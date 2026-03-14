@@ -21,6 +21,19 @@
             "upgradePackages": "true"
         }
     },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.python",
+                "RReverser.llvm",
+                "ms-vscode.cmake-tools",
+                "charliermarsh.ruff",
+                "twxs.cmake",
+                "llvm-vs-code-extensions.vscode-clangd"
+            ]
+        }
+    },
     "containerUser": "opt-bench",
     "remoteUser": "opt-bench",
     "runArgs": [

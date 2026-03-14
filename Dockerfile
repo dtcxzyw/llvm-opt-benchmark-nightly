@@ -35,11 +35,14 @@ RUN add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -cs)/ llvm-tool
     clang-format-23 \
     clangd-23
 RUN find /usr/bin -name "*-23" -type l -exec sh -c 'cp -P "$1" "${1%-23}"' _ {} \;
+# Common build dependencies
+RUN apt-get install -y pkg-config
 
 RUN useradd -u 1001 -m opt-bench
 USER opt-bench
 WORKDIR /home/opt-bench
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly
+RUN . "$HOME/.cargo/env" && rustup component add llvm-tools-preview
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN curl -LsSf https://hf.co/cli/install.sh | bash
