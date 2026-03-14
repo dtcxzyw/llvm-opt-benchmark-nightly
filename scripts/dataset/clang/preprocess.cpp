@@ -3,6 +3,7 @@
 // This file is licensed under the MIT License.
 // See the LICENSE file for more information.
 
+#include <llvm/Bitcode/BitcodeWriter.h>
 #include <llvm/IR/Analysis.h>
 #include <llvm/IR/DebugInfo.h>
 #include <llvm/IR/Module.h>
@@ -18,6 +19,7 @@
 #include <llvm/Transforms/IPO/GlobalDCE.h>
 #include <llvm/Transforms/Scalar/DCE.h>
 #include <filesystem>
+
 using namespace llvm;
 namespace fs = std::filesystem;
 
@@ -41,10 +43,10 @@ public:
 
     auto AbsFileName = Prefix / fs::path(FileName).filename();
     auto TargetFileName = AbsFileName.has_extension()
-                              ? AbsFileName.replace_extension(".ll").string()
-                              : AbsFileName.string() + ".ll";
+                              ? AbsFileName.replace_extension(".bc").string()
+                              : AbsFileName.string() + ".bc";
     Expected<sys::fs::TempFile> Temp =
-        sys::fs::TempFile::create("opt-%%%%%%%.ll");
+        sys::fs::TempFile::create("opt-%%%%%%%.bc");
     if (!Temp)
       return PreservedAnalyses::none();
     {
@@ -55,7 +57,7 @@ public:
       // Drop unused comdats.
       for (auto &GO : M.global_objects())
         GO.setComdat(nullptr);
-      M.print(OS, /*AAW=*/nullptr);
+      WriteBitcodeToFile(M, OS);
     }
     (void)Temp->keep(TargetFileName);
     return PreservedAnalyses::none();
