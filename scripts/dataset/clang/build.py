@@ -16,7 +16,7 @@ if not os.path.exists(PLUGIN):
 
 if __name__ == "__main__":
     proj = sys.argv[1]
-    build_script = os.path.join(REPO_DIR, proj, "build.sh")
+    build_script = os.path.join(REPO_DIR, proj, "build.clang.sh")
     if not os.path.exists(build_script):
         print(f"Build script {build_script} does not exist.")
         exit(1)
@@ -47,3 +47,9 @@ if __name__ == "__main__":
     env["CXX"] = cxx_wrapper
     env["DUMP_PREFIX"] = data_dir
     subprocess.check_call(["bash", build_script], cwd=work_dir, env=env)
+
+    print("Filtering out trivial files...", flush=True)
+    subprocess.check_call(
+        ["python3", os.path.join(ROOT_DIR, "scripts/dataset/filter.py"), proj]
+    )
+    print("Done.")
