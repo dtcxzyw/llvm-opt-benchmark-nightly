@@ -1,7 +1,25 @@
 import requests
 import os
 
-allow_list = ['dtcxzyw','nikic','preames','topperc','goldsteinn','fhahn','RKSimon','arsenm','antoniofrighetto','asb','michaelmaitland','artagnon','XChy','andjo403','zyw-bot']
+allow_list = [
+    "dtcxzyw",
+    "nikic",
+    "preames",
+    "topperc",
+    "goldsteinn",
+    "fhahn",
+    "RKSimon",
+    "arsenm",
+    "antoniofrighetto",
+    "asb",
+    "michaelmaitland",
+    "artagnon",
+    "XChy",
+    "andjo403",
+    "zyw-bot",
+]
+
+
 def is_authorized_users(user):
     if user in allow_list:
         return True
@@ -15,7 +33,9 @@ def is_authorized_users(user):
                 "Accept": "application/vnd.github+json",
             }
         )
-        res = session.get(f"https://api.github.com/orgs/llvm/members/{user}", timeout=120)
+        res = session.get(
+            f"https://api.github.com/orgs/llvm/members/{user}", timeout=120
+        )
         return res.status_code == 204
     except Exception as e:
         print(e)

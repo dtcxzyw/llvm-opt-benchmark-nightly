@@ -5,7 +5,10 @@ description = "An LLVM IR dataset for data-driven compiler optimization research
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "huggingface-hub>=1.7.1",
     "requests>=2.32.5",
+    "ruff>=0.15.6",
+    "tenacity>=9.1.4",
     "tqdm>=4.67.3",
     "unidiff>=0.7.5",
 ]

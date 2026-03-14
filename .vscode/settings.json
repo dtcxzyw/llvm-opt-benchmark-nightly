@@ -1,0 +1,5 @@
+{
+    "ruff.interpreter": [
+        ".venv/bin/python"
+    ]
+}
