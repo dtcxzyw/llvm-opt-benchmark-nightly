@@ -1,0 +1,33 @@
+{
+    "name": "llvm-opt-benchmark Dev Container",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": ".."
+    },
+    "workspaceMount": "source=${localWorkspaceFolder},target=/opt-bench,type=bind,consistency=cached",
+    "workspaceFolder": "/opt-bench",
+    "mounts": [
+        {
+            "source": "devcontainer-cargo-cache-${devcontainerId}",
+            "target": "/usr/local/cargo",
+            "type": "volume"
+        }
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "configureZshAsDefaultShell": "true",
+            "username": "opt-bench",
+            "upgradePackages": "true"
+        }
+    },
+    "containerUser": "opt-bench",
+    "remoteUser": "opt-bench",
+    "runArgs": [
+        "--network=host",
+        "--cap-add=SYS_PTRACE",
+        "--cap-add=PERFMON",
+        "--security-opt",
+        "seccomp=unconfined"
+    ]
+}
