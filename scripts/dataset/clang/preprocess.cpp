@@ -51,12 +51,7 @@ public:
       return PreservedAnalyses::none();
     {
       raw_fd_ostream OS(Temp->FD, false);
-      M.setModuleIdentifier("");
-      M.setSourceFileName("");
       StripDebugInfo(M);
-      // Drop unused comdats.
-      for (auto &GO : M.global_objects())
-        GO.setComdat(nullptr);
       WriteBitcodeToFile(M, OS);
     }
     (void)Temp->keep(TargetFileName);
