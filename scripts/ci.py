@@ -2,23 +2,32 @@
 # uv run scripts/ci.py test # with env USER/COMMENT_BODY/ISSUE_URL
 
 from dataclasses import dataclass
+import heapq
 import os
 import argparse
 import shutil
 import subprocess
+import difflib
+from typing import Optional, List, Tuple
 import authorized_users
 import huggingface_hub
 from tenacity import retry, stop_after_attempt, wait_exponential_jitter
 from pathlib import Path
 from urllib.parse import urlparse
 import requests
+import json
+import math
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LLVM_REPO = os.path.join(ROOT_DIR, "work/llvm-project")
 LLVM_BUILD_DIR = os.path.join(ROOT_DIR, "work/llvm-build")
+OPT_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/opt")
+LLVM_DIS_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-dis")
+LLVM_DIFF_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-diff")
 OPT_OUT_DIR = os.path.join(ROOT_DIR, "work/opt-out")
 LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
 DATA_DIR = os.path.join(ROOT_DIR, "data")
+STATS_BASELINE_FILE = os.path.join(DATA_DIR, "stats.json.baseline")
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ["GITHUB_RUN_ID"]
@@ -116,8 +125,11 @@ def build_llvm(config: TestConfig) -> bool:
             cmd.append("-DLLVM_ABI_BREAKING_CHECKS=FORCE_OFF")
             cmd.append("-DLLVM_FORCE_ENABLE_STATS=ON")
         subprocess.check_call(cmd, cwd=LLVM_BUILD_DIR)
+        cmd = ["cmake", "--build", ".", "-j", "-t", "opt"]
+        if not config.comptime and not config.stats:
+            cmd += ["llvm-dis", "llvm-diff"]
         subprocess.check_call(
-            ["cmake", "--build", ".", "-j", "-t", "opt"],
+            cmd,
             cwd=LLVM_BUILD_DIR,
             timeout=3600,
         )
@@ -168,14 +180,490 @@ def apply_llvm_patch(patch_url: str) -> bool:
     return bool(result)
 
 
+def gen_textual_ir(input_bc: str) -> Optional[str]:
+    ret = subprocess.run(
+        [LLVM_DIS_BINARY, input_bc, "-o", "-", "--show-annotations"],
+        capture_output=True,
+    )
+    if ret.returncode != 0:
+        return None
+    return ret.stdout.decode()
+
+
+def _extract_hunks_from_unified(unified_lines: List[str]) -> List[List[str]]:
+    hunks = []
+    current_hunk = None
+    for line in unified_lines:
+        if line.startswith("--- ") or line.startswith("+++ "):
+            continue
+        if line.startswith("@@ "):
+            if current_hunk is not None:
+                hunks.append(current_hunk)
+            current_hunk = []
+            continue
+        if current_hunk is None:
+            continue
+        if line.startswith("\\ No newline at end of file"):
+            continue
+        if line[:1] in {" ", "-", "+"}:
+            current_hunk.append(line)
+    if current_hunk is not None:
+        hunks.append(current_hunk)
+    return hunks
+
+
+def _extract_hunks_from_llvm_diff(diff_text: str) -> List[List[str]]:
+    hunks = []
+    current_hunk = []
+    for raw_line in diff_text.splitlines():
+        line = raw_line.lstrip()
+        if not line:
+            if current_hunk:
+                hunks.append(current_hunk)
+                current_hunk = []
+            continue
+
+        if line[0] in {"<", ">"}:
+            marker = "-" if line[0] == "<" else "+"
+            content = line[1:].lstrip()
+            current_hunk.append(marker + content)
+            continue
+
+        if current_hunk:
+            hunks.append(current_hunk)
+            current_hunk = []
+
+    if current_hunk:
+        hunks.append(current_hunk)
+    return hunks
+
+
+def _build_minimized_files_from_hunks(hunks: List[List[str]]) -> Optional[tuple]:
+    if not hunks:
+        return None
+
+    minimized_ref_lines = []
+    minimized_new_lines = []
+    for hunk_id, hunk_lines in enumerate(hunks):
+        begin_marker = f"begin_hunk_{hunk_id}"
+        end_marker = f"end_hunk_{hunk_id}"
+        minimized_ref_lines.append(begin_marker)
+        minimized_new_lines.append(begin_marker)
+
+        for line in hunk_lines:
+            content = line[1:]
+            if line.startswith(" "):
+                minimized_ref_lines.append(content)
+                minimized_new_lines.append(content)
+            elif line.startswith("-"):
+                minimized_ref_lines.append(content)
+            elif line.startswith("+"):
+                minimized_new_lines.append(content)
+
+        minimized_ref_lines.append(end_marker)
+        minimized_new_lines.append(end_marker)
+
+    return minimized_ref_lines, minimized_new_lines
+
+
+# (ref_bc, new_bc) -> (minimized_ref_ir, minimized_new_ir)
+def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
+    base_name = new_bc.removesuffix(".bc")
+    ref_ir = base_name + ".ref.ll"
+    new_ir = base_name + ".new.ll"
+
+    def _fallback_with_difflib() -> Optional[tuple]:
+        ref_text = gen_textual_ir(ref_bc)
+        if ref_text is None:
+            return None
+        new_text = gen_textual_ir(new_bc)
+        if new_text is None:
+            return None
+
+        ref_lines = ref_text.splitlines()
+        new_lines = new_text.splitlines()
+        unified = list(
+            difflib.unified_diff(
+                ref_lines,
+                new_lines,
+                fromfile=ref_ir,
+                tofile=new_ir,
+                n=3,
+                lineterm="",
+            )
+        )
+        hunks = _extract_hunks_from_unified(unified)
+        minimized = _build_minimized_files_from_hunks(hunks)
+        if minimized is None:
+            return None
+
+        minimized_ref_lines, minimized_new_lines = minimized
+        with open(ref_ir, "w") as f:
+            f.write("\n".join(minimized_ref_lines) + "\n")
+        with open(new_ir, "w") as f:
+            f.write("\n".join(minimized_new_lines) + "\n")
+        return (ref_ir, new_ir)
+
+    try:
+        llvm_diff_ret = subprocess.run(
+            [LLVM_DIFF_BINARY, ref_bc, new_bc],
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        if llvm_diff_ret.returncode == 0:
+            # No differences, no need to generate diff files.
+            return None
+
+        # llvm-diff can return non-zero for semantic differences.
+        # Only treat signal termination as a crash and fallback.
+        if llvm_diff_ret.returncode < 0:
+            return _fallback_with_difflib()
+
+        hunks = _extract_hunks_from_llvm_diff(llvm_diff_ret.stdout)
+        minimized = _build_minimized_files_from_hunks(hunks)
+    except Exception:
+        return _fallback_with_difflib()
+
+    if minimized is None:
+        return None
+
+    minimized_ref_lines, minimized_new_lines = minimized
+
+    with open(ref_ir, "w") as f:
+        f.write("\n".join(minimized_ref_lines) + "\n")
+    with open(new_ir, "w") as f:
+        f.write("\n".join(minimized_new_lines) + "\n")
+
+    return (ref_ir, new_ir)
+
+
+def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
+    input_path = os.path.join(DATA_DIR, proj, "original", file)
+    ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
+    optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
+    try:
+        cmd = [OPT_BINARY, "-O3", input_path, "-o", optimized_path]
+        if config.comptime:
+            cmd = (
+                [
+                    "taskset",
+                    "-c",
+                    str(worker_idx),
+                    "perf",
+                    "stat",
+                    "-e",
+                    "instructions:u",
+                    "--no-big-num",
+                ]
+                + cmd
+                + ["--disable-output"]
+            )
+        else:
+            cmd += ["--stats", "--stats-json"]
+            if config.stats:
+                cmd.append("--disable-output")
+            else:
+                cmd += ["-o", optimized_path]
+        ret = subprocess.run(
+            cmd,
+            stdin=subprocess.DEVNULL,
+            capture_output=True,
+            timeout=600,
+            env={
+                "LLVM_DISABLE_CRASH_REPORT": "1",
+                "LLVM_DISABLE_SYMBOLIZATION": "1",
+            },
+        )
+        if ret.returncode != 0:
+            return "fail"
+
+        if config.comptime:
+            err = ret.stderr.decode()
+            comptime_result = 0
+            for line in err.splitlines():
+                if "instructions:u" in line:
+                    comptime_result = int(line.strip().split()[0])
+                    break
+            return comptime_result
+
+        rendered = None
+        if not config.stats:
+            if not os.path.exists(optimized_path):
+                return "fail"
+
+            if os.path.exists(ref_path):
+                identical = False
+                if (
+                    subprocess.call(
+                        ["cmp", "-s", optimized_path, ref_path],
+                        stderr=subprocess.DEVNULL,
+                        stdout=subprocess.DEVNULL,
+                    )
+                    == 0
+                ):
+                    identical = True
+                    os.remove(optimized_path)
+
+                if not identical:
+                    rendered = compute_diff(ref_path, optimized_path)
+
+        err = ret.stderr.decode()
+        stats_result = json.loads(err[err.find("{") : err.find("}") + 1])
+        return stats_result, rendered
+    except subprocess.TimeoutExpired:
+        return "timeout"
+    except Exception:
+        return "fail"
+
+
 def run_opt(config: TestConfig):
     log_file = os.path.join(REPORT_DIR, "opt.log")
-    stat_file = os.path.join(REPORT_DIR, "stats.json")
     if os.path.exists(OPT_OUT_DIR):
         shutil.rmtree(OPT_OUT_DIR)
     os.makedirs(OPT_OUT_DIR)
 
-    pass
+    tasks = []
+    for proj in os.listdir(DATA_DIR):
+        original_dir = os.path.join(DATA_DIR, proj, "original")
+        if not os.path.exists(original_dir):
+            continue
+        for file in os.listdir(original_dir):
+            if file.endswith(".bc"):
+                tasks.append((proj, file))
+
+    stats_nondeter_keys = {
+        "dse.NumDomMemDefChecks",
+        "ir.NumInstrRenumberings",
+        "basicaa.SearchTimes",
+        "aa.NumMayAlias",
+        "capture-tracking.NumCaptured",
+        "aa.NumMustAlias",
+        "memory-builtins.ObjectVisitorArgument",
+        "aa.NumNoAlias",
+        "assume-queries.NumAssumeQueries",
+        "capture-tracking.NumNotCaptured",
+        "ipt.NumInstScanned",
+        "simplifycfg.NumSimpl",
+        "instcount.LargestFunctionSize",
+        "instcount.LargestFunctionBBCount",
+    }
+
+    comptime_results = {}
+    stats_results = {}
+    rendered_files = []
+    with open(log_file, "w") as log_f:
+        for proj, file in tasks:
+            ret = run_opt_file(config, proj, file, worker_idx=0)
+            if isinstance(ret, str):
+                log_f.write(f"{proj}/{file}: {ret}\n")
+                continue
+
+            if config.comptime:
+                comptime_results[f"{proj}/{file}"] = ret
+            else:
+                stats_result, rendered = ret
+                if config.stats:
+                    if config.stats in stats_result:
+                        stats_results[f"{proj}/{file}"] = stats_result[config.stats]
+                else:
+                    for key, value in stats_result.items():
+                        if key in stats_nondeter_keys:
+                            continue
+                        stats_results[key] = stats_results.get(key, 0) + value
+                    if rendered:
+                        rendered_files.append(rendered)
+
+    return comptime_results, stats_results, rendered_files
+
+
+# Pick top K improved/regressed stats
+def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> str:
+    if not baseline or not new:
+        return None
+
+    improvements = []
+    regressions = []
+    THRESHOLD = 0.00001
+    log_sum_baseline = 0
+    log_sum_new = 0
+    for key in new:
+        if key not in baseline:
+            continue
+        old_value = baseline[key]
+        new_value = new[key]
+        if old_value <= 0 or new_value <= 0:
+            continue
+        change = (new_value - old_value) / old_value
+        if abs(change) < THRESHOLD:
+            continue
+        log_sum_baseline += math.log(old_value)
+        log_sum_new += math.log(new_value)
+        if change < 0:
+            improvements.append((key, change))
+        elif change > 0:
+            regressions.append((key, change))
+
+    improvements.sort(key=lambda x: x[1])
+    regressions.sort(key=lambda x: x[1], reverse=True)
+    report = ""
+    TOPK = 10
+    if improvements:
+        report += f"Top {TOPK} improvements{postfix}:\n"
+        for key, change in improvements[:TOPK]:
+            report += f"  {key}: {change:+.2%}\n"
+
+    if regressions:
+        report += f"Top {TOPK} regressions{postfix}:\n"
+        for key, change in regressions[:TOPK]:
+            report += f"  {key}: {change:+.2%}\n"
+
+    if not report:
+        return f"No significant changes{postfix}.\n"
+
+    if avg:
+        avg_change = math.exp((log_sum_new - log_sum_baseline) / len(new)) - 1
+        report += f"\n  GeoMean: {avg_change:+.2%}\n"
+
+    return report
+
+
+def aggregate_stats_by_project(stats: dict) -> dict:
+    stats_by_proj = {}
+    for key, value in stats.items():
+        proj = key.split("/")[0]
+        stats_by_proj[proj] = stats_by_proj.get(proj, 0) + value
+    return stats_by_proj
+
+
+def compare_stats(baseline: dict, new: dict, by_project: bool, avg: bool) -> str:
+    if not by_project:
+        return compare_stats_impl(baseline, new, "", avg)
+
+    by_file = compare_stats_impl(baseline, new, " (by file)", avg)
+    # by projects
+    baseline_by_proj = aggregate_stats_by_project(baseline)
+    new_by_proj = aggregate_stats_by_project(new)
+    by_proj = compare_stats_impl(baseline_by_proj, new_by_proj, " (by project)", avg)
+    return by_file + "\n" + by_proj
+
+
+def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str]]]:
+    MAX_DIFF_PER_FILE = 1000
+    MAX_DIFF_TOTAL = 15000
+    MAX_FILE_TOTAL = 200
+    TRIVIAL_PENALTY = 200
+    DIVERSITY_PENALTY_INC = 30
+
+    # proj -> list of (cost, real_cost, ref_ir, new_ir, proj, added, removed)
+    diffs = dict()
+
+    total_added = 0
+    total_removed = 0
+    for ref_ir, new_ir in rendered_files:
+        proj = os.path.basename(ref_ir).split("-s-")[0]
+        if ref_ir is None or new_ir is None:
+            continue
+        with open(ref_ir, "r") as f:
+            ref_lines = f.readlines()
+        with open(new_ir, "r") as f:
+            new_lines = f.readlines()
+        diff = difflib.unified_diff(
+            ref_lines,
+            new_lines,
+            fromfile=ref_ir,
+            tofile=new_ir,
+            n=3,
+            lineterm="",
+        )
+        number_of_added_lines = sum(
+            1 for line in diff if line.startswith("+") and not line.startswith("+++")
+        )
+        number_of_removed_lines = sum(
+            1 for line in diff if line.startswith("-") and not line.startswith("---")
+        )
+        if number_of_added_lines == 0 and number_of_removed_lines == 0:
+            continue
+        total_added += number_of_added_lines
+        total_removed += number_of_removed_lines
+
+        cost = len(ref_lines) + number_of_added_lines + number_of_removed_lines
+        real_cost = cost
+        if cost > MAX_DIFF_PER_FILE or len(new_lines) > MAX_DIFF_PER_FILE:
+            continue
+        if number_of_added_lines == number_of_removed_lines:
+            cost += TRIVIAL_PENALTY
+        diffs.setdefault(proj, []).append(
+            (
+                cost,
+                real_cost,
+                ref_ir,
+                new_ir,
+                proj,
+                number_of_added_lines,
+                number_of_removed_lines,
+            )
+        )
+
+    diff_heap = []
+    for list in diffs.values():
+        list.sort(key=lambda x: x[0])
+        diff_heap.append(list.pop(0))
+    heapq.heapify(diff_heap)
+
+    diversity_penalty = dict()
+    diff_pattern = set()
+    file_count = 0
+    diff_count = 0
+    kept_files = []
+    kept_added = 0
+    kept_removed = 0
+    kept_files_sorted = []
+    while len(diff_heap) != 0:
+        _, real_cost, ref_ir, new_ir, proj, add, sub = heapq.heappop(diff_heap)
+        proj_list = diffs[proj]
+        if len(proj_list) != 0:
+            diversity_penalty[proj] = (
+                diversity_penalty.get(proj, 0) + DIVERSITY_PENALTY_INC
+            )
+            cnt2, real_cost2, ref_ir2, new_ir2, proj2, add2, sub2 = proj_list.pop(0)
+            cnt2 += diversity_penalty[proj]
+            heapq.heappush(
+                diff_heap, (cnt2, real_cost2, ref_ir2, new_ir2, proj2, add2, sub2)
+            )
+
+        key = (add, sub)
+        if key in diff_pattern:
+            continue
+        diff_pattern.add(key)
+        if file_count < MAX_FILE_TOTAL and diff_count + real_cost <= MAX_DIFF_TOTAL:
+            file_count += 1
+            diff_count += real_cost
+            kept_added += add
+            kept_removed += sub
+            kept_files.append((ref_ir, new_ir))
+            kept_files_sorted.append((ref_ir, add, sub))
+        else:
+            break
+
+    report = f"Total {len(rendered_files)} files with differences, showing {len(kept_files)} files in the report.\n"
+    report += f"Original: Total added lines: {total_added}, total removed lines: {total_removed}.\n"
+    report += (
+        f"Kept: Total added lines: {kept_added}, total removed lines: {kept_removed}.\n"
+    )
+
+    # Sort kept_files_sorted by add - sub.
+    kept_files_sorted.sort(key=lambda x: (x[1] - x[2], -(x[1] + x[2])), reverse=True)
+    if len(kept_files_sorted) > 200:
+        kept_files_sorted = kept_files_sorted[:100] + kept_files_sorted[-100:]
+    for file, add, sub in kept_files_sorted:
+        name = os.path.basename(file)
+        pos = name.index("-s-")
+        proj = name[:pos]
+        file_name = name[pos + 3 :].removesuffix(".ref.ll")
+        report += f"{proj}/{file_name}: +{add} -{sub}\n"
+
+    return report, kept_files
 
 
 def update():
@@ -188,7 +676,35 @@ def update():
     if not build_llvm(config):
         print("Failed to build LLVM with the latest revision.")
         return
-    run_opt(config)
+    stats_baseline = None
+    if os.path.exists(STATS_BASELINE_FILE):
+        with open(STATS_BASELINE_FILE, "r") as f:
+            stats_baseline = json.load(f)
+    _, stats, rendered_files = run_opt(config)
+    stats_cmp = None
+    if stats_baseline:
+        stats_cmp = compare_stats(stats_baseline, stats, by_project=False, avg=False)
+
+    should_report = stats_cmp != "No significant changes.\n" or len(rendered_files) > 0
+    report, kept_files = generate_diff_report(rendered_files)
+    if should_report:
+        pass
+
+    # Update baseline bc
+    for file in os.listdir(DATA_DIR):
+        if file.endswith(".bc"):
+            pos = file.index("-s-")
+            proj = file[:pos]
+            file_name = file[pos + 3 :]
+            ref_path = os.path.join(DATA_DIR, proj, "optimized", file_name)
+            os.rename(os.path.join(OPT_OUT_DIR, file), ref_path)
+    # Update baseline stats
+    with open(STATS_BASELINE_FILE, "w") as f:
+        json.dump(stats, f, indent=2)
+    # Update llvm version
+    with open(os.path.join(DATA_DIR, "LLVM_VERSION"), "w") as f:
+        f.write(new_revision)
+    sync_dataset_to_remote()
 
 
 def test(user: str, comment_body: str, issue_url: str):
@@ -231,6 +747,22 @@ def test(user: str, comment_body: str, issue_url: str):
         return
 
     patch_name = patch_url.removeprefix("llvm/llvm-project/pull/")
+
+    if config.comptime:
+        with open("/proc/sys/kernel/randomize_va_space", "r") as f:
+            if int(f.read().strip()) != 0:
+                print("Please disable ASLR")
+                return
+        with open("/proc/sys/kernel/perf_event_paranoid", "r") as f:
+            if int(f.read().strip()) != -1:
+                print("Please enable userland `perf`")
+                return
+
+        if not build_llvm(config):
+            return
+
+        baseline_comptime, _, _ = run_opt(config)
+
     if not apply_llvm_patch(patch_url):
         reply_issue_comment(
             issue_url,
@@ -247,7 +779,25 @@ def test(user: str, comment_body: str, issue_url: str):
             user,
         )
         return
-    run_opt(config)
+    comptime, stats, rendered_files = run_opt(config)
+
+    comptime_cmp = None
+    stats_cmp = None
+
+    if config.comptime:
+        comptime_cmp = compare_stats(
+            baseline_comptime, comptime, by_project=True, avg=True
+        )
+    elif os.path.exists(STATS_BASELINE_FILE):
+        with open(STATS_BASELINE_FILE, "r") as f:
+            stats_baseline = json.load(f)
+        single_stat = config.stats is not None
+        stats_cmp = compare_stats(
+            stats_baseline, stats, by_project=single_stat, avg=single_stat
+        )
+
+    if not config.comptime and not config.stats:
+        generate_diff_report(rendered_files)
 
 
 if __name__ == "__main__":
