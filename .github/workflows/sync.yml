@@ -16,10 +16,14 @@ jobs:
       cancel-in-progress: false
 
     steps:
+      - name: Reset repository
+        run: git clean -ffdx -- report && git reset --hard HEAD
+
       - uses: actions/checkout@v4
         with:
           submodules: false
           ref: main
+          clean: false
 
       - name: Set up Git
         run: |

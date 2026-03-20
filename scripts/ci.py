@@ -109,7 +109,7 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
 
 def setup_base_environment() -> str:
     sync_dataset_from_remote()
-    llvm_revision = Path(os.path.join(DATA_DIR, "LLVM_VERSION")).read_text()
+    llvm_revision = Path(os.path.join(DATA_DIR, "LLVM_VERSION")).read_text().strip()
     setup_llvm(llvm_revision)
     return llvm_revision
 
@@ -994,6 +994,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="CI script for llvm-opt-benchmark")
     parser.add_argument("command", choices=["update", "test"], help="Command to run")
     args = parser.parse_args()
+    work_dir = os.path.join(ROOT_DIR, "work")
+    if not os.path.exists(work_dir):
+        os.makedirs(work_dir)
 
     if args.command == "update":
         update()
