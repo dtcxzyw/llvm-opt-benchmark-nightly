@@ -1,0 +1,37 @@
+name: Sync with upstream LLVM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [self-hosted, baseline]
+
+    permissions:
+      issues: write
+      contents: write
+
+    concurrency:
+      group: baseline
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: false
+          ref: main
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up python env
+        run: uv sync
+
+      - name: Update LLVM
+        run: uv run scripts/ci.py update
+        env:
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN_WRITE }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}

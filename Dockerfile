@@ -37,6 +37,7 @@ RUN add-apt-repository -y "deb http://apt.llvm.org/$(lsb_release -cs)/ llvm-tool
 RUN find /usr/bin -name "*-23" -type l -exec sh -c 'cp -P "$1" "${1%-23}"' _ {} \;
 # Common build dependencies
 RUN apt-get install -y pkg-config
+RUN apt-get install -y gh
 
 RUN useradd -u 1001 -m opt-bench
 USER opt-bench

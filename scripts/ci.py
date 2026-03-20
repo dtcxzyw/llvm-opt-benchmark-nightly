@@ -32,8 +32,8 @@ DATA_DIR = os.path.join(ROOT_DIR, "data")
 STATS_BASELINE_FILE = os.path.join(DATA_DIR, "stats.json.baseline")
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
-JOB_ID = os.environ["GITHUB_RUN_ID"]
-GH_TOKEN = os.environ["GITHUB_TOKEN"]
+JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
+GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -65,19 +65,21 @@ def reply_issue_comment(
 ):
     full_comment = f"> {original_comment}\n\n@{user} {append_comment}"
     # Use gh cli to post the comment.
-    subprocess.check_call(["gh", "issue", "comment", issue_url, "--body", full_comment])
+    subprocess.check_call(
+        ["gh", "issue", "comment", issue_url, "--body", full_comment], cwd=ROOT_DIR
+    )
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def push_branch(branch: str):
-    subprocess.check_call(["git", "push", "origin", branch], cwd=LLVM_REPO)
+    subprocess.check_call(["git", "push", "origin", branch], cwd=ROOT_DIR)
 
 
 def create_branch(branch: str):
-    subprocess.check_call(["git", "checkout", "-b", branch], cwd=LLVM_REPO)
-    subprocess.check_call(["git", "add", "report"], cwd=LLVM_REPO)
+    subprocess.check_call(["git", "checkout", "-b", branch], cwd=ROOT_DIR)
+    subprocess.check_call(["git", "add", "report"], cwd=ROOT_DIR)
     subprocess.check_call(
-        ["git", "commit", "--allow-empty", "-m", "Update"], cwd=LLVM_REPO
+        ["git", "commit", "--allow-empty", "-m", "Update"], cwd=ROOT_DIR
     )
     push_branch(branch)
 
@@ -101,7 +103,7 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
             label,
         ],
         input=body.encode(),
-        cwd=LLVM_REPO,
+        cwd=ROOT_DIR,
     )
 
 
@@ -146,7 +148,7 @@ def build_llvm(config: TestConfig) -> bool:
             "-DLLVM_OPTIMIZED_TABLEGEN=ON",
             "-DLLVM_ENABLE_WARNINGS=OFF",
             "-DLLVM_APPEND_VC_REV=OFF",
-            "-DLLVM_TARGETS_TO_BUILD='X86'",
+            "-DLLVM_TARGETS_TO_BUILD=X86",
             "-DCMAKE_C_COMPILER=clang",
             "-DCMAKE_CXX_COMPILER=clang++",
             "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
@@ -178,14 +180,16 @@ def get_llvm_patch(patch_url: str) -> str:
     if not patch_url.endswith(".diff"):
         patch_url += ".diff"
     session = requests.Session()
-    session.headers.update(
-        {
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Authorization": f"Bearer {GH_TOKEN}",
-            "Accept": "application/vnd.github+json",
-        }
-    )
-    return session.get(patch_url, timeout=120).text
+    headers = {
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Accept": "application/vnd.github+json",
+    }
+    if GH_TOKEN:
+        headers["Authorization"] = f"Bearer {GH_TOKEN}"
+    session.headers.update(headers)
+    ret = session.get(patch_url, timeout=120)
+    ret.raise_for_status()
+    return ret.text
 
 
 def apply_llvm_patch(patch_url: str) -> bool:
@@ -372,12 +376,26 @@ def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
     return (ref_ir, new_ir)
 
 
+def extract_stats_json(stderr_text: str) -> Optional[dict]:
+    decoder = json.JSONDecoder()
+    idx = stderr_text.find("{")
+    while idx != -1:
+        try:
+            obj, _ = decoder.raw_decode(stderr_text[idx:])
+            if isinstance(obj, dict):
+                return obj
+        except json.JSONDecodeError:
+            pass
+        idx = stderr_text.find("{", idx + 1)
+    return None
+
+
 def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
     input_path = os.path.join(DATA_DIR, proj, "original", file)
     ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
     optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
     try:
-        cmd = [OPT_BINARY, "-O3", input_path, "-o", optimized_path]
+        cmd = [OPT_BINARY, "-O3", input_path]
         if config.comptime:
             cmd = (
                 [
@@ -399,15 +417,15 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
                 cmd.append("--disable-output")
             else:
                 cmd += ["-o", optimized_path]
+        env_opt = os.environ.copy()
+        env_opt["LLVM_DISABLE_CRASH_REPORT"] = "1"
+        env_opt["LLVM_DISABLE_SYMBOLIZATION"] = "1"
         ret = subprocess.run(
             cmd,
             stdin=subprocess.DEVNULL,
             capture_output=True,
             timeout=600,
-            env={
-                "LLVM_DISABLE_CRASH_REPORT": "1",
-                "LLVM_DISABLE_SYMBOLIZATION": "1",
-            },
+            env=env_opt,
         )
         if ret.returncode != 0:
             return "fail"
@@ -443,7 +461,9 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
                     rendered = compute_diff(ref_path, optimized_path)
 
         err = ret.stderr.decode()
-        stats_result = json.loads(err[err.find("{") : err.find("}") + 1])
+        stats_result = extract_stats_json(err)
+        if stats_result is None:
+            return "fail"
         return stats_result, rendered
     except subprocess.TimeoutExpired:
         return "timeout"
@@ -467,13 +487,15 @@ def run_opt(config: TestConfig):
                 tasks.append((proj, file))
 
     # Keep worker count bounded and configurable for CI environments.
-    worker_count = max(
-        1,
-        min(
-            len(tasks) if tasks else 1,
-            int(os.environ.get("OPT_BENCH_WORKERS", os.cpu_count() or 1)),
-        ),
-    )
+    workers_env = os.environ.get("OPT_BENCH_WORKERS")
+    try:
+        requested_workers = (
+            int(workers_env) if workers_env is not None else (os.cpu_count() or 1)
+        )
+    except ValueError:
+        requested_workers = os.cpu_count() or 1
+    requested_workers = max(1, requested_workers)
+    worker_count = max(1, min(len(tasks) if tasks else 1, requested_workers))
 
     stats_nondeter_keys = {
         "dse.NumDomMemDefChecks",
@@ -543,6 +565,7 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
     THRESHOLD = 0.00001
     log_sum_baseline = 0
     log_sum_new = 0
+    matched_count = 0
     for key in new:
         if key not in baseline:
             continue
@@ -555,6 +578,7 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
             continue
         log_sum_baseline += math.log(old_value)
         log_sum_new += math.log(new_value)
+        matched_count += 1
         if change < 0:
             improvements.append((key, change))
         elif change > 0:
@@ -577,8 +601,8 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
     if not report:
         return f"No significant changes{postfix}.\n"
 
-    if avg:
-        avg_change = math.exp((log_sum_new - log_sum_baseline) / len(new)) - 1
+    if avg and matched_count > 0:
+        avg_change = math.exp((log_sum_new - log_sum_baseline) / matched_count) - 1
         report += f"\n  GeoMean: {avg_change:+.2%}\n"
 
     return report
@@ -594,13 +618,17 @@ def aggregate_stats_by_project(stats: dict) -> dict:
 
 def compare_stats(baseline: dict, new: dict, by_project: bool, avg: bool) -> str:
     if not by_project:
-        return compare_stats_impl(baseline, new, "", avg)
+        return compare_stats_impl(baseline, new, "", avg) or "No significant changes.\n"
 
     by_file = compare_stats_impl(baseline, new, " (by file)", avg)
     # by projects
     baseline_by_proj = aggregate_stats_by_project(baseline)
     new_by_proj = aggregate_stats_by_project(new)
     by_proj = compare_stats_impl(baseline_by_proj, new_by_proj, " (by project)", avg)
+    if by_file is None:
+        by_file = "No significant changes (by file).\n"
+    if by_proj is None:
+        by_proj = "No significant changes (by project).\n"
     return by_file + "\n" + by_proj
 
 
@@ -783,13 +811,13 @@ def update():
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
 
     # Update baseline bc
-    for file in os.listdir(DATA_DIR):
+    for file in os.listdir(OPT_OUT_DIR):
         if file.endswith(".bc"):
             pos = file.index("-s-")
             proj = file[:pos]
             file_name = file[pos + 3 :]
             ref_path = os.path.join(DATA_DIR, proj, "optimized", file_name)
-            os.rename(os.path.join(OPT_OUT_DIR, file), ref_path)
+            os.replace(os.path.join(OPT_OUT_DIR, file), ref_path)
     # Update baseline stats
     with open(STATS_BASELINE_FILE, "w") as f:
         json.dump(stats, f, indent=2, sort_keys=True)
@@ -828,17 +856,41 @@ def test(user: str, comment_body: str, issue_url: str):
     try:
         res = urlparse(patch_url)
         if res.scheme != "https":
-            print(f"Please provide a valid HTTPS URL: {patch_url}")
+            reply_issue_comment(
+                issue_url,
+                comment_body,
+                f"Please provide a valid HTTPS URL: {patch_url}",
+                user,
+            )
             return
         if res.netloc != "github.com":
-            print(f"Please provide a valid GitHub URL: {patch_url}")
+            reply_issue_comment(
+                issue_url,
+                comment_body,
+                f"Please provide a valid GitHub URL: {patch_url}",
+                user,
+            )
             return
-        patch_url = res.path.removeprefix("/")
+        patch_path = res.path.removeprefix("/").strip()
+        if not patch_path:
+            reply_issue_comment(
+                issue_url,
+                comment_body,
+                f"Invalid patch URL: {patch_url}",
+                user,
+            )
+            return
+        patch_url = f"https://github.com/{patch_path}"
     except Exception:
-        print(f"Invalid patch URL: {patch_url}")
+        reply_issue_comment(
+            issue_url,
+            comment_body,
+            f"Invalid patch URL: {patch_url}",
+            user,
+        )
         return
 
-    patch_name = patch_url.removeprefix("llvm/llvm-project/pull/")
+    patch_name = patch_path.removeprefix("llvm/llvm-project/pull/")
 
     if config.comptime:
         with open("/proc/sys/kernel/randomize_va_space", "r") as f:
@@ -855,7 +907,18 @@ def test(user: str, comment_body: str, issue_url: str):
 
         baseline_comptime, _, _ = run_opt(config)
 
-    if not apply_llvm_patch(patch_url):
+    try:
+        patch_applied = apply_llvm_patch(patch_url)
+    except Exception:
+        reply_issue_comment(
+            issue_url,
+            comment_body,
+            "Failed to fetch or apply the patch. Please make sure the patch URL is reachable and valid.",
+            user,
+        )
+        return
+
+    if not patch_applied:
         reply_issue_comment(
             issue_url,
             comment_body,
@@ -889,8 +952,9 @@ def test(user: str, comment_body: str, issue_url: str):
         )
 
     pr_title = f"pre-commit: {patch_name}"
+    pr_body = ""
     pr_body += f"cc @{user}\n\n"
-    pr_body += f"Link: https://github.com/{patch_url}\n"
+    pr_body += f"Link: {patch_url}\n"
     pr_body += f"Baseline commit: {old_revision}\n"
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
