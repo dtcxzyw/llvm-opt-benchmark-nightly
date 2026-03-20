@@ -8,6 +8,7 @@ import argparse
 import shutil
 import subprocess
 import difflib
+from concurrent.futures import ThreadPoolExecutor
 from typing import Optional, List, Tuple
 import authorized_users
 import huggingface_hub
@@ -24,6 +25,7 @@ LLVM_BUILD_DIR = os.path.join(ROOT_DIR, "work/llvm-build")
 OPT_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/opt")
 LLVM_DIS_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-dis")
 LLVM_DIFF_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-diff")
+PATCH_FILE = os.path.join(ROOT_DIR, "work/patch.diff")
 OPT_OUT_DIR = os.path.join(ROOT_DIR, "work/opt-out")
 LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
 DATA_DIR = os.path.join(ROOT_DIR, "data")
@@ -66,8 +68,41 @@ def reply_issue_comment(
     subprocess.check_call(["gh", "issue", "comment", issue_url, "--body", full_comment])
 
 
-def create_pr():
-    subprocess.check_call(["git", "checkout", "-b", f"task-{JOB_ID}"], cwd=LLVM_REPO)
+@retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
+def push_branch(branch: str):
+    subprocess.check_call(["git", "push", "origin", branch], cwd=LLVM_REPO)
+
+
+def create_branch(branch: str):
+    subprocess.check_call(["git", "checkout", "-b", branch], cwd=LLVM_REPO)
+    subprocess.check_call(["git", "add", "report"], cwd=LLVM_REPO)
+    subprocess.check_call(
+        ["git", "commit", "--allow-empty", "-m", "Update"], cwd=LLVM_REPO
+    )
+    push_branch(branch)
+
+
+@retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
+def create_pr(head: str, base: str, title: str, body: str, label: str):
+    subprocess.check_call(
+        [
+            "gh",
+            "pr",
+            "create",
+            "--head",
+            head,
+            "--base",
+            base,
+            "--title",
+            title,
+            "--body-file",
+            "-",
+            "--label",
+            label,
+        ],
+        input=body.encode(),
+        cwd=LLVM_REPO,
+    )
 
 
 def setup_base_environment() -> str:
@@ -155,15 +190,14 @@ def get_llvm_patch(patch_url: str) -> str:
 
 def apply_llvm_patch(patch_url: str) -> bool:
     patch_content = get_llvm_patch(patch_url)
-    patch_file = os.path.join(REPORT_DIR, "patch.diff")
-    with open(patch_file, "w") as f:
+    with open(PATCH_FILE, "w") as f:
         f.write(patch_content)
     result = subprocess.call(
         [
             "git",
             "apply",
             "-3",
-            patch_file,
+            PATCH_FILE,
             "--include=llvm/lib/*",
             "--include=llvm/include/*",
         ],
@@ -432,6 +466,15 @@ def run_opt(config: TestConfig):
             if file.endswith(".bc"):
                 tasks.append((proj, file))
 
+    # Keep worker count bounded and configurable for CI environments.
+    worker_count = max(
+        1,
+        min(
+            len(tasks) if tasks else 1,
+            int(os.environ.get("OPT_BENCH_WORKERS", os.cpu_count() or 1)),
+        ),
+    )
+
     stats_nondeter_keys = {
         "dse.NumDomMemDefChecks",
         "ir.NumInstrRenumberings",
@@ -452,9 +495,22 @@ def run_opt(config: TestConfig):
     comptime_results = {}
     stats_results = {}
     rendered_files = []
+    task_results = [None] * len(tasks)
+
+    def _run_task(args):
+        idx, (proj, file) = args
+        worker_idx = idx % worker_count
+        return idx, proj, file, run_opt_file(config, proj, file, worker_idx=worker_idx)
+
+    with ThreadPoolExecutor(max_workers=worker_count) as executor:
+        for idx, proj, file, ret in executor.map(_run_task, enumerate(tasks)):
+            task_results[idx] = (proj, file, ret)
+
     with open(log_file, "w") as log_f:
-        for proj, file in tasks:
-            ret = run_opt_file(config, proj, file, worker_idx=0)
+        for item in task_results:
+            if item is None:
+                continue
+            proj, file, ret = item
             if isinstance(ret, str):
                 log_f.write(f"{proj}/{file}: {ret}\n")
                 continue
@@ -681,14 +737,50 @@ def update():
         with open(STATS_BASELINE_FILE, "r") as f:
             stats_baseline = json.load(f)
     _, stats, rendered_files = run_opt(config)
-    stats_cmp = None
+    stats_cmp = "No significant changes.\n"
     if stats_baseline:
         stats_cmp = compare_stats(stats_baseline, stats, by_project=False, avg=False)
 
     should_report = stats_cmp != "No significant changes.\n" or len(rendered_files) > 0
     report, kept_files = generate_diff_report(rendered_files)
     if should_report:
-        pass
+        pr_title = f"Update LLVM baseline to {new_revision[:8]}"
+        pr_body = f"LLVM baseline is updated from {old_revision[:8]} to {new_revision[:8]}.\n\n"
+        llvm_history = ""
+        try:
+            llvm_history = (
+                subprocess.check_output(
+                    ["git", "log", "--oneline", f"{old_revision}..{new_revision}"],
+                    cwd=LLVM_REPO,
+                )
+                .decode()
+                .strip()
+            )
+            history_lines = llvm_history.splitlines()
+            if len(history_lines) > 100:
+                llvm_history = (
+                    "\n".join(history_lines[:100])
+                    + f"\n... (total {len(history_lines)} commits)"
+                )
+        except Exception:
+            pass
+        if llvm_history:
+            pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
+
+        pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
+        pr_body += f"## File Changes\n```\n{report}\n```\n"
+
+        base_branch_name = f"task-{JOB_ID}-base"
+        change_branch_name = f"task-{JOB_ID}-change"
+        for ref_ir, _ in kept_files:
+            shutil.copy(ref_ir, os.path.join(REPORT_DIR, os.path.basename(ref_ir)))
+        create_branch(base_branch_name)
+        for _, new_ir in kept_files:
+            shutil.copy(new_ir, os.path.join(REPORT_DIR, os.path.basename(new_ir)))
+        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
+            json.dump(stats, f, indent=2, sort_keys=True)
+        create_branch(change_branch_name)
+        create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
 
     # Update baseline bc
     for file in os.listdir(DATA_DIR):
@@ -700,7 +792,7 @@ def update():
             os.rename(os.path.join(OPT_OUT_DIR, file), ref_path)
     # Update baseline stats
     with open(STATS_BASELINE_FILE, "w") as f:
-        json.dump(stats, f, indent=2)
+        json.dump(stats, f, indent=2, sort_keys=True)
     # Update llvm version
     with open(os.path.join(DATA_DIR, "LLVM_VERSION"), "w") as f:
         f.write(new_revision)
@@ -796,8 +888,42 @@ def test(user: str, comment_body: str, issue_url: str):
             stats_baseline, stats, by_project=single_stat, avg=single_stat
         )
 
+    pr_title = f"pre-commit: {patch_name}"
+    pr_body += f"cc @{user}\n\n"
+    pr_body += f"Link: https://github.com/{patch_url}\n"
+    pr_body += f"Baseline commit: {old_revision}\n"
+    base_branch_name = f"task-{JOB_ID}-base"
+    change_branch_name = f"task-{JOB_ID}-change"
+    if comptime_cmp:
+        pr_body += f"## Compile-time Changes\n```{comptime_cmp}```\n"
+    if stats_cmp:
+        pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
+
+    kept_files = None
     if not config.comptime and not config.stats:
-        generate_diff_report(rendered_files)
+        report, kept_files = generate_diff_report(rendered_files)
+        pr_body += f"## Diff Report\n```\n{report}\n```\n"
+        for ref_ir, _ in kept_files:
+            shutil.copy(ref_ir, os.path.join(REPORT_DIR, os.path.basename(ref_ir)))
+    create_branch(base_branch_name)
+    if kept_files:
+        for _, new_ir in kept_files:
+            shutil.copy(new_ir, os.path.join(REPORT_DIR, os.path.basename(new_ir)))
+    if stats:
+        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
+            json.dump(stats, f, indent=2, sort_keys=True)
+    if os.path.exists(PATCH_FILE):
+        shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
+    create_branch(change_branch_name)
+    try:
+        create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
+    except Exception:
+        reply_issue_comment(
+            issue_url,
+            comment_body,
+            "Failed to create pull request.",
+            user,
+        )
 
 
 if __name__ == "__main__":
