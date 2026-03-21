@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    if: github.event.issue.number == 2 && github.event.sender.type == 'User'
+    if: github.event.issue.number == 2 && github.event.sender.type == 'User' && !startsWith(github.event.comment.body, '>')
     runs-on: [self-hosted, pre_commit]
 
     permissions:

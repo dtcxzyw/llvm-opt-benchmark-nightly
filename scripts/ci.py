@@ -850,6 +850,9 @@ def update():
 def test(user: str, comment_body: str, issue_url: str):
     old_revision = setup_base_environment()
     comment_body = comment_body.strip()
+    if comment_body.startswith(">"):
+        # Ignore quoted comments.
+        return
     config = TestConfig()
     patch_url = ""
     if comment_body.startswith("/comptime "):
