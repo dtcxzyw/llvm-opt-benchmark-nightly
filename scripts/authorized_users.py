@@ -20,7 +20,7 @@ allow_list = [
 ]
 
 
-def is_authorized_users(user):
+def is_authorized_user(user):
     if user in allow_list:
         return True
     try:
