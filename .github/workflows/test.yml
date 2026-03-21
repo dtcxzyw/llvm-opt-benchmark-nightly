@@ -1,11 +1,13 @@
-name: Sync with upstream LLVM
+name: Pre-commit test
 
 on:
-  workflow_dispatch:
+  issue_comment:
+    types: created
 
 jobs:
   build:
-    runs-on: [self-hosted, baseline]
+    if: github.event.issue.number == 2 && github.event.sender.type == 'User'
+    runs-on: [self-hosted, pre_commit]
 
     permissions:
       issues: write
@@ -33,9 +35,13 @@ jobs:
       - name: Set up python env
         run: uv sync
 
-      - name: Update LLVM
-        run: uv run scripts/ci.py update
+      - name: Run test
+        run: uv run scripts/ci.py test
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN_WRITE }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READONLY }}
           GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN_LLVM: ${{ secrets.PAT_MEMBERSHIP }}
+          USER: ${{ github.event.sender.login }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ISSUE_URL: ${{ github.event.issue.url }}

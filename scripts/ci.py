@@ -227,7 +227,11 @@ def gen_textual_ir(input_bc: str) -> Optional[str]:
     )
     if ret.returncode != 0:
         return None
-    return ret.stdout.decode()
+    out_ir = ret.stdout.decode()
+    if out_ir.startswith("; ModuleID"):
+        next_line = out_ir.index("\n")
+        out_ir = out_ir[next_line + 1 :]
+    return out_ir
 
 
 def _extract_hunks_from_unified(unified_lines: List[str]) -> List[List[str]]:
@@ -778,7 +782,7 @@ def update():
     report, kept_files = generate_diff_report(rendered_files)
     if should_report:
         pr_title = f"Update LLVM baseline to {new_revision[:8]}"
-        pr_body = f"LLVM baseline is updated from {old_revision[:8]} to {new_revision[:8]}.\n\n"
+        pr_body = f"LLVM baseline is updated from https://github.com/llvm/llvm-project/commit/{old_revision} to https://github.com/llvm/llvm-project/commit/{new_revision}.\n\n"
         llvm_history = ""
         try:
             llvm_history = (
@@ -800,7 +804,8 @@ def update():
         if llvm_history:
             pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
 
-        pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
+        if stats_cmp:
+            pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
         pr_body += f"## File Changes\n```\n{report}\n```\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
@@ -937,7 +942,7 @@ def test(user: str, comment_body: str, issue_url: str):
         reply_issue_comment(
             issue_url,
             comment_body,
-            f"The patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or {old_revision}) and does not have conflicts.",
+            f"The patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or https://github.com/llvm/llvm-project/commit/{old_revision}) and does not have conflicts.",
             user,
         )
         return
@@ -945,7 +950,7 @@ def test(user: str, comment_body: str, issue_url: str):
         reply_issue_comment(
             issue_url,
             comment_body,
-            f"Failed to build LLVM with the patch applied (base commit {old_revision}). Please check if the patch can be built successfully.",
+            f"Failed to build LLVM with the patch applied (base commit https://github.com/llvm/llvm-project/commit/{old_revision}). Please check if the patch can be built successfully.",
             user,
         )
         return
@@ -970,7 +975,9 @@ def test(user: str, comment_body: str, issue_url: str):
     pr_body = ""
     pr_body += f"cc @{user}\n\n"
     pr_body += f"Link: {patch_url}\n"
-    pr_body += f"Baseline commit: {old_revision}\n"
+    pr_body += (
+        f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
+    )
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
