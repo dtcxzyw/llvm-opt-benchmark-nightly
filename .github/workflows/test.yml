@@ -44,4 +44,4 @@ jobs:
           GITHUB_TOKEN_LLVM: ${{ secrets.PAT_MEMBERSHIP }}
           USER: ${{ github.event.sender.login }}
           COMMENT_BODY: ${{ github.event.comment.body }}
-          ISSUE_URL: ${{ github.event.issue.url }}
+          ISSUE_URL: ${{ github.event.issue.number }}
