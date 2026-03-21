@@ -873,6 +873,9 @@ def test(user: str, comment_body: str, issue_url: str):
         config = TestConfig(stats=parts[0].strip())
         patch_url = parts[1].strip()
     else:
+        if "github.com/llvm/llvm-project" not in comment_body:
+            # Ignore normal comments
+            return
         config = TestConfig(comptime=False, stats=None)
         patch_url = comment_body
 
