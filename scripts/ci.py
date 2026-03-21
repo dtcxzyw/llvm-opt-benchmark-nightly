@@ -213,7 +213,7 @@ def apply_llvm_patch(patch_url: str) -> bool:
         return False
     # If nothing is applied, it also returns 0, so we need to check if there are any changes after applying the patch.
     result = (
-        subprocess.check_output(["git", "diff", "--name-only"], cwd=LLVM_REPO)
+        subprocess.check_output(["git", "diff", "--name-only", "HEAD"], cwd=LLVM_REPO)
         .decode()
         .strip()
     )
@@ -939,7 +939,7 @@ def test(user: str, comment_body: str, issue_url: str):
         reply_issue_comment(
             issue_url,
             comment_body,
-            "Failed to fetch or apply the patch. Please make sure the patch URL is reachable and valid.",
+            "Failed to fetch the patch. Please make sure the patch URL is reachable and valid.",
             user,
         )
         return
