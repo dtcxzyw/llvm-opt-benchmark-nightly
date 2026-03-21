@@ -86,7 +86,7 @@ def create_branch(branch: str):
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def create_pr(head: str, base: str, title: str, body: str, label: str):
-    subprocess.check_call(
+    subprocess.run(
         [
             "gh",
             "pr",
@@ -102,7 +102,8 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
             "--label",
             label,
         ],
-        input=body.encode(),
+        input=body.encode("utf-8"),
+        check=True,
         cwd=ROOT_DIR,
     )
 
