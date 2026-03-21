@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 import requests
 import json
 import math
+from tqdm import tqdm
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LLVM_REPO = os.path.join(ROOT_DIR, "work/llvm-project")
@@ -525,9 +526,12 @@ def run_opt(config: TestConfig):
         worker_idx = idx % worker_count
         return idx, proj, file, run_opt_file(config, proj, file, worker_idx=worker_idx)
 
+    progress_miniters = max(1, math.ceil(len(tasks) * 0.05))
     with ThreadPoolExecutor(max_workers=worker_count) as executor:
-        for idx, proj, file, ret in executor.map(_run_task, enumerate(tasks)):
-            task_results[idx] = (proj, file, ret)
+        with tqdm(total=len(tasks), miniters=progress_miniters, desc="run_opt") as pbar:
+            for idx, proj, file, ret in executor.map(_run_task, enumerate(tasks)):
+                task_results[idx] = (proj, file, ret)
+                pbar.update(1)
 
     with open(log_file, "w") as log_f:
         for item in task_results:
@@ -802,10 +806,20 @@ def update():
         base_branch_name = f"task-{JOB_ID}-base"
         change_branch_name = f"task-{JOB_ID}-change"
         for ref_ir, _ in kept_files:
-            shutil.copy(ref_ir, os.path.join(REPORT_DIR, os.path.basename(ref_ir)))
+            shutil.copy(
+                ref_ir,
+                os.path.join(
+                    REPORT_DIR, os.path.basename(ref_ir).replace(".ref.ll", ".ll")
+                ),
+            )
         create_branch(base_branch_name)
         for _, new_ir in kept_files:
-            shutil.copy(new_ir, os.path.join(REPORT_DIR, os.path.basename(new_ir)))
+            shutil.copy(
+                new_ir,
+                os.path.join(
+                    REPORT_DIR, os.path.basename(new_ir).replace(".new.ll", ".ll")
+                ),
+            )
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
         create_branch(change_branch_name)
@@ -969,11 +983,21 @@ def test(user: str, comment_body: str, issue_url: str):
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff Report\n```\n{report}\n```\n"
         for ref_ir, _ in kept_files:
-            shutil.copy(ref_ir, os.path.join(REPORT_DIR, os.path.basename(ref_ir)))
+            shutil.copy(
+                ref_ir,
+                os.path.join(
+                    REPORT_DIR, os.path.basename(ref_ir).replace(".ref.ll", ".ll")
+                ),
+            )
     create_branch(base_branch_name)
     if kept_files:
         for _, new_ir in kept_files:
-            shutil.copy(new_ir, os.path.join(REPORT_DIR, os.path.basename(new_ir)))
+            shutil.copy(
+                new_ir,
+                os.path.join(
+                    REPORT_DIR, os.path.basename(new_ir).replace(".new.ll", ".ll")
+                ),
+            )
     if stats:
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
