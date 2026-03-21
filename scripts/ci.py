@@ -805,8 +805,8 @@ def update():
             pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
 
         if stats_cmp:
-            pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
-        pr_body += f"## File Changes\n```\n{report}\n```\n"
+            pr_body += f"## Changes in statistics\n```\n{stats_cmp}\n```\n"
+        pr_body += f"## Diff report\n```\n{report}\n```\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
         change_branch_name = f"task-{JOB_ID}-change"
@@ -987,14 +987,14 @@ def test(user: str, comment_body: str, issue_url: str):
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
-        pr_body += f"## Compile-time Changes\n```{comptime_cmp}```\n"
+        pr_body += f"## Changes in compile-time\n```\n{comptime_cmp}\n```\n"
     if stats_cmp:
-        pr_body += f"## Stats Changes\n```{stats_cmp}```\n"
+        pr_body += f"## Changes in statistics\n```\n{stats_cmp}\n```\n"
 
     kept_files = None
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
-        pr_body += f"## Diff Report\n```\n{report}\n```\n"
+        pr_body += f"## Diff report\n```\n{report}\n```\n"
         for ref_ir, _ in kept_files:
             shutil.copy(
                 ref_ir,
@@ -1002,6 +1002,11 @@ def test(user: str, comment_body: str, issue_url: str):
                     REPORT_DIR, os.path.basename(ref_ir).replace(".ref.ll", ".ll")
                 ),
             )
+    if stats:
+        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
+            json.dump(stats, f, indent=2, sort_keys=True)
+    if os.path.exists(PATCH_FILE):
+        shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
     create_branch(base_branch_name)
     if kept_files:
         for _, new_ir in kept_files:
@@ -1011,11 +1016,6 @@ def test(user: str, comment_body: str, issue_url: str):
                     REPORT_DIR, os.path.basename(new_ir).replace(".new.ll", ".ll")
                 ),
             )
-    if stats:
-        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
-            json.dump(stats, f, indent=2, sort_keys=True)
-    if os.path.exists(PATCH_FILE):
-        shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
     create_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
