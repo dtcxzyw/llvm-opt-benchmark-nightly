@@ -1,0 +1,575 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 10caf4ab78a5a..27fed27676c1a 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -32,6 +32,7 @@
+ #include "llvm/Support/KnownBits.h"
+ #include "llvm/Transforms/InstCombine/InstCombiner.h"
+ #include <bitset>
++#include <optional>
+ 
+ using namespace llvm;
+ using namespace PatternMatch;
+@@ -2179,6 +2180,161 @@ Instruction *InstCombinerImpl::foldICmpOrConstant(ICmpInst &Cmp,
+   return nullptr;
+ }
+ 
++/// Refer to https://github.com/llvm/llvm-project/pull/186347 for the
++/// underlying math model.
++///
++/// Compute the result range Y on which y = Cx mod m is invertible, where
++/// x ranges over [0, n - 1], n = 2^N, and m = 2^M.
++///
++/// When IsDomainReturned is true, the returned Y is also the reachable image of
++/// the multiply, i.e. the domain. Otherwise, the returned Y is only the unique
++/// invertible result range.
++static std::optional<ConstantRange>
++getInvertibleResultRangeForZExtMul(const APInt &C, unsigned N,
++                                   bool &IsDomainReturned) {
++  unsigned M = C.getBitWidth();
++  assert(N < M && "Expected zext to a wider type");
++
++  // Use a widened type so that n = 2^N, m = 2^M, and (n - 1) * C are all
++  // representable without wrapping during the analysis.
++  unsigned WideBits = N + M;
++  APInt WideC = C.zext(WideBits);
++  APInt n = APInt::getOneBitSet(WideBits, N);
++  APInt m = APInt::getOneBitSet(WideBits, M);
++
++  // k = floor(((n - 1) * C) / m) counts how many times the walk y = Cx crosses
++  // the modulus while x ranges over [0, n - 1].
++  APInt MaxY = (n - 1) * WideC;
++  APInt k = MaxY.lshr(M);
++
++  if (k.isZero()) {
++    // k = 0: the walk never wraps, so the mapping is invertible over the full
++    // result space. Here we return the reachable image/domain [0, MaxY].
++    // f(x) = Cx:      |
++    //               Y |  /
++    //               Y | /
++    //               Y |/
++    //                 ----
++    IsDomainReturned = true;
++    return ConstantRange::getNonEmpty(APInt::getZero(M), (MaxY + 1).trunc(M));
++  }
++
++  if (k.isOne()) {
++    // k = 1: only the unique upper tail [((n - 1) * C + 1) mod m, m) is
++    // invertible.
++    // f(x) = Cx:    Y |   /
++    //               Y |  /
++    //                 | /   /
++    //                 |/   /
++    //                 -------
++    IsDomainReturned = false;
++    APInt TailLo = (MaxY - m + 1).trunc(M);
++    return ConstantRange::getNonEmpty(TailLo, APInt::getZero(M));
++  }
++
++  // k >= 2: the walk overlaps itself too much to have a unique inverse.
++  // f(x) = Cx:        |   /   /
++  //                   |  /   /
++  // Y does not exist. | /   /   /
++  //                   |/   /   /
++  //                   -----------
++  return std::nullopt;
++}
++
++/// Given a compared result range CmpCR, constant C, and number N, considering
++///       y = f(x) = Cx, where C: iM, y: iM, x: iN,
++/// this function tries to find the equivalent range X of x,
++///          where x ∈ X iff y ∈ CmpCR.
++/// Refer to https://github.com/llvm/llvm-project/pull/186347 for the
++/// underlying math model.
++static std::optional<ConstantRange>
++getEquivalentSourceRangeForZExtMul(const ConstantRange &CmpCR, const APInt &C,
++                                   unsigned N) {
++  assert(N < C.getBitWidth() && "Expected zext to a wider type");
++  assert(!CmpCR.isEmptySet() && "Unexpected empty set");
++  assert(!CmpCR.isFullSet() && "Unexpected full set");
++  assert(!C.isOne() && "mul x, 1 should be folded before.");
++
++  // ==================================================================== //
++  // 1. Calculate the invertible interval Y for mul (zext x), C.
++  // ==================================================================== //
++  bool IsDomainReturned = false;
++  auto Y = getInvertibleResultRangeForZExtMul(C, N, IsDomainReturned);
++  if (!Y)
++    return std::nullopt;
++
++  // ==================================================================== //
++  // 2. Calculate the equivalent range X via f^{-1} on CmpCR.
++  // ==================================================================== //
++
++  auto TryGetSourceRange =
++      [&](const ConstantRange &CR) -> std::optional<ConstantRange> {
++    // If Y is also the domain, only CR ∩ Y matters. Otherwise, the whole
++    // compare range must stay inside the unique invertible tail.
++    std::optional<ConstantRange> ActiveCmpY;
++    if (IsDomainReturned) {
++      // Y is domain of Cx: keep only the reachable part.
++      // ActiveCmpY = null if
++      //        L-------U    : Y
++      //        --U   L----- : CR
++      ActiveCmpY = Y->exactIntersectWith(CR);
++
++      if (ActiveCmpY == Y)
++        return /* Y ⊆ CR*/ ConstantRange::getFull(N);
++      if (ActiveCmpY && ActiveCmpY->isEmptySet())
++        return /* Y ∩ CR = ∅ */ ConstantRange::getEmpty(N);
++    } else {
++      // Otherwise, CR must stay entirely inside Y.
++      // ActiveCmpY = null if CR has some values non-invertible.
++      ActiveCmpY = Y->contains(CR) ? std::optional(CR) : std::nullopt;
++    }
++    // If ActiveCmpY = null, there are >1 separate intervals of x,
++    // making Cx ∈ CR. I.e., we cannot derive a single X.
++    if (!ActiveCmpY)
++      return std::nullopt;
++    // For an invertible half-open interval Y = [y0, y1), the corresponding
++    // source interval is f^{-1}(Y) = [ceil(y0 / C), ceil(y1 / C)) = [x0, x1).
++    APInt Y0 = ActiveCmpY->getLower();
++    APInt Y1 = ActiveCmpY->getUpper() - 1;
++    // x0 = ceil(y0 / C)
++    APInt X0 = APIntOps::RoundingUDiv(Y0, C, APInt::Rounding::UP);
++    // x1 = ceil(y1 / C) = floor((y1 - 1) / C) + 1
++    APInt X1 = APIntOps::RoundingUDiv(Y1, C, APInt::Rounding::DOWN) + 1;
++    return ConstantRange::getNonEmpty(X0.trunc(N), X1.trunc(N));
++  };
++
++  // Try to get single X = f^{-1}(CmpCR) to make Cx ∈ CmpCR.
++  if (auto SrcCR = TryGetSourceRange(CmpCR))
++    return SrcCR;
++  // Try to get single X = f^{-1}(CmpCR.inverse()).inverse() to make Cx ∈ CmpCR.
++  if (auto InvSrcCR = TryGetSourceRange(CmpCR.inverse()))
++    return InvSrcCR->inverse();
++
++  return std::nullopt;
++}
++
++/// Given a value @param X and a constant range @param CR , emit @return the
++/// equivalent icmp expression on X. E.g., CR = [3, 7) --> (x - 3) <u 4.
++///   -  CR = [a, b), a < b ---> (x - a) <u (b - a)
++///   -  CR = [a, b), a > b ---> (x - b) >u (a - b)
++static ICmpInst *emitICmpForEquivalentRange(Value *X, const ConstantRange &CR,
++                                            InstCombiner::BuilderTy &Builder) {
++  Type *Ty = X->getType();
++  assert(Ty->isIntOrIntVectorTy() &&
++         "The value X constrained by CR must be an integer or integer vector.");
++  CmpInst::Predicate EquivPred;
++  APInt EquivCmpC;
++  APInt EquivOffset;
++
++  CR.getEquivalentICmp(EquivPred, EquivCmpC, EquivOffset);
++  return new ICmpInst(
++      EquivPred,
++      EquivOffset.isZero()
++          ? X
++          : Builder.CreateAdd(X, ConstantInt::get(Ty, EquivOffset)),
++      ConstantInt::get(Ty, EquivCmpC));
++}
++
+ /// Fold icmp (mul X, Y), C.
+ Instruction *InstCombinerImpl::foldICmpMulConstant(ICmpInst &Cmp,
+                                                    BinaryOperator *Mul,
+@@ -2198,6 +2354,25 @@ Instruction *InstCombinerImpl::foldICmpMulConstant(ICmpInst &Cmp,
+   if (!match(Mul->getOperand(1), m_APInt(MulC)))
+     return nullptr;
+ 
++  // Try to match and optimize the following pattern:
++  //   y = mul (zext x), C
++  //   icmp pred  y, C2          ; y in CR ?
++  // -->
++  //   icmp pred‘ (x + C3), C4   ; x in CR'?
++  // if y = Cx is invertible on y \in CR
++  //
++  // This currently only handles scalar, C > 0, and zext-based patterns.
++  // FIXME: can vector, C < 0, and sext-based patterns be supported?
++  Value *NarrowX;
++  if (ICmpInst::isRelational(Pred) && MulTy->isIntegerTy() &&
++      MulC->isStrictlyPositive() && match(X, m_ZExt(m_Value(NarrowX)))) {
++    auto *SrcTy = cast<IntegerType>(NarrowX->getType());
++    ConstantRange CmpCR = ConstantRange::makeExactICmpRegion(Pred, C);
++    if (auto SrcCR = getEquivalentSourceRangeForZExtMul(CmpCR, *MulC,
++                                                        SrcTy->getBitWidth()))
++      return emitICmpForEquivalentRange(NarrowX, *SrcCR, Builder);
++  }
++
+   // If this is a test of the sign bit and the multiply is sign-preserving with
+   // a constant operand, use the multiply LHS operand instead:
+   // (X * +MulC) < 0 --> X < 0
+@@ -3183,6 +3358,26 @@ Instruction *InstCombinerImpl::foldICmpAddConstant(ICmpInst &Cmp,
+                         ConstantInt::get(Ty, C - *C2));
+ 
+   auto CR = ConstantRange::makeExactICmpRegion(Pred, C).subtract(*C2);
++
++  // Try to match and optimize the following pattern:
++  //   y = mul (zext x), C
++  //   icmp pred  (y + C1), C2  ; y in CR ?
++  // -->
++  //   icmp pred’ (x + C3), C4  ; x in CR'?
++  // if y = Cx is invertible on y \in CR
++  //
++  // This currently only handles scalar, C > 0, and zext-based patterns.
++  // FIXME: can vector, C < 0, and sext-based patterns be supported?
++  Value *NarrowX;
++  const APInt *MulC;
++  if (match(X, m_Mul(m_ZExt(m_Value(NarrowX)), m_APInt(MulC))) &&
++      X->getType()->isIntegerTy() && MulC->isStrictlyPositive()) {
++    auto *SrcTy = cast<IntegerType>(NarrowX->getType());
++    if (auto SrcCR =
++            getEquivalentSourceRangeForZExtMul(CR, *MulC, SrcTy->getBitWidth()))
++      return emitICmpForEquivalentRange(NarrowX, *SrcCR, Builder);
++  }
++
+   const APInt &Upper = CR.getUpper();
+   const APInt &Lower = CR.getLower();
+   if (Cmp.isSigned()) {
+@@ -3263,20 +3458,9 @@ Instruction *InstCombinerImpl::foldICmpAddConstant(ICmpInst &Cmp,
+   if (match(X, m_ZExt(m_Value(V)))) {
+     Type *NewCmpTy = V->getType();
+     unsigned NewCmpBW = NewCmpTy->getScalarSizeInBits();
+-    if (shouldChangeType(Ty, NewCmpTy)) {
+-      ConstantRange SrcCR = CR.truncate(NewCmpBW, TruncInst::NoUnsignedWrap);
+-      CmpInst::Predicate EquivPred;
+-      APInt EquivInt;
+-      APInt EquivOffset;
+-
+-      SrcCR.getEquivalentICmp(EquivPred, EquivInt, EquivOffset);
+-      return new ICmpInst(
+-          EquivPred,
+-          EquivOffset.isZero()
+-              ? V
+-              : Builder.CreateAdd(V, ConstantInt::get(NewCmpTy, EquivOffset)),
+-          ConstantInt::get(NewCmpTy, EquivInt));
+-    }
++    if (shouldChangeType(Ty, NewCmpTy))
++      return emitICmpForEquivalentRange(
++          V, CR.truncate(NewCmpBW, TruncInst::NoUnsignedWrap), Builder);
+   }
+ 
+   return nullptr;
+@@ -4102,16 +4286,7 @@ foldICmpUSubSatOrUAddSatWithConstant(CmpPredicate Pred, SaturatingInst *II,
+   if (!Combination)
+     return nullptr;
+ 
+-  CmpInst::Predicate EquivPred;
+-  APInt EquivInt;
+-  APInt EquivOffset;
+-
+-  Combination->getEquivalentICmp(EquivPred, EquivInt, EquivOffset);
+-
+-  return new ICmpInst(
+-      EquivPred,
+-      Builder.CreateAdd(Op0, ConstantInt::get(Op1->getType(), EquivOffset)),
+-      ConstantInt::get(Op1->getType(), EquivInt));
++  return emitICmpForEquivalentRange(Op0, *Combination, Builder);
+ }
+ 
+ static Instruction *
+@@ -5825,18 +6000,9 @@ Instruction *InstCombinerImpl::foldICmpWithClamp(ICmpInst &I, Value *X,
+   }
+ 
+   ConstantRange CR = ConstantRange::getNonEmpty(*Lo, *Hi + 1);
+-  ICmpInst::Predicate Pred;
+-  APInt C, Offset;
+-  if (I.getPredicate() == ICmpInst::ICMP_EQ)
+-    CR.getEquivalentICmp(Pred, C, Offset);
+-  else
+-    CR.inverse().getEquivalentICmp(Pred, C, Offset);
+-
+-  if (!Offset.isZero())
+-    X = Builder.CreateAdd(X, ConstantInt::get(X->getType(), Offset));
+ 
+-  return replaceInstUsesWith(
+-      I, Builder.CreateICmp(Pred, X, ConstantInt::get(X->getType(), C)));
++  return emitICmpForEquivalentRange(
++      X, I.getPredicate() == ICmpInst::ICMP_EQ ? CR : CR.inverse(), Builder);
+ }
+ 
+ // Canonicalize checking for a power-of-2-or-zero value:
+diff --git a/llvm/test/Transforms/InstCombine/icmp-mul.ll b/llvm/test/Transforms/InstCombine/icmp-mul.ll
+index 1e4876d5cd569..4551a19fa6a3a 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-mul.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-mul.ll
+@@ -1567,3 +1567,280 @@ entry:
+   %cmp = icmp slt i64 %mul1, %mul2
+   ret i1 %cmp
+ }
++
++; Test for icmp (mul (zext x), C) to icmp x,
++; if mul is invertible on given predicate constraint
++; Refer to https://github.com/llvm/llvm-project/pull/186347 to understand
++; the mathematical model.
++
++; Comes from https://github.com/llvm/llvm-project/pull/185907#discussion_r2919506475
++; N = 9, M = 27
++; n = 2^9 = 512, m = 2^27 = 134217728, C = 262657
++; k = floor((n - 1) * C / m) = floor(511 * 262657 / 134217728) = 0
++; CR = [-2^26, 262657), Y = [0, 134217728)
++; Invertible: yes
++define i1 @slt_invertible_zext_mul_full_image(<2 x i9> %v) {
++; CHECK-LABEL: @slt_invertible_zext_mul_full_image(
++; CHECK-NEXT:    [[E:%.*]] = extractelement <2 x i9> [[V:%.*]], i64 0
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i9 [[E]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %e = extractelement <2 x i9> %v, i64 0
++  %z = zext i9 %e to i27
++  %m = mul i27 %z, 262657
++  %cmp = icmp slt i27 %m, 262657
++  ret i1 %cmp
++}
++
++; N = 8, M = 16
++; n = 2^8 = 256, m = 2^16 = 65536, C = 257
++; k = floor((n - 1) * C / m) = floor(255 * 257 / 65536) = 0
++; CR = [-2^15, 257), Y = [0, 65536)
++; Invertible: yes
++define i1 @slt_invertible_zext_mul_full_image_i16(i8 %v) {
++; CHECK-LABEL: @slt_invertible_zext_mul_full_image_i16(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[V:%.*]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i8 %v to i16
++  %m = mul nuw i16 %z, 257
++  %cmp = icmp slt i16 %m, 257
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 17
++; k = floor((n - 1) * C / m) = floor(15 * 17 / 256) = 0
++; CR = [-2^7, 17), Y = [0, 256)
++; Invertible: yes
++define i1 @slt_invertible_zext_mul_full_image_i8(i4 %v) {
++; CHECK-LABEL: @slt_invertible_zext_mul_full_image_i8(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i4 [[V:%.*]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %v to i8
++  %m = mul nuw i8 %z, 17
++  %cmp = icmp slt i8 %m, 17
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 10
++; k = floor((n - 1) * C / m) = floor(15 * 10 / 256) = 0
++; CR = [0, 50), Y = [0, 151)
++; Invertible: yes, because CR ⊆ Y
++define i1 @ult_invertible_zext_mul_partial_image(i4 %x) {
++; CHECK-LABEL: @ult_invertible_zext_mul_partial_image(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[X:%.*]], 5
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 10
++  %cmp = icmp ult i8 %m, 50
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 10
++; k = floor((n - 1) * C / m) = floor(15 * 10 / 256) = 0
++; CR = [0, 200), Y = [0, 151)
++; Invertible: yes
++define i1 @ult_invertible_zext_mul_all_true(i4 %x) {
++; CHECK-LABEL: @ult_invertible_zext_mul_all_true(
++; CHECK-NEXT:    ret i1 true
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 10
++  %cmp = icmp ult i8 %m, 200
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 10
++; k = floor((n - 1) * C / m) = floor(15 * 10 / 256) = 0
++; CR = [200, 256), Y = [0, 151)
++; Invertible: yes
++define i1 @uge_invertible_zext_mul_all_false(i4 %x) {
++; CHECK-LABEL: @uge_invertible_zext_mul_all_false(
++; CHECK-NEXT:    ret i1 false
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 10
++  %cmp = icmp uge i8 %m, 200
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CR = [60, 128), Y = [45, 256)
++; Invertible: yes
++define i1 @sge_invertible_tail_of_zext_mul(i4 %x) {
++; CHECK-LABEL: @sge_invertible_tail_of_zext_mul(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], -3
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], 4
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %cmp = icmp sge i8 %m, 60
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CR = [60, 256), Y = [45, 256)
++; Invertible: yes
++define i1 @uge_invertible_tail_of_zext_mul(i4 %x) {
++; CHECK-LABEL: @uge_invertible_tail_of_zext_mul(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], -3
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], -6
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %cmp = icmp uge i8 %m, 60
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 18
++; k = floor((n - 1) * C / m) = floor(15 * 18 / 256) = 1
++; CR = [-2^7, 16), Y = [15, 256)
++; Invertible: yes on Y.inverse() = [16, 2^7)
++define i1 @slt_noninvertible_signed_range_before_tail(i4 %v) {
++; CHECK-LABEL: @slt_noninvertible_signed_range_before_tail(
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i4 [[V:%.*]], 1
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %v to i8
++  %cast = mul nuw i8 %z, 18
++  %cmp = icmp slt i8 %cast, 16
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CR = [0, 45), Y = [45, 256)
++; Invertible: yes on Y.inverse() = [45, 256)
++define i1 @ult_noninvertible_zext_mul_range(i4 %x) {
++; CHECK-LABEL: @ult_noninvertible_zext_mul_range(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], 3
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], 6
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %cmp = icmp ult i8 %m, 45
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 18
++; k = floor((n - 1) * C / m) = floor(15 * 18 / 256) = 1
++; CR = [0, 16), Y = [15, 256)
++; Invertible: yes on Y.inverse() = [16, 256)
++define i1 @ult_noninvertible_zext_mul_before_tail(i4 %v) {
++; CHECK-LABEL: @ult_noninvertible_zext_mul_before_tail(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[V:%.*]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], 2
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %v to i8
++  %cast = mul i8 %z, 18
++  %cmp = icmp ult i8 %cast, 16
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CR = [-2^7, 60), Y = [45, 256)
++; Invertible: yes on Y.inverse() = [60, 2^7)
++define i1 @slt_noninvertible_crosses_wrap(i4 %v) {
++; CHECK-LABEL: @slt_noninvertible_crosses_wrap(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[V:%.*]], -7
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], -4
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %v to i8
++  %cast = mul i8 %z, 20
++  %cmp = icmp slt i8 %cast, 60
++  ret i1 %cmp
++}
++
++; N = 5, M = 8
++; n = 2^5 = 32, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(31 * 20 / 256) = 2
++; CR = [60, 256), Y = none
++; Invertible: no
++define i1 @uge_noninvertible_multiple_wraps(i5 %x) {
++; CHECK-LABEL: @uge_noninvertible_multiple_wraps(
++; CHECK-NEXT:    [[Z:%.*]] = zext i5 [[X:%.*]] to i8
++; CHECK-NEXT:    [[M:%.*]] = mul i8 [[Z]], 20
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ugt i8 [[M]], 59
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i5 %x to i8
++  %m = mul i8 %z, 20
++  %cmp = icmp uge i8 %m, 60
++  ret i1 %cmp
++}
++
++; Tests for CmpCR built through add.
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CmpCR = [110, 228), Y = [45, 256)
++; Invertible: yes
++define i1 @sge_invertible_tail_of_zext_mul_plus_offset(i4 %x) {
++; CHECK-LABEL: @sge_invertible_tail_of_zext_mul_plus_offset(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], -6
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], 6
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %a = sub i8 %m, 100
++  %cmp = icmp sge i8 %a, 10
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CmpCR = [100, 200), Y = [45, 256)
++; Invertible: yes
++define i1 @ult_invertible_zext_mul_plus_offset(i4 %x) {
++; CHECK-LABEL: @ult_invertible_zext_mul_plus_offset(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], -5
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], 5
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %a = add i8 %m, -100
++  %cmp = icmp ult i8 %a, 100
++  ret i1 %cmp
++}
++
++; N = 4, M = 8
++; n = 2^4 = 16, m = 2^8 = 256, C = 20
++; k = floor((n - 1) * C / m) = floor(15 * 20 / 256) = 1
++; CmpCR = [122, 60), Y = [45, 256)
++; Invertible: yes on CmpCR.inverse() = [60, 122)
++define i1 @slt_inverse_invertible_zext_mul_plus_offset(i4 %x) {
++; CHECK-LABEL: @slt_inverse_invertible_zext_mul_plus_offset(
++; CHECK-NEXT:    [[TMP1:%.*]] = add i4 [[X:%.*]], -7
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i4 [[TMP1]], -4
++; CHECK-NEXT:    ret i1 [[CMP]]
++;
++  %z = zext i4 %x to i8
++  %m = mul i8 %z, 20
++  %a = add i8 %m, 6
++  %cmp = icmp slt i8 %a, 66
++  ret i1 %cmp
++}
