@@ -55,6 +55,8 @@ def sync_dataset_to_remote():
 def setup_llvm(revision: str):
     if not os.path.exists(LLVM_REPO):
         subprocess.check_call(["git", "clone", LLVM_REPO_URL, LLVM_REPO])
+    subprocess.check_call(["git", "reset", "HEAD"], cwd=LLVM_REPO)
+    subprocess.check_call(["git", "checkout", "."], cwd=LLVM_REPO)
     subprocess.check_call(["git", "clean", "-fdx"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "fetch"], cwd=LLVM_REPO)
     subprocess.check_call(["git", "checkout", revision], cwd=LLVM_REPO)
@@ -195,6 +197,8 @@ def get_llvm_patch(patch_url: str) -> str:
 
 
 def apply_llvm_patch(patch_url: str) -> bool:
+    if os.path.exists(PATCH_FILE):
+        os.remove(PATCH_FILE)
     patch_content = get_llvm_patch(patch_url)
     with open(PATCH_FILE, "w") as f:
         f.write(patch_content)
@@ -602,12 +606,12 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
     report = ""
     TOPK = 10
     if improvements:
-        report += f"Top {min(len(improvements), TOPK)} improvements{postfix}:\n"
+        report += f"Top {min(len(improvements), TOPK)} decrements{postfix}:\n"
         for key, old_value, new_value, change in improvements[:TOPK]:
             report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
 
     if regressions:
-        report += f"Top {min(len(regressions), TOPK)} regressions{postfix}:\n"
+        report += f"Top {min(len(regressions), TOPK)} increments{postfix}:\n"
         for key, old_value, new_value, change in regressions[:TOPK]:
             report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
 
