@@ -593,23 +593,23 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
         log_sum_new += math.log(new_value)
         matched_count += 1
         if change < 0:
-            improvements.append((key, change))
+            improvements.append((key, old_value, new_value, change))
         elif change > 0:
-            regressions.append((key, change))
+            regressions.append((key, old_value, new_value, change))
 
-    improvements.sort(key=lambda x: x[1])
-    regressions.sort(key=lambda x: x[1], reverse=True)
+    improvements.sort(key=lambda x: x[3])
+    regressions.sort(key=lambda x: x[3], reverse=True)
     report = ""
     TOPK = 10
     if improvements:
-        report += f"Top {TOPK} improvements{postfix}:\n"
-        for key, change in improvements[:TOPK]:
-            report += f"  {key}: {change:+.2%}\n"
+        report += f"Top {min(len(improvements), TOPK)} improvements{postfix}:\n"
+        for key, old_value, new_value, change in improvements[:TOPK]:
+            report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
 
     if regressions:
-        report += f"Top {TOPK} regressions{postfix}:\n"
-        for key, change in regressions[:TOPK]:
-            report += f"  {key}: {change:+.2%}\n"
+        report += f"Top {min(len(regressions), TOPK)} regressions{postfix}:\n"
+        for key, old_value, new_value, change in regressions[:TOPK]:
+            report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
 
     if not report:
         return f"No significant changes{postfix}.\n"
