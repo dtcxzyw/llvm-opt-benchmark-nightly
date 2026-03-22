@@ -677,11 +677,16 @@ def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str
             n=3,
             lineterm="",
         )
+        diff_lines = list(diff)
         number_of_added_lines = sum(
-            1 for line in diff if line.startswith("+") and not line.startswith("+++")
+            1
+            for line in diff_lines
+            if line.startswith("+") and not line.startswith("+++")
         )
         number_of_removed_lines = sum(
-            1 for line in diff if line.startswith("-") and not line.startswith("---")
+            1
+            for line in diff_lines
+            if line.startswith("-") and not line.startswith("---")
         )
         if number_of_added_lines == 0 and number_of_removed_lines == 0:
             continue
