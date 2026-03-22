@@ -712,9 +712,9 @@ def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str
         )
 
     diff_heap = []
-    for list in diffs.values():
-        list.sort(key=lambda x: x[0])
-        diff_heap.append(list.pop(0))
+    for proj in diffs.values():
+        proj.sort(key=lambda x: x[0])
+        diff_heap.append(proj.pop(0))
     heapq.heapify(diff_heap)
 
     diversity_penalty = dict()
