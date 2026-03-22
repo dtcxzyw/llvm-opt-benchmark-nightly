@@ -424,6 +424,10 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
             else:
                 cmd += ["-o", optimized_path]
         env_opt = os.environ.copy()
+        # drop tokens
+        token_keys = [x for x in env_opt if "TOKEN" in x.upper()]
+        for key in token_keys:
+            env_opt.pop(key, None)
         env_opt["LLVM_DISABLE_CRASH_REPORT"] = "1"
         env_opt["LLVM_DISABLE_SYMBOLIZATION"] = "1"
         ret = subprocess.run(
