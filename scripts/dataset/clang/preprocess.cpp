@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT License
-// Copyright (c) 2024 Yingwei Zheng
+// Copyright (c) 2026 Yingwei Zheng
 // This file is licensed under the MIT License.
 // See the LICENSE file for more information.
 

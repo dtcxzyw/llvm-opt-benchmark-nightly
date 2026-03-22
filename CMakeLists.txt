@@ -20,3 +20,4 @@ include_directories(${LLVM_INCLUDE_DIRS})
 add_compile_options(-fno-rtti) # Workaround for 174084
 add_link_options(-Wl,--no-undefined)
 add_subdirectory(scripts/dataset/clang)
+add_subdirectory(scripts/llvm-relaxed-diff)
