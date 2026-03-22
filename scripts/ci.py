@@ -770,9 +770,9 @@ def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str
 def update():
     old_revision = setup_base_environment()
     new_revision = update_llvm()
-    if old_revision == new_revision:
-        print("LLVM is already up to date.")
-        return
+    # if old_revision == new_revision:
+    #     print("LLVM is already up to date.")
+    #     return
     config = TestConfig()
     if not build_llvm(config):
         print("Failed to build LLVM with the latest revision.")
