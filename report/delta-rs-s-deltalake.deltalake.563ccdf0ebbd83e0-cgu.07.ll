@@ -2,7 +2,7 @@ begin_hunk_0
   %loop-unroll.iv171 = phi i32 [ %loop-unroll.iv.next172, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %72 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i28.i.i.i = phi i32 [ %83, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %72 ] ; [#uses=4 type=i32]
   %76 = shl i32 %.sroa.0.02.i28.i.i.i, 1          ; [#uses=1 type=i32]
-  %77 = or i32 %76, 1                             ; [#uses=1 type=i32]
+  %77 = or disjoint i32 %76, 1                    ; [#uses=1 type=i32]
   %78 = icmp ult i32 %.sroa.0.02.i28.i.i.i, 7     ; [#uses=1 type=i1]
   br i1 %78, label %80, label %79
 
@@ -11,7 +11,7 @@ begin_hunk_1
   %loop-unroll.iv179 = phi i32 [ %loop-unroll.iv.next180, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i5.i.i ], [ 0, %92 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i.i4.i.i = phi i32 [ %105, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i5.i.i ], [ 0, %92 ] ; [#uses=4 type=i32]
   %98 = shl i32 %.sroa.0.02.i.i4.i.i, 1           ; [#uses=1 type=i32]
-  %99 = or i32 %98, 1                             ; [#uses=1 type=i32]
+  %99 = or disjoint i32 %98, 1                    ; [#uses=1 type=i32]
   %100 = icmp ult i32 %.sroa.0.02.i.i4.i.i, 7     ; [#uses=1 type=i1]
   br i1 %100, label %102, label %101
 
@@ -20,7 +20,7 @@ begin_hunk_2
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i5.i ], [ 0, %238 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i.i.i4.i = phi i32 [ %249, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i5.i ], [ 0, %238 ] ; [#uses=4 type=i32]
   %242 = shl i32 %.sroa.0.02.i.i.i4.i, 1          ; [#uses=1 type=i32]
-  %243 = or i32 %242, 1                           ; [#uses=1 type=i32]
+  %243 = or disjoint i32 %242, 1                  ; [#uses=1 type=i32]
   %244 = icmp ult i32 %.sroa.0.02.i.i.i4.i, 7     ; [#uses=1 type=i1]
   br i1 %244, label %246, label %245
 
@@ -29,7 +29,7 @@ begin_hunk_3
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread ] ; [#uses=4 type=i32]
   %.sroa.0.02.i = phi i32 [ %102, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread ] ; [#uses=4 type=i32]
   %95 = shl i32 %.sroa.0.02.i, 1                  ; [#uses=1 type=i32]
-  %96 = or i32 %95, 1                             ; [#uses=1 type=i32]
+  %96 = or disjoint i32 %95, 1                    ; [#uses=1 type=i32]
   %97 = icmp ult i32 %.sroa.0.02.i, 7             ; [#uses=1 type=i1]
   br i1 %97, label %99, label %98
 
@@ -38,7 +38,7 @@ begin_hunk_4
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread73 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i = phi i32 [ %102, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i ], [ 0, %.thread73 ] ; [#uses=4 type=i32]
   %95 = shl i32 %.sroa.0.02.i, 1                  ; [#uses=1 type=i32]
-  %96 = or i32 %95, 1                             ; [#uses=1 type=i32]
+  %96 = or disjoint i32 %95, 1                    ; [#uses=1 type=i32]
   %97 = icmp ult i32 %.sroa.0.02.i, 7             ; [#uses=1 type=i1]
   br i1 %97, label %99, label %98
 
@@ -47,7 +47,7 @@ begin_hunk_5
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ], [ 0, %63 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i28.i = phi i32 [ %74, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ], [ 0, %63 ] ; [#uses=4 type=i32]
   %67 = shl i32 %.sroa.0.02.i28.i, 1              ; [#uses=1 type=i32]
-  %68 = or i32 %67, 1                             ; [#uses=1 type=i32]
+  %68 = or disjoint i32 %67, 1                    ; [#uses=1 type=i32]
   %69 = icmp ult i32 %.sroa.0.02.i28.i, 7         ; [#uses=1 type=i1]
   br i1 %69, label %71, label %70
 
@@ -56,7 +56,7 @@ begin_hunk_6
   %loop-unroll.iv106 = phi i32 [ %loop-unroll.iv.next107, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i5 ], [ 0, %84 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i.i4 = phi i32 [ %97, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i5 ], [ 0, %84 ] ; [#uses=4 type=i32]
   %90 = shl i32 %.sroa.0.02.i.i4, 1               ; [#uses=1 type=i32]
-  %91 = or i32 %90, 1                             ; [#uses=1 type=i32]
+  %91 = or disjoint i32 %90, 1                    ; [#uses=1 type=i32]
   %92 = icmp ult i32 %.sroa.0.02.i.i4, 7          ; [#uses=1 type=i1]
   br i1 %92, label %94, label %93
 
@@ -65,7 +65,7 @@ begin_hunk_7
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ], [ 0, %103 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i.i = phi i32 [ %114, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i ], [ 0, %103 ] ; [#uses=4 type=i32]
   %107 = shl i32 %.sroa.0.02.i.i, 1               ; [#uses=1 type=i32]
-  %108 = or i32 %107, 1                           ; [#uses=1 type=i32]
+  %108 = or disjoint i32 %107, 1                  ; [#uses=1 type=i32]
   %109 = icmp ult i32 %.sroa.0.02.i.i, 7          ; [#uses=1 type=i1]
   br i1 %109, label %111, label %110
 
@@ -74,7 +74,7 @@ begin_hunk_8
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.i.i
   %38 = mul i32 %.sroa.0.0.ph76.i.i, %.sroa.0.0.ph76.i.i ; [#uses=1 type=i32]
   %39 = shl i32 %.sroa.0.0.ph76.i.i, 1            ; [#uses=1 type=i32]
-  %40 = or i32 %39, 1                             ; [#uses=1 type=i32]
+  %40 = or disjoint i32 %39, 1                    ; [#uses=1 type=i32]
   br label %.lr.ph.i
 
 41:                                               ; preds = %.loopexit.i.i
@@ -83,7 +83,7 @@ begin_hunk_9
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %24 ] ; [#uses=4 type=i32]
   %.sroa.0.04044.i.i.i.i = phi i32 [ %35, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %24 ] ; [#uses=4 type=i32]
   %28 = shl i32 %.sroa.0.04044.i.i.i.i, 1         ; [#uses=1 type=i32]
-  %29 = or i32 %28, 1                             ; [#uses=1 type=i32]
+  %29 = or disjoint i32 %28, 1                    ; [#uses=1 type=i32]
   %30 = icmp ult i32 %.sroa.0.04044.i.i.i.i, 7    ; [#uses=1 type=i1]
   br i1 %30, label %32, label %31
 
@@ -92,7 +92,7 @@ begin_hunk_10
 .preheader.i.i.i.i.preheader:                     ; preds = %._crit_edge.i.i.i.i
   %46 = mul i32 %.sroa.0.040.lcssa.i.i.i.i, %.sroa.0.040.lcssa.i.i.i.i ; [#uses=1 type=i32]
   %47 = shl i32 %.sroa.0.040.lcssa.i.i.i.i, 1     ; [#uses=1 type=i32]
-  %48 = or i32 %47, 1                             ; [#uses=1 type=i32]
+  %48 = or disjoint i32 %47, 1                    ; [#uses=1 type=i32]
   br label %.preheader.i.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i.i.i.i, %._crit_edge.i.i.i.i
@@ -101,7 +101,7 @@ begin_hunk_11
   %loop-unroll.iv40 = phi i32 [ %loop-unroll.iv.next41, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i.i ], [ 0, %62 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i27.i.i.i.i = phi i32 [ %73, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i.i ], [ 0, %62 ] ; [#uses=4 type=i32]
   %66 = shl i32 %.sroa.0.02.i27.i.i.i.i, 1        ; [#uses=1 type=i32]
-  %67 = or i32 %66, 1                             ; [#uses=1 type=i32]
+  %67 = or disjoint i32 %66, 1                    ; [#uses=1 type=i32]
   %68 = icmp ult i32 %.sroa.0.02.i27.i.i.i.i, 7   ; [#uses=1 type=i1]
   br i1 %68, label %70, label %69
 
@@ -110,7 +110,7 @@ begin_hunk_12
   %loop-unroll.iv32 = phi i32 [ %loop-unroll.iv.next33, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i30.i.i.i.i ], [ 0, %77 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i29.i.i.i.i = phi i32 [ %90, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i30.i.i.i.i ], [ 0, %77 ] ; [#uses=4 type=i32]
   %83 = shl i32 %.sroa.0.02.i29.i.i.i.i, 1        ; [#uses=1 type=i32]
-  %84 = or i32 %83, 1                             ; [#uses=1 type=i32]
+  %84 = or disjoint i32 %83, 1                    ; [#uses=1 type=i32]
   %85 = icmp ult i32 %.sroa.0.02.i29.i.i.i.i, 7   ; [#uses=1 type=i1]
   br i1 %85, label %87, label %86
 
@@ -119,7 +119,7 @@ begin_hunk_13
   %loop-unroll.iv = phi i32 [ %loop-unroll.iv.next, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %24 ] ; [#uses=4 type=i32]
   %.sroa.0.04042.i.i.i.i = phi i32 [ %35, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i ], [ 0, %24 ] ; [#uses=4 type=i32]
   %28 = shl i32 %.sroa.0.04042.i.i.i.i, 1         ; [#uses=1 type=i32]
-  %29 = or i32 %28, 1                             ; [#uses=1 type=i32]
+  %29 = or disjoint i32 %28, 1                    ; [#uses=1 type=i32]
   %30 = icmp ult i32 %.sroa.0.04042.i.i.i.i, 7    ; [#uses=1 type=i1]
   br i1 %30, label %32, label %31
 
@@ -128,7 +128,7 @@ begin_hunk_14
 .preheader.i.i.i.i.preheader:                     ; preds = %._crit_edge.i.i.i.i
   %46 = mul i32 %.sroa.0.040.lcssa.i.i.i.i, %.sroa.0.040.lcssa.i.i.i.i ; [#uses=1 type=i32]
   %47 = shl i32 %.sroa.0.040.lcssa.i.i.i.i, 1     ; [#uses=1 type=i32]
-  %48 = or i32 %47, 1                             ; [#uses=1 type=i32]
+  %48 = or disjoint i32 %47, 1                    ; [#uses=1 type=i32]
   br label %.preheader.i.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit25.i.i.i.i, %._crit_edge.i.i.i.i
@@ -137,7 +137,7 @@ begin_hunk_15
   %loop-unroll.iv40 = phi i32 [ %loop-unroll.iv.next41, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i.i ], [ 0, %62 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i27.i.i.i.i = phi i32 [ %73, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i.i.i.i.i ], [ 0, %62 ] ; [#uses=4 type=i32]
   %66 = shl i32 %.sroa.0.02.i27.i.i.i.i, 1        ; [#uses=1 type=i32]
-  %67 = or i32 %66, 1                             ; [#uses=1 type=i32]
+  %67 = or disjoint i32 %66, 1                    ; [#uses=1 type=i32]
   %68 = icmp ult i32 %.sroa.0.02.i27.i.i.i.i, 7   ; [#uses=1 type=i1]
   br i1 %68, label %70, label %69
 
@@ -146,7 +146,7 @@ begin_hunk_16
   %loop-unroll.iv32 = phi i32 [ %loop-unroll.iv.next33, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i30.i.i.i.i ], [ 0, %77 ] ; [#uses=4 type=i32]
   %.sroa.0.02.i29.i.i.i.i = phi i32 [ %90, %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc5utilsNtB5_7Backoff10spin_heavy.exit.i30.i.i.i.i ], [ 0, %77 ] ; [#uses=4 type=i32]
   %83 = shl i32 %.sroa.0.02.i29.i.i.i.i, 1        ; [#uses=1 type=i32]
-  %84 = or i32 %83, 1                             ; [#uses=1 type=i32]
+  %84 = or disjoint i32 %83, 1                    ; [#uses=1 type=i32]
   %85 = icmp ult i32 %.sroa.0.02.i29.i.i.i.i, 7   ; [#uses=1 type=i1]
   br i1 %85, label %87, label %86
 

@@ -2,14 +2,12 @@ begin_hunk_0
 
 52:                                               ; preds = %._crit_edge
   %53 = icmp ugt i32 %.060, 11                    ; [#uses=1 type=i1]
-  %54 = load <4 x i8>, ptr %2, align 4            ; [#uses=1 type=<4 x i8>]
-  %.fr = freeze <4 x i8> %54                      ; [#uses=1 type=<4 x i8>]
+  %54 = load i32, ptr %2, align 4                 ; [#uses=1 type=i32]
   %55 = getelementptr inbounds nuw i8, ptr %2, i64 4 ; [#uses=1 type=ptr]
   %56 = load i8, ptr %55, align 4                 ; [#uses=1 type=i8]
   %57 = icmp eq i8 %56, 101                       ; [#uses=1 type=i1]
-  %.fr.scalar = bitcast <4 x i8> %.fr to i32      ; [#uses=1 type=i32]
-  %58 = icmp eq i32 %.fr.scalar, 1651467329       ; [#uses=1 type=i1]
-  %59 = and i1 %53, %58                           ; [#uses=1 type=i1]
+  %58 = icmp eq i32 %54, 1651467329               ; [#uses=1 type=i1]
+  %59 = select i1 %53, i1 %58, i1 false           ; [#uses=1 type=i1]
   %op.rdx100 = select i1 %59, i1 %57, i1 false    ; [#uses=1 type=i1]
   br i1 %op.rdx100, label %60, label %98
 
@@ -18,7 +16,7 @@ begin_hunk_1
   %.2127.lcssa = phi i32 [ %.1126152, %89 ], [ %102, %middle.block ], [ %110, %.lr.ph ] ; [#uses=2 type=i32]
   %.2122.lcssa = phi ptr [ %.1121153, %89 ], [ %101, %middle.block ], [ %108, %.lr.ph ] ; [#uses=1 type=ptr]
   %.5116.lcssa = phi ptr [ %.4115, %89 ], [ %100, %middle.block ], [ %106, %.lr.ph ] ; [#uses=2 type=ptr]
-  %.5.lcssa = phi i64 [ %.4.fr, %89 ], [ %99, %middle.block ], [ %109, %.lr.ph ] ; [#uses=2 type=i64]
+  %.5.lcssa = phi i64 [ %.4, %89 ], [ %99, %middle.block ], [ %109, %.lr.ph ] ; [#uses=2 type=i64]
   %80 = icmp ult i32 %.2127.lcssa, %.0124         ; [#uses=1 type=i1]
   br i1 %80, label %81, label %._crit_edge.thread189, !llvm.loop !110
 
@@ -27,16 +25,15 @@ begin_hunk_2
 
 89:                                               ; preds = %86, %81
   %.4115 = phi ptr [ %87, %86 ], [ %.3114154, %81 ] ; [#uses=5 type=ptr]
-  %.4 = phi i64 [ %88, %86 ], [ %.3155, %81 ]     ; [#uses=1 type=i64]
-  %.4.fr = freeze i64 %.4                         ; [#uses=5 type=i64]
+  %.4 = phi i64 [ %88, %86 ], [ %.3155, %81 ]     ; [#uses=5 type=i64]
   %90 = icmp ult i32 %.1126152, %.0124            ; [#uses=1 type=i1]
-  %91 = icmp ne i64 %.4.fr, 0                     ; [#uses=1 type=i1]
-  %92 = and i1 %90, %91                           ; [#uses=1 type=i1]
+  %91 = icmp ne i64 %.4, 0                        ; [#uses=1 type=i1]
+  %92 = select i1 %90, i1 %91, i1 false           ; [#uses=1 type=i1]
   br i1 %92, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %89
   %.4115208 = ptrtoaddr ptr %.4115 to i64         ; [#uses=1 type=i64]
-  %93 = add i64 %.4.fr, -1                        ; [#uses=1 type=i64]
+  %93 = add i64 %.4, -1                           ; [#uses=1 type=i64]
   %94 = xor i32 %.1126152, -1                     ; [#uses=1 type=i32]
   %95 = add i32 %.0124, %94                       ; [#uses=1 type=i32]
   %96 = zext i32 %95 to i64                       ; [#uses=1 type=i64]
@@ -45,7 +42,7 @@ begin_hunk_3
 
 vector.ph:                                        ; preds = %.lr.ph.preheader
   %n.vec = and i64 %97, 8589934560                ; [#uses=6 type=i64]
-  %99 = sub i64 %.4.fr, %n.vec                    ; [#uses=2 type=i64]
+  %99 = sub i64 %.4, %n.vec                       ; [#uses=2 type=i64]
   %100 = getelementptr i8, ptr %.4115, i64 %n.vec ; [#uses=2 type=ptr]
   %101 = getelementptr i8, ptr %.1121153, i64 %n.vec ; [#uses=2 type=ptr]
   %.cast = trunc i64 %n.vec to i32                ; [#uses=1 type=i32]
@@ -54,7 +51,7 @@ begin_hunk_4
   br i1 %cmp.n, label %.loopexit, label %.lr.ph.preheader214
 
 .lr.ph.preheader214:                              ; preds = %.lr.ph.preheader, %middle.block
-  %.5148.ph = phi i64 [ %.4.fr, %.lr.ph.preheader ], [ %99, %middle.block ] ; [#uses=1 type=i64]
+  %.5148.ph = phi i64 [ %.4, %.lr.ph.preheader ], [ %99, %middle.block ] ; [#uses=1 type=i64]
   %.5116147.ph = phi ptr [ %.4115, %.lr.ph.preheader ], [ %100, %middle.block ] ; [#uses=1 type=ptr]
   %.2122146.ph = phi ptr [ %.1121153, %.lr.ph.preheader ], [ %101, %middle.block ] ; [#uses=1 type=ptr]
   %.2127145.ph = phi i32 [ %.1126152, %.lr.ph.preheader ], [ %102, %middle.block ] ; [#uses=1 type=i32]
