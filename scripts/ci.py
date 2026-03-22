@@ -25,7 +25,6 @@ LLVM_REPO = os.path.join(ROOT_DIR, "work/llvm-project")
 LLVM_BUILD_DIR = os.path.join(ROOT_DIR, "work/llvm-build")
 OPT_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/opt")
 LLVM_DIS_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-dis")
-LLVM_DIFF_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-diff")
 PATCH_FILE = os.path.join(ROOT_DIR, "work/patch.diff")
 OPT_OUT_DIR = os.path.join(ROOT_DIR, "work/opt-out")
 LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
@@ -168,7 +167,7 @@ def build_llvm(config: TestConfig) -> bool:
         subprocess.check_call(cmd, cwd=LLVM_BUILD_DIR)
         cmd = ["cmake", "--build", ".", "-j", "-t", "opt"]
         if not config.comptime and not config.stats:
-            cmd += ["llvm-dis", "llvm-diff"]
+            cmd += ["llvm-dis"]
         subprocess.check_call(
             cmd,
             cwd=LLVM_BUILD_DIR,
@@ -320,71 +319,36 @@ def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
     ref_ir = base_name + ".ref.ll"
     new_ir = base_name + ".new.ll"
 
-    def _fallback_with_difflib() -> Optional[tuple]:
-        ref_text = gen_textual_ir(ref_bc)
-        if ref_text is None:
-            return None
-        new_text = gen_textual_ir(new_bc)
-        if new_text is None:
-            return None
+    ref_text = gen_textual_ir(ref_bc)
+    if ref_text is None:
+        return None
+    new_text = gen_textual_ir(new_bc)
+    if new_text is None:
+        return None
 
-        ref_lines = ref_text.splitlines()
-        new_lines = new_text.splitlines()
-        unified = list(
-            difflib.unified_diff(
-                ref_lines,
-                new_lines,
-                fromfile=ref_ir,
-                tofile=new_ir,
-                n=3,
-                lineterm="",
-            )
+    ref_lines = ref_text.splitlines()
+    new_lines = new_text.splitlines()
+    unified = list(
+        difflib.unified_diff(
+            ref_lines,
+            new_lines,
+            fromfile=ref_ir,
+            tofile=new_ir,
+            n=3,
+            lineterm="",
         )
-        hunks = _extract_hunks_from_unified(unified)
-        minimized = _build_minimized_files_from_hunks(hunks)
-        if minimized is None:
-            return None
-
-        minimized_ref_lines, minimized_new_lines = minimized
-        with open(ref_ir, "w") as f:
-            f.write("\n".join(minimized_ref_lines) + "\n")
-        with open(new_ir, "w") as f:
-            f.write("\n".join(minimized_new_lines) + "\n")
-        return (ref_ir, new_ir)
-
-    try:
-        llvm_diff_ret = subprocess.run(
-            [LLVM_DIFF_BINARY, ref_bc, new_bc],
-            capture_output=True,
-            text=True,
-            timeout=120,
-        )
-        if llvm_diff_ret.returncode == 0:
-            # No differences, no need to generate diff files.
-            return None
-
-        # llvm-diff can return non-zero for semantic differences.
-        # Only treat signal termination as a crash and fallback.
-        if llvm_diff_ret.returncode < 0:
-            return _fallback_with_difflib()
-
-        hunks = _extract_hunks_from_llvm_diff(llvm_diff_ret.stdout)
-        minimized = _build_minimized_files_from_hunks(hunks)
-    except Exception:
-        return _fallback_with_difflib()
-
+    )
+    hunks = _extract_hunks_from_unified(unified)
+    minimized = _build_minimized_files_from_hunks(hunks)
     if minimized is None:
         return None
 
     minimized_ref_lines, minimized_new_lines = minimized
-
     with open(ref_ir, "w") as f:
         f.write("\n".join(minimized_ref_lines) + "\n")
     with open(new_ir, "w") as f:
         f.write("\n".join(minimized_new_lines) + "\n")
-
     return (ref_ir, new_ir)
-
 
 def extract_stats_json(stderr_text: str) -> Optional[dict]:
     decoder = json.JSONDecoder()
