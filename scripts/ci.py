@@ -800,7 +800,15 @@ def update():
         try:
             llvm_history = (
                 subprocess.check_output(
-                    ["git", "log", "--oneline", f"{old_revision}..{new_revision}"],
+                    [
+                        "git",
+                        "log",
+                        "--oneline",
+                        f"{old_revision}..{new_revision}",
+                        "--",
+                        "llvm/lib",
+                        "llvm/include",
+                    ],
                     cwd=LLVM_REPO,
                 )
                 .decode()
