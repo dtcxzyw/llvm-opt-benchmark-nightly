@@ -4,6 +4,10 @@
 // See the LICENSE file for more information.
 
 #include <llvm/ADT/DenseMap.h>
+#include <llvm/ADT/DenseSet.h>
+#include <llvm/ADT/SmallPtrSet.h>
+#include <llvm/ADT/SmallVector.h>
+#include <llvm/ADT/STLExtras.h>
 #include <llvm/IR/AssemblyAnnotationWriter.h>
 #include <llvm/IR/BasicBlock.h>
 #include <llvm/IR/DerivedTypes.h>
@@ -13,6 +17,7 @@
 #include <llvm/IR/Instructions.h>
 #include <llvm/IR/LLVMContext.h>
 #include <llvm/IR/Module.h>
+#include <llvm/IR/ValueSymbolTable.h>
 #include <llvm/IRReader/IRReader.h>
 #include <llvm/Support/CommandLine.h>
 #include <llvm/Support/Error.h>
@@ -23,9 +28,113 @@
 #include <llvm/Support/SourceMgr.h>
 #include <llvm/Support/ToolOutputFile.h>
 #include <llvm/Support/raw_ostream.h>
+#include <algorithm>
 #include <cstdlib>
 
 using namespace llvm;
+
+struct InstructionLocation {
+  uint32_t BBIndex;
+  uint32_t InstIndex;
+};
+
+struct FunctionMapping {
+  SmallVector<std::pair<uint32_t, uint32_t>, 16> BBMappings;
+  SmallVector<std::pair<InstructionLocation, InstructionLocation>, 32>
+      InstMappings;
+};
+
+static std::string getAlphabeticSuffix(uint32_t Index) {
+  std::string Result;
+  while (true) {
+    Result.push_back(static_cast<char>('a' + Index % 26));
+    if (Index < 26)
+      break;
+    Index = Index / 26 - 1;
+  }
+  std::reverse(Result.begin(), Result.end());
+  return Result;
+}
+
+static std::string getUniqueRenamedValueName(Function &F, StringRef BaseName) {
+  ValueSymbolTable *VST = F.getValueSymbolTable();
+  std::string Prefix = BaseName.empty() ? "tmp" : BaseName.str();
+  for (uint32_t I = 0;; ++I) {
+    std::string Candidate = Prefix + "." + getAlphabeticSuffix(I);
+    if (!VST || !VST->lookup(Candidate))
+      return Candidate;
+  }
+}
+
+static void makeDesiredNameAvailable(Function &F, StringRef DesiredName,
+                                     Value &Target) {
+  if (DesiredName.empty())
+    return;
+
+  ValueSymbolTable *VST = F.getValueSymbolTable();
+  if (!VST)
+    return;
+
+  Value *Conflict = VST->lookup(DesiredName);
+  if (!Conflict || Conflict == &Target || isa<Argument>(Conflict))
+    return;
+  Conflict->setName(getUniqueRenamedValueName(F, DesiredName));
+}
+
+static void alignValueName(const Value &OldV, Value &NewV, Function &NewF) {
+  StringRef OldName = OldV.getName();
+  if (OldName.empty()) {
+    NewV.setName("");
+    return;
+  }
+
+  makeDesiredNameAvailable(NewF, OldName, NewV);
+  NewV.setName(OldName);
+}
+
+static BasicBlock *getBasicBlockByIndex(Function &F, uint32_t Index) {
+  uint32_t Current = 0;
+  for (BasicBlock &BB : F) {
+    if (Current == Index)
+      return &BB;
+    ++Current;
+  }
+  return nullptr;
+}
+
+static Instruction *getInstructionByIndex(BasicBlock &BB, uint32_t Index) {
+  uint32_t Current = 0;
+  for (Instruction &Inst : BB) {
+    if (Current == Index)
+      return &Inst;
+    ++Current;
+  }
+  return nullptr;
+}
+
+static void applyAlignedNames(Function &OldF, Function &NewF,
+                              const FunctionMapping &Mapping) {
+  for (auto [OldBBIndex, NewBBIndex] : Mapping.BBMappings) {
+    auto *OldBB = getBasicBlockByIndex(OldF, OldBBIndex);
+    auto *NewBB = getBasicBlockByIndex(NewF, NewBBIndex);
+    if (!OldBB || !NewBB)
+      continue;
+    alignValueName(*OldBB, *NewBB, NewF);
+  }
+
+  for (auto [OldLoc, NewLoc] : Mapping.InstMappings) {
+    auto *OldBB = getBasicBlockByIndex(OldF, OldLoc.BBIndex);
+    auto *NewBB = getBasicBlockByIndex(NewF, NewLoc.BBIndex);
+    if (!OldBB || !NewBB)
+      continue;
+
+    auto *OldI = getInstructionByIndex(*OldBB, OldLoc.InstIndex);
+    auto *NewI = getInstructionByIndex(*NewBB, NewLoc.InstIndex);
+    if (!OldI || !NewI)
+      continue;
+    alignValueName(*OldI, *NewI, NewF);
+  }
+}
 
 static cl::OptionCategory Category("llvm-relaxed-diff Options");
 static cl::opt<std::string> OldFile(cl::Positional, cl::desc("<old>"),
@@ -111,9 +220,6 @@ public:
 class FunctionMatcher {
   Function &OldF;
   Function &NewF;
-  Module &OldM;
-  Module &NewM;
-  LLVMContext &Ctx;
   TypeComparator &Comparator;
 
   SmallPtrSet<const BasicBlock *, 16> MappedBBs;
@@ -380,15 +486,93 @@ class FunctionMatcher {
   }
 
   uint32_t computeEditDistance(const BasicBlock *OldBB,
-                               const BasicBlock *NewBB, SmallVectorImpl<uint32_t> *Solution = nullptr) {
-    return 0;
+                               const BasicBlock *NewBB,
+                               SmallVectorImpl<uint32_t> *Solution = nullptr) {
+    SmallVector<const Instruction *, 16> OldInsts;
+    SmallVector<const Instruction *, 16> NewInsts;
+    for (const Instruction &Inst : *OldBB)
+      OldInsts.push_back(&Inst);
+    for (const Instruction &Inst : *NewBB)
+      NewInsts.push_back(&Inst);
+
+    const uint32_t OldSize = OldInsts.size();
+    const uint32_t NewSize = NewInsts.size();
+    SmallVector<SmallVector<uint32_t, 16>, 16> DP(
+        OldSize + 1, SmallVector<uint32_t, 16>(NewSize + 1));
+
+    for (uint32_t I = 0; I <= OldSize; ++I)
+      DP[I][0] = I;
+    for (uint32_t J = 0; J <= NewSize; ++J)
+      DP[0][J] = J;
+
+    for (uint32_t I = 1; I <= OldSize; ++I) {
+      for (uint32_t J = 1; J <= NewSize; ++J) {
+        uint32_t MatchCost =
+            DP[I - 1][J - 1] + computeCost(OldInsts[I - 1], NewInsts[J - 1]);
+        uint32_t DeleteCost = DP[I - 1][J] + 1;
+        uint32_t InsertCost = DP[I][J - 1] + 1;
+        DP[I][J] = std::min(MatchCost, std::min(DeleteCost, InsertCost));
+      }
+    }
+
+    if (!Solution)
+      return DP[OldSize][NewSize];
+
+    Solution->clear();
+    Solution->resize(OldSize, UINT32_MAX);
+    uint32_t I = OldSize;
+    uint32_t J = NewSize;
+    while (I != 0 || J != 0) {
+      if (I != 0 && J != 0) {
+        uint32_t MatchCost =
+            DP[I - 1][J - 1] + computeCost(OldInsts[I - 1], NewInsts[J - 1]);
+        if (DP[I][J] == MatchCost) {
+          (*Solution)[I - 1] = J - 1;
+          --I;
+          --J;
+          continue;
+        }
+      }
+
+      if (I != 0 && DP[I][J] == DP[I - 1][J] + 1) {
+        --I;
+        continue;
+      }
+
+      assert(J != 0 && DP[I][J] == DP[I][J - 1] + 1);
+      --J;
+    }
+
+    return DP[OldSize][NewSize];
   }
 
   bool applyMapping(const BasicBlock *OldBB, const BasicBlock *NewBB) {
     SmallVector<uint32_t, 16> Solution;
     computeEditDistance(OldBB, NewBB, &Solution);
 
-    return false;
+    if (MappedBBs.contains(OldBB) || MappedBBs.contains(NewBB))
+      return false;
+
+    SmallVector<const Instruction *, 16> NewInsts;
+    for (const Instruction &Inst : *NewBB)
+      NewInsts.push_back(&Inst);
+
+    bool Modified = false;
+    MappedBBs.insert(OldBB);
+    MappedBBs.insert(NewBB);
+    BBMap.insert({OldBB, NewBB});
+    PotentialBBPairs.erase({OldBB, NewBB});
+    Modified = true;
+
+    uint32_t OldIndex = 0;
+    for (const Instruction &OldI : *OldBB) {
+      uint32_t NewIndex = Solution[OldIndex++];
+      if (NewIndex == UINT32_MAX)
+        continue;
+      Modified |= newValMatch(&OldI, NewInsts[NewIndex]);
+    }
+
+    return Modified;
   }
 
   bool propagateValMapping() {
@@ -410,13 +594,70 @@ class FunctionMatcher {
     return Modified;
   }
 
+  FunctionMapping buildMapping() const {
+    DenseMap<const BasicBlock *, uint32_t> OldBBIndices;
+    DenseMap<const BasicBlock *, uint32_t> NewBBIndices;
+    DenseMap<const Instruction *, InstructionLocation> OldInstIndices;
+    DenseMap<const Instruction *, InstructionLocation> NewInstIndices;
+
+    uint32_t OldBBIndex = 0;
+    for (const BasicBlock &BB : OldF) {
+      OldBBIndices.insert({&BB, OldBBIndex});
+      uint32_t InstIndex = 0;
+      for (const Instruction &Inst : BB) {
+        OldInstIndices.insert({&Inst, {OldBBIndex, InstIndex}});
+        ++InstIndex;
+      }
+      ++OldBBIndex;
+    }
+
+    uint32_t NewBBIndex = 0;
+    for (const BasicBlock &BB : NewF) {
+      NewBBIndices.insert({&BB, NewBBIndex});
+      uint32_t InstIndex = 0;
+      for (const Instruction &Inst : BB) {
+        NewInstIndices.insert({&Inst, {NewBBIndex, InstIndex}});
+        ++InstIndex;
+      }
+      ++NewBBIndex;
+    }
+
+    FunctionMapping Mapping;
+    Mapping.BBMappings.reserve(BBMap.size());
+    for (auto &[OldBB, NewBB] : BBMap)
+      Mapping.BBMappings.push_back({OldBBIndices.lookup(OldBB),
+                                    NewBBIndices.lookup(NewBB)});
+    sort(Mapping.BBMappings, [](const auto &LHS, const auto &RHS) {
+      if (LHS.first != RHS.first)
+        return LHS.first < RHS.first;
+      return LHS.second < RHS.second;
+    });
+
+    for (auto &[OldV, NewV] : ValMap) {
+      auto *OldI = dyn_cast<Instruction>(OldV);
+      auto *NewI = dyn_cast<Instruction>(NewV);
+      if (!OldI || !NewI)
+        continue;
+      Mapping.InstMappings.push_back(
+          {OldInstIndices.lookup(OldI), NewInstIndices.lookup(NewI)});
+    }
+    sort(Mapping.InstMappings, [](const auto &LHS, const auto &RHS) {
+      if (LHS.first.BBIndex != RHS.first.BBIndex)
+        return LHS.first.BBIndex < RHS.first.BBIndex;
+      if (LHS.first.InstIndex != RHS.first.InstIndex)
+        return LHS.first.InstIndex < RHS.first.InstIndex;
+      if (LHS.second.BBIndex != RHS.second.BBIndex)
+        return LHS.second.BBIndex < RHS.second.BBIndex;
+      return LHS.second.InstIndex < RHS.second.InstIndex;
+    });
+    return Mapping;
+  }
+
 public:
   FunctionMatcher(Function &OldF, Function &NewF, TypeComparator &Comparator)
-      : OldF(OldF), NewF(NewF), OldM(*OldF.getParent()),
-        NewM(*NewF.getParent()), Ctx(OldM.getContext()),
-        Comparator(Comparator) {}
+      : OldF(OldF), NewF(NewF), Comparator(Comparator) {}
 
-  void run() {
+  FunctionMapping run() {
     newBBMatch(&OldF.getEntryBlock(), &NewF.getEntryBlock());
     for (uint32_t I = 0, E = std::min(OldF.arg_size(), NewF.arg_size()); I != E;
          ++I) {
@@ -432,6 +673,8 @@ public:
                                                                       nullptr};
       uint32_t MinCost = UINT32_MAX;
       for (auto &[OldBB, NewBB] : PotentialBBPairs) {
+        if (MappedBBs.contains(OldBB) || MappedBBs.contains(NewBB))
+          continue;
         uint32_t Cost = computeEditDistance(OldBB, NewBB);
         if (Cost < MinCost) {
           MinCost = Cost;
@@ -446,6 +689,8 @@ public:
       if (!Changed)
         break;
     }
+
+    return buildMapping();
   }
 };
 
@@ -456,7 +701,7 @@ public:
     if (isa<Instruction>(&V) && !V.getType()->isVoidTy() &&
         V.hasNUsesOrMore(2)) {
       OS.PadToColumn(50);
-      OS << "; " << V.getNumUses() << "uses";
+      OS << "; " << V.getNumUses() << " uses";
     }
   }
 };
@@ -466,20 +711,21 @@ int main(int argc, char **argv) {
   cl::HideUnrelatedOptions(Category);
   cl::ParseCommandLineOptions(argc, argv, "diff\n");
 
-  LLVMContext Context;
+  LLVMContext MatchContext;
   SMDiagnostic Err;
-  auto OldM = parseIRFile(OldFile, Err, Context);
+  auto OldM = parseIRFile(OldFile, Err, MatchContext);
   if (!OldM) {
     Err.print(argv[0], errs());
     return EXIT_FAILURE;
   }
 
-  auto NewM = parseIRFile(NewFile, Err, Context);
+  auto NewM = parseIRFile(NewFile, Err, MatchContext);
   if (!NewM) {
     Err.print(argv[0], errs());
     return EXIT_FAILURE;
   }
 
+  SmallVector<std::pair<std::string, FunctionMapping>, 16> FunctionMappings;
   TypeComparator Comparator;
   for (auto &OldF : *OldM) {
     if (OldF.empty())
@@ -489,11 +735,31 @@ int main(int argc, char **argv) {
       continue;
 
     FunctionMatcher Matcher(OldF, *NewF, Comparator);
-    Matcher.run();
+    FunctionMappings.emplace_back(OldF.getName().str(), Matcher.run());
   }
 
-  // FIXME: Use a new context to rename values to avoid differences in named
-  // structs.
+  LLVMContext OldPrintContext;
+  auto OldOutM = parseIRFile(OldFile, Err, OldPrintContext);
+  if (!OldOutM) {
+    Err.print(argv[0], errs());
+    return EXIT_FAILURE;
+  }
+
+  LLVMContext NewPrintContext;
+  auto NewOutM = parseIRFile(NewFile, Err, NewPrintContext);
+  if (!NewOutM) {
+    Err.print(argv[0], errs());
+    return EXIT_FAILURE;
+  }
+
+  for (auto &[FunctionName, Mapping] : FunctionMappings) {
+    auto *OldF = OldOutM->getFunction(FunctionName);
+    auto *NewF = NewOutM->getFunction(FunctionName);
+    if (!OldF || !NewF || OldF->empty() || NewF->empty())
+      continue;
+    applyAlignedNames(*OldF, *NewF, Mapping);
+  }
+
   CommentWriter writer;
   std::error_code EC;
   auto OldOut =
@@ -509,8 +775,12 @@ int main(int argc, char **argv) {
     errs() << "Error opening file: " << EC.message() << "\n";
     return EXIT_FAILURE;
   }
-  OldM->print(OldOut->os(), &writer);
-  NewM->print(NewOut->os(), &writer);
+  OldOutM->setModuleIdentifier("");
+  NewOutM->setModuleIdentifier("");
+  OldOutM->setSourceFileName("");
+  NewOutM->setSourceFileName("");
+  OldOutM->print(OldOut->os(), &writer);
+  NewOutM->print(NewOut->os(), &writer);
 
   OldOut->keep();
   NewOut->keep();

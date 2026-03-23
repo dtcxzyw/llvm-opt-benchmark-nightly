@@ -24,7 +24,10 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LLVM_REPO = os.path.join(ROOT_DIR, "work/llvm-project")
 LLVM_BUILD_DIR = os.path.join(ROOT_DIR, "work/llvm-build")
 OPT_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/opt")
-LLVM_DIS_BINARY = os.path.join(LLVM_BUILD_DIR, "bin/llvm-dis")
+TOOLS_BUILD_DIR = os.path.join(ROOT_DIR, "build")
+RELAXED_DIFF_BINARY = os.path.join(
+    TOOLS_BUILD_DIR, "scripts", "llvm-relaxed-diff", "llvm-relaxed-diff"
+)
 PATCH_FILE = os.path.join(ROOT_DIR, "work/patch.diff")
 OPT_OUT_DIR = os.path.join(ROOT_DIR, "work/opt-out")
 LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
@@ -166,13 +169,31 @@ def build_llvm(config: TestConfig) -> bool:
             cmd.append("-DLLVM_FORCE_ENABLE_STATS=ON")
         subprocess.check_call(cmd, cwd=LLVM_BUILD_DIR)
         cmd = ["cmake", "--build", ".", "-j", "-t", "opt"]
-        if not config.comptime and not config.stats:
-            cmd += ["llvm-dis"]
         subprocess.check_call(
             cmd,
             cwd=LLVM_BUILD_DIR,
             timeout=3600,
         )
+
+        if not config.comptime and not config.stats:
+            subprocess.check_call(
+                [
+                    "cmake",
+                    "-S",
+                    ROOT_DIR,
+                    "-B",
+                    TOOLS_BUILD_DIR,
+                    "-DLLVM_DIR="
+                    + os.path.join(LLVM_BUILD_DIR, "lib", "cmake", "llvm"),
+                ],
+                cwd=ROOT_DIR,
+                timeout=180,
+            )
+            subprocess.check_call(
+                ["cmake", "--build", TOOLS_BUILD_DIR, "-j", "-t", "llvm-relaxed-diff"],
+                cwd=ROOT_DIR,
+                timeout=180,
+            )
     except Exception:
         return False
     return True
@@ -221,20 +242,6 @@ def apply_llvm_patch(patch_url: str) -> bool:
         .strip()
     )
     return bool(result)
-
-
-def gen_textual_ir(input_bc: str) -> Optional[str]:
-    ret = subprocess.run(
-        [LLVM_DIS_BINARY, input_bc, "-o", "-", "--show-annotations"],
-        capture_output=True,
-    )
-    if ret.returncode != 0:
-        return None
-    out_ir = ret.stdout.decode()
-    if out_ir.startswith("; ModuleID"):
-        next_line = out_ir.index("\n")
-        out_ir = out_ir[next_line + 1 :]
-    return out_ir
 
 
 def _extract_hunks_from_unified(unified_lines: List[str]) -> List[List[str]]:
@@ -319,15 +326,20 @@ def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
     ref_ir = base_name + ".ref.ll"
     new_ir = base_name + ".new.ll"
 
-    ref_text = gen_textual_ir(ref_bc)
-    if ref_text is None:
-        return None
-    new_text = gen_textual_ir(new_bc)
-    if new_text is None:
-        return None
+    ret = subprocess.run(
+        [RELAXED_DIFF_BINARY, ref_bc, new_bc, ref_ir, new_ir],
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        timeout=120,
+    )
+    if ret.returncode != 0:
+        raise RuntimeError("llvm-relaxed-diff failed")
 
-    ref_lines = ref_text.splitlines()
-    new_lines = new_text.splitlines()
+    with open(ref_ir, "r") as f:
+        ref_lines = f.read().splitlines()
+    with open(new_ir, "r") as f:
+        new_lines = f.read().splitlines()
+
     unified = list(
         difflib.unified_diff(
             ref_lines,
@@ -436,7 +448,10 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
                     os.remove(optimized_path)
 
                 if not identical:
-                    rendered = compute_diff(ref_path, optimized_path)
+                    try:
+                        rendered = compute_diff(ref_path, optimized_path)
+                    except (subprocess.SubprocessError, OSError, RuntimeError):
+                        return "diff fail"
 
         err = ret.stderr.decode()
         stats_result = extract_stats_json(err)
