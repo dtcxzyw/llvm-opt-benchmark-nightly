@@ -37,7 +37,6 @@ REPORT_DIR = os.path.join(ROOT_DIR, "report")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
-REPORT_COMPARE_URL = "https://github.com/dtcxzyw/llvm-opt-benchmark-nightly/compare"
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -83,11 +82,18 @@ def push_branch(branch: str):
 
 def create_branch(branch: str):
     subprocess.check_call(["git", "checkout", "-b", branch], cwd=ROOT_DIR)
+
+
+def commit_report_if_changed(message: str) -> bool:
     subprocess.check_call(["git", "add", "report"], cwd=ROOT_DIR)
-    subprocess.check_call(
-        ["git", "commit", "--allow-empty", "-m", "Update"], cwd=ROOT_DIR
+    ret = subprocess.call(
+        ["git", "diff", "--cached", "--quiet"],
+        cwd=ROOT_DIR,
     )
-    push_branch(branch)
+    if ret == 0:
+        return False
+    subprocess.check_call(["git", "commit", "-m", message], cwd=ROOT_DIR)
+    return True
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -642,57 +648,17 @@ def copy_report_ir(ir_path: str):
     shutil.copy(ir_path, _report_ir_output_path(ir_path))
 
 
-def create_staged_report_branches(
-    base_branch_name: str,
-    positive_branch_name: str,
-    negative_branch_name: str,
-    kept_files: List[Tuple[str, str, int]],
-):
-    for ref_ir, _, _ in kept_files:
-        copy_report_ir(ref_ir)
-    create_branch(base_branch_name)
-
-    for _, new_ir, delta in kept_files:
-        if delta > 0:
-            copy_report_ir(new_ir)
-    create_branch(positive_branch_name)
-
-    for _, new_ir, delta in kept_files:
-        if delta < 0:
-            copy_report_ir(new_ir)
-    create_branch(negative_branch_name)
-
-    for _, new_ir, delta in kept_files:
-        if delta == 0:
-            copy_report_ir(new_ir)
-
-
-def build_diff_review_links(
-    base_branch_name: str,
-    positive_branch_name: str,
-    negative_branch_name: str,
-    change_branch_name: str,
-    kept_files: List[Tuple[str, str, int]],
-) -> str:
-    links = []
-    if any(delta > 0 for _, _, delta in kept_files):
-        links.append(
-            "- add > sub: "
-            f"{REPORT_COMPARE_URL}/{base_branch_name}..{positive_branch_name}"
-        )
-    if any(delta < 0 for _, _, delta in kept_files):
-        links.append(
-            "- add < sub: "
-            f"{REPORT_COMPARE_URL}/{positive_branch_name}..{negative_branch_name}"
-        )
-    if any(delta == 0 for _, _, delta in kept_files):
-        links.append(
-            "- add == sub: "
-            f"{REPORT_COMPARE_URL}/{negative_branch_name}..{change_branch_name}"
-        )
-    if not links:
-        return ""
-    return "## Review links\n" + "\n".join(links) + "\n"
+def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
+    groups = [
+        ("report: add > sub", lambda delta: delta > 0),
+        ("report: add < sub", lambda delta: delta < 0),
+        ("report: add == sub", lambda delta: delta == 0),
+    ]
+    for message, predicate in groups:
+        for _, new_ir, delta in kept_files:
+            if predicate(delta):
+                copy_report_ir(new_ir)
+        commit_report_if_changed(message)
 
 
 def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str, int]]]:
@@ -876,26 +842,20 @@ def update():
         pr_body += f"## Diff report\n```\n{report}\n```\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
-        positive_branch_name = f"task-{JOB_ID}-positive"
-        negative_branch_name = f"task-{JOB_ID}-negative"
         change_branch_name = f"task-{JOB_ID}-change"
-        pr_body += build_diff_review_links(
-            base_branch_name,
-            positive_branch_name,
-            negative_branch_name,
-            change_branch_name,
-            kept_files,
-        )
+        for ref_ir, _, _ in kept_files:
+            copy_report_ir(ref_ir)
+        create_branch(base_branch_name)
+        commit_report_if_changed("report: baseline refs")
+        push_branch(base_branch_name)
 
-        create_staged_report_branches(
-            base_branch_name,
-            positive_branch_name,
-            negative_branch_name,
-            kept_files,
-        )
+        create_branch(change_branch_name)
+        commit_grouped_diff_changes(kept_files)
+
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
-        create_branch(change_branch_name)
+        commit_report_if_changed("report: metadata")
+        push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
 
     # Update baseline bc
@@ -1053,8 +1013,6 @@ def test(user: str, comment_body: str, issue_url: str):
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
     base_branch_name = f"task-{JOB_ID}-base"
-    positive_branch_name = f"task-{JOB_ID}-positive"
-    negative_branch_name = f"task-{JOB_ID}-negative"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
         pr_body += f"## Changes in compile-time\n```\n{comptime_cmp}\n```\n"
@@ -1065,30 +1023,23 @@ def test(user: str, comment_body: str, issue_url: str):
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n```\n{report}\n```\n"
-        pr_body += build_diff_review_links(
-            base_branch_name,
-            positive_branch_name,
-            negative_branch_name,
-            change_branch_name,
-            kept_files,
-        )
+    if kept_files:
+        for ref_ir, _, _ in kept_files:
+            copy_report_ir(ref_ir)
+    create_branch(base_branch_name)
+    commit_report_if_changed("report: baseline refs")
+    push_branch(base_branch_name)
+
+    create_branch(change_branch_name)
+    if kept_files:
+        commit_grouped_diff_changes(kept_files)
     if stats:
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
-    if kept_files:
-        create_staged_report_branches(
-            base_branch_name,
-            positive_branch_name,
-            negative_branch_name,
-            kept_files,
-        )
-    else:
-        create_branch(base_branch_name)
-        create_branch(positive_branch_name)
-        create_branch(negative_branch_name)
-    create_branch(change_branch_name)
+    commit_report_if_changed("report: metadata")
+    push_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
     except Exception:
