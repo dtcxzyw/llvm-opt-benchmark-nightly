@@ -191,6 +191,9 @@ def build_llvm(config: TestConfig) -> bool:
                     ROOT_DIR,
                     "-B",
                     TOOLS_BUILD_DIR,
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-G",
+                    "Ninja",
                     "-DLLVM_DIR="
                     + os.path.join(LLVM_BUILD_DIR, "lib", "cmake", "llvm"),
                 ],
@@ -343,6 +346,7 @@ def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
     with open(new_ir, "w") as f:
         f.write("\n".join(minimized_new_lines) + "\n")
     return (ref_ir, new_ir)
+
 
 def extract_stats_json(stderr_text: str) -> Optional[dict]:
     decoder = json.JSONDecoder()
@@ -655,7 +659,9 @@ def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
         commit_report_if_changed(message)
 
 
-def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str, int]]]:
+def generate_diff_report(
+    rendered_files: list,
+) -> Tuple[str, List[Tuple[str, str, int]]]:
     MAX_DIFF_PER_FILE = 1000
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
