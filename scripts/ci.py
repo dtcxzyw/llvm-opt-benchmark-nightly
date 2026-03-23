@@ -186,7 +186,7 @@ def build_llvm(config: TestConfig) -> bool:
         if not config.comptime and not config.stats:
             if os.path.exists(TOOLS_BUILD_DIR):
                 shutil.rmtree(TOOLS_BUILD_DIR)
-            os.path.makedirs(TOOLS_BUILD_DIR)
+            os.makedirs(TOOLS_BUILD_DIR)
             subprocess.check_call(
                 [
                     "cmake",
