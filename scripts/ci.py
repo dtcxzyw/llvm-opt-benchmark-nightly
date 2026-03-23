@@ -37,6 +37,7 @@ REPORT_DIR = os.path.join(ROOT_DIR, "report")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+REPORT_COMPARE_URL = "https://github.com/dtcxzyw/llvm-opt-benchmark-nightly/compare"
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -465,7 +466,7 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
 
 
 def run_opt(config: TestConfig):
-    log_file = os.path.join(REPORT_DIR, "opt.log")
+    log_file = os.path.join(REPORT_DIR, "opt_log")
     if os.path.exists(OPT_OUT_DIR):
         shutil.rmtree(OPT_OUT_DIR)
     os.makedirs(OPT_OUT_DIR)
@@ -628,7 +629,67 @@ def compare_stats(baseline: dict, new: dict, by_project: bool, avg: bool) -> str
     return by_file + "\n" + by_proj
 
 
-def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str]]]:
+def _report_ir_output_path(ir_path: str) -> str:
+    return os.path.join(
+        REPORT_DIR,
+        os.path.basename(ir_path)
+        .replace(".ref.ll", ".ll")
+        .replace(".new.ll", ".ll"),
+    )
+
+
+def copy_report_ir(ir_path: str):
+    shutil.copy(ir_path, _report_ir_output_path(ir_path))
+
+
+def create_staged_report_branches(
+    base_branch_name: str,
+    positive_branch_name: str,
+    negative_branch_name: str,
+    kept_files: List[Tuple[str, str, int]],
+):
+    for ref_ir, _, _ in kept_files:
+        copy_report_ir(ref_ir)
+    create_branch(base_branch_name)
+
+    for _, new_ir, delta in kept_files:
+        if delta > 0:
+            copy_report_ir(new_ir)
+    create_branch(positive_branch_name)
+
+    for _, new_ir, delta in kept_files:
+        if delta < 0:
+            copy_report_ir(new_ir)
+    create_branch(negative_branch_name)
+
+    for _, new_ir, delta in kept_files:
+        if delta == 0:
+            copy_report_ir(new_ir)
+
+
+def build_diff_review_links(
+    base_branch_name: str,
+    positive_branch_name: str,
+    negative_branch_name: str,
+    kept_files: List[Tuple[str, str, int]],
+) -> str:
+    links = []
+    if any(delta > 0 for _, _, delta in kept_files):
+        links.append(
+            "- add - sub > 0: "
+            f"{REPORT_COMPARE_URL}/{base_branch_name}..{positive_branch_name}"
+        )
+    if any(delta < 0 for _, _, delta in kept_files):
+        links.append(
+            "- add - sub < 0: "
+            f"{REPORT_COMPARE_URL}/{positive_branch_name}..{negative_branch_name}"
+        )
+    if not links:
+        return ""
+    return "## Review links\n" + "\n".join(links) + "\n"
+
+
+def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str, int]]]:
     MAX_DIFF_PER_FILE = 1000
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
@@ -726,7 +787,7 @@ def generate_diff_report(rendered_files: list) -> Tuple[str, List[Tuple[str, str
             diff_count += real_cost
             kept_added += add
             kept_removed += sub
-            kept_files.append((ref_ir, new_ir))
+            kept_files.append((ref_ir, new_ir, add - sub))
             kept_files_sorted.append((ref_ir, add, sub))
         else:
             break
@@ -809,22 +870,22 @@ def update():
         pr_body += f"## Diff report\n```\n{report}\n```\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
+        positive_branch_name = f"task-{JOB_ID}-positive"
+        negative_branch_name = f"task-{JOB_ID}-negative"
         change_branch_name = f"task-{JOB_ID}-change"
-        for ref_ir, _ in kept_files:
-            shutil.copy(
-                ref_ir,
-                os.path.join(
-                    REPORT_DIR, os.path.basename(ref_ir).replace(".ref.ll", ".ll")
-                ),
-            )
-        create_branch(base_branch_name)
-        for _, new_ir in kept_files:
-            shutil.copy(
-                new_ir,
-                os.path.join(
-                    REPORT_DIR, os.path.basename(new_ir).replace(".new.ll", ".ll")
-                ),
-            )
+        pr_body += build_diff_review_links(
+            base_branch_name,
+            positive_branch_name,
+            negative_branch_name,
+            kept_files,
+        )
+
+        create_staged_report_branches(
+            base_branch_name,
+            positive_branch_name,
+            negative_branch_name,
+            kept_files,
+        )
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
         create_branch(change_branch_name)
@@ -985,6 +1046,8 @@ def test(user: str, comment_body: str, issue_url: str):
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
     base_branch_name = f"task-{JOB_ID}-base"
+    positive_branch_name = f"task-{JOB_ID}-positive"
+    negative_branch_name = f"task-{JOB_ID}-negative"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
         pr_body += f"## Changes in compile-time\n```\n{comptime_cmp}\n```\n"
@@ -995,27 +1058,28 @@ def test(user: str, comment_body: str, issue_url: str):
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n```\n{report}\n```\n"
-        for ref_ir, _ in kept_files:
-            shutil.copy(
-                ref_ir,
-                os.path.join(
-                    REPORT_DIR, os.path.basename(ref_ir).replace(".ref.ll", ".ll")
-                ),
-            )
+        pr_body += build_diff_review_links(
+            base_branch_name,
+            positive_branch_name,
+            negative_branch_name,
+            kept_files,
+        )
     if stats:
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
-    create_branch(base_branch_name)
     if kept_files:
-        for _, new_ir in kept_files:
-            shutil.copy(
-                new_ir,
-                os.path.join(
-                    REPORT_DIR, os.path.basename(new_ir).replace(".new.ll", ".ll")
-                ),
-            )
+        create_staged_report_branches(
+            base_branch_name,
+            positive_branch_name,
+            negative_branch_name,
+            kept_files,
+        )
+    else:
+        create_branch(base_branch_name)
+        create_branch(positive_branch_name)
+        create_branch(negative_branch_name)
     create_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
