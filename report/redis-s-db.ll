@@ -1,0 +1,193 @@
+begin_hunk_0
+
+.lr.ph:                                           ; preds = %1
+  %10 = icmp eq i64 %3, %6
+  %.fr = freeze i1 %10
+  br i1 %.fr, label %.lr.ph.split.us, label %.lr.ph.split
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %47
+  %11 = phi i32 [ %49, %47 ], [ %8, %.lr.ph ]
+end_hunk_0
+begin_hunk_1
+
+78:                                               ; preds = %sdslen.exit
+  %79 = load i8, ptr %55, align 1, !tbaa !110
+  %.fr447 = freeze i8 %79
+  %80 = icmp ne i8 %.fr447, 42
+  %81 = zext i1 %80 to i32
+  br label %sdslen.exit.thread
+
+end_hunk_1
+begin_hunk_2
+  %141 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %142 = load ptr, ptr %141, align 8, !tbaa !102
+  store ptr %142, ptr %140, align 8, !tbaa !167
+  %or.cond11 = and i1 %16, %134
+  %143 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8160), align 8
+  %144 = icmp ne i32 %143, 0
+  %or.cond13 = select i1 %or.cond11, i1 %144, i1 false
+end_hunk_2
+begin_hunk_3
+  br i1 %16, label %.split384.us.preheader, label %.split384
+
+.split384.us.preheader:                           ; preds = %.thread, %146
+  %.0225449 = phi i32 [ %145, %.thread ], [ -1, %146 ]
+  br label %.split384.us
+
+.split384.us:                                     ; preds = %.split384.us.preheader, %150
+end_hunk_3
+begin_hunk_4
+  %.0.us = phi i64 [ %149, %150 ], [ %2, %.split384.us.preheader ]
+  %147 = load ptr, ptr %141, align 8, !tbaa !102
+  %148 = load ptr, ptr %147, align 8, !tbaa !49
+  %149 = call i64 @kvstoreScan(ptr noundef %148, i64 noundef %.0.us, i32 noundef %.0225449, ptr noundef nonnull @scanCallback, ptr noundef nonnull @scanShouldSkipDict, ptr noundef nonnull %5) #21 ; 4 uses
+  %.not259.us = icmp eq i64 %149, 0
+  %.not260.us = icmp eq i64 %.0226.us, 0
+  %or.cond274.us = select i1 %.not259.us, i1 true, i1 %.not260.us
+end_hunk_4
+begin_hunk_5
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !102      ; 5 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 72
+  %9 = load i32, ptr %8, align 8, !tbaa !92
+  %.fr131 = freeze i32 %9                         ; 9 uses
+  store i32 %.fr131, ptr %2, align 4, !tbaa !9
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  %11 = load i32, ptr %10, align 8, !tbaa !135    ; 3 uses
+  %12 = icmp sgt i32 %11, 3
+end_hunk_5
+begin_hunk_6
+
+.lr.ph:                                           ; preds = %1
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
+  %14 = icmp sgt i32 %.fr131, -1
+  %15 = zext nneg i32 %.fr131 to i64
+  br i1 %14, label %.lr.ph.split, label %.lr.ph.split.us
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph, %selectDb.exit116.us
+  %16 = phi i32 [ %44, %selectDb.exit116.us ], [ %.fr131, %.lr.ph ]
+  %17 = phi i32 [ %45, %selectDb.exit116.us ], [ %11, %.lr.ph ] ; 2 uses
+  %.0126.us = phi ptr [ %.2.us, %selectDb.exit116.us ], [ %7, %.lr.ph ]
+  %.091125.us = phi i32 [ %46, %selectDb.exit116.us ], [ 3, %.lr.ph ] ; 4 uses
+end_hunk_6
+begin_hunk_7
+  br i1 %47, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !195
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %selectDb.exit116
+  %48 = phi i32 [ %80, %selectDb.exit116 ], [ %.fr131, %.lr.ph ]
+  %49 = phi i32 [ %82, %selectDb.exit116 ], [ %11, %.lr.ph ]
+  %.0126 = phi ptr [ %.2, %selectDb.exit116 ], [ %7, %.lr.ph ]
+  %.091125 = phi i32 [ %81, %selectDb.exit116 ], [ 3, %.lr.ph ] ; 4 uses
+end_hunk_7
+begin_hunk_8
+  %75 = getelementptr inbounds nuw [96 x i8], ptr %73, i64 %74 ; 3 uses
+  store ptr %75, ptr %6, align 8, !tbaa !102
+  %76 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6516), align 4
+  %.not.i113 = icmp slt i32 %.fr131, %76
+  br i1 %.not.i113, label %77, label %selectDb.exit116
+
+77:                                               ; preds = %72
+end_hunk_8
+begin_hunk_9
+  br i1 %83, label %.lr.ph.split, label %._crit_edge, !llvm.loop !195
+
+._crit_edge:                                      ; preds = %selectDb.exit116.us, %selectDb.exit116, %1
+  %84 = phi i32 [ %.fr131, %1 ], [ %80, %selectDb.exit116 ], [ %44, %selectDb.exit116.us ] ; 2 uses
+  %.094.lcssa = phi i32 [ 0, %1 ], [ %.296, %selectDb.exit116 ], [ %.296.us, %selectDb.exit116.us ]
+  %.0.lcssa = phi ptr [ %7, %1 ], [ %.2, %selectDb.exit116 ], [ %.2.us, %selectDb.exit116.us ] ; 9 uses
+  %85 = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8160), align 8, !tbaa !108
+end_hunk_9
+begin_hunk_10
+  br i1 %86, label %87, label %91
+
+87:                                               ; preds = %._crit_edge
+  %88 = icmp ne i32 %.fr131, 0
+  %89 = icmp ne i32 %84, 0
+  %or.cond3 = select i1 %88, i1 true, i1 %89
+  br i1 %or.cond3, label %90, label %91
+end_hunk_10
+begin_hunk_11
+  %103 = load ptr, ptr %102, align 8, !tbaa !64
+  %104 = call i32 @sdscmp(ptr noundef %101, ptr noundef %103) #21
+  %105 = icmp eq i32 %104, 0
+  br i1 %105, label %106, label %._crit_edge136
+
+._crit_edge136:                                   ; preds = %99
+  %.pre137 = load i32, ptr %2, align 4
+  br label %108
+
+106:                                              ; preds = %99
+end_hunk_11
+begin_hunk_12
+  call void @addReplyErrorObject(ptr noundef nonnull %0, ptr noundef %107) #21
+  br label %.critedge
+
+108:                                              ; preds = %._crit_edge136, %91
+  %109 = phi i32 [ %.pre137, %._crit_edge136 ], [ %84, %91 ]
+  %110 = icmp ne i32 %.fr131, 0
+  %111 = icmp ne i32 %109, 0
+  %or.cond5 = select i1 %110, i1 true, i1 %111
+  br i1 %or.cond5, label %112, label %115
+end_hunk_12
+begin_hunk_13
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
+  %.043 = phi i32 [ 2, %.preheader.lr.ph ], [ %.pre-phi, %.loopexit ]
+  %.02742 = phi i32 [ 0, %.preheader.lr.ph ], [ %.128, %.loopexit ] ; 3 uses
+  %.043.fr = freeze i32 %.043                     ; 3 uses
+  %34 = sext i32 %.043.fr to i64
+  %35 = getelementptr inbounds [8 x i8], ptr %1, i64 %34
+  %36 = load ptr, ptr %35, align 8, !tbaa !103
+  %37 = getelementptr inbounds nuw i8, ptr %36, i64 8
+  %38 = load ptr, ptr %37, align 8, !tbaa !64     ; 6 uses
+  %39 = add i32 %.043.fr, 1                       ; 5 uses
+  %40 = icmp slt i32 %39, %2
+  %41 = tail call i32 @strcasecmp(ptr noundef %38, ptr noundef nonnull @.str.73) #25
+  %.not33.us = icmp eq i32 %41, 0                 ; 2 uses
+end_hunk_13
+begin_hunk_14
+  %.us-phi = phi ptr [ getelementptr inbounds nuw (i8, ptr @__const.sortGetKeys.skiplist, i64 32), %.preheader.split.us.2 ], [ @__const.sortGetKeys.skiplist, %.preheader.split.us.preheader ], [ getelementptr inbounds nuw (i8, ptr @__const.sortGetKeys.skiplist, i64 16), %.preheader.split.us.1 ], [ @__const.sortGetKeys.skiplist, %.preheader.split.preheader ], [ getelementptr inbounds nuw (i8, ptr @__const.sortGetKeys.skiplist, i64 16), %.preheader.split.1 ], [ getelementptr inbounds nuw (i8, ptr @__const.sortGetKeys.skiplist, i64 32), %.preheader.split.2 ]
+  %46 = getelementptr inbounds nuw i8, ptr %.us-phi, i64 8
+  %47 = load i32, ptr %46, align 8, !tbaa !252
+  %48 = add nsw i32 %47, %.043.fr
+  %.pre = add nsw i32 %48, 1
+  br label %.loopexit
+
+end_hunk_14
+begin_hunk_15
+  br i1 %.not, label %12, label %14
+
+12:                                               ; preds = %.lr.ph
+  %13 = add i32 %.04361, 1
+  br label %26
+
+14:                                               ; preds = %.lr.ph
+end_hunk_15
+begin_hunk_16
+  br i1 %.not47, label %16, label %18
+
+16:                                               ; preds = %14
+  %17 = add i32 %.04361, 1
+  br label %26
+
+18:                                               ; preds = %14
+end_hunk_16
+begin_hunk_17
+  br i1 %.not48, label %20, label %22
+
+20:                                               ; preds = %18
+  %21 = add i32 %.04361, 2
+  br label %26
+
+22:                                               ; preds = %18
+end_hunk_17
+begin_hunk_18
+
+26:                                               ; preds = %16, %22, %20, %12
+  %.245.ph = phi i32 [ %13, %12 ], [ %17, %16 ], [ %21, %20 ], [ %.04361, %22 ]
+  %27 = add i32 %.245.ph, 1                       ; 2 uses
+  %28 = icmp slt i32 %27, %2
+  br i1 %28, label %.lr.ph, label %.loopexit, !llvm.loop !259
+
+end_hunk_18
