@@ -34,6 +34,7 @@ LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
 DATA_DIR = os.path.join(ROOT_DIR, "data")
 STATS_BASELINE_FILE = os.path.join(DATA_DIR, "stats.json.baseline")
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
+OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
@@ -273,32 +274,6 @@ def _extract_hunks_from_unified(unified_lines: List[str]) -> List[List[str]]:
     return hunks
 
 
-def _extract_hunks_from_llvm_diff(diff_text: str) -> List[List[str]]:
-    hunks = []
-    current_hunk = []
-    for raw_line in diff_text.splitlines():
-        line = raw_line.lstrip()
-        if not line:
-            if current_hunk:
-                hunks.append(current_hunk)
-                current_hunk = []
-            continue
-
-        if line[0] in {"<", ">"}:
-            marker = "-" if line[0] == "<" else "+"
-            content = line[1:].lstrip()
-            current_hunk.append(marker + content)
-            continue
-
-        if current_hunk:
-            hunks.append(current_hunk)
-            current_hunk = []
-
-    if current_hunk:
-        hunks.append(current_hunk)
-    return hunks
-
-
 def _build_minimized_files_from_hunks(hunks: List[List[str]]) -> Optional[tuple]:
     if not hunks:
         return None
@@ -472,7 +447,6 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
 
 
 def run_opt(config: TestConfig):
-    log_file = os.path.join(REPORT_DIR, "opt_log")
     if os.path.exists(OPT_OUT_DIR):
         shutil.rmtree(OPT_OUT_DIR)
     os.makedirs(OPT_OUT_DIR)
@@ -531,7 +505,7 @@ def run_opt(config: TestConfig):
                 task_results[idx] = (proj, file, ret)
                 pbar.update(1)
 
-    with open(log_file, "w") as log_f:
+    with open(OPT_LOG_FILE, "w") as log_f:
         for item in task_results:
             if item is None:
                 continue
@@ -636,16 +610,36 @@ def compare_stats(baseline: dict, new: dict, by_project: bool, avg: bool) -> str
 
 
 def _report_ir_output_path(ir_path: str) -> str:
-    return os.path.join(
-        REPORT_DIR,
-        os.path.basename(ir_path)
-        .replace(".ref.ll", ".ll")
-        .replace(".new.ll", ".ll"),
+    normalized_name = (
+        os.path.basename(ir_path).replace(".ref.ll", ".ll").replace(".new.ll", ".ll")
     )
+    if "-s-" in normalized_name:
+        proj, file_name = normalized_name.split("-s-", 1)
+        return os.path.join(REPORT_DIR, proj, file_name)
+    return os.path.join(REPORT_DIR, normalized_name)
 
 
 def copy_report_ir(ir_path: str):
-    shutil.copy(ir_path, _report_ir_output_path(ir_path))
+    output_path = _report_ir_output_path(ir_path)
+    output_dir = os.path.dirname(output_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+    shutil.copy(ir_path, output_path)
+
+
+def get_opt_log_preview() -> str:
+    if not os.path.exists(OPT_LOG_FILE):
+        return ""
+    with open(OPT_LOG_FILE, "r") as f:
+        lines = [line.rstrip("\n") for line in f.readlines()]
+    non_empty_lines = [line for line in lines if line.strip()]
+    if not non_empty_lines:
+        return ""
+    preview_lines = non_empty_lines[:25]
+    if len(non_empty_lines) > 25:
+        preview_lines.append("truncated")
+    preview = "\n".join(preview_lines)
+    return f"## Errors\n```\n{preview}\n```\n"
 
 
 def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
@@ -808,6 +802,7 @@ def update():
     if should_report:
         pr_title = f"Update LLVM baseline to {new_revision[:8]}"
         pr_body = f"LLVM baseline is updated from https://github.com/llvm/llvm-project/commit/{old_revision} to https://github.com/llvm/llvm-project/commit/{new_revision}.\n\n"
+        pr_body += get_opt_log_preview()
         llvm_history = ""
         try:
             llvm_history = (
@@ -1012,6 +1007,7 @@ def test(user: str, comment_body: str, issue_url: str):
     pr_body += (
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
+    pr_body += get_opt_log_preview()
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
