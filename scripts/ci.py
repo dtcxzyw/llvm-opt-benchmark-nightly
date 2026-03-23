@@ -671,18 +671,24 @@ def build_diff_review_links(
     base_branch_name: str,
     positive_branch_name: str,
     negative_branch_name: str,
+    change_branch_name: str,
     kept_files: List[Tuple[str, str, int]],
 ) -> str:
     links = []
     if any(delta > 0 for _, _, delta in kept_files):
         links.append(
-            "- add - sub > 0: "
+            "- add > sub: "
             f"{REPORT_COMPARE_URL}/{base_branch_name}..{positive_branch_name}"
         )
     if any(delta < 0 for _, _, delta in kept_files):
         links.append(
-            "- add - sub < 0: "
+            "- add < sub: "
             f"{REPORT_COMPARE_URL}/{positive_branch_name}..{negative_branch_name}"
+        )
+    if any(delta == 0 for _, _, delta in kept_files):
+        links.append(
+            "- add == sub: "
+            f"{REPORT_COMPARE_URL}/{negative_branch_name}..{change_branch_name}"
         )
     if not links:
         return ""
@@ -877,6 +883,7 @@ def update():
             base_branch_name,
             positive_branch_name,
             negative_branch_name,
+            change_branch_name,
             kept_files,
         )
 
@@ -1062,6 +1069,7 @@ def test(user: str, comment_body: str, issue_url: str):
             base_branch_name,
             positive_branch_name,
             negative_branch_name,
+            change_branch_name,
             kept_files,
         )
     if stats:
