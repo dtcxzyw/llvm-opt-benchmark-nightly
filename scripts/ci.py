@@ -260,7 +260,7 @@ def _parse_review_response(text: str) -> Optional[Tuple[str, str]]:
     if not lines:
         return None
     first_line = lines[0].lower()
-    match = re.match(r"^(malicious|innocuous)\\b", first_line)
+    match = re.match(r"^(malicious|innocuous)\b", first_line)
     if not match:
         return None
     verdict = match.group(1)
