@@ -294,7 +294,6 @@ def _review_patch_chunk_with_openai(
 
     resp = client.chat.completions.create(
         model=OPENAI_MODEL,
-        temperature=0,
         messages=[
             {
                 "role": "system",
