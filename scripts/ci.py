@@ -313,6 +313,7 @@ def _review_patch_chunk_with_openai(
     content = ""
     if resp.choices and resp.choices[0].message and resp.choices[0].message.content:
         content = resp.choices[0].message.content
+    print(f"Review response for chunk {chunk_idx}/{chunk_total}:\n{content}\n")
     parsed = _parse_review_response(content)
     if parsed is not None:
         return parsed
