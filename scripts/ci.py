@@ -266,6 +266,7 @@ def _parse_review_response(text: str) -> Optional[Tuple[str, str]]:
     return verdict, reason
 
 
+@retry(stop=stop_after_attempt(3), wait=wait_exponential_jitter(initial=1, max=8), reraise=True)
 def _review_patch_chunk_with_openai(
     client: OpenAI,
     patch_chunk: str,
@@ -291,24 +292,23 @@ def _review_patch_chunk_with_openai(
         "</PATCH>\n"
     )
 
-    for _ in range(3):
-        resp = client.chat.completions.create(
-            model=OPENAI_MODEL,
-            temperature=0,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a strict patch safety and relevance reviewer.",
-                },
-                {"role": "user", "content": user_prompt},
-            ],
-        )
-        content = ""
-        if resp.choices and resp.choices[0].message and resp.choices[0].message.content:
-            content = resp.choices[0].message.content
-        parsed = _parse_review_response(content)
-        if parsed is not None:
-            return parsed
+    resp = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        temperature=0,
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a strict patch safety and relevance reviewer.",
+            },
+            {"role": "user", "content": user_prompt},
+        ],
+    )
+    content = ""
+    if resp.choices and resp.choices[0].message and resp.choices[0].message.content:
+        content = resp.choices[0].message.content
+    parsed = _parse_review_response(content)
+    if parsed is not None:
+        return parsed
 
     raise RuntimeError(
         f"Review model output format is invalid for chunk {chunk_idx}/{chunk_total}."

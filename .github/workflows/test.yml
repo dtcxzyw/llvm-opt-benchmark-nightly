@@ -38,6 +38,9 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN_READONLY }}
           GITHUB_TOKEN: ${{ secrets.PAT }}
           GITHUB_TOKEN_LLVM: ${{ secrets.PAT_MEMBERSHIP }}
+          OPENAI_API_URL: ${{ secrets.OPENAI_API_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          OPENAI_API_TOKEN: ${{ secrets.OPENAI_API_TOKEN }}
           USER: ${{ github.event.sender.login }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           ISSUE_URL: ${{ github.event.issue.number }}
