@@ -1,0 +1,13 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index ff086f79c417f..e75c7f010e82a 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -5381,7 +5381,7 @@ static bool isUsedWithinShuffleVector(Value *V) {
+ 
+ Instruction *InstCombinerImpl::visitFreeze(FreezeInst &I) {
+   Value *Op0 = I.getOperand(0);
+-
++  return replaceInstUsesWith(I, Op0);
+   if (Value *V = simplifyFreezeInst(Op0, SQ.getWithInstruction(&I)))
+     return replaceInstUsesWith(I, V);
+ 
