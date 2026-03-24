@@ -40,9 +40,13 @@ OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
-OPENAI_API_URL = os.environ.get("OPENAI_API_URL", os.environ.get("OPENAI_BASE_URL", ""))
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "")
-OPENAI_API_TOKEN = os.environ.get("OPENAI_API_TOKEN", os.environ.get("OPENAI_API_KEY", ""))
+OPENAI_API_URL = os.environ.get(
+    "OPENAI_API_URL", os.environ.get("OPENAI_BASE_URL", "")
+).strip()
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "").strip()
+OPENAI_API_TOKEN = os.environ.get(
+    "OPENAI_API_TOKEN", os.environ.get("OPENAI_API_KEY", "")
+).strip()
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -266,7 +270,11 @@ def _parse_review_response(text: str) -> Optional[Tuple[str, str]]:
     return verdict, reason
 
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential_jitter(initial=1, max=8), reraise=True)
+@retry(
+    stop=stop_after_attempt(3),
+    wait=wait_exponential_jitter(initial=1, max=8),
+    reraise=True,
+)
 def _review_patch_chunk_with_openai(
     client: OpenAI,
     patch_chunk: str,
