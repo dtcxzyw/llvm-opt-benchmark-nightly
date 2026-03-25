@@ -290,10 +290,6 @@ class FunctionMatcher {
   SmallPtrSet<const Value *, 16> MappedVals;
   DenseMap<const Value *, const Value *> ValMap;
 
-  DenseSet<std::pair<const Instruction *, const Instruction *>>
-      PotentialInstPairs;
-  DenseSet<std::pair<const BasicBlock *, const BasicBlock *>> PotentialBBPairs;
-
   bool isIdenticalValue(const Value *OldV, const Value *NewV) {
     if (OldV == NewV)
       return true;
@@ -374,29 +370,32 @@ class FunctionMatcher {
     return true;
   }
 
-  bool isIdenticalInstSlow(const Instruction *OldI, const Instruction *NewI) {
+  bool isIdenticalInst(const Instruction *OldI, const Instruction *NewI) {
     if (OldI->getOpcode() != NewI->getOpcode())
       return false;
     if (OldI->getNumOperands() != NewI->getNumOperands())
       return false;
+    if (!Comparator.isSameType(OldI->getType(), NewI->getType()))
+      return false;
     if (!hasSameSpecialStates(OldI, NewI))
       return false;
-    for (unsigned I = 0, E = OldI->getNumOperands(); I != E; ++I)
-      if (!isIdenticalValue(OldI->getOperand(I), NewI->getOperand(I)))
-        return false;
     return true;
   }
 
-  bool newValMatch(const Value *OldV, const Value *NewV) {
+  bool isIdenticalBB(const BasicBlock *OldBB, const BasicBlock *NewBB) {
+    return BBMap.lookup(OldBB) == NewBB;
+  }
+
+  void newValMatch(const Value *OldV, const Value *NewV) {
     if (OldV == NewV)
-      return false;
+      return;
     if (!(isa<Argument>(OldV) && isa<Argument>(NewV)) &&
         !(isa<Instruction>(OldV) && isa<Instruction>(NewV)))
-      return false;
+      return;
     if (MappedVals.contains(OldV) || MappedVals.contains(NewV))
-      return false;
+      return;
     if (!Comparator.isSameType(OldV->getType(), NewV->getType()))
-      return false;
+      return;
     if (auto *OldArg = dyn_cast<Argument>(OldV))
       if (auto *NewArg = dyn_cast<Argument>(NewV))
         if (OldArg->getArgNo() == NewArg->getArgNo() &&
@@ -404,142 +403,22 @@ class FunctionMatcher {
           MappedVals.insert(OldV);
           MappedVals.insert(NewV);
           ValMap.insert({OldV, NewV});
-          return true;
+          return;
         }
     if (auto *OldI = dyn_cast<Instruction>(OldV))
       if (auto *NewI = dyn_cast<Instruction>(NewV)) {
-        if (isIdenticalInstSlow(OldI, NewI)) {
+        if (isIdenticalInst(OldI, NewI)) {
           MappedVals.insert(OldV);
           MappedVals.insert(NewV);
           ValMap.insert({OldV, NewV});
-          return true;
-        } else {
-          PotentialInstPairs.insert({OldI, NewI});
+          return;
         }
       }
-    return false;
-  }
-
-  bool newBBMatch(const BasicBlock *OldBB, const BasicBlock *NewBB) {
-    if (MappedBBs.contains(OldBB) || MappedBBs.contains(NewBB))
-      return false;
-    if (!isIdenticalBBSlow(OldBB, NewBB)) {
-      PotentialBBPairs.insert({OldBB, NewBB});
-      return false;
-    }
-    for (auto &&[OldI, NewI] : zip(*OldBB, *NewBB)) {
-      MappedVals.insert(&OldI);
-      MappedVals.insert(&NewI);
-      ValMap.insert({&OldI, &NewI});
-    }
-    MappedBBs.insert(OldBB);
-    MappedBBs.insert(NewBB);
-    BBMap.insert({OldBB, NewBB});
-    return true;
-  }
-
-  bool isIdenticalBB(const BasicBlock *OldBB, const BasicBlock *NewBB) {
-    return OldBB == NewBB || BBMap.lookup(OldBB) == NewBB;
-  }
-
-  bool isIdenticalBBSlow(const BasicBlock *OldBB, const BasicBlock *NewBB) {
-    if (OldBB->size() != NewBB->size())
-      return false;
-    for (auto &&[OldI, NewI] : zip(*OldBB, *NewBB)) {
-      if (MappedVals.contains(&OldI) || MappedVals.contains(&NewI)) {
-        if (isIdenticalValue(&OldI, &NewI))
-          continue;
-        return false;
-      }
-      if (!isIdenticalInstSlow(&OldI, &NewI))
-        return false;
-    }
-    return true;
-  }
-
-  bool propagateBBMapping() {
-    SmallVector<std::pair<const BasicBlock *, const BasicBlock *>, 16> WorkList(
-        BBMap.begin(), BBMap.end());
-    bool Modified = false;
-    while (!WorkList.empty()) {
-      auto [OldBB, NewBB] = WorkList.pop_back_val();
-      if (auto *OldPred = OldBB->getUniquePredecessor())
-        if (auto *NewPred = NewBB->getUniquePredecessor())
-          if (newBBMatch(OldPred, NewPred))
-            WorkList.emplace_back(OldPred, NewPred);
-
-      if (auto *OldSucc = OldBB->getUniqueSuccessor())
-        if (auto *NewSucc = NewBB->getUniqueSuccessor()) {
-          if (newBBMatch(OldSucc, NewSucc))
-            WorkList.emplace_back(OldSucc, NewSucc);
-          continue;
-        }
-
-      // Terminators with identical cond & targets
-      if (auto *OldBr = dyn_cast<CondBrInst>(OldBB->getTerminator()))
-        if (auto *NewBr = dyn_cast<CondBrInst>(NewBB->getTerminator())) {
-          // TODO: match inverse condition and swapped targets
-          if (isIdenticalValue(OldBr->getCondition(), NewBr->getCondition())) {
-            if (newBBMatch(OldBr->getSuccessor(0), NewBr->getSuccessor(0)))
-              WorkList.emplace_back(OldBr->getSuccessor(0),
-                                    NewBr->getSuccessor(0));
-            if (newBBMatch(OldBr->getSuccessor(1), NewBr->getSuccessor(1)))
-              WorkList.emplace_back(OldBr->getSuccessor(1),
-                                    NewBr->getSuccessor(1));
-          }
-
-          continue;
-        }
-
-      if (auto *OldSwitch = dyn_cast<SwitchInst>(OldBB->getTerminator()))
-        if (auto *NewSwitch = dyn_cast<SwitchInst>(NewBB->getTerminator())) {
-          if (isIdenticalValue(OldSwitch->getCondition(),
-                               NewSwitch->getCondition()) &&
-              OldSwitch->getNumCases() == NewSwitch->getNumCases()) {
-            bool IsValid = true;
-            DenseMap<const BasicBlock *, const BasicBlock *> SuccMap;
-            for (auto &Case : OldSwitch->cases()) {
-              auto *OldSucc = Case.getCaseSuccessor();
-              auto NewCase = NewSwitch->findCaseValue(Case.getCaseValue());
-              if (NewCase == NewSwitch->case_default()) {
-                IsValid = false;
-                break;
-              }
-              auto *NewSucc = NewCase->getCaseSuccessor();
-              if (auto *OldMap = SuccMap.lookup(OldSucc)) {
-                if (OldMap != NewSucc) {
-                  IsValid = false;
-                  break;
-                }
-              }
-              SuccMap[OldSucc] = NewSucc;
-            }
-
-            if (IsValid) {
-              auto *OldDefault = OldSwitch->getDefaultDest();
-              auto *NewDefault = NewSwitch->getDefaultDest();
-              if (newBBMatch(OldDefault, NewDefault))
-                WorkList.emplace_back(OldDefault, NewDefault);
-              for (auto &[OldSucc, NewSucc] : SuccMap) {
-                if (newBBMatch(OldSucc, NewSucc))
-                  WorkList.emplace_back(OldSucc, NewSucc);
-              }
-            }
-          }
-          continue;
-        }
-    }
-
-    return Modified;
   }
 
   static constexpr uint32_t MaxCost = 10;
   uint32_t computeCost(const Instruction *OldI, const Instruction *NewI) {
-    if (OldI->getOpcode() != NewI->getOpcode())
-      return MaxCost;
-    if (OldI->getNumOperands() != NewI->getNumOperands())
-      return MaxCost;
-    if (!hasSameSpecialStates(OldI, NewI))
+    if (!isIdenticalInst(OldI, NewI))
       return MaxCost;
     uint32_t Cost = 0;
     for (unsigned I = 0, E = OldI->getNumOperands(); I != E; ++I)
@@ -548,18 +427,13 @@ class FunctionMatcher {
     return std::min(Cost, MaxCost);
   }
 
-  uint32_t computeEditDistance(const BasicBlock *OldBB,
-                               const BasicBlock *NewBB,
+  template <typename T, typename CostFn>
+  uint32_t computeEditDistance(const SmallVectorImpl<T> &OldSeq,
+                               const SmallVectorImpl<T> &NewSeq,
+                               CostFn &&CostFnImpl,
                                SmallVectorImpl<uint32_t> *Solution = nullptr) {
-    SmallVector<const Instruction *, 16> OldInsts;
-    SmallVector<const Instruction *, 16> NewInsts;
-    for (const Instruction &Inst : *OldBB)
-      OldInsts.push_back(&Inst);
-    for (const Instruction &Inst : *NewBB)
-      NewInsts.push_back(&Inst);
-
-    const uint32_t OldSize = OldInsts.size();
-    const uint32_t NewSize = NewInsts.size();
+    const uint32_t OldSize = OldSeq.size();
+    const uint32_t NewSize = NewSeq.size();
     SmallVector<SmallVector<uint32_t, 16>, 16> DP(
         OldSize + 1, SmallVector<uint32_t, 16>(NewSize + 1));
 
@@ -571,7 +445,7 @@ class FunctionMatcher {
     for (uint32_t I = 1; I <= OldSize; ++I) {
       for (uint32_t J = 1; J <= NewSize; ++J) {
         uint32_t MatchCost =
-            DP[I - 1][J - 1] + computeCost(OldInsts[I - 1], NewInsts[J - 1]);
+            DP[I - 1][J - 1] + CostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
         uint32_t DeleteCost = DP[I - 1][J] + 1;
         uint32_t InsertCost = DP[I][J - 1] + 1;
         DP[I][J] = std::min(MatchCost, std::min(DeleteCost, InsertCost));
@@ -588,7 +462,7 @@ class FunctionMatcher {
     while (I != 0 || J != 0) {
       if (I != 0 && J != 0) {
         uint32_t MatchCost =
-            DP[I - 1][J - 1] + computeCost(OldInsts[I - 1], NewInsts[J - 1]);
+            DP[I - 1][J - 1] + CostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
         if (DP[I][J] == MatchCost) {
           (*Solution)[I - 1] = J - 1;
           --I;
@@ -609,52 +483,46 @@ class FunctionMatcher {
     return DP[OldSize][NewSize];
   }
 
-  bool applyMapping(const BasicBlock *OldBB, const BasicBlock *NewBB) {
-    SmallVector<uint32_t, 16> Solution;
-    computeEditDistance(OldBB, NewBB, &Solution);
+  template <typename T, typename ApplyFn>
+  void applyMapping(const SmallVectorImpl<T> &OldSeq,
+                    const SmallVectorImpl<T> &NewSeq,
+                    const SmallVectorImpl<uint32_t> &Solution,
+                    ApplyFn &&ApplyFnImpl) {
+    for (uint32_t I = 0, E = OldSeq.size(); I != E; ++I) {
+      uint32_t J = Solution[I];
+      if (J == UINT32_MAX)
+        continue;
+      ApplyFnImpl(OldSeq[I], NewSeq[J]);
+    }
+  }
 
+  void applyMapping(const BasicBlock *OldBB, const BasicBlock *NewBB) {
     if (MappedBBs.contains(OldBB) || MappedBBs.contains(NewBB))
-      return false;
+      return;
 
+    SmallVector<const Instruction *, 16> OldInsts;
     SmallVector<const Instruction *, 16> NewInsts;
+    for (const Instruction &Inst : *OldBB)
+      OldInsts.push_back(&Inst);
     for (const Instruction &Inst : *NewBB)
       NewInsts.push_back(&Inst);
 
-    bool Modified = false;
+    SmallVector<uint32_t, 16> Solution;
+    computeEditDistance(
+        OldInsts, NewInsts,
+        [&](const Instruction *OldI, const Instruction *NewI) {
+          return computeCost(OldI, NewI);
+        },
+        &Solution);
+
     MappedBBs.insert(OldBB);
     MappedBBs.insert(NewBB);
     BBMap.insert({OldBB, NewBB});
-    PotentialBBPairs.erase({OldBB, NewBB});
-    Modified = true;
 
-    uint32_t OldIndex = 0;
-    for (const Instruction &OldI : *OldBB) {
-      uint32_t NewIndex = Solution[OldIndex++];
-      if (NewIndex == UINT32_MAX)
-        continue;
-      Modified |= newValMatch(&OldI, NewInsts[NewIndex]);
-    }
-
-    return Modified;
-  }
-
-  bool propagateValMapping() {
-    bool Modified = false;
-    while (true) {
-      bool Changed = false;
-      DenseSet<std::pair<const Instruction *, const Instruction *>>
-          InstWorkList;
-      InstWorkList.swap(PotentialInstPairs);
-      for (auto &[OldI, NewI] : InstWorkList) {
-        if (newValMatch(OldI, NewI))
-          Changed = true;
-      }
-
-      if (!Changed)
-        break;
-      Modified = true;
-    }
-    return Modified;
+    applyMapping(OldInsts, NewInsts, Solution,
+                 [&](const Instruction *OldI, const Instruction *NewI) {
+                   newValMatch(OldI, NewI);
+                 });
   }
 
   FunctionMapping buildMapping() const {
@@ -721,7 +589,6 @@ public:
       : OldF(OldF), NewF(NewF), Comparator(Comparator) {}
 
   FunctionMapping run() {
-    newBBMatch(&OldF.getEntryBlock(), &NewF.getEntryBlock());
     for (uint32_t I = 0, E = std::min(OldF.arg_size(), NewF.arg_size()); I != E;
          ++I) {
       Value *OldArg = OldF.getArg(I);
@@ -730,28 +597,35 @@ public:
         newValMatch(OldArg, NewArg);
     }
 
-    while (true) {
-      bool Changed = propagateBBMapping();
-      std::pair<const BasicBlock *, const BasicBlock *> BestBBPair = {nullptr,
-                                                                      nullptr};
-      uint32_t MinCost = UINT32_MAX;
-      for (auto &[OldBB, NewBB] : PotentialBBPairs) {
-        if (MappedBBs.contains(OldBB) || MappedBBs.contains(NewBB))
-          continue;
-        uint32_t Cost = computeEditDistance(OldBB, NewBB);
-        if (Cost < MinCost) {
-          MinCost = Cost;
-          BestBBPair = {OldBB, NewBB};
-        }
-      }
+    SmallVector<const BasicBlock *, 16> OldBBs;
+    SmallVector<const BasicBlock *, 16> NewBBs;
+    for (const BasicBlock &BB : OldF)
+      OldBBs.push_back(&BB);
+    for (const BasicBlock &BB : NewF)
+      NewBBs.push_back(&BB);
 
-      if (BestBBPair.first)
-        Changed |= applyMapping(BestBBPair.first, BestBBPair.second);
+    SmallVector<uint32_t, 16> BBSolution;
+    computeEditDistance(
+        OldBBs, NewBBs,
+        [&](const BasicBlock *OldBB, const BasicBlock *NewBB) {
+          SmallVector<const Instruction *, 16> OldInsts;
+          SmallVector<const Instruction *, 16> NewInsts;
+          for (const Instruction &Inst : *OldBB)
+            OldInsts.push_back(&Inst);
+          for (const Instruction &Inst : *NewBB)
+            NewInsts.push_back(&Inst);
+          return computeEditDistance(
+              OldInsts, NewInsts,
+              [&](const Instruction *OldI, const Instruction *NewI) {
+                return computeCost(OldI, NewI);
+              });
+        },
+        &BBSolution);
 
-      Changed |= propagateValMapping();
-      if (!Changed)
-        break;
-    }
+    applyMapping(OldBBs, NewBBs, BBSolution,
+                 [&](const BasicBlock *OldBB, const BasicBlock *NewBB) {
+                   applyMapping(OldBB, NewBB);
+                 });
 
     return buildMapping();
   }
