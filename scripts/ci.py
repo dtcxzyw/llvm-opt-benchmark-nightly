@@ -1041,13 +1041,14 @@ def update():
             copy_report_ir(ref_ir)
         create_branch(base_branch_name)
         commit_report_if_changed("report: baseline refs")
-        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
-            json.dump(stats, f, indent=2, sort_keys=True)        
-        commit_report_if_changed("report: metadata")
         push_branch(base_branch_name)
 
         create_branch(change_branch_name)
         commit_grouped_diff_changes(kept_files)
+
+        with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
+            json.dump(stats, f, indent=2, sort_keys=True)
+        commit_report_if_changed("report: metadata")
         push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
 
@@ -1233,16 +1234,17 @@ def test(user: str, comment_body: str, issue_url: str):
             copy_report_ir(ref_ir)
     create_branch(base_branch_name)
     commit_report_if_changed("report: baseline refs")
+    push_branch(base_branch_name)
+
+    create_branch(change_branch_name)
+    if kept_files:
+        commit_grouped_diff_changes(kept_files)
     if stats:
         with open(os.path.join(REPORT_DIR, "stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "patch.diff"))
     commit_report_if_changed("report: metadata")
-    push_branch(base_branch_name)
-    create_branch(change_branch_name)
-    if kept_files:
-        commit_grouped_diff_changes(kept_files)
     push_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
