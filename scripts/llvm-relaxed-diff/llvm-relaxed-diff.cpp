@@ -216,6 +216,9 @@ static cl::opt<std::string> NewFileOut(cl::Positional,
                                        cl::desc("<new_aligned>"), cl::Required,
                                        cl::value_desc("path to aligned new IR"),
                                        cl::cat(Category));
+static cl::opt<bool> Debug("debug",
+                           cl::desc("emit basic block/instruction mappings"),
+                           cl::init(false), cl::cat(Category));
 
 class TypeComparator {
   DenseMap<std::pair<const StructType *, const StructType *>, bool> QueryCache;
@@ -633,10 +636,113 @@ public:
 
 /// Behave like llvm-dis with --with-annotations.
 class CommentWriter : public AssemblyAnnotationWriter {
+  struct FunctionAnnotMapping {
+    DenseMap<uint32_t, uint32_t> BBMap;
+    DenseMap<uint64_t, uint64_t> InstMap;
+  };
+
+  bool DebugEnabled = false;
+  DenseMap<const BasicBlock *, uint32_t> BBIndices;
+  DenseMap<const Instruction *, uint64_t> InstIndices;
+  DenseMap<const Function *, FunctionAnnotMapping> MappingByFunction;
+
+  static uint64_t packInstLocation(uint32_t BBIndex, uint32_t InstIndex) {
+    return (static_cast<uint64_t>(BBIndex) << 32) | InstIndex;
+  }
+
+  static InstructionLocation unpackInstLocation(uint64_t Packed) {
+    return {static_cast<uint32_t>(Packed >> 32),
+            static_cast<uint32_t>(Packed & 0xffffffffu)};
+  }
+
 public:
+  CommentWriter(Module &M,
+                const SmallVectorImpl<std::pair<std::string, FunctionMapping>>
+                    &FunctionMappings,
+                bool ReverseDirection, bool DebugEnabled)
+      : DebugEnabled(DebugEnabled) {
+    for (Function &F : M) {
+      uint32_t BBIndex = 0;
+      for (BasicBlock &BB : F) {
+        BBIndices.insert({&BB, BBIndex});
+        uint32_t InstIndex = 0;
+        for (Instruction &Inst : BB) {
+          InstIndices.insert({&Inst, packInstLocation(BBIndex, InstIndex)});
+          ++InstIndex;
+        }
+        ++BBIndex;
+      }
+    }
+
+    for (const auto &[FunctionName, Mapping] : FunctionMappings) {
+      Function *F = M.getFunction(FunctionName);
+      if (!F || F->empty())
+        continue;
+
+      auto &FuncMapping = MappingByFunction[F];
+      for (const auto &[OldBBIndex, NewBBIndex] : Mapping.BBMappings) {
+        uint32_t Src = ReverseDirection ? NewBBIndex : OldBBIndex;
+        uint32_t Dst = ReverseDirection ? OldBBIndex : NewBBIndex;
+        FuncMapping.BBMap.insert({Src, Dst});
+      }
+
+      for (const auto &[OldLoc, NewLoc] : Mapping.InstMappings) {
+        uint64_t Src = ReverseDirection
+                           ? packInstLocation(NewLoc.BBIndex, NewLoc.InstIndex)
+                           : packInstLocation(OldLoc.BBIndex, OldLoc.InstIndex);
+        uint64_t Dst = ReverseDirection
+                           ? packInstLocation(OldLoc.BBIndex, OldLoc.InstIndex)
+                           : packInstLocation(NewLoc.BBIndex, NewLoc.InstIndex);
+        FuncMapping.InstMap.insert({Src, Dst});
+      }
+    }
+  }
+
+  void emitBasicBlockStartAnnot(const BasicBlock *BB,
+                                formatted_raw_ostream &OS) override {
+    if (!DebugEnabled)
+      return;
+
+    auto BBIt = BBIndices.find(BB);
+    if (BBIt == BBIndices.end())
+      return;
+
+    auto FuncIt = MappingByFunction.find(BB->getParent());
+    if (FuncIt == MappingByFunction.end())
+      return;
+
+    auto MappedIt = FuncIt->second.BBMap.find(BBIt->second);
+    if (MappedIt == FuncIt->second.BBMap.end())
+      return;
+
+    OS << "\t; map bb " << BBIt->second << " -> " << MappedIt->second << "\n";
+  }
+
+  void emitInstructionAnnot(const Instruction *I,
+                            formatted_raw_ostream &OS) override {
+    if (!DebugEnabled)
+      return;
+
+    auto InstIt = InstIndices.find(I);
+    if (InstIt == InstIndices.end())
+      return;
+
+    auto FuncIt = MappingByFunction.find(I->getFunction());
+    if (FuncIt == MappingByFunction.end())
+      return;
+
+    auto MappedIt = FuncIt->second.InstMap.find(InstIt->second);
+    if (MappedIt == FuncIt->second.InstMap.end())
+      return;
+
+    InstructionLocation CurLoc = unpackInstLocation(InstIt->second);
+    InstructionLocation MappedLoc = unpackInstLocation(MappedIt->second);
+    OS << "\t; map inst " << CurLoc.BBIndex << "." << CurLoc.InstIndex << " -> "
+       << MappedLoc.BBIndex << "." << MappedLoc.InstIndex << "\n";
+  }
+
   void printInfoComment(const Value &V, formatted_raw_ostream &OS) override {
-    if (isa<Instruction>(&V) && !V.getType()->isVoidTy() &&
-        V.hasNUsesOrMore(2)) {
+    if (isa<Instruction>(&V) && !V.getType()->isVoidTy() && !V.hasOneUse()) {
       OS.PadToColumn(50);
       OS << "; " << V.getNumUses() << " uses";
     }
@@ -697,7 +803,8 @@ int main(int argc, char **argv) {
     applyAlignedNames(*OldF, *NewF, Mapping);
   }
 
-  CommentWriter writer;
+  CommentWriter OldWriter(*OldOutM, FunctionMappings, false, Debug);
+  CommentWriter NewWriter(*NewOutM, FunctionMappings, true, Debug);
   std::error_code EC;
   auto OldOut =
       std::make_unique<ToolOutputFile>(OldFileOut, EC, sys::fs::OF_None);
@@ -716,8 +823,8 @@ int main(int argc, char **argv) {
   NewOutM->setModuleIdentifier("");
   OldOutM->setSourceFileName("");
   NewOutM->setSourceFileName("");
-  OldOutM->print(OldOut->os(), &writer);
-  NewOutM->print(NewOut->os(), &writer);
+  OldOutM->print(OldOut->os(), &OldWriter);
+  NewOutM->print(NewOut->os(), &NewWriter);
 
   OldOut->keep();
   NewOut->keep();
