@@ -66,6 +66,30 @@ static std::string getUniqueRenamedValueName(Function &F, StringRef BaseName) {
   }
 }
 
+static bool isNameAvailableForTarget(Function &F, StringRef Name,
+                                     const Value *Target) {
+  if (Name.empty())
+    return false;
+  ValueSymbolTable *VST = F.getValueSymbolTable();
+  if (!VST)
+    return true;
+  Value *Conflict = VST->lookup(Name);
+  return !Conflict || Conflict == Target;
+}
+
+static std::string getUniqueSharedValueName(Function &OldF, const Value *OldV,
+                                            Function &NewF,
+                                            const Value *NewV,
+                                            StringRef BaseName) {
+  std::string Prefix = BaseName.empty() ? "tmp" : BaseName.str();
+  for (uint32_t I = 0;; ++I) {
+    std::string Candidate = Prefix + "." + getAlphabeticSuffix(I);
+    if (isNameAvailableForTarget(OldF, Candidate, OldV) &&
+        isNameAvailableForTarget(NewF, Candidate, NewV))
+      return Candidate;
+  }
+}
+
 static void makeDesiredNameAvailable(Function &F, StringRef DesiredName,
                                      Value &Target) {
   if (DesiredName.empty())
@@ -81,14 +105,36 @@ static void makeDesiredNameAvailable(Function &F, StringRef DesiredName,
   Conflict->setName(getUniqueRenamedValueName(F, DesiredName));
 }
 
-static void alignValueName(const Value &OldV, Value &NewV, Function &NewF) {
-  StringRef OldName = OldV.getName();
-  if (OldName.empty()) {
-    NewV.setName("");
-    return;
+static StringRef ensureUniquePrintableName(Function &F, Value &V) {
+  ValueSymbolTable *VST = F.getValueSymbolTable();
+  StringRef Name = V.getName();
+  if (!Name.empty() && (!VST || VST->lookup(Name) == &V))
+    return Name;
+
+  std::string UniqueName = getUniqueRenamedValueName(F, Name);
+  V.setName(UniqueName);
+  return V.getName();
+}
+
+static void alignValueName(Value &OldV, Value &NewV, Function &OldF,
+                           Function &NewF) {
+  StringRef OldName = ensureUniquePrintableName(OldF, OldV);
+
+  if (!isNameAvailableForTarget(NewF, OldName, &NewV)) {
+    std::string SharedName =
+        getUniqueSharedValueName(OldF, &OldV, NewF, &NewV, OldName);
+    OldV.setName(SharedName);
+    OldName = ensureUniquePrintableName(OldF, OldV);
   }
 
   makeDesiredNameAvailable(NewF, OldName, NewV);
+  if (!isNameAvailableForTarget(NewF, OldName, &NewV)) {
+    std::string SharedName =
+        getUniqueSharedValueName(OldF, &OldV, NewF, &NewV, OldName);
+    OldV.setName(SharedName);
+    OldName = ensureUniquePrintableName(OldF, OldV);
+  }
+
   NewV.setName(OldName);
 }
 
@@ -119,7 +165,7 @@ static void applyAlignedNames(Function &OldF, Function &NewF,
     auto *NewBB = getBasicBlockByIndex(NewF, NewBBIndex);
     if (!OldBB || !NewBB)
       continue;
-    alignValueName(*OldBB, *NewBB, NewF);
+    alignValueName(*OldBB, *NewBB, OldF, NewF);
   }
 
   for (auto [OldLoc, NewLoc] : Mapping.InstMappings) {
@@ -132,7 +178,7 @@ static void applyAlignedNames(Function &OldF, Function &NewF,
     auto *NewI = getInstructionByIndex(*NewBB, NewLoc.InstIndex);
     if (!OldI || !NewI)
       continue;
-    alignValueName(*OldI, *NewI, NewF);
+    alignValueName(*OldI, *NewI, OldF, NewF);
   }
 }
 
