@@ -2,73 +2,72 @@ begin_hunk_0
   %tmp.cf = getelementptr inbounds nuw i8, ptr %tmp.r, i64 88
   store i32 %tmp.ce, ptr %tmp.cf, align 8, !tbaa !111
   %tmp.cg = getelementptr inbounds nuw i8, ptr %tmp.q, i64 72 ; 2 uses
-  %tmp.ch = load i16, ptr %tmp.cg, align 8, !tbaa !112
-  %39 = sext i16 %tmp.ch to i64                   ; 2 uses
-  %40 = add nsw i64 %39, 1
-  %41 = icmp ult i64 %40, 1152921504606846976
-  br i1 %41, label %42, label %51
+  %tmp.ch = load i16, ptr %tmp.cg, align 8, !tbaa !112 ; 2 uses
+  %39 = icmp sgt i16 %tmp.ch, -2
+  br i1 %39, label %40, label %50
 
-42:                                               ; preds = %tmp.m
-  %43 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 48
-  %44 = load ptr, ptr %43, align 8, !tbaa !71
-  %45 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 92
-  %46 = load i32, ptr %45, align 4, !tbaa !113
-  %47 = sext i32 %46 to i64
-  %48 = shl nsw i64 %47, 4
-  %49 = shl nsw i64 %39, 4
-  %50 = tail call ptr @luaM_realloc_(ptr noundef %tmp.o, ptr noundef %44, i64 noundef %48, i64 noundef %49) #6
-  br label %53
+40:                                               ; preds = %tmp.m
+  %41 = sext i16 %tmp.ch to i64
+  %42 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 48
+  %43 = load ptr, ptr %42, align 8, !tbaa !71
+  %44 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 92
+  %45 = load i32, ptr %44, align 4, !tbaa !113
+  %46 = sext i32 %45 to i64
+  %47 = shl nsw i64 %46, 4
+  %48 = shl nsw i64 %41, 4
+  %49 = tail call ptr @luaM_realloc_(ptr noundef %tmp.o, ptr noundef %43, i64 noundef %47, i64 noundef %48) #6
+  br label %52
 
-51:                                               ; preds = %tmp.m
-  %52 = tail call ptr @luaM_toobig(ptr noundef %tmp.o) #6
-  br label %53
+50:                                               ; preds = %tmp.m
+  %51 = tail call ptr @luaM_toobig(ptr noundef %tmp.o) #6
+  br label %52
 
-53:                                               ; preds = %51, %42
-  %54 = phi ptr [ %50, %42 ], [ %52, %51 ]
-  %55 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 48
-  store ptr %54, ptr %55, align 8, !tbaa !71
-  %56 = load i16, ptr %tmp.cg, align 8, !tbaa !112
-  %57 = sext i16 %56 to i32
-  %58 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 92
-  store i32 %57, ptr %58, align 4, !tbaa !113
-  %59 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 112 ; 2 uses
-  %60 = load i8, ptr %59, align 8, !tbaa !114
-  %61 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 56 ; 2 uses
-  %62 = load ptr, ptr %61, align 8, !tbaa !115
-  %63 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 72 ; 2 uses
-  %64 = load i32, ptr %63, align 8, !tbaa !116
-  %65 = sext i32 %64 to i64
-  %66 = shl nsw i64 %65, 3
-  %67 = zext i8 %60 to i64
-  %68 = shl nuw nsw i64 %67, 3
-  %69 = tail call ptr @luaM_realloc_(ptr noundef %tmp.o, ptr noundef %62, i64 noundef %66, i64 noundef %68) #6
-  store ptr %69, ptr %61, align 8, !tbaa !115
-  %70 = load i8, ptr %59, align 8, !tbaa !114
-  %71 = zext i8 %70 to i32
-  store i32 %71, ptr %63, align 8, !tbaa !116
-  %72 = getelementptr inbounds nuw i8, ptr %tmp.q, i64 16
-  %73 = load ptr, ptr %72, align 8, !tbaa !39
-  store ptr %73, ptr %tmp.p, align 8, !tbaa !38
-  %74 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %75 = load i32, ptr %74, align 8, !tbaa !56
-  %.off.i = add i32 %75, -285
+52:                                               ; preds = %50, %40
+  %53 = phi ptr [ %49, %40 ], [ %51, %50 ]
+  %54 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 48
+  store ptr %53, ptr %54, align 8, !tbaa !71
+  %55 = load i16, ptr %tmp.cg, align 8, !tbaa !112
+  %56 = sext i16 %55 to i32
+  %57 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 92
+  store i32 %56, ptr %57, align 4, !tbaa !113
+  %58 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 112 ; 2 uses
+  %59 = load i8, ptr %58, align 8, !tbaa !114
+  %60 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 56 ; 2 uses
+  %61 = load ptr, ptr %60, align 8, !tbaa !115
+  %62 = getelementptr inbounds nuw i8, ptr %tmp.r, i64 72 ; 2 uses
+  %63 = load i32, ptr %62, align 8, !tbaa !116
+  %64 = sext i32 %63 to i64
+  %65 = shl nsw i64 %64, 3
+  %66 = zext i8 %59 to i64
+  %67 = shl nuw nsw i64 %66, 3
+  %68 = tail call ptr @luaM_realloc_(ptr noundef %tmp.o, ptr noundef %61, i64 noundef %65, i64 noundef %67) #6
+  store ptr %68, ptr %60, align 8, !tbaa !115
+  %69 = load i8, ptr %58, align 8, !tbaa !114
+  %70 = zext i8 %69 to i32
+  store i32 %70, ptr %62, align 8, !tbaa !116
+  %71 = getelementptr inbounds nuw i8, ptr %tmp.q, i64 16
+  %72 = load ptr, ptr %71, align 8, !tbaa !39
+  store ptr %72, ptr %tmp.p, align 8, !tbaa !38
+  %73 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %74 = load i32, ptr %73, align 8, !tbaa !56
+  %.off.i = add i32 %74, -285
   %switch.i = icmp ult i32 %.off.i, 2
-  br i1 %switch.i, label %76, label %anchor_token.exit
+  br i1 %switch.i, label %75, label %anchor_token.exit
 
-76:                                               ; preds = %53
-  %77 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %78 = load ptr, ptr %77, align 8, !tbaa !28     ; 2 uses
-  %79 = getelementptr inbounds nuw i8, ptr %78, i64 24
-  %80 = getelementptr inbounds nuw i8, ptr %78, i64 16
-  %81 = load i64, ptr %80, align 8, !tbaa !28
-  %82 = tail call ptr @luaX_newstring(ptr noundef nonnull %0, ptr noundef nonnull %79, i64 noundef %81) #6
+75:                                               ; preds = %52
+  %76 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %77 = load ptr, ptr %76, align 8, !tbaa !28     ; 2 uses
+  %78 = getelementptr inbounds nuw i8, ptr %77, i64 24
+  %79 = getelementptr inbounds nuw i8, ptr %77, i64 16
+  %80 = load i64, ptr %79, align 8, !tbaa !28
+  %81 = tail call ptr @luaX_newstring(ptr noundef nonnull %0, ptr noundef nonnull %78, i64 noundef %80) #6
   br label %anchor_token.exit
 
-anchor_token.exit:                                ; preds = %53, %76
-  %83 = getelementptr inbounds nuw i8, ptr %tmp.o, i64 16 ; 2 uses
-  %84 = load ptr, ptr %83, align 8, !tbaa !17
-  %85 = getelementptr inbounds i8, ptr %84, i64 -32
-  store ptr %85, ptr %83, align 8, !tbaa !17
+anchor_token.exit:                                ; preds = %52, %75
+  %82 = getelementptr inbounds nuw i8, ptr %tmp.o, i64 16 ; 2 uses
+  %83 = load ptr, ptr %82, align 8, !tbaa !17
+  %84 = getelementptr inbounds i8, ptr %83, i64 -32
+  store ptr %84, ptr %82, align 8, !tbaa !17
   ret void
 }
 
