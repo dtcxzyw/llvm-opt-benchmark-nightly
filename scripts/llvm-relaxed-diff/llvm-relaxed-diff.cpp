@@ -56,9 +56,11 @@ static std::string getAlphabeticSuffix(uint32_t Index) {
   return Result;
 }
 
-static std::string getUniqueRenamedValueName(Function &F, StringRef BaseName) {
+static std::string getUniqueRenamedValueName(Function &F, Value *V,
+                                             StringRef BaseName) {
   ValueSymbolTable *VST = F.getValueSymbolTable();
-  std::string Prefix = BaseName.empty() ? "tmp" : BaseName.str();
+  std::string Prefix =
+      BaseName.empty() ? (isa<Instruction>(V) ? "i" : "bb") : BaseName.str();
   for (uint32_t I = 0;; ++I) {
     std::string Candidate = Prefix + "." + getAlphabeticSuffix(I);
     if (!VST || !VST->lookup(Candidate))
@@ -109,7 +111,7 @@ static void makeDesiredNameAvailable(Function &F, StringRef DesiredName,
   Value *Conflict = VST->lookup(DesiredName);
   if (!Conflict || Conflict == &Target || isa<Argument>(Conflict))
     return;
-  Conflict->setName(getUniqueRenamedValueName(F, DesiredName));
+  Conflict->setName(getUniqueRenamedValueName(F, &Target, DesiredName));
 }
 
 static StringRef ensureUniquePrintableName(Function &F, Value &V) {
@@ -121,7 +123,7 @@ static StringRef ensureUniquePrintableName(Function &F, Value &V) {
   if (!Name.empty() && (!VST || VST->lookup(Name) == &V))
     return Name;
 
-  std::string UniqueName = getUniqueRenamedValueName(F, Name);
+  std::string UniqueName = getUniqueRenamedValueName(F, &V, Name);
   V.setName(UniqueName);
   return V.getName();
 }
