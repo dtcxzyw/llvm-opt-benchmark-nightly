@@ -35,6 +35,8 @@ OPT_OUT_DIR = os.path.join(ROOT_DIR, "work/opt-out")
 LLVM_REPO_URL = "https://github.com/llvm/llvm-project.git"
 DATA_DIR = os.path.join(ROOT_DIR, "data")
 STATS_BASELINE_FILE = os.path.join(DATA_DIR, "stats.json.baseline")
+STATS_BASELINE_FILE_PER_FILE = os.path.join(DATA_DIR, "stats_per_file.json.baseline")
+PER_FILE_INTERESTING_STATS = ["inline.NumInlined", "inline.NumDeleted"]
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
@@ -59,7 +61,12 @@ def sync_dataset_to_remote():
     huggingface_hub.sync_bucket(
         DATA_DIR,
         HF_URL,
-        include=["*/optimized/*.bc", "LLVM_VERSION", "stats.json.baseline"],
+        include=[
+            "*/optimized/*.bc",
+            "LLVM_VERSION",
+            "stats.json.baseline",
+            "stats_per_file.json.baseline",
+        ],
     )
 
 
@@ -433,8 +440,23 @@ def _build_minimized_files_from_hunks(hunks: List[List[str]]) -> Optional[tuple]
     return minimized_ref_lines, minimized_new_lines
 
 
+def _format_interesting_stats_lines(stats: Optional[dict]) -> List[str]:
+    if not stats:
+        return []
+    lines = []
+    for key in PER_FILE_INTERESTING_STATS:
+        if key in stats:
+            lines.append(f"{key}: {stats[key]}")
+    return lines
+
+
 # (ref_bc, new_bc) -> (minimized_ref_ir, minimized_new_ir)
-def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
+def compute_diff(
+    ref_bc: str,
+    new_bc: str,
+    ref_stats: Optional[dict] = None,
+    new_stats: Optional[dict] = None,
+) -> Optional[tuple]:
     base_name = new_bc.removesuffix(".bc")
     ref_ir = base_name + ".ref.ll"
     new_ir = base_name + ".new.ll"
@@ -452,6 +474,12 @@ def compute_diff(ref_bc: str, new_bc: str) -> Optional[tuple]:
         ref_lines = f.read().splitlines()
     with open(new_ir, "r") as f:
         new_lines = f.read().splitlines()
+
+    ref_stat_lines = _format_interesting_stats_lines(ref_stats)
+    new_stat_lines = _format_interesting_stats_lines(new_stats)
+    if ref_stat_lines or new_stat_lines:
+        ref_lines = ref_stat_lines + ref_lines
+        new_lines = new_stat_lines + new_lines
 
     unified = list(
         difflib.unified_diff(
@@ -490,7 +518,13 @@ def extract_stats_json(stderr_text: str) -> Optional[dict]:
     return None
 
 
-def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
+def run_opt_file(
+    config: TestConfig,
+    proj: str,
+    file: str,
+    worker_idx: int,
+    baseline_file_stats: Optional[dict] = None,
+):
     input_path = os.path.join(DATA_DIR, proj, "original", file)
     ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
     optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
@@ -562,16 +596,28 @@ def run_opt_file(config: TestConfig, proj: str, file: str, worker_idx: int):
                     os.remove(optimized_path)
 
                 if not identical:
-                    try:
-                        rendered = compute_diff(ref_path, optimized_path)
-                    except (subprocess.SubprocessError, OSError, RuntimeError):
-                        return "diff fail"
+                    rendered = (ref_path, optimized_path)
 
         err = ret.stderr.decode()
         stats_result = extract_stats_json(err)
         if stats_result is None:
             return "fail"
-        return stats_result, rendered
+        interesting_stats = {
+            key: stats_result[key]
+            for key in PER_FILE_INTERESTING_STATS
+            if key in stats_result
+        }
+        if rendered:
+            try:
+                rendered = compute_diff(
+                    ref_path,
+                    optimized_path,
+                    ref_stats=baseline_file_stats,
+                    new_stats=interesting_stats,
+                )
+            except (subprocess.SubprocessError, OSError, RuntimeError):
+                return "diff fail"
+        return stats_result, rendered, interesting_stats
     except subprocess.TimeoutExpired:
         return "timeout"
     except Exception:
@@ -622,13 +668,30 @@ def run_opt(config: TestConfig):
 
     comptime_results = {}
     stats_results = {}
+    per_file_stats_results = {}
     rendered_files = []
     task_results = [None] * len(tasks)
+
+    baseline_per_file_stats = {}
+    if not config.comptime and os.path.exists(STATS_BASELINE_FILE_PER_FILE):
+        try:
+            with open(STATS_BASELINE_FILE_PER_FILE, "r") as f:
+                baseline_per_file_stats = json.load(f)
+        except Exception:
+            baseline_per_file_stats = {}
 
     def _run_task(args):
         idx, (proj, file) = args
         worker_idx = idx % worker_count
-        return idx, proj, file, run_opt_file(config, proj, file, worker_idx=worker_idx)
+        file_key = f"{proj}/{file}"
+        baseline_file_stats = baseline_per_file_stats.get(file_key)
+        return idx, proj, file, run_opt_file(
+            config,
+            proj,
+            file,
+            worker_idx=worker_idx,
+            baseline_file_stats=baseline_file_stats,
+        )
 
     progress_miniters = max(1, math.ceil(len(tasks) * 0.05))
     with ThreadPoolExecutor(max_workers=worker_count) as executor:
@@ -649,7 +712,9 @@ def run_opt(config: TestConfig):
             if config.comptime:
                 comptime_results[f"{proj}/{file}"] = ret
             else:
-                stats_result, rendered = ret
+                stats_result, rendered, interesting_stats = ret
+                if interesting_stats:
+                    per_file_stats_results[f"{proj}/{file}"] = interesting_stats
                 if config.stats:
                     if config.stats in stats_result:
                         stats_results[f"{proj}/{file}"] = stats_result[config.stats]
@@ -661,7 +726,7 @@ def run_opt(config: TestConfig):
                     if rendered:
                         rendered_files.append(rendered)
 
-    return comptime_results, stats_results, rendered_files
+    return comptime_results, stats_results, rendered_files, per_file_stats_results
 
 
 # Pick top K improved/regressed stats
@@ -926,7 +991,7 @@ def update():
     if os.path.exists(STATS_BASELINE_FILE):
         with open(STATS_BASELINE_FILE, "r") as f:
             stats_baseline = json.load(f)
-    _, stats, rendered_files = run_opt(config)
+    _, stats, rendered_files, per_file_stats = run_opt(config)
     stats_cmp = "No significant changes.\n"
     if stats_baseline:
         stats_cmp = compare_stats(stats_baseline, stats, by_project=False, avg=False)
@@ -998,6 +1063,8 @@ def update():
     # Update baseline stats
     with open(STATS_BASELINE_FILE, "w") as f:
         json.dump(stats, f, indent=2, sort_keys=True)
+    with open(STATS_BASELINE_FILE_PER_FILE, "w") as f:
+        json.dump(per_file_stats, f, indent=2, sort_keys=True)
     # Update llvm version
     with open(os.path.join(DATA_DIR, "LLVM_VERSION"), "w") as f:
         f.write(new_revision)
@@ -1088,7 +1155,7 @@ def test(user: str, comment_body: str, issue_url: str):
         if not build_llvm(config):
             return
 
-        baseline_comptime, _, _ = run_opt(config)
+        baseline_comptime, _, _, _ = run_opt(config)
 
     try:
         patch_applied, patch_reject_reason = apply_llvm_patch(patch_url)
@@ -1126,7 +1193,7 @@ def test(user: str, comment_body: str, issue_url: str):
             user,
         )
         return
-    comptime, stats, rendered_files = run_opt(config)
+    comptime, stats, rendered_files, _ = run_opt(config)
 
     comptime_cmp = None
     stats_cmp = None
