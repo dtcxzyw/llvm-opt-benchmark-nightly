@@ -77,11 +77,18 @@ static bool isNameAvailableForTarget(Function &F, StringRef Name,
   return !Conflict || Conflict == Target;
 }
 
+static bool canAssignName(const Value &V) {
+  if (const auto *I = dyn_cast<Instruction>(&V))
+    return !I->getType()->isVoidTy();
+  return isa<BasicBlock>(V);
+}
+
 static std::string getUniqueSharedValueName(Function &OldF, const Value *OldV,
                                             Function &NewF,
                                             const Value *NewV,
                                             StringRef BaseName) {
-  std::string Prefix = BaseName.empty() ? "tmp" : BaseName.str();
+  std::string Prefix =
+      BaseName.empty() ? (isa<Instruction>(OldV) ? "i" : "bb") : BaseName.str();
   for (uint32_t I = 0;; ++I) {
     std::string Candidate = Prefix + "." + getAlphabeticSuffix(I);
     if (isNameAvailableForTarget(OldF, Candidate, OldV) &&
@@ -106,6 +113,9 @@ static void makeDesiredNameAvailable(Function &F, StringRef DesiredName,
 }
 
 static StringRef ensureUniquePrintableName(Function &F, Value &V) {
+  if (!canAssignName(V))
+    return "";
+
   ValueSymbolTable *VST = F.getValueSymbolTable();
   StringRef Name = V.getName();
   if (!Name.empty() && (!VST || VST->lookup(Name) == &V))
@@ -118,7 +128,12 @@ static StringRef ensureUniquePrintableName(Function &F, Value &V) {
 
 static void alignValueName(Value &OldV, Value &NewV, Function &OldF,
                            Function &NewF) {
+  if (!canAssignName(OldV) || !canAssignName(NewV))
+    return;
+
   StringRef OldName = ensureUniquePrintableName(OldF, OldV);
+  if (OldName.empty())
+    return;
 
   if (!isNameAvailableForTarget(NewF, OldName, &NewV)) {
     std::string SharedName =
