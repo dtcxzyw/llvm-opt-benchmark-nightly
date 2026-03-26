@@ -898,9 +898,9 @@ def generate_diff_report(
         total_added += number_of_added_lines
         total_removed += number_of_removed_lines
 
-        cost = len(ref_lines) + number_of_added_lines + number_of_removed_lines
-        real_cost = cost
-        if cost > MAX_DIFF_PER_FILE or len(new_lines) > MAX_DIFF_PER_FILE:
+        cost = number_of_added_lines + number_of_removed_lines
+        real_cost = len(diff_lines)
+        if cost > MAX_DIFF_PER_FILE or real_cost > MAX_DIFF_PER_FILE:
             continue
         if number_of_added_lines == number_of_removed_lines:
             cost += TRIVIAL_PENALTY
