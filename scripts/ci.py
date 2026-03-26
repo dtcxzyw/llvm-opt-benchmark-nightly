@@ -147,6 +147,7 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
             )
         pr_number = match.group(1)
 
+        print(f"Updating PR body with actual PR number {pr_number}...")
         updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
         env = os.environ.copy()
         env["GITHUB_TOKEN"] = GH_TOKEN_PR_EDIT
