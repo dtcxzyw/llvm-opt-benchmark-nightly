@@ -43,6 +43,7 @@ OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+GH_TOKEN_PR_EDIT = os.environ.get("GITHUB_TOKEN_PR_EDIT", "")
 OPENAI_API_URL = os.environ.get(
     "OPENAI_API_URL", os.environ.get("OPENAI_BASE_URL", "")
 ).strip()
@@ -146,11 +147,14 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
         pr_number = match.group(1)
 
         updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
+        env = os.environ.copy()
+        env["GITHUB_TOKEN"] = GH_TOKEN_PR_EDIT
         subprocess.run(
             ["gh", "pr", "edit", pr_number, "--body-file", "-"],
             input=updated_body.encode("utf-8"),
             check=True,
             cwd=ROOT_DIR,
+            env=env,
         )
         return
 
