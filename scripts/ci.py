@@ -981,7 +981,7 @@ def generate_diff_report(
         path = f"{proj}/{file_name}"
         diff_url = hashlib.sha256(f"report/{path}.ll".encode()).hexdigest()
         report += (
-            f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](#diff-{diff_url})\n"
+            f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](files#diff-{diff_url})\n"
         )
 
     return report, kept_files
