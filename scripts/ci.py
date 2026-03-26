@@ -905,7 +905,7 @@ def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
             pr_body += f"[{message}](NUMBER_PLACEHOLDER/commits/{commit_hash})\n"
 
     if len(pr_body) > 0:
-        pr_body = "## Grouped changes:\n\n" + pr_body
+        pr_body = "## Grouped changes\n\n" + pr_body
     return pr_body
 
 
