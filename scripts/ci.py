@@ -972,7 +972,7 @@ def generate_diff_report(
         pos = name.index("-s-")
         proj = name[:pos]
         file_name = name[pos + 3 :].removesuffix(".ref.ll")
-        report += f"{proj}/{file_name}: +{add} -{sub}\n"
+        report += f"+{add:>3} -{sub:>3} {proj}/{file_name}\n"
 
     return report, kept_files
 
