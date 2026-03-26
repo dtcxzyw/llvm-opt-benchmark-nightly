@@ -43,7 +43,6 @@ OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
-GH_TOKEN_PR_EDIT = os.environ.get("GITHUB_TOKEN_PR_EDIT", "")
 OPENAI_API_URL = os.environ.get(
     "OPENAI_API_URL", os.environ.get("OPENAI_BASE_URL", "")
 ).strip()
@@ -149,14 +148,11 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
 
         print(f"Updating PR body with actual PR number {pr_number}...")
         updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
-        env = os.environ.copy()
-        env["GITHUB_TOKEN"] = GH_TOKEN_PR_EDIT
         subprocess.run(
             ["gh", "pr", "edit", pr_number, "--body-file", "-"],
             input=updated_body.encode("utf-8"),
             check=True,
             cwd=ROOT_DIR,
-            env=env,
         )
         return
 
@@ -1309,8 +1305,7 @@ def test(user: str, comment_body: str, issue_url: str):
     push_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
-    except Exception as e:
-        print(e)
+    except Exception:
         reply_issue_comment(
             issue_url,
             comment_body,
