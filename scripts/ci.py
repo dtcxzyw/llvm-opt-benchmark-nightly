@@ -891,11 +891,22 @@ def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
         ("report: add < sub", lambda delta: delta < 0),
         ("report: add == sub", lambda delta: delta == 0),
     ]
+    pr_body = ""
     for message, predicate in groups:
         for _, new_ir, delta in kept_files:
             if predicate(delta):
                 copy_report_ir(new_ir)
-        commit_report_if_changed(message)
+        if commit_report_if_changed(message):
+            commit_hash = (
+                subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT_DIR)
+                .decode()
+                .strip()
+            )
+            pr_body += f"[{message}](NUMBER_PLACEHOLDER/commits/{commit_hash})\n"
+
+    if len(pr_body) > 0:
+        pr_body = "## Grouped changes:\n\n" + pr_body
+    return pr_body
 
 
 def generate_diff_report(
@@ -1095,7 +1106,7 @@ def update():
         push_branch(base_branch_name)
 
         create_branch(change_branch_name)
-        commit_grouped_diff_changes(kept_files)
+        pr_body += commit_grouped_diff_changes(kept_files)
 
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
@@ -1294,7 +1305,7 @@ def test(user: str, comment_body: str, issue_url: str):
 
     create_branch(change_branch_name)
     if kept_files:
-        commit_grouped_diff_changes(kept_files)
+        pr_body += commit_grouped_diff_changes(kept_files)
     if stats:
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
