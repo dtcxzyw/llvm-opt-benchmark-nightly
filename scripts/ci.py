@@ -116,6 +116,44 @@ def commit_report_if_changed(message: str) -> bool:
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def create_pr(head: str, base: str, title: str, body: str, label: str):
+    if "NUMBER_PLACEHOLDER" in body:
+        # Create PR first without explicit body, then patch in the body after
+        # replacing placeholder with the actual PR number.
+        create_output = subprocess.check_output(
+            [
+                "gh",
+                "pr",
+                "create",
+                "--head",
+                head,
+                "--base",
+                base,
+                "--title",
+                title,
+                "--fill",
+                "--label",
+                label,
+            ],
+            cwd=ROOT_DIR,
+            text=True,
+        ).strip()
+
+        match = re.search(r"/pull/(\d+)\b", create_output)
+        if not match:
+            raise RuntimeError(
+                f"Failed to parse PR number from output: {create_output}"
+            )
+        pr_number = match.group(1)
+
+        updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
+        subprocess.run(
+            ["gh", "pr", "edit", pr_number, "--body-file", "-"],
+            input=updated_body.encode("utf-8"),
+            check=True,
+            cwd=ROOT_DIR,
+        )
+        return
+
     subprocess.run(
         [
             "gh",
@@ -980,9 +1018,7 @@ def generate_diff_report(
         file_name = name[pos + 3 :].removesuffix(".ref.ll")
         path = f"{proj}/{file_name}"
         diff_url = hashlib.sha256(f"report/{path}.ll".encode()).hexdigest()
-        report += (
-            f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](files#diff-{diff_url})\n"
-        )
+        report += f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](NUMBER_PLACEHOLDER/files#diff-{diff_url})\n"
 
     return report, kept_files
 
