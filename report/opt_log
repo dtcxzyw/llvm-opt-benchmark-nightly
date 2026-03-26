@@ -1,0 +1,9 @@
+oiio/FileRules.bc: diff fail
+oiio/ViewingRules.bc: diff fail
+oiio/tif_jpeg_12.bc: diff fail
+oiio/exif.bc: diff fail
+oiio/tif_jpeg.bc: diff fail
+oiio/FileTransform.bc: diff fail
+redis/lparser.bc: diff fail
+redis/aof.bc: diff fail
+delta-rs/deltalake_core-1fa7f9344ca2d0c9.deltalake_core.c7669c1bd09fee8-cgu.15.bc: diff fail
