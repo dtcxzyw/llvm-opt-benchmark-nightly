@@ -138,6 +138,7 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
             cwd=ROOT_DIR,
             text=True,
         ).strip()
+        print(create_output)
 
         match = re.search(r"/pull/(\d+)\b", create_output)
         if not match:
@@ -1307,7 +1308,8 @@ def test(user: str, comment_body: str, issue_url: str):
     push_branch(change_branch_name)
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
-    except Exception:
+    except Exception as e:
+        print(e)
         reply_issue_comment(
             issue_url,
             comment_body,
