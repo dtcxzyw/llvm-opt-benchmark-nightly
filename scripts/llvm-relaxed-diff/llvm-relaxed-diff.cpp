@@ -401,8 +401,7 @@ class FunctionMatcher {
       return;
     if (auto *OldArg = dyn_cast<Argument>(OldV))
       if (auto *NewArg = dyn_cast<Argument>(NewV))
-        if (OldArg->getArgNo() == NewArg->getArgNo() &&
-            OldArg->getName() == NewArg->getName()) {
+        if (OldArg->getArgNo() == NewArg->getArgNo()) {
           MappedVals.insert(OldV);
           MappedVals.insert(NewV);
           ValMap.insert({OldV, NewV});
@@ -419,38 +418,60 @@ class FunctionMatcher {
       }
   }
 
-  static constexpr uint32_t MaxCost = 10;
+  // Keep substitution costs close to insert+delete so DP prefers alignment
+  // for structurally similar instructions.
+  static constexpr uint32_t MaxCost = 2;
   uint32_t computeCost(const Instruction *OldI, const Instruction *NewI) {
     if (!isIdenticalInst(OldI, NewI))
       return MaxCost;
-    uint32_t Cost = 0;
+    bool HasOperandMismatch = false;
     for (unsigned I = 0, E = OldI->getNumOperands(); I != E; ++I)
-      if (!isIdenticalValue(OldI->getOperand(I), NewI->getOperand(I)))
-        Cost += 1;
-    return std::min(Cost, MaxCost);
+      if (!isIdenticalValue(OldI->getOperand(I), NewI->getOperand(I))) {
+        HasOperandMismatch = true;
+        break;
+      }
+    return HasOperandMismatch ? 1 : 0;
   }
 
   template <typename T, typename CostFn>
   uint32_t computeEditDistance(const SmallVectorImpl<T> &OldSeq,
                                const SmallVectorImpl<T> &NewSeq,
                                CostFn &&CostFnImpl,
+                               uint32_t InsertDeleteCost = 1,
                                SmallVectorImpl<uint32_t> *Solution = nullptr) {
+    return computeEditDistanceWithGapCosts(
+        OldSeq, NewSeq,
+        [&](const T &OldElem, const T &NewElem) {
+          return CostFnImpl(OldElem, NewElem);
+        },
+        [&](const T &) { return InsertDeleteCost; },
+        [&](const T &) { return InsertDeleteCost; }, Solution);
+  }
+
+  template <typename T, typename MatchCostFn, typename DeleteCostFn,
+            typename InsertCostFn>
+  uint32_t computeEditDistanceWithGapCosts(
+      const SmallVectorImpl<T> &OldSeq, const SmallVectorImpl<T> &NewSeq,
+      MatchCostFn &&MatchCostFnImpl, DeleteCostFn &&DeleteCostFnImpl,
+      InsertCostFn &&InsertCostFnImpl,
+      SmallVectorImpl<uint32_t> *Solution = nullptr) {
     const uint32_t OldSize = OldSeq.size();
     const uint32_t NewSize = NewSeq.size();
     SmallVector<SmallVector<uint32_t, 16>, 16> DP(
         OldSize + 1, SmallVector<uint32_t, 16>(NewSize + 1));
 
-    for (uint32_t I = 0; I <= OldSize; ++I)
-      DP[I][0] = I;
-    for (uint32_t J = 0; J <= NewSize; ++J)
-      DP[0][J] = J;
+    DP[0][0] = 0;
+    for (uint32_t I = 1; I <= OldSize; ++I)
+      DP[I][0] = DP[I - 1][0] + DeleteCostFnImpl(OldSeq[I - 1]);
+    for (uint32_t J = 1; J <= NewSize; ++J)
+      DP[0][J] = DP[0][J - 1] + InsertCostFnImpl(NewSeq[J - 1]);
 
     for (uint32_t I = 1; I <= OldSize; ++I) {
       for (uint32_t J = 1; J <= NewSize; ++J) {
         uint32_t MatchCost =
-            DP[I - 1][J - 1] + CostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
-        uint32_t DeleteCost = DP[I - 1][J] + 1;
-        uint32_t InsertCost = DP[I][J - 1] + 1;
+            DP[I - 1][J - 1] + MatchCostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
+        uint32_t DeleteCost = DP[I - 1][J] + DeleteCostFnImpl(OldSeq[I - 1]);
+        uint32_t InsertCost = DP[I][J - 1] + InsertCostFnImpl(NewSeq[J - 1]);
         DP[I][J] = std::min(MatchCost, std::min(DeleteCost, InsertCost));
       }
     }
@@ -465,7 +486,7 @@ class FunctionMatcher {
     while (I != 0 || J != 0) {
       if (I != 0 && J != 0) {
         uint32_t MatchCost =
-            DP[I - 1][J - 1] + CostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
+            DP[I - 1][J - 1] + MatchCostFnImpl(OldSeq[I - 1], NewSeq[J - 1]);
         if (DP[I][J] == MatchCost) {
           (*Solution)[I - 1] = J - 1;
           --I;
@@ -474,12 +495,17 @@ class FunctionMatcher {
         }
       }
 
-      if (I != 0 && DP[I][J] == DP[I - 1][J] + 1) {
-        --I;
-        continue;
+      if (I != 0) {
+        uint32_t DeleteCost = DP[I - 1][J] + DeleteCostFnImpl(OldSeq[I - 1]);
+        if (DP[I][J] == DeleteCost) {
+          --I;
+          continue;
+        }
       }
 
-      assert(J != 0 && DP[I][J] == DP[I][J - 1] + 1);
+      assert(J != 0);
+      uint32_t InsertCost = DP[I][J - 1] + InsertCostFnImpl(NewSeq[J - 1]);
+      assert(DP[I][J] == InsertCost);
       --J;
     }
 
@@ -516,7 +542,7 @@ class FunctionMatcher {
         [&](const Instruction *OldI, const Instruction *NewI) {
           return computeCost(OldI, NewI);
         },
-        &Solution);
+        MaxCost, &Solution);
 
     MappedBBs.insert(OldBB);
     MappedBBs.insert(NewBB);
@@ -608,7 +634,7 @@ public:
       NewBBs.push_back(&BB);
 
     SmallVector<uint32_t, 16> BBSolution;
-    computeEditDistance(
+    computeEditDistanceWithGapCosts(
         OldBBs, NewBBs,
         [&](const BasicBlock *OldBB, const BasicBlock *NewBB) {
           SmallVector<const Instruction *, 16> OldInsts;
@@ -621,7 +647,14 @@ public:
               OldInsts, NewInsts,
               [&](const Instruction *OldI, const Instruction *NewI) {
                 return computeCost(OldI, NewI);
-              });
+              },
+              MaxCost);
+        },
+        [&](const BasicBlock *OldBB) {
+          return static_cast<uint32_t>(OldBB->size()) * MaxCost;
+        },
+        [&](const BasicBlock *NewBB) {
+          return static_cast<uint32_t>(NewBB->size()) * MaxCost;
         },
         &BBSolution);
 
