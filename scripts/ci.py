@@ -685,12 +685,17 @@ def run_opt(config: TestConfig):
         worker_idx = idx % worker_count
         file_key = f"{proj}/{file}"
         baseline_file_stats = baseline_per_file_stats.get(file_key)
-        return idx, proj, file, run_opt_file(
-            config,
+        return (
+            idx,
             proj,
             file,
-            worker_idx=worker_idx,
-            baseline_file_stats=baseline_file_stats,
+            run_opt_file(
+                config,
+                proj,
+                file,
+                worker_idx=worker_idx,
+                baseline_file_stats=baseline_file_stats,
+            ),
         )
 
     progress_miniters = max(1, math.ceil(len(tasks) * 0.05))
@@ -972,7 +977,7 @@ def generate_diff_report(
         pos = name.index("-s-")
         proj = name[:pos]
         file_name = name[pos + 3 :].removesuffix(".ref.ll")
-        report += f"+{add:>3} -{sub:>3} {proj}/{file_name}\n"
+        report += f"{add - sub:+5d} ({add:+5d} {-sub:+5d}) {proj}/{file_name}\n"
 
     return report, kept_files
 
