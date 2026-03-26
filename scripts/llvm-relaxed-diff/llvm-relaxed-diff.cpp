@@ -216,7 +216,7 @@ static cl::opt<std::string> NewFileOut(cl::Positional,
                                        cl::desc("<new_aligned>"), cl::Required,
                                        cl::value_desc("path to aligned new IR"),
                                        cl::cat(Category));
-static cl::opt<bool> Debug("debug",
+static cl::opt<bool> Debug("debug-mappings",
                            cl::desc("emit basic block/instruction mappings"),
                            cl::init(false), cl::cat(Category));
 
