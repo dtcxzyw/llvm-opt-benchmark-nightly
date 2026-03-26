@@ -20,6 +20,7 @@ import json
 import math
 from tqdm import tqdm
 from openai import OpenAI
+import hashlib
 import re
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -977,7 +978,11 @@ def generate_diff_report(
         pos = name.index("-s-")
         proj = name[:pos]
         file_name = name[pos + 3 :].removesuffix(".ref.ll")
-        report += f"{add - sub:+5d} ({add:+5d} {-sub:+5d}) {proj}/{file_name}\n"
+        path = f"{proj}/{file_name}"
+        diff_url = hashlib.sha256(f"report/{path}.ll".encode()).hexdigest()
+        report += (
+            f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](#diff-{diff_url})\n"
+        )
 
     return report, kept_files
 
@@ -1038,7 +1043,7 @@ def update():
 
         if stats_cmp:
             pr_body += f"## Changes in statistics\n```\n{stats_cmp}\n```\n"
-        pr_body += f"## Diff report\n```\n{report}\n```\n"
+        pr_body += f"## Diff report\n{report}\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
         change_branch_name = f"task-{JOB_ID}-change"
@@ -1046,6 +1051,7 @@ def update():
             copy_report_ir(ref_ir)
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats_baseline, f, indent=2, sort_keys=True)
+            f.write("\n")
         create_branch(base_branch_name)
         commit_report_if_changed("report: baseline refs")
         push_branch(base_branch_name)
@@ -1055,6 +1061,7 @@ def update():
 
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
+            f.write("\n")
         commit_report_if_changed("report: metadata")
         push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
@@ -1235,7 +1242,7 @@ def test(user: str, comment_body: str, issue_url: str):
     kept_files = None
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
-        pr_body += f"## Diff report\n```\n{report}\n```\n"
+        pr_body += f"## Diff report\n{report}\n"
     if kept_files:
         for ref_ir, _, _ in kept_files:
             copy_report_ir(ref_ir)
@@ -1243,6 +1250,7 @@ def test(user: str, comment_body: str, issue_url: str):
     if stats:
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats_baseline, f, indent=2, sort_keys=True)
+            f.write("\n")
     commit_report_if_changed("report: baseline refs")
     push_branch(base_branch_name)
 
@@ -1252,6 +1260,7 @@ def test(user: str, comment_body: str, issue_url: str):
     if stats:
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
             json.dump(stats, f, indent=2, sort_keys=True)
+            f.write("\n")
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "z_patch.diff"))
     commit_report_if_changed("report: metadata")
