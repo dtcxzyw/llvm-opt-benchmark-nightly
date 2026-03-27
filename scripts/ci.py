@@ -902,9 +902,7 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
 
     if avg and matched_count > 0:
         avg_change = math.exp((log_sum_new - log_sum_baseline) / matched_count) - 1
-        report += "\n| Aggregate | Value |\n"
-        report += "| --- | ---: |\n"
-        report += f"| GeoMean | {avg_change:+.2%} |\n"
+        report += f"| GeoMean | | | {avg_change:+.2%} |\n"
 
     report += "\n"
 
