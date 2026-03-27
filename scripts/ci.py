@@ -240,6 +240,13 @@ def backup_opt_outputs(dest_dir: str):
         os.makedirs(dest_dir, exist_ok=True)
 
 
+def dump_json_sorted(file_path: str, data: dict, trailing_newline: bool = False):
+    with open(file_path, "w") as f:
+        json.dump(data, f, indent=2, sort_keys=True)
+        if trailing_newline:
+            f.write("\n")
+
+
 # Get the latest llvm version from the upstream.
 def update_llvm() -> str:
     subprocess.check_call(["git", "fetch", "origin", "main"], cwd=LLVM_REPO)
@@ -1090,7 +1097,7 @@ def generate_diff_report(
         else:
             break
 
-    report = "| Scope | Files | Added | Removed |\n"
+    report = "| Scope | Files | Added Lines | Removed Lines |\n"
     report += "| --- | ---: | ---: | ---: |\n"
     report += (
         f"| Original | {len(rendered_files)} | {total_added} | {total_removed} |\n"
@@ -1101,7 +1108,7 @@ def generate_diff_report(
     kept_files_sorted.sort(key=lambda x: (x[1] - x[2], -(x[1] + x[2])), reverse=True)
     if len(kept_files_sorted) > 200:
         kept_files_sorted = kept_files_sorted[:100] + kept_files_sorted[-100:]
-    report += "| Delta | Added | Removed | File |\n"
+    report += "| Delta | Added Lines | Removed Lines | File |\n"
     report += "| ---: | ---: | ---: | --- |\n"
     for file, add, sub in kept_files_sorted:
         name = os.path.basename(file)
@@ -1180,9 +1187,11 @@ def update():
         change_branch_name = f"task-{JOB_ID}-change"
         for ref_ir, _, _ in kept_files:
             copy_report_ir(ref_ir)
-        with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
-            json.dump(stats_baseline, f, indent=2, sort_keys=True)
-            f.write("\n")
+        dump_json_sorted(
+            os.path.join(REPORT_DIR, "z_stats.json"),
+            stats_baseline,
+            trailing_newline=True,
+        )
         create_branch(base_branch_name)
         commit_report_if_changed("report: baseline refs")
         push_branch(base_branch_name)
@@ -1190,9 +1199,11 @@ def update():
         create_branch(change_branch_name)
         pr_body += commit_grouped_diff_changes(kept_files)
 
-        with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
-            json.dump(stats, f, indent=2, sort_keys=True)
-            f.write("\n")
+        dump_json_sorted(
+            os.path.join(REPORT_DIR, "z_stats.json"),
+            stats,
+            trailing_newline=True,
+        )
         commit_report_if_changed("report: metadata")
         push_branch(change_branch_name)
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "update")
@@ -1206,10 +1217,8 @@ def update():
             ref_path = os.path.join(DATA_DIR, proj, "optimized", file_name)
             os.replace(os.path.join(OPT_OUT_DIR, file), ref_path)
     # Update baseline stats
-    with open(STATS_BASELINE_FILE, "w") as f:
-        json.dump(stats, f, indent=2, sort_keys=True)
-    with open(STATS_BASELINE_FILE_PER_FILE, "w") as f:
-        json.dump(per_file_stats, f, indent=2, sort_keys=True)
+    dump_json_sorted(STATS_BASELINE_FILE, stats)
+    dump_json_sorted(STATS_BASELINE_FILE_PER_FILE, per_file_stats)
     # Update llvm version
     with open(os.path.join(DATA_DIR, "LLVM_VERSION"), "w") as f:
         f.write(new_revision)
@@ -1286,12 +1295,6 @@ def test(user: str, comment_body: str, issue_url: str):
 
     patch_name = patch_path.removeprefix("llvm/llvm-project/pull/")
 
-    baseline_patch_name = None
-    if baseline_patch_path:
-        baseline_patch_name = baseline_patch_path.removeprefix(
-            "llvm/llvm-project/pull/"
-        )
-
     if config.comptime:
         with open("/proc/sys/kernel/randomize_va_space", "r") as f:
             if int(f.read().strip()) != 0:
@@ -1307,6 +1310,7 @@ def test(user: str, comment_body: str, issue_url: str):
     compare_baseline_stats = None
     baseline_stage_per_file_stats = {}
     baseline_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-baseline")
+    current_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-current")
 
     # Optional stage A: run baseline patch first, then run current patch on a clean llvm base.
     stages = []
@@ -1392,7 +1396,7 @@ def test(user: str, comment_body: str, issue_url: str):
                 baseline_stage_per_file_stats = stage_per_file_stats
                 backup_opt_outputs(baseline_stage_opt_dir)
             elif stage_name == "current":
-                backup_opt_outputs(os.path.join(ROOT_DIR, "work", "opt-out-current"))
+                backup_opt_outputs(current_stage_opt_dir)
 
         current_result = stage_results["current"]
         comptime = current_result["comptime"]
@@ -1415,6 +1419,11 @@ def test(user: str, comment_body: str, issue_url: str):
         except Exception:
             pass
 
+        # Keep test workspace clean for later runs.
+        for path in [OPT_OUT_DIR, baseline_stage_opt_dir, current_stage_opt_dir]:
+            if os.path.exists(path):
+                shutil.rmtree(path)
+
     comptime_cmp = None
     stats_cmp = None
 
@@ -1432,9 +1441,7 @@ def test(user: str, comment_body: str, issue_url: str):
     pr_body = ""
     pr_body += f"cc @{user}\n\n"
     pr_body += f"Current: {patch_url}\n"
-    if baseline_patch_url and baseline_patch_name:
-        pr_body += f"Baseline: {baseline_patch_url} ({baseline_patch_name})\n"
-    elif baseline_patch_url:
+    if baseline_patch_url:
         pr_body += f"Baseline: {baseline_patch_url}\n"
     pr_body += (
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
@@ -1457,10 +1464,12 @@ def test(user: str, comment_body: str, issue_url: str):
         for ref_ir, _, _ in kept_files:
             copy_report_ir(ref_ir)
     create_branch(base_branch_name)
-    if stats and compare_baseline_stats is not None:
-        with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
-            json.dump(compare_baseline_stats, f, indent=2, sort_keys=True)
-            f.write("\n")
+    if stats and compare_baseline_stats is not None and not config.stats:
+        dump_json_sorted(
+            os.path.join(REPORT_DIR, "z_stats.json"),
+            compare_baseline_stats,
+            trailing_newline=True,
+        )
     commit_report_if_changed("report: baseline refs")
     push_branch(base_branch_name)
 
@@ -1468,9 +1477,11 @@ def test(user: str, comment_body: str, issue_url: str):
     if kept_files:
         pr_body += commit_grouped_diff_changes(kept_files)
     if stats:
-        with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
-            json.dump(stats, f, indent=2, sort_keys=True)
-            f.write("\n")
+        dump_json_sorted(
+            os.path.join(REPORT_DIR, "z_stats.json"),
+            stats,
+            trailing_newline=True,
+        )
     if os.path.exists(PATCH_FILE):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "z_patch.diff"))
     commit_report_if_changed("report: metadata")
