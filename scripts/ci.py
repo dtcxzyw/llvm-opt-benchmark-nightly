@@ -185,6 +185,61 @@ def setup_base_environment() -> str:
     return llvm_revision
 
 
+def normalize_patch_url(patch_url: str) -> Tuple[str, str]:
+    res = urlparse(patch_url)
+    if res.scheme != "https":
+        raise ValueError(f"Please provide a valid HTTPS URL: {patch_url}")
+    if res.netloc != "github.com":
+        raise ValueError(f"Please provide a valid GitHub URL: {patch_url}")
+    patch_path = res.path.removeprefix("/").strip()
+    if not patch_path:
+        raise ValueError(f"Invalid patch URL: {patch_url}")
+    return f"https://github.com/{patch_path}", patch_path
+
+
+def list_dataset_bc_tasks() -> List[Tuple[str, str]]:
+    tasks = []
+    for proj in os.listdir(DATA_DIR):
+        original_dir = os.path.join(DATA_DIR, proj, "original")
+        if not os.path.exists(original_dir):
+            continue
+        for file in os.listdir(original_dir):
+            if file.endswith(".bc"):
+                tasks.append((proj, file))
+    return tasks
+
+
+def extract_baseline_from_comment(comment_body: str) -> Tuple[str, Optional[str]]:
+    tokens = comment_body.split()
+    baseline_idx = None
+    for idx, token in enumerate(tokens):
+        if token == "--baseline":
+            baseline_idx = idx
+            break
+
+    if baseline_idx is None:
+        return comment_body, None
+
+    if baseline_idx + 1 >= len(tokens):
+        raise ValueError("Missing baseline URL after --baseline.")
+
+    baseline_url = tokens[baseline_idx + 1].strip()
+    remaining_tokens = tokens[:baseline_idx] + tokens[baseline_idx + 2 :]
+    cleaned_comment = " ".join(remaining_tokens).strip()
+    if not cleaned_comment:
+        raise ValueError("Patch URL is required in comment body.")
+    return cleaned_comment, baseline_url
+
+
+def backup_opt_outputs(dest_dir: str):
+    if os.path.exists(dest_dir):
+        shutil.rmtree(dest_dir)
+    if os.path.exists(OPT_OUT_DIR):
+        shutil.copytree(OPT_OUT_DIR, dest_dir)
+    else:
+        os.makedirs(dest_dir, exist_ok=True)
+
+
 # Get the latest llvm version from the upstream.
 def update_llvm() -> str:
     subprocess.check_call(["git", "fetch", "origin", "main"], cwd=LLVM_REPO)
@@ -565,9 +620,10 @@ def run_opt_file(
     file: str,
     worker_idx: int,
     baseline_file_stats: Optional[dict] = None,
+    enable_ir_diff: bool = True,
+    compare_ref_path: Optional[str] = None,
 ):
     input_path = os.path.join(DATA_DIR, proj, "original", file)
-    ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
     optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
     try:
         cmd = [OPT_BINARY, "-O3", input_path]
@@ -623,21 +679,27 @@ def run_opt_file(
             if not os.path.exists(optimized_path):
                 return "fail"
 
-            if os.path.exists(ref_path):
-                identical = False
-                if (
-                    subprocess.call(
-                        ["cmp", "-s", optimized_path, ref_path],
-                        stderr=subprocess.DEVNULL,
-                        stdout=subprocess.DEVNULL,
-                    )
-                    == 0
-                ):
-                    identical = True
-                    os.remove(optimized_path)
+            if enable_ir_diff:
+                ref_path = compare_ref_path
+                if ref_path is None:
+                    ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
+                if compare_ref_path is not None and not os.path.exists(ref_path):
+                    return "fail"
+                if os.path.exists(ref_path):
+                    identical = False
+                    if (
+                        subprocess.call(
+                            ["cmp", "-s", optimized_path, ref_path],
+                            stderr=subprocess.DEVNULL,
+                            stdout=subprocess.DEVNULL,
+                        )
+                        == 0
+                    ):
+                        identical = True
+                        os.remove(optimized_path)
 
-                if not identical:
-                    rendered = (ref_path, optimized_path)
+                    if not identical:
+                        rendered = (ref_path, optimized_path)
 
         err = ret.stderr.decode()
         stats_result = extract_stats_json(err)
@@ -665,19 +727,17 @@ def run_opt_file(
         return "fail"
 
 
-def run_opt(config: TestConfig):
+def run_opt(
+    config: TestConfig,
+    enable_ir_diff: bool = True,
+    compare_ref_root: Optional[str] = None,
+    compare_per_file_stats: Optional[dict] = None,
+):
     if os.path.exists(OPT_OUT_DIR):
         shutil.rmtree(OPT_OUT_DIR)
     os.makedirs(OPT_OUT_DIR)
 
-    tasks = []
-    for proj in os.listdir(DATA_DIR):
-        original_dir = os.path.join(DATA_DIR, proj, "original")
-        if not os.path.exists(original_dir):
-            continue
-        for file in os.listdir(original_dir):
-            if file.endswith(".bc"):
-                tasks.append((proj, file))
+    tasks = list_dataset_bc_tasks()
 
     # Keep worker count bounded and configurable for CI environments.
     workers_env = os.environ.get("OPT_BENCH_WORKERS")
@@ -713,8 +773,12 @@ def run_opt(config: TestConfig):
     rendered_files = []
     task_results = [None] * len(tasks)
 
-    baseline_per_file_stats = {}
-    if not config.comptime and os.path.exists(STATS_BASELINE_FILE_PER_FILE):
+    baseline_per_file_stats = compare_per_file_stats or {}
+    if (
+        compare_per_file_stats is None
+        and not config.comptime
+        and os.path.exists(STATS_BASELINE_FILE_PER_FILE)
+    ):
         try:
             with open(STATS_BASELINE_FILE_PER_FILE, "r") as f:
                 baseline_per_file_stats = json.load(f)
@@ -726,6 +790,9 @@ def run_opt(config: TestConfig):
         worker_idx = idx % worker_count
         file_key = f"{proj}/{file}"
         baseline_file_stats = baseline_per_file_stats.get(file_key)
+        compare_ref_path = None
+        if compare_ref_root is not None:
+            compare_ref_path = os.path.join(compare_ref_root, f"{proj}-s-{file}")
         return (
             idx,
             proj,
@@ -736,6 +803,8 @@ def run_opt(config: TestConfig):
                 file,
                 worker_idx=worker_idx,
                 baseline_file_stats=baseline_file_stats,
+                enable_ir_diff=enable_ir_diff,
+                compare_ref_path=compare_ref_path,
             ),
         )
 
@@ -1036,6 +1105,40 @@ def generate_diff_report(
     return report, kept_files
 
 
+def summarize_rendered_files(rendered_files: list) -> str:
+    total_added = 0
+    total_removed = 0
+    for ref_ir, new_ir in rendered_files:
+        with open(ref_ir, "r") as f:
+            ref_lines = f.readlines()
+        with open(new_ir, "r") as f:
+            new_lines = f.readlines()
+        diff = difflib.unified_diff(
+            ref_lines,
+            new_lines,
+            fromfile=ref_ir,
+            tofile=new_ir,
+            n=3,
+            lineterm="",
+        )
+        diff_lines = list(diff)
+        total_added += sum(
+            1
+            for line in diff_lines
+            if line.startswith("+") and not line.startswith("+++")
+        )
+        total_removed += sum(
+            1
+            for line in diff_lines
+            if line.startswith("-") and not line.startswith("---")
+        )
+
+    return (
+        f"Total {len(rendered_files)} files with differences. "
+        f"Total added lines: {total_added}, total removed lines: {total_removed}."
+    )
+
+
 def update():
     old_revision = setup_base_environment()
     new_revision = update_llvm()
@@ -1140,6 +1243,16 @@ def test(user: str, comment_body: str, issue_url: str):
     if comment_body.startswith(">"):
         # Ignore quoted comments.
         return
+    try:
+        comment_body, baseline_patch_url = extract_baseline_from_comment(comment_body)
+    except ValueError as e:
+        reply_issue_comment(
+            issue_url,
+            comment_body,
+            str(e),
+            user,
+        )
+        return
     config = TestConfig()
     patch_url = ""
     if comment_body.startswith("/comptime "):
@@ -1167,43 +1280,38 @@ def test(user: str, comment_body: str, issue_url: str):
         patch_url = comment_body
 
     try:
-        res = urlparse(patch_url)
-        if res.scheme != "https":
-            reply_issue_comment(
-                issue_url,
-                comment_body,
-                f"Please provide a valid HTTPS URL: {patch_url}",
-                user,
-            )
-            return
-        if res.netloc != "github.com":
-            reply_issue_comment(
-                issue_url,
-                comment_body,
-                f"Please provide a valid GitHub URL: {patch_url}",
-                user,
-            )
-            return
-        patch_path = res.path.removeprefix("/").strip()
-        if not patch_path:
-            reply_issue_comment(
-                issue_url,
-                comment_body,
-                f"Invalid patch URL: {patch_url}",
-                user,
-            )
-            return
-        patch_url = f"https://github.com/{patch_path}"
-    except Exception:
+        patch_url, patch_path = normalize_patch_url(patch_url)
+    except ValueError as e:
         reply_issue_comment(
             issue_url,
             comment_body,
-            f"Invalid patch URL: {patch_url}",
+            str(e),
             user,
         )
         return
 
+    baseline_patch_path = None
+    if baseline_patch_url:
+        try:
+            baseline_patch_url, baseline_patch_path = normalize_patch_url(
+                baseline_patch_url.strip()
+            )
+        except ValueError as e:
+            reply_issue_comment(
+                issue_url,
+                comment_body,
+                f"Invalid baseline patch URL: {e}",
+                user,
+            )
+            return
+
     patch_name = patch_path.removeprefix("llvm/llvm-project/pull/")
+
+    baseline_patch_name = None
+    if baseline_patch_path:
+        baseline_patch_name = baseline_patch_path.removeprefix(
+            "llvm/llvm-project/pull/"
+        )
 
     if config.comptime:
         with open("/proc/sys/kernel/randomize_va_space", "r") as f:
@@ -1215,48 +1323,122 @@ def test(user: str, comment_body: str, issue_url: str):
                 print("Please enable userland `perf`")
                 return
 
-        if not build_llvm(config):
-            return
+    stage_results = {}
+    baseline_comptime = None
+    compare_baseline_stats = None
+    baseline_stage_rendered_files = []
+    baseline_stage_per_file_stats = {}
+    current_stage_per_file_stats = {}
+    baseline_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-baseline")
 
-        baseline_comptime, _, _, _ = run_opt(config)
+    # Optional stage A: run baseline patch first, then run current patch on a clean llvm base.
+    stages = []
+    if baseline_patch_url:
+        stages.append(("baseline", baseline_patch_url))
+    stages.append(("current", patch_url))
 
     try:
-        patch_applied, patch_reject_reason = apply_llvm_patch(patch_url)
-    except Exception:
-        reply_issue_comment(
-            issue_url,
-            comment_body,
-            "Failed to fetch the patch. Please make sure the patch URL is reachable and valid.",
-            user,
-        )
-        return
+        if config.comptime and not baseline_patch_url:
+            if not build_llvm(config):
+                return
+            baseline_comptime, _, _, _ = run_opt(config)
 
-    if patch_reject_reason:
-        reply_issue_comment(
-            issue_url,
-            comment_body,
-            f"Unable to run tests because patch review failed: {patch_reject_reason}",
-            user,
-        )
-        return
+        for idx, (stage_name, stage_patch_url) in enumerate(stages):
+            if idx > 0:
+                setup_llvm(old_revision)
 
-    if not patch_applied:
-        reply_issue_comment(
-            issue_url,
-            comment_body,
-            f"The patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or https://github.com/llvm/llvm-project/commit/{old_revision}) and does not have conflicts.",
-            user,
-        )
-        return
-    if not build_llvm(config):
-        reply_issue_comment(
-            issue_url,
-            comment_body,
-            f"Failed to build LLVM with the patch applied (base commit https://github.com/llvm/llvm-project/commit/{old_revision}). Please check if the patch can be built successfully.",
-            user,
-        )
-        return
-    comptime, stats, rendered_files, _ = run_opt(config)
+            try:
+                patch_applied, patch_reject_reason = apply_llvm_patch(stage_patch_url)
+            except Exception:
+                reply_issue_comment(
+                    issue_url,
+                    comment_body,
+                    f"Failed to fetch the {stage_name} patch. Please make sure the patch URL is reachable and valid.",
+                    user,
+                )
+                return
+
+            if patch_reject_reason:
+                reply_issue_comment(
+                    issue_url,
+                    comment_body,
+                    f"Unable to run tests because {stage_name} patch review failed: {patch_reject_reason}",
+                    user,
+                )
+                return
+
+            if not patch_applied:
+                reply_issue_comment(
+                    issue_url,
+                    comment_body,
+                    f"The {stage_name} patch cannot be applied cleanly. Please make sure the patch is based on the latest main branch (or https://github.com/llvm/llvm-project/commit/{old_revision}) and does not have conflicts.",
+                    user,
+                )
+                return
+
+            if not build_llvm(config):
+                reply_issue_comment(
+                    issue_url,
+                    comment_body,
+                    f"Failed to build LLVM with the {stage_name} patch applied (base commit https://github.com/llvm/llvm-project/commit/{old_revision}). Please check if the patch can be built successfully.",
+                    user,
+                )
+                return
+
+            stage_comptime, stage_stats, stage_rendered, stage_per_file_stats = run_opt(
+                config,
+                enable_ir_diff=(stage_name == "current" or not baseline_patch_url),
+                compare_ref_root=(
+                    baseline_stage_opt_dir
+                    if stage_name == "current"
+                    and baseline_patch_url
+                    and not config.comptime
+                    and not config.stats
+                    else None
+                ),
+                compare_per_file_stats=(
+                    baseline_stage_per_file_stats
+                    if stage_name == "current"
+                    and baseline_patch_url
+                    and not config.comptime
+                    else None
+                ),
+            )
+            stage_results[stage_name] = {
+                "comptime": stage_comptime,
+                "stats": stage_stats,
+                "rendered": stage_rendered,
+                "per_file_stats": stage_per_file_stats,
+            }
+
+            if stage_name == "baseline":
+                baseline_stage_rendered_files = stage_rendered
+                baseline_stage_per_file_stats = stage_per_file_stats
+                backup_opt_outputs(baseline_stage_opt_dir)
+            elif stage_name == "current":
+                current_stage_per_file_stats = stage_per_file_stats
+                backup_opt_outputs(os.path.join(ROOT_DIR, "work", "opt-out-current"))
+
+        current_result = stage_results["current"]
+        comptime = current_result["comptime"]
+        stats = current_result["stats"]
+        rendered_files = current_result["rendered"]
+
+        if baseline_patch_url:
+            baseline_result = stage_results["baseline"]
+            if config.comptime:
+                baseline_comptime = baseline_result["comptime"]
+            else:
+                compare_baseline_stats = baseline_result["stats"]
+        elif not config.comptime and os.path.exists(STATS_BASELINE_FILE):
+            with open(STATS_BASELINE_FILE, "r") as f:
+                compare_baseline_stats = json.load(f)
+
+    finally:
+        try:
+            setup_llvm(old_revision)
+        except Exception:
+            pass
 
     comptime_cmp = None
     stats_cmp = None
@@ -1265,21 +1447,25 @@ def test(user: str, comment_body: str, issue_url: str):
         comptime_cmp = compare_stats(
             baseline_comptime, comptime, by_project=True, avg=True
         )
-    elif os.path.exists(STATS_BASELINE_FILE):
-        with open(STATS_BASELINE_FILE, "r") as f:
-            stats_baseline = json.load(f)
+    elif compare_baseline_stats:
         single_stat = config.stats is not None
         stats_cmp = compare_stats(
-            stats_baseline, stats, by_project=single_stat, avg=single_stat
+            compare_baseline_stats, stats, by_project=single_stat, avg=single_stat
         )
 
     pr_title = f"pre-commit: {patch_name}"
     pr_body = ""
     pr_body += f"cc @{user}\n\n"
-    pr_body += f"Link: {patch_url}\n"
+    pr_body += f"Current: {patch_url}\n"
+    if baseline_patch_url and baseline_patch_name:
+        pr_body += f"Baseline: {baseline_patch_url} ({baseline_patch_name})\n"
+    elif baseline_patch_url:
+        pr_body += f"Baseline: {baseline_patch_url}\n"
     pr_body += (
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
+    if baseline_patch_url:
+        pr_body += "Comparison mode: baseline patch vs current patch (baseline stage runs first, then current stage after reset).\n"
     pr_body += get_opt_log_preview()
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
@@ -1292,13 +1478,18 @@ def test(user: str, comment_body: str, issue_url: str):
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n{report}\n"
+        if baseline_patch_url and baseline_stage_rendered_files:
+            baseline_stage_report = summarize_rendered_files(
+                baseline_stage_rendered_files
+            )
+            pr_body += f"## Baseline stage diff summary\n{baseline_stage_report}\n"
     if kept_files:
         for ref_ir, _, _ in kept_files:
             copy_report_ir(ref_ir)
     create_branch(base_branch_name)
-    if stats:
+    if stats and compare_baseline_stats is not None:
         with open(os.path.join(REPORT_DIR, "z_stats.json"), "w") as f:
-            json.dump(stats_baseline, f, indent=2, sort_keys=True)
+            json.dump(compare_baseline_stats, f, indent=2, sort_keys=True)
             f.write("\n")
     commit_report_if_changed("report: baseline refs")
     push_branch(base_branch_name)
