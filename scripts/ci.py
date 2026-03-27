@@ -878,18 +878,18 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
     TOPK = 10
     rows = []
     for key, old_value, new_value, change in improvements[:TOPK]:
-        rows.append(("decrement", key, old_value, new_value, change))
+        rows.append((key, old_value, new_value, change))
     for key, old_value, new_value, change in regressions[:TOPK]:
-        rows.append(("increment", key, old_value, new_value, change))
+        rows.append((key, old_value, new_value, change))
 
     if not rows:
         return f"No significant changes{postfix}.\n"
 
     report = f"Top changes{postfix}:\n"
-    report += "| Type | Metric | Baseline | Current | Change |\n"
-    report += "| --- | --- | ---: | ---: | ---: |\n"
-    for kind, key, old_value, new_value, change in rows:
-        report += f"| {kind} | {key} | {old_value} | {new_value} | {change:+.2%} |\n"
+    report += "| Metric | Baseline | Current | Change |\n"
+    report += "| --- | ---: | ---: | ---: |\n"
+    for key, old_value, new_value, change in rows:
+        report += f"| {key} | {old_value} | {new_value} | {change:+.2%} |\n"
 
     if avg and matched_count > 0:
         avg_change = math.exp((log_sum_new - log_sum_baseline) / matched_count) - 1
@@ -1088,14 +1088,12 @@ def generate_diff_report(
         else:
             break
 
-    report = "| Metric | Value |\n"
-    report += "| --- | ---: |\n"
-    report += f"| Total files with differences | {len(rendered_files)} |\n"
-    report += f"| Files shown in report | {len(kept_files)} |\n"
-    report += f"| Original added lines | {total_added} |\n"
-    report += f"| Original removed lines | {total_removed} |\n"
-    report += f"| Kept added lines | {kept_added} |\n"
-    report += f"| Kept removed lines | {kept_removed} |\n\n"
+    report = "| Scope | Files | Added | Removed |\n"
+    report += "| --- | ---: | ---: | ---: |\n"
+    report += (
+        f"| Original | {len(rendered_files)} | {total_added} | {total_removed} |\n"
+    )
+    report += f"| Kept | {len(kept_files)} | {kept_added} | {kept_removed} |\n\n"
 
     # Sort kept_files_sorted by add - sub.
     kept_files_sorted.sort(key=lambda x: (x[1] - x[2], -(x[1] + x[2])), reverse=True)
