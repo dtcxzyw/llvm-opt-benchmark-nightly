@@ -433,6 +433,8 @@ def review_patch_content(patch_content: str) -> Tuple[bool, str]:
             "Patch review is required but OpenAI settings are missing. "
             "Please set OPENAI_API_URL, OPENAI_MODEL, and OPENAI_API_TOKEN.",
         )
+    if len(patch_content) > 10000000:
+        return False, "Patch is too large to review."
 
     client = OpenAI(base_url=OPENAI_API_URL, api_key=OPENAI_API_TOKEN)
     chunks = _split_patch_for_review(patch_content, max_lines=10000)
