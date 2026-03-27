@@ -1454,7 +1454,10 @@ def test(user: str, comment_body: str, issue_url: str):
     if comptime_cmp:
         pr_body += f"## Changes in compile-time\n{comptime_cmp}\n"
     if stats_cmp:
-        pr_body += f"## Changes in statistics\n{stats_cmp}\n"
+        if config.stats:
+            pr_body += f"## Changes in {config.stats}\n{stats_cmp}\n"
+        else:
+            pr_body += f"## Changes in statistics\n{stats_cmp}\n"
 
     kept_files = None
     if not config.comptime and not config.stats:
