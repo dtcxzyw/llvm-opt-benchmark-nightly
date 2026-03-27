@@ -875,24 +875,29 @@ def compare_stats_impl(baseline: dict, new: dict, postfix: str, avg: bool) -> st
 
     improvements.sort(key=lambda x: x[3])
     regressions.sort(key=lambda x: x[3], reverse=True)
-    report = ""
     TOPK = 10
-    if improvements:
-        report += f"Top {min(len(improvements), TOPK)} decrements{postfix}:\n"
-        for key, old_value, new_value, change in improvements[:TOPK]:
-            report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
+    rows = []
+    for key, old_value, new_value, change in improvements[:TOPK]:
+        rows.append(("decrement", key, old_value, new_value, change))
+    for key, old_value, new_value, change in regressions[:TOPK]:
+        rows.append(("increment", key, old_value, new_value, change))
 
-    if regressions:
-        report += f"Top {min(len(regressions), TOPK)} increments{postfix}:\n"
-        for key, old_value, new_value, change in regressions[:TOPK]:
-            report += f"  {key}: {old_value} -> {new_value} {change:+.2%}\n"
-
-    if not report:
+    if not rows:
         return f"No significant changes{postfix}.\n"
+
+    report = f"Top changes{postfix}:\n"
+    report += "| Type | Metric | Baseline | Current | Change |\n"
+    report += "| --- | --- | ---: | ---: | ---: |\n"
+    for kind, key, old_value, new_value, change in rows:
+        report += f"| {kind} | {key} | {old_value} | {new_value} | {change:+.2%} |\n"
 
     if avg and matched_count > 0:
         avg_change = math.exp((log_sum_new - log_sum_baseline) / matched_count) - 1
-        report += f"\n  GeoMean: {avg_change:+.2%}\n"
+        report += "\n| Aggregate | Value |\n"
+        report += "| --- | ---: |\n"
+        report += f"| GeoMean | {avg_change:+.2%} |\n"
+
+    report += "\n"
 
     return report
 
@@ -1083,16 +1088,21 @@ def generate_diff_report(
         else:
             break
 
-    report = f"Total {len(rendered_files)} files with differences, showing {len(kept_files)} files in the report.\n"
-    report += f"Original: Total added lines: {total_added}, total removed lines: {total_removed}.\n"
-    report += (
-        f"Kept: Total added lines: {kept_added}, total removed lines: {kept_removed}.\n"
-    )
+    report = "| Metric | Value |\n"
+    report += "| --- | ---: |\n"
+    report += f"| Total files with differences | {len(rendered_files)} |\n"
+    report += f"| Files shown in report | {len(kept_files)} |\n"
+    report += f"| Original added lines | {total_added} |\n"
+    report += f"| Original removed lines | {total_removed} |\n"
+    report += f"| Kept added lines | {kept_added} |\n"
+    report += f"| Kept removed lines | {kept_removed} |\n\n"
 
     # Sort kept_files_sorted by add - sub.
     kept_files_sorted.sort(key=lambda x: (x[1] - x[2], -(x[1] + x[2])), reverse=True)
     if len(kept_files_sorted) > 200:
         kept_files_sorted = kept_files_sorted[:100] + kept_files_sorted[-100:]
+    report += "| Delta | Added | Removed | File |\n"
+    report += "| ---: | ---: | ---: | --- |\n"
     for file, add, sub in kept_files_sorted:
         name = os.path.basename(file)
         pos = name.index("-s-")
@@ -1100,43 +1110,12 @@ def generate_diff_report(
         file_name = name[pos + 3 :].removesuffix(".ref.ll")
         path = f"{proj}/{file_name}"
         diff_url = hashlib.sha256(f"report/{path}.ll".encode()).hexdigest()
-        report += f"`{add - sub:+5d} ({add:+5d} {-sub:+5d})` [{path}](NUMBER_PLACEHOLDER/files#diff-{diff_url})\n"
+        report += (
+            f"| {add - sub:+d} | {add} | {sub} | "
+            f"[{path}](NUMBER_PLACEHOLDER/files#diff-{diff_url}) |\n"
+        )
 
     return report, kept_files
-
-
-def summarize_rendered_files(rendered_files: list) -> str:
-    total_added = 0
-    total_removed = 0
-    for ref_ir, new_ir in rendered_files:
-        with open(ref_ir, "r") as f:
-            ref_lines = f.readlines()
-        with open(new_ir, "r") as f:
-            new_lines = f.readlines()
-        diff = difflib.unified_diff(
-            ref_lines,
-            new_lines,
-            fromfile=ref_ir,
-            tofile=new_ir,
-            n=3,
-            lineterm="",
-        )
-        diff_lines = list(diff)
-        total_added += sum(
-            1
-            for line in diff_lines
-            if line.startswith("+") and not line.startswith("+++")
-        )
-        total_removed += sum(
-            1
-            for line in diff_lines
-            if line.startswith("-") and not line.startswith("---")
-        )
-
-    return (
-        f"Total {len(rendered_files)} files with differences. "
-        f"Total added lines: {total_added}, total removed lines: {total_removed}."
-    )
 
 
 def update():
@@ -1194,7 +1173,7 @@ def update():
             pr_body += f"## Commits in this update:\n```\n{llvm_history}\n```\n\n"
 
         if stats_cmp:
-            pr_body += f"## Changes in statistics\n```\n{stats_cmp}\n```\n"
+            pr_body += f"## Changes in statistics\n{stats_cmp}\n"
         pr_body += f"## Diff report\n{report}\n"
 
         base_branch_name = f"task-{JOB_ID}-base"
@@ -1326,9 +1305,7 @@ def test(user: str, comment_body: str, issue_url: str):
     stage_results = {}
     baseline_comptime = None
     compare_baseline_stats = None
-    baseline_stage_rendered_files = []
     baseline_stage_per_file_stats = {}
-    current_stage_per_file_stats = {}
     baseline_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-baseline")
 
     # Optional stage A: run baseline patch first, then run current patch on a clean llvm base.
@@ -1412,11 +1389,9 @@ def test(user: str, comment_body: str, issue_url: str):
             }
 
             if stage_name == "baseline":
-                baseline_stage_rendered_files = stage_rendered
                 baseline_stage_per_file_stats = stage_per_file_stats
                 backup_opt_outputs(baseline_stage_opt_dir)
             elif stage_name == "current":
-                current_stage_per_file_stats = stage_per_file_stats
                 backup_opt_outputs(os.path.join(ROOT_DIR, "work", "opt-out-current"))
 
         current_result = stage_results["current"]
@@ -1470,19 +1445,14 @@ def test(user: str, comment_body: str, issue_url: str):
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
     if comptime_cmp:
-        pr_body += f"## Changes in compile-time\n```\n{comptime_cmp}\n```\n"
+        pr_body += f"## Changes in compile-time\n{comptime_cmp}\n"
     if stats_cmp:
-        pr_body += f"## Changes in statistics\n```\n{stats_cmp}\n```\n"
+        pr_body += f"## Changes in statistics\n{stats_cmp}\n"
 
     kept_files = None
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n{report}\n"
-        if baseline_patch_url and baseline_stage_rendered_files:
-            baseline_stage_report = summarize_rendered_files(
-                baseline_stage_rendered_files
-            )
-            pr_body += f"## Baseline stage diff summary\n{baseline_stage_report}\n"
     if kept_files:
         for ref_ir, _, _ in kept_files:
             copy_report_ir(ref_ir)
