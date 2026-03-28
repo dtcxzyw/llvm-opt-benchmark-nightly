@@ -1503,10 +1503,7 @@ def test(user: str, comment_body: str, issue_url: str):
         shutil.copy(PATCH_FILE, os.path.join(REPORT_DIR, "z_patch.diff"))
     commit_report_if_changed("report: metadata")
     push_branch(change_branch_name)
-    # Keep test workspace clean for later runs.
-    for path in [OPT_OUT_DIR, baseline_stage_opt_dir, current_stage_opt_dir]:
-        if os.path.exists(path):
-            shutil.rmtree(path)
+
     try:
         create_pr(change_branch_name, base_branch_name, pr_title, pr_body, "pr_review")
     except Exception:
