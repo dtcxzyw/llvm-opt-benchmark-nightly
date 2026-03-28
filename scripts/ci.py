@@ -588,7 +588,7 @@ def compute_diff(
         [RELAXED_DIFF_BINARY, ref_bc, new_bc, ref_ir, new_ir],
         stdin=subprocess.DEVNULL,
         capture_output=True,
-        timeout=120,
+        timeout=300,
     )
     if ret.returncode != 0:
         raise RuntimeError("llvm-relaxed-diff failed")
