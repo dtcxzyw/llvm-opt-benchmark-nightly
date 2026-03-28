@@ -1,0 +1,2 @@
+hermes/hermes_sandbox_impl_compiled_1.bc: diff fail
+llvm-test-suite/sqlite3.bc: fail
