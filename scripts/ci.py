@@ -1231,6 +1231,9 @@ def update():
             proj = file[:pos]
             file_name = file[pos + 3 :]
             ref_path = os.path.join(DATA_DIR, proj, "optimized", file_name)
+            ref_dir = os.path.dirname(ref_path)
+            if not os.path.exists(ref_dir):
+                os.makedirs(ref_dir)
             os.replace(os.path.join(OPT_OUT_DIR, file), ref_path)
     # Update baseline stats
     dump_json_sorted(STATS_BASELINE_FILE, stats)
