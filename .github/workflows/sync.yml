@@ -3,6 +3,9 @@ name: Sync with upstream LLVM
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: "0 */1 * * *"
+
 jobs:
   build:
     runs-on: [self-hosted, baseline]
