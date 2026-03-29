@@ -1452,7 +1452,9 @@ def test(user: str, comment_body: str, issue_url: str):
         )
 
     pr_title = f"pre-commit: {patch_name}"
-    pr_body = ""
+    pr_body = (
+        "Please read the instructions in the README to reproduce the results locally.\n"
+    )
     pr_body += f"cc @{user}\n\n"
     pr_body += f"Current: {patch_url}\n"
     if baseline_patch_url:
