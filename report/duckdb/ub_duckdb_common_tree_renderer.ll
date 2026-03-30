@@ -2,6 +2,7 @@ begin_hunk_0
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %i.l, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i = load <2 x i64>, ptr %i.e, align 8
   %i.m = zext i32 %i.f to i64
   %i.n = add nuw nsw i64 %i.j, %i.m               ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 10
@@ -10,7 +11,7 @@ begin_hunk_1
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i64 %.11224.i.i, ptr %i.ah, align 8, !tbaa !1463
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, ptr noundef nonnull align 8 dereferenceable(16) %i.e, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i, ptr %i.ai, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 56
   store i32 %i.f, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(17) %3, ptr noundef nonnull align 8 dereferenceable(64) %2)
@@ -19,6 +20,7 @@ begin_hunk_2
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %6, ptr noundef nonnull align 4 dereferenceable(20) %i.m, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i = load <2 x i64>, ptr %i.f, align 8
   %i.n = zext i32 %i.g to i64
   %i.o = add nuw nsw i64 %i.k, %i.n               ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 10
@@ -27,7 +29,7 @@ begin_hunk_3
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i64 %.11224.i.i, ptr %i.ai, align 8, !tbaa !1463
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i, ptr %i.aj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 56
   store i32 %i.g, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !3
   invoke void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(17) %6, ptr noundef nonnull align 8 dereferenceable(64) %5)
@@ -36,6 +38,7 @@ begin_hunk_4
   %i.av = load ptr, ptr %i.al, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %4, ptr noundef nonnull align 4 dereferenceable(20) %i.av, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i31 = load <2 x i64>, ptr %i.ap, align 8
   %i.aw = zext i32 %i.aq to i64
   %i.ax = add nuw nsw i64 %i.au, %i.aw            ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 10
@@ -44,7 +47,7 @@ begin_hunk_5
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i64 %.11224.i.i37, ptr %i.br, align 8, !tbaa !1463
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i31, ptr %i.bs, align 8
   %.sroa.4.0..sroa_idx.i40 = getelementptr inbounds nuw i8, ptr %3, i64 56
   store i32 %i.aq, ptr %.sroa.4.0..sroa_idx.i40, align 8, !tbaa !3
   invoke void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.ar, ptr noundef nonnull align 8 dereferenceable(17) %4, ptr noundef nonnull align 8 dereferenceable(64) %3)
@@ -53,6 +56,7 @@ begin_hunk_6
   %i.cv = load ptr, ptr %i.al, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.cv, i64 20, i1 false)
+  %.sroa.0.0.copyload52 = load <2 x i64>, ptr %i.ap, align 8
   %i.cw = zext i32 %.119 to i64
   %i.cx = add nuw nsw i64 %i.cu, %i.cw            ; 3 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -61,7 +65,7 @@ begin_hunk_7
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.dq, align 8, !tbaa !1469
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dr, ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload52, ptr %i.dr, align 8
   %.sroa.462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %.119, ptr %.sroa.462.0..sroa_idx, align 8, !tbaa !3
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -70,6 +74,7 @@ begin_hunk_8
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.aa, i64 20, i1 false)
+  %.sroa.0.0.copyload4 = load <2 x i64>, ptr %i.r, align 8
   %i.ab = zext nneg i32 %i.t to i64
   %i.ac = add nuw nsw i64 %i.z, %i.ab             ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -78,7 +83,7 @@ begin_hunk_9
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.aw, align 8, !tbaa !1483
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4, ptr %i.ax, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %i.t, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi1EEEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 8 dereferenceable(17) %2, ptr noundef nonnull align 8 dereferenceable(64) %1)
@@ -87,6 +92,7 @@ begin_hunk_10
   %i.x = load ptr, ptr %i.f, align 8, !tbaa !1458, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.x, i64 20, i1 false)
+  %.sroa.0.0.copyload5 = load <2 x i64>, ptr %i.a, align 8
   %i.y = zext nneg i32 %i.c to i64
   %i.z = add nuw nsw i64 %i.w, %i.y               ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -95,7 +101,7 @@ begin_hunk_11
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.at, align 8, !tbaa !1489
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload5, ptr %i.au, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %i.c, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb9hugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi3EEEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(17) %2, ptr noundef nonnull align 8 dereferenceable(64) %1)
@@ -104,6 +110,7 @@ begin_hunk_12
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %i.l, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i = load <2 x i64>, ptr %i.e, align 8
   %i.m = zext i32 %i.f to i64
   %i.n = add nuw nsw i64 %i.j, %i.m               ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 10
@@ -112,7 +119,7 @@ begin_hunk_13
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 32
   store i64 %.11224.i.i, ptr %i.ah, align 8, !tbaa !1564
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ai, ptr noundef nonnull align 8 dereferenceable(16) %i.e, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i, ptr %i.ai, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 56
   store i32 %i.f, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(17) %3, ptr noundef nonnull align 8 dereferenceable(64) %2)
@@ -121,6 +128,7 @@ begin_hunk_14
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %6, ptr noundef nonnull align 4 dereferenceable(20) %i.m, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i = load <2 x i64>, ptr %i.f, align 8
   %i.n = zext i32 %i.g to i64
   %i.o = add nuw nsw i64 %i.k, %i.n               ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 10
@@ -129,7 +137,7 @@ begin_hunk_15
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i64 %.11224.i.i, ptr %i.ai, align 8, !tbaa !1564
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i, ptr %i.aj, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 56
   store i32 %i.g, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !3
   invoke void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(17) %6, ptr noundef nonnull align 8 dereferenceable(64) %5)
@@ -138,6 +146,7 @@ begin_hunk_16
   %i.av = load ptr, ptr %i.al, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %4, ptr noundef nonnull align 4 dereferenceable(20) %i.av, i64 20, i1 false)
+  %.sroa.0.0.copyload4.i31 = load <2 x i64>, ptr %i.ap, align 8
   %i.aw = zext i32 %i.aq to i64
   %i.ax = add nuw nsw i64 %i.au, %i.aw            ; 3 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 10
@@ -146,7 +155,7 @@ begin_hunk_17
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i64 %.11224.i.i37, ptr %i.br, align 8, !tbaa !1564
   %i.bs = getelementptr inbounds nuw i8, ptr %3, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4.i31, ptr %i.bs, align 8
   %.sroa.4.0..sroa_idx.i40 = getelementptr inbounds nuw i8, ptr %3, i64 56
   store i32 %i.aq, ptr %.sroa.4.0..sroa_idx.i40, align 8, !tbaa !3
   invoke void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10dec_writerEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.ar, ptr noundef nonnull align 8 dereferenceable(17) %4, ptr noundef nonnull align 8 dereferenceable(64) %3)
@@ -155,6 +164,7 @@ begin_hunk_18
   %i.cv = load ptr, ptr %i.al, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.cv, i64 20, i1 false)
+  %.sroa.0.0.copyload52 = load <2 x i64>, ptr %i.ap, align 8
   %i.cw = zext i32 %.119 to i64
   %i.cx = add nuw nsw i64 %i.cu, %i.cw            ; 3 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -163,7 +173,7 @@ begin_hunk_19
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.dq, align 8, !tbaa !1570
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dr, ptr noundef nonnull align 8 dereferenceable(16) %i.ap, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload52, ptr %i.dr, align 8
   %.sroa.462.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %.119, ptr %.sroa.462.0..sroa_idx, align 8, !tbaa !3
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -172,6 +182,7 @@ begin_hunk_20
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.aa, i64 20, i1 false)
+  %.sroa.0.0.copyload4 = load <2 x i64>, ptr %i.r, align 8
   %i.ab = zext nneg i32 %i.t to i64
   %i.ac = add nuw nsw i64 %i.z, %i.ab             ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -180,7 +191,7 @@ begin_hunk_21
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.aw, align 8, !tbaa !1582
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, ptr noundef nonnull align 8 dereferenceable(16) %i.r, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload4, ptr %i.ax, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %i.t, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi1EEEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 8 dereferenceable(17) %2, ptr noundef nonnull align 8 dereferenceable(64) %1)
@@ -189,6 +200,7 @@ begin_hunk_22
   %i.x = load ptr, ptr %i.f, align 8, !tbaa !1559, !nonnull !562, !align !926
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 4 dereferenceable(20) %i.x, i64 20, i1 false)
+  %.sroa.0.0.copyload5 = load <2 x i64>, ptr %i.a, align 8
   %i.y = zext nneg i32 %i.c to i64
   %i.z = add nuw nsw i64 %i.w, %i.y               ; 3 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 10
@@ -197,7 +209,7 @@ begin_hunk_23
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i64 %.11224.i, ptr %i.at, align 8, !tbaa !1587
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false)
+  store <2 x i64> %.sroa.0.0.copyload5, ptr %i.au, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 56
   store i32 %i.c, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !3
   call void @_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE12write_paddedINS5_17padded_int_writerINS5_10int_writerIN6duckdb10uhugeint_tENS0_18basic_format_specsIcEEE10bin_writerILi3EEEEEEEvRKSC_OT_(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(17) %2, ptr noundef nonnull align 8 dereferenceable(64) %1)
