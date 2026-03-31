@@ -6,9 +6,10 @@ import heapq
 import os
 import argparse
 import shutil
+import resource
 import subprocess
 import difflib
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Optional, List, Tuple
 import authorized_users
 import huggingface_hub
@@ -641,6 +642,11 @@ def extract_stats_json(stderr_text: str) -> Optional[dict]:
     return None
 
 
+def _disable_core_dumps():
+    """preexec_fn: prevent kernel core-dump handlers from stalling crashed opt processes."""
+    resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+
+
 def run_opt_file(
     config: TestConfig,
     proj: str,
@@ -688,6 +694,7 @@ def run_opt_file(
             capture_output=True,
             timeout=600,
             env=env_opt,
+            preexec_fn=_disable_core_dumps,
         )
         if ret.returncode != 0:
             return "fail"
@@ -835,10 +842,14 @@ def run_opt(
             ),
         )
 
-    progress_miniters = max(1, math.ceil(len(tasks) * 0.05))
     with ThreadPoolExecutor(max_workers=worker_count) as executor:
-        with tqdm(total=len(tasks), miniters=progress_miniters, desc="run_opt") as pbar:
-            for idx, proj, file, ret in executor.map(_run_task, enumerate(tasks)):
+        futures = {
+            executor.submit(_run_task, (idx, task)): idx
+            for idx, task in enumerate(tasks)
+        }
+        with tqdm(total=len(tasks), desc="run_opt") as pbar:
+            for future in as_completed(futures):
+                idx, proj, file, ret = future.result()
                 task_results[idx] = (proj, file, ret)
                 pbar.update(1)
 
