@@ -31,7 +31,7 @@ You should be able to reproduce the regression locally in the following steps:
 
 ```
 # Download the source IR. Note that you should replace `optimized` with `original`.
-wget https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/<project_name>/original/<file_name>.bc?download=true
+wget https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/<project_name>/original/<file_name>.bc?download=true -O <file_name>.bc
 # You can also use huggingface cli to download the file:
 hf buckets cp hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark/<project_name>/original/<file_name>.bc .
 # Apply your patch and rebuild opt.
