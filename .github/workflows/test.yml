@@ -13,6 +13,8 @@ jobs:
       issues: write
       contents: write
 
+    timeout-minutes: 90
+
     steps:
       - name: Reset repository
         run: git clean -ffdx -- report && git reset --hard HEAD
