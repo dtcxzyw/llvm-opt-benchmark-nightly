@@ -9,7 +9,7 @@ import shutil
 import resource
 import subprocess
 import difflib
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from typing import Optional, List, Tuple
 import authorized_users
 import huggingface_hub
@@ -19,6 +19,7 @@ from urllib.parse import urlparse
 import requests
 import json
 import math
+import time
 from tqdm import tqdm
 from openai import OpenAI
 import hashlib
@@ -41,6 +42,7 @@ STATS_BASELINE_FILE_PER_FILE = os.path.join(DATA_DIR, "stats_per_file.json.basel
 PER_FILE_INTERESTING_STATS = ["inline.NumInlined", "inline.NumDeleted"]
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
+RUN_OPT_TIME_BUDGET_SECONDS = 50 * 60
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
@@ -574,22 +576,40 @@ def _format_interesting_stats_lines(stats: Optional[dict]) -> List[str]:
     return lines
 
 
+def _remaining_time_seconds(deadline: Optional[float]) -> Optional[float]:
+    if deadline is None:
+        return None
+    return deadline - time.monotonic()
+
+
+def _bounded_timeout(seconds: float, deadline: Optional[float]) -> float:
+    remaining = _remaining_time_seconds(deadline)
+    if remaining is None:
+        return seconds
+    return min(seconds, max(0.0, remaining))
+
+
 # (ref_bc, new_bc) -> (minimized_ref_ir, minimized_new_ir)
 def compute_diff(
     ref_bc: str,
     new_bc: str,
     ref_stats: Optional[dict] = None,
     new_stats: Optional[dict] = None,
+    deadline: Optional[float] = None,
 ) -> Optional[tuple]:
     base_name = new_bc.removesuffix(".bc")
     ref_ir = base_name + ".ref.ll"
     new_ir = base_name + ".new.ll"
 
+    diff_timeout = _bounded_timeout(300, deadline)
+    if diff_timeout <= 0:
+        raise subprocess.TimeoutExpired(RELAXED_DIFF_BINARY, timeout=0)
+
     ret = subprocess.run(
         [RELAXED_DIFF_BINARY, ref_bc, new_bc, ref_ir, new_ir],
         stdin=subprocess.DEVNULL,
         capture_output=True,
-        timeout=300,
+        timeout=diff_timeout,
     )
     if ret.returncode != 0:
         raise RuntimeError("llvm-relaxed-diff failed")
@@ -655,10 +675,15 @@ def run_opt_file(
     baseline_file_stats: Optional[dict] = None,
     enable_ir_diff: bool = True,
     compare_ref_path: Optional[str] = None,
+    deadline: Optional[float] = None,
 ):
     input_path = os.path.join(DATA_DIR, proj, "original", file)
     optimized_path = os.path.join(OPT_OUT_DIR, proj + "-s-" + file)
     try:
+        opt_timeout = _bounded_timeout(600, deadline)
+        if opt_timeout <= 0:
+            return "timeout"
+
         cmd = [OPT_BINARY, "-O3", input_path]
         if config.comptime:
             cmd = (
@@ -692,7 +717,7 @@ def run_opt_file(
             cmd,
             stdin=subprocess.DEVNULL,
             capture_output=True,
-            timeout=600,
+            timeout=opt_timeout,
             env=env_opt,
             preexec_fn=_disable_core_dumps,
         )
@@ -751,7 +776,10 @@ def run_opt_file(
                     optimized_path,
                     ref_stats=baseline_file_stats,
                     new_stats=interesting_stats,
+                    deadline=deadline,
                 )
+            except subprocess.TimeoutExpired:
+                return "timeout"
             except (subprocess.SubprocessError, OSError, RuntimeError):
                 return "diff fail"
         return stats_result, rendered, interesting_stats
@@ -806,6 +834,8 @@ def run_opt(
     per_file_stats_results = {}
     rendered_files = []
     task_results = [None] * len(tasks)
+    timed_out = False
+    deadline = time.monotonic() + RUN_OPT_TIME_BUDGET_SECONDS
 
     baseline_per_file_stats = compare_per_file_stats or {}
     if (
@@ -839,19 +869,41 @@ def run_opt(
                 baseline_file_stats=baseline_file_stats,
                 enable_ir_diff=enable_ir_diff,
                 compare_ref_path=compare_ref_path,
+                deadline=deadline,
             ),
         )
 
-    with ThreadPoolExecutor(max_workers=worker_count) as executor:
+    pending_futures = set()
+    executor = ThreadPoolExecutor(max_workers=worker_count)
+    try:
         futures = {
             executor.submit(_run_task, (idx, task)): idx
             for idx, task in enumerate(tasks)
         }
+        pending_futures = set(futures)
         with tqdm(total=len(tasks), desc="run_opt") as pbar:
-            for future in as_completed(futures):
-                idx, proj, file, ret = future.result()
-                task_results[idx] = (proj, file, ret)
-                pbar.update(1)
+            while pending_futures:
+                remaining = max(0.0, _remaining_time_seconds(deadline))
+                done, pending_futures = wait(
+                    pending_futures,
+                    timeout=remaining,
+                    return_when=FIRST_COMPLETED,
+                )
+                if not done:
+                    timed_out = True
+                    break
+
+                for future in done:
+                    idx, proj, file, ret = future.result()
+                    task_results[idx] = (proj, file, ret)
+                    pbar.update(1)
+    finally:
+        if timed_out:
+            for future in pending_futures:
+                future.cancel()
+            executor.shutdown(wait=False, cancel_futures=True)
+        else:
+            executor.shutdown(wait=True)
 
     with open(OPT_LOG_FILE, "w") as log_f:
         for item in task_results:
@@ -878,6 +930,15 @@ def run_opt(
                         stats_results[key] = stats_results.get(key, 0) + value
                     if rendered:
                         rendered_files.append(rendered)
+
+        if timed_out:
+            unfinished_count = sum(1 for item in task_results if item is None)
+            unfinished_ratio = unfinished_count / len(tasks) if tasks else 0.0
+            log_f.write(
+                "time budget exhausted: "
+                f"{unfinished_count}/{len(tasks)} tasks unfinished "
+                f"({unfinished_ratio:.2%})\n"
+            )
 
     return comptime_results, stats_results, rendered_files, per_file_stats_results
 
