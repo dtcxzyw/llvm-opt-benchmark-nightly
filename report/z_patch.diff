@@ -1,0 +1,184 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 6798493de1aa3..24c23e86c0ca8 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -5761,6 +5761,9 @@ void InstCombinerImpl::tryToSinkInstructionDbgVariableRecords(
+ }
+ 
+ bool InstCombinerImpl::run() {
++  // Weak VHs to keep track of sunk instructions for the purpose of pushing them
++  // back into worklist at final.
++  SmallVector<WeakTrackingVH, 8> SunkInsts;
+   while (!Worklist.isEmpty()) {
+     // Walk deferred instructions in reverse order, and push them to the
+     // worklist, which means they'll end up popped from the worklist in-order.
+@@ -5779,6 +5782,19 @@ bool InstCombinerImpl::run() {
+     }
+ 
+     Instruction *I = Worklist.removeOne();
++    if (Worklist.isEmpty() && !SunkInsts.empty()) {
++      LLVM_DEBUG(dbgs() << "Begin to Push Sunk Instructions.\n");
++      // These sunk instructions might be visited before its dom condtion is
++      // visited, and thus the instcombine cannot reach fixpoint in ONE
++      // iteration.
++      // Therefore, we need to push them back to the worklist after
++      // all instructions are visited.
++      for (auto SunkInst : SunkInsts)
++        if (auto *I = dyn_cast_or_null<Instruction>(SunkInst))
++          Worklist.push(I);
++      LLVM_DEBUG(dbgs() << "End to Push Sunk Instructions.\n");
++      SunkInsts.clear();
++    }
+     if (I == nullptr) continue;  // skip null values.
+ 
+     // Check to see if we can DCE the instruction.
+@@ -5875,6 +5891,7 @@ bool InstCombinerImpl::run() {
+         for (Use &U : I->operands())
+           if (Instruction *OpI = dyn_cast<Instruction>(U.get()))
+             Worklist.push(OpI);
++        SunkInsts.push_back(WeakTrackingVH(I));
+       }
+     }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/indexed-gep-compares.ll b/llvm/test/Transforms/InstCombine/indexed-gep-compares.ll
+index 0115da65b3a4c..2bcb3872268a4 100644
+--- a/llvm/test/Transforms/InstCombine/indexed-gep-compares.ll
++++ b/llvm/test/Transforms/InstCombine/indexed-gep-compares.ll
+@@ -18,7 +18,7 @@ define ptr@test1(ptr %A, i32 %Offset) {
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp sgt i32 [[RHS_IDX]], 400
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+@@ -76,7 +76,7 @@ define ptr @test1_not_all_nuw(ptr %A, i32 %Offset) {
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp sgt i32 [[RHS_IDX]], 400
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+@@ -106,7 +106,7 @@ define ptr@test2(i32 %A, i32 %Offset) {
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    [[A_PTR:%.*]] = inttoptr i32 [[A:%.*]] to ptr
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+@@ -231,7 +231,7 @@ define ptr@test4(i16 %A, i32 %Offset) {
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext i16 [[A:%.*]] to i32
+ ; CHECK-NEXT:    [[A_PTR:%.*]] = inttoptr i32 [[TMP0]] to ptr
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+@@ -268,7 +268,7 @@ define ptr@test5(i32 %Offset) personality ptr @__gxx_personality_v0 {
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp sgt i32 [[RHS_IDX]], 400
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ; CHECK:       lpad:
+ ; CHECK-NEXT:    [[L:%.*]] = landingpad { ptr, i32 }
+@@ -314,7 +314,7 @@ define ptr@test6(i32 %Offset) personality ptr @__gxx_personality_v0 {
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    [[A_PTR:%.*]] = inttoptr i32 [[A]] to ptr
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A_PTR]], i32 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ; CHECK:       lpad:
+ ; CHECK-NEXT:    [[L:%.*]] = landingpad { ptr, i32 }
+diff --git a/llvm/test/Transforms/InstCombine/opaque-ptr.ll b/llvm/test/Transforms/InstCombine/opaque-ptr.ll
+index 9f3cd87924774..b589e37269e3c 100644
+--- a/llvm/test/Transforms/InstCombine/opaque-ptr.ll
++++ b/llvm/test/Transforms/InstCombine/opaque-ptr.ll
+@@ -399,7 +399,7 @@ define ptr @indexed_compare(ptr %A, i64 %offset) {
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp sgt i64 [[RHS_IDX]], 400
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i64 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i64 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+@@ -428,7 +428,7 @@ define ptr @indexed_compare_different_types(ptr %A, i64 %offset) {
+ ; CHECK-NEXT:    [[COND:%.*]] = icmp sgt i64 [[RHS_IDX]], 800
+ ; CHECK-NEXT:    br i1 [[COND]], label [[BB2:%.*]], label [[BB]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds i8, ptr [[A:%.*]], i64 [[RHS_IDX]]
++; CHECK-NEXT:    [[RHS_PTR:%.*]] = getelementptr inbounds nuw i8, ptr [[A:%.*]], i64 [[RHS_IDX]]
+ ; CHECK-NEXT:    ret ptr [[RHS_PTR]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/InstCombine/sink_instruction.ll b/llvm/test/Transforms/InstCombine/sink_instruction.ll
+index c3af8163830b8..67368531c4737 100644
+--- a/llvm/test/Transforms/InstCombine/sink_instruction.ll
++++ b/llvm/test/Transforms/InstCombine/sink_instruction.ll
+@@ -37,22 +37,18 @@ define i32 @test2(i32 %x) nounwind ssp "instcombine-no-verify-fixpoint" {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[BB:%.*]]
+ ; CHECK:       bb:
+-; CHECK-NEXT:    [[X_ADDR_17:%.*]] = phi i32 [ [[X:%.*]], [[ENTRY:%.*]] ], [ [[X_ADDR_0:%.*]], [[BB2:%.*]] ]
+-; CHECK-NEXT:    [[I_06:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[TMP4:%.*]], [[BB2]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[X_ADDR_17]], 0
++; CHECK-NEXT:    [[I_06:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[TMP4:%.*]], [[BB2:%.*]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = icmp eq i32 [[X_ADDR_17:%.*]], 0
+ ; CHECK-NEXT:    br i1 [[TMP0]], label [[BB1:%.*]], label [[BB2]]
+ ; CHECK:       bb1:
+-; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i32 [[X_ADDR_17]], 1
+-; CHECK-NEXT:    [[TMP2:%.*]] = sdiv i32 [[TMP1]], [[X_ADDR_17]]
+-; CHECK-NEXT:    [[TMP3:%.*]] = tail call i32 @bar() #[[ATTR3:[0-9]+]]
++; CHECK-NEXT:    [[TMP1:%.*]] = tail call i32 @bar() #[[ATTR3:[0-9]+]]
+ ; CHECK-NEXT:    br label [[BB2]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[X_ADDR_0]] = phi i32 [ [[TMP2]], [[BB1]] ], [ [[X_ADDR_17]], [[BB]] ]
+ ; CHECK-NEXT:    [[TMP4]] = add nuw nsw i32 [[I_06]], 1
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[TMP4]], 1000000
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[BB4:%.*]], label [[BB]]
+ ; CHECK:       bb4:
+-; CHECK-NEXT:    ret i32 [[X_ADDR_0]]
++; CHECK-NEXT:    ret i32 [[X_ADDR_17]]
+ ;
+ entry:
+   br label %bb
+diff --git a/llvm/test/Transforms/InstCombine/xor-not-icmp-fixpoint.ll b/llvm/test/Transforms/InstCombine/xor-not-icmp-fixpoint.ll
+new file mode 100644
+index 0000000000000..25b2df22b2471
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/xor-not-icmp-fixpoint.ll
+@@ -0,0 +1,25 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -S -passes='instcombine<max-iterations=1>' < %s | FileCheck %s
++
++; Reduced from a modified __asan::Allocator::CheckOptions.
++define i64 @check_options(i16 %x) {
++; CHECK-LABEL: define i64 @check_options(
++; CHECK-SAME: i16 [[X:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i16 [[X]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[TRAP:.*]], label %[[EXIT:.*]]
++; CHECK:       [[TRAP]]:
++; CHECK-NEXT:    [[WIDE:%.*]] = zext nneg i16 [[X]] to i64
++; CHECK-NEXT:    ret i64 [[WIDE]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret i64 10
++;
++  %wide = zext i16 %x to i64
++  %cmp = icmp eq i16 %x, 0
++  br i1 %cmp, label %trap, label %exit
++
++trap:
++  ret i64 %wide
++
++exit:
++  ret i64 10
++}
