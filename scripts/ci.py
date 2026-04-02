@@ -291,6 +291,14 @@ class TestConfig:
     stats: str = None
 
 
+def format_test_mode_label(config: TestConfig) -> str:
+    if config.comptime:
+        return "compile-time"
+    if config.stats:
+        return f"stats {config.stats}"
+    return "diff"
+
+
 @dataclass
 class RenderedDiff:
     report_ref_ir: str
@@ -1641,7 +1649,7 @@ def test(user: str, comment_body: str, issue_url: str):
             compare_baseline_stats, stats, by_project=single_stat, avg=single_stat
         )
 
-    pr_title = f"pre-commit: {patch_name}"
+    pr_title = f"pre-commit ({format_test_mode_label(config)}): {patch_name}"
     pr_body = (
         "Please read the instructions in the README to reproduce the results locally.\n"
     )
