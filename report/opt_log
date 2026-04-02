@@ -1,0 +1,3 @@
+oiio/psaux.bc: timeout
+velox/Bridge.bc: timeout
+assimp/PretransformVertices.bc: timeout
