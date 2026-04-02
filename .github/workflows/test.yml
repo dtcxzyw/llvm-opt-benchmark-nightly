@@ -34,6 +34,7 @@ jobs:
         run: uv sync
 
       - name: Run test
+        id: test
         run: uv run scripts/ci.py test
         env:
           GITHUB_RUN_ID: ${{ github.run_id }}
@@ -46,3 +47,10 @@ jobs:
           USER: ${{ github.event.sender.login }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           ISSUE_URL: ${{ github.event.issue.number }}
+
+      - name: Upload IR diff artifacts
+        if: steps.test.outputs.SHOULD_UPLOAD_ARTIFACT == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: pre-commit-ir-diffs-${{ github.run_id }}
+          path: ${{ steps.test.outputs.ARTIFACT_DIR }}

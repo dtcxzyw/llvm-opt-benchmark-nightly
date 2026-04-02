@@ -42,9 +42,14 @@ STATS_BASELINE_FILE_PER_FILE = os.path.join(DATA_DIR, "stats_per_file.json.basel
 PER_FILE_INTERESTING_STATS = ["inline.NumInlined", "inline.NumDeleted"]
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
+ARTIFACT_DIR = os.path.join(ROOT_DIR, "work", "artifacts")
+ARTIFACT_SIZE_LIMIT_BYTES = 100 * 1024 * 1024
 RUN_OPT_TIME_BUDGET_SECONDS = 50 * 60
 HF_URL = "hf://buckets/llvm-opt-benchmark/llvm-opt-benchmark"
 JOB_ID = os.environ.get("GITHUB_RUN_ID", "local")
+RUN_ARTIFACTS_URL = (
+    "https://github.com/dtcxzyw/llvm-opt-benchmark-nightly/actions/runs/" + JOB_ID
+)
 GH_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 OPENAI_API_URL = os.environ.get(
     "OPENAI_API_URL", os.environ.get("OPENAI_BASE_URL", "")
@@ -284,6 +289,23 @@ def update_llvm() -> str:
 class TestConfig:
     comptime: bool = False
     stats: str = None
+
+
+@dataclass
+class RenderedDiff:
+    report_ref_ir: str
+    report_new_ir: str
+    artifact_ref_ir: str
+    artifact_new_ir: str
+
+
+@dataclass
+class KeptDiff:
+    report_ref_ir: str
+    report_new_ir: str
+    artifact_ref_ir: str
+    artifact_new_ir: str
+    delta: int
 
 
 def build_llvm(config: TestConfig) -> bool:
@@ -589,17 +611,92 @@ def _bounded_timeout(seconds: float, deadline: Optional[float]) -> float:
     return min(seconds, max(0.0, remaining))
 
 
-# (ref_bc, new_bc) -> (minimized_ref_ir, minimized_new_ir)
+def _report_file_name_from_ir_path(ir_path: str) -> str:
+    name = os.path.basename(ir_path)
+    for suffix in (".min.ref.ll", ".min.new.ll", ".ref.ll", ".new.ll"):
+        if name.endswith(suffix):
+            return name.removesuffix(suffix) + ".ll"
+    return name
+
+
+def _minimized_ir_paths(base_name: str) -> Tuple[str, str]:
+    return base_name + ".min.ref.ll", base_name + ".min.new.ll"
+
+
+def reset_artifact_dir():
+    if os.path.exists(ARTIFACT_DIR):
+        shutil.rmtree(ARTIFACT_DIR)
+    os.makedirs(ARTIFACT_DIR, exist_ok=True)
+
+
+def emit_github_output(name: str, value: str):
+    output_file = os.environ.get("GITHUB_OUTPUT")
+    if not output_file:
+        return
+    with open(output_file, "a") as f:
+        f.write(f"{name}={value}\n")
+
+
+def emit_artifact_outputs(should_upload: bool):
+    emit_github_output("SHOULD_UPLOAD_ARTIFACT", "true" if should_upload else "false")
+    emit_github_output("ARTIFACT_DIR", ARTIFACT_DIR)
+
+
+def _artifact_output_dir_for_ir(ir_path: str) -> str:
+    normalized_name = _report_file_name_from_ir_path(ir_path)
+    if "-s-" in normalized_name:
+        proj, file_name = normalized_name.split("-s-", 1)
+        return os.path.join(ARTIFACT_DIR, proj, file_name)
+    return os.path.join(ARTIFACT_DIR, normalized_name)
+
+
+def stage_artifact_diffs(kept_files: List[KeptDiff]) -> int:
+    total_size = 0
+    copied_pairs = 0
+    for kept_file in kept_files:
+        ref_size = os.path.getsize(kept_file.artifact_ref_ir)
+        new_size = os.path.getsize(kept_file.artifact_new_ir)
+        pair_size = ref_size + new_size
+        if total_size + pair_size > ARTIFACT_SIZE_LIMIT_BYTES:
+            break
+
+        artifact_output_dir = _artifact_output_dir_for_ir(kept_file.artifact_ref_ir)
+        os.makedirs(artifact_output_dir, exist_ok=True)
+        shutil.copy(
+            kept_file.artifact_ref_ir,
+            os.path.join(artifact_output_dir, os.path.basename(kept_file.artifact_ref_ir)),
+        )
+        shutil.copy(
+            kept_file.artifact_new_ir,
+            os.path.join(artifact_output_dir, os.path.basename(kept_file.artifact_new_ir)),
+        )
+        total_size += pair_size
+        copied_pairs += 1
+    return copied_pairs
+
+
+def get_artifact_download_note(copied_pairs: int) -> str:
+    if copied_pairs <= 0:
+        return ""
+    return (
+        "## Artifacts\n"
+        f"Selected raw llvm-relaxed-diff outputs ({copied_pairs} file pairs, up to 100 MB) "
+        f"can be downloaded from {RUN_ARTIFACTS_URL}.\n\n"
+    )
+
+
+# (ref_bc, new_bc) -> report+artifact IR paths
 def compute_diff(
     ref_bc: str,
     new_bc: str,
     ref_stats: Optional[dict] = None,
     new_stats: Optional[dict] = None,
     deadline: Optional[float] = None,
-) -> Optional[tuple]:
+) -> Optional[RenderedDiff]:
     base_name = new_bc.removesuffix(".bc")
     ref_ir = base_name + ".ref.ll"
     new_ir = base_name + ".new.ll"
+    minimized_ref_ir, minimized_new_ir = _minimized_ir_paths(base_name)
 
     diff_timeout = _bounded_timeout(300, deadline)
     if diff_timeout <= 0:
@@ -641,11 +738,16 @@ def compute_diff(
         return None
 
     minimized_ref_lines, minimized_new_lines = minimized
-    with open(ref_ir, "w") as f:
+    with open(minimized_ref_ir, "w") as f:
         f.write("\n".join(minimized_ref_lines) + "\n")
-    with open(new_ir, "w") as f:
+    with open(minimized_new_ir, "w") as f:
         f.write("\n".join(minimized_new_lines) + "\n")
-    return (ref_ir, new_ir)
+    return RenderedDiff(
+        report_ref_ir=minimized_ref_ir,
+        report_new_ir=minimized_new_ir,
+        artifact_ref_ir=ref_ir,
+        artifact_new_ir=new_ir,
+    )
 
 
 def extract_stats_json(stderr_text: str) -> Optional[dict]:
@@ -733,7 +835,7 @@ def run_opt_file(
                     break
             return comptime_result
 
-        rendered = None
+        rendered: Optional[RenderedDiff] = None
         if not config.stats:
             if not os.path.exists(optimized_path):
                 return "fail"
@@ -832,7 +934,7 @@ def run_opt(
     comptime_results = {}
     stats_results = {}
     per_file_stats_results = {}
-    rendered_files = []
+    rendered_files: List[RenderedDiff] = []
     task_results = [None] * len(tasks)
     timed_out = False
     deadline = time.monotonic() + RUN_OPT_TIME_BUDGET_SECONDS
@@ -1024,9 +1126,7 @@ def compare_stats(baseline: dict, new: dict, by_project: bool, avg: bool) -> str
 
 
 def _report_ir_output_path(ir_path: str) -> str:
-    normalized_name = (
-        os.path.basename(ir_path).replace(".ref.ll", ".ll").replace(".new.ll", ".ll")
-    )
+    normalized_name = _report_file_name_from_ir_path(ir_path)
     if "-s-" in normalized_name:
         proj, file_name = normalized_name.split("-s-", 1)
         return os.path.join(REPORT_DIR, proj, file_name)
@@ -1056,7 +1156,7 @@ def get_opt_log_preview() -> str:
     return f"## Errors\n```\n{preview}\n```\n"
 
 
-def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
+def commit_grouped_diff_changes(kept_files: List[KeptDiff]):
     groups = [
         ("report: add > sub", lambda delta: delta > 0),
         ("report: add < sub", lambda delta: delta < 0),
@@ -1064,9 +1164,9 @@ def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
     ]
     pr_body = ""
     for message, predicate in groups:
-        for _, new_ir, delta in kept_files:
-            if predicate(delta):
-                copy_report_ir(new_ir)
+        for kept_file in kept_files:
+            if predicate(kept_file.delta):
+                copy_report_ir(kept_file.report_new_ir)
         if commit_report_if_changed(message):
             commit_hash = (
                 subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT_DIR)
@@ -1081,8 +1181,8 @@ def commit_grouped_diff_changes(kept_files: List[Tuple[str, str, int]]):
 
 
 def generate_diff_report(
-    rendered_files: list,
-) -> Tuple[str, List[Tuple[str, str, int]]]:
+    rendered_files: List[RenderedDiff],
+) -> Tuple[str, List[KeptDiff]]:
     MAX_DIFF_PER_FILE = 1000
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
@@ -1094,7 +1194,9 @@ def generate_diff_report(
 
     total_added = 0
     total_removed = 0
-    for ref_ir, new_ir in rendered_files:
+    for rendered_file in rendered_files:
+        ref_ir = rendered_file.report_ref_ir
+        new_ir = rendered_file.report_new_ir
         proj = os.path.basename(ref_ir).split("-s-")[0]
         if ref_ir is None or new_ir is None:
             continue
@@ -1136,8 +1238,7 @@ def generate_diff_report(
             (
                 cost,
                 real_cost,
-                ref_ir,
-                new_ir,
+                rendered_file,
                 proj,
                 number_of_added_lines,
                 number_of_removed_lines,
@@ -1154,22 +1255,20 @@ def generate_diff_report(
     diff_pattern = set()
     file_count = 0
     diff_count = 0
-    kept_files = []
+    kept_files: List[KeptDiff] = []
     kept_added = 0
     kept_removed = 0
     kept_files_sorted = []
     while len(diff_heap) != 0:
-        _, real_cost, ref_ir, new_ir, proj, add, sub = heapq.heappop(diff_heap)
+        _, real_cost, rendered_file, proj, add, sub = heapq.heappop(diff_heap)
         proj_list = diffs[proj]
         if len(proj_list) != 0:
             diversity_penalty[proj] = (
                 diversity_penalty.get(proj, 0) + DIVERSITY_PENALTY_INC
             )
-            cnt2, real_cost2, ref_ir2, new_ir2, proj2, add2, sub2 = proj_list.pop(0)
+            cnt2, real_cost2, rendered_file2, proj2, add2, sub2 = proj_list.pop(0)
             cnt2 += diversity_penalty[proj]
-            heapq.heappush(
-                diff_heap, (cnt2, real_cost2, ref_ir2, new_ir2, proj2, add2, sub2)
-            )
+            heapq.heappush(diff_heap, (cnt2, real_cost2, rendered_file2, proj2, add2, sub2))
 
         key = (add, sub)
         if key in diff_pattern:
@@ -1180,8 +1279,16 @@ def generate_diff_report(
             diff_count += real_cost
             kept_added += add
             kept_removed += sub
-            kept_files.append((ref_ir, new_ir, add - sub))
-            kept_files_sorted.append((ref_ir, add, sub))
+            kept_files.append(
+                KeptDiff(
+                    report_ref_ir=rendered_file.report_ref_ir,
+                    report_new_ir=rendered_file.report_new_ir,
+                    artifact_ref_ir=rendered_file.artifact_ref_ir,
+                    artifact_new_ir=rendered_file.artifact_new_ir,
+                    delta=add - sub,
+                )
+            )
+            kept_files_sorted.append((rendered_file.report_ref_ir, add, sub))
         else:
             break
 
@@ -1199,10 +1306,10 @@ def generate_diff_report(
     report += "| Delta | Added Lines | Removed Lines | File |\n"
     report += "| ---: | ---: | ---: | --- |\n"
     for file, add, sub in kept_files_sorted:
-        name = os.path.basename(file)
+        name = _report_file_name_from_ir_path(file)
         pos = name.index("-s-")
         proj = name[:pos]
-        file_name = name[pos + 3 :].removesuffix(".ref.ll")
+        file_name = name[pos + 3 :].removesuffix(".ll")
         path = f"{proj}/{file_name}"
         diff_url = hashlib.sha256(f"report/{path}.ll".encode()).hexdigest()
         report += (
@@ -1215,6 +1322,8 @@ def generate_diff_report(
 
 def update():
     old_revision = setup_base_environment()
+    reset_artifact_dir()
+    emit_artifact_outputs(False)
     new_revision = update_llvm()
     # if old_revision == new_revision:
     #     print("LLVM is already up to date.")
@@ -1234,6 +1343,8 @@ def update():
 
     should_report = stats_cmp != "No significant changes.\n" or len(rendered_files) > 0
     report, kept_files = generate_diff_report(rendered_files)
+    artifact_pairs = stage_artifact_diffs(kept_files)
+    emit_artifact_outputs(artifact_pairs > 0)
     if should_report:
         pr_title = f"Update LLVM baseline to {new_revision[:8]}"
         pr_body = f"LLVM baseline is updated from https://github.com/llvm/llvm-project/commit/{old_revision} to https://github.com/llvm/llvm-project/commit/{new_revision}.\n\n"
@@ -1270,11 +1381,12 @@ def update():
         if stats_cmp:
             pr_body += f"## Changes in statistics\n{stats_cmp}\n"
         pr_body += f"## Diff report\n{report}\n"
+        pr_body += get_artifact_download_note(artifact_pairs)
 
         base_branch_name = f"task-{JOB_ID}-base"
         change_branch_name = f"task-{JOB_ID}-change"
-        for ref_ir, _, _ in kept_files:
-            copy_report_ir(ref_ir)
+        for kept_file in kept_files:
+            copy_report_ir(kept_file.report_ref_ir)
         dump_json_sorted(
             os.path.join(REPORT_DIR, "z_stats.json"),
             stats_baseline,
@@ -1318,6 +1430,8 @@ def update():
 
 def test(user: str, comment_body: str, issue_url: str):
     old_revision = setup_base_environment()
+    reset_artifact_dir()
+    emit_artifact_outputs(False)
     comment_body = comment_body.strip()
     if comment_body.startswith(">"):
         # Ignore quoted comments.
@@ -1548,12 +1662,18 @@ def test(user: str, comment_body: str, issue_url: str):
             pr_body += f"## Changes in statistics\n{stats_cmp}\n"
 
     kept_files = None
+    artifact_pairs = 0
     if not config.comptime and not config.stats:
         report, kept_files = generate_diff_report(rendered_files)
         pr_body += f"## Diff report\n{report}\n"
+        artifact_pairs = stage_artifact_diffs(kept_files)
+        emit_artifact_outputs(artifact_pairs > 0)
+        pr_body += get_artifact_download_note(artifact_pairs)
+    else:
+        emit_artifact_outputs(False)
     if kept_files:
-        for ref_ir, _, _ in kept_files:
-            copy_report_ir(ref_ir)
+        for kept_file in kept_files:
+            copy_report_ir(kept_file.report_ref_ir)
     create_branch(base_branch_name)
     if stats and compare_baseline_stats is not None and not config.stats:
         dump_json_sorted(
