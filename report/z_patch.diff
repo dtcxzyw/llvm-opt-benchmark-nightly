@@ -1,0 +1,530 @@
+diff --git a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+index d3ae9a6cf8d80..988ee6b5866f9 100644
+--- a/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/DeadStoreElimination.cpp
+@@ -32,6 +32,7 @@
+ #include "llvm/ADT/DenseMap.h"
+ #include "llvm/ADT/MapVector.h"
+ #include "llvm/ADT/PostOrderIterator.h"
++#include "llvm/ADT/ScopedHashTable.h"
+ #include "llvm/ADT/SetVector.h"
+ #include "llvm/ADT/SmallPtrSet.h"
+ #include "llvm/ADT/SmallVector.h"
+@@ -174,6 +175,11 @@ static cl::opt<bool> EnableInitializesImprovement(
+     "enable-dse-initializes-attr-improvement", cl::init(true), cl::Hidden,
+     cl::desc("Enable the initializes attr improvement in DSE"));
+ 
++static cl::opt<unsigned> MaxDepthRecursion(
++    "dse-max-dom-cond-depth", cl::init(20), cl::Hidden,
++    cl::desc("Limit dominator tree depth for recursion while eliminating "
++             "redundant stores via dominating conditions"));
++
+ //===----------------------------------------------------------------------===//
+ // Helper functions
+ //===----------------------------------------------------------------------===//
+@@ -1106,10 +1112,6 @@ struct DSEState {
+   /// try folding it into a call to calloc.
+   bool tryFoldIntoCalloc(MemoryDef *Def, const Value *DefUO);
+ 
+-  // Check if there is a dominating condition, that implies that the value
+-  // being stored in a ptr is already present in the ptr.
+-  bool dominatingConditionImpliesValue(MemoryDef *Def);
+-
+   /// \returns true if \p Def is a no-op store, either because it
+   /// directly stores back a loaded value or stores zero to a calloced object.
+   bool storeIsNoop(MemoryDef *Def, const Value *DefUO);
+@@ -1120,6 +1122,11 @@ struct DSEState {
+   /// is already stored at the same location.
+   bool eliminateRedundantStoresOfExistingValues();
+ 
++  /// If there is a dominating condition that implies the value being stored in
++  /// a pointer, and such a condition appears in a node that dominates the
++  /// store, then the store may be redundant if no write occurs in between.
++  bool eliminateRedundantStoresViaDominatingConditions();
++
+   // Return the locations written by the initializes attribute.
+   // Note that this function considers:
+   // 1. Unwind edge: use "initializes" attribute only if the callee has
+@@ -2133,6 +2140,116 @@ bool DSEState::eliminateDeadWritesAtEndOfFunction() {
+   return MadeChange;
+ }
+ 
++bool DSEState::eliminateRedundantStoresViaDominatingConditions() {
++  bool MadeChange = false;
++  LLVM_DEBUG(dbgs() << "Trying to eliminate MemoryDefs whose value being "
++                       "written is implied by a dominating condition\n");
++
++  using ConditionInfo = std::pair<Value *, Value *>;
++  using ScopedHTType = ScopedHashTable<ConditionInfo, Instruction *>;
++
++  // We maintain a scoped hash table of the active dominating conditions for a
++  // given node.
++  ScopedHTType ActiveConditions;
++  auto GetDominatingCondition = [&](BasicBlock *BB)
++      -> std::optional<std::tuple<ConditionInfo, Instruction *, BasicBlock *>> {
++    auto *BI = dyn_cast<CondBrInst>(BB->getTerminator());
++    if (!BI)
++      return std::nullopt;
++
++    // In case both blocks are the same, it is not possible to determine
++    // if optimization is possible. (We would not want to optimize a store
++    // in the FalseBB if condition is true and vice versa.)
++    if (BI->getSuccessor(0) == BI->getSuccessor(1))
++      return std::nullopt;
++
++    Instruction *ICmpL;
++    CmpPredicate Pred;
++    Value *StorePtr, *StoreVal;
++    if (!match(BI->getCondition(),
++               m_c_ICmp(Pred, m_Instruction(ICmpL, m_Load(m_Value(StorePtr))),
++                        m_Value(StoreVal))) ||
++        !ICmpInst::isEquality(Pred))
++      return std::nullopt;
++
++    // Ensure the replacement is allowed when comparing pointers, as
++    // the equality compares addresses only, not pointers' provenance.
++    if (StoreVal->getType()->isPointerTy() &&
++        !canReplacePointersIfEqual(StoreVal, ICmpL, DL))
++      return std::nullopt;
++
++    unsigned ImpliedSuccIdx = (Pred == ICmpInst::ICMP_EQ) ? 0 : 1;
++    BasicBlock *ImpliedSucc = BI->getSuccessor(ImpliedSuccIdx);
++    return {{ConditionInfo(StorePtr, StoreVal), ICmpL, ImpliedSucc}};
++  };
++
++  using NodePredicate = std::function<void(DomTreeNode *, unsigned)>;
++  NodePredicate VisitNode = [&](DomTreeNode *Node, unsigned Depth) {
++    if (Depth > MaxDepthRecursion)
++      return;
++
++    BasicBlock *BB = Node->getBlock();
++    // Check for redundant stores against active known conditions.
++    if (auto *Accesses = MSSA.getBlockDefs(BB)) {
++      for (auto &Access : make_early_inc_range(*Accesses)) {
++        auto *Def = dyn_cast<MemoryDef>(&Access);
++        if (!Def)
++          continue;
++
++        auto *SI = dyn_cast<StoreInst>(Def->getMemoryInst());
++        if (!SI || !SI->isUnordered())
++          continue;
++
++        Instruction *LI = ActiveConditions.lookup(
++            {SI->getPointerOperand(), SI->getValueOperand()});
++        if (!LI)
++          continue;
++
++        // Found a dominating condition that may imply the value being stored.
++        // Make sure there does not exist any clobbering access between the
++        // load and the potential redundant store.
++        MemoryAccess *LoadAccess = MSSA.getMemoryAccess(LI);
++        MemoryAccess *ClobberingAccess =
++            MSSA.getSkipSelfWalker()->getClobberingMemoryAccess(Def, BatchAA);
++        if (MSSA.dominates(ClobberingAccess, LoadAccess)) {
++          LLVM_DEBUG(dbgs()
++                     << "Removing No-Op Store:\n  DEAD: " << *SI << '\n');
++          deleteDeadInstruction(SI);
++          NumRedundantStores++;
++          MadeChange = true;
++        }
++      }
++    }
++
++    // See whether this basic block establishes a dominating condition.
++    auto MaybeCondition = GetDominatingCondition(BB);
++
++    for (DomTreeNode *Child : Node->children()) {
++      // RAII scope for the active conditions.
++      ScopedHTType::ScopeTy Scope(ActiveConditions);
++      if (MaybeCondition) {
++        const auto &[Cond, LI, ImpliedSucc] = *MaybeCondition;
++        if (DT.dominates(BasicBlockEdge(BB, ImpliedSucc), Child->getBlock())) {
++          // Found a condition that holds for this child, dominated by the
++          // current node via the equality edge. Propagate the condition to
++          // the subchilds by pushing it onto the table.
++          ActiveConditions.insert(Cond, LI);
++        }
++      }
++
++      // Recursively visit the children of this node. Upon destruction, the no
++      // longer active condition before visiting any sibling nodes is popped
++      // from the active scope.
++      VisitNode(Child, Depth + 1);
++    }
++  };
++
++  // Do a DFS walk of the dom-tree.
++  VisitNode(DT.getRootNode(), 0);
++
++  return MadeChange;
++}
++
+ bool DSEState::tryFoldIntoCalloc(MemoryDef *Def, const Value *DefUO) {
+   Instruction *DefI = Def->getMemoryInst();
+   MemSetInst *MemSet = dyn_cast<MemSetInst>(DefI);
+@@ -2237,61 +2354,6 @@ bool DSEState::tryFoldIntoCalloc(MemoryDef *Def, const Value *DefUO) {
+   return true;
+ }
+ 
+-bool DSEState::dominatingConditionImpliesValue(MemoryDef *Def) {
+-  auto *StoreI = cast<StoreInst>(Def->getMemoryInst());
+-  BasicBlock *StoreBB = StoreI->getParent();
+-  Value *StorePtr = StoreI->getPointerOperand();
+-  Value *StoreVal = StoreI->getValueOperand();
+-
+-  DomTreeNode *IDom = DT.getNode(StoreBB)->getIDom();
+-  if (!IDom)
+-    return false;
+-
+-  auto *BI = dyn_cast<CondBrInst>(IDom->getBlock()->getTerminator());
+-  if (!BI)
+-    return false;
+-
+-  // In case both blocks are the same, it is not possible to determine
+-  // if optimization is possible. (We would not want to optimize a store
+-  // in the FalseBB if condition is true and vice versa.)
+-  if (BI->getSuccessor(0) == BI->getSuccessor(1))
+-    return false;
+-
+-  Instruction *ICmpL;
+-  CmpPredicate Pred;
+-  if (!match(BI->getCondition(),
+-             m_c_ICmp(Pred,
+-                      m_CombineAnd(m_Load(m_Specific(StorePtr)),
+-                                   m_Instruction(ICmpL)),
+-                      m_Specific(StoreVal))) ||
+-      !ICmpInst::isEquality(Pred))
+-    return false;
+-
+-  // Ensure the replacement is allowed when comparing pointers, as
+-  // the equality compares addresses only, not pointers' provenance.
+-  if (StoreVal->getType()->isPointerTy() &&
+-      !canReplacePointersIfEqual(StoreVal, ICmpL, DL))
+-    return false;
+-
+-  // In case the else blocks also branches to the if block or the other way
+-  // around it is not possible to determine if the optimization is possible.
+-  if (Pred == ICmpInst::ICMP_EQ &&
+-      !DT.dominates(BasicBlockEdge(BI->getParent(), BI->getSuccessor(0)),
+-                    StoreBB))
+-    return false;
+-
+-  if (Pred == ICmpInst::ICMP_NE &&
+-      !DT.dominates(BasicBlockEdge(BI->getParent(), BI->getSuccessor(1)),
+-                    StoreBB))
+-    return false;
+-
+-  MemoryAccess *LoadAcc = MSSA.getMemoryAccess(ICmpL);
+-  MemoryAccess *ClobAcc =
+-      MSSA.getSkipSelfWalker()->getClobberingMemoryAccess(Def, BatchAA);
+-
+-  return MSSA.dominates(ClobAcc, LoadAcc);
+-}
+-
+ bool DSEState::storeIsNoop(MemoryDef *Def, const Value *DefUO) {
+   Instruction *DefI = Def->getMemoryInst();
+   StoreInst *Store = dyn_cast<StoreInst>(DefI);
+@@ -2320,9 +2382,6 @@ bool DSEState::storeIsNoop(MemoryDef *Def, const Value *DefUO) {
+   if (!Store)
+     return false;
+ 
+-  if (dominatingConditionImpliesValue(Def))
+-    return true;
+-
+   if (auto *LoadI = dyn_cast<LoadInst>(Store->getOperand(0))) {
+     if (LoadI->getPointerOperand() == Store->getOperand(1)) {
+       // Get the defining access for the load.
+@@ -2729,6 +2788,7 @@ static bool eliminateDeadStores(Function &F, AliasAnalysis &AA, MemorySSA &MSSA,
+ 
+   MadeChange |= State.eliminateRedundantStoresOfExistingValues();
+   MadeChange |= State.eliminateDeadWritesAtEndOfFunction();
++  MadeChange |= State.eliminateRedundantStoresViaDominatingConditions();
+ 
+   while (!State.ToRemove.empty()) {
+     Instruction *DeadInst = State.ToRemove.pop_back_val();
+diff --git a/llvm/test/Transforms/DeadStoreElimination/dead-stores-via-dom-conditions.ll b/llvm/test/Transforms/DeadStoreElimination/dead-stores-via-dom-conditions.ll
+new file mode 100644
+index 0000000000000..53f570e2b3c53
+--- /dev/null
++++ b/llvm/test/Transforms/DeadStoreElimination/dead-stores-via-dom-conditions.ll
+@@ -0,0 +1,280 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -aa-pipeline=basic-aa -passes='dse,verify<memoryssa>' -S | FileCheck %s
++
++; There exists a dominating condition in the entry block, not the immediate
++; dominator for the store, the edge entry->if.eq dominates the store, no
++; clobber in between, the store is redundant.
++define void @remove_tautological_store_via_dom_condition(ptr %x, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[IF_EQ:.*]], label %[[IF_ELSE:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[IF_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    br label %[[INNER:.*]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %then, label %end
++
++then:
++  br i1 %c, label %if.eq, label %if.else
++
++if.eq:
++  br label %join
++
++if.else:
++  br label %join
++
++join:
++  br label %inner
++
++inner:
++  store i32 0, ptr %x, align 4
++  br label %end
++
++end:
++  ret void
++}
++
++; There exists a dominating condition in block then, the edge then->if.eq immediately
++; dominates the first store, but does not dominate the second one, no clobber
++; in between, the first store is redundant.
++define void @remove_tautological_store_via_dom_condition_2(ptr %x, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition_2(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[IF_EQ:.*]], label %[[IF_ELSE:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[IF_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    store i32 0, ptr [[X]], align 4
++; CHECK-NEXT:    br label %[[INNER:.*]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %then, label %end
++
++then:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %if.eq, label %if.else
++
++if.eq:
++  store i32 0, ptr %x, align 4
++  br label %join
++
++if.else:
++  br label %join
++
++join:
++  store i32 0, ptr %x, align 4
++  br label %inner
++
++inner:
++  br label %end
++
++end:
++  ret void
++}
++
++; There exist two dominating conditions in the CFG, the edges entry->if.eq and
++; then->if.eq dominate the stores, no clobber in between, the stores are redundant.
++define void @remove_tautological_store_via_dom_condition_3(ptr %x, ptr %y, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition_3(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[VAL_2:%.*]] = load i32, ptr [[Y]], align 4
++; CHECK-NEXT:    [[CMP_2:%.*]] = icmp eq i32 [[VAL_2]], 0
++; CHECK-NEXT:    br i1 [[CMP_2]], label %[[IF_EQ:.*]], label %[[IF_ELSE:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[IF_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    br label %[[INNER:.*]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %then, label %end
++
++then:
++  %val.2 = load i32, ptr %y, align 4
++  %cmp.2 = icmp eq i32 %val.2, 0
++  br i1 %cmp.2, label %if.eq, label %if.else
++
++if.eq:
++  store i32 0, ptr %x, align 4
++  store i32 0, ptr %y, align 4
++  br label %join
++
++if.else:
++  br label %join
++
++join:
++  br label %inner
++
++inner:
++  br label %end
++
++end:
++  ret void
++}
++
++; Negative tests.
++
++; There exists a dominating condition in the entry block, however,
++; the pointer whose value is implied is clobbered in between.
++define void @remove_tautological_store_via_dom_condition_clobber_between(ptr %x, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition_clobber_between(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[IF_EQ:.*]], label %[[END:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[NEXT:.*]]
++; CHECK:       [[NEXT]]:
++; CHECK-NEXT:    call void @opaque(ptr [[X]])
++; CHECK-NEXT:    br i1 [[C]], label %[[INNER:.*]], label %[[END]]
++; CHECK:       [[INNER]]:
++; CHECK-NEXT:    store i32 0, ptr [[X]], align 4
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %if.eq, label %end
++
++if.eq:
++  br label %next
++
++next:
++  call void @opaque(ptr %x)
++  br i1 %c, label %inner, label %end
++
++inner:
++  store i32 0, ptr %x, align 4
++  br label %end
++
++end:
++  ret void
++}
++
++; Volatile stores should not be eliminated.
++define void @remove_tautological_store_via_dom_condition_volatile_store(ptr %x, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition_volatile_store(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[IF_EQ:.*]], label %[[IF_ELSE:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[IF_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    store volatile i32 0, ptr [[X]], align 4
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %then, label %end
++
++then:
++  br i1 %c, label %if.eq, label %if.else
++
++if.eq:
++  br label %join
++
++if.else:
++  br label %join
++
++join:
++  store volatile i32 0, ptr %x, align 4
++  br label %end
++
++end:
++  ret void
++}
++
++; Atomic stores should not be eliminated.
++define void @remove_tautological_store_via_dom_condition_atomic_store(ptr %x, i1 %c) {
++; CHECK-LABEL: define void @remove_tautological_store_via_dom_condition_atomic_store(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[X]], align 4
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[VAL]], 0
++; CHECK-NEXT:    br i1 [[CMP]], label %[[THEN:.*]], label %[[END:.*]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    br i1 [[C]], label %[[IF_EQ:.*]], label %[[IF_ELSE:.*]]
++; CHECK:       [[IF_EQ]]:
++; CHECK-NEXT:    br label %[[JOIN:.*]]
++; CHECK:       [[IF_ELSE]]:
++; CHECK-NEXT:    br label %[[JOIN]]
++; CHECK:       [[JOIN]]:
++; CHECK-NEXT:    store atomic i32 0, ptr [[X]] release, align 4
++; CHECK-NEXT:    br label %[[END]]
++; CHECK:       [[END]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %val = load i32, ptr %x, align 4
++  %cmp = icmp eq i32 %val, 0
++  br i1 %cmp, label %then, label %end
++
++then:
++  br i1 %c, label %if.eq, label %if.else
++
++if.eq:
++  br label %join
++
++if.else:
++  br label %join
++
++join:
++  store atomic i32 0, ptr %x release, align 4
++  br label %end
++
++end:
++  ret void
++}
++
++declare void @opaque(ptr)
