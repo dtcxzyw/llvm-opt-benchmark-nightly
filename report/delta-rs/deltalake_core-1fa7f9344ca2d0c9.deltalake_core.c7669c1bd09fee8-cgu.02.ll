@@ -2,7 +2,6 @@ begin_hunk_0
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -11,7 +10,6 @@ begin_hunk_1
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -20,7 +18,6 @@ begin_hunk_2
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -29,7 +26,6 @@ begin_hunk_3
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -38,7 +34,6 @@ begin_hunk_4
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -47,7 +42,6 @@ begin_hunk_5
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -56,7 +50,6 @@ begin_hunk_6
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -65,7 +58,6 @@ begin_hunk_7
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -74,7 +66,6 @@ begin_hunk_8
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -83,7 +74,6 @@ begin_hunk_9
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -92,7 +82,6 @@ begin_hunk_10
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -101,7 +90,6 @@ begin_hunk_11
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -110,7 +98,6 @@ begin_hunk_12
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -119,7 +106,6 @@ begin_hunk_13
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -128,7 +114,6 @@ begin_hunk_14
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -137,7 +122,6 @@ begin_hunk_15
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -146,7 +130,6 @@ begin_hunk_16
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -155,7 +138,6 @@ begin_hunk_17
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -164,7 +146,6 @@ begin_hunk_18
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -173,7 +154,6 @@ begin_hunk_19
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -182,7 +162,6 @@ begin_hunk_20
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -191,7 +170,6 @@ begin_hunk_21
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -200,7 +178,6 @@ begin_hunk_22
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -209,7 +186,6 @@ begin_hunk_23
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -218,7 +194,6 @@ begin_hunk_24
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -227,7 +202,6 @@ begin_hunk_25
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -236,7 +210,6 @@ begin_hunk_26
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -245,7 +218,6 @@ begin_hunk_27
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -254,7 +226,6 @@ begin_hunk_28
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -263,7 +234,6 @@ begin_hunk_29
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -272,7 +242,6 @@ begin_hunk_30
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -281,7 +250,6 @@ begin_hunk_31
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -290,7 +258,6 @@ begin_hunk_32
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -299,7 +266,6 @@ begin_hunk_33
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -308,7 +274,6 @@ begin_hunk_34
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -317,7 +282,6 @@ begin_hunk_35
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -326,7 +290,6 @@ begin_hunk_36
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -335,7 +298,6 @@ begin_hunk_37
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -344,7 +306,6 @@ begin_hunk_38
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -353,7 +314,6 @@ begin_hunk_39
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -362,7 +322,6 @@ begin_hunk_40
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -371,7 +330,6 @@ begin_hunk_41
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -380,7 +338,6 @@ begin_hunk_42
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -389,7 +346,6 @@ begin_hunk_43
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -398,7 +354,6 @@ begin_hunk_44
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -407,7 +362,6 @@ begin_hunk_45
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -416,7 +370,6 @@ begin_hunk_46
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -425,7 +378,6 @@ begin_hunk_47
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -434,7 +386,6 @@ begin_hunk_48
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -443,7 +394,6 @@ begin_hunk_49
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -452,7 +402,6 @@ begin_hunk_50
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -461,7 +410,6 @@ begin_hunk_51
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -470,7 +418,6 @@ begin_hunk_52
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -479,7 +426,6 @@ begin_hunk_53
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -488,7 +434,6 @@ begin_hunk_54
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -497,7 +442,6 @@ begin_hunk_55
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -506,7 +450,6 @@ begin_hunk_56
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -515,7 +458,6 @@ begin_hunk_57
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -524,7 +466,6 @@ begin_hunk_58
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -533,7 +474,6 @@ begin_hunk_59
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -542,7 +482,6 @@ begin_hunk_60
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -551,7 +490,6 @@ begin_hunk_61
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -560,7 +498,6 @@ begin_hunk_62
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -569,7 +506,6 @@ begin_hunk_63
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -578,7 +514,6 @@ begin_hunk_64
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -587,7 +522,6 @@ begin_hunk_65
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -596,7 +530,6 @@ begin_hunk_66
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -605,7 +538,6 @@ begin_hunk_67
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -614,7 +546,6 @@ begin_hunk_68
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -623,7 +554,6 @@ begin_hunk_69
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -632,7 +562,6 @@ begin_hunk_70
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -641,7 +570,6 @@ begin_hunk_71
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -650,7 +578,6 @@ begin_hunk_72
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -659,7 +586,6 @@ begin_hunk_73
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -668,7 +594,6 @@ begin_hunk_74
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -677,7 +602,6 @@ begin_hunk_75
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -686,7 +610,6 @@ begin_hunk_76
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -695,7 +618,6 @@ begin_hunk_77
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -704,7 +626,6 @@ begin_hunk_78
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -713,7 +634,6 @@ begin_hunk_79
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -722,7 +642,6 @@ begin_hunk_80
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -731,7 +650,6 @@ begin_hunk_81
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -740,7 +658,6 @@ begin_hunk_82
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -749,7 +666,6 @@ begin_hunk_83
   br label %.body
 
 .body:                                            ; preds = %bb.n, %bb.o
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.l, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -758,7 +674,6 @@ begin_hunk_84
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -767,7 +682,6 @@ begin_hunk_85
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -776,7 +690,6 @@ begin_hunk_86
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -785,7 +698,6 @@ begin_hunk_87
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -794,7 +706,6 @@ begin_hunk_88
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -803,7 +714,6 @@ begin_hunk_89
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -812,7 +722,6 @@ begin_hunk_90
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -821,7 +730,6 @@ begin_hunk_91
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -830,7 +738,6 @@ begin_hunk_92
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -839,7 +746,6 @@ begin_hunk_93
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -848,7 +754,6 @@ begin_hunk_94
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -857,7 +762,6 @@ begin_hunk_95
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -866,7 +770,6 @@ begin_hunk_96
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -875,7 +778,6 @@ begin_hunk_97
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -884,7 +786,6 @@ begin_hunk_98
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -893,7 +794,6 @@ begin_hunk_99
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -902,7 +802,6 @@ begin_hunk_100
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -911,7 +810,6 @@ begin_hunk_101
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -920,7 +818,6 @@ begin_hunk_102
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -929,7 +826,6 @@ begin_hunk_103
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -938,7 +834,6 @@ begin_hunk_104
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -947,7 +842,6 @@ begin_hunk_105
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -956,7 +850,6 @@ begin_hunk_106
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -965,7 +858,6 @@ begin_hunk_107
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -974,7 +866,6 @@ begin_hunk_108
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -983,7 +874,6 @@ begin_hunk_109
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -992,7 +882,6 @@ begin_hunk_110
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1001,7 +890,6 @@ begin_hunk_111
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1010,7 +898,6 @@ begin_hunk_112
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1019,7 +906,6 @@ begin_hunk_113
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1028,7 +914,6 @@ begin_hunk_114
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1037,7 +922,6 @@ begin_hunk_115
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1046,7 +930,6 @@ begin_hunk_116
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1055,7 +938,6 @@ begin_hunk_117
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1064,7 +946,6 @@ begin_hunk_118
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 
@@ -1073,7 +954,6 @@ begin_hunk_119
   br label %.body
 
 .body:                                            ; preds = %bb.o, %bb.p
-  store i64 0, ptr %1, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.n, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false)
   br label %common.resume
 

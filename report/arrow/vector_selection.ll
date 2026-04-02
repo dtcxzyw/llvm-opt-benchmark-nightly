@@ -2,7 +2,6 @@ begin_hunk_0
   br i1 %i.b, label %_ZN5arrow6StatusaSEOS0_.exit, label %bb.i, !prof !77
 
 _ZN5arrow6StatusaSEOS0_.exit:                     ; preds = %bb.a
-  store ptr null, ptr %1, align 8, !tbaa !74
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !832)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -11,7 +10,6 @@ begin_hunk_1
   br i1 %i.b, label %_ZN5arrow6StatusaSEOS0_.exit, label %bb.j, !prof !77
 
 _ZN5arrow6StatusaSEOS0_.exit:                     ; preds = %bb.a
-  store ptr null, ptr %1, align 8, !tbaa !74
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load <2 x ptr>, ptr %i.c, align 8, !tbaa !72, !noalias !839
@@ -20,7 +18,6 @@ begin_hunk_2
   br i1 %i.b, label %_ZN5arrow6StatusaSEOS0_.exit, label %bb.j, !prof !77
 
 _ZN5arrow6StatusaSEOS0_.exit:                     ; preds = %bb.a
-  store ptr null, ptr %1, align 8, !tbaa !74
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load <2 x ptr>, ptr %i.c, align 8, !tbaa !72, !noalias !855
@@ -29,7 +26,6 @@ begin_hunk_3
   br i1 %i.b, label %_ZN5arrow6StatusaSEOS0_.exit, label %bb.j, !prof !77
 
 _ZN5arrow6StatusaSEOS0_.exit:                     ; preds = %bb.a
-  store ptr null, ptr %1, align 8, !tbaa !74
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load <2 x ptr>, ptr %i.c, align 8, !tbaa !72, !noalias !861
