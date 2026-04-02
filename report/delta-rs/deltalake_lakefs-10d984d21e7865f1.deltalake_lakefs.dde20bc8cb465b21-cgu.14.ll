@@ -2,20 +2,13 @@ begin_hunk_0
 @_RNvNCNKNvNtNtCskQDtHcQtBkN_5tokio7runtime7context7CONTEXT0023___RUST_STD_INTERNAL_VAL = external thread_local global { { { { { i64, { { i64, [1 x i64] } } }, i64 }, i64, ptr, i64, { { { i32, [2 x i32] } } }, { { { { i8, [1 x i8] } } } }, i8, [1 x i8] } }, i8, [7 x i8] }
 @4 = private unnamed_addr constant [101 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/delta_kernel-0.19.2/src/path.rs\00", align 1
 @5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @4, [16 x i8] c"d\00\00\00\00\00\00\00w\00\00\00\0E\00\00\00" }>, align 8
-@6 = private unnamed_addr constant [15 x i8] c"_staged_commits", align 1
-@7 = private unnamed_addr constant [10 x i8] c"_delta_log", align 1
-@8 = private unnamed_addr constant [4 x i8] c"json", align 1
-@9 = private unnamed_addr constant [3 x i8] c"crc", align 1
-@10 = private unnamed_addr constant [10 x i8] c"checkpoint", align 1
-@11 = private unnamed_addr constant [7 x i8] c"parquet", align 1
-@12 = private unnamed_addr constant [9 x i8] c"compacted", align 1
-@13 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRReNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
-@14 = private unnamed_addr constant [6 x i8] c"Domain", align 1
-@15 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtNtB8_3net7ip_addr8Ipv4AddrNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
-@16 = private unnamed_addr constant [4 x i8] c"Ipv4", align 1
-@17 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtNtB8_3net7ip_addr8Ipv6AddrNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
-@18 = private unnamed_addr constant [4 x i8] c"Ipv6", align 1
-@19 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8
+@6 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRReNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
+@7 = private unnamed_addr constant [6 x i8] c"Domain", align 1
+@8 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtNtB8_3net7ip_addr8Ipv4AddrNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
+@9 = private unnamed_addr constant [4 x i8] c"Ipv4", align 1
+@10 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNvXs1g_NtCsbvkFyIu7lgC_4core3fmtRNtNtNtB8_3net7ip_addr8Ipv6AddrNtB6_5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs }>, align 8
+@11 = private unnamed_addr constant [4 x i8] c"Ipv6", align 1
+@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8
 
 ; Function Attrs: nonlazybind uwtable
 define hidden void @_RINvMsj_NtCs6Po7BT7Nknu_5alloc3vecINtB6_3VechE14extend_trustedINtNtCsbvkFyIu7lgC_4core6option8IntoIterhEECsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef align 8 dereferenceable(24) %0, i1 noundef zeroext %1, i8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
@@ -24,7 +17,7 @@ begin_hunk_1
   br label %.thread188
 
 bb.o:                                             ; preds = %bb.m
-  %i.af = extractvalue { ptr, i64 } %i.ae, 0      ; 3 uses
+  %i.af = extractvalue { ptr, i64 } %i.ae, 0      ; 5 uses
   %i.ag = extractvalue { ptr, i64 } %i.ae, 1
   %i.ah = load i64, ptr %.sroa.675.0..sroa_idx, align 8, !noundef !6 ; 11 uses
   %i.ai = icmp sgt i64 %i.ah, -1
@@ -33,8 +26,15 @@ begin_hunk_2
   ]
 
 bb.ay:                                            ; preds = %bb.ax
-  %bcmp = call i32 @bcmp(ptr noundef nonnull dereferenceable(15) %i.af, ptr noundef nonnull dereferenceable(15) @6, i64 15)
-  %i.gz = icmp eq i32 %bcmp, 0
+  %2 = load i64, ptr %i.af, align 1
+  %3 = xor i64 %2, 6873730425965278047
+  %4 = getelementptr i8, ptr %i.af, i64 7
+  %5 = load i64, ptr %4, align 1
+  %6 = xor i64 %5, 8319390330368516959
+  %7 = or i64 %3, %6
+  %8 = icmp ne i64 %7, 0
+  %9 = zext i1 %8 to i32
+  %i.gz = icmp eq i32 %9, 0
   br i1 %i.gz, label %bb.az, label %bb.bf
 
 bb.az:                                            ; preds = %bb.ay
@@ -43,7 +43,7 @@ begin_hunk_3
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsj34PGqTgg0L_16deltalake_lakefs.exit164 unwind label %bb.cs
 
 bb.bb:                                            ; preds = %bb.az
-  %i.hc = extractvalue { ptr, i64 } %i.ha, 0      ; 2 uses
+  %i.hc = extractvalue { ptr, i64 } %i.ha, 0      ; 3 uses
   %.not128 = icmp ne ptr %i.hc, null
   %i.hd = extractvalue { ptr, i64 } %i.ha, 1
   %i.he = icmp eq i64 %i.hd, 10
@@ -52,8 +52,16 @@ begin_hunk_4
   br i1 %or.cond149, label %bb.bc, label %bb.bf
 
 bb.bc:                                            ; preds = %bb.bb
-  %bcmp129 = call i32 @bcmp(ptr noundef nonnull dereferenceable(10) %i.hc, ptr noundef nonnull dereferenceable(10) @7, i64 10)
-  %i.hf = icmp eq i32 %bcmp129, 0
+  %10 = load i64, ptr %i.hc, align 1
+  %11 = xor i64 %10, 7809067431546414175
+  %12 = getelementptr i8, ptr %i.hc, i64 8
+  %13 = load i16, ptr %12, align 1
+  %14 = zext i16 %13 to i64
+  %15 = xor i64 %14, 26479
+  %16 = or i64 %11, %15
+  %17 = icmp ne i64 %16, 0
+  %18 = zext i1 %17 to i32
+  %i.hf = icmp eq i32 %18, 0
   br i1 %i.hf, label %bb.bd, label %bb.bf
 
 bb.bd:                                            ; preds = %bb.bc
@@ -62,8 +70,16 @@ begin_hunk_5
   ]
 
 bb.bg:                                            ; preds = %bb.ax
-  %bcmp127 = call i32 @bcmp(ptr noundef nonnull dereferenceable(10) %i.af, ptr noundef nonnull dereferenceable(10) @7, i64 10)
-  %i.hj = icmp eq i32 %bcmp127, 0
+  %19 = load i64, ptr %i.af, align 1
+  %20 = xor i64 %19, 7809067431546414175
+  %21 = getelementptr i8, ptr %i.af, i64 8
+  %22 = load i16, ptr %21, align 1
+  %23 = zext i16 %22 to i64
+  %24 = xor i64 %23, 26479
+  %25 = or i64 %20, %24
+  %26 = icmp ne i64 %25, 0
+  %27 = zext i1 %26 to i32
+  %i.hj = icmp eq i32 %27, 0
   br i1 %i.hj, label %bb.bh, label %bb.bf
 
 bb.bh:                                            ; preds = %bb.bg
@@ -72,16 +88,26 @@ begin_hunk_6
 
 bb.bk:                                            ; preds = %bb.bj
   %i.ho = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6
-  %bcmp142 = call i32 @bcmp(ptr noundef nonnull dereferenceable(4) %i.ho, ptr noundef nonnull dereferenceable(4) @8, i64 4)
-  %i.hp = icmp eq i32 %bcmp142, 0
+  %28 = load i32, ptr %i.ho, align 1
+  %29 = icmp ne i32 %28, 1852797802
+  %30 = zext i1 %29 to i32
+  %i.hp = icmp eq i32 %30, 0
   %i.hq = and i1 %.sroa.035.0, %i.hp
   %spec.select202 = select i1 %i.hq, i32 0, i32 7
   br label %.thread197
 
 bb.bl:                                            ; preds = %bb.bj
-  %i.hr = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6
-  %bcmp143 = call i32 @bcmp(ptr noundef nonnull dereferenceable(3) %i.hr, ptr noundef nonnull dereferenceable(3) @9, i64 3)
-  %i.hs = icmp eq i32 %bcmp143, 0
+  %i.hr = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %31 = load i16, ptr %i.hr, align 1
+  %32 = xor i16 %31, 29283
+  %33 = getelementptr i8, ptr %i.hr, i64 2
+  %34 = load i8, ptr %33, align 1
+  %35 = zext i8 %34 to i16
+  %36 = xor i16 %35, 99
+  %37 = or i16 %32, %36
+  %38 = icmp ne i16 %37, 0
+  %39 = zext i1 %38 to i32
+  %i.hs = icmp eq i32 %39, 0
   %or.cond = and i1 %.sroa.035.0, %i.hs
   %spec.select151 = select i1 %or.cond, i32 6, i32 7
   br label %.thread197
@@ -90,8 +116,10 @@ begin_hunk_7
 
 bb.bn:                                            ; preds = %bb.bm
   %i.hx = load ptr, ptr %i.ht, align 8, !nonnull !6, !noundef !6
-  %bcmp138 = call i32 @bcmp(ptr noundef nonnull dereferenceable(4) %i.hx, ptr noundef nonnull dereferenceable(4) @8, i64 4)
-  %i.hy = icmp eq i32 %bcmp138, 0
+  %40 = load i32, ptr %i.hx, align 1
+  %41 = icmp ne i32 %40, 1852797802
+  %42 = zext i1 %41 to i32
+  %i.hy = icmp eq i32 %42, 0
   br i1 %i.hy, label %bb.bp, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bm, %bb.bn
@@ -100,17 +128,32 @@ begin_hunk_8
   br i1 %.sroa.085.0, label %bb.bs, label %.thread197
 
 bb.bq:                                            ; preds = %bb.bo
-  %i.ic = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6
-  %bcmp139 = call i32 @bcmp(ptr noundef nonnull dereferenceable(10) %i.ic, ptr noundef nonnull dereferenceable(10) @10, i64 10)
-  %i.id = icmp eq i32 %bcmp139, 0
+  %i.ic = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %43 = load i64, ptr %i.ic, align 1
+  %44 = xor i64 %43, 7597414702928717923
+  %45 = getelementptr i8, ptr %i.ic, i64 8
+  %46 = load i16, ptr %45, align 1
+  %47 = zext i16 %46 to i64
+  %48 = xor i64 %47, 29806
+  %49 = or i64 %44, %48
+  %50 = icmp ne i64 %49, 0
+  %51 = zext i1 %50 to i32
+  %i.id = icmp eq i32 %51, 0
   %i.ie = icmp eq i64 %i.hv, 7
   %or.cond203 = and i1 %i.ie, %i.id
   br i1 %or.cond203, label %bb.br, label %.thread197
 
 bb.br:                                            ; preds = %bb.bq
-  %i.if = load ptr, ptr %i.ht, align 8, !nonnull !6, !noundef !6
-  %bcmp140 = call i32 @bcmp(ptr noundef nonnull dereferenceable(7) %i.if, ptr noundef nonnull dereferenceable(7) @11, i64 7)
-  %i.ig = icmp eq i32 %bcmp140, 0
+  %i.if = load ptr, ptr %i.ht, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %52 = load i32, ptr %i.if, align 1
+  %53 = xor i32 %52, 1903321456
+  %54 = getelementptr i8, ptr %i.if, i64 3
+  %55 = load i32, ptr %54, align 1
+  %56 = xor i32 %55, 1952806257
+  %57 = or i32 %53, %56
+  %58 = icmp ne i32 %57, 0
+  %59 = zext i1 %58 to i32
+  %i.ig = icmp eq i32 %59, 0
   %or.cond3 = and i1 %.sroa.035.0, %i.ig
   %spec.select = select i1 %or.cond3, i32 2, i32 7
   br label %.thread197
@@ -119,9 +162,17 @@ begin_hunk_9
   br i1 %i.in, label %bb.bx, label %.thread198
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.io = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6
-  %bcmp132 = call i32 @bcmp(ptr noundef nonnull dereferenceable(10) %i.io, ptr noundef nonnull dereferenceable(10) @10, i64 10)
-  %i.ip = icmp eq i32 %bcmp132, 0
+  %i.io = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %60 = load i64, ptr %i.io, align 1
+  %61 = xor i64 %60, 7597414702928717923
+  %62 = getelementptr i8, ptr %i.io, i64 8
+  %63 = load i16, ptr %62, align 1
+  %64 = zext i16 %63 to i64
+  %65 = xor i64 %64, 29806
+  %66 = or i64 %61, %65
+  %67 = icmp ne i64 %66, 0
+  %68 = zext i1 %67 to i32
+  %i.ip = icmp eq i32 %68, 0
   br i1 %i.ip, label %bb.by, label %.thread198
 
 .thread198:                                       ; preds = %bb.bz, %bb.by, %bb.ca, %bb.bw, %bb.bx
@@ -130,15 +181,24 @@ begin_hunk_10
 
 bb.bz:                                            ; preds = %bb.by
   %i.iw = load ptr, ptr %i.it, align 8, !nonnull !6, !noundef !6
-  %bcmp133 = call i32 @bcmp(ptr noundef nonnull dereferenceable(4) %i.iw, ptr noundef nonnull dereferenceable(4) @8, i64 4)
-  %i.ix = icmp eq i32 %bcmp133, 0
+  %69 = load i32, ptr %i.iw, align 1
+  %70 = icmp ne i32 %69, 1852797802
+  %71 = zext i1 %70 to i32
+  %i.ix = icmp eq i32 %71, 0
   %brmerge206.not = and i1 %.sroa.035.0, %i.ix
   br i1 %brmerge206.not, label %bb.cb, label %.thread198
 
 bb.ca:                                            ; preds = %bb.by
-  %i.iy = load ptr, ptr %i.it, align 8, !nonnull !6, !noundef !6
-  %bcmp134 = call i32 @bcmp(ptr noundef nonnull dereferenceable(7) %i.iy, ptr noundef nonnull dereferenceable(7) @11, i64 7)
-  %i.iz = icmp eq i32 %bcmp134, 0
+  %i.iy = load ptr, ptr %i.it, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %72 = load i32, ptr %i.iy, align 1
+  %73 = xor i32 %72, 1903321456
+  %74 = getelementptr i8, ptr %i.iy, i64 3
+  %75 = load i32, ptr %74, align 1
+  %76 = xor i32 %75, 1952806257
+  %77 = or i32 %73, %76
+  %78 = icmp ne i32 %77, 0
+  %79 = zext i1 %78 to i32
+  %i.iz = icmp eq i32 %79, 0
   %brmerge.not = and i1 %.sroa.035.0, %i.iz
   br i1 %brmerge.not, label %bb.cb, label %.thread198
 
@@ -147,9 +207,17 @@ begin_hunk_11
 
 bb.cc:                                            ; preds = %.thread198
   %i.jd = getelementptr inbounds nuw i8, ptr %i.hh, i64 16
-  %i.je = load ptr, ptr %i.jd, align 8, !nonnull !6, !noundef !6
-  %bcmp135 = call i32 @bcmp(ptr noundef nonnull dereferenceable(9) %i.je, ptr noundef nonnull dereferenceable(9) @12, i64 9)
-  %i.jf = icmp eq i32 %bcmp135, 0
+  %i.je = load ptr, ptr %i.jd, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %80 = load i64, ptr %i.je, align 1
+  %81 = xor i64 %80, 7310577365278355299
+  %82 = getelementptr i8, ptr %i.je, i64 8
+  %83 = load i8, ptr %82, align 1
+  %84 = zext i8 %83 to i64
+  %85 = xor i64 %84, 100
+  %86 = or i64 %81, %85
+  %87 = icmp ne i64 %86, 0
+  %88 = zext i1 %87 to i32
+  %i.jf = icmp eq i32 %88, 0
   br i1 %i.jf, label %bb.cd, label %.thread197
 
 bb.cd:                                            ; preds = %bb.cc
@@ -158,8 +226,10 @@ begin_hunk_12
 bb.ce:                                            ; preds = %bb.cd
   %i.jj = getelementptr inbounds nuw i8, ptr %i.hh, i64 32
   %i.jk = load ptr, ptr %i.jj, align 8, !nonnull !6, !noundef !6
-  %bcmp136 = call i32 @bcmp(ptr noundef nonnull dereferenceable(4) %i.jk, ptr noundef nonnull dereferenceable(4) @8, i64 4)
-  %i.jl = icmp eq i32 %bcmp136, 0
+  %89 = load i32, ptr %i.jk, align 1
+  %90 = icmp ne i32 %89, 1852797802
+  %91 = zext i1 %90 to i32
+  %i.jl = icmp eq i32 %91, 0
   %or.cond6 = and i1 %.sroa.035.0, %i.jl
   br i1 %or.cond6, label %bb.cf, label %.thread197
 
@@ -168,9 +238,17 @@ begin_hunk_13
   br i1 %i.ju, label %bb.cm, label %.thread197
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.jv = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6
-  %bcmp130 = call i32 @bcmp(ptr noundef nonnull dereferenceable(10) %i.jv, ptr noundef nonnull dereferenceable(10) @10, i64 10)
-  %i.jw = icmp eq i32 %bcmp130, 0
+  %i.jv = load ptr, ptr %i.hh, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %92 = load i64, ptr %i.jv, align 1
+  %93 = xor i64 %92, 7597414702928717923
+  %94 = getelementptr i8, ptr %i.jv, i64 8
+  %95 = load i16, ptr %94, align 1
+  %96 = zext i16 %95 to i64
+  %97 = xor i64 %96, 29806
+  %98 = or i64 %93, %97
+  %99 = icmp ne i64 %98, 0
+  %100 = zext i1 %99 to i32
+  %i.jw = icmp eq i32 %100, 0
   br i1 %i.jw, label %bb.cn, label %.thread197
 
 bb.cn:                                            ; preds = %bb.cm
@@ -179,9 +257,16 @@ begin_hunk_14
 
 bb.co:                                            ; preds = %bb.cn
   %i.ka = getelementptr inbounds nuw i8, ptr %i.hh, i64 48
-  %i.kb = load ptr, ptr %i.ka, align 8, !nonnull !6, !noundef !6
-  %bcmp131 = call i32 @bcmp(ptr noundef nonnull dereferenceable(7) %i.kb, ptr noundef nonnull dereferenceable(7) @11, i64 7)
-  %i.kc = icmp eq i32 %bcmp131, 0
+  %i.kb = load ptr, ptr %i.ka, align 8, !nonnull !6, !noundef !6 ; 2 uses
+  %101 = load i32, ptr %i.kb, align 1
+  %102 = xor i32 %101, 1903321456
+  %103 = getelementptr i8, ptr %i.kb, i64 3
+  %104 = load i32, ptr %103, align 1
+  %105 = xor i32 %104, 1952806257
+  %106 = or i32 %102, %105
+  %107 = icmp ne i32 %106, 0
+  %108 = zext i1 %107 to i32
+  %i.kc = icmp eq i32 %108, 0
   %or.cond8 = and i1 %.sroa.035.0, %i.kc
   br i1 %or.cond8, label %bb.cp, label %.thread197
 
@@ -190,7 +275,7 @@ begin_hunk_15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !464
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store ptr %i.f, ptr %i.c, align 8, !noalias !464
-  %i.g = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @14, i64 noundef 6, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @13)
+  %i.g = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 6, ptr noundef nonnull %i.c, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !464
   br label %_RNvXsc_NtCseo6ZV82fEK1_3url4hostINtB5_4HostReENtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs.exit
 
@@ -199,7 +284,7 @@ begin_hunk_16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !464
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   store ptr %i.h, ptr %i.b, align 8, !noalias !464
-  %i.i = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @15)
+  %i.i = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 4, ptr noundef nonnull %i.b, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @8)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !464
   br label %_RNvXsc_NtCseo6ZV82fEK1_3url4hostINtB5_4HostReENtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs.exit
 
@@ -208,7 +293,7 @@ begin_hunk_17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !464
   %i.j = getelementptr inbounds nuw i8, ptr %i.d, i64 1
   store ptr %i.j, ptr %i.a, align 8, !noalias !464
-  %i.k = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @18, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @17)
+  %i.k = call noundef zeroext i1 @_RNvMsa_NtCsbvkFyIu7lgC_4core3fmtNtB5_9Formatter25debug_tuple_field1_finish(ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 4, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @10)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !464
   br label %_RNvXsc_NtCseo6ZV82fEK1_3url4hostINtB5_4HostReENtNtCsbvkFyIu7lgC_4core3fmt5Debug3fmtCsj34PGqTgg0L_16deltalake_lakefs.exit
 
@@ -217,7 +302,7 @@ begin_hunk_18
   %.lcssa12.i = phi i64 [ %.promoted.i.i, %bb.d ], [ %.promoted.i.i, %bb.e ], [ %i.bq, %bb.p ], [ %i.bq, %bb.q ]
   %i.ci = xor i8 %.lcssa15.i, 1
   store i8 %i.ci, ptr %i.m, align 8, !alias.scope !497, !noalias !500
-  tail call void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i, i64 noundef %.lcssa12.i, i64 noundef %.val1.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @19) #19, !noalias !513
+  tail call void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %.val.i, i64 noundef %.val1.i, i64 noundef %.lcssa12.i, i64 noundef %.val1.i, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #19, !noalias !513
   unreachable
 
 .loopexit19.i:                                    ; preds = %bb.f
