@@ -1189,12 +1189,12 @@ def generate_diff_report(
     TRIVIAL_PENALTY = 200
     DIVERSITY_PENALTY_INC = 30
 
-    # proj -> list of (cost, real_cost, ref_ir, new_ir, proj, added, removed)
+    # proj -> list of (cost, real_cost, order_key, rendered_file, proj, added, removed)
     diffs = dict()
 
     total_added = 0
     total_removed = 0
-    for rendered_file in rendered_files:
+    for order_key, rendered_file in enumerate(rendered_files):
         ref_ir = rendered_file.report_ref_ir
         new_ir = rendered_file.report_new_ir
         proj = os.path.basename(ref_ir).split("-s-")[0]
@@ -1238,6 +1238,7 @@ def generate_diff_report(
             (
                 cost,
                 real_cost,
+                order_key,
                 rendered_file,
                 proj,
                 number_of_added_lines,
@@ -1260,15 +1261,18 @@ def generate_diff_report(
     kept_removed = 0
     kept_files_sorted = []
     while len(diff_heap) != 0:
-        _, real_cost, rendered_file, proj, add, sub = heapq.heappop(diff_heap)
+        _, real_cost, _, rendered_file, proj, add, sub = heapq.heappop(diff_heap)
         proj_list = diffs[proj]
         if len(proj_list) != 0:
             diversity_penalty[proj] = (
                 diversity_penalty.get(proj, 0) + DIVERSITY_PENALTY_INC
             )
-            cnt2, real_cost2, rendered_file2, proj2, add2, sub2 = proj_list.pop(0)
+            cnt2, real_cost2, order_key2, rendered_file2, proj2, add2, sub2 = proj_list.pop(0)
             cnt2 += diversity_penalty[proj]
-            heapq.heappush(diff_heap, (cnt2, real_cost2, rendered_file2, proj2, add2, sub2))
+            heapq.heappush(
+                diff_heap,
+                (cnt2, real_cost2, order_key2, rendered_file2, proj2, add2, sub2),
+            )
 
         key = (add, sub)
         if key in diff_pattern:
