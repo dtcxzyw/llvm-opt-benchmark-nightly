@@ -2,8 +2,7 @@ begin_hunk_0
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 4 ; 4 uses
   %i.dl = icmp sgt i32 %.fr130, 1                 ; 2 uses
   %.not.i.not.i = icmp slt i32 %2, %i.dc
-  %15 = add i32 %i.de, 1
-  %umax.i.i = tail call i32 @llvm.umax.i32(i32 %15, i32 2)
+  %umax.i.i = tail call i32 @llvm.umax.i32(i32 %i.de, i32 1)
   %i.dm = sext i32 %1 to i64
   %invariant.op.i.i = add nsw i64 %i.dm, -1       ; 3 uses
   %i.dn = add i32 %i.cm, -1
@@ -12,7 +11,7 @@ begin_hunk_1
   br i1 %.not.i.not.i, label %.lr.ph119.us.us.i.us.us.i, label %.loopexit.us.i.us.us.i
 
 .lr.ph119.us.us.i.us.us.i:                        ; preds = %._crit_edge.us.i.us.us.i, %._crit_edge120.us.us.i.us.us.i
-  %.098121.us.us.i.us.us.i = phi i32 [ %i.ia, %._crit_edge120.us.us.i.us.us.i ], [ 1, %._crit_edge.us.i.us.us.i ] ; 2 uses
+  %.098121.us.us.i.us.us.i = phi i32 [ %i.ia, %._crit_edge120.us.us.i.us.us.i ], [ 1, %._crit_edge.us.i.us.us.i ] ; 3 uses
   %i.gu = mul nsw i32 %.098121.us.us.i.us.us.i, 14
   %i.gv = add nsw i32 %i.gu, %i.fi
   %i.gw = shl nsw i32 %i.gv, 10
@@ -21,8 +20,8 @@ begin_hunk_2
   br i1 %exitcond147.not.i.us.us.i, label %._crit_edge120.us.us.i.us.us.i, label %bb.m, !llvm.loop !28
 
 ._crit_edge120.us.us.i.us.us.i:                   ; preds = %bb.m
-  %i.ia = add nuw i32 %.098121.us.us.i.us.us.i, 1 ; 2 uses
-  %exitcond148.i.us.us.i = icmp eq i32 %i.ia, %umax.i.i
+  %i.ia = add nuw i32 %.098121.us.us.i.us.us.i, 1
+  %exitcond148.i.us.us.i = icmp eq i32 %.098121.us.us.i.us.us.i, %umax.i.i
   br i1 %exitcond148.i.us.us.i, label %.loopexit.us.i.us.us.i, label %.lr.ph119.us.us.i.us.us.i, !llvm.loop !29
 
 .loopexit.us.i.us.us.i:                           ; preds = %._crit_edge120.us.us.i.us.us.i, %._crit_edge.us.i.us.us.i
@@ -31,7 +30,7 @@ begin_hunk_3
   %i.dy = xor i32 %i.dq, 255
   %i.dz = icmp samesign ult i32 %i.dy, %i.du
   %i.ea = zext i1 %i.dz to i32
-  %i.eb = sub nsw i32 %i.dt, %i.dw
+  %i.eb = sub nuw nsw i32 %i.dt, %i.dw
   %i.ec = sub nsw i32 %i.ea, %i.dt
   %i.ed = add i32 %i.ec, %i.dx
   %i.ee = icmp slt i32 %i.eb, %i.ed
@@ -40,7 +39,7 @@ begin_hunk_4
   %i.et = xor i32 %i.em, 255
   %i.eu = icmp samesign ult i32 %i.et, %i.eq
   %i.ev = zext i1 %i.eu to i32
-  %i.ew = sub nsw i32 %i.ep, %i.er
+  %i.ew = sub nuw nsw i32 %i.ep, %i.er
   %i.ex = sub nsw i32 %i.ev, %i.ep
   %i.ey = add i32 %i.ex, %i.es
   %i.ez = icmp slt i32 %i.ew, %i.ey
@@ -49,7 +48,7 @@ begin_hunk_5
   %i.fr = and i32 %i.fq, 255
   %i.fs = icmp samesign ult i32 %i.fr, %i.fn
   %i.ft = zext i1 %i.fs to i32
-  %i.fu = sub nsw i32 %i.fj, %i.fo
+  %i.fu = sub nuw nsw i32 %i.fj, %i.fo
   %i.fv = sub i32 %i.fp, %i.fj
   %i.fw = add nsw i32 %i.fv, %i.ft
   %i.fx = icmp slt i32 %i.fu, %i.fw
@@ -58,7 +57,7 @@ begin_hunk_6
   %i.gk = and i32 %i.gj, 255
   %i.gl = icmp samesign ult i32 %i.gk, %i.gg
   %i.gm = zext i1 %i.gl to i32
-  %i.gn = sub nsw i32 %i.ge, %i.gh
+  %i.gn = sub nuw nsw i32 %i.ge, %i.gh
   %i.go = sub i32 %i.gi, %i.ge
   %i.gp = add nsw i32 %i.go, %i.gm
   %i.gq = icmp slt i32 %i.gn, %i.gp
