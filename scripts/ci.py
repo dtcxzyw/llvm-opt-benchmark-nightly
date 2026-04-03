@@ -274,6 +274,7 @@ def dump_json_sorted(file_path: str, data: dict, trailing_newline: bool = False)
 
 
 # Get the latest llvm version from the upstream.
+@retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
 def update_llvm() -> str:
     subprocess.check_call(["git", "fetch", "origin", "main"], cwd=LLVM_REPO)
     revision = (
