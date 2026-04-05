@@ -2,6 +2,7 @@
 # uv run scripts/ci.py test # with env USER/COMMENT_BODY/ISSUE_URL
 
 from dataclasses import dataclass
+import bisect
 import heapq
 import os
 import argparse
@@ -58,6 +59,14 @@ OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "").strip()
 OPENAI_API_TOKEN = os.environ.get(
     "OPENAI_API_TOKEN", os.environ.get("OPENAI_API_KEY", "")
 ).strip()
+
+UNIFIED_HUNK_HEADER_RE = re.compile(
+    r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@"
+)
+LLVM_FUNCTION_RE = re.compile(
+    r'^(?:define|declare)\b.*?(@(?:"[^"]+"|[-a-zA-Z$._0-9]+))\('
+)
+LLVM_BLOCK_RE = re.compile(r'^((?:"[^"]+"|[-a-zA-Z$._0-9]+)):$')
 
 
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
@@ -317,6 +326,21 @@ class KeptDiff:
     delta: int
 
 
+@dataclass
+class DiffHunk:
+    lines: List[str]
+    ref_start_idx: int
+    new_start_idx: int
+
+
+@dataclass
+class IRContextIndex:
+    function_positions: List[int]
+    function_names: List[str]
+    block_positions: List[int]
+    block_names: List[str]
+
+
 def build_llvm(config: TestConfig) -> bool:
     try:
         if os.path.exists(LLVM_BUILD_DIR):
@@ -547,41 +571,156 @@ def apply_llvm_patch(patch_url: str) -> Tuple[bool, Optional[str]]:
     return bool(result), None
 
 
-def _extract_hunks_from_unified(unified_lines: List[str]) -> List[List[str]]:
+def _parse_unified_hunk_header(line: str) -> Tuple[int, int]:
+    match = UNIFIED_HUNK_HEADER_RE.match(line)
+    if match is None:
+        raise ValueError(f"Invalid unified diff hunk header: {line}")
+    ref_start = int(match.group(1))
+    new_start = int(match.group(3))
+    return max(ref_start - 1, 0), max(new_start - 1, 0)
+
+
+def _extract_hunks_from_unified(unified_lines: List[str]) -> List[DiffHunk]:
     hunks = []
-    current_hunk = None
+    current_hunk_lines = None
+    current_ref_idx = 0
+    current_new_idx = 0
+    hunk_ref_start_idx = 0
+    hunk_new_start_idx = 0
     for line in unified_lines:
         if line.startswith("--- ") or line.startswith("+++ "):
             continue
         if line.startswith("@@ "):
-            if current_hunk is not None:
-                hunks.append(current_hunk)
-            current_hunk = []
+            if current_hunk_lines is not None:
+                hunks.append(
+                    DiffHunk(
+                        lines=current_hunk_lines,
+                        ref_start_idx=hunk_ref_start_idx,
+                        new_start_idx=hunk_new_start_idx,
+                    )
+                )
+            current_ref_idx, current_new_idx = _parse_unified_hunk_header(line)
+            hunk_ref_start_idx = current_ref_idx
+            hunk_new_start_idx = current_new_idx
+            current_hunk_lines = []
             continue
-        if current_hunk is None:
+        if current_hunk_lines is None:
             continue
         if line.startswith("\\ No newline at end of file"):
             continue
         if line[:1] in {" ", "-", "+"}:
-            current_hunk.append(line)
-    if current_hunk is not None:
-        hunks.append(current_hunk)
+            current_hunk_lines.append(line)
+            if line.startswith(" "):
+                current_ref_idx += 1
+                current_new_idx += 1
+            elif line.startswith("-"):
+                current_ref_idx += 1
+            elif line.startswith("+"):
+                current_new_idx += 1
+    if current_hunk_lines is not None:
+        hunks.append(
+            DiffHunk(
+                lines=current_hunk_lines,
+                ref_start_idx=hunk_ref_start_idx,
+                new_start_idx=hunk_new_start_idx,
+            )
+        )
     return hunks
 
 
-def _build_minimized_files_from_hunks(hunks: List[List[str]]) -> Optional[tuple]:
+def _build_ir_context_index(lines: List[str]) -> IRContextIndex:
+    function_positions = []
+    function_names = []
+    block_positions = []
+    block_names = []
+
+    for idx, line in enumerate(lines):
+        function_match = LLVM_FUNCTION_RE.match(line)
+        if function_match is not None:
+            function_positions.append(idx)
+            function_names.append(function_match.group(1))
+
+        block_match = LLVM_BLOCK_RE.match(line)
+        if block_match is not None:
+            block_positions.append(idx)
+            block_names.append(block_match.group(1))
+
+    return IRContextIndex(
+        function_positions=function_positions,
+        function_names=function_names,
+        block_positions=block_positions,
+        block_names=block_names,
+    )
+
+
+def _lookup_nearest_preceding_context(
+    positions: List[int], names: List[str], line_idx: int
+) -> Tuple[Optional[int], Optional[str]]:
+    if not positions:
+        return None, None
+    match_idx = bisect.bisect_right(positions, line_idx) - 1
+    if match_idx < 0:
+        return None, None
+    return positions[match_idx], names[match_idx]
+
+
+def _lookup_ir_context(
+    index: IRContextIndex, line_idx: int
+) -> Tuple[Optional[str], Optional[str]]:
+    function_pos, function_name = _lookup_nearest_preceding_context(
+        index.function_positions, index.function_names, line_idx
+    )
+    block_pos, block_name = _lookup_nearest_preceding_context(
+        index.block_positions, index.block_names, line_idx
+    )
+    if function_pos is not None and block_pos is not None and block_pos < function_pos:
+        block_name = None
+    return function_name, block_name
+
+
+def _format_ir_context(function_name: Optional[str], block_name: Optional[str]) -> str:
+    if function_name and block_name:
+        return f"{function_name}:{block_name}"
+    return function_name or block_name or ""
+
+
+def _build_hunk_begin_marker(
+    hunk_id: int,
+    ref_index: IRContextIndex,
+    new_index: IRContextIndex,
+    ref_start_idx: int,
+    new_start_idx: int,
+) -> str:
+    ref_context = _format_ir_context(*_lookup_ir_context(ref_index, ref_start_idx))
+    new_context = _format_ir_context(*_lookup_ir_context(new_index, new_start_idx))
+    if not ref_context and not new_context:
+        return f"begin_hunk_{hunk_id}"
+    if ref_context == new_context:
+        return f"begin_hunk_{hunk_id}_{ref_context}"
+    return f"begin_hunk_{hunk_id}_{ref_context}/{new_context}"
+
+
+def _build_minimized_files_from_hunks(
+    hunks: List[DiffHunk], ref_index: IRContextIndex, new_index: IRContextIndex
+) -> Optional[Tuple[List[str], List[str]]]:
     if not hunks:
         return None
 
     minimized_ref_lines = []
     minimized_new_lines = []
-    for hunk_id, hunk_lines in enumerate(hunks):
-        begin_marker = f"begin_hunk_{hunk_id}"
+    for hunk_id, hunk in enumerate(hunks):
+        begin_marker = _build_hunk_begin_marker(
+            hunk_id,
+            ref_index,
+            new_index,
+            hunk.ref_start_idx,
+            hunk.new_start_idx,
+        )
         end_marker = f"end_hunk_{hunk_id}"
         minimized_ref_lines.append(begin_marker)
         minimized_new_lines.append(begin_marker)
 
-        for line in hunk_lines:
+        for line in hunk.lines:
             content = line[1:]
             if line.startswith(" "):
                 minimized_ref_lines.append(content)
@@ -731,6 +870,9 @@ def compute_diff(
         ref_lines = ref_stat_lines + ref_lines
         new_lines = new_stat_lines + new_lines
 
+    ref_index = _build_ir_context_index(ref_lines)
+    new_index = _build_ir_context_index(new_lines)
+
     unified = list(
         difflib.unified_diff(
             ref_lines,
@@ -742,7 +884,7 @@ def compute_diff(
         )
     )
     hunks = _extract_hunks_from_unified(unified)
-    minimized = _build_minimized_files_from_hunks(hunks)
+    minimized = _build_minimized_files_from_hunks(hunks, ref_index, new_index)
     if minimized is None:
         return None
 
