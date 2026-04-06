@@ -2,10 +2,8 @@ begin_hunk_0_@_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_L10color_
   br i1 %i.cy, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.i
-  %.inv.i.i.i.i = fcmp oge float %i.cv, 0.000000e+00
-  %.0.i.i.i.i.i = select i1 %.inv.i.i.i.i, float %i.cv, float 0.000000e+00 ; 2 uses
-  %i.cz = fcmp ogt float %.0.i.i.i.i.i, 1.000000e+00
-  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %.0.i.i.i.i.i
+  %i.cz = fcmp ogt float %i.cv, 1.000000e+00
+  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %i.cv
   %i.da = sext i32 %i.cw to i64
   br label %bb.v
 
@@ -14,10 +12,8 @@ begin_hunk_1_@_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_L10color_
   br i1 %i.cy, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.i
-  %.inv.i.i.i.i = fcmp oge float %i.cv, 0.000000e+00
-  %.0.i.i.i.i.i = select i1 %.inv.i.i.i.i, float %i.cv, float 0.000000e+00 ; 2 uses
-  %i.cz = fcmp ogt float %.0.i.i.i.i.i, 1.000000e+00
-  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %.0.i.i.i.i.i
+  %i.cz = fcmp ogt float %i.cv, 1.000000e+00
+  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %i.cv
   %i.da = sext i32 %i.cw to i64
   br label %bb.v
 
@@ -26,10 +22,8 @@ begin_hunk_2_@_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_L10color_
   br i1 %i.cy, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.i
-  %.inv.i.i.i.i = fcmp oge float %i.cv, 0.000000e+00
-  %.0.i.i.i.i.i = select i1 %.inv.i.i.i.i, float %i.cv, float 0.000000e+00 ; 2 uses
-  %i.cz = fcmp ogt float %.0.i.i.i.i.i, 1.000000e+00
-  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %.0.i.i.i.i.i
+  %i.cz = fcmp ogt float %i.cv, 1.000000e+00
+  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %i.cv
   %i.da = sext i32 %i.cw to i64
   br label %bb.v
 
@@ -38,10 +32,8 @@ begin_hunk_3_@_ZNSt17_Function_handlerIFvN11OpenImageIO4v3_13ROIEEZNS1_L10color_
   br i1 %i.cy, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.i
-  %.inv.i.i.i.i = fcmp oge float %i.cv, 0.000000e+00
-  %.0.i.i.i.i.i = select i1 %.inv.i.i.i.i, float %i.cv, float 0.000000e+00 ; 2 uses
-  %i.cz = fcmp ogt float %.0.i.i.i.i.i, 1.000000e+00
-  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %.0.i.i.i.i.i
+  %i.cz = fcmp ogt float %i.cv, 1.000000e+00
+  %.1.i.i.i.i.i = select i1 %i.cz, float 1.000000e+00, float %i.cv
   %i.da = sext i32 %i.cw to i64
   br label %bb.v
 
