@@ -846,15 +846,15 @@ def compute_diff(
     new_ir = base_name + ".new.ll"
     minimized_ref_ir, minimized_new_ir = _minimized_ir_paths(base_name)
 
-    diff_timeout = _bounded_timeout(300, deadline)
-    if diff_timeout <= 0:
+    relaxed_diff_timeout = _bounded_timeout(300, deadline)
+    if relaxed_diff_timeout <= 0:
         raise subprocess.TimeoutExpired(RELAXED_DIFF_BINARY, timeout=0)
 
     ret = subprocess.run(
         [RELAXED_DIFF_BINARY, ref_bc, new_bc, ref_ir, new_ir],
         stdin=subprocess.DEVNULL,
         capture_output=True,
-        timeout=diff_timeout,
+        timeout=relaxed_diff_timeout,
     )
     if ret.returncode != 0:
         raise RuntimeError("llvm-relaxed-diff failed")
@@ -866,29 +866,36 @@ def compute_diff(
 
     ref_stat_lines = _format_interesting_stats_lines(ref_stats)
     new_stat_lines = _format_interesting_stats_lines(new_stats)
-    if ref_stat_lines or new_stat_lines:
-        ref_lines = ref_stat_lines + ref_lines
-        new_lines = new_stat_lines + new_lines
 
     ref_index = _build_ir_context_index(ref_lines)
     new_index = _build_ir_context_index(new_lines)
 
-    unified = list(
-        difflib.unified_diff(
-            ref_lines,
-            new_lines,
-            fromfile=ref_ir,
-            tofile=new_ir,
-            n=3,
-            lineterm="",
-        )
+    diff_timeout = _bounded_timeout(30, deadline)
+    if diff_timeout <= 0:
+        raise subprocess.TimeoutExpired("diff", timeout=0)
+
+    diff_ret = subprocess.run(
+        ["diff", "-U", "3", ref_ir, new_ir],
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        text=True,
+        timeout=diff_timeout,
     )
+
+    if diff_ret.returncode == 0:
+        return None
+    if diff_ret.returncode != 1:
+        raise RuntimeError("diff failed")
+
+    unified = diff_ret.stdout.splitlines()
     hunks = _extract_hunks_from_unified(unified)
     minimized = _build_minimized_files_from_hunks(hunks, ref_index, new_index)
     if minimized is None:
         return None
 
     minimized_ref_lines, minimized_new_lines = minimized
+    minimized_ref_lines = ref_stat_lines + minimized_ref_lines
+    minimized_new_lines = new_stat_lines + minimized_new_lines
     with open(minimized_ref_ir, "w") as f:
         f.write("\n".join(minimized_ref_lines) + "\n")
     with open(minimized_new_ir, "w") as f:
@@ -1032,7 +1039,7 @@ def run_opt_file(
                     deadline=deadline,
                 )
             except subprocess.TimeoutExpired:
-                return "timeout"
+                rendered = None
             except (subprocess.SubprocessError, OSError, RuntimeError):
                 return "diff fail"
         return stats_result, rendered, interesting_stats
