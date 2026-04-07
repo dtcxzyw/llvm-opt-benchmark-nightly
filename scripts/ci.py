@@ -41,6 +41,7 @@ DATA_DIR = os.path.join(ROOT_DIR, "data")
 STATS_BASELINE_FILE = os.path.join(DATA_DIR, "stats.json.baseline")
 STATS_BASELINE_FILE_PER_FILE = os.path.join(DATA_DIR, "stats_per_file.json.baseline")
 PER_FILE_INTERESTING_STATS = ["inline.NumInlined", "inline.NumDeleted"]
+MAX_DIFF_PER_FILE = 1000
 REPORT_DIR = os.path.join(ROOT_DIR, "report")
 OPT_LOG_FILE = os.path.join(REPORT_DIR, "opt_log")
 ARTIFACT_DIR = os.path.join(ROOT_DIR, "work", "artifacts")
@@ -859,17 +860,6 @@ def compute_diff(
     if ret.returncode != 0:
         raise RuntimeError("llvm-relaxed-diff failed")
 
-    with open(ref_ir, "r") as f:
-        ref_lines = f.read().splitlines()
-    with open(new_ir, "r") as f:
-        new_lines = f.read().splitlines()
-
-    ref_stat_lines = _format_interesting_stats_lines(ref_stats)
-    new_stat_lines = _format_interesting_stats_lines(new_stats)
-
-    ref_index = _build_ir_context_index(ref_lines)
-    new_index = _build_ir_context_index(new_lines)
-
     diff_timeout = _bounded_timeout(30, deadline)
     if diff_timeout <= 0:
         raise subprocess.TimeoutExpired("diff", timeout=0)
@@ -888,6 +878,26 @@ def compute_diff(
         raise RuntimeError("diff failed")
 
     unified = diff_ret.stdout.splitlines()
+    number_of_added_lines = sum(
+        1 for line in unified if line.startswith("+") and not line.startswith("+++")
+    )
+    number_of_removed_lines = sum(
+        1 for line in unified if line.startswith("-") and not line.startswith("---")
+    )
+    if number_of_added_lines + number_of_removed_lines > MAX_DIFF_PER_FILE:
+        return None
+
+    with open(ref_ir, "r") as f:
+        ref_lines = f.read().splitlines()
+    with open(new_ir, "r") as f:
+        new_lines = f.read().splitlines()
+
+    ref_stat_lines = _format_interesting_stats_lines(ref_stats)
+    new_stat_lines = _format_interesting_stats_lines(new_stats)
+
+    ref_index = _build_ir_context_index(ref_lines)
+    new_index = _build_ir_context_index(new_lines)
+
     hunks = _extract_hunks_from_unified(unified)
     minimized = _build_minimized_files_from_hunks(hunks, ref_index, new_index)
     if minimized is None:
@@ -1358,7 +1368,6 @@ def commit_grouped_diff_changes(kept_files: List[KeptDiff]):
 def generate_diff_report(
     rendered_files: List[RenderedDiff],
 ) -> Tuple[str, List[KeptDiff]]:
-    MAX_DIFF_PER_FILE = 1000
     MAX_DIFF_TOTAL = 15000
     MAX_FILE_TOTAL = 200
     TRIVIAL_PENALTY = 200
