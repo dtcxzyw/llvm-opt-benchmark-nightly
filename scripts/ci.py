@@ -10,7 +10,7 @@ import shutil
 import resource
 import subprocess
 import difflib
-from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
+import multiprocessing
 from typing import Optional, List, Tuple
 import authorized_users
 import huggingface_hub
@@ -1042,6 +1042,41 @@ def run_opt_file(
         return "fail"
 
 
+def _run_opt_task(args):
+    (
+        idx,
+        proj,
+        file,
+        worker_count,
+        config,
+        baseline_per_file_stats,
+        enable_ir_diff,
+        compare_ref_root,
+        deadline,
+    ) = args
+    worker_idx = idx % worker_count
+    file_key = f"{proj}/{file}"
+    baseline_file_stats = baseline_per_file_stats.get(file_key)
+    compare_ref_path = None
+    if compare_ref_root is not None:
+        compare_ref_path = os.path.join(compare_ref_root, f"{proj}-s-{file}")
+    return (
+        idx,
+        proj,
+        file,
+        run_opt_file(
+            config,
+            proj,
+            file,
+            worker_idx=worker_idx,
+            baseline_file_stats=baseline_file_stats,
+            enable_ir_diff=enable_ir_diff,
+            compare_ref_path=compare_ref_path,
+            deadline=deadline,
+        ),
+    )
+
+
 def run_opt(
     config: TestConfig,
     enable_ir_diff: bool = True,
@@ -1102,61 +1137,43 @@ def run_opt(
         except Exception:
             baseline_per_file_stats = {}
 
-    def _run_task(args):
-        idx, (proj, file) = args
-        worker_idx = idx % worker_count
-        file_key = f"{proj}/{file}"
-        baseline_file_stats = baseline_per_file_stats.get(file_key)
-        compare_ref_path = None
-        if compare_ref_root is not None:
-            compare_ref_path = os.path.join(compare_ref_root, f"{proj}-s-{file}")
-        return (
+    task_args = [
+        (
             idx,
             proj,
             file,
-            run_opt_file(
-                config,
-                proj,
-                file,
-                worker_idx=worker_idx,
-                baseline_file_stats=baseline_file_stats,
-                enable_ir_diff=enable_ir_diff,
-                compare_ref_path=compare_ref_path,
-                deadline=deadline,
-            ),
+            worker_count,
+            config,
+            baseline_per_file_stats,
+            enable_ir_diff,
+            compare_ref_root,
+            deadline,
         )
+        for idx, (proj, file) in enumerate(tasks)
+    ]
 
-    pending_futures = set()
-    executor = ThreadPoolExecutor(max_workers=worker_count)
+    pool = multiprocessing.Pool(processes=worker_count)
     try:
-        futures = {
-            executor.submit(_run_task, (idx, task)): idx
-            for idx, task in enumerate(tasks)
-        }
-        pending_futures = set(futures)
+        results_iter = pool.imap_unordered(_run_opt_task, task_args, chunksize=1)
         with tqdm(total=len(tasks), desc="run_opt") as pbar:
-            while pending_futures:
+            completed = 0
+            while completed < len(tasks):
                 remaining = max(0.0, _remaining_time_seconds(deadline))
-                done, pending_futures = wait(
-                    pending_futures,
-                    timeout=remaining,
-                    return_when=FIRST_COMPLETED,
-                )
-                if not done:
+                try:
+                    idx, proj, file, ret = results_iter.next(timeout=remaining)
+                except multiprocessing.TimeoutError:
                     timed_out = True
                     break
 
-                for future in done:
-                    idx, proj, file, ret = future.result()
-                    task_results[idx] = (proj, file, ret)
-                    pbar.update(1)
+                task_results[idx] = (proj, file, ret)
+                completed += 1
+                pbar.update(1)
     finally:
         if timed_out:
-            for future in pending_futures:
-                future.cancel()
-            executor.shutdown(wait=False, cancel_futures=True)
+            pool.terminate()
         else:
-            executor.shutdown(wait=True)
+            pool.close()
+        pool.join()
 
     with open(OPT_LOG_FILE, "w") as log_f:
         for item in task_results:
