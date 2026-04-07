@@ -14,10 +14,6 @@ jobs:
       issues: write
       contents: write
 
-    concurrency:
-      group: task
-      cancel-in-progress: false
-
     steps:
       - name: Reset repository
         run: git clean -ffdx -- report && git reset --hard HEAD
