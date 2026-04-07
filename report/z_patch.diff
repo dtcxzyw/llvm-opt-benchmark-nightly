@@ -1,0 +1,319 @@
+diff --git a/llvm/include/llvm/Analysis/ValueLattice.h b/llvm/include/llvm/Analysis/ValueLattice.h
+index 262ff58f07dfd..560bcbabe09cf 100644
+--- a/llvm/include/llvm/Analysis/ValueLattice.h
++++ b/llvm/include/llvm/Analysis/ValueLattice.h
+@@ -80,6 +80,11 @@ class ValueLatticeElement {
+   /// Number of times a constant range has been extended with widening enabled.
+   unsigned NumRangeExtensions : 8;
+ 
++  // Pointer constants derived from equality predicates may have different
++  // provenance than the original value. Limit constant propagation if this
++  // happens to be the case.
++  bool MayHaveDifferentProvenance = false;
++
+   /// The union either stores a pointer to a constant or a constant range,
+   /// associated to the lattice element. We have to ensure that Range is
+   /// initialized or destroyed when changing state to or from constantrange.
+@@ -148,7 +153,8 @@ class ValueLatticeElement {
+   ~ValueLatticeElement() { destroy(); }
+ 
+   ValueLatticeElement(const ValueLatticeElement &Other)
+-      : Tag(Other.Tag), NumRangeExtensions(0) {
++      : Tag(Other.Tag), NumRangeExtensions(0),
++        MayHaveDifferentProvenance(Other.MayHaveDifferentProvenance) {
+     switch (Other.Tag) {
+     case constantrange:
+     case constantrange_including_undef:
+@@ -167,7 +173,8 @@ class ValueLatticeElement {
+   }
+ 
+   ValueLatticeElement(ValueLatticeElement &&Other)
+-      : Tag(Other.Tag), NumRangeExtensions(0) {
++      : Tag(Other.Tag), NumRangeExtensions(0),
++        MayHaveDifferentProvenance(Other.MayHaveDifferentProvenance) {
+     switch (Other.Tag) {
+     case constantrange:
+     case constantrange_including_undef:
+@@ -492,6 +499,9 @@ class ValueLatticeElement {
+ 
+   unsigned getNumRangeExtensions() const { return NumRangeExtensions; }
+   void setNumRangeExtensions(unsigned N) { NumRangeExtensions = N; }
++
++  bool mayHaveDifferentProvenance() const { return MayHaveDifferentProvenance; }
++  void setMayHaveDifferentProvenance(bool V) { MayHaveDifferentProvenance = V; }
+ };
+ 
+ static_assert(sizeof(ValueLatticeElement) <= 40,
+diff --git a/llvm/include/llvm/Transforms/Utils/SCCPSolver.h b/llvm/include/llvm/Transforms/Utils/SCCPSolver.h
+index 5aac7c2ac5d3e..f20e36454c6c1 100644
+--- a/llvm/include/llvm/Transforms/Utils/SCCPSolver.h
++++ b/llvm/include/llvm/Transforms/Utils/SCCPSolver.h
+@@ -218,6 +218,11 @@ class SCCPSolver {
+   // old ValueLatticeElement::isOverdefined() and is intended to be used in the
+   // transition to ValueLatticeElement.
+   LLVM_ABI static bool isOverdefined(const ValueLatticeElement &LV);
++
++  // Helper to check if \p LV is a replaceable constant. A pointer constant with
++  // potentially different provenance may not be unconditionally propagated to
++  // all uses.
++  LLVM_ABI static bool isReplaceableConstant(const ValueLatticeElement &LV);
+ };
+ } // namespace llvm
+ 
+diff --git a/llvm/lib/Analysis/Loads.cpp b/llvm/lib/Analysis/Loads.cpp
+index 2e855f918c913..108ba23b1794c 100644
+--- a/llvm/lib/Analysis/Loads.cpp
++++ b/llvm/lib/Analysis/Loads.cpp
+@@ -803,7 +803,7 @@ Value *llvm::FindAvailableLoadedValue(LoadInst *Load, BatchAAResults &AA,
+ 
+ // Returns true if a use is either in an ICmp/PtrToInt or a Phi/Select that only
+ // feeds into them.
+-static bool isPointerUseReplacable(const Use &U, bool HasNonAddressBits) {
++static bool isPointerUseReplaceable(const Use &U, bool HasNonAddressBits) {
+   unsigned Limit = 40;
+   SmallVector<const User *> Worklist({U.getUser()});
+   SmallPtrSet<const User *, 8> Visited;
+@@ -859,7 +859,7 @@ bool llvm::canReplacePointersInUseIfEqual(const Use &U, const Value *To,
+ 
+   bool HasNonAddressBits =
+       DL.getAddressSizeInBits(Ty) != DL.getPointerTypeSizeInBits(Ty);
+-  return isPointerUseReplacable(U, HasNonAddressBits);
++  return isPointerUseReplaceable(U, HasNonAddressBits);
+ }
+ 
+ bool llvm::canReplacePointersIfEqual(const Value *From, const Value *To,
+diff --git a/llvm/lib/Transforms/IPO/SCCP.cpp b/llvm/lib/Transforms/IPO/SCCP.cpp
+index 2ecadd529170f..7994c73e17302 100644
+--- a/llvm/lib/Transforms/IPO/SCCP.cpp
++++ b/llvm/lib/Transforms/IPO/SCCP.cpp
+@@ -277,7 +277,8 @@ static bool runIPSCCP(
+   for (const auto &[F, ReturnValue] : Solver.getTrackedRetVals()) {
+     assert(!F->getReturnType()->isVoidTy() &&
+            "should not track void functions");
+-    if (SCCPSolver::isConstant(ReturnValue) || ReturnValue.isUnknownOrUndef())
++    if (SCCPSolver::isReplaceableConstant(ReturnValue) ||
++        ReturnValue.isUnknownOrUndef())
+       findReturnsToZap(*F, ReturnsToZap, Solver);
+   }
+ 
+diff --git a/llvm/lib/Transforms/Utils/SCCPSolver.cpp b/llvm/lib/Transforms/Utils/SCCPSolver.cpp
+index 0ac99413a2cf8..6993ce7fd552f 100644
+--- a/llvm/lib/Transforms/Utils/SCCPSolver.cpp
++++ b/llvm/lib/Transforms/Utils/SCCPSolver.cpp
+@@ -16,6 +16,7 @@
+ #include "llvm/ADT/SetVector.h"
+ #include "llvm/Analysis/ConstantFolding.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
++#include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/ValueLattice.h"
+ #include "llvm/Analysis/ValueLatticeUtils.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -57,6 +58,14 @@ bool SCCPSolver::isConstant(const ValueLatticeElement &LV) {
+          (LV.isConstantRange() && LV.getConstantRange().isSingleElement());
+ }
+ 
++bool SCCPSolver::isReplaceableConstant(const ValueLatticeElement &LV) {
++  if (!isConstant(LV))
++    return false;
++  if (LV.mayHaveDifferentProvenance())
++    return false;
++  return true;
++}
++
+ bool SCCPSolver::isOverdefined(const ValueLatticeElement &LV) {
+   return !LV.isUnknownOrUndef() && !SCCPSolver::isConstant(LV);
+ }
+@@ -83,6 +92,32 @@ bool SCCPSolver::tryToReplaceWithConstant(Value *V) {
+     return false;
+   }
+ 
++  // For pointer constants derived from PredicateInfo, the constant may have
++  // different provenance. Take this into account during constant pointer
++  // propagation.
++  if (V->getType()->isPointerTy()) {
++    const auto &LV = getLatticeValueFor(V);
++    if (LV.mayHaveDifferentProvenance()) {
++      const DataLayout *DL = nullptr;
++      if (auto *I = dyn_cast<Instruction>(V))
++        DL = &I->getDataLayout();
++      else if (auto *A = dyn_cast<Argument>(V))
++        DL = &A->getParent()->getDataLayout();
++
++      if (!DL)
++        return false;
++
++      bool Changed = V->replaceUsesWithIf(Const, [&](Use &U) {
++        bool CanReplace = canReplacePointersInUseIfEqual(U, Const, *DL);
++        if (CanReplace)
++          LLVM_DEBUG(dbgs() << "  Constant pointer: " << *Const << " = " << *V
++                            << '\n');
++        return CanReplace;
++      });
++      return Changed;
++    }
++  }
++
+   LLVM_DEBUG(dbgs() << "  Constant: " << *Const << " = " << *V << '\n');
+ 
+   // Replaces all of the uses of a variable with uses of the constant.
+@@ -356,11 +391,11 @@ bool SCCPSolver::simplifyInstsInBlock(BasicBlock &BB,
+     if (Inst.getType()->isVoidTy())
+       continue;
+     if (tryToReplaceWithConstant(&Inst)) {
+-      if (wouldInstructionBeTriviallyDead(&Inst))
++      if (isInstructionTriviallyDead(&Inst)) {
+         Inst.eraseFromParent();
+-
++        ++InstRemovedStat;
++      }
+       MadeChanges = true;
+-      ++InstRemovedStat;
+     } else if (replaceSignedInst(*this, InsertedValues, Inst)) {
+       MadeChanges = true;
+       ++InstReplacedStat;
+@@ -1122,7 +1157,7 @@ bool SCCPInstVisitor::isStructLatticeConstant(Function *F, StructType *STy) {
+   for (unsigned i = 0, e = STy->getNumElements(); i != e; ++i) {
+     const auto &It = TrackedMultipleRetVals.find(std::make_pair(F, i));
+     assert(It != TrackedMultipleRetVals.end());
+-    if (!SCCPSolver::isConstant(It->second))
++    if (!SCCPSolver::isReplaceableConstant(It->second))
+       return false;
+   }
+   return true;
+@@ -2079,6 +2114,8 @@ void SCCPInstVisitor::handlePredicate(Instruction *I, Value *CopyOf,
+     // For non-integer values or integer constant expressions, only
+     // propagate equal constants or not-constants.
+     addAdditionalUser(OtherOp, I);
++    if (CopyOf->getType()->isPointerTy())
++      CondVal.setMayHaveDifferentProvenance(true);
+     mergeInValue(IV, I, CondVal);
+     return;
+   } else if (Pred == CmpInst::ICMP_NE && CondVal.isConstant()) {
+diff --git a/llvm/test/Transforms/SCCP/assume-equality-pointers.ll b/llvm/test/Transforms/SCCP/assume-equality-pointers.ll
+new file mode 100644
+index 0000000000000..8c01e29f2d074
+--- /dev/null
++++ b/llvm/test/Transforms/SCCP/assume-equality-pointers.ll
+@@ -0,0 +1,100 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=ipsccp -S | FileCheck %s
++
++define ptr @assume_pointers_equality_maybe_different_provenance_1(ptr %x) {
++; CHECK-LABEL: define ptr @assume_pointers_equality_maybe_different_provenance_1(
++; CHECK-SAME: ptr [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[X]], inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    ret ptr [[X]]
++;
++entry:
++  %cmp = icmp eq ptr %x, inttoptr (i64 12345678 to ptr)
++  call void @llvm.assume(i1 %cmp)
++  ret ptr %x
++}
++
++define ptr @assume_pointers_equality_maybe_different_provenance_2(ptr %x, i1 %cond) {
++; CHECK-LABEL: define ptr @assume_pointers_equality_maybe_different_provenance_2(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[X]], inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    br i1 [[COND]], label %[[NEXT:.*]], label %[[EXIT:.*]]
++; CHECK:       [[NEXT]]:
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ [[X]], %[[ENTRY]] ], [ inttoptr (i64 12345678 to ptr), %[[NEXT]] ]
++; CHECK-NEXT:    ret ptr [[PHI]]
++;
++entry:
++  %cmp = icmp eq ptr %x, inttoptr (i64 12345678 to ptr)
++  call void @llvm.assume(i1 %cmp)
++  br i1 %cond, label %next, label %exit
++
++next:
++  br label %exit
++
++exit:
++  %phi = phi ptr [ %x, %entry ], [ inttoptr (i64 12345678 to ptr), %next ]
++  ret ptr %phi
++}
++
++define internal ptr @callee(ptr returned %p) memory(none) {
++; CHECK-LABEL: define internal ptr @callee(
++; CHECK-SAME: ptr returned [[P:%.*]]) #[[ATTR0:[0-9]+]] {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    ret ptr [[P]]
++;
++entry:
++  ret ptr %p
++}
++
++define ptr @assume_pointers_equality_maybe_different_provenance_3(ptr %x, i1 %cond) {
++; CHECK-LABEL: define ptr @assume_pointers_equality_maybe_different_provenance_3(
++; CHECK-SAME: ptr [[X:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[X]], inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    br i1 [[COND]], label %[[NEXT:.*]], label %[[EXIT:.*]]
++; CHECK:       [[NEXT]]:
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 true, ptr [[X]], ptr inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ [[X]], %[[ENTRY]] ], [ [[SEL]], %[[NEXT]] ]
++; CHECK-NEXT:    [[Q:%.*]] = call ptr @callee(ptr [[PHI]])
++; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[COND]], ptr [[Q]], ptr [[X]]
++; CHECK-NEXT:    ret ptr [[SEL2]]
++;
++entry:
++  %cmp = icmp eq ptr %x, inttoptr (i64 12345678 to ptr)
++  call void @llvm.assume(i1 %cmp)
++  br i1 %cond, label %next, label %exit
++
++next:
++  %sel = select i1 %cond, ptr %x, ptr inttoptr (i64 12345678 to ptr)
++  br label %exit
++
++exit:
++  %phi = phi ptr [ %x, %entry ], [ %sel, %next ]
++  %q = call ptr @callee(ptr %phi)
++  %sel2 = select i1 %cond, ptr %q, ptr %x
++  ret ptr %sel2
++}
++
++define i1 @assume_pointers_equality_can_replace_valid(ptr %x, ptr %y) {
++; CHECK-LABEL: define i1 @assume_pointers_equality_can_replace_valid(
++; CHECK-SAME: ptr [[X:%.*]], ptr [[Y:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[X]], inttoptr (i64 12345678 to ptr)
++; CHECK-NEXT:    call void @llvm.assume(i1 [[CMP]])
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq ptr inttoptr (i64 12345678 to ptr), [[Y]]
++; CHECK-NEXT:    ret i1 [[CMP2]]
++;
++  %cmp = icmp eq ptr %x, inttoptr (i64 12345678 to ptr)
++  call void @llvm.assume(i1 %cmp)
++  %cmp2 = icmp eq ptr %x, %y
++  ret i1 %cmp2
++}
++
++declare void @llvm.assume(i1)
+diff --git a/llvm/test/Transforms/SCCP/replace-dereferenceable-ptr-with-undereferenceable.ll b/llvm/test/Transforms/SCCP/replace-dereferenceable-ptr-with-undereferenceable.ll
+index 39af513a4506c..f336fcbe70c77 100644
+--- a/llvm/test/Transforms/SCCP/replace-dereferenceable-ptr-with-undereferenceable.ll
++++ b/llvm/test/Transforms/SCCP/replace-dereferenceable-ptr-with-undereferenceable.ll
+@@ -11,7 +11,7 @@ define i32 @eq_undereferenceable(ptr %p) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq ptr [[P:%.*]], getelementptr inbounds (i32, ptr @x, i64 1)
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[IF_THEN:%.*]], label [[IF_END:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    store i32 2, ptr getelementptr inbounds (i32, ptr @x, i64 1), align 4
++; CHECK-NEXT:    store i32 2, ptr [[P]], align 4
+ ; CHECK-NEXT:    br label [[IF_END]]
+ ; CHECK:       if.end:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr @y, align 4
+@@ -65,7 +65,7 @@ define i1 @eq_undereferenceable_cmp_simp(ptr %p) {
+ ; CHECK-NEXT:    [[CMP_0:%.*]] = icmp eq ptr [[P:%.*]], getelementptr inbounds (i32, ptr @x, i64 1)
+ ; CHECK-NEXT:    br i1 [[CMP_0]], label [[IF_THEN:%.*]], label [[IF_END:%.*]]
+ ; CHECK:       if.then:
+-; CHECK-NEXT:    store i32 2, ptr getelementptr inbounds (i32, ptr @x, i64 1), align 4
++; CHECK-NEXT:    store i32 2, ptr [[P]], align 4
+ ; CHECK-NEXT:    ret i1 true
+ ; CHECK:       if.end:
+ ; CHECK-NEXT:    ret i1 false
