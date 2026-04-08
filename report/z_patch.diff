@@ -1,0 +1,319 @@
+diff --git a/llvm/include/llvm/Analysis/AliasAnalysis.h b/llvm/include/llvm/Analysis/AliasAnalysis.h
+index 1bd6fc48da289..2b520839a792a 100644
+--- a/llvm/include/llvm/Analysis/AliasAnalysis.h
++++ b/llvm/include/llvm/Analysis/AliasAnalysis.h
+@@ -156,7 +156,8 @@ struct LLVM_ABI CaptureAnalysis {
+   ///
+   /// If I is nullptr, then captures at any point will be considered.
+   virtual CaptureComponents
+-  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt) = 0;
++  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt,
++                    bool *IsNotCapturedBeforeOrAt = nullptr) = 0;
+ };
+ 
+ /// Context-free CaptureAnalysis provider, which computes and caches whether an
+@@ -166,8 +167,9 @@ class LLVM_ABI SimpleCaptureAnalysis final : public CaptureAnalysis {
+   SmallDenseMap<const Value *, CaptureComponents, 8> IsCapturedCache;
+ 
+ public:
+-  CaptureComponents getCapturesBefore(const Value *Object, const Instruction *I,
+-                                      bool OrAt) override;
++  CaptureComponents
++  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt,
++                    bool *IsNotCapturedBeforeOrAt = nullptr) override;
+ };
+ 
+ /// Context-sensitive CaptureAnalysis provider, which computes and caches the
+@@ -195,12 +197,46 @@ class LLVM_ABI EarliestEscapeAnalysis final : public CaptureAnalysis {
+                          const CycleInfo *CI = nullptr)
+       : DT(DT), LI(LI), CI(CI) {}
+ 
+-  CaptureComponents getCapturesBefore(const Value *Object, const Instruction *I,
+-                                      bool OrAt) override;
++  CaptureComponents
++  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt,
++                    bool *IsNotCapturedBeforeOrAt = nullptr) override;
+ 
+   void removeInstruction(Instruction *I);
+ };
+ 
++/// Context-sensitive CaptureAnalysis provider, which precisely determines
++/// whether an object is captured before a specific instruction using
++/// PointerMayBeCapturedBefore.
++class LLVM_ABI CapturesBeforeAnalysis final : public CaptureAnalysis {
++  const DominatorTree &DT;
++  const LoopInfo *LI;
++
++public:
++  CapturesBeforeAnalysis(const DominatorTree &DT, const LoopInfo *LI = nullptr)
++      : DT(DT), LI(LI) {}
++
++  CaptureComponents
++  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt,
++                    bool *IsNotCapturedBeforeOrAt = nullptr) override;
++};
++
++/// A CaptureAnalysis provider that chains EarliestEscapeAnalysis and
++/// CapturesBeforeAnalysis. It favours the former, cached but approximate;
++/// falling back to the latter, precise but expensive, when needed.
++class LLVM_ABI ChainedCaptureAnalysis final : public CaptureAnalysis {
++  EarliestEscapeAnalysis &EEA;
++  CapturesBeforeAnalysis &CBA;
++
++public:
++  ChainedCaptureAnalysis(EarliestEscapeAnalysis &EEA,
++                         CapturesBeforeAnalysis &CBA)
++      : EEA(EEA), CBA(CBA) {}
++
++  CaptureComponents
++  getCapturesBefore(const Value *Object, const Instruction *I, bool OrAt,
++                    bool *IsNotCapturedBeforeOrAt = nullptr) override;
++};
++
+ /// Cache key for BasicAA results. It only includes the pointer and size from
+ /// MemoryLocation, as BasicAA is AATags independent. Additionally, it includes
+ /// the value of MayBeCrossIteration, which may affect BasicAA results.
+@@ -534,22 +570,6 @@ class AAResults {
+   LLVM_ABI ModRefInfo getModRefInfo(const Instruction *I1,
+                                     const Instruction *I2);
+ 
+-  /// Return information about whether a particular call site modifies
+-  /// or reads the specified memory location \p MemLoc before instruction \p I
+-  /// in a BasicBlock.
+-  ModRefInfo callCapturesBefore(const Instruction *I,
+-                                const MemoryLocation &MemLoc,
+-                                DominatorTree *DT) {
+-    SimpleAAQueryInfo AAQIP(*this);
+-    return callCapturesBefore(I, MemLoc, DT, AAQIP);
+-  }
+-
+-  /// A convenience wrapper to synthesize a memory location.
+-  ModRefInfo callCapturesBefore(const Instruction *I, const Value *P,
+-                                LocationSize Size, DominatorTree *DT) {
+-    return callCapturesBefore(I, MemoryLocation(P, Size), DT);
+-  }
+-
+   /// @}
+   //===--------------------------------------------------------------------===//
+   /// \name Higher level methods for querying mod/ref information.
+diff --git a/llvm/lib/Analysis/AliasAnalysis.cpp b/llvm/lib/Analysis/AliasAnalysis.cpp
+index 102f0c070d517..7517b2f6c67a8 100644
+--- a/llvm/lib/Analysis/AliasAnalysis.cpp
++++ b/llvm/lib/Analysis/AliasAnalysis.cpp
+@@ -632,71 +632,6 @@ ModRefInfo AAResults::getModRefInfo(const Instruction *I,
+   }
+ }
+ 
+-/// Return information about whether a particular call site modifies
+-/// or reads the specified memory location \p MemLoc before instruction \p I
+-/// in a BasicBlock.
+-/// FIXME: this is really just shoring-up a deficiency in alias analysis.
+-/// BasicAA isn't willing to spend linear time determining whether an alloca
+-/// was captured before or after this particular call, while we are. However,
+-/// with a smarter AA in place, this test is just wasting compile time.
+-ModRefInfo AAResults::callCapturesBefore(const Instruction *I,
+-                                         const MemoryLocation &MemLoc,
+-                                         DominatorTree *DT,
+-                                         AAQueryInfo &AAQI) {
+-  if (!DT)
+-    return ModRefInfo::ModRef;
+-
+-  const Value *Object = getUnderlyingObject(MemLoc.Ptr);
+-  if (!isIdentifiedFunctionLocal(Object))
+-    return ModRefInfo::ModRef;
+-
+-  const auto *Call = dyn_cast<CallBase>(I);
+-  if (!Call || Call == Object)
+-    return ModRefInfo::ModRef;
+-
+-  if (capturesAnything(PointerMayBeCapturedBefore(
+-          Object, /* ReturnCaptures */ true, I, DT,
+-          /* include Object */ true, CaptureComponents::Provenance)))
+-    return ModRefInfo::ModRef;
+-
+-  unsigned ArgNo = 0;
+-  ModRefInfo R = ModRefInfo::NoModRef;
+-  // Set flag only if no May found and all operands processed.
+-  for (auto CI = Call->data_operands_begin(), CE = Call->data_operands_end();
+-       CI != CE; ++CI, ++ArgNo) {
+-    // Only look at the no-capture or byval pointer arguments.  If this
+-    // pointer were passed to arguments that were neither of these, then it
+-    // couldn't be no-capture.
+-    if (!(*CI)->getType()->isPointerTy())
+-      continue;
+-
+-    // Make sure we still check captures(ret: address, provenance) and
+-    // captures(address) arguments, as these wouldn't be treated as a capture
+-    // at the call-site.
+-    CaptureInfo Captures = Call->getCaptureInfo(ArgNo);
+-    if (capturesAnyProvenance(Captures.getOtherComponents()))
+-      continue;
+-
+-    AliasResult AR =
+-        alias(MemoryLocation::getBeforeOrAfter(*CI),
+-              MemoryLocation::getBeforeOrAfter(Object), AAQI, Call);
+-    // If this is a no-capture pointer argument, see if we can tell that it
+-    // is impossible to alias the pointer we're checking.  If not, we have to
+-    // assume that the call could touch the pointer, even though it doesn't
+-    // escape.
+-    if (AR == AliasResult::NoAlias)
+-      continue;
+-    if (Call->doesNotAccessMemory(ArgNo))
+-      continue;
+-    if (Call->onlyReadsMemory(ArgNo)) {
+-      R = ModRefInfo::Ref;
+-      continue;
+-    }
+-    return ModRefInfo::ModRef;
+-  }
+-  return R;
+-}
+-
+ /// canBasicBlockModify - Return true if it is possible for execution of the
+ /// specified basic block to modify the location Loc.
+ ///
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index dee305a6f40d2..2345df9fe0739 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -197,9 +197,10 @@ static bool areBothVScale(const Value *V1, const Value *V2) {
+ 
+ CaptureAnalysis::~CaptureAnalysis() = default;
+ 
+-CaptureComponents SimpleCaptureAnalysis::getCapturesBefore(const Value *Object,
+-                                                           const Instruction *I,
+-                                                           bool OrAt) {
++CaptureComponents
++SimpleCaptureAnalysis::getCapturesBefore(const Value *Object,
++                                         const Instruction *I, bool OrAt,
++                                         bool * /*IsNotCapturedBeforeOrAt*/) {
+   if (!isIdentifiedFunctionLocal(Object))
+     return CaptureComponents::Provenance;
+ 
+@@ -228,7 +229,8 @@ static bool isNotInCycle(const Instruction *I, const DominatorTree *DT,
+ 
+ CaptureComponents
+ EarliestEscapeAnalysis::getCapturesBefore(const Value *Object,
+-                                          const Instruction *I, bool OrAt) {
++                                          const Instruction *I, bool OrAt,
++                                          bool * /*IsNotCapturedBeforeOrAt*/) {
+   if (!isIdentifiedFunctionLocal(Object))
+     return CaptureComponents::Provenance;
+ 
+@@ -275,6 +277,48 @@ void EarliestEscapeAnalysis::removeInstruction(Instruction *I) {
+   }
+ }
+ 
++CaptureComponents
++CapturesBeforeAnalysis::getCapturesBefore(const Value *Object,
++                                          const Instruction *I, bool OrAt,
++                                          bool *IsNotCapturedBeforeOrAt) {
++  assert(I && "CapturesBeforeAnalysis requires a context instruction.");
++  if (!isIdentifiedFunctionLocal(Object))
++    return CaptureComponents::Provenance;
++
++  CaptureComponents CC = PointerMayBeCapturedBefore(
++      Object, /* ReturnCaptures */ true, I, &DT, /* IncludeI */ true,
++      CaptureComponents::Provenance, capturesAnything, LI);
++  if (IsNotCapturedBeforeOrAt && capturesNothing(CC))
++    *IsNotCapturedBeforeOrAt = true;
++  return CC;
++}
++
++CaptureComponents
++ChainedCaptureAnalysis::getCapturesBefore(const Value *Object,
++                                          const Instruction *I, bool OrAt,
++                                          bool *IsNotCapturedBeforeOrAt) {
++  CaptureComponents CC = EEA.getCapturesBefore(Object, I, OrAt);
++  if (!capturesAnyProvenance(CC)) {
++    // The provenance may or may not be captured, depending on OrAt. If
++    // required, we should determine whether IsNotCapturedBeforeOrAt also holds.
++    if (IsNotCapturedBeforeOrAt && I) {
++      CaptureComponents CCAt = EEA.getCapturesBefore(Object, I, true);
++      if (!capturesAnyProvenance(CCAt))
++        *IsNotCapturedBeforeOrAt = true;
++      else
++        CBA.getCapturesBefore(Object, I, OrAt, IsNotCapturedBeforeOrAt);
++    }
++  }
++  return CC;
++
++  if (!I)
++    return CC;
++
++  // EEA could not provide an accurate answer, try the precise analysis (OrAt is
++  // not taken into account).
++  return CBA.getCapturesBefore(Object, I, OrAt, IsNotCapturedBeforeOrAt);
++}
++
+ //===----------------------------------------------------------------------===//
+ // GetElementPtr Instruction Decomposition and Analysis
+ //===----------------------------------------------------------------------===//
+@@ -967,10 +1011,11 @@ ModRefInfo BasicAAResult::getModRefInfo(const CallBase *Call,
+   // objects, to model any accesses that may occur prior to the second return.
+   // As an exception, ignore allocas, as setjmp is not required to preserve
+   // non-volatile stores for them.
++  bool ProvenanceNotCapturedBeforeOrAtCall = false;
+   if (isModOrRefSet(OtherMR) && !isa<Constant>(Object) && Call != Object &&
+       (isa<AllocaInst>(Object) || !Call->hasFnAttr(Attribute::ReturnsTwice))) {
+-    CaptureComponents CC =
+-        AAQI.CA->getCapturesBefore(Object, Call, /*OrAt=*/false);
++    CaptureComponents CC = AAQI.CA->getCapturesBefore(
++        Object, Call, /*OrAt=*/false, &ProvenanceNotCapturedBeforeOrAtCall);
+     if (capturesNothing(CC))
+       OtherMR = ModRefInfo::NoModRef;
+     else if (capturesReadProvenanceOnly(CC))
+@@ -987,6 +1032,25 @@ ModRefInfo BasicAAResult::getModRefInfo(const CallBase *Call,
+       if (!Arg->getType()->isPointerTy())
+         continue;
+       unsigned ArgIdx = Call->getDataOperandNo(&U);
++
++      if (ProvenanceNotCapturedBeforeOrAtCall) {
++        // If we have previously established that the object's provenance is not
++        // captured before or at the call-site, then any argument that captures
++        // provenance through non-return paths cannot alias the object memory
++        // location; otherwise the call would be capturing the object's
++        // provenance, contradicting our premise.
++        //
++        // getModRefInfo may leverage previous capture information to refine
++        // mod/ref, so long as the user is interested into knowing only whether
++        // the provenance is captured; meaning that the refinement would not be
++        // correct if the call were to capture address. Though, for AA purposes,
++        // only provenance captures should be relevant. Note that this is only
++        // used during call-slot optimization.
++        CaptureInfo ArgCaptures = Call->getCaptureInfo(ArgIdx);
++        if (capturesAnyProvenance(ArgCaptures.getOtherComponents()))
++          continue;
++      }
++
+       MemoryLocation ArgLoc =
+           Call->isArgOperand(&U)
+               ? MemoryLocation::getForArgument(Call, ArgIdx, TLI)
+diff --git a/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp b/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
+index 43779d5195714..274792eb2298a 100644
+--- a/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
++++ b/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
+@@ -1043,14 +1043,15 @@ bool MemCpyOptPass::performCallSlotOptzn(Instruction *cpyLoad,
+   // In addition to knowing that the call does not access src in some
+   // unexpected manner, for example via a global, which we deduce from
+   // the use analysis, we also need to know that it does not sneakily
+-  // access dest.  We rely on AA to figure this out for us.
+-  MemoryLocation DestWithSrcSize(cpyDest, LocationSize::precise(srcSize));
+-  ModRefInfo MR = BAA.getModRefInfo(C, DestWithSrcSize);
+-  // If necessary, perform additional analysis.
+-  if (isModOrRefSet(MR))
+-    MR = BAA.callCapturesBefore(C, DestWithSrcSize, DT);
+-  if (isModOrRefSet(MR))
+-    return false;
++  // access dest. We rely on AA with CapturesBeforeAnalysis to figure this out.
++  {
++    MemoryLocation DestWithSrcSize(cpyDest, LocationSize::precise(srcSize));
++    CapturesBeforeAnalysis CBA(*DT);
++    ChainedCaptureAnalysis CCA(*EEA, CBA);
++    BatchAAResults BAAWithCCA(*AA, &CCA);
++    if (isModOrRefSet(BAAWithCCA.getModRefInfo(C, DestWithSrcSize)))
++      return false;
++  }
+ 
+   // We can't create address space casts here because we don't know if they're
+   // safe for the target.
