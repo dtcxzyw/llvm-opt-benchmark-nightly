@@ -316,6 +316,7 @@ class RenderedDiff:
     report_new_ir: str
     artifact_ref_ir: str
     artifact_new_ir: str
+    opcode_seq: Optional[Tuple[Tuple[str, ...], Tuple[str, ...]]]
 
 
 @dataclass
@@ -737,6 +738,39 @@ def _build_minimized_files_from_hunks(
     return minimized_ref_lines, minimized_new_lines
 
 
+def _extract_opcode_from_diff_line(line: str) -> Optional[str]:
+    if not line or line[:1] not in {"+", "-"} or line.startswith("+++") or line.startswith("---"):
+        return None
+    content = line[1:]
+    if "=" not in content:
+        return None
+    _, rhs = content.split("=", 1)
+    opcode = rhs.strip().split(maxsplit=1)
+    if not opcode:
+        return None
+    return opcode[0]
+
+
+def _extract_opcode_sequences_from_unified(
+    unified_lines: List[str],
+) -> Optional[Tuple[Tuple[str, ...], Tuple[str, ...]]]:
+    added_seq = []
+    removed_seq = []
+    for line in unified_lines:
+        opcode = _extract_opcode_from_diff_line(line)
+        if opcode is None:
+            continue
+        if line.startswith("+"):
+            added_seq.append(opcode)
+            if len(added_seq) > 100:
+                return None
+        elif line.startswith("-"):
+            removed_seq.append(opcode)
+            if len(removed_seq) > 100:
+                return None
+    return tuple(added_seq), tuple(removed_seq)
+
+
 def _format_interesting_stats_lines(stats: Optional[dict]) -> List[str]:
     if not stats:
         return []
@@ -878,6 +912,7 @@ def compute_diff(
         raise RuntimeError("diff failed")
 
     unified = diff_ret.stdout.splitlines()
+    opcode_seq = _extract_opcode_sequences_from_unified(unified)
     number_of_added_lines = sum(
         1 for line in unified if line.startswith("+") and not line.startswith("+++")
     )
@@ -915,6 +950,7 @@ def compute_diff(
         report_new_ir=minimized_new_ir,
         artifact_ref_ir=ref_ir,
         artifact_new_ir=new_ir,
+        opcode_seq=opcode_seq,
     )
 
 
@@ -1458,10 +1494,11 @@ def generate_diff_report(
                 (cnt2, real_cost2, order_key2, rendered_file2, proj2, add2, sub2),
             )
 
-        key = (add, sub)
-        if key in diff_pattern:
-            continue
-        diff_pattern.add(key)
+        if rendered_file.opcode_seq is not None:
+            key = (add, sub, rendered_file.opcode_seq)
+            if key in diff_pattern:
+                continue
+            diff_pattern.add(key)
         if file_count < MAX_FILE_TOTAL and diff_count + real_cost <= MAX_DIFF_TOTAL:
             file_count += 1
             diff_count += real_cost
