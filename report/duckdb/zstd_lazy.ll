@@ -4,10 +4,11 @@ begin_hunk_0_@_ZN11duckdb_zstd23ZSTD_compressBlock_lazyEPNS_17ZSTD_matchState_tE
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef i64 @_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZSTD_matchState_tEPNS_10seqStore_tEPjPKvm(ptr noundef captures(none) initializes((300, 304)) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
+  %5 = ptrtoint ptr %3 to i64                     ; 3 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 22 uses
-  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -8 ; 5 uses
+  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -8 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !7    ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -16,7 +17,6 @@ begin_hunk_1_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
   %.neg.i = sub i64 %i.aa, %i.z
   %.neg516.i = trunc i64 %.neg.i to i32
   %i.ab = add i32 %i.h, %.neg516.i                ; 3 uses
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
   %i.ac = ptrtoint ptr %i.j to i64
   %i.ad = ptrtoint ptr %i.x to i64
   %i.ae = add i64 %i.ac, %i.ad
@@ -25,13 +25,13 @@ begin_hunk_2_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph164, %.critedge9.i
-  %.0.i163 = phi ptr [ %i.an, %.lr.ph164 ], [ %.7.i, %.critedge9.i ] ; 10 uses
+  %.0.i163 = phi ptr [ %i.an, %.lr.ph164 ], [ %.7.i, %.critedge9.i ] ; 11 uses
   %.0409.i162 = phi ptr [ %3, %.lr.ph164 ], [ %.6415.i, %.critedge9.i ] ; 11 uses
   %.2418.i161 = phi i32 [ %i.n, %.lr.ph164 ], [ %.9.i, %.critedge9.i ] ; 5 uses
   %.2426.i160 = phi i32 [ %i.p, %.lr.ph164 ], [ %.9433.i, %.critedge9.i ] ; 2 uses
+  %.0.i163186 = ptrtoint ptr %.0.i163 to i64      ; 3 uses
   %6 = getelementptr inbounds nuw i8, ptr %.0.i163, i64 1 ; 2 uses
-  %7 = ptrtoint ptr %.0.i163 to i64               ; 2 uses
-  %i.ba = sub i64 %7, %i.ao
+  %i.ba = sub i64 %.0.i163186, %i.ao
   %i.bb = trunc i64 %i.ba to i32
   %reass.sub = sub i32 %i.bb, %.2418.i161
   %i.bc = add i32 %reass.sub, 1                   ; 4 uses
@@ -40,11 +40,19 @@ begin_hunk_3_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
   %.0449.i = select i1 %i.bx, i64 %i.bv, i64 1    ; 2 uses
   %.0465.i = select i1 %i.bx, ptr %.0.i163, ptr %6 ; 2 uses
   %i.by = icmp ult ptr %.0.i163, %i.d
-  br i1 %i.by, label %.lr.ph, label %.loopexit
+  br i1 %i.by, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %7 = getelementptr i8, ptr %.0.i163, i64 %4
+  %8 = getelementptr i8, ptr %7, i64 %5
+  %scevgep = getelementptr i8, ptr %8, i64 -8
+  %9 = sub i64 0, %.0.i163186
+  %scevgep187 = getelementptr i8, ptr %scevgep, i64 %9
+  br label %.lr.ph
 
 bb.i:                                             ; preds = %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit6
   %i.bz = ptrtoint ptr %.0409.i162 to i64
-  %i.ca = sub i64 %7, %i.bz                       ; 2 uses
+  %i.ca = sub i64 %.0.i163186, %i.bz              ; 2 uses
   %i.cb = lshr i64 %i.ca, 8
   %i.cc = getelementptr inbounds nuw i8, ptr %.0.i163, i64 %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 1
@@ -53,11 +61,11 @@ begin_hunk_4_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
   store i32 %i.cf, ptr %i.ak, align 4, !tbaa !44
   br label %.critedge9.i
 
-.lr.ph:                                           ; preds = %.preheader, %bb.ap
-  %.1.i131 = phi ptr [ %i.cg, %bb.ap ], [ %.0.i163, %.preheader ] ; 2 uses
-  %.5444.i130 = phi i64 [ %.0.i4, %bb.ap ], [ %.4443.i, %.preheader ] ; 5 uses
-  %.1450.i129 = phi i64 [ %i.fz, %bb.ap ], [ %.0449.i, %.preheader ] ; 5 uses
-  %.1466.i128 = phi ptr [ %i.cg, %bb.ap ], [ %.0465.i, %.preheader ] ; 4 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ap
+  %.1.i131 = phi ptr [ %i.cg, %bb.ap ], [ %.0.i163, %.lr.ph.preheader ] ; 2 uses
+  %.5444.i130 = phi i64 [ %.0.i4, %bb.ap ], [ %.4443.i, %.lr.ph.preheader ] ; 5 uses
+  %.1450.i129 = phi i64 [ %i.fz, %bb.ap ], [ %.0449.i, %.lr.ph.preheader ] ; 5 uses
+  %.1466.i128 = phi ptr [ %i.cg, %bb.ap ], [ %.0465.i, %.lr.ph.preheader ] ; 4 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.1.i131, i64 1 ; 10 uses
   %i.ch = ptrtoint ptr %i.cg to i64
   %i.ci = sub i64 %i.ch, %i.ao
@@ -66,8 +74,8 @@ begin_hunk_5_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
 
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %8 = icmp ult ptr %i.cg, %i.d
-  br i1 %8, label %.lr.ph, label %.loopexit
+  %exitcond.not = icmp eq ptr %i.cg, %scevgep187
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 
 bb.aq:                                            ; preds = %bb.ao, %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -76,10 +84,11 @@ begin_hunk_6_@_ZN11duckdb_zstd38ZSTD_compressBlock_lazy_dictMatchStateEPNS_17ZST
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef i64 @_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS_17ZSTD_matchState_tEPNS_10seqStore_tEPjPKvm(ptr noundef captures(none) initializes((300, 304)) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
+  %5 = ptrtoint ptr %3 to i64                     ; 3 uses
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca i64, align 8                      ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 22 uses
-  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -8 ; 5 uses
+  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -8 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !7    ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -88,7 +97,6 @@ begin_hunk_7_@_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS_
   %.neg.i = sub i64 %i.aa, %i.z
   %.neg516.i = trunc i64 %.neg.i to i32
   %i.ab = add i32 %i.h, %.neg516.i                ; 3 uses
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
   %i.ac = ptrtoint ptr %i.j to i64
   %i.ad = ptrtoint ptr %i.x to i64
   %i.ae = add i64 %i.ac, %i.ad
@@ -97,13 +105,13 @@ begin_hunk_8_@_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS_
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph164, %.critedge9.i
-  %.0.i163 = phi ptr [ %i.an, %.lr.ph164 ], [ %.7.i, %.critedge9.i ] ; 10 uses
+  %.0.i163 = phi ptr [ %i.an, %.lr.ph164 ], [ %.7.i, %.critedge9.i ] ; 11 uses
   %.0409.i162 = phi ptr [ %3, %.lr.ph164 ], [ %.6415.i, %.critedge9.i ] ; 11 uses
   %.2418.i161 = phi i32 [ %i.n, %.lr.ph164 ], [ %.9.i, %.critedge9.i ] ; 5 uses
   %.2426.i160 = phi i32 [ %i.p, %.lr.ph164 ], [ %.9433.i, %.critedge9.i ] ; 2 uses
+  %.0.i163186 = ptrtoint ptr %.0.i163 to i64      ; 3 uses
   %6 = getelementptr inbounds nuw i8, ptr %.0.i163, i64 1 ; 2 uses
-  %7 = ptrtoint ptr %.0.i163 to i64               ; 2 uses
-  %i.ba = sub i64 %7, %i.ao
+  %i.ba = sub i64 %.0.i163186, %i.ao
   %i.bb = trunc i64 %i.ba to i32
   %reass.sub = sub i32 %i.bb, %.2418.i161
   %i.bc = add i32 %reass.sub, 1                   ; 4 uses
@@ -112,11 +120,19 @@ begin_hunk_9_@_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS_
   %.0449.i = select i1 %i.bx, i64 %i.bv, i64 1    ; 2 uses
   %.0465.i = select i1 %i.bx, ptr %.0.i163, ptr %6 ; 2 uses
   %i.by = icmp ult ptr %.0.i163, %i.d
-  br i1 %i.by, label %.lr.ph, label %.loopexit
+  br i1 %i.by, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %7 = getelementptr i8, ptr %.0.i163, i64 %4
+  %8 = getelementptr i8, ptr %7, i64 %5
+  %scevgep = getelementptr i8, ptr %8, i64 -8
+  %9 = sub i64 0, %.0.i163186
+  %scevgep187 = getelementptr i8, ptr %scevgep, i64 %9
+  br label %.lr.ph
 
 bb.i:                                             ; preds = %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit6
   %i.bz = ptrtoint ptr %.0409.i162 to i64
-  %i.ca = sub i64 %7, %i.bz                       ; 2 uses
+  %i.ca = sub i64 %.0.i163186, %i.bz              ; 2 uses
   %i.cb = lshr i64 %i.ca, 8
   %i.cc = getelementptr inbounds nuw i8, ptr %.0.i163, i64 %i.cb
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 1
@@ -125,11 +141,11 @@ begin_hunk_10_@_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS
   store i32 %i.cf, ptr %i.ak, align 4, !tbaa !44
   br label %.critedge9.i
 
-.lr.ph:                                           ; preds = %.preheader, %bb.ap
-  %.1.i131 = phi ptr [ %i.cg, %bb.ap ], [ %.0.i163, %.preheader ] ; 2 uses
-  %.5444.i130 = phi i64 [ %.0.i4, %bb.ap ], [ %.4443.i, %.preheader ] ; 5 uses
-  %.1450.i129 = phi i64 [ %i.fz, %bb.ap ], [ %.0449.i, %.preheader ] ; 5 uses
-  %.1466.i128 = phi ptr [ %i.cg, %bb.ap ], [ %.0465.i, %.preheader ] ; 4 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.ap
+  %.1.i131 = phi ptr [ %i.cg, %bb.ap ], [ %.0.i163, %.lr.ph.preheader ] ; 2 uses
+  %.5444.i130 = phi i64 [ %.0.i4, %bb.ap ], [ %.4443.i, %.lr.ph.preheader ] ; 5 uses
+  %.1450.i129 = phi i64 [ %i.fz, %bb.ap ], [ %.0449.i, %.lr.ph.preheader ] ; 5 uses
+  %.1466.i128 = phi ptr [ %i.cg, %bb.ap ], [ %.0465.i, %.lr.ph.preheader ] ; 4 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %.1.i131, i64 1 ; 10 uses
   %i.ch = ptrtoint ptr %i.cg to i64
   %i.ci = sub i64 %i.ch, %i.ao
@@ -138,8 +154,8 @@ begin_hunk_11_@_ZN11duckdb_zstd43ZSTD_compressBlock_lazy_dedicatedDictSearchEPNS
 
 bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %8 = icmp ult ptr %i.cg, %i.d
-  br i1 %8, label %.lr.ph, label %.loopexit
+  %exitcond.not = icmp eq ptr %i.cg, %scevgep187
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph
 
 bb.aq:                                            ; preds = %bb.ao, %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -148,10 +164,11 @@ begin_hunk_12_@_ZN11duckdb_zstd27ZSTD_compressBlock_lazy_rowEPNS_17ZSTD_matchSta
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef i64 @_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_17ZSTD_matchState_tEPNS_10seqStore_tEPjPKvm(ptr noundef captures(none) initializes((300, 304)) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
+  %5 = ptrtoint ptr %3 to i64                     ; 3 uses
   %i.a = alloca i64, align 8                      ; 13 uses
   %i.b = alloca i64, align 8                      ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 34 uses
-  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 9 uses
+  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !7    ; 19 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -160,7 +177,6 @@ begin_hunk_13_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
   %.neg.i = sub i64 %i.ae, %i.ad
   %.neg516.i = trunc i64 %.neg.i to i32
   %i.af = add i32 %i.h, %.neg516.i                ; 3 uses
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
   %i.ag = ptrtoint ptr %i.j to i64
   %i.ah = ptrtoint ptr %i.ab to i64
   %i.ai = add i64 %i.ag, %i.ah
@@ -169,13 +185,13 @@ begin_hunk_14_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph193, %.critedge9.i
-  %.0.i192 = phi ptr [ %i.ao, %.lr.ph193 ], [ %.7.i, %.critedge9.i ] ; 16 uses
+  %.0.i192 = phi ptr [ %i.ao, %.lr.ph193 ], [ %.7.i, %.critedge9.i ] ; 17 uses
   %.0409.i191 = phi ptr [ %3, %.lr.ph193 ], [ %.6415.i, %.critedge9.i ] ; 11 uses
   %.2418.i190 = phi i32 [ %i.r, %.lr.ph193 ], [ %.9.i, %.critedge9.i ] ; 5 uses
   %.2426.i189 = phi i32 [ %i.t, %.lr.ph193 ], [ %.9433.i, %.critedge9.i ] ; 2 uses
+  %.0.i192234 = ptrtoint ptr %.0.i192 to i64      ; 3 uses
   %6 = getelementptr inbounds nuw i8, ptr %.0.i192, i64 1 ; 2 uses
-  %7 = ptrtoint ptr %.0.i192 to i64               ; 2 uses
-  %i.hp = sub i64 %7, %i.gz
+  %i.hp = sub i64 %.0.i192234, %i.gz
   %i.hq = trunc i64 %i.hp to i32
   %reass.sub = sub i32 %i.hq, %.2418.i190
   %i.hr = add i32 %reass.sub, 1                   ; 4 uses
@@ -184,11 +200,19 @@ begin_hunk_15_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
   %.0449.i = select i1 %i.is, i64 %i.iq, i64 1    ; 2 uses
   %.0465.i = select i1 %i.is, ptr %.0.i192, ptr %6 ; 2 uses
   %i.it = icmp ult ptr %.0.i192, %i.d
-  br i1 %i.it, label %.lr.ph158, label %.loopexit
+  br i1 %i.it, label %.lr.ph158.preheader, label %.loopexit
+
+.lr.ph158.preheader:                              ; preds = %.preheader
+  %7 = getelementptr i8, ptr %.0.i192, i64 %4
+  %8 = getelementptr i8, ptr %7, i64 %5
+  %scevgep = getelementptr i8, ptr %8, i64 -16
+  %9 = sub i64 0, %.0.i192234
+  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %9
+  br label %.lr.ph158
 
 bb.x:                                             ; preds = %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit13
   %i.iu = ptrtoint ptr %.0409.i191 to i64
-  %i.iv = sub i64 %7, %i.iu                       ; 2 uses
+  %i.iv = sub i64 %.0.i192234, %i.iu              ; 2 uses
   %i.iw = lshr i64 %i.iv, 8
   %i.ix = getelementptr inbounds nuw i8, ptr %.0.i192, i64 %i.iw
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 1
@@ -197,11 +221,11 @@ begin_hunk_16_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
   store i32 %i.ja, ptr %i.ap, align 4, !tbaa !44
   br label %.critedge9.i
 
-.lr.ph158:                                        ; preds = %.preheader, %bb.bn
-  %.1.i157 = phi ptr [ %i.jb, %bb.bn ], [ %.0.i192, %.preheader ] ; 2 uses
-  %.5444.i156 = phi i64 [ %.0.i11, %bb.bn ], [ %.4443.i, %.preheader ] ; 5 uses
-  %.1450.i155 = phi i64 [ %i.na, %bb.bn ], [ %.0449.i, %.preheader ] ; 5 uses
-  %.1466.i154 = phi ptr [ %i.jb, %bb.bn ], [ %.0465.i, %.preheader ] ; 4 uses
+.lr.ph158:                                        ; preds = %.lr.ph158.preheader, %bb.bn
+  %.1.i157 = phi ptr [ %i.jb, %bb.bn ], [ %.0.i192, %.lr.ph158.preheader ] ; 2 uses
+  %.5444.i156 = phi i64 [ %.0.i11, %bb.bn ], [ %.4443.i, %.lr.ph158.preheader ] ; 5 uses
+  %.1450.i155 = phi i64 [ %i.na, %bb.bn ], [ %.0449.i, %.lr.ph158.preheader ] ; 5 uses
+  %.1466.i154 = phi ptr [ %i.jb, %bb.bn ], [ %.0465.i, %.lr.ph158.preheader ] ; 4 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.1.i157, i64 1 ; 16 uses
   %i.jc = ptrtoint ptr %i.jb to i64
   %i.jd = sub i64 %i.jc, %i.gz
@@ -210,8 +234,8 @@ begin_hunk_17_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
 
 bb.bn:                                            ; preds = %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %8 = icmp ult ptr %i.jb, %i.d
-  br i1 %8, label %.lr.ph158, label %.loopexit
+  %exitcond236.not = icmp eq ptr %i.jb, %scevgep235
+  br i1 %exitcond236.not, label %.loopexit, label %.lr.ph158
 
 bb.bo:                                            ; preds = %bb.bm, %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
@@ -220,10 +244,11 @@ begin_hunk_18_@_ZN11duckdb_zstd42ZSTD_compressBlock_lazy_dictMatchState_rowEPNS_
 ; Function Attrs: mustprogress nounwind uwtable
 define noundef i64 @_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_rowEPNS_17ZSTD_matchState_tEPNS_10seqStore_tEPjPKvm(ptr noundef captures(none) initializes((300, 304)) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #2 {
 bb.a:
+  %5 = ptrtoint ptr %3 to i64                     ; 3 uses
   %i.a = alloca i64, align 8                      ; 13 uses
   %i.b = alloca i64, align 8                      ; 14 uses
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 34 uses
-  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 9 uses
+  %i.d = getelementptr inbounds i8, ptr %i.c, i64 -16 ; 8 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !7    ; 19 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -232,7 +257,6 @@ begin_hunk_19_@_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_row
   %.neg.i = sub i64 %i.ae, %i.ad
   %.neg516.i = trunc i64 %.neg.i to i32
   %i.af = add i32 %i.h, %.neg516.i                ; 3 uses
-  %5 = ptrtoint ptr %3 to i64                     ; 2 uses
   %i.ag = ptrtoint ptr %i.j to i64
   %i.ah = ptrtoint ptr %i.ab to i64
   %i.ai = add i64 %i.ag, %i.ah
@@ -241,13 +265,13 @@ begin_hunk_20_@_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_row
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph193, %.critedge9.i
-  %.0.i192 = phi ptr [ %i.ao, %.lr.ph193 ], [ %.7.i, %.critedge9.i ] ; 16 uses
+  %.0.i192 = phi ptr [ %i.ao, %.lr.ph193 ], [ %.7.i, %.critedge9.i ] ; 17 uses
   %.0409.i191 = phi ptr [ %3, %.lr.ph193 ], [ %.6415.i, %.critedge9.i ] ; 11 uses
   %.2418.i190 = phi i32 [ %i.r, %.lr.ph193 ], [ %.9.i, %.critedge9.i ] ; 5 uses
   %.2426.i189 = phi i32 [ %i.t, %.lr.ph193 ], [ %.9433.i, %.critedge9.i ] ; 2 uses
+  %.0.i192234 = ptrtoint ptr %.0.i192 to i64      ; 3 uses
   %6 = getelementptr inbounds nuw i8, ptr %.0.i192, i64 1 ; 2 uses
-  %7 = ptrtoint ptr %.0.i192 to i64               ; 2 uses
-  %i.hp = sub i64 %7, %i.gz
+  %i.hp = sub i64 %.0.i192234, %i.gz
   %i.hq = trunc i64 %i.hp to i32
   %reass.sub = sub i32 %i.hq, %.2418.i190
   %i.hr = add i32 %reass.sub, 1                   ; 4 uses
@@ -256,11 +280,19 @@ begin_hunk_21_@_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_row
   %.0449.i = select i1 %i.is, i64 %i.iq, i64 1    ; 2 uses
   %.0465.i = select i1 %i.is, ptr %.0.i192, ptr %6 ; 2 uses
   %i.it = icmp ult ptr %.0.i192, %i.d
-  br i1 %i.it, label %.lr.ph158, label %.loopexit
+  br i1 %i.it, label %.lr.ph158.preheader, label %.loopexit
+
+.lr.ph158.preheader:                              ; preds = %.preheader
+  %7 = getelementptr i8, ptr %.0.i192, i64 %4
+  %8 = getelementptr i8, ptr %7, i64 %5
+  %scevgep = getelementptr i8, ptr %8, i64 -16
+  %9 = sub i64 0, %.0.i192234
+  %scevgep235 = getelementptr i8, ptr %scevgep, i64 %9
+  br label %.lr.ph158
 
 bb.x:                                             ; preds = %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit13
   %i.iu = ptrtoint ptr %.0409.i191 to i64
-  %i.iv = sub i64 %7, %i.iu                       ; 2 uses
+  %i.iv = sub i64 %.0.i192234, %i.iu              ; 2 uses
   %i.iw = lshr i64 %i.iv, 8
   %i.ix = getelementptr inbounds nuw i8, ptr %.0.i192, i64 %i.iw
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 1
@@ -269,11 +301,11 @@ begin_hunk_22_@_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_row
   store i32 %i.ja, ptr %i.ap, align 4, !tbaa !44
   br label %.critedge9.i
 
-.lr.ph158:                                        ; preds = %.preheader, %bb.bn
-  %.1.i157 = phi ptr [ %i.jb, %bb.bn ], [ %.0.i192, %.preheader ] ; 2 uses
-  %.5444.i156 = phi i64 [ %.0.i11, %bb.bn ], [ %.4443.i, %.preheader ] ; 5 uses
-  %.1450.i155 = phi i64 [ %i.na, %bb.bn ], [ %.0449.i, %.preheader ] ; 5 uses
-  %.1466.i154 = phi ptr [ %i.jb, %bb.bn ], [ %.0465.i, %.preheader ] ; 4 uses
+.lr.ph158:                                        ; preds = %.lr.ph158.preheader, %bb.bn
+  %.1.i157 = phi ptr [ %i.jb, %bb.bn ], [ %.0.i192, %.lr.ph158.preheader ] ; 2 uses
+  %.5444.i156 = phi i64 [ %.0.i11, %bb.bn ], [ %.4443.i, %.lr.ph158.preheader ] ; 5 uses
+  %.1450.i155 = phi i64 [ %i.na, %bb.bn ], [ %.0449.i, %.lr.ph158.preheader ] ; 5 uses
+  %.1466.i154 = phi ptr [ %i.jb, %bb.bn ], [ %.0465.i, %.lr.ph158.preheader ] ; 4 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.1.i157, i64 1 ; 16 uses
   %i.jc = ptrtoint ptr %i.jb to i64
   %i.jd = sub i64 %i.jc, %i.gz
@@ -282,8 +314,8 @@ begin_hunk_23_@_ZN11duckdb_zstd47ZSTD_compressBlock_lazy_dedicatedDictSearch_row
 
 bb.bn:                                            ; preds = %bb.bm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
-  %8 = icmp ult ptr %i.jb, %i.d
-  br i1 %8, label %.lr.ph158, label %.loopexit
+  %exitcond236.not = icmp eq ptr %i.jb, %scevgep235
+  br i1 %exitcond236.not, label %.loopexit, label %.lr.ph158
 
 bb.bo:                                            ; preds = %bb.bm, %_ZN11duckdb_zstdL14ZSTD_searchMaxEPNS_17ZSTD_matchState_tEPKhS3_PmjjNS_14searchMethod_eENS_15ZSTD_dictMode_eE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
