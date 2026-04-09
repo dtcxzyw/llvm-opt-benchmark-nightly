@@ -4,7 +4,7 @@ begin_hunk_0_@_ZZN11OpenImageIO4v3_1L21lightprobe_to_envlatlIfEEbRNS0_8ImageBufE
   %.sink10.i = phi float [ %i.bo, %bb.k ], [ %i.by, %bb.l ] ; 2 uses
   %.sink.i = phi float [ %i.bt, %bb.k ], [ %i.bo, %bb.l ]
   %i.bz = call float @llvm.acos.f32(float %.sink.i)
-  %i.ca = fpext float %i.bz to double
+  %i.ca = fpext ninf float %i.bz to double
   %i.cb = fmul double %i.ca, 0x3FD45F306DC9C883
   %i.cc = call float @hypotf(float noundef %.sink11.i, float noundef %.sink10.i) #38
   %i.cd = fpext float %i.cc to double
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZZN11OpenImageIO4v3_1L21lightprobe_to_envlatlIhEEbRNS0_8ImageBufE
   %.sink10.i = phi float [ %i.bn, %bb.j ], [ %i.bx, %bb.k ] ; 2 uses
   %.sink.i = phi float [ %i.bs, %bb.j ], [ %i.bn, %bb.k ]
   %i.by = call float @llvm.acos.f32(float %.sink.i)
-  %i.bz = fpext float %i.by to double
+  %i.bz = fpext ninf float %i.by to double
   %i.ca = fmul double %i.bz, 0x3FD45F306DC9C883
   %i.cb = call float @hypotf(float noundef %.sink11.i, float noundef %.sink10.i) #38
   %i.cc = fpext float %i.cb to double
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZZN11OpenImageIO4v3_1L21lightprobe_to_envlatlIN9Imath_3_14halfEEE
   %.sink10.i = phi float [ %i.bn, %bb.j ], [ %i.bx, %bb.k ] ; 2 uses
   %.sink.i = phi float [ %i.bs, %bb.j ], [ %i.bn, %bb.k ]
   %i.by = call float @llvm.acos.f32(float %.sink.i)
-  %i.bz = fpext float %i.by to double
+  %i.bz = fpext ninf float %i.by to double
   %i.ca = fmul double %i.bz, 0x3FD45F306DC9C883
   %i.cb = call float @hypotf(float noundef %.sink11.i, float noundef %.sink10.i) #38
   %i.cc = fpext float %i.cb to double
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZZN11OpenImageIO4v3_1L21lightprobe_to_envlatlItEEbRNS0_8ImageBufE
   %.sink10.i = phi float [ %i.bn, %bb.j ], [ %i.bx, %bb.k ] ; 2 uses
   %.sink.i = phi float [ %i.bs, %bb.j ], [ %i.bn, %bb.k ]
   %i.by = call float @llvm.acos.f32(float %.sink.i)
-  %i.bz = fpext float %i.by to double
+  %i.bz = fpext ninf float %i.by to double
   %i.ca = fmul double %i.bz, 0x3FD45F306DC9C883
   %i.cb = call float @hypotf(float noundef %.sink11.i, float noundef %.sink10.i) #38
   %i.cc = fpext float %i.cb to double
