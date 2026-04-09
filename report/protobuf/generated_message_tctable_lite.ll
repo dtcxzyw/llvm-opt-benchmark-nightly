@@ -4,8 +4,8 @@ begin_hunk_0_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
   %i.au = add i64 %.0.v.i.i.i57129, %i.ar
-  %4 = add i64 %i.au, 8
-  %5 = sub i64 %4, %i.c
+  %4 = sub i64 %i.au, %i.c
+  %5 = add i64 %4, 8
   %diff.check = icmp ult i64 %5, 32
   br i1 %diff.check, label %.lr.ph.preheader139, label %vector.ph
 
@@ -14,8 +14,8 @@ begin_hunk_1_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %.0.v.i.i.i57129 = ptrtoaddr ptr %.0.v.i.i.i57 to i64
   %i.au = add i64 %.0.v.i.i.i57129, %i.ar
-  %4 = add i64 %i.au, 8
-  %5 = sub i64 %4, %i.c
+  %4 = sub i64 %i.au, %i.c
+  %5 = add i64 %4, 8
   %diff.check = icmp ult i64 %5, 32
   br i1 %diff.check, label %.lr.ph.preheader139, label %vector.ph
 
@@ -24,11 +24,10 @@ begin_hunk_2_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 2
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 2
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 2
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -37,11 +36,10 @@ begin_hunk_3_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 2
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 2
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 2
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -50,11 +48,10 @@ begin_hunk_4_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 2
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 2
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 2
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -63,11 +60,10 @@ begin_hunk_5_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 2
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 2
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 2
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -76,11 +72,10 @@ begin_hunk_6_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 3
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 3
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 3
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -89,11 +84,10 @@ begin_hunk_7_@_ZN6google8protobuf8internal18EpsCopyInputStream30ReadPackedVarint
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ac = add i64 %i.d, %i.z
-  %4 = shl i64 %i.ac, 3
-  %5 = add i64 %4, 8
-  %i.ad = shl i64 %i.c, 3
-  %6 = sub i64 %5, %i.ad
-  %scevgep = getelementptr i8, ptr %.0.v.i.i.i, i64 %6
+  %4 = sub i64 %i.ac, %i.c
+  %i.ad = shl i64 %4, 3
+  %5 = getelementptr i8, ptr %.0.v.i.i.i, i64 %i.ad
+  %scevgep = getelementptr i8, ptr %5, i64 8
   %bound0 = icmp ult ptr %i.aa, %1
   %bound1 = icmp ult ptr %0, %scevgep
   %found.conflict = and i1 %bound0, %bound1

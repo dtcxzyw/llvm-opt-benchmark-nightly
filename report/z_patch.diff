@@ -1,0 +1,2430 @@
+diff --git a/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_ld1_vnum.c b/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_ld1_vnum.c
+index 8206e4f41e44a..d1f4f6e665fb1 100644
+--- a/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_ld1_vnum.c
++++ b/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_ld1_vnum.c
+@@ -16,8 +16,7 @@
+ // CHECK-C-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -31,8 +30,7 @@
+ // CHECK-CXX-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -52,8 +50,7 @@ void test_svld1_hor_vnum_za8(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -68,8 +65,7 @@ void test_svld1_hor_vnum_za8(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -89,8 +85,7 @@ void test_svld1_hor_vnum_za16(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -105,8 +100,7 @@ void test_svld1_hor_vnum_za16(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -126,8 +120,7 @@ void test_svld1_hor_vnum_za32(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -142,8 +135,7 @@ void test_svld1_hor_vnum_za32(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -195,8 +187,7 @@ void test_svld1_hor_vnum_za128(uint32_t slice_base, svbool_t pg, const void *ptr
+ // CHECK-C-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -210,8 +201,7 @@ void test_svld1_hor_vnum_za128(uint32_t slice_base, svbool_t pg, const void *ptr
+ // CHECK-CXX-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -231,8 +221,7 @@ void test_svld1_ver_hor_za8(uint32_t slice_base, svbool_t pg, const void *ptr, i
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -247,8 +236,7 @@ void test_svld1_ver_hor_za8(uint32_t slice_base, svbool_t pg, const void *ptr, i
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -268,8 +256,7 @@ void test_svld1_ver_vnum_za16(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -284,8 +271,7 @@ void test_svld1_ver_vnum_za16(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -305,8 +291,7 @@ void test_svld1_ver_vnum_za32(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.ld1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -321,8 +306,7 @@ void test_svld1_ver_vnum_za32(uint32_t slice_base, svbool_t pg, const void *ptr,
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.ld1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+diff --git a/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_st1_vnum.c b/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_st1_vnum.c
+index 507a544bdadbe..9949da43d3b2e 100644
+--- a/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_st1_vnum.c
++++ b/clang/test/CodeGen/AArch64/sme-intrinsics/acle_sme_st1_vnum.c
+@@ -16,8 +16,7 @@
+ // CHECK-C-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -31,8 +30,7 @@
+ // CHECK-CXX-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1b.horiz(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -52,8 +50,7 @@ void test_svst1_hor_vnum_za8(uint32_t slice_base, svbool_t pg, void *ptr, int64_
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -68,8 +65,7 @@ void test_svst1_hor_vnum_za8(uint32_t slice_base, svbool_t pg, void *ptr, int64_
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1h.horiz(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -89,8 +85,7 @@ void test_svst1_hor_vnum_za16(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -105,8 +100,7 @@ void test_svst1_hor_vnum_za16(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1w.horiz(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -126,8 +120,7 @@ void test_svst1_hor_vnum_za32(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -142,8 +135,7 @@ void test_svst1_hor_vnum_za32(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1d.horiz(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -195,8 +187,7 @@ void test_svst1_hor_vnum_za128(uint32_t slice_base, svbool_t pg, void *ptr, int6
+ // CHECK-C-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -210,8 +201,7 @@ void test_svst1_hor_vnum_za128(uint32_t slice_base, svbool_t pg, void *ptr, int6
+ // CHECK-CXX-NEXT:    [[TMP2:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP3]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP2]]
+-// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[ADD]], 15
++// CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], 15
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1b.vert(<vscale x 16 x i1> [[PG]], ptr [[TMP1]], i32 0, i32 [[TMP4]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -231,8 +221,7 @@ void test_svst1_ver_vnum_za8(uint32_t slice_base, svbool_t pg, void *ptr, int64_
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -247,8 +236,7 @@ void test_svst1_ver_vnum_za8(uint32_t slice_base, svbool_t pg, void *ptr, int64_
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 7
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 7
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1h.vert(<vscale x 8 x i1> [[TMP0]], ptr [[TMP2]], i32 1, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -268,8 +256,7 @@ void test_svst1_ver_vnum_za16(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -284,8 +271,7 @@ void test_svst1_ver_vnum_za16(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 3
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 3
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1w.vert(<vscale x 4 x i1> [[TMP0]], ptr [[TMP2]], i32 3, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+@@ -305,8 +291,7 @@ void test_svst1_ver_vnum_za32(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-C-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-C-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-C-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-C-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-C-NEXT:    tail call void @llvm.aarch64.sme.st1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-C-NEXT:    ret void
+ //
+@@ -321,8 +306,7 @@ void test_svst1_ver_vnum_za32(uint32_t slice_base, svbool_t pg, void *ptr, int64
+ // CHECK-CXX-NEXT:    [[TMP3:%.*]] = trunc i64 [[VNUM]] to i32
+ // CHECK-CXX-NEXT:    [[TMP4:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 0, i32 [[TMP4]])
+-// CHECK-CXX-NEXT:    [[ADD:%.*]] = add i32 [[SLICE_BASE]], [[TMP3]]
+-// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[ADD]], 1
++// CHECK-CXX-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], 1
+ // CHECK-CXX-NEXT:    tail call void @llvm.aarch64.sme.st1d.vert(<vscale x 2 x i1> [[TMP0]], ptr [[TMP2]], i32 7, i32 [[TMP5]])
+ // CHECK-CXX-NEXT:    ret void
+ //
+diff --git a/clang/test/Headers/__clang_hip_math.hip b/clang/test/Headers/__clang_hip_math.hip
+index 3c15336584501..9cce2690211f0 100644
+--- a/clang/test/Headers/__clang_hip_math.hip
++++ b/clang/test/Headers/__clang_hip_math.hip
+@@ -64,8 +64,8 @@ typedef unsigned long long uint64_t;
+ // CHECK:       [[IF_THEN_I]]:
+ // CHECK-NEXT:    [[MUL_I:%.*]] = shl i64 [[__R_0_I]], 3
+ // CHECK-NEXT:    [[CONV5_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// CHECK-NEXT:    [[ADD_I:%.*]] = add i64 [[MUL_I]], -48
+-// CHECK-NEXT:    [[SUB_I:%.*]] = add i64 [[ADD_I]], [[CONV5_I]]
++// CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[MUL_I]], [[CONV5_I]]
++// CHECK-NEXT:    [[SUB_I:%.*]] = add i64 [[TMP2]], -48
+ // CHECK-NEXT:    [[INCDEC_PTR_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I]]
+ // CHECK:       [[CLEANUP_I]]:
+@@ -91,8 +91,8 @@ typedef unsigned long long uint64_t;
+ // AMDGCNSPIRV-NEXT:    [[OR_COND_I:%.*]] = icmp eq i8 [[TMP1]], 48
+ // AMDGCNSPIRV-NEXT:    [[MUL_I:%.*]] = shl i64 [[__R_0_I]], 3
+ // AMDGCNSPIRV-NEXT:    [[CONV5_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I:%.*]] = add i64 [[MUL_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I:%.*]] = add i64 [[ADD_I]], [[CONV5_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP2:%.*]] = add i64 [[MUL_I]], [[CONV5_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I:%.*]] = add i64 [[TMP2]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_IDX:%.*]] = zext i1 [[OR_COND_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I]], i64 [[__TAGP_ADDR_1_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I]] = select i1 [[OR_COND_I]], i64 [[SUB_I]], i64 [[__R_0_I]]
+@@ -122,8 +122,8 @@ extern "C" __device__ uint64_t test___make_mantissa_base8(const char *p) {
+ // CHECK:       [[IF_THEN_I]]:
+ // CHECK-NEXT:    [[MUL_I:%.*]] = mul i64 [[__R_0_I]], 10
+ // CHECK-NEXT:    [[CONV5_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// CHECK-NEXT:    [[ADD_I:%.*]] = add i64 [[MUL_I]], -48
+-// CHECK-NEXT:    [[SUB_I:%.*]] = add i64 [[ADD_I]], [[CONV5_I]]
++// CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[MUL_I]], [[CONV5_I]]
++// CHECK-NEXT:    [[SUB_I:%.*]] = add i64 [[TMP2]], -48
+ // CHECK-NEXT:    [[INCDEC_PTR_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I]]
+ // CHECK:       [[CLEANUP_I]]:
+@@ -149,8 +149,8 @@ extern "C" __device__ uint64_t test___make_mantissa_base8(const char *p) {
+ // AMDGCNSPIRV-NEXT:    [[OR_COND_I:%.*]] = icmp ult i8 [[TMP1]], 10
+ // AMDGCNSPIRV-NEXT:    [[MUL_I:%.*]] = mul i64 [[__R_0_I]], 10
+ // AMDGCNSPIRV-NEXT:    [[CONV5_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I:%.*]] = add i64 [[MUL_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I:%.*]] = add i64 [[ADD_I]], [[CONV5_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP2:%.*]] = add i64 [[MUL_I]], [[CONV5_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I:%.*]] = add i64 [[TMP2]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_IDX:%.*]] = zext i1 [[OR_COND_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I]], i64 [[__TAGP_ADDR_1_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I]] = select i1 [[OR_COND_I]], i64 [[SUB_I]], i64 [[__R_0_I]]
+@@ -186,11 +186,11 @@ extern "C" __device__ uint64_t test___make_mantissa_base10(const char *p) {
+ // CHECK-NEXT:    [[OR_COND34_I:%.*]] = icmp ult i8 [[TMP3]], 6
+ // CHECK-NEXT:    br i1 [[OR_COND34_I]], label %[[IF_END31_I]], label %[[CLEANUP_I]]
+ // CHECK:       [[IF_END31_I]]:
+-// CHECK-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I]] ], [ -48, %[[WHILE_BODY_I]] ], [ -55, %[[IF_ELSE17_I]] ]
++// CHECK-NEXT:    [[DOTSINK1:%.*]] = phi i64 [ -87, %[[IF_ELSE_I]] ], [ -48, %[[WHILE_BODY_I]] ], [ -55, %[[IF_ELSE17_I]] ]
+ // CHECK-NEXT:    [[MUL24_I:%.*]] = shl i64 [[__R_0_I]], 4
+ // CHECK-NEXT:    [[CONV25_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// CHECK-NEXT:    [[ADD26_I:%.*]] = add i64 [[MUL24_I]], [[DOTSINK]]
+-// CHECK-NEXT:    [[ADD28_I:%.*]] = add i64 [[ADD26_I]], [[CONV25_I]]
++// CHECK-NEXT:    [[TMP4:%.*]] = add i64 [[MUL24_I]], [[CONV25_I]]
++// CHECK-NEXT:    [[ADD28_I:%.*]] = add i64 [[TMP4]], [[DOTSINK1]]
+ // CHECK-NEXT:    [[INCDEC_PTR_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I]]
+ // CHECK:       [[CLEANUP_I]]:
+@@ -225,11 +225,11 @@ extern "C" __device__ uint64_t test___make_mantissa_base10(const char *p) {
+ // AMDGCNSPIRV-NEXT:    [[OR_COND34_I:%.*]] = icmp ult i8 [[TMP3]], 6
+ // AMDGCNSPIRV-NEXT:    br i1 [[OR_COND34_I]], label %[[IF_END31_I]], label %[[CLEANUP_I]]
+ // AMDGCNSPIRV:       [[IF_END31_I]]:
+-// AMDGCNSPIRV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I]] ], [ -48, %[[WHILE_BODY_I]] ], [ -55, %[[IF_ELSE17_I]] ]
++// AMDGCNSPIRV-NEXT:    [[DOTSINK1:%.*]] = phi i64 [ -87, %[[IF_ELSE_I]] ], [ -48, %[[WHILE_BODY_I]] ], [ -55, %[[IF_ELSE17_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[MUL24_I:%.*]] = shl i64 [[__R_0_I]], 4
+ // AMDGCNSPIRV-NEXT:    [[CONV25_I:%.*]] = zext nneg i8 [[TMP0]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD26_I:%.*]] = add i64 [[MUL24_I]], [[DOTSINK]]
+-// AMDGCNSPIRV-NEXT:    [[ADD28_I:%.*]] = add i64 [[ADD26_I]], [[CONV25_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP4:%.*]] = add i64 [[MUL24_I]], [[CONV25_I]]
++// AMDGCNSPIRV-NEXT:    [[ADD28_I:%.*]] = add i64 [[TMP4]], [[DOTSINK1]]
+ // AMDGCNSPIRV-NEXT:    [[INCDEC_PTR_I:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I]], i64 1
+ // AMDGCNSPIRV-NEXT:    br label %[[CLEANUP_I]]
+ // AMDGCNSPIRV:       [[CLEANUP_I]]:
+@@ -279,11 +279,11 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // CHECK-NEXT:    [[OR_COND34_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // CHECK-NEXT:    br i1 [[OR_COND34_I_I]], label %[[IF_END31_I_I]], label %[[CLEANUP_I36_I]]
+ // CHECK:       [[IF_END31_I_I]]:
+-// CHECK-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I]] ], [ -48, %[[WHILE_BODY_I34_I]] ], [ -55, %[[IF_ELSE17_I_I]] ]
++// CHECK-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I]] ], [ -48, %[[WHILE_BODY_I34_I]] ], [ -55, %[[IF_ELSE17_I_I]] ]
+ // CHECK-NEXT:    [[MUL24_I_I:%.*]] = shl i64 [[__R_0_I32_I]], 4
+ // CHECK-NEXT:    [[CONV25_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// CHECK-NEXT:    [[ADD26_I_I:%.*]] = add i64 [[MUL24_I_I]], [[DOTSINK]]
+-// CHECK-NEXT:    [[ADD28_I_I:%.*]] = add i64 [[ADD26_I_I]], [[CONV25_I_I]]
++// CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I]], [[CONV25_I_I]]
++// CHECK-NEXT:    [[ADD28_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // CHECK-NEXT:    [[INCDEC_PTR_I40_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I36_I]]
+ // CHECK:       [[CLEANUP_I36_I]]:
+@@ -294,18 +294,18 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // CHECK:       [[WHILE_COND_I_I]]:
+ // CHECK-NEXT:    [[__TAGP_ADDR_0_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I:%.*]], %[[CLEANUP_I_I:.*]] ], [ [[INCDEC_PTR_I]], %[[IF_THEN_I]] ]
+ // CHECK-NEXT:    [[__R_0_I_I:%.*]] = phi i64 [ [[__R_1_I_I:%.*]], %[[CLEANUP_I_I]] ], [ 0, %[[IF_THEN_I]] ]
+-// CHECK-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// CHECK-NEXT:    [[CMP_NOT_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// CHECK-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// CHECK-NEXT:    [[CMP_NOT_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // CHECK-NEXT:    br i1 [[CMP_NOT_I_I]], label %[[_ZL15__MAKE_MANTISSAPKC_EXIT]], label %[[WHILE_BODY_I_I:.*]]
+ // CHECK:       [[WHILE_BODY_I_I]]:
+-// CHECK-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// CHECK-NEXT:    [[OR_COND_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// CHECK-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// CHECK-NEXT:    [[OR_COND_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // CHECK-NEXT:    br i1 [[OR_COND_I_I]], label %[[IF_THEN_I_I:.*]], label %[[CLEANUP_I_I]]
+ // CHECK:       [[IF_THEN_I_I]]:
+ // CHECK-NEXT:    [[MUL_I_I:%.*]] = shl i64 [[__R_0_I_I]], 3
+-// CHECK-NEXT:    [[CONV5_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// CHECK-NEXT:    [[ADD_I_I:%.*]] = add i64 [[MUL_I_I]], -48
+-// CHECK-NEXT:    [[SUB_I_I:%.*]] = add i64 [[ADD_I_I]], [[CONV5_I_I]]
++// CHECK-NEXT:    [[CONV5_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// CHECK-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I]], [[CONV5_I_I]]
++// CHECK-NEXT:    [[SUB_I_I:%.*]] = add i64 [[TMP9]], -48
+ // CHECK-NEXT:    [[INCDEC_PTR_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I_I]]
+ // CHECK:       [[CLEANUP_I_I]]:
+@@ -315,18 +315,18 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // CHECK:       [[WHILE_COND_I14_I]]:
+ // CHECK-NEXT:    [[__TAGP_ADDR_0_I15_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I:%.*]], %[[CLEANUP_I20_I:.*]] ], [ [[P]], %[[ENTRY]] ]
+ // CHECK-NEXT:    [[__R_0_I16_I:%.*]] = phi i64 [ [[__R_1_I22_I:%.*]], %[[CLEANUP_I20_I]] ], [ 0, %[[ENTRY]] ]
+-// CHECK-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// CHECK-NEXT:    [[CMP_NOT_I17_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// CHECK-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// CHECK-NEXT:    [[CMP_NOT_I17_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // CHECK-NEXT:    br i1 [[CMP_NOT_I17_I]], label %[[_ZL15__MAKE_MANTISSAPKC_EXIT]], label %[[WHILE_BODY_I18_I:.*]]
+ // CHECK:       [[WHILE_BODY_I18_I]]:
+-// CHECK-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// CHECK-NEXT:    [[OR_COND_I19_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// CHECK-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// CHECK-NEXT:    [[OR_COND_I19_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // CHECK-NEXT:    br i1 [[OR_COND_I19_I]], label %[[IF_THEN_I24_I:.*]], label %[[CLEANUP_I20_I]]
+ // CHECK:       [[IF_THEN_I24_I]]:
+ // CHECK-NEXT:    [[MUL_I25_I:%.*]] = mul i64 [[__R_0_I16_I]], 10
+-// CHECK-NEXT:    [[CONV5_I26_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// CHECK-NEXT:    [[ADD_I27_I:%.*]] = add i64 [[MUL_I25_I]], -48
+-// CHECK-NEXT:    [[SUB_I28_I:%.*]] = add i64 [[ADD_I27_I]], [[CONV5_I26_I]]
++// CHECK-NEXT:    [[CONV5_I26_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// CHECK-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I]], [[CONV5_I26_I]]
++// CHECK-NEXT:    [[SUB_I28_I:%.*]] = add i64 [[TMP12]], -48
+ // CHECK-NEXT:    [[INCDEC_PTR_I29_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I]], i64 1
+ // CHECK-NEXT:    br label %[[CLEANUP_I20_I]]
+ // CHECK:       [[CLEANUP_I20_I]]:
+@@ -371,11 +371,11 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // AMDGCNSPIRV-NEXT:    [[OR_COND34_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // AMDGCNSPIRV-NEXT:    br i1 [[OR_COND34_I_I]], label %[[IF_END31_I_I]], label %[[CLEANUP_I_I]]
+ // AMDGCNSPIRV:       [[IF_END31_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I]] ], [ -48, %[[WHILE_BODY_I32_I]] ], [ -55, %[[IF_ELSE17_I_I]] ]
++// AMDGCNSPIRV-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I]] ], [ -48, %[[WHILE_BODY_I32_I]] ], [ -55, %[[IF_ELSE17_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[MUL24_I_I:%.*]] = shl i64 [[__R_0_I30_I]], 4
+ // AMDGCNSPIRV-NEXT:    [[CONV25_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD26_I_I:%.*]] = add i64 [[MUL24_I_I]], [[DOTSINK]]
+-// AMDGCNSPIRV-NEXT:    [[ADD28_I_I:%.*]] = add i64 [[ADD26_I_I]], [[CONV25_I_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I]], [[CONV25_I_I]]
++// AMDGCNSPIRV-NEXT:    [[ADD28_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // AMDGCNSPIRV-NEXT:    [[INCDEC_PTR_I37_I:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I29_I]], i64 1
+ // AMDGCNSPIRV-NEXT:    br label %[[CLEANUP_I_I]]
+ // AMDGCNSPIRV:       [[CLEANUP_I_I]]:
+@@ -386,16 +386,16 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I_I:%.*]], %[[WHILE_BODY_I_I:.*]] ], [ [[INCDEC_PTR_I]], %[[IF_THEN_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I_I:%.*]] = phi i64 [ [[__R_1_I_I:%.*]], %[[WHILE_BODY_I_I]] ], [ 0, %[[IF_THEN_I]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I_I]], label %[[_ZL15__MAKE_MANTISSAPKC_EXIT]], label %[[WHILE_BODY_I_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // AMDGCNSPIRV-NEXT:    [[MUL_I_I:%.*]] = shl i64 [[__R_0_I_I]], 3
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I_I:%.*]] = add i64 [[MUL_I_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I_I:%.*]] = add i64 [[ADD_I_I]], [[CONV5_I_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I]], [[CONV5_I_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I_I:%.*]] = add i64 [[TMP9]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I_IDX:%.*]] = zext i1 [[OR_COND_I_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I]], i64 [[__TAGP_ADDR_1_I_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I_I]] = select i1 [[OR_COND_I_I]], i64 [[SUB_I_I]], i64 [[__R_0_I_I]]
+@@ -403,16 +403,16 @@ extern "C" __device__ uint64_t test___make_mantissa_base16(const char *p) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I14_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I15_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I25_I:%.*]], %[[WHILE_BODY_I18_I:.*]] ], [ [[P]], %[[ENTRY]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I16_I:%.*]] = phi i64 [ [[__R_1_I26_I:%.*]], %[[WHILE_BODY_I18_I]] ], [ 0, %[[ENTRY]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP10:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I17_I]], label %[[_ZL15__MAKE_MANTISSAPKC_EXIT]], label %[[WHILE_BODY_I18_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I18_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// AMDGCNSPIRV-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // AMDGCNSPIRV-NEXT:    [[MUL_I20_I:%.*]] = mul i64 [[__R_0_I16_I]], 10
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I22_I:%.*]] = add i64 [[MUL_I20_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I23_I:%.*]] = add i64 [[ADD_I22_I]], [[CONV5_I21_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I20_I]], [[CONV5_I21_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I23_I:%.*]] = add i64 [[TMP12]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I_IDX:%.*]] = zext i1 [[OR_COND_I19_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I]], i64 [[__TAGP_ADDR_1_I25_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I26_I]] = select i1 [[OR_COND_I19_I]], i64 [[SUB_I23_I]], i64 [[__R_0_I16_I]]
+@@ -4380,11 +4380,11 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // DEFAULT-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // DEFAULT-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // DEFAULT:       [[IF_END31_I_I_I]]:
+-// DEFAULT-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// DEFAULT-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // DEFAULT-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // DEFAULT-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// DEFAULT-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// DEFAULT-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// DEFAULT-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// DEFAULT-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // DEFAULT:       [[CLEANUP_I36_I_I]]:
+@@ -4395,18 +4395,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // DEFAULT:       [[WHILE_COND_I_I_I]]:
+ // DEFAULT-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // DEFAULT-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// DEFAULT-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// DEFAULT-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// DEFAULT-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// DEFAULT-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // DEFAULT-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // DEFAULT:       [[WHILE_BODY_I_I_I]]:
+-// DEFAULT-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// DEFAULT-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// DEFAULT-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// DEFAULT-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // DEFAULT-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // DEFAULT:       [[IF_THEN_I_I_I]]:
+ // DEFAULT-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// DEFAULT-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// DEFAULT-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// DEFAULT-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// DEFAULT-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// DEFAULT-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// DEFAULT-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // DEFAULT:       [[CLEANUP_I_I_I]]:
+@@ -4416,18 +4416,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // DEFAULT:       [[WHILE_COND_I14_I_I]]:
+ // DEFAULT-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // DEFAULT-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// DEFAULT-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// DEFAULT-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// DEFAULT-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// DEFAULT-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // DEFAULT-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // DEFAULT:       [[WHILE_BODY_I18_I_I]]:
+-// DEFAULT-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// DEFAULT-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// DEFAULT-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// DEFAULT-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // DEFAULT-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // DEFAULT:       [[IF_THEN_I24_I_I]]:
+ // DEFAULT-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// DEFAULT-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// DEFAULT-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// DEFAULT-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// DEFAULT-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// DEFAULT-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// DEFAULT-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // DEFAULT:       [[CLEANUP_I20_I_I]]:
+@@ -4439,8 +4439,8 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // DEFAULT-NEXT:    [[CONV_I:%.*]] = trunc i64 [[RETVAL_0_I_I]] to i32
+ // DEFAULT-NEXT:    [[BF_VALUE_I:%.*]] = and i32 [[CONV_I]], 4194303
+ // DEFAULT-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i32 [[BF_VALUE_I]], 2143289344
+-// DEFAULT-NEXT:    [[TMP10:%.*]] = bitcast i32 [[BF_SET9_I]] to float
+-// DEFAULT-NEXT:    ret float [[TMP10]]
++// DEFAULT-NEXT:    [[TMP13:%.*]] = bitcast i32 [[BF_SET9_I]] to float
++// DEFAULT-NEXT:    ret float [[TMP13]]
+ //
+ // FINITEONLY-LABEL: define dso_local nofpclass(nan inf) float @test_nanf(
+ // FINITEONLY-SAME: ptr noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr #[[ATTR3]] {
+@@ -4481,11 +4481,11 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // APPROX-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // APPROX-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // APPROX:       [[IF_END31_I_I_I]]:
+-// APPROX-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// APPROX-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // APPROX-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // APPROX-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// APPROX-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// APPROX-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// APPROX-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// APPROX-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // APPROX-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // APPROX:       [[CLEANUP_I36_I_I]]:
+@@ -4496,18 +4496,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // APPROX:       [[WHILE_COND_I_I_I]]:
+ // APPROX-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // APPROX-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// APPROX-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// APPROX-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// APPROX-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// APPROX-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // APPROX-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // APPROX:       [[WHILE_BODY_I_I_I]]:
+-// APPROX-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// APPROX-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// APPROX-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// APPROX-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // APPROX-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // APPROX:       [[IF_THEN_I_I_I]]:
+ // APPROX-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// APPROX-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// APPROX-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// APPROX-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// APPROX-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// APPROX-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// APPROX-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // APPROX-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // APPROX:       [[CLEANUP_I_I_I]]:
+@@ -4517,18 +4517,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // APPROX:       [[WHILE_COND_I14_I_I]]:
+ // APPROX-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // APPROX-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// APPROX-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// APPROX-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// APPROX-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// APPROX-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // APPROX-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // APPROX:       [[WHILE_BODY_I18_I_I]]:
+-// APPROX-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// APPROX-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// APPROX-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// APPROX-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // APPROX-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // APPROX:       [[IF_THEN_I24_I_I]]:
+ // APPROX-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// APPROX-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// APPROX-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// APPROX-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// APPROX-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// APPROX-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// APPROX-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // APPROX-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // APPROX:       [[CLEANUP_I20_I_I]]:
+@@ -4540,8 +4540,8 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // APPROX-NEXT:    [[CONV_I:%.*]] = trunc i64 [[RETVAL_0_I_I]] to i32
+ // APPROX-NEXT:    [[BF_VALUE_I:%.*]] = and i32 [[CONV_I]], 4194303
+ // APPROX-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i32 [[BF_VALUE_I]], 2143289344
+-// APPROX-NEXT:    [[TMP10:%.*]] = bitcast i32 [[BF_SET9_I]] to float
+-// APPROX-NEXT:    ret float [[TMP10]]
++// APPROX-NEXT:    [[TMP13:%.*]] = bitcast i32 [[BF_SET9_I]] to float
++// APPROX-NEXT:    ret float [[TMP13]]
+ //
+ // NCRDIV-LABEL: define dso_local float @test_nanf(
+ // NCRDIV-SAME: ptr noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr #[[ATTR2]] {
+@@ -4577,11 +4577,11 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // NCRDIV-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // NCRDIV-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // NCRDIV:       [[IF_END31_I_I_I]]:
+-// NCRDIV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// NCRDIV-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // NCRDIV-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // NCRDIV-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// NCRDIV-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// NCRDIV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// NCRDIV-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// NCRDIV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // NCRDIV:       [[CLEANUP_I36_I_I]]:
+@@ -4592,18 +4592,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // NCRDIV:       [[WHILE_COND_I_I_I]]:
+ // NCRDIV-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // NCRDIV-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// NCRDIV-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// NCRDIV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// NCRDIV-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// NCRDIV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // NCRDIV-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // NCRDIV:       [[WHILE_BODY_I_I_I]]:
+-// NCRDIV-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// NCRDIV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// NCRDIV-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// NCRDIV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // NCRDIV-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // NCRDIV:       [[IF_THEN_I_I_I]]:
+ // NCRDIV-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// NCRDIV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// NCRDIV-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// NCRDIV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// NCRDIV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// NCRDIV-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// NCRDIV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // NCRDIV:       [[CLEANUP_I_I_I]]:
+@@ -4613,18 +4613,18 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // NCRDIV:       [[WHILE_COND_I14_I_I]]:
+ // NCRDIV-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // NCRDIV-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// NCRDIV-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// NCRDIV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// NCRDIV-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// NCRDIV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // NCRDIV-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // NCRDIV:       [[WHILE_BODY_I18_I_I]]:
+-// NCRDIV-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// NCRDIV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// NCRDIV-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// NCRDIV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // NCRDIV-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // NCRDIV:       [[IF_THEN_I24_I_I]]:
+ // NCRDIV-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// NCRDIV-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// NCRDIV-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// NCRDIV-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// NCRDIV-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// NCRDIV-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// NCRDIV-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // NCRDIV:       [[CLEANUP_I20_I_I]]:
+@@ -4636,8 +4636,8 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // NCRDIV-NEXT:    [[CONV_I:%.*]] = trunc i64 [[RETVAL_0_I_I]] to i32
+ // NCRDIV-NEXT:    [[BF_VALUE_I:%.*]] = and i32 [[CONV_I]], 4194303
+ // NCRDIV-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i32 [[BF_VALUE_I]], 2143289344
+-// NCRDIV-NEXT:    [[TMP10:%.*]] = bitcast i32 [[BF_SET9_I]] to float
+-// NCRDIV-NEXT:    ret float [[TMP10]]
++// NCRDIV-NEXT:    [[TMP13:%.*]] = bitcast i32 [[BF_SET9_I]] to float
++// NCRDIV-NEXT:    ret float [[TMP13]]
+ //
+ // AMDGCNSPIRV-LABEL: define spir_func float @test_nanf(
+ // AMDGCNSPIRV-SAME: ptr addrspace(4) noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr addrspace(4) #[[ATTR2]] {
+@@ -4673,11 +4673,11 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // AMDGCNSPIRV-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // AMDGCNSPIRV-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I_I_I]]
+ // AMDGCNSPIRV:       [[IF_END31_I_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I32_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// AMDGCNSPIRV-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I32_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I30_I_I]], 4
+ // AMDGCNSPIRV-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// AMDGCNSPIRV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // AMDGCNSPIRV-NEXT:    [[INCDEC_PTR_I37_I_I:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I29_I_I]], i64 1
+ // AMDGCNSPIRV-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // AMDGCNSPIRV:       [[CLEANUP_I_I_I]]:
+@@ -4688,16 +4688,16 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I_I_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[WHILE_BODY_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[WHILE_BODY_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I_I_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // AMDGCNSPIRV-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I_I_IDX:%.*]] = zext i1 [[OR_COND_I_I_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], i64 [[__TAGP_ADDR_1_I_I_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I_I_I]] = select i1 [[OR_COND_I_I_I]], i64 [[SUB_I_I_I]], i64 [[__R_0_I_I_I]]
+@@ -4705,16 +4705,16 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I14_I_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I25_I_I:%.*]], %[[WHILE_BODY_I18_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I26_I_I:%.*]], %[[WHILE_BODY_I18_I_I]] ], [ 0, %[[ENTRY]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP10:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL4NANFPKC_EXIT]], label %[[WHILE_BODY_I18_I_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I18_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// AMDGCNSPIRV-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // AMDGCNSPIRV-NEXT:    [[MUL_I20_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I22_I_I:%.*]] = add i64 [[MUL_I20_I_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I23_I_I:%.*]] = add i64 [[ADD_I22_I_I]], [[CONV5_I21_I_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I20_I_I]], [[CONV5_I21_I_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I23_I_I:%.*]] = add i64 [[TMP12]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I_I_IDX:%.*]] = zext i1 [[OR_COND_I19_I_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], i64 [[__TAGP_ADDR_1_I25_I_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I26_I_I]] = select i1 [[OR_COND_I19_I_I]], i64 [[SUB_I23_I_I]], i64 [[__R_0_I16_I_I]]
+@@ -4724,8 +4724,8 @@ extern "C" __device__ double test_modf(double x, double* y) {
+ // AMDGCNSPIRV-NEXT:    [[CONV_I:%.*]] = trunc i64 [[RETVAL_0_I_I]] to i32
+ // AMDGCNSPIRV-NEXT:    [[BF_VALUE_I:%.*]] = and i32 [[CONV_I]], 4194303
+ // AMDGCNSPIRV-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i32 [[BF_VALUE_I]], 2143289344
+-// AMDGCNSPIRV-NEXT:    [[TMP10:%.*]] = bitcast i32 [[BF_SET9_I]] to float
+-// AMDGCNSPIRV-NEXT:    ret float [[TMP10]]
++// AMDGCNSPIRV-NEXT:    [[TMP13:%.*]] = bitcast i32 [[BF_SET9_I]] to float
++// AMDGCNSPIRV-NEXT:    ret float [[TMP13]]
+ //
+ extern "C" __device__ float test_nanf(const char *tag) {
+   return nanf(tag);
+@@ -4765,11 +4765,11 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // DEFAULT-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // DEFAULT-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // DEFAULT:       [[IF_END31_I_I_I]]:
+-// DEFAULT-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// DEFAULT-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // DEFAULT-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // DEFAULT-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// DEFAULT-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// DEFAULT-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// DEFAULT-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// DEFAULT-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // DEFAULT:       [[CLEANUP_I36_I_I]]:
+@@ -4780,18 +4780,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // DEFAULT:       [[WHILE_COND_I_I_I]]:
+ // DEFAULT-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // DEFAULT-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// DEFAULT-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// DEFAULT-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// DEFAULT-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// DEFAULT-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // DEFAULT-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // DEFAULT:       [[WHILE_BODY_I_I_I]]:
+-// DEFAULT-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// DEFAULT-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// DEFAULT-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// DEFAULT-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // DEFAULT-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // DEFAULT:       [[IF_THEN_I_I_I]]:
+ // DEFAULT-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// DEFAULT-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// DEFAULT-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// DEFAULT-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// DEFAULT-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// DEFAULT-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// DEFAULT-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // DEFAULT:       [[CLEANUP_I_I_I]]:
+@@ -4801,18 +4801,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // DEFAULT:       [[WHILE_COND_I14_I_I]]:
+ // DEFAULT-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // DEFAULT-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// DEFAULT-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// DEFAULT-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// DEFAULT-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// DEFAULT-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // DEFAULT-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // DEFAULT:       [[WHILE_BODY_I18_I_I]]:
+-// DEFAULT-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// DEFAULT-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// DEFAULT-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// DEFAULT-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // DEFAULT-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // DEFAULT:       [[IF_THEN_I24_I_I]]:
+ // DEFAULT-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// DEFAULT-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// DEFAULT-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// DEFAULT-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// DEFAULT-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// DEFAULT-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// DEFAULT-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // DEFAULT-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // DEFAULT-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // DEFAULT:       [[CLEANUP_I20_I_I]]:
+@@ -4823,8 +4823,8 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // DEFAULT-NEXT:    [[RETVAL_0_I_I:%.*]] = phi i64 [ [[__R_0_I32_I_I]], %[[WHILE_COND_I30_I_I]] ], [ [[__R_0_I_I_I]], %[[WHILE_COND_I_I_I]] ], [ 0, %[[CLEANUP_I_I_I]] ], [ 0, %[[CLEANUP_I36_I_I]] ], [ 0, %[[CLEANUP_I20_I_I]] ], [ [[__R_0_I16_I_I]], %[[WHILE_COND_I14_I_I]] ]
+ // DEFAULT-NEXT:    [[BF_VALUE_I:%.*]] = and i64 [[RETVAL_0_I_I]], 2251799813685247
+ // DEFAULT-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i64 [[BF_VALUE_I]], 9221120237041090560
+-// DEFAULT-NEXT:    [[TMP10:%.*]] = bitcast i64 [[BF_SET9_I]] to double
+-// DEFAULT-NEXT:    ret double [[TMP10]]
++// DEFAULT-NEXT:    [[TMP13:%.*]] = bitcast i64 [[BF_SET9_I]] to double
++// DEFAULT-NEXT:    ret double [[TMP13]]
+ //
+ // FINITEONLY-LABEL: define dso_local nofpclass(nan inf) double @test_nan(
+ // FINITEONLY-SAME: ptr noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr #[[ATTR3]] {
+@@ -4865,11 +4865,11 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // APPROX-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // APPROX-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // APPROX:       [[IF_END31_I_I_I]]:
+-// APPROX-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// APPROX-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // APPROX-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // APPROX-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// APPROX-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// APPROX-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// APPROX-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// APPROX-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // APPROX-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // APPROX:       [[CLEANUP_I36_I_I]]:
+@@ -4880,18 +4880,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // APPROX:       [[WHILE_COND_I_I_I]]:
+ // APPROX-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // APPROX-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// APPROX-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// APPROX-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// APPROX-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// APPROX-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // APPROX-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // APPROX:       [[WHILE_BODY_I_I_I]]:
+-// APPROX-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// APPROX-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// APPROX-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// APPROX-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // APPROX-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // APPROX:       [[IF_THEN_I_I_I]]:
+ // APPROX-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// APPROX-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// APPROX-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// APPROX-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// APPROX-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// APPROX-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// APPROX-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // APPROX-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // APPROX:       [[CLEANUP_I_I_I]]:
+@@ -4901,18 +4901,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // APPROX:       [[WHILE_COND_I14_I_I]]:
+ // APPROX-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // APPROX-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// APPROX-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// APPROX-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// APPROX-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// APPROX-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // APPROX-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // APPROX:       [[WHILE_BODY_I18_I_I]]:
+-// APPROX-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// APPROX-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// APPROX-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// APPROX-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // APPROX-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // APPROX:       [[IF_THEN_I24_I_I]]:
+ // APPROX-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// APPROX-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// APPROX-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// APPROX-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// APPROX-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// APPROX-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// APPROX-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // APPROX-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // APPROX-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // APPROX:       [[CLEANUP_I20_I_I]]:
+@@ -4923,8 +4923,8 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // APPROX-NEXT:    [[RETVAL_0_I_I:%.*]] = phi i64 [ [[__R_0_I32_I_I]], %[[WHILE_COND_I30_I_I]] ], [ [[__R_0_I_I_I]], %[[WHILE_COND_I_I_I]] ], [ 0, %[[CLEANUP_I_I_I]] ], [ 0, %[[CLEANUP_I36_I_I]] ], [ 0, %[[CLEANUP_I20_I_I]] ], [ [[__R_0_I16_I_I]], %[[WHILE_COND_I14_I_I]] ]
+ // APPROX-NEXT:    [[BF_VALUE_I:%.*]] = and i64 [[RETVAL_0_I_I]], 2251799813685247
+ // APPROX-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i64 [[BF_VALUE_I]], 9221120237041090560
+-// APPROX-NEXT:    [[TMP10:%.*]] = bitcast i64 [[BF_SET9_I]] to double
+-// APPROX-NEXT:    ret double [[TMP10]]
++// APPROX-NEXT:    [[TMP13:%.*]] = bitcast i64 [[BF_SET9_I]] to double
++// APPROX-NEXT:    ret double [[TMP13]]
+ //
+ // NCRDIV-LABEL: define dso_local double @test_nan(
+ // NCRDIV-SAME: ptr noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr #[[ATTR2]] {
+@@ -4960,11 +4960,11 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // NCRDIV-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // NCRDIV-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I36_I_I]]
+ // NCRDIV:       [[IF_END31_I_I_I]]:
+-// NCRDIV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// NCRDIV-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I34_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // NCRDIV-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I32_I_I]], 4
+ // NCRDIV-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// NCRDIV-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// NCRDIV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// NCRDIV-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// NCRDIV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I40_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I31_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I36_I_I]]
+ // NCRDIV:       [[CLEANUP_I36_I_I]]:
+@@ -4975,18 +4975,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // NCRDIV:       [[WHILE_COND_I_I_I]]:
+ // NCRDIV-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[CLEANUP_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // NCRDIV-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[CLEANUP_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// NCRDIV-NEXT:    [[TMP6:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// NCRDIV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// NCRDIV-NEXT:    [[TMP7:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// NCRDIV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // NCRDIV-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I_I_I:.*]]
+ // NCRDIV:       [[WHILE_BODY_I_I_I]]:
+-// NCRDIV-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// NCRDIV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// NCRDIV-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// NCRDIV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // NCRDIV-NEXT:    br i1 [[OR_COND_I_I_I]], label %[[IF_THEN_I_I_I:.*]], label %[[CLEANUP_I_I_I]]
+ // NCRDIV:       [[IF_THEN_I_I_I]]:
+ // NCRDIV-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// NCRDIV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// NCRDIV-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// NCRDIV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// NCRDIV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// NCRDIV-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// NCRDIV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // NCRDIV:       [[CLEANUP_I_I_I]]:
+@@ -4996,18 +4996,18 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // NCRDIV:       [[WHILE_COND_I14_I_I]]:
+ // NCRDIV-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr [ [[__TAGP_ADDR_1_I21_I_I:%.*]], %[[CLEANUP_I20_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // NCRDIV-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I22_I_I:%.*]], %[[CLEANUP_I20_I_I]] ], [ 0, %[[ENTRY]] ]
+-// NCRDIV-NEXT:    [[TMP8:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
+-// NCRDIV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// NCRDIV-NEXT:    [[TMP10:%.*]] = load i8, ptr [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA7]]
++// NCRDIV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // NCRDIV-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I18_I_I:.*]]
+ // NCRDIV:       [[WHILE_BODY_I18_I_I]]:
+-// NCRDIV-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// NCRDIV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// NCRDIV-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// NCRDIV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // NCRDIV-NEXT:    br i1 [[OR_COND_I19_I_I]], label %[[IF_THEN_I24_I_I:.*]], label %[[CLEANUP_I20_I_I]]
+ // NCRDIV:       [[IF_THEN_I24_I_I]]:
+ // NCRDIV-NEXT:    [[MUL_I25_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// NCRDIV-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// NCRDIV-NEXT:    [[ADD_I27_I_I:%.*]] = add i64 [[MUL_I25_I_I]], -48
+-// NCRDIV-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[ADD_I27_I_I]], [[CONV5_I26_I_I]]
++// NCRDIV-NEXT:    [[CONV5_I26_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// NCRDIV-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I25_I_I]], [[CONV5_I26_I_I]]
++// NCRDIV-NEXT:    [[SUB_I28_I_I:%.*]] = add i64 [[TMP12]], -48
+ // NCRDIV-NEXT:    [[INCDEC_PTR_I29_I_I:%.*]] = getelementptr inbounds nuw i8, ptr [[__TAGP_ADDR_0_I15_I_I]], i64 1
+ // NCRDIV-NEXT:    br label %[[CLEANUP_I20_I_I]]
+ // NCRDIV:       [[CLEANUP_I20_I_I]]:
+@@ -5018,8 +5018,8 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // NCRDIV-NEXT:    [[RETVAL_0_I_I:%.*]] = phi i64 [ [[__R_0_I32_I_I]], %[[WHILE_COND_I30_I_I]] ], [ [[__R_0_I_I_I]], %[[WHILE_COND_I_I_I]] ], [ 0, %[[CLEANUP_I_I_I]] ], [ 0, %[[CLEANUP_I36_I_I]] ], [ 0, %[[CLEANUP_I20_I_I]] ], [ [[__R_0_I16_I_I]], %[[WHILE_COND_I14_I_I]] ]
+ // NCRDIV-NEXT:    [[BF_VALUE_I:%.*]] = and i64 [[RETVAL_0_I_I]], 2251799813685247
+ // NCRDIV-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i64 [[BF_VALUE_I]], 9221120237041090560
+-// NCRDIV-NEXT:    [[TMP10:%.*]] = bitcast i64 [[BF_SET9_I]] to double
+-// NCRDIV-NEXT:    ret double [[TMP10]]
++// NCRDIV-NEXT:    [[TMP13:%.*]] = bitcast i64 [[BF_SET9_I]] to double
++// NCRDIV-NEXT:    ret double [[TMP13]]
+ //
+ // AMDGCNSPIRV-LABEL: define spir_func double @test_nan(
+ // AMDGCNSPIRV-SAME: ptr addrspace(4) noundef readonly captures(none) [[TAG:%.*]]) local_unnamed_addr addrspace(4) #[[ATTR2]] {
+@@ -5055,11 +5055,11 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // AMDGCNSPIRV-NEXT:    [[OR_COND34_I_I_I:%.*]] = icmp ult i8 [[TMP5]], 6
+ // AMDGCNSPIRV-NEXT:    br i1 [[OR_COND34_I_I_I]], label %[[IF_END31_I_I_I]], label %[[CLEANUP_I_I_I]]
+ // AMDGCNSPIRV:       [[IF_END31_I_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[DOTSINK:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I32_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
++// AMDGCNSPIRV-NEXT:    [[DOTSINK15:%.*]] = phi i64 [ -87, %[[IF_ELSE_I_I_I]] ], [ -48, %[[WHILE_BODY_I32_I_I]] ], [ -55, %[[IF_ELSE17_I_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[MUL24_I_I_I:%.*]] = shl i64 [[__R_0_I30_I_I]], 4
+ // AMDGCNSPIRV-NEXT:    [[CONV25_I_I_I:%.*]] = zext nneg i8 [[TMP2]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD26_I_I_I:%.*]] = add i64 [[MUL24_I_I_I]], [[DOTSINK]]
+-// AMDGCNSPIRV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[ADD26_I_I_I]], [[CONV25_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = add i64 [[MUL24_I_I_I]], [[CONV25_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[ADD28_I_I_I:%.*]] = add i64 [[TMP6]], [[DOTSINK15]]
+ // AMDGCNSPIRV-NEXT:    [[INCDEC_PTR_I37_I_I:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I29_I_I]], i64 1
+ // AMDGCNSPIRV-NEXT:    br label %[[CLEANUP_I_I_I]]
+ // AMDGCNSPIRV:       [[CLEANUP_I_I_I]]:
+@@ -5070,16 +5070,16 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I_I_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I_I_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I_I_I:%.*]], %[[WHILE_BODY_I_I_I:.*]] ], [ [[INCDEC_PTR_I_I]], %[[IF_THEN_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I_I_I:%.*]] = phi i64 [ [[__R_1_I_I_I:%.*]], %[[WHILE_BODY_I_I_I]] ], [ 0, %[[IF_THEN_I_I]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP6:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP6]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I_I_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP7:%.*]] = and i8 [[TMP6]], -8
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP7]], 48
++// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = and i8 [[TMP7]], -8
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I_I_I:%.*]] = icmp eq i8 [[TMP8]], 48
+ // AMDGCNSPIRV-NEXT:    [[MUL_I_I_I:%.*]] = shl i64 [[__R_0_I_I_I]], 3
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP6]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I_I_I:%.*]] = add i64 [[MUL_I_I_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[ADD_I_I_I]], [[CONV5_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I_I_I:%.*]] = zext nneg i8 [[TMP7]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i64 [[MUL_I_I_I]], [[CONV5_I_I_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I_I_I:%.*]] = add i64 [[TMP9]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I_I_IDX:%.*]] = zext i1 [[OR_COND_I_I_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I_I_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I_I_I]], i64 [[__TAGP_ADDR_1_I_I_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I_I_I]] = select i1 [[OR_COND_I_I_I]], i64 [[SUB_I_I_I]], i64 [[__R_0_I_I_I]]
+@@ -5087,16 +5087,16 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // AMDGCNSPIRV:       [[WHILE_COND_I14_I_I]]:
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_0_I15_I_I:%.*]] = phi ptr addrspace(4) [ [[__TAGP_ADDR_1_I25_I_I:%.*]], %[[WHILE_BODY_I18_I_I:.*]] ], [ [[TAG]], %[[ENTRY]] ]
+ // AMDGCNSPIRV-NEXT:    [[__R_0_I16_I_I:%.*]] = phi i64 [ [[__R_1_I26_I_I:%.*]], %[[WHILE_BODY_I18_I_I]] ], [ 0, %[[ENTRY]] ]
+-// AMDGCNSPIRV-NEXT:    [[TMP8:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
+-// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP8]], 0
++// AMDGCNSPIRV-NEXT:    [[TMP10:%.*]] = load i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], align 1, !tbaa [[CHAR_TBAA8]]
++// AMDGCNSPIRV-NEXT:    [[CMP_NOT_I17_I_I:%.*]] = icmp eq i8 [[TMP10]], 0
+ // AMDGCNSPIRV-NEXT:    br i1 [[CMP_NOT_I17_I_I]], label %[[_ZL3NANPKC_EXIT]], label %[[WHILE_BODY_I18_I_I]]
+ // AMDGCNSPIRV:       [[WHILE_BODY_I18_I_I]]:
+-// AMDGCNSPIRV-NEXT:    [[TMP9:%.*]] = add i8 [[TMP8]], -48
+-// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP9]], 10
++// AMDGCNSPIRV-NEXT:    [[TMP11:%.*]] = add i8 [[TMP10]], -48
++// AMDGCNSPIRV-NEXT:    [[OR_COND_I19_I_I:%.*]] = icmp ult i8 [[TMP11]], 10
+ // AMDGCNSPIRV-NEXT:    [[MUL_I20_I_I:%.*]] = mul i64 [[__R_0_I16_I_I]], 10
+-// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I_I:%.*]] = zext nneg i8 [[TMP8]] to i64
+-// AMDGCNSPIRV-NEXT:    [[ADD_I22_I_I:%.*]] = add i64 [[MUL_I20_I_I]], -48
+-// AMDGCNSPIRV-NEXT:    [[SUB_I23_I_I:%.*]] = add i64 [[ADD_I22_I_I]], [[CONV5_I21_I_I]]
++// AMDGCNSPIRV-NEXT:    [[CONV5_I21_I_I:%.*]] = zext nneg i8 [[TMP10]] to i64
++// AMDGCNSPIRV-NEXT:    [[TMP12:%.*]] = add i64 [[MUL_I20_I_I]], [[CONV5_I21_I_I]]
++// AMDGCNSPIRV-NEXT:    [[SUB_I23_I_I:%.*]] = add i64 [[TMP12]], -48
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I_I_IDX:%.*]] = zext i1 [[OR_COND_I19_I_I]] to i64
+ // AMDGCNSPIRV-NEXT:    [[__TAGP_ADDR_1_I25_I_I]] = getelementptr inbounds nuw i8, ptr addrspace(4) [[__TAGP_ADDR_0_I15_I_I]], i64 [[__TAGP_ADDR_1_I25_I_I_IDX]]
+ // AMDGCNSPIRV-NEXT:    [[__R_1_I26_I_I]] = select i1 [[OR_COND_I19_I_I]], i64 [[SUB_I23_I_I]], i64 [[__R_0_I16_I_I]]
+@@ -5105,8 +5105,8 @@ extern "C" __device__ float test_nanf(const char *tag) {
+ // AMDGCNSPIRV-NEXT:    [[RETVAL_0_I_I:%.*]] = phi i64 [ [[__R_0_I30_I_I]], %[[WHILE_COND_I28_I_I]] ], [ [[__R_0_I_I_I]], %[[WHILE_COND_I_I_I]] ], [ 0, %[[WHILE_BODY_I_I_I]] ], [ 0, %[[CLEANUP_I_I_I]] ], [ 0, %[[WHILE_BODY_I18_I_I]] ], [ [[__R_0_I16_I_I]], %[[WHILE_COND_I14_I_I]] ]
+ // AMDGCNSPIRV-NEXT:    [[BF_VALUE_I:%.*]] = and i64 [[RETVAL_0_I_I]], 2251799813685247
+ // AMDGCNSPIRV-NEXT:    [[BF_SET9_I:%.*]] = or disjoint i64 [[BF_VALUE_I]], 9221120237041090560
+-// AMDGCNSPIRV-NEXT:    [[TMP10:%.*]] = bitcast i64 [[BF_SET9_I]] to double
+-// AMDGCNSPIRV-NEXT:    ret double [[TMP10]]
++// AMDGCNSPIRV-NEXT:    [[TMP13:%.*]] = bitcast i64 [[BF_SET9_I]] to double
++// AMDGCNSPIRV-NEXT:    ret double [[TMP13]]
+ //
+ extern "C" __device__ double test_nan(const char *tag) {
+   return nan(tag);
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index c781c6978b275..27d8a43928d6d 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -1453,7 +1453,7 @@ static Instruction *factorizeMathWithShlOps(BinaryOperator &I,
+   // TODO: Also handle mul by doubling the shift amount?
+   assert((I.getOpcode() == Instruction::Add ||
+           I.getOpcode() == Instruction::Sub) &&
+-         "Expected add/sub");
++         "Expecting add/sub instruction");
+   auto *Op0 = dyn_cast<BinaryOperator>(I.getOperand(0));
+   auto *Op1 = dyn_cast<BinaryOperator>(I.getOperand(1));
+   if (!Op0 || !Op1 || !(Op0->hasOneUse() || Op1->hasOneUse()))
+@@ -1523,6 +1523,34 @@ static Instruction *foldBoxMultiply(BinaryOperator &I) {
+   return nullptr;
+ }
+ 
++/// Canonicalize a nested add/sub with a constant on the inner RHS by
++/// sinking the constant to the outer RHS.
++/// (X +/- C) +/- Y  ->  (X +/- Y) +/- C
++/// TODO:
++///   (C - X) +/- Y  ->  (Y -/+ X) + C
++static Instruction *
++canonicalizeNestedAddSubWithConstant(BinaryOperator &I,
++                                     InstCombiner::BuilderTy &Builder) {
++  assert((I.getOpcode() == Instruction::Add ||
++          I.getOpcode() == Instruction::Sub) &&
++         "Expecting add/sub instruction");
++
++  Value *Y = I.getOperand(1);
++  if (isa<Constant>(Y))
++    return nullptr;
++
++  Value *X;
++  Constant *C;
++  auto *Inner = dyn_cast<BinaryOperator>(I.getOperand(0));
++  if (!Inner || !Inner->hasOneUse() ||
++      (!match(Inner, m_Add(m_Value(X), m_ImmConstant(C))) &&
++       !match(Inner, m_Sub(m_Value(X), m_ImmConstant(C)))))
++    return nullptr;
++
++  Value *XY = Builder.CreateBinOp(I.getOpcode(), X, Y);
++  return BinaryOperator::Create(Inner->getOpcode(), XY, C);
++}
++
+ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+   if (Value *V = simplifyAddInst(I.getOperand(0), I.getOperand(1),
+                                  I.hasNoSignedWrap(), I.hasNoUnsignedWrap(),
+@@ -1915,6 +1943,9 @@ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+   if (Instruction *Res = foldBinOpOfSelectAndCastOfSelectCondition(I))
+     return Res;
+ 
++  if (Instruction *Res = canonicalizeNestedAddSubWithConstant(I, Builder))
++    return Res;
++
+   // Re-enqueue users of the induction variable of add recurrence if we infer
+   // new nuw/nsw flags.
+   if (Changed) {
+@@ -2966,6 +2997,9 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+     }
+   }
+ 
++  if (Instruction *Res = canonicalizeNestedAddSubWithConstant(I, Builder))
++    return Res;
++
+   return TryToNarrowDeduceFlags();
+ }
+ 
+diff --git a/llvm/test/Analysis/ValueTracking/knownbits-and-or-xor-lowbit.ll b/llvm/test/Analysis/ValueTracking/knownbits-and-or-xor-lowbit.ll
+index f272d9009aed1..866c2df1249f4 100644
+--- a/llvm/test/Analysis/ValueTracking/knownbits-and-or-xor-lowbit.ll
++++ b/llvm/test/Analysis/ValueTracking/knownbits-and-or-xor-lowbit.ll
+@@ -191,9 +191,9 @@ define i1 @add_YX_xor_bit0_is_one_fail(i8 %x, i8 %C) nounwind {
+ 
+ define <2 x i1> @add_XY_or_bit0_is_one_fail(<2 x i8> %x, <2 x i8> %C) nounwind {
+ ; CHECK-LABEL: @add_XY_or_bit0_is_one_fail(
+-; CHECK-NEXT:    [[C1:%.*]] = add <2 x i8> [[C:%.*]], splat (i8 1)
+-; CHECK-NEXT:    [[Y:%.*]] = add <2 x i8> [[C1]], [[X:%.*]]
+-; CHECK-NEXT:    [[W:%.*]] = or <2 x i8> [[X]], [[Y]]
++; CHECK-NEXT:    [[Y:%.*]] = add <2 x i8> [[C1:%.*]], [[X:%.*]]
++; CHECK-NEXT:    [[Y1:%.*]] = add <2 x i8> [[Y]], splat (i8 1)
++; CHECK-NEXT:    [[W:%.*]] = or <2 x i8> [[X]], [[Y1]]
+ ; CHECK-NEXT:    [[R:%.*]] = icmp eq <2 x i8> [[W]], splat (i8 90)
+ ; CHECK-NEXT:    ret <2 x i1> [[R]]
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/add-sext-icmp.ll b/llvm/test/Transforms/InstCombine/add-sext-icmp.ll
+index 26bfc56690cb3..93f441e4ae0d7 100644
+--- a/llvm/test/Transforms/InstCombine/add-sext-icmp.ll
++++ b/llvm/test/Transforms/InstCombine/add-sext-icmp.ll
+@@ -37,10 +37,10 @@ define i32 @add_sext_icmp_commutative(i32 %A) {
+ define i32 @add_sext_icmp_negative_constant(i32 %A) {
+ ; CHECK-LABEL: define i32 @add_sext_icmp_negative_constant(
+ ; CHECK-SAME: i32 [[A:%.*]]) {
+-; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[A]], 2
+ ; CHECK-NEXT:    [[ICMP:%.*]] = icmp ne i32 [[A]], 0
+ ; CHECK-NEXT:    [[SEXT:%.*]] = sext i1 [[ICMP]] to i32
+-; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[ADD1]], [[SEXT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[A]], [[SEXT]]
++; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[TMP1]], 2
+ ; CHECK-NEXT:    ret i32 [[ADD2]]
+ ;
+   %add1 = add i32 %A, 2
+@@ -53,10 +53,9 @@ define i32 @add_sext_icmp_negative_constant(i32 %A) {
+ define i32 @add_sext_icmp_negative_pred(i32 %A) {
+ ; CHECK-LABEL: define i32 @add_sext_icmp_negative_pred(
+ ; CHECK-SAME: i32 [[A:%.*]]) {
+-; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[ICMP:%.*]] = icmp eq i32 [[A]], 0
+-; CHECK-NEXT:    [[SEXT:%.*]] = sext i1 [[ICMP]] to i32
+-; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[ADD1]], [[SEXT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[A]], 1
++; CHECK-NEXT:    [[ADD2:%.*]] = select i1 [[ICMP]], i32 0, i32 [[TMP1]]
+ ; CHECK-NEXT:    ret i32 [[ADD2]]
+ ;
+   %add1 = add i32 %A, 1
+@@ -86,11 +85,11 @@ define i32 @add_sext_icmp_multi_use_add2(i32 %A) {
+ define i32 @add_sext_icmp_multi_use_sext(i32 %A) {
+ ; CHECK-LABEL: define i32 @add_sext_icmp_multi_use_sext(
+ ; CHECK-SAME: i32 [[A:%.*]]) {
+-; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[ICMP:%.*]] = icmp ne i32 [[A]], 0
+ ; CHECK-NEXT:    [[SEXT:%.*]] = sext i1 [[ICMP]] to i32
+ ; CHECK-NEXT:    call void @use(i32 [[SEXT]])
+-; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[ADD1]], [[SEXT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[A]], [[SEXT]]
++; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[TMP1]], 1
+ ; CHECK-NEXT:    ret i32 [[ADD2]]
+ ;
+   %add1 = add i32 %A, 1
+@@ -104,11 +103,11 @@ define i32 @add_sext_icmp_multi_use_sext(i32 %A) {
+ define i32 @add_sext_icmp_multi_use_icmp(i32 %A) {
+ ; CHECK-LABEL: define i32 @add_sext_icmp_multi_use_icmp(
+ ; CHECK-SAME: i32 [[A:%.*]]) {
+-; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[ICMP:%.*]] = icmp ne i32 [[A]], 0
+ ; CHECK-NEXT:    call void @use(i1 [[ICMP]])
+ ; CHECK-NEXT:    [[SEXT:%.*]] = sext i1 [[ICMP]] to i32
+-; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[ADD1]], [[SEXT]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[A]], [[SEXT]]
++; CHECK-NEXT:    [[ADD2:%.*]] = add i32 [[TMP1]], 1
+ ; CHECK-NEXT:    ret i32 [[ADD2]]
+ ;
+   %add1 = add i32 %A, 1
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index aa68dfb540064..b1d15a4885195 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -1928,6 +1928,32 @@ define i8 @add_xor_and_var_extra_use(i8 noundef %x, i8 noundef %y) {
+   ret i8 %add
+ }
+ 
++define i1 @add_sub_eq(i32 %A, i32 %B) {
++; CHECK-LABEL: @add_sub_eq(
++; CHECK-NEXT:    [[EQ:%.*]] = icmp eq i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    ret i1 [[EQ]]
++;
++  %add = add i32 %A, 1
++  %sub = sub i32 %add, %B
++  %eq = icmp eq i32 %sub, 1
++  ret i1 %eq
++}
++
++define i1 @add_sub_eq_use(i32 %A, i32 %B) {
++; CHECK-LABEL: @add_sub_eq_use(
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[A:%.*]], [[B:%.*]]
++; CHECK-NEXT:    [[SUB:%.*]] = add i32 [[TMP1]], 1
++; CHECK-NEXT:    call void @use(i32 [[SUB]])
++; CHECK-NEXT:    [[EQ:%.*]] = icmp eq i32 [[A]], [[B]]
++; CHECK-NEXT:    ret i1 [[EQ]]
++;
++  %add = add i32 %A, 1
++  %sub = sub i32 %add, %B
++  call void @use(i32 %sub)
++  %eq = icmp eq i32 %sub, 1
++  ret i1 %eq
++}
++
+ define i32 @add_add_add(i32 %A, i32 %B, i32 %C, i32 %D) {
+ ; CHECK-LABEL: @add_add_add(
+ ; CHECK-NEXT:    [[E:%.*]] = add i32 [[A:%.*]], [[B:%.*]]
+diff --git a/llvm/test/Transforms/InstCombine/binop-recurrence.ll b/llvm/test/Transforms/InstCombine/binop-recurrence.ll
+index b5eef4e3f516d..a5b6e8501357c 100644
+--- a/llvm/test/Transforms/InstCombine/binop-recurrence.ll
++++ b/llvm/test/Transforms/InstCombine/binop-recurrence.ll
+@@ -1293,15 +1293,15 @@ define i8 @no_add_op2_to_pn2(i1 %c, i32 %n) {
+ ; CHECK:       [[BODY]]:
+ ; CHECK-NEXT:    [[I:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[I_NEXT:%.*]], %[[BODY]] ]
+ ; CHECK-NEXT:    [[PN:%.*]] = phi i8 [ 0, %[[ENTRY]] ], [ [[OP1:%.*]], %[[BODY]] ]
+-; CHECK-NEXT:    [[PN2:%.*]] = phi i8 [ 1, %[[ENTRY]] ], [ [[OP1]], %[[BODY]] ]
++; CHECK-NEXT:    [[OP2:%.*]] = phi i8 [ 1, %[[ENTRY]] ], [ [[OP1]], %[[BODY]] ]
+ ; CHECK-NEXT:    [[OP1]] = add i8 [[PN]], 2
+ ; CHECK-NEXT:    [[I_NEXT]] = add nuw nsw i32 [[I]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 [[I_NEXT]], [[N]]
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[EXIT:.*]], label %[[BODY]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[OP2:%.*]] = add i8 [[PN2]], 3
+ ; CHECK-NEXT:    [[RDX:%.*]] = add i8 [[OP2]], [[OP1]]
+-; CHECK-NEXT:    ret i8 [[RDX]]
++; CHECK-NEXT:    [[RDX1:%.*]] = add i8 [[RDX]], 3
++; CHECK-NEXT:    ret i8 [[RDX1]]
+ ;
+ entry:
+   br label %body
+diff --git a/llvm/test/Transforms/InstCombine/demand_shrink_nsw.ll b/llvm/test/Transforms/InstCombine/demand_shrink_nsw.ll
+index 0426f6987898d..d30dfa3996a2e 100644
+--- a/llvm/test/Transforms/InstCombine/demand_shrink_nsw.ll
++++ b/llvm/test/Transforms/InstCombine/demand_shrink_nsw.ll
+@@ -8,12 +8,12 @@ define i32 @foo(i32 %arg) {
+ ; CHECK-LABEL: @foo(
+ ; CHECK-NEXT:    [[V33:%.*]] = and i32 [[ARG:%.*]], 223
+ ; CHECK-NEXT:    [[V34:%.*]] = xor i32 [[V33]], 29
+-; CHECK-NEXT:    [[V35:%.*]] = add nuw nsw i32 [[V34]], 1362915575
+ ; CHECK-NEXT:    [[V40:%.*]] = shl nuw nsw i32 [[V34]], 1
+ ; CHECK-NEXT:    [[V41:%.*]] = and i32 [[V40]], 290
+-; CHECK-NEXT:    [[V42:%.*]] = sub nuw nsw i32 [[V35]], [[V41]]
+-; CHECK-NEXT:    [[V43:%.*]] = add nuw i32 [[V42]], 1533579450
+-; CHECK-NEXT:    [[V45:%.*]] = xor i32 [[V43]], 749011377
++; CHECK-NEXT:    [[TMP1:%.*]] = sub nsw i32 [[V34]], [[V41]]
++; CHECK-NEXT:    [[V43:%.*]] = add nsw i32 [[TMP1]], 749011377
++; CHECK-NEXT:    [[TMP2:%.*]] = and i32 [[V43]], 2147483647
++; CHECK-NEXT:    [[V45:%.*]] = xor i32 [[TMP2]], -1398472271
+ ; CHECK-NEXT:    ret i32 [[V45]]
+ ;
+   %v33 = and i32 %arg, 223
+diff --git a/llvm/test/Transforms/InstCombine/fold-sub-of-not-to-inc-of-add.ll b/llvm/test/Transforms/InstCombine/fold-sub-of-not-to-inc-of-add.ll
+index 3bd341ffafb58..1b1cd7a21a094 100644
+--- a/llvm/test/Transforms/InstCombine/fold-sub-of-not-to-inc-of-add.ll
++++ b/llvm/test/Transforms/InstCombine/fold-sub-of-not-to-inc-of-add.ll
+@@ -13,9 +13,9 @@
+ 
+ define i32 @p0_scalar(i32 %x, i32 %y) {
+ ; CHECK-LABEL: @p0_scalar(
+-; CHECK-NEXT:    [[T0_NEG:%.*]] = add i32 [[X:%.*]], 1
+-; CHECK-NEXT:    [[T1:%.*]] = add i32 [[T0_NEG]], [[Y:%.*]]
+-; CHECK-NEXT:    ret i32 [[T1]]
++; CHECK-NEXT:    [[T1:%.*]] = add i32 [[T0_NEG:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[T2:%.*]] = add i32 [[T1]], 1
++; CHECK-NEXT:    ret i32 [[T2]]
+ ;
+   %t0 = xor i32 %x, -1
+   %t1 = sub i32 %y, %t0
+@@ -41,9 +41,9 @@ define i8 @p0_scalar_not_truly_negatable(i8 %x, i8 %y) {
+ 
+ define <4 x i32> @p1_vector_splat(<4 x i32> %x, <4 x i32> %y) {
+ ; CHECK-LABEL: @p1_vector_splat(
+-; CHECK-NEXT:    [[T0_NEG:%.*]] = add <4 x i32> [[X:%.*]], splat (i32 1)
+-; CHECK-NEXT:    [[T1:%.*]] = add <4 x i32> [[T0_NEG]], [[Y:%.*]]
+-; CHECK-NEXT:    ret <4 x i32> [[T1]]
++; CHECK-NEXT:    [[T1:%.*]] = add <4 x i32> [[T0_NEG:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[T2:%.*]] = add <4 x i32> [[T1]], splat (i32 1)
++; CHECK-NEXT:    ret <4 x i32> [[T2]]
+ ;
+   %t0 = xor <4 x i32> %x, <i32 -1, i32 -1, i32 -1, i32 -1>
+   %t1 = sub <4 x i32> %y, %t0
+@@ -52,9 +52,9 @@ define <4 x i32> @p1_vector_splat(<4 x i32> %x, <4 x i32> %y) {
+ 
+ define <4 x i32> @p2_vector_poison(<4 x i32> %x, <4 x i32> %y) {
+ ; CHECK-LABEL: @p2_vector_poison(
+-; CHECK-NEXT:    [[T0_NEG:%.*]] = add <4 x i32> [[X:%.*]], splat (i32 1)
+-; CHECK-NEXT:    [[T1:%.*]] = add <4 x i32> [[T0_NEG]], [[Y:%.*]]
+-; CHECK-NEXT:    ret <4 x i32> [[T1]]
++; CHECK-NEXT:    [[T1:%.*]] = add <4 x i32> [[T0_NEG:%.*]], [[Y:%.*]]
++; CHECK-NEXT:    [[T2:%.*]] = add <4 x i32> [[T1]], splat (i32 1)
++; CHECK-NEXT:    ret <4 x i32> [[T2]]
+ ;
+   %t0 = xor <4 x i32> %x, <i32 -1, i32 -1, i32 poison, i32 -1>
+   %t1 = sub <4 x i32> %y, %t0
+diff --git a/llvm/test/Transforms/InstCombine/not.ll b/llvm/test/Transforms/InstCombine/not.ll
+index a459dc1ef8b7f..b83b281f4e672 100644
+--- a/llvm/test/Transforms/InstCombine/not.ll
++++ b/llvm/test/Transforms/InstCombine/not.ll
+@@ -802,11 +802,11 @@ define <2 x i32> @test_sext_vec(<2 x i32> %a, <2 x i32> %b){
+ 
+ define i64 @test_zext_nneg(i32 %c1, i64 %c2, i64 %c3){
+ ; CHECK-LABEL: @test_zext_nneg(
+-; CHECK-NEXT:    [[DOTNEG:%.*]] = add i64 [[C2:%.*]], -4
+-; CHECK-NEXT:    [[TMP1:%.*]] = sext i32 [[C1:%.*]] to i64
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 [[TMP1]], [[C3:%.*]]
+-; CHECK-NEXT:    [[SUB:%.*]] = add i64 [[DOTNEG]], [[TMP2]]
+-; CHECK-NEXT:    ret i64 [[SUB]]
++; CHECK-NEXT:    [[C2:%.*]] = sext i32 [[C1:%.*]] to i64
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 [[C2]], [[SUB:%.*]]
++; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[C3:%.*]], [[TMP1]]
++; CHECK-NEXT:    [[SUB1:%.*]] = add i64 [[TMP3]], -4
++; CHECK-NEXT:    ret i64 [[SUB1]]
+ ;
+   %not = xor i32 %c1, -1
+   %conv = zext nneg i32 %not to i64
+diff --git a/llvm/test/Transforms/InstCombine/saturating-add-sub.ll b/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
+index 5ac8588a0ed83..5a8517eabbd63 100644
+--- a/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
++++ b/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
+@@ -1056,9 +1056,9 @@ define i8 @test_scalar_usub_urem_must_zero(i8 %a) {
+ ; We have a constant range for the LHS, but only known bits for the RHS
+ define i8 @test_scalar_usub_add_nuw_known_bits(i8 %a, i8 %b) {
+ ; CHECK-LABEL: @test_scalar_usub_add_nuw_known_bits(
+-; CHECK-NEXT:    [[AA:%.*]] = add nuw i8 [[A:%.*]], 10
+ ; CHECK-NEXT:    [[BB:%.*]] = and i8 [[B:%.*]], 7
+-; CHECK-NEXT:    [[R:%.*]] = sub nuw i8 [[AA]], [[BB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i8 [[A:%.*]], [[BB]]
++; CHECK-NEXT:    [[R:%.*]] = add i8 [[TMP1]], 10
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %aa = add nuw i8 %a, 10
+@@ -1134,9 +1134,9 @@ define <2 x i8> @test_vector_usub_add_nuw_no_ov_nonsplat3(<2 x i8> %a) {
+ 
+ define i8 @test_scalar_ssub_add_nsw_no_ov(i8 %a, i8 %b) {
+ ; CHECK-LABEL: @test_scalar_ssub_add_nsw_no_ov(
+-; CHECK-NEXT:    [[AA:%.*]] = add nsw i8 [[A:%.*]], 7
+ ; CHECK-NEXT:    [[BB:%.*]] = and i8 [[B:%.*]], 7
+-; CHECK-NEXT:    [[R:%.*]] = sub nsw i8 [[AA]], [[BB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i8 [[A:%.*]], [[BB]]
++; CHECK-NEXT:    [[R:%.*]] = add i8 [[TMP1]], 7
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %aa = add nsw i8 %a, 7
+@@ -1160,9 +1160,9 @@ define i8 @test_scalar_ssub_add_nsw_may_ov(i8 %a, i8 %b) {
+ 
+ define <2 x i8> @test_vector_ssub_add_nsw_no_ov_splat(<2 x i8> %a, <2 x i8> %b) {
+ ; CHECK-LABEL: @test_vector_ssub_add_nsw_no_ov_splat(
+-; CHECK-NEXT:    [[AA:%.*]] = add nsw <2 x i8> [[A:%.*]], splat (i8 7)
+ ; CHECK-NEXT:    [[BB:%.*]] = and <2 x i8> [[B:%.*]], splat (i8 7)
+-; CHECK-NEXT:    [[R:%.*]] = sub nsw <2 x i8> [[AA]], [[BB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub <2 x i8> [[A:%.*]], [[BB]]
++; CHECK-NEXT:    [[R:%.*]] = add <2 x i8> [[TMP1]], splat (i8 7)
+ ; CHECK-NEXT:    ret <2 x i8> [[R]]
+ ;
+   %aa = add nsw <2 x i8> %a, <i8 7, i8 7>
+@@ -1173,9 +1173,9 @@ define <2 x i8> @test_vector_ssub_add_nsw_no_ov_splat(<2 x i8> %a, <2 x i8> %b)
+ 
+ define <2 x i8> @test_vector_ssub_add_nsw_no_ov_nonsplat1(<2 x i8> %a, <2 x i8> %b) {
+ ; CHECK-LABEL: @test_vector_ssub_add_nsw_no_ov_nonsplat1(
+-; CHECK-NEXT:    [[AA:%.*]] = add nsw <2 x i8> [[A:%.*]], splat (i8 7)
+ ; CHECK-NEXT:    [[BB:%.*]] = and <2 x i8> [[B:%.*]], <i8 7, i8 6>
+-; CHECK-NEXT:    [[R:%.*]] = sub nsw <2 x i8> [[AA]], [[BB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub <2 x i8> [[A:%.*]], [[BB]]
++; CHECK-NEXT:    [[R:%.*]] = add <2 x i8> [[TMP1]], splat (i8 7)
+ ; CHECK-NEXT:    ret <2 x i8> [[R]]
+ ;
+   %aa = add nsw <2 x i8> %a, <i8 7, i8 7>
+diff --git a/llvm/test/Transforms/InstCombine/select-binop-cmp.ll b/llvm/test/Transforms/InstCombine/select-binop-cmp.ll
+index e563cafbc7e4f..a07b9d3de9a76 100644
+--- a/llvm/test/Transforms/InstCombine/select-binop-cmp.ll
++++ b/llvm/test/Transforms/InstCombine/select-binop-cmp.ll
+@@ -1237,9 +1237,9 @@ define i32 @select_replace_nested_extra_use(i32 %x, i32 %y, i32 %z) {
+ define i32 @select_replace_nested_no_simplify(i32 %x, i32 %y, i32 %z) {
+ ; CHECK-LABEL: @select_replace_nested_no_simplify(
+ ; CHECK-NEXT:    [[C:%.*]] = icmp eq i32 [[X:%.*]], 1
+-; CHECK-NEXT:    [[SUB:%.*]] = add i32 [[Y:%.*]], -1
+-; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[SUB]], [[Z:%.*]]
+-; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i32 [[ADD]], i32 [[Y]]
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[SUB:%.*]], [[Z:%.*]]
++; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[ADD]], -1
++; CHECK-NEXT:    [[S:%.*]] = select i1 [[C]], i32 [[ADD1]], i32 [[SUB]]
+ ; CHECK-NEXT:    ret i32 [[S]]
+ ;
+   %c = icmp eq i32 %x, 1
+diff --git a/llvm/test/Transforms/InstCombine/sub-from-sub.ll b/llvm/test/Transforms/InstCombine/sub-from-sub.ll
+index 7b9e2fe4e6cdf..ffa3b0ace33c2 100644
+--- a/llvm/test/Transforms/InstCombine/sub-from-sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub-from-sub.ll
+@@ -126,9 +126,9 @@ define i8 @t3_c0(i8 %y, i8 %z) {
+ 
+ define i8 @t4_c1(i8 %x, i8 %z) {
+ ; CHECK-LABEL: @t4_c1(
+-; CHECK-NEXT:    [[I0:%.*]] = add i8 [[X:%.*]], -42
+-; CHECK-NEXT:    [[R:%.*]] = sub i8 [[I0]], [[Z:%.*]]
+-; CHECK-NEXT:    ret i8 [[R]]
++; CHECK-NEXT:    [[R:%.*]] = sub i8 [[I0:%.*]], [[Z:%.*]]
++; CHECK-NEXT:    [[R1:%.*]] = add i8 [[R]], -42
++; CHECK-NEXT:    ret i8 [[R1]]
+ ;
+   %i0 = sub i8 %x, 42
+   %r = sub i8 %i0, %z
+diff --git a/llvm/test/Transforms/InstCombine/sub-of-negatible-inseltpoison.ll b/llvm/test/Transforms/InstCombine/sub-of-negatible-inseltpoison.ll
+index 537497110cd8a..8eac257c1906d 100644
+--- a/llvm/test/Transforms/InstCombine/sub-of-negatible-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/sub-of-negatible-inseltpoison.ll
+@@ -250,8 +250,8 @@ define i8 @sub_from_constant_of_sub_from_constant_multi_use(i8 %x) {
+ define i8 @sub_from_variable_of_sub_from_constant(i8 %x, i8 %y) {
+ ; CHECK-LABEL: define i8 @sub_from_variable_of_sub_from_constant(
+ ; CHECK-SAME: i8 [[X:%.*]], i8 [[Y:%.*]]) {
+-; CHECK-NEXT:    [[S_NEG:%.*]] = add i8 [[X]], -42
+-; CHECK-NEXT:    [[R:%.*]] = add i8 [[S_NEG]], [[Y]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[X]], [[Y]]
++; CHECK-NEXT:    [[R:%.*]] = add i8 [[TMP1]], -42
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %s = sub i8 42, %x
+@@ -1122,8 +1122,8 @@ define i8 @add_via_or_with_no_common_bits_set(i8 %x, i8 %y) {
+ ; CHECK-NEXT:    [[T0:%.*]] = sub i8 0, [[Y]]
+ ; CHECK-NEXT:    call void @use8(i8 [[T0]])
+ ; CHECK-NEXT:    [[T1_NEG:%.*]] = shl i8 [[Y]], 2
+-; CHECK-NEXT:    [[T2_NEG:%.*]] = add i8 [[T1_NEG]], -3
+-; CHECK-NEXT:    [[T3:%.*]] = add i8 [[T2_NEG]], [[X]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[T1_NEG]], [[X]]
++; CHECK-NEXT:    [[T3:%.*]] = add i8 [[TMP1]], -3
+ ; CHECK-NEXT:    ret i8 [[T3]]
+ ;
+   %t0 = sub i8 0, %y
+diff --git a/llvm/test/Transforms/InstCombine/sub-of-negatible.ll b/llvm/test/Transforms/InstCombine/sub-of-negatible.ll
+index 3a91c14e8ba10..97daebdebecf7 100644
+--- a/llvm/test/Transforms/InstCombine/sub-of-negatible.ll
++++ b/llvm/test/Transforms/InstCombine/sub-of-negatible.ll
+@@ -276,8 +276,8 @@ define i8 @sub_from_constant_of_sub_from_constant_multi_use(i8 %x) {
+ define i8 @sub_from_variable_of_sub_from_constant(i8 %x, i8 %y) {
+ ; CHECK-LABEL: define i8 @sub_from_variable_of_sub_from_constant(
+ ; CHECK-SAME: i8 [[X:%.*]], i8 [[Y:%.*]]) {
+-; CHECK-NEXT:    [[S_NEG:%.*]] = add i8 [[X]], -42
+-; CHECK-NEXT:    [[R:%.*]] = add i8 [[S_NEG]], [[Y]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[X]], [[Y]]
++; CHECK-NEXT:    [[R:%.*]] = add i8 [[TMP1]], -42
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %s = sub i8 42, %x
+@@ -1160,8 +1160,8 @@ define i8 @add_via_or_with_no_common_bits_set(i8 %x, i8 %y) {
+ ; CHECK-NEXT:    [[T0:%.*]] = sub i8 0, [[Y]]
+ ; CHECK-NEXT:    call void @use8(i8 [[T0]])
+ ; CHECK-NEXT:    [[T1_NEG:%.*]] = shl i8 [[Y]], 2
+-; CHECK-NEXT:    [[T2_NEG:%.*]] = add i8 [[T1_NEG]], -3
+-; CHECK-NEXT:    [[T3:%.*]] = add i8 [[T2_NEG]], [[X]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i8 [[T1_NEG]], [[X]]
++; CHECK-NEXT:    [[T3:%.*]] = add i8 [[TMP1]], -3
+ ; CHECK-NEXT:    ret i8 [[T3]]
+ ;
+   %t0 = sub i8 0, %y
+diff --git a/llvm/test/Transforms/InstCombine/sub.ll b/llvm/test/Transforms/InstCombine/sub.ll
+index fadcbfeddac4b..bd24e239ce8e0 100644
+--- a/llvm/test/Transforms/InstCombine/sub.ll
++++ b/llvm/test/Transforms/InstCombine/sub.ll
+@@ -1537,9 +1537,8 @@ define i8 @sub_mask_lowbits(i8 %x) {
+ 
+ define i8 @sub_not_mask_lowbits(i8 %x) {
+ ; CHECK-LABEL: @sub_not_mask_lowbits(
+-; CHECK-NEXT:    [[A1:%.*]] = add i8 [[X:%.*]], 4
+-; CHECK-NEXT:    [[A2:%.*]] = and i8 [[X]], 7
+-; CHECK-NEXT:    [[R:%.*]] = sub i8 [[A1]], [[A2]]
++; CHECK-NEXT:    [[TMP1:%.*]] = and i8 [[X:%.*]], -8
++; CHECK-NEXT:    [[R:%.*]] = or disjoint i8 [[TMP1]], 4
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %a1 = add i8 %x, 4
+diff --git a/llvm/test/Transforms/LoopVectorize/if-conversion.ll b/llvm/test/Transforms/LoopVectorize/if-conversion.ll
+index bf9e242ce32c1..1e65b32cd8a37 100644
+--- a/llvm/test/Transforms/LoopVectorize/if-conversion.ll
++++ b/llvm/test/Transforms/LoopVectorize/if-conversion.ll
+@@ -156,13 +156,13 @@ define i32 @reduction_func(ptr nocapture %A, i32 %n) readonly {
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
+-; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PREDPHI:%.*]], %[[VECTOR_BODY]] ]
++; CHECK-NEXT:    [[TMP3:%.*]] = phi <4 x i32> [ zeroinitializer, %[[VECTOR_PH]] ], [ [[PREDPHI:%.*]], %[[VECTOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i8], ptr [[A]], i64 [[INDEX]]
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4
+ ; CHECK-NEXT:    [[TMP2:%.*]] = icmp sgt <4 x i32> [[WIDE_LOAD]], splat (i32 30)
+-; CHECK-NEXT:    [[TMP3:%.*]] = add <4 x i32> [[VEC_PHI]], splat (i32 2)
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add <4 x i32> [[TMP3]], [[WIDE_LOAD]]
+-; CHECK-NEXT:    [[PREDPHI]] = select <4 x i1> [[TMP2]], <4 x i32> [[TMP4]], <4 x i32> [[VEC_PHI]]
++; CHECK-NEXT:    [[TMP8:%.*]] = add <4 x i32> [[TMP4]], splat (i32 2)
++; CHECK-NEXT:    [[PREDPHI]] = select <4 x i1> [[TMP2]], <4 x i32> [[TMP8]], <4 x i32> [[TMP3]]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 4
+ ; CHECK-NEXT:    [[TMP5:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[TMP5]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP9:![0-9]+]]
+@@ -176,17 +176,17 @@ define i32 @reduction_func(ptr nocapture %A, i32 %n) readonly {
+ ; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
+ ; CHECK:       [[FOR_BODY]]:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ [[INDVARS_IV_NEXT:%.*]], %[[FOR_INC:.*]] ], [ [[BC_RESUME_VAL]], %[[SCALAR_PH]] ]
+-; CHECK-NEXT:    [[SUM_011:%.*]] = phi i32 [ [[SUM_1:%.*]], %[[FOR_INC]] ], [ [[BC_MERGE_RDX]], %[[SCALAR_PH]] ]
++; CHECK-NEXT:    [[ADD:%.*]] = phi i32 [ [[SUM_1:%.*]], %[[FOR_INC]] ], [ [[BC_MERGE_RDX]], %[[SCALAR_PH]] ]
+ ; CHECK-NEXT:    [[ARRAYIDX:%.*]] = getelementptr inbounds [4 x i8], ptr [[A]], i64 [[INDVARS_IV]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i32, ptr [[ARRAYIDX]], align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp sgt i32 [[TMP7]], 30
+ ; CHECK-NEXT:    br i1 [[CMP1]], label %[[IF_THEN:.*]], label %[[FOR_INC]]
+ ; CHECK:       [[IF_THEN]]:
+-; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[SUM_011]], 2
+ ; CHECK-NEXT:    [[ADD4:%.*]] = add i32 [[ADD]], [[TMP7]]
++; CHECK-NEXT:    [[ADD5:%.*]] = add i32 [[ADD4]], 2
+ ; CHECK-NEXT:    br label %[[FOR_INC]]
+ ; CHECK:       [[FOR_INC]]:
+-; CHECK-NEXT:    [[SUM_1]] = phi i32 [ [[ADD4]], %[[IF_THEN]] ], [ [[SUM_011]], %[[FOR_BODY]] ]
++; CHECK-NEXT:    [[SUM_1]] = phi i32 [ [[ADD5]], %[[IF_THEN]] ], [ [[ADD]], %[[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT]] = add i64 [[INDVARS_IV]], 1
+ ; CHECK-NEXT:    [[LFTR_WIDEIV:%.*]] = trunc i64 [[INDVARS_IV_NEXT]] to i32
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[N]], [[LFTR_WIDEIV]]
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/indvars-vectorization.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/indvars-vectorization.ll
+index 1569db4ce0edd..f667708118aaf 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/indvars-vectorization.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/indvars-vectorization.ll
+@@ -15,8 +15,8 @@ define void @s172(i32 noundef %xa, i32 noundef %xb, ptr noundef %a, ptr noundef
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sext i32 [[SUB]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = sext i32 [[XB]] to i64
+ ; CHECK-NEXT:    [[TMP2:%.*]] = tail call i64 @llvm.smax.i64(i64 [[TMP0]], i64 31999)
+-; CHECK-NEXT:    [[SMAX10:%.*]] = add nuw nsw i64 [[TMP2]], 1
+-; CHECK-NEXT:    [[TMP8:%.*]] = sub i64 [[SMAX10]], [[TMP0]]
++; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[TMP2]], [[TMP0]]
++; CHECK-NEXT:    [[TMP8:%.*]] = add i64 [[TMP3]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ugt i64 [[TMP8]], 23
+ ; CHECK-NEXT:    [[IDENT_CHECK_NOT:%.*]] = icmp eq i32 [[XB]], 1
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = and i1 [[MIN_ITERS_CHECK]], [[IDENT_CHECK_NOT]]
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
+index 5941eb6fa8046..69b23200b239b 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/std-find.ll
+@@ -253,8 +253,8 @@ define ptr @std_find_caller(ptr noundef %first, ptr noundef %last) {
+ ; CHECK-NEXT:    [[FIRST3:%.*]] = ptrtoint ptr [[FIRST]] to i64
+ ; CHECK-NEXT:    [[PTR_SUB:%.*]] = sub i64 [[LAST_I64]], [[FIRST3]]
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[FIRST]], i64 [[PTR_SUB]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[LAST_I64]], -2
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 [[TMP0]], [[FIRST3]]
++; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[LAST_I64]], [[FIRST3]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], -2
+ ; CHECK-NEXT:    [[TMP2:%.*]] = lshr exact i64 [[TMP1]], 1
+ ; CHECK-NEXT:    [[TMP3:%.*]] = add nuw i64 [[TMP2]], 1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP1]], 14
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/avg.ll b/llvm/test/Transforms/PhaseOrdering/X86/avg.ll
+index bad894d142fd2..074ee0d4e4c20 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/avg.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/avg.ll
+@@ -17,96 +17,96 @@ define { i64, i64 } @avgr_16_u8(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; SSE2-LABEL: @avgr_16_u8(
+ ; SSE2-NEXT:  entry:
+ ; SSE2-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i16
++; SSE2-NEXT:    [[TMP7:%.*]] = insertelement <2 x i16> poison, i16 [[TMP0]], i64 0
++; SSE2-NEXT:    [[TMP15:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i16
++; SSE2-NEXT:    [[TMP18:%.*]] = insertelement <2 x i16> [[TMP7]], i16 [[TMP15]], i64 1
+ ; SSE2-NEXT:    [[TMP1:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+-; SSE2-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[A_COERCE1:%.*]], i64 1
++; SSE2-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[A_COERCE1]], i64 1
+ ; SSE2-NEXT:    [[TMP3:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 16)
+ ; SSE2-NEXT:    [[TMP4:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 24)
+ ; SSE2-NEXT:    [[TMP5:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 32)
+ ; SSE2-NEXT:    [[TMP6:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 40)
+ ; SSE2-NEXT:    [[A_SROA_7_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 48
+-; SSE2-NEXT:    [[A_SROA_8_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 56
+-; SSE2-NEXT:    [[TMP7:%.*]] = trunc i64 [[A_COERCE1]] to i16
+ ; SSE2-NEXT:    [[A_SROA_16_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 48
+ ; SSE2-NEXT:    [[TMP8:%.*]] = trunc i64 [[B_COERCE0:%.*]] to i16
++; SSE2-NEXT:    [[TMP19:%.*]] = insertelement <2 x i16> poison, i16 [[TMP8]], i64 0
++; SSE2-NEXT:    [[TMP20:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i16
++; SSE2-NEXT:    [[TMP21:%.*]] = insertelement <2 x i16> [[TMP19]], i16 [[TMP20]], i64 1
+ ; SSE2-NEXT:    [[TMP9:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0]], i64 0
+-; SSE2-NEXT:    [[TMP10:%.*]] = insertelement <2 x i64> [[TMP9]], i64 [[B_COERCE1:%.*]], i64 1
++; SSE2-NEXT:    [[TMP10:%.*]] = insertelement <2 x i64> [[TMP9]], i64 [[B_COERCE1]], i64 1
+ ; SSE2-NEXT:    [[TMP11:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 16)
+ ; SSE2-NEXT:    [[TMP12:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 24)
+ ; SSE2-NEXT:    [[TMP13:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 32)
+ ; SSE2-NEXT:    [[TMP14:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 40)
+ ; SSE2-NEXT:    [[B_SROA_7_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 48
+-; SSE2-NEXT:    [[TMP15:%.*]] = trunc i64 [[B_COERCE1]] to i16
+ ; SSE2-NEXT:    [[B_SROA_16_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 48
+ ; SSE2-NEXT:    [[TMP16:%.*]] = and <2 x i64> [[TMP2]], splat (i64 255)
+ ; SSE2-NEXT:    [[TMP17:%.*]] = and <2 x i64> [[TMP10]], splat (i64 255)
+-; SSE2-NEXT:    [[TMP18:%.*]] = insertelement <2 x i16> poison, i16 [[TMP0]], i64 0
+-; SSE2-NEXT:    [[TMP19:%.*]] = insertelement <2 x i16> [[TMP18]], i16 [[TMP7]], i64 1
+-; SSE2-NEXT:    [[TMP20:%.*]] = lshr <2 x i16> [[TMP19]], splat (i16 8)
++; SSE2-NEXT:    [[ADD_7:%.*]] = lshr i64 [[A_COERCE0]], 56
+ ; SSE2-NEXT:    [[B_SROA_8_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 56
+-; SSE2-NEXT:    [[TMP21:%.*]] = insertelement <2 x i16> poison, i16 [[TMP8]], i64 0
+-; SSE2-NEXT:    [[TMP22:%.*]] = insertelement <2 x i16> [[TMP21]], i16 [[TMP15]], i64 1
+-; SSE2-NEXT:    [[TMP23:%.*]] = lshr <2 x i16> [[TMP22]], splat (i16 8)
+-; SSE2-NEXT:    [[A_SROA_17_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 56
++; SSE2-NEXT:    [[ADD_15:%.*]] = lshr i64 [[A_COERCE1]], 56
+ ; SSE2-NEXT:    [[CONV1_6:%.*]] = and i64 [[A_SROA_7_0_EXTRACT_SHIFT]], 255
+ ; SSE2-NEXT:    [[B_SROA_17_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 56
+ ; SSE2-NEXT:    [[CONV4_6:%.*]] = and i64 [[B_SROA_7_0_EXTRACT_SHIFT]], 255
+-; SSE2-NEXT:    [[TMP24:%.*]] = add nuw nsw <2 x i64> [[TMP16]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP25:%.*]] = add nuw nsw <2 x i64> [[TMP24]], [[TMP17]]
++; SSE2-NEXT:    [[TMP22:%.*]] = add nuw nsw <2 x i64> [[TMP16]], [[TMP17]]
++; SSE2-NEXT:    [[TMP25:%.*]] = add nuw nsw <2 x i64> [[TMP22]], splat (i64 1)
+ ; SSE2-NEXT:    [[TMP26:%.*]] = lshr <2 x i64> [[TMP25]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP27:%.*]] = add nuw nsw <2 x i16> [[TMP20]], splat (i16 1)
++; SSE2-NEXT:    [[TMP27:%.*]] = lshr <2 x i16> [[TMP18]], splat (i16 8)
++; SSE2-NEXT:    [[TMP23:%.*]] = lshr <2 x i16> [[TMP21]], splat (i16 8)
+ ; SSE2-NEXT:    [[TMP28:%.*]] = add nuw nsw <2 x i16> [[TMP27]], [[TMP23]]
+ ; SSE2-NEXT:    [[TMP29:%.*]] = and <2 x i64> [[TMP3]], splat (i64 255)
+ ; SSE2-NEXT:    [[TMP30:%.*]] = and <2 x i64> [[TMP11]], splat (i64 255)
+-; SSE2-NEXT:    [[TMP31:%.*]] = add nuw nsw <2 x i64> [[TMP29]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP32:%.*]] = add nuw nsw <2 x i64> [[TMP31]], [[TMP30]]
++; SSE2-NEXT:    [[TMP32:%.*]] = add nuw nsw <2 x i64> [[TMP29]], [[TMP30]]
+ ; SSE2-NEXT:    [[TMP33:%.*]] = and <2 x i64> [[TMP4]], splat (i64 255)
+ ; SSE2-NEXT:    [[TMP34:%.*]] = and <2 x i64> [[TMP12]], splat (i64 255)
+-; SSE2-NEXT:    [[TMP35:%.*]] = add nuw nsw <2 x i64> [[TMP33]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP35]], [[TMP34]]
++; SSE2-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP33]], [[TMP34]]
+ ; SSE2-NEXT:    [[TMP37:%.*]] = and <2 x i64> [[TMP5]], splat (i64 255)
+ ; SSE2-NEXT:    [[TMP38:%.*]] = and <2 x i64> [[TMP13]], splat (i64 255)
+-; SSE2-NEXT:    [[TMP39:%.*]] = add nuw nsw <2 x i64> [[TMP37]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP40:%.*]] = add nuw nsw <2 x i64> [[TMP39]], [[TMP38]]
++; SSE2-NEXT:    [[TMP40:%.*]] = add nuw nsw <2 x i64> [[TMP37]], [[TMP38]]
+ ; SSE2-NEXT:    [[TMP41:%.*]] = and <2 x i64> [[TMP6]], splat (i64 255)
+ ; SSE2-NEXT:    [[TMP42:%.*]] = and <2 x i64> [[TMP14]], splat (i64 255)
+-; SSE2-NEXT:    [[TMP43:%.*]] = add nuw nsw <2 x i64> [[TMP41]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP44:%.*]] = add nuw nsw <2 x i64> [[TMP43]], [[TMP42]]
++; SSE2-NEXT:    [[TMP44:%.*]] = add nuw nsw <2 x i64> [[TMP41]], [[TMP42]]
+ ; SSE2-NEXT:    [[CONV1_14:%.*]] = and i64 [[A_SROA_16_8_EXTRACT_SHIFT]], 255
+ ; SSE2-NEXT:    [[CONV4_14:%.*]] = and i64 [[B_SROA_16_8_EXTRACT_SHIFT]], 255
+-; SSE2-NEXT:    [[ADD_7:%.*]] = add nuw nsw i64 [[A_SROA_8_0_EXTRACT_SHIFT]], 1
+-; SSE2-NEXT:    [[ADD_14:%.*]] = add nuw nsw i64 [[CONV1_14]], 1
+-; SSE2-NEXT:    [[ADD5_14:%.*]] = add nuw nsw i64 [[ADD_14]], [[CONV4_14]]
++; SSE2-NEXT:    [[ADD5_14:%.*]] = add nuw nsw i64 [[CONV1_14]], [[CONV4_14]]
+ ; SSE2-NEXT:    [[ADD5_7:%.*]] = add nuw nsw i64 [[ADD_7]], [[B_SROA_8_0_EXTRACT_SHIFT]]
+-; SSE2-NEXT:    [[ADD_15:%.*]] = add nuw nsw i64 [[A_SROA_17_8_EXTRACT_SHIFT]], 1
+-; SSE2-NEXT:    [[ADD_6:%.*]] = add nuw nsw i64 [[CONV1_6]], 1
+ ; SSE2-NEXT:    [[ADD5_15:%.*]] = add nuw nsw i64 [[ADD_15]], [[B_SROA_17_8_EXTRACT_SHIFT]]
+-; SSE2-NEXT:    [[ADD5_6:%.*]] = add nuw nsw i64 [[ADD_6]], [[CONV4_6]]
++; SSE2-NEXT:    [[ADD5_6:%.*]] = add nuw nsw i64 [[CONV1_6]], [[CONV4_6]]
+ ; SSE2-NEXT:    [[TMP45:%.*]] = shl nuw i64 [[ADD5_15]], 55
+ ; SSE2-NEXT:    [[TMP46:%.*]] = shl nuw nsw i64 [[ADD5_6]], 47
+-; SSE2-NEXT:    [[RETVAL_SROA_17_8_INSERT_EXT:%.*]] = and i64 [[TMP45]], -72057594037927936
+-; SSE2-NEXT:    [[RETVAL_SROA_7_0_INSERT_SHIFT:%.*]] = and i64 [[TMP46]], 71776119061217280
++; SSE2-NEXT:    [[TMP70:%.*]] = add nuw i64 [[TMP45]], 36028797018963968
++; SSE2-NEXT:    [[TMP71:%.*]] = add nuw nsw i64 [[TMP46]], 140737488355328
++; SSE2-NEXT:    [[RETVAL_SROA_17_8_INSERT_EXT:%.*]] = and i64 [[TMP70]], -72057594037927936
++; SSE2-NEXT:    [[RETVAL_SROA_7_0_INSERT_SHIFT:%.*]] = and i64 [[TMP71]], 71776119061217280
+ ; SSE2-NEXT:    [[TMP47:%.*]] = shl nuw nsw i64 [[ADD5_14]], 47
+ ; SSE2-NEXT:    [[TMP48:%.*]] = shl nuw i64 [[ADD5_7]], 55
+-; SSE2-NEXT:    [[RETVAL_SROA_16_8_INSERT_SHIFT:%.*]] = and i64 [[TMP47]], 71776119061217280
+-; SSE2-NEXT:    [[RETVAL_SROA_8_0_INSERT_EXT:%.*]] = and i64 [[TMP48]], -72057594037927936
++; SSE2-NEXT:    [[TMP72:%.*]] = add nuw nsw i64 [[TMP47]], 140737488355328
++; SSE2-NEXT:    [[TMP73:%.*]] = add nuw i64 [[TMP48]], 36028797018963968
++; SSE2-NEXT:    [[RETVAL_SROA_16_8_INSERT_SHIFT:%.*]] = and i64 [[TMP72]], 71776119061217280
++; SSE2-NEXT:    [[RETVAL_SROA_8_0_INSERT_EXT:%.*]] = and i64 [[TMP73]], -72057594037927936
+ ; SSE2-NEXT:    [[RETVAL_SROA_16_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_17_8_INSERT_EXT]], [[RETVAL_SROA_16_8_INSERT_SHIFT]]
+ ; SSE2-NEXT:    [[RETVAL_SROA_7_0_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_8_0_INSERT_EXT]], [[RETVAL_SROA_7_0_INSERT_SHIFT]]
+ ; SSE2-NEXT:    [[TMP49:%.*]] = shl nuw nsw <2 x i64> [[TMP44]], splat (i64 39)
+-; SSE2-NEXT:    [[TMP50:%.*]] = and <2 x i64> [[TMP49]], splat (i64 280375465082880)
++; SSE2-NEXT:    [[TMP74:%.*]] = add nuw nsw <2 x i64> [[TMP49]], splat (i64 549755813888)
++; SSE2-NEXT:    [[TMP50:%.*]] = and <2 x i64> [[TMP74]], splat (i64 280375465082880)
+ ; SSE2-NEXT:    [[TMP51:%.*]] = insertelement <2 x i64> poison, i64 [[RETVAL_SROA_7_0_INSERT_INSERT]], i64 0
+ ; SSE2-NEXT:    [[TMP52:%.*]] = insertelement <2 x i64> [[TMP51]], i64 [[RETVAL_SROA_16_8_INSERT_INSERT]], i64 1
+ ; SSE2-NEXT:    [[TMP53:%.*]] = or disjoint <2 x i64> [[TMP52]], [[TMP50]]
+ ; SSE2-NEXT:    [[TMP54:%.*]] = shl nuw nsw <2 x i64> [[TMP40]], splat (i64 31)
+-; SSE2-NEXT:    [[TMP55:%.*]] = and <2 x i64> [[TMP54]], splat (i64 1095216660480)
++; SSE2-NEXT:    [[TMP75:%.*]] = add nuw nsw <2 x i64> [[TMP54]], splat (i64 2147483648)
++; SSE2-NEXT:    [[TMP55:%.*]] = and <2 x i64> [[TMP75]], splat (i64 1095216660480)
+ ; SSE2-NEXT:    [[TMP56:%.*]] = or disjoint <2 x i64> [[TMP53]], [[TMP55]]
+ ; SSE2-NEXT:    [[TMP57:%.*]] = shl nuw nsw <2 x i64> [[TMP36]], splat (i64 23)
+-; SSE2-NEXT:    [[TMP58:%.*]] = and <2 x i64> [[TMP57]], splat (i64 4278190080)
++; SSE2-NEXT:    [[TMP76:%.*]] = add nuw nsw <2 x i64> [[TMP57]], splat (i64 8388608)
++; SSE2-NEXT:    [[TMP58:%.*]] = and <2 x i64> [[TMP76]], splat (i64 4278190080)
+ ; SSE2-NEXT:    [[TMP59:%.*]] = or disjoint <2 x i64> [[TMP56]], [[TMP58]]
+ ; SSE2-NEXT:    [[TMP60:%.*]] = shl nuw nsw <2 x i64> [[TMP32]], splat (i64 15)
+-; SSE2-NEXT:    [[TMP61:%.*]] = and <2 x i64> [[TMP60]], splat (i64 16711680)
++; SSE2-NEXT:    [[TMP77:%.*]] = add nuw nsw <2 x i64> [[TMP60]], splat (i64 32768)
++; SSE2-NEXT:    [[TMP61:%.*]] = and <2 x i64> [[TMP77]], splat (i64 16711680)
+ ; SSE2-NEXT:    [[TMP62:%.*]] = shl nuw <2 x i16> [[TMP28]], splat (i16 7)
++; SSE2-NEXT:    [[TMP78:%.*]] = add nuw <2 x i16> [[TMP62]], splat (i16 128)
+ ; SSE2-NEXT:    [[TMP63:%.*]] = or disjoint <2 x i64> [[TMP59]], [[TMP61]]
+-; SSE2-NEXT:    [[TMP64:%.*]] = and <2 x i16> [[TMP62]], splat (i16 -256)
++; SSE2-NEXT:    [[TMP64:%.*]] = and <2 x i16> [[TMP78]], splat (i16 -256)
+ ; SSE2-NEXT:    [[TMP65:%.*]] = zext <2 x i16> [[TMP64]] to <2 x i64>
+ ; SSE2-NEXT:    [[TMP66:%.*]] = or <2 x i64> [[TMP63]], [[TMP65]]
+ ; SSE2-NEXT:    [[TMP67:%.*]] = or <2 x i64> [[TMP66]], [[TMP26]]
+@@ -119,96 +119,93 @@ define { i64, i64 } @avgr_16_u8(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; SSE4-LABEL: @avgr_16_u8(
+ ; SSE4-NEXT:  entry:
+ ; SSE4-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i16
++; SSE4-NEXT:    [[TMP7:%.*]] = insertelement <2 x i16> poison, i16 [[TMP0]], i64 0
++; SSE4-NEXT:    [[TMP15:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i16
++; SSE4-NEXT:    [[TMP18:%.*]] = insertelement <2 x i16> [[TMP7]], i16 [[TMP15]], i64 1
+ ; SSE4-NEXT:    [[TMP1:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+-; SSE4-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[A_COERCE1:%.*]], i64 1
++; SSE4-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[A_COERCE1]], i64 1
+ ; SSE4-NEXT:    [[TMP3:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 16)
+ ; SSE4-NEXT:    [[TMP4:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 24)
+ ; SSE4-NEXT:    [[TMP5:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 32)
+ ; SSE4-NEXT:    [[TMP6:%.*]] = lshr <2 x i64> [[TMP2]], splat (i64 40)
+ ; SSE4-NEXT:    [[A_SROA_7_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 48
+-; SSE4-NEXT:    [[A_SROA_8_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 56
+-; SSE4-NEXT:    [[TMP7:%.*]] = trunc i64 [[A_COERCE1]] to i16
+ ; SSE4-NEXT:    [[A_SROA_16_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 48
+ ; SSE4-NEXT:    [[TMP8:%.*]] = trunc i64 [[B_COERCE0:%.*]] to i16
++; SSE4-NEXT:    [[TMP19:%.*]] = insertelement <2 x i16> poison, i16 [[TMP8]], i64 0
++; SSE4-NEXT:    [[TMP20:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i16
++; SSE4-NEXT:    [[TMP21:%.*]] = insertelement <2 x i16> [[TMP19]], i16 [[TMP20]], i64 1
+ ; SSE4-NEXT:    [[TMP9:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0]], i64 0
+-; SSE4-NEXT:    [[TMP10:%.*]] = insertelement <2 x i64> [[TMP9]], i64 [[B_COERCE1:%.*]], i64 1
++; SSE4-NEXT:    [[TMP10:%.*]] = insertelement <2 x i64> [[TMP9]], i64 [[B_COERCE1]], i64 1
+ ; SSE4-NEXT:    [[TMP11:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 16)
+ ; SSE4-NEXT:    [[TMP12:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 24)
+ ; SSE4-NEXT:    [[TMP13:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 32)
+ ; SSE4-NEXT:    [[TMP14:%.*]] = lshr <2 x i64> [[TMP10]], splat (i64 40)
+ ; SSE4-NEXT:    [[B_SROA_7_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 48
+-; SSE4-NEXT:    [[TMP15:%.*]] = trunc i64 [[B_COERCE1]] to i16
+ ; SSE4-NEXT:    [[B_SROA_16_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 48
+ ; SSE4-NEXT:    [[TMP16:%.*]] = and <2 x i64> [[TMP2]], splat (i64 255)
+ ; SSE4-NEXT:    [[TMP17:%.*]] = and <2 x i64> [[TMP10]], splat (i64 255)
+-; SSE4-NEXT:    [[TMP18:%.*]] = insertelement <2 x i16> poison, i16 [[TMP0]], i64 0
+-; SSE4-NEXT:    [[TMP19:%.*]] = insertelement <2 x i16> [[TMP18]], i16 [[TMP7]], i64 1
+-; SSE4-NEXT:    [[TMP20:%.*]] = lshr <2 x i16> [[TMP19]], splat (i16 8)
++; SSE4-NEXT:    [[ADD_7:%.*]] = lshr i64 [[A_COERCE0]], 56
+ ; SSE4-NEXT:    [[B_SROA_8_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 56
+-; SSE4-NEXT:    [[TMP21:%.*]] = insertelement <2 x i16> poison, i16 [[TMP8]], i64 0
+-; SSE4-NEXT:    [[TMP22:%.*]] = insertelement <2 x i16> [[TMP21]], i16 [[TMP15]], i64 1
+-; SSE4-NEXT:    [[TMP23:%.*]] = lshr <2 x i16> [[TMP22]], splat (i16 8)
+-; SSE4-NEXT:    [[A_SROA_17_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 56
++; SSE4-NEXT:    [[ADD_15:%.*]] = lshr i64 [[A_COERCE1]], 56
+ ; SSE4-NEXT:    [[CONV1_6:%.*]] = and i64 [[A_SROA_7_0_EXTRACT_SHIFT]], 255
+ ; SSE4-NEXT:    [[B_SROA_17_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 56
+ ; SSE4-NEXT:    [[CONV4_6:%.*]] = and i64 [[B_SROA_7_0_EXTRACT_SHIFT]], 255
+-; SSE4-NEXT:    [[TMP24:%.*]] = add nuw nsw <2 x i64> [[TMP16]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP25:%.*]] = add nuw nsw <2 x i64> [[TMP24]], [[TMP17]]
++; SSE4-NEXT:    [[TMP22:%.*]] = add nuw nsw <2 x i64> [[TMP16]], [[TMP17]]
++; SSE4-NEXT:    [[TMP25:%.*]] = add nuw nsw <2 x i64> [[TMP22]], splat (i64 1)
+ ; SSE4-NEXT:    [[TMP26:%.*]] = lshr <2 x i64> [[TMP25]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP27:%.*]] = add nuw nsw <2 x i16> [[TMP20]], splat (i16 1)
++; SSE4-NEXT:    [[TMP27:%.*]] = lshr <2 x i16> [[TMP18]], splat (i16 8)
++; SSE4-NEXT:    [[TMP23:%.*]] = lshr <2 x i16> [[TMP21]], splat (i16 8)
+ ; SSE4-NEXT:    [[TMP28:%.*]] = add nuw nsw <2 x i16> [[TMP27]], [[TMP23]]
+ ; SSE4-NEXT:    [[TMP29:%.*]] = and <2 x i64> [[TMP3]], splat (i64 255)
+ ; SSE4-NEXT:    [[TMP30:%.*]] = and <2 x i64> [[TMP11]], splat (i64 255)
+-; SSE4-NEXT:    [[TMP31:%.*]] = add nuw nsw <2 x i64> [[TMP29]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP32:%.*]] = add nuw nsw <2 x i64> [[TMP31]], [[TMP30]]
++; SSE4-NEXT:    [[TMP32:%.*]] = add nuw nsw <2 x i64> [[TMP29]], [[TMP30]]
+ ; SSE4-NEXT:    [[TMP33:%.*]] = and <2 x i64> [[TMP4]], splat (i64 255)
+ ; SSE4-NEXT:    [[TMP34:%.*]] = and <2 x i64> [[TMP12]], splat (i64 255)
+-; SSE4-NEXT:    [[TMP35:%.*]] = add nuw nsw <2 x i64> [[TMP33]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP35]], [[TMP34]]
++; SSE4-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP33]], [[TMP34]]
+ ; SSE4-NEXT:    [[TMP37:%.*]] = and <2 x i64> [[TMP5]], splat (i64 255)
+ ; SSE4-NEXT:    [[TMP38:%.*]] = and <2 x i64> [[TMP13]], splat (i64 255)
+-; SSE4-NEXT:    [[TMP39:%.*]] = add nuw nsw <2 x i64> [[TMP37]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP40:%.*]] = add nuw nsw <2 x i64> [[TMP39]], [[TMP38]]
++; SSE4-NEXT:    [[TMP40:%.*]] = add nuw nsw <2 x i64> [[TMP37]], [[TMP38]]
+ ; SSE4-NEXT:    [[TMP41:%.*]] = and <2 x i64> [[TMP6]], splat (i64 255)
+ ; SSE4-NEXT:    [[TMP42:%.*]] = and <2 x i64> [[TMP14]], splat (i64 255)
+-; SSE4-NEXT:    [[TMP43:%.*]] = add nuw nsw <2 x i64> [[TMP41]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP44:%.*]] = add nuw nsw <2 x i64> [[TMP43]], [[TMP42]]
++; SSE4-NEXT:    [[TMP39:%.*]] = add nuw nsw <2 x i64> [[TMP41]], [[TMP42]]
+ ; SSE4-NEXT:    [[CONV1_14:%.*]] = and i64 [[A_SROA_16_8_EXTRACT_SHIFT]], 255
+ ; SSE4-NEXT:    [[CONV4_14:%.*]] = and i64 [[B_SROA_16_8_EXTRACT_SHIFT]], 255
+-; SSE4-NEXT:    [[ADD_7:%.*]] = add nuw nsw i64 [[A_SROA_8_0_EXTRACT_SHIFT]], 1
+-; SSE4-NEXT:    [[ADD_14:%.*]] = add nuw nsw i64 [[CONV1_14]], 1
+-; SSE4-NEXT:    [[ADD5_14:%.*]] = add nuw nsw i64 [[ADD_14]], [[CONV4_14]]
++; SSE4-NEXT:    [[ADD5_14:%.*]] = add nuw nsw i64 [[CONV1_14]], [[CONV4_14]]
+ ; SSE4-NEXT:    [[ADD5_7:%.*]] = add nuw nsw i64 [[ADD_7]], [[B_SROA_8_0_EXTRACT_SHIFT]]
+-; SSE4-NEXT:    [[ADD_15:%.*]] = add nuw nsw i64 [[A_SROA_17_8_EXTRACT_SHIFT]], 1
+-; SSE4-NEXT:    [[ADD_6:%.*]] = add nuw nsw i64 [[CONV1_6]], 1
+ ; SSE4-NEXT:    [[ADD5_15:%.*]] = add nuw nsw i64 [[ADD_15]], [[B_SROA_17_8_EXTRACT_SHIFT]]
+-; SSE4-NEXT:    [[ADD5_6:%.*]] = add nuw nsw i64 [[ADD_6]], [[CONV4_6]]
++; SSE4-NEXT:    [[ADD5_6:%.*]] = add nuw nsw i64 [[CONV1_6]], [[CONV4_6]]
+ ; SSE4-NEXT:    [[TMP45:%.*]] = shl nuw i64 [[ADD5_15]], 55
+ ; SSE4-NEXT:    [[TMP46:%.*]] = shl nuw nsw i64 [[ADD5_6]], 47
+-; SSE4-NEXT:    [[RETVAL_SROA_17_8_INSERT_EXT:%.*]] = and i64 [[TMP45]], -72057594037927936
+-; SSE4-NEXT:    [[RETVAL_SROA_7_0_INSERT_SHIFT:%.*]] = and i64 [[TMP46]], 71776119061217280
++; SSE4-NEXT:    [[TMP44:%.*]] = insertelement <2 x i64> poison, i64 [[TMP46]], i64 0
++; SSE4-NEXT:    [[TMP51:%.*]] = insertelement <2 x i64> [[TMP44]], i64 [[TMP45]], i64 1
++; SSE4-NEXT:    [[TMP70:%.*]] = add nuw <2 x i64> [[TMP51]], <i64 140737488355328, i64 36028797018963968>
++; SSE4-NEXT:    [[TMP52:%.*]] = and <2 x i64> [[TMP70]], <i64 71776119061217280, i64 -72057594037927936>
+ ; SSE4-NEXT:    [[TMP47:%.*]] = shl nuw nsw i64 [[ADD5_14]], 47
+ ; SSE4-NEXT:    [[TMP48:%.*]] = shl nuw i64 [[ADD5_7]], 55
+-; SSE4-NEXT:    [[RETVAL_SROA_16_8_INSERT_SHIFT:%.*]] = and i64 [[TMP47]], 71776119061217280
+-; SSE4-NEXT:    [[RETVAL_SROA_8_0_INSERT_EXT:%.*]] = and i64 [[TMP48]], -72057594037927936
+-; SSE4-NEXT:    [[RETVAL_SROA_16_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_17_8_INSERT_EXT]], [[RETVAL_SROA_16_8_INSERT_SHIFT]]
+-; SSE4-NEXT:    [[RETVAL_SROA_7_0_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_8_0_INSERT_EXT]], [[RETVAL_SROA_7_0_INSERT_SHIFT]]
+-; SSE4-NEXT:    [[TMP49:%.*]] = shl nuw nsw <2 x i64> [[TMP44]], splat (i64 39)
+-; SSE4-NEXT:    [[TMP50:%.*]] = and <2 x i64> [[TMP49]], splat (i64 280375465082880)
+-; SSE4-NEXT:    [[TMP51:%.*]] = insertelement <2 x i64> poison, i64 [[RETVAL_SROA_7_0_INSERT_INSERT]], i64 0
+-; SSE4-NEXT:    [[TMP52:%.*]] = insertelement <2 x i64> [[TMP51]], i64 [[RETVAL_SROA_16_8_INSERT_INSERT]], i64 1
++; SSE4-NEXT:    [[TMP71:%.*]] = insertelement <2 x i64> poison, i64 [[TMP48]], i64 0
++; SSE4-NEXT:    [[TMP49:%.*]] = insertelement <2 x i64> [[TMP71]], i64 [[TMP47]], i64 1
++; SSE4-NEXT:    [[TMP72:%.*]] = add nuw <2 x i64> [[TMP49]], <i64 36028797018963968, i64 140737488355328>
++; SSE4-NEXT:    [[TMP50:%.*]] = and <2 x i64> [[TMP72]], <i64 -72057594037927936, i64 71776119061217280>
+ ; SSE4-NEXT:    [[TMP53:%.*]] = or disjoint <2 x i64> [[TMP52]], [[TMP50]]
++; SSE4-NEXT:    [[TMP73:%.*]] = shl nuw nsw <2 x i64> [[TMP39]], splat (i64 39)
++; SSE4-NEXT:    [[TMP74:%.*]] = add nuw nsw <2 x i64> [[TMP73]], splat (i64 549755813888)
++; SSE4-NEXT:    [[TMP55:%.*]] = and <2 x i64> [[TMP74]], splat (i64 280375465082880)
++; SSE4-NEXT:    [[TMP75:%.*]] = or disjoint <2 x i64> [[TMP53]], [[TMP55]]
+ ; SSE4-NEXT:    [[TMP54:%.*]] = shl nuw nsw <2 x i64> [[TMP40]], splat (i64 31)
+-; SSE4-NEXT:    [[TMP55:%.*]] = and <2 x i64> [[TMP54]], splat (i64 1095216660480)
+-; SSE4-NEXT:    [[TMP56:%.*]] = or disjoint <2 x i64> [[TMP53]], [[TMP55]]
++; SSE4-NEXT:    [[TMP76:%.*]] = add nuw nsw <2 x i64> [[TMP54]], splat (i64 2147483648)
++; SSE4-NEXT:    [[TMP77:%.*]] = and <2 x i64> [[TMP76]], splat (i64 1095216660480)
++; SSE4-NEXT:    [[TMP56:%.*]] = or disjoint <2 x i64> [[TMP75]], [[TMP77]]
+ ; SSE4-NEXT:    [[TMP57:%.*]] = shl nuw nsw <2 x i64> [[TMP36]], splat (i64 23)
+-; SSE4-NEXT:    [[TMP58:%.*]] = and <2 x i64> [[TMP57]], splat (i64 4278190080)
++; SSE4-NEXT:    [[TMP78:%.*]] = add nuw nsw <2 x i64> [[TMP57]], splat (i64 8388608)
++; SSE4-NEXT:    [[TMP58:%.*]] = and <2 x i64> [[TMP78]], splat (i64 4278190080)
+ ; SSE4-NEXT:    [[TMP59:%.*]] = or disjoint <2 x i64> [[TMP56]], [[TMP58]]
+ ; SSE4-NEXT:    [[TMP60:%.*]] = shl nuw nsw <2 x i64> [[TMP32]], splat (i64 15)
+-; SSE4-NEXT:    [[TMP61:%.*]] = and <2 x i64> [[TMP60]], splat (i64 16711680)
++; SSE4-NEXT:    [[TMP79:%.*]] = add nuw nsw <2 x i64> [[TMP60]], splat (i64 32768)
++; SSE4-NEXT:    [[TMP61:%.*]] = and <2 x i64> [[TMP79]], splat (i64 16711680)
+ ; SSE4-NEXT:    [[TMP62:%.*]] = shl nuw <2 x i16> [[TMP28]], splat (i16 7)
++; SSE4-NEXT:    [[TMP80:%.*]] = add nuw <2 x i16> [[TMP62]], splat (i16 128)
+ ; SSE4-NEXT:    [[TMP63:%.*]] = or disjoint <2 x i64> [[TMP59]], [[TMP61]]
+-; SSE4-NEXT:    [[TMP64:%.*]] = and <2 x i16> [[TMP62]], splat (i16 -256)
++; SSE4-NEXT:    [[TMP64:%.*]] = and <2 x i16> [[TMP80]], splat (i16 -256)
+ ; SSE4-NEXT:    [[TMP65:%.*]] = zext <2 x i16> [[TMP64]] to <2 x i64>
+ ; SSE4-NEXT:    [[TMP66:%.*]] = or <2 x i64> [[TMP63]], [[TMP65]]
+ ; SSE4-NEXT:    [[TMP67:%.*]] = or <2 x i64> [[TMP66]], [[TMP26]]
+@@ -230,52 +227,52 @@ define { i64, i64 } @avgr_16_u8(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; AVX-NEXT:    [[TMP7:%.*]] = lshr i16 [[TMP6]], 8
+ ; AVX-NEXT:    [[CONV1:%.*]] = and i64 [[A_COERCE0]], 255
+ ; AVX-NEXT:    [[CONV4:%.*]] = and i64 [[B_COERCE0]], 255
+-; AVX-NEXT:    [[ADD:%.*]] = add nuw nsw i64 [[CONV1]], 1
+-; AVX-NEXT:    [[ADD5:%.*]] = add nuw nsw i64 [[ADD]], [[CONV4]]
+-; AVX-NEXT:    [[ADD_1:%.*]] = add nuw nsw i16 [[TMP1]], 1
+-; AVX-NEXT:    [[ADD5_1:%.*]] = add nuw nsw i16 [[ADD_1]], [[TMP5]]
++; AVX-NEXT:    [[TMP13:%.*]] = add nuw nsw i64 [[CONV1]], [[CONV4]]
++; AVX-NEXT:    [[ADD5:%.*]] = add nuw nsw i64 [[TMP13]], 1
++; AVX-NEXT:    [[ADD5_1:%.*]] = add nuw nsw i16 [[TMP1]], [[TMP5]]
+ ; AVX-NEXT:    [[CONV1_8:%.*]] = and i64 [[A_COERCE1]], 255
+ ; AVX-NEXT:    [[CONV4_8:%.*]] = and i64 [[B_COERCE1]], 255
+-; AVX-NEXT:    [[ADD_8:%.*]] = add nuw nsw i64 [[CONV1_8]], 1
+-; AVX-NEXT:    [[ADD5_8:%.*]] = add nuw nsw i64 [[ADD_8]], [[CONV4_8]]
+-; AVX-NEXT:    [[ADD_9:%.*]] = add nuw nsw i16 [[TMP3]], 1
+-; AVX-NEXT:    [[ADD5_9:%.*]] = add nuw nsw i16 [[ADD_9]], [[TMP7]]
++; AVX-NEXT:    [[TMP30:%.*]] = add nuw nsw i64 [[CONV1_8]], [[CONV4_8]]
++; AVX-NEXT:    [[ADD5_8:%.*]] = add nuw nsw i64 [[TMP30]], 1
++; AVX-NEXT:    [[ADD5_9:%.*]] = add nuw nsw i16 [[TMP3]], [[TMP7]]
+ ; AVX-NEXT:    [[TMP8:%.*]] = shl nuw i16 [[ADD5_1]], 7
+-; AVX-NEXT:    [[TMP9:%.*]] = and i16 [[TMP8]], -256
+-; AVX-NEXT:    [[TMP10:%.*]] = insertelement <8 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -1, i64 -1>, i64 [[A_COERCE0]], i64 0
++; AVX-NEXT:    [[TMP42:%.*]] = add nuw i16 [[TMP8]], 128
++; AVX-NEXT:    [[TMP9:%.*]] = and i16 [[TMP42]], -256
++; AVX-NEXT:    [[TMP10:%.*]] = insertelement <8 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -1, i64 -1>, i64 [[B_COERCE0]], i64 0
+ ; AVX-NEXT:    [[TMP11:%.*]] = shufflevector <8 x i64> [[TMP10]], <8 x i64> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 6, i32 7>
+ ; AVX-NEXT:    [[TMP12:%.*]] = lshr <8 x i64> [[TMP11]], <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 0, i64 0>
+-; AVX-NEXT:    [[TMP13:%.*]] = and <8 x i64> [[TMP12]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 0, i64 0>
+ ; AVX-NEXT:    [[RETVAL_SROA_2_0_INSERT_SHIFT_MASKED:%.*]] = zext i16 [[TMP9]] to i64
+-; AVX-NEXT:    [[TMP14:%.*]] = insertelement <8 x i64> poison, i64 [[B_COERCE0]], i64 0
++; AVX-NEXT:    [[TMP14:%.*]] = insertelement <8 x i64> poison, i64 [[A_COERCE0]], i64 0
+ ; AVX-NEXT:    [[TMP15:%.*]] = insertelement <8 x i64> [[TMP14]], i64 [[ADD5]], i64 6
+ ; AVX-NEXT:    [[TMP16:%.*]] = insertelement <8 x i64> [[TMP15]], i64 [[RETVAL_SROA_2_0_INSERT_SHIFT_MASKED]], i64 7
+ ; AVX-NEXT:    [[TMP17:%.*]] = shufflevector <8 x i64> [[TMP16]], <8 x i64> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 6, i32 7>
+ ; AVX-NEXT:    [[TMP18:%.*]] = lshr <8 x i64> [[TMP17]], <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 1, i64 0>
+ ; AVX-NEXT:    [[TMP19:%.*]] = and <8 x i64> [[TMP18]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 -1, i64 -1>
+-; AVX-NEXT:    [[TMP20:%.*]] = add nuw nsw <8 x i64> [[TMP13]], <i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 0, i64 0>
++; AVX-NEXT:    [[TMP20:%.*]] = and <8 x i64> [[TMP12]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 0, i64 0>
+ ; AVX-NEXT:    [[TMP21:%.*]] = add nuw nsw <8 x i64> [[TMP19]], [[TMP20]]
+ ; AVX-NEXT:    [[TMP22:%.*]] = shl nuw <8 x i64> [[TMP21]], <i64 55, i64 47, i64 39, i64 31, i64 23, i64 15, i64 0, i64 0>
+-; AVX-NEXT:    [[TMP23:%.*]] = and <8 x i64> [[TMP22]], <i64 -72057594037927936, i64 71776119061217280, i64 280375465082880, i64 1095216660480, i64 4278190080, i64 16711680, i64 -1, i64 -1>
++; AVX-NEXT:    [[TMP44:%.*]] = add nuw <8 x i64> [[TMP22]], <i64 36028797018963968, i64 140737488355328, i64 549755813888, i64 2147483648, i64 8388608, i64 32768, i64 0, i64 0>
++; AVX-NEXT:    [[TMP23:%.*]] = and <8 x i64> [[TMP44]], <i64 -72057594037927936, i64 71776119061217280, i64 280375465082880, i64 1095216660480, i64 4278190080, i64 16711680, i64 -1, i64 -1>
+ ; AVX-NEXT:    [[TMP24:%.*]] = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> [[TMP23]])
+ ; AVX-NEXT:    [[DOTFCA_0_INSERT:%.*]] = insertvalue { i64, i64 } poison, i64 [[TMP24]], 0
+ ; AVX-NEXT:    [[TMP25:%.*]] = shl nuw i16 [[ADD5_9]], 7
+-; AVX-NEXT:    [[TMP26:%.*]] = and i16 [[TMP25]], -256
+-; AVX-NEXT:    [[TMP27:%.*]] = insertelement <8 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -1, i64 -1>, i64 [[A_COERCE1]], i64 0
++; AVX-NEXT:    [[TMP45:%.*]] = add nuw i16 [[TMP25]], 128
++; AVX-NEXT:    [[TMP26:%.*]] = and i16 [[TMP45]], -256
++; AVX-NEXT:    [[TMP27:%.*]] = insertelement <8 x i64> <i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 poison, i64 -1, i64 -1>, i64 [[B_COERCE1]], i64 0
+ ; AVX-NEXT:    [[TMP28:%.*]] = shufflevector <8 x i64> [[TMP27]], <8 x i64> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 6, i32 7>
+ ; AVX-NEXT:    [[TMP29:%.*]] = lshr <8 x i64> [[TMP28]], <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 0, i64 0>
+-; AVX-NEXT:    [[TMP30:%.*]] = and <8 x i64> [[TMP29]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 0, i64 0>
+ ; AVX-NEXT:    [[RETVAL_SROA_11_8_INSERT_SHIFT_MASKED:%.*]] = zext i16 [[TMP26]] to i64
+-; AVX-NEXT:    [[TMP31:%.*]] = insertelement <8 x i64> poison, i64 [[B_COERCE1]], i64 0
++; AVX-NEXT:    [[TMP31:%.*]] = insertelement <8 x i64> poison, i64 [[A_COERCE1]], i64 0
+ ; AVX-NEXT:    [[TMP32:%.*]] = insertelement <8 x i64> [[TMP31]], i64 [[ADD5_8]], i64 6
+ ; AVX-NEXT:    [[TMP33:%.*]] = insertelement <8 x i64> [[TMP32]], i64 [[RETVAL_SROA_11_8_INSERT_SHIFT_MASKED]], i64 7
+ ; AVX-NEXT:    [[TMP34:%.*]] = shufflevector <8 x i64> [[TMP33]], <8 x i64> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 6, i32 7>
+ ; AVX-NEXT:    [[TMP35:%.*]] = lshr <8 x i64> [[TMP34]], <i64 56, i64 48, i64 40, i64 32, i64 24, i64 16, i64 1, i64 0>
+ ; AVX-NEXT:    [[TMP36:%.*]] = and <8 x i64> [[TMP35]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 -1, i64 -1>
+-; AVX-NEXT:    [[TMP37:%.*]] = add nuw nsw <8 x i64> [[TMP30]], <i64 1, i64 1, i64 1, i64 1, i64 1, i64 1, i64 0, i64 0>
++; AVX-NEXT:    [[TMP37:%.*]] = and <8 x i64> [[TMP29]], <i64 -1, i64 255, i64 255, i64 255, i64 255, i64 255, i64 0, i64 0>
+ ; AVX-NEXT:    [[TMP38:%.*]] = add nuw nsw <8 x i64> [[TMP36]], [[TMP37]]
+ ; AVX-NEXT:    [[TMP39:%.*]] = shl nuw <8 x i64> [[TMP38]], <i64 55, i64 47, i64 39, i64 31, i64 23, i64 15, i64 0, i64 0>
+-; AVX-NEXT:    [[TMP40:%.*]] = and <8 x i64> [[TMP39]], <i64 -72057594037927936, i64 71776119061217280, i64 280375465082880, i64 1095216660480, i64 4278190080, i64 16711680, i64 -1, i64 -1>
++; AVX-NEXT:    [[TMP43:%.*]] = add nuw <8 x i64> [[TMP39]], <i64 36028797018963968, i64 140737488355328, i64 549755813888, i64 2147483648, i64 8388608, i64 32768, i64 0, i64 0>
++; AVX-NEXT:    [[TMP40:%.*]] = and <8 x i64> [[TMP43]], <i64 -72057594037927936, i64 71776119061217280, i64 280375465082880, i64 1095216660480, i64 4278190080, i64 16711680, i64 -1, i64 -1>
+ ; AVX-NEXT:    [[TMP41:%.*]] = tail call i64 @llvm.vector.reduce.or.v8i64(<8 x i64> [[TMP40]])
+ ; AVX-NEXT:    [[DOTFCA_1_INSERT:%.*]] = insertvalue { i64, i64 } [[DOTFCA_0_INSERT]], i64 [[TMP41]], 1
+ ; AVX-NEXT:    ret { i64, i64 } [[DOTFCA_1_INSERT]]
+@@ -731,63 +728,68 @@ define { i64, i64 } @avgr_8_u16(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; SSE2-LABEL: @avgr_8_u16(
+ ; SSE2-NEXT:  entry:
+ ; SSE2-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i32
++; SSE2-NEXT:    [[TMP1:%.*]] = lshr i32 [[TMP0]], 16
+ ; SSE2-NEXT:    [[A_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 32
+ ; SSE2-NEXT:    [[A_SROA_4_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 48
+ ; SSE2-NEXT:    [[TMP2:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i32
++; SSE2-NEXT:    [[TMP3:%.*]] = lshr i32 [[TMP2]], 16
+ ; SSE2-NEXT:    [[A_SROA_8_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 32
+-; SSE2-NEXT:    [[TMP18:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0:%.*]], i64 0
+-; SSE2-NEXT:    [[TMP3:%.*]] = insertelement <2 x i64> [[TMP18]], i64 [[B_COERCE1:%.*]], i64 1
+-; SSE2-NEXT:    [[TMP4:%.*]] = trunc <2 x i64> [[TMP3]] to <2 x i32>
+-; SSE2-NEXT:    [[B_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 32
++; SSE2-NEXT:    [[A_SROA_9_8_EXTRACT_SHIFT1:%.*]] = lshr i64 [[A_COERCE1]], 48
++; SSE2-NEXT:    [[TMP4:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i32
++; SSE2-NEXT:    [[TMP5:%.*]] = lshr i32 [[TMP4]], 16
+ ; SSE2-NEXT:    [[B_SROA_8_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 32
+-; SSE2-NEXT:    [[TMP5:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+-; SSE2-NEXT:    [[TMP6:%.*]] = insertelement <2 x i64> [[TMP5]], i64 [[A_COERCE1]], i64 1
+-; SSE2-NEXT:    [[TMP7:%.*]] = and <2 x i64> [[TMP6]], splat (i64 65535)
+-; SSE2-NEXT:    [[TMP8:%.*]] = and <2 x i64> [[TMP3]], splat (i64 65535)
+-; SSE2-NEXT:    [[TMP19:%.*]] = insertelement <2 x i32> poison, i32 [[TMP0]], i64 0
+-; SSE2-NEXT:    [[TMP10:%.*]] = insertelement <2 x i32> [[TMP19]], i32 [[TMP2]], i64 1
+-; SSE2-NEXT:    [[TMP11:%.*]] = lshr <2 x i32> [[TMP10]], splat (i32 16)
++; SSE2-NEXT:    [[B_SROA_4_0_EXTRACT_SHIFT1:%.*]] = lshr i64 [[B_COERCE1]], 48
++; SSE2-NEXT:    [[TMP6:%.*]] = trunc i64 [[B_COERCE0:%.*]] to i32
++; SSE2-NEXT:    [[TMP7:%.*]] = lshr i32 [[TMP6]], 16
++; SSE2-NEXT:    [[B_SROA_8_8_EXTRACT_SHIFT1:%.*]] = lshr i64 [[B_COERCE0]], 32
+ ; SSE2-NEXT:    [[CONV2_4:%.*]] = lshr i64 [[B_COERCE0]], 48
+-; SSE2-NEXT:    [[TMP20:%.*]] = lshr <2 x i32> [[TMP4]], splat (i32 16)
+-; SSE2-NEXT:    [[CONV_6:%.*]] = lshr i64 [[A_COERCE1]], 48
+-; SSE2-NEXT:    [[A_SROA_9_8_EXTRACT_SHIFT:%.*]] = and i64 [[A_SROA_3_0_EXTRACT_SHIFT]], 65535
+-; SSE2-NEXT:    [[B_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 48
+-; SSE2-NEXT:    [[CONV2_2:%.*]] = and i64 [[B_SROA_3_0_EXTRACT_SHIFT]], 65535
+-; SSE2-NEXT:    [[TMP31:%.*]] = add nuw nsw <2 x i64> [[TMP7]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP14:%.*]] = add nuw nsw <2 x i64> [[TMP31]], [[TMP8]]
+-; SSE2-NEXT:    [[TMP15:%.*]] = lshr <2 x i64> [[TMP14]], splat (i64 1)
+-; SSE2-NEXT:    [[TMP16:%.*]] = add nuw nsw <2 x i32> [[TMP11]], splat (i32 1)
+-; SSE2-NEXT:    [[TMP17:%.*]] = add nuw nsw <2 x i32> [[TMP16]], [[TMP20]]
+-; SSE2-NEXT:    [[CONV_7:%.*]] = and i64 [[A_SROA_8_8_EXTRACT_SHIFT]], 65535
++; SSE2-NEXT:    [[CONV:%.*]] = and i64 [[A_COERCE0]], 65535
++; SSE2-NEXT:    [[CONV2:%.*]] = and i64 [[B_COERCE1]], 65535
++; SSE2-NEXT:    [[TMP8:%.*]] = add nuw nsw i64 [[CONV]], [[CONV2]]
++; SSE2-NEXT:    [[ADD3:%.*]] = add nuw nsw i64 [[TMP8]], 1
++; SSE2-NEXT:    [[SHR:%.*]] = lshr i64 [[ADD3]], 1
++; SSE2-NEXT:    [[TMP9:%.*]] = add nuw nsw i32 [[TMP1]], [[TMP5]]
++; SSE2-NEXT:    [[ADD_3:%.*]] = and i64 [[A_SROA_3_0_EXTRACT_SHIFT]], 65535
+ ; SSE2-NEXT:    [[B_SROA_4_0_EXTRACT_SHIFT:%.*]] = and i64 [[B_SROA_8_8_EXTRACT_SHIFT]], 65535
+-; SSE2-NEXT:    [[ADD_4:%.*]] = add nuw nsw i64 [[A_SROA_4_0_EXTRACT_SHIFT]], 1
+-; SSE2-NEXT:    [[ADD_3:%.*]] = add nuw nsw i64 [[CONV_7]], 1
+ ; SSE2-NEXT:    [[ADD3_3:%.*]] = add nuw nsw i64 [[ADD_3]], [[B_SROA_4_0_EXTRACT_SHIFT]]
+-; SSE2-NEXT:    [[ADD3_4:%.*]] = add nuw nsw i64 [[ADD_4]], [[CONV2_4]]
+-; SSE2-NEXT:    [[ADD_6:%.*]] = add nuw nsw i64 [[CONV_6]], 1
++; SSE2-NEXT:    [[TMP11:%.*]] = add nuw nsw i64 [[A_SROA_4_0_EXTRACT_SHIFT]], [[B_SROA_4_0_EXTRACT_SHIFT1]]
++; SSE2-NEXT:    [[CONV_4:%.*]] = and i64 [[A_COERCE1]], 65535
++; SSE2-NEXT:    [[CONV2_5:%.*]] = and i64 [[B_COERCE0]], 65535
++; SSE2-NEXT:    [[A_SROA_9_8_EXTRACT_SHIFT:%.*]] = add nuw nsw i64 [[CONV_4]], [[CONV2_5]]
+ ; SSE2-NEXT:    [[ADD_7:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT]], 1
++; SSE2-NEXT:    [[SHR_4:%.*]] = lshr i64 [[ADD_7]], 1
++; SSE2-NEXT:    [[TMP14:%.*]] = add nuw nsw i32 [[TMP3]], [[TMP7]]
++; SSE2-NEXT:    [[ADD_6:%.*]] = and i64 [[A_SROA_8_8_EXTRACT_SHIFT]], 65535
++; SSE2-NEXT:    [[B_SROA_9_8_EXTRACT_SHIFT:%.*]] = and i64 [[B_SROA_8_8_EXTRACT_SHIFT1]], 65535
+ ; SSE2-NEXT:    [[ADD3_7:%.*]] = add nuw nsw i64 [[ADD_6]], [[B_SROA_9_8_EXTRACT_SHIFT]]
+-; SSE2-NEXT:    [[ADD3_2:%.*]] = add nuw nsw i64 [[ADD_7]], [[CONV2_2]]
+-; SSE2-NEXT:    [[TMP12:%.*]] = shl nuw i64 [[ADD3_7]], 47
+-; SSE2-NEXT:    [[TMP9:%.*]] = shl nuw nsw i64 [[ADD3_2]], 31
++; SSE2-NEXT:    [[TMP15:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT1]], [[CONV2_4]]
++; SSE2-NEXT:    [[ADD3_4:%.*]] = shl nuw i64 [[TMP11]], 47
++; SSE2-NEXT:    [[TMP12:%.*]] = add nuw i64 [[ADD3_4]], 140737488355328
+ ; SSE2-NEXT:    [[RETVAL_SROA_9_8_INSERT_EXT:%.*]] = and i64 [[TMP12]], -281474976710656
+-; SSE2-NEXT:    [[SHR_4:%.*]] = and i64 [[TMP9]], 281470681743360
+ ; SSE2-NEXT:    [[TMP13:%.*]] = shl nuw nsw i64 [[ADD3_3]], 31
+-; SSE2-NEXT:    [[TMP21:%.*]] = shl nuw i64 [[ADD3_4]], 47
+-; SSE2-NEXT:    [[RETVAL_SROA_8_8_INSERT_SHIFT:%.*]] = and i64 [[TMP13]], 281470681743360
+-; SSE2-NEXT:    [[RETVAL_SROA_7_8_INSERT_INSERT:%.*]] = and i64 [[TMP21]], -281474976710656
++; SSE2-NEXT:    [[TMP17:%.*]] = add nuw nsw i64 [[TMP13]], 2147483648
++; SSE2-NEXT:    [[RETVAL_SROA_8_8_INSERT_SHIFT:%.*]] = and i64 [[TMP17]], 281470681743360
+ ; SSE2-NEXT:    [[RETVAL_SROA_8_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_9_8_INSERT_EXT]], [[RETVAL_SROA_8_8_INSERT_SHIFT]]
+-; SSE2-NEXT:    [[RETVAL_SROA_5_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_7_8_INSERT_INSERT]], [[SHR_4]]
+-; SSE2-NEXT:    [[TMP22:%.*]] = shl nuw <2 x i32> [[TMP17]], splat (i32 15)
+-; SSE2-NEXT:    [[TMP23:%.*]] = and <2 x i32> [[TMP22]], splat (i32 -65536)
+-; SSE2-NEXT:    [[TMP24:%.*]] = zext <2 x i32> [[TMP23]] to <2 x i64>
+-; SSE2-NEXT:    [[TMP25:%.*]] = insertelement <2 x i64> poison, i64 [[RETVAL_SROA_5_8_INSERT_INSERT]], i64 0
+-; SSE2-NEXT:    [[TMP26:%.*]] = insertelement <2 x i64> [[TMP25]], i64 [[RETVAL_SROA_8_8_INSERT_INSERT]], i64 1
+-; SSE2-NEXT:    [[TMP27:%.*]] = or disjoint <2 x i64> [[TMP26]], [[TMP24]]
+-; SSE2-NEXT:    [[TMP28:%.*]] = or disjoint <2 x i64> [[TMP27]], [[TMP15]]
+-; SSE2-NEXT:    [[TMP29:%.*]] = extractelement <2 x i64> [[TMP28]], i64 0
++; SSE2-NEXT:    [[ADD3_1:%.*]] = shl nuw i32 [[TMP9]], 15
++; SSE2-NEXT:    [[TMP18:%.*]] = add nuw i32 [[ADD3_1]], 32768
++; SSE2-NEXT:    [[TMP19:%.*]] = and i32 [[TMP18]], -65536
++; SSE2-NEXT:    [[RETVAL_SROA_2_0_INSERT_SHIFT:%.*]] = zext i32 [[TMP19]] to i64
++; SSE2-NEXT:    [[RETVAL_SROA_2_0_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_8_8_INSERT_INSERT]], [[RETVAL_SROA_2_0_INSERT_SHIFT]]
++; SSE2-NEXT:    [[TMP29:%.*]] = or disjoint i64 [[RETVAL_SROA_2_0_INSERT_INSERT]], [[SHR]]
+ ; SSE2-NEXT:    [[DOTFCA_0_INSERT:%.*]] = insertvalue { i64, i64 } poison, i64 [[TMP29]], 0
+-; SSE2-NEXT:    [[TMP30:%.*]] = extractelement <2 x i64> [[TMP28]], i64 1
++; SSE2-NEXT:    [[ADD3_8:%.*]] = shl nuw i64 [[TMP15]], 47
++; SSE2-NEXT:    [[TMP20:%.*]] = add nuw i64 [[ADD3_8]], 140737488355328
++; SSE2-NEXT:    [[RETVAL_SROA_9_8_INSERT_EXT1:%.*]] = and i64 [[TMP20]], -281474976710656
++; SSE2-NEXT:    [[ADD3_6:%.*]] = shl nuw nsw i64 [[ADD3_7]], 31
++; SSE2-NEXT:    [[TMP21:%.*]] = add nuw nsw i64 [[ADD3_6]], 2147483648
++; SSE2-NEXT:    [[RETVAL_SROA_8_8_INSERT_SHIFT1:%.*]] = and i64 [[TMP21]], 281470681743360
++; SSE2-NEXT:    [[RETVAL_SROA_8_8_INSERT_INSERT1:%.*]] = or disjoint i64 [[RETVAL_SROA_9_8_INSERT_EXT1]], [[RETVAL_SROA_8_8_INSERT_SHIFT1]]
++; SSE2-NEXT:    [[ADD3_5:%.*]] = shl nuw i32 [[TMP14]], 15
++; SSE2-NEXT:    [[TMP22:%.*]] = add nuw i32 [[ADD3_5]], 32768
++; SSE2-NEXT:    [[TMP23:%.*]] = and i32 [[TMP22]], -65536
++; SSE2-NEXT:    [[RETVAL_SROA_7_8_INSERT_SHIFT:%.*]] = zext i32 [[TMP23]] to i64
++; SSE2-NEXT:    [[RETVAL_SROA_7_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_8_8_INSERT_INSERT1]], [[RETVAL_SROA_7_8_INSERT_SHIFT]]
++; SSE2-NEXT:    [[TMP30:%.*]] = or disjoint i64 [[RETVAL_SROA_7_8_INSERT_INSERT]], [[SHR_4]]
+ ; SSE2-NEXT:    [[DOTFCA_1_INSERT:%.*]] = insertvalue { i64, i64 } [[DOTFCA_0_INSERT]], i64 [[TMP30]], 1
+ ; SSE2-NEXT:    ret { i64, i64 } [[DOTFCA_1_INSERT]]
+ ;
+@@ -795,57 +797,57 @@ define { i64, i64 } @avgr_8_u16(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; SSE4-NEXT:  entry:
+ ; SSE4-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i32
+ ; SSE4-NEXT:    [[A_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 32
+-; SSE4-NEXT:    [[A_SROA_4_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 48
+ ; SSE4-NEXT:    [[TMP1:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i32
+ ; SSE4-NEXT:    [[A_SROA_8_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 32
+-; SSE4-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0:%.*]], i64 0
+-; SSE4-NEXT:    [[TMP3:%.*]] = insertelement <2 x i64> [[TMP2]], i64 [[B_COERCE1:%.*]], i64 1
+-; SSE4-NEXT:    [[TMP4:%.*]] = trunc <2 x i64> [[TMP3]] to <2 x i32>
++; SSE4-NEXT:    [[TMP2:%.*]] = trunc i64 [[B_COERCE0:%.*]] to i32
+ ; SSE4-NEXT:    [[B_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 32
++; SSE4-NEXT:    [[TMP32:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i32
+ ; SSE4-NEXT:    [[B_SROA_8_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 32
+ ; SSE4-NEXT:    [[TMP5:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+ ; SSE4-NEXT:    [[TMP6:%.*]] = insertelement <2 x i64> [[TMP5]], i64 [[A_COERCE1]], i64 1
+ ; SSE4-NEXT:    [[TMP7:%.*]] = and <2 x i64> [[TMP6]], splat (i64 65535)
++; SSE4-NEXT:    [[TMP33:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0]], i64 0
++; SSE4-NEXT:    [[TMP3:%.*]] = insertelement <2 x i64> [[TMP33]], i64 [[B_COERCE1]], i64 1
+ ; SSE4-NEXT:    [[TMP8:%.*]] = and <2 x i64> [[TMP3]], splat (i64 65535)
++; SSE4-NEXT:    [[ADD_3:%.*]] = lshr i64 [[A_COERCE0]], 48
+ ; SSE4-NEXT:    [[TMP9:%.*]] = insertelement <2 x i32> poison, i32 [[TMP0]], i64 0
+ ; SSE4-NEXT:    [[TMP10:%.*]] = insertelement <2 x i32> [[TMP9]], i32 [[TMP1]], i64 1
+ ; SSE4-NEXT:    [[TMP11:%.*]] = lshr <2 x i32> [[TMP10]], splat (i32 16)
+ ; SSE4-NEXT:    [[B_SROA_4_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 48
++; SSE4-NEXT:    [[TMP13:%.*]] = insertelement <2 x i32> poison, i32 [[TMP2]], i64 0
++; SSE4-NEXT:    [[TMP4:%.*]] = insertelement <2 x i32> [[TMP13]], i32 [[TMP32]], i64 1
+ ; SSE4-NEXT:    [[TMP12:%.*]] = lshr <2 x i32> [[TMP4]], splat (i32 16)
+ ; SSE4-NEXT:    [[A_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 48
+ ; SSE4-NEXT:    [[CONV_2:%.*]] = and i64 [[A_SROA_3_0_EXTRACT_SHIFT]], 65535
+ ; SSE4-NEXT:    [[B_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 48
+ ; SSE4-NEXT:    [[CONV2_2:%.*]] = and i64 [[B_SROA_3_0_EXTRACT_SHIFT]], 65535
+-; SSE4-NEXT:    [[TMP13:%.*]] = add nuw nsw <2 x i64> [[TMP7]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP14:%.*]] = add nuw nsw <2 x i64> [[TMP13]], [[TMP8]]
++; SSE4-NEXT:    [[TMP16:%.*]] = add nuw nsw <2 x i64> [[TMP7]], [[TMP8]]
++; SSE4-NEXT:    [[TMP14:%.*]] = add nuw nsw <2 x i64> [[TMP16]], splat (i64 1)
+ ; SSE4-NEXT:    [[TMP15:%.*]] = lshr <2 x i64> [[TMP14]], splat (i64 1)
+-; SSE4-NEXT:    [[TMP16:%.*]] = add nuw nsw <2 x i32> [[TMP11]], splat (i32 1)
+-; SSE4-NEXT:    [[TMP17:%.*]] = add nuw nsw <2 x i32> [[TMP16]], [[TMP12]]
++; SSE4-NEXT:    [[TMP17:%.*]] = add nuw nsw <2 x i32> [[TMP11]], [[TMP12]]
+ ; SSE4-NEXT:    [[CONV_6:%.*]] = and i64 [[A_SROA_8_8_EXTRACT_SHIFT]], 65535
+ ; SSE4-NEXT:    [[CONV2_6:%.*]] = and i64 [[B_SROA_8_8_EXTRACT_SHIFT]], 65535
+-; SSE4-NEXT:    [[ADD_3:%.*]] = add nuw nsw i64 [[A_SROA_4_0_EXTRACT_SHIFT]], 1
+-; SSE4-NEXT:    [[ADD_6:%.*]] = add nuw nsw i64 [[CONV_6]], 1
+-; SSE4-NEXT:    [[ADD3_6:%.*]] = add nuw nsw i64 [[ADD_6]], [[CONV2_6]]
++; SSE4-NEXT:    [[ADD3_6:%.*]] = add nuw nsw i64 [[CONV_6]], [[CONV2_6]]
+ ; SSE4-NEXT:    [[ADD3_3:%.*]] = add nuw nsw i64 [[ADD_3]], [[B_SROA_4_0_EXTRACT_SHIFT]]
+-; SSE4-NEXT:    [[ADD_7:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT]], 1
+-; SSE4-NEXT:    [[ADD_2:%.*]] = add nuw nsw i64 [[CONV_2]], 1
+-; SSE4-NEXT:    [[ADD3_7:%.*]] = add nuw nsw i64 [[ADD_7]], [[B_SROA_9_8_EXTRACT_SHIFT]]
+-; SSE4-NEXT:    [[ADD3_2:%.*]] = add nuw nsw i64 [[ADD_2]], [[CONV2_2]]
++; SSE4-NEXT:    [[ADD3_7:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT]], [[B_SROA_9_8_EXTRACT_SHIFT]]
++; SSE4-NEXT:    [[ADD3_2:%.*]] = add nuw nsw i64 [[CONV_2]], [[CONV2_2]]
+ ; SSE4-NEXT:    [[TMP18:%.*]] = shl nuw i64 [[ADD3_7]], 47
+ ; SSE4-NEXT:    [[TMP19:%.*]] = shl nuw nsw i64 [[ADD3_2]], 31
+-; SSE4-NEXT:    [[RETVAL_SROA_9_8_INSERT_EXT:%.*]] = and i64 [[TMP18]], -281474976710656
+-; SSE4-NEXT:    [[RETVAL_SROA_3_0_INSERT_SHIFT:%.*]] = and i64 [[TMP19]], 281470681743360
++; SSE4-NEXT:    [[TMP35:%.*]] = insertelement <2 x i64> poison, i64 [[TMP19]], i64 0
++; SSE4-NEXT:    [[TMP25:%.*]] = insertelement <2 x i64> [[TMP35]], i64 [[TMP18]], i64 1
++; SSE4-NEXT:    [[TMP36:%.*]] = add nuw <2 x i64> [[TMP25]], <i64 2147483648, i64 140737488355328>
++; SSE4-NEXT:    [[TMP37:%.*]] = and <2 x i64> [[TMP36]], <i64 281470681743360, i64 -281474976710656>
+ ; SSE4-NEXT:    [[TMP20:%.*]] = shl nuw nsw i64 [[ADD3_6]], 31
+ ; SSE4-NEXT:    [[TMP21:%.*]] = shl nuw i64 [[ADD3_3]], 47
+-; SSE4-NEXT:    [[RETVAL_SROA_8_8_INSERT_SHIFT:%.*]] = and i64 [[TMP20]], 281470681743360
+-; SSE4-NEXT:    [[RETVAL_SROA_4_0_INSERT_EXT:%.*]] = and i64 [[TMP21]], -281474976710656
+-; SSE4-NEXT:    [[RETVAL_SROA_8_8_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_9_8_INSERT_EXT]], [[RETVAL_SROA_8_8_INSERT_SHIFT]]
+-; SSE4-NEXT:    [[RETVAL_SROA_3_0_INSERT_INSERT:%.*]] = or disjoint i64 [[RETVAL_SROA_4_0_INSERT_EXT]], [[RETVAL_SROA_3_0_INSERT_SHIFT]]
++; SSE4-NEXT:    [[TMP38:%.*]] = insertelement <2 x i64> poison, i64 [[TMP21]], i64 0
++; SSE4-NEXT:    [[TMP39:%.*]] = insertelement <2 x i64> [[TMP38]], i64 [[TMP20]], i64 1
++; SSE4-NEXT:    [[TMP40:%.*]] = add nuw <2 x i64> [[TMP39]], <i64 140737488355328, i64 2147483648>
++; SSE4-NEXT:    [[TMP31:%.*]] = and <2 x i64> [[TMP40]], <i64 -281474976710656, i64 281470681743360>
++; SSE4-NEXT:    [[TMP26:%.*]] = or disjoint <2 x i64> [[TMP37]], [[TMP31]]
+ ; SSE4-NEXT:    [[TMP22:%.*]] = shl nuw <2 x i32> [[TMP17]], splat (i32 15)
+-; SSE4-NEXT:    [[TMP23:%.*]] = and <2 x i32> [[TMP22]], splat (i32 -65536)
++; SSE4-NEXT:    [[TMP34:%.*]] = add nuw <2 x i32> [[TMP22]], splat (i32 32768)
++; SSE4-NEXT:    [[TMP23:%.*]] = and <2 x i32> [[TMP34]], splat (i32 -65536)
+ ; SSE4-NEXT:    [[TMP24:%.*]] = zext <2 x i32> [[TMP23]] to <2 x i64>
+-; SSE4-NEXT:    [[TMP25:%.*]] = insertelement <2 x i64> poison, i64 [[RETVAL_SROA_3_0_INSERT_INSERT]], i64 0
+-; SSE4-NEXT:    [[TMP26:%.*]] = insertelement <2 x i64> [[TMP25]], i64 [[RETVAL_SROA_8_8_INSERT_INSERT]], i64 1
+ ; SSE4-NEXT:    [[TMP27:%.*]] = or disjoint <2 x i64> [[TMP26]], [[TMP24]]
+ ; SSE4-NEXT:    [[TMP28:%.*]] = or disjoint <2 x i64> [[TMP27]], [[TMP15]]
+ ; SSE4-NEXT:    [[TMP29:%.*]] = extractelement <2 x i64> [[TMP28]], i64 0
+@@ -858,51 +860,49 @@ define { i64, i64 } @avgr_8_u16(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; AVX2-NEXT:  entry:
+ ; AVX2-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i32
+ ; AVX2-NEXT:    [[A_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 32
+-; AVX2-NEXT:    [[A_SROA_4_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE0]], 48
+ ; AVX2-NEXT:    [[TMP1:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i32
+-; AVX2-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0:%.*]], i64 0
++; AVX2-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+ ; AVX2-NEXT:    [[TMP20:%.*]] = insertelement <2 x i64> [[TMP2]], i64 [[A_COERCE1]], i64 1
+ ; AVX2-NEXT:    [[TMP21:%.*]] = lshr <2 x i64> [[TMP20]], <i64 48, i64 32>
+-; AVX2-NEXT:    [[TMP3:%.*]] = insertelement <2 x i64> [[TMP20]], i64 [[B_COERCE1:%.*]], i64 1
+-; AVX2-NEXT:    [[TMP4:%.*]] = trunc <2 x i64> [[TMP3]] to <2 x i32>
+-; AVX2-NEXT:    [[B_SROA_3_0_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE0]], 32
++; AVX2-NEXT:    [[TMP5:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i32
+ ; AVX2-NEXT:    [[B_SROA_8_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 32
+-; AVX2-NEXT:    [[TMP6:%.*]] = insertelement <2 x i64> [[TMP20]], i64 [[A_COERCE0]], i64 0
+-; AVX2-NEXT:    [[TMP7:%.*]] = and <2 x i64> [[TMP6]], splat (i64 65535)
++; AVX2-NEXT:    [[TMP6:%.*]] = trunc i64 [[B_COERCE2:%.*]] to i32
++; AVX2-NEXT:    [[TMP7:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE1]], i64 0
++; AVX2-NEXT:    [[TMP3:%.*]] = insertelement <2 x i64> [[TMP7]], i64 [[B_COERCE2]], i64 1
++; AVX2-NEXT:    [[TMP16:%.*]] = lshr <2 x i64> [[TMP3]], <i64 48, i64 32>
++; AVX2-NEXT:    [[TMP13:%.*]] = and <2 x i64> [[TMP20]], splat (i64 65535)
+ ; AVX2-NEXT:    [[TMP8:%.*]] = and <2 x i64> [[TMP3]], splat (i64 65535)
+ ; AVX2-NEXT:    [[TMP9:%.*]] = insertelement <2 x i32> poison, i32 [[TMP0]], i64 0
+ ; AVX2-NEXT:    [[TMP10:%.*]] = insertelement <2 x i32> [[TMP9]], i32 [[TMP1]], i64 1
+ ; AVX2-NEXT:    [[TMP11:%.*]] = lshr <2 x i32> [[TMP10]], splat (i32 16)
++; AVX2-NEXT:    [[TMP18:%.*]] = insertelement <2 x i32> poison, i32 [[TMP5]], i64 0
++; AVX2-NEXT:    [[TMP4:%.*]] = insertelement <2 x i32> [[TMP18]], i32 [[TMP6]], i64 1
+ ; AVX2-NEXT:    [[TMP12:%.*]] = lshr <2 x i32> [[TMP4]], splat (i32 16)
+ ; AVX2-NEXT:    [[A_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[A_COERCE1]], 48
+ ; AVX2-NEXT:    [[CONV_2:%.*]] = and i64 [[A_SROA_3_0_EXTRACT_SHIFT]], 65535
+-; AVX2-NEXT:    [[B_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE1]], 48
+-; AVX2-NEXT:    [[CONV2_2:%.*]] = and i64 [[B_SROA_3_0_EXTRACT_SHIFT]], 65535
+-; AVX2-NEXT:    [[TMP13:%.*]] = add nuw nsw <2 x i64> [[TMP7]], splat (i64 1)
++; AVX2-NEXT:    [[B_SROA_9_8_EXTRACT_SHIFT:%.*]] = lshr i64 [[B_COERCE2]], 48
++; AVX2-NEXT:    [[CONV2_2:%.*]] = and i64 [[B_SROA_8_8_EXTRACT_SHIFT]], 65535
+ ; AVX2-NEXT:    [[TMP14:%.*]] = add nuw nsw <2 x i64> [[TMP13]], [[TMP8]]
+-; AVX2-NEXT:    [[TMP15:%.*]] = lshr <2 x i64> [[TMP14]], splat (i64 1)
+-; AVX2-NEXT:    [[TMP16:%.*]] = add nuw nsw <2 x i32> [[TMP11]], splat (i32 1)
+-; AVX2-NEXT:    [[TMP17:%.*]] = add nuw nsw <2 x i32> [[TMP16]], [[TMP12]]
++; AVX2-NEXT:    [[TMP19:%.*]] = add nuw nsw <2 x i64> [[TMP14]], splat (i64 1)
++; AVX2-NEXT:    [[TMP15:%.*]] = lshr <2 x i64> [[TMP19]], splat (i64 1)
++; AVX2-NEXT:    [[TMP17:%.*]] = add nuw nsw <2 x i32> [[TMP11]], [[TMP12]]
+ ; AVX2-NEXT:    [[TMP34:%.*]] = and <2 x i64> [[TMP21]], <i64 -1, i64 65535>
+-; AVX2-NEXT:    [[CONV2_6:%.*]] = and i64 [[B_SROA_8_8_EXTRACT_SHIFT]], 65535
+-; AVX2-NEXT:    [[ADD_3:%.*]] = add nuw nsw i64 [[A_SROA_4_0_EXTRACT_SHIFT]], 1
+-; AVX2-NEXT:    [[TMP37:%.*]] = add nuw nsw <2 x i64> [[TMP34]], <i64 0, i64 1>
+-; AVX2-NEXT:    [[TMP35:%.*]] = insertelement <2 x i64> poison, i64 [[ADD_3]], i64 0
+-; AVX2-NEXT:    [[TMP25:%.*]] = insertelement <2 x i64> [[TMP35]], i64 [[CONV2_6]], i64 1
+-; AVX2-NEXT:    [[TMP38:%.*]] = add nuw nsw <2 x i64> [[TMP25]], [[TMP37]]
+-; AVX2-NEXT:    [[ADD_7:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT]], 1
+-; AVX2-NEXT:    [[ADD_2:%.*]] = add nuw nsw i64 [[CONV_2]], 1
+-; AVX2-NEXT:    [[ADD3_7:%.*]] = add nuw nsw i64 [[ADD_7]], [[B_SROA_9_8_EXTRACT_SHIFT]]
+-; AVX2-NEXT:    [[ADD3_2:%.*]] = add nuw nsw i64 [[ADD_2]], [[CONV2_2]]
++; AVX2-NEXT:    [[TMP25:%.*]] = and <2 x i64> [[TMP16]], <i64 -1, i64 65535>
++; AVX2-NEXT:    [[TMP38:%.*]] = add nuw nsw <2 x i64> [[TMP34]], [[TMP25]]
++; AVX2-NEXT:    [[ADD3_7:%.*]] = add nuw nsw i64 [[A_SROA_9_8_EXTRACT_SHIFT]], [[B_SROA_9_8_EXTRACT_SHIFT]]
++; AVX2-NEXT:    [[ADD3_2:%.*]] = add nuw nsw i64 [[CONV_2]], [[CONV2_2]]
+ ; AVX2-NEXT:    [[TMP39:%.*]] = insertelement <2 x i64> poison, i64 [[ADD3_2]], i64 0
+ ; AVX2-NEXT:    [[TMP40:%.*]] = insertelement <2 x i64> [[TMP39]], i64 [[ADD3_7]], i64 1
+ ; AVX2-NEXT:    [[TMP41:%.*]] = shl nuw <2 x i64> [[TMP40]], <i64 31, i64 47>
+-; AVX2-NEXT:    [[TMP31:%.*]] = and <2 x i64> [[TMP41]], <i64 281470681743360, i64 -281474976710656>
++; AVX2-NEXT:    [[TMP35:%.*]] = add nuw <2 x i64> [[TMP41]], <i64 2147483648, i64 140737488355328>
++; AVX2-NEXT:    [[TMP31:%.*]] = and <2 x i64> [[TMP35]], <i64 281470681743360, i64 -281474976710656>
+ ; AVX2-NEXT:    [[TMP32:%.*]] = shl nuw <2 x i64> [[TMP38]], <i64 47, i64 31>
+-; AVX2-NEXT:    [[TMP33:%.*]] = and <2 x i64> [[TMP32]], <i64 -281474976710656, i64 281470681743360>
++; AVX2-NEXT:    [[TMP36:%.*]] = add nuw <2 x i64> [[TMP32]], <i64 140737488355328, i64 2147483648>
++; AVX2-NEXT:    [[TMP33:%.*]] = and <2 x i64> [[TMP36]], <i64 -281474976710656, i64 281470681743360>
+ ; AVX2-NEXT:    [[TMP26:%.*]] = or disjoint <2 x i64> [[TMP31]], [[TMP33]]
+ ; AVX2-NEXT:    [[TMP22:%.*]] = shl nuw <2 x i32> [[TMP17]], splat (i32 15)
+-; AVX2-NEXT:    [[TMP23:%.*]] = and <2 x i32> [[TMP22]], splat (i32 -65536)
++; AVX2-NEXT:    [[TMP37:%.*]] = add nuw <2 x i32> [[TMP22]], splat (i32 32768)
++; AVX2-NEXT:    [[TMP23:%.*]] = and <2 x i32> [[TMP37]], splat (i32 -65536)
+ ; AVX2-NEXT:    [[TMP24:%.*]] = zext <2 x i32> [[TMP23]] to <2 x i64>
+ ; AVX2-NEXT:    [[TMP27:%.*]] = or disjoint <2 x i64> [[TMP26]], [[TMP24]]
+ ; AVX2-NEXT:    [[TMP28:%.*]] = or disjoint <2 x i64> [[TMP27]], [[TMP15]]
+@@ -915,23 +915,24 @@ define { i64, i64 } @avgr_8_u16(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; AVX512-LABEL: @avgr_8_u16(
+ ; AVX512-NEXT:  entry:
+ ; AVX512-NEXT:    [[TMP0:%.*]] = trunc i64 [[A_COERCE0:%.*]] to i32
++; AVX512-NEXT:    [[TMP5:%.*]] = trunc i64 [[B_COERCE1:%.*]] to i32
+ ; AVX512-NEXT:    [[TMP1:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE0]], i64 0
+-; AVX512-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[B_COERCE1:%.*]], i64 1
++; AVX512-NEXT:    [[TMP2:%.*]] = insertelement <2 x i64> [[TMP1]], i64 [[B_COERCE1]], i64 1
+ ; AVX512-NEXT:    [[TMP3:%.*]] = lshr <2 x i64> [[TMP2]], <i64 48, i64 32>
+ ; AVX512-NEXT:    [[TMP4:%.*]] = trunc i64 [[A_COERCE1:%.*]] to i32
+-; AVX512-NEXT:    [[TMP31:%.*]] = insertelement <2 x i64> poison, i64 [[B_COERCE0:%.*]], i64 0
+-; AVX512-NEXT:    [[TMP32:%.*]] = insertelement <2 x i64> [[TMP31]], i64 [[A_COERCE1]], i64 1
++; AVX512-NEXT:    [[TMP8:%.*]] = trunc i64 [[B_COERCE2:%.*]] to i32
++; AVX512-NEXT:    [[TMP7:%.*]] = insertelement <2 x i64> poison, i64 [[A_COERCE1]], i64 0
++; AVX512-NEXT:    [[TMP32:%.*]] = insertelement <2 x i64> [[TMP7]], i64 [[B_COERCE2]], i64 1
+ ; AVX512-NEXT:    [[TMP49:%.*]] = lshr <2 x i64> [[TMP32]], <i64 48, i64 32>
+-; AVX512-NEXT:    [[TMP5:%.*]] = insertelement <2 x i64> [[TMP2]], i64 [[B_COERCE0]], i64 0
+-; AVX512-NEXT:    [[TMP6:%.*]] = trunc <2 x i64> [[TMP5]] to <2 x i32>
+-; AVX512-NEXT:    [[TMP7:%.*]] = insertelement <2 x i64> [[TMP32]], i64 [[A_COERCE0]], i64 0
+-; AVX512-NEXT:    [[TMP8:%.*]] = and <2 x i64> [[TMP7]], splat (i64 65535)
+-; AVX512-NEXT:    [[TMP9:%.*]] = and <2 x i64> [[TMP5]], splat (i64 65535)
+-; AVX512-NEXT:    [[TMP10:%.*]] = lshr <2 x i64> [[TMP7]], <i64 32, i64 0>
++; AVX512-NEXT:    [[TMP22:%.*]] = and <2 x i64> [[TMP2]], splat (i64 65535)
++; AVX512-NEXT:    [[TMP9:%.*]] = and <2 x i64> [[TMP32]], splat (i64 65535)
++; AVX512-NEXT:    [[TMP10:%.*]] = lshr <2 x i64> [[TMP2]], <i64 32, i64 0>
+ ; AVX512-NEXT:    [[TMP11:%.*]] = insertelement <2 x i32> poison, i32 [[TMP0]], i64 0
+-; AVX512-NEXT:    [[TMP12:%.*]] = insertelement <2 x i32> [[TMP11]], i32 [[TMP4]], i64 1
++; AVX512-NEXT:    [[TMP12:%.*]] = insertelement <2 x i32> [[TMP11]], i32 [[TMP5]], i64 1
+ ; AVX512-NEXT:    [[TMP13:%.*]] = lshr <2 x i32> [[TMP12]], splat (i32 16)
+-; AVX512-NEXT:    [[TMP14:%.*]] = lshr <2 x i64> [[TMP5]], <i64 32, i64 0>
++; AVX512-NEXT:    [[TMP14:%.*]] = lshr <2 x i64> [[TMP32]], <i64 32, i64 0>
++; AVX512-NEXT:    [[TMP25:%.*]] = insertelement <2 x i32> poison, i32 [[TMP4]], i64 0
++; AVX512-NEXT:    [[TMP6:%.*]] = insertelement <2 x i32> [[TMP25]], i32 [[TMP8]], i64 1
+ ; AVX512-NEXT:    [[TMP15:%.*]] = lshr <2 x i32> [[TMP6]], splat (i32 16)
+ ; AVX512-NEXT:    [[TMP16:%.*]] = and <2 x i64> [[TMP10]], <i64 65535, i64 poison>
+ ; AVX512-NEXT:    [[TMP17:%.*]] = lshr <2 x i64> [[TMP10]], <i64 65535, i64 48>
+@@ -939,26 +940,24 @@ define { i64, i64 } @avgr_8_u16(i64 %a.coerce0, i64 %a.coerce1, i64 %b.coerce0,
+ ; AVX512-NEXT:    [[TMP19:%.*]] = and <2 x i64> [[TMP14]], <i64 65535, i64 poison>
+ ; AVX512-NEXT:    [[TMP20:%.*]] = lshr <2 x i64> [[TMP14]], <i64 65535, i64 48>
+ ; AVX512-NEXT:    [[TMP21:%.*]] = shufflevector <2 x i64> [[TMP19]], <2 x i64> [[TMP20]], <2 x i32> <i32 0, i32 3>
+-; AVX512-NEXT:    [[TMP22:%.*]] = add nuw nsw <2 x i64> [[TMP8]], splat (i64 1)
+ ; AVX512-NEXT:    [[TMP23:%.*]] = add nuw nsw <2 x i64> [[TMP22]], [[TMP9]]
+-; AVX512-NEXT:    [[TMP24:%.*]] = lshr <2 x i64> [[TMP23]], splat (i64 1)
+-; AVX512-NEXT:    [[TMP25:%.*]] = add nuw nsw <2 x i32> [[TMP13]], splat (i32 1)
+-; AVX512-NEXT:    [[TMP26:%.*]] = add nuw nsw <2 x i32> [[TMP25]], [[TMP15]]
+-; AVX512-NEXT:    [[TMP30:%.*]] = and <2 x i64> [[TMP49]], <i64 -1, i64 65535>
+-; AVX512-NEXT:    [[TMP27:%.*]] = add nuw nsw <2 x i64> [[TMP3]], <i64 1, i64 poison>
+-; AVX512-NEXT:    [[TMP28:%.*]] = and <2 x i64> [[TMP3]], <i64 poison, i64 65535>
+-; AVX512-NEXT:    [[TMP29:%.*]] = shufflevector <2 x i64> [[TMP27]], <2 x i64> [[TMP28]], <2 x i32> <i32 0, i32 3>
+-; AVX512-NEXT:    [[TMP33:%.*]] = add nuw nsw <2 x i64> [[TMP30]], <i64 0, i64 1>
++; AVX512-NEXT:    [[TMP27:%.*]] = add nuw nsw <2 x i64> [[TMP23]], splat (i64 1)
++; AVX512-NEXT:    [[TMP24:%.*]] = lshr <2 x i64> [[TMP27]], splat (i64 1)
++; AVX512-NEXT:    [[TMP26:%.*]] = add nuw nsw <2 x i32> [[TMP13]], [[TMP15]]
++; AVX512-NEXT:    [[TMP29:%.*]] = and <2 x i64> [[TMP3]], <i64 -1, i64 65535>
++; AVX512-NEXT:    [[TMP33:%.*]] = and <2 x i64> [[TMP49]], <i64 -1, i64 65535>
+ ; AVX512-NEXT:    [[TMP34:%.*]] = add nuw nsw <2 x i64> [[TMP29]], [[TMP33]]
+-; AVX512-NEXT:    [[TMP35:%.*]] = add nuw nsw <2 x i64> [[TMP18]], splat (i64 1)
+-; AVX512-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP35]], [[TMP21]]
++; AVX512-NEXT:    [[TMP36:%.*]] = add nuw nsw <2 x i64> [[TMP18]], [[TMP21]]
+ ; AVX512-NEXT:    [[TMP37:%.*]] = shl nuw <2 x i64> [[TMP36]], <i64 31, i64 47>
+-; AVX512-NEXT:    [[TMP38:%.*]] = and <2 x i64> [[TMP37]], <i64 281470681743360, i64 -281474976710656>
++; AVX512-NEXT:    [[TMP35:%.*]] = add nuw <2 x i64> [[TMP37]], <i64 2147483648, i64 140737488355328>
++; AVX512-NEXT:    [[TMP38:%.*]] = and <2 x i64> [[TMP35]], <i64 281470681743360, i64 -281474976710656>
+ ; AVX512-NEXT:    [[TMP39:%.*]] = shl nuw <2 x i64> [[TMP34]], <i64 47, i64 31>
+-; AVX512-NEXT:    [[TMP40:%.*]] = and <2 x i64> [[TMP39]], <i64 -281474976710656, i64 281470681743360>
++; AVX512-NEXT:    [[TMP50:%.*]] = add nuw <2 x i64> [[TMP39]], <i64 140737488355328, i64 2147483648>
++; AVX512-NEXT:    [[TMP40:%.*]] = and <2 x i64> [[TMP50]], <i64 -281474976710656, i64 281470681743360>
+ ; AVX512-NEXT:    [[TMP41:%.*]] = or disjoint <2 x i64> [[TMP38]], [[TMP40]]
+ ; AVX512-NEXT:    [[TMP42:%.*]] = shl nuw <2 x i32> [[TMP26]], splat (i32 15)
+-; AVX512-NEXT:    [[TMP43:%.*]] = and <2 x i32> [[TMP42]], splat (i32 -65536)
++; AVX512-NEXT:    [[TMP51:%.*]] = add nuw <2 x i32> [[TMP42]], splat (i32 32768)
++; AVX512-NEXT:    [[TMP43:%.*]] = and <2 x i32> [[TMP51]], splat (i32 -65536)
+ ; AVX512-NEXT:    [[TMP44:%.*]] = zext <2 x i32> [[TMP43]] to <2 x i64>
+ ; AVX512-NEXT:    [[TMP45:%.*]] = or disjoint <2 x i64> [[TMP41]], [[TMP44]]
+ ; AVX512-NEXT:    [[TMP46:%.*]] = or disjoint <2 x i64> [[TMP45]], [[TMP24]]
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/pr48844-br-to-switch-vectorization.ll b/llvm/test/Transforms/PhaseOrdering/X86/pr48844-br-to-switch-vectorization.ll
+index b2e07e77b05c5..37276bf2e0ec7 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/pr48844-br-to-switch-vectorization.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/pr48844-br-to-switch-vectorization.ll
+@@ -36,8 +36,8 @@ define dso_local void @test(ptr %start, ptr %end) #0 {
+ ; AVX2:       iter.check:
+ ; AVX2-NEXT:    [[END3:%.*]] = ptrtoint ptr [[END]] to i64
+ ; AVX2-NEXT:    [[START4:%.*]] = ptrtoint ptr [[START]] to i64
+-; AVX2-NEXT:    [[TMP0:%.*]] = add i64 [[END3]], -4
+-; AVX2-NEXT:    [[TMP1:%.*]] = sub i64 [[TMP0]], [[START4]]
++; AVX2-NEXT:    [[TMP0:%.*]] = sub i64 [[END3]], [[START4]]
++; AVX2-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], -4
+ ; AVX2-NEXT:    [[TMP2:%.*]] = lshr i64 [[TMP1]], 2
+ ; AVX2-NEXT:    [[TMP3:%.*]] = add nuw nsw i64 [[TMP2]], 1
+ ; AVX2-NEXT:    [[MIN_ITERS_CHECK1:%.*]] = icmp ult i64 [[TMP1]], 28
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/scalarization-inseltpoison.ll b/llvm/test/Transforms/PhaseOrdering/X86/scalarization-inseltpoison.ll
+index d36da8d028c60..4dd897d905d7b 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/scalarization-inseltpoison.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/scalarization-inseltpoison.ll
+@@ -18,14 +18,14 @@ define <4 x i32> @square(<4 x i32> %num, i32 %y, i32 %x, i32 %h, i32 %k, i32 %w,
+ ; CHECK-NEXT:    [[MUL13:%.*]] = mul nsw i32 [[W:%.*]], 53
+ ; CHECK-NEXT:    [[DIV17:%.*]] = sdiv i32 [[X:%.*]], 820
+ ; CHECK-NEXT:    [[MUL21:%.*]] = shl nsw i32 [[U:%.*]], 2
+-; CHECK-NEXT:    [[OP_RDX:%.*]] = add nsw i32 [[DIV17]], 317426
+-; CHECK-NEXT:    [[OP_RDX9:%.*]] = add nsw i32 [[DIV]], [[DIV9]]
+-; CHECK-NEXT:    [[OP_RDX10:%.*]] = add i32 [[MUL5]], [[MUL13]]
+-; CHECK-NEXT:    [[OP_RDX11:%.*]] = add i32 [[MUL]], [[MUL21]]
+-; CHECK-NEXT:    [[OP_RDX12:%.*]] = add i32 [[OP_RDX]], [[OP_RDX9]]
+-; CHECK-NEXT:    [[OP_RDX13:%.*]] = add i32 [[OP_RDX10]], [[OP_RDX11]]
+-; CHECK-NEXT:    [[OP_RDX14:%.*]] = add i32 [[OP_RDX12]], [[OP_RDX13]]
+-; CHECK-NEXT:    [[OP_RDX15:%.*]] = add i32 [[OP_RDX14]], [[Y:%.*]]
++; CHECK-NEXT:    [[DOTSCALAR:%.*]] = add i32 [[Y:%.*]], [[DIV17]]
++; CHECK-NEXT:    [[DOTSCALAR1:%.*]] = add i32 [[DOTSCALAR]], [[MUL5]]
++; CHECK-NEXT:    [[DOTSCALAR2:%.*]] = add i32 [[DOTSCALAR1]], [[DIV]]
++; CHECK-NEXT:    [[DOTSCALAR3:%.*]] = add i32 [[DOTSCALAR2]], [[MUL13]]
++; CHECK-NEXT:    [[DOTSCALAR4:%.*]] = add i32 [[DOTSCALAR3]], [[MUL]]
++; CHECK-NEXT:    [[DOTSCALAR5:%.*]] = add i32 [[DOTSCALAR4]], [[DIV9]]
++; CHECK-NEXT:    [[DOTSCALAR6:%.*]] = add i32 [[DOTSCALAR5]], [[MUL21]]
++; CHECK-NEXT:    [[OP_RDX15:%.*]] = add i32 [[DOTSCALAR6]], 317426
+ ; CHECK-NEXT:    [[TMP1:%.*]] = insertelement <4 x i32> poison, i32 [[OP_RDX15]], i64 0
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x i32> [[TMP1]], <4 x i32> poison, <4 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[ADD29:%.*]] = add <4 x i32> [[TMP2]], [[NUM:%.*]]
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/scalarization.ll b/llvm/test/Transforms/PhaseOrdering/X86/scalarization.ll
+index c3131a41c2b2e..d2f5216f10e50 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/scalarization.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/scalarization.ll
+@@ -18,14 +18,14 @@ define <4 x i32> @square(<4 x i32> %num, i32 %y, i32 %x, i32 %h, i32 %k, i32 %w,
+ ; CHECK-NEXT:    [[MUL13:%.*]] = mul nsw i32 [[W:%.*]], 53
+ ; CHECK-NEXT:    [[DIV17:%.*]] = sdiv i32 [[X:%.*]], 820
+ ; CHECK-NEXT:    [[MUL21:%.*]] = shl nsw i32 [[U:%.*]], 2
+-; CHECK-NEXT:    [[OP_RDX:%.*]] = add nsw i32 [[DIV17]], 317426
+-; CHECK-NEXT:    [[OP_RDX9:%.*]] = add nsw i32 [[DIV]], [[DIV9]]
+-; CHECK-NEXT:    [[OP_RDX10:%.*]] = add i32 [[MUL5]], [[MUL13]]
+-; CHECK-NEXT:    [[OP_RDX11:%.*]] = add i32 [[MUL]], [[MUL21]]
+-; CHECK-NEXT:    [[OP_RDX12:%.*]] = add i32 [[OP_RDX]], [[OP_RDX9]]
+-; CHECK-NEXT:    [[OP_RDX13:%.*]] = add i32 [[OP_RDX10]], [[OP_RDX11]]
+-; CHECK-NEXT:    [[OP_RDX14:%.*]] = add i32 [[OP_RDX12]], [[OP_RDX13]]
+-; CHECK-NEXT:    [[OP_RDX15:%.*]] = add i32 [[OP_RDX14]], [[Y:%.*]]
++; CHECK-NEXT:    [[DOTSCALAR:%.*]] = add i32 [[Y:%.*]], [[DIV17]]
++; CHECK-NEXT:    [[DOTSCALAR1:%.*]] = add i32 [[DOTSCALAR]], [[MUL5]]
++; CHECK-NEXT:    [[DOTSCALAR2:%.*]] = add i32 [[DOTSCALAR1]], [[DIV]]
++; CHECK-NEXT:    [[DOTSCALAR3:%.*]] = add i32 [[DOTSCALAR2]], [[MUL13]]
++; CHECK-NEXT:    [[DOTSCALAR4:%.*]] = add i32 [[DOTSCALAR3]], [[MUL]]
++; CHECK-NEXT:    [[DOTSCALAR5:%.*]] = add i32 [[DOTSCALAR4]], [[DIV9]]
++; CHECK-NEXT:    [[DOTSCALAR6:%.*]] = add i32 [[DOTSCALAR5]], [[MUL21]]
++; CHECK-NEXT:    [[OP_RDX15:%.*]] = add i32 [[DOTSCALAR6]], 317426
+ ; CHECK-NEXT:    [[TMP1:%.*]] = insertelement <4 x i32> poison, i32 [[OP_RDX15]], i64 0
+ ; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <4 x i32> [[TMP1]], <4 x i32> poison, <4 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[ADD29:%.*]] = add <4 x i32> [[TMP2]], [[NUM:%.*]]

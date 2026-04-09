@@ -4,6 +4,7 @@ begin_hunk_0_@_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4
   %i.j = load i64, ptr %i.i, align 8              ; 2 uses
   %i.k = sub i64 %5, %i.j
   %.promoted40 = load i64, ptr %i.h, align 8
+  %invariant.op = sub i64 1, %i.g
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.a
@@ -12,7 +13,7 @@ begin_hunk_1_@_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4
 bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.l = phi i64 [ %.promoted40, %.lr.ph ], [ %i.w, %bb.f ] ; 5 uses
   %i.m = phi i64 [ %i.c, %.lr.ph ], [ %i.y, %bb.f ]
-  %i.n = phi i64 [ %.promoted, %.lr.ph ], [ %i.x, %bb.f ] ; 8 uses
+  %i.n = phi i64 [ %.promoted, %.lr.ph ], [ %i.x, %bb.f ] ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 %i.m
   %i.p = load i8, ptr %i.o, align 1, !noundef !4
   %i.q = and i8 %i.p, 63
@@ -21,13 +22,13 @@ begin_hunk_2_@_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4
 
 .sink.split:                                      ; preds = %bb.d, %bb.r, %bb.o
   %.sink = phi i64 [ %i.k, %bb.o ], [ 0, %bb.r ], [ 0, %bb.d ] ; 2 uses
-  %.ph76 = phi i64 [ %i.aq, %bb.o ], [ %8, %bb.r ], [ %i.v, %bb.d ]
+  %.ph76 = phi i64 [ %i.aq, %bb.o ], [ %i.aw, %bb.r ], [ %i.v, %bb.d ]
   store i64 %.sink, ptr %i.h, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.r, %bb.o, %bb.d
   %i.w = phi i64 [ %i.l, %bb.r ], [ %i.l, %bb.d ], [ %i.l, %bb.o ], [ %.sink, %.sink.split ]
-  %i.x = phi i64 [ %8, %bb.r ], [ %i.v, %bb.d ], [ %i.aq, %bb.o ], [ %.ph76, %.sink.split ] ; 2 uses
+  %i.x = phi i64 [ %i.aw, %bb.r ], [ %i.v, %bb.d ], [ %i.aq, %bb.o ], [ %.ph76, %.sink.split ] ; 2 uses
   %i.y = add i64 %i.b, %i.x                       ; 2 uses
   %i.z = icmp ult i64 %i.y, %3
   br i1 %i.z, label %bb.b, label %._crit_edge
@@ -36,8 +37,8 @@ begin_hunk_3_@_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4
   br i1 %i.ab, label %.lr.ph98, label %._crit_edge99
 
 .lr.ph94:                                         ; preds = %bb.e, %bb.g
-  %.sroa.04.092 = phi i64 [ %i.aa, %bb.g ], [ %.sroa.03.0, %bb.e ] ; 4 uses
-  %i.ac = add i64 %.sroa.04.092, %i.n             ; 2 uses
+  %.sroa.04.092 = phi i64 [ %i.aa, %bb.g ], [ %.sroa.03.0, %bb.e ] ; 3 uses
+  %i.ac = add i64 %.sroa.04.092, %i.n             ; 3 uses
   %i.ad = icmp ult i64 %i.ac, %3
   br i1 %i.ad, label %bb.p, label %bb.q
 
@@ -46,10 +47,8 @@ begin_hunk_4_@_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4
   unreachable
 
 bb.r:                                             ; preds = %bb.p
-  %7 = add i64 %i.n, 1
-  %i.aw = add i64 %7, %.sroa.04.092
-  %8 = sub i64 %i.aw, %i.g                        ; 3 uses
-  store i64 %8, ptr %i.a, align 8
+  %i.aw = add i64 %i.ac, %invariant.op            ; 3 uses
+  store i64 %i.aw, ptr %i.a, align 8
   br i1 %6, label %bb.f, label %.sink.split
 }
 
@@ -58,11 +57,11 @@ begin_hunk_5_@_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtN
   %i.eu = getelementptr inbounds nuw i8, ptr %i.aa, i64 84
   %i.ev = load i32, ptr %i.eu, align 4, !alias.scope !5661, !noalias !5662, !noundef !4
   %i.ew = zext i32 %i.ev to i64
-  %i.ex = add nuw nsw i32 %i.et, -719163
-  %2 = add nsw i32 %i.ex, %.sroa.05.0.i.i.i.i.i.i.i.i
-  %3 = sub nsw i32 %2, %i.eo
-  %i.ey = add nsw i32 %3, %i.eq
-  %narrow.i.i.i.i.i.i.i = add nsw i32 %i.ey, %i.er
+  %i.ex = add nsw i32 %i.et, %.sroa.05.0.i.i.i.i.i.i.i.i
+  %2 = sub nsw i32 %i.ex, %i.eo
+  %3 = add nsw i32 %2, %i.eq
+  %i.ey = add nsw i32 %3, %i.er
+  %narrow.i.i.i.i.i.i.i = add nsw i32 %i.ey, -719163
   %i.ez = sext i32 %narrow.i.i.i.i.i.i.i to i64
   %i.fa = mul nsw i64 %i.ez, 86400
   %i.fb = add nsw i64 %i.fa, %i.ew
@@ -71,11 +70,11 @@ begin_hunk_6_@_RNvXs1_NtNtNtCs8CRAYtH5WmW_12futures_util6stream6stream10filter_m
   %i.ch = and i32 %i.cg, 511
   %i.ci = load i32, ptr %i.am, align 4, !alias.scope !10564, !noalias !10556, !noundef !4
   %i.cj = zext i32 %i.ci to i64
-  %i.ck = add nuw nsw i32 %i.ch, -719163
-  %3 = add nsw i32 %i.ck, %.sroa.05.0.i.i.i
-  %4 = sub nsw i32 %3, %i.cc
-  %i.cl = add nsw i32 %4, %i.ce
-  %narrow.i.i = add nsw i32 %i.cl, %i.cf
+  %i.ck = add nsw i32 %i.ch, %.sroa.05.0.i.i.i
+  %3 = sub nsw i32 %i.ck, %i.cc
+  %4 = add nsw i32 %3, %i.ce
+  %i.cl = add nsw i32 %4, %i.cf
+  %narrow.i.i = add nsw i32 %i.cl, -719163
   %i.cm = sext i32 %narrow.i.i to i64
   %i.cn = mul nsw i64 %i.cm, 86400
   %i.co = add nsw i64 %i.cn, %i.cj
@@ -84,12 +83,12 @@ begin_hunk_7_@_RNvXs6_NtNtCs1N9T06jgEdt_11arrow_array5array10list_arrayINtB5_16G
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = tail call noundef i64 @_RNvXNtCs1N9T06jgEdt_11arrow_array5arrayINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB2_5ArrayEL_EB1a_21get_array_memory_size(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a)
-  %1 = add i64 %i.b, 112
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4
   %.sroa.03.0.in = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   %.sroa.03.0 = load i64, ptr %.sroa.03.0.in, align 8, !noundef !4
-  %i.e = add i64 %1, %.sroa.03.0                  ; 2 uses
+  %1 = add i64 %i.b, %.sroa.03.0
+  %i.e = add i64 %1, 112                          ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !noundef !4 ; 2 uses
   %.not6 = icmp eq ptr %i.g, null
@@ -98,12 +97,12 @@ begin_hunk_8_@_RNvXs6_NtNtCs1N9T06jgEdt_11arrow_array5array10list_arrayINtB5_16G
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = tail call noundef i64 @_RNvXNtCs1N9T06jgEdt_11arrow_array5arrayINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB2_5ArrayEL_EB1a_21get_array_memory_size(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a)
-  %1 = add i64 %i.b, 112
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !noundef !4
   %.sroa.03.0.in = getelementptr inbounds nuw i8, ptr %i.d, i64 48
   %.sroa.03.0 = load i64, ptr %.sroa.03.0.in, align 8, !noundef !4
-  %i.e = add i64 %1, %.sroa.03.0                  ; 2 uses
+  %1 = add i64 %i.b, %.sroa.03.0
+  %i.e = add i64 %1, 112                          ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.g = load ptr, ptr %i.f, align 8, !noundef !4 ; 2 uses
   %.not6 = icmp eq ptr %i.g, null
