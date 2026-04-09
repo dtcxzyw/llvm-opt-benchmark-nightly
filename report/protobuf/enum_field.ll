@@ -4,8 +4,8 @@ begin_hunk_0_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !15   ; 2 uses
   %i.f = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %i.c, i64 noundef %i.e)
-  %i.g = add i64 %i.e, 87
-  %i.h = add i64 %i.g, %i.f                       ; 3 uses
+  %i.g = add i64 %i.e, %i.f
+  %i.h = add i64 %i.g, 87                         ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !99, !noalias !202
   %i.k = and i64 %i.j, 65535
@@ -14,8 +14,8 @@ begin_hunk_1_@_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotF
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i64, ptr %i.b, align 8, !tbaa !15   ; 2 uses
   %i.d = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %i.a, i64 noundef %i.c)
-  %i.e = add i64 %i.c, 87
-  %i.f = add i64 %i.e, %i.d
+  %i.e = add i64 %i.c, %i.d
+  %i.f = add i64 %i.e, 87
   ret i64 %i.f
 }
 
@@ -24,15 +24,15 @@ begin_hunk_2_@_ZN4absl12lts_2025051218container_internal22DeallocateBackingArray
 bb.a:
   %.neg = select i1 %5, i64 -9, i64 -8
   %i.a = select i1 %5, i64 9, i64 8
-  %i.b = add i64 %1, 15
-  %i.c = add i64 %i.b, %4
-  %i.d = add i64 %i.c, %i.a
+  %i.b = add i64 %1, %4
+  %i.c = add i64 %i.b, %i.a
+  %i.d = add i64 %i.c, 15
   %i.e = sub i64 0, %4
   %i.f = and i64 %i.d, %i.e
   %i.g = mul i64 %3, %1
   %i.h = getelementptr inbounds i8, ptr %2, i64 %.neg
-  %i.i = add i64 %i.g, 7
-  %i.j = add i64 %i.i, %i.f
+  %i.i = add i64 %i.g, %i.f
+  %i.j = add i64 %i.i, 7
   %i.k = and i64 %i.j, -8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.k) #28
   ret void
@@ -41,8 +41,8 @@ begin_hunk_3_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
 
 _ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE.exit: ; preds = %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.o
   %.0.i = phi i64 [ %i.cm, %bb.o ], [ %i.bk, %bb.j ], [ %i.ce, %bb.l ], [ %i.cl, %bb.n ], [ %i.az, %bb.h ], [ ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), %bb.f ]
-  %i.cn = add i64 %i.aa, 87
-  %i.co = add i64 %i.cn, %.0.i                    ; 2 uses
+  %i.cn = add i64 %i.aa, %.0.i
+  %i.co = add i64 %i.cn, 87                       ; 2 uses
   %i.cp = lshr i64 %i.co, 7
   %i.cq = xor i64 %i.cp, %i.j                     ; 5 uses
   %i.cr = trunc i64 %i.co to i8
@@ -51,8 +51,8 @@ begin_hunk_4_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
 
 _ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE.exit: ; preds = %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.o
   %.0.i = phi i64 [ %i.cm, %bb.o ], [ %i.bk, %bb.j ], [ %i.ce, %bb.l ], [ %i.cl, %bb.n ], [ %i.az, %bb.h ], [ ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), %bb.f ]
-  %i.cn = add i64 %i.aa, 87
-  %i.co = add i64 %i.cn, %.0.i                    ; 2 uses
+  %i.cn = add i64 %i.aa, %.0.i
+  %i.co = add i64 %i.cn, 87                       ; 2 uses
   %i.cp = lshr i64 %i.co, 7
   %i.cq = xor i64 %i.cp, %i.j                     ; 5 uses
   %i.cr = trunc i64 %i.co to i8
@@ -61,8 +61,8 @@ begin_hunk_5_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !15   ; 2 uses
   %i.f = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %i.c, i64 noundef %i.e)
-  %i.g = add i64 %i.e, 87
-  %i.h = add i64 %i.g, %i.f                       ; 3 uses
+  %i.g = add i64 %i.e, %i.f
+  %i.h = add i64 %i.g, 87                         ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !99, !noalias !314
   %i.k = and i64 %i.j, 65535
@@ -71,8 +71,8 @@ begin_hunk_6_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !15   ; 2 uses
   %i.f = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %i.c, i64 noundef %i.e)
-  %i.g = add i64 %i.e, 87
-  %i.h = add i64 %i.g, %i.f                       ; 3 uses
+  %i.g = add i64 %i.e, %i.f
+  %i.h = add i64 %i.g, 87                         ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.j = load i64, ptr %i.i, align 8, !tbaa !99, !noalias !317
   %i.k = and i64 %i.j, 65535
@@ -81,8 +81,8 @@ begin_hunk_7_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
 
 _ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE.exit: ; preds = %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.o
   %.0.i = phi i64 [ %i.cm, %bb.o ], [ %i.bk, %bb.j ], [ %i.ce, %bb.l ], [ %i.cl, %bb.n ], [ %i.az, %bb.h ], [ ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), %bb.f ]
-  %i.cn = add i64 %i.aa, 87
-  %i.co = add i64 %i.cn, %.0.i                    ; 2 uses
+  %i.cn = add i64 %i.aa, %.0.i
+  %i.co = add i64 %i.cn, 87                       ; 2 uses
   %i.cp = lshr i64 %i.co, 7
   %i.cq = xor i64 %i.cp, %i.j                     ; 5 uses
   %i.cr = trunc i64 %i.co to i8
@@ -91,8 +91,8 @@ begin_hunk_8_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !342
   %i.p = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload.i, i64 noundef %.sroa.0.0.copyload.i)
-  %i.q = add i64 %.sroa.0.0.copyload.i, 87
-  %i.r = add i64 %i.q, %i.p                       ; 2 uses
+  %i.q = add i64 %.sroa.0.0.copyload.i, %i.p
+  %i.r = add i64 %i.q, 87                         ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !99, !noalias !358
   %i.u = and i64 %i.t, 65535
@@ -101,8 +101,8 @@ begin_hunk_9_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !342
   %i.p = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload.i, i64 noundef %.sroa.0.0.copyload.i)
-  %i.q = add i64 %.sroa.0.0.copyload.i, 87
-  %i.r = add i64 %i.q, %i.p                       ; 2 uses
+  %i.q = add i64 %.sroa.0.0.copyload.i, %i.p
+  %i.r = add i64 %i.q, 87                         ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !99, !noalias !392
   %i.u = and i64 %i.t, 65535
@@ -111,8 +111,8 @@ begin_hunk_10_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fl
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !342
   %i.p = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload.i, i64 noundef %.sroa.0.0.copyload.i)
-  %i.q = add i64 %.sroa.0.0.copyload.i, 87
-  %i.r = add i64 %i.q, %i.p                       ; 2 uses
+  %i.q = add i64 %.sroa.0.0.copyload.i, %i.p
+  %i.r = add i64 %i.q, 87                         ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !99, !noalias !398
   %i.u = and i64 %i.t, 65535
@@ -121,8 +121,8 @@ begin_hunk_11_@_ZN4absl12lts_2025051218container_internal5btreeINS1_10set_params
 bb.f:                                             ; preds = %bb.e
   %i.aa = load i8, ptr %i.l, align 1, !tbaa !17
   %i.ab = zext i8 %i.aa to i32
-  %i.ac = add nsw i32 %i.y, 1
-  %i.ad = add nsw i32 %i.ac, %i.ab
+  %i.ac = add nsw i32 %i.y, %i.ab
+  %i.ad = add nsw i32 %i.ac, 1
   br label %.critedge.sink.split
 
 bb.g:                                             ; preds = %bb.d, %bb.c, %bb.b
@@ -131,9 +131,9 @@ begin_hunk_12_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
   %lcmp.mod79 = trunc i8 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod79)
   %i.cl = load i8, ptr %i.a, align 1, !tbaa !17
-  %i.cm = trunc i64 %indvars.iv.epil.init to i8
-  %i.cn = add i8 %i.cm, 1
-  %i.co = add i8 %i.cl, %i.cn                     ; 2 uses
+  %i.cm = trunc nuw i64 %indvars.iv.epil.init to i8
+  %i.cn = add i8 %i.cl, %i.cm
+  %i.co = add i8 %i.cn, 1                         ; 2 uses
   %i.cp = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.epil.init
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !408 ; 3 uses
   %i.cr = zext i8 %i.co to i64
@@ -142,12 +142,12 @@ begin_hunk_13_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.f, %.lr.ph.new
-  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.f ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.f ] ; 4 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.f ]
   %i.cw = load i8, ptr %i.a, align 1, !tbaa !17
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %4 = trunc nuw i64 %indvars.iv.next to i8
-  %i.cx = add i8 %i.cw, %4                        ; 2 uses
+  %4 = trunc nuw i64 %indvars.iv to i8
+  %5 = add i8 %i.cw, %4
+  %i.cx = add i8 %5, 1                            ; 2 uses
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !408 ; 3 uses
   %i.da = zext i8 %i.cx to i64
@@ -156,10 +156,11 @@ begin_hunk_14_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
   %i.dc = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   store i8 %i.cx, ptr %i.dc, align 1, !tbaa !17
   store ptr %0, ptr %i.cz, align 8, !tbaa !408
+  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.dd = load i8, ptr %i.a, align 1, !tbaa !17
-  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
-  %5 = trunc nuw i64 %indvars.iv.next.1 to i8
-  %i.de = add i8 %i.dd, %5                        ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv.next to i8
+  %7 = add i8 %i.dd, %6
+  %i.de = add i8 %7, 1                            ; 2 uses
   %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %indvars.iv.next
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !408 ; 3 uses
   %i.dh = zext i8 %i.de to i64
@@ -168,6 +169,7 @@ begin_hunk_15_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
   %i.dj = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   store i8 %i.de, ptr %i.dj, align 1, !tbaa !17
   store ptr %0, ptr %i.dg, align 8, !tbaa !408
+  %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader.loopexit.unr-lcssa, label %bb.f, !llvm.loop !427
@@ -176,7 +178,6 @@ begin_hunk_16_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
 
 .lr.ph63.new:                                     ; preds = %.lr.ph63
   %unroll_iter = and i64 %i.da, -2
-  %invariant.op = sub i8 1, %1
   br label %bb.g
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
@@ -185,8 +186,9 @@ begin_hunk_17_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_
   store ptr %2, ptr %i.ec, align 8, !tbaa !408
   %i.eg = load i8, ptr %i.as, align 1, !tbaa !17
   %i.eh = trunc i64 %indvars.iv65 to i8
-  %.reass = add i8 %i.eh, %invariant.op
-  %i.ei = add i8 %.reass, %i.eg
+  %4 = sub i8 %i.eh, %1
+  %.reass = add i8 %4, %i.eg
+  %i.ei = add i8 %.reass, 1
   %i.ej = zext i8 %i.ei to i64
   %i.ek = getelementptr inbounds nuw [8 x i8], ptr %i.cx, i64 %i.ej
   %i.el = load ptr, ptr %i.ek, align 8, !tbaa !408 ; 3 uses
