@@ -1,0 +1,177 @@
+diff --git a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+index bc52bf1168d4a..2688891c15096 100644
+--- a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
++++ b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+@@ -481,6 +481,8 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+   /// Return true if the cast from integer to FP can be proven to be exact
+   /// for all possible inputs (the conversion does not lose any precision).
+   bool isKnownExactCastIntToFP(CastInst &I) const;
++  bool canBeCastedExactlyIntToFP(Value *V, Type *FPTy, bool IsSigned,
++                                 const Instruction *CxtI = nullptr) const;
+ 
+   OverflowResult computeOverflowForUnsignedMul(const Value *LHS,
+                                                const Value *RHS,
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index a1d67a0c60ac5..d95c395af33b6 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -2004,10 +2004,17 @@ static Type *shrinkFPConstantVector(Value *V, bool PreferBFloat) {
+ }
+ 
+ /// Find the minimum FP type we can safely truncate to.
+-static Type *getMinimumFPType(Value *V, bool PreferBFloat) {
++static Type *getMinimumFPType(Value *V, Type *PreferredTy, InstCombiner &IC) {
+   if (auto *FPExt = dyn_cast<FPExtInst>(V))
+     return FPExt->getOperand(0)->getType();
+ 
++  Value *Src;
++  if (match(V, m_IToFP(m_Value(Src))))
++    if (IC.canBeCastedExactlyIntToFP(Src, PreferredTy, isa<SIToFPInst>(V),
++                                     cast<Instruction>(V)))
++      return PreferredTy;
++
++  bool PreferBFloat = PreferredTy->getScalarType()->isBFloatTy();
+   // If this value is a constant, return the constant in the smallest FP type
+   // that can accurately represent it.  This allows us to turn
+   // (float)((double)X+2.0) into x+2.0f.
+@@ -2030,30 +2037,27 @@ static Type *getMinimumFPType(Value *V, bool PreferBFloat) {
+   return V->getType();
+ }
+ 
+-bool InstCombiner::isKnownExactCastIntToFP(CastInst &I) const {
+-  CastInst::CastOps Opcode = I.getOpcode();
+-  assert((Opcode == CastInst::SIToFP || Opcode == CastInst::UIToFP) &&
+-         "Unexpected cast");
+-  Value *Src = I.getOperand(0);
+-  Type *SrcTy = Src->getType();
+-  Type *FPTy = I.getType();
+-  bool IsSigned = Opcode == Instruction::SIToFP;
++bool InstCombiner::canBeCastedExactlyIntToFP(Value *V, Type *FPTy,
++                                             bool IsSigned,
++                                             const Instruction *CxtI) const {
++  Type *SrcTy = V->getType();
++  assert(SrcTy->isIntOrIntVectorTy() && "Expected an integer type");
+   int SrcSize = (int)SrcTy->getScalarSizeInBits() - IsSigned;
++  int DestNumSigBits = FPTy->getFPMantissaWidth();
+ 
+   // Easy case - if the source integer type has less bits than the FP mantissa,
+   // then the cast must be exact.
+-  int DestNumSigBits = FPTy->getFPMantissaWidth();
+   if (SrcSize <= DestNumSigBits)
+     return true;
+ 
+   // Cast from FP to integer and back to FP is independent of the intermediate
+   // integer width because of poison on overflow.
+   Value *F;
+-  if (match(Src, m_FPToI(m_Value(F)))) {
++  if (match(V, m_FPToI(m_Value(F)))) {
+     // If this is uitofp (fptosi F), the source needs an extra bit to avoid
+     // potential rounding of negative FP input values.
+     int SrcNumSigBits = F->getType()->getFPMantissaWidth();
+-    if (!IsSigned && match(Src, m_FPToSI(m_Value())))
++    if (!IsSigned && match(V, m_FPToSI(m_Value())))
+       SrcNumSigBits++;
+ 
+     // [su]itofp (fpto[su]i F) --> exact if the source type has less or equal
+@@ -2066,7 +2070,7 @@ bool InstCombiner::isKnownExactCastIntToFP(CastInst &I) const {
+ 
+   // Try harder to find if the source integer type has less significant bits.
+   // Compute number of sign bits or determine trailing zeros.
+-  KnownBits SrcKnown = computeKnownBits(Src, &I);
++  KnownBits SrcKnown = computeKnownBits(V, CxtI);
+   int SigBits = (int)SrcTy->getScalarSizeInBits() -
+                 SrcKnown.countMinLeadingZeros() -
+                 SrcKnown.countMinTrailingZeros();
+@@ -2076,7 +2080,7 @@ bool InstCombiner::isKnownExactCastIntToFP(CastInst &I) const {
+   // For sitofp, the sign maps to the FP sign bit, so only magnitude bits
+   // (BitWidth - NumSignBits) consume mantissa.
+   if (IsSigned) {
+-    SigBits = (int)SrcTy->getScalarSizeInBits() - ComputeNumSignBits(Src, &I);
++    SigBits = (int)SrcTy->getScalarSizeInBits() - ComputeNumSignBits(V, CxtI);
+     if (SigBits <= DestNumSigBits)
+       return true;
+   }
+@@ -2084,6 +2088,15 @@ bool InstCombiner::isKnownExactCastIntToFP(CastInst &I) const {
+   return false;
+ }
+ 
++bool InstCombiner::isKnownExactCastIntToFP(CastInst &I) const {
++  CastInst::CastOps Opcode = I.getOpcode();
++  assert((Opcode == CastInst::SIToFP || Opcode == CastInst::UIToFP) &&
++         "Unexpected cast");
++  Value *Src = I.getOperand(0);
++  Type *FPTy = I.getType();
++  return canBeCastedExactlyIntToFP(Src, FPTy, Opcode == CastInst::SIToFP, &I);
++}
++
+ Instruction *InstCombinerImpl::visitFPTrunc(FPTruncInst &FPT) {
+   if (Instruction *I = commonCastTransforms(FPT))
+     return I;
+@@ -2098,9 +2111,8 @@ Instruction *InstCombinerImpl::visitFPTrunc(FPTruncInst &FPT) {
+   Type *Ty = FPT.getType();
+   auto *BO = dyn_cast<BinaryOperator>(FPT.getOperand(0));
+   if (BO && BO->hasOneUse()) {
+-    bool PreferBFloat = Ty->getScalarType()->isBFloatTy();
+-    Type *LHSMinType = getMinimumFPType(BO->getOperand(0), PreferBFloat);
+-    Type *RHSMinType = getMinimumFPType(BO->getOperand(1), PreferBFloat);
++    Type *LHSMinType = getMinimumFPType(BO->getOperand(0), Ty, *this);
++    Type *RHSMinType = getMinimumFPType(BO->getOperand(1), Ty, *this);
+     unsigned OpWidth = BO->getType()->getFPMantissaWidth();
+     unsigned LHSWidth = LHSMinType->getFPMantissaWidth();
+     unsigned RHSWidth = RHSMinType->getFPMantissaWidth();
+diff --git a/llvm/test/Transforms/InstCombine/fptrunc.ll b/llvm/test/Transforms/InstCombine/fptrunc.ll
+index 0b5d8b3cd06e0..2ffb1690fa8cb 100644
+--- a/llvm/test/Transforms/InstCombine/fptrunc.ll
++++ b/llvm/test/Transforms/InstCombine/fptrunc.ll
+@@ -240,3 +240,51 @@ define half @fptrunc_to_bfloat_bitcast_to_half(float %src) {
+   %cast = bitcast bfloat %trunc to half
+   ret half %cast
+ }
++
++; Convert from integer is exact, so cast to float even if fpext is simplified.
++
++define float @fptrunc_narrow_sitofp_with_fpext(i64 %x) {
++; CHECK-LABEL: @fptrunc_narrow_sitofp_with_fpext(
++; CHECK-NEXT:    [[TMP1:%.*]] = urem i64 [[X:%.*]], 74383
++; CHECK-NEXT:    [[TMP2:%.*]] = uitofp nneg i64 [[TMP1]] to float
++; CHECK-NEXT:    [[CONV4:%.*]] = fdiv float [[TMP2]], 7.438300e+04
++; CHECK-NEXT:    ret float [[CONV4]]
++;
++  %1 = urem i64 %x, 74383
++  %conv  = sitofp i64 %1 to float
++  %conv2 = fpext float %conv to double
++  %div3  = fdiv double %conv2, 7.438300e+04
++  %conv4 = fptrunc double %div3 to float
++  ret float %conv4
++}
++
++; Convert from integer is exact, so cast to float.
++
++define float @fptrunc_narrow_urem_within_float_range(i64 %x) {
++; CHECK-LABEL: @fptrunc_narrow_urem_within_float_range(
++; CHECK-NEXT:    [[TMP1:%.*]] = urem i64 [[X:%.*]], 74383
++; CHECK-NEXT:    [[TMP2:%.*]] = uitofp nneg i64 [[TMP1]] to float
++; CHECK-NEXT:    [[CONV4:%.*]] = fdiv float [[TMP2]], 7.438300e+04
++; CHECK-NEXT:    ret float [[CONV4]]
++;
++  %1 = urem i64 %x,74383
++  %conv = sitofp i64 %1 to double
++  %div3 = fdiv double %conv, 7.438300e+04
++  %conv4 = fptrunc double %div3 to float
++  ret float %conv4
++}
++
++; Negative test - input is not known, so cast cannot be narrowed to float.
++
++define float @fptrunc_narrow_outside_float_range(i64 %x) {
++; CHECK-LABEL: @fptrunc_narrow_outside_float_range(
++; CHECK-NEXT:    [[CONV:%.*]] = sitofp i64 [[X:%.*]] to double
++; CHECK-NEXT:    [[DIV3:%.*]] = fdiv double [[CONV]], 7.438300e+04
++; CHECK-NEXT:    [[CONV4:%.*]] = fptrunc double [[DIV3]] to float
++; CHECK-NEXT:    ret float [[CONV4]]
++;
++  %conv = sitofp i64 %x to double
++  %div3 = fdiv double %conv, 7.438300e+04
++  %conv4 = fptrunc double %div3 to float
++  ret float %conv4
++}
