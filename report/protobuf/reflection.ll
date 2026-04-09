@@ -4,8 +4,8 @@ begin_hunk_0_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !15
   %i.m = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload.i, i64 noundef %.sroa.0.0.copyload.i)
-  %i.n = add i64 %.sroa.0.0.copyload.i, 87
-  %i.o = add i64 %i.n, %i.m                       ; 2 uses
+  %i.n = add i64 %.sroa.0.0.copyload.i, %i.m
+  %i.o = add i64 %i.n, 87                         ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load i64, ptr %i.p, align 8, !tbaa !30, !noalias !32
   %i.r = and i64 %i.q, 65535
@@ -14,20 +14,18 @@ begin_hunk_1_@_ZZN4absl12lts_2025051214flags_internal13FlagSaverImpl16SaveFromRe
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4absl12lts_2025051214flags_internal18FlagStateInterfaceESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, label %.lr.ph.i.i.i.i.preheader
 
 .lr.ph.i.i.i.i.preheader:                         ; preds = %.noexc8
-  %3 = add i64 %i.j, -8
-  %4 = sub i64 %3, %i.k                           ; 2 uses
+  %3 = sub i64 %i.j, %i.k
+  %4 = add i64 %3, -8                             ; 2 uses
   %i.v = lshr i64 %4, 3
   %i.w = add nuw nsw i64 %i.v, 1                  ; 2 uses
   %min.iters.check = icmp ult i64 %4, 152
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.preheader18, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.preheader
-  %5 = add i64 %i.j, -8
-  %i.x = sub i64 %5, %i.k
-  %i.y = and i64 %i.x, -8
-  %6 = add i64 %i.y, 8                            ; 2 uses
-  %scevgep = getelementptr i8, ptr %i.t, i64 %6
-  %scevgep13 = getelementptr i8, ptr %i.i, i64 %6
+  %i.x = sub i64 %i.j, %i.k
+  %i.y = and i64 %i.x, -8                         ; 2 uses
+  %scevgep = getelementptr i8, ptr %i.t, i64 %i.y
+  %scevgep13 = getelementptr i8, ptr %i.i, i64 %i.y
   %bound0 = icmp ult ptr %i.t, %scevgep13
   %bound1 = icmp ult ptr %i.i, %scevgep
   %found.conflict = and i1 %bound0, %bound1
@@ -36,15 +34,15 @@ begin_hunk_2_@_ZN4absl12lts_2025051218container_internal22DeallocateBackingArray
 bb.a:
   %.neg = select i1 %5, i64 -9, i64 -8
   %i.a = select i1 %5, i64 9, i64 8
-  %i.b = add i64 %1, 15
-  %i.c = add i64 %i.b, %4
-  %i.d = add i64 %i.c, %i.a
+  %i.b = add i64 %1, %4
+  %i.c = add i64 %i.b, %i.a
+  %i.d = add i64 %i.c, 15
   %i.e = sub i64 0, %4
   %i.f = and i64 %i.d, %i.e
   %i.g = mul i64 %3, %1
   %i.h = getelementptr inbounds i8, ptr %2, i64 %.neg
-  %i.i = add i64 %i.g, 7
-  %i.j = add i64 %i.i, %i.f
+  %i.i = add i64 %i.g, %i.f
+  %i.j = add i64 %i.i, 7
   %i.k = and i64 %i.j, -8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef %i.k) #34
   ret void
@@ -53,8 +51,8 @@ begin_hunk_3_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !15
   %i.c = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload.i, i64 noundef %.sroa.0.0.copyload.i)
-  %i.d = add i64 %.sroa.0.0.copyload.i, 87
-  %i.e = add i64 %i.d, %i.c                       ; 3 uses
+  %i.d = add i64 %.sroa.0.0.copyload.i, %i.c
+  %i.e = add i64 %i.d, 87                         ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load i64, ptr %i.f, align 8, !tbaa !30, !noalias !138
   %i.h = and i64 %i.g, 65535
@@ -63,8 +61,8 @@ begin_hunk_4_@_ZN4absl12lts_2025051218container_internal23TypeErasedApplyToSlotF
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !15
   %i.a = tail call noundef i64 @_ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE(i64 noundef ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), ptr noundef %.sroa.2.0.copyload, i64 noundef %.sroa.0.0.copyload)
-  %i.b = add i64 %.sroa.0.0.copyload, 87
-  %i.c = add i64 %i.b, %i.a
+  %i.b = add i64 %.sroa.0.0.copyload, %i.a
+  %i.c = add i64 %i.b, 87
   ret i64 %i.c
 }
 
@@ -73,8 +71,8 @@ begin_hunk_5_@_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17Fla
 
 _ZN4absl12lts_2025051213hash_internal15MixingHashState21CombineContiguousImplEmPKhmSt17integral_constantIiLi8EE.exit: ; preds = %bb.f, %bb.h, %bb.j, %bb.l, %bb.n, %bb.o
   %.0.i = phi i64 [ %i.cj, %bb.o ], [ %i.bh, %bb.j ], [ %i.cb, %bb.l ], [ %i.ci, %bb.n ], [ %i.aw, %bb.h ], [ ptrtoint (ptr @_ZN4absl12lts_2025051213hash_internal15MixingHashState5kSeedE to i64), %bb.f ]
-  %i.ck = add i64 %.sroa.0.0.copyload.i.i.i.i.i.i, 87
-  %i.cl = add i64 %i.ck, %.0.i                    ; 2 uses
+  %i.ck = add i64 %.sroa.0.0.copyload.i.i.i.i.i.i, %.0.i
+  %i.cl = add i64 %i.ck, 87                       ; 2 uses
   %i.cm = lshr i64 %i.cl, 7
   %i.cn = xor i64 %i.cm, %i.j                     ; 5 uses
   %i.co = trunc i64 %i.cl to i8
