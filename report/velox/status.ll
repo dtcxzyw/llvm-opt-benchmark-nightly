@@ -4,7 +4,7 @@ begin_hunk_0_@_ZNK5arrow6Status5AbortERKNSt7__cxx1112basic_stringIcSt11char_trai
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 48
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = invoke noundef signext i8 %i.x(ptr noundef nonnull align 8 dereferenceable(570) %i.q, i8 noundef signext 10)
-          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i unwind label %bb.g
+          to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i unwind label %bb.g, !inline_history !66
 
 _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i: ; preds = %.noexc4, %bb.e
   %.0.i.i.i = phi i8 [ %i.u, %bb.e ], [ %i.y, %.noexc4 ]
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZNK5arrow6Status4WarnEv:bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = invoke noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1)
-          to label %.noexc unwind label %bb.e
+          to label %.noexc unwind label %bb.e, !inline_history !67
 
 .noexc:                                           ; preds = %bb.b
   br i1 %i.d, label %bb.c, label %_ZN5arrow4util12ArrowLogBaselsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS1_RKT_.exit
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZNK5arrow6Status4WarnEv:bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr %i.g(ptr noundef nonnull align 8 dereferenceable(8) %1)
-          to label %.noexc4 unwind label %bb.e
+          to label %.noexc4 unwind label %bb.e, !inline_history !67
 
 .noexc4:                                          ; preds = %bb.c
   %i.i = load ptr, ptr %2, align 8, !tbaa !11
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = invoke noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc unwind label %bb.f
+          to label %.noexc unwind label %bb.f, !inline_history !67
 
 .noexc:                                           ; preds = %bb.a
   br i1 %i.d, label %bb.b, label %_ZN5arrow4util12ArrowLogBaselsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS1_RKT_.exit
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = invoke noundef nonnull align 8 dereferenceable(8) ptr %i.g(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc7 unwind label %bb.f
+          to label %.noexc7 unwind label %bb.f, !inline_history !67
 
 .noexc7:                                          ; preds = %bb.b
   %i.i = load ptr, ptr %1, align 8, !tbaa !11
@@ -49,7 +49,7 @@ begin_hunk_5_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   %i.o = load ptr, ptr %i.n, align 8
   %i.p = invoke noundef zeroext i1 %i.o(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc9 unwind label %bb.f
+          to label %.noexc9 unwind label %bb.f, !inline_history !68
 
 .noexc9:                                          ; preds = %_ZN5arrow4util12ArrowLogBaselsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS1_RKT_.exit
   br i1 %i.p, label %bb.c, label %_ZN5arrow4util12ArrowLogBaselsIA3_cEERS1_RKT_.exit
@@ -58,7 +58,7 @@ begin_hunk_6_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.s = load ptr, ptr %i.r, align 8
   %i.t = invoke noundef nonnull align 8 dereferenceable(8) ptr %i.s(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc10 unwind label %bb.f
+          to label %.noexc10 unwind label %bb.f, !inline_history !68
 
 .noexc10:                                         ; preds = %bb.c
   %i.u = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.t, ptr noundef nonnull @.str.19, i64 noundef 2)
@@ -67,7 +67,7 @@ begin_hunk_7_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = invoke noundef zeroext i1 %i.x(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc12 unwind label %bb.h
+          to label %.noexc12 unwind label %bb.h, !inline_history !67
 
 .noexc12:                                         ; preds = %bb.d
   br i1 %i.y, label %bb.e, label %_ZN5arrow4util12ArrowLogBaselsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEERS1_RKT_.exit15
@@ -76,7 +76,7 @@ begin_hunk_8_@_ZNK5arrow6Status4WarnERKNSt7__cxx1112basic_stringIcSt11char_trait
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 24
   %i.ab = load ptr, ptr %i.aa, align 8
   %i.ac = invoke noundef nonnull align 8 dereferenceable(8) ptr %i.ab(ptr noundef nonnull align 8 dereferenceable(8) %2)
-          to label %.noexc13 unwind label %bb.h
+          to label %.noexc13 unwind label %bb.h, !inline_history !67
 
 .noexc13:                                         ; preds = %bb.e
   %i.ad = load ptr, ptr %3, align 8, !tbaa !11
@@ -85,7 +85,7 @@ begin_hunk_9_@_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release
   %i.a = load ptr, ptr %0, align 8, !tbaa !23
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !66
+  tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !69
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
   %i.e = load i8, ptr @__libc_single_threaded, align 1, !tbaa !16
   %.not.i = icmp eq i8 %i.e, 0
@@ -94,7 +94,7 @@ begin_hunk_10_@_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_releas
   %i.j = load ptr, ptr %0, align 8, !tbaa !23
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !66
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(16) %0) #16, !inline_history !69
   br label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE19_M_release_last_useEv.exit: ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i, %bb.d
@@ -103,11 +103,11 @@ begin_hunk_11_@_ZNSt12__shared_ptrIN5arrow12StatusDetailELN9__gnu_cxx12_Lock_pol
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !23
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.j = load ptr, ptr %i.i, align 8
-  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !67
+  tail call void %i.j(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !70
   %i.k = load ptr, ptr %i.b, align 8, !tbaa !23
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8
-  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !67
+  tail call void %i.m(ptr noundef nonnull align 8 dereferenceable(16) %i.b) #16, !inline_history !70
   br label %_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -116,6 +116,9 @@ begin_hunk_12_@llvm.memset.p0.i64
 !63 = !{!"p1 _ZTS15__locale_struct", !10, i64 0}
 !64 = !{!"p1 int", !10, i64 0}
 !65 = !{!"p1 short", !10, i64 0}
-!66 = distinct !{null}
-!67 = distinct !{null, null}
+!66 = distinct !{null, null}
+!67 = distinct !{null}
+!68 = distinct !{null}
+!69 = distinct !{null}
+!70 = distinct !{null, null}
 end_hunk_12
