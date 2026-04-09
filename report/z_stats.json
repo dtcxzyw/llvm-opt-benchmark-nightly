@@ -1,5 +1,7 @@
 {
+  "SLP.NumStoreChains": 122377,
   "SLP.NumVectorInstructions": 296658,
+  "SLP.NumVectorizedStores": 278500,
   "abstract-call-sites.NumDirectAbstractCallSites": 1845151,
   "abstract-call-sites.NumInvalidAbstractCallSitesNoCallback": 26669,
   "abstract-call-sites.NumInvalidAbstractCallSitesUnknownCallee": 229,
