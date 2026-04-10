@@ -1,0 +1,100 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index c781c6978b275..a2059907607d8 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -1523,6 +1523,35 @@ static Instruction *foldBoxMultiply(BinaryOperator &I) {
+   return nullptr;
+ }
+ 
++static Instruction *
++foldAddWithMaskedOverwrite(BinaryOperator &Add,
++                           InstCombiner::BuilderTy &Builder) {
++  Value *LHS = Add.getOperand(0), *RHS = Add.getOperand(1);
++  Value *X, *Y;
++  const APInt *C, *Mask;
++
++  auto Match = [&](Value *AddOp, Value *AndOp) -> Instruction * {
++    if (!match(AddOp, m_c_Add(m_Value(X), m_APInt(C))) ||
++        !match(AndOp, m_c_And(m_Value(Y), m_APInt(Mask))) || *Mask != ~(*C))
++      return nullptr;
++
++    // Replacing one add with {or, add}. Avoid growth if both sides are shared.
++    if (!AddOp->hasOneUse() && !AndOp->hasOneUse())
++      return nullptr;
++
++    Value *NewOr =
++        Builder.CreateOr(Y, Constant::getIntegerValue(Add.getType(), *C));
++    Instruction *NewAdd = cast<Instruction>(Builder.CreateAdd(X, NewOr));
++    NewAdd->setHasNoSignedWrap(Add.hasNoSignedWrap());
++    NewAdd->setHasNoUnsignedWrap(Add.hasNoUnsignedWrap());
++    return NewAdd;
++  };
++
++  if (Instruction *I = Match(LHS, RHS))
++    return I;
++  return Match(RHS, LHS);
++}
++
+ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+   if (Value *V = simplifyAddInst(I.getOperand(0), I.getOperand(1),
+                                  I.hasNoSignedWrap(), I.hasNoUnsignedWrap(),
+@@ -1604,6 +1633,10 @@ Instruction *InstCombinerImpl::visitAdd(BinaryOperator &I) {
+   if (Value *V = checkForNegativeOperand(I, Builder))
+     return replaceInstUsesWith(I, V);
+ 
++  // (X + C) + (Y & ~C) == X + (Y | C)
++  if (Value *V = foldAddWithMaskedOverwrite(I, Builder))
++    return replaceInstUsesWith(I, V);
++
+   // (A + 1) + ~B --> A - B
+   // ~B + (A + 1) --> A - B
+   // (~B + A) + 1 --> A - B
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index aa68dfb540064..3899fe88eb0cb 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -5,6 +5,44 @@
+ declare void @use(i8)
+ declare void @use_i1(i1)
+ 
++; fold (X + C) + (Y & ~C) -> X + (Y | C)
++
++define i32 @add_masked_overwrite_basic(i32 %x, i32 %y) {
++; CHECK-LABEL: @add_masked_overwrite_basic(
++; CHECK-NEXT:    [[OR:%.*]] = or i32 [[Y:%.*]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[X:%.*]], [[OR]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %a = add i32 %x, 1
++  %b = and i32 %y, -2
++  %r = add i32 %a, %b
++  ret i32 %r
++}
++
++define i32 @add_masked_overwrite_commuted(i32 %x, i32 %y) {
++; CHECK-LABEL: @add_masked_overwrite_commuted(
++; CHECK-NEXT:    [[OR:%.*]] = or i32 [[Y:%.*]], 1
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 [[X:%.*]], [[OR]]
++; CHECK-NEXT:    ret i32 [[ADD]]
++;
++  %a = add i32 %x, 1
++  %b = and i32 %y, -2
++  %r = add i32 %b, %a
++  ret i32 %r
++}
++
++define <4 x i32> @add_masked_overwrite_vec_splat(<4 x i32> %x, <4 x i32> %y) {
++; CHECK-LABEL: @add_masked_overwrite_vec_splat(
++; CHECK-NEXT:    [[OR:%.*]] = or <4 x i32> [[Y:%.*]], splat (i32 1)
++; CHECK-NEXT:    [[ADD:%.*]] = add <4 x i32> [[X:%.*]], [[OR]]
++; CHECK-NEXT:    ret <4 x i32> [[ADD]]
++;
++  %a = add <4 x i32> %x, splat (i32 1)
++  %b = and <4 x i32> %y, splat (i32 -2)
++  %r = add <4 x i32> %a, %b
++  ret <4 x i32> %r
++}
++
+ define i32 @select_0_or_1_from_bool(i1 %x) {
+ ; CHECK-LABEL: @select_0_or_1_from_bool(
+ ; CHECK-NEXT:    [[NOT_X:%.*]] = xor i1 [[X:%.*]], true
