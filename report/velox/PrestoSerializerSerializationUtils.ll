@@ -1,0 +1,57 @@
+inline.NumInlined: 33059
+inline.NumDeleted: 6234
+begin_hunk_0_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE9eraseImplENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmE
+define linkonce_odr void @_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE9eraseImplENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i64 %2, i64 %3, i64 %4) local_unnamed_addr #33 comdat align 2 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !716  ; 2 uses
+  %5 = and i64 %i.b, -256
+  %6 = and i64 %i.b, 255
+  %i.c = add i64 %5, -256                         ; 2 uses
+  %7 = or disjoint i64 %i.c, %6
+  store i64 %7, ptr %i.a, align 8, !tbaa !716
+  %i.d = and i64 %2, 255                          ; 2 uses
+  %i.e = icmp samesign ult i64 %i.d, 16
+  tail call void @llvm.assume(i1 %i.e)
+end_hunk_0
+begin_hunk_1_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE9eraseImplENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmE:bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.j = load i64, ptr %i.i, align 8, !tbaa !1452
+  %i.k = icmp eq i64 %i.h, %i.j
+  br i1 %i.k, label %bb.b, label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE29adjustSizeAndBeginBeforeEraseENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEE.exit
+
+bb.b:                                             ; preds = %bb.a
+  %8 = icmp eq i64 %i.c, 0
+  br i1 %8, label %_ZN5folly3f146detail11F14ItemIterIPNS1_8F14ChunkIPKN8facebook5velox6BufferEEEE17precheckedAdvanceEv.exit.i, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %i.l = getelementptr inbounds i8, ptr %1, i64 -16
+  %.neg.i.i.i.i = mul i64 %2, -8
+  %i.m = getelementptr inbounds i8, ptr %i.l, i64 %.neg.i.i.i.i ; 2 uses
+  %.not19.i4.i.i = icmp eq i64 %2, 0
+  br i1 %.not19.i4.i.i, label %.critedge.i.i.i.preheader, label %thread-pre-split.i.i
+end_hunk_1
+begin_hunk_2_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE9eraseImplENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmE:bb.a
+  %i.ae = getelementptr inbounds nuw [8 x i8], ptr %i.ad, i64 %i.ab
+  br label %_ZN5folly3f146detail11F14ItemIterIPNS1_8F14ChunkIPKN8facebook5velox6BufferEEEE17precheckedAdvanceEv.exit.i
+
+_ZN5folly3f146detail11F14ItemIterIPNS1_8F14ChunkIPKN8facebook5velox6BufferEEEE17precheckedAdvanceEv.exit.i: ; preds = %thread-pre-split.i.i, %bb.e, %bb.b
+  %.sroa.01.0.i = phi ptr [ null, %bb.b ], [ %i.ae, %bb.e ], [ %i.q, %thread-pre-split.i.i ]
+  %.sroa.7.0.i = phi i64 [ 0, %bb.b ], [ %i.ab, %bb.e ], [ %i.p, %thread-pre-split.i.i ]
+  %i.af = and i64 %.sroa.7.0.i, 255               ; 2 uses
+  %i.ag = icmp samesign ult i64 %i.af, 16
+  tail call void @llvm.assume(i1 %i.ag)
+  %i.ah = lshr i64 %i.af, 1
+  %i.ai = ptrtoint ptr %.sroa.01.0.i to i64
+  %i.aj = or i64 %i.ah, %i.ai
+  store i64 %i.aj, ptr %i.i, align 8, !tbaa !121
+  br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE29adjustSizeAndBeginBeforeEraseENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEE.exit
+
+_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE29adjustSizeAndBeginBeforeEraseENS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEE.exit: ; preds = %bb.a, %_ZN5folly3f146detail11F14ItemIterIPNS1_8F14ChunkIPKN8facebook5velox6BufferEEEE17precheckedAdvanceEv.exit.i
+  %9 = getelementptr inbounds i8, ptr %1, i64 -16
+  %.neg.i.i.i = mul i64 %2, -8
+  %i.ak = getelementptr inbounds i8, ptr %9, i64 %.neg.i.i.i ; 4 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 %2 ; 2 uses
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !34
+  %.not.i.i7 = icmp sgt i8 %i.am, -1
+end_hunk_2
