@@ -1,0 +1,31 @@
+begin_hunk_0_@jpeg_idct_float:bb.a
+  %i.ak = getelementptr inbounds nuw i8, ptr %.0197202, i64 64
+  %i.al = load float, ptr %i.ak, align 4, !tbaa !35
+  %i.am = fmul float %i.al, %i.aj                 ; 2 uses
+  %5 = insertelement <2 x i16> poison, i16 %i.q, i64 0
+  %6 = insertelement <2 x i16> %5, i16 %i.w, i64 1
+  %7 = sitofp <2 x i16> %6 to <2 x float>
+  %i.an = getelementptr inbounds nuw i8, ptr %.0197202, i64 128
+  %i.ao = load float, ptr %i.an, align 4, !tbaa !35
+  %8 = getelementptr inbounds nuw i8, ptr %.0197202, i64 192
+  %9 = load float, ptr %8, align 4, !tbaa !35
+  %10 = insertelement <2 x float> poison, float %i.ao, i64 0
+  %11 = insertelement <2 x float> %10, float %9, i64 1
+  %12 = fmul <2 x float> %11, %7                  ; 3 uses
+  %13 = extractelement <2 x float> %12, i64 0
+  %i.ap = fsub float %i.af, %13                   ; 2 uses
+  %14 = insertelement <2 x float> poison, float %i.af, i64 0
+  %15 = insertelement <2 x float> %14, float %i.am, i64 1
+  %16 = fadd <2 x float> %15, %12                 ; 2 uses
+  %17 = extractelement <2 x float> %12, i64 1
+  %i.aq = fsub float %i.am, %17
+  %18 = extractelement <2 x float> %16, i64 1     ; 3 uses
+  %i.ar = fneg float %18
+  %i.as = tail call float @llvm.fmuladd.f32(float %i.aq, float 0x3FF6A09E60000000, float %i.ar) ; 2 uses
+  %19 = extractelement <2 x float> %16, i64 0     ; 2 uses
+  %i.at = fadd float %19, %18                     ; 2 uses
+  %i.au = fsub float %19, %18                     ; 2 uses
+  %i.av = fadd float %i.ap, %i.as                 ; 2 uses
+  %i.aw = fsub float %i.ap, %i.as                 ; 2 uses
+  %i.ax = insertelement <4 x i16> poison, i16 %i.n, i64 0
+end_hunk_0
