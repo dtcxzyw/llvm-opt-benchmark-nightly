@@ -4,7 +4,8 @@ begin_hunk_0_@_ZNK8facebook5velox9TimerNode10formatImplERNSt7__cxx1112basic_stri
 
 .lr.ph502:                                        ; preds = %.lr.ph
   %i.ti = load i64, ptr %i.p, align 8
-  %i.tj = icmp ule i64 %i.ti, %55                 ; 2 uses
+  %52 = extractelement <2 x i64> %56, i64 0       ; 2 uses
+  %i.tj = icmp ule i64 %i.ti, %52                 ; 2 uses
   %i.tk = ptrtoint ptr %i.te to i64
   %i.tl = ptrtoint ptr %i.tg to i64
   %i.tm = sub i64 %i.tl, %i.tk
@@ -13,16 +14,12 @@ begin_hunk_1_@_ZNK8facebook5velox9TimerNode10formatImplERNSt7__cxx1112basic_stri
   br label %bb.gh
 
 .lr.ph:                                           ; preds = %bb.du, %.lr.ph
-  %.096498 = phi i64 [ %55, %.lr.ph ], [ 0, %bb.du ]
-  %.097497 = phi i64 [ %57, %.lr.ph ], [ 0, %bb.du ]
   %.sroa.0468.0496 = phi ptr [ %i.tr, %.lr.ph ], [ %i.te, %bb.du ] ; 2 uses
-  %52 = load ptr, ptr %.sroa.0468.0496, align 8, !tbaa !42 ; 2 uses
-  %53 = getelementptr inbounds nuw i8, ptr %52, i64 120
-  %54 = load i64, ptr %53, align 8, !tbaa !46
-  %55 = add i64 %54, %.096498                     ; 3 uses
-  %i.tq = getelementptr inbounds nuw i8, ptr %52, i64 128
-  %56 = load i64, ptr %i.tq, align 8, !tbaa !49
-  %57 = add i64 %56, %.097497                     ; 2 uses
+  %53 = phi <2 x i64> [ %56, %.lr.ph ], [ zeroinitializer, %bb.du ]
+  %54 = load ptr, ptr %.sroa.0468.0496, align 8, !tbaa !42
+  %i.tq = getelementptr inbounds nuw i8, ptr %54, i64 120
+  %55 = load <2 x i64>, ptr %i.tq, align 8, !tbaa !36
+  %56 = add <2 x i64> %55, %53                    ; 3 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %.sroa.0468.0496, i64 8 ; 2 uses
   %i.ts = icmp eq ptr %i.tr, %i.tg
   br i1 %i.ts, label %.lr.ph502, label %.lr.ph
@@ -31,8 +28,9 @@ begin_hunk_2_@_ZNK8facebook5velox9TimerNode10formatImplERNSt7__cxx1112basic_stri
 
 bb.dz:                                            ; preds = %._crit_edge503
   %i.ul = load i64, ptr %i.p, align 8, !tbaa !46
-  %i.um = sub i64 %i.ul, %55                      ; 2 uses
+  %i.um = sub i64 %i.ul, %52                      ; 2 uses
   %i.un = load i64, ptr %i.r, align 8, !tbaa !49
+  %57 = extractelement <2 x i64> %56, i64 1
   %spec.select = call i64 @llvm.usub.sat.i64(i64 %i.un, i64 %57) ; 2 uses
   %i.uo = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 4 uses
   %i.up = load ptr, ptr %i.uo, align 8, !tbaa !54 ; 5 uses

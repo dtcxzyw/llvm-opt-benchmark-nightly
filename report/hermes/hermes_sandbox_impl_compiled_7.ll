@@ -4,6 +4,7 @@ begin_hunk_0_@w2c_hermes_pow:bb.a
   %i.ch = getelementptr inbounds nuw i8, ptr %.val805, i64 231384
   %.0.copyload.i819 = load double, ptr %i.ch, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i819) #13, !srcloc !44
+  %3 = fmul double %.0.copyload.i819, %i.cf
   %sh.diff = lshr i64 %i.cc, 40
   %i.ci = and i64 %sh.diff, 4064                  ; 3 uses
   %.val804 = load ptr, ptr %i.cg, align 8, !tbaa !8
@@ -12,6 +13,7 @@ begin_hunk_1_@w2c_hermes_pow:bb.a
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 231472
   %.0.copyload.i820 = load double, ptr %i.ck, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i820) #13, !srcloc !44
+  %4 = fadd double %3, %.0.copyload.i820
   %i.cl = and i64 %i.cc, -4503599627370496
   %i.cm = sub i64 %.1763, %i.cl                   ; 2 uses
   %i.cn = add i64 %i.cm, 2147483648
@@ -20,90 +22,80 @@ begin_hunk_2_@w2c_hermes_pow:bb.a
   %.0.copyload.i821 = load double, ptr %i.cr, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i821) #13, !srcloc !44
   %i.cs = fmul double %.0.copyload.i821, %i.cp
-  %3 = bitcast i64 %i.cm to double
-  %4 = fsub double %3, %i.cp
-  %.val802 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %5 = getelementptr inbounds nuw i8, ptr %.val802, i64 231376
-  %.0.copyload.i822 = load double, ptr %5, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i822) #13, !srcloc !44
+  %5 = fadd double %i.cs, -1.000000e+00           ; 3 uses
+  %6 = bitcast i64 %i.cm to double
+  %7 = fsub double %6, %i.cp
+  %8 = fmul double %7, %.0.copyload.i821          ; 2 uses
+  %9 = fadd double %8, %5                         ; 8 uses
   %.val801.a = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %6 = getelementptr inbounds nuw i8, ptr %.val801.a, i64 %i.ci
-  %i.ct = getelementptr inbounds nuw i8, ptr %6, i64 231464
+  %i.ct = getelementptr inbounds nuw i8, ptr %.val801.a, i64 231376
   %.0.copyload.i823.a = load double, ptr %i.ct, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i823.a) #13, !srcloc !44
-  %.val800 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %7 = getelementptr inbounds nuw i8, ptr %.val800, i64 231392
-  %.0.copyload.i824 = load double, ptr %7, align 1 ; 3 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i824) #13, !srcloc !44
+  %10 = fmul double %.0.copyload.i823.a, %i.cf
   %.val799.a = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %i.cu = getelementptr inbounds nuw i8, ptr %.val799.a, i64 231440
-  %.0.copyload.i825 = load double, ptr %i.cu, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i825) #13, !srcloc !44
-  %.val798 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %i.cv = getelementptr inbounds nuw i8, ptr %.val798, i64 231432
+  %i.cu = getelementptr inbounds nuw i8, ptr %.val799.a, i64 %i.ci
+  %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 231464
   %.0.copyload.i826.a = load double, ptr %i.cv, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i826.a) #13, !srcloc !44
-  %.val797 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %.val797, i64 231424
-  %.0.copyload.i827 = load double, ptr %8, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i827) #13, !srcloc !44
-  %.val796 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %9 = getelementptr inbounds nuw i8, ptr %.val796, i64 231416
-  %.0.copyload.i828 = load double, ptr %9, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i828) #13, !srcloc !44
+  %11 = fadd double %10, %.0.copyload.i826.a      ; 2 uses
+  %12 = fadd double %9, %11                       ; 3 uses
+  %13 = fsub double %11, %12
+  %14 = fadd double %9, %13
+  %15 = fadd double %4, %14
   %.val795.a = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %i.cw = getelementptr inbounds nuw i8, ptr %.val795.a, i64 231408
-  %.0.copyload.i829.a = load double, ptr %i.cw, align 1 ; 2 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %.val795.a, i64 231392
+  %.0.copyload.i829.a = load double, ptr %i.cw, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i829.a) #13, !srcloc !44
+  %16 = fmul double %9, %.0.copyload.i829.a       ; 2 uses
+  %17 = fmul double %5, %.0.copyload.i829.a       ; 2 uses
+  %18 = fadd double %16, %17
+  %19 = fmul double %8, %18
+  %i.cx = fadd double %15, %19
+  %i.cy = fmul double %5, %17                     ; 2 uses
+  %i.cz = fadd double %12, %i.cy                  ; 3 uses
+  %20 = fsub double %12, %i.cz
+  %21 = fadd double %i.cy, %20
+  %i.da = fadd double %i.cx, %21
+  %22 = fmul double %9, %16                       ; 3 uses
+  %i.db = fmul double %9, %22
+  %.val799 = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %23 = getelementptr inbounds nuw i8, ptr %.val799, i64 231440
+  %.0.copyload.i825 = load double, ptr %23, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i825) #13, !srcloc !44
+  %24 = fmul double %9, %.0.copyload.i825
+  %.val798 = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %25 = getelementptr inbounds nuw i8, ptr %.val798, i64 231432
+  %.0.copyload.i826 = load double, ptr %25, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i826) #13, !srcloc !44
+  %26 = fadd double %24, %.0.copyload.i826
+  %i.dc = fmul double %22, %26
+  %.val797 = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %27 = getelementptr inbounds nuw i8, ptr %.val797, i64 231424
+  %.0.copyload.i827 = load double, ptr %27, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i827) #13, !srcloc !44
+  %i.dd = fmul double %9, %.0.copyload.i827
+  %.val796 = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %28 = getelementptr inbounds nuw i8, ptr %.val796, i64 231416
+  %.0.copyload.i828 = load double, ptr %28, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i828) #13, !srcloc !44
+  %i.de = fadd double %i.dd, %.0.copyload.i828
+  %i.df = fadd double %i.dc, %i.de
+  %29 = fmul double %22, %i.df
+  %.val795 = load ptr, ptr %i.cg, align 8, !tbaa !8
+  %30 = getelementptr inbounds nuw i8, ptr %.val795, i64 231408
+  %.0.copyload.i829 = load double, ptr %30, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i829) #13, !srcloc !44
+  %31 = fmul double %9, %.0.copyload.i829
   %.val794 = load ptr, ptr %i.cg, align 8, !tbaa !8
-  %10 = getelementptr inbounds nuw i8, ptr %.val794, i64 231400
-  %.0.copyload.i830 = load double, ptr %10, align 1 ; 2 uses
+  %32 = getelementptr inbounds nuw i8, ptr %.val794, i64 231400
+  %.0.copyload.i830 = load double, ptr %32, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(double %.0.copyload.i830) #13, !srcloc !44
-  %i.cx = fadd double %i.cs, -1.000000e+00        ; 3 uses
-  %i.cy = fmul double %4, %.0.copyload.i821       ; 2 uses
-  %i.cz = fadd double %i.cy, %i.cx                ; 8 uses
-  %11 = fmul double %.0.copyload.i822, %i.cf
-  %12 = fmul double %i.cz, %.0.copyload.i825
-  %i.da = fadd double %11, %.0.copyload.i823.a    ; 2 uses
-  %13 = fadd double %i.cz, %i.da                  ; 3 uses
-  %i.db = fmul double %i.cz, %.0.copyload.i824    ; 2 uses
-  %14 = fmul double %i.cx, %.0.copyload.i824      ; 2 uses
-  %15 = fadd double %i.db, %14
-  %16 = insertelement <2 x double> poison, double %i.cx, i64 0
-  %17 = insertelement <2 x double> %16, double %i.cz, i64 1
-  %18 = insertelement <2 x double> poison, double %14, i64 0
-  %19 = insertelement <2 x double> %18, double %.0.copyload.i829.a, i64 1
-  %20 = fmul <2 x double> %17, %19                ; 2 uses
-  %21 = extractelement <2 x double> %20, i64 0
-  %22 = fadd double %13, %21                      ; 3 uses
-  %23 = fsub double %13, %22
-  %i.dc = fmul double %i.cz, %i.db                ; 3 uses
-  %24 = fmul double %i.cy, %15
-  %25 = fmul double %i.cz, %i.dc
-  %26 = fadd double %12, %.0.copyload.i826.a
-  %27 = fsub double %i.da, %13
-  %i.dd = fmul double %i.dc, %26
-  %28 = fadd double %i.cz, %27
-  %29 = fmul double %i.cz, %.0.copyload.i827
-  %30 = fmul double %.0.copyload.i819, %i.cf
-  %i.de = fadd double %29, %.0.copyload.i828
-  %i.df = fadd double %30, %.0.copyload.i820
-  %31 = fadd double %i.dd, %i.de
-  %32 = fadd double %i.df, %28
-  %33 = fmul double %i.dc, %31
-  %34 = fadd double %32, %24
-  %35 = insertelement <2 x double> poison, double %23, i64 0
-  %36 = insertelement <2 x double> %35, double %.0.copyload.i830, i64 1
-  %37 = fadd <2 x double> %20, %36
-  %38 = insertelement <2 x double> poison, double %34, i64 0
-  %39 = insertelement <2 x double> %38, double %33, i64 1
-  %40 = fadd <2 x double> %39, %37                ; 2 uses
-  %41 = extractelement <2 x double> %40, i64 1
-  %42 = fmul double %25, %41
-  %43 = extractelement <2 x double> %40, i64 0
-  %i.dg = fadd double %43, %42                    ; 2 uses
-  %i.dh = fadd double %22, %i.dg                  ; 3 uses
-  %i.di = fsub double %22, %i.dh
+  %33 = fadd double %31, %.0.copyload.i830
+  %34 = fadd double %29, %33
+  %35 = fmul double %i.db, %34
+  %i.dg = fadd double %i.da, %35                  ; 2 uses
+  %i.dh = fadd double %i.cz, %i.dg                ; 3 uses
+  %i.di = fsub double %i.cz, %i.dh
   %i.dj = fadd double %i.dg, %i.di
   %i.dk = zext i32 %i.c to i64
   %i.dl = add nuw nsw i64 %i.dk, 8                ; 2 uses
