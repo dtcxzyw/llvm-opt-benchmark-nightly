@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
   br i1 %i.a, label %.lr.ph.i.i, label %._crit_edge.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a, %select.unfold.i.i
-  %.07999.i.i = phi ptr [ %.281.i.i, %select.unfold.i.i ], [ %2, %bb.a ] ; 6 uses
+  %.07999.i.i = phi ptr [ %.281.i.i, %select.unfold.i.i ], [ %2, %bb.a ] ; 2 uses
   %.08298.i.i = phi i64 [ %.284.i.i, %select.unfold.i.i ], [ %1, %bb.a ] ; 5 uses
   %i.b = load i64, ptr %.07999.i.i, align 1       ; 9 uses
   %i.c = and i64 %i.b, -9187201950435737472
@@ -13,7 +13,6 @@ begin_hunk_1_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
 
 bb.b:                                             ; preds = %.lr.ph.i.i
   %i.h = add nsw i64 %.08298.i.i, -8
-  %3 = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 8
   br label %select.unfold.i.i, !llvm.loop !3827
 
 bb.c:                                             ; preds = %.lr.ph.i.i
@@ -22,7 +21,6 @@ begin_hunk_2_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
   br i1 %i.aj, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %4 = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 5
   %i.ak = add nsw i64 %.08298.i.i, -5
   br label %select.unfold.i.i, !llvm.loop !3827
 
@@ -31,7 +29,6 @@ begin_hunk_3_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
   br i1 %i.aq, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %5 = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 6
   %i.ar = add nsw i64 %.08298.i.i, -6
   br label %select.unfold.i.i, !llvm.loop !3827
 
@@ -40,12 +37,10 @@ begin_hunk_4_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
   br i1 %i.ax, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %6 = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 7
   %i.ay = add nsw i64 %.08298.i.i, -7
   br label %select.unfold.i.i, !llvm.loop !3827
 
 bb.i:                                             ; preds = %bb.g
-  %7 = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 8
   %i.az = zext i16 %i.aw to i64
   %i.ba = getelementptr inbounds nuw [2 x i8], ptr @_ZN5arrow4util8internal16utf8_large_tableE, i64 %i.az
   %i.bb = getelementptr inbounds nuw [2 x i8], ptr %i.ba, i64 %i.g
@@ -54,7 +49,8 @@ begin_hunk_5_@_ZN5arrow7compute8internal12_GLOBAL__N_113Utf8Validator10VisitValu
 
 select.unfold.i.i:                                ; preds = %bb.i, %bb.h, %bb.f, %bb.d, %bb.b
   %.284.i.i = phi i64 [ %i.h, %bb.b ], [ %i.ak, %bb.d ], [ %i.ar, %bb.f ], [ %i.ay, %bb.h ], [ %i.bd, %bb.i ] ; 3 uses
-  %.281.i.i = phi ptr [ %3, %bb.b ], [ %4, %bb.d ], [ %5, %bb.f ], [ %6, %bb.h ], [ %7, %bb.i ] ; 2 uses
+  %.pn.i.i = phi i64 [ 8, %bb.b ], [ 5, %bb.d ], [ 6, %bb.f ], [ 7, %bb.h ], [ 8, %bb.i ]
+  %.281.i.i = getelementptr inbounds nuw i8, ptr %.07999.i.i, i64 %.pn.i.i ; 2 uses
   %i.bf = icmp sgt i64 %.284.i.i, 7
   br i1 %i.bf, label %.lr.ph.i.i, label %._crit_edge.i.i
 

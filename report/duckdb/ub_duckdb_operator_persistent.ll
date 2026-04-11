@@ -4,7 +4,7 @@ begin_hunk_0_@_ZNSt8__detail9_Map_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEES
 
 .preheader.i.i.i.i.i:                             ; preds = %bb.d
   %i.ab = icmp eq ptr %i.q, %i.r
-  br i1 %i.ab, label %4, label %.lr.ph.i.i.i.i.i
+  br i1 %i.ab, label %bb.l, label %.lr.ph.i.i.i.i.i
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.ac = add nuw i64 %.01012.i.i.i.i.i, 1        ; 2 uses
@@ -13,15 +13,7 @@ begin_hunk_1_@_ZNSt8__detail9_Map_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEES
 _ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit: ; preds = %bb.e
   %.pre.i = load ptr, ptr %.015.i.i, align 8, !tbaa !179 ; 2 uses
   %.not = icmp eq ptr %.pre.i, null
-  br i1 %.not, label %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit.thread, label %.thread34
-
-.thread34:                                        ; preds = %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit
-  %3 = getelementptr inbounds nuw i8, ptr %.pre.i, i64 32
-  br label %bb.l
-
-4:                                                ; preds = %.preheader.i.i.i.i.i
-  %5 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 32
-  br label %bb.l
+  br i1 %.not, label %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit.thread, label %bb.l
 
 _ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit.thread: ; preds = %_ZNKSt8__detail15_Hashtable_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEESt4pairIKS5_mENS_10_Select1stENS1_22VectorOfValuesEqualityENS1_26VectorOfValuesHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS7_mRKNS_16_Hash_node_valueIS8_Lb1EEE.exit.i.i, %bb.f, %_ZNKSt8__detail15_Hash_code_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEESt4pairIKS5_mENS_10_Select1stENS1_26VectorOfValuesHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE12_M_hash_codeERS7_.exit, %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
@@ -30,7 +22,6 @@ begin_hunk_2_@_ZNSt8__detail9_Map_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEES
           to label %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit unwind label %bb.k
 
 _ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit: ; preds = %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeC2IJRKSt21piecewise_construct_tSt5tupleIJRS6_EESO_IJEEEEEPNS9_16_Hashtable_allocISaINS9_10_Hash_nodeIS7_Lb1EEEEEEDpOT_.exit
-  %6 = getelementptr inbounds nuw i8, ptr %i.bb, i64 32
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   br label %bb.l
 
@@ -39,9 +30,10 @@ begin_hunk_3_@_ZNSt8__detail9_Map_baseIN6duckdb6vectorINS1_5ValueELb1ESaIS3_EEES
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   br label %common.resume
 
-bb.l:                                             ; preds = %4, %.thread34, %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit
-  %.1.a = phi ptr [ %6, %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit ], [ %5, %4 ], [ %3, %.thread34 ]
-  ret ptr %.1.a
+bb.l:                                             ; preds = %.preheader.i.i.i.i.i, %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit, %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit
+  %.1.a = phi ptr [ %i.bb, %_ZNSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_Scoped_nodeD2Ev.exit ], [ %.pre.i, %_ZNKSt10_HashtableIN6duckdb6vectorINS0_5ValueELb1ESaIS2_EEESt4pairIKS4_mESaIS7_ENSt8__detail10_Select1stENS0_22VectorOfValuesEqualityENS0_26VectorOfValuesHashFunctionENS9_18_Mod_range_hashingENS9_20_Default_ranged_hashENS9_20_Prime_rehash_policyENS9_17_Hashtable_traitsILb1ELb0ELb1EEEE12_M_find_nodeEmRS6_m.exit ], [ %.0.i.i, %.preheader.i.i.i.i.i ]
+  %.1 = getelementptr inbounds nuw i8, ptr %.1.a, i64 32
+  ret ptr %.1
 }
 
 ; Function Attrs: mustprogress uwtable
