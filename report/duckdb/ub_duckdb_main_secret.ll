@@ -1,0 +1,32 @@
+inline.NumInlined: 5469
+inline.NumDeleted: 2421
+begin_hunk_0_@_ZN6duckdb13SecretManager22LookupFunctionInternalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_:bb.a
+  br i1 %.not, label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread, label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread80
+
+_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread80: ; preds = %.noexc, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit
+  %.sroa.06.1.i.i82 = phi ptr [ %i.z, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit ], [ %.sroa.06.0.i.i, %.noexc ] ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i82, i64 40 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i82, i64 96
+  %i.ab = load i64, ptr %i.aa, align 8, !tbaa !264
+  %.not.not.i.i.i = icmp eq i64 %i.ab, 0
+end_hunk_0
+begin_hunk_1_@_ZN6duckdb13SecretManager22LookupFunctionInternalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_:bb.a
+  br i1 %.not100, label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread, label %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread84.invoke
+
+_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread84.invoke: ; preds = %.noexc14, %.noexc57, %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit60, %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
+  %i.ay = phi ptr [ %3, %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit ], [ %4, %.noexc57 ], [ %4, %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit60 ], [ %3, %.noexc14 ]
+  %i.az = invoke noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb23CreateSecretFunctionSet11GetFunctionERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(88) %i.ay, ptr noundef nonnull align 8 dereferenceable(32) %2)
+          to label %_ZNSt11unique_lockISt5mutexED2Ev.exit unwind label %.thread97.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+
+_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit.thread: ; preds = %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_N6duckdb23CreateSecretFunctionSetEENS_10_Select1stENS9_29CaseInsensitiveStringEqualityENS9_33CaseInsensitiveStringHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS8_mRKNS_16_Hash_node_valueISB_Lb1EEE.exit.thread.i.i.i.i, %bb.i, %bb.d, %_ZNKSt8__detail15_Hashtable_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_N6duckdb20CreateSecretFunctionEENS_10_Select1stENS9_29CaseInsensitiveStringEqualityENS9_33CaseInsensitiveStringHashFunctionENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_17_Hashtable_traitsILb1ELb0ELb1EEEE9_M_equalsERS8_mRKNS_16_Hash_node_valueISB_Lb1EEE.exit.thread.i.i.i.i.i, %bb.p, %bb.k, %.noexc15, %.noexc12, %_ZN6duckdb23CreateSecretFunctionSet14ProviderExistsERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit
+end_hunk_1
+begin_hunk_2_@_ZN6duckdb13SecretManager22LookupFunctionInternalERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES8_:bb.a
+  br i1 %.not101, label %_ZNSt11unique_lockISt5mutexED2Ev.exit, label %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit41.thread87
+
+_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit41.thread87: ; preds = %.noexc38, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit41
+  %.sroa.06.1.i.i3289 = phi ptr [ %i.bx, %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN6duckdb23CreateSecretFunctionSetENS6_33CaseInsensitiveStringHashFunctionENS6_29CaseInsensitiveStringEqualityESaISt4pairIKS5_S7_EEE4findERSB_.exit41 ], [ %.sroa.06.0.i.i36, %.noexc38 ] ; 5 uses
+  %4 = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i3289, i64 40 ; 2 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i3289, i64 96
+  %i.bz = load i64, ptr %i.by, align 8, !tbaa !264
+  %.not.not.i.i.i42 = icmp eq i64 %i.bz, 0
+end_hunk_2
