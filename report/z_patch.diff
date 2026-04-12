@@ -1,0 +1,206 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 7f1ced9505b9b..15ff2eb24600c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -8290,15 +8290,43 @@ static Instruction *foldFCmpReciprocalAndZero(FCmpInst &I, Instruction *LHSI,
+ 
+ // Transform 'fptrunc(x) cmp C' to 'x cmp ext(C)' if possible.
+ // Patterns include:
+-//    fptrunc(x) <  C  -->  x <  ext(C)
+-//    fptrunc(x) <= C  -->  x <= ext(C)
+-//    fptrunc(x) >  C  -->  x >  ext(C)
+-//    fptrunc(x) >= C  -->  x >= ext(C)
++//    fptrunc(x) <  C                -->  x <  ext(C)
++//    fptrunc(x) <= C                -->  x <= ext(C)
++//    fptrunc(x) >  C                -->  x >  ext(C)
++//    fptrunc(x) >= C                -->  x >= ext(C)
++//    fptrunc(x) ord/uno C           -->  x ord/uno 0
++//    fptrunc(x) ord/uno fptrunc(y)  -->  x ord/uno y
+ // where 'ext(C)' is the extension of 'C' to the type of 'x' with a small bias
+ // due to precision loss.
+ static Instruction *foldFCmpFpTrunc(FCmpInst &I, const Instruction &FPTrunc,
+-                                    const Constant &C) {
++                                    const Value &CmpRHS) {
+   FCmpInst::Predicate Pred = I.getPredicate();
++  Type *DestType = FPTrunc.getOperand(0)->getType();
++
++  // Handle ord/uno [C | fptrunc(y)]
++  if (Pred == FCmpInst::FCMP_ORD || Pred == FCmpInst::FCMP_UNO) {
++    Value *RHS;
++    const APFloat *CValue;
++    if (match(&CmpRHS, m_FPTrunc(m_Value(RHS)))) {
++      if (DestType != RHS->getType())
++        return nullptr;
++    } else if (match(&CmpRHS, m_APFloat(CValue))) {
++      assert(!CValue->isNaN() &&
++             "NaN RHS should be folded away by simplifyFCmpInst()");
++      RHS = ConstantFP::getZero(DestType);
++    } else {
++      return nullptr;
++    }
++
++    return new FCmpInst(Pred, FPTrunc.getOperand(0), RHS, "", &I);
++  }
++
++  // Handle <, >, <=, >=
++  const APFloat *CValue;
++  // TODO: support vec
++  if (!match(&CmpRHS, m_APFloat(CValue)))
++    return nullptr;
++
+   bool RoundDown = false;
+ 
+   if (Pred == FCmpInst::FCMP_OGE || Pred == FCmpInst::FCMP_UGE ||
+@@ -8310,10 +8338,6 @@ static Instruction *foldFCmpFpTrunc(FCmpInst &I, const Instruction &FPTrunc,
+   else
+     return nullptr;
+ 
+-  const APFloat *CValue;
+-  if (!match(&C, m_APFloat(CValue)))
+-    return nullptr;
+-
+   if (CValue->isNaN() || CValue->isInfinity())
+     return nullptr;
+ 
+@@ -8332,7 +8356,6 @@ static Instruction *foldFCmpFpTrunc(FCmpInst &I, const Instruction &FPTrunc,
+ 
+   APFloat NextCValue = NextValue(*CValue, RoundDown);
+ 
+-  Type *DestType = FPTrunc.getOperand(0)->getType();
+   const fltSemantics &DestFltSema =
+       DestType->getScalarType()->getFltSemantics();
+ 
+@@ -8354,7 +8377,7 @@ static Instruction *foldFCmpFpTrunc(FCmpInst &I, const Instruction &FPTrunc,
+       scalbn(ExtCValue + ExtNextCValue, -1, APFloat::rmNearestTiesToEven);
+ 
+   const fltSemantics &SrcFltSema =
+-      C.getType()->getScalarType()->getFltSemantics();
++      CmpRHS.getType()->getScalarType()->getFltSemantics();
+ 
+   // 'MidValue' might be rounded to 'NextCValue'. Correct it here.
+   APFloat MidValue = ConvertFltSema(ExtMidValue, SrcFltSema);
+@@ -8835,10 +8858,16 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+     }
+   }
+ 
+-  // Handle fcmp with instruction LHS and constant RHS.
+   Instruction *LHSI;
++  // Handle fcmp with fptrunc LHS
++  if (match(Op0, m_Instruction(LHSI)) &&
++      LHSI->getOpcode() == Instruction::FPTrunc)
++    if (Instruction *NV = foldFCmpFpTrunc(I, *LHSI, *Op1))
++      return NV;
++
++  // Handle fcmp with instruction LHS and constant RHS.
+   Constant *RHSC;
+-  if (match(Op0, m_Instruction(LHSI)) && match(Op1, m_Constant(RHSC))) {
++  if (LHSI && match(Op1, m_Constant(RHSC))) {
+     switch (LHSI->getOpcode()) {
+     case Instruction::Select:
+       // fcmp eq (cond ? x : -x), 0 --> fcmp eq x, 0
+@@ -8872,10 +8901,6 @@ Instruction *InstCombinerImpl::visitFCmpInst(FCmpInst &I) {
+                 foldCmpLoadFromIndexedGlobal(cast<LoadInst>(LHSI), GEP, I))
+           return Res;
+       break;
+-    case Instruction::FPTrunc:
+-      if (Instruction *NV = foldFCmpFpTrunc(I, *LHSI, *RHSC))
+-        return NV;
+-      break;
+     }
+   }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/fold-fcmp-trunc.ll b/llvm/test/Transforms/InstCombine/fold-fcmp-trunc.ll
+index 371f9b6807fe4..e65e31700240f 100644
+--- a/llvm/test/Transforms/InstCombine/fold-fcmp-trunc.ll
++++ b/llvm/test/Transforms/InstCombine/fold-fcmp-trunc.ll
+@@ -57,6 +57,52 @@ define i1 @fcmp_trunc_zero(double %0) {
+   ret i1 %result
+ }
+ 
++define i1 @fcmp_trunc_uno(double %0) {
++; CHECK-LABEL: define i1 @fcmp_trunc_uno(
++; CHECK-SAME: double [[TMP0:%.*]]) {
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp uno double [[TMP0]], 0.000000e+00
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++  %trunc = fptrunc double %0 to float
++  %result = fcmp uno float %trunc, 0.000000e+00
++  ret i1 %result
++}
++
++define i1 @fcmp_trunc_ord_inf(double %0) {
++; CHECK-LABEL: define i1 @fcmp_trunc_ord_inf(
++; CHECK-SAME: double [[TMP0:%.*]]) {
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp ord double [[TMP0]], 0.000000e+00
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++  %trunc = fptrunc double %0 to float
++  %result = fcmp ord float %trunc, 0x7FF0000000000000
++  ret i1 %result
++}
++
++define i1 @fcmp_trunc_pair_uno(double %x, double %y) {
++; CHECK-LABEL: define i1 @fcmp_trunc_pair_uno(
++; CHECK-SAME: double [[X:%.*]], double [[Y:%.*]]) {
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp uno double [[X]], [[Y]]
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++  %tx = fptrunc double %x to float
++  %ty = fptrunc double %y to float
++  %result = fcmp uno float %tx, %ty
++  ret i1 %result
++}
++
++define i1 @fcmp_trunc_pair_ord(double %x, double %y) {
++; CHECK-LABEL: define i1 @fcmp_trunc_pair_ord(
++; CHECK-SAME: double [[X:%.*]], double [[Y:%.*]]) {
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp ord double [[X]], [[Y]]
++; CHECK-NEXT:    ret i1 [[RESULT]]
++;
++  %tx = fptrunc double %x to float
++  %ty = fptrunc double %y to float
++  %result = fcmp ord float %tx, %ty
++  ret i1 %result
++}
++
+ define i1 @fcmp_trunc_with_nnan(double %0) {
+ ; CHECK-LABEL: define i1 @fcmp_trunc_with_nnan(
+ ; CHECK-SAME: double [[TMP0:%.*]]) {
+@@ -104,7 +150,7 @@ define i1 @fcmp_trunc_with_reassoc(double %0) {
+ define i1 @fcmp_trunc_with_fast(double %0) {
+ ; CHECK-LABEL: define i1 @fcmp_trunc_with_fast(
+ ; CHECK-SAME: double [[TMP0:%.*]]) {
+-; CHECK-NEXT:    [[RESULT:%.*]] = fcmp fast oge double [[TMP0]], 0x4058FFFFF0000000 
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp fast oge double [[TMP0]], 0x4058FFFFF0000000
+ ; CHECK-NEXT:    ret i1 [[RESULT]]
+ ;
+   %trunc = fptrunc double %0 to float
+@@ -327,8 +373,7 @@ define i1 @fcmp_trunc_literal_positive_inf(double %0) {
+ define i1 @fcmp_trunc_literal_negative_inf(double %0) {
+ ; CHECK-LABEL: define i1 @fcmp_trunc_literal_negative_inf(
+ ; CHECK-SAME: double [[TMP0:%.*]]) {
+-; CHECK-NEXT:    [[TRUNC:%.*]] = fptrunc double [[TMP0]] to float
+-; CHECK-NEXT:    [[RESULT:%.*]] = fcmp uno float [[TRUNC]], 0.000000e+00
++; CHECK-NEXT:    [[RESULT:%.*]] = fcmp uno double [[TMP0]], 0.000000e+00
+ ; CHECK-NEXT:    ret i1 [[RESULT]]
+ ;
+   %trunc = fptrunc double %0 to float
+@@ -671,4 +716,3 @@ define i1 @fcmp_trunc_mn_ppc_fp128(ppc_fp128 %0) {
+   %result = fcmp uge float %trunc, 0xC7EFFFFF00000000
+   ret i1 %result
+ }
+-
+diff --git a/llvm/test/Transforms/InstCombine/known-never-nan.ll b/llvm/test/Transforms/InstCombine/known-never-nan.ll
+index c4ce874029647..759cabae3d72f 100644
+--- a/llvm/test/Transforms/InstCombine/known-never-nan.ll
++++ b/llvm/test/Transforms/InstCombine/known-never-nan.ll
+@@ -150,8 +150,7 @@ define i1 @fpext_maybe_nan(float %arg0) {
+ 
+ define i1 @fptrunc_maybe_nan(double %arg0) {
+ ; CHECK-LABEL: @fptrunc_maybe_nan(
+-; CHECK-NEXT:    [[OP:%.*]] = fptrunc double [[ARG0:%.*]] to float
+-; CHECK-NEXT:    [[TMP:%.*]] = fcmp ord float [[OP]], 0.000000e+00
++; CHECK-NEXT:    [[TMP:%.*]] = fcmp ord double [[ARG0:%.*]], 0.000000e+00
+ ; CHECK-NEXT:    ret i1 [[TMP]]
+ ;
+   %op = fptrunc double %arg0 to float
