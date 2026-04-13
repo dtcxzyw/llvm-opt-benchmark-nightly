@@ -1028,7 +1028,7 @@ def run_opt_file(
             preexec_fn=_disable_core_dumps,
         )
         if ret.returncode != 0:
-            return "fail"
+            return "failed to run opt"
 
         if config.comptime:
             err = ret.stderr.decode()
@@ -1042,14 +1042,14 @@ def run_opt_file(
         rendered: Optional[RenderedDiff] = None
         if not config.stats:
             if not os.path.exists(optimized_path):
-                return "fail"
+                return "failed to produce optimized output"
 
             if enable_ir_diff:
                 ref_path = compare_ref_path
                 if ref_path is None:
                     ref_path = os.path.join(DATA_DIR, proj, "optimized", file)
                 if compare_ref_path is not None and not os.path.exists(ref_path):
-                    return "fail"
+                    return "failed to locate comparison baseline"
                 if os.path.exists(ref_path):
                     identical = False
                     if (
@@ -1069,7 +1069,7 @@ def run_opt_file(
         err = ret.stderr.decode()
         stats_result = extract_stats_json(err)
         if stats_result is None:
-            return "fail"
+            return "failed to extract stats"
         interesting_stats = {
             key: stats_result[key]
             for key in PER_FILE_INTERESTING_STATS
@@ -1087,12 +1087,12 @@ def run_opt_file(
             except subprocess.TimeoutExpired:
                 rendered = None
             except (subprocess.SubprocessError, OSError, RuntimeError):
-                return "diff fail"
+                return "failed to compute diff"
         return stats_result, rendered, interesting_stats
     except subprocess.TimeoutExpired:
         return "timeout"
     except Exception:
-        return "fail"
+        return "failed to execute opt task"
 
 
 def _run_opt_task(args):
