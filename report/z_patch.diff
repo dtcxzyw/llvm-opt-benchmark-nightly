@@ -1,0 +1,80 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 635502f08b483..11648355ab0a0 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -1005,13 +1005,20 @@ Instruction *InstCombinerImpl::foldAddWithConstant(BinaryOperator &Add) {
+         Add, Builder.CreateBinaryIntrinsic(
+                  Intrinsic::usub_sat, X, ConstantInt::get(Add.getType(), -*C)));
+ 
+-  // Fold (add (zext (add X, -1)), 1) -> (zext X) if X is non-zero.
+-  // TODO: There's a general form for any constant on the outer add.
+-  if (C->isOne()) {
+-    if (match(Op0, m_ZExt(m_Add(m_Value(X), m_AllOnes())))) {
+-      const SimplifyQuery Q = SQ.getWithInstruction(&Add);
+-      if (llvm::isKnownNonZero(X, Q))
+-        return new ZExtInst(X, Ty);
++  // Fold (add (zext (add X, -C)), C) -> (zext X) if X u>= C.
++  // Truncate C to the narrow type to avoid mismatched width comparisons.
++  {
++    const APInt *InnerC;
++    if (match(Op0, m_ZExt(m_Add(m_Value(X), m_APIntAllowPoison(InnerC))))) {
++      unsigned NarrowBW = InnerC->getBitWidth();
++      if (C->getActiveBits() <= NarrowBW) {
++        APInt NarrowC = C->trunc(NarrowBW);
++        const SimplifyQuery Q = SQ.getWithInstruction(&Add);
++        if (*InnerC == -NarrowC &&
++            (NarrowC.isOne() ? llvm::isKnownNonZero(X, Q)
++                             : computeKnownBits(X, &Add).getMinValue().uge(NarrowC)))
++          return new ZExtInst(X, Ty);
++      }
+     }
+   }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/add.ll b/llvm/test/Transforms/InstCombine/add.ll
+index aa68dfb540064..bcffaa01ea4b3 100644
+--- a/llvm/test/Transforms/InstCombine/add.ll
++++ b/llvm/test/Transforms/InstCombine/add.ll
+@@ -4535,3 +4535,43 @@ define <2 x i32> @ceil_div_vec_multi_use(<2 x i32> range(i32 0, 1000) %x) {
+ declare void @use_i32(i32)
+ declare void @use_vec(<2 x i32>)
+ declare void @fake_func(i32)
++; Fold (add (zext (add X, -C)), C) -> (zext X) if X u>= C.
++; General case: C=4, X proven >= 4 via and+or.
++define i32 @zext_add_general_c4(i8 %x) {
++; CHECK-LABEL: @zext_add_general_c4(
++; CHECK-NEXT:    [[AND:%.*]] = and i8 %x, -8
++; CHECK-NEXT:    [[OR:%.*]] = or disjoint i8 [[AND]], 4
++; CHECK-NEXT:    [[R:%.*]] = zext i8 [[OR]] to i32
++; CHECK-NEXT:    ret i32 [[R]]
++  %and = and i8 %x, -8
++  %or  = or  i8 %and, 4
++  %inner = add i8 %or, -4
++  %z = zext i8 %inner to i32
++  %r = add i32 %z, 4
++  ret i32 %r
++}
++
++; Don't fold: C=260 doesn't fit in i8, even though -C truncated matches -4.
++define i32 @zext_add_no_fold_c260(i8 range(i8 4, 8) %x) {
++; CHECK-LABEL: @zext_add_no_fold_c260(
++; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i8 %x to i32
++; CHECK-NEXT:    [[R:%.*]] = or disjoint i32 [[TMP1]], 256
++; CHECK-NEXT:    ret i32 [[R]]
++  %inner = add i8 %x, -4
++  %z = zext i8 %inner to i32
++  %r = add i32 %z, 260
++  ret i32 %r
++}
++
++; Don't fold: outer C=5 and inner -C=-4 don't match.
++define i32 @zext_add_no_fold_mismatch(i8 %x) {
++; CHECK-LABEL: @zext_add_no_fold_mismatch(
++; CHECK-NEXT:    [[INNER:%.*]] = add i8 %x, -4
++; CHECK-NEXT:    [[Z:%.*]] = zext i8 [[INNER]] to i32
++; CHECK-NEXT:    [[R:%.*]] = add nuw nsw i32 [[Z]], 5
++; CHECK-NEXT:    ret i32 [[R]]
++  %inner = add i8 %x, -4
++  %z = zext i8 %inner to i32
++  %r = add i32 %z, 5
++  ret i32 %r
++}
