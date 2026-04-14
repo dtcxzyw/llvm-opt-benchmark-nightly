@@ -1,0 +1,1092 @@
+diff --git a/clang/test/CodeGenOpenCL/nullptr.cl b/clang/test/CodeGenOpenCL/nullptr.cl
+index 976e12c0bef47..f45df110ec243 100644
+--- a/clang/test/CodeGenOpenCL/nullptr.cl
++++ b/clang/test/CodeGenOpenCL/nullptr.cl
+@@ -597,10 +597,10 @@ typedef struct {
+ } StructTy3;
+ 
+ // CHECK-LABEL: test_memset_private
+-// SPIR64: call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %ptr, i8 0, i64 32, i1 false)
++// SPIR64: store <4 x i64> zeroinitializer, ptr %ptr, align 8
+ // SPIR64: [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr %ptr, i64 32
+ // SPIR64: store ptr addrspacecast (ptr addrspace(4) null to ptr), ptr [[GEP]], align 8
+-// AMDGCN: call void @llvm.memset.p5.i64(ptr addrspace(5) noundef align 8 {{.*}}, i8 0, i64 32, i1 false)
++// AMDGCN: store <4 x i64> zeroinitializer, ptr addrspace(5) %ptr, align 8
+ // AMDGCN: [[GEP:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(5) %ptr, i32 32
+ // AMDGCN: store ptr addrspace(5) addrspacecast (ptr null to ptr addrspace(5)), ptr addrspace(5) [[GEP]]
+ // AMDGCN: [[GEP1:%.*]] = getelementptr inbounds nuw i8, ptr addrspace(5) {{.*}}, i32 36
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index 760b84000fe7b..dda74e2dfbfe3 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -5121,6 +5121,162 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+   return true;
+ }
+ 
++/// Try to canonicalize a homogeneous, tightly-packed struct to a vector type.
++///
++/// For structs where all elements have the same type and are tightly packed
++/// (no padding), we can represent them as a fixed vector which enables better
++/// optimization (e.g., vector selects instead of memcpy).
++///
++/// \param STy The struct type to try to canonicalize.
++/// \param DL The DataLayout for size/alignment queries.
++/// \returns The equivalent vector type, or nullptr if not applicable.
++static FixedVectorType *tryCanonicalizeStructToVector(StructType *STy,
++                                                      const DataLayout &DL) {
++  unsigned NumElts = STy->getNumElements();
++  if (NumElts != 2 && NumElts != 4)
++    return nullptr;
++
++  // All elements must be the same type.
++  Type *EltTy = STy->getElementType(0);
++  for (unsigned I = 1; I < NumElts; ++I)
++    if (STy->getElementType(I) != EltTy)
++      return nullptr;
++
++  // Element type must be valid for vectors.
++  if (!VectorType::isValidElementType(EltTy))
++    return nullptr;
++
++  // Only allow integer types >= 8 bits or floating point.
++  if (auto *IT = dyn_cast<IntegerType>(EltTy)) {
++    if (IT->getBitWidth() < 8)
++      return nullptr;
++  } else if (!EltTy->isFloatingPointTy()) {
++    return nullptr;
++  }
++
++  // Element size must be fixed and non-zero.
++  TypeSize EltTS = DL.getTypeAllocSize(EltTy);
++  if (!EltTS.isFixed())
++    return nullptr;
++  uint64_t EltSize = EltTS.getFixedValue();
++  if (EltSize < 1)
++    return nullptr;
++
++  const StructLayout *SL = DL.getStructLayout(STy);
++  uint64_t StructSize = SL->getSizeInBytes();
++  if (StructSize == 0)
++    return nullptr;
++
++  // Must be tightly packed: size == NumElts * EltSize.
++  if (StructSize != NumElts * EltSize)
++    return nullptr;
++
++  // Verify each element is at the expected offset (no padding).
++  for (unsigned I = 0; I < NumElts; ++I)
++    if (SL->getElementOffset(I) != I * EltSize)
++      return nullptr;
++
++  return FixedVectorType::get(EltTy, NumElts);
++}
++
++/// Decide whether it is profitable to canonicalize a homogeneous struct
++/// partition to a vector after the usual promotion choices have already failed.
++///
++/// This helper is intentionally conservative: we only canonicalize when the
++/// partition has a non-splittable whole-partition use and does not have any
++/// non-splittable sub-element loads.
++///
++/// Default allow case:
++/// - a real whole-partition use, because that is the clearest signal that a
++///   vector type can carry a whole value profitably.
++///
++/// Default reject case:
++/// - sub-element loads, because they usually turn the vector back into lane
++///   extraction traffic.
++///
++/// We also recover a narrow class of memcpy-only integer cases, even though
++/// they are classified as splittable rather than whole-partition uses:
++/// - interior i64 partitions within a larger fixed-size allocation
++/// - original full-record integer aggregates of size >= 32 bytes
++///
++/// Rationale:
++/// - Some memcpy-only integer cases are real wins and stay in whole-value form
++///   after canonicalization.
++/// - But recovering all full-record memcpy-only cases is too broad: an
++///   original full-record 16-byte {i64, i64} helper can look locally
++///   profitable while still making later code generation worse.
++/// - So the fallback stays narrow and uses the current partition's offsets plus
++///   allocation size to distinguish the safer recovered cases from the broader
++///   risky bucket.
++///
++/// Intuition:
++/// - Good: whole-value traffic can benefit from a vector type.
++///     %tmp = load { i64, i64 }, ptr %src
++///     store { i64, i64 } %tmp, ptr %dst
++///   Canonicalizing to <2 x i64> exposes a single whole-value load/store.
++///
++/// - Bad: field-by-field reads become extractelement traffic.
++///     %x = load i32, ptr %p
++///     %y = load i32, ptr (gep %p, 4)
++///   Canonicalizing { i32, i32 } to <2 x i32> only adds lane extraction.
++///
++/// - Bad: a store-only FP tail can seed later SLP divergence without a clear
++///   SROA win.
++///     store float %a, ptr %p0
++///     store float %b, ptr %p1
++///     store float %c, ptr %p2
++///     store float %d, ptr %p3
++///   Canonicalizing this to a temporary <4 x float> store was enough to change
++///   later vectorization without a clear benefit.
++static bool
++shouldCanonicalizeHomogeneousStructToVector(Partition &P, const DataLayout &DL,
++                                            AllocaInst &AI,
++                                            bool IsI64Candidate) {
++  bool HasWholePartitionUse = false;
++  bool HasSubElementLoad = false;
++  bool HasRecoverableSplittableTransfer = false;
++  std::optional<TypeSize> AllocSize = AI.getAllocationSize(DL);
++  bool IsInteriorSubaggregate =
++      AllocSize && AllocSize->isFixed() && P.beginOffset() != 0 &&
++      P.endOffset() < AllocSize->getFixedValue();
++  bool IsOriginalFullRecord =
++      P.beginOffset() == 0 && AllocSize && AllocSize->isFixed() &&
++      AllocSize->getFixedValue() == P.size();
++
++  for (const Slice &S : P) {
++    if (S.isDead())
++      continue;
++
++    auto *U = S.getUse();
++    if (!U)
++      continue;
++
++    if (S.isSplittable()) {
++      if (IsI64Candidate && IsInteriorSubaggregate &&
++          S.beginOffset() == P.beginOffset() &&
++          S.endOffset() == P.endOffset() && isa<MemIntrinsic>(U->getUser()))
++        HasRecoverableSplittableTransfer = true;
++      if (IsI64Candidate && IsOriginalFullRecord && P.size() >= 32 &&
++          S.beginOffset() == P.beginOffset() &&
++          S.endOffset() == P.endOffset() && isa<MemIntrinsic>(U->getUser()))
++        HasRecoverableSplittableTransfer = true;
++      continue;
++    }
++
++    uint64_t SliceSize = S.endOffset() - S.beginOffset();
++    if (SliceSize < P.size()) {
++      if (isa<LoadInst>(U->getUser()))
++        HasSubElementLoad = true;
++      continue;
++    }
++
++    HasWholePartitionUse = true;
++  }
++
++  return (HasWholePartitionUse || HasRecoverableSplittableTransfer) &&
++         !HasSubElementLoad;
++}
++
+ /// Select a partition type for an alloca partition.
+ ///
+ /// Try to compute a friendly type for this partition of the alloca. This
+@@ -5135,6 +5291,26 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+ static std::tuple<Type *, bool, VectorType *>
+ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+                     LLVMContext &C) {
++  auto LogChoice = [&](StringRef Path, Type *ChosenTy, VectorType *ChosenVecTy,
++                       bool ChosenIntWidening) {
++    LLVM_DEBUG({
++      dbgs() << "selectPartitionType path=" << Path
++             << " func=" << AI.getFunction()->getName() << " alloca=";
++      if (AI.hasName())
++        dbgs() << AI.getName();
++      else
++        dbgs() << "<unnamed>";
++      dbgs() << " partition=[" << P.beginOffset() << "," << P.endOffset()
++             << ") size=" << P.size();
++      if (std::optional<TypeSize> AllocSize = AI.getAllocationSize(DL))
++        dbgs() << " alloc-size=" << AllocSize->getKnownMinValue();
++      if (ChosenTy)
++        dbgs() << " chosen=" << *ChosenTy;
++      if (ChosenVecTy)
++        dbgs() << " vec=" << *ChosenVecTy;
++      dbgs() << " intwiden=" << ChosenIntWidening << "\n";
++    });
++  };
+   // First check if the partition is viable for vector promotion.
+   //
+   // We prefer vector promotion over integer widening promotion when:
+@@ -5151,8 +5327,10 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+   // promotion. If the vector has one element, let the below code select
+   // whether we promote with the vector or scalar.
+   if (VecTy && VecTy->getElementType()->isFloatingPointTy() &&
+-      VecTy->getElementCount().getFixedValue() > 1)
++      VecTy->getElementCount().getFixedValue() > 1) {
++    LogChoice("direct-fp-vecty", VecTy, VecTy, false);
+     return {VecTy, false, VecTy};
++  }
+ 
+   // Check if there is a common type that all slices of the partition use that
+   // spans the partition.
+@@ -5164,10 +5342,13 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+       // We prefer vector promotion here because if vector promotion is viable
+       // and there is a common type used, then it implies the second listed
+       // condition for preferring vector promotion is true.
+-      if (VecTy)
++      if (VecTy) {
++        LogChoice("common-type-vecty", VecTy, VecTy, false);
+         return {VecTy, false, VecTy};
+-      return {CommonUseTy, isIntegerWideningViable(P, CommonUseTy, DL),
+-              nullptr};
++      }
++      bool IntWiden = isIntegerWideningViable(P, CommonUseTy, DL);
++      LogChoice("common-type", CommonUseTy, nullptr, IntWiden);
++      return {CommonUseTy, IntWiden, nullptr};
+     }
+   }
+ 
+@@ -5183,32 +5364,83 @@ selectPartitionType(Partition &P, const DataLayout &DL, AllocaInst &AI,
+         DL.isLegalInteger(P.size() * 8))
+       TypePartitionTy = Type::getIntNTy(C, P.size() * 8);
+     // There was no common type used, so we prefer integer widening promotion.
+-    if (isIntegerWideningViable(P, TypePartitionTy, DL))
++    if (isIntegerWideningViable(P, TypePartitionTy, DL)) {
++      LogChoice("type-partition-intwiden", TypePartitionTy, nullptr, true);
+       return {TypePartitionTy, true, nullptr};
+-    if (VecTy)
++    }
++    if (VecTy) {
++      LogChoice("type-partition-vecty", VecTy, VecTy, false);
+       return {VecTy, false, VecTy};
++    }
+     // If we couldn't promote with TypePartitionTy, try with the largest
+     // integer type used.
+     if (LargestIntTy &&
+         DL.getTypeAllocSize(LargestIntTy).getFixedValue() >= P.size() &&
+-        isIntegerWideningViable(P, LargestIntTy, DL))
++        isIntegerWideningViable(P, LargestIntTy, DL)) {
++      LogChoice("largest-int-intwiden", LargestIntTy, nullptr, true);
+       return {LargestIntTy, true, nullptr};
++    }
++
++    // Try homogeneous struct to vector canonicalization.
++    //
++    // This is intentionally more conservative than tryCanonicalize...
++    // alone: after the normal promotion paths above fail, we only want the
++    // struct-to-vector fallback when it can expose a real whole-value use,
++    // not when it would merely create vector lanes that later passes have to
++    // unpack again.
++    if (auto *STy = dyn_cast<StructType>(TypePartitionTy))
++      if (auto *VTy = tryCanonicalizeStructToVector(STy, DL)) {
++        // Recover only a narrow integer memcpy-only subset here. Broader
++        // fallback recovery was too aggressive:
++        // - full-record 16-byte { i64, i64 } cases reopened regressions
++        // - FP and lane-oriented cases were more likely to trigger bad later
++        //   codegen
++        //
++        // So this path is restricted to 64-bit integer lanes, and only for
++        // interior partitions or original full records of size >= 32 bytes.
++        bool AllowStructFallback = shouldCanonicalizeHomogeneousStructToVector(
++            P, DL, AI, VTy->getElementType()->isIntegerTy(64));
++        LLVM_DEBUG({
++          dbgs() << "selectPartitionType struct-fallback-candidate"
++                 << " func=" << AI.getFunction()->getName() << " alloca=";
++          if (AI.hasName())
++            dbgs() << AI.getName();
++          else
++            dbgs() << "<unnamed>";
++          dbgs() << " partition=[" << P.beginOffset() << "," << P.endOffset()
++                 << ") size=" << P.size() << " type-partition=" << *STy
++                 << " candidate-vec=" << *VTy << " allow=" << AllowStructFallback
++                 << "\n";
++        });
++        if (AllowStructFallback) {
++          LogChoice("struct-fallback-vecty", VTy, nullptr, false);
++          return {VTy, false, nullptr};
++        }
++      }
+ 
+     // Fallback to TypePartitionTy and we probably won't promote.
++    LogChoice("type-partition-fallback", TypePartitionTy, nullptr, false);
+     return {TypePartitionTy, false, nullptr};
+   }
+ 
+   // Select the largest integer type used if it spans the partition.
+   if (LargestIntTy &&
+-      DL.getTypeAllocSize(LargestIntTy).getFixedValue() >= P.size())
++      DL.getTypeAllocSize(LargestIntTy).getFixedValue() >= P.size()) {
++    LogChoice("largest-int-fallback", LargestIntTy, nullptr, false);
+     return {LargestIntTy, false, nullptr};
++  }
+ 
+   // Select a legal integer type if it spans the partition.
+-  if (DL.isLegalInteger(P.size() * 8))
+-    return {Type::getIntNTy(C, P.size() * 8), false, nullptr};
++  if (DL.isLegalInteger(P.size() * 8)) {
++    Type *IntTy = Type::getIntNTy(C, P.size() * 8);
++    LogChoice("legal-int-fallback", IntTy, nullptr, false);
++    return {IntTy, false, nullptr};
++  }
+ 
+   // Fallback to an i8 array.
+-  return {ArrayType::get(Type::getInt8Ty(C), P.size()), false, nullptr};
++  Type *ArrayTy = ArrayType::get(Type::getInt8Ty(C), P.size());
++  LogChoice("byte-array-fallback", ArrayTy, nullptr, false);
++  return {ArrayTy, false, nullptr};
+ }
+ 
+ /// Rewrite an alloca partition's users.
+diff --git a/llvm/test/CodeGen/NVPTX/lower-byval-args.ll b/llvm/test/CodeGen/NVPTX/lower-byval-args.ll
+index 2b99a2af52719..a3144c5768431 100644
+--- a/llvm/test/CodeGen/NVPTX/lower-byval-args.ll
++++ b/llvm/test/CodeGen/NVPTX/lower-byval-args.ll
+@@ -455,64 +455,39 @@ define dso_local ptx_kernel void @memcpy_to_param(ptr nocapture noundef readonly
+ ; PTX-NEXT:    .local .align 8 .b8 __local_depot9[8];
+ ; PTX-NEXT:    .reg .b64 %SP;
+ ; PTX-NEXT:    .reg .b64 %SPL;
+-; PTX-NEXT:    .reg .b32 %r<3>;
+-; PTX-NEXT:    .reg .b64 %rd<47>;
++; PTX-NEXT:    .reg .b32 %r<23>;
++; PTX-NEXT:    .reg .b64 %rd<4>;
+ ; PTX-EMPTY:
+ ; PTX-NEXT:  // %bb.0: // %entry
+ ; PTX-NEXT:    mov.b64 %SPL, __local_depot9;
+ ; PTX-NEXT:    cvta.local.u64 %SP, %SPL;
+ ; PTX-NEXT:    ld.param.b64 %rd1, [memcpy_to_param_param_0];
+-; PTX-NEXT:    add.u64 %rd2, %SPL, 0;
++; PTX-NEXT:    cvta.to.global.u64 %rd2, %rd1;
+ ; PTX-NEXT:    ld.param.b32 %r1, [memcpy_to_param_param_1+4];
+-; PTX-NEXT:    st.local.b32 [%rd2+4], %r1;
+ ; PTX-NEXT:    ld.param.b32 %r2, [memcpy_to_param_param_1];
+-; PTX-NEXT:    st.local.b32 [%rd2], %r2;
+-; PTX-NEXT:    ld.volatile.b8 %rd3, [%rd1];
+-; PTX-NEXT:    ld.volatile.b8 %rd4, [%rd1+1];
+-; PTX-NEXT:    shl.b64 %rd5, %rd4, 8;
+-; PTX-NEXT:    or.b64 %rd6, %rd5, %rd3;
+-; PTX-NEXT:    ld.volatile.b8 %rd7, [%rd1+2];
+-; PTX-NEXT:    shl.b64 %rd8, %rd7, 16;
+-; PTX-NEXT:    ld.volatile.b8 %rd9, [%rd1+3];
+-; PTX-NEXT:    shl.b64 %rd10, %rd9, 24;
+-; PTX-NEXT:    or.b64 %rd11, %rd10, %rd8;
+-; PTX-NEXT:    or.b64 %rd12, %rd11, %rd6;
+-; PTX-NEXT:    ld.volatile.b8 %rd13, [%rd1+4];
+-; PTX-NEXT:    ld.volatile.b8 %rd14, [%rd1+5];
+-; PTX-NEXT:    shl.b64 %rd15, %rd14, 8;
+-; PTX-NEXT:    or.b64 %rd16, %rd15, %rd13;
+-; PTX-NEXT:    ld.volatile.b8 %rd17, [%rd1+6];
+-; PTX-NEXT:    shl.b64 %rd18, %rd17, 16;
+-; PTX-NEXT:    ld.volatile.b8 %rd19, [%rd1+7];
+-; PTX-NEXT:    shl.b64 %rd20, %rd19, 24;
+-; PTX-NEXT:    or.b64 %rd21, %rd20, %rd18;
+-; PTX-NEXT:    or.b64 %rd22, %rd21, %rd16;
+-; PTX-NEXT:    shl.b64 %rd23, %rd22, 32;
+-; PTX-NEXT:    or.b64 %rd24, %rd23, %rd12;
+-; PTX-NEXT:    st.volatile.b64 [%SP], %rd24;
+-; PTX-NEXT:    ld.volatile.b8 %rd25, [%rd1+8];
+-; PTX-NEXT:    ld.volatile.b8 %rd26, [%rd1+9];
+-; PTX-NEXT:    shl.b64 %rd27, %rd26, 8;
+-; PTX-NEXT:    or.b64 %rd28, %rd27, %rd25;
+-; PTX-NEXT:    ld.volatile.b8 %rd29, [%rd1+10];
+-; PTX-NEXT:    shl.b64 %rd30, %rd29, 16;
+-; PTX-NEXT:    ld.volatile.b8 %rd31, [%rd1+11];
+-; PTX-NEXT:    shl.b64 %rd32, %rd31, 24;
+-; PTX-NEXT:    or.b64 %rd33, %rd32, %rd30;
+-; PTX-NEXT:    or.b64 %rd34, %rd33, %rd28;
+-; PTX-NEXT:    ld.volatile.b8 %rd35, [%rd1+12];
+-; PTX-NEXT:    ld.volatile.b8 %rd36, [%rd1+13];
+-; PTX-NEXT:    shl.b64 %rd37, %rd36, 8;
+-; PTX-NEXT:    or.b64 %rd38, %rd37, %rd35;
+-; PTX-NEXT:    ld.volatile.b8 %rd39, [%rd1+14];
+-; PTX-NEXT:    shl.b64 %rd40, %rd39, 16;
+-; PTX-NEXT:    ld.volatile.b8 %rd41, [%rd1+15];
+-; PTX-NEXT:    shl.b64 %rd42, %rd41, 24;
+-; PTX-NEXT:    or.b64 %rd43, %rd42, %rd40;
+-; PTX-NEXT:    or.b64 %rd44, %rd43, %rd38;
+-; PTX-NEXT:    shl.b64 %rd45, %rd44, 32;
+-; PTX-NEXT:    or.b64 %rd46, %rd45, %rd34;
+-; PTX-NEXT:    st.volatile.b64 [%SP+8], %rd46;
++; PTX-NEXT:    st.v2.b32 [%SP], {%r2, %r1};
++; PTX-NEXT:    ld.volatile.global.b8 %r3, [%rd2+4];
++; PTX-NEXT:    ld.volatile.global.b8 %r4, [%rd2+5];
++; PTX-NEXT:    shl.b32 %r5, %r4, 8;
++; PTX-NEXT:    or.b32 %r6, %r5, %r3;
++; PTX-NEXT:    ld.volatile.global.b8 %r7, [%rd2+6];
++; PTX-NEXT:    shl.b32 %r8, %r7, 16;
++; PTX-NEXT:    ld.volatile.global.b8 %r9, [%rd2+7];
++; PTX-NEXT:    shl.b32 %r10, %r9, 24;
++; PTX-NEXT:    or.b32 %r11, %r10, %r8;
++; PTX-NEXT:    or.b32 %r12, %r11, %r6;
++; PTX-NEXT:    ld.volatile.global.b8 %r13, [%rd2];
++; PTX-NEXT:    ld.volatile.global.b8 %r14, [%rd2+1];
++; PTX-NEXT:    shl.b32 %r15, %r14, 8;
++; PTX-NEXT:    or.b32 %r16, %r15, %r13;
++; PTX-NEXT:    ld.volatile.global.b8 %r17, [%rd2+2];
++; PTX-NEXT:    shl.b32 %r18, %r17, 16;
++; PTX-NEXT:    ld.volatile.global.b8 %r19, [%rd2+3];
++; PTX-NEXT:    shl.b32 %r20, %r19, 24;
++; PTX-NEXT:    or.b32 %r21, %r20, %r18;
++; PTX-NEXT:    or.b32 %r22, %r21, %r16;
++; PTX-NEXT:    add.u64 %rd3, %SPL, 0;
++; PTX-NEXT:    st.local.v2.b32 [%rd3], {%r22, %r12};
+ ; PTX-NEXT:    ret;
+ entry:
+   tail call void @llvm.memcpy.p0.p0.i64(ptr %s, ptr %in, i64 16, i1 true)
+diff --git a/llvm/test/DebugInfo/Generic/assignment-tracking/sroa/user-memcpy.ll b/llvm/test/DebugInfo/Generic/assignment-tracking/sroa/user-memcpy.ll
+index ded78f4ff83f4..00127c85db1fb 100644
+--- a/llvm/test/DebugInfo/Generic/assignment-tracking/sroa/user-memcpy.ll
++++ b/llvm/test/DebugInfo/Generic/assignment-tracking/sroa/user-memcpy.ll
+@@ -21,8 +21,8 @@
+ ;; Allocas have been promoted - the linked dbg.assigns have been removed.
+ 
+ ;; | V3i point = {0, 0, 0};
+-; CHECK-NEXT: #dbg_value(i64 0, ![[point:[0-9]+]], !DIExpression(DW_OP_LLVM_fragment, 0, 64),
+-; CHECK-NEXT: #dbg_value(i64 0, ![[point]], !DIExpression(DW_OP_LLVM_fragment, 64, 64),
++;; point.x and point.y are promoted together as <2 x i64> zeroinitializer.
++; CHECK-NEXT: #dbg_value(<2 x i64> zeroinitializer, ![[point:[0-9]+]], !DIExpression(DW_OP_LLVM_fragment, 0, 128),
+ 
+ ;; point.z = 5000;
+ ; CHECK-NEXT: #dbg_value(i64 5000, ![[point]], !DIExpression(DW_OP_LLVM_fragment, 128, 64),
+@@ -40,8 +40,8 @@
+ ; CHECK-NEXT: #dbg_value(i64 %other.sroa.3.0.copyload, ![[other]], !DIExpression(DW_OP_LLVM_fragment, 128, 64),
+ 
+ ;; | std::memcpy(&point.y, &other.x, sizeof(long) * 2);
+-;;   other is now 3 scalars:
+-;;     point.y = other.x
++;;   point.x and point.y are a <2 x i64>, insertelement updates point.y:
++; CHECK-NEXT: {{.*}} = insertelement <2 x i64> zeroinitializer, i64 %other.sroa.0.0.copyload, i32 1
+ ; CHECK-NEXT: #dbg_value(i64 %other.sroa.0.0.copyload, ![[point]], !DIExpression(DW_OP_LLVM_fragment, 64, 64),
+ ;;
+ ;;     point.z = other.y
+diff --git a/llvm/test/DebugInfo/Generic/sroa-alloca-offset.ll b/llvm/test/DebugInfo/Generic/sroa-alloca-offset.ll
+index 6718711f83e04..30d8e80f8d73a 100644
+--- a/llvm/test/DebugInfo/Generic/sroa-alloca-offset.ll
++++ b/llvm/test/DebugInfo/Generic/sroa-alloca-offset.ll
+@@ -140,9 +140,7 @@ entry:
+ ;; 16 bit variable f (!62): value vgf (lower bits)
+ ;; 16 bit variable g (!63): value vgf (upper bits)
+ ;;
+-;; 16 bit variable h (!64): deref dead_64_128
+-; COMMON-NEXT: %[[dead_64_128:.*]] = alloca %struct.two
+-; COMMON-NEXT: #dbg_declare(ptr %[[dead_64_128]], ![[h:[0-9]+]], !DIExpression(),
++;; 16 bit variable h (!64): value vh (vector)
+ ; COMMON-NEXT: %[[ve:.*]] = load i32, ptr @gf
+ ;; FIXME: mem2reg bug - offset is incorrect - see comment above.
+ ; COMMON-NEXT: #dbg_value(i32 %[[ve]], ![[e:[0-9]+]], !DIExpression(DW_OP_plus_uconst, 2),
+@@ -150,6 +148,8 @@ entry:
+ ; COMMON-NEXT: #dbg_value(i32 %[[vfg]], ![[f:[0-9]+]], !DIExpression(),
+ ;; FIXME: mem2reg bug - offset is incorrect - see comment above.
+ ; COMMON-NEXT: #dbg_value(i32 %[[vfg]], ![[g:[0-9]+]], !DIExpression(DW_OP_plus_uconst, 2),
++; COMMON-NEXT: %[[vh:.*]] = load <2 x i32>, ptr getelementptr inbounds (i8, ptr @gf, i64 8)
++; COMMON-NEXT: #dbg_value(<2 x i32> %[[vh]], ![[h:[0-9]+]], !DIExpression(),
+ define dso_local noundef i32 @_Z4fun3v() #0 !dbg !55 {
+ entry:
+   %0 = alloca %struct.four, align 4
+diff --git a/llvm/test/DebugInfo/X86/sroasplit-4.ll b/llvm/test/DebugInfo/X86/sroasplit-4.ll
+index d5ce348e9896e..97eba1d206eeb 100644
+--- a/llvm/test/DebugInfo/X86/sroasplit-4.ll
++++ b/llvm/test/DebugInfo/X86/sroasplit-4.ll
+@@ -2,11 +2,15 @@
+ ;
+ ; Test that recursively splitting an alloca updates the debug info correctly.
+ ; CHECK: %[[T:.*]] = load i64, ptr @t, align 8
+-; CHECK: #dbg_value(i64 %[[T]], ![[Y:.*]], !DIExpression(DW_OP_LLVM_fragment, 0, 64),
++; CHECK: %[[VEC1:.*]] = insertelement <2 x i64> {{.*}}, i64 %[[T]], i32 0
++; CHECK: #dbg_value(<2 x i64> %[[VEC1]], ![[Y:.*]], !DIExpression(),
+ ; CHECK: %[[T1:.*]] = load i64, ptr @t, align 8
+-; CHECK: #dbg_value(i64 %[[T1]], ![[Y]], !DIExpression(DW_OP_LLVM_fragment, 64, 64),
+-; CHECK: #dbg_value(i64 %[[T]], ![[R:.*]], !DIExpression(DW_OP_LLVM_fragment, 192, 64),
+-; CHECK: #dbg_value(i64 %[[T1]], ![[R]], !DIExpression(DW_OP_LLVM_fragment, 256, 64),
++; CHECK: %[[VEC2:.*]] = insertelement <2 x i64> %[[VEC1]], i64 %[[T1]], i32 1
++; CHECK: #dbg_value(<2 x i64> %[[VEC2]], ![[Y]], !DIExpression(),
++; CHECK: #dbg_value(i32 0, ![[R:.*]], !DIExpression(DW_OP_LLVM_fragment, 0, 32),
++; CHECK: #dbg_value(i64 0, ![[R]], !DIExpression(DW_OP_LLVM_fragment, 64, 64),
++; CHECK: #dbg_value(i64 0, ![[R]], !DIExpression(DW_OP_LLVM_fragment, 128, 64),
++; CHECK: #dbg_value(<2 x i64> %[[VEC2]], ![[R]], !DIExpression(DW_OP_LLVM_fragment, 192, 128),
+ ;
+ ; struct p {
+ ;   __SIZE_TYPE__ s;
+diff --git a/llvm/test/Transforms/SROA/struct-to-vector-fp-store-only-tail.ll b/llvm/test/Transforms/SROA/struct-to-vector-fp-store-only-tail.ll
+new file mode 100644
+index 0000000000000..f223c2e8efa70
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/struct-to-vector-fp-store-only-tail.ll
+@@ -0,0 +1,39 @@
++; RUN: opt -passes=sroa -S %s | FileCheck %s
++; NOTE: Do not autogenerate. This regression test checks a specific store-only
++; homogeneous float slice pattern that current SROA can over-vectorize.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-pc-linux-gnu"
++
++%class.aiMatrix4x4t = type { float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float }
++
++; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: readwrite)
++declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg)
++
++; This reduced case exercises a homogeneous FP tail slice that is only stored.
++; The fixed behavior keeps the scalar/memcpy shape; the buggy behavior deletes
++; the 3-float temporary and replaces it with a non-const vector store
++; (`store <4 x float> %...`) seeded by FP struct-to-vector canonicalization.
++;
++; CHECK-LABEL: define ptr @store_only_fp_tail()
++; CHECK: %.sroa.3 = alloca { float, float, float }, align 8
++; CHECK: %.sroa.4 = alloca { float, float, float, float, float, float, float, float, float, float, float }, align 8
++; CHECK: %.sroa.0.sroa.1 = alloca { float, float, float }, align 8
++; CHECK: %.sroa.2 = alloca { float, float, float, float, float, float, float, float, float, float, float }, align 8
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 8 %.sroa.3, ptr align 8 %.sroa.0.sroa.1, i64 12, i1 false)
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 8 %.sroa.4, ptr align 8 %.sroa.2, i64 44, i1 false)
++; CHECK: store float 0.000000e+00, ptr null, align 1
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 1 getelementptr inbounds (i8, ptr null, i64 4), ptr align 8 %.sroa.3, i64 12, i1 false)
++; CHECK: store float 0.000000e+00, ptr getelementptr inbounds (i8, ptr null, i64 16), align 1
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 1 getelementptr inbounds (i8, ptr null, i64 20), ptr align 8 %.sroa.4, i64 44, i1 false)
++; CHECK-NOT: store <4 x float> %
++define ptr @store_only_fp_tail() {
++  %1 = alloca %class.aiMatrix4x4t, align 4
++  %2 = alloca %class.aiMatrix4x4t, align 4
++  %3 = getelementptr i8, ptr %2, i64 16
++  store float 0.000000e+00, ptr %3, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr %1, ptr %2, i64 64, i1 false)
++  store float 0.000000e+00, ptr %1, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr null, ptr %1, i64 64, i1 false)
++  ret ptr null
++}
+diff --git a/llvm/test/Transforms/SROA/struct-to-vector-mapok-extra-alloca.ll b/llvm/test/Transforms/SROA/struct-to-vector-mapok-extra-alloca.ll
+new file mode 100644
+index 0000000000000..f9ce644156b31
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/struct-to-vector-mapok-extra-alloca.ll
+@@ -0,0 +1,35 @@
++; RUN: opt -passes='default<O3>' -S %s | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++; CHECK-LABEL: define void @"_ZN102_$LT$futures_util..stream..try_stream..MapOk$LT$St$C$F$GT$$u20$as$u20$futures_core..stream..Stream$GT$9poll_next17h555df33481d9c33cE"
++; CHECK: [[TMP:%.*]] = alloca [11 x i64], align 8
++; CHECK: call void @llvm.lifetime.start.p0(ptr nonnull [[TMP]])
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) [[TMP]], ptr noundef nonnull align 1 dereferenceable(88) %0, i64 88, i1 false)
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(88) %0, ptr noundef nonnull align 8 dereferenceable(88) [[TMP]], i64 88, i1 false)
++; CHECK: call void @llvm.lifetime.end.p0(ptr nonnull [[TMP]])
++define void @"_ZN102_$LT$futures_util..stream..try_stream..MapOk$LT$St$C$F$GT$$u20$as$u20$futures_core..stream..Stream$GT$9poll_next17h555df33481d9c33cE"(ptr %0) {
++  call void @"_ZN101_$LT$futures_util..stream..stream..map..Map$LT$St$C$F$GT$$u20$as$u20$futures_core..stream..Stream$GT$9poll_next17h5aa844c062b2077eE"(ptr %0)
++  ret void
++}
++
++; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: readwrite)
++declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #0
++
++define void @"_ZN101_$LT$futures_util..stream..stream..map..Map$LT$St$C$F$GT$$u20$as$u20$futures_core..stream..Stream$GT$9poll_next17h5aa844c062b2077eE"(ptr %0) {
++  %.sroa.5 = alloca [11 x i64], align 8
++  %2 = load i64, ptr %0, align 8
++  %3 = icmp eq i64 %2, 0
++  br i1 %3, label %"_ZN122_$LT$futures_util..fns..MapOkFn$LT$F$GT$$u20$as$u20$futures_util..fns..FnMut1$LT$core..result..Result$LT$T$C$E$GT$$GT$$GT$8call_mut17h252763b5559d12fbE.exit", label %4
++
++4:                                                ; preds = %1
++  call void @llvm.memcpy.p0.p0.i64(ptr %.sroa.5, ptr %0, i64 88, i1 false)
++  br label %"_ZN122_$LT$futures_util..fns..MapOkFn$LT$F$GT$$u20$as$u20$futures_util..fns..FnMut1$LT$core..result..Result$LT$T$C$E$GT$$GT$$GT$8call_mut17h252763b5559d12fbE.exit"
++
++"_ZN122_$LT$futures_util..fns..MapOkFn$LT$F$GT$$u20$as$u20$futures_util..fns..FnMut1$LT$core..result..Result$LT$T$C$E$GT$$GT$$GT$8call_mut17h252763b5559d12fbE.exit": ; preds = %4, %1
++  call void @llvm.memcpy.p0.p0.i64(ptr %0, ptr %.sroa.5, i64 88, i1 false)
++  ret void
++}
++
++attributes #0 = { nocallback nofree nounwind willreturn memory(argmem: readwrite) }
+diff --git a/llvm/test/Transforms/SROA/struct-to-vector-subpartition.ll b/llvm/test/Transforms/SROA/struct-to-vector-subpartition.ll
+new file mode 100644
+index 0000000000000..fafded012ae4a
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/struct-to-vector-subpartition.ll
+@@ -0,0 +1,76 @@
++; RUN: opt -passes=sroa -S %s | FileCheck %s
++; NOTE: Do not autogenerate. This test intentionally uses targeted CHECK
++; patterns for clarity.
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++; When SROA splits { ptr, i64, i64, i64 } into [0,8), [8,16), [16,32),
++; the [16,32) partition type from getTypePartition is { i64, i64 }.
++; The current whole-use heuristic intentionally does NOT canonicalize this
++; sub-partition to <2 x i64>, because the [16,32) slice is only touched by
++; splittable memcpy traffic and has no non-splittable whole-partition use.
++; Keeping it scalar avoids creating a vectorized temporary that later passes
++; may not be able to promote away.
++
++; CHECK-LABEL: define void @test_subpartition_type(
++; CHECK: %a.sroa.6 = alloca { i64, i64 }, align 8
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 8 %a.sroa.6, ptr align 8 %a.sroa.6.0.src.sroa_idx, i64 16, i1 false)
++; CHECK: call void @llvm.memcpy.p0.p0.i64(ptr align 8 %a.sroa.6.0.dst.sroa_idx, ptr align 8 %a.sroa.6, i64 16, i1 false)
++define void @test_subpartition_type(ptr %src, ptr %dst) {
++entry:
++  %a = alloca { ptr, i64, i64, i64 }, align 8
++  call void @llvm.lifetime.start.p0(i64 32, ptr %a)
++
++  ; Copy all 32 bytes from src into %a (splittable)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %a, ptr align 8 %src, i64 32, i1 false)
++
++  ; Load ptr at [0,8) -- forces partition boundary at 8
++  %p = load ptr, ptr %a, align 8
++
++  ; Load i64 at [8,16) -- forces partition boundary at 16
++  %gep.a.8 = getelementptr inbounds i8, ptr %a, i64 8
++  %v1 = load i64, ptr %gep.a.8, align 8
++
++  ; Only splittable memcpy uses touch [16,32), so SROA creates a single
++  ; [16,32) partition. getTypePartition returns { i64, i64 } for this, but
++  ; the whole-use heuristic keeps it in scalar/memcpy form.
++
++  ; Copy all 32 bytes from %a to dst (splittable)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %dst, ptr align 8 %a, i64 32, i1 false)
++
++  call void @llvm.lifetime.end.p0(i64 32, ptr %a)
++  ret void
++}
++
++; Element-wise { double, double } access through a phi.
++; The phi between two allocas prevents SROA slice analysis
++; ("A pointer to this alloca escaped"), so the allocas survive.
++
++; CHECK-LABEL: define void @test_elementwise_phi(
++; CHECK-NOT: <2 x double>
++define void @test_elementwise_phi(ptr %src0, ptr %src1, i1 %cond, ptr %dst) {
++entry:
++  %a = alloca { double, double }, align 8
++  %b = alloca { double, double }, align 8
++  %a.1 = getelementptr inbounds i8, ptr %a, i64 8
++  %b.1 = getelementptr inbounds i8, ptr %b, i64 8
++  %v0 = load double, ptr %src0, align 8
++  %v1 = load double, ptr %src1, align 8
++  store double %v0, ptr %a, align 8
++  store double %v1, ptr %a.1, align 8
++  store double 0.0, ptr %b, align 8
++  store double 0.0, ptr %b.1, align 8
++  br i1 %cond, label %if.then, label %if.else
++
++if.then:
++  br label %merge
++
++if.else:
++  br label %merge
++
++merge:
++  %sel = phi ptr [ %a, %if.then ], [ %b, %if.else ]
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %dst, ptr align 8 %sel, i64 16, i1 false)
++  ret void
++}
+diff --git a/llvm/test/Transforms/SROA/struct-to-vector.ll b/llvm/test/Transforms/SROA/struct-to-vector.ll
+new file mode 100644
+index 0000000000000..58945334b7961
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/struct-to-vector.ll
+@@ -0,0 +1,396 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='sroa,gvn,instcombine,simplifycfg' -S %s | FileCheck %s
++%struct.myint4 = type { i32, i32, i32, i32 }
++
++define dso_local void @foo_flat(ptr noundef %x, i64 %y.coerce0, i64 %y.coerce1, i32 noundef %cond) {
++; CHECK-LABEL: define dso_local void @foo_flat(
++; CHECK-SAME: ptr noundef [[X:%.*]], i64 [[Y_COERCE0:%.*]], i64 [[Y_COERCE1:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TOBOOL_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[DOTY_COERCE0:%.*]] = select i1 [[TOBOOL_NOT]], i64 0, i64 [[Y_COERCE0]]
++; CHECK-NEXT:    [[DOTY_COERCE1:%.*]] = select i1 [[TOBOOL_NOT]], i64 0, i64 [[Y_COERCE1]]
++; CHECK-NEXT:    store i64 [[DOTY_COERCE0]], ptr [[X]], align 16
++; CHECK-NEXT:    [[X_REPACK7:%.*]] = getelementptr inbounds nuw i8, ptr [[X]], i64 8
++; CHECK-NEXT:    store i64 [[DOTY_COERCE1]], ptr [[X_REPACK7]], align 8
++; CHECK-NEXT:    ret void
++;
++entry:
++  %y = alloca %struct.myint4, align 16
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.myint4, align 16
++  %zero = alloca %struct.myint4, align 16
++  %data = alloca %struct.myint4, align 16
++  %0 = getelementptr inbounds nuw { i64, i64 }, ptr %y, i32 0, i32 0
++  store i64 %y.coerce0, ptr %0, align 16
++  %1 = getelementptr inbounds nuw { i64, i64 }, ptr %y, i32 0, i32 1
++  store i64 %y.coerce1, ptr %1, align 8
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 16 %temp, ptr align 16 %y, i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 16 %zero, i8 0, i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %2 = load i32, ptr %cond.addr, align 4
++  %tobool = icmp ne i32 %2, 0
++  br i1 %tobool, label %cond.true, label %cond.false
++
++cond.true:
++  br label %cond.end
++
++cond.false:
++  br label %cond.end
++
++cond.end:
++  %cond1 = phi ptr [ %temp, %cond.true ], [ %zero, %cond.false ]
++  %whole = load { i64, i64 }, ptr %cond1, align 16
++  store { i64, i64 } %whole, ptr %data, align 16
++  %3 = load ptr, ptr %x.addr, align 8
++  %whole2 = load { i64, i64 }, ptr %data, align 16
++  store { i64, i64 } %whole2, ptr %3, align 16
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
++%struct.myint4_base_n = type { i32, i32, i32, i32 }
++%struct.myint4_nested = type { %struct.myint4_base_n }
++
++define dso_local void @foo_nested(ptr noundef %x, i64 %y.coerce0, i64 %y.coerce1, i32 noundef %cond) {
++; CHECK-LABEL: define dso_local void @foo_nested(
++; CHECK-SAME: ptr noundef [[X:%.*]], i64 [[Y_COERCE0:%.*]], i64 [[Y_COERCE1:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TOBOOL_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[DOTY_COERCE0:%.*]] = select i1 [[TOBOOL_NOT]], i64 0, i64 [[Y_COERCE0]]
++; CHECK-NEXT:    [[DOTY_COERCE1:%.*]] = select i1 [[TOBOOL_NOT]], i64 0, i64 [[Y_COERCE1]]
++; CHECK-NEXT:    store i64 [[DOTY_COERCE0]], ptr [[X]], align 16
++; CHECK-NEXT:    [[X_REPACK7:%.*]] = getelementptr inbounds nuw i8, ptr [[X]], i64 8
++; CHECK-NEXT:    store i64 [[DOTY_COERCE1]], ptr [[X_REPACK7]], align 8
++; CHECK-NEXT:    ret void
++;
++entry:
++  %y = alloca %struct.myint4_nested, align 16
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.myint4_nested, align 16
++  %zero = alloca %struct.myint4_nested, align 16
++  %data = alloca %struct.myint4_nested, align 16
++  %0 = getelementptr inbounds nuw { i64, i64 }, ptr %y, i32 0, i32 0
++  store i64 %y.coerce0, ptr %0, align 16
++  %1 = getelementptr inbounds nuw { i64, i64 }, ptr %y, i32 0, i32 1
++  store i64 %y.coerce1, ptr %1, align 8
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 16 %temp, ptr align 16 %y, i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 16 %zero, i8 0, i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %2 = load i32, ptr %cond.addr, align 4
++  %tobool = icmp ne i32 %2, 0
++  br i1 %tobool, label %cond.true, label %cond.false
++
++cond.true:
++  br label %cond.end
++
++cond.false:
++  br label %cond.end
++
++cond.end:
++  %cond1 = phi ptr [ %temp, %cond.true ], [ %zero, %cond.false ]
++  %whole = load { i64, i64 }, ptr %cond1, align 16
++  store { i64, i64 } %whole, ptr %data, align 16
++  %3 = load ptr, ptr %x.addr, align 8
++  %whole2 = load { i64, i64 }, ptr %data, align 16
++  store { i64, i64 } %whole2, ptr %3, align 16
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
++
++%struct.padded = type { i32, i8, i32, i8 }
++define dso_local void @foo_padded(ptr noundef %x, i32 %a0, i8 %a1,
++; CHECK-LABEL: define dso_local void @foo_padded(
++; CHECK-SAME: ptr noundef [[X:%.*]], i32 [[A0:%.*]], i8 [[A1:%.*]], i32 [[A2:%.*]], i8 [[A3:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMP:%.*]] = alloca [[STRUCT_PADDED:%.*]], align 4
++; CHECK-NEXT:    [[ZERO:%.*]] = alloca [[STRUCT_PADDED]], align 4
++; CHECK-NEXT:    [[DATA:%.*]] = alloca [[STRUCT_PADDED]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    store i32 [[A0]], ptr [[TEMP]], align 4
++; CHECK-NEXT:    [[Y_SROA_2_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 4
++; CHECK-NEXT:    store i8 [[A1]], ptr [[Y_SROA_2_0_TEMP_SROA_IDX]], align 4
++; CHECK-NEXT:    [[Y_SROA_31_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 8
++; CHECK-NEXT:    store i32 [[A2]], ptr [[Y_SROA_31_0_TEMP_SROA_IDX]], align 4
++; CHECK-NEXT:    [[Y_SROA_4_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 12
++; CHECK-NEXT:    store i8 [[A3]], ptr [[Y_SROA_4_0_TEMP_SROA_IDX]], align 4
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) [[ZERO]], i8 0, i64 16, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    [[TOBOOL_PAD_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[ZERO_TEMP:%.*]] = select i1 [[TOBOOL_PAD_NOT]], ptr [[ZERO]], ptr [[TEMP]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) [[DATA]], ptr noundef nonnull align 4 dereferenceable(16) [[ZERO_TEMP]], i64 16, i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) [[X]], ptr noundef nonnull align 4 dereferenceable(16) [[DATA]], i64 16, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    ret void
++;
++  i32 %a2, i8 %a3,
++  i32 noundef %cond) {
++entry:
++  %y = alloca %struct.padded, align 4
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.padded, align 4
++  %zero = alloca %struct.padded, align 4
++  %data = alloca %struct.padded, align 4
++  %y_i32_0 = getelementptr inbounds %struct.padded, ptr %y, i32 0, i32 0
++  store i32 %a0, ptr %y_i32_0, align 4
++  %y_i8_1 = getelementptr inbounds %struct.padded, ptr %y, i32 0, i32 1
++  store i8 %a1, ptr %y_i8_1, align 1
++  %y_i32_2 = getelementptr inbounds %struct.padded, ptr %y, i32 0, i32 2
++  store i32 %a2, ptr %y_i32_2, align 4
++  %y_i8_3 = getelementptr inbounds %struct.padded, ptr %y, i32 0, i32 3
++  store i8 %a3, ptr %y_i8_3, align 1
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %temp, ptr align 4 %y,
++  i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 4 %zero, i8 0, i64 16, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %c.pad = load i32, ptr %cond.addr, align 4
++  %tobool.pad = icmp ne i32 %c.pad, 0
++  br i1 %tobool.pad, label %cond.true.pad, label %cond.false.pad
++
++cond.true.pad:
++  br label %cond.end.pad
++
++cond.false.pad:
++  br label %cond.end.pad
++
++cond.end.pad:
++  %cond1.pad = phi ptr [ %temp, %cond.true.pad ], [ %zero, %cond.false.pad ]
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %data, ptr align 4 %cond1.pad,
++  i64 16, i1 false)
++  %xv.pad = load ptr, ptr %x.addr, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %xv.pad, ptr align 4 %data,
++  i64 16, i1 false)
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
++
++%struct.nonhomo = type { i32, i64, i32, i64 }
++define dso_local void @foo_nonhomo(ptr noundef %x, i32 %a0, i64 %a1,
++; CHECK-LABEL: define dso_local void @foo_nonhomo(
++; CHECK-SAME: ptr noundef [[X:%.*]], i32 [[A0:%.*]], i64 [[A1:%.*]], i32 [[A2:%.*]], i64 [[A3:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMP:%.*]] = alloca [[STRUCT_NONHOMO:%.*]], align 8
++; CHECK-NEXT:    [[ZERO:%.*]] = alloca [[STRUCT_NONHOMO]], align 8
++; CHECK-NEXT:    [[DATA:%.*]] = alloca [[STRUCT_NONHOMO]], align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    store i32 [[A0]], ptr [[TEMP]], align 8
++; CHECK-NEXT:    [[Y_SROA_2_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 4
++; CHECK-NEXT:    store i64 [[A1]], ptr [[Y_SROA_2_0_TEMP_SROA_IDX]], align 4
++; CHECK-NEXT:    [[Y_SROA_3_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 12
++; CHECK-NEXT:    store i32 [[A2]], ptr [[Y_SROA_3_0_TEMP_SROA_IDX]], align 4
++; CHECK-NEXT:    [[Y_SROA_4_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 16
++; CHECK-NEXT:    store i64 [[A3]], ptr [[Y_SROA_4_0_TEMP_SROA_IDX]], align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[ZERO]], i8 0, i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    [[TOBOOL_NH_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[ZERO_TEMP:%.*]] = select i1 [[TOBOOL_NH_NOT]], ptr [[ZERO]], ptr [[TEMP]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[DATA]], ptr noundef nonnull align 8 dereferenceable(32) [[ZERO_TEMP]], i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[X]], ptr noundef nonnull align 8 dereferenceable(32) [[DATA]], i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    ret void
++;
++  i32 %a2, i64 %a3,
++  i32 noundef %cond) {
++entry:
++  %y = alloca %struct.nonhomo, align 8
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.nonhomo, align 8
++  %zero = alloca %struct.nonhomo, align 8
++  %data = alloca %struct.nonhomo, align 8
++  %y_i32_0n = getelementptr inbounds %struct.nonhomo, ptr %y, i32 0, i32 0
++  store i32 %a0, ptr %y_i32_0n, align 4
++  %y_i64_1n = getelementptr inbounds %struct.nonhomo, ptr %y, i32 0, i32 1
++  store i64 %a1, ptr %y_i64_1n, align 8
++  %y_i32_2n = getelementptr inbounds %struct.nonhomo, ptr %y, i32 0, i32 2
++  store i32 %a2, ptr %y_i32_2n, align 4
++  %y_i64_3n = getelementptr inbounds %struct.nonhomo, ptr %y, i32 0, i32 3
++  store i64 %a3, ptr %y_i64_3n, align 8
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temp, ptr align 8 %y,
++  i64 32, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 8 %zero, i8 0, i64 32, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %c.nh = load i32, ptr %cond.addr, align 4
++  %tobool.nh = icmp ne i32 %c.nh, 0
++  br i1 %tobool.nh, label %cond.true.nh, label %cond.false.nh
++
++cond.true.nh:
++  br label %cond.end.nh
++
++cond.false.nh:
++  br label %cond.end.nh
++
++cond.end.nh:
++  %cond1.nh = phi ptr [ %temp, %cond.true.nh ], [ %zero, %cond.false.nh ]
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %data, ptr align 8 %cond1.nh,
++  i64 32, i1 false)
++  %xv.nh = load ptr, ptr %x.addr, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %xv.nh, ptr align 8 %data,
++  i64 32, i1 false)
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
++
++%struct.i1x4 = type { i1, i1, i1, i1 }
++define dso_local void @foo_i1(ptr noundef %x, i64 %dummy0, i64 %dummy1,
++; CHECK-LABEL: define dso_local void @foo_i1(
++; CHECK-SAME: ptr noundef [[X:%.*]], i64 [[DUMMY0:%.*]], i64 [[DUMMY1:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMP:%.*]] = alloca [[STRUCT_I1X4:%.*]], align 1
++; CHECK-NEXT:    [[ZERO:%.*]] = alloca [[STRUCT_I1X4]], align 1
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    store i32 0, ptr [[ZERO]], align 1
++; CHECK-NEXT:    [[TOBOOL_I1_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[ZERO_TEMP:%.*]] = select i1 [[TOBOOL_I1_NOT]], ptr [[ZERO]], ptr [[TEMP]]
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[ZERO_TEMP]], align 1
++; CHECK-NEXT:    store i32 [[TMP0]], ptr [[X]], align 1
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    ret void
++;
++  i32 noundef %cond) {
++entry:
++  %y = alloca %struct.i1x4, align 1
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.i1x4, align 1
++  %zero = alloca %struct.i1x4, align 1
++  %data = alloca %struct.i1x4, align 1
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %temp, ptr align 1 %y,
++  i64 4, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 1 %zero, i8 0, i64 4, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %c.i1 = load i32, ptr %cond.addr, align 4
++  %tobool.i1 = icmp ne i32 %c.i1, 0
++  br i1 %tobool.i1, label %cond.true.i1, label %cond.false.i1
++
++cond.true.i1:
++  br label %cond.end.i1
++
++cond.false.i1:
++  br label %cond.end.i1
++
++cond.end.i1:
++  %cond1.i1 = phi ptr [ %temp, %cond.true.i1 ], [ %zero, %cond.false.i1 ]
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %data, ptr align 1 %cond1.i1,
++  i64 4, i1 false)
++  %xv.i1 = load ptr, ptr %x.addr, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %xv.i1, ptr align 1 %data,
++  i64 4, i1 false)
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
++
++%struct.ptr4 = type { ptr, ptr, ptr, ptr }
++define dso_local void @foo_ptr(ptr noundef %x, ptr %p0, ptr %p1,
++; CHECK-LABEL: define dso_local void @foo_ptr(
++; CHECK-SAME: ptr noundef [[X:%.*]], ptr [[P0:%.*]], ptr [[P1:%.*]], ptr [[P2:%.*]], ptr [[P3:%.*]], i32 noundef [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[TEMP:%.*]] = alloca [[STRUCT_PTR4:%.*]], align 8
++; CHECK-NEXT:    [[ZERO:%.*]] = alloca [[STRUCT_PTR4]], align 8
++; CHECK-NEXT:    [[DATA:%.*]] = alloca [[STRUCT_PTR4]], align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    store ptr [[P0]], ptr [[TEMP]], align 8
++; CHECK-NEXT:    [[Y_SROA_2_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 8
++; CHECK-NEXT:    store ptr [[P1]], ptr [[Y_SROA_2_0_TEMP_SROA_IDX]], align 8
++; CHECK-NEXT:    [[Y_SROA_3_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 16
++; CHECK-NEXT:    store ptr [[P2]], ptr [[Y_SROA_3_0_TEMP_SROA_IDX]], align 8
++; CHECK-NEXT:    [[Y_SROA_4_0_TEMP_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[TEMP]], i64 24
++; CHECK-NEXT:    store ptr [[P3]], ptr [[Y_SROA_4_0_TEMP_SROA_IDX]], align 8
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[ZERO]], i8 0, i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.start.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    [[TOBOOL_PTR_NOT:%.*]] = icmp eq i32 [[COND]], 0
++; CHECK-NEXT:    [[ZERO_TEMP:%.*]] = select i1 [[TOBOOL_PTR_NOT]], ptr [[ZERO]], ptr [[TEMP]]
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[DATA]], ptr noundef nonnull align 8 dereferenceable(32) [[ZERO_TEMP]], i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) [[X]], ptr noundef nonnull align 8 dereferenceable(32) [[DATA]], i64 32, i1 false)
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[DATA]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[ZERO]])
++; CHECK-NEXT:    call void @llvm.lifetime.end.p0(ptr nonnull [[TEMP]])
++; CHECK-NEXT:    ret void
++;
++  ptr %p2, ptr %p3,
++  i32 noundef %cond) {
++entry:
++  %y = alloca %struct.ptr4, align 8
++  %x.addr = alloca ptr, align 8
++  %cond.addr = alloca i32, align 4
++  %temp = alloca %struct.ptr4, align 8
++  %zero = alloca %struct.ptr4, align 8
++  %data = alloca %struct.ptr4, align 8
++  %y_p0 = getelementptr inbounds %struct.ptr4, ptr %y, i32 0, i32 0
++  store ptr %p0, ptr %y_p0, align 8
++  %y_p1 = getelementptr inbounds %struct.ptr4, ptr %y, i32 0, i32 1
++  store ptr %p1, ptr %y_p1, align 8
++  %y_p2 = getelementptr inbounds %struct.ptr4, ptr %y, i32 0, i32 2
++  store ptr %p2, ptr %y_p2, align 8
++  %y_p3 = getelementptr inbounds %struct.ptr4, ptr %y, i32 0, i32 3
++  store ptr %p3, ptr %y_p3, align 8
++  store ptr %x, ptr %x.addr, align 8
++  store i32 %cond, ptr %cond.addr, align 4
++  call void @llvm.lifetime.start.p0(ptr %temp)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %temp, ptr align 8 %y,
++  i64 32, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %zero)
++  call void @llvm.memset.p0.i64(ptr align 8 %zero, i8 0, i64 32, i1 false)
++  call void @llvm.lifetime.start.p0(ptr %data)
++  %c.ptr = load i32, ptr %cond.addr, align 4
++  %tobool.ptr = icmp ne i32 %c.ptr, 0
++  br i1 %tobool.ptr, label %cond.true.ptr, label %cond.false.ptr
++
++cond.true.ptr:
++  br label %cond.end.ptr
++
++cond.false.ptr:
++  br label %cond.end.ptr
++
++cond.end.ptr:
++  %cond1.ptr = phi ptr [ %temp, %cond.true.ptr ], [ %zero, %cond.false.ptr ]
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %data, ptr align 8 %cond1.ptr,
++  i64 32, i1 false)
++  %xv.ptr = load ptr, ptr %x.addr, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %xv.ptr, ptr align 8 %data,
++  i64 32, i1 false)
++  call void @llvm.lifetime.end.p0(ptr %data)
++  call void @llvm.lifetime.end.p0(ptr %zero)
++  call void @llvm.lifetime.end.p0(ptr %temp)
++  ret void
++}
+diff --git a/llvm/test/Transforms/SROA/tbaa-struct3.ll b/llvm/test/Transforms/SROA/tbaa-struct3.ll
+index 6a0cacc7016f7..97e82db27c378 100644
+--- a/llvm/test/Transforms/SROA/tbaa-struct3.ll
++++ b/llvm/test/Transforms/SROA/tbaa-struct3.ll
+@@ -73,12 +73,13 @@ define void @load_store_transfer_split_struct_tbaa_2_i31(ptr dereferenceable(24)
+ ; CHECK-LABEL: define void @load_store_transfer_split_struct_tbaa_2_i31(
+ ; CHECK-SAME: ptr dereferenceable(24) [[RES:%.*]], i31 [[A:%.*]], i31 [[B:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
+-; CHECK-NEXT:    [[TMP:%.*]] = alloca { i31, i31 }, align 4
+-; CHECK-NEXT:    store i31 [[A]], ptr [[TMP]], align 4
++; CHECK-NEXT:    [[TMP:%.*]] = alloca <2 x i31>, align 8
++; CHECK-NEXT:    store i31 [[A]], ptr [[TMP]], align 8
+ ; CHECK-NEXT:    [[TMP_4_TMP_4_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[TMP]], i64 4
+ ; CHECK-NEXT:    store i31 [[B]], ptr [[TMP_4_TMP_4_SROA_IDX]], align 4
+-; CHECK-NEXT:    [[TMP_0_L1:%.*]] = load i62, ptr [[TMP]], align 4, !tbaa.struct [[TBAA_STRUCT4:![0-9]+]]
+-; CHECK-NEXT:    store i62 [[TMP_0_L1]], ptr [[RES]], align 4, !tbaa.struct [[TBAA_STRUCT4]]
++; CHECK-NEXT:    [[TMP_SROA_0_0_TMP_SROA_0_0_L1:%.*]] = load <2 x i31>, ptr [[TMP]], align 8, !tbaa.struct [[TBAA_STRUCT4:![0-9]+]]
++; CHECK-NEXT:    [[TMP0:%.*]] = bitcast <2 x i31> [[TMP_SROA_0_0_TMP_SROA_0_0_L1]] to i62
++; CHECK-NEXT:    store i62 [[TMP0]], ptr [[RES]], align 4, !tbaa.struct [[TBAA_STRUCT4]]
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
