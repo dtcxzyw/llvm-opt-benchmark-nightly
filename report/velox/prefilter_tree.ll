@@ -4,10 +4,10 @@ begin_hunk_0_@_ZN4absl12lts_2024011618container_internal12raw_hash_setINS1_17Fla
   %i.dy = getelementptr inbounds i8, ptr %i.du, i64 %.neg.i
   %i.dz = add i64 %i.ds, 23
   %i.ea = add i64 %i.dz, %i.dx
-  %4 = and i64 %i.ea, -8
   %i.eb = shl i64 %i.ds, 3
-  %i.ec = add i64 %4, %i.eb
-  call void @_ZdlPvm(ptr noundef nonnull %i.dy, i64 noundef %i.ec) #31
+  %i.ec = add i64 %i.ea, %i.eb
+  %4 = and i64 %i.ec, -8
+  call void @_ZdlPvm(ptr noundef nonnull %i.dy, i64 noundef %4) #31
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %._crit_edge
@@ -16,9 +16,9 @@ begin_hunk_1_@_ZN4absl12lts_2024011618container_internal19HashSetResizeHelper15I
   %i.ae = getelementptr inbounds i8, ptr %i.z, i64 %.neg.i
   %i.af = add i64 %i.y, 23
   %i.ag = add i64 %i.af, %i.ad
-  %4 = and i64 %i.ag, -8
-  %5 = shl i64 %i.y, 3
-  %6 = add i64 %4, %5
+  %4 = shl i64 %i.y, 3
+  %5 = add i64 %i.ag, %4
+  %6 = and i64 %5, -8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.ae, i64 noundef %6) #31
   %.pre = load i64, ptr %i.n, align 8, !tbaa !60
   br label %bb.e
@@ -27,10 +27,9 @@ begin_hunk_2_@_ZN4absl12lts_2024011618container_internal18DeallocateStandardILm8
   %i.i = getelementptr inbounds i8, ptr %i.d, i64 %i.h
   %i.j = add i64 %i.c, 31
   %i.k = add i64 %i.j, %i.g
-  %2 = and i64 %i.k, -8
   %i.l = mul i64 %i.c, %i.a
-  %3 = add i64 %i.l, 7
-  %i.m = add i64 %3, %2
+  %2 = or i64 %i.k, 7
+  %i.m = add i64 %i.l, %2
   %i.n = and i64 %i.m, -8
   tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef %i.n) #31
   ret void
