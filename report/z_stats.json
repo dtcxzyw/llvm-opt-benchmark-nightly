@@ -157,7 +157,7 @@
   "function-specialization.NumSpecsCreated": 4,
   "globaldce.NumFunctions": 35561,
   "globaldce.NumVFuncs": 8013,
-  "globaldce.NumVariables": 18035,
+  "globaldce.NumVariables": 18033,
   "globalopt.NumAliasesRemoved": 13,
   "globalopt.NumAliasesResolved": 2859,
   "globalopt.NumCXXDtorsRemoved": 193,
