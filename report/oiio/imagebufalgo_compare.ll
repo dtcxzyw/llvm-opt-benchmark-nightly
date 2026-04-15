@@ -4,9 +4,9 @@ begin_hunk_0_@_ZNSt17_Function_handlerIFvllEZN11OpenImageIO4v3_1L18computePixelS
 bb.v:                                             ; preds = %_ZN11OpenImageIO4v3_13valERNS0_12ImageBufAlgo10PixelStatsEif.exit.i.i.i, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %i.gt, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %_ZN11OpenImageIO4v3_13valERNS0_12ImageBufAlgo10PixelStatsEif.exit.i.i.i ] ; 9 uses
   %i.ii = getelementptr inbounds [8 x i8], ptr %i.gl, i64 %indvars.iv.i.i.i
-  %i.ij = load double, ptr %i.ii, align 8, !tbaa !24
-  %i.ik = fptrunc double %i.ij to float           ; 7 uses
-  %i.il = fcmp uno float %i.ik, 0.000000e+00
+  %i.ij = load double, ptr %i.ii, align 8, !tbaa !24 ; 2 uses
+  %i.ik = fptrunc double %i.ij to float           ; 6 uses
+  %i.il = fcmp uno double %i.ij, 0.000000e+00
   br i1 %i.il, label %bb.w, label %bb.x
 
 bb.w:                                             ; preds = %bb.v
