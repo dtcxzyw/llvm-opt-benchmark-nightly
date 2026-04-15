@@ -1,0 +1,255 @@
+diff --git a/llvm/include/llvm/IR/ConstantRange.h b/llvm/include/llvm/IR/ConstantRange.h
+index f4d4f1f555fa4..4abe53a06ef87 100644
+--- a/llvm/include/llvm/IR/ConstantRange.h
++++ b/llvm/include/llvm/IR/ConstantRange.h
+@@ -41,6 +41,7 @@ namespace llvm {
+ 
+ class MDNode;
+ class raw_ostream;
++class CmpPredicate;
+ struct KnownBits;
+ 
+ /// This class represents a range of values.
+@@ -108,6 +109,13 @@ class [[nodiscard]] ConstantRange {
+   LLVM_ABI static ConstantRange
+   makeAllowedICmpRegion(CmpInst::Predicate Pred, const ConstantRange &Other);
+ 
++  /// Produce the smallest range such that all values that may satisfy the given
++  /// predicate with any value contained within Other is contained in the
++  /// returned range. This overload takes a CmpPredicate, which may carry
++  /// samesign information for tighter ranges on unsigned predicates.
++  LLVM_ABI static ConstantRange
++  makeAllowedICmpRegion(CmpPredicate Pred, const ConstantRange &Other);
++
+   /// Produce the largest range such that all values in the returned range
+   /// satisfy the given predicate with all values contained within Other.
+   /// Formally, this returns a subset of
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index a0fb28612c534..3b26bcc1f1ad8 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -10411,7 +10411,7 @@ ConstantRange llvm::computeConstantRange(const Value *V, bool ForSigned,
+           computeConstantRange(Cmp->getOperand(1), /* ForSigned */ false,
+                                UseInstrInfo, AC, I, DT, Depth + 1);
+       CR = CR.intersectWith(
+-          ConstantRange::makeAllowedICmpRegion(Cmp->getPredicate(), RHS));
++          ConstantRange::makeAllowedICmpRegion(Cmp->getCmpPredicate(), RHS));
+     }
+   }
+ 
+diff --git a/llvm/lib/IR/ConstantRange.cpp b/llvm/lib/IR/ConstantRange.cpp
+index 4c10dfb140cbe..68554ed6ab1f5 100644
+--- a/llvm/lib/IR/ConstantRange.cpp
++++ b/llvm/lib/IR/ConstantRange.cpp
+@@ -23,6 +23,7 @@
+ #include "llvm/IR/ConstantRange.h"
+ #include "llvm/ADT/APInt.h"
+ #include "llvm/Config/llvm-config.h"
++#include "llvm/IR/CmpPredicate.h"
+ #include "llvm/IR/Constants.h"
+ #include "llvm/IR/InstrTypes.h"
+ #include "llvm/IR/Instruction.h"
+@@ -156,6 +157,15 @@ ConstantRange ConstantRange::makeAllowedICmpRegion(CmpInst::Predicate Pred,
+   }
+ }
+ 
++ConstantRange ConstantRange::makeAllowedICmpRegion(CmpPredicate Pred,
++                                                   const ConstantRange &CR) {
++  ConstantRange Result = makeAllowedICmpRegion(Pred.dropSameSign(), CR);
++  if (!Pred.hasSameSign() || !CmpInst::isUnsigned(Pred))
++    return Result;
++  return Result.intersectWith(
++      makeAllowedICmpRegion(ICmpInst::getSignedPredicate(Pred), CR));
++}
++
+ ConstantRange ConstantRange::makeSatisfyingICmpRegion(CmpInst::Predicate Pred,
+                                                       const ConstantRange &CR) {
+   // Follows from De-Morgan's laws:
+diff --git a/llvm/unittests/Analysis/ValueTrackingTest.cpp b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+index de481e39307cb..ad37aa03692a2 100644
+--- a/llvm/unittests/Analysis/ValueTrackingTest.cpp
++++ b/llvm/unittests/Analysis/ValueTrackingTest.cpp
+@@ -3401,6 +3401,106 @@ TEST_F(ValueTrackingTest, ComputeConstantRange) {
+     EXPECT_EQ(10, CR2.getUpper());
+   }
+ 
++  {
++    // Assumptions:
++    //  * stride >= 5 (unsigned)
++    //
++    // stride = [5, 0)
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++
++  define i32 @test(i32 %stride) {
++    %gt = icmp uge i32 %stride, 5
++    call void @llvm.assume(i1 %gt)
++    %stride.plus.one = add nsw nuw i32 %stride, 1
++    ret i32 %stride.plus.one
++  })");
++    Function *F = M->getFunction("test");
++
++    AssumptionCache AC(*F);
++    Value *Stride = &*F->arg_begin();
++
++    Instruction *I = &findInstructionByName(F, "stride.plus.one");
++    ConstantRange CR2 = computeConstantRange(Stride, false, true, &AC, I);
++    EXPECT_EQ(5, CR2.getLower());
++    EXPECT_EQ(0, CR2.getUpper());
++  }
++
++  {
++    // Assumptions:
++    //  * stride > 5 (unsigned)
++    //
++    // stride = [5, 0)
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++
++  define i32 @test(i32 %stride) {
++    %gt = icmp ugt i32 %stride, 5
++    call void @llvm.assume(i1 %gt)
++    %stride.plus.one = add nsw nuw i32 %stride, 1
++    ret i32 %stride.plus.one
++  })");
++    Function *F = M->getFunction("test");
++
++    AssumptionCache AC(*F);
++    Value *Stride = &*F->arg_begin();
++
++    Instruction *I = &findInstructionByName(F, "stride.plus.one");
++    ConstantRange CR2 = computeConstantRange(Stride, false, true, &AC, I);
++    EXPECT_EQ(6, CR2.getLower());
++    EXPECT_EQ(0, CR2.getUpper());
++  }
++
++  {
++    // Assumptions:
++    //  * stride >= 5 (samesign unsigned)
++    //
++    // stride = [5, MIN_SIGNED)
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++
++  define i32 @test(i32 %stride) {
++    %gt = icmp samesign uge i32 %stride, 5
++    call void @llvm.assume(i1 %gt)
++    %stride.plus.one = add nsw nuw i32 %stride, 1
++    ret i32 %stride.plus.one
++  })");
++    Function *F = M->getFunction("test");
++
++    AssumptionCache AC(*F);
++    Value *Stride = &*F->arg_begin();
++
++    Instruction *I = &findInstructionByName(F, "stride.plus.one");
++    ConstantRange CR2 = computeConstantRange(Stride, false, true, &AC, I);
++    EXPECT_EQ(5, CR2.getLower());
++    EXPECT_EQ(APInt::getSignedMinValue(32), CR2.getUpper());
++  }
++
++  {
++    // Assumptions:
++    //  * stride > 5 (samesign unsigned)
++    //
++    // stride = [5, MIN_SIGNED)
++    auto M = parseModule(R"(
++  declare void @llvm.assume(i1)
++
++  define i32 @test(i32 %stride) {
++    %gt = icmp samesign ugt i32 %stride, 5
++    call void @llvm.assume(i1 %gt)
++    %stride.plus.one = add nsw nuw i32 %stride, 1
++    ret i32 %stride.plus.one
++  })");
++    Function *F = M->getFunction("test");
++
++    AssumptionCache AC(*F);
++    Value *Stride = &*F->arg_begin();
++
++    Instruction *I = &findInstructionByName(F, "stride.plus.one");
++    ConstantRange CR2 = computeConstantRange(Stride, false, true, &AC, I);
++    EXPECT_EQ(6, CR2.getLower());
++    EXPECT_EQ(APInt::getSignedMinValue(32), CR2.getUpper());
++  }
++
+   {
+     // Assumptions:
+     //  * stride >= 5
+diff --git a/llvm/unittests/IR/ConstantRangeTest.cpp b/llvm/unittests/IR/ConstantRangeTest.cpp
+index 13712a76d3edf..bb6b2a1cb7249 100644
+--- a/llvm/unittests/IR/ConstantRangeTest.cpp
++++ b/llvm/unittests/IR/ConstantRangeTest.cpp
+@@ -10,6 +10,7 @@
+ #include "llvm/ADT/BitVector.h"
+ #include "llvm/ADT/Sequence.h"
+ #include "llvm/ADT/SmallBitVector.h"
++#include "llvm/IR/CmpPredicate.h"
+ #include "llvm/IR/Instructions.h"
+ #include "llvm/IR/Operator.h"
+ #include "llvm/Support/KnownBits.h"
+@@ -1730,6 +1731,64 @@ TEST(ConstantRange, MakeAllowedICmpRegionEdgeCases) {
+                   .isFullSet());
+ }
+ 
++template <typename SIV>
++auto getSameSignTester(SIV ShouldIncludeValue, CmpInst::Predicate Cmp) {
++  return [Cmp, ShouldIncludeValue](const ConstantRange &CR) {
++    uint32_t BitWidth = CR.getBitWidth();
++    unsigned Max = 1 << BitWidth;
++    SmallBitVector Elems(Max);
++    if (!CR.isEmptySet()) {
++      for (unsigned I : llvm::seq(Max)) {
++        APInt Current(BitWidth, I);
++        if (ShouldIncludeValue(Current, CR))
++          Elems.set(I);
++      }
++    }
++
++    CmpPredicate CmpPred(Cmp, true);
++    TestRange(ConstantRange::makeAllowedICmpRegion(CmpPred, CR), Elems,
++              PreferSmallest, {});
++  };
++}
++
++TEST(ConstantRange, MakeAllowedICmpRegionExaustive) {
++  EnumerateInterestingConstantRanges(getSameSignTester(
++      [](const APInt &A, const ConstantRange &B) {
++        if (A.isNegative())
++          return A.sge(B.getSignedMin());
++        return A.uge(B.getUnsignedMin());
++      },
++      ICmpInst::ICMP_UGE));
++
++  EnumerateInterestingConstantRanges(getSameSignTester(
++      [](const APInt &A, const ConstantRange &B) {
++        if (A.isNegative())
++          return A.sgt(B.getSignedMin());
++        return A.ugt(B.getUnsignedMin());
++      },
++      ICmpInst::ICMP_UGT));
++
++  EnumerateInterestingConstantRanges(getSameSignTester(
++      [](const APInt &A, const ConstantRange &B) {
++        if (A.isNegative() && B.getUnsignedMax().isNegative())
++          return A.sle(B.getUnsignedMax());
++        if (A.isNonNegative() && B.getSignedMax().isNonNegative())
++          return A.ule(B.getSignedMax());
++        return false;
++      },
++      ICmpInst::ICMP_ULE));
++
++  EnumerateInterestingConstantRanges(getSameSignTester(
++      [](const APInt &A, const ConstantRange &B) {
++        if (A.isNegative() && B.getUnsignedMax().isNegative())
++          return A.slt(B.getUnsignedMax());
++        if (A.isNonNegative() && B.getSignedMax().isNonNegative())
++          return A.ult(B.getSignedMax());
++        return false;
++      },
++      ICmpInst::ICMP_ULT));
++}
++
+ TEST(ConstantRange, MakeExactICmpRegion) {
+   for (unsigned Bits : {1, 4}) {
+     EnumerateAPInts(Bits, [](const APInt &N) {
