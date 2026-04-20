@@ -1,0 +1,280 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index bffc887d93535..315d5159b9f9f 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -3347,6 +3347,89 @@ static Instruction *foldSelectWithFCmpToFabs(SelectInst &SI,
+   return ChangedFMF ? &SI : nullptr;
+ }
+ 
++static bool matchIsNotNaNTest(Value *Cond, Value *X, InstCombinerImpl &IC) {
++  Instruction *CmpI;
++  Value *Cmp0, *Cmp1;
++  if (!match(Cond, m_OneUse(m_Instruction(
++                       CmpI, m_SpecificFCmp(FCmpInst::FCMP_ORD, m_Value(Cmp0),
++                                            m_Value(Cmp1))))))
++    return false;
++
++  if (Cmp0 == X && Cmp1 == X)
++    return true;
++
++  auto IsKnownNeverNaN = [&](Value *V) {
++    return match(V, m_NonNaN()) ||
++           isKnownNeverNaN(V, IC.getSimplifyQuery().getWithInstruction(CmpI));
++  };
++
++  return (Cmp0 == X && IsKnownNeverNaN(Cmp1)) ||
++         (Cmp1 == X && IsKnownNeverNaN(Cmp0));
++}
++
++// Match a select that returns X when X is not NaN, and Y otherwise.
++static Value *matchNaNScrubbedValue(Value *V, Value *Y, InstCombinerImpl &IC) {
++  Value *Cond, *X;
++  if (!match(V, m_Select(m_Value(Cond), m_Value(X), m_Specific(Y))))
++    return nullptr;
++
++  return matchIsNotNaNTest(Cond, X, IC) ? X : nullptr;
++}
++
++// Fold a select of an ordered fcmp using fabs of a NaN-scrubbed value:
++//   %s   = select i1 (isnotnan T %x), T %x, T %y
++//   %a   = call T @llvm.fabs.T(T %s)
++//   %c   = fcmp <ordered-pred> T %a, %k
++//   %r   = select i1 %c, T %s, T %y
++//     =>
++//   %a2  = call T @llvm.fabs.T(T %x)
++//   %c2  = fcmp <ordered-pred> T %a2, %k
++//   %r2  = select i1 %c2, T %x, T %y
++static Instruction *
++foldSelectOfOrderedFAbsCmpOfNaNScrubbedValue(SelectInst &SI,
++                                             InstCombinerImpl &IC) {
++  Instruction *OuterCmpI;
++  Value *Cmp0, *Cmp1;
++  if (!match(SI.getCondition(),
++             m_OneUse(m_Instruction(OuterCmpI,
++                                    m_FCmp(m_Value(Cmp0), m_Value(Cmp1))))))
++    return nullptr;
++
++  auto *OuterCmp = cast<FCmpInst>(OuterCmpI);
++  if (!FCmpInst::isOrdered(OuterCmp->getPredicate()))
++    return nullptr;
++
++  // The NaN path now evaluates fabs(X) instead of fabs(Y), so preserving nnan
++  // on the fcmp could introduce poison when X is NaN.
++  if (OuterCmp->hasNoNaNs())
++    return nullptr;
++
++  Value *Y = SI.getFalseValue();
++  Value *InnerSel = SI.getTrueValue();
++  Value *X = matchNaNScrubbedValue(InnerSel, Y, IC);
++  if (!X)
++    return nullptr;
++
++  bool Swapped = false;
++  Value *OtherOp = nullptr;
++  if (match(Cmp0, m_OneUse(m_FAbs(m_Specific(InnerSel))))) {
++    OtherOp = Cmp1;
++  } else if (match(Cmp1, m_OneUse(m_FAbs(m_Specific(InnerSel))))) {
++    Swapped = true;
++    OtherOp = Cmp0;
++  } else {
++    return nullptr;
++  }
++
++  Value *NewAbs = IC.Builder.CreateUnaryIntrinsic(Intrinsic::fabs, X);
++  Value *NewCmp = Swapped ? IC.Builder.CreateFCmpFMF(OuterCmp->getPredicate(),
++                                                     OtherOp, NewAbs, OuterCmp)
++                          : IC.Builder.CreateFCmpFMF(OuterCmp->getPredicate(),
++                                                     NewAbs, OtherOp, OuterCmp);
++  Value *NewSel = IC.Builder.CreateSelectFMF(NewCmp, X, Y, &SI);
++  return IC.replaceInstUsesWith(SI, NewSel);
++}
++
+ // Match the following IR pattern:
+ //   %x.lowbits = and i8 %x, %lowbitmask
+ //   %x.lowbits.are.zero = icmp eq i8 %x.lowbits, 0
+@@ -4599,6 +4682,9 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+   if (Instruction *Fabs = foldSelectWithFCmpToFabs(SI, *this))
+     return Fabs;
+ 
++  if (Instruction *I = foldSelectOfOrderedFAbsCmpOfNaNScrubbedValue(SI, *this))
++    return I;
++
+   // See if we are selecting two values based on a comparison of the two values.
+   if (CmpInst *CI = dyn_cast<CmpInst>(CondVal))
+     if (Instruction *NewSel = foldSelectValueEquivalence(SI, *CI))
+diff --git a/llvm/test/Transforms/InstCombine/fcmp-select.ll b/llvm/test/Transforms/InstCombine/fcmp-select.ll
+index 268cd4675c6cc..9704be6a70844 100644
+--- a/llvm/test/Transforms/InstCombine/fcmp-select.ll
++++ b/llvm/test/Transforms/InstCombine/fcmp-select.ll
+@@ -3,6 +3,7 @@
+ 
+ declare void @use(i1)
+ declare void @usef64(double)
++declare double @llvm.fabs.f64(double)
+ 
+ ; X == 42.0 ? X : 42.0 --> 42.0
+ 
+@@ -280,6 +281,163 @@ define i1 @test_fcmp_ord_select_fcmp_oeq_var_const(double %x) {
+   ret i1 %cmp2
+ }
+ 
++define double @test_fcmp_ord_select_fabs_fcmp_one_select_var_const(double %x) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_fcmp_one_select_var_const(
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double 0.000000e+00
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %cmp1 = fcmp ord double %x, 0.000000e+00
++  %sel1 = select i1 %cmp1, double %x, double 0.000000e+00
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double 0.000000e+00
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_commuted_select_fabs_fcmp_one_select_var_const(double %x) {
++; CHECK-LABEL: @test_fcmp_ord_commuted_select_fabs_fcmp_one_select_var_const(
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double 0.000000e+00
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %cmp1 = fcmp ord double 0.000000e+00, %x
++  %sel1 = select i1 %cmp1, double %x, double 0.000000e+00
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double 0.000000e+00
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_fcmp_one_select_nonnan_const(double %x, double %y) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_fcmp_one_select_nonnan_const(
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %cmp1 = fcmp ord double %x, 1.000000e+00
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_self_select_fabs_fcmp_one_select_var_var(double %x, double %y) {
++; CHECK-LABEL: @test_fcmp_ord_self_select_fabs_fcmp_one_select_var_var(
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %cmp1 = fcmp ord double %x, %x
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_fcmp_one_select_uitofp_nonnan(double %x, double %y, i32 %i) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_fcmp_one_select_uitofp_nonnan(
++; CHECK:         [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %nonnan = uitofp i32 %i to double
++  %cmp1 = fcmp ord double %x, %nonnan
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_commuted_select_fabs_fcmp_one_select_sitofp_nonnan(double %x, double %y, i32 %i) {
++; CHECK-LABEL: @test_fcmp_ord_commuted_select_fabs_fcmp_one_select_sitofp_nonnan(
++; CHECK:         [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %nonnan = sitofp i32 %i to double
++  %cmp1 = fcmp ord double %nonnan, %x
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_rhs_fcmp_ogt_select_uitofp_nonnan(double %x, double %y, double %k, i32 %i) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_rhs_fcmp_ogt_select_uitofp_nonnan(
++; CHECK:         [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp ogt double [[K:%.*]], [[ABS]]
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %nonnan = uitofp i32 %i to double
++  %cmp1 = fcmp ord double %x, %nonnan
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp ogt double %k, %abs
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_fcmp_une_select_var_const(double %x) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_fcmp_une_select_var_const(
++; CHECK-NEXT:    [[CMP1:%.*]] = fcmp ord double [[X:%.*]], 0.000000e+00
++; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], double [[X]], double 0.000000e+00
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[SEL1]])
++; CHECK-NEXT:    [[CMP2:%.*]] = fcmp une double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2]], double [[SEL1]], double 0.000000e+00
++; CHECK-NEXT:    ret double [[SEL2]]
++;
++  %cmp1 = fcmp ord double %x, 0.000000e+00
++  %sel1 = select i1 %cmp1, double %x, double 0.000000e+00
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp une double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double 0.000000e+00
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_fcmp_nnan_one_select_var_var(double %x, double %y) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_fcmp_nnan_one_select_var_var(
++; CHECK-NEXT:    [[CMP1:%.*]] = fcmp ord double [[X:%.*]], 0.000000e+00
++; CHECK-NEXT:    [[SEL1:%.*]] = select i1 [[CMP1]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[SEL1]])
++; CHECK-NEXT:    [[CMP2:%.*]] = fcmp nnan one double [[ABS]], 0x7FF0000000000000
++; CHECK-NEXT:    [[SEL2:%.*]] = select i1 [[CMP2]], double [[SEL1]], double [[Y]]
++; CHECK-NEXT:    ret double [[SEL2]]
++;
++  %cmp1 = fcmp ord double %x, 0.000000e+00
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp nnan one double %abs, 0x7FF0000000000000
++  %sel2 = select i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
++define double @test_fcmp_ord_select_fabs_rhs_fcmp_ogt_select_var_var(double %x, double %y, double %k) {
++; CHECK-LABEL: @test_fcmp_ord_select_fabs_rhs_fcmp_ogt_select_var_var(
++; CHECK-NEXT:    [[ABS:%.*]] = call double @llvm.fabs.f64(double [[X:%.*]])
++; CHECK-NEXT:    [[CMP:%.*]] = fcmp ninf ogt double [[K:%.*]], [[ABS]]
++; CHECK-NEXT:    [[SEL:%.*]] = select nnan i1 [[CMP]], double [[X]], double [[Y:%.*]]
++; CHECK-NEXT:    ret double [[SEL]]
++;
++  %cmp1 = fcmp ord double %x, 0.000000e+00
++  %sel1 = select i1 %cmp1, double %x, double %y
++  %abs = call ninf double @llvm.fabs.f64(double %sel1)
++  %cmp2 = fcmp ninf ogt double %k, %abs
++  %sel2 = select nnan i1 %cmp2, double %sel1, double %y
++  ret double %sel2
++}
++
+ ; Make sure that we recognize the SPF correctly.
+ 
+ define float @test_select_nnan_nsz_fcmp_olt(float %x) {
