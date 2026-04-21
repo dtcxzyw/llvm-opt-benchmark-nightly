@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   %i.i = phi ptr [ null, %.lr.ph ], [ %i.bc, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ] ; 7 uses
   %i.j = phi ptr [ null, %.lr.ph ], [ %i.be, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ] ; 5 uses
   %.0725 = phi i64 [ 0, %.lr.ph ], [ %i.bf, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ] ; 2 uses
-  %i.k = phi ptr [ null, %.lr.ph ], [ %i.bd, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ] ; 13 uses
+  %i.k = phi ptr [ null, %.lr.ph ], [ %i.bd, %_ZNSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EED2Ev.exit ] ; 15 uses
   %i.l = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %.0725
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !78
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.y = shl nuw nsw i64 %i.x, 3
   %i.z = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #18
-          to label %.noexc9 unwind label %.loopexit15 ; 10 uses
+          to label %.noexc9 unwind label %.loopexit15 ; 12 uses
 
 .noexc9:                                          ; preds = %_ZNKSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.r
@@ -22,10 +22,10 @@ begin_hunk_2_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
 
 .lr.ph.i.i.i.i.i.i.i.preheader.a:                 ; preds = %.noexc9
   %i.ab = add i64 %i.p, -8
-  %i.ac = sub i64 %i.ab, %i.q                     ; 2 uses
+  %i.ac = sub i64 %i.ab, %i.q                     ; 3 uses
   %i.ad = lshr i64 %i.ac, 3
-  %i.ae = add nuw nsw i64 %i.ad, 1                ; 2 uses
-  %min.iters.check = icmp ult i64 %i.ac, 120
+  %i.ae = add nuw nsw i64 %i.ad, 1                ; 5 uses
+  %min.iters.check = icmp ult i64 %i.ac, 24
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader111, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader.a
@@ -34,10 +34,15 @@ begin_hunk_3_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   %bound0 = icmp ult ptr %i.z, %scevgep104
   %bound1 = icmp ult ptr %i.k, %scevgep102
   %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.i.i.preheader111, label %vector.ph
+  br i1 %found.conflict, label %.lr.ph.i.i.i.i.i.i.i.preheader111, label %vector.main.loop.iter.check
 
-vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.ae, 4611686018427387888     ; 4 uses
+vector.main.loop.iter.check:                      ; preds = %vector.memcheck
+  %min.iters.check105 = icmp ult i64 %i.ac, 120
+  br i1 %min.iters.check105, label %vec.epilog.ph, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.main.loop.iter.check
+  %n.mod.vf = and i64 %i.ae, 12
+  %n.vec = and i64 %i.ae, 4611686018427387888     ; 5 uses
   %i.ai = shl i64 %n.vec, 3
   %i.aj = getelementptr i8, ptr %i.z, i64 %i.ai   ; 2 uses
   %i.ak = shl i64 %n.vec, 3
@@ -46,15 +51,47 @@ begin_hunk_4_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   store <4 x ptr> zeroinitializer, ptr %i.au, align 8, !tbaa !46, !alias.scope !108, !noalias !103
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.av = icmp eq i64 %index.next, %n.vec
-  br i1 %i.av, label %middle.block.a, label %vector.body, !llvm.loop !113
+  br i1 %i.av, label %middle.block, label %vector.body, !llvm.loop !113
 
-middle.block.a:                                   ; preds = %vector.body
-  %cmp.n.a = icmp eq i64 %i.ae, %n.vec
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i64 %i.ae, %n.vec
+  br i1 %cmp.n, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %vec.epilog.iter.check
+
+vec.epilog.iter.check:                            ; preds = %middle.block
+  %min.epilog.iters.check = icmp eq i64 %n.mod.vf, 0
+  br i1 %min.epilog.iters.check, label %.lr.ph.i.i.i.i.i.i.i.preheader111, label %vec.epilog.ph, !prof !116
+
+vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
+  %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
+  %n.vec113 = and i64 %i.ae, 4611686018427387900  ; 4 uses
+  %4 = shl i64 %n.vec113, 3
+  %5 = getelementptr i8, ptr %i.z, i64 %4         ; 2 uses
+  %6 = shl i64 %n.vec113, 3
+  %7 = getelementptr i8, ptr %i.k, i64 %6
+  br label %vec.epilog.vector.body
+
+vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
+  %index114 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next118, %vec.epilog.vector.body ] ; 3 uses
+  %8 = shl i64 %index114, 3
+  %next.gep115 = getelementptr i8, ptr %i.z, i64 %8
+  %9 = shl i64 %index114, 3
+  %next.gep116 = getelementptr i8, ptr %i.k, i64 %9 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !103)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
+  %wide.load117 = load <4 x i64>, ptr %next.gep116, align 8, !tbaa !46, !alias.scope !108, !noalias !103
+  store <4 x i64> %wide.load117, ptr %next.gep115, align 8, !tbaa !46, !alias.scope !111, !noalias !108
+  store <4 x ptr> zeroinitializer, ptr %next.gep116, align 8, !tbaa !46, !alias.scope !108, !noalias !103
+  %index.next118 = add nuw i64 %index114, 4       ; 2 uses
+  %10 = icmp eq i64 %index.next118, %n.vec113
+  br i1 %10, label %middle.block.a, label %vec.epilog.vector.body, !llvm.loop !117
+
+middle.block.a:                                   ; preds = %vec.epilog.vector.body
+  %cmp.n.a = icmp eq i64 %i.ae, %n.vec113
   br i1 %cmp.n.a, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.preheader111
 
-.lr.ph.i.i.i.i.i.i.i.preheader111:                ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.i.i.preheader.a, %middle.block.a
-  %.012.i.i.i.i.i.i.i.ph = phi ptr [ %i.z, %vector.memcheck ], [ %i.z, %.lr.ph.i.i.i.i.i.i.i.preheader.a ], [ %i.aj, %middle.block.a ]
-  %.0911.i.i.i.i.i.i.i.ph = phi ptr [ %i.k, %vector.memcheck ], [ %i.k, %.lr.ph.i.i.i.i.i.i.i.preheader.a ], [ %i.al, %middle.block.a ]
+.lr.ph.i.i.i.i.i.i.i.preheader111:                ; preds = %vector.memcheck, %.lr.ph.i.i.i.i.i.i.i.preheader.a, %vec.epilog.iter.check, %middle.block.a
+  %.012.i.i.i.i.i.i.i.ph = phi ptr [ %i.z, %.lr.ph.i.i.i.i.i.i.i.preheader.a ], [ %i.z, %vector.memcheck ], [ %i.aj, %vec.epilog.iter.check ], [ %5, %middle.block.a ]
+  %.0911.i.i.i.i.i.i.i.ph = phi ptr [ %i.k, %.lr.ph.i.i.i.i.i.i.i.preheader.a ], [ %i.k, %vector.memcheck ], [ %i.al, %vec.epilog.iter.check ], [ %7, %middle.block.a ]
   br label %.lr.ph.i.i.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i.i.i.i.preheader111, %.lr.ph.i.i.i.i.i.i.i
@@ -63,10 +100,10 @@ begin_hunk_5_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   %i.ax = getelementptr inbounds nuw i8, ptr %.0911.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ax, %i.i
-  br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !116
+  br i1 %.not.i.i.i.i.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i, !llvm.loop !118
 
-_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block.a, %.noexc9
-  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.z, %.noexc9 ], [ %i.aj, %middle.block.a ], [ %i.ay, %.lr.ph.i.i.i.i.i.i.i ]
+_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit22.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i, %middle.block, %middle.block.a, %.noexc9
+  %.0.lcssa.i.i.i.i.i.i.i = phi ptr [ %i.z, %.noexc9 ], [ %5, %middle.block.a ], [ %i.aj, %middle.block ], [ %i.ay, %.lr.ph.i.i.i.i.i.i.i ]
   %.not.i23.i.i.i = icmp eq ptr %i.k, null
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i, label %bb.f
 
@@ -75,7 +112,7 @@ begin_hunk_6_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   %i.bi = sub i64 %i.bg, %i.bh
   %i.bj = ashr exact i64 %i.bi, 3
   %i.bk = icmp ult i64 %i.bf, %i.bj
-  br i1 %i.bk, label %bb.b, label %.loopexit, !llvm.loop !117
+  br i1 %i.bk, label %bb.b, label %.loopexit, !llvm.loop !119
 
 .loopexit15:                                      ; preds = %_ZNKSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
@@ -84,9 +121,9 @@ begin_hunk_7_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
           to label %bb.i unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %i.bq = load ptr, ptr %3, align 8, !tbaa !118   ; 3 uses
+  %i.bq = load ptr, ptr %3, align 8, !tbaa !120   ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !121 ; 2 uses
+  %i.bs = load ptr, ptr %i.br, align 8, !tbaa !123 ; 2 uses
   %.not4.i.i.i = icmp eq ptr %i.bq, %i.bs
   br i1 %.not4.i.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i, label %.lr.ph.i.i.i
 
@@ -95,16 +132,16 @@ begin_hunk_8_@_ZN4geos9operation9overlayng15OverlayEdgeRing9toPolygonEPKNS_4geom
   %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !40
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8
-  call void %i.bw(ptr noundef nonnull align 8 dereferenceable(48) %i.bt) #17, !inline_history !122
+  call void %i.bw(ptr noundef nonnull align 8 dereferenceable(48) %i.bt) #17, !inline_history !124
   br label %_ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i.i
 
 _ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i.i: ; preds = %_ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i.i.i.i.i, %.lr.ph.i.i.i
   %i.bx = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bx, %i.bs
-  br i1 %.not.i.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !123
+  br i1 %.not.i.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !125
 
 _ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i.i
-  %.pr.i = load ptr, ptr %3, align 8, !tbaa !118
+  %.pr.i = load ptr, ptr %3, align 8, !tbaa !120
   br label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i
 
 _ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split.i, %bb.i
@@ -113,9 +150,9 @@ begin_hunk_9_@_ZNK4geos4geom15GeometryFactory13createPolygonEOSt10unique_ptrINS0
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #9 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !118    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !120    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !121  ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !123  ; 2 uses
   %.not4.i.i = icmp eq ptr %i.a, %i.c
   br i1 %.not4.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit, label %.lr.ph.i.i
 
@@ -124,16 +161,16 @@ begin_hunk_10_@_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_d
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !40
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(48) %i.d) #17, !inline_history !124
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(48) %i.d) #17, !inline_history !126
   br label %_ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i
 
 _ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i: ; preds = %_ZNKSt14default_deleteIN4geos4geom10LinearRingEEclEPS2_.exit.i.i.i.i, %.lr.ph.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.05.i.i, i64 8 ; 2 uses
   %.not.i.i = icmp eq ptr %i.h, %i.c
-  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !123
+  br i1 %.not.i.i, label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !125
 
 _ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split: ; preds = %_ZSt8_DestroyISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EEEvPT_.exit.i.i
-  %.pr = load ptr, ptr %0, align 8, !tbaa !118
+  %.pr = load ptr, ptr %0, align 8, !tbaa !120
   br label %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit
 
 _ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exitthread-pre-split, %bb.a
@@ -142,21 +179,21 @@ begin_hunk_11_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !125)
-  %i.a = load ptr, ptr %1, align 8, !tbaa !57, !noalias !125
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
+  %i.a = load ptr, ptr %1, align 8, !tbaa !57, !noalias !127
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !83, !noalias !125 ; 3 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !83, !noalias !127 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
-  store ptr %i.d, ptr %4, align 8, !tbaa !80, !alias.scope !128
+  store ptr %i.d, ptr %4, align 8, !tbaa !80, !alias.scope !130
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
-  store i64 0, ptr %i.e, align 8, !tbaa !83, !alias.scope !128
-  store i8 0, ptr %i.d, align 8, !tbaa !82, !alias.scope !128
+  store i64 0, ptr %i.e, align 8, !tbaa !83, !alias.scope !130
+  store i8 0, ptr %i.d, align 8, !tbaa !82, !alias.scope !130
   %i.f = add i64 %i.c, 2
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7reserveEm(ptr noundef nonnull align 8 dereferenceable(32) %4, i64 noundef %i.f)
           to label %bb.b unwind label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = load i64, ptr %i.e, align 8, !tbaa !83, !alias.scope !128
+  %i.g = load i64, ptr %i.e, align 8, !tbaa !83, !alias.scope !130
   %i.h = sub i64 4611686018427387903, %i.g
   %i.i = icmp ult i64 %i.h, %i.c
   br i1 %i.i, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
@@ -165,7 +202,7 @@ begin_hunk_12_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i unwind label %bb.c ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKcm.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i
-  %i.k = load i64, ptr %i.e, align 8, !tbaa !83, !alias.scope !128
+  %i.k = load i64, ptr %i.e, align 8, !tbaa !83, !alias.scope !130
   %i.l = and i64 %i.k, -2
   %i.m = icmp eq i64 %i.l, 4611686018427387902
   br i1 %i.m, label %.invoke.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
@@ -174,7 +211,7 @@ begin_hunk_13_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
 bb.c:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i, %.invoke.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i.i.i, %bb.a
   %i.o = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.p = load ptr, ptr %4, align 8, !tbaa !57, !alias.scope !128 ; 2 uses
+  %i.p = load ptr, ptr %4, align 8, !tbaa !57, !alias.scope !130 ; 2 uses
   %i.q = icmp eq ptr %i.p, %i.d
   br i1 %i.q, label %common.resume, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
@@ -183,10 +220,10 @@ begin_hunk_14_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
   resume { ptr, i32 } %common.resume.op
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !131)
+  call void @llvm.experimental.noalias.scope.decl(metadata !133)
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.s = load i64, ptr %i.r, align 8, !tbaa !83, !noalias !131 ; 2 uses
-  %i.t = load i64, ptr %i.e, align 8, !tbaa !83, !noalias !131
+  %i.s = load i64, ptr %i.r, align 8, !tbaa !83, !noalias !133 ; 2 uses
+  %i.t = load i64, ptr %i.e, align 8, !tbaa !83, !noalias !133
   %i.u = sub i64 4611686018427387903, %i.t
   %i.v = icmp ult i64 %i.u, %i.s
   br i1 %i.v, label %bb.d, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
@@ -195,13 +232,13 @@ begin_hunk_15_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i: ; preds = %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_.exit
-  %i.w = load ptr, ptr %2, align 8, !tbaa !57, !noalias !131
+  %i.w = load ptr, ptr %2, align 8, !tbaa !57, !noalias !133
   %i.x = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef %i.w, i64 noundef %i.s)
           to label %.noexc6 unwind label %bb.h    ; 6 uses
 
 .noexc6:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
-  store ptr %i.y, ptr %3, align 8, !tbaa !80, !alias.scope !131
+  store ptr %i.y, ptr %3, align 8, !tbaa !80, !alias.scope !133
   %i.z = load ptr, ptr %i.x, align 8, !tbaa !57   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 16 ; 5 uses
   %i.ab = icmp eq ptr %i.z, %i.aa
@@ -210,9 +247,9 @@ begin_hunk_16_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
   br label %bb.f
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %.noexc6
-  store ptr %i.z, ptr %3, align 8, !tbaa !57, !alias.scope !131
+  store ptr %i.z, ptr %3, align 8, !tbaa !57, !alias.scope !133
   %i.ag = load i64, ptr %i.aa, align 8, !tbaa !82
-  store i64 %i.ag, ptr %i.y, align 8, !tbaa !82, !alias.scope !131
+  store i64 %i.ag, ptr %i.y, align 8, !tbaa !82, !alias.scope !133
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %.pre.i = load i64, ptr %.phi.trans.insert.i, align 8, !tbaa !83
   br label %bb.f
@@ -221,7 +258,7 @@ begin_hunk_17_@_ZN4geos4util13GEOSExceptionC2ERKNSt7__cxx1112basic_stringIcSt11c
   %i.ah = phi i64 [ %i.ad, %bb.e ], [ %.pre.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i64 %i.ah, ptr %i.aj, align 8, !tbaa !83, !alias.scope !131
+  store i64 %i.ah, ptr %i.aj, align 8, !tbaa !83, !alias.scope !133
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !57
   store i64 0, ptr %i.ai, align 8, !tbaa !83
   store i8 0, ptr %i.aa, align 8, !tbaa !82
@@ -230,22 +267,24 @@ begin_hunk_18_@llvm.umax.i64
 !113 = distinct !{!113, !65, !114, !115}
 !114 = !{!"llvm.loop.isvectorized", i32 1}
 !115 = !{!"llvm.loop.unroll.runtime.disable"}
-!116 = distinct !{!116, !65, !114}
-!117 = distinct !{!117, !65}
-!118 = !{!119, !120, i64 0}
-!119 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE17_Vector_impl_dataE", !120, i64 0, !120, i64 8, !120, i64 16}
-!120 = !{!"p1 _ZTSSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EE", !10, i64 0}
-!121 = !{!119, !120, i64 8}
-!122 = distinct !{ptr @_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EED2Ev, null, null, null, null, null}
-!123 = distinct !{!123, !65}
-!124 = distinct !{null, null, null, null, null}
-!125 = !{!126}
-!126 = distinct !{!126, !127, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
-!127 = distinct !{!127, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
-!128 = !{!129, !126}
-!129 = distinct !{!129, !130, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
-!130 = distinct !{!130, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
-!131 = !{!132}
-!132 = distinct !{!132, !133, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_: argument 0"}
-!133 = distinct !{!133, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_"}
+!116 = !{!"branch_weights", i32 4, i32 12}
+!117 = distinct !{!117, !65, !114, !115}
+!118 = distinct !{!118, !65, !114}
+!119 = distinct !{!119, !65}
+!120 = !{!121, !122, i64 0}
+!121 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EE17_Vector_impl_dataE", !122, i64 0, !122, i64 8, !122, i64 16}
+!122 = !{!"p1 _ZTSSt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS2_EE", !10, i64 0}
+!123 = !{!121, !122, i64 8}
+!124 = distinct !{ptr @_ZNSt6vectorISt10unique_ptrIN4geos4geom10LinearRingESt14default_deleteIS3_EESaIS6_EED2Ev, null, null, null, null, null}
+!125 = distinct !{!125, !65}
+!126 = distinct !{null, null, null, null, null}
+!127 = !{!128}
+!128 = distinct !{!128, !129, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
+!129 = distinct !{!129, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}
+!130 = !{!131, !128}
+!131 = distinct !{!131, !132, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE: argument 0"}
+!132 = distinct !{!132, !"_ZSt12__str_concatINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_PKNS6_10value_typeENS6_9size_typeES9_SA_RKNS6_14allocator_typeE"}
+!133 = !{!134}
+!134 = distinct !{!134, !135, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_: argument 0"}
+!135 = distinct !{!135, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EEOS8_RKS8_"}
 end_hunk_18
