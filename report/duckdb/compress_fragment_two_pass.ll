@@ -4,8 +4,7 @@ begin_hunk_0_@_ZL34BrotliCompressFragmentTwoPassImpl8PN13duckdb_brotli18BrotliTw
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -14,8 +13,7 @@ begin_hunk_1_@_ZL34BrotliCompressFragmentTwoPassImpl8PN13duckdb_brotli18BrotliTw
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -24,8 +22,7 @@ begin_hunk_2_@_ZL34BrotliCompressFragmentTwoPassImpl9PN13duckdb_brotli18BrotliTw
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -34,8 +31,7 @@ begin_hunk_3_@_ZL34BrotliCompressFragmentTwoPassImpl9PN13duckdb_brotli18BrotliTw
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -44,8 +40,7 @@ begin_hunk_4_@_ZL35BrotliCompressFragmentTwoPassImpl10PN13duckdb_brotli18BrotliT
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -54,8 +49,7 @@ begin_hunk_5_@_ZL35BrotliCompressFragmentTwoPassImpl10PN13duckdb_brotli18BrotliT
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -64,8 +58,7 @@ begin_hunk_6_@_ZL35BrotliCompressFragmentTwoPassImpl11PN13duckdb_brotli18BrotliT
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -74,8 +67,7 @@ begin_hunk_7_@_ZL35BrotliCompressFragmentTwoPassImpl11PN13duckdb_brotli18BrotliT
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -84,8 +76,7 @@ begin_hunk_8_@_ZL35BrotliCompressFragmentTwoPassImpl12PN13duckdb_brotli18BrotliT
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -94,8 +85,7 @@ begin_hunk_9_@_ZL35BrotliCompressFragmentTwoPassImpl12PN13duckdb_brotli18BrotliT
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -104,8 +94,7 @@ begin_hunk_10_@_ZL35BrotliCompressFragmentTwoPassImpl13PN13duckdb_brotli18Brotli
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -114,8 +103,7 @@ begin_hunk_11_@_ZL35BrotliCompressFragmentTwoPassImpl13PN13duckdb_brotli18Brotli
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -124,8 +112,7 @@ begin_hunk_12_@_ZL35BrotliCompressFragmentTwoPassImpl14PN13duckdb_brotli18Brotli
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -134,8 +121,7 @@ begin_hunk_13_@_ZL35BrotliCompressFragmentTwoPassImpl14PN13duckdb_brotli18Brotli
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -144,8 +130,7 @@ begin_hunk_14_@_ZL35BrotliCompressFragmentTwoPassImpl15PN13duckdb_brotli18Brotli
 bb.l:                                             ; preds = %bb.k
   %i.cz = add nsw i32 %i.cj, -66                  ; 2 uses
   %i.da = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cz, i1 true) ; 2 uses
-  %8 = xor i32 %i.da, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.da
   %i.db = add nsw i32 %.neg.i, %i.cz
   %i.dc = shl nsw i32 %i.db, 8
   %reass.sub = sub nsw i32 %i.dc, %i.da
@@ -154,8 +139,7 @@ begin_hunk_15_@_ZL35BrotliCompressFragmentTwoPassImpl15PN13duckdb_brotli18Brotli
 bb.aq:                                            ; preds = %bb.ap
   %i.lp = add nsw i32 %i.la, -66                  ; 2 uses
   %i.lq = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.lp, i1 true) ; 2 uses
-  %9 = xor i32 %i.lq, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.lq
   %i.lr = add nsw i32 %.neg.i34, %i.lp
   %i.ls = shl nsw i32 %i.lr, 8
   %reass.sub263 = sub nsw i32 %i.ls, %i.lq
@@ -164,8 +148,7 @@ begin_hunk_16_@_ZL35BrotliCompressFragmentTwoPassImpl16PN13duckdb_brotli18Brotli
 bb.n:                                             ; preds = %bb.m
   %i.el = add nsw i32 %i.dv, -66                  ; 2 uses
   %i.em = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.el, i1 true) ; 2 uses
-  %8 = xor i32 %i.em, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.em
   %i.en = add nsw i32 %.neg.i, %i.el
   %i.eo = shl nsw i32 %i.en, 8
   %reass.sub = sub nsw i32 %i.eo, %i.em
@@ -174,8 +157,7 @@ begin_hunk_17_@_ZL35BrotliCompressFragmentTwoPassImpl16PN13duckdb_brotli18Brotli
 bb.at:                                            ; preds = %bb.as
   %i.of = add nsw i32 %i.nq, -66                  ; 2 uses
   %i.og = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.of, i1 true) ; 2 uses
-  %9 = xor i32 %i.og, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.og
   %i.oh = add nsw i32 %.neg.i34, %i.of
   %i.oi = shl nsw i32 %i.oh, 8
   %reass.sub287 = sub nsw i32 %i.oi, %i.og
@@ -184,8 +166,7 @@ begin_hunk_18_@_ZL35BrotliCompressFragmentTwoPassImpl17PN13duckdb_brotli18Brotli
 bb.n:                                             ; preds = %bb.m
   %i.el = add nsw i32 %i.dv, -66                  ; 2 uses
   %i.em = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.el, i1 true) ; 2 uses
-  %8 = xor i32 %i.em, 31
-  %.neg.i = shl nsw i32 -1, %8
+  %.neg.i = ashr exact i32 -2147483648, %i.em
   %i.en = add nsw i32 %.neg.i, %i.el
   %i.eo = shl nsw i32 %i.en, 8
   %reass.sub = sub nsw i32 %i.eo, %i.em
@@ -194,8 +175,7 @@ begin_hunk_19_@_ZL35BrotliCompressFragmentTwoPassImpl17PN13duckdb_brotli18Brotli
 bb.at:                                            ; preds = %bb.as
   %i.of = add nsw i32 %i.nq, -66                  ; 2 uses
   %i.og = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.of, i1 true) ; 2 uses
-  %9 = xor i32 %i.og, 31
-  %.neg.i34 = shl nsw i32 -1, %9
+  %.neg.i34 = ashr exact i32 -2147483648, %i.og
   %i.oh = add nsw i32 %.neg.i34, %i.of
   %i.oi = shl nsw i32 %i.oh, 8
   %reass.sub287 = sub nsw i32 %i.oi, %i.og
