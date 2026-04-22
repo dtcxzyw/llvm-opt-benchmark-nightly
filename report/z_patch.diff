@@ -1,0 +1,893 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index d97c66025cee7..6be4b493146dd 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -1481,7 +1481,23 @@ static Instruction *factorizeMinMaxTree(IntrinsicInst *II) {
+   Module *Mod = II->getModule();
+   Function *MinMax =
+       Intrinsic::getOrInsertDeclaration(Mod, MinMaxID, II->getType());
+-  return CallInst::Create(MinMax, { MinMaxOp, ThirdOp });
++  Instruction *RetI = CallInst::Create(MinMax, {MinMaxOp, ThirdOp});
++  if (isa<FPMathOperator>(II)) {
++    FastMathFlags IIFMF = II->getFastMathFlags();
++    FastMathFlags FoldedOpFMF =
++        (MinMaxOp == LHS ? RHS : LHS)->getFastMathFlags();
++    FastMathFlags RetFMF = IIFMF & FoldedOpFMF;
++    // Different intrinsics handle NaN propagation differently. For maximum and
++    // minimum, nnan does not rely on the folded instruction's flags. For the
++    // others, it does not rely on II's flags
++    if (MinMaxID == Intrinsic::maximum || MinMaxID == Intrinsic::minimum)
++      RetFMF.setNoNaNs(IIFMF.noNaNs());
++    if (MinMaxID == Intrinsic::maxnum || MinMaxID == Intrinsic::minnum ||
++        MinMaxID == Intrinsic::maximumnum || MinMaxID == Intrinsic::minimumnum)
++      RetFMF.setNoNaNs(FoldedOpFMF.noNaNs());
++    RetI->setFastMathFlags(RetFMF);
++  }
++  return RetI;
+ }
+ 
+ /// If all arguments of the intrinsic are unary shuffles with the same mask,
+@@ -2861,6 +2877,9 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       return FNeg;
+     }
+ 
++    if (Instruction *NewMinMax = factorizeMinMaxTree(II))
++      return NewMinMax;
++
+     // m(m(X, C2), C1) -> m(X, C)
+     const APFloat *C1, *C2;
+     if (auto *M = dyn_cast<IntrinsicInst>(Arg0)) {
+diff --git a/llvm/test/Transforms/InstCombine/maximum.ll b/llvm/test/Transforms/InstCombine/maximum.ll
+index c79449472235b..906a6644ba3d5 100644
+--- a/llvm/test/Transforms/InstCombine/maximum.ll
++++ b/llvm/test/Transforms/InstCombine/maximum.ll
+@@ -8,6 +8,8 @@ declare <4 x float> @llvm.maximum.v4f32(<4 x float>, <4 x float>)
+ declare double @llvm.maximum.f64(double, double)
+ declare <2 x double> @llvm.maximum.v2f64(<2 x double>, <2 x double>)
+ 
++declare void @use(float)
++
+ define float @constant_fold_maximum_f32() {
+ ; CHECK-LABEL: @constant_fold_maximum_f32(
+ ; CHECK-NEXT:    ret float 2.000000e+00
+@@ -238,6 +240,122 @@ define float @maximum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @maximum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_common_op(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Z1:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  %m2 = call float @llvm.maximum.f32(float %x, float %z)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_reuse_lhs(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximum.f32(float %z, float %x)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_reuse_rhs(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.maximum.f32(float [[Z1:%.*]], float [[X:%.*]])
++; CHECK-NEXT:    call void @use(float [[Y]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %y, float %x)
++  %m2 = call float @llvm.maximum.f32(float %z, float %x)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_reuse_lhs_nnan(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.maximum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_reuse_lhs_nnan_folded_only(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call nnan float @llvm.maximum.f32(float %z, float %x)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_reuse_lhs_fmf_intersection(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.maximum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call afn ninf float @llvm.maximum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @maximum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: @maximum_common_op_uses(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximum.f32(float [[X]], float [[Z:%.*]])
++; CHECK-NEXT:    call void @use(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximum.f32(float %x, float %z)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @maximum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: @maximum_no_common_op(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximum.f32(float [[W:%.*]], float [[Z:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximum.f32(float %x, float %y)
++  %m2 = call float @llvm.maximum.f32(float %w, float %z)
++  %m3 = call float @llvm.maximum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ ; PR37404 - https://bugs.llvm.org/show_bug.cgi?id=37404
+ 
+ define <2 x float> @neg_neg(<2 x float> %x, <2 x float> %y) {
+@@ -293,7 +411,6 @@ define float @unary_neg_neg_vec_fmf(float %x, float %y) {
+ ; 1 extra use of an intermediate value should still allow the fold,
+ ; but 2 would require more instructions than we started with.
+ 
+-declare void @use(float)
+ define float @neg_neg_extra_use_x(float %x, float %y) {
+ ; CHECK-LABEL: @neg_neg_extra_use_x(
+ ; CHECK-NEXT:    [[NEGX:%.*]] = fneg float [[X:%.*]]
+diff --git a/llvm/test/Transforms/InstCombine/maximumnum.ll b/llvm/test/Transforms/InstCombine/maximumnum.ll
+index 0d20be9062e77..5860e75fadda3 100644
+--- a/llvm/test/Transforms/InstCombine/maximumnum.ll
++++ b/llvm/test/Transforms/InstCombine/maximumnum.ll
+@@ -1,6 +1,8 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
+ ; RUN: opt -S -passes=instcombine < %s | FileCheck %s
+ 
++declare void @use(float)
++
+ define float @maximumnum_f32_1_maximumnum_val_p0(float %x) {
+ ; CHECK-LABEL: define float @maximumnum_f32_1_maximumnum_val_p0(
+ ; CHECK-SAME: float [[X:%.*]]) {
+@@ -103,6 +105,130 @@ define float @maximumnum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @maximumnum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_common_op(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Z]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M2]], float [[Y]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  %m2 = call float @llvm.maximumnum.f32(float %x, float %z)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximumnum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_reuse_lhs(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximumnum.f32(float %z, float %x)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximumnum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_reuse_rhs(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximumnum.f32(float [[Z]], float [[X]])
++; CHECK-NEXT:    call void @use(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M2]], float [[Y]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %y, float %x)
++  %m2 = call float @llvm.maximumnum.f32(float %z, float %x)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximumnum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_reuse_lhs_nnan(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximumnum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximumnum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_reuse_lhs_nnan_folded_only(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.maximumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call nnan float @llvm.maximumnum.f32(float %z, float %x)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maximumnum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_reuse_lhs_fmf_intersection(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.maximumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call afn ninf float @llvm.maximumnum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @maximumnum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @maximumnum_common_op_uses(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Z]])
++; CHECK-NEXT:    call void @use(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maximumnum.f32(float %x, float %z)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @maximumnum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: define float @maximumnum_no_common_op(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]], float [[W:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maximumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maximumnum.f32(float [[W]], float [[Z]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maximumnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maximumnum.f32(float %x, float %y)
++  %m2 = call float @llvm.maximumnum.f32(float %w, float %z)
++  %m3 = call float @llvm.maximumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ ; PR37404 - https://bugs.llvm.org/show_bug.cgi?id=37404
+ 
+ define <2 x float> @maximumnum_neg_neg(<2 x float> %x, <2 x float> %y) {
+@@ -149,7 +275,6 @@ define float @maximumnum_unary_neg_neg_vec_fmf(float %x, float %y) {
+ ; 1 extra use of an intermediate value should still allow the fold,
+ ; but 2 would require more instructions than we started with.
+ 
+-declare void @use(float)
+ define float @maximumnum_neg_neg_extra_use_x(float %x, float %y) {
+ ; CHECK-LABEL: define float @maximumnum_neg_neg_extra_use_x(
+ ; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]]) {
+diff --git a/llvm/test/Transforms/InstCombine/maxnum.ll b/llvm/test/Transforms/InstCombine/maxnum.ll
+index 5e275627414cb..94e8c3a4af5a2 100644
+--- a/llvm/test/Transforms/InstCombine/maxnum.ll
++++ b/llvm/test/Transforms/InstCombine/maxnum.ll
+@@ -8,6 +8,8 @@ declare <4 x float> @llvm.maxnum.v4f32(<4 x float>, <4 x float>)
+ declare double @llvm.maxnum.f64(double, double)
+ declare <2 x double> @llvm.maxnum.v2f64(<2 x double>, <2 x double>)
+ 
++declare void @use(float)
++
+ define float @constant_fold_maxnum_f32() {
+ ; CHECK-LABEL: @constant_fold_maxnum_f32(
+ ; CHECK-NEXT:    ret float 2.000000e+00
+@@ -238,6 +240,122 @@ define float @maxnum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @maxnum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_common_op(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Z1:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  %m2 = call float @llvm.maxnum.f32(float %x, float %z)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maxnum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_reuse_lhs(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maxnum.f32(float %z, float %x)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maxnum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_reuse_rhs(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.maxnum.f32(float [[Z1:%.*]], float [[X:%.*]])
++; CHECK-NEXT:    call void @use(float [[Y]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %y, float %x)
++  %m2 = call float @llvm.maxnum.f32(float %z, float %x)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maxnum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_reuse_lhs_nnan(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maxnum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maxnum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_reuse_lhs_nnan_folded_only(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.maxnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call nnan float @llvm.maxnum.f32(float %z, float %x)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @maxnum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_reuse_lhs_fmf_intersection(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.maxnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call afn ninf float @llvm.maxnum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @maxnum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: @maxnum_common_op_uses(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maxnum.f32(float [[X]], float [[Z:%.*]])
++; CHECK-NEXT:    call void @use(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  call void @use(float %m1)
++  %m2 = call float @llvm.maxnum.f32(float %x, float %z)
++  call void @use(float %m2)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @maxnum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: @maxnum_no_common_op(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.maxnum.f32(float [[W:%.*]], float [[Z:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.maxnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.maxnum.f32(float %x, float %y)
++  %m2 = call float @llvm.maxnum.f32(float %w, float %z)
++  %m3 = call float @llvm.maxnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ ; PR37404 - https://bugs.llvm.org/show_bug.cgi?id=37404
+ 
+ define <2 x float> @neg_neg(<2 x float> %x, <2 x float> %y) {
+@@ -281,7 +399,6 @@ define float @unary_neg_neg_vec_fmf(float %x, float %y) {
+ ; 1 extra use of an intermediate value should still allow the fold,
+ ; but 2 would require more instructions than we started with.
+ 
+-declare void @use(float)
+ define float @neg_neg_extra_use_x(float %x, float %y) {
+ ; CHECK-LABEL: @neg_neg_extra_use_x(
+ ; CHECK-NEXT:    [[NEGX:%.*]] = fneg float [[X:%.*]]
+diff --git a/llvm/test/Transforms/InstCombine/minimum.ll b/llvm/test/Transforms/InstCombine/minimum.ll
+index eb6eadf96e132..c0ea78d9d59de 100644
+--- a/llvm/test/Transforms/InstCombine/minimum.ll
++++ b/llvm/test/Transforms/InstCombine/minimum.ll
+@@ -9,6 +9,7 @@ declare double @llvm.minimum.f64(double, double)
+ declare <2 x double> @llvm.minimum.v2f64(<2 x double>, <2 x double>)
+ 
+ declare float @llvm.maximum.f32(float, float)
++declare void @use.f32(float)
+ 
+ define float @constant_fold_minimum_f32() {
+ ; CHECK-LABEL: @constant_fold_minimum_f32(
+@@ -240,6 +241,122 @@ define float @minimum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @minimum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_common_op(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Z1:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  %m2 = call float @llvm.minimum.f32(float %x, float %z)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_reuse_lhs(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimum.f32(float %z, float %x)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_reuse_rhs(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.minimum.f32(float [[Z1:%.*]], float [[X:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[Y]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %y, float %x)
++  %m2 = call float @llvm.minimum.f32(float %z, float %x)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_reuse_lhs_nnan(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.minimum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_reuse_lhs_nnan_folded_only(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call nnan float @llvm.minimum.f32(float %z, float %x)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_reuse_lhs_fmf_intersection(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.minimum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call afn ninf float @llvm.minimum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @minimum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: @minimum_common_op_uses(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimum.f32(float [[X]], float [[Z:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimum.f32(float %x, float %z)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @minimum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: @minimum_no_common_op(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimum.f32(float [[W:%.*]], float [[Z:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimum.f32(float %x, float %y)
++  %m2 = call float @llvm.minimum.f32(float %w, float %z)
++  %m3 = call float @llvm.minimum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ define float @minimum_x_maximum_x_y(float %x, float %y) {
+ ; CHECK-LABEL: @minimum_x_maximum_x_y(
+ ; CHECK-NEXT:    [[A:%.*]] = call float @llvm.maximum.f32(float [[X:%.*]], float [[Y:%.*]])
+diff --git a/llvm/test/Transforms/InstCombine/minimumnum.ll b/llvm/test/Transforms/InstCombine/minimumnum.ll
+index 9262a71939158..d06464edd53a5 100644
+--- a/llvm/test/Transforms/InstCombine/minimumnum.ll
++++ b/llvm/test/Transforms/InstCombine/minimumnum.ll
+@@ -1,6 +1,8 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
+ ; RUN: opt -S -passes=instcombine < %s | FileCheck %s
+ 
++declare void @use.f32(float)
++
+ define float @minimumnum_f32_1_minimumnum_val_p0(float %x) {
+ ; CHECK-LABEL: define float @minimumnum_f32_1_minimumnum_val_p0(
+ ; CHECK-SAME: float [[X:%.*]]) {
+@@ -103,6 +105,130 @@ define float @minimumnum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @minimumnum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_common_op(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Z]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M2]], float [[Y]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  %m2 = call float @llvm.minimumnum.f32(float %x, float %z)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimumnum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_reuse_lhs(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimumnum.f32(float %z, float %x)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimumnum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_reuse_rhs(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimumnum.f32(float [[Z]], float [[X]])
++; CHECK-NEXT:    call void @use.f32(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M2]], float [[Y]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %y, float %x)
++  %m2 = call float @llvm.minimumnum.f32(float %z, float %x)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimumnum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_reuse_lhs_nnan(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimumnum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimumnum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_reuse_lhs_nnan_folded_only(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.minimumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call nnan float @llvm.minimumnum.f32(float %z, float %x)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minimumnum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_reuse_lhs_fmf_intersection(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.minimumnum.f32(float [[M1]], float [[Z]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call afn ninf float @llvm.minimumnum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @minimumnum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: define float @minimumnum_common_op_uses(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Z]])
++; CHECK-NEXT:    call void @use.f32(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minimumnum.f32(float %x, float %z)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @minimumnum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: define float @minimumnum_no_common_op(
++; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]], float [[Z:%.*]], float [[W:%.*]]) {
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minimumnum.f32(float [[X]], float [[Y]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minimumnum.f32(float [[W]], float [[Z]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minimumnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minimumnum.f32(float %x, float %y)
++  %m2 = call float @llvm.minimumnum.f32(float %w, float %z)
++  %m3 = call float @llvm.minimumnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ define float @minimumnum_x_maximumnum_x_y(float %x, float %y) {
+ ; CHECK-LABEL: define float @minimumnum_x_maximumnum_x_y(
+ ; CHECK-SAME: float [[X:%.*]], float [[Y:%.*]]) {
+diff --git a/llvm/test/Transforms/InstCombine/minnum.ll b/llvm/test/Transforms/InstCombine/minnum.ll
+index 7ac83bf91163e..193c07f4a29c4 100644
+--- a/llvm/test/Transforms/InstCombine/minnum.ll
++++ b/llvm/test/Transforms/InstCombine/minnum.ll
+@@ -9,6 +9,7 @@ declare double @llvm.minnum.f64(double, double)
+ declare <2 x double> @llvm.minnum.v2f64(<2 x double>, <2 x double>)
+ 
+ declare float @llvm.maxnum.f32(float, float)
++declare void @use.f32(float)
+ 
+ define float @constant_fold_minnum_f32() {
+ ; CHECK-LABEL: @constant_fold_minnum_f32(
+@@ -240,6 +241,122 @@ define float @minnum4(float %x, float %y, float %z, float %w) {
+   ret float %c
+ }
+ 
++define float @minnum_common_op(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_common_op(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Z1:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  %m2 = call float @llvm.minnum.f32(float %x, float %z)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minnum_reuse_lhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_reuse_lhs(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minnum.f32(float %z, float %x)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minnum_reuse_rhs(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_reuse_rhs(
++; CHECK-NEXT:    [[Y:%.*]] = call float @llvm.minnum.f32(float [[Z1:%.*]], float [[X:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[Y]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[Y]], float [[Y1:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %y, float %x)
++  %m2 = call float @llvm.minnum.f32(float %z, float %x)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minnum_reuse_lhs_nnan(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_reuse_lhs_nnan(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minnum.f32(float %z, float %x)
++  %m3 = call nnan float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minnum_reuse_lhs_nnan_folded_only(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_reuse_lhs_nnan_folded_only(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call nnan float @llvm.minnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call nnan float @llvm.minnum.f32(float %z, float %x)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++define float @minnum_reuse_lhs_fmf_intersection(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_reuse_lhs_fmf_intersection(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M3:%.*]] = call ninf float @llvm.minnum.f32(float [[M1]], float [[Z:%.*]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call afn ninf float @llvm.minnum.f32(float %z, float %x)
++  %m3 = call arcp ninf float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - too many uses.
++
++define float @minnum_common_op_uses(float %x, float %y, float %z) {
++; CHECK-LABEL: @minnum_common_op_uses(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M1]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minnum.f32(float [[X]], float [[Z:%.*]])
++; CHECK-NEXT:    call void @use.f32(float [[M2]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  call void @use.f32(float %m1)
++  %m2 = call float @llvm.minnum.f32(float %x, float %z)
++  call void @use.f32(float %m2)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
++; Negative test - must have common operand.
++
++define float @minnum_no_common_op(float %x, float %y, float %z, float %w) {
++; CHECK-LABEL: @minnum_no_common_op(
++; CHECK-NEXT:    [[M1:%.*]] = call float @llvm.minnum.f32(float [[X:%.*]], float [[Y:%.*]])
++; CHECK-NEXT:    [[M2:%.*]] = call float @llvm.minnum.f32(float [[W:%.*]], float [[Z:%.*]])
++; CHECK-NEXT:    [[M3:%.*]] = call float @llvm.minnum.f32(float [[M1]], float [[M2]])
++; CHECK-NEXT:    ret float [[M3]]
++;
++  %m1 = call float @llvm.minnum.f32(float %x, float %y)
++  %m2 = call float @llvm.minnum.f32(float %w, float %z)
++  %m3 = call float @llvm.minnum.f32(float %m1, float %m2)
++  ret float %m3
++}
++
+ define float @minnum_x_maxnum_x_y(float %x, float %y) {
+ ; CHECK-LABEL: @minnum_x_maxnum_x_y(
+ ; CHECK-NEXT:    [[A:%.*]] = call float @llvm.maxnum.f32(float [[X:%.*]], float [[Y:%.*]])
