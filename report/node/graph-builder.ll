@@ -1,0 +1,157 @@
+inline.NumInlined: 29995
+inline.NumDeleted: 7796
+begin_hunk_0
+@.str.41 = private unnamed_addr constant [11 x i8] c"!is_null()\00", align 1
+@_ZN2v88internal21g_current_local_heap_E = external thread_local(localexec) local_unnamed_addr global ptr, align 8
+@_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE2EEEENS_4base6VectorIKS4_EEvE9rep_array = linkonce_odr hidden local_unnamed_addr constant %"struct.std::array.566" { [1 x %"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation"] [%"class.v8::internal::compiler::turboshaft::MaybeRegisterRepresentation" { i8 2 }] }, comdat, align 1
+@switch.table._ZNK2v88internal8compiler10turboshaft21LoadDataViewElementOp11outputs_repEv = private unnamed_addr constant [12 x i64] [i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 2, i64 3, i64 0, i64 1, i64 1], comdat($_ZNK2v88internal8compiler10turboshaft21LoadDataViewElementOp11outputs_repEv), align 8
+@switch.table._ZNK2v88internal8compiler10turboshaft18LoadTypedElementOp11outputs_repEv = private unnamed_addr constant [12 x i64] [i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 0, i64 2, i64 3, i64 0, i64 1, i64 1], comdat($_ZNK2v88internal8compiler10turboshaft18LoadTypedElementOp11outputs_repEv), align 8
+@switch.table._ZN2v88internal8compiler10turboshaft27RequiredOptimizationReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES6_EEEEEEEEEEEE9ReducePhiENS8_6VectorIKNS2_7OpIndexEEENS2_22RegisterRepresentationE = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft27RequiredOptimizationReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES6_EEEEEEEEEEEE9ReducePhiENS8_6VectorIKNS2_7OpIndexEEENS2_22RegisterRepresentationE), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENSE_7StorageEEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENSE_7StorageEEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEi = private unnamed_addr constant [22 x i8] c"\00\00\00\00\00\00\01\01\02\02\03\04\04\04\04\04\04\04\04\01\06\07", comdat($_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEi), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEih = private unnamed_addr constant [22 x i8] c"\00\00\00\00\00\00\01\01\02\02\03\04\04\04\04\04\04\04\04\01\06\07", comdat($_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEih), align 1
+@switch.table._ZNK2v88internal8compiler10turboshaft20MemoryRepresentation15SizeInBytesLog2Ev = private unnamed_addr constant [22 x i8] c"\00\00\01\01\02\02\03\03\01\02\03\03\03\03\03\03\03\03\02\03\04\05", comdat($_ZNK2v88internal8compiler10turboshaft20MemoryRepresentation15SizeInBytesLog2Ev), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindEmEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindEmEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float64EEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float64EEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float32EEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float32EEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6HandleINS0_10HeapObjectEEEEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6HandleINS0_10HeapObjectEEEEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_17ExternalReferenceEEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_17ExternalReferenceEEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE124ENS2_21UniformReducerAdapterIS3_SH_E31ReduceChangeOrDeoptContinuationEJNS2_1VINS2_13UntaggedUnionIJNSP_IJNS2_12WordWithBitsILm32EEENSQ_ILm64EEEEEENSP_IJNS2_13FloatWithBitsILm32EEENSU_ILm64EEEEEEEEEEENSO_INS2_10FrameStateEEENS2_15ChangeOrDeoptOp4KindENS1_21CheckForMinusZeroModeENS1_14FeedbackSourceEEEENS2_7OpIndexEDpT1_ = private unnamed_addr constant [10 x ptr] [ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE1EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE1EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE1EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE1EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array], comdat($_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE124ENS2_21UniformReducerAdapterIS3_SH_E31ReduceChangeOrDeoptContinuationEJNS2_1VINS2_13UntaggedUnionIJNSP_IJNS2_12WordWithBitsILm32EEENSQ_ILm64EEEEEENSP_IJNS2_13FloatWithBitsILm32EEENSU_ILm64EEEEEEEEEEENSO_INS2_10FrameStateEEENS2_15ChangeOrDeoptOp4KindENS1_21CheckForMinusZeroModeENS1_14FeedbackSourceEEEENS2_7OpIndexEDpT1_), align 8
+@switch.table._ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE = private unnamed_addr constant [22 x i8] c"\00\00\00\00\00\00\01\01\02\02\03\04\04\04\04\04\04\04\04\01\06\07", comdat($_ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE), align 1
+@switch.table._ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE.31 = private unnamed_addr constant [22 x i8] c"\00\00\00\00\00\00\01\01\02\02\03\04\04\04\04\04\04\04\04\01\06\07", comdat($_ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE), align 1
+@switch.table._ZNK2v88internal8compiler10turboshaft6CallOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE = private unnamed_addr constant [9 x i8] c"\04\04\01\01\01\00\01\01\04", comdat($_ZNK2v88internal8compiler10turboshaft6CallOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6TaggedINS0_3SmiEEEEEENS2_7OpIndexEDpT0_ = private unnamed_addr constant [15 x i8] c"\00\01\02\03\04\04\01\01\04\05\01\01\01\00\00", comdat($_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6TaggedINS0_3SmiEEEEEENS2_7OpIndexEDpT0_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE144ENS2_21UniformReducerAdapterIS3_SH_E35ReduceStoreTypedElementContinuationEJNS2_7OpIndexENS2_1VINS0_6ObjectEEENSP_INS2_12WordWithBitsILm64EEEEESU_SO_NS0_17ExternalArrayTypeEEEESO_DpT1_ = private unnamed_addr constant [12 x i8] c"\00\00\00\00\00\00\00\02\03\00\01\01", comdat($_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE144ENS2_21UniformReducerAdapterIS3_SH_E35ReduceStoreTypedElementContinuationEJNS2_7OpIndexENS2_1VINS0_6ObjectEEENSP_INS2_12WordWithBitsILm64EEEEESU_SO_NS0_17ExternalArrayTypeEEEESO_DpT1_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE142ENS2_21UniformReducerAdapterIS3_SH_E38ReduceStoreDataViewElementContinuationEJNS2_1VINS0_6ObjectEEENSO_INS2_12WordWithBitsILm64EEEEEST_NS2_7OpIndexENSO_INSR_ILm32EEEEENS0_17ExternalArrayTypeEEEESU_DpT1_ = private unnamed_addr constant [12 x i8] c"\00\00\00\00\00\00\00\02\03\00\01\01", comdat($_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE142ENS2_21UniformReducerAdapterIS3_SH_E38ReduceStoreDataViewElementContinuationEJNS2_1VINS0_6ObjectEEENSO_INS2_12WordWithBitsILm64EEEEEST_NS2_7OpIndexENSO_INSR_ILm32EEEEENS0_17ExternalArrayTypeEEEESU_DpT1_), align 1
+@switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_ = private unnamed_addr constant [9 x i64] [i64 4, i64 4, i64 4, i64 4, i64 4, i64 4, i64 6, i64 2, i64 4], comdat($_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_), align 8
+@switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE41ENS2_21UniformReducerAdapterIS3_SH_E30ReduceSimd128SplatContinuationEJNS2_1VINS2_3AnyEEENS2_14Simd128SplatOp4KindEEEENS2_7OpIndexEDpT1_ = private unnamed_addr constant [7 x ptr] [ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE0EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE1EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE2EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE3EEEENS_4base6VectorIKS4_EEvE9rep_array, ptr @_ZZN2v88internal8compiler10turboshaft14MaybeRepVectorIJLNS2_27MaybeRegisterRepresentation4EnumE2EEEENS_4base6VectorIKS4_EEvE9rep_array], comdat($_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE41ENS2_21UniformReducerAdapterIS3_SH_E30ReduceSimd128SplatContinuationEJNS2_1VINS2_3AnyEEENS2_14Simd128SplatOp4KindEEEENS2_7OpIndexEDpT1_), align 8
+
+; Function Attrs: mustprogress nounwind uwtable
+define hidden i16 @_ZN2v88internal8compiler10turboshaft10BuildGraphEPNS2_12PipelineDataEPNS1_8ScheduleEPNS0_4ZoneEPNS1_7LinkageEPNS0_7ZoneMapIjPKNS1_20JSWasmCallParametersESt4lessIjEEE(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #0 {
+end_hunk_0
+begin_hunk_1_@_ZNK2v88internal8compiler10turboshaft21LoadDataViewElementOp11outputs_repEv:switch.lookup
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.b = load i32, ptr %i.a, align 4
+  %i.c = sext i32 %i.b to i64
+  %i.d = getelementptr [8 x i8], ptr @switch.table._ZNK2v88internal8compiler10turboshaft21LoadDataViewElementOp11outputs_repEv, i64 %i.c
+  %switch.gep = getelementptr i8, ptr %i.d, i64 -8
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr @_ZZN2v88internal8compiler10turboshaft12VectorForRepENS2_22RegisterRepresentationEE5table, i64 %switch.load
+end_hunk_1
+begin_hunk_2_@_ZN2v88internal8compiler10turboshaft27RequiredOptimizationReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES6_EEEEEEEEEEEE9ReducePhiENS8_6VectorIKNS2_7OpIndexEEENS2_22RegisterRepresentationE:bb.a
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
+  store i8 %i.w, ptr %i.bd, align 4
+  %i.be = zext nneg i8 %i.w to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft27RequiredOptimizationReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES6_EEEEEEEEEEEE9ReducePhiENS8_6VectorIKNS2_7OpIndexEEENS2_22RegisterRepresentationE, i64 %i.be
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.bf = getelementptr inbounds nuw i8, ptr %i.ay, i64 5
+  store i8 %switch.load, ptr %i.bf, align 1
+end_hunk_2
+begin_hunk_3_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENSE_7StorageEEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENSE_7StorageEEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+  store i8 %switch.load, ptr %i.ak, align 1
+end_hunk_3
+begin_hunk_4_@_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEi:switch.lookup
+
+bb.a:                                             ; preds = %switch.lookup
+  %i.d = zext nneg i8 %3 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEi, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.e = getelementptr inbounds i8, ptr %0, i64 -816
+  %i.f = tail call i32 @_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE77ENS2_21UniformReducerAdapterIS3_SH_E22ReduceLoadContinuationEJNS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationENS2_22RegisterRepresentationEihEEESO_DpT1_(ptr noundef nonnull align 8 dereferenceable(816) %i.e, i32 %1, i32 -1, i8 %2, i8 %3, i8 %switch.load, i32 noundef %4, i8 noundef zeroext 0)
+end_hunk_4
+begin_hunk_5_@_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEih:switch.lookup
+
+bb.a:                                             ; preds = %switch.lookup
+  %i.d = zext nneg i8 %4 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE4LoadENS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationEih, i64 %i.d
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.e = getelementptr inbounds i8, ptr %0, i64 -816
+  %i.f = tail call i32 @_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE77ENS2_21UniformReducerAdapterIS3_SH_E22ReduceLoadContinuationEJNS2_7OpIndexENS2_15OptionalOpIndexENS2_6LoadOp4KindENS2_20MemoryRepresentationENS2_22RegisterRepresentationEihEEESO_DpT1_(ptr noundef nonnull align 8 dereferenceable(816) %i.e, i32 %1, i32 %2, i8 %3, i8 %4, i8 %switch.load, i32 noundef %5, i8 noundef zeroext %6)
+end_hunk_5
+begin_hunk_6_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindEmEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindEmEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+  store i8 %switch.load, ptr %i.ak, align 1
+end_hunk_6
+begin_hunk_7_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float64EEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float64EEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+  store i8 %switch.load, ptr %i.ak, align 1
+end_hunk_7
+begin_hunk_8_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float32EEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_7Float32EEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %.sroa.0.0.insert.ext.i.i = zext i32 %2 to i64
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+end_hunk_8
+begin_hunk_9_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6HandleINS0_10HeapObjectEEEEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_6HandleINS0_10HeapObjectEEEEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ak = ptrtoint ptr %2 to i64
+  %i.al = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+end_hunk_9
+begin_hunk_10_@_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_17ExternalReferenceEEEENS2_7OpIndexEDpT0_:bb.a
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  store i8 %1, ptr %i.ai, align 4
+  %i.aj = zext nneg i8 %1 to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_25ExplicitTruncationReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSE_4KindENS0_17ExternalReferenceEEEENS2_7OpIndexEDpT0_, i64 %i.aj
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 5
+  store i8 %switch.load, ptr %i.ak, align 1
+end_hunk_10
+begin_hunk_11_@_ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE:bb.a
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %i.j = load i8, ptr %i.i, align 1
+  %i.k = zext nneg i8 %i.j to i64
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZNK2v88internal8compiler10turboshaft7StoreOp10inputs_repERNS0_10ZoneVectorINS2_27MaybeRegisterRepresentationEEE, i64 %i.k
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %i.m = load ptr, ptr %i.l, align 8
+end_hunk_11
+begin_hunk_12_@_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE144ENS2_21UniformReducerAdapterIS3_SH_E35ReduceStoreTypedElementContinuationEJNS2_7OpIndexENS2_1VINS0_6ObjectEEENSP_INS2_12WordWithBitsILm64EEEEESU_SO_NS0_17ExternalArrayTypeEEEESO_DpT1_:bb.a
+  %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 4 ; 2 uses
+  store i32 %6, ptr %i.s, align 4
+  %i.t = sext i32 %6 to i64
+  %i.u = getelementptr i8, ptr @switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE144ENS2_21UniformReducerAdapterIS3_SH_E35ReduceStoreTypedElementContinuationEJNS2_7OpIndexENS2_1VINS0_6ObjectEEENSP_INS2_12WordWithBitsILm64EEEEESU_SO_NS0_17ExternalArrayTypeEEEESO_DpT1_, i64 %i.t
+  %switch.gep = getelementptr i8, ptr %i.u, i64 -1
+  %switch.load = load i8, ptr %switch.gep, align 1
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 528
+end_hunk_12
+begin_hunk_13_@_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_:bb.a
+  %i.av = load i16, ptr %i.q, align 2
+  %i.aw = load i8, ptr %i.r, align 4
+  %i.ax = zext nneg i8 %i.aw to i64
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_, i64 %i.ax
+  %switch.load = load i64, ptr %switch.gep, align 8
+  %i.ay = zext i16 %i.av to i64
+  %i.az = icmp eq i64 %switch.load, %i.ay         ; 5 uses
+end_hunk_13
+begin_hunk_14_@_ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_:bb.a
+  %i.cs = load i16, ptr %i.q, align 2             ; 2 uses
+  %i.ct = load i8, ptr %i.r, align 4              ; 4 uses
+  %i.cu = zext nneg i8 %i.ct to i64
+  %switch.gep125 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal8compiler10turboshaft25ExplicitTruncationReducerINS2_15VariableReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE15ReduceOperationILNS2_6OpcodeE101ENS2_21UniformReducerAdapterIS3_SH_E34ReduceAtomicWord32PairContinuationEJNS2_1VINS2_12WordWithBitsILm64EEEEENS2_9OptionalVISQ_EENSS_INSP_ILm32EEEEESV_SV_SV_NS2_18AtomicWord32PairOp4KindEiEEENS2_7OpIndexEDpT1_, i64 %i.cu
+  %switch.load126 = load i64, ptr %switch.gep125, align 8
+  %i.cv = zext i16 %i.cs to i64                   ; 2 uses
+  %i.cw = icmp eq i64 %switch.load126, %i.cv
+end_hunk_14
