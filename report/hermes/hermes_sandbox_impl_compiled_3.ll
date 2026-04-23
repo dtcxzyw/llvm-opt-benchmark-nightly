@@ -4,9 +4,8 @@ begin_hunk_0_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3AHadesGC0x3A0x3AyoungGenCollecti
   %.045.i = phi i32 [ %i.vr, %.preheader.i3450 ], [ %i.vk, %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3AfindNextCardWithStatus0x28hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3ACardStatus0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x290x20const.exit3445 ]
   %.0.i3451 = phi i32 [ %i.vn, %.preheader.i3450 ], [ %.0.copyload.i3434, %w2c_hermes_hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3AfindNextCardWithStatus0x28hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3ACardStatus0x2C0x20unsigned0x20long0x2C0x20unsigned0x20long0x290x20const.exit3445 ]
   %i.vm = and i32 %.045.i, 31
-  %4 = xor i32 %i.vm, 31
-  %5 = shl nsw i32 -1, %4
-  %i.vn = add i32 %5, %.0.i3451                   ; 3 uses
+  %4 = ashr exact i32 -2147483648, %i.vm
+  %i.vn = add i32 %4, %.0.i3451                   ; 3 uses
   %i.vo = add i32 %i.vn, %i.vg
   %i.vp = zext i32 %i.vo to i64
   %.val.i3452 = load ptr, ptr %i.e, align 8, !tbaa !7
@@ -15,9 +14,8 @@ begin_hunk_1_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3AfirstObjForCar
   %.045 = phi i32 [ %i.m, %.preheader ], [ %i.f, %bb.a ]
   %.0 = phi i32 [ %i.i, %.preheader ], [ %2, %bb.a ]
   %i.h = and i32 %.045, 31
-  %3 = xor i32 %i.h, 31
-  %4 = shl nsw i32 -1, %3
-  %i.i = add i32 %4, %.0                          ; 3 uses
+  %3 = ashr exact i32 -2147483648, %i.h
+  %i.i = add i32 %3, %.0                          ; 3 uses
   %i.j = add i32 %i.a, %i.i
   %i.k = zext i32 %i.j to i64
   %.val = load ptr, ptr %i.c, align 8, !tbaa !7
