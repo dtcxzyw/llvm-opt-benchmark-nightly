@@ -4,8 +4,8 @@ begin_hunk_0_@deflate_find_min_cost_path:bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.r = zext i16 %i.g to i64
-  %3 = shl nuw nsw i64 %i.r, 2
-  %.add = sub nuw nsw i64 -4, %3                  ; 2 uses
+  %3 = xor i64 %i.r, -1
+  %.add = shl nsw i64 %3, 2                       ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.h, %bb.c

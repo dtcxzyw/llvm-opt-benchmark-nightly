@@ -4,7 +4,7 @@ begin_hunk_0_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGeneratorInnerFunction0x3A0x3Ac
 bb.ab:                                            ; preds = %bb.y, %bb.aa
   %.0668 = phi i32 [ %.0.copyload.i793, %bb.aa ], [ %.0.copyload.i784, %bb.y ]
   %i.dx = shl i32 %i.cv, 3
-  %i.dy = add i32 %.0668, %i.dx                   ; 9 uses
+  %i.dy = add i32 %.0668, %i.dx                   ; 8 uses
   %.val736 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.dz = getelementptr inbounds nuw i8, ptr %.val736, i64 %i.cm
   store i32 %i.dy, ptr %i.dz, align 1
@@ -13,14 +13,13 @@ begin_hunk_1_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGeneratorInnerFunction0x3A0x3Ac
   br i1 %.not683, label %.loopexit, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.ez = add i32 %i.dy, -64                      ; 4 uses
+  %i.ez = add i32 %i.dy, -64                      ; 5 uses
   %i.fa = icmp ugt i32 %.0.copyload.i786, 3
   br i1 %i.fa, label %bb.ad, label %.loopexit825
 
 bb.ad:                                            ; preds = %bb.ac
   %i.fb = and i32 %.0.copyload.i786, -4           ; 2 uses
   %i.fc = zext i32 %.0 to i64                     ; 4 uses
-  %6 = add i32 %i.dy, -80
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ae, %bb.ad
@@ -29,7 +28,8 @@ begin_hunk_2_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3AGeneratorInnerFunction0x3A0x3Ac
   %.val749 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.fy = getelementptr inbounds nuw i8, ptr %.val749, i64 %i.fx
   store i64 %.0.copyload.i798, ptr %i.fy, align 1
-  %7 = sub i32 %6, %i.fe
+  %6 = xor i32 %i.fe, -16
+  %7 = add i32 %6, %i.ez
   %i.fz = or disjoint i32 %i.fe, 24               ; 2 uses
   %.val712 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.ga = getelementptr inbounds nuw i8, ptr %.val712, i64 %i.fc

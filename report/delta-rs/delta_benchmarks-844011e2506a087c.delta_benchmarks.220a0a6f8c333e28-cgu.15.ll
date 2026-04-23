@@ -4,7 +4,7 @@ begin_hunk_0_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1059, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1059
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -13,7 +13,7 @@ begin_hunk_1_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1080, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1080
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -22,7 +22,7 @@ begin_hunk_2_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1101, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1101
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -31,7 +31,7 @@ begin_hunk_3_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1122, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1122
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -40,7 +40,7 @@ begin_hunk_4_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1143, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1143
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -49,7 +49,7 @@ begin_hunk_5_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1164, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1164
   br label %_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs2VbMhdeEr66_16delta_benchmarks.exit
@@ -58,7 +58,7 @@ begin_hunk_6_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk
 
 bb.f:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1c_3AnyNtNtB1e_6marker4SyncNtB2t_4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ak = load ptr, ptr %0, align 8, !alias.scope !1351, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.ad
+  %1 = xor i64 %i.ad, -32
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.al, i64 noundef %i.ag, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1351
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtB4_3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1n_3AnyNtNtB4_6marker4SyncNtB2o_4SendEL_EINtNtB4_4hash18BuildHasherDefaultNtNtCs4m0Tg8nAduX_20datafusion_execution6config8IdHasherEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -67,7 +67,7 @@ begin_hunk_7_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1470, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1470
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1p_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFENtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -76,7 +76,7 @@ begin_hunk_8_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1497, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1497
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1p_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFENtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -85,7 +85,7 @@ begin_hunk_9_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1524, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1524
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1p_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFENtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -94,7 +94,7 @@ begin_hunk_10_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZE
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1551, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1551
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1p_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionENtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -103,7 +103,7 @@ begin_hunk_11_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZE
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !1578, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1578
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1p_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanENtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -112,7 +112,7 @@ begin_hunk_12_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZE
   br i1 %i.h, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i
-  %0 = sub nuw nsw i64 -16, %i.b
+  %0 = xor i64 %i.b, -16
   %i.i = getelementptr inbounds i8, ptr %.0.val, i64 %0
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.i, i64 noundef %i.e, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !1647
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9hashbrown3map7HashMapNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjNtNtNtCs2pqxYH9ZEk8_3std4hash6random11RandomStateEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -121,7 +121,7 @@ begin_hunk_13_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs4m0Tg8nAduX_20
 
 bb.h:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1c_3AnyNtNtB1e_6marker4SyncNtB2t_4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.aq = load ptr, ptr %i.f, align 8, !alias.scope !2499, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aj
+  %1 = xor i64 %i.aj, -32
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ar, i64 noundef %i.am, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !2499
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtB4_3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1D_3AnyNtNtB4_6marker4SyncNtB2E_4SendEL_EINtNtB4_4hash18BuildHasherDefaultNtNtCs4m0Tg8nAduX_20datafusion_execution6config8IdHasherEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -130,7 +130,7 @@ begin_hunk_14_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs8ulvy0Wg6Ot_12
   br i1 %i.ai, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjEECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.i
 
 bb.i:                                             ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i.i.i.i
-  %1 = sub nuw nsw i64 -16, %i.ac
+  %1 = xor i64 %i.ac, -16
   %i.aj = getelementptr inbounds i8, ptr %.val, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aj, i64 noundef %i.af, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !2899
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -139,7 +139,7 @@ begin_hunk_15_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs8Hz2sPNgbCO_
 
 bb.aj:                                            ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.cn = load ptr, ptr %i.bf, align 8, !alias.scope !4089, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.cg
+  %1 = xor i64 %i.cg, -32
   %i.co = getelementptr inbounds i8, ptr %i.cn, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.co, i64 noundef %i.cj, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !4089
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1F_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -148,7 +148,7 @@ begin_hunk_16_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs8Hz2sPNgbCO_
 
 bb.ap:                                            ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.dz = load ptr, ptr %i.cr, align 8, !alias.scope !4119, !nonnull !8, !noundef !8
-  %2 = sub nuw nsw i64 -32, %i.ds
+  %2 = xor i64 %i.ds, -32
   %i.ea = getelementptr inbounds i8, ptr %i.dz, i64 %2
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ea, i64 noundef %i.dv, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !4119
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1F_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -157,7 +157,7 @@ begin_hunk_17_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs8Hz2sPNgbCO_
 
 bb.av:                                            ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.fl = load ptr, ptr %i.ed, align 8, !alias.scope !4149, !nonnull !8, !noundef !8
-  %3 = sub nuw nsw i64 -32, %i.fe
+  %3 = xor i64 %i.fe, -32
   %i.fm = getelementptr inbounds i8, ptr %i.fl, i64 %3
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.fm, i64 noundef %i.fh, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !4149
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1F_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -166,7 +166,7 @@ begin_hunk_18_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs8Hz2sPNgbCO_
 
 bb.bb:                                            ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.gx = load ptr, ptr %i.fp, align 8, !alias.scope !4179, !nonnull !8, !noundef !8
-  %4 = sub nuw nsw i64 -32, %i.gq
+  %4 = xor i64 %i.gq, -32
   %i.gy = getelementptr inbounds i8, ptr %i.gx, i64 %4
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.gy, i64 noundef %i.gt, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !4179
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1F_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -175,7 +175,7 @@ begin_hunk_19_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs8Hz2sPNgbCO_
 
 bb.cs:                                            ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i.i.i.i.i
   %i.ni = load ptr, ptr %i.ma, align 8, !alias.scope !4329, !nonnull !8, !noundef !8
-  %5 = sub nuw nsw i64 -32, %i.nb
+  %5 = xor i64 %i.nb, -32
   %i.nj = getelementptr inbounds i8, ptr %i.ni, i64 %5
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.nj, i64 noundef %i.ne, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !4329
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1F_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -184,7 +184,7 @@ begin_hunk_20_@_RNvXsE_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_7HashMapRNtNtCsjhHCjz
   tail call void @llvm.assume(i1 %i.h)
   %i.i = icmp ult i64 %i.g, 9223372036854775793
   tail call void @llvm.assume(i1 %i.i)
-  %2 = sub nuw nsw i64 -16, %i.d
+  %2 = xor i64 %i.d, -16
   %i.j = getelementptr inbounds i8, ptr %.sroa.02.0.copyload, i64 %2
   br label %_RNvXsh_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuEENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collect12IntoIterator9into_iterCs2VbMhdeEr66_16delta_benchmarks.exit
 
@@ -193,7 +193,7 @@ begin_hunk_21_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8828, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8828
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -202,7 +202,7 @@ begin_hunk_22_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8845, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8845
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -211,7 +211,7 @@ begin_hunk_23_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8862, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8862
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -220,7 +220,7 @@ begin_hunk_24_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8879, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8879
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -229,7 +229,7 @@ begin_hunk_25_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8896, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8896
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -238,7 +238,7 @@ begin_hunk_26_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.e:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1e_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ah = load ptr, ptr %0, align 8, !alias.scope !8913, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.aa
+  %1 = xor i64 %i.aa, -32
   %i.ai = getelementptr inbounds i8, ptr %i.ah, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.ai, i64 noundef %i.ad, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8913
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB1h_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -247,7 +247,7 @@ begin_hunk_27_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
 
 bb.m:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtB1e_4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.av = load ptr, ptr %0, align 8, !alias.scope !8947, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.ao
+  %1 = xor i64 %i.ao, -32
   %i.aw = getelementptr inbounds i8, ptr %i.av, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.aw, i64 noundef %i.ar, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !8947
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtB1h_4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema5field5FieldEEENtNtB1h_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -256,7 +256,7 @@ begin_hunk_28_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8ulvy
   br i1 %i.i, label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
-  %1 = sub nuw nsw i64 -16, %i.c
+  %1 = xor i64 %i.c, -16
   %i.j = getelementptr inbounds i8, ptr %.val, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.j, i64 noundef %i.f, i64 noundef range(i64 1, -9223372036854775807) 16) #39
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema18MetadataColumnSpecjENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -265,7 +265,7 @@ begin_hunk_29_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFy
 
 bb.f:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1c_3AnyNtNtB1e_6marker4SyncNtB2t_4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ak = load ptr, ptr %0, align 8, !alias.scope !9154, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -32, %i.ad
+  %1 = xor i64 %i.ad, -32
   %i.al = getelementptr inbounds i8, ptr %i.ak, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.al, i64 noundef %i.ag, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !9154
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB1f_3AnyNtNtB1h_6marker4SyncNtB2w_4SendEL_EENtNtB1Q_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -274,7 +274,7 @@ begin_hunk_30_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjhHCj
 
 bb.j:                                             ; preds = %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner13drop_elementsTNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EEECs2VbMhdeEr66_16delta_benchmarks.exit.i
   %i.ar = load ptr, ptr %0, align 8, !alias.scope !9182, !nonnull !8, !noundef !8
-  %1 = sub nuw nsw i64 -64, %i.ak
+  %1 = xor i64 %i.ak, -64
   %i.as = getelementptr inbounds i8, ptr %i.ar, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.as, i64 noundef %i.an, i64 noundef range(i64 1, -9223372036854775807) 16) #39, !noalias !9182
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTNtNtCsjhHCjzi9uUI_17datafusion_common15table_reference22ResolvedTableReferenceINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtNtCs8VI8w5SIoU4_15datafusion_expr12table_source11TableSourceEL_EENtNtB2y_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -283,7 +283,7 @@ begin_hunk_31_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTRNtNtCs6Po7
   br i1 %i.k, label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtCs6Po7BT7Nknu_5alloc6string6StringuENtNtB1i_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
-  %1 = sub nuw nsw i64 -16, %i.e
+  %1 = xor i64 %i.e, -16
   %i.l = getelementptr inbounds i8, ptr %.val, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.l, i64 noundef %i.h, i64 noundef range(i64 1, -9223372036854775807) 16) #39
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtCs6Po7BT7Nknu_5alloc6string6StringuENtNtB1i_5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
@@ -292,7 +292,7 @@ begin_hunk_32_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTRNtNtCsjhHC
   br i1 %i.k, label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit, label %bb.b
 
 bb.b:                                             ; preds = %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i
-  %1 = sub nuw nsw i64 -16, %i.e
+  %1 = xor i64 %i.e, -16
   %i.l = getelementptr inbounds i8, ptr %.val, i64 %1
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %i.l, i64 noundef %i.h, i64 noundef range(i64 1, -9223372036854775807) 16) #39
   br label %_RINvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB6_13RawTableInner16drop_inner_tableTRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuENtNtCs6Po7BT7Nknu_5alloc5alloc6GlobalECs2VbMhdeEr66_16delta_benchmarks.exit
