@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_8Int8TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int16TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int32TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int64TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9UInt8TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -49,7 +49,7 @@ begin_hunk_5_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt16TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -58,7 +58,7 @@ begin_hunk_6_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt32TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -67,7 +67,7 @@ begin_hunk_7_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt64TypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -76,7 +76,7 @@ begin_hunk_8_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_114FloatConverterINS_9FloatTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -85,7 +85,7 @@ begin_hunk_9_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_1
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_114FloatConverterINS_10DoubleTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -94,7 +94,7 @@ begin_hunk_10_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_10StringTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -103,7 +103,7 @@ begin_hunk_11_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_10BinaryTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -112,7 +112,7 @@ begin_hunk_12_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_15LargeStringTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -121,7 +121,7 @@ begin_hunk_13_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_15LargeBinaryTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -130,7 +130,7 @@ begin_hunk_14_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_14StringViewTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -139,7 +139,7 @@ begin_hunk_15_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_14BinaryViewTypeENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -148,7 +148,7 @@ begin_hunk_16_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_124FixedSizeBinaryConverterINS_17DictionaryBuilderINS_19FixedSizeBinaryTypeEEEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -157,7 +157,7 @@ begin_hunk_17_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_13Decimal32TypeENS_9Decimal32ENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -166,7 +166,7 @@ begin_hunk_18_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_13Decimal64TypeENS_9Decimal64ENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -175,7 +175,7 @@ begin_hunk_19_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_14Decimal128TypeENS_10Decimal128ENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -184,7 +184,7 @@ begin_hunk_20_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_14Decimal256TypeENS_10Decimal256ENS_17DictionaryBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -193,7 +193,7 @@ begin_hunk_21_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_8Int8TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -202,7 +202,7 @@ begin_hunk_22_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int16TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -211,7 +211,7 @@ begin_hunk_23_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int32TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -220,7 +220,7 @@ begin_hunk_24_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9Int64TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -229,7 +229,7 @@ begin_hunk_25_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_9UInt8TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -238,7 +238,7 @@ begin_hunk_26_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt16TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -247,7 +247,7 @@ begin_hunk_27_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt32TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -256,7 +256,7 @@ begin_hunk_28_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10UInt64TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -265,7 +265,7 @@ begin_hunk_29_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_118TimestampConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -274,7 +274,7 @@ begin_hunk_30_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10Date32TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -283,7 +283,7 @@ begin_hunk_31_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10Date64TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -292,7 +292,7 @@ begin_hunk_32_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10Time32TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -301,7 +301,7 @@ begin_hunk_33_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_10Time64TypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -310,7 +310,7 @@ begin_hunk_34_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_12DurationTypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -319,7 +319,7 @@ begin_hunk_35_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_113NullConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -328,7 +328,7 @@ begin_hunk_36_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116BooleanConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -337,7 +337,7 @@ begin_hunk_37_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_13HalfFloatTypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -346,7 +346,7 @@ begin_hunk_38_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_114FloatConverterINS_9FloatTypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -355,7 +355,7 @@ begin_hunk_39_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_114FloatConverterINS_10DoubleTypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -364,7 +364,7 @@ begin_hunk_40_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_126VarLengthListLikeConverterINS_8ListTypeEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -373,7 +373,7 @@ begin_hunk_41_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_126VarLengthListLikeConverterINS_13LargeListTypeEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -382,7 +382,7 @@ begin_hunk_42_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_126VarLengthListLikeConverterINS_12ListViewTypeEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -391,7 +391,7 @@ begin_hunk_43_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_126VarLengthListLikeConverterINS_17LargeListViewTypeEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -400,7 +400,7 @@ begin_hunk_44_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_112MapConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(72) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -409,7 +409,7 @@ begin_hunk_45_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_122FixedSizeListConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(64) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -418,7 +418,7 @@ begin_hunk_46_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StructConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(64) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -427,7 +427,7 @@ begin_hunk_47_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_10StringTypeENS_13StringBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -436,7 +436,7 @@ begin_hunk_48_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_10BinaryTypeENS_13BinaryBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -445,7 +445,7 @@ begin_hunk_49_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_15LargeStringTypeENS_18LargeStringBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -454,7 +454,7 @@ begin_hunk_50_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_15LargeBinaryTypeENS_18LargeBinaryBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -463,7 +463,7 @@ begin_hunk_51_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_14StringViewTypeENS_17StringViewBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -472,7 +472,7 @@ begin_hunk_52_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_115StringConverterINS_14BinaryViewTypeENS_17BinaryViewBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -481,7 +481,7 @@ begin_hunk_53_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_124FixedSizeBinaryConverterINS_22FixedSizeBinaryBuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -490,7 +490,7 @@ begin_hunk_54_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_13Decimal32TypeENS_9Decimal32ENS_16Decimal32BuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -499,7 +499,7 @@ begin_hunk_55_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_13Decimal64TypeENS_9Decimal64ENS_16Decimal64BuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -508,7 +508,7 @@ begin_hunk_56_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_14Decimal128TypeENS_10Decimal128ENS_17Decimal128BuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -517,7 +517,7 @@ begin_hunk_57_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116DecimalConverterINS_14Decimal256TypeENS_10Decimal256ENS_17Decimal256BuilderEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -526,7 +526,7 @@ begin_hunk_58_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_114UnionConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(96) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -535,7 +535,7 @@ begin_hunk_59_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_116IntegerConverterINS_17MonthIntervalTypeENS_14NumericBuilderIS5_EEE7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -544,7 +544,7 @@ begin_hunk_60_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_124DayTimeIntervalConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -553,7 +553,7 @@ begin_hunk_61_@_ZN5arrow3ipc8internal4json12_GLOBAL__N_117ConcreteConverterINS3_
   resume { ptr, i32 } %.pn23
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define internal void @_ZN5arrow3ipc8internal4json12_GLOBAL__N_129MonthDayNanoIntervalConverter7builderEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.233") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -562,7 +562,7 @@ begin_hunk_62_@llvm.smin.i32
 attributes #9 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #11 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { cold mustprogress noreturn nounwind memory(inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
