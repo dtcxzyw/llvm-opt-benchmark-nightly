@@ -61,9 +61,7 @@ OPENAI_API_TOKEN = os.environ.get(
     "OPENAI_API_TOKEN", os.environ.get("OPENAI_API_KEY", "")
 ).strip()
 
-UNIFIED_HUNK_HEADER_RE = re.compile(
-    r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@"
-)
+UNIFIED_HUNK_HEADER_RE = re.compile(r"^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
 LLVM_FUNCTION_RE = re.compile(
     r'^(?:define|declare)\b.*?(@(?:"[^"]+"|[-a-zA-Z$._0-9]+))\('
 )
@@ -739,7 +737,12 @@ def _build_minimized_files_from_hunks(
 
 
 def _extract_opcode_from_diff_line(line: str) -> Optional[str]:
-    if not line or line[:1] not in {"+", "-"} or line.startswith("+++") or line.startswith("---"):
+    if (
+        not line
+        or line[:1] not in {"+", "-"}
+        or line.startswith("+++")
+        or line.startswith("---")
+    ):
         return None
     content = line[1:]
     if "=" not in content:
@@ -847,11 +850,15 @@ def stage_artifact_diffs(kept_files: List[KeptDiff]) -> int:
         os.makedirs(artifact_output_dir, exist_ok=True)
         shutil.copy(
             kept_file.artifact_ref_ir,
-            os.path.join(artifact_output_dir, os.path.basename(kept_file.artifact_ref_ir)),
+            os.path.join(
+                artifact_output_dir, os.path.basename(kept_file.artifact_ref_ir)
+            ),
         )
         shutil.copy(
             kept_file.artifact_new_ir,
-            os.path.join(artifact_output_dir, os.path.basename(kept_file.artifact_new_ir)),
+            os.path.join(
+                artifact_output_dir, os.path.basename(kept_file.artifact_new_ir)
+            ),
         )
         total_size += pair_size
         copied_pairs += 1
@@ -1487,7 +1494,9 @@ def generate_diff_report(
             diversity_penalty[proj] = (
                 diversity_penalty.get(proj, 0) + DIVERSITY_PENALTY_INC
             )
-            cnt2, real_cost2, order_key2, rendered_file2, proj2, add2, sub2 = proj_list.pop(0)
+            cnt2, real_cost2, order_key2, rendered_file2, proj2, add2, sub2 = (
+                proj_list.pop(0)
+            )
             cnt2 += diversity_penalty[proj]
             heapq.heappush(
                 diff_heap,
@@ -1691,7 +1700,7 @@ def test(user: str, comment_body: str, issue_url: str):
         config = TestConfig(stats=parts[0].strip())
         patch_url = parts[1].strip()
     else:
-        if "github.com/llvm/llvm-project" not in comment_body:
+        if ("github.com" not in comment_body) or ("llvm-project" not in comment_body):
             # Ignore normal comments
             return
         config = TestConfig(comptime=False, stats=None)
