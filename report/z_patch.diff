@@ -1,0 +1,387 @@
+diff --git a/llvm/include/llvm/IR/IRBuilder.h b/llvm/include/llvm/IR/IRBuilder.h
+index a48e9ebe178b9..84a588023826d 100644
+--- a/llvm/include/llvm/IR/IRBuilder.h
++++ b/llvm/include/llvm/IR/IRBuilder.h
+@@ -1762,6 +1762,18 @@ class IRBuilderBase {
+     return Insert(BinOp, Name);
+   }
+ 
++  Value *CreateNoWrapBinOp(Instruction::BinaryOps Opc, Value *LHS, Value *RHS,
++                           bool IsNUW, bool IsNSW, const Twine &Name = "") {
++    if (Value *V = Folder.FoldNoWrapBinOp(Opc, LHS, RHS, IsNUW, IsNSW))
++      return V;
++    Instruction *BinOp = BinaryOperator::Create(Opc, LHS, RHS);
++    if (IsNUW)
++      BinOp->setHasNoUnsignedWrap(IsNUW);
++    if (IsNSW)
++      BinOp->setHasNoSignedWrap(IsNSW);
++    return Insert(BinOp, Name);
++  }
++
+   Value *CreateLogicalAnd(Value *Cond1, Value *Cond2, const Twine &Name = "",
+                           Instruction *MDFrom = nullptr) {
+     assert(Cond2->getType()->isIntOrIntVectorTy(1));
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index d54e4de81d995..8877688207548 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -337,16 +337,23 @@ Value *SCEVExpander::InsertBinop(Instruction::BinaryOps Opcode,
+   }
+ 
+   // If we haven't found this binop, insert it.
+-  // TODO: Use the Builder, which will make CreateBinOp below fold with
+-  // InstSimplifyFolder.
+-  Instruction *BO = Builder.Insert(BinaryOperator::Create(Opcode, LHS, RHS));
+-  BO->setDebugLoc(Loc);
+-  if (any(Flags & SCEV::FlagNUW))
+-    BO->setHasNoUnsignedWrap();
+-  if (any(Flags & SCEV::FlagNSW))
+-    BO->setHasNoSignedWrap();
+-
+-  return BO;
++  Builder.SetCurrentDebugLocation(Loc);
++  bool IsNUW = any(Flags & SCEV::FlagNUW);
++  bool IsNSW = any(Flags & SCEV::FlagNSW);
++  // Don't use folder when expanding post-inc rewrites in LSRMode to preserve
++  // the rewrites.
++  if (LSRMode && !PostIncLoops.empty() &&
++      all_of(PostIncLoops, [&](const Loop *L) {
++        return !L->contains(Builder.GetInsertBlock());
++      })) {
++    auto *BO = BinaryOperator::Create(Opcode, LHS, RHS);
++    if (IsNUW)
++      BO->setHasNoUnsignedWrap();
++    if (IsNSW)
++      BO->setHasNoSignedWrap();
++    return Builder.Insert(BO);
++  }
++  return Builder.CreateNoWrapBinOp(Opcode, LHS, RHS, IsNUW, IsNSW);
+ }
+ 
+ /// expandAddToGEP - Expand an addition expression with a pointer type into
+@@ -1344,7 +1351,9 @@ Value *SCEVExpander::visitAddRecExpr(SCEVUseT<const SCEVAddRecExpr *> S) {
+     Value *V = expand(
+         SE.getAddRecExpr(NewOps, S->getLoop(), S.getNoWrapFlags(SCEV::FlagNW)));
+     BasicBlock::iterator NewInsertPt =
+-        findInsertPointAfter(cast<Instruction>(V), &*Builder.GetInsertPoint());
++        isa<Instruction>(V) ? findInsertPointAfter(cast<Instruction>(V),
++                                                   &*Builder.GetInsertPoint())
++                            : Builder.GetInsertPoint();
+     V = expand(SE.getTruncateExpr(SE.getUnknown(V), Ty), NewInsertPt);
+     return V;
+   }
+diff --git a/llvm/test/CodeGen/AArch64/sink-and-fold.ll b/llvm/test/CodeGen/AArch64/sink-and-fold.ll
+index 4d383fefc43c7..a47026f2c095d 100644
+--- a/llvm/test/CodeGen/AArch64/sink-and-fold.ll
++++ b/llvm/test/CodeGen/AArch64/sink-and-fold.ll
+@@ -160,10 +160,9 @@ define void @f4(ptr %a, i64 %n) nounwind "target-features"="+alu-lsl-fast" {
+ ; CHECK-NEXT:  .LBB4_5: // %LJ.latch
+ ; CHECK-NEXT:    // in Loop: Header=BB4_6 Depth=2
+ ; CHECK-NEXT:    add x8, x21, #1
++; CHECK-NEXT:    cmp x21, x19
+ ; CHECK-NEXT:    str w0, [x20, x21, lsl #2]
+-; CHECK-NEXT:    sub x9, x8, #1
+ ; CHECK-NEXT:    mov x21, x8
+-; CHECK-NEXT:    cmp x9, x19
+ ; CHECK-NEXT:    b.ge .LBB4_2
+ ; CHECK-NEXT:  .LBB4_6: // %LJ
+ ; CHECK-NEXT:    // Parent Loop BB4_3 Depth=1
+diff --git a/llvm/test/Transforms/LoopIdiom/expand-scev-expand-simplifications.ll b/llvm/test/Transforms/LoopIdiom/expand-scev-expand-simplifications.ll
+index 9a59e5a8ccabb..e1cbf8d171ce2 100644
+--- a/llvm/test/Transforms/LoopIdiom/expand-scev-expand-simplifications.ll
++++ b/llvm/test/Transforms/LoopIdiom/expand-scev-expand-simplifications.ll
+@@ -9,8 +9,7 @@ define void @test_simplify_scev_during_expansion_flags(i64 %start) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[START_NEG:%.*]] = sub i64 0, [[START]]
+ ; CHECK-NEXT:    [[START_MUL:%.*]] = ashr exact i64 [[START_NEG]], 2
+-; CHECK-NEXT:    [[TMP0:%.*]] = shl nsw i64 [[START_MUL]], 2
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 404, [[TMP0]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 404, [[START_NEG]]
+ ; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 4 null, i8 0, i64 [[TMP1]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll b/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
+index 9c3698a740992..a46d75ae537ab 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/depth-limit-overrun.ll
+@@ -22,10 +22,9 @@ define void @test(i32 %A, i32 %B, i32 %C) {
+ ; DEFAULT:       preheader:
+ ; DEFAULT-NEXT:    [[I15:%.*]] = shl i32 [[B]], 1
+ ; DEFAULT-NEXT:    [[TMP1:%.*]] = mul i32 [[PHI2]], -1
+-; DEFAULT-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP1]], -1
+-; DEFAULT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[TMP2]]
++; DEFAULT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[PHI2]]
+ ; DEFAULT-NEXT:    [[TMP4:%.*]] = add i32 [[B]], [[PHI4]]
+-; DEFAULT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[TMP2]]
++; DEFAULT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[PHI2]]
+ ; DEFAULT-NEXT:    [[TMP6:%.*]] = sub i32 14, [[TMP5]]
+ ; DEFAULT-NEXT:    [[TMP7:%.*]] = add i32 [[TMP0]], [[PHI2]]
+ ; DEFAULT-NEXT:    br label [[INNER_LOOP:%.*]]
+@@ -87,10 +86,9 @@ define void @test(i32 %A, i32 %B, i32 %C) {
+ ; LIMIT:       preheader:
+ ; LIMIT-NEXT:    [[I15:%.*]] = shl i32 [[B]], 1
+ ; LIMIT-NEXT:    [[TMP1:%.*]] = mul i32 [[PHI2]], -1
+-; LIMIT-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP1]], -1
+-; LIMIT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[TMP2]]
++; LIMIT-NEXT:    [[TMP3:%.*]] = sub i32 [[PHI4]], [[PHI2]]
+ ; LIMIT-NEXT:    [[TMP4:%.*]] = add i32 [[B]], [[PHI4]]
+-; LIMIT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[TMP2]]
++; LIMIT-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[PHI2]]
+ ; LIMIT-NEXT:    [[TMP6:%.*]] = sub i32 14, [[TMP5]]
+ ; LIMIT-NEXT:    [[TMP7:%.*]] = add i32 [[TMP0]], [[PHI2]]
+ ; LIMIT-NEXT:    br label [[INNER_LOOP:%.*]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/lsr-rewrite-to-add-one.ll b/llvm/test/Transforms/LoopStrengthReduce/lsr-rewrite-to-add-one.ll
+index 74d861cf5168c..d66905ae26f14 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/lsr-rewrite-to-add-one.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/lsr-rewrite-to-add-one.ll
+@@ -20,8 +20,7 @@ define i32 @test(i1 %c.1, ptr %src) {
+ ; CHECK-NEXT:    [[OR:%.*]] = or i1 [[P]], [[T]]
+ ; CHECK-NEXT:    [[ZEXT_OR:%.*]] = zext i1 [[OR]] to i32
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw i32 [[LSR_IV]], 1
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[LSR_IV_NEXT]], -1
+-; CHECK-NEXT:    [[LOOP_HEADER_TERMCOND:%.*]] = icmp sgt i32 [[TMP0]], -1050
++; CHECK-NEXT:    [[LOOP_HEADER_TERMCOND:%.*]] = icmp sgt i32 [[LSR_IV]], -1050
+ ; CHECK-NEXT:    br i1 [[LOOP_HEADER_TERMCOND]], label [[LOOP_HEADER]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+ ; CHECK-NEXT:    [[ZEXT_OR_LCSSA:%.*]] = phi i32 [ [[ZEXT_OR]], [[LOOP_LATCH]] ]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll b/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
+index 502042eaf9b9c..007d84f9120e3 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
+@@ -16,9 +16,7 @@ define void @test1() {
+ ; CHECK-NEXT:    [[VAL4:%.*]] = sub i32 [[VAL]], [[VAL3]]
+ ; CHECK-NEXT:    [[VAL5:%.*]] = ashr i32 undef, undef
+ ; CHECK-NEXT:    [[VAL6:%.*]] = sub i32 [[VAL4]], [[VAL5]]
+-; CHECK-NEXT:    [[TMP0:%.*]] = mul i32 [[VAL]], 7
+-; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[VAL3]], 7
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[TMP0]], [[TMP1]]
++; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[VAL]], 7
+ ; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[VAL5]], 7
+ ; CHECK-NEXT:    [[TMP4:%.*]] = sub i32 [[TMP2]], [[TMP3]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = shl i32 [[VAL6]], 3
+@@ -58,10 +56,8 @@ define void @test1() {
+ ; CHECK:       bb20.bb15splitsplitsplit_crit_edge:
+ ; CHECK-NEXT:    [[TMP14:%.*]] = mul i32 [[VAL]], 3
+ ; CHECK-NEXT:    [[TMP15:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+-; CHECK-NEXT:    [[TMP16:%.*]] = mul i32 [[TMP15]], 3
+-; CHECK-NEXT:    [[TMP17:%.*]] = sub i32 [[TMP14]], [[TMP16]]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = mul i32 [[VAL5]], 3
+-; CHECK-NEXT:    [[TMP19:%.*]] = sub i32 [[TMP17]], [[TMP18]]
++; CHECK-NEXT:    [[TMP19:%.*]] = sub i32 [[TMP14]], [[TMP18]]
+ ; CHECK-NEXT:    [[TMP20:%.*]] = add i32 [[TMP19]], [[LSR_IV1]]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLIT]]
+ ; CHECK:       bb15splitsplitsplit:
+@@ -82,10 +78,8 @@ define void @test1() {
+ ; CHECK:       bb26.bb15split_crit_edge:
+ ; CHECK-NEXT:    [[TMP28:%.*]] = mul i32 [[VAL]], 5
+ ; CHECK-NEXT:    [[TMP29:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+-; CHECK-NEXT:    [[TMP30:%.*]] = mul i32 [[TMP29]], 5
+-; CHECK-NEXT:    [[TMP31:%.*]] = sub i32 [[TMP28]], [[TMP30]]
+ ; CHECK-NEXT:    [[TMP32:%.*]] = mul i32 [[VAL5]], 5
+-; CHECK-NEXT:    [[TMP33:%.*]] = sub i32 [[TMP31]], [[TMP32]]
++; CHECK-NEXT:    [[TMP33:%.*]] = sub i32 [[TMP28]], [[TMP32]]
+ ; CHECK-NEXT:    [[TMP34:%.*]] = add i32 [[TMP33]], [[LSR_IV1]]
+ ; CHECK-NEXT:    br label [[BB15SPLIT]]
+ ; CHECK:       bb15split:
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/epilog-vectorization-factors.ll b/llvm/test/Transforms/LoopVectorize/AArch64/epilog-vectorization-factors.ll
+index db0d09a1e4e40..db217bd005dbc 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/epilog-vectorization-factors.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/epilog-vectorization-factors.ll
+@@ -425,26 +425,11 @@ define void @trip_count_based_on_ptrtoint(i64 %x) "target-cpu"="apple-m1" {
+ ; CHECK-NEXT:    [[PTR_START:%.*]] = inttoptr i64 [[X:%.*]] to ptr
+ ; CHECK-NEXT:    [[ADD:%.*]] = add i64 [[X]], 40
+ ; CHECK-NEXT:    [[PTR_END:%.*]] = inttoptr i64 [[ADD]] to ptr
+-; CHECK-NEXT:    [[TMP0:%.*]] = sub i64 [[ADD]], [[X]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 2
+-; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i64 [[TMP1]], 1
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP2]], 4
+-; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[VEC_EPILOG_SCALAR_PH:%.*]], label [[VECTOR_SCEVCHECK:%.*]]
+-; CHECK:       vector.scevcheck:
+-; CHECK-NEXT:    [[TMP3:%.*]] = trunc i64 [[ADD]] to i2
+-; CHECK-NEXT:    [[TMP4:%.*]] = trunc i64 [[X]] to i2
+-; CHECK-NEXT:    [[TMP5:%.*]] = sub i2 [[TMP3]], [[TMP4]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = zext i2 [[TMP5]] to i64
+-; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i64 [[TMP6]], 0
+-; CHECK-NEXT:    br i1 [[IDENT_CHECK]], label [[VEC_EPILOG_SCALAR_PH]], label [[VECTOR_MAIN_LOOP_ITER_CHECK:%.*]]
++; CHECK-NEXT:    br i1 false, label [[VEC_EPILOG_SCALAR_PH:%.*]], label [[VECTOR_SCEVCHECK:%.*]]
+ ; CHECK:       vector.main.loop.iter.check:
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK1:%.*]] = icmp ult i64 [[TMP2]], 16
+-; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK1]], label [[VEC_EPILOG_PH:%.*]], label [[VECTOR_PH:%.*]]
++; CHECK-NEXT:    br i1 true, label [[VEC_EPILOG_PH:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[TMP2]], 16
+-; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[TMP2]], [[N_MOD_VF]]
+-; CHECK-NEXT:    [[TMP12:%.*]] = mul i64 [[N_VEC]], 4
+-; CHECK-NEXT:    [[IND_END:%.*]] = getelementptr i8, ptr [[PTR_START]], i64 [[TMP12]]
++; CHECK-NEXT:    [[IND_END:%.*]] = getelementptr i8, ptr [[PTR_START]], i64 0
+ ; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
+ ; CHECK:       vector.body:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[VECTOR_BODY]] ]
+@@ -458,16 +443,14 @@ define void @trip_count_based_on_ptrtoint(i64 %x) "target-cpu"="apple-m1" {
+ ; CHECK-NEXT:    store <4 x i32> zeroinitializer, ptr [[TMP9]], align 4
+ ; CHECK-NEXT:    store <4 x i32> zeroinitializer, ptr [[TMP10]], align 4
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 16
+-; CHECK-NEXT:    [[TMP11:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    [[TMP11:%.*]] = icmp eq i64 [[INDEX_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[TMP11]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP17:![0-9]+]]
+ ; CHECK:       middle.block:
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP2]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT:%.*]], label [[VEC_EPILOG_ITER_CHECK:%.*]]
++; CHECK-NEXT:    br i1 false, label [[EXIT:%.*]], label [[VEC_EPILOG_ITER_CHECK:%.*]]
+ ; CHECK:       vec.epilog.iter.check:
+-; CHECK-NEXT:    [[MIN_EPILOG_ITERS_CHECK:%.*]] = icmp ult i64 [[N_MOD_VF]], 4
+-; CHECK-NEXT:    br i1 [[MIN_EPILOG_ITERS_CHECK]], label [[VEC_EPILOG_SCALAR_PH]], label [[VEC_EPILOG_PH]], !prof [[PROF11]]
++; CHECK-NEXT:    br i1 false, label [[VEC_EPILOG_SCALAR_PH]], label [[VEC_EPILOG_PH]], !prof [[PROF11]]
+ ; CHECK:       vec.epilog.ph:
+-; CHECK-NEXT:    [[VEC_EPILOG_RESUME_VAL:%.*]] = phi i64 [ [[N_VEC]], [[VEC_EPILOG_ITER_CHECK]] ], [ 0, [[VECTOR_MAIN_LOOP_ITER_CHECK]] ]
++; CHECK-NEXT:    [[VEC_EPILOG_RESUME_VAL:%.*]] = phi i64 [ 0, [[VEC_EPILOG_ITER_CHECK]] ], [ 0, [[VECTOR_SCEVCHECK]] ]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = getelementptr i8, ptr [[PTR_START]], i64 32
+ ; CHECK-NEXT:    br label [[VEC_EPILOG_VECTOR_BODY:%.*]]
+ ; CHECK:       vec.epilog.vector.body:
+@@ -479,10 +462,9 @@ define void @trip_count_based_on_ptrtoint(i64 %x) "target-cpu"="apple-m1" {
+ ; CHECK-NEXT:    [[TMP15:%.*]] = icmp eq i64 [[INDEX_NEXT5]], 8
+ ; CHECK-NEXT:    br i1 [[TMP15]], label [[VEC_EPILOG_MIDDLE_BLOCK:%.*]], label [[VEC_EPILOG_VECTOR_BODY]], !llvm.loop [[LOOP18:![0-9]+]]
+ ; CHECK:       vec.epilog.middle.block:
+-; CHECK-NEXT:    [[CMP_N6:%.*]] = icmp eq i64 [[TMP2]], 8
+-; CHECK-NEXT:    br i1 [[CMP_N6]], label [[EXIT]], label [[VEC_EPILOG_SCALAR_PH]]
++; CHECK-NEXT:    br i1 false, label [[EXIT]], label [[VEC_EPILOG_SCALAR_PH]]
+ ; CHECK:       vec.epilog.scalar.ph:
+-; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi ptr [ [[TMP14]], [[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[IND_END]], [[VEC_EPILOG_ITER_CHECK]] ], [ [[PTR_START]], [[VECTOR_SCEVCHECK]] ], [ [[PTR_START]], [[ITER_CHECK:%.*]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi ptr [ [[TMP14]], [[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[IND_END]], [[VEC_EPILOG_ITER_CHECK]] ], [ [[PTR_START]], [[ITER_CHECK:%.*]] ]
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi ptr [ [[BC_RESUME_VAL]], [[VEC_EPILOG_SCALAR_PH]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+diff --git a/llvm/test/Transforms/LoopVectorize/epilog-vectorization-reductions.ll b/llvm/test/Transforms/LoopVectorize/epilog-vectorization-reductions.ll
+index 014e1355822ab..c7975db05e257 100644
+--- a/llvm/test/Transforms/LoopVectorize/epilog-vectorization-reductions.ll
++++ b/llvm/test/Transforms/LoopVectorize/epilog-vectorization-reductions.ll
+@@ -1013,27 +1013,11 @@ define i64 @reduction_with_ptr_iv_inttoptr_exit_cond(ptr %base, ptr %src) {
+ ; CHECK-NEXT:    [[END:%.*]] = inttoptr i64 [[ADD]] to ptr
+ ; CHECK-NEXT:    [[START:%.*]] = getelementptr i8, ptr [[BASE]], i64 24
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[ADD]], -48
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i64 [[TMP0]], [[PTRTOINT]]
+-; CHECK-NEXT:    [[TMP2:%.*]] = mul i64 [[TMP1]], 768614336404564651
+-; CHECK-NEXT:    [[TMP3:%.*]] = lshr i64 [[TMP2]], 3
+-; CHECK-NEXT:    [[TMP4:%.*]] = add nuw nsw i64 [[TMP3]], 1
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP4]], 4
+-; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label %[[VEC_EPILOG_SCALAR_PH:.*]], label %[[VECTOR_SCEVCHECK:.*]]
++; CHECK-NEXT:    br i1 false, label %[[VEC_EPILOG_SCALAR_PH:.*]], label %[[VECTOR_SCEVCHECK:.*]]
+ ; CHECK:       [[VECTOR_SCEVCHECK]]:
+-; CHECK-NEXT:    [[TMP5:%.*]] = trunc i64 [[ADD]] to i3
+-; CHECK-NEXT:    [[TMP6:%.*]] = trunc i64 [[PTRTOINT]] to i3
+-; CHECK-NEXT:    [[TMP7:%.*]] = sub i3 [[TMP5]], [[TMP6]]
+-; CHECK-NEXT:    [[TMP8:%.*]] = zext i3 [[TMP7]] to i64
+-; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i64 [[TMP8]], 0
+-; CHECK-NEXT:    br i1 [[IDENT_CHECK]], label %[[VEC_EPILOG_SCALAR_PH]], label %[[VECTOR_MAIN_LOOP_ITER_CHECK:.*]]
+-; CHECK:       [[VECTOR_MAIN_LOOP_ITER_CHECK]]:
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK1:%.*]] = icmp ult i64 [[TMP4]], 8
+-; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK1]], label %[[VEC_EPILOG_PH:.*]], label %[[VECTOR_PH:.*]]
++; CHECK-NEXT:    br i1 true, label %[[VEC_EPILOG_PH:.*]], label %[[VECTOR_PH:.*]]
+ ; CHECK:       [[VECTOR_PH]]:
+-; CHECK-NEXT:    [[N_MOD_VF:%.*]] = urem i64 [[TMP4]], 8
+-; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[TMP4]], [[N_MOD_VF]]
+-; CHECK-NEXT:    [[TMP15:%.*]] = mul i64 [[N_VEC]], 24
+-; CHECK-NEXT:    [[TMP24:%.*]] = getelementptr i8, ptr [[START]], i64 [[TMP15]]
++; CHECK-NEXT:    [[TMP24:%.*]] = getelementptr i8, ptr [[START]], i64 0
+ ; CHECK-NEXT:    br label %[[VECTOR_BODY:.*]]
+ ; CHECK:       [[VECTOR_BODY]]:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, %[[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ]
+@@ -1045,17 +1029,15 @@ define i64 @reduction_with_ptr_iv_inttoptr_exit_cond(ptr %base, ptr %src) {
+ ; CHECK-NEXT:    [[TMP25:%.*]] = zext <8 x i8> [[BROADCAST_SPLAT]] to <8 x i64>
+ ; CHECK-NEXT:    [[TMP14]] = add <8 x i64> [[TMP11]], [[TMP25]]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 8
+-; CHECK-NEXT:    [[TMP13:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
++; CHECK-NEXT:    [[TMP13:%.*]] = icmp eq i64 [[INDEX_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[TMP13]], label %[[MIDDLE_BLOCK:.*]], label %[[VECTOR_BODY]], !llvm.loop [[LOOP30:![0-9]+]]
+ ; CHECK:       [[MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    [[TMP26:%.*]] = call i64 @llvm.vector.reduce.add.v8i64(<8 x i64> [[TMP14]])
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[TMP4]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], label %[[EXIT:.*]], label %[[VEC_EPILOG_ITER_CHECK:.*]]
++; CHECK-NEXT:    br i1 false, label %[[EXIT:.*]], label %[[VEC_EPILOG_ITER_CHECK:.*]]
+ ; CHECK:       [[VEC_EPILOG_ITER_CHECK]]:
+-; CHECK-NEXT:    [[MIN_EPILOG_ITERS_CHECK:%.*]] = icmp ult i64 [[N_MOD_VF]], 4
+-; CHECK-NEXT:    br i1 [[MIN_EPILOG_ITERS_CHECK]], label %[[VEC_EPILOG_SCALAR_PH]], label %[[VEC_EPILOG_PH]], !prof [[PROF3]]
++; CHECK-NEXT:    br i1 false, label %[[VEC_EPILOG_SCALAR_PH]], label %[[VEC_EPILOG_PH]], !prof [[PROF3]]
+ ; CHECK:       [[VEC_EPILOG_PH]]:
+-; CHECK-NEXT:    [[BC_MERGE_RDX:%.*]] = phi i64 [ [[TMP26]], %[[VEC_EPILOG_ITER_CHECK]] ], [ 0, %[[VECTOR_MAIN_LOOP_ITER_CHECK]] ]
++; CHECK-NEXT:    [[BC_MERGE_RDX:%.*]] = phi i64 [ [[TMP26]], %[[VEC_EPILOG_ITER_CHECK]] ], [ 0, %[[VECTOR_SCEVCHECK]] ]
+ ; CHECK-NEXT:    [[TMP17:%.*]] = getelementptr i8, ptr [[START]], i64 96
+ ; CHECK-NEXT:    [[TMP18:%.*]] = insertelement <4 x i64> zeroinitializer, i64 [[BC_MERGE_RDX]], i32 0
+ ; CHECK-NEXT:    br label %[[VEC_EPILOG_VECTOR_BODY:.*]]
+@@ -1069,11 +1051,10 @@ define i64 @reduction_with_ptr_iv_inttoptr_exit_cond(ptr %base, ptr %src) {
+ ; CHECK-NEXT:    br label %[[VEC_EPILOG_MIDDLE_BLOCK:.*]]
+ ; CHECK:       [[VEC_EPILOG_MIDDLE_BLOCK]]:
+ ; CHECK-NEXT:    [[TMP23:%.*]] = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> [[TMP22]])
+-; CHECK-NEXT:    [[CMP_N6:%.*]] = icmp eq i64 [[TMP4]], 4
+-; CHECK-NEXT:    br i1 [[CMP_N6]], label %[[EXIT]], label %[[VEC_EPILOG_SCALAR_PH]]
++; CHECK-NEXT:    br i1 true, label %[[EXIT]], label %[[VEC_EPILOG_SCALAR_PH]]
+ ; CHECK:       [[VEC_EPILOG_SCALAR_PH]]:
+-; CHECK-NEXT:    [[BC_RESUME_VAL5:%.*]] = phi ptr [ [[TMP17]], %[[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[TMP24]], %[[VEC_EPILOG_ITER_CHECK]] ], [ [[START]], %[[VECTOR_SCEVCHECK]] ], [ [[START]], %[[ITER_CHECK]] ]
+-; CHECK-NEXT:    [[BC_MERGE_RDX6:%.*]] = phi i64 [ [[TMP23]], %[[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[TMP26]], %[[VEC_EPILOG_ITER_CHECK]] ], [ 0, %[[VECTOR_SCEVCHECK]] ], [ 0, %[[ITER_CHECK]] ]
++; CHECK-NEXT:    [[BC_RESUME_VAL5:%.*]] = phi ptr [ [[TMP17]], %[[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[TMP24]], %[[VEC_EPILOG_ITER_CHECK]] ], [ [[START]], %[[ITER_CHECK]] ]
++; CHECK-NEXT:    [[BC_MERGE_RDX6:%.*]] = phi i64 [ [[TMP23]], %[[VEC_EPILOG_MIDDLE_BLOCK]] ], [ [[TMP26]], %[[VEC_EPILOG_ITER_CHECK]] ], [ 0, %[[ITER_CHECK]] ]
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV_PTR:%.*]] = phi ptr [ [[BC_RESUME_VAL5]], %[[VEC_EPILOG_SCALAR_PH]] ], [ [[IV_PTR_NEXT:%.*]], %[[LOOP]] ]
+diff --git a/llvm/test/Transforms/LoopVectorize/version-stride-with-integer-casts.ll b/llvm/test/Transforms/LoopVectorize/version-stride-with-integer-casts.ll
+index afc4d2e0fd627..cecea84f08ea2 100644
+--- a/llvm/test/Transforms/LoopVectorize/version-stride-with-integer-casts.ll
++++ b/llvm/test/Transforms/LoopVectorize/version-stride-with-integer-casts.ll
+@@ -399,8 +399,6 @@ define void @zext_of_i1_stride(i1 %g, ptr %dst) mustprogress {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[G_16:%.*]] = zext i1 [[G]] to i16
+ ; CHECK-NEXT:    [[G_64:%.*]] = zext i1 [[G]] to i64
+-; CHECK-NEXT:    [[TMP0:%.*]] = udiv i64 15, [[G_64]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i64 [[TMP0]], 1
+ ; CHECK-NEXT:    br label [[VECTOR_SCEVCHECK:%.*]]
+ ; CHECK:       vector.scevcheck:
+ ; CHECK-NEXT:    [[IDENT_CHECK:%.*]] = icmp ne i1 [[G]], true
+diff --git a/polly/lib/CodeGen/IslNodeBuilder.cpp b/polly/lib/CodeGen/IslNodeBuilder.cpp
+index 9421679b35ff4..b1c6dd37d8299 100644
+--- a/polly/lib/CodeGen/IslNodeBuilder.cpp
++++ b/polly/lib/CodeGen/IslNodeBuilder.cpp
+@@ -587,6 +587,8 @@ void IslNodeBuilder::createForParallel(__isl_take isl_ast_node *For) {
+   ScalarEvolution *CallerSE = GenSE;
+   ValueMapT CallerGlobals = ValueMap;
+   IslExprBuilder::IDToValueTy IDToValueCopy = IDToValue;
++  MapVector<const Loop *, const SCEV *> OutsideLoopIterationsCopy =
++      OutsideLoopIterations;
+ 
+   // Get the analyses for the subfunction. ParallelLoopGenerator already create
+   // DominatorTree and LoopInfo for us.
+@@ -648,6 +650,19 @@ void IslNodeBuilder::createForParallel(__isl_take isl_ast_node *For) {
+   }
+   IDToValue[IteratorID] = IV;
+ 
++  // Also update OutsideLoopIterations to use values from the subfunction.
++  // SCEVExpander may fold identity operations (e.g. x+0 -> x), returning the
++  // original loop PHI instead of a new instruction. We need to remap these
++  // values through NewValues so GenSE (now SubSE) doesn't operate on values
++  // from the caller function.
++  for (auto &[L, S] : OutsideLoopIterations) {
++    if (auto *U = dyn_cast<SCEVUnknown>(S)) {
++      Value *NewVal = NewValues.lookup(U->getValue());
++      assert(NewVal && "must have a new value");
++      OutsideLoopIterations[L] = GenSE->getUnknown(NewVal);
++    }
++  }
++
+ #ifndef NDEBUG
+   // Check whether the maps now exclusively refer to SubFn values.
+   for (auto &[OldVal, SubVal] : ValueMap) {
+@@ -680,14 +695,12 @@ void IslNodeBuilder::createForParallel(__isl_take isl_ast_node *For) {
+   GenSE = CallerSE;
+   IDToValue = std::move(IDToValueCopy);
+   ValueMap = std::move(CallerGlobals);
++  OutsideLoopIterations = std::move(OutsideLoopIterationsCopy);
+   ExprBuilder.switchGeneratedFunc(CallerFn, CallerDT, CallerLI, CallerSE);
+   RegionGen.switchGeneratedFunc(CallerFn, CallerDT, CallerLI, CallerSE);
+   BlockGen.switchGeneratedFunc(CallerFn, CallerDT, CallerLI, CallerSE);
+   Builder.SetInsertPoint(AfterLoop);
+ 
+-  for (const Loop *L : Loops)
+-    OutsideLoopIterations.erase(L);
+-
+   isl_ast_node_free(For);
+   isl_ast_expr_free(Iterator);
+   isl_id_free(IteratorID);

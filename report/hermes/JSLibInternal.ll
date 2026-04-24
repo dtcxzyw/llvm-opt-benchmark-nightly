@@ -4,7 +4,7 @@ begin_hunk_0_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZSt13move_backwardIPPN6hermes5regex4NodeES4_ET0_T_S6_S5_.exit
   %i.ak = inttoptr i64 %i.af to ptr               ; 6 uses
-  %min.iters.check128 = icmp ult i64 %i.ai, 16
+  %min.iters.check128 = icmp ult i64 %i.ai, 14
   br i1 %min.iters.check128, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck121
 
 vector.memcheck121:                               ; preds = %.lr.ph.i.i.i.i.preheader.i
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
   br i1 %i.bh, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEEPS6_S6_ET0_T_SG_SF_RSaIT1_E.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %_ZSt9__advanceISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPKPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %min.iters.check = icmp ult i64 %i.bg, 20
+  %min.iters.check = icmp ult i64 %i.bg, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader180, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 .lr.ph.i.i.i.i.preheader.i35:                     ; preds = %_ZSt22__uninitialized_move_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit33
   %i.cj = inttoptr i64 %i.cf to ptr               ; 6 uses
-  %min.iters.check101 = icmp ult i64 %i.ch, 16
+  %min.iters.check101 = icmp ult i64 %i.ch, 14
   br i1 %min.iters.check101, label %.lr.ph.i.i.i.i.i36.preheader, label %vector.memcheck94
 
 vector.memcheck94:                                ; preds = %.lr.ph.i.i.i.i.preheader.i35
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 _ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.ds = getelementptr i8, ptr %i.dm, i64 %i.do  ; 5 uses
-  %min.iters.check156 = icmp ult i64 %i.d, 30
+  %min.iters.check156 = icmp ult i64 %i.d, 28
   br i1 %min.iters.check156, label %.lr.ph.i.i.i.i.i.i.i.i42.preheader, label %vector.memcheck148
 
 vector.memcheck148:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 .lr.ph.i.i.i.i.preheader.i:                       ; preds = %_ZSt13move_backwardIPPN6hermes5regex4NodeES4_ET0_T_S6_S5_.exit
   %i.ak = inttoptr i64 %i.af to ptr               ; 6 uses
-  %min.iters.check128 = icmp ult i64 %i.ai, 16
+  %min.iters.check128 = icmp ult i64 %i.ai, 14
   br i1 %min.iters.check128, label %.lr.ph.i.i.i.i.i.preheader, label %vector.memcheck121
 
 vector.memcheck121:                               ; preds = %.lr.ph.i.i.i.i.preheader.i
@@ -49,7 +49,7 @@ begin_hunk_5_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
   br i1 %i.bh, label %.lr.ph.i.i.i.i.i.i.i.i.preheader, label %_ZSt22__uninitialized_copy_aISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEES7_S6_ET0_T_SE_SD_RSaIT1_E.exit
 
 .lr.ph.i.i.i.i.i.i.i.i.preheader:                 ; preds = %_ZSt9__advanceISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPPN6hermes5regex4NodeESt6vectorIS6_SaIS6_EEEEElEvRT_T0_St26random_access_iterator_tag.exit
-  %min.iters.check = icmp ult i64 %i.bg, 20
+  %min.iters.check = icmp ult i64 %i.bg, 16
   br i1 %min.iters.check, label %.lr.ph.i.i.i.i.i.i.i.i.preheader180, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i.i.i.i.i.i.i.i.preheader
@@ -58,7 +58,7 @@ begin_hunk_6_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 .lr.ph.i.i.i.i.preheader.i35:                     ; preds = %_ZSt22__uninitialized_move_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit33
   %i.cj = inttoptr i64 %i.cf to ptr               ; 6 uses
-  %min.iters.check101 = icmp ult i64 %i.ch, 16
+  %min.iters.check101 = icmp ult i64 %i.ch, 14
   br i1 %min.iters.check101, label %.lr.ph.i.i.i.i.i36.preheader, label %vector.memcheck94
 
 vector.memcheck94:                                ; preds = %.lr.ph.i.i.i.i.preheader.i35
@@ -67,7 +67,7 @@ begin_hunk_7_@_ZNSt6vectorIPN6hermes5regex4NodeESaIS3_EE15_M_range_insertISt16re
 
 _ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit: ; preds = %bb.q, %bb.r, %bb.s
   %i.ds = getelementptr i8, ptr %i.dm, i64 %i.do  ; 5 uses
-  %min.iters.check156 = icmp ult i64 %i.d, 30
+  %min.iters.check156 = icmp ult i64 %i.d, 28
   br i1 %min.iters.check156, label %.lr.ph.i.i.i.i.i.i.i.i42.preheader, label %vector.memcheck148
 
 vector.memcheck148:                               ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN6hermes5regex4NodeES4_SaIS3_EET0_T_S7_S6_RT1_.exit
