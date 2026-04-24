@@ -148,12 +148,42 @@ def commit_report_if_changed(message: str) -> bool:
     return True
 
 
+def _find_existing_open_pr(head: str, base: str) -> Optional[Tuple[str, str]]:
+    pr_list_output = subprocess.check_output(
+        [
+            "gh",
+            "pr",
+            "list",
+            "--head",
+            head,
+            "--base",
+            base,
+            "--state",
+            "open",
+            "--json",
+            "number,url",
+        ],
+        cwd=ROOT_DIR,
+        text=True,
+    )
+    pr_list = json.loads(pr_list_output)
+    if len(pr_list) != 1:
+        return None
+    pr = pr_list[0]
+    return str(pr["number"]), pr["url"]
+
+
+def _parse_pr_number_from_output(create_output: str) -> Optional[str]:
+    match = re.search(r"/pull/(\d+)\b", create_output)
+    if match is None:
+        return None
+    return match.group(1)
+
+
 @retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
-def create_pr(head: str, base: str, title: str, body: str, label: str):
-    if "NUMBER_PLACEHOLDER" in body:
-        # Create PR first without explicit body, then patch in the body after
-        # replacing placeholder with the actual PR number.
-        create_output = subprocess.check_output(
+def _create_pr_with_fill(head: str, base: str, title: str, label: str) -> str:
+    try:
+        return subprocess.check_output(
             [
                 "gh",
                 "pr",
@@ -171,45 +201,77 @@ def create_pr(head: str, base: str, title: str, body: str, label: str):
             cwd=ROOT_DIR,
             text=True,
         ).strip()
-        print(create_output)
+    except subprocess.CalledProcessError:
+        existing_pr = _find_existing_open_pr(head, base)
+        if existing_pr is None:
+            raise
+        _, pr_url = existing_pr
+        return pr_url
 
-        match = re.search(r"/pull/(\d+)\b", create_output)
-        if not match:
-            raise RuntimeError(
-                f"Failed to parse PR number from output: {create_output}"
-            )
-        pr_number = match.group(1)
 
-        print(f"Updating PR body with actual PR number {pr_number}...")
-        updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
-        subprocess.run(
-            ["gh", "pr", "edit", pr_number, "--body-file", "-"],
-            input=updated_body.encode("utf-8"),
-            check=True,
+@retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
+def _create_pr_with_body(
+    head: str, base: str, title: str, body: str, label: str
+) -> Optional[str]:
+    try:
+        create_output = subprocess.check_output(
+            [
+                "gh",
+                "pr",
+                "create",
+                "--head",
+                head,
+                "--base",
+                base,
+                "--title",
+                title,
+                "--body-file",
+                "-",
+                "--label",
+                label,
+            ],
+            input=body.encode("utf-8"),
             cwd=ROOT_DIR,
-        )
-        return
+        ).decode().strip()
+    except subprocess.CalledProcessError:
+        existing_pr = _find_existing_open_pr(head, base)
+        if existing_pr is None:
+            raise
+        pr_number, _ = existing_pr
+        return pr_number
 
+    return _parse_pr_number_from_output(create_output)
+
+
+@retry(stop=stop_after_attempt(5), wait=wait_exponential_jitter(initial=1, max=10))
+def _edit_pr_body(pr_number: str, body: str):
     subprocess.run(
-        [
-            "gh",
-            "pr",
-            "create",
-            "--head",
-            head,
-            "--base",
-            base,
-            "--title",
-            title,
-            "--body-file",
-            "-",
-            "--label",
-            label,
-        ],
+        ["gh", "pr", "edit", pr_number, "--body-file", "-"],
         input=body.encode("utf-8"),
         check=True,
         cwd=ROOT_DIR,
     )
+
+
+def create_pr(head: str, base: str, title: str, body: str, label: str):
+    if "NUMBER_PLACEHOLDER" in body:
+        # Create PR first without explicit body, then patch in the body after
+        # replacing placeholder with the actual PR number.
+        create_output = _create_pr_with_fill(head, base, title, label)
+        print(create_output)
+
+        pr_number = _parse_pr_number_from_output(create_output)
+        if pr_number is None:
+            raise RuntimeError(
+                f"Failed to parse PR number from output: {create_output}"
+            )
+
+        print(f"Updating PR body with actual PR number {pr_number}...")
+        updated_body = body.replace("NUMBER_PLACEHOLDER", pr_number)
+        _edit_pr_body(pr_number, updated_body)
+        return
+
+    _create_pr_with_body(head, base, title, body, label)
 
 
 def setup_base_environment() -> str:
