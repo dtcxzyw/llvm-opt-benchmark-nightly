@@ -1,0 +1,127 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index f2a2e21f6fc95..54ad48decc8f8 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -237,7 +237,13 @@ Instruction *InstCombinerImpl::commonCastTransforms(CastInst &CI) {
+     // legal type.
+     if (!Src->getType()->isIntegerTy() || !CI.getType()->isIntegerTy() ||
+         shouldChangeType(CI.getSrcTy(), CI.getType()))
+-      if (Instruction *NV = foldOpIntoPhi(CI, PN))
++      if (Instruction *NV =
++              foldOpIntoPhi(CI, PN,
++                            /*AllowMultipleUses=*/
++                            is_contained({Instruction::Trunc, Instruction::ZExt,
++                                          Instruction::SExt},
++                                         CI.getOpcode()) &&
++                                all_of(PN->operands(), IsaPred<ConstantInt>)))
+         return NV;
+   }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/cast_phi.ll b/llvm/test/Transforms/InstCombine/cast_phi.ll
+index e8db72c8d849e..59929ee420f49 100644
+--- a/llvm/test/Transforms/InstCombine/cast_phi.ll
++++ b/llvm/test/Transforms/InstCombine/cast_phi.ll
+@@ -378,3 +378,103 @@ exit:
+   %ext = zext i8 %iv to i32
+   ret i32 %ext
+ }
++
++
++declare void @use8(i8)
++declare void @use32(i32)
++
++define i32 @zext_constants_multi_use(i8 %x) {
++; CHECK-LABEL: @zext_constants_multi_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[X:%.*]], 42
++; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    br label [[EXIT:%.*]]
++; CHECK:       f:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[R:%.*]] = phi i32 [ 5, [[T]] ], [ 255, [[F]] ]
++; CHECK-NEXT:    [[P:%.*]] = phi i8 [ 5, [[T]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    call void @use8(i8 [[P]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %cmp = icmp eq i8 %x, 42
++  br i1 %cmp, label %t, label %f
++
++t:
++  br label %exit
++
++f:
++  br label %exit
++
++exit:
++  %p = phi i8 [ 5, %t ], [ -1, %f ]
++  call void @use8(i8 %p)
++  %r = zext i8 %p to i32
++  ret i32 %r
++}
++
++define i32 @sext_constants_multi_use(i8 %x) {
++; CHECK-LABEL: @sext_constants_multi_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[X:%.*]], 42
++; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    br label [[EXIT:%.*]]
++; CHECK:       f:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[R:%.*]] = phi i32 [ 5, [[T]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[P:%.*]] = phi i8 [ 5, [[T]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    call void @use8(i8 [[P]])
++; CHECK-NEXT:    ret i32 [[R]]
++;
++entry:
++  %cmp = icmp eq i8 %x, 42
++  br i1 %cmp, label %t, label %f
++
++t:
++  br label %exit
++
++f:
++  br label %exit
++
++exit:
++  %p = phi i8 [ 5, %t ], [ -1, %f ]
++  call void @use8(i8 %p)
++  %r = sext i8 %p to i32
++  ret i32 %r
++}
++
++define i8 @trunc_constants_multi_use(i8 %x) {
++; CHECK-LABEL: @trunc_constants_multi_use(
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[X:%.*]], 42
++; CHECK-NEXT:    br i1 [[CMP]], label [[T:%.*]], label [[F:%.*]]
++; CHECK:       t:
++; CHECK-NEXT:    br label [[EXIT:%.*]]
++; CHECK:       f:
++; CHECK-NEXT:    br label [[EXIT]]
++; CHECK:       exit:
++; CHECK-NEXT:    [[R:%.*]] = phi i8 [ 5, [[T]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    [[P:%.*]] = phi i32 [ 5, [[T]] ], [ -1, [[F]] ]
++; CHECK-NEXT:    call void @use32(i32 [[P]])
++; CHECK-NEXT:    ret i8 [[R]]
++;
++entry:
++  %cmp = icmp eq i8 %x, 42
++  br i1 %cmp, label %t, label %f
++
++t:
++  br label %exit
++
++f:
++  br label %exit
++
++exit:
++  %p = phi i32 [ 5, %t ], [ -1, %f ]
++  call void @use32(i32 %p)
++  %r = trunc i32 %p to i8
++  ret i8 %r
++}
