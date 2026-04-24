@@ -77,19 +77,19 @@ def sync_dataset_from_remote():
         HF_URL, DATA_DIR, delete=True, plan=plan_file, quiet=True
     )
     # Workaround for https://github.com/huggingface/huggingface_hub/issues/3995
-    with open(plan_file, "r") as f:
-        for line in f:
-            item = json.loads(line.strip())
-            if (
-                isinstance(item, dict)
-                and item.get("type") == "operation"
-                and item.get("action") == "download"
-            ):
-                path = os.path.join(DATA_DIR, item.get("path"))
-                if os.path.exists(path):
-                    size = item.get("size")
-                    if os.path.getsize(path) > size:
-                        os.truncate(path, size)
+    # with open(plan_file, "r") as f:
+    #     for line in f:
+    #         item = json.loads(line.strip())
+    #         if (
+    #             isinstance(item, dict)
+    #             and item.get("type") == "operation"
+    #             and item.get("action") == "download"
+    #         ):
+    #             path = os.path.join(DATA_DIR, item.get("path"))
+    #             if os.path.exists(path):
+    #                 size = item.get("size")
+    #                 if os.path.getsize(path) > size:
+    #                     os.truncate(path, size)
     huggingface_hub.sync_bucket(apply=plan_file)
 
 
