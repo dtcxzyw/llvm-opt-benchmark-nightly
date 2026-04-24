@@ -1,0 +1,191 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 9f362deb7cca9..87c22a42583cc 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -16252,6 +16252,9 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+     }
+ 
+     const SCEV *visitAddExpr(const SCEVAddExpr *Expr) {
++      if (const SCEV *S = Map.lookup(Expr))
++        return S;
++
+       // Helper to check if S is a subtraction (A - B) where A != B, and if so,
+       // return UMax(S, 1).
+       auto RewriteSubtraction = [&](const SCEV *S) -> const SCEV * {
+@@ -16276,16 +16279,29 @@ const SCEV *ScalarEvolution::LoopGuards::rewrite(const SCEV *Expr) const {
+       // (Const + A + B). There may be guard info for A + B, and if so, apply
+       // it.
+       // TODO: Could more generally apply guards to Add sub-expressions.
+-      if (isa<SCEVConstant>(Expr->getOperand(0)) &&
+-          Expr->getNumOperands() == 3) {
+-        const SCEV *Add =
+-            SE.getAddExpr(Expr->getOperand(1), Expr->getOperand(2));
+-        if (const SCEV *Rewritten = RewriteSubtraction(Add))
+-          return SE.getAddExpr(
+-              Expr->getOperand(0), Rewritten,
+-              ScalarEvolution::maskFlags(Expr->getNoWrapFlags(), FlagMask));
+-        if (const SCEV *S = Map.lookup(Add))
+-          return SE.getAddExpr(Expr->getOperand(0), S);
++      if (isa<SCEVConstant>(Expr->getOperand(0))) {
++        if (Expr->getNumOperands() == 3) {
++          const SCEV *Add =
++              SE.getAddExpr(Expr->getOperand(1), Expr->getOperand(2));
++          if (const SCEV *Rewritten = RewriteSubtraction(Add))
++            return SE.getAddExpr(
++                Expr->getOperand(0), Rewritten,
++                ScalarEvolution::maskFlags(Expr->getNoWrapFlags(), FlagMask));
++          if (const SCEV *S = Map.lookup(Add))
++            return SE.getAddExpr(Expr->getOperand(0), S);
++        }
++
++        // For expressions of the form (Const + A), check if we have guard info
++        // for (Const + 1 + A), and rewrite to ((Const + 1 + A) - 1). This makes
++        // sure we don't lose information when rewriting expressions based on
++        // back-edge taken counts in some cases.
++        if (Expr->getNumOperands() == 2) {
++          auto *NewC =
++              SE.getAddExpr(Expr->getOperand(0), SE.getOne(Expr->getType()));
++          if (const SCEV *S =
++                  Map.lookup(SE.getAddExpr(NewC, Expr->getOperand(1))))
++            return SE.getAddExpr(S, SE.getMinusOne(Expr->getType()));
++        }
+       }
+       SmallVector<SCEVUse, 2> Operands;
+       bool Changed = false;
+diff --git a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info-apply-to-adds.ll b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info-apply-to-adds.ll
+index 6b2c78cebc44a..5ea836d3b8067 100644
+--- a/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info-apply-to-adds.ll
++++ b/llvm/test/Analysis/ScalarEvolution/backedge-taken-count-guard-info-apply-to-adds.ll
+@@ -33,9 +33,9 @@ declare void @clobber()
+ define void @test_add_sub_1_guard(ptr %src, i32 %n) {
+ ; CHECK-LABEL: 'test_add_sub_1_guard'
+ ; CHECK-NEXT:  Determining loop execution counts for: @test_add_sub_1_guard
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is (zext i32 (-1 + (%n /u 2))<nsw> to i64)
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 4294967295
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is (zext i32 (-1 + (%n /u 2))<nsw> to i64)
++; CHECK-NEXT:  Loop %loop: backedge-taken count is i64 0
++; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i64 0
++; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is i64 0
+ ; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-minmax.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-minmax.ll
+index d38010403dad7..2f0627b7d4476 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-minmax.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-minmax.ll
+@@ -102,12 +102,12 @@ define void @umax(i32 noundef %a, i32 noundef %b) {
+ ; CHECK-NEXT:    %cond = select i1 %cmp, i32 %mul, i32 %mul1
+ ; CHECK-NEXT:    --> ((2 * %a) umax (4 * %b)) U: [0,-1) S: [-2147483648,2147483647)
+ ; CHECK-NEXT:    %i.011 = phi i32 [ %inc, %for.body ], [ 0, %entry ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + ((2 * %a) umax (4 * %b))) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + ((2 * %a) umax (4 * %b))) LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.011, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><%for.body> U: [1,-1) S: [1,-1) Exits: ((2 * %a) umax (4 * %b)) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: ((2 * %a) umax (4 * %b)) LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @umax
+ ; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + ((2 * %a) umax (4 * %b)))
+-; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -3
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+ ; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + ((2 * %a) umax (4 * %b)))
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 2
+ ;
+@@ -197,12 +197,12 @@ define void @smax(i32 noundef %a, i32 noundef %b) {
+ ; CHECK-NEXT:    %cond = select i1 %cmp, i32 %mul, i32 %mul1
+ ; CHECK-NEXT:    --> ((2 * %a)<nsw> smax (4 * %b)<nsw>) U: [0,-1) S: [-2147483648,2147483647)
+ ; CHECK-NEXT:    %i.011 = phi i32 [ %inc, %for.body ], [ 0, %entry ]
+-; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,-2147483648) S: [0,-2147483648) Exits: (-1 + ((2 * %a)<nsw> smax (4 * %b)<nsw>)) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%for.body> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + ((2 * %a)<nsw> smax (4 * %b)<nsw>)) LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:    %inc = add nuw nsw i32 %i.011, 1
+-; CHECK-NEXT:    --> {1,+,1}<nuw><%for.body> U: [1,-1) S: [1,-1) Exits: ((2 * %a)<nsw> smax (4 * %b)<nsw>) LoopDispositions: { %for.body: Computable }
++; CHECK-NEXT:    --> {1,+,1}<nuw><nsw><%for.body> U: [1,-2147483648) S: [1,-2147483648) Exits: ((2 * %a)<nsw> smax (4 * %b)<nsw>) LoopDispositions: { %for.body: Computable }
+ ; CHECK-NEXT:  Determining loop execution counts for: @smax
+ ; CHECK-NEXT:  Loop %for.body: backedge-taken count is (-1 + ((2 * %a)<nsw> smax (4 * %b)<nsw>))
+-; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 -3
++; CHECK-NEXT:  Loop %for.body: constant max backedge-taken count is i32 2147483646
+ ; CHECK-NEXT:  Loop %for.body: symbolic max backedge-taken count is (-1 + ((2 * %a)<nsw> smax (4 * %b)<nsw>))
+ ; CHECK-NEXT:  Loop %for.body: Trip multiple is 2
+ ;
+diff --git a/llvm/test/Transforms/IndVarSimplify/canonicalize-cmp.ll b/llvm/test/Transforms/IndVarSimplify/canonicalize-cmp.ll
+index 6ac09fafcb7a4..b8fd0e46592ac 100644
+--- a/llvm/test/Transforms/IndVarSimplify/canonicalize-cmp.ll
++++ b/llvm/test/Transforms/IndVarSimplify/canonicalize-cmp.ll
+@@ -343,14 +343,13 @@ define void @slt_no_smax_needed(i64 %n, ptr %dst) {
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i32 [[ADD_1]], 8
+ ; CHECK-NEXT:    br i1 [[PRE]], label [[EXIT:%.*]], label [[LOOP_PREHEADER:%.*]]
+ ; CHECK:       loop.preheader:
+-; CHECK-NEXT:    [[SMAX:%.*]] = call i32 @llvm.smax.i32(i32 [[SHR]], i32 1)
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], [[LOOP]] ], [ 0, [[LOOP_PREHEADER]] ]
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[DST:%.*]], i32 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[SMAX]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[SHR]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       exit.loopexit:
+ ; CHECK-NEXT:    br label [[EXIT]]
+@@ -385,14 +384,13 @@ define void @ult_no_umax_needed(i64 %n, ptr %dst) {
+ ; CHECK-NEXT:    [[PRE:%.*]] = icmp ult i32 [[ADD_1]], 8
+ ; CHECK-NEXT:    br i1 [[PRE]], label [[EXIT:%.*]], label [[LOOP_PREHEADER:%.*]]
+ ; CHECK:       loop.preheader:
+-; CHECK-NEXT:    [[UMAX:%.*]] = call i32 @llvm.umax.i32(i32 [[SHR]], i32 1)
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ [[IV_NEXT:%.*]], [[LOOP]] ], [ 0, [[LOOP_PREHEADER]] ]
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[DST:%.*]], i32 [[IV]]
+ ; CHECK-NEXT:    store i8 0, ptr [[GEP]], align 1
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i32 [[IV]], 1
+-; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[UMAX]]
++; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp ne i32 [[IV_NEXT]], [[SHR]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label [[LOOP]], label [[EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       exit.loopexit:
+ ; CHECK-NEXT:    br label [[EXIT]]
+diff --git a/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll b/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
+index bc1543d8361a7..09419c13aaeb0 100644
+--- a/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
++++ b/llvm/test/Transforms/LoopIdiom/add-nsw-zext-fold.ll
+@@ -61,9 +61,9 @@ define void @test_memset_size_can_use_info_from_guards(i32 %x, ptr %dst) {
+ ; CHECK:       [[LOOP1_BACKEDGE]]:
+ ; CHECK-NEXT:    br label %[[LOOP1]]
+ ; CHECK:       [[LOOP2_PREHEADER]]:
+-; CHECK-NEXT:    [[TMP0:%.*]] = zext i32 [[SUB]] to i64
+-; CHECK-NEXT:    [[TMP1:%.*]] = lshr i64 [[TMP0]], 1
+-; CHECK-NEXT:    [[UMAX:%.*]] = call i64 @llvm.umax.i64(i64 [[TMP1]], i64 1)
++; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i32 [[SHR]], -1
++; CHECK-NEXT:    [[TMP1:%.*]] = zext i32 [[TMP0]] to i64
++; CHECK-NEXT:    [[UMAX:%.*]] = add nuw nsw i64 [[TMP1]], 1
+ ; CHECK-NEXT:    call void @llvm.memset.p0.i64(ptr align 1 [[DST]], i8 0, i64 [[UMAX]], i1 false)
+ ; CHECK-NEXT:    br label %[[LOOP2:.*]]
+ ; CHECK:       [[LOOP2]]:
+diff --git a/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll b/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
+index a9d8eecf16d6c..9916bb29749ba 100644
+--- a/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
++++ b/llvm/test/Transforms/LoopVectorize/dont-fold-tail-for-divisible-TC.ll
+@@ -192,7 +192,7 @@ define void @cannotProveAlignedTC(ptr noalias nocapture %A, i32 %p, i32 %q) opts
+ ; CHECK-NEXT:    store i32 13, ptr [[TMP12]], align 1
+ ; CHECK-NEXT:    br label [[PRED_STORE_CONTINUE6]]
+ ; CHECK:       pred.store.continue6:
+-; CHECK-NEXT:    [[INDEX_NEXT]] = add i32 [[INDEX]], 4
++; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 4
+ ; CHECK-NEXT:    [[VEC_IND_NEXT]] = add <4 x i32> [[VEC_IND]], splat (i32 4)
+ ; CHECK-NEXT:    [[TMP13:%.*]] = icmp eq i32 [[INDEX_NEXT]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[TMP13]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP6:![0-9]+]]
+diff --git a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+index 16afd3044d180..3546d8c03767c 100644
+--- a/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
++++ b/llvm/test/Transforms/LoopVectorize/runtime-checks-difference.ll
+@@ -461,12 +461,7 @@ define void @remove_diff_checks_via_guards(i32 %x, i32 %y, ptr %A) {
+ ; CHECK-NEXT:    [[TMP13:%.*]] = icmp ugt i64 [[SMAX]], 4294967295
+ ; CHECK-NEXT:    [[TMP14:%.*]] = or i1 [[TMP12]], [[TMP13]]
+ ; CHECK-NEXT:    [[TMP15:%.*]] = or i1 [[TMP9]], [[TMP14]]
+-; CHECK-NEXT:    br i1 [[TMP15]], [[SCALAR_PH]], label %[[VECTOR_MEMCHECK:.*]]
+-; CHECK:       [[VECTOR_MEMCHECK]]:
+-; CHECK-NEXT:    [[TMP16:%.*]] = sext i32 [[OFFSET]] to i64
+-; CHECK-NEXT:    [[TMP17:%.*]] = shl nsw i64 [[TMP16]], 2
+-; CHECK-NEXT:    [[DIFF_CHECK:%.*]] = icmp ult i64 [[TMP17]], 16
+-; CHECK-NEXT:    br i1 [[DIFF_CHECK]], [[SCALAR_PH]], [[VECTOR_PH1:label %.*]]
++; CHECK-NEXT:    br i1 [[TMP15]], [[SCALAR_PH]], [[VECTOR_PH:label %.*]]
+ ;
+ entry:
+   %offset = sub i32 %x, %y
