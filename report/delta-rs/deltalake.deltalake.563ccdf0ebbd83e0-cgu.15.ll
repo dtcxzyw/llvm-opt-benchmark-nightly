@@ -4,11 +4,10 @@ begin_hunk_0_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterNtNt
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val5 = load ptr, ptr %i.f, align 8            ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %.sink1.i.i.i, %bb.g ] ; 2 uses
+  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %i.s, %bb.g ] ; 2 uses
   %i.h = phi ptr [ %.promoted, %.lr.ph ], [ %i.i, %bb.g ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6495
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.b, ptr noundef nonnull align 8 dereferenceable(96) %i.h, i64 96, i1 false)
@@ -17,16 +16,17 @@ begin_hunk_1_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterNtNt
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.8..sroa_idx.i, i64 48, i1 false), !noalias !6495
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6499
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !6495
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.l = load i64, ptr %.val, align 8, !noalias !6508, !noundef !12
-  %i.m = add i64 %i.l, -1                         ; 2 uses
+  %i.m = add i64 %i.l, -1
   store i64 %i.m, ptr %.val, align 8, !noalias !6508
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.n = ptrtoint ptr %.sroa.4.8.copyload.i to i64
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs7p2uQeJxui2_9deltalake6schema5FieldENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0B2C_.exit.i.i
+  br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6499
@@ -35,21 +35,13 @@ begin_hunk_2_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterNtNt
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.q = load ptr, ptr %.val5, align 8, !noalias !6515, !noundef !12
   %i.r = call noundef i32 @PyList_SetItem(ptr noundef %i.q, i64 noundef %.sroa.0.029, ptr noundef nonnull %.sroa.4.8.copyload.i) #42, !noalias !6515 ; 0 uses
-  %i.s = add i64 %.sroa.0.029, 1
+  %i.s = add i64 %.sroa.0.029, 1                  ; 3 uses
   %.pre.i.i = load i64, ptr %.val, align 8, !noalias !6512
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs7p2uQeJxui2_9deltalake6schema5FieldENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0B2C_.exit.i.i
-
-_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs7p2uQeJxui2_9deltalake6schema5FieldENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0B2C_.exit.i.i: ; preds = %bb.d, %bb.c
-  %4 = phi i64 [ %i.m, %bb.c ], [ %.pre.i.i, %bb.d ]
-  %.sink1.i.i.i = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ] ; 3 uses
-  %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
-  %5 = icmp eq i64 %4, 0
-  %6 = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %bb.g
+  %4 = icmp eq i64 %.pre.i.i, 0
+  br i1 %4, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
-  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %.sink1.i.i.i, %bb.g ]
+  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.s, %bb.g ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.0.lcssa, ptr %i.t, align 8, !alias.scope !6519
   store i64 2, ptr %0, align 8, !alias.scope !6519
@@ -58,17 +50,19 @@ begin_hunk_3_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterNtNt
 bb.e:                                             ; preds = %._crit_edge, %bb.f
   ret void
 
-bb.f:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs7p2uQeJxui2_9deltalake6schema5FieldENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0B2C_.exit.i.i
+bb.f:                                             ; preds = %bb.d, %bb.c
+  %.sroa.6.0.ph = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ]
+  %.sroa.010.0.ph = phi i64 [ 1, %bb.c ], [ 0, %bb.d ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
-  store i64 %.sink.i.i3.i, ptr %0, align 8, !alias.scope !6522
+  store i64 %.sroa.010.0.ph, ptr %0, align 8, !alias.scope !6522
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sink1.i.i.i, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !6522
+  store i64 %.sroa.6.0.ph, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !6522
   %.sroa.315.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.315.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, i64 48, i1 false)
   br label %bb.e
 
-bb.g:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterNtNtCs7p2uQeJxui2_9deltalake6schema5FieldENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0B2C_.exit.i.i
+bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   %.not = icmp eq ptr %i.i, %i.d
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -77,11 +71,10 @@ begin_hunk_4_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val5 = load ptr, ptr %i.f, align 8            ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %.sink1.i.i.i, %bb.g ] ; 2 uses
+  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %i.s, %bb.g ] ; 2 uses
   %i.h = phi ptr [ %.promoted, %.lr.ph ], [ %i.i, %bb.g ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !6982
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.b, ptr noundef nonnull align 8 dereferenceable(48) %i.h, i64 48, i1 false)
@@ -90,16 +83,17 @@ begin_hunk_5_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.8..sroa_idx.i, i64 48, i1 false), !noalias !6982
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6986
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !6982
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.l = load i64, ptr %.val, align 8, !noalias !6995, !noundef !12
-  %i.m = add i64 %i.l, -1                         ; 2 uses
+  %i.m = add i64 %i.l, -1
   store i64 %i.m, ptr %.val, align 8, !noalias !6995
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.n = ptrtoint ptr %.sroa.4.8.copyload.i to i64
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringB2z_EENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+  br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6986
@@ -108,21 +102,13 @@ begin_hunk_6_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.q = load ptr, ptr %.val5, align 8, !noalias !7002, !noundef !12
   %i.r = call noundef i32 @PyList_SetItem(ptr noundef %i.q, i64 noundef %.sroa.0.029, ptr noundef nonnull %.sroa.4.8.copyload.i) #42, !noalias !7002 ; 0 uses
-  %i.s = add i64 %.sroa.0.029, 1
+  %i.s = add i64 %.sroa.0.029, 1                  ; 3 uses
   %.pre.i.i = load i64, ptr %.val, align 8, !noalias !6999
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringB2z_EENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
-
-_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringB2z_EENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i: ; preds = %bb.d, %bb.c
-  %4 = phi i64 [ %i.m, %bb.c ], [ %.pre.i.i, %bb.d ]
-  %.sink1.i.i.i = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ] ; 3 uses
-  %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
-  %5 = icmp eq i64 %4, 0
-  %6 = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %bb.g
+  %4 = icmp eq i64 %.pre.i.i, 0
+  br i1 %4, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
-  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %.sink1.i.i.i, %bb.g ]
+  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.s, %bb.g ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.0.lcssa, ptr %i.t, align 8, !alias.scope !7006
   store i64 2, ptr %0, align 8, !alias.scope !7006
@@ -131,17 +117,19 @@ begin_hunk_7_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
 bb.e:                                             ; preds = %._crit_edge, %bb.f
   ret void
 
-bb.f:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringB2z_EENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+bb.f:                                             ; preds = %bb.d, %bb.c
+  %.sroa.6.0.ph = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ]
+  %.sroa.010.0.ph = phi i64 [ 1, %bb.c ], [ 0, %bb.d ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
-  store i64 %.sink.i.i3.i, ptr %0, align 8, !alias.scope !7009
+  store i64 %.sroa.010.0.ph, ptr %0, align 8, !alias.scope !7009
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sink1.i.i.i, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7009
+  store i64 %.sroa.6.0.ph, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7009
   %.sroa.315.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.315.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, i64 48, i1 false)
   br label %bb.e
 
-bb.g:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringB2z_EENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   %.not = icmp eq ptr %i.i, %i.d
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -150,11 +138,10 @@ begin_hunk_8_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val5 = load ptr, ptr %i.f, align 8            ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.g
-  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %.sink1.i.i.i, %bb.g ] ; 2 uses
+  %.sroa.0.029 = phi i64 [ %2, %.lr.ph ], [ %i.s, %bb.g ] ; 2 uses
   %i.h = phi ptr [ %.promoted, %.lr.ph ], [ %i.i, %bb.g ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !7013
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 32, i1 false)
@@ -163,16 +150,17 @@ begin_hunk_9_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNtN
   br i1 %i.k, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
+  %.sroa.7.8..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.8..sroa_idx.i, i64 48, i1 false), !noalias !7013
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7017
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !7013
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.l = load i64, ptr %.val, align 8, !noalias !7026, !noundef !12
-  %i.m = add i64 %i.l, -1                         ; 2 uses
+  %i.m = add i64 %i.l, -1
   store i64 %i.m, ptr %.val, align 8, !noalias !7026
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.n = ptrtoint ptr %.sroa.4.8.copyload.i to i64
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringINtNtB15_6option6OptionINtNtB8_8instance5BoundNtNtB6_3any5PyAnyEEEENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+  br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7017
@@ -181,21 +169,13 @@ begin_hunk_10_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNt
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5) ]
   %i.q = load ptr, ptr %.val5, align 8, !noalias !7033, !noundef !12
   %i.r = call noundef i32 @PyList_SetItem(ptr noundef %i.q, i64 noundef %.sroa.0.029, ptr noundef nonnull %.sroa.4.8.copyload.i) #42, !noalias !7033 ; 0 uses
-  %i.s = add i64 %.sroa.0.029, 1
+  %i.s = add i64 %.sroa.0.029, 1                  ; 3 uses
   %.pre.i.i = load i64, ptr %.val, align 8, !noalias !7030
-  br label %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringINtNtB15_6option6OptionINtNtB8_8instance5BoundNtNtB6_3any5PyAnyEEEENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
-
-_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringINtNtB15_6option6OptionINtNtB8_8instance5BoundNtNtB6_3any5PyAnyEEEENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i: ; preds = %bb.d, %bb.c
-  %4 = phi i64 [ %i.m, %bb.c ], [ %.pre.i.i, %bb.d ]
-  %.sink1.i.i.i = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ] ; 3 uses
-  %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
-  %5 = icmp eq i64 %4, 0
-  %6 = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %bb.g
+  %4 = icmp eq i64 %.pre.i.i, 0
+  br i1 %4, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
-  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %.sink1.i.i.i, %bb.g ]
+  %.sroa.0.0.lcssa = phi i64 [ %2, %bb.a ], [ %i.s, %bb.g ]
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.0.0.lcssa, ptr %i.t, align 8, !alias.scope !7037
   store i64 2, ptr %0, align 8, !alias.scope !7037
@@ -204,17 +184,19 @@ begin_hunk_11_@_RINvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB6_8IntoIterTNt
 bb.e:                                             ; preds = %._crit_edge, %bb.f
   ret void
 
-bb.f:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringINtNtB15_6option6OptionINtNtB8_8instance5BoundNtNtB6_3any5PyAnyEEEENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+bb.f:                                             ; preds = %bb.d, %bb.c
+  %.sroa.6.0.ph = phi i64 [ %i.n, %bb.c ], [ %i.s, %bb.d ]
+  %.sroa.010.0.ph = phi i64 [ 1, %bb.c ], [ 0, %bb.d ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.7.i, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
-  store i64 %.sink.i.i3.i, ptr %0, align 8, !alias.scope !7040
+  store i64 %.sroa.010.0.ph, ptr %0, align 8, !alias.scope !7040
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.sink1.i.i.i, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7040
+  store i64 %.sroa.6.0.ph, ptr %.sroa.2.0..sroa_idx, align 8, !alias.scope !7040
   %.sroa.315.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.315.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.10, i64 48, i1 false)
   br label %bb.e
 
-bb.g:                                             ; preds = %_RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7lgC_4core4iter8adapters3map3MapINtNtNtCs6Po7BT7Nknu_5alloc3vec9into_iter8IntoIterTNtNtB1R_6string6StringINtNtB15_6option6OptionINtNtB8_8instance5BoundNtNtB6_3any5PyAnyEEEENCINvYB2y_NtNtB8_10conversion12IntoPyObject28owned_sequence_into_pyobjectINtB1P_3VecB2y_EE0EE0Cs7p2uQeJxui2_9deltalake.exit.i.i
+bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   %.not = icmp eq ptr %i.i, %i.d
   br i1 %.not, label %._crit_edge, label %bb.b
@@ -223,7 +205,8 @@ begin_hunk_12_@_RNvMs_NtNtCs4tdlwR1I4n2_7parquet5arrow12arrow_writerINtB4_11Arro
   br label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv, %bb.u
-  %.sroa.020.6.a = phi i8 [ 0, %bb.bv ], [ 1, %bb.u ] ; 4 uses
+  %.sroa.020.6 = phi i1 [ false, %bb.bv ], [ true, %bb.u ]
+  %.sroa.020.6.a = phi i8 [ 0, %bb.bv ], [ 1, %bb.u ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   %i.ek = getelementptr inbounds nuw i8, ptr %3, i64 248 ; 4 uses
   %i.el = load i64, ptr %i.ek, align 8, !range !13, !alias.scope !8066, !noundef !12
@@ -232,8 +215,7 @@ begin_hunk_13_@_RNvMs_NtNtCs4tdlwR1I4n2_7parquet5arrow12arrow_writerINtB4_11Arro
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs7p2uQeJxui2_9deltalake.exit75
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs7p2uQeJxui2_9deltalake.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs7p2uQeJxui2_9deltalake.exit72, %bb.cc
-  %4 = trunc nuw i8 %.sroa.020.6.a to i1
-  br i1 %4, label %bb.ce, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs7p2uQeJxui2_9deltalake.exit
+  br i1 %.sroa.020.6, label %bb.ce, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs6Po7BT7Nknu_5alloc6string6StringEECs7p2uQeJxui2_9deltalake.exit
 
 bb.ce:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs7p2uQeJxui2_9deltalake.exit
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(24) %1)
