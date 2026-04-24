@@ -4,8 +4,8 @@ begin_hunk_0_@_RNvMs5_NtCsdl0l68gAy31_9arrow_ipc6readerINtB5_10FileReaderINtNtNt
   call void @llvm.lifetime.end.p0(ptr nonnull %i.as)
   ret void
 
-.thread12:                                        ; preds = %.body226.i, %bb.dl, %bb.ds
-  %.pn10 = phi { ptr, i32 } [ %.pn176.i, %bb.ds ], [ %.pn176.i, %.body226.i ], [ %i.if, %bb.dl ]
+.thread12:                                        ; preds = %bb.ds, %bb.dl, %.body226.i
+  %.pn10 = phi { ptr, i32 } [ %.pn176.i, %.body226.i ], [ %.pn176.i, %bb.ds ], [ %i.if, %bb.dl ]
   resume { ptr, i32 } %.pn10
 }
 
