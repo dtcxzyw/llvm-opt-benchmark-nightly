@@ -4,8 +4,8 @@ begin_hunk_0_@_ZN5boost4math6detail13ibeta_inv_impIeNS0_8policies6policyINS3_13p
   br label %bb.ck
 
 bb.g:                                             ; preds = %bb.d
-  %7 = fcmp oeq x86_fp80 %0, 0xK3FFF8000000000000000
-  br i1 %7, label %bb.h, label %thread-pre-split
+  %7 = fcmp une x86_fp80 %0, 0xK3FFF8000000000000000 ; 2 uses
+  br i1 %7, label %thread-pre-split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.e = fcmp oeq x86_fp80 %1, 0xK3FFF8000000000000000
@@ -14,7 +14,7 @@ begin_hunk_1_@_ZN5boost4math6detail13ibeta_inv_impIeNS0_8policies6policyINS3_13p
 
 thread-pre-split.thread:                          ; preds = %bb.h
   %i.h = fcmp oeq x86_fp80 %1, 0xK3FFE8000000000000000
-  br i1 %i.h, label %thread-pre-split417, label %.thread638
+  br i1 %i.h, label %.thread616, label %.thread638
 
 bb.k:                                             ; preds = %thread-pre-split
   %i.i = fcmp oeq x86_fp80 %1, 0xK3FFE8000000000000000
@@ -23,15 +23,19 @@ begin_hunk_2_@_ZN5boost4math6detail13ibeta_inv_impIeNS0_8policies6policyINS3_13p
   %i.p = fcmp ogt x86_fp80 %1, 0xK3FFE8000000000000000
   br i1 %i.p, label %.thread616, label %thread-pre-split417
 
-.thread616:                                       ; preds = %bb.n
+.thread616:                                       ; preds = %thread-pre-split.thread, %bb.n
+  %.0378598606617 = phi x86_fp80 [ %2, %bb.n ], [ %3, %thread-pre-split.thread ]
+  %.0386595607616 = phi x86_fp80 [ %3, %bb.n ], [ %2, %thread-pre-split.thread ]
+  %.sroa.0297.sroa.0.0589609615 = phi x86_fp80 [ %1, %bb.n ], [ 0xK3FFF8000000000000000, %thread-pre-split.thread ]
+  %8 = zext i1 %7 to i8
   br label %thread-pre-split417
 
-thread-pre-split417:                              ; preds = %thread-pre-split.thread, %bb.n, %thread-pre-split, %.thread616
-  %.sroa.0297.sroa.0.1 = phi x86_fp80 [ %1, %thread-pre-split ], [ %1, %bb.n ], [ 0xK3FFE8000000000000000, %thread-pre-split.thread ], [ 0xK3FFE8000000000000000, %.thread616 ] ; 21 uses
-  %.sroa.0333.sroa.0.1 = phi x86_fp80 [ %0, %thread-pre-split ], [ %0, %bb.n ], [ 0xK3FFF8000000000000000, %thread-pre-split.thread ], [ %1, %.thread616 ] ; 23 uses
-  %.1387 = phi x86_fp80 [ %3, %thread-pre-split ], [ %3, %bb.n ], [ %3, %thread-pre-split.thread ], [ %2, %.thread616 ] ; 10 uses
-  %.1379 = phi x86_fp80 [ %2, %thread-pre-split ], [ %2, %bb.n ], [ %2, %thread-pre-split.thread ], [ %3, %.thread616 ] ; 16 uses
-  %.1166 = phi i8 [ 0, %thread-pre-split ], [ 0, %bb.n ], [ 0, %thread-pre-split.thread ], [ 1, %.thread616 ] ; 11 uses
+thread-pre-split417:                              ; preds = %bb.n, %thread-pre-split, %.thread616
+  %.sroa.0297.sroa.0.1 = phi x86_fp80 [ 0xK3FFE8000000000000000, %.thread616 ], [ %1, %bb.n ], [ %1, %thread-pre-split ] ; 21 uses
+  %.sroa.0333.sroa.0.1 = phi x86_fp80 [ %.sroa.0297.sroa.0.0589609615, %.thread616 ], [ %0, %bb.n ], [ %0, %thread-pre-split ] ; 23 uses
+  %.1387 = phi x86_fp80 [ %.0378598606617, %.thread616 ], [ %3, %bb.n ], [ %3, %thread-pre-split ] ; 10 uses
+  %.1379 = phi x86_fp80 [ %.0386595607616, %.thread616 ], [ %2, %bb.n ], [ %2, %thread-pre-split ] ; 16 uses
+  %.1166 = phi i8 [ %8, %.thread616 ], [ 0, %bb.n ], [ 0, %thread-pre-split ] ; 11 uses
   %i.q = fcmp oeq x86_fp80 %.sroa.0297.sroa.0.1, 0xK3FFE8000000000000000
   %i.r = fcmp oge x86_fp80 %.sroa.0333.sroa.0.1, 0xK3FFE8000000000000000
   %or.cond = and i1 %i.q, %i.r
