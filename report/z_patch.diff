@@ -1,0 +1,222 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 9f362deb7cca9..50ebc78281c48 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -1910,6 +1910,20 @@ const SCEV *ScalarEvolution::getZeroExtendExprImpl(const SCEV *Op, Type *Ty,
+       return getAddExpr(Ops, SCEV::FlagNUW, Depth + 1);
+     }
+ 
++    const APInt *C, *C2;
++    // zext (C + A)<nsw> -> (sext(C) + sext(A))<nsw> if zext (C + A)<nsw> >=s 0.
++    // Currently the non-negative check is done manually, as isKnownNonNegative
++    // is too expensive.
++    if (SA->hasNoSignedWrap() &&
++        match(SA, m_scev_Add(m_scev_APInt(C),
++                             m_scev_SMax(m_scev_APInt(C2), m_SCEV()))) &&
++        C->isNegative() && !C->isMinSignedValue() && C2->sge(C->abs())) {
++      assert(isKnownNonNegative(SA) && "incorrectly determined non-negative");
++      return getAddExpr(getSignExtendExpr(SA->getOperand(0), Ty, Depth + 1),
++                        getSignExtendExpr(SA->getOperand(1), Ty, Depth + 1),
++                        SCEV::FlagNSW, Depth + 1);
++    }
++
+     // zext(C + x + y + ...) --> (zext(D) + zext((C - D) + x + y + ...))
+     // if D + (C - D + x + y + ...) could be proven to not unsigned wrap
+     // where D maximizes the number of trailing zeros of (C - D + x + y + ...)
+diff --git a/llvm/test/Analysis/LoopAccessAnalysis/depend_diff_types.ll b/llvm/test/Analysis/LoopAccessAnalysis/depend_diff_types.ll
+index 27a85c7a46084..5d59660a68e90 100644
+--- a/llvm/test/Analysis/LoopAccessAnalysis/depend_diff_types.ll
++++ b/llvm/test/Analysis/LoopAccessAnalysis/depend_diff_types.ll
+@@ -561,17 +561,11 @@ exit:
+   ret void
+ }
+ 
+-; TODO: Relax HasSameSize check in isSafeDependenceDistance.
+ define void @different_type_sizes_safe_dep_dist(i16  %n, ptr %p) {
+ ; CHECK-LABEL: 'different_type_sizes_safe_dep_dist'
+ ; CHECK-NEXT:    loop:
+-; CHECK-NEXT:      Report: unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop
+-; CHECK-NEXT:  Unknown data dependence.
++; CHECK-NEXT:      Memory dependences are safe
+ ; CHECK-NEXT:      Dependences:
+-; CHECK-NEXT:        Unknown:
+-; CHECK-NEXT:            store i32 0, ptr %gep.iv, align 1 ->
+-; CHECK-NEXT:            store i16 1, ptr %gep.off.iv, align 1
+-; CHECK-EMPTY:
+ ; CHECK-NEXT:      Run-time memory checks:
+ ; CHECK-NEXT:      Grouped accesses:
+ ; CHECK-EMPTY:
+diff --git a/llvm/test/Analysis/ScalarEvolution/zext-add.ll b/llvm/test/Analysis/ScalarEvolution/zext-add.ll
+index a08feef7098ea..c2a9915ecdb29 100644
+--- a/llvm/test/Analysis/ScalarEvolution/zext-add.ll
++++ b/llvm/test/Analysis/ScalarEvolution/zext-add.ll
+@@ -13,7 +13,7 @@ define void @test_push_constant_into_zext(ptr %dst, ptr %src, i32 %n, i64 %offse
+ ; CHECK-NEXT:    %iv = phi i32 [ 0, %outer.loop ], [ %iv.next, %inner.loop ]
+ ; CHECK-NEXT:    --> {0,+,1}<nuw><nsw><%inner.loop> U: [0,2147483647) S: [0,2147483647) Exits: (-1 + (1 smax %n))<nsw> LoopDispositions: { %inner.loop: Computable, %outer.loop: Variant }
+ ; CHECK-NEXT:    %ptr.iv = phi ptr [ %src, %outer.loop ], [ %ptr.iv.next, %inner.loop ]
+-; CHECK-NEXT:    --> {%src,+,%offset}<%inner.loop> U: full-set S: full-set Exits: (((zext i32 (-1 + (1 smax %n))<nsw> to i64) * %offset) + %src) LoopDispositions: { %inner.loop: Computable, %outer.loop: Variant }
++; CHECK-NEXT:    --> {%src,+,%offset}<%inner.loop> U: full-set S: full-set Exits: (((-1 + (zext i32 (1 smax %n) to i64))<nsw> * %offset) + %src) LoopDispositions: { %inner.loop: Computable, %outer.loop: Variant }
+ ; CHECK-NEXT:    %l = load i8, ptr %outer.ptr, align 1
+ ; CHECK-NEXT:    --> %l U: full-set S: full-set Exits: <<Unknown>> LoopDispositions: { %inner.loop: Variant, %outer.loop: Variant }
+ ; CHECK-NEXT:    %ptr.iv.next = getelementptr i8, ptr %ptr.iv, i64 %offset
+diff --git a/llvm/test/Transforms/LoopUnroll/peel-last-iteration-with-guards.ll b/llvm/test/Transforms/LoopUnroll/peel-last-iteration-with-guards.ll
+index c1d8395965577..c763f14b73cb8 100644
+--- a/llvm/test/Transforms/LoopUnroll/peel-last-iteration-with-guards.ll
++++ b/llvm/test/Transforms/LoopUnroll/peel-last-iteration-with-guards.ll
+@@ -77,10 +77,14 @@ define i32 @peel_with_guard_known_nonnegative_2(ptr %x, i32 %w) {
+ ; CHECK-NEXT:    [[SUB:%.*]] = add nsw i32 [[W]], -1
+ ; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i32 [[SUB]] to i64
+ ; CHECK-NEXT:    [[WIDE_TRIP_COUNT:%.*]] = zext nneg i32 [[W]] to i64
++; CHECK-NEXT:    [[TMP3:%.*]] = add nsw i64 [[WIDE_TRIP_COUNT]], -1
++; CHECK-NEXT:    [[TMP2:%.*]] = icmp ne i64 [[TMP3]], 0
++; CHECK-NEXT:    br i1 [[TMP2]], label %[[PH_SPLIT:.*]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN:.*]]
++; CHECK:       [[PH_SPLIT]]:
+ ; CHECK-NEXT:    br label %[[LOOP_HEADER:.*]]
+ ; CHECK:       [[LOOP_HEADER]]:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
+-; CHECK-NEXT:    [[RED:%.*]] = phi i32 [ 0, %[[PH]] ], [ [[ADD:%.*]], %[[LOOP_LATCH]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, %[[PH_SPLIT]] ], [ [[IV_NEXT:%.*]], %[[LOOP_LATCH:.*]] ]
++; CHECK-NEXT:    [[RED:%.*]] = phi i32 [ 0, %[[PH_SPLIT]] ], [ [[ADD:%.*]], %[[LOOP_LATCH]] ]
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i64 [[IV]], [[TMP0]]
+ ; CHECK-NEXT:    br i1 [[CMP1]], label %[[IF_THEN:.*]], label %[[LOOP_LATCH]]
+ ; CHECK:       [[IF_THEN]]:
+@@ -91,13 +95,38 @@ define i32 @peel_with_guard_known_nonnegative_2(ptr %x, i32 %w) {
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ARRAYIDX]], align 4
+ ; CHECK-NEXT:    [[ADD]] = add nsw i32 [[TMP1]], [[RED]]
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[WIDE_TRIP_COUNT]]
+-; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT:.*]], label %[[LOOP_HEADER]]
++; CHECK-NEXT:    [[TMP4:%.*]] = sub i64 [[WIDE_TRIP_COUNT]], 1
++; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[IV_NEXT]], [[TMP4]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT:.*]], label %[[LOOP_HEADER]], !llvm.loop [[LOOP2:![0-9]+]]
++; CHECK:       [[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT]]:
++; CHECK-NEXT:    [[DOTPH:%.*]] = phi i64 [ [[IV_NEXT]], %[[LOOP_LATCH]] ]
++; CHECK-NEXT:    [[DOTPH1:%.*]] = phi i32 [ [[ADD]], %[[LOOP_LATCH]] ]
++; CHECK-NEXT:    br label %[[EXIT_LOOPEXIT_PEEL_BEGIN]]
++; CHECK:       [[EXIT_LOOPEXIT_PEEL_BEGIN]]:
++; CHECK-NEXT:    [[TMP5:%.*]] = phi i64 [ 0, %[[PH]] ], [ [[DOTPH]], %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT]] ]
++; CHECK-NEXT:    [[TMP6:%.*]] = phi i32 [ 0, %[[PH]] ], [ [[DOTPH1]], %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT]] ]
++; CHECK-NEXT:    br label %[[LOOP_HEADER_PEEL:.*]]
++; CHECK:       [[LOOP_HEADER_PEEL]]:
++; CHECK-NEXT:    [[CMP1_PEEL:%.*]] = icmp eq i64 [[TMP5]], [[TMP0]]
++; CHECK-NEXT:    br i1 [[CMP1_PEEL]], label %[[EXIT_LOOPEXIT:.*]], label %[[LOOP_LATCH_PEEL:.*]]
+ ; CHECK:       [[EXIT_LOOPEXIT]]:
+-; CHECK-NEXT:    [[ADD_LCSSA:%.*]] = phi i32 [ [[ADD]], %[[LOOP_LATCH]] ]
++; CHECK-NEXT:    tail call void @foo()
++; CHECK-NEXT:    br label %[[LOOP_LATCH_PEEL]]
++; CHECK:       [[LOOP_LATCH_PEEL]]:
++; CHECK-NEXT:    [[ARRAYIDX_PEEL:%.*]] = getelementptr inbounds nuw i32, ptr [[X]], i64 [[TMP5]]
++; CHECK-NEXT:    [[TMP7:%.*]] = load i32, ptr [[ARRAYIDX_PEEL]], align 4
++; CHECK-NEXT:    [[ADD_PEEL:%.*]] = add nsw i32 [[TMP7]], [[TMP6]]
++; CHECK-NEXT:    [[IV_NEXT_PEEL:%.*]] = add nuw nsw i64 [[TMP5]], 1
++; CHECK-NEXT:    [[EC_PEEL:%.*]] = icmp eq i64 [[IV_NEXT_PEEL]], [[WIDE_TRIP_COUNT]]
++; CHECK-NEXT:    br i1 [[EC_PEEL]], label %[[EXIT_LOOPEXIT_PEEL_NEXT:.*]], label %[[EXIT_LOOPEXIT_PEEL_NEXT]]
++; CHECK:       [[EXIT_LOOPEXIT_PEEL_NEXT]]:
++; CHECK-NEXT:    br label %[[LOOP_HEADER_PEEL_NEXT:.*]]
++; CHECK:       [[LOOP_HEADER_PEEL_NEXT]]:
++; CHECK-NEXT:    br label %[[EXIT_LOOPEXIT1:.*]]
++; CHECK:       [[EXIT_LOOPEXIT1]]:
+ ; CHECK-NEXT:    br label %[[EXIT]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    [[RED_LCSSA:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[ADD_LCSSA]], %[[EXIT_LOOPEXIT]] ]
++; CHECK-NEXT:    [[RED_LCSSA:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[ADD_PEEL]], %[[EXIT_LOOPEXIT1]] ]
+ ; CHECK-NEXT:    ret i32 [[RED_LCSSA]]
+ ;
+ entry:
+@@ -156,7 +185,7 @@ define void @peel_with_guard2(i32 %n) {
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[N]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[TMP2]]
+-; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT:.*]], label %[[LOOP_HEADER]], !llvm.loop [[LOOP2:![0-9]+]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT:.*]], label %[[LOOP_HEADER]], !llvm.loop [[LOOP3:![0-9]+]]
+ ; CHECK:       [[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT]]:
+ ; CHECK-NEXT:    [[DOTPH:%.*]] = phi i32 [ [[IV_NEXT]], %[[LOOP_LATCH]] ]
+ ; CHECK-NEXT:    br label %[[EXIT_LOOPEXIT_PEEL_BEGIN]]
+@@ -228,7 +257,7 @@ define void @test_peel_guard_sub_1_btc(i32 %n) {
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw i32 [[IV]], 1
+ ; CHECK-NEXT:    [[TMP2:%.*]] = sub i32 [[N]], 1
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i32 [[IV_NEXT]], [[TMP2]]
+-; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT:.*]], label %[[LOOP_HEADER]], !llvm.loop [[LOOP3:![0-9]+]]
++; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT:.*]], label %[[LOOP_HEADER]], !llvm.loop [[LOOP4:![0-9]+]]
+ ; CHECK:       [[EXIT_LOOPEXIT_PEEL_BEGIN_LOOPEXIT]]:
+ ; CHECK-NEXT:    [[DOTPH:%.*]] = phi i32 [ [[IV_NEXT]], %[[LOOP_LATCH]] ]
+ ; CHECK-NEXT:    br label %[[EXIT_LOOPEXIT_PEEL_BEGIN]]
+@@ -281,4 +310,5 @@ exit:
+ ; CHECK: [[META1]] = !{!"llvm.loop.peeled.count", i32 1}
+ ; CHECK: [[LOOP2]] = distinct !{[[LOOP2]], [[META1]]}
+ ; CHECK: [[LOOP3]] = distinct !{[[LOOP3]], [[META1]]}
++; CHECK: [[LOOP4]] = distinct !{[[LOOP4]], [[META1]]}
+ ;.
+diff --git a/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll b/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
+index eaa552ab5c616..e63b441bf8808 100644
+--- a/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
++++ b/llvm/test/Transforms/LoopVectorize/AArch64/predicated-costs.ll
+@@ -46,8 +46,8 @@ define void @test_predicated_load_cast_hint(ptr %dst.1, ptr %dst.2, ptr %src, i8
+ ; CHECK-NEXT:    [[TMP18:%.*]] = shl i64 [[OFF]], 3
+ ; CHECK-NEXT:    [[SCEVGEP6:%.*]] = getelementptr i8, ptr [[DST_1]], i64 [[TMP18]]
+ ; CHECK-NEXT:    [[SMAX7:%.*]] = call i32 @llvm.smax.i32(i32 [[N_SUB]], i32 4)
+-; CHECK-NEXT:    [[TMP19:%.*]] = add nsw i32 [[SMAX7]], -1
+-; CHECK-NEXT:    [[TMP20:%.*]] = zext nneg i32 [[TMP19]] to i64
++; CHECK-NEXT:    [[TMP19:%.*]] = zext nneg i32 [[SMAX7]] to i64
++; CHECK-NEXT:    [[TMP20:%.*]] = add nsw i64 [[TMP19]], -1
+ ; CHECK-NEXT:    [[TMP21:%.*]] = lshr i64 [[TMP20]], 2
+ ; CHECK-NEXT:    [[TMP22:%.*]] = shl nuw nsw i64 [[TMP21]], 9
+ ; CHECK-NEXT:    [[TMP23:%.*]] = add i64 [[TMP22]], [[TMP18]]
+diff --git a/llvm/test/Transforms/LoopVectorize/reduction.ll b/llvm/test/Transforms/LoopVectorize/reduction.ll
+index e8b11a5d31b19..adfe665535472 100644
+--- a/llvm/test/Transforms/LoopVectorize/reduction.ll
++++ b/llvm/test/Transforms/LoopVectorize/reduction.ll
+@@ -1184,13 +1184,13 @@ define i64 @reduction_with_phi_with_one_incoming_on_backedge(i16 %n, ptr %A) {
+ ; CHECK-SAME: i16 [[N:%.*]], ptr [[A:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i16 @llvm.smax.i16(i16 [[N]], i16 2)
+-; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i16 [[SMAX]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i16 [[TMP0]] to i32
++; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i16 [[SMAX]] to i32
++; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i32 [[TMP0]], -1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp slt i16 [[N]], 5
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_VEC:%.*]] = and i32 [[TMP1]], 32764
+-; CHECK-NEXT:    [[DOTCAST:%.*]] = trunc nuw nsw i32 [[N_VEC]] to i16
++; CHECK-NEXT:    [[N_VEC:%.*]] = and i32 [[TMP1]], -4
++; CHECK-NEXT:    [[DOTCAST:%.*]] = trunc nsw i32 [[N_VEC]] to i16
+ ; CHECK-NEXT:    [[IND_END:%.*]] = or disjoint i16 [[DOTCAST]], 1
+ ; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
+ ; CHECK:       vector.body:
+@@ -1207,7 +1207,7 @@ define i64 @reduction_with_phi_with_one_incoming_on_backedge(i16 %n, ptr %A) {
+ ; CHECK-NEXT:    br i1 [[TMP5]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP23:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[TMP6:%.*]] = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> [[TMP4]])
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[N_VEC]], [[TMP1]]
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[TMP1]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT:%.*]], label [[SCALAR_PH]]
+ ; CHECK:       scalar.ph:
+ ; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i16 [ [[IND_END]], [[MIDDLE_BLOCK]] ], [ 1, [[ENTRY:%.*]] ]
+@@ -1262,13 +1262,13 @@ define i64 @reduction_with_phi_with_two_incoming_on_backedge(i16 %n, ptr %A) {
+ ; CHECK-SAME: i16 [[N:%.*]], ptr [[A:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[SMAX:%.*]] = call i16 @llvm.smax.i16(i16 [[N]], i16 2)
+-; CHECK-NEXT:    [[TMP0:%.*]] = add nsw i16 [[SMAX]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = zext nneg i16 [[TMP0]] to i32
++; CHECK-NEXT:    [[TMP0:%.*]] = zext nneg i16 [[SMAX]] to i32
++; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i32 [[TMP0]], -1
+ ; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp slt i16 [[N]], 5
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[SCALAR_PH:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_VEC:%.*]] = and i32 [[TMP1]], 32764
+-; CHECK-NEXT:    [[DOTCAST:%.*]] = trunc nuw nsw i32 [[N_VEC]] to i16
++; CHECK-NEXT:    [[N_VEC:%.*]] = and i32 [[TMP1]], -4
++; CHECK-NEXT:    [[DOTCAST:%.*]] = trunc nsw i32 [[N_VEC]] to i16
+ ; CHECK-NEXT:    [[IND_END:%.*]] = or disjoint i16 [[DOTCAST]], 1
+ ; CHECK-NEXT:    br label [[VECTOR_BODY:%.*]]
+ ; CHECK:       vector.body:
+@@ -1285,7 +1285,7 @@ define i64 @reduction_with_phi_with_two_incoming_on_backedge(i16 %n, ptr %A) {
+ ; CHECK-NEXT:    br i1 [[TMP5]], label [[MIDDLE_BLOCK:%.*]], label [[VECTOR_BODY]], !llvm.loop [[LOOP25:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[TMP6:%.*]] = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> [[TMP4]])
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[N_VEC]], [[TMP1]]
++; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i32 [[TMP1]], [[N_VEC]]
+ ; CHECK-NEXT:    br i1 [[CMP_N]], label [[EXIT:%.*]], label [[SCALAR_PH]]
+ ; CHECK:       scalar.ph:
+ ; CHECK-NEXT:    [[BC_RESUME_VAL:%.*]] = phi i16 [ [[IND_END]], [[MIDDLE_BLOCK]] ], [ 1, [[ENTRY:%.*]] ]
