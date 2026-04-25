@@ -1,0 +1,83 @@
+begin_hunk_0_@jpeg12_idct_float:bb.a
+  %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !39
+  %i.eh = getelementptr inbounds nuw [2 x i8], ptr %i.eg, i64 %i.f ; 8 uses
+  %i.ei = load float, ptr %.2206, align 4, !tbaa !35
+  %5 = fadd float %i.ei, 2.048500e+03             ; 2 uses
+  %i.ej = getelementptr inbounds nuw i8, ptr %.2206, i64 16
+  %6 = load float, ptr %i.ej, align 4, !tbaa !35  ; 2 uses
+  %7 = fadd float %5, %6                          ; 2 uses
+  %8 = fsub float %5, %6                          ; 2 uses
+  %i.ek = getelementptr inbounds nuw i8, ptr %.2206, i64 8
+  %i.el = load float, ptr %i.ek, align 4, !tbaa !35 ; 2 uses
+  %i.em = getelementptr inbounds nuw i8, ptr %.2206, i64 24
+  %i.en = load float, ptr %i.em, align 4, !tbaa !35 ; 2 uses
+  %i.eo = fadd float %i.el, %i.en                 ; 3 uses
+  %i.ep = fsub float %i.el, %i.en
+  %i.eq = fneg float %i.eo
+  %9 = tail call float @llvm.fmuladd.f32(float %i.ep, float 0x3FF6A09E60000000, float %i.eq) ; 2 uses
+  %10 = fadd float %7, %i.eo                      ; 2 uses
+  %11 = fadd float %8, %9                         ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %.2206, i64 20
+  %i.er = load float, ptr %12, align 4, !tbaa !35 ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %.2206, i64 12
+  %i.es = load float, ptr %13, align 4, !tbaa !35 ; 2 uses
+  %i.et = fadd float %i.er, %i.es                 ; 2 uses
+  %i.eu = fsub float %i.er, %i.es                 ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %.2206, i64 4
+  %15 = load float, ptr %14, align 4, !tbaa !35   ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %.2206, i64 28
+  %17 = load float, ptr %16, align 4, !tbaa !35   ; 2 uses
+  %i.ev = fadd float %15, %17                     ; 2 uses
+  %18 = fsub float %15, %17                       ; 2 uses
+  %i.ew = fadd float %i.et, %i.ev                 ; 3 uses
+  %i.ex = fsub float %i.ev, %i.et
+  %i.ey = fmul float %i.ex, 0x3FF6A09E60000000
+  %i.ez = fadd float %i.eu, %18
+  %i.fa = fmul float %i.ez, 0x3FFD906BC0000000    ; 2 uses
+  %19 = fneg float %18
+  %i.fb = tail call float @llvm.fmuladd.f32(float %19, float 0x3FF1517A80000000, float %i.fa)
+  %i.fc = fneg float %i.eu
+  %i.fd = tail call float @llvm.fmuladd.f32(float %i.fc, float 0x4004E7AEA0000000, float %i.fa)
+  %i.fe = fsub float %i.fd, %i.ew                 ; 3 uses
+  %i.ff = fadd float %10, %i.ew
+  %20 = fptosi float %i.ff to i32
+  %21 = and i32 %20, 16383
+  %22 = zext nneg i32 %21 to i64
+  %23 = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %22
+  %24 = load i16, ptr %23, align 2, !tbaa !34
+  store i16 %24, ptr %i.eh, align 2, !tbaa !34
+  %25 = fsub float %10, %i.ew
+  %26 = fptosi float %25 to i32
+  %27 = and i32 %26, 16383
+  %i.fg = zext nneg i32 %27 to i64
+  %i.fh = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.fg
+  %i.fi = load i16, ptr %i.fh, align 2, !tbaa !34
+  %28 = getelementptr inbounds nuw i8, ptr %i.eh, i64 14
+  store i16 %i.fi, ptr %28, align 2, !tbaa !34
+  %29 = fadd float %11, %i.fe
+  %30 = fptosi float %29 to i32
+  %31 = and i32 %30, 16383
+  %32 = zext nneg i32 %31 to i64
+  %33 = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %32
+  %34 = load i16, ptr %33, align 2, !tbaa !34
+  %35 = getelementptr inbounds nuw i8, ptr %i.eh, i64 2
+  store i16 %34, ptr %35, align 2, !tbaa !34
+  %36 = fsub float %11, %i.fe
+  %37 = fptosi float %36 to i32
+  %38 = and i32 %37, 16383
+  %i.fj = zext nneg i32 %38 to i64
+  %i.fk = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.fj
+  %i.fl = load i16, ptr %i.fk, align 2, !tbaa !34
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.eh, i64 12
+end_hunk_0
+begin_hunk_1_@jpeg12_idct_float:bb.a
+  %i.fn = getelementptr inbounds nuw i8, ptr %i.eh, i64 4
+  %i.fo = getelementptr inbounds nuw i8, ptr %i.eh, i64 10
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.eh, i64 6
+  %i.fq = fsub float %7, %i.eo
+  %i.fr = fsub float %8, %9
+  %i.fs = fsub float %i.ey, %i.fe                 ; 2 uses
+  %i.ft = fsub float %i.fb, %i.fs
+  %i.fu = insertelement <4 x float> poison, float %i.fr, i64 0
+  %i.fv = insertelement <4 x float> %i.fu, float %i.fs, i64 1
+end_hunk_1
