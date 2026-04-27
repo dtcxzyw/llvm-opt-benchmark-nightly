@@ -4,7 +4,8 @@ begin_hunk_0_@_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCs
   %i.q = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
   %i.r = zext nneg i16 %i.q to i64
   %i.s = sub nsw i64 0, %i.r
-  %i.t = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.s
+  %i.t = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.s ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -24 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.u)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtCs3LITIwzqf1g_4uuid4UuidINtNtCs3JXekYNd0JR_7dashmap4util11SharedValueNtNtCs6Po7BT7Nknu_5alloc6string6StringEEECsj34PGqTgg0L_16deltalake_lakefs.exit.i.i unwind label %bb.e, !noalias !541
@@ -13,7 +14,8 @@ begin_hunk_1_@_RNvXsf_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerINtB5_8RawTableTNtCs
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [104 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [104 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -104 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.y)

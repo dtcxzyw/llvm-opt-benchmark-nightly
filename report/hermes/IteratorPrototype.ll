@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN6hermes2vm14NativeFunction6createERNS0_7RuntimeENS0_6HandleINS0
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden { i32, i64 } @_ZN6hermes2vm25iteratorPrototypeIteratorEPvRNS0_7RuntimeENS0_10NativeArgsE(ptr readnone captures(none) %0, ptr nonnull readnone align 8 captures(none) %1, ptr noundef readonly captures(none) dead_on_return %2) #2 {
 bb.a:
-  %i.a = load ptr, ptr %2, align 8, !tbaa !25, !noalias !27
+  %i.a = load ptr, ptr %2, align 8, !tbaa !25, !noalias !27, !nonnull !30, !noundef !30
   %.sroa.0.0.copyload = load i64, ptr %i.a, align 8, !tbaa !7
   %.fca.1.insert = insertvalue { i32, i64 } { i32 1, i64 poison }, i64 %.sroa.0.0.copyload, 1
   ret { i32, i64 } %.fca.1.insert
@@ -13,4 +13,5 @@ begin_hunk_1_@_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE
 !27 = !{!28}
 !28 = distinct !{!28, !29, !"_ZNK6hermes2vm10NativeArgs5beginEv: argument 0"}
 !29 = distinct !{!29, !"_ZNK6hermes2vm10NativeArgs5beginEv"}
+!30 = !{}
 end_hunk_1

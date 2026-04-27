@@ -4,7 +4,8 @@ begin_hunk_0_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -13,7 +14,8 @@ begin_hunk_1_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -22,7 +24,8 @@ begin_hunk_2_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -31,7 +34,8 @@ begin_hunk_3_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -40,7 +44,8 @@ begin_hunk_4_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -49,7 +54,8 @@ begin_hunk_5_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -58,7 +64,8 @@ begin_hunk_6_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -67,7 +74,8 @@ begin_hunk_7_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -76,7 +84,8 @@ begin_hunk_8_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -85,7 +94,8 @@ begin_hunk_9_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -94,7 +104,8 @@ begin_hunk_10_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtN
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -103,7 +114,8 @@ begin_hunk_11_@_RNvMsz_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_6SharedINtN
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -112,7 +124,8 @@ begin_hunk_12_@_RNvXsn_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -121,7 +134,8 @@ begin_hunk_13_@_RNvXsn_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -130,7 +144,8 @@ begin_hunk_14_@_RNvXsn_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -139,7 +154,8 @@ begin_hunk_15_@_RNvXso_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -148,7 +164,8 @@ begin_hunk_16_@_RNvXso_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 
@@ -157,7 +174,8 @@ begin_hunk_17_@_RNvXso_NtCsee2lL6QbnsJ_15crossbeam_epoch6atomicINtB5_5OwnedINtNt
 bb.a:
   %i.a = load i64, ptr %0, align 8, !noundef !3
   %i.b = and i64 %i.a, -8
-  %i.c = inttoptr i64 %i.b to ptr
+  %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
   ret ptr %i.c
 }
 

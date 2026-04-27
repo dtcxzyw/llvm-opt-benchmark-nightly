@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN6icu_7812PreparsedUCD21parseScriptExtensionsEPKcRNS_10UnicodeSe
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.g, align 8
-  %i.i = load ptr, ptr %4, align 8
+  %i.i = load ptr, ptr %4, align 8, !nonnull !14, !noundef !14
   store i8 0, ptr %i.i, align 1
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %.0 to i64
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN6icu_7812PreparsedUCD19parseIdentifierTypeEPKcRNS_10UnicodeSetE
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.g, align 8
-  %i.i = load ptr, ptr %4, align 8
+  %i.i = load ptr, ptr %4, align 8, !nonnull !14, !noundef !14
   store i8 0, ptr %i.i, align 1
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %.0 to i64
@@ -22,4 +22,5 @@ begin_hunk_2_@strlen
 !11 = distinct !{!11, !6}
 !12 = distinct !{!12, !6}
 !13 = !{i64 2149290739}
+!14 = !{}
 end_hunk_2
