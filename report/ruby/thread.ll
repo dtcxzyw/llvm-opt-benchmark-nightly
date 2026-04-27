@@ -4,7 +4,8 @@ begin_hunk_0_@exec_recursive:bb.a
 
 bb.q:                                             ; preds = %bb.o
   %i.cc = add i64 %i.bn, 24
-  %i.cd = inttoptr i64 %i.cc to ptr
+  %i.cd = inttoptr i64 %i.cc to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.cd) ]
   %i.ce = getelementptr i8, ptr %i.cd, i64 16
   %i.cf = load i64, ptr %i.ce, align 8, !tbaa !398
   br label %RHASH_EMPTY_P.exit.i
@@ -13,7 +14,8 @@ begin_hunk_1_@exec_recursive:bb.a
 
 bb.af:                                            ; preds = %bb.ad
   %i.ek = add i64 %i.dv, 24
-  %i.el = inttoptr i64 %i.ek to ptr
+  %i.el = inttoptr i64 %i.ek to ptr               ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.el) ]
   %i.em = getelementptr i8, ptr %i.el, i64 16
   %i.en = load i64, ptr %i.em, align 8, !tbaa !398
   br label %RHASH_EMPTY_P.exit.i67

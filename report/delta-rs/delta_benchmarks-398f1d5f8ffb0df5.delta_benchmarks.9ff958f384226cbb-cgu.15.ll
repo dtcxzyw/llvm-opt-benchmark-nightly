@@ -4,7 +4,8 @@ begin_hunk_0_@_RINvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB6_13RawTableInner16drop_
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [144 x i8], ptr %.sroa.04.1.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [144 x i8], ptr %.sroa.04.1.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.14.014.i, -1              ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -144 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 16 dereferenceable(144) %i.y)
@@ -13,7 +14,8 @@ begin_hunk_1_@_RINvMsa_NtCs2HSpDNxY7OE_9hashbrown3rawNtB6_13RawTableInner16drop_
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [24 x i8], ptr %.sroa.04.1.i, i64 %i.v
+  %i.w = getelementptr inbounds [24 x i8], ptr %.sroa.04.1.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.14.010.i, -1              ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !185)
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -16 ; 2 uses
@@ -22,7 +24,8 @@ begin_hunk_2_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !369
@@ -31,7 +34,8 @@ begin_hunk_3_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -40
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcDNtNtCs2xb0BKvnu80_21datafusion_datasource11file_format17FileFormatFactoryEL_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(40) %i.y), !noalias !390
@@ -40,7 +44,8 @@ begin_hunk_4_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -40
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table20TableProviderFactoryEL_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(40) %i.y), !noalias !411
@@ -49,7 +54,8 @@ begin_hunk_5_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !432
@@ -58,7 +64,8 @@ begin_hunk_6_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !453
@@ -67,7 +74,8 @@ begin_hunk_7_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !474
@@ -76,7 +84,8 @@ begin_hunk_8_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !495
@@ -85,7 +94,8 @@ begin_hunk_9_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9h
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !516
@@ -94,7 +104,8 @@ begin_hunk_10_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !537
@@ -103,7 +114,8 @@ begin_hunk_11_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB4_6option6OptionBH_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !558
@@ -112,7 +124,8 @@ begin_hunk_12_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -56
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(56) %i.y), !noalias !579
@@ -121,7 +134,8 @@ begin_hunk_13_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnDecryptionPropertiesEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !600
@@ -130,7 +144,8 @@ begin_hunk_14_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs3gpiEk3WpjL_9
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [112 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [112 x i8], ptr %.sroa.05.1.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i, -1         ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -112
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 16 dereferenceable(112) %i.y), !noalias !621
@@ -139,7 +154,8 @@ begin_hunk_15_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZE
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i.i.i.i, -1     ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !810
@@ -148,7 +164,8 @@ begin_hunk_16_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsfYVtenZkBsn_12
   %i.ab = zext nneg i16 %i.aa to i64
   %i.ac = and i16 %i.z, %.lcssa.i.i.i.i.i.i.i
   %i.ad = sub nsw i64 0, %i.ab
-  %i.ae = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i.i.i.i, i64 %i.ad
+  %i.ae = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i.i.i.i.i, i64 %i.ad ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ae) ]
   %i.af = add i64 %.sroa.107.014.i.i.i.i.i.i, -1  ; 2 uses
   %i.ag = getelementptr inbounds i8, ptr %i.ae, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.ag), !noalias !1646
@@ -157,7 +174,8 @@ begin_hunk_17_@_RNvXsC_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_11RawIntoIterTNtNtCs8
   %i.r = and i16 %i.o, %.lcssa.i.i                ; 2 uses
   store i16 %i.r, ptr %i.e, align 8, !alias.scope !5111
   %i.s = sub nsw i64 0, %i.q
-  %i.t = getelementptr inbounds [112 x i8], ptr %.lcssa13, i64 %i.s
+  %i.t = getelementptr inbounds [112 x i8], ptr %.lcssa13, i64 %i.s ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.u = add i64 %i.h, -1                         ; 3 uses
   store i64 %i.u, ptr %i.b, align 8, !alias.scope !5108
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -112
@@ -166,7 +184,8 @@ begin_hunk_18_@_RNvXsE_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_11RawIntoIterTNtNtCs8
   %i.r = and i16 %i.o, %.lcssa.i
   store i16 %i.r, ptr %i.e, align 8, !alias.scope !5118
   %i.s = sub nsw i64 0, %i.q
-  %i.t = getelementptr inbounds [112 x i8], ptr %i.n, i64 %i.s
+  %i.t = getelementptr inbounds [112 x i8], ptr %i.n, i64 %i.s ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -112
@@ -175,7 +194,8 @@ begin_hunk_19_@_RNvXsE_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_11RawIntoIterTRNtNtCs
   %i.r = and i16 %i.o, %.lcssa.i
   store i16 %i.r, ptr %i.e, align 8, !alias.scope !5124
   %i.s = sub nsw i64 0, %i.q
-  %i.t = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.s
+  %i.t = getelementptr inbounds [8 x i8], ptr %i.n, i64 %i.s ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.t) ]
   %i.u = add i64 %i.b, -1
   store i64 %i.u, ptr %i.a, align 8
   %i.v = getelementptr inbounds i8, ptr %i.t, i64 -8
@@ -184,7 +204,8 @@ begin_hunk_20_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringBH_EECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !6247
@@ -193,7 +214,8 @@ begin_hunk_21_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -40
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcDNtNtCs2xb0BKvnu80_21datafusion_datasource11file_format17FileFormatFactoryEL_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(40) %i.y), !noalias !6264
@@ -202,7 +224,8 @@ begin_hunk_22_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -40
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table20TableProviderFactoryEL_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(40) %i.y), !noalias !6281
@@ -211,7 +234,8 @@ begin_hunk_23_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6298
@@ -220,7 +244,8 @@ begin_hunk_24_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6315
@@ -229,7 +254,8 @@ begin_hunk_25_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6332
@@ -238,7 +264,8 @@ begin_hunk_26_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6349
@@ -247,7 +274,8 @@ begin_hunk_27_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6366
@@ -256,7 +284,8 @@ begin_hunk_28_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBL_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(32) %i.y), !noalias !6383
@@ -265,7 +294,8 @@ begin_hunk_29_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB4_6option6OptionBH_EEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !6400
@@ -274,7 +304,8 @@ begin_hunk_30_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -32 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.y)
@@ -283,7 +314,8 @@ begin_hunk_31_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [352 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [352 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -352 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(352) %i.y)
@@ -292,7 +324,8 @@ begin_hunk_32_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [144 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [144 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -144 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 16 dereferenceable(144) %i.y)
@@ -301,7 +334,8 @@ begin_hunk_33_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -56
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(56) %i.y), !noalias !6488
@@ -310,7 +344,8 @@ begin_hunk_34_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [56 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -56 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(56) %i.y)
@@ -319,7 +354,8 @@ begin_hunk_35_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [136 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [136 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -136 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(136) %i.y)
@@ -328,7 +364,8 @@ begin_hunk_36_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [48 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -48
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnDecryptionPropertiesEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 8 dereferenceable(48) %i.y), !noalias !6539
@@ -337,7 +374,8 @@ begin_hunk_37_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [72 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 3 uses
+  %i.w = getelementptr inbounds [72 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.018.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -72 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.y)
@@ -346,7 +384,8 @@ begin_hunk_38_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7B
   %i.r = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
   %i.s = zext nneg i16 %i.r to i64
   %i.t = sub nsw i64 0, %i.s
-  %i.u = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.t
+  %i.u = getelementptr inbounds [40 x i8], ptr %.sroa.05.1.i.i, i64 %i.t ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -40 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.v)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs6Po7BT7Nknu_5alloc6string6StringTjRNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEEECsdJxlLsGgtXr_16delta_benchmarks.exit.i.i unwind label %bb.e, !noalias !6573
@@ -355,7 +394,8 @@ begin_hunk_39_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [112 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [112 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -112
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 16 dereferenceable(112) %i.y), !noalias !6590
@@ -364,7 +404,8 @@ begin_hunk_40_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFy
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [32 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6618)
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -16 ; 2 uses
@@ -373,7 +414,8 @@ begin_hunk_41_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjhHCj
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [64 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 7 uses
+  %i.w = getelementptr inbounds [64 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 8 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.017.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -64 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6646)
@@ -382,7 +424,8 @@ begin_hunk_42_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjhHCj
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [224 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [224 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -224
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion5utils10ExpressionEECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef align 16 dereferenceable(224) %i.y), !noalias !6714
@@ -391,7 +434,8 @@ begin_hunk_43_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjhHCj
   %i.t = zext nneg i16 %i.s to i64
   %i.u = and i16 %i.r, %.lcssa.i.i.i
   %i.v = sub nsw i64 0, %i.t
-  %i.w = getelementptr inbounds [104 x i8], ptr %.sroa.05.1.i.i, i64 %i.v
+  %i.w = getelementptr inbounds [104 x i8], ptr %.sroa.05.1.i.i, i64 %i.v ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.w) ]
   %i.x = add i64 %.sroa.107.014.i.i, -1           ; 2 uses
   %i.y = getelementptr inbounds i8, ptr %i.w, i64 -104
   tail call fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnECsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(104) %i.y), !noalias !6731
@@ -400,7 +444,8 @@ begin_hunk_44_@_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCs4td
   %i.r = tail call range(i16 0, 17) i16 @llvm.cttz.i16(i16 %.lcssa.i.i.i, i1 true)
   %i.s = zext nneg i16 %i.r to i64
   %i.t = sub nsw i64 0, %i.s
-  %i.u = getelementptr inbounds [80 x i8], ptr %.sroa.05.1.i.i, i64 %i.t
+  %i.u = getelementptr inbounds [80 x i8], ptr %.sroa.05.1.i.i, i64 %i.t ; 2 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.u) ]
   %i.v = getelementptr inbounds i8, ptr %i.u, i64 -80 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecNtNtB7_6string6StringENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull align 8 dereferenceable(80) %i.v)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtNtCs4tdlwR1I4n2_7parquet6schema5types10ColumnPathNtNtNtBN_4file10properties16ColumnPropertiesEECsdJxlLsGgtXr_16delta_benchmarks.exit.i.i unwind label %bb.e, !noalias !6748
