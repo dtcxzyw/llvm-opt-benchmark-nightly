@@ -4,9 +4,9 @@ begin_hunk_0_@_ZN8NArchive4NZip10CInArchive15ReadLocalsAndCdER13CObjectVectorINS
 .noexc149:                                        ; preds = %_ZN7CBufferIhE11SetCapacityEm.exit.i
   store ptr %i.hp, ptr %i.hk, align 8, !tbaa !34
   store i64 %i.ho, ptr %i.hn, align 8, !tbaa !33
-  %.pre.i148 = load i64, ptr %i.bz, align 8, !tbaa !33
   %7 = load ptr, ptr %i.cl, align 8, !tbaa !34
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.hp, ptr align 1 %7, i64 %.pre.i148, i1 false)
+  %8 = load i64, ptr %i.bz, align 8, !tbaa !33
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.hp, ptr align 1 %7, i64 %8, i1 false)
   br label %_ZN7CBufferIhEaSERKS0_.exit
 
 _ZN7CBufferIhEaSERKS0_.exit:                      ; preds = %.noexc149, %_ZN7CBufferIhE4FreeEv.exit.i
@@ -15,10 +15,10 @@ begin_hunk_1_@_ZN8NArchive4NZip5CItemC2ERKS1_:bb.a
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 168
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !34
   store i64 %i.ai, ptr %i.ag, align 8, !tbaa !33
-  %.pre.i.i = load i64, ptr %i.ah, align 8, !tbaa !33
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !34
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aj, ptr align 1 %i.am, i64 %.pre.i.i, i1 false)
+  %2 = load i64, ptr %i.ah, align 8, !tbaa !33
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.aj, ptr align 1 %i.am, i64 %2, i1 false)
   br label %_ZN7CBufferIhEC2ERKS0_.exit
 
 _ZN7CBufferIhEC2ERKS0_.exit:                      ; preds = %.noexc, %_ZN8NArchive4NZip11CExtraBlockC2ERKS1_.exit
