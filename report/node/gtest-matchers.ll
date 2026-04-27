@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN7testing7MatcherIRKNSt7__cxx1112basic_stringIcSt11char_traitsIc
   %.pre.i.i.i.i = load i64, ptr %i.y, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.n
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.aj = phi i64 [ %i.af, %bb.n ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   store i64 %i.aj, ptr %i.ak, align 8
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN7testing7MatcherIRKNSt7__cxx1112basic_stringIcSt11char_traitsIc
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZN7testing7MatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcES
   %.pre.i.i.i.i = load i64, ptr %i.y, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.n
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.aj = phi i64 [ %i.af, %bb.n ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   store i64 %i.aj, ptr %i.ak, align 8
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZN7testing7MatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcES
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZN7testing7MatcherIRKSt17basic_string_viewIcSt11char_traitsIcEEEC
   %.pre.i.i.i.i = load i64, ptr %i.y, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.n
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.aj = phi i64 [ %i.af, %bb.n ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   store i64 %i.aj, ptr %i.ak, align 8
@@ -49,7 +49,7 @@ begin_hunk_5_@_ZN7testing7MatcherIRKSt17basic_string_viewIcSt11char_traitsIcEEEC
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8
@@ -58,7 +58,7 @@ begin_hunk_6_@_ZN7testing7MatcherIRKSt17basic_string_viewIcSt11char_traitsIcEEEC
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8
@@ -67,7 +67,7 @@ begin_hunk_7_@_ZN7testing7MatcherISt17basic_string_viewIcSt11char_traitsIcEEEC2E
   %.pre.i.i.i.i = load i64, ptr %i.y, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.n
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.n, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.aj = phi i64 [ %i.af, %bb.n ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   store i64 %i.aj, ptr %i.ak, align 8
@@ -76,7 +76,7 @@ begin_hunk_8_@_ZN7testing7MatcherISt17basic_string_viewIcSt11char_traitsIcEEEC2E
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8
@@ -85,7 +85,7 @@ begin_hunk_9_@_ZN7testing7MatcherISt17basic_string_viewIcSt11char_traitsIcEEEC2E
   %.pre.i.i.i.i = load i64, ptr %i.x, align 8
   br label %_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit
 
-_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %bb.p
+_ZN7testing8internal14ComparisonBaseINS0_9EqMatcherINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES8_St8equal_toIvEED2Ev.exit: ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.ai = phi i64 [ %i.ae, %bb.p ], [ %.pre.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ]
   %i.aj = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   store i64 %i.ai, ptr %i.aj, align 8

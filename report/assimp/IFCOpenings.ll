@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN6Assimp3IFC18GetContoursInPlaneERKSt10shared_ptrINS0_8TempMeshE
   call void @_ZdlPvm(ptr noundef nonnull %i.af, i64 noundef %i.ak) #27
   br label %_ZNSt6vectorI10aiVector2tIdESaIS1_EED2Ev.exit11
 
-_ZNSt6vectorI10aiVector2tIdESaIS1_EED2Ev.exit11:  ; preds = %bb.g, %.body
+_ZNSt6vectorI10aiVector2tIdESaIS1_EED2Ev.exit11:  ; preds = %.body, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
