@@ -1,0 +1,501 @@
+diff --git a/llvm/lib/Transforms/Scalar/LICM.cpp b/llvm/lib/Transforms/Scalar/LICM.cpp
+index 03edf9e3b0c1e..330464fdb64ff 100644
+--- a/llvm/lib/Transforms/Scalar/LICM.cpp
++++ b/llvm/lib/Transforms/Scalar/LICM.cpp
+@@ -2328,7 +2328,9 @@ static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+     auto *Accesses = MSSA->getBlockAccesses(BB);
+     if (!Accesses)
+       continue;
+-    for (const auto &MA : *Accesses)
++    for (const auto &MA : *Accesses) {
++      if (!Flags.getIsSink() && MSSA->dominates(IMD, &MA))
++        continue;
+       if (const auto *MU = dyn_cast<MemoryUse>(&MA)) {
+         auto *MD = getClobberingMemoryAccess(*MSSA, BAA, Flags,
+                                              const_cast<MemoryUse *>(MU));
+@@ -2361,6 +2363,7 @@ static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+           }
+         }
+       }
++    }
+   }
+   return true;
+ }
+diff --git a/llvm/test/Analysis/MemorySSA/pr43427.ll b/llvm/test/Analysis/MemorySSA/pr43427.ll
+index 254fb1104c590..074fe39ff0de7 100644
+--- a/llvm/test/Analysis/MemorySSA/pr43427.ll
++++ b/llvm/test/Analysis/MemorySSA/pr43427.ll
+@@ -2,9 +2,15 @@
+ 
+ ; CHECK-LABEL: @f(i1 %arg)
+ 
++; CHECK: entry:
++; CHECK-NEXT:  %e = alloca i16, align 1
++; CHECK-NEXT:; [[NO1:.*]] = MemoryDef(liveOnEntry)
++; CHECK-NEXT:  store i16 undef, ptr %e, align 1
++; CHECK-NEXT:  br label %lbl1
++
+ ; CHECK: lbl1:
+-; CHECK-NEXT: ; [[NO4:.*]] = MemoryPhi({entry,liveOnEntry},{lbl1.backedge,[[NO9:.*]]})
+-; CHECK-NEXT: ; [[NO2:.*]] = MemoryDef([[NO4]])
++; CHECK-NEXT: ; [[NO4:.*]] = MemoryPhi({entry,1},{lbl1.backedge,[[NO2:.*]]})
++; CHECK-NEXT: ; [[NO2]] = MemoryDef([[NO4]])
+ ; CHECK-NEXT:  call void @g()
+ ; CHECK-NEXT:  br i1 %arg, label %for.end, label %if.else
+ 
+@@ -12,26 +18,24 @@
+ ; CHECK-NEXT:  br i1 %arg, label %lbl3, label %lbl2
+ 
+ ; CHECK: lbl2:
+-; CHECK-NEXT: ; [[NO8:.*]] = MemoryPhi({lbl3,[[NO7:.*]]},{for.end,[[NO2]]})
+ ; CHECK-NEXT:  br label %lbl3
+ 
+ ; CHECK: lbl3:
+-; CHECK-NEXT: [[NO7]] = MemoryPhi({lbl2,[[NO8]]},{for.end,2})
++; CHECK-NEXT:   br i1 %arg, label %lbl2, label %cleanup
+ 
+ ; CHECK: cleanup:
+ ; CHECK-NEXT: MemoryUse([[NO2]])
+ ; CHECK-NEXT:  %cleanup.dest = load i32, ptr undef, align 1
++; CHECK-NEXT:  %switch = icmp ult i32 %cleanup.dest, 1
++; CHECK-NEXT:  br i1 %switch, label %cleanup.cont, label %lbl1.backedge
+ 
+ ; CHECK: lbl1.backedge:
+-; CHECK-NEXT:  [[NO9]] = MemoryPhi({cleanup,[[NO7]]},{if.else,2})
+ ; CHECK-NEXT:   br label %lbl1
+ 
+ ; CHECK: cleanup.cont:
+-; CHECK-NEXT: ; [[NO6:.*]] = MemoryDef([[NO7]])
+-; CHECK-NEXT:   store i16 undef, ptr %e, align 1
+-; CHECK-NEXT:  3 = MemoryDef([[NO6]])
++; CHECK-NEXT: ; [[NO3:.*]] = MemoryDef([[NO2]])
+ ; CHECK-NEXT:   call void @g()
+-
++; CHECK-NEXT:   ret void
+ define void @f(i1 %arg) {
+ entry:
+   %e = alloca i16, align 1
+diff --git a/llvm/test/Analysis/MemorySSA/pr43438.ll b/llvm/test/Analysis/MemorySSA/pr43438.ll
+index 0e09137c1cf9a..c2a8d68930e0d 100644
+--- a/llvm/test/Analysis/MemorySSA/pr43438.ll
++++ b/llvm/test/Analysis/MemorySSA/pr43438.ll
+@@ -46,11 +46,7 @@ if.end569:                                        ; preds = %if.else568, %if.the
+ 
+ 
+ ; CHECK-LABEL: @f(i1 %arg)
+-; CHECK: 7 = MemoryPhi(
+-; CHECK: 6 = MemoryPhi(
+-; CHECK: 10 = MemoryPhi(
+-; CHECK: 9 = MemoryPhi(
+-; CHECK: 8 = MemoryPhi(
++; CHECK: 4 = MemoryPhi(
+ define void @f(i1 %arg) {
+ entry:
+   %e = alloca i16, align 1
+diff --git a/llvm/test/Transforms/LICM/2011-04-06-PromoteResultOfPromotion.ll b/llvm/test/Transforms/LICM/2011-04-06-PromoteResultOfPromotion.ll
+index 0d32e508edf5f..07352a299f76b 100644
+--- a/llvm/test/Transforms/LICM/2011-04-06-PromoteResultOfPromotion.ll
++++ b/llvm/test/Transforms/LICM/2011-04-06-PromoteResultOfPromotion.ll
+@@ -9,10 +9,12 @@ define void @f() {
+ ; CHECK-LABEL: define void @f() {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+ ; CHECK-NEXT:    [[L_87_I:%.*]] = alloca [9 x i16], align 16
+-; CHECK-NEXT:    [[G_58_PROMOTED:%.*]] = load i32, ptr @g_58, align 4, !tbaa [[INT_TBAA0:![0-9]+]]
++; CHECK-NEXT:    store ptr @g_58, ptr @g_116, align 8, !tbaa [[ANYPTR_TBAA0:![0-9]+]]
++; CHECK-NEXT:    [[TMP2:%.*]] = load ptr, ptr @g_116, align 8, !tbaa [[ANYPTR_TBAA0]]
++; CHECK-NEXT:    [[TMP2_PROMOTED:%.*]] = load i32, ptr [[TMP2]], align 4, !tbaa [[INT_TBAA4:![0-9]+]]
+ ; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
+ ; CHECK:       [[FOR_BODY]]:
+-; CHECK-NEXT:    [[TMP31:%.*]] = phi i32 [ [[G_58_PROMOTED]], %[[ENTRY]] ], [ [[OR:%.*]], %[[FOR_BODY]] ]
++; CHECK-NEXT:    [[TMP31:%.*]] = phi i32 [ [[TMP2_PROMOTED]], %[[ENTRY]] ], [ [[OR:%.*]], %[[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[INC12:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[INC:%.*]], %[[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[OR]] = or i32 [[TMP31]], 10
+ ; CHECK-NEXT:    [[INC]] = add nsw i32 [[INC12]], 1
+@@ -20,8 +22,7 @@ define void @f() {
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[FOR_BODY]], label %[[FOR_END:.*]]
+ ; CHECK:       [[FOR_END]]:
+ ; CHECK-NEXT:    [[OR_LCSSA:%.*]] = phi i32 [ [[OR]], %[[FOR_BODY]] ]
+-; CHECK-NEXT:    store ptr @g_58, ptr @g_116, align 8, !tbaa [[ANYPTR_TBAA4:![0-9]+]]
+-; CHECK-NEXT:    store i32 [[OR_LCSSA]], ptr @g_58, align 4, !tbaa [[INT_TBAA0]]
++; CHECK-NEXT:    store i32 [[OR_LCSSA]], ptr [[TMP2]], align 4, !tbaa [[INT_TBAA4]]
+ ; CHECK-NEXT:    ret void
+ ;
+ 
+@@ -52,10 +53,10 @@ for.end:                                          ; preds = %for.inc
+ !5 = !{!"any pointer", !1}
+ !6 = !{!"int", !1}
+ ;.
+-; CHECK: [[INT_TBAA0]] = !{[[META1:![0-9]+]], [[META1]], i64 0}
+-; CHECK: [[META1]] = !{!"int", [[META2:![0-9]+]]}
++; CHECK: [[ANYPTR_TBAA0]] = !{[[META1:![0-9]+]], [[META1]], i64 0}
++; CHECK: [[META1]] = !{!"any pointer", [[META2:![0-9]+]]}
+ ; CHECK: [[META2]] = !{!"omnipotent char", [[META3:![0-9]+]]}
+ ; CHECK: [[META3]] = !{!"Simple C/C++ TBAA"}
+-; CHECK: [[ANYPTR_TBAA4]] = !{[[META5:![0-9]+]], [[META5]], i64 0}
+-; CHECK: [[META5]] = !{!"any pointer", [[META2]]}
++; CHECK: [[INT_TBAA4]] = !{[[META5:![0-9]+]], [[META5]], i64 0}
++; CHECK: [[META5]] = !{!"int", [[META2]]}
+ ;.
+diff --git a/llvm/test/Transforms/LICM/call-hoisting.ll b/llvm/test/Transforms/LICM/call-hoisting.ll
+index 1078c079dfa42..02a90fb68040d 100644
+--- a/llvm/test/Transforms/LICM/call-hoisting.ll
++++ b/llvm/test/Transforms/LICM/call-hoisting.ll
+@@ -400,12 +400,12 @@ define void @neg_ref(ptr %loc) {
+ ; CHECK-LABEL: define void @neg_ref(
+ ; CHECK-SAME: ptr [[LOC:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
+-; CHECK-NEXT:    br label %[[LOOP:.*]]
+-; CHECK:       [[LOOP]]:
+-; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[BACKEDGE:.*]] ]
+ ; CHECK-NEXT:    call void @store(i32 0, ptr [[LOC]])
+ ; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[LOC]], align 4
+ ; CHECK-NEXT:    [[EARLYCND:%.*]] = icmp eq i32 [[V]], 198
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[BACKEDGE:.*]] ]
+ ; CHECK-NEXT:    br i1 [[EARLYCND]], label %[[EXIT1:.*]], label %[[BACKEDGE]]
+ ; CHECK:       [[BACKEDGE]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+@@ -620,3 +620,4 @@ exit:
+   ret void
+ }
+ 
++
+diff --git a/llvm/test/Transforms/LICM/guards.ll b/llvm/test/Transforms/LICM/guards.ll
+index 361d938ce19b8..0f08e59f20bfa 100644
+--- a/llvm/test/Transforms/LICM/guards.ll
++++ b/llvm/test/Transforms/LICM/guards.ll
+@@ -34,9 +34,9 @@ define void @test2(i1 %cond, ptr %ptr) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[X:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[X_INC:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    store i32 0, ptr [[PTR:%.*]], align 4
++; CHECK-NEXT:    store i32 [[X]], ptr [[PTR:%.*]], align 4
+ ; CHECK-NEXT:    call void (i1, ...) @llvm.experimental.guard(i1 [[COND:%.*]]) [ "deopt"(i32 0) ]
+-; CHECK-NEXT:    [[X_INC]] = add i32 [[X]], 0
++; CHECK-NEXT:    [[X_INC]] = add i32 [[X]], [[X]]
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ;
+ 
+@@ -45,7 +45,7 @@ entry:
+ 
+ loop:
+   %x = phi i32 [ 0, %entry ], [ %x.inc, %loop ]
+-  store i32 0, ptr %ptr
++  store i32 %x, ptr %ptr
+   call void (i1, ...) @llvm.experimental.guard(i1 %cond) ["deopt" (i32 0)]
+   %val = load i32, ptr %ptr
+   %x.inc = add i32 %x, %val
+diff --git a/llvm/test/Transforms/LICM/hoist-debuginvariant.ll b/llvm/test/Transforms/LICM/hoist-debuginvariant.ll
+index e560ac4c55378..98e7bd6a5c03c 100644
+--- a/llvm/test/Transforms/LICM/hoist-debuginvariant.ll
++++ b/llvm/test/Transforms/LICM/hoist-debuginvariant.ll
+@@ -16,8 +16,8 @@ define void @fn1() !dbg !6 {
+ ; CHECK-NEXT: [[_TMP2:%.*]] = load i32, ptr @a, align 4
+ ; CHECK-NEXT: [[_TMP3:%.*]] = load i32, ptr @b, align 4
+ ; CHECK-NEXT: [[_TMP4:%.*]] = sdiv i32 [[_TMP2]], [[_TMP3]]
++; CHECK-NEXT: store i32 [[_TMP4]], ptr @c, align 4
+ ; CHECK-NEXT: br label [[BB3:%.*]]
+-
+   br label %bb3
+ 
+ bb3:                                              ; preds = %bb3, %0
+diff --git a/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll b/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll
+new file mode 100644
+index 0000000000000..0e5f0b0034ff1
+--- /dev/null
++++ b/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll
+@@ -0,0 +1,163 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes='loop-mssa(licm)' < %s -S | FileCheck %s
++
++;; It should hoist fn_write_inaccessible_mem
++;; because there is no conflict between inaccessible memory
++;; fn_read_inaccessible_mem is a nice side effect
++define i32 @loop_alias(i64 %x) {
++; CHECK-LABEL: define i32 @loop_alias(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ null, %[[ENTRY]] ], [ [[GEP:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[PHI]], align 16
++; CHECK-NEXT:    [[VAL:%.*]] = call i32 @fn_args(i32 [[LOAD]])
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[LOAD]])
++; CHECK-NEXT:    [[GEP]] = getelementptr inbounds nuw i32, ptr [[PHI]], i64 [[X]]
++; CHECK-NEXT:    [[ACC:%.*]] = add nuw nsw i32 [[VAL]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[ACC]], 10
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[AFTER_LOOP:.*]]
++; CHECK:       [[AFTER_LOOP]]:
++; CHECK-NEXT:    [[ACC_LCSSA:%.*]] = phi i32 [ [[ACC]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i32 [[ACC_LCSSA]]
++;
++entry:
++  br label %loop
++loop:
++  %phi = phi ptr [ null, %entry ], [ %gep, %loop ]
++  %load = load i32, ptr %phi, align 16
++  %val = call i32 @fn_args(i32  %load)
++  call void @fn_write_inaccessible_mem()
++  call void @fn_read_inaccessible_mem(i32 %load)
++  %gep = getelementptr inbounds nuw i32, ptr %phi, i64 %x
++  %acc = add nuw nsw i32 %val, 1
++  %cmp = icmp ult i32 %acc, 10
++  br i1 %cmp, label %loop, label %after_loop
++after_loop:
++  ret i32 %acc
++}
++
++;; It should NOT hoist fn_write_inaccessible_mem
++;; Because fn_args_2 reads same memory location
++define i32 @ne_loop_alias(i64 %x) {
++; CHECK-LABEL: define i32 @ne_loop_alias(
++; CHECK-SAME: i64 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ null, %[[ENTRY]] ], [ [[GEP:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[PHI]], align 16
++; CHECK-NEXT:    [[VAL:%.*]] = call i32 @fn_args_2(i32 [[LOAD]])
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[VAL]])
++; CHECK-NEXT:    [[GEP]] = getelementptr inbounds nuw i32, ptr [[PHI]], i64 [[X]]
++; CHECK-NEXT:    [[ACC:%.*]] = add nuw nsw i32 [[VAL]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[ACC]], 10
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[AFTER_LOOP:.*]]
++; CHECK:       [[AFTER_LOOP]]:
++; CHECK-NEXT:    [[ACC_LCSSA:%.*]] = phi i32 [ [[ACC]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i32 [[ACC_LCSSA]]
++;
++entry:
++  br label %loop
++loop:
++  %phi = phi ptr [ null, %entry ], [ %gep, %loop ]
++  %load = load i32, ptr %phi, align 16
++  %val = call i32 @fn_args_2(i32  %load)
++  call void @fn_write_inaccessible_mem()
++  call void @fn_read_inaccessible_mem(i32 %val)
++  %gep = getelementptr inbounds nuw i32, ptr %phi, i64 %x
++  %acc = add nuw nsw i32 %val, 1
++  %cmp = icmp ult i32 %acc, 10
++  br i1 %cmp, label %loop, label %after_loop
++after_loop:
++  ret i32 %acc
++}
++
++;; Should hoist fn_write_inaccessible_mem
++;; It does not alias with store
++define void @hoist_untill_I(ptr noalias %loc, ptr noalias %loc2){
++; CHECK-LABEL: define void @hoist_untill_I(
++; CHECK-SAME: ptr noalias [[LOC:%.*]], ptr noalias [[LOC2:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[LOC2]], align 4
++; CHECK-NEXT:    store i32 [[VAL]], ptr [[LOC]], align 4
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[VAL]])
++; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
++; CHECK:       [[FOR_COND_CLEANUP:.*:]]
++; CHECK-NEXT:    ret void
++; CHECK:       [[FOR_BODY]]:
++; CHECK-NEXT:    br label %[[FOR_BODY]]
++;
++entry:
++  br label %for.body
++for.cond.cleanup:                                 ; preds = %for.body
++  ret void
++for.body:
++  %val = load i32, ptr %loc2
++  store i32 %val, ptr %loc
++  call void @fn_write_inaccessible_mem()
++  call void @fn_read_inaccessible_mem(i32 %val)
++  br label %for.body
++}
++
++;; Should NOT hoist fn_write_inaccessible_mem
++;; because fn_read_inaccessible_mem reads the same memory location
++define void @neg_hoist_untill_I(ptr noalias %loc, ptr noalias %loc2){
++; CHECK-LABEL: define void @neg_hoist_untill_I(
++; CHECK-SAME: ptr noalias [[LOC:%.*]], ptr noalias [[LOC2:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[LOC2]], align 4
++; CHECK-NEXT:    store i32 [[VAL]], ptr [[LOC]], align 4
++; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
++; CHECK:       [[FOR_BODY]]:
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 0)
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[VAL]])
++; CHECK-NEXT:    br label %[[FOR_BODY]]
++;
++entry:
++  br label %for.body
++for.body:
++  %val = load i32, ptr %loc2
++  store i32 %val, ptr %loc
++  call void @fn_read_inaccessible_mem(i32 0)
++  call void @fn_write_inaccessible_mem()
++  call void @fn_read_inaccessible_mem(i32 %val)
++  br label %for.body
++}
++
++
++;; Nothing should be hoisted from the loop because volatile
++;; sets inaccessible memory to read write
++define void @neg_volatile(ptr %loc, ptr %loc2) {
++; CHECK-LABEL: define void @neg_volatile(
++; CHECK-SAME: ptr [[LOC:%.*]], ptr [[LOC2:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[LOC2]], align 4
++; CHECK-NEXT:    store volatile i32 0, ptr [[LOC]], align 4
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[VAL]])
++; CHECK-NEXT:    br label %[[LOOP]]
++;
++entry:
++  br label %loop
++
++loop:
++  %val = load i32, ptr %loc2
++  store volatile i32 0, ptr %loc
++  call void @fn_write_inaccessible_mem()
++  call void @fn_read_inaccessible_mem(i32 %val)
++  br label %loop
++}
++
++declare i32 @fn_args(i32) nounwind willreturn memory(argmem: read)
++declare i32 @fn_args_2(i32) nounwind willreturn memory(inaccessiblemem: read)
++declare void @fn_write_inaccessible_mem() nounwind memory(inaccessiblemem: write)
++declare void @fn_read_inaccessible_mem(i32) nounwind memory(inaccessiblemem: read)
++declare void @fn_readwrite_inaccessible_mem() nounwind memory(inaccessiblemem: readwrite)
+diff --git a/llvm/test/Transforms/LICM/invariant.start.ll b/llvm/test/Transforms/LICM/invariant.start.ll
+index c9c16423e2637..9c957267d3db9 100644
+--- a/llvm/test/Transforms/LICM/invariant.start.ll
++++ b/llvm/test/Transforms/LICM/invariant.start.ll
+@@ -85,9 +85,9 @@ define void @test4(i1 %cond, ptr %ptr) {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[X:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[X_INC:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    store i32 0, ptr [[PTR:%.*]], align 4
++; CHECK-NEXT:    store i32 [[X]], ptr [[PTR:%.*]], align 4
+ ; CHECK-NEXT:    [[TMP0:%.*]] = call ptr @llvm.invariant.start.p0(i64 4, ptr [[PTR]])
+-; CHECK-NEXT:    [[X_INC]] = add i32 [[X]], 0
++; CHECK-NEXT:    [[X_INC]] = add i32 [[X]], [[X]]
+ ; CHECK-NEXT:    br label [[LOOP]]
+ ;
+ entry:
+@@ -95,7 +95,7 @@ entry:
+ 
+ loop:
+   %x = phi i32 [ 0, %entry ], [ %x.inc, %loop ]
+-  store i32 0, ptr %ptr
++  store i32 %x, ptr %ptr
+   call ptr @llvm.invariant.start.p0(i64 4, ptr %ptr)
+   %val = load i32, ptr %ptr
+   %x.inc = add i32 %x, %val
+@@ -106,12 +106,12 @@ loop:
+ define void @test5(i1 %cond, ptr %ptr) {
+ ; CHECK-LABEL: @test5(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i32 0, ptr [[PTR:%.*]], align 4
++; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[X:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[X_INC:%.*]], [[LOOP]] ]
+-; CHECK-NEXT:    store i32 0, ptr [[PTR:%.*]], align 4
+ ; CHECK-NEXT:    [[SCOPE:%.*]] = call ptr @llvm.invariant.start.p0(i64 4, ptr [[PTR]])
+-; CHECK-NEXT:    [[VAL:%.*]] = load i32, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    call void @llvm.invariant.end.p0(ptr [[SCOPE]], i64 4, ptr [[PTR]])
+ ; CHECK-NEXT:    [[X_INC]] = add i32 [[X]], [[VAL]]
+ ; CHECK-NEXT:    br label [[LOOP]]
+diff --git a/llvm/test/Transforms/LICM/pr50367.ll b/llvm/test/Transforms/LICM/pr50367.ll
+index 6aafff74f61d8..3e3e5c92cd481 100644
+--- a/llvm/test/Transforms/LICM/pr50367.ll
++++ b/llvm/test/Transforms/LICM/pr50367.ll
+@@ -44,6 +44,9 @@ define void @store_null(i1 %arg) {
+ ; CHECK-LABEL: define void @store_null(
+ ; CHECK-SAME: i1 [[ARG:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store ptr null, ptr @e, align 8, !tbaa [[ANYPTR_TBAA0]]
++; CHECK-NEXT:    [[PTR:%.*]] = load ptr, ptr @e, align 8, !tbaa [[ANYPTR_TBAA0]]
++; CHECK-NEXT:    store i32 0, ptr [[PTR]], align 4, !tbaa [[INT_TBAA4]]
+ ; CHECK-NEXT:    br label %[[LOOP1:.*]]
+ ; CHECK:       [[LOOP1]]:
+ ; CHECK-NEXT:    br label %[[LOOP2:.*]]
+@@ -53,7 +56,6 @@ define void @store_null(i1 %arg) {
+ ; CHECK-NEXT:    store i32 0, ptr null, align 4
+ ; CHECK-NEXT:    br label %[[LOOP2]]
+ ; CHECK:       [[LOOP_LATCH]]:
+-; CHECK-NEXT:    store i32 0, ptr null, align 4, !tbaa [[INT_TBAA4]]
+ ; CHECK-NEXT:    br label %[[LOOP1]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LICM/pr59324.ll b/llvm/test/Transforms/LICM/pr59324.ll
+index ec33a0f8ded0f..bb5570fec8b56 100644
+--- a/llvm/test/Transforms/LICM/pr59324.ll
++++ b/llvm/test/Transforms/LICM/pr59324.ll
+@@ -4,10 +4,10 @@
+ define void @test(ptr %a) {
+ ; CHECK-LABEL: @test(
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    br label [[LOOP:%.*]]
+-; CHECK:       loop:
+ ; CHECK-NEXT:    store ptr null, ptr null, align 8
+ ; CHECK-NEXT:    [[P:%.*]] = load ptr, ptr null, align 8
++; CHECK-NEXT:    br label [[LOOP:%.*]]
++; CHECK:       loop:
+ ; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
+ ; CHECK-NEXT:    store i32 [[V]], ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    br label [[LOOP]]
+diff --git a/llvm/test/Transforms/LICM/store-hoisting.ll b/llvm/test/Transforms/LICM/store-hoisting.ll
+index 016364fff9fbb..a746caec18e54 100644
+--- a/llvm/test/Transforms/LICM/store-hoisting.ll
++++ b/llvm/test/Transforms/LICM/store-hoisting.ll
+@@ -184,24 +184,24 @@ exit:
+ }
+ 
+ ; Hoisting the store is actually valid here, as it dominates the load.
+-define void @neg_ref(ptr %loc) {
+-; CHECK-LABEL: define void @neg_ref(
++define void @ref(ptr %loc) {
++; CHECK-LABEL: define void @ref(
+ ; CHECK-SAME: ptr [[LOC:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    store i32 0, ptr [[LOC]], align 4
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[LOC]], align 4
++; CHECK-NEXT:    [[EARLYCND:%.*]] = icmp eq i32 [[V]], 198
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[BACKEDGE:.*]] ]
+-; CHECK-NEXT:    [[EARLYCND:%.*]] = icmp eq i32 0, 198
+ ; CHECK-NEXT:    br i1 [[EARLYCND]], label %[[EXIT1:.*]], label %[[BACKEDGE]]
+ ; CHECK:       [[BACKEDGE]]:
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[IV]], 200
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT2:.*]]
+ ; CHECK:       [[EXIT1]]:
+-; CHECK-NEXT:    store i32 0, ptr [[LOC]], align 4
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       [[EXIT2]]:
+-; CHECK-NEXT:    store i32 0, ptr [[LOC]], align 4
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
+@@ -583,15 +583,14 @@ exit:
+ 
+ declare void @readonly() readonly
+ 
+-; TODO: can legally hoist since value read by call is known
+ define void @test_dominated_readonly(ptr %loc) {
+ ; CHECK-LABEL: define void @test_dominated_readonly(
+ ; CHECK-SAME: ptr [[LOC:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    store i32 0, ptr [[LOC]], align 4
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+-; CHECK-NEXT:    store i32 0, ptr [[LOC]], align 4
+ ; CHECK-NEXT:    call void @readonly()
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[IV]], 200
