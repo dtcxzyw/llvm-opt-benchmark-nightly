@@ -1,0 +1,503 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/AssumeBundleBuilder.h b/llvm/include/llvm/Transforms/Utils/AssumeBundleBuilder.h
+index eb91367dfdce0..f9d65d6b875ce 100644
+--- a/llvm/include/llvm/Transforms/Utils/AssumeBundleBuilder.h
++++ b/llvm/include/llvm/Transforms/Utils/AssumeBundleBuilder.h
+@@ -47,6 +47,8 @@ LLVM_ABI AssumeInst *buildAssumeFromInst(Instruction *I);
+ LLVM_ABI bool salvageKnowledge(Instruction *I, AssumptionCache *AC = nullptr,
+                                DominatorTree *DT = nullptr);
+ 
++LLVM_ABI void salvageKnowledgeBeforeInlining(CallBase *CB, AssumptionCache *AC);
++
+ /// Build and return a new assume created from the provided knowledge
+ /// if the knowledge in the assume is fully redundant this will return nullptr
+ LLVM_ABI AssumeInst *
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 8185f009bc9d0..1c99963b63170 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3710,7 +3710,18 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+           return CallBase::removeOperandBundle(II, OBU.getTagID());
+         }
+ 
+-        // TODO: apply nonnull return attributes to calls and invokes
++        // Fold the assume into a nonnull return attribute
++        // Note that we check the next node, since we care that the assume is
++        // valid after the CallBase, not before
++        // TODO: Fold nonnull into invokes
++        if (auto *CB = dyn_cast<CallBase>(RK.WasOn);
++            CB && !CB->isTerminator() &&
++            isValidAssumeForContext(II, CB->getNextNode(), &DT,
++                                    /*AllowEphemerals=*/true)) {
++          CB->addRetAttr(Attribute::NonNull);
++          Worklist.addValue(CB);
++          return CallBase::removeOperandBundle(II, OBU.getTagID());
++        }
+       }
+     }
+ 
+diff --git a/llvm/lib/Transforms/Utils/AssumeBundleBuilder.cpp b/llvm/lib/Transforms/Utils/AssumeBundleBuilder.cpp
+index 4aebeeda7f262..9befefd64c0f9 100644
+--- a/llvm/lib/Transforms/Utils/AssumeBundleBuilder.cpp
++++ b/llvm/lib/Transforms/Utils/AssumeBundleBuilder.cpp
+@@ -305,6 +305,33 @@ bool llvm::salvageKnowledge(Instruction *I, AssumptionCache *AC,
+   return Changed;
+ }
+ 
++void llvm::salvageKnowledgeBeforeInlining(CallBase *CB, AssumptionCache *AC) {
++  if (EnableKnowledgeRetention) {
++    salvageKnowledge(CB, AC);
++    return;
++  }
++
++  // TODO: Salvage knowledge from invokes
++  if (CB->isTerminator())
++    return;
++
++  SmallVector<OperandBundleDef, 1> AfterAttrs;
++  if (CB->hasRetAttr(Attribute::NonNull))
++    AfterAttrs.emplace_back("nonnull", CB);
++
++  if (AfterAttrs.empty())
++    return;
++
++  Module *M = CB->getModule();
++  Function *AssumeDecl =
++      Intrinsic::getOrInsertDeclaration(M, Intrinsic::assume);
++  AssumeInst *Assume = cast<AssumeInst>(CallInst::Create(
++      AssumeDecl, ConstantInt::getTrue(M->getContext()), AfterAttrs));
++  Assume->insertAfter(CB->getIterator());
++  if (AC)
++    AC->registerAssumption(Assume);
++}
++
+ AssumeInst *
+ llvm::buildAssumeFromKnowledge(ArrayRef<RetainedKnowledge> Knowledge,
+                                Instruction *CtxI, AssumptionCache *AC,
+diff --git a/llvm/lib/Transforms/Utils/InlineFunction.cpp b/llvm/lib/Transforms/Utils/InlineFunction.cpp
+index 3230b306f17d1..8a18875db779b 100644
+--- a/llvm/lib/Transforms/Utils/InlineFunction.cpp
++++ b/llvm/lib/Transforms/Utils/InlineFunction.cpp
+@@ -2718,7 +2718,7 @@ void llvm::InlineFunctionImpl(CallBase &CB, InlineFunctionInfo &IFI,
+         IFI.GetAssumptionCache ? &IFI.GetAssumptionCache(*Caller) : nullptr;
+ 
+     /// Preserve all attributes on of the call and its parameters.
+-    salvageKnowledge(&CB, AC);
++    salvageKnowledgeBeforeInlining(&CB, AC);
+ 
+     // We want the inliner to prune the code as it copies.  We would LOVE to
+     // have no dead or constant instructions leftover after inlining occurs
+diff --git a/llvm/test/Transforms/Inline/cgscc-update.ll b/llvm/test/Transforms/Inline/cgscc-update.ll
+index f1121fa88a4b1..1f149a065ce2a 100644
+--- a/llvm/test/Transforms/Inline/cgscc-update.ll
++++ b/llvm/test/Transforms/Inline/cgscc-update.ll
+@@ -1,4 +1,4 @@
+-; RUN: opt < %s -aa-pipeline=basic-aa -passes='cgscc(function-attrs,inline)' -S | FileCheck %s
++; RUN: opt < %s -aa-pipeline=basic-aa -passes='cgscc(function-attrs,inline,instcombine)' -S | FileCheck %s
+ ; This test runs the inliner and the function attribute deduction. It ensures
+ ; that when the inliner mutates the call graph it correctly updates the CGSCC
+ ; iteration so that we can compute refined function attributes. In this way it
+diff --git a/llvm/test/Transforms/Inline/nonnull.ll b/llvm/test/Transforms/Inline/nonnull.ll
+index 93aabfb6f10ab..4c8e16bccc90c 100644
+--- a/llvm/test/Transforms/Inline/nonnull.ll
++++ b/llvm/test/Transforms/Inline/nonnull.ll
+@@ -131,7 +131,7 @@ define void @caller6(ptr %arg) {
+ declare ptr @buz()
+ define nonnull ptr @callee7() {
+ ; CHECK-LABEL: define nonnull ptr @callee7() {
+-; CHECK-NEXT:    [[R:%.*]] = call ptr @buz() #[[ATTR0:[0-9]+]]
++; CHECK-NEXT:    [[R:%.*]] = call ptr @buz() #[[ATTR1:[0-9]+]]
+ ; CHECK-NEXT:    ret ptr [[R]]
+ ;
+   %r = call ptr @buz() willreturn nounwind
+@@ -140,7 +140,8 @@ define nonnull ptr @callee7() {
+ 
+ define ptr @caller7() {
+ ; CHECK-LABEL: define ptr @caller7() {
+-; CHECK-NEXT:    [[R_I:%.*]] = call nonnull ptr @buz() #[[ATTR0]]
++; CHECK-NEXT:    [[R_I:%.*]] = call nonnull ptr @buz() #[[ATTR1]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call ptr @callee7()
+@@ -159,6 +160,7 @@ define nonnull ptr @callee8() {
+ define ptr @caller8() {
+ ; CHECK-LABEL: define ptr @caller8() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call nonnull ptr @buz()
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee8()
+@@ -168,7 +170,7 @@ define ptr @caller8() {
+ define ptr @callee9() {
+ ; CHECK-LABEL: define ptr @callee9() {
+ ; CHECK-NEXT:    [[R:%.*]] = call ptr @buz()
+-; CHECK-NEXT:    call void @foo() #[[ATTR1:[0-9]+]]
++; CHECK-NEXT:    call void @foo() #[[ATTR2:[0-9]+]]
+ ; CHECK-NEXT:    ret ptr [[R]]
+ ;
+   %r = call ptr @buz()
+@@ -179,9 +181,42 @@ define ptr @callee9() {
+ define ptr @caller9() {
+ ; CHECK-LABEL: define ptr @caller9() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call ptr @buz()
+-; CHECK-NEXT:    call void @foo() #[[ATTR1]]
++; CHECK-NEXT:    call void @foo() #[[ATTR2]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee9()
+   ret ptr %r
+ }
++
++declare i32 @__gxx_personality_v0(...)
++
++define ptr @simple_func(ptr %ptr) {
++; CHECK-LABEL: define ptr @simple_func
++; CHECK-SAME: (ptr [[PTR:%.*]]) {
++; CHECK-NEXT:    ret ptr [[PTR]]
++;
++  ret ptr %ptr
++}
++
++define ptr @on_invoke() personality ptr @__gxx_personality_v0 {
++; CHECK-LABEL: define ptr @on_invoke() personality ptr @__gxx_personality_v0 {
++; CHECK-NEXT:    [[R:%.*]] = call ptr @buz()
++; CHECK-NEXT:    br label [[PROCEED:%.*]]
++; CHECK:       proceed:
++; CHECK-NEXT:    ret ptr [[R]]
++; CHECK:       pad:
++; CHECK-NEXT:    [[TMP1:%.*]] = landingpad { ptr, i32 }
++; CHECK-NEXT:            cleanup
++; CHECK-NEXT:    ret ptr [[R]]
++;
++  %r = call ptr @buz()
++  invoke nonnull ptr @simple_func(ptr %r) to label %proceed unwind label %pad
++
++proceed:
++  ret ptr %r
++
++pad:
++  landingpad { ptr, i32 } cleanup
++  ret ptr %r
++}
+diff --git a/llvm/test/Transforms/Inline/ret_attr_align_and_noundef.ll b/llvm/test/Transforms/Inline/ret_attr_align_and_noundef.ll
+index c99d979be472b..0035e847ea0ef 100644
+--- a/llvm/test/Transforms/Inline/ret_attr_align_and_noundef.ll
++++ b/llvm/test/Transforms/Inline/ret_attr_align_and_noundef.ll
+@@ -188,6 +188,7 @@ define ptr @callee8() {
+ define ptr @caller8_okay_use_after_poison_anyways() {
+ ; CHECK-LABEL: define ptr @caller8_okay_use_after_poison_anyways() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call nonnull ptr @foo()
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+@@ -208,6 +209,7 @@ define ptr @callee9() {
+ define ptr @caller9_fail_creates_ub() {
+ ; CHECK-LABEL: define ptr @caller9_fail_creates_ub() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call noundef ptr @foo()
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+@@ -219,6 +221,7 @@ define ptr @caller9_fail_creates_ub() {
+ define ptr @caller9_okay_is_ub_anyways() {
+ ; CHECK-LABEL: define ptr @caller9_okay_is_ub_anyways() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call noundef nonnull ptr @foo()
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+@@ -242,6 +245,7 @@ define ptr @caller10_fail_maybe_poison() {
+ ; CHECK-LABEL: define ptr @caller10_fail_maybe_poison() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call ptr @foo()
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee10()
+@@ -252,6 +256,7 @@ define ptr @caller10_okay_will_be_ub() {
+ ; CHECK-LABEL: define ptr @caller10_okay_will_be_ub() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call noundef nonnull ptr @foo()
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call noundef nonnull ptr @callee10()
+@@ -262,6 +267,7 @@ define noundef ptr @caller10_okay_will_be_ub_todo() {
+ ; CHECK-LABEL: define noundef ptr @caller10_okay_will_be_ub_todo() {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call ptr @foo()
+ ; CHECK-NEXT:    call void @use.ptr(ptr [[R_I]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee10()
+@@ -306,6 +312,7 @@ define ptr @caller11_todo() {
+ ; CHECK-NEXT:    [[COND2_I:%.*]] = call i1 @val()
+ ; CHECK-NEXT:    br label [[CALLEE11_EXIT]]
+ ; CHECK:       callee11.exit:
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee11()
+@@ -333,6 +340,7 @@ define ptr @caller12_todo() {
+ ; CHECK-NEXT:    [[COND_I:%.*]] = call i1 @val() #[[ATTR0]]
+ ; CHECK-NEXT:    [[PP_I:%.*]] = call ptr @llvm.ptrmask.p0.i64(ptr [[P_I]], i64 -4)
+ ; CHECK-NEXT:    [[R_I:%.*]] = select i1 [[COND_I]], ptr [[P_I]], ptr [[PP_I]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %r = call nonnull ptr @callee12()
+@@ -434,6 +442,7 @@ define ptr @caller_bad_ret_prop(ptr %p1, ptr %p2, i64 %x, ptr %other) {
+ ; CHECK-NEXT:    br label [[CALLEE_BAD_RET_PROP_EXIT]]
+ ; CHECK:       callee_bad_ret_prop.exit:
+ ; CHECK-NEXT:    [[TMP2:%.*]] = phi ptr [ [[OTHER]], [[T_I]] ], [ [[TMP1]], [[F_I]] ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[TMP2]]) ]
+ ; CHECK-NEXT:    ret ptr [[TMP2]]
+ ;
+   %1 = call noundef ptr %p1(i64 %x, ptr %p2)
+diff --git a/llvm/test/Transforms/Inline/ret_attr_update.ll b/llvm/test/Transforms/Inline/ret_attr_update.ll
+index 7004b5795125d..57d8c3b1f5932 100644
+--- a/llvm/test/Transforms/Inline/ret_attr_update.ll
++++ b/llvm/test/Transforms/Inline/ret_attr_update.ll
+@@ -17,6 +17,7 @@ define ptr @caller(ptr %ptr, i64 %x) {
+ ; CHECK-LABEL: @caller(
+ ; CHECK-NEXT:    [[GEP:%.*]] = getelementptr inbounds i8, ptr [[PTR:%.*]], i64 [[X:%.*]]
+ ; CHECK-NEXT:    [[R_I:%.*]] = call nonnull ptr @foo(ptr noalias [[GEP]])
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+ ;
+   %gep = getelementptr inbounds i8, ptr %ptr, i64 %x
+@@ -54,6 +55,7 @@ define ptr @caller2(ptr %ptr, i64 %x, i1 %cond) {
+ ; CHECK-NEXT:    [[R_I:%.*]] = call ptr @foo(ptr [[GEP]])
+ ; CHECK-NEXT:    [[COND_I:%.*]] = icmp ne ptr [[R_I]], null
+ ; CHECK-NEXT:    call void (i1, ...) @llvm.experimental.guard(i1 [[COND_I]]) [ "deopt"() ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[R_I]]) ]
+ ; CHECK-NEXT:    [[R_I1:%.*]] = call ptr @bar(ptr [[GEP]])
+ ; CHECK-NEXT:    [[COND_I2:%.*]] = icmp ne ptr [[R_I1]], null
+ ; CHECK-NEXT:    br i1 [[COND_I2]], label [[RET_I:%.*]], label [[ORIG_I:%.*]]
+@@ -63,6 +65,7 @@ define ptr @caller2(ptr %ptr, i64 %x, i1 %cond) {
+ ; CHECK-NEXT:    br label [[CALLEE_WITH_EXPLICIT_CONTROL_FLOW_EXIT]]
+ ; CHECK:       callee_with_explicit_control_flow.exit:
+ ; CHECK-NEXT:    [[Q3:%.*]] = phi ptr [ [[R_I1]], [[RET_I]] ], [ [[GEP]], [[ORIG_I]] ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[Q3]]) ]
+ ; CHECK-NEXT:    br i1 [[COND:%.*]], label [[PRET:%.*]], label [[QRET:%.*]]
+ ; CHECK:       pret:
+ ; CHECK-NEXT:    ret ptr [[R_I]]
+@@ -187,6 +190,7 @@ define void @test7(ptr %ptr, i64 %x, i1 %cond) {
+ ; CHECK-NEXT:    br label [[CALLEE7_EXIT]]
+ ; CHECK:       callee7.exit:
+ ; CHECK-NEXT:    [[T1:%.*]] = phi ptr [ [[R_I]], [[PASS_I]] ], [ [[S_I]], [[FAIL_I]] ]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[T1]]) ]
+ ; CHECK-NEXT:    call void @snort(ptr [[T1]])
+ ; CHECK-NEXT:    ret void
+ ;
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index 197d680babe11..f6a164895fa92 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -400,6 +400,42 @@ define i1 @nonnull5(ptr %a) {
+   ret i1 %rval
+ }
+ 
++declare ptr @get_ptr()
++
++define void @nonnull_on_call() {
++; CHECK-LABEL: @nonnull_on_call(
++; CHECK-NEXT:    [[PTR:%.*]] = call nonnull ptr @get_ptr()
++; CHECK-NEXT:    ret void
++;
++  %ptr = call ptr @get_ptr()
++  call void @llvm.assume(i1 true) [ "nonnull"(ptr %ptr) ]
++  ret void
++}
++
++declare i32 @__gxx_personality_v0(...)
++
++define void @nonnull_on_invoke() personality ptr @__gxx_personality_v0 {
++; CHECK-LABEL: @nonnull_on_invoke(
++; CHECK-NEXT:    [[PTR:%.*]] = invoke ptr @get_ptr()
++; CHECK-NEXT:            to label [[PROCEED:%.*]] unwind label [[PAD:%.*]]
++; CHECK:       proceed:
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[PTR]]) ]
++; CHECK-NEXT:    ret void
++; CHECK:       pad:
++; CHECK-NEXT:    [[TMP1:%.*]] = landingpad { ptr, i32 }
++; CHECK-NEXT:            cleanup
++; CHECK-NEXT:    ret void
++;
++  %ptr = invoke ptr @get_ptr() to label %proceed unwind label %pad
++proceed:
++  call void @llvm.assume(i1 true) [ "nonnull"(ptr %ptr) ]
++  ret void
++
++pad:
++  landingpad { ptr, i32 } cleanup
++  ret void
++}
++
+ define void @redundant_nonnull1(ptr nonnull %ptr) {
+ ; CHECK-LABEL: @redundant_nonnull1(
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/PhaseOrdering/AArch64/hoist-runtime-checks.ll b/llvm/test/Transforms/PhaseOrdering/AArch64/hoist-runtime-checks.ll
+index ed0452d8eccd5..0bcf989d1cf06 100644
+--- a/llvm/test/Transforms/PhaseOrdering/AArch64/hoist-runtime-checks.ll
++++ b/llvm/test/Transforms/PhaseOrdering/AArch64/hoist-runtime-checks.ll
+@@ -128,19 +128,22 @@ define dso_local noundef i32 @sum_prefix_with_sum(ptr %s.coerce0, i64 %s.coerce1
+ ; CHECK-NEXT:    br i1 [[CMP5_NOT]], label [[FOR_COND_CLEANUP:%.*]], label [[FOR_BODY_PREHEADER:%.*]]
+ ; CHECK:       for.body.preheader:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[N]], -1
+-; CHECK-NEXT:    [[DOTNOT_NOT:%.*]] = icmp ugt i64 [[S_COERCE1]], [[TMP0]]
+-; CHECK-NEXT:    br i1 [[DOTNOT_NOT]], label [[FOR_BODY_PREHEADER8:%.*]], label [[COND_FALSE_I:%.*]], !prof [[PROF4:![0-9]+]]
+-; CHECK:       for.body.preheader8:
+-; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[N]], 8
++; CHECK-NEXT:    [[UMIN:%.*]] = tail call i64 @llvm.umin.i64(i64 [[S_COERCE1]], i64 [[TMP0]])
++; CHECK-NEXT:    [[TMP6:%.*]] = add i64 [[UMIN]], 1
++; CHECK-NEXT:    [[MIN_ITERS_CHECK:%.*]] = icmp ult i64 [[TMP6]], 9
+ ; CHECK-NEXT:    br i1 [[MIN_ITERS_CHECK]], label [[FOR_BODY_PREHEADER11:%.*]], label [[VECTOR_PH:%.*]]
+ ; CHECK:       vector.ph:
+-; CHECK-NEXT:    [[N_VEC:%.*]] = and i64 [[N]], -8
++; CHECK-NEXT:    [[N_MOD_VF:%.*]] = and i64 [[TMP6]], 7
++; CHECK-NEXT:    [[TMP8:%.*]] = icmp eq i64 [[N_MOD_VF]], 0
++; CHECK-NEXT:    [[TMP9:%.*]] = select i1 [[TMP8]], i64 8, i64 [[N_MOD_VF]]
++; CHECK-NEXT:    [[N_VEC:%.*]] = sub i64 [[TMP6]], [[TMP9]]
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       vector.body:
+ ; CHECK-NEXT:    [[INDEX:%.*]] = phi i64 [ 0, [[VECTOR_PH]] ], [ [[INDEX_NEXT:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[VEC_PHI:%.*]] = phi <4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP3:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[VEC_PHI9:%.*]] = phi <4 x i32> [ zeroinitializer, [[VECTOR_PH]] ], [ [[TMP4:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i8], ptr [[S_COERCE0]], i64 [[INDEX]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[TMP1]]) ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP1]], i64 16
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4
+ ; CHECK-NEXT:    [[WIDE_LOAD10:%.*]] = load <4 x i32>, ptr [[TMP2]], align 4
+@@ -148,31 +151,34 @@ define dso_local noundef i32 @sum_prefix_with_sum(ptr %s.coerce0, i64 %s.coerce1
+ ; CHECK-NEXT:    [[TMP4]] = add <4 x i32> [[WIDE_LOAD10]], [[VEC_PHI9]]
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i64 [[INDEX]], 8
+ ; CHECK-NEXT:    [[TMP5:%.*]] = icmp eq i64 [[INDEX_NEXT]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[TMP5]], label [[SPAN_CHECKED_ACCESS_EXIT:%.*]], label [[FOR_BODY]], !llvm.loop [[LOOP5:![0-9]+]]
++; CHECK-NEXT:    br i1 [[TMP5]], label [[MIDDLE_BLOCK:%.*]], label [[FOR_BODY]], !llvm.loop [[LOOP4:![0-9]+]]
+ ; CHECK:       middle.block:
+ ; CHECK-NEXT:    [[BIN_RDX:%.*]] = add <4 x i32> [[TMP4]], [[TMP3]]
+ ; CHECK-NEXT:    [[ADD:%.*]] = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> [[BIN_RDX]])
+-; CHECK-NEXT:    [[CMP_N:%.*]] = icmp eq i64 [[N]], [[N_VEC]]
+-; CHECK-NEXT:    br i1 [[CMP_N]], label [[FOR_COND_CLEANUP]], label [[FOR_BODY_PREHEADER11]]
++; CHECK-NEXT:    br label [[FOR_BODY_PREHEADER11]]
+ ; CHECK:       for.body.preheader11:
+-; CHECK-NEXT:    [[I_07_PH:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER8]] ], [ [[N_VEC]], [[SPAN_CHECKED_ACCESS_EXIT]] ]
+-; CHECK-NEXT:    [[RET_0_LCSSA:%.*]] = phi i32 [ 0, [[FOR_BODY_PREHEADER8]] ], [ [[ADD]], [[SPAN_CHECKED_ACCESS_EXIT]] ]
++; CHECK-NEXT:    [[I_07_PH:%.*]] = phi i64 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[N_VEC]], [[MIDDLE_BLOCK]] ]
++; CHECK-NEXT:    [[RET_06_PH:%.*]] = phi i32 [ 0, [[FOR_BODY_PREHEADER]] ], [ [[ADD]], [[MIDDLE_BLOCK]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY1:%.*]]
+ ; CHECK:       for.cond.cleanup:
+-; CHECK-NEXT:    [[RET_0_LCSSA1:%.*]] = phi i32 [ 0, [[ENTRY1:%.*]] ], [ [[ADD]], [[SPAN_CHECKED_ACCESS_EXIT]] ], [ [[ADD1:%.*]], [[FOR_BODY1]] ]
++; CHECK-NEXT:    [[RET_0_LCSSA1:%.*]] = phi i32 [ 0, [[ENTRY:%.*]] ], [ [[ADD1:%.*]], [[SPAN_CHECKED_ACCESS_EXIT:%.*]] ]
+ ; CHECK-NEXT:    ret i32 [[RET_0_LCSSA1]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[I_07:%.*]] = phi i64 [ [[INC:%.*]], [[FOR_BODY1]] ], [ [[I_07_PH]], [[FOR_BODY_PREHEADER11]] ]
+-; CHECK-NEXT:    [[RET_06:%.*]] = phi i32 [ [[ADD1]], [[FOR_BODY1]] ], [ [[RET_0_LCSSA]], [[FOR_BODY_PREHEADER11]] ]
++; CHECK-NEXT:    [[I_07:%.*]] = phi i64 [ [[INC:%.*]], [[SPAN_CHECKED_ACCESS_EXIT]] ], [ [[I_07_PH]], [[FOR_BODY_PREHEADER11]] ]
++; CHECK-NEXT:    [[RET_06:%.*]] = phi i32 [ [[ADD1]], [[SPAN_CHECKED_ACCESS_EXIT]] ], [ [[RET_06_PH]], [[FOR_BODY_PREHEADER11]] ]
++; CHECK-NEXT:    [[EXITCOND_NOT1:%.*]] = icmp eq i64 [[I_07]], [[S_COERCE1]]
++; CHECK-NEXT:    br i1 [[EXITCOND_NOT1]], label [[COND_FALSE_I:%.*]], label [[SPAN_CHECKED_ACCESS_EXIT]], !prof [[PROF5:![0-9]+]]
++; CHECK:       cond.false.i:
++; CHECK-NEXT:    tail call void @llvm.trap()
++; CHECK-NEXT:    unreachable
++; CHECK:       span_checked_access.exit:
+ ; CHECK-NEXT:    [[ARRAYIDX_I:%.*]] = getelementptr inbounds [4 x i8], ptr [[S_COERCE0]], i64 [[I_07]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ARRAYIDX_I]]) ]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i32, ptr [[ARRAYIDX_I]], align 4
+ ; CHECK-NEXT:    [[ADD1]] = add nsw i32 [[TMP7]], [[RET_06]]
+ ; CHECK-NEXT:    [[INC]] = add nuw i64 [[I_07]], 1
+ ; CHECK-NEXT:    [[EXITCOND_NOT:%.*]] = icmp eq i64 [[INC]], [[N]]
+ ; CHECK-NEXT:    br i1 [[EXITCOND_NOT]], label [[FOR_COND_CLEANUP]], label [[FOR_BODY1]], !llvm.loop [[LOOP6:![0-9]+]]
+-; CHECK:       cond.false.i:
+-; CHECK-NEXT:    tail call void @llvm.trap()
+-; CHECK-NEXT:    unreachable
+ ;
+ entry:
+   %s = alloca %"class.std::__1::span", align 8
+@@ -228,7 +234,7 @@ define hidden noundef nonnull align 4 dereferenceable(4) ptr @span_checked_acces
+ ; CHECK-NEXT:    [[__SIZE__I:%.*]] = getelementptr inbounds nuw i8, ptr [[THIS]], i64 8
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load i64, ptr [[__SIZE__I]], align 8
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[__IDX]], [[TMP0]]
+-; CHECK-NEXT:    br i1 [[CMP]], label [[COND_END:%.*]], label [[COND_FALSE:%.*]], !prof [[PROF4]]
++; CHECK-NEXT:    br i1 [[CMP]], label [[COND_END:%.*]], label [[COND_FALSE:%.*]], !prof [[PROF7:![0-9]+]]
+ ; CHECK:       cond.false:
+ ; CHECK-NEXT:    tail call void @llvm.trap()
+ ; CHECK-NEXT:    unreachable
+@@ -293,7 +299,8 @@ declare void @llvm.lifetime.end.p0(ptr nocapture)
+ ; CHECK: [[META1]] = !{!"llvm.loop.isvectorized", i32 1}
+ ; CHECK: [[META2]] = !{!"llvm.loop.unroll.runtime.disable"}
+ ; CHECK: [[LOOP3]] = distinct !{[[LOOP3]], [[META2]], [[META1]]}
+-; CHECK: [[PROF4]] = !{!"branch_weights", !"expected", i32 2000, i32 1}
+-; CHECK: [[LOOP5]] = distinct !{[[LOOP5]], [[META1]], [[META2]]}
++; CHECK: [[LOOP4]] = distinct !{[[LOOP4]], [[META1]], [[META2]]}
++; CHECK: [[PROF5]] = !{!"branch_weights", !"expected", i32 1, i32 2000}
+ ; CHECK: [[LOOP6]] = distinct !{[[LOOP6]], [[META2]], [[META1]]}
++; CHECK: [[PROF7]] = !{!"branch_weights", !"expected", i32 2000, i32 1}
+ ;.
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll b/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
+index 94766a1a83f7b..33b740f697c9a 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/hoist-load-of-baseptr.ll
+@@ -32,6 +32,7 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O1:       [[FOR_BODY4]]:
+ ; O1-NEXT:    [[J_05:%.*]] = phi i64 [ [[INC5:%.*]], %[[FOR_BODY4]] ], [ 0, %[[FOR_COND1_PREHEADER]] ]
+ ; O1-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05]]
++; O1-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ADD_PTR_I]]) ]
+ ; O1-NEXT:    [[TMP1:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA2:![0-9]+]]
+ ; O1-NEXT:    [[INC:%.*]] = add nsw i32 [[TMP1]], 1
+ ; O1-NEXT:    store i32 [[INC]], ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA2]]
+@@ -56,6 +57,7 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O2:       [[VECTOR_BODY]]:
+ ; O2-NEXT:    [[INDEX:%.*]] = phi i64 [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ], [ 0, %[[FOR_BODY4_PREHEADER]] ]
+ ; O2-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[INDEX]]
++; O2-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[TMP1]]) ]
+ ; O2-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP1]], i64 16
+ ; O2-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4, !tbaa [[INT_TBAA0:![0-9]+]]
+ ; O2-NEXT:    [[WIDE_LOAD8:%.*]] = load <4 x i32>, ptr [[TMP2]], align 4, !tbaa [[INT_TBAA0]]
+@@ -80,6 +82,7 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O2:       [[FOR_BODY4]]:
+ ; O2-NEXT:    [[J_05:%.*]] = phi i64 [ [[INC5:%.*]], %[[FOR_BODY4]] ], [ [[J_05_PH]], %[[FOR_BODY4_PREHEADER9]] ]
+ ; O2-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05]]
++; O2-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ADD_PTR_I]]) ]
+ ; O2-NEXT:    [[TMP6:%.*]] = load i32, ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA0]]
+ ; O2-NEXT:    [[INC:%.*]] = add nsw i32 [[TMP6]], 1
+ ; O2-NEXT:    store i32 [[INC]], ptr [[ADD_PTR_I]], align 4, !tbaa [[INT_TBAA0]]
+@@ -104,6 +107,7 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O3:       [[VECTOR_BODY]]:
+ ; O3-NEXT:    [[INDEX:%.*]] = phi i64 [ [[INDEX_NEXT:%.*]], %[[VECTOR_BODY]] ], [ 0, %[[FOR_COND1_PREHEADER_US]] ]
+ ; O3-NEXT:    [[TMP1:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[INDEX]]
++; O3-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[TMP1]]) ]
+ ; O3-NEXT:    [[TMP2:%.*]] = getelementptr inbounds nuw i8, ptr [[TMP1]], i64 16
+ ; O3-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[TMP1]], align 4, !tbaa [[INT_TBAA0:![0-9]+]]
+ ; O3-NEXT:    [[WIDE_LOAD9:%.*]] = load <4 x i32>, ptr [[TMP2]], align 4, !tbaa [[INT_TBAA0]]
+@@ -122,6 +126,7 @@ define dso_local void @_Z7computeRSt6vectorIiSaIiEEy(ptr noundef nonnull align 8
+ ; O3:       [[FOR_BODY4_US]]:
+ ; O3-NEXT:    [[J_05_US:%.*]] = phi i64 [ [[INC5_US:%.*]], %[[FOR_BODY4_US]] ], [ [[J_05_US_PH]], %[[FOR_BODY4_US_PREHEADER]] ]
+ ; O3-NEXT:    [[ADD_PTR_I_US:%.*]] = getelementptr inbounds [4 x i8], ptr [[TMP0]], i64 [[J_05_US]]
++; O3-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ADD_PTR_I_US]]) ]
+ ; O3-NEXT:    [[TMP6:%.*]] = load i32, ptr [[ADD_PTR_I_US]], align 4, !tbaa [[INT_TBAA0]]
+ ; O3-NEXT:    [[INC_US:%.*]] = add nsw i32 [[TMP6]], 1
+ ; O3-NEXT:    store i32 [[INC_US]], ptr [[ADD_PTR_I_US]], align 4, !tbaa [[INT_TBAA0]]
+diff --git a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+index 3758140a20c4c..e11595bcbefc5 100644
+--- a/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
++++ b/llvm/test/Transforms/PhaseOrdering/loop-access-checks.ll
+@@ -148,6 +148,7 @@ define void @foo(ptr noundef nonnull align 8 dereferenceable(24) noalias %vec) #
+ ; CHECK:       [[FOR_BODY]]:
+ ; CHECK-NEXT:    [[I_010:%.*]] = phi i64 [ [[INC:%.*]], %[[FOR_BODY]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds [8 x i8], ptr [[TMP1]], i64 [[I_010]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ADD_PTR_I]]) ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load double, ptr [[ADD_PTR_I]], align 8
+ ; CHECK-NEXT:    [[ADD:%.*]] = fadd double [[TMP2]], 1.000000e+00
+ ; CHECK-NEXT:    store double [[ADD]], ptr [[ADD_PTR_I]], align 8
+@@ -287,6 +288,7 @@ define void @loop_with_signed_induction(ptr noundef nonnull align 8 dereferencea
+ ; CHECK:       [[FOR_BODY]]:
+ ; CHECK-NEXT:    [[I_010:%.*]] = phi i64 [ [[INC:%.*]], %[[FOR_BODY]] ], [ 0, %[[ENTRY]] ]
+ ; CHECK-NEXT:    [[ADD_PTR_I:%.*]] = getelementptr inbounds nuw [8 x i8], ptr [[TMP1]], i64 [[I_010]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[ADD_PTR_I]]) ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load double, ptr [[ADD_PTR_I]], align 8, !tbaa [[DOUBLE_TBAA6:![0-9]+]]
+ ; CHECK-NEXT:    [[ADD:%.*]] = fadd double [[TMP2]], 1.000000e+00
+ ; CHECK-NEXT:    store double [[ADD]], ptr [[ADD_PTR_I]], align 8, !tbaa [[DOUBLE_TBAA6]]
