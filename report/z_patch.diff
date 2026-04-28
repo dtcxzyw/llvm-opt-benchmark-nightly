@@ -1,0 +1,166 @@
+diff --git a/llvm/include/llvm/IR/PatternMatch.h b/llvm/include/llvm/IR/PatternMatch.h
+index de24f4da336c2..8305f4dda7aff 100644
+--- a/llvm/include/llvm/IR/PatternMatch.h
++++ b/llvm/include/llvm/IR/PatternMatch.h
+@@ -510,6 +510,19 @@ inline api_pred_ty<is_maxsignedvalue> m_MaxSignedValue(const APInt *&V) {
+   return V;
+ }
+ 
++struct is_minsignedvalue {
++  bool isValue(const APInt &C) const { return C.isMinSignedValue(); }
++};
++/// Match an integer or vector with values having only the high bit set and
++/// all other bits cleared (0x80...).
++/// For vectors, this includes constants with undefined elements.
++inline cst_pred_ty<is_minsignedvalue> m_MinSignedValue() {
++  return cst_pred_ty<is_minsignedvalue>();
++}
++inline api_pred_ty<is_minsignedvalue> m_MinSignedValue(const APInt *&V) {
++  return V;
++}
++
+ struct is_negative {
+   bool isValue(const APInt &C) const { return C.isNegative(); }
+ };
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index bffc887d93535..56f51bc67cfaa 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -2154,6 +2154,15 @@ static Instruction *foldSelectICmpEq(SelectInst &SI, ICmpInst *ICI,
+   if (Pred == ICmpInst::ICMP_NE)
+     std::swap(TrueVal, FalseVal);
+ 
++  /// `A == MIN_INT ? MAX_INT : 0 - A` --> `ssub_sat 0, A`
++  if (match(CmpRHS, m_MinSignedValue()) && match(TrueVal, m_MaxSignedValue()) &&
++      match(FalseVal, m_Sub(m_ZeroInt(), m_Specific(CmpLHS)))) {
++    return IC.replaceInstUsesWith(
++        SI, IC.Builder.CreateBinaryIntrinsic(
++                Intrinsic::ssub_sat,
++                ConstantInt::getNullValue(CmpLHS->getType()), CmpLHS));
++  }
++
+   if (Instruction *Res =
+           foldSelectWithExtremeEqCond(CmpLHS, CmpRHS, TrueVal, FalseVal))
+     return Res;
+diff --git a/llvm/test/Transforms/InstCombine/saturating-add-sub.ll b/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
+index 5ac8588a0ed83..f1cc997a41ba1 100644
+--- a/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
++++ b/llvm/test/Transforms/InstCombine/saturating-add-sub.ll
+@@ -3087,3 +3087,47 @@ define i8 @no_fold_umin_to_uadd_sat_if_not_zero(i8 %a, i8 %b) {
+   %r = trunc nuw i16 %cmp to i8
+   ret i8 %r
+ }
++
++define i8 @fold_icmpeq_to_ssub_sat(i8 %a) {
++; CHECK-LABEL: @fold_icmpeq_to_ssub_sat(
++; CHECK-NEXT:    [[SEL:%.*]] = call i8 @llvm.ssub.sat.i8(i8 0, i8 [[A:%.*]])
++; CHECK-NEXT:    ret i8 [[SEL]]
++;
++  %cmp = icmp eq i8 %a, -128
++  %sub = sub i8 0, %a
++  %sel = select i1 %cmp, i8 127, i8 %sub
++  ret i8 %sel
++}
++
++define i8 @fold_icmpne_to_ssub_sat(i8 %a) {
++; CHECK-LABEL: @fold_icmpne_to_ssub_sat(
++; CHECK-NEXT:    [[SEL:%.*]] = call i8 @llvm.ssub.sat.i8(i8 0, i8 [[A:%.*]])
++; CHECK-NEXT:    ret i8 [[SEL]]
++;
++  %cmp = icmp ne i8 %a, -128
++  %sub = sub i8 0, %a
++  %sel = select i1 %cmp, i8 %sub, i8 127
++  ret i8 %sel
++}
++
++define <4 x i8> @fold_icmpeq_to_ssub_sat_vec(<4 x i8> %a) {
++; CHECK-LABEL: @fold_icmpeq_to_ssub_sat_vec(
++; CHECK-NEXT:    [[SEL:%.*]] = call <4 x i8> @llvm.ssub.sat.v4i8(<4 x i8> zeroinitializer, <4 x i8> [[A:%.*]])
++; CHECK-NEXT:    ret <4 x i8> [[SEL]]
++;
++  %cmp = icmp eq <4 x i8> %a, splat (i8 -128)
++  %sub = sub <4 x i8> zeroinitializer, %a
++  %sel = select <4 x i1> %cmp, <4 x i8> splat (i8 127), <4 x i8> %sub
++  ret <4 x i8> %sel
++}
++
++define <4 x i8> @fold_icmpne_to_ssub_sat_vec(<4 x i8> %a) {
++; CHECK-LABEL: @fold_icmpne_to_ssub_sat_vec(
++; CHECK-NEXT:    [[SEL:%.*]] = call <4 x i8> @llvm.ssub.sat.v4i8(<4 x i8> zeroinitializer, <4 x i8> [[A:%.*]])
++; CHECK-NEXT:    ret <4 x i8> [[SEL]]
++;
++  %cmp = icmp ne <4 x i8> %a, splat (i8 -128)
++  %sub = sub <4 x i8> zeroinitializer, %a
++  %sel = select <4 x i1> %cmp, <4 x i8> %sub, <4 x i8> splat (i8 127)
++  ret <4 x i8> %sel
++}
+diff --git a/llvm/test/Transforms/LoopVectorize/ARM/mve-qabs.ll b/llvm/test/Transforms/LoopVectorize/ARM/mve-qabs.ll
+index 8a79ea62361a4..4a314f6845f4a 100644
+--- a/llvm/test/Transforms/LoopVectorize/ARM/mve-qabs.ll
++++ b/llvm/test/Transforms/LoopVectorize/ARM/mve-qabs.ll
+@@ -29,9 +29,7 @@ define void @arm_abs_q7(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32 %
+ ; CHECK-NEXT:    [[NEXT_GEP7:%.*]] = getelementptr i8, ptr [[PDST]], i32 [[INDEX]]
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <16 x i8>, ptr [[NEXT_GEP]], align 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = icmp sgt <16 x i8> [[WIDE_LOAD]], zeroinitializer
+-; CHECK-NEXT:    [[TMP2:%.*]] = icmp eq <16 x i8> [[WIDE_LOAD]], splat (i8 -128)
+-; CHECK-NEXT:    [[TMP3:%.*]] = sub <16 x i8> zeroinitializer, [[WIDE_LOAD]]
+-; CHECK-NEXT:    [[TMP4:%.*]] = select <16 x i1> [[TMP2]], <16 x i8> splat (i8 127), <16 x i8> [[TMP3]]
++; CHECK-NEXT:    [[TMP4:%.*]] = call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> zeroinitializer, <16 x i8> [[WIDE_LOAD]])
+ ; CHECK-NEXT:    [[TMP5:%.*]] = select <16 x i1> [[TMP1]], <16 x i8> [[WIDE_LOAD]], <16 x i8> [[TMP4]]
+ ; CHECK-NEXT:    store <16 x i8> [[TMP5]], ptr [[NEXT_GEP7]], align 1
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 16
+@@ -52,9 +50,7 @@ define void @arm_abs_q7(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32 %
+ ; CHECK-NEXT:    [[INCDEC_PTR]] = getelementptr inbounds nuw i8, ptr [[PSRC_ADDR_022]], i32 1
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i8, ptr [[PSRC_ADDR_022]], align 1
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp sgt i8 [[TMP7]], 0
+-; CHECK-NEXT:    [[CMP5:%.*]] = icmp eq i8 [[TMP7]], -128
+-; CHECK-NEXT:    [[SUB:%.*]] = sub i8 0, [[TMP7]]
+-; CHECK-NEXT:    [[COND:%.*]] = select i1 [[CMP5]], i8 127, i8 [[SUB]]
++; CHECK-NEXT:    [[COND:%.*]] = call i8 @llvm.ssub.sat.i8(i8 0, i8 [[TMP7]])
+ ; CHECK-NEXT:    [[COND11:%.*]] = select i1 [[CMP1]], i8 [[TMP7]], i8 [[COND]]
+ ; CHECK-NEXT:    [[INCDEC_PTR13]] = getelementptr inbounds nuw i8, ptr [[PDST_ADDR_020]], i32 1
+ ; CHECK-NEXT:    store i8 [[COND11]], ptr [[PDST_ADDR_020]], align 1
+@@ -124,9 +120,7 @@ define void @arm_abs_q15(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32
+ ; CHECK-NEXT:    [[NEXT_GEP8:%.*]] = getelementptr i8, ptr [[PDST]], i32 [[OFFSET_IDX7]]
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <8 x i16>, ptr [[NEXT_GEP]], align 2
+ ; CHECK-NEXT:    [[TMP3:%.*]] = icmp sgt <8 x i16> [[WIDE_LOAD]], zeroinitializer
+-; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq <8 x i16> [[WIDE_LOAD]], splat (i16 -32768)
+-; CHECK-NEXT:    [[TMP5:%.*]] = sub <8 x i16> zeroinitializer, [[WIDE_LOAD]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = select <8 x i1> [[TMP4]], <8 x i16> splat (i16 32767), <8 x i16> [[TMP5]]
++; CHECK-NEXT:    [[TMP6:%.*]] = call <8 x i16> @llvm.ssub.sat.v8i16(<8 x i16> zeroinitializer, <8 x i16> [[WIDE_LOAD]])
+ ; CHECK-NEXT:    [[TMP7:%.*]] = select <8 x i1> [[TMP3]], <8 x i16> [[WIDE_LOAD]], <8 x i16> [[TMP6]]
+ ; CHECK-NEXT:    store <8 x i16> [[TMP7]], ptr [[NEXT_GEP8]], align 2
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 8
+@@ -147,9 +141,7 @@ define void @arm_abs_q15(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32
+ ; CHECK-NEXT:    [[INCDEC_PTR]] = getelementptr inbounds nuw i8, ptr [[PSRC_ADDR_023]], i32 2
+ ; CHECK-NEXT:    [[TMP9:%.*]] = load i16, ptr [[PSRC_ADDR_023]], align 2
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp sgt i16 [[TMP9]], 0
+-; CHECK-NEXT:    [[CMP5:%.*]] = icmp eq i16 [[TMP9]], -32768
+-; CHECK-NEXT:    [[SUB:%.*]] = sub i16 0, [[TMP9]]
+-; CHECK-NEXT:    [[COND:%.*]] = select i1 [[CMP5]], i16 32767, i16 [[SUB]]
++; CHECK-NEXT:    [[COND:%.*]] = call i16 @llvm.ssub.sat.i16(i16 0, i16 [[TMP9]])
+ ; CHECK-NEXT:    [[COND11:%.*]] = select i1 [[CMP1]], i16 [[TMP9]], i16 [[COND]]
+ ; CHECK-NEXT:    [[INCDEC_PTR13]] = getelementptr inbounds nuw i8, ptr [[PDST_ADDR_021]], i32 2
+ ; CHECK-NEXT:    store i16 [[COND11]], ptr [[PDST_ADDR_021]], align 2
+@@ -219,9 +211,7 @@ define void @arm_abs_q31(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32
+ ; CHECK-NEXT:    [[NEXT_GEP8:%.*]] = getelementptr i8, ptr [[PDST]], i32 [[OFFSET_IDX7]]
+ ; CHECK-NEXT:    [[WIDE_LOAD:%.*]] = load <4 x i32>, ptr [[NEXT_GEP]], align 4
+ ; CHECK-NEXT:    [[TMP3:%.*]] = icmp sgt <4 x i32> [[WIDE_LOAD]], zeroinitializer
+-; CHECK-NEXT:    [[TMP4:%.*]] = icmp eq <4 x i32> [[WIDE_LOAD]], splat (i32 -2147483648)
+-; CHECK-NEXT:    [[TMP5:%.*]] = sub nsw <4 x i32> zeroinitializer, [[WIDE_LOAD]]
+-; CHECK-NEXT:    [[TMP6:%.*]] = select <4 x i1> [[TMP4]], <4 x i32> splat (i32 2147483647), <4 x i32> [[TMP5]]
++; CHECK-NEXT:    [[TMP6:%.*]] = call <4 x i32> @llvm.ssub.sat.v4i32(<4 x i32> zeroinitializer, <4 x i32> [[WIDE_LOAD]])
+ ; CHECK-NEXT:    [[TMP7:%.*]] = select <4 x i1> [[TMP3]], <4 x i32> [[WIDE_LOAD]], <4 x i32> [[TMP6]]
+ ; CHECK-NEXT:    store <4 x i32> [[TMP7]], ptr [[NEXT_GEP8]], align 4
+ ; CHECK-NEXT:    [[INDEX_NEXT]] = add nuw i32 [[INDEX]], 4
+@@ -242,9 +232,7 @@ define void @arm_abs_q31(ptr nocapture readonly %pSrc, ptr nocapture %pDst, i32
+ ; CHECK-NEXT:    [[INCDEC_PTR]] = getelementptr inbounds nuw i8, ptr [[PSRC_ADDR_017]], i32 4
+ ; CHECK-NEXT:    [[TMP9:%.*]] = load i32, ptr [[PSRC_ADDR_017]], align 4
+ ; CHECK-NEXT:    [[CMP1:%.*]] = icmp sgt i32 [[TMP9]], 0
+-; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq i32 [[TMP9]], -2147483648
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i32 0, [[TMP9]]
+-; CHECK-NEXT:    [[COND:%.*]] = select i1 [[CMP2]], i32 2147483647, i32 [[SUB]]
++; CHECK-NEXT:    [[COND:%.*]] = call i32 @llvm.ssub.sat.i32(i32 0, i32 [[TMP9]])
+ ; CHECK-NEXT:    [[COND6:%.*]] = select i1 [[CMP1]], i32 [[TMP9]], i32 [[COND]]
+ ; CHECK-NEXT:    [[INCDEC_PTR7]] = getelementptr inbounds nuw i8, ptr [[PDST_ADDR_015]], i32 4
+ ; CHECK-NEXT:    store i32 [[COND6]], ptr [[PDST_ADDR_015]], align 4
