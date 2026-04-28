@@ -4,9 +4,9 @@ begin_hunk_0_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8faceb
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIPKN8facebook5velox6BufferEvvvvEEE13insertAtBlankIJS8_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS8_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIPKN8facebook5velox6BufferEE6setTagEmm.exit, %bb.o
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %6 = and i64 %i.cb, 255
-  %7 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %7, %6
+  %6 = add i64 %i.cc, 256
+  %7 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %6, %7
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -15,9 +15,9 @@ begin_hunk_1_@_ZN8facebook5velox9functions12_GLOBAL__N_111SetWithNullINS2_18Wrap
   store i32 %.0.i, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !3, !noalias !3224
   %i.dh = load i64, ptr %i.x, align 8, !tbaa !1823, !noalias !3224 ; 2 uses
   %i.di = and i64 %i.dh, -256
-  %3 = and i64 %i.dh, 255
-  %4 = add i64 %i.di, 256
-  %i.dj = or disjoint i64 %4, %3
+  %3 = add i64 %i.di, 256
+  %4 = and i64 %i.dh, 255
+  %i.dj = or disjoint i64 %3, %4
   store i64 %i.dj, ptr %i.x, align 8, !tbaa !1823, !noalias !3224
   br label %_ZN5folly3f146detail11F14BasicSetINS1_21VectorContainerPolicyIN8facebook5velox9functions12_GLOBAL__N_118WrappedVectorEntryEvNS7_11SetWithNullIS8_E4HashENSA_7EqualToEvSt17integral_constantIbLb1EEEEE6insertEOS8_.exit
 
@@ -26,9 +26,9 @@ begin_hunk_2_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE13insertAtBlankIJbEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIbEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIbE6setTagEmm.exit, %bb.o
   %i.by = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bz = and i64 %i.by, -256
-  %6 = and i64 %i.by, 255
-  %7 = add i64 %i.bz, 256
-  %i.ca = or disjoint i64 %7, %6
+  %6 = add i64 %i.bz, 256
+  %7 = and i64 %i.by, 255
+  %i.ca = or disjoint i64 %6, %7
   store i64 %i.ca, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -37,9 +37,9 @@ begin_hunk_3_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE13insertAtBlankIJiEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIiEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIiE6setTagEmm.exit, %bb.o
   %i.ca = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cb = and i64 %i.ca, -256
-  %6 = and i64 %i.ca, 255
-  %7 = add i64 %i.cb, 256
-  %i.cc = or disjoint i64 %7, %6
+  %6 = add i64 %i.cb, 256
+  %7 = and i64 %i.ca, 255
+  %i.cc = or disjoint i64 %6, %7
   store i64 %i.cc, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -48,9 +48,9 @@ begin_hunk_4_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE13insertAtBlankIJaEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIaEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIaE6setTagEmm.exit, %bb.o
   %i.by = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bz = and i64 %i.by, -256
-  %6 = and i64 %i.by, 255
-  %7 = add i64 %i.bz, 256
-  %i.ca = or disjoint i64 %7, %6
+  %6 = add i64 %i.bz, 256
+  %7 = and i64 %i.by, 255
+  %i.ca = or disjoint i64 %6, %7
   store i64 %i.ca, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -59,9 +59,9 @@ begin_hunk_5_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE13insertAtBlankIJsEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIsEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIsE6setTagEmm.exit, %bb.o
   %i.ca = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cb = and i64 %i.ca, -256
-  %6 = and i64 %i.ca, 255
-  %7 = add i64 %i.cb, 256
-  %i.cc = or disjoint i64 %7, %6
+  %6 = add i64 %i.cb, 256
+  %7 = and i64 %i.ca, 255
+  %i.cc = or disjoint i64 %6, %7
   store i64 %i.cc, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -70,9 +70,9 @@ begin_hunk_6_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE13insertAtBlankIJlEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIlEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIlE6setTagEmm.exit, %bb.o
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %6 = and i64 %i.cb, 255
-  %7 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %7, %6
+  %6 = add i64 %i.cc, 256
+  %7 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %6, %7
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -81,9 +81,9 @@ begin_hunk_7_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE1
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE13insertAtBlankIJnEEEvNS1_11F14ItemIterIPNS1_8F14ChunkInEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkInE6setTagEmm.exit, %bb.n
   %i.bz = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.ca = and i64 %i.bz, -256
-  %6 = and i64 %i.bz, 255
-  %7 = add i64 %i.ca, 256
-  %i.cb = or disjoint i64 %7, %6
+  %6 = add i64 %i.ca, 256
+  %7 = and i64 %i.bz, 255
+  %i.cb = or disjoint i64 %6, %7
   store i64 %i.cb, ptr %i.a, align 8, !tbaa !1823
   br label %.loopexit
 
@@ -92,9 +92,9 @@ begin_hunk_8_@_ZNK8facebook5velox9functions12_GLOBAL__N_121ArraysOverlapFunction
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE13insertAtBlankIJfEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIfEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.dw, %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit.i.i.i.i.i
   %i.xq = load i64, ptr %i.hr, align 8, !tbaa !1823, !noalias !3922 ; 2 uses
   %i.xr = and i64 %i.xq, -256
-  %16 = and i64 %i.xq, 255
-  %17 = add i64 %i.xr, 256
-  %i.xs = or disjoint i64 %17, %16
+  %16 = add i64 %i.xr, 256
+  %17 = and i64 %i.xq, 255
+  %i.xs = or disjoint i64 %16, %17
   store i64 %i.xs, ptr %i.hr, align 8, !tbaa !1823, !noalias !3922
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE19tryEmplaceValueImplIfJfEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIfEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 
@@ -103,9 +103,9 @@ begin_hunk_9_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8faceb
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE13insertAtBlankIJfEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIfEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit, %bb.o
   %i.cc = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %6 = and i64 %i.cc, 255
-  %7 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %7, %6
+  %6 = add i64 %i.cd, 256
+  %7 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %6, %7
   store i64 %i.ce, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -114,9 +114,9 @@ begin_hunk_10_@_ZNK8facebook5velox9functions12_GLOBAL__N_121ArraysOverlapFunctio
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE13insertAtBlankIJdEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIdEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.dw, %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit.i.i.i.i.i
   %i.xs = load i64, ptr %i.hr, align 8, !tbaa !1823, !noalias !4011 ; 2 uses
   %i.xt = and i64 %i.xs, -256
-  %16 = and i64 %i.xs, 255
-  %17 = add i64 %i.xt, 256
-  %i.xu = or disjoint i64 %17, %16
+  %16 = add i64 %i.xt, 256
+  %17 = and i64 %i.xs, 255
+  %i.xu = or disjoint i64 %16, %17
   store i64 %i.xu, ptr %i.hr, align 8, !tbaa !1823, !noalias !4011
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE19tryEmplaceValueImplIdJdEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIdEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 
@@ -125,9 +125,9 @@ begin_hunk_11_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8face
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE13insertAtBlankIJdEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIdEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit, %bb.o
   %i.cd = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.ce = and i64 %i.cd, -256
-  %6 = and i64 %i.cd, 255
-  %7 = add i64 %i.ce, 256
-  %i.cf = or disjoint i64 %7, %6
+  %6 = add i64 %i.ce, 256
+  %7 = and i64 %i.cd, 255
+  %i.cf = or disjoint i64 %6, %7
   store i64 %i.cf, ptr %i.a, align 8, !tbaa !1823
   br label %bb.p
 
@@ -136,9 +136,9 @@ begin_hunk_12_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE13insertAtBlankIJS6_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIN8facebook5velox10StringViewEE6setTagEmm.exit, %bb.r
   %i.ea = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eb = and i64 %i.ea, -256
-  %6 = and i64 %i.ea, 255
-  %7 = add i64 %i.eb, 256
-  %i.ec = or disjoint i64 %7, %6
+  %6 = add i64 %i.eb, 256
+  %7 = and i64 %i.ea, 255
+  %i.ec = or disjoint i64 %6, %7
   store i64 %i.ec, ptr %i.a, align 8, !tbaa !1823
   br label %_ZNK5folly3f146detail20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvE14keyMatchesItemIS5_EEbRKT_RKS5_.exit.thread
 
@@ -147,9 +147,9 @@ begin_hunk_13_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE13insertAtBlankIJS6_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIN8facebook5velox9TimestampEE6setTagEmm.exit, %bb.n
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %6 = and i64 %i.cb, 255
-  %7 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %7, %6
+  %6 = add i64 %i.cc, 256
+  %7 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %6, %7
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !1823
   br label %.loopexit
 
@@ -158,9 +158,9 @@ begin_hunk_14_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8faceb
   store i8 %i.ck, ptr %i.cg, align 1, !tbaa !14
   %i.cl = load i64, ptr %i.ad, align 8, !tbaa !1823 ; 2 uses
   %i.cm = and i64 %i.cl, -256
-  %3 = and i64 %i.cl, 255
-  %4 = add i64 %i.cm, 256
-  %i.cn = or disjoint i64 %4, %3                  ; 2 uses
+  %3 = add i64 %i.cm, 256
+  %4 = and i64 %i.cl, 255
+  %i.cn = or disjoint i64 %3, %4                  ; 2 uses
   store i64 %i.cn, ptr %i.ad, align 8, !tbaa !1823
   %i.co = add i64 %.03679.i.i, 1
   %.not74.i.i = icmp eq i32 %.sroa.0.1.i.i, 0
@@ -169,9 +169,9 @@ begin_hunk_15_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8faceb
   store i32 %.val71.i.i, ptr %i.fb, align 4, !tbaa !3
   %i.fd = load i64, ptr %i.ad, align 8, !tbaa !1823 ; 2 uses
   %i.fe = and i64 %i.fd, -256
-  %5 = and i64 %i.fd, 255
-  %6 = add i64 %i.fe, 256
-  %i.ff = or disjoint i64 %6, %5
+  %5 = add i64 %i.fe, 256
+  %6 = and i64 %i.fd, 255
+  %i.ff = or disjoint i64 %5, %6
   store i64 %i.ff, ptr %i.ad, align 8, !tbaa !1823
   %.not149.i.i = icmp eq i32 %.sroa.0109.2.i.i, 0
   br i1 %.not149.i.i, label %.loopexit.i.i, label %.preheader.i.i, !llvm.loop !4313
@@ -180,9 +180,9 @@ begin_hunk_16_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8faceb
   store i32 %.val70.i.i, ptr %i.gy, align 4, !tbaa !3
   %i.ha = load i64, ptr %i.ad, align 8, !tbaa !1823 ; 2 uses
   %i.hb = and i64 %i.ha, -256
-  %7 = and i64 %i.ha, 255
-  %8 = add i64 %i.hb, 256
-  %i.hc = or disjoint i64 %8, %7
+  %7 = add i64 %i.hb, 256
+  %8 = and i64 %i.ha, 255
+  %i.hc = or disjoint i64 %7, %8
   store i64 %i.hc, ptr %i.ad, align 8, !tbaa !1823
   %.not148.i.i = icmp eq i32 %.sroa.0109.3.i.i, 0
   br i1 %.not148.i.i, label %.loopexit.i.i, label %.preheader152.i.i, !llvm.loop !4314
@@ -191,9 +191,9 @@ begin_hunk_17_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIbE6setTagEmm.exit.i, %bb.ay
   %i.nl = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4382 ; 2 uses
   %i.nm = and i64 %i.nl, -256
-  %4 = and i64 %i.nl, 255
-  %5 = add i64 %i.nm, 256
-  %i.nn = or disjoint i64 %5, %4
+  %4 = add i64 %i.nm, 256
+  %5 = and i64 %i.nl, 255
+  %i.nn = or disjoint i64 %4, %5
   store i64 %i.nn, ptr %i.bg, align 8, !tbaa !1823, !noalias !4382
   %i.no = load ptr, ptr %i.bu, align 8, !tbaa !4385, !nonnull !93, !align !1670
   %i.np = load ptr, ptr %i.no, align 8, !tbaa !1816
@@ -202,9 +202,9 @@ begin_hunk_18_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !14
   %i.bw = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.bx = and i64 %i.bw, -256
-  %2 = and i64 %i.bw, 255
-  %3 = add i64 %i.bx, 256
-  %i.by = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.bx, 256
+  %3 = and i64 %i.bw, 255
+  %i.by = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.by, ptr %i.c, align 8, !tbaa !1823
   %i.bz = add i64 %.04582, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -213,9 +213,9 @@ begin_hunk_19_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bu = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bv = and i64 %i.bu, -256
-  %3 = and i64 %i.bu, 255
-  %4 = add i64 %i.bv, 256
-  %i.bw = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.bv, 256
+  %4 = and i64 %i.bu, 255
+  %i.bw = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.bw, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4393
@@ -224,9 +224,9 @@ begin_hunk_20_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIbvvvvEEE13insertAtBlankIJRKbEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIbEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.dx = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.dy = and i64 %i.dx, -256
-  %5 = and i64 %i.dx, 255
-  %6 = add i64 %i.dy, 256
-  %i.dz = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.dy, 256
+  %6 = and i64 %i.dx, 255
+  %i.dz = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.dz, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -235,9 +235,9 @@ begin_hunk_21_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIiE6setTagEmm.exit.i, %bb.ay
   %i.nd = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4429 ; 2 uses
   %i.ne = and i64 %i.nd, -256
-  %4 = and i64 %i.nd, 255
-  %5 = add i64 %i.ne, 256
-  %i.nf = or disjoint i64 %5, %4
+  %4 = add i64 %i.ne, 256
+  %5 = and i64 %i.nd, 255
+  %i.nf = or disjoint i64 %4, %5
   store i64 %i.nf, ptr %i.bg, align 8, !tbaa !1823, !noalias !4429
   %i.ng = load ptr, ptr %i.bu, align 8, !tbaa !4432, !nonnull !93, !align !1670
   %i.nh = load ptr, ptr %i.ng, align 8, !tbaa !1816
@@ -246,9 +246,9 @@ begin_hunk_22_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE
   store i8 %i.bx, ptr %i.bt, align 1, !tbaa !14
   %i.by = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.bz = and i64 %i.by, -256
-  %2 = and i64 %i.by, 255
-  %3 = add i64 %i.bz, 256
-  %i.ca = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.bz, 256
+  %3 = and i64 %i.by, 255
+  %i.ca = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ca, ptr %i.c, align 8, !tbaa !1823
   %i.cb = add i64 %.04590, 1
   %.not79 = icmp eq i32 %.sroa.064.1, 0
@@ -257,9 +257,9 @@ begin_hunk_23_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ca = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cb = and i64 %i.ca, -256
-  %3 = and i64 %i.ca, 255
-  %4 = add i64 %i.cb, 256
-  %i.cc = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.cb, 256
+  %4 = and i64 %i.ca, 255
+  %i.cc = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.cc, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4440
@@ -268,9 +268,9 @@ begin_hunk_24_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIivvvvEEE13insertAtBlankIJRKiEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIiEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.ef = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eg = and i64 %i.ef, -256
-  %5 = and i64 %i.ef, 255
-  %6 = add i64 %i.eg, 256
-  %i.eh = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.eg, 256
+  %6 = and i64 %i.ef, 255
+  %i.eh = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.eh, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -279,9 +279,9 @@ begin_hunk_25_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIaE6setTagEmm.exit.i, %bb.ay
   %i.nb = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4476 ; 2 uses
   %i.nc = and i64 %i.nb, -256
-  %4 = and i64 %i.nb, 255
-  %5 = add i64 %i.nc, 256
-  %i.nd = or disjoint i64 %5, %4
+  %4 = add i64 %i.nc, 256
+  %5 = and i64 %i.nb, 255
+  %i.nd = or disjoint i64 %4, %5
   store i64 %i.nd, ptr %i.bg, align 8, !tbaa !1823, !noalias !4476
   %i.ne = load ptr, ptr %i.bu, align 8, !tbaa !4479, !nonnull !93, !align !1670
   %i.nf = load ptr, ptr %i.ne, align 8, !tbaa !1816
@@ -290,9 +290,9 @@ begin_hunk_26_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !14
   %i.bw = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.bx = and i64 %i.bw, -256
-  %2 = and i64 %i.bw, 255
-  %3 = add i64 %i.bx, 256
-  %i.by = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.bx, 256
+  %3 = and i64 %i.bw, 255
+  %i.by = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.by, ptr %i.c, align 8, !tbaa !1823
   %i.bz = add i64 %.04582, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -301,9 +301,9 @@ begin_hunk_27_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bu = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bv = and i64 %i.bu, -256
-  %3 = and i64 %i.bu, 255
-  %4 = add i64 %i.bv, 256
-  %i.bw = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.bv, 256
+  %4 = and i64 %i.bu, 255
+  %i.bw = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.bw, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4487
@@ -312,9 +312,9 @@ begin_hunk_28_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIavvvvEEE13insertAtBlankIJRKaEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIaEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.dx = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.dy = and i64 %i.dx, -256
-  %5 = and i64 %i.dx, 255
-  %6 = add i64 %i.dy, 256
-  %i.dz = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.dy, 256
+  %6 = and i64 %i.dx, 255
+  %i.dz = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.dz, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -323,9 +323,9 @@ begin_hunk_29_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIsE6setTagEmm.exit.i, %bb.ay
   %i.ne = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4523 ; 2 uses
   %i.nf = and i64 %i.ne, -256
-  %4 = and i64 %i.ne, 255
-  %5 = add i64 %i.nf, 256
-  %i.ng = or disjoint i64 %5, %4
+  %4 = add i64 %i.nf, 256
+  %5 = and i64 %i.ne, 255
+  %i.ng = or disjoint i64 %4, %5
   store i64 %i.ng, ptr %i.bg, align 8, !tbaa !1823, !noalias !4523
   %i.nh = load ptr, ptr %i.bu, align 8, !tbaa !4526, !nonnull !93, !align !1670
   %i.ni = load ptr, ptr %i.nh, align 8, !tbaa !1816
@@ -334,9 +334,9 @@ begin_hunk_30_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !14
   %i.cc = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %2 = and i64 %i.cc, 255
-  %3 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.cd, 256
+  %3 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ce, ptr %i.c, align 8, !tbaa !1823
   %i.cf = add i64 %.04588, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -345,9 +345,9 @@ begin_hunk_31_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ca = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cb = and i64 %i.ca, -256
-  %3 = and i64 %i.ca, 255
-  %4 = add i64 %i.cb, 256
-  %i.cc = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.cb, 256
+  %4 = and i64 %i.ca, 255
+  %i.cc = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.cc, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4534
@@ -356,9 +356,9 @@ begin_hunk_32_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIsvvvvEEE13insertAtBlankIJRKsEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIsEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.ef = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eg = and i64 %i.ef, -256
-  %5 = and i64 %i.ef, 255
-  %6 = add i64 %i.eg, 256
-  %i.eh = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.eg, 256
+  %6 = and i64 %i.ef, 255
+  %i.eh = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.eh, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -367,9 +367,9 @@ begin_hunk_33_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIlE6setTagEmm.exit.i, %bb.ay
   %i.ne = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4570 ; 2 uses
   %i.nf = and i64 %i.ne, -256
-  %4 = and i64 %i.ne, 255
-  %5 = add i64 %i.nf, 256
-  %i.ng = or disjoint i64 %5, %4
+  %4 = add i64 %i.nf, 256
+  %5 = and i64 %i.ne, 255
+  %i.ng = or disjoint i64 %4, %5
   store i64 %i.ng, ptr %i.bg, align 8, !tbaa !1823, !noalias !4570
   %i.nh = load ptr, ptr %i.bu, align 8, !tbaa !4573, !nonnull !93, !align !1670
   %i.ni = load ptr, ptr %i.nh, align 8, !tbaa !1816
@@ -378,9 +378,9 @@ begin_hunk_34_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !14
   %i.cc = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %2 = and i64 %i.cc, 255
-  %3 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.cd, 256
+  %3 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ce, ptr %i.c, align 8, !tbaa !1823
   %i.cf = add i64 %.04584, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -389,9 +389,9 @@ begin_hunk_35_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %3 = and i64 %i.cb, 255
-  %4 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.cc, 256
+  %4 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4581
@@ -400,9 +400,9 @@ begin_hunk_36_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIlvvvvEEE13insertAtBlankIJRKlEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIlEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.ef = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eg = and i64 %i.ef, -256
-  %5 = and i64 %i.ef, 255
-  %6 = add i64 %i.eg, 256
-  %i.eh = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.eg, 256
+  %6 = and i64 %i.ef, 255
+  %i.eh = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.eh, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -411,9 +411,9 @@ begin_hunk_37_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkInE6setTagEmm.exit.i, %bb.ay
   %i.nf = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4617 ; 2 uses
   %i.ng = and i64 %i.nf, -256
-  %4 = and i64 %i.nf, 255
-  %5 = add i64 %i.ng, 256
-  %i.nh = or disjoint i64 %5, %4
+  %4 = add i64 %i.ng, 256
+  %5 = and i64 %i.nf, 255
+  %i.nh = or disjoint i64 %4, %5
   store i64 %i.nh, ptr %i.bg, align 8, !tbaa !1823, !noalias !4617
   %i.ni = load ptr, ptr %i.bu, align 8, !tbaa !4620, !nonnull !93, !align !1670
   %i.nj = load ptr, ptr %i.ni, align 8, !tbaa !1816
@@ -422,9 +422,9 @@ begin_hunk_38_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE
   store i8 %i.cc, ptr %i.by, align 1, !tbaa !14
   %i.cd = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.ce = and i64 %i.cd, -256
-  %2 = and i64 %i.cd, 255
-  %3 = add i64 %i.ce, 256
-  %i.cf = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.ce, 256
+  %3 = and i64 %i.cd, 255
+  %i.cf = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.cf, ptr %i.c, align 8, !tbaa !1823
   %i.cg = add i64 %.04586, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -433,9 +433,9 @@ begin_hunk_39_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bx = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.by = and i64 %i.bx, -256
-  %3 = and i64 %i.bx, 255
-  %4 = add i64 %i.by, 256
-  %i.bz = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.by, 256
+  %4 = and i64 %i.bx, 255
+  %i.bz = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.bz, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4628
@@ -444,9 +444,9 @@ begin_hunk_40_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyInvvvvEEE13insertAtBlankIJRKnEEEvNS1_11F14ItemIterIPNS1_8F14ChunkInEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.eb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.ec = and i64 %i.eb, -256
-  %5 = and i64 %i.eb, 255
-  %6 = add i64 %i.ec, 256
-  %i.ed = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.ec, 256
+  %6 = and i64 %i.eb, 255
+  %i.ed = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.ed, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -455,9 +455,9 @@ begin_hunk_41_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.bj:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit.i, %bb.bi
   %i.pa = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4673 ; 2 uses
   %i.pb = and i64 %i.pa, -256
-  %4 = and i64 %i.pa, 255
-  %5 = add i64 %i.pb, 256
-  %i.pc = or disjoint i64 %5, %4
+  %4 = add i64 %i.pb, 256
+  %5 = and i64 %i.pa, 255
+  %i.pc = or disjoint i64 %4, %5
   store i64 %i.pc, ptr %i.bg, align 8, !tbaa !1823, !noalias !4673
   %i.pd = load ptr, ptr %i.bu, align 8, !tbaa !4676, !nonnull !93, !align !1670
   %i.pe = load ptr, ptr %i.pd, align 8, !tbaa !1816
@@ -466,9 +466,9 @@ begin_hunk_42_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8face
   store i8 %i.bx, ptr %i.bt, align 1, !tbaa !14
   %i.by = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.bz = and i64 %i.by, -256
-  %2 = and i64 %i.by, 255
-  %3 = add i64 %i.bz, 256
-  %i.ca = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.bz, 256
+  %3 = and i64 %i.by, 255
+  %i.ca = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ca, ptr %i.c, align 8, !tbaa !1823
   %i.cb = add i64 %.04590, 1
   %.not79 = icmp eq i32 %.sroa.064.1, 0
@@ -477,9 +477,9 @@ begin_hunk_43_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8face
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ca = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cb = and i64 %i.ca, -256
-  %3 = and i64 %i.ca, 255
-  %4 = add i64 %i.cb, 256
-  %i.cc = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.cb, 256
+  %4 = and i64 %i.ca, 255
+  %i.cc = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.cc, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4684
@@ -488,9 +488,9 @@ begin_hunk_44_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8face
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE13insertAtBlankIJRKfEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIfEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.y, %bb.z
   %i.ey = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.ez = and i64 %i.ey, -256
-  %5 = and i64 %i.ey, 255
-  %6 = add i64 %i.ez, 256
-  %i.fa = or disjoint i64 %6, %5                  ; 2 uses
+  %5 = add i64 %i.ez, 256
+  %6 = and i64 %i.ey, 255
+  %i.fa = or disjoint i64 %5, %6                  ; 2 uses
   store i64 %i.fa, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -499,9 +499,9 @@ begin_hunk_45_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.bj:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit.i, %bb.bi
   %i.pd = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4729 ; 2 uses
   %i.pe = and i64 %i.pd, -256
-  %4 = and i64 %i.pd, 255
-  %5 = add i64 %i.pe, 256
-  %i.pf = or disjoint i64 %5, %4
+  %4 = add i64 %i.pe, 256
+  %5 = and i64 %i.pd, 255
+  %i.pf = or disjoint i64 %4, %5
   store i64 %i.pf, ptr %i.bg, align 8, !tbaa !1823, !noalias !4729
   %i.pg = load ptr, ptr %i.bu, align 8, !tbaa !4732, !nonnull !93, !align !1670
   %i.ph = load ptr, ptr %i.pg, align 8, !tbaa !1816
@@ -510,9 +510,9 @@ begin_hunk_46_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8face
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !14
   %i.cc = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %2 = and i64 %i.cc, 255
-  %3 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.cd, 256
+  %3 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ce, ptr %i.c, align 8, !tbaa !1823
   %i.cf = add i64 %.04584, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -521,9 +521,9 @@ begin_hunk_47_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8face
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %3 = and i64 %i.cb, 255
-  %4 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.cc, 256
+  %4 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4740
@@ -532,9 +532,9 @@ begin_hunk_48_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8face
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE13insertAtBlankIJRKdEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIdEEEESt4pairImmEDpOT_.exit68: ; preds = %bb.y, %bb.z
   %i.ez = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.fa = and i64 %i.ez, -256
-  %5 = and i64 %i.ez, 255
-  %6 = add i64 %i.fa, 256
-  %i.fb = or disjoint i64 %6, %5                  ; 2 uses
+  %5 = add i64 %i.fa, 256
+  %6 = and i64 %i.ez, 255
+  %i.fb = or disjoint i64 %5, %6                  ; 2 uses
   store i64 %i.fb, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -543,9 +543,9 @@ begin_hunk_49_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !14
   %i.cc = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %2 = and i64 %i.cc, 255
-  %3 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.cd, 256
+  %3 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ce, ptr %i.c, align 8, !tbaa !1823
   %i.cf = add i64 %.04586, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -554,9 +554,9 @@ begin_hunk_50_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.by = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bz = and i64 %i.by, -256
-  %4 = and i64 %i.by, 255
-  %5 = add i64 %i.bz, 256
-  %i.ca = or disjoint i64 %5, %4                  ; 3 uses
+  %4 = add i64 %i.bz, 256
+  %5 = and i64 %i.by, 255
+  %i.ca = or disjoint i64 %4, %5                  ; 3 uses
   store i64 %i.ca, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4799
@@ -565,9 +565,9 @@ begin_hunk_51_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE13insertAtBlankIJRKS6_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEESt4pairImmEDpOT_.exit68: ; preds = %bb.u, %bb.v
   %i.ef = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eg = and i64 %i.ef, -256
-  %6 = and i64 %i.ef, 255
-  %7 = add i64 %i.eg, 256
-  %i.eh = or disjoint i64 %7, %6                  ; 2 uses
+  %6 = add i64 %i.eg, 256
+  %7 = and i64 %i.ef, 255
+  %i.eh = or disjoint i64 %6, %7                  ; 2 uses
   store i64 %i.eh, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -576,9 +576,9 @@ begin_hunk_52_@_ZZNK8facebook5velox9functions12_GLOBAL__N_126ArraysIntersectSing
 bb.az:                                            ; preds = %_ZN5folly3f146detail8F14ChunkIN8facebook5velox9TimestampEE6setTagEmm.exit.i, %bb.ay
   %i.of = load i64, ptr %i.bg, align 8, !tbaa !1823, !noalias !4835 ; 2 uses
   %i.og = and i64 %i.of, -256
-  %4 = and i64 %i.of, 255
-  %5 = add i64 %i.og, 256
-  %i.oh = or disjoint i64 %5, %4
+  %4 = add i64 %i.og, 256
+  %5 = and i64 %i.of, 255
+  %i.oh = or disjoint i64 %4, %5
   store i64 %i.oh, ptr %i.bg, align 8, !tbaa !1823, !noalias !4835
   %i.oi = load ptr, ptr %i.bu, align 8, !tbaa !4838, !nonnull !93, !align !1670
   %i.oj = load ptr, ptr %i.oi, align 8, !tbaa !1816
@@ -587,9 +587,9 @@ begin_hunk_53_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !14
   %i.cc = load i64, ptr %i.c, align 8, !tbaa !1823 ; 2 uses
   %i.cd = and i64 %i.cc, -256
-  %2 = and i64 %i.cc, 255
-  %3 = add i64 %i.cd, 256
-  %i.ce = or disjoint i64 %3, %2                  ; 2 uses
+  %2 = add i64 %i.cd, 256
+  %3 = and i64 %i.cc, 255
+  %i.ce = or disjoint i64 %2, %3                  ; 2 uses
   store i64 %i.ce, ptr %i.c, align 8, !tbaa !1823
   %i.cf = add i64 %.04586, 1
   %.not77 = icmp eq i32 %.sroa.062.1, 0
@@ -598,9 +598,9 @@ begin_hunk_54_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bw = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.bx = and i64 %i.bw, -256
-  %3 = and i64 %i.bw, 255
-  %4 = add i64 %i.bx, 256
-  %i.by = or disjoint i64 %4, %3                  ; 3 uses
+  %3 = add i64 %i.bx, 256
+  %4 = and i64 %i.bw, 255
+  %i.by = or disjoint i64 %3, %4                  ; 3 uses
   store i64 %i.by, ptr %i.a, align 8, !tbaa !1823
   %.not113 = icmp eq i32 %.sroa.073.2, 0
   br i1 %.not113, label %.loopexit, label %bb.f, !llvm.loop !4846
@@ -609,9 +609,9 @@ begin_hunk_55_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebo
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox9TimestampEvvvvEEE13insertAtBlankIJRKS6_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEESt4pairImmEDpOT_.exit68: ; preds = %bb.t, %bb.u
   %i.eg = load i64, ptr %i.a, align 8, !tbaa !1823 ; 2 uses
   %i.eh = and i64 %i.eg, -256
-  %5 = and i64 %i.eg, 255
-  %6 = add i64 %i.eh, 256
-  %i.ei = or disjoint i64 %6, %5                  ; 3 uses
+  %5 = add i64 %i.eh, 256
+  %6 = and i64 %i.eg, 255
+  %i.ei = or disjoint i64 %5, %6                  ; 3 uses
   store i64 %i.ei, ptr %i.a, align 8, !tbaa !1823
   %.not112 = icmp eq i32 %.sroa.073.3, 0
   br i1 %.not112, label %.loopexit, label %bb.m
@@ -620,9 +620,9 @@ begin_hunk_56_@_ZNK8facebook5velox9functions12_GLOBAL__N_128ArrayIntersectExcept
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE13insertAtBlankIJfEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIfEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.ee, %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit.i.i.i.i.i
   %i.zb = load i64, ptr %i.jc, align 8, !tbaa !1823, !noalias !5211 ; 2 uses
   %i.zc = and i64 %i.zb, -256
-  %29 = and i64 %i.zb, 255
-  %30 = add i64 %i.zc, 256
-  %i.zd = or disjoint i64 %30, %29
+  %29 = add i64 %i.zc, 256
+  %30 = and i64 %i.zb, 255
+  %i.zd = or disjoint i64 %29, %30
   store i64 %i.zd, ptr %i.jc, align 8, !tbaa !1823, !noalias !5211
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE19tryEmplaceValueImplIfJfEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIfEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 
@@ -631,9 +631,9 @@ begin_hunk_57_@_ZNK8facebook5velox9functions12_GLOBAL__N_128ArrayIntersectExcept
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE13insertAtBlankIJdEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIdEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.ee, %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit.i.i.i.i.i
   %i.zd = load i64, ptr %i.jc, align 8, !tbaa !1823, !noalias !5264 ; 2 uses
   %i.ze = and i64 %i.zd, -256
-  %29 = and i64 %i.zd, 255
-  %30 = add i64 %i.ze, 256
-  %i.zf = or disjoint i64 %30, %29
+  %29 = add i64 %i.ze, 256
+  %30 = and i64 %i.zd, 255
+  %i.zf = or disjoint i64 %29, %30
   store i64 %i.zf, ptr %i.jc, align 8, !tbaa !1823, !noalias !5264
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE19tryEmplaceValueImplIdJdEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIdEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 
@@ -642,9 +642,9 @@ begin_hunk_58_@_ZNK8facebook5velox9functions12_GLOBAL__N_128ArrayIntersectExcept
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE13insertAtBlankIJfEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIfEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.ee, %_ZN5folly3f146detail8F14ChunkIfE6setTagEmm.exit.i.i.i.i.i
   %i.zb = load i64, ptr %i.jc, align 8, !tbaa !1823, !noalias !5748 ; 2 uses
   %i.zc = and i64 %i.zb, -256
-  %29 = and i64 %i.zb, 255
-  %30 = add i64 %i.zc, 256
-  %i.zd = or disjoint i64 %30, %29
+  %29 = add i64 %i.zc, 256
+  %30 = and i64 %i.zb, 255
+  %i.zd = or disjoint i64 %29, %30
   store i64 %i.zd, ptr %i.jc, align 8, !tbaa !1823, !noalias !5748
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIfvN8facebook5velox4util14floating_point12NaNAwareHashIfLb1EEENS7_14NaNAwareEqualsIfLb1EEEvEEE19tryEmplaceValueImplIfJfEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIfEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 
@@ -653,9 +653,9 @@ begin_hunk_59_@_ZNK8facebook5velox9functions12_GLOBAL__N_128ArrayIntersectExcept
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE13insertAtBlankIJdEEEvNS1_11F14ItemIterIPNS1_8F14ChunkIdEEEESt4pairImmEDpOT_.exit.i.i.i.i.i: ; preds = %bb.ee, %_ZN5folly3f146detail8F14ChunkIdE6setTagEmm.exit.i.i.i.i.i
   %i.zd = load i64, ptr %i.jc, align 8, !tbaa !1823, !noalias !5801 ; 2 uses
   %i.ze = and i64 %i.zd, -256
-  %29 = and i64 %i.zd, 255
-  %30 = add i64 %i.ze, 256
-  %i.zf = or disjoint i64 %30, %29
+  %29 = add i64 %i.ze, 256
+  %30 = and i64 %i.zd, 255
+  %i.zf = or disjoint i64 %29, %30
   store i64 %i.zf, ptr %i.jc, align 8, !tbaa !1823, !noalias !5801
   br label %_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIdvN8facebook5velox4util14floating_point12NaNAwareHashIdLb1EEENS7_14NaNAwareEqualsIdLb1EEEvEEE19tryEmplaceValueImplIdJdEEESt4pairINS1_11F14ItemIterIPNS1_8F14ChunkIdEEEEbESF_ImmERKT_DpOT0_.exit.i.i.i.i
 

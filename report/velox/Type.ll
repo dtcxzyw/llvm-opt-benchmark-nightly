@@ -4,9 +4,9 @@ begin_hunk_0_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIN8facebo
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ci, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !1137
   %i.cj = load i64, ptr %i.a, align 8, !tbaa !10  ; 2 uses
   %i.ck = and i64 %i.cj, -256
-  %7 = and i64 %i.cj, 255
-  %8 = add i64 %i.ck, 256
-  %i.cl = or disjoint i64 %8, %7
+  %7 = add i64 %i.ck, 256
+  %8 = and i64 %i.cj, 255
+  %i.cl = or disjoint i64 %7, %8
   store i64 %i.cl, ptr %i.a, align 8, !tbaa !10
   br label %bb.o
 
@@ -15,9 +15,9 @@ begin_hunk_1_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyISt17basi
   store i8 %i.dm, ptr %i.dl, align 8, !tbaa !1144
   %i.dn = load i64, ptr %i.a, align 8, !tbaa !10  ; 2 uses
   %i.do = and i64 %i.dn, -256
-  %7 = and i64 %i.dn, 255
-  %8 = add i64 %i.do, 256
-  %i.dp = or disjoint i64 %8, %7
+  %7 = add i64 %i.do, 256
+  %8 = and i64 %i.dn, 255
+  %i.dp = or disjoint i64 %7, %8
   store i64 %i.dp, ptr %i.a, align 8, !tbaa !10
   br label %bb.o
 
@@ -26,9 +26,9 @@ begin_hunk_2_@_ZN5folly3f146detail8F14TableINS1_19NodeContainerPolicyINSt7__cxx1
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !10   ; 2 uses
   %i.q = and i64 %i.p, -256
-  %8 = and i64 %i.p, 255
-  %9 = add i64 %i.q, 256
-  %i.r = or disjoint i64 %9, %8
+  %8 = add i64 %i.q, 256
+  %9 = and i64 %i.p, 255
+  %i.r = or disjoint i64 %8, %9
   store i64 %i.r, ptr %i.o, align 8, !tbaa !10
   ret void
 }
@@ -37,9 +37,9 @@ begin_hunk_3_@_ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8faceboo
 _ZN5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox7RowType9NameIndexEvNS6_15NameIndexHasherEvvEEE13insertAtBlankIJS7_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIS7_EEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIN8facebook5velox7RowType9NameIndexEE6setTagEmm.exit, %bb.n
   %i.ce = load i64, ptr %i.a, align 8, !tbaa !10  ; 2 uses
   %i.cf = and i64 %i.ce, -256
-  %6 = and i64 %i.ce, 255
-  %7 = add i64 %i.cf, 256
-  %i.cg = or disjoint i64 %7, %6
+  %6 = add i64 %i.cf, 256
+  %7 = and i64 %i.ce, 255
+  %i.cg = or disjoint i64 %6, %7
   store i64 %i.cg, ptr %i.a, align 8, !tbaa !10
   br label %.loopexit
 
@@ -48,9 +48,9 @@ begin_hunk_4_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIPKN8face
   tail call void @_ZN5folly7dynamicC1EOS0_(ptr noundef nonnull align 8 dereferenceable(40) %i.ck, ptr noundef nonnull align 8 dereferenceable(40) %i.cl) #17
   %i.cm = load i64, ptr %i.a, align 8, !tbaa !10  ; 2 uses
   %i.cn = and i64 %i.cm, -256
-  %7 = and i64 %i.cm, 255
-  %8 = add i64 %i.cn, 256
-  %i.co = or disjoint i64 %8, %7
+  %7 = add i64 %i.cn, 256
+  %8 = and i64 %i.cm, 255
+  %i.co = or disjoint i64 %7, %8
   store i64 %i.co, ptr %i.a, align 8, !tbaa !10
   br label %bb.o
 
@@ -59,9 +59,9 @@ begin_hunk_5_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiSt10sha
 _ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyIiSt10shared_ptrIKN8facebook5velox4TypeEEvvvSt17integral_constantIbLb1EEEEE13insertAtBlankIJiRS9_EEEvNS1_11F14ItemIterIPNS1_8F14ChunkIjEEEESt4pairImmEDpOT_.exit: ; preds = %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit, %bb.p, %bb.q
   %i.cr = phi i64 [ %.pre.i, %bb.q ], [ %i.cb, %bb.p ], [ %i.cb, %_ZN5folly3f146detail8F14ChunkIjE6setTagEmm.exit ] ; 2 uses
   %i.cs = and i64 %i.cr, -256
-  %7 = and i64 %i.cr, 255
-  %8 = add i64 %i.cs, 256
-  %i.ct = or disjoint i64 %8, %7
+  %7 = add i64 %i.cs, 256
+  %8 = and i64 %i.cr, 255
+  %i.ct = or disjoint i64 %7, %8
   store i64 %i.ct, ptr %i.a, align 8, !tbaa !10
   br label %bb.r
 

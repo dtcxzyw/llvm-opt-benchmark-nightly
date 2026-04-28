@@ -4,9 +4,9 @@ begin_hunk_0_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cx
   store i8 0, ptr %i.dq, align 8, !tbaa !45
   %i.ea = load i64, ptr %i.a, align 8, !tbaa !31  ; 2 uses
   %i.eb = and i64 %i.ea, -256
-  %6 = and i64 %i.ea, 255
-  %7 = add i64 %i.eb, 256
-  %i.ec = or disjoint i64 %7, %6
+  %6 = add i64 %i.eb, 256
+  %7 = and i64 %i.ea, 255
+  %i.ec = or disjoint i64 %6, %7
   store i64 %i.ec, ptr %i.a, align 8, !tbaa !31
   br label %bb.p
 
@@ -15,9 +15,9 @@ begin_hunk_1_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cx
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !45
   %i.bw = load i64, ptr %i.d, align 8, !tbaa !31  ; 2 uses
   %i.bx = and i64 %i.bw, -256
-  %3 = and i64 %i.bw, 255
-  %4 = add i64 %i.bx, 256
-  %i.by = or disjoint i64 %4, %3                  ; 2 uses
+  %3 = add i64 %i.bx, 256
+  %4 = and i64 %i.bw, 255
+  %i.by = or disjoint i64 %3, %4                  ; 2 uses
   store i64 %i.by, ptr %i.d, align 8, !tbaa !31
   %i.bz = add i64 %.03662, 1
   %.not57 = icmp eq i32 %.sroa.0.1, 0
@@ -26,9 +26,9 @@ begin_hunk_2_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cx
   store i32 %i.as, ptr %i.bz, align 4, !tbaa !7
   %i.cb = load i64, ptr %i.a, align 8, !tbaa !31  ; 2 uses
   %i.cc = and i64 %i.cb, -256
-  %4 = and i64 %i.cb, 255
-  %5 = add i64 %i.cc, 256
-  %i.cd = or disjoint i64 %5, %4
+  %4 = add i64 %i.cc, 256
+  %5 = and i64 %i.cb, 255
+  %i.cd = or disjoint i64 %4, %5
   store i64 %i.cd, ptr %i.a, align 8, !tbaa !31
   %.not129 = icmp eq i32 %.sroa.088.2, 0
   br i1 %.not129, label %.loopexit, label %.lr.ph152, !llvm.loop !148
@@ -37,9 +37,9 @@ begin_hunk_3_@_ZN5folly3f146detail8F14TableINS1_21VectorContainerPolicyINSt7__cx
   store i32 %i.ck, ptr %i.hu, align 4, !tbaa !7
   %i.hw = load i64, ptr %i.a, align 8, !tbaa !31  ; 2 uses
   %i.hx = and i64 %i.hw, -256
-  %6 = and i64 %i.hw, 255
-  %7 = add i64 %i.hx, 256
-  %i.hy = or disjoint i64 %7, %6
+  %6 = add i64 %i.hx, 256
+  %7 = and i64 %i.hw, 255
+  %i.hy = or disjoint i64 %6, %7
   store i64 %i.hy, ptr %i.a, align 8, !tbaa !31
   %.not128 = icmp eq i32 %.sroa.088.3, 0
   br i1 %.not128, label %.loopexit, label %.lr.ph148, !llvm.loop !149
