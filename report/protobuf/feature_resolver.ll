@@ -4,19 +4,17 @@ begin_hunk_0_@_ZN6google8protobuf12_GLOBAL__N_115CollectEditionsERKNS0_10Descrip
   br i1 %or.cond, label %.lr.ph.i.i.i4.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i.i
-  %n.vec = and i64 %i.ds, 9223372036854775800     ; 4 uses
-  %i.du = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.ds, 9223372036854775800     ; 3 uses
+  %i.du = shl i64 %n.vec, 2                       ; 2 uses
   %i.dv = getelementptr i8, ptr %i.dp, i64 %i.du
-  %4 = shl i64 %n.vec, 2
-  %i.dw = getelementptr i8, ptr %i.dm, i64 %4
+  %i.dw = getelementptr i8, ptr %i.dm, i64 %i.du
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %offset.idx = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %offset.idx = shl i64 %index, 2                 ; 2 uses
   %next.gep = getelementptr i8, ptr %i.dp, i64 %offset.idx ; 2 uses
-  %offset.idx57 = shl i64 %index, 2
-  %next.gep58 = getelementptr i8, ptr %i.dm, i64 %offset.idx57 ; 2 uses
+  %next.gep58 = getelementptr i8, ptr %i.dm, i64 %offset.idx ; 2 uses
   %i.dx = getelementptr i8, ptr %next.gep58, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep58, align 4, !noalias !112
   %wide.load59 = load <4 x i32>, ptr %i.dx, align 4, !noalias !112
@@ -25,19 +23,17 @@ begin_hunk_1_@_ZN4absl12lts_2025051218container_internal5btreeINS1_10set_paramsI
   br i1 %or.cond, label %.lr.ph.i.i.i4.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i
-  %n.vec = and i64 %i.at, 9223372036854775800     ; 4 uses
-  %i.av = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.at, 9223372036854775800     ; 3 uses
+  %i.av = shl i64 %n.vec, 2                       ; 2 uses
   %i.aw = getelementptr i8, ptr %i.aq, i64 %i.av
-  %5 = shl i64 %n.vec, 2
-  %i.ax = getelementptr i8, ptr %i.an, i64 %5
+  %i.ax = getelementptr i8, ptr %i.an, i64 %i.av
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %offset.idx = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %offset.idx = shl i64 %index, 2                 ; 2 uses
   %next.gep = getelementptr i8, ptr %i.aq, i64 %offset.idx ; 2 uses
-  %offset.idx21 = shl i64 %index, 2
-  %next.gep22 = getelementptr i8, ptr %i.an, i64 %offset.idx21 ; 2 uses
+  %next.gep22 = getelementptr i8, ptr %i.an, i64 %offset.idx ; 2 uses
   %i.ay = getelementptr i8, ptr %next.gep22, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep22, align 4
   %wide.load23 = load <4 x i32>, ptr %i.ay, align 4
@@ -46,19 +42,17 @@ begin_hunk_2_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_p
   br i1 %diff.check, label %.lr.ph.i.preheader85, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.w, 9223372036854775800      ; 4 uses
-  %i.ab = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.w, 9223372036854775800      ; 3 uses
+  %i.ab = shl i64 %n.vec, 2                       ; 2 uses
   %i.ac = getelementptr i8, ptr %i.k, i64 %i.ab
-  %4 = shl i64 %n.vec, 2
-  %i.ad = getelementptr i8, ptr %i.r, i64 %4
+  %i.ad = getelementptr i8, ptr %i.r, i64 %i.ab
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %offset.idx = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %offset.idx = shl i64 %index, 2                 ; 2 uses
   %next.gep = getelementptr i8, ptr %i.k, i64 %offset.idx ; 2 uses
-  %offset.idx62 = shl i64 %index, 2
-  %next.gep63 = getelementptr i8, ptr %i.r, i64 %offset.idx62 ; 2 uses
+  %next.gep63 = getelementptr i8, ptr %i.r, i64 %offset.idx ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %next.gep, i64 4
   %i.af = getelementptr i8, ptr %next.gep63, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep63, align 4
@@ -67,19 +61,17 @@ begin_hunk_3_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_p
   br i1 %min.iters.check67, label %.lr.ph.i47.preheader84, label %vector.ph68
 
 vector.ph68:                                      ; preds = %.lr.ph.i47.preheader
-  %n.vec70 = and i64 %i.bd, 9223372036854775800   ; 4 uses
-  %i.be = shl i64 %n.vec70, 2
+  %n.vec70 = and i64 %i.bd, 9223372036854775800   ; 3 uses
+  %i.be = shl i64 %n.vec70, 2                     ; 2 uses
   %i.bf = getelementptr i8, ptr %i.r, i64 %i.be
-  %5 = shl i64 %n.vec70, 2
-  %i.bg = getelementptr i8, ptr %i.av, i64 %5
+  %i.bg = getelementptr i8, ptr %i.av, i64 %i.be
   br label %vector.body71
 
 vector.body71:                                    ; preds = %vector.body71, %vector.ph68
-  %index72 = phi i64 [ 0, %vector.ph68 ], [ %index.next79, %vector.body71 ] ; 3 uses
-  %offset.idx73 = shl i64 %index72, 2
+  %index72 = phi i64 [ 0, %vector.ph68 ], [ %index.next79, %vector.body71 ] ; 2 uses
+  %offset.idx73 = shl i64 %index72, 2             ; 2 uses
   %next.gep74 = getelementptr i8, ptr %i.r, i64 %offset.idx73 ; 2 uses
-  %offset.idx75 = shl i64 %index72, 2
-  %next.gep76 = getelementptr i8, ptr %i.av, i64 %offset.idx75 ; 2 uses
+  %next.gep76 = getelementptr i8, ptr %i.av, i64 %offset.idx73 ; 2 uses
   %i.bh = getelementptr i8, ptr %next.gep76, i64 16
   %wide.load77 = load <4 x i32>, ptr %next.gep76, align 4
   %wide.load78 = load <4 x i32>, ptr %i.bh, align 4
@@ -88,19 +80,17 @@ begin_hunk_4_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_p
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %i.n, 9223372036854775800      ; 4 uses
-  %i.o = mul i64 %n.vec, -4
+  %n.vec = and i64 %i.n, 9223372036854775800      ; 3 uses
+  %i.o = mul i64 %n.vec, -4                       ; 2 uses
   %i.p = getelementptr i8, ptr %i.j, i64 %i.o
-  %4 = mul i64 %n.vec, -4
-  %i.q = getelementptr i8, ptr %i.k, i64 %4
+  %i.q = getelementptr i8, ptr %i.k, i64 %i.o
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %offset.idx = mul i64 %index, -4
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %offset.idx = mul i64 %index, -4                ; 2 uses
   %next.gep = getelementptr i8, ptr %i.j, i64 %offset.idx ; 2 uses
-  %offset.idx65 = mul i64 %index, -4
-  %next.gep66 = getelementptr i8, ptr %i.k, i64 %offset.idx65 ; 2 uses
+  %next.gep66 = getelementptr i8, ptr %i.k, i64 %offset.idx ; 2 uses
   %i.r = getelementptr inbounds i8, ptr %next.gep66, i64 -16
   %i.s = getelementptr inbounds i8, ptr %next.gep66, i64 -32
   %wide.load = load <4 x i32>, ptr %i.r, align 4
@@ -109,19 +99,17 @@ begin_hunk_5_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_p
   br i1 %diff.check, label %.lr.ph.i48.preheader90, label %vector.ph74
 
 vector.ph74:                                      ; preds = %vector.memcheck
-  %n.vec76 = and i64 %i.au, 9223372036854775800   ; 4 uses
-  %i.bd = shl i64 %n.vec76, 2
+  %n.vec76 = and i64 %i.au, 9223372036854775800   ; 3 uses
+  %i.bd = shl i64 %n.vec76, 2                     ; 2 uses
   %i.be = getelementptr i8, ptr %i.f, i64 %i.bd
-  %5 = shl i64 %n.vec76, 2
-  %i.bf = getelementptr i8, ptr %i.ap, i64 %5
+  %i.bf = getelementptr i8, ptr %i.ap, i64 %i.bd
   br label %vector.body77
 
 vector.body77:                                    ; preds = %vector.body77, %vector.ph74
-  %index78 = phi i64 [ 0, %vector.ph74 ], [ %index.next85, %vector.body77 ] ; 3 uses
-  %offset.idx79 = shl i64 %index78, 2
+  %index78 = phi i64 [ 0, %vector.ph74 ], [ %index.next85, %vector.body77 ] ; 2 uses
+  %offset.idx79 = shl i64 %index78, 2             ; 2 uses
   %next.gep80 = getelementptr i8, ptr %i.f, i64 %offset.idx79 ; 2 uses
-  %offset.idx81 = shl i64 %index78, 2
-  %next.gep82 = getelementptr i8, ptr %i.ap, i64 %offset.idx81 ; 2 uses
+  %next.gep82 = getelementptr i8, ptr %i.ap, i64 %offset.idx79 ; 2 uses
   %i.bg = getelementptr i8, ptr %next.gep82, i64 16
   %wide.load83 = load <4 x i32>, ptr %next.gep82, align 4
   %wide.load84 = load <4 x i32>, ptr %i.bg, align 4
@@ -130,19 +118,17 @@ begin_hunk_6_@_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_p
   br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.vec = and i64 %i.w, 9223372036854775800      ; 4 uses
-  %i.aa = shl i64 %n.vec, 2
+  %n.vec = and i64 %i.w, 9223372036854775800      ; 3 uses
+  %i.aa = shl i64 %n.vec, 2                       ; 2 uses
   %i.ab = getelementptr i8, ptr %i.t, i64 %i.aa
-  %4 = shl i64 %n.vec, 2
-  %i.ac = getelementptr i8, ptr %i.r, i64 %4
+  %i.ac = getelementptr i8, ptr %i.r, i64 %i.aa
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %offset.idx = shl i64 %index, 2
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %offset.idx = shl i64 %index, 2                 ; 2 uses
   %next.gep = getelementptr i8, ptr %i.t, i64 %offset.idx ; 2 uses
-  %offset.idx35 = shl i64 %index, 2
-  %next.gep36 = getelementptr i8, ptr %i.r, i64 %offset.idx35 ; 2 uses
+  %next.gep36 = getelementptr i8, ptr %i.r, i64 %offset.idx ; 2 uses
   %i.ad = getelementptr i8, ptr %next.gep36, i64 16
   %wide.load = load <4 x i32>, ptr %next.gep36, align 4
   %wide.load37 = load <4 x i32>, ptr %i.ad, align 4
