@@ -4,18 +4,16 @@ begin_hunk_0_@_ZN13duckdb_snappy8internal16CompressFragmentEPKcmPcPti:bb.a
   br label %vector.body
 
 vector.body:                                      ; preds = %pred.store.continue413, %.lr.ph.i169
-  %index = phi i64 [ 0, %.lr.ph.i169 ], [ %index.next, %pred.store.continue413 ] ; 3 uses
+  %index = phi i64 [ 0, %.lr.ph.i169 ], [ %index.next, %pred.store.continue413 ] ; 2 uses
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.lr.ph.i169 ], [ %vec.ind.next, %pred.store.continue413 ] ; 2 uses
   %5 = mul i64 %index, 3                          ; 4 uses
-  %6 = getelementptr i8, ptr %.8, i64 %5
-  %next.gep403.a = getelementptr i8, ptr %6, i64 3
-  %i.mz = getelementptr i8, ptr %.8, i64 %5
-  %next.gep404.a = getelementptr i8, ptr %i.mz, i64 6
-  %i.na = getelementptr i8, ptr %.8, i64 %5
-  %next.gep405.a = getelementptr i8, ptr %i.na, i64 9
-  %broadcast.splatinsert406 = insertelement <4 x i64> poison, i64 %index, i64 0
-  %broadcast.splat407 = shufflevector <4 x i64> %broadcast.splatinsert406, <4 x i64> poison, <4 x i32> zeroinitializer
-  %vec.iv = or disjoint <4 x i64> %broadcast.splat407, <i64 0, i64 1, i64 2, i64 3>
-  %i.nb = icmp ule <4 x i64> %vec.iv, %broadcast.splat ; 4 uses
+  %next.gep403.a = getelementptr i8, ptr %.8, i64 %5
+  %i.mz = getelementptr i8, ptr %next.gep403.a, i64 3
+  %next.gep404.a = getelementptr i8, ptr %.8, i64 %5
+  %i.na = getelementptr i8, ptr %next.gep404.a, i64 6
+  %next.gep405.a = getelementptr i8, ptr %.8, i64 %5
+  %next.gep405 = getelementptr i8, ptr %next.gep405.a, i64 9
+  %i.nb = icmp ule <4 x i64> %vec.ind, %broadcast.splat ; 4 uses
   %i.nc = extractelement <4 x i1> %i.nb, i64 0
   br i1 %i.nc, label %pred.store.if, label %pred.store.continue
 
@@ -24,7 +22,7 @@ begin_hunk_1_@_ZN13duckdb_snappy8internal16CompressFragmentEPKcmPcPti:bb.a
   br i1 %i.nd, label %pred.store.if408.a, label %pred.store.continue409.a
 
 pred.store.if408.a:                               ; preds = %pred.store.continue
-  store i32 %i.mr, ptr %next.gep403.a, align 1
+  store i32 %i.mr, ptr %i.mz, align 1
   br label %pred.store.continue409.a
 
 pred.store.continue409.a:                         ; preds = %pred.store.if408.a, %pred.store.continue
@@ -33,7 +31,7 @@ begin_hunk_2_@_ZN13duckdb_snappy8internal16CompressFragmentEPKcmPcPti:bb.a
   br i1 %i.ne, label %pred.store.if410.a, label %pred.store.continue411.a
 
 pred.store.if410.a:                               ; preds = %pred.store.continue409.a
-  store i32 %i.mr, ptr %next.gep404.a, align 1
+  store i32 %i.mr, ptr %i.na, align 1
   br label %pred.store.continue411.a
 
 pred.store.continue411.a:                         ; preds = %pred.store.if410.a, %pred.store.continue409.a
@@ -42,11 +40,12 @@ begin_hunk_3_@_ZN13duckdb_snappy8internal16CompressFragmentEPKcmPcPti:bb.a
   br i1 %i.nf, label %pred.store.if412, label %pred.store.continue413
 
 pred.store.if412:                                 ; preds = %pred.store.continue411.a
-  store i32 %i.mr, ptr %next.gep405.a, align 1
+  store i32 %i.mr, ptr %next.gep405, align 1
   br label %pred.store.continue413
 
 pred.store.continue413:                           ; preds = %pred.store.if412, %pred.store.continue411.a
   %index.next = add i64 %index, 4                 ; 2 uses
+  %vec.ind.next = add <4 x i64> %vec.ind, splat (i64 4)
   %i.ng = icmp eq i64 %index.next, %n.vec
   br i1 %i.ng, label %._crit_edge.i166, label %vector.body, !prof !32, !llvm.loop !33
 
@@ -55,18 +54,16 @@ begin_hunk_4_@_ZN13duckdb_snappy8internal26CompressFragmentDoubleHashEPKcmPcPtiS
   br label %vector.body
 
 vector.body:                                      ; preds = %pred.store.continue604, %.lr.ph.i276
-  %index = phi i64 [ 0, %.lr.ph.i276 ], [ %index.next, %pred.store.continue604 ] ; 3 uses
+  %index = phi i64 [ 0, %.lr.ph.i276 ], [ %index.next, %pred.store.continue604 ] ; 2 uses
+  %vec.ind = phi <4 x i64> [ <i64 0, i64 1, i64 2, i64 3>, %.lr.ph.i276 ], [ %vec.ind.next, %pred.store.continue604 ] ; 2 uses
   %7 = mul i64 %index, 3                          ; 4 uses
-  %8 = getelementptr i8, ptr %.2, i64 %7
-  %next.gep594.a = getelementptr i8, ptr %8, i64 3
-  %i.hr = getelementptr i8, ptr %.2, i64 %7
-  %next.gep595.a = getelementptr i8, ptr %i.hr, i64 6
-  %i.hs = getelementptr i8, ptr %.2, i64 %7
-  %next.gep596.a = getelementptr i8, ptr %i.hs, i64 9
-  %broadcast.splatinsert597 = insertelement <4 x i64> poison, i64 %index, i64 0
-  %broadcast.splat598 = shufflevector <4 x i64> %broadcast.splatinsert597, <4 x i64> poison, <4 x i32> zeroinitializer
-  %vec.iv = or disjoint <4 x i64> %broadcast.splat598, <i64 0, i64 1, i64 2, i64 3>
-  %i.ht = icmp ule <4 x i64> %vec.iv, %broadcast.splat ; 4 uses
+  %next.gep594.a = getelementptr i8, ptr %.2, i64 %7
+  %i.hr = getelementptr i8, ptr %next.gep594.a, i64 3
+  %next.gep595.a = getelementptr i8, ptr %.2, i64 %7
+  %i.hs = getelementptr i8, ptr %next.gep595.a, i64 6
+  %next.gep596.a = getelementptr i8, ptr %.2, i64 %7
+  %next.gep596 = getelementptr i8, ptr %next.gep596.a, i64 9
+  %i.ht = icmp ule <4 x i64> %vec.ind, %broadcast.splat ; 4 uses
   %i.hu = extractelement <4 x i1> %i.ht, i64 0
   br i1 %i.hu, label %pred.store.if, label %pred.store.continue
 
@@ -75,7 +72,7 @@ begin_hunk_5_@_ZN13duckdb_snappy8internal26CompressFragmentDoubleHashEPKcmPcPtiS
   br i1 %i.hv, label %pred.store.if599.a, label %pred.store.continue600.a
 
 pred.store.if599.a:                               ; preds = %pred.store.continue
-  store i32 %i.hj, ptr %next.gep594.a, align 1
+  store i32 %i.hj, ptr %i.hr, align 1
   br label %pred.store.continue600.a
 
 pred.store.continue600.a:                         ; preds = %pred.store.if599.a, %pred.store.continue
@@ -84,7 +81,7 @@ begin_hunk_6_@_ZN13duckdb_snappy8internal26CompressFragmentDoubleHashEPKcmPcPtiS
   br i1 %i.hw, label %pred.store.if601.a, label %pred.store.continue602.a
 
 pred.store.if601.a:                               ; preds = %pred.store.continue600.a
-  store i32 %i.hj, ptr %next.gep595.a, align 1
+  store i32 %i.hj, ptr %i.hs, align 1
   br label %pred.store.continue602.a
 
 pred.store.continue602.a:                         ; preds = %pred.store.if601.a, %pred.store.continue600.a
@@ -93,11 +90,12 @@ begin_hunk_7_@_ZN13duckdb_snappy8internal26CompressFragmentDoubleHashEPKcmPcPtiS
   br i1 %i.hx, label %pred.store.if603, label %pred.store.continue604
 
 pred.store.if603:                                 ; preds = %pred.store.continue602.a
-  store i32 %i.hj, ptr %next.gep596.a, align 1
+  store i32 %i.hj, ptr %next.gep596, align 1
   br label %pred.store.continue604
 
 pred.store.continue604:                           ; preds = %pred.store.if603, %pred.store.continue602.a
   %index.next = add i64 %index, 4                 ; 2 uses
+  %vec.ind.next = add <4 x i64> %vec.ind, splat (i64 4)
   %i.hy = icmp eq i64 %index.next, %n.vec
   br i1 %i.hy, label %._crit_edge.i, label %vector.body, !prof !32, !llvm.loop !42
 
