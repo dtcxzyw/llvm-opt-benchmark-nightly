@@ -1,0 +1,266 @@
+diff --git a/llvm/include/llvm/Analysis/ScalarEvolution.h b/llvm/include/llvm/Analysis/ScalarEvolution.h
+index 5c01da0855f66..8b199e7cb05fd 100644
+--- a/llvm/include/llvm/Analysis/ScalarEvolution.h
++++ b/llvm/include/llvm/Analysis/ScalarEvolution.h
+@@ -2106,7 +2106,7 @@ class ScalarEvolution {
+                                          bool AllowPredicates);
+   std::optional<ScalarEvolution::ExitLimit> computeExitLimitFromCondFromBinOp(
+       ExitLimitCacheTy &Cache, const Loop *L, Value *ExitCond, bool ExitIfTrue,
+-      bool ControlsOnlyExit, bool AllowPredicates);
++      bool AllowPredicates);
+ 
+   /// Compute the number of times the backedge of the specified loop will
+   /// execute if its exit condition were a conditional branch of the ICmpInst
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 676292ebe0346..d0af9f9e52e79 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9298,7 +9298,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondImpl(
+     bool ControlsOnlyExit, bool AllowPredicates) {
+   // Handle BinOp conditions (And, Or).
+   if (auto LimitFromBinOp = computeExitLimitFromCondFromBinOp(
+-          Cache, L, ExitCond, ExitIfTrue, ControlsOnlyExit, AllowPredicates))
++          Cache, L, ExitCond, ExitIfTrue, AllowPredicates))
+     return *LimitFromBinOp;
+ 
+   // With an icmp, it may be feasible to compute an exact backedge-taken count.
+@@ -9358,7 +9358,7 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondImpl(
+ std::optional<ScalarEvolution::ExitLimit>
+ ScalarEvolution::computeExitLimitFromCondFromBinOp(
+     ExitLimitCacheTy &Cache, const Loop *L, Value *ExitCond, bool ExitIfTrue,
+-    bool ControlsOnlyExit, bool AllowPredicates) {
++    bool AllowPredicates) {
+   // Check if the controlling expression for this loop is an And or Or.
+   Value *Op0, *Op1;
+   bool IsAnd;
+@@ -9369,14 +9369,6 @@ ScalarEvolution::computeExitLimitFromCondFromBinOp(
+   else
+     return std::nullopt;
+ 
+-  // Be robust against unsimplified IR for the form "op i1 X, NeutralElement".
+-  const Constant *NeutralElement = ConstantInt::get(ExitCond->getType(), IsAnd);
+-  if (Op0 == NeutralElement)
+-    std::swap(Op0, Op1);
+-  if (Op1 == NeutralElement)
+-    return computeExitLimitFromCondCached(Cache, L, Op0, ExitIfTrue,
+-                                          ControlsOnlyExit, AllowPredicates);
+-
+   // A sub-condition of a non-trivial binop never solely controls the exit,
+   // whether we exit always depends on both conditions.
+   ExitLimit EL0 = computeExitLimitFromCondCached(
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-andor-selectform.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-andor-selectform.ll
+index 7e052d65d1c8e..26f00ea5ca36a 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-andor-selectform.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-andor-selectform.ll
+@@ -7,10 +7,9 @@ target triple = "x86_64-unknown-linux-gnu"
+ define void @unsimplified_and1(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_and1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_and1
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -29,10 +28,9 @@ leave:
+ define void @unsimplified_and2(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_and2'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_and2
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -137,10 +135,9 @@ leave:
+ define void @unsimplified_or3(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_or3'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_or3
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -159,10 +156,9 @@ leave:
+ define void @unsimplified_or4(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_or4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_or4
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -181,10 +177,9 @@ leave:
+ define void @reversed_and1(i32 %n) {
+ ; CHECK-LABEL: 'reversed_and1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_and1
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -203,10 +198,9 @@ leave:
+ define void @reversed_and2(i32 %n) {
+ ; CHECK-LABEL: 'reversed_and2'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_and2
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -311,10 +305,9 @@ leave:
+ define void @reversed_or3(i32 %n) {
+ ; CHECK-LABEL: 'reversed_or3'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_or3
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -333,10 +326,9 @@ leave:
+ define void @reversed_or4(i32 %n) {
+ ; CHECK-LABEL: 'reversed_or4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_or4
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/Analysis/ScalarEvolution/trip-count-andor.ll b/llvm/test/Analysis/ScalarEvolution/trip-count-andor.ll
+index 8df88f2d58621..34bf853b6be02 100644
+--- a/llvm/test/Analysis/ScalarEvolution/trip-count-andor.ll
++++ b/llvm/test/Analysis/ScalarEvolution/trip-count-andor.ll
+@@ -7,10 +7,9 @@ target triple = "x86_64-unknown-linux-gnu"
+ define void @unsimplified_and1(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_and1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_and1
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -29,10 +28,9 @@ leave:
+ define void @unsimplified_and2(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_and2'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_and2
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -137,10 +135,9 @@ leave:
+ define void @unsimplified_or3(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_or3'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_or3
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -159,10 +156,9 @@ leave:
+ define void @unsimplified_or4(i32 %n) {
+ ; CHECK-LABEL: 'unsimplified_or4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @unsimplified_or4
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -181,10 +177,9 @@ leave:
+ define void @reversed_and1(i32 %n) {
+ ; CHECK-LABEL: 'reversed_and1'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_and1
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -203,10 +198,9 @@ leave:
+ define void @reversed_and2(i32 %n) {
+ ; CHECK-LABEL: 'reversed_and2'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_and2
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+-; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable constant max backedge-taken count.
++; CHECK-NEXT:  Loop %loop: Unpredictable symbolic max backedge-taken count.
+ ;
+ entry:
+   br label %loop
+@@ -311,10 +305,9 @@ leave:
+ define void @reversed_or3(i32 %n) {
+ ; CHECK-LABEL: 'reversed_or3'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_or3
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
+@@ -333,10 +326,9 @@ leave:
+ define void @reversed_or4(i32 %n) {
+ ; CHECK-LABEL: 'reversed_or4'
+ ; CHECK-NEXT:  Determining loop execution counts for: @reversed_or4
+-; CHECK-NEXT:  Loop %loop: backedge-taken count is %n
++; CHECK-NEXT:  Loop %loop: Unpredictable backedge-taken count.
+ ; CHECK-NEXT:  Loop %loop: constant max backedge-taken count is i32 -1
+ ; CHECK-NEXT:  Loop %loop: symbolic max backedge-taken count is %n
+-; CHECK-NEXT:  Loop %loop: Trip multiple is 1
+ ;
+ entry:
+   br label %loop
