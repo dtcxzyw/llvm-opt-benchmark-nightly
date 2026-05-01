@@ -2,7 +2,7 @@ begin_hunk_0_@DGaussianMask:bb.a
 .lr.ph:                                           ; preds = %bb.c
   %i.n = trunc i32 %.neg to i16
   %i.o = fmul double %i.b, 2.000000e+00
-  %i.p = fmul double %i.o, %i.b                   ; 4 uses
+  %i.p = fmul double %i.o, %i.b                   ; 3 uses
   %i.q = fmul double %i.b, 0x40040D931FF62705     ; 3 uses
   %i.r = fdiv double -1.000000e+00, %i.q
   %i.s = fptrunc double %i.r to float
@@ -11,6 +11,8 @@ begin_hunk_1_@DGaussianMask:bb.a
   %i.u = fdiv double 1.000000e+00, %i.q
   %i.v = fptrunc double %i.u to float
   %i.w = fpext float %i.v to double
+  %4 = insertelement <2 x double> poison, double %i.p, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.i
@@ -19,7 +21,7 @@ begin_hunk_2_@DGaussianMask:bb.a
 bb.f:                                             ; preds = %bb.d
   %i.aj = add nsw i32 %i.y, -1
   %i.ak = icmp eq i32 %i.aa, %i.aj
-  %i.al = sitofp i16 %.04249 to double            ; 3 uses
+  %i.al = sitofp i16 %.04249 to double            ; 2 uses
   br i1 %i.ak, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -28,17 +30,17 @@ begin_hunk_3_@DGaussianMask:bb.a
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
-  %4 = fadd double %i.al, 5.000000e-01            ; 2 uses
-  %5 = fneg double %4
-  %6 = fmul double %4, %5
-  %7 = fdiv double %6, %i.p
-  %8 = tail call double @exp(double noundef %7) #8, !tbaa !4
-  %9 = fadd double %i.al, -5.000000e-01           ; 2 uses
-  %10 = fneg double %9
-  %11 = fmul double %9, %10
-  %12 = fdiv double %11, %i.p
-  %i.as = tail call double @exp(double noundef %12) #8, !tbaa !4
-  %i.at = fsub double %8, %i.as
+  %6 = insertelement <2 x double> poison, double %i.al, i64 0
+  %7 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> zeroinitializer
+  %8 = fadd <2 x double> %7, <double 5.000000e-01, double -5.000000e-01> ; 2 uses
+  %9 = fneg <2 x double> %8
+  %10 = fmul <2 x double> %8, %9
+  %11 = fdiv <2 x double> %10, %5                 ; 2 uses
+  %12 = extractelement <2 x double> %11, i64 0
+  %13 = tail call double @exp(double noundef %12) #8, !tbaa !4
+  %14 = extractelement <2 x double> %11, i64 1
+  %i.as = tail call double @exp(double noundef %14) #8, !tbaa !4
+  %i.at = fsub double %13, %i.as
   %i.au = fdiv double %i.at, %i.q
   br label %bb.i
 
