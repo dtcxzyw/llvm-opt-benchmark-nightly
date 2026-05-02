@@ -4,7 +4,7 @@ begin_hunk_0_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_16ArraySor
   %.val.i4.i.i.i.i = load i32, ptr %i.h, align 4, !tbaa !719
   %.val3.i5.i.i.i.i = load i32, ptr %i.i, align 4, !tbaa !719
   %i.j = icmp eq i32 %.val.i4.i.i.i.i, %.val3.i5.i.i.i.i
-  %3 = and i1 %i.e, %i.j
+  %3 = select i1 %i.j, i1 %i.e, i1 false
   ret i1 %3
 }
 
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_11SortOpti
   br i1 %i.ac, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_11SortOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEEEEEEERKS3_SI_RKT_.exit
 
 _ZN5arrow7compute8internal11CompareImplINS0_11SortOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEEEEEEERKS3_SI_RKT_.exit: ; preds = %bb.b, %.lr.ph.i.i.i.i.i.i, %bb.a, %.preheader.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i.i.i.i.i.i ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
+  %.1.i.i.i.i.i.i = phi i1 [ true, %.preheader.i.i.i.i.i.i ], [ false, %bb.a ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !838 ; 2 uses
   %i.af = getelementptr inbounds i8, ptr %1, i64 %i.ae
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_19Partitio
   %.val.i4.i.i.i.i = load i32, ptr %i.h, align 4, !tbaa !719
   %.val3.i5.i.i.i.i = load i32, ptr %i.i, align 4, !tbaa !719
   %i.j = icmp eq i32 %.val.i4.i.i.i.i, %.val3.i5.i.i.i.i
-  %3 = and i1 %i.e, %i.j
+  %3 = select i1 %i.j, i1 %i.e, i1 false
   ret i1 %3
 }
 
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_16Winsoriz
   %.val.i4.i.i.i.i = load double, ptr %i.h, align 8, !tbaa !95
   %.val3.i5.i.i.i.i = load double, ptr %i.i, align 8, !tbaa !95
   %i.j = fcmp oeq double %.val.i4.i.i.i.i, %.val3.i5.i.i.i.i
-  %3 = and i1 %i.e, %i.j
+  %3 = select i1 %i.j, i1 %i.e, i1 false
   ret i1 %3
 }
 
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_14SelectKO
   %i.ab = sub i64 %i.z, %i.aa
   %i.ac = sdiv exact i64 %i.ab, 48
   %.not15.i.i.i.i.i.i = icmp ult i64 %i.w, %i.ac
-  br i1 %.not15.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i, !llvm.loop !837
+  br i1 %.not15.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit, !llvm.loop !837
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.b
   %i.ad = phi ptr [ %i.y, %bb.b ], [ %i.l, %.preheader.i.i.i.i.i.i ]
@@ -49,16 +49,12 @@ begin_hunk_5_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_14SelectKO
   %i.ae = getelementptr inbounds nuw [48 x i8], ptr %i.ad, i64 %.01012.i.i.i.i.i.i
   %i.af = load ptr, ptr %i.i, align 8, !tbaa !71
   %i.ag = getelementptr inbounds nuw [48 x i8], ptr %i.af, i64 %.01012.i.i.i.i.i.i
-  %i.ah = tail call noundef zeroext i1 @_ZNK5arrow7compute7SortKey6EqualsERKS1_(ptr noundef nonnull align 8 dereferenceable(44) %i.ae, ptr noundef nonnull align 8 dereferenceable(44) %i.ag) ; 2 uses
-  br i1 %i.ah, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i
+  %i.ah = tail call noundef zeroext i1 @_ZNK5arrow7compute7SortKey6EqualsERKS1_(ptr noundef nonnull align 8 dereferenceable(44) %i.ae, ptr noundef nonnull align 8 dereferenceable(44) %i.ag)
+  br i1 %i.ah, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit
 
-_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.b
-  %3 = and i1 %i.e, %i.ah
-  br label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit
-
-_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit: ; preds = %bb.a, %.preheader.i.i.i.i.i.i, %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ %i.e, %.preheader.i.i.i.i.i.i ], [ %3, %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i ]
-  ret i1 %.1.i.i.i.i.i.i
+_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit: ; preds = %bb.b, %.lr.ph.i.i.i.i.i.i, %bb.a, %.preheader.i.i.i.i.i.i
+  %.shrunk = phi i1 [ %i.e, %.preheader.i.i.i.i.i.i ], [ false, %bb.a ], [ %i.e, %bb.b ], [ false, %.lr.ph.i.i.i.i.i.i ]
+  ret i1 %.shrunk
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -67,8 +63,8 @@ begin_hunk_6_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_17Cumulati
   %.val.i4.i.i.i.i = load i8, ptr %i.m, align 1, !tbaa !519, !range !120, !noundef !121
   %.val3.i5.i.i.i.i = load i8, ptr %i.n, align 1, !tbaa !519, !range !120, !noundef !121
   %i.o = icmp eq i8 %.val.i4.i.i.i.i, %.val3.i5.i.i.i.i
-  %3 = and i1 %i.j, %i.o
-  ret i1 %3
+  %narrow = select i1 %i.o, i1 %i.j, i1 false
+  ret i1 %narrow
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -77,7 +73,7 @@ begin_hunk_7_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_11RankOpti
   br i1 %i.ac, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_11RankOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEENS8_IS3_NS3_10TiebreakerEEEEEEEERKS3_SK_RKT_.exit
 
 _ZN5arrow7compute8internal11CompareImplINS0_11RankOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEENS8_IS3_NS3_10TiebreakerEEEEEEEERKS3_SK_RKT_.exit: ; preds = %bb.b, %.lr.ph.i.i.i.i.i.i, %bb.a, %.preheader.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i.i.i.i.i.i ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
+  %.1.i.i.i.i.i.i = phi i1 [ true, %.preheader.i.i.i.i.i.i ], [ false, %bb.a ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !1568 ; 2 uses
   %i.af = getelementptr inbounds i8, ptr %1, i64 %i.ae
@@ -86,7 +82,6 @@ begin_hunk_8_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_11RankOpti
   %.val.i.i.i.i.i = load i32, ptr %i.af, align 4, !tbaa !719
   %.val3.i.i.i.i.i = load i32, ptr %i.ag, align 4, !tbaa !719
   %i.ah = icmp eq i32 %.val.i.i.i.i.i, %.val3.i.i.i.i.i
-  %3 = and i1 %.1.i.i.i.i.i.i, %i.ah
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !1570 ; 2 uses
   %i.ak = getelementptr inbounds i8, ptr %1, i64 %i.aj
@@ -95,7 +90,8 @@ begin_hunk_9_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_11RankOpti
   %.val.i6.i.i.i.i = load i32, ptr %i.ak, align 4, !tbaa !1572
   %.val3.i7.i.i.i.i = load i32, ptr %i.al, align 4, !tbaa !1572
   %i.am = icmp eq i32 %.val.i6.i.i.i.i, %.val3.i7.i.i.i.i
-  %i.an = and i1 %3, %i.am
+  %3 = select i1 %i.am, i1 %i.ah, i1 false
+  %i.an = and i1 %.1.i.i.i.i.i.i, %3
   ret i1 %i.an
 }
 
@@ -104,7 +100,7 @@ begin_hunk_10_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_19RankQua
   br i1 %i.ac, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_19RankQuantileOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEEEEEEERKS3_SI_RKT_.exit
 
 _ZN5arrow7compute8internal11CompareImplINS0_19RankQuantileOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaISA_EEEENS8_IS3_NS0_13NullPlacementEEEEEEEERKS3_SI_RKT_.exit: ; preds = %bb.b, %.lr.ph.i.i.i.i.i.i, %bb.a, %.preheader.i.i.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i.i.i.i.i.i ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
+  %.1.i.i.i.i.i.i = phi i1 [ true, %.preheader.i.i.i.i.i.i ], [ false, %bb.a ], [ %i.ac, %.lr.ph.i.i.i.i.i.i ], [ %i.ac, %bb.b ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !1685 ; 2 uses
   %i.af = getelementptr inbounds i8, ptr %1, i64 %i.ae
@@ -113,8 +109,8 @@ begin_hunk_11_@_ZZN5arrow7compute8internal22GetFunctionOptionsTypeINS0_25Inverse
   %brmerge.not.i.i.i.i.i.i.i = and i1 %i.m, %i.l
   %i.n = icmp eq ptr %.val.i4.i.i.i.i, %.val4.i.i.i.i.i
   %i.o = select i1 %brmerge.not.i.i.i.i.i.i.i, i1 %i.n, i1 %i.m
-  %3 = and i1 %i.e, %i.o
-  ret i1 %3
+  %narrow = select i1 %i.o, i1 %i.e, i1 false
+  ret i1 %narrow
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -4,9 +4,10 @@ begin_hunk_0_@_ZN6duckdb21FlattenDependentJoins29PushDownDependentJoinInternalEN
 
 bb.ce:                                            ; preds = %bb.cd
   %i.mp = load i8, ptr %i.mk, align 1, !tbaa !40, !range !101, !noundef !50
-  %197 = zext i1 %i.mo to i8
-  %198 = or i8 %i.mp, %197
-  store i8 %198, ptr %i.mk, align 1, !tbaa !40
+  %197 = trunc nuw i8 %i.mp to i1
+  %198 = or i1 %i.mo, %197
+  %199 = zext i1 %198 to i8
+  store i8 %199, ptr %i.mk, align 1, !tbaa !40
   %i.mq = getelementptr inbounds nuw i8, ptr %.sroa.02887.03558, i64 8 ; 2 uses
   %.not3052 = icmp eq ptr %i.mq, %i.mj
   br i1 %.not3052, label %._crit_edge3561, label %bb.cc
@@ -15,10 +16,8 @@ begin_hunk_1_@_ZN6duckdb21FlattenDependentJoins29PushDownDependentJoinInternalEN
 
 bb.cy:                                            ; preds = %bb.cx
   %i.oo = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %199 = icmp ne i8 %i.oo, 0
-  %200 = and i1 %i.on, %199
-  %201 = zext i1 %200 to i8
-  store i8 %201, ptr %3, align 1, !tbaa !340
+  %200 = select i1 %i.on, i8 %i.oo, i8 0
+  store i8 %200, ptr %3, align 1, !tbaa !340
   %i.op = getelementptr inbounds nuw i8, ptr %.sroa.02883.03550, i64 8 ; 2 uses
   %.not3050 = icmp eq ptr %i.op, %i.og
   br i1 %.not3050, label %._crit_edge3553, label %.lr.ph3552
@@ -27,12 +26,10 @@ begin_hunk_2_@_ZN6duckdb21FlattenDependentJoins29PushDownDependentJoinInternalEN
 bb.dc:                                            ; preds = %bb.db
   %i.ou = getelementptr inbounds nuw i8, ptr %i.ot, i64 8
   %i.ov = load i8, ptr %i.ou, align 8, !tbaa !75
-  %.not840 = icmp ne i8 %i.ov, 57
+  %.not840.not = icmp eq i8 %i.ov, 57
   %i.ow = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %202 = icmp ne i8 %i.ow, 0
-  %203 = and i1 %.not840, %202
-  %204 = zext i1 %203 to i8
-  store i8 %204, ptr %3, align 1, !tbaa !340
+  %201 = select i1 %.not840.not, i8 0, i8 %i.ow
+  store i8 %201, ptr %3, align 1, !tbaa !340
   br i1 %i.at, label %bb.dp, label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc
@@ -41,10 +38,8 @@ begin_hunk_3_@_ZN6duckdb21FlattenDependentJoins29PushDownDependentJoinInternalEN
 
 bb.ey:                                            ; preds = %bb.ex
   %i.wt = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %205 = icmp ne i8 %i.wt, 0
-  %206 = and i1 %i.ws, %205
-  %207 = zext i1 %206 to i8
-  store i8 %207, ptr %3, align 1, !tbaa !340
+  %202 = select i1 %i.ws, i8 %i.wt, i8 0
+  store i8 %202, ptr %3, align 1, !tbaa !340
   %i.wu = getelementptr inbounds nuw i8, ptr %.sroa.02873.03520, i64 8 ; 2 uses
   %.not3046 = icmp eq ptr %i.wu, %i.wk
   br i1 %.not3046, label %._crit_edge3523, label %.lr.ph3522
@@ -53,7 +48,7 @@ begin_hunk_4_@_ZN6duckdb24HasCorrelatedExpressions12VisitReplaceERNS_24BoundColu
   %.lcssa = phi i8 [ 0, %.preheader ], [ 1, %_ZNK6duckdb17CorrelatedColumnsixERKm.exit ], [ 0, %bb.l ]
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.aq = load i8, ptr %i.ap, align 8, !tbaa !367, !range !101, !noundef !50
-  %i.ar = or i8 %i.aq, %.lcssa
+  %i.ar = or i8 %.lcssa, %i.aq
   store i8 %i.ar, ptr %i.ap, align 8, !tbaa !367
   br label %bb.m
 
