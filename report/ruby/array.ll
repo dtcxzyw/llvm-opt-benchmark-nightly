@@ -4,7 +4,7 @@ begin_hunk_0_@rb_ary_sum:bb.a
   br label %finish_exact_sum.exit151
 
 bb.ac:                                            ; preds = %bb.aa
-  %or.cond.i150 = and i1 %i.be, %.not.i147
+  %or.cond.i150 = select i1 %.not.i147, i1 %i.be, i1 false
   br i1 %or.cond.i150, label %bb.ad, label %finish_exact_sum.exit151
 
 bb.ad:                                            ; preds = %bb.ac

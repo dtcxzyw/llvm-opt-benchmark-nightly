@@ -4,14 +4,14 @@ begin_hunk_0_@_ZZN8facebook5velox9functions25JsonExtractScalarFunctionINS0_4exec
   %i.ar = zext i8 %i.aq to i64
   %i.as = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.ar
   %i.at = load i8, ptr %i.as, align 1, !tbaa !100, !range !125, !noundef !126
-  %4 = icmp ne i8 %i.at, 0
+  %4 = trunc nuw i8 %i.at to i1
   br label %.thread140
 
 .thread140:                                       ; preds = %.thread, %_ZN8simdjson8fallback8ondemand14value_iterator16peek_root_scalarEPKc.exit, %bb.k, %bb.i
   %i.au = phi i8 [ %i.an, %.thread ], [ 0, %bb.i ], [ 0, %bb.k ], [ 0, %_ZN8simdjson8fallback8ondemand14value_iterator16peek_root_scalarEPKc.exit ] ; 2 uses
   %.not12.i = phi i1 [ false, %.thread ], [ false, %bb.i ], [ %4, %bb.k ], [ false, %_ZN8simdjson8fallback8ondemand14value_iterator16peek_root_scalarEPKc.exit ]
-  %5 = icmp ne i8 %i.au, 0
-  %brmerge.i = or i1 %5, %.not12.i
+  %5 = trunc nuw i8 %i.au to i1
+  %brmerge.i = or i1 %.not12.i, %5
   br i1 %brmerge.i, label %.thread142, label %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSESt9nullopt_t.exit
 
 .thread142:                                       ; preds = %bb.h, %bb.j, %.thread140
@@ -20,8 +20,8 @@ begin_hunk_1_@_ZZN8facebook5velox9functions25JsonExtractScalarFunctionINS0_4exec
   %i.an = zext i8 %i.am to i64
   %i.ao = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.an
   %i.ap = load i8, ptr %i.ao, align 1, !tbaa !100, !range !125, !noundef !126
-  %.not103 = icmp eq i8 %i.ap, 0
-  br i1 %.not103, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit, label %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSESt9nullopt_t.exit
+  %4 = trunc nuw i8 %i.ap to i1
+  br i1 %4, label %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEaSESt9nullopt_t.exit, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit: ; preds = %bb.g
   br i1 %.not, label %bb.h, label %.thread85
@@ -30,8 +30,8 @@ begin_hunk_2_@_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec
   %i.fq = zext i8 %i.fp to i64
   %i.fr = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fq
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !100, !range !125, !noundef !126
-  %.not401 = icmp eq i8 %i.fs, 0
-  br i1 %.not401, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i, label %.critedge.thread
+  %9 = trunc nuw i8 %i.fs to i1
+  br i1 %9, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i: ; preds = %bb.ae
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ez, i64 4 ; 3 uses
@@ -40,8 +40,8 @@ begin_hunk_3_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.fh = zext i8 %i.fg to i64
   %i.fi = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fh
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !100, !range !125, !noundef !126
-  %.not411 = icmp eq i8 %i.fj, 0
-  br i1 %.not411, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i, label %.critedge.thread
+  %10 = trunc nuw i8 %i.fj to i1
+  br i1 %10, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i: ; preds = %bb.y
   %i.fk = getelementptr inbounds nuw i8, ptr %i.em, i64 4 ; 3 uses
@@ -50,8 +50,8 @@ begin_hunk_4_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.fp = zext i8 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fp
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !100, !range !125, !noalias !4322, !noundef !126
-  %.not871 = icmp eq i8 %i.fr, 0
-  br i1 %.not871, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge.thread
+  %16 = trunc nuw i8 %i.fr to i1
+  br i1 %16, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.aa
   %i.fs = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 3 uses
@@ -60,8 +60,8 @@ begin_hunk_5_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.pk = zext i8 %i.pj to i64
   %i.pl = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.pk
   %i.pm = load i8, ptr %i.pl, align 1, !tbaa !100, !range !125, !noundef !126
-  %.not866 = icmp eq i8 %i.pm, 0
-  br i1 %.not866, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i, label %.critedge882.thread
+  %17 = trunc nuw i8 %i.pm to i1
+  br i1 %17, label %.critedge882.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i: ; preds = %bb.cl
   %i.pn = getelementptr inbounds nuw i8, ptr %i.op, i64 4 ; 3 uses
@@ -70,8 +70,8 @@ begin_hunk_6_@_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exec
   %i.gc = zext i8 %i.gb to i64
   %i.gd = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.gc
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !100, !range !125, !noalias !4387, !noundef !126
-  %.not389 = icmp eq i8 %i.ge, 0
-  br i1 %.not389, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge.thread
+  %9 = trunc nuw i8 %i.ge to i1
+  br i1 %9, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.ah
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fl, i64 4 ; 3 uses
@@ -80,8 +80,8 @@ begin_hunk_7_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.ft = zext i8 %i.fs to i64
   %i.fu = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.ft
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !100, !range !125, !noalias !4428, !noundef !126
-  %.not397 = icmp eq i8 %i.fv, 0
-  br i1 %.not397, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge.thread
+  %10 = trunc nuw i8 %i.fv to i1
+  br i1 %10, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.ab
   %i.fw = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 3 uses
@@ -90,8 +90,8 @@ begin_hunk_8_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.gb = zext i8 %i.ga to i64
   %i.gc = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.gb
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !100, !range !125, !noalias !4463, !noundef !126
-  %.not862 = icmp eq i8 %i.gd, 0
-  br i1 %.not862, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i, label %.critedge.thread
+  %16 = trunc nuw i8 %i.gd to i1
+  br i1 %16, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i: ; preds = %bb.ad
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fk, i64 4 ; 3 uses
@@ -100,8 +100,8 @@ begin_hunk_9_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSe
   %i.qi = zext i8 %i.qh to i64
   %i.qj = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.qi
   %i.qk = load i8, ptr %i.qj, align 1, !tbaa !100, !range !125, !noalias !4495, !noundef !126
-  %.not857 = icmp eq i8 %i.qk, 0
-  br i1 %.not857, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge873.thread
+  %17 = trunc nuw i8 %i.qk to i1
+  br i1 %17, label %.critedge873.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.cr
   %i.ql = getelementptr inbounds nuw i8, ptr %i.pn, i64 4 ; 3 uses
@@ -110,8 +110,8 @@ begin_hunk_10_@_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exe
   %i.fq = zext i8 %i.fp to i64
   %i.fr = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fq
   %i.fs = load i8, ptr %i.fr, align 1, !tbaa !100, !range !125, !noalias !4622, !noundef !126
-  %.not390 = icmp eq i8 %i.fs, 0
-  br i1 %.not390, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge.thread
+  %9 = trunc nuw i8 %i.fs to i1
+  br i1 %9, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.ae
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ez, i64 4 ; 3 uses
@@ -120,8 +120,8 @@ begin_hunk_11_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.fh = zext i8 %i.fg to i64
   %i.fi = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fh
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !100, !range !125, !noalias !4662, !noundef !126
-  %.not399 = icmp eq i8 %i.fj, 0
-  br i1 %.not399, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge.thread
+  %10 = trunc nuw i8 %i.fj to i1
+  br i1 %10, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.y
   %i.fk = getelementptr inbounds nuw i8, ptr %i.em, i64 4 ; 3 uses
@@ -130,8 +130,8 @@ begin_hunk_12_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.fp = zext i8 %i.fo to i64
   %i.fq = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.fp
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !100, !range !125, !noalias !4696, !noundef !126
-  %.not860 = icmp eq i8 %i.fr, 0
-  br i1 %.not860, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i, label %.critedge.thread
+  %16 = trunc nuw i8 %i.fr to i1
+  br i1 %16, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i: ; preds = %bb.aa
   %i.fs = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 3 uses
@@ -140,8 +140,8 @@ begin_hunk_13_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.pk = zext i8 %i.pj to i64
   %i.pl = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.pk
   %i.pm = load i8, ptr %i.pl, align 1, !tbaa !100, !range !125, !noalias !4727, !noundef !126
-  %.not855 = icmp eq i8 %i.pm, 0
-  br i1 %.not855, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i, label %.critedge871.thread
+  %17 = trunc nuw i8 %i.pm to i1
+  br i1 %17, label %.critedge871.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i: ; preds = %bb.cl
   %i.pn = getelementptr inbounds nuw i8, ptr %i.op, i64 4 ; 3 uses
@@ -150,8 +150,8 @@ begin_hunk_14_@_ZNK8facebook5velox17SelectivityVector15applyToSelectedIZNS0_4exe
   %i.gc = zext i8 %i.gb to i64
   %i.gd = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.gc
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !100, !range !125, !noalias !4764, !noundef !126
-  %.not387 = icmp eq i8 %i.ge, 0
-  br i1 %.not387, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i, label %.critedge.thread
+  %9 = trunc nuw i8 %i.ge to i1
+  br i1 %9, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i: ; preds = %bb.ah
   %i.gf = getelementptr inbounds nuw i8, ptr %i.fl, i64 4 ; 3 uses
@@ -160,8 +160,8 @@ begin_hunk_15_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.ft = zext i8 %i.fs to i64
   %i.fu = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.ft
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !100, !range !125, !noalias !4804, !noundef !126
-  %.not395 = icmp eq i8 %i.fv, 0
-  br i1 %.not395, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i, label %.critedge.thread
+  %10 = trunc nuw i8 %i.fv to i1
+  br i1 %10, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i: ; preds = %bb.ab
   %i.fw = getelementptr inbounds nuw i8, ptr %i.ey, i64 4 ; 3 uses
@@ -170,8 +170,8 @@ begin_hunk_16_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.gb = zext i8 %i.ga to i64
   %i.gc = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.gb
   %i.gd = load i8, ptr %i.gc, align 1, !tbaa !100, !range !125, !noalias !4838, !noundef !126
-  %.not860 = icmp eq i8 %i.gd, 0
-  br i1 %.not860, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i.i, label %.critedge.thread
+  %16 = trunc nuw i8 %i.gd to i1
+  br i1 %16, label %.critedge.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i.i: ; preds = %bb.ad
   %i.ge = getelementptr inbounds nuw i8, ptr %i.fk, i64 4 ; 3 uses
@@ -180,8 +180,8 @@ begin_hunk_17_@_ZZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToS
   %i.qi = zext i8 %i.qh to i64
   %i.qj = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.qi
   %i.qk = load i8, ptr %i.qj, align 1, !tbaa !100, !range !125, !noalias !4869, !noundef !126
-  %.not855 = icmp eq i8 %i.qk, 0
-  br i1 %.not855, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i, label %.critedge871.thread
+  %17 = trunc nuw i8 %i.qk to i1
+  br i1 %17, label %.critedge871.thread, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_boolEPKh.exit.i.i.i: ; preds = %bb.cr
   %i.ql = getelementptr inbounds nuw i8, ptr %i.pn, i64 4 ; 3 uses
