@@ -4,7 +4,7 @@ begin_hunk_0_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecINtNtNtCs95DO3l
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2897)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2897
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2897
@@ -13,7 +13,7 @@ begin_hunk_1_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecINtNtNtCs95DO3l
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2900)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2900
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2900
@@ -22,7 +22,7 @@ begin_hunk_2_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecINtNtNtCs95DO3l
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2903)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2903
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2903
@@ -31,7 +31,7 @@ begin_hunk_3_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtCsgO8S5jLFu
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2906)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2906
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2906
@@ -40,7 +40,7 @@ begin_hunk_4_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtCsgO8S5jLFu
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2909)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2909
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2909
@@ -49,7 +49,7 @@ begin_hunk_5_@_RNvMs3_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVecNtNtCshhQzAC5dG
   %i.b = load i64, ptr %0, align 8, !range !41, !noundef !12 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2912)
   %i.c = shl nuw i64 %i.b, 1
-  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 range(i64 0, -1) 4) ; 3 uses
+  %i.d = tail call i64 @llvm.umax.i64(i64 %i.c, i64 4) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2912
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.val13.i = load ptr, ptr %i.e, align 8, !alias.scope !2912
