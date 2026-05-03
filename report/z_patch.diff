@@ -1,0 +1,118 @@
+diff --git a/llvm/include/llvm/IR/Instruction.h b/llvm/include/llvm/IR/Instruction.h
+index 0b57ad4d0a379..0e6c122a4e2ef 100644
+--- a/llvm/include/llvm/IR/Instruction.h
++++ b/llvm/include/llvm/IR/Instruction.h
+@@ -588,23 +588,22 @@ class Instruction : public User,
+   LLVM_ABI void dropPoisonGeneratingMetadata();
+ 
+   /// Return true if this instruction has poison-generating attribute.
+-  LLVM_ABI bool hasPoisonGeneratingReturnAttributes() const LLVM_READONLY;
++  LLVM_ABI bool hasPoisonGeneratingAttributes() const LLVM_READONLY;
+ 
+-  /// Drops return attributes that may generate poison.
+-  LLVM_ABI void dropPoisonGeneratingReturnAttributes();
++  /// Drops attributes that may generate poison.
++  LLVM_ABI void dropPoisonGeneratingAttributes();
+ 
+   /// Return true if this instruction has poison-generating flags,
+-  /// return attributes or metadata.
++  /// attributes or metadata.
+   bool hasPoisonGeneratingAnnotations() const {
+-    return hasPoisonGeneratingFlags() ||
+-           hasPoisonGeneratingReturnAttributes() ||
++    return hasPoisonGeneratingFlags() || hasPoisonGeneratingAttributes() ||
+            hasPoisonGeneratingMetadata();
+   }
+ 
+-  /// Drops flags, return attributes and metadata that may generate poison.
++  /// Drops flags, attributes and metadata that may generate poison.
+   void dropPoisonGeneratingAnnotations() {
+     dropPoisonGeneratingFlags();
+-    dropPoisonGeneratingReturnAttributes();
++    dropPoisonGeneratingAttributes();
+     dropPoisonGeneratingMetadata();
+   }
+ 
+diff --git a/llvm/lib/IR/Instruction.cpp b/llvm/lib/IR/Instruction.cpp
+index 1932ff72b0a35..b002832ec0624 100644
+--- a/llvm/lib/IR/Instruction.cpp
++++ b/llvm/lib/IR/Instruction.cpp
+@@ -533,18 +533,24 @@ void Instruction::dropPoisonGeneratingMetadata() {
+     eraseMetadata(ID);
+ }
+ 
+-bool Instruction::hasPoisonGeneratingReturnAttributes() const {
++bool Instruction::hasPoisonGeneratingAttributes() const {
+   if (const auto *CB = dyn_cast<CallBase>(this)) {
+-    AttributeSet RetAttrs = CB->getAttributes().getRetAttrs();
+-    return RetAttrs.hasAttribute(Attribute::Range) ||
+-           RetAttrs.hasAttribute(Attribute::Alignment) ||
+-           RetAttrs.hasAttribute(Attribute::NonNull) ||
+-           RetAttrs.hasAttribute(Attribute::NoFPClass);
++    auto HasPoisonGeneratingAttributes = [](AttributeSet Attrs) {
++      return Attrs.hasAttribute(Attribute::Range) ||
++             Attrs.hasAttribute(Attribute::Alignment) ||
++             Attrs.hasAttribute(Attribute::NonNull) ||
++             Attrs.hasAttribute(Attribute::NoFPClass);
++    };
++    if (HasPoisonGeneratingAttributes(CB->getRetAttributes()))
++      return true;
++    for (unsigned ArgNo = 0; ArgNo < CB->arg_size(); ArgNo++)
++      if (HasPoisonGeneratingAttributes(CB->getParamAttributes(ArgNo)))
++        return true;
+   }
+   return false;
+ }
+ 
+-void Instruction::dropPoisonGeneratingReturnAttributes() {
++void Instruction::dropPoisonGeneratingAttributes() {
+   if (auto *CB = dyn_cast<CallBase>(this)) {
+     AttributeMask AM;
+     AM.addAttribute(Attribute::Range);
+@@ -552,8 +558,10 @@ void Instruction::dropPoisonGeneratingReturnAttributes() {
+     AM.addAttribute(Attribute::NonNull);
+     AM.addAttribute(Attribute::NoFPClass);
+     CB->removeRetAttrs(AM);
++    for (unsigned ArgNo = 0; ArgNo < CB->arg_size(); ArgNo++)
++      CB->removeParamAttrs(ArgNo, AM);
+   }
+-  assert(!hasPoisonGeneratingReturnAttributes() && "must be kept in sync");
++  assert(!hasPoisonGeneratingAttributes() && "must be kept in sync");
+ }
+ 
+ void Instruction::dropUBImplyingAttrsAndUnknownMetadata(
+diff --git a/llvm/lib/IR/Operator.cpp b/llvm/lib/IR/Operator.cpp
+index bd92a32142ebc..aa6c739cee665 100644
+--- a/llvm/lib/IR/Operator.cpp
++++ b/llvm/lib/IR/Operator.cpp
+@@ -75,7 +75,7 @@ bool Operator::hasPoisonGeneratingAnnotations() const {
+   if (hasPoisonGeneratingFlags())
+     return true;
+   auto *I = dyn_cast<Instruction>(this);
+-  return I && (I->hasPoisonGeneratingReturnAttributes() ||
++  return I && (I->hasPoisonGeneratingAttributes() ||
+                I->hasPoisonGeneratingMetadata());
+ }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/ispow2.ll b/llvm/test/Transforms/InstCombine/ispow2.ll
+index df697e686d986..be8d89d246843 100644
+--- a/llvm/test/Transforms/InstCombine/ispow2.ll
++++ b/llvm/test/Transforms/InstCombine/ispow2.ll
+@@ -1553,7 +1553,7 @@ define i1 @is_power2_or_zero_with_range(i32 %x) {
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp samesign ult i32 [[CTPOP]], 2
+ ; CHECK-NEXT:    ret i1 [[RES]]
+ ;
+-  %ctpop = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %x)
++  %ctpop = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 range(i32 1, 0) %x)
+   %cmp = icmp eq i32 %ctpop, 1
+   %notzero = icmp eq i32 %x, 0
+   %res = select i1 %notzero, i1 true, i1 %cmp
+@@ -1566,7 +1566,7 @@ define i1 @is_power2_or_zero_inv_with_range(i32 %x) {
+ ; CHECK-NEXT:    [[RES:%.*]] = icmp samesign ugt i32 [[CTPOP]], 1
+ ; CHECK-NEXT:    ret i1 [[RES]]
+ ;
+-  %ctpop = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 %x)
++  %ctpop = call range(i32 1, 33) i32 @llvm.ctpop.i32(i32 range(i32 1, 0) %x)
+   %cmp = icmp ne i32 %ctpop, 1
+   %notzero = icmp ne i32 %x, 0
+   %res = select i1 %notzero, i1 %cmp, i1 false
