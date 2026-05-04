@@ -1,0 +1,67 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 3bcec0827e9a1..1924d99c0f723 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3716,6 +3716,24 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+           return CallBase::removeOperandBundle(II, OBU.getTagID());
+         }
+ 
++        // Move assume to the base pointer of a gep if it's inbounds
++        if (auto *GEP = dyn_cast<GEPOperator>(RK.WasOn); GEP && GEP->isInBounds()) {
++          while (true) {
++            auto *NextGEP = dyn_cast<GEPOperator>(GEP->getPointerOperand());
++            if (!NextGEP || !NextGEP->isInBounds())
++              break;
++            GEP = NextGEP;
++          }
++          if (auto *Replacement = buildAssumeFromKnowledge(
++                  {RetainedKnowledge{Attribute::NonNull, 0,
++                                     GEP->getPointerOperand()}},
++                  Next, &AC, &DT)) {
++            InsertNewInstBefore(Replacement, Next->getIterator());
++            AC.registerAssumption(Replacement);
++            return CallBase::removeOperandBundle(II, OBU.getTagID());
++          }
++        }
++
+         // TODO: apply nonnull return attributes to calls and invokes
+       }
+     }
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index 197d680babe11..b7976fef75e00 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -613,6 +613,33 @@ define void @nonnull_only_ephemeral_use(ptr %p) {
+   ret void
+ }
+ 
++define ptr @nonnull_gep(ptr %p, i64 %i) {
++; DEFAULT-LABEL: @nonnull_gep(
++; DEFAULT-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 [[I:%.*]]
++; DEFAULT-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[P2]]) ]
++; DEFAULT-NEXT:    ret ptr [[P2]]
++;
++; BUNDLES-LABEL: @nonnull_gep(
++; BUNDLES-NEXT:    [[P2:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 [[I:%.*]]
++; BUNDLES-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[P]]) ]
++; BUNDLES-NEXT:    ret ptr [[P2]]
++;
++  %p2 = getelementptr i8, ptr %p, i64 %i
++  call void @llvm.assume(i1 true) ["nonnull"(ptr %p2)]
++  ret ptr %p2
++}
++
++define ptr @nonnull_gep_inbounds(ptr %p, i64 %i) {
++; CHECK-LABEL: @nonnull_gep_inbounds(
++; CHECK-NEXT:    [[P2:%.*]] = getelementptr inbounds i8, ptr [[P:%.*]], i64 [[I:%.*]]
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[P]]) ]
++; CHECK-NEXT:    ret ptr [[P2]]
++;
++  %p2 = getelementptr inbounds i8, ptr %p, i64 %i
++  call void @llvm.assume(i1 true) ["nonnull"(ptr %p2)]
++  ret ptr %p2
++}
++
+ define void @always_true_assumption() {
+ ; CHECK-LABEL: @always_true_assumption(
+ ; CHECK-NEXT:    ret void
