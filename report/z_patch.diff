@@ -1,0 +1,2883 @@
+diff --git a/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp b/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
+index 01322c26aa77e..309782de7cc28 100644
+--- a/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
++++ b/llvm/lib/Transforms/Scalar/LoopStrengthReduce.cpp
+@@ -5908,7 +5908,8 @@ void LSRInstance::RewriteForPHI(PHINode *PN, const LSRUse &LU,
+                 SplitCriticalEdge(BB, Parent,
+                                   CriticalEdgeSplittingOptions(&DT, &LI, MSSAU)
+                                       .setMergeIdenticalEdges()
+-                                      .setKeepOneInputPHIs());
++                                      .setKeepOneInputPHIs()
++                                      .setPreserveLCSSA());
+           } else {
+             SmallVector<BasicBlock*, 2> NewBBs;
+             DomTreeUpdater DTU(DT, DomTreeUpdater::UpdateStrategy::Eager);
+@@ -6165,7 +6166,7 @@ LSRInstance::LSRInstance(Loop *L, IVUsers &IU, ScalarEvolution &SE,
+       MSSAU(MSSAU), AMK(PreferredAddresingMode.getNumOccurrences() > 0
+                             ? PreferredAddresingMode
+                             : TTI.getPreferredAddressingMode(L, &SE)),
+-      Rewriter(SE, "lsr", false), BaselineCost(L, SE, TTI, AMK) {
++      Rewriter(SE, "lsr"), BaselineCost(L, SE, TTI, AMK) {
+   // If LoopSimplify form is not available, stay out of trouble.
+   if (!L->isLoopSimplifyForm())
+     return;
+diff --git a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+index d54e4de81d995..d5537f0668d20 100644
+--- a/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
++++ b/llvm/lib/Transforms/Utils/ScalarEvolutionExpander.cpp
+@@ -1236,6 +1236,8 @@ SCEVExpander::expandAddRecExprLiterally(SCEVUseT<const SCEVAddRecExpr *> S) {
+   // We have decided to reuse an induction variable of a dominating loop. Apply
+   // truncation and/or inversion of the step.
+   if (TruncTy) {
++    if ((TruncTy != Result->getType()) || InvertStep)
++      Result = fixupLCSSAFormFor(Result);
+     // Truncate the result.
+     if (TruncTy != Result->getType())
+       Result = Builder.CreateTrunc(Result, TruncTy);
+diff --git a/llvm/test/Analysis/ScalarEvolution/pr62430.ll b/llvm/test/Analysis/ScalarEvolution/pr62430.ll
+index a3e3b8ff5c11a..a8e91b34b65d0 100644
+--- a/llvm/test/Analysis/ScalarEvolution/pr62430.ll
++++ b/llvm/test/Analysis/ScalarEvolution/pr62430.ll
+@@ -13,14 +13,12 @@ define void @test() {
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[BB7]] ], [ 16, [[BB]] ]
+ ; CHECK-NEXT:    br label [[BB4:%.*]]
+ ; CHECK:       bb4:
+-; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i32 [ [[LSR_IV_NEXT4:%.*]], [[BB6:%.*]] ], [ [[LSR_IV1]], [[BB3]] ]
+-; CHECK-NEXT:    br i1 true, label [[BB7]], label [[BB6]]
++; CHECK-NEXT:    br i1 true, label [[BB7]], label [[BB6:%.*]]
+ ; CHECK:       bb6:
+-; CHECK-NEXT:    [[LSR_IV_NEXT4]] = add i32 [[LSR_IV3]], 268435456
+ ; CHECK-NEXT:    br label [[BB4]]
+ ; CHECK:       bb7:
+-; CHECK-NEXT:    [[MUL9:%.*]] = mul i32 [[LSR_IV3]], [[LSR_IV3]]
+-; CHECK-NEXT:    [[MUL10:%.*]] = mul i32 [[MUL9]], [[LSR_IV3]]
++; CHECK-NEXT:    [[MUL9:%.*]] = mul i32 [[LSR_IV1]], [[LSR_IV1]]
++; CHECK-NEXT:    [[MUL10:%.*]] = mul i32 [[MUL9]], [[LSR_IV1]]
+ ; CHECK-NEXT:    call void @foo(i32 [[MUL10]])
+ ; CHECK-NEXT:    [[SEXT:%.*]] = sext i32 [[MUL10]] to i64
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 32
+diff --git a/llvm/test/CodeGen/AArch64/ragreedy-csr.ll b/llvm/test/CodeGen/AArch64/ragreedy-csr.ll
+index 31f004e8d72b7..020b69f1a9512 100644
+--- a/llvm/test/CodeGen/AArch64/ragreedy-csr.ll
++++ b/llvm/test/CodeGen/AArch64/ragreedy-csr.ll
+@@ -32,135 +32,136 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
+ ; CHECK-NEXT:    .cfi_offset w30, -8
+ ; CHECK-NEXT:    .cfi_offset w29, -16
+ ; CHECK-NEXT:  Lloh0:
+-; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
++; CHECK-NEXT:    adrp x15, __DefaultRuneLocale@GOTPAGE
+ ; CHECK-NEXT:    ldrb w12, [x0, #4]
+-; CHECK-NEXT:    ldrb w13, [x1, #4]
+-; CHECK-NEXT:    ldr x9, [x0, #16]
+-; CHECK-NEXT:    ldr x10, [x1, #16]
++; CHECK-NEXT:    ldrb w14, [x1, #4]
++; CHECK-NEXT:    ldr x10, [x0, #16]
++; CHECK-NEXT:    ldr x13, [x1, #16]
+ ; CHECK-NEXT:    mov x11, xzr
+ ; CHECK-NEXT:  Lloh1:
+-; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
+-; CHECK-NEXT:    ldrsb x8, [x9, x11]
+-; CHECK-NEXT:    tbz x8, #63, LBB0_3
+-; CHECK-NEXT:  LBB0_2: ; %cond.false.i.i
+-; CHECK-NEXT:    stp x9, x0, [sp, #32] ; 16-byte Folded Spill
+-; CHECK-NEXT:    mov w0, w8
+-; CHECK-NEXT:    mov w1, #32768 ; =0x8000
+-; CHECK-NEXT:    str x10, [sp, #8] ; 8-byte Spill
+-; CHECK-NEXT:    str x11, [sp, #24] ; 8-byte Spill
+-; CHECK-NEXT:    str w12, [sp, #4] ; 4-byte Spill
+-; CHECK-NEXT:    str w13, [sp, #20] ; 4-byte Spill
+-; CHECK-NEXT:    bl ___maskrune
+-; CHECK-NEXT:  Lloh2:
+-; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
+-; CHECK-NEXT:    mov w8, w0
+-; CHECK-NEXT:  Lloh3:
+-; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
+-; CHECK-NEXT:    ldp x11, x9, [sp, #24] ; 16-byte Folded Reload
+-; CHECK-NEXT:    ldr w13, [sp, #20] ; 4-byte Reload
+-; CHECK-NEXT:    ldr w12, [sp, #4] ; 4-byte Reload
+-; CHECK-NEXT:    ldr x10, [sp, #8] ; 8-byte Reload
+-; CHECK-NEXT:    ldr x0, [sp, #40] ; 8-byte Reload
+-; CHECK-NEXT:    cbz w8, LBB0_4
+-; CHECK-NEXT:    b LBB0_6
+-; CHECK-NEXT:  LBB0_3: ; %cond.true.i.i
+-; CHECK-NEXT:    add x8, x14, x8, lsl #2
++; CHECK-NEXT:    ldr x15, [x15, __DefaultRuneLocale@GOTPAGEOFF]
++; CHECK-NEXT:  LBB0_2: ; %while.cond
++; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
++; CHECK-NEXT:    add x9, x10, x11
++; CHECK-NEXT:    ldrsb x8, [x9], #1
++; CHECK-NEXT:    tbnz x8, #63, LBB0_8
++; CHECK-NEXT:  ; %bb.3: ; %cond.true.i.i
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
++; CHECK-NEXT:    add x8, x15, x8, lsl #2
+ ; CHECK-NEXT:    ldr w8, [x8, #60]
+ ; CHECK-NEXT:    and w8, w8, #0x8000
+ ; CHECK-NEXT:    cbnz w8, LBB0_6
+ ; CHECK-NEXT:  LBB0_4: ; %lor.rhs
+-; CHECK-NEXT:    ldrsb x8, [x10, x11]
+-; CHECK-NEXT:    tbnz x8, #63, LBB0_8
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
++; CHECK-NEXT:    ldrsb x8, [x13, x11]
++; CHECK-NEXT:    tbnz x8, #63, LBB0_9
+ ; CHECK-NEXT:  ; %bb.5: ; %cond.true.i.i217
+-; CHECK-NEXT:    add x8, x14, x8, lsl #2
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
++; CHECK-NEXT:    add x8, x15, x8, lsl #2
+ ; CHECK-NEXT:    ldr w8, [x8, #60]
+ ; CHECK-NEXT:    and w8, w8, #0x8000
+-; CHECK-NEXT:    cbz w8, LBB0_9
++; CHECK-NEXT:    cbz w8, LBB0_10
+ ; CHECK-NEXT:  LBB0_6: ; %while.body
+-; CHECK-NEXT:    ldrb w8, [x9, x11]
+-; CHECK-NEXT:    ldrb w15, [x10, x11]
+-; CHECK-NEXT:    cmp w8, w15
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
++; CHECK-NEXT:    ldrb w8, [x10, x11]
++; CHECK-NEXT:    ldrb w9, [x13, x11]
++; CHECK-NEXT:    cmp w8, w9
+ ; CHECK-NEXT:    b.ne LBB0_42
+ ; CHECK-NEXT:  ; %bb.7: ; %if.end17
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
+ ; CHECK-NEXT:    add x11, x11, #1
+-; CHECK-NEXT:    ldrsb x8, [x9, x11]
+-; CHECK-NEXT:    tbz x8, #63, LBB0_3
+ ; CHECK-NEXT:    b LBB0_2
+-; CHECK-NEXT:  LBB0_8: ; %cond.false.i.i219
++; CHECK-NEXT:  LBB0_8: ; %cond.false.i.i
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
+ ; CHECK-NEXT:    stp x9, x0, [sp, #32] ; 16-byte Folded Spill
+ ; CHECK-NEXT:    mov w0, w8
+ ; CHECK-NEXT:    mov w1, #32768 ; =0x8000
+-; CHECK-NEXT:    str x10, [sp, #8] ; 8-byte Spill
++; CHECK-NEXT:    stp x10, x13, [sp, #8] ; 16-byte Folded Spill
+ ; CHECK-NEXT:    str x11, [sp, #24] ; 8-byte Spill
+-; CHECK-NEXT:    str w12, [sp, #4] ; 4-byte Spill
+-; CHECK-NEXT:    str w13, [sp, #20] ; 4-byte Spill
++; CHECK-NEXT:    stp w14, w12, [sp] ; 8-byte Folded Spill
++; CHECK-NEXT:    bl ___maskrune
++; CHECK-NEXT:  Lloh2:
++; CHECK-NEXT:    adrp x15, __DefaultRuneLocale@GOTPAGE
++; CHECK-NEXT:    mov w8, w0
++; CHECK-NEXT:  Lloh3:
++; CHECK-NEXT:    ldr x15, [x15, __DefaultRuneLocale@GOTPAGEOFF]
++; CHECK-NEXT:    ldp x13, x11, [sp, #16] ; 16-byte Folded Reload
++; CHECK-NEXT:    ldp w14, w12, [sp] ; 8-byte Folded Reload
++; CHECK-NEXT:    ldp x9, x0, [sp, #32] ; 16-byte Folded Reload
++; CHECK-NEXT:    ldr x10, [sp, #8] ; 8-byte Reload
++; CHECK-NEXT:    cbz w8, LBB0_4
++; CHECK-NEXT:    b LBB0_6
++; CHECK-NEXT:  LBB0_9: ; %cond.false.i.i219
++; CHECK-NEXT:    ; in Loop: Header=BB0_2 Depth=1
++; CHECK-NEXT:    stp x9, x0, [sp, #32] ; 16-byte Folded Spill
++; CHECK-NEXT:    mov w0, w8
++; CHECK-NEXT:    mov w1, #32768 ; =0x8000
++; CHECK-NEXT:    stp x10, x13, [sp, #8] ; 16-byte Folded Spill
++; CHECK-NEXT:    str x11, [sp, #24] ; 8-byte Spill
++; CHECK-NEXT:    stp w14, w12, [sp] ; 8-byte Folded Spill
+ ; CHECK-NEXT:    bl ___maskrune
+ ; CHECK-NEXT:  Lloh4:
+-; CHECK-NEXT:    adrp x14, __DefaultRuneLocale@GOTPAGE
++; CHECK-NEXT:    adrp x15, __DefaultRuneLocale@GOTPAGE
+ ; CHECK-NEXT:    mov w8, w0
+ ; CHECK-NEXT:  Lloh5:
+-; CHECK-NEXT:    ldr x14, [x14, __DefaultRuneLocale@GOTPAGEOFF]
+-; CHECK-NEXT:    ldp x11, x9, [sp, #24] ; 16-byte Folded Reload
+-; CHECK-NEXT:    ldr w13, [sp, #20] ; 4-byte Reload
+-; CHECK-NEXT:    ldr w12, [sp, #4] ; 4-byte Reload
++; CHECK-NEXT:    ldr x15, [x15, __DefaultRuneLocale@GOTPAGEOFF]
++; CHECK-NEXT:    ldp x13, x11, [sp, #16] ; 16-byte Folded Reload
++; CHECK-NEXT:    ldp w14, w12, [sp] ; 8-byte Folded Reload
++; CHECK-NEXT:    ldp x9, x0, [sp, #32] ; 16-byte Folded Reload
+ ; CHECK-NEXT:    ldr x10, [sp, #8] ; 8-byte Reload
+-; CHECK-NEXT:    ldr x0, [sp, #40] ; 8-byte Reload
+ ; CHECK-NEXT:    cbnz w8, LBB0_6
+-; CHECK-NEXT:  LBB0_9: ; %while.end
+-; CHECK-NEXT:    orr w8, w13, w12
+-; CHECK-NEXT:    cbnz w8, LBB0_24
+-; CHECK-NEXT:  ; %bb.10: ; %if.then23
+-; CHECK-NEXT:    ldr x12, [x0, #16]
+-; CHECK-NEXT:    ldrb w8, [x9, x11]
+-; CHECK-NEXT:    ldrb w13, [x12]
+-; CHECK-NEXT:    cmp w13, #83
++; CHECK-NEXT:  LBB0_10: ; %while.end
++; CHECK-NEXT:    orr w15, w14, w12
++; CHECK-NEXT:    add x8, x13, x11
++; CHECK-NEXT:    cbnz w15, LBB0_24
++; CHECK-NEXT:  ; %bb.11: ; %if.then23
++; CHECK-NEXT:    ldr x14, [x0, #16]
++; CHECK-NEXT:    ldrb w12, [x11, x10]
++; CHECK-NEXT:    ldrb w15, [x14]
++; CHECK-NEXT:    cmp w15, #83
+ ; CHECK-NEXT:    b.eq LBB0_19
+-; CHECK-NEXT:  LBB0_11: ; %while.cond59.preheader
+-; CHECK-NEXT:    cbz w8, LBB0_23
+-; CHECK-NEXT:  LBB0_12: ; %land.rhs.preheader
+-; CHECK-NEXT:    add x12, x9, x11
+-; CHECK-NEXT:    add x9, x10, x11
+-; CHECK-NEXT:    add x10, x12, #1
++; CHECK-NEXT:  LBB0_12: ; %while.cond59.preheader
++; CHECK-NEXT:    cbz w12, LBB0_23
+ ; CHECK-NEXT:  LBB0_13: ; %land.rhs
+ ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    ldrb w11, [x9], #1
+-; CHECK-NEXT:    cbz w11, LBB0_23
++; CHECK-NEXT:    ldrb w10, [x8], #1
++; CHECK-NEXT:    cbz w10, LBB0_23
+ ; CHECK-NEXT:  ; %bb.14: ; %while.body66
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmp w8, #42
++; CHECK-NEXT:    cmp w12, #42
+ ; CHECK-NEXT:    b.eq LBB0_18
+ ; CHECK-NEXT:  ; %bb.15: ; %while.body66
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmp w11, #42
++; CHECK-NEXT:    cmp w10, #42
+ ; CHECK-NEXT:    b.eq LBB0_18
+ ; CHECK-NEXT:  ; %bb.16: ; %lor.lhs.false74
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmp w8, w11
++; CHECK-NEXT:    cmp w12, w10
+ ; CHECK-NEXT:    mov w0, wzr
+ ; CHECK-NEXT:    b.ne LBB0_43
+ ; CHECK-NEXT:  ; %bb.17: ; %lor.lhs.false74
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmp w8, #94
++; CHECK-NEXT:    cmp w12, #94
+ ; CHECK-NEXT:    b.eq LBB0_43
+ ; CHECK-NEXT:  LBB0_18: ; %if.then83
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    ldrb w8, [x10], #1
++; CHECK-NEXT:    ldrb w12, [x9], #1
+ ; CHECK-NEXT:    mov w0, #1 ; =0x1
+-; CHECK-NEXT:    cbnz w8, LBB0_13
++; CHECK-NEXT:    cbnz w12, LBB0_13
+ ; CHECK-NEXT:    b LBB0_43
+ ; CHECK-NEXT:  LBB0_19: ; %land.lhs.true28
+-; CHECK-NEXT:    cbz w8, LBB0_23
++; CHECK-NEXT:    cbz w12, LBB0_23
+ ; CHECK-NEXT:  ; %bb.20: ; %land.lhs.true28
+-; CHECK-NEXT:    cmp w8, #112
+-; CHECK-NEXT:    b.ne LBB0_12
++; CHECK-NEXT:    cmp w12, #112
++; CHECK-NEXT:    b.ne LBB0_13
+ ; CHECK-NEXT:  ; %bb.21: ; %land.lhs.true35
+-; CHECK-NEXT:    ldrb w13, [x10, x11]
++; CHECK-NEXT:    ldrb w13, [x11, x13]
+ ; CHECK-NEXT:    cmp w13, #112
+-; CHECK-NEXT:    b.ne LBB0_12
++; CHECK-NEXT:    b.ne LBB0_13
+ ; CHECK-NEXT:  ; %bb.22: ; %land.lhs.true43
+-; CHECK-NEXT:    sub x12, x9, x12
+-; CHECK-NEXT:    add x12, x12, x11
+-; CHECK-NEXT:    cmp x12, #1
++; CHECK-NEXT:    sub x13, x11, x14
++; CHECK-NEXT:    add x13, x10, x13
++; CHECK-NEXT:    cmp x13, #1
+ ; CHECK-NEXT:    b.ne LBB0_44
+ ; CHECK-NEXT:  LBB0_23:
+ ; CHECK-NEXT:    mov w0, #1 ; =0x1
+@@ -169,77 +170,71 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
+ ; CHECK-NEXT:    cmp w12, #1
+ ; CHECK-NEXT:    b.ne LBB0_33
+ ; CHECK-NEXT:  ; %bb.25: ; %if.else88
+-; CHECK-NEXT:    cmp w13, #2
++; CHECK-NEXT:    cmp w14, #2
+ ; CHECK-NEXT:    b.ne LBB0_33
+ ; CHECK-NEXT:  ; %bb.26: ; %while.cond95.preheader
+-; CHECK-NEXT:    ldrb w12, [x9, x11]
+-; CHECK-NEXT:    cbz w12, LBB0_23
++; CHECK-NEXT:    ldrb w11, [x11, x10]
++; CHECK-NEXT:    cbz w11, LBB0_23
+ ; CHECK-NEXT:  ; %bb.27: ; %land.rhs99.preheader
+-; CHECK-NEXT:    mov x8, xzr
++; CHECK-NEXT:    mov x10, xzr
+ ; CHECK-NEXT:    mov w0, #1 ; =0x1
+ ; CHECK-NEXT:    b LBB0_29
+ ; CHECK-NEXT:  LBB0_28: ; %if.then117
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
+-; CHECK-NEXT:    add x12, x9, x8
+-; CHECK-NEXT:    add x8, x8, #1
+-; CHECK-NEXT:    add x12, x12, x11
+-; CHECK-NEXT:    ldrb w12, [x12, #1]
+-; CHECK-NEXT:    cbz w12, LBB0_43
++; CHECK-NEXT:    ldrb w11, [x9, x10]
++; CHECK-NEXT:    add x10, x10, #1
++; CHECK-NEXT:    cbz w11, LBB0_43
+ ; CHECK-NEXT:  LBB0_29: ; %land.rhs99
+ ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    add x13, x10, x8
+-; CHECK-NEXT:    ldrb w13, [x13, x11]
+-; CHECK-NEXT:    cbz w13, LBB0_23
++; CHECK-NEXT:    ldrb w12, [x8, x10]
++; CHECK-NEXT:    cbz w12, LBB0_23
+ ; CHECK-NEXT:  ; %bb.30: ; %while.body104
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
+-; CHECK-NEXT:    cmp w12, w13
++; CHECK-NEXT:    cmp w11, w12
+ ; CHECK-NEXT:    b.eq LBB0_28
+ ; CHECK-NEXT:  ; %bb.31: ; %while.body104
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
+-; CHECK-NEXT:    cmp w12, #42
++; CHECK-NEXT:    cmp w11, #42
+ ; CHECK-NEXT:    b.eq LBB0_28
+ ; CHECK-NEXT:  ; %bb.32: ; %while.body104
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_29 Depth=1
+-; CHECK-NEXT:    cmp w13, #94
++; CHECK-NEXT:    cmp w12, #94
+ ; CHECK-NEXT:    b.eq LBB0_28
+ ; CHECK-NEXT:    b LBB0_42
+ ; CHECK-NEXT:  LBB0_33: ; %if.else123
+-; CHECK-NEXT:    cmp w13, #1
++; CHECK-NEXT:    cmp w14, #1
+ ; CHECK-NEXT:    mov w0, wzr
+ ; CHECK-NEXT:    b.ne LBB0_43
+ ; CHECK-NEXT:  ; %bb.34: ; %if.else123
+ ; CHECK-NEXT:    cmp w12, #2
+ ; CHECK-NEXT:    b.ne LBB0_43
+ ; CHECK-NEXT:  ; %bb.35: ; %while.cond130.preheader
+-; CHECK-NEXT:    ldrb w8, [x9, x11]
+-; CHECK-NEXT:    cbz w8, LBB0_23
++; CHECK-NEXT:    ldrb w10, [x11, x10]
++; CHECK-NEXT:    cbz w10, LBB0_23
+ ; CHECK-NEXT:  ; %bb.36: ; %land.rhs134.preheader
+-; CHECK-NEXT:    mov x12, xzr
++; CHECK-NEXT:    mov x11, xzr
+ ; CHECK-NEXT:    mov w0, #1 ; =0x1
+ ; CHECK-NEXT:    b LBB0_38
+ ; CHECK-NEXT:  LBB0_37: ; %if.then152
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
+-; CHECK-NEXT:    add x8, x9, x12
+-; CHECK-NEXT:    add x12, x12, #1
+-; CHECK-NEXT:    add x8, x8, x11
+-; CHECK-NEXT:    ldrb w8, [x8, #1]
+-; CHECK-NEXT:    cbz w8, LBB0_43
++; CHECK-NEXT:    ldrb w10, [x9, x11]
++; CHECK-NEXT:    add x11, x11, #1
++; CHECK-NEXT:    cbz w10, LBB0_43
+ ; CHECK-NEXT:  LBB0_38: ; %land.rhs134
+ ; CHECK-NEXT:    ; =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    add x13, x10, x12
+-; CHECK-NEXT:    ldrb w13, [x13, x11]
+-; CHECK-NEXT:    cbz w13, LBB0_23
++; CHECK-NEXT:    ldrb w12, [x8, x11]
++; CHECK-NEXT:    cbz w12, LBB0_23
+ ; CHECK-NEXT:  ; %bb.39: ; %while.body139
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
+-; CHECK-NEXT:    cmp w8, w13
++; CHECK-NEXT:    cmp w10, w12
+ ; CHECK-NEXT:    b.eq LBB0_37
+ ; CHECK-NEXT:  ; %bb.40: ; %while.body139
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
+-; CHECK-NEXT:    cmp w13, #42
++; CHECK-NEXT:    cmp w12, #42
+ ; CHECK-NEXT:    b.eq LBB0_37
+ ; CHECK-NEXT:  ; %bb.41: ; %while.body139
+ ; CHECK-NEXT:    ; in Loop: Header=BB0_38 Depth=1
+-; CHECK-NEXT:    cmp w8, #94
++; CHECK-NEXT:    cmp w10, #94
+ ; CHECK-NEXT:    b.eq LBB0_37
+ ; CHECK-NEXT:  LBB0_42:
+ ; CHECK-NEXT:    mov w0, wzr
+@@ -248,17 +243,17 @@ define fastcc i32 @prune_match(ptr nocapture readonly %a, ptr nocapture readonly
+ ; CHECK-NEXT:    add sp, sp, #64
+ ; CHECK-NEXT:    ret
+ ; CHECK-NEXT:  LBB0_44: ; %lor.lhs.false47
+-; CHECK-NEXT:    cmp x12, #2
+-; CHECK-NEXT:    b.ne LBB0_11
++; CHECK-NEXT:    cmp x13, #2
++; CHECK-NEXT:    b.ne LBB0_12
+ ; CHECK-NEXT:  ; %bb.45: ; %land.lhs.true52
+-; CHECK-NEXT:    add x12, x9, x11
++; CHECK-NEXT:    add x10, x11, x10
+ ; CHECK-NEXT:    mov w0, #1 ; =0x1
+-; CHECK-NEXT:    ldurb w12, [x12, #-1]
+-; CHECK-NEXT:    cmp w12, #73
++; CHECK-NEXT:    ldurb w10, [x10, #-1]
++; CHECK-NEXT:    cmp w10, #73
+ ; CHECK-NEXT:    b.eq LBB0_43
+ ; CHECK-NEXT:  ; %bb.46: ; %land.lhs.true52
+-; CHECK-NEXT:    cbz w8, LBB0_43
+-; CHECK-NEXT:    b LBB0_12
++; CHECK-NEXT:    cbz w12, LBB0_43
++; CHECK-NEXT:    b LBB0_13
+ ; CHECK-NEXT:  LBB0_47:
+ ; CHECK-NEXT:    mov w0, wzr
+ ; CHECK-NEXT:    ret
+diff --git a/llvm/test/CodeGen/ARM/arm-and-tst-peephole.ll b/llvm/test/CodeGen/ARM/arm-and-tst-peephole.ll
+index 0795525fba1b3..2ad1e14bcf08f 100644
+--- a/llvm/test/CodeGen/ARM/arm-and-tst-peephole.ll
++++ b/llvm/test/CodeGen/ARM/arm-and-tst-peephole.ll
+@@ -38,7 +38,7 @@ define ptr @foo(ptr %this, i32 %acc) nounwind readonly align 2 {
+ ; ARM-NEXT:    cmp r3, #2
+ ; ARM-NEXT:    bne .LBB0_1
+ ; ARM-NEXT:  @ %bb.6: @ %sw.bb8
+-; ARM-NEXT:    add r1, r1, r12
++; ARM-NEXT:    add r1, r12, r1
+ ; ARM-NEXT:    add r0, r0, r1, lsl #2
+ ; ARM-NEXT:    mov pc, lr
+ ;
+@@ -78,7 +78,7 @@ define ptr @foo(ptr %this, i32 %acc) nounwind readonly align 2 {
+ ; THUMB-NEXT:    adds r0, r3, #4
+ ; THUMB-NEXT:    b .LBB0_8
+ ; THUMB-NEXT:  .LBB0_7: @ %sw.bb8
+-; THUMB-NEXT:    adds r1, r1, r2
++; THUMB-NEXT:    adds r1, r2, r1
+ ; THUMB-NEXT:    lsls r1, r1, #2
+ ; THUMB-NEXT:    adds r0, r0, r1
+ ; THUMB-NEXT:  .LBB0_8: @ %sw.bb6
+diff --git a/llvm/test/CodeGen/X86/lsr-addrecloops.ll b/llvm/test/CodeGen/X86/lsr-addrecloops.ll
+index 98c8f587784c2..a5aaa721add20 100644
+--- a/llvm/test/CodeGen/X86/lsr-addrecloops.ll
++++ b/llvm/test/CodeGen/X86/lsr-addrecloops.ll
+@@ -13,25 +13,25 @@ define void @in4dob_(ptr nocapture writeonly %0, ptr nocapture readonly %1, ptr
+ ; CHECK:       # %bb.0: # %.preheader263
+ ; CHECK-NEXT:    leaq (,%rcx,4), %r9
+ ; CHECK-NEXT:    movl $1, %r10d
+-; CHECK-NEXT:    xorl %eax, %eax
+ ; CHECK-NEXT:    vxorps %xmm0, %xmm0, %xmm0
++; CHECK-NEXT:    movq %rdi, %rax
+ ; CHECK-NEXT:    jmp .LBB0_1
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  .LBB0_20: # in Loop: Header=BB0_1 Depth=1
++; CHECK-NEXT:  .LBB0_18: # in Loop: Header=BB0_1 Depth=1
+ ; CHECK-NEXT:    incq %r10
+ ; CHECK-NEXT:    addq %r9, %rax
+ ; CHECK-NEXT:    cmpq %r10, %rcx
+-; CHECK-NEXT:    je .LBB0_18
++; CHECK-NEXT:    je .LBB0_19
+ ; CHECK-NEXT:  .LBB0_1: # =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    vmovss {{.*#+}} xmm1 = mem[0],zero,zero,zero
+ ; CHECK-NEXT:    vucomiss %xmm0, %xmm1
+-; CHECK-NEXT:    jne .LBB0_20
+-; CHECK-NEXT:    jp .LBB0_20
++; CHECK-NEXT:    jne .LBB0_18
++; CHECK-NEXT:    jp .LBB0_18
+ ; CHECK-NEXT:  # %bb.2: # in Loop: Header=BB0_1 Depth=1
+ ; CHECK-NEXT:    vmovss {{.*#+}} xmm1 = mem[0],zero,zero,zero
+ ; CHECK-NEXT:    vucomiss %xmm0, %xmm1
+-; CHECK-NEXT:    jne .LBB0_20
+-; CHECK-NEXT:    jp .LBB0_20
++; CHECK-NEXT:    jne .LBB0_18
++; CHECK-NEXT:    jp .LBB0_18
+ ; CHECK-NEXT:  # %bb.3: # %vector.body807.preheader
+ ; CHECK-NEXT:    leaq 1(%rcx), %rdx
+ ; CHECK-NEXT:    movl %edx, %esi
+@@ -49,15 +49,14 @@ define void @in4dob_(ptr nocapture writeonly %0, ptr nocapture readonly %1, ptr
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_6: # %vector.body807
+ ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    leaq (%rdi,%r9), %r11
+-; CHECK-NEXT:    vmovups %ymm0, (%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 1(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 2(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 3(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 4(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 5(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 6(%rax,%r11)
+-; CHECK-NEXT:    vmovups %ymm0, 7(%rax,%r11)
++; CHECK-NEXT:    vmovups %ymm0, (%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 1(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 2(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 3(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 4(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 5(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 6(%rax,%r9)
++; CHECK-NEXT:    vmovups %ymm0, 7(%rax,%r9)
+ ; CHECK-NEXT:    addq $8, %r9
+ ; CHECK-NEXT:    cmpq %r9, %r10
+ ; CHECK-NEXT:    jne .LBB0_6
+@@ -65,25 +64,25 @@ define void @in4dob_(ptr nocapture writeonly %0, ptr nocapture readonly %1, ptr
+ ; CHECK-NEXT:    testq %rsi, %rsi
+ ; CHECK-NEXT:    je .LBB0_10
+ ; CHECK-NEXT:  # %bb.8: # %vector.body807.epil.preheader
+-; CHECK-NEXT:    addq %rdi, %r9
++; CHECK-NEXT:    addq %rax, %r9
+ ; CHECK-NEXT:    xorl %r10d, %r10d
+ ; CHECK-NEXT:    vxorps %xmm0, %xmm0, %xmm0
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_9: # %vector.body807.epil
+ ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    leaq (%r9,%r10), %r11
+-; CHECK-NEXT:    vmovups %ymm0, (%rax,%r11)
++; CHECK-NEXT:    vmovups %ymm0, (%r9,%r10)
+ ; CHECK-NEXT:    incq %r10
+ ; CHECK-NEXT:    cmpq %r10, %rsi
+ ; CHECK-NEXT:    jne .LBB0_9
+ ; CHECK-NEXT:  .LBB0_10: # %.lr.ph373
+ ; CHECK-NEXT:    testb $1, %r8b
+ ; CHECK-NEXT:    je .LBB0_11
+-; CHECK-NEXT:  # %bb.19: # %scalar.ph839.preheader
++; CHECK-NEXT:  # %bb.20: # %scalar.ph839.preheader
+ ; CHECK-NEXT:    movl $0, (%rdi)
+ ; CHECK-NEXT:    vzeroupper
+ ; CHECK-NEXT:    retq
+ ; CHECK-NEXT:  .LBB0_11: # %vector.body847.preheader
++; CHECK-NEXT:    addq $96, %rax
+ ; CHECK-NEXT:    movl %edx, %esi
+ ; CHECK-NEXT:    andl $7, %esi
+ ; CHECK-NEXT:    cmpq $7, %rcx
+@@ -98,34 +97,32 @@ define void @in4dob_(ptr nocapture writeonly %0, ptr nocapture readonly %1, ptr
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_14: # %vector.body847
+ ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    leaq (%rdi,%rcx), %r8
+-; CHECK-NEXT:    vmovups %ymm0, 96(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 97(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 98(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 99(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 100(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 101(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 102(%rax,%r8)
+-; CHECK-NEXT:    vmovups %ymm0, 103(%rax,%r8)
++; CHECK-NEXT:    vmovups %ymm0, (%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 1(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 2(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 3(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 4(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 5(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 6(%rax,%rcx)
++; CHECK-NEXT:    vmovups %ymm0, 7(%rax,%rcx)
+ ; CHECK-NEXT:    addq $8, %rcx
+ ; CHECK-NEXT:    cmpq %rcx, %rdx
+ ; CHECK-NEXT:    jne .LBB0_14
+ ; CHECK-NEXT:  .LBB0_15: # %common.ret.loopexit.unr-lcssa
+ ; CHECK-NEXT:    testq %rsi, %rsi
+-; CHECK-NEXT:    je .LBB0_18
++; CHECK-NEXT:    je .LBB0_19
+ ; CHECK-NEXT:  # %bb.16: # %vector.body847.epil.preheader
+-; CHECK-NEXT:    leaq 96(%rcx,%rdi), %rcx
+-; CHECK-NEXT:    xorl %edx, %edx
++; CHECK-NEXT:    addq %rcx, %rax
++; CHECK-NEXT:    xorl %ecx, %ecx
+ ; CHECK-NEXT:    vxorps %xmm0, %xmm0, %xmm0
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  .LBB0_17: # %vector.body847.epil
+ ; CHECK-NEXT:    # =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    leaq (%rcx,%rdx), %rdi
+-; CHECK-NEXT:    vmovups %ymm0, (%rax,%rdi)
+-; CHECK-NEXT:    incq %rdx
+-; CHECK-NEXT:    cmpq %rdx, %rsi
++; CHECK-NEXT:    vmovups %ymm0, (%rax,%rcx)
++; CHECK-NEXT:    incq %rcx
++; CHECK-NEXT:    cmpq %rcx, %rsi
+ ; CHECK-NEXT:    jne .LBB0_17
+-; CHECK-NEXT:  .LBB0_18: # %common.ret
++; CHECK-NEXT:  .LBB0_19: # %common.ret
+ ; CHECK-NEXT:    vzeroupper
+ ; CHECK-NEXT:    retq
+ .preheader263:
+diff --git a/llvm/test/CodeGen/X86/ragreedy-hoist-spill.ll b/llvm/test/CodeGen/X86/ragreedy-hoist-spill.ll
+index 69a6cdb7081eb..f5b12bd33b370 100644
+--- a/llvm/test/CodeGen/X86/ragreedy-hoist-spill.ll
++++ b/llvm/test/CodeGen/X86/ragreedy-hoist-spill.ll
+@@ -45,10 +45,10 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    jne LBB0_5
+ ; CHECK-NEXT:  ## %bb.2: ## %if.then4
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    je LBB0_54
++; CHECK-NEXT:    je LBB0_53
+ ; CHECK-NEXT:  ## %bb.3: ## %SyTime.exit
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    je LBB0_54
++; CHECK-NEXT:    je LBB0_53
+ ; CHECK-NEXT:  LBB0_4: ## %cleanup
+ ; CHECK-NEXT:    addq $552, %rsp ## imm = 0x228
+ ; CHECK-NEXT:    popq %rbx
+@@ -60,7 +60,7 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    retq
+ ; CHECK-NEXT:  LBB0_5: ## %if.end25
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    je LBB0_54
++; CHECK-NEXT:    je LBB0_53
+ ; CHECK-NEXT:  ## %bb.6: ## %SyTime.exit2720
+ ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rax
+ ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rcx
+@@ -102,10 +102,10 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    movl $0, {{[-0-9]+}}(%r{{[sb]}}p) ## 4-byte Folded Spill
+ ; CHECK-NEXT:    xorl %r15d, %r15d
+ ; CHECK-NEXT:    jmp LBB0_13
+-; CHECK-NEXT:  LBB0_43: ## %while.cond1037.preheader
++; CHECK-NEXT:  LBB0_42: ## %while.cond1037.preheader
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    testb %r12b, %r12b
+-; CHECK-NEXT:    je LBB0_54
++; CHECK-NEXT:    je LBB0_53
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  LBB0_20: ## %while.cond197.backedge
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+@@ -116,11 +116,11 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:  LBB0_13: ## %while.body200
+ ; CHECK-NEXT:    ## =>This Loop Header: Depth=1
+ ; CHECK-NEXT:    ## Child Loop BB0_28 Depth 2
+-; CHECK-NEXT:    ## Child Loop BB0_37 Depth 2
++; CHECK-NEXT:    ## Child Loop BB0_36 Depth 2
+ ; CHECK-NEXT:    leal -268(%rbp), %eax
+ ; CHECK-NEXT:    cmpl $105, %eax
+ ; CHECK-NEXT:    ja LBB0_14
+-; CHECK-NEXT:  ## %bb.55: ## %while.body200
++; CHECK-NEXT:  ## %bb.54: ## %while.body200
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    movslq (%r14,%rax,4), %rax
+ ; CHECK-NEXT:    addq %r14, %rax
+@@ -129,30 +129,29 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    testb %r12b, %r12b
+ ; CHECK-NEXT:    ## implicit-def: $rbx
+-; CHECK-NEXT:    jne LBB0_33
++; CHECK-NEXT:    jne LBB0_32
+ ; CHECK-NEXT:  ## %bb.26: ## %do.body479.preheader
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    testb %r12b, %r12b
+ ; CHECK-NEXT:    ## implicit-def: $rbx
+-; CHECK-NEXT:    jne LBB0_33
++; CHECK-NEXT:    jne LBB0_32
+ ; CHECK-NEXT:  ## %bb.27: ## %land.rhs485.preheader
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    ## implicit-def: $rax
++; CHECK-NEXT:    ## implicit-def: $rbx
+ ; CHECK-NEXT:    jmp LBB0_28
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  LBB0_31: ## %do.body479.backedge
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_28 Depth=2
+-; CHECK-NEXT:    leaq 1(%rbx), %rax
++; CHECK-NEXT:    incq %rbx
+ ; CHECK-NEXT:    testb %r12b, %r12b
+ ; CHECK-NEXT:    je LBB0_32
+ ; CHECK-NEXT:  LBB0_28: ## %land.rhs485
+ ; CHECK-NEXT:    ## Parent Loop BB0_13 Depth=1
+ ; CHECK-NEXT:    ## => This Inner Loop Header: Depth=2
+ ; CHECK-NEXT:    testb %sil, %sil
+-; CHECK-NEXT:    jne LBB0_54
++; CHECK-NEXT:    jne LBB0_53
+ ; CHECK-NEXT:  ## %bb.29: ## %cond.true.i.i2780
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_28 Depth=2
+-; CHECK-NEXT:    movq %rax, %rbx
+ ; CHECK-NEXT:    testb %al, %al
+ ; CHECK-NEXT:    jne LBB0_31
+ ; CHECK-NEXT:  ## %bb.30: ## %lor.rhs500
+@@ -163,7 +162,40 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    movb $1, %sil
+ ; CHECK-NEXT:    testb %al, %al
+ ; CHECK-NEXT:    jne LBB0_31
+-; CHECK-NEXT:    jmp LBB0_33
++; CHECK-NEXT:  LBB0_32: ## %if.end517
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    leal -324(%r15), %eax
++; CHECK-NEXT:    cmpl $59, %eax
++; CHECK-NEXT:    ja LBB0_33
++; CHECK-NEXT:  ## %bb.55: ## %if.end517
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    movabsq $576460756598390785, %rcx ## imm = 0x800000100000001
++; CHECK-NEXT:    btq %rax, %rcx
++; CHECK-NEXT:    jb LBB0_36
++; CHECK-NEXT:  LBB0_33: ## %if.end517
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    cmpl $11, %r15d
++; CHECK-NEXT:    je LBB0_36
++; CHECK-NEXT:  ## %bb.34: ## %if.end517
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    cmpl $24, %r15d
++; CHECK-NEXT:    je LBB0_36
++; CHECK-NEXT:  ## %bb.35: ## %if.then532
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    movq _SyFgets.yank@GOTPCREL(%rip), %rax
++; CHECK-NEXT:    movb $0, (%rax)
++; CHECK-NEXT:    .p2align 4
++; CHECK-NEXT:  LBB0_36: ## %for.cond534
++; CHECK-NEXT:    ## Parent Loop BB0_13 Depth=1
++; CHECK-NEXT:    ## => This Inner Loop Header: Depth=2
++; CHECK-NEXT:    testb %r12b, %r12b
++; CHECK-NEXT:    jne LBB0_36
++; CHECK-NEXT:  ## %bb.37: ## %for.cond542.preheader
++; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    testb %al, %al
++; CHECK-NEXT:    movb $0, (%rbx)
++; CHECK-NEXT:    leaq LJTI0_0(%rip), %rdx
++; CHECK-NEXT:    jmp LBB0_20
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  LBB0_14: ## %while.body200
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+@@ -179,17 +211,17 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    movl $1, %ebp
+ ; CHECK-NEXT:    jmp LBB0_20
+-; CHECK-NEXT:  LBB0_44: ## %sw.bb1134
++; CHECK-NEXT:  LBB0_43: ## %sw.bb1134
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rax
+ ; CHECK-NEXT:    leaq {{[0-9]+}}(%rsp), %rcx
+ ; CHECK-NEXT:    cmpq %rax, %rcx
+-; CHECK-NEXT:    jb LBB0_54
+-; CHECK-NEXT:  ## %bb.45: ## in Loop: Header=BB0_13 Depth=1
++; CHECK-NEXT:    jb LBB0_53
++; CHECK-NEXT:  ## %bb.44: ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    movl $0, {{[-0-9]+}}(%r{{[sb]}}p) ## 4-byte Folded Spill
+ ; CHECK-NEXT:    movl $268, %ebp ## imm = 0x10C
+ ; CHECK-NEXT:    jmp LBB0_20
+-; CHECK-NEXT:  LBB0_39: ## %sw.bb566
++; CHECK-NEXT:  LBB0_38: ## %sw.bb566
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    movl $20, %ebp
+ ; CHECK-NEXT:    jmp LBB0_20
+@@ -197,51 +229,14 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+ ; CHECK-NEXT:    movl $2, %ebp
+ ; CHECK-NEXT:    jmp LBB0_20
+-; CHECK-NEXT:  LBB0_32: ## %if.end517.loopexitsplit
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    incq %rbx
+-; CHECK-NEXT:  LBB0_33: ## %if.end517
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    leal -324(%r15), %eax
+-; CHECK-NEXT:    cmpl $59, %eax
+-; CHECK-NEXT:    ja LBB0_34
+-; CHECK-NEXT:  ## %bb.56: ## %if.end517
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    movabsq $576460756598390785, %rcx ## imm = 0x800000100000001
+-; CHECK-NEXT:    btq %rax, %rcx
+-; CHECK-NEXT:    jb LBB0_37
+-; CHECK-NEXT:  LBB0_34: ## %if.end517
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmpl $11, %r15d
+-; CHECK-NEXT:    je LBB0_37
+-; CHECK-NEXT:  ## %bb.35: ## %if.end517
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    cmpl $24, %r15d
+-; CHECK-NEXT:    je LBB0_37
+-; CHECK-NEXT:  ## %bb.36: ## %if.then532
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    movq _SyFgets.yank@GOTPCREL(%rip), %rax
+-; CHECK-NEXT:    movb $0, (%rax)
+-; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_37: ## %for.cond534
+-; CHECK-NEXT:    ## Parent Loop BB0_13 Depth=1
+-; CHECK-NEXT:    ## => This Inner Loop Header: Depth=2
+-; CHECK-NEXT:    testb %r12b, %r12b
+-; CHECK-NEXT:    jne LBB0_37
+-; CHECK-NEXT:  ## %bb.38: ## %for.cond542.preheader
+-; CHECK-NEXT:    ## in Loop: Header=BB0_13 Depth=1
+-; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    movb $0, (%rbx)
+-; CHECK-NEXT:    leaq LJTI0_0(%rip), %rdx
+-; CHECK-NEXT:    jmp LBB0_20
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_41: ## %while.cond864
++; CHECK-NEXT:  LBB0_40: ## %while.cond864
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    jmp LBB0_41
++; CHECK-NEXT:    jmp LBB0_40
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_42: ## %while.cond962
++; CHECK-NEXT:  LBB0_41: ## %while.cond962
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    jmp LBB0_42
++; CHECK-NEXT:    jmp LBB0_41
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  LBB0_24: ## %for.cond357
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+@@ -251,15 +246,15 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:  LBB0_21: ## %while.end1465
+ ; CHECK-NEXT:    incl %ebp
+ ; CHECK-NEXT:    cmpl $16, %ebp
+-; CHECK-NEXT:    ja LBB0_49
++; CHECK-NEXT:    ja LBB0_48
+ ; CHECK-NEXT:  ## %bb.22: ## %while.end1465
+ ; CHECK-NEXT:    movl $83969, %eax ## imm = 0x14801
+ ; CHECK-NEXT:    btl %ebp, %eax
+-; CHECK-NEXT:    jae LBB0_49
++; CHECK-NEXT:    jae LBB0_48
+ ; CHECK-NEXT:  ## %bb.23:
+ ; CHECK-NEXT:    xorl %ebx, %ebx
+ ; CHECK-NEXT:    movq {{[-0-9]+}}(%r{{[sb]}}p), %r14 ## 8-byte Reload
+-; CHECK-NEXT:  LBB0_47: ## %if.then1477
++; CHECK-NEXT:  LBB0_46: ## %if.then1477
+ ; CHECK-NEXT:    ## implicit-def: $edi
+ ; CHECK-NEXT:    ## implicit-def: $rsi
+ ; CHECK-NEXT:    movl $1, %edx
+@@ -268,49 +263,49 @@ define ptr @SyFgets(ptr %line, i64 %length, i64 %fid) {
+ ; CHECK-NEXT:    movq _syHistory@GOTPCREL(%rip), %rax
+ ; CHECK-NEXT:    leaq 8189(%r14,%rax), %rax
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_48: ## %for.body1723
++; CHECK-NEXT:  LBB0_47: ## %for.body1723
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    decq %rax
+-; CHECK-NEXT:    jmp LBB0_48
+-; CHECK-NEXT:  LBB0_46: ## %if.then1477.loopexit
++; CHECK-NEXT:    jmp LBB0_47
++; CHECK-NEXT:  LBB0_45: ## %if.then1477.loopexit
+ ; CHECK-NEXT:    movq {{[-0-9]+}}(%r{{[sb]}}p), %r14 ## 8-byte Reload
+ ; CHECK-NEXT:    movq %r14, %rbx
+-; CHECK-NEXT:    jmp LBB0_47
++; CHECK-NEXT:    jmp LBB0_46
+ ; CHECK-NEXT:  LBB0_16: ## %while.cond635.preheader
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    je LBB0_40
++; CHECK-NEXT:    je LBB0_39
+ ; CHECK-NEXT:    .p2align 4
+ ; CHECK-NEXT:  LBB0_17: ## %for.body643.us
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    jmp LBB0_17
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_40: ## %while.cond661
++; CHECK-NEXT:  LBB0_39: ## %while.cond661
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    jmp LBB0_40
+-; CHECK-NEXT:  LBB0_49: ## %for.cond1480.preheader
++; CHECK-NEXT:    jmp LBB0_39
++; CHECK-NEXT:  LBB0_48: ## %for.cond1480.preheader
+ ; CHECK-NEXT:    xorl %eax, %eax
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:    je LBB0_54
+-; CHECK-NEXT:  ## %bb.50: ## %for.body1664.lr.ph
++; CHECK-NEXT:    je LBB0_53
++; CHECK-NEXT:  ## %bb.49: ## %for.body1664.lr.ph
+ ; CHECK-NEXT:    xorl %eax, %eax
+ ; CHECK-NEXT:    testb %al, %al
+ ; CHECK-NEXT:    movq {{[-0-9]+}}(%r{{[sb]}}p), %r14 ## 8-byte Reload
+ ; CHECK-NEXT:    movl {{[-0-9]+}}(%r{{[sb]}}p), %ebp ## 4-byte Reload
+-; CHECK-NEXT:    jne LBB0_53
+-; CHECK-NEXT:  ## %bb.51: ## %while.body1679.preheader
++; CHECK-NEXT:    jne LBB0_52
++; CHECK-NEXT:  ## %bb.50: ## %while.body1679.preheader
+ ; CHECK-NEXT:    incl %ebp
+ ; CHECK-NEXT:    xorl %ebx, %ebx
+ ; CHECK-NEXT:    .p2align 4
+-; CHECK-NEXT:  LBB0_52: ## %while.body1679
++; CHECK-NEXT:  LBB0_51: ## %while.body1679
+ ; CHECK-NEXT:    ## =>This Inner Loop Header: Depth=1
+ ; CHECK-NEXT:    movq (%r14), %rdi
+ ; CHECK-NEXT:    callq _fileno
+ ; CHECK-NEXT:    incl %ebp
+ ; CHECK-NEXT:    testb %bl, %bl
+-; CHECK-NEXT:    jne LBB0_52
+-; CHECK-NEXT:  LBB0_53: ## %while.cond1683.preheader
++; CHECK-NEXT:    jne LBB0_51
++; CHECK-NEXT:  LBB0_52: ## %while.cond1683.preheader
+ ; CHECK-NEXT:    testb %al, %al
+-; CHECK-NEXT:  LBB0_54: ## %if.then.i
++; CHECK-NEXT:  LBB0_53: ## %if.then.i
+ ; CHECK-NEXT:    ud2
+ entry:
+   %sub.ptr.rhs.cast646 = ptrtoint ptr %line to i64
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/2011-12-19-PostincQuadratic.ll b/llvm/test/Transforms/LoopStrengthReduce/2011-12-19-PostincQuadratic.ll
+index 4241bff1a5e61..83116f2b3936e 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/2011-12-19-PostincQuadratic.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/2011-12-19-PostincQuadratic.ll
+@@ -24,9 +24,10 @@ define void @vb() nounwind {
+ ; CHECK-NEXT:    [[SCEVGEP]] = getelementptr i8, ptr [[LSR_IV1]], i32 [[LSR_IV]]
+ ; CHECK-NEXT:    br i1 true, label [[FOR_BODY43_PREHEADER:%.*]], label [[FOR_BODY7]]
+ ; CHECK:       for.body43.preheader:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA:%.*]] = phi ptr [ [[LSR_IV1]], [[FOR_BODY7]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY43:%.*]]
+ ; CHECK:       for.body43:
+-; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi ptr [ [[LSR_IV1]], [[FOR_BODY43_PREHEADER]] ], [ [[SCEVGEP3:%.*]], [[FOR_BODY43]] ]
++; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi ptr [ [[LSR_IV1_LCSSA]], [[FOR_BODY43_PREHEADER]] ], [ [[SCEVGEP3:%.*]], [[FOR_BODY43]] ]
+ ; CHECK-NEXT:    [[T2:%.*]] = load i32, ptr [[LSR_IV2]], align 4
+ ; CHECK-NEXT:    [[SCEVGEP3]] = getelementptr i8, ptr [[LSR_IV2]], i32 4
+ ; CHECK-NEXT:    br label [[FOR_BODY43]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/AArch64/postinc-with-fixups-with-different-loops.ll b/llvm/test/Transforms/LoopStrengthReduce/AArch64/postinc-with-fixups-with-different-loops.ll
+index 60d5588dfea11..1990d2b279aee 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/AArch64/postinc-with-fixups-with-different-loops.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/AArch64/postinc-with-fixups-with-different-loops.ll
+@@ -26,7 +26,8 @@ define i32 @test() {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[LSR_IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[EC]], label [[EXIT:%.*]], label [[LOOP_2]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    ret i32 [[IV_2_NEXT]]
++; CHECK-NEXT:    [[IV_2_NEXT_LCSSA:%.*]] = phi i32 [ [[IV_2_NEXT]], [[LOOP_2]] ]
++; CHECK-NEXT:    ret i32 [[IV_2_NEXT_LCSSA]]
+ ;
+ entry:
+   br label %loop.1
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/AArch64/pr53625.ll b/llvm/test/Transforms/LoopStrengthReduce/AArch64/pr53625.ll
+index ff2527d5bb6ad..fc6ee39f0423b 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/AArch64/pr53625.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/AArch64/pr53625.ll
+@@ -62,18 +62,20 @@ define i64 @IVIncHoist_not_all_user_in_header(i32 %c, ptr %a, ptr %b) {
+ ; CHECK-NEXT:    mov w9, w0
+ ; CHECK-NEXT:    add x10, x1, #4
+ ; CHECK-NEXT:    add x11, x2, #8
++; CHECK-NEXT:    mov w12, #2 // =0x2
+ ; CHECK-NEXT:    mov w0, #1 // =0x1
+ ; CHECK-NEXT:  .LBB1_2: // %for.body
+ ; CHECK-NEXT:    // =>This Inner Loop Header: Depth=1
+-; CHECK-NEXT:    ldr w12, [x10, x8, lsl #2]
+-; CHECK-NEXT:    cbnz w12, .LBB1_7
++; CHECK-NEXT:    ldr w13, [x10, x8, lsl #2]
++; CHECK-NEXT:    cbnz w13, .LBB1_7
+ ; CHECK-NEXT:  // %bb.3: // %if.then
+ ; CHECK-NEXT:    // in Loop: Header=BB1_2 Depth=1
+-; CHECK-NEXT:    ldr w12, [x11, x8, lsl #2]
+-; CHECK-NEXT:    cbnz w12, .LBB1_6
++; CHECK-NEXT:    ldr w13, [x11, x8, lsl #2]
++; CHECK-NEXT:    cbnz w13, .LBB1_6
+ ; CHECK-NEXT:  // %bb.4: // %for.cond
+ ; CHECK-NEXT:    // in Loop: Header=BB1_2 Depth=1
+ ; CHECK-NEXT:    add x8, x8, #1
++; CHECK-NEXT:    add x12, x12, #1
+ ; CHECK-NEXT:    cmp x9, x8
+ ; CHECK-NEXT:    b.ne .LBB1_2
+ ; CHECK-NEXT:  .LBB1_5:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/AMDGPU/lsr-invalid-ptr-extend.ll b/llvm/test/Transforms/LoopStrengthReduce/AMDGPU/lsr-invalid-ptr-extend.ll
+index fa7c094499e03..a0f4dcde7f6ab 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/AMDGPU/lsr-invalid-ptr-extend.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/AMDGPU/lsr-invalid-ptr-extend.ll
+@@ -12,20 +12,22 @@ define amdgpu_kernel void @scaledregtest() local_unnamed_addr {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[FOR_BODY:%.*]]
+ ; CHECK:       loopexit:
++; CHECK-NEXT:    [[SCEVGEP11_LCSSA:%.*]] = phi ptr addrspace(5) [ [[SCEVGEP11:%.*]], [[FOR_BODY]] ]
++; CHECK-NEXT:    [[SCEVGEP13_LCSSA:%.*]] = phi ptr [ [[SCEVGEP13:%.*]], [[FOR_BODY]] ]
+ ; CHECK-NEXT:    br label [[FOR_BODY_1:%.*]]
+ ; CHECK:       for.body.1:
+-; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi ptr addrspace(5) [ [[SCEVGEP6:%.*]], [[FOR_BODY_1]] ], [ [[SCEVGEP11_LCSSA:%.*]], [[LOOPEXIT:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi ptr [ [[SCEVGEP2:%.*]], [[FOR_BODY_1]] ], [ [[SCEVGEP13_LCSSA:%.*]], [[LOOPEXIT]] ]
++; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi ptr addrspace(5) [ [[SCEVGEP6:%.*]], [[FOR_BODY_1]] ], [ [[SCEVGEP11_LCSSA]], [[LOOPEXIT:%.*]] ]
++; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi ptr [ [[SCEVGEP2:%.*]], [[FOR_BODY_1]] ], [ [[SCEVGEP13_LCSSA]], [[LOOPEXIT]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = load ptr, ptr addrspace(5) [[LSR_IV5]], align 8
+ ; CHECK-NEXT:    store ptr [[TMP0]], ptr [[LSR_IV1]], align 8
+ ; CHECK-NEXT:    [[SCEVGEP2]] = getelementptr i8, ptr [[LSR_IV1]], i64 8
+ ; CHECK-NEXT:    [[SCEVGEP6]] = getelementptr i8, ptr addrspace(5) [[LSR_IV5]], i32 8
+ ; CHECK-NEXT:    br label [[FOR_BODY_1]]
+ ; CHECK:       for.body:
+-; CHECK-NEXT:    [[SCEVGEP11_LCSSA]] = phi ptr addrspace(5) [ [[SCEVGEP4:%.*]], [[FOR_BODY]] ], [ inttoptr (i32 64 to ptr addrspace(5)), [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[SCEVGEP13_LCSSA]] = phi ptr [ [[SCEVGEP:%.*]], [[FOR_BODY]] ], [ inttoptr (i64 64 to ptr), [[ENTRY]] ]
+-; CHECK-NEXT:    [[SCEVGEP]] = getelementptr i8, ptr [[SCEVGEP13_LCSSA]], i64 64
+-; CHECK-NEXT:    [[SCEVGEP4]] = getelementptr i8, ptr addrspace(5) [[SCEVGEP11_LCSSA]], i32 64
++; CHECK-NEXT:    [[LSR_IV12:%.*]] = phi ptr [ [[SCEVGEP13]], [[FOR_BODY]] ], [ null, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[LSR_IV10:%.*]] = phi ptr addrspace(5) [ [[SCEVGEP11]], [[FOR_BODY]] ], [ null, [[ENTRY]] ]
++; CHECK-NEXT:    [[SCEVGEP11]] = getelementptr i8, ptr addrspace(5) [[LSR_IV10]], i32 64
++; CHECK-NEXT:    [[SCEVGEP13]] = getelementptr i8, ptr [[LSR_IV12]], i64 64
+ ; CHECK-NEXT:    br i1 false, label [[LOOPEXIT]], label [[FOR_BODY]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll b/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
+index 3844e00ae0a4f..a411e63292033 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/ARM/illegal-addr-modes.ll
+@@ -30,11 +30,12 @@ define ptr @negativeOneCase(ptr returned %a, ptr nocapture readonly %b, i32 %n)
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[TMP0]], 0
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[WHILE_COND2_PREHEADER:%.*]], label [[WHILE_COND]]
+ ; CHECK:       while.cond2.preheader:
++; CHECK-NEXT:    [[INCDEC_PTR_LCSSA:%.*]] = phi ptr [ [[INCDEC_PTR]], [[WHILE_COND]] ]
+ ; CHECK-NEXT:    br label [[WHILE_COND2:%.*]]
+ ; CHECK:       while.cond2:
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[WHILE_BODY5:%.*]] ], [ 0, [[WHILE_COND2_PREHEADER]] ]
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[B]], i32 [[LSR_IV]]
+-; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[INCDEC_PTR]], i32 [[LSR_IV]]
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[INCDEC_PTR_LCSSA]], i32 [[LSR_IV]]
+ ; CHECK-NEXT:    [[CMP3:%.*]] = icmp eq i32 [[N]], [[LSR_IV]]
+ ; CHECK-NEXT:    br i1 [[CMP3]], label [[WHILE_END8:%.*]], label [[WHILE_BODY5]]
+ ; CHECK:       while.body5:
+@@ -43,7 +44,7 @@ define ptr @negativeOneCase(ptr returned %a, ptr nocapture readonly %b, i32 %n)
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br label [[WHILE_COND2]]
+ ; CHECK:       while.end8:
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[INCDEC_PTR]], i32 [[N]]
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[INCDEC_PTR_LCSSA]], i32 [[N]]
+ ; CHECK-NEXT:    store i8 0, ptr [[SCEVGEP]], align 1
+ ; CHECK-NEXT:    ret ptr [[A]]
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/Power/incomplete-phi.ll b/llvm/test/Transforms/LoopStrengthReduce/Power/incomplete-phi.ll
+index 8f7ca70935628..4d3ebf08bb4ea 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/Power/incomplete-phi.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/Power/incomplete-phi.ll
+@@ -38,6 +38,7 @@ define void @foo(ptr %arg) {
+ ; CHECK:       bb17:
+ ; CHECK-NEXT:    br i1 false, label [[BB18]], label [[BB22_PREHEADER]]
+ ; CHECK:       bb22.preheader:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA:%.*]] = phi ptr [ [[LSR_IV1]], [[BB3]] ], [ [[LSR_IV1]], [[BB17]] ]
+ ; CHECK-NEXT:    br label [[BB22:%.*]]
+ ; CHECK:       bb18:
+ ; CHECK-NEXT:    [[LSR_IV_NEXT6]] = add nuw nsw i64 [[LSR_IV5]], 4
+@@ -45,7 +46,7 @@ define void @foo(ptr %arg) {
+ ; CHECK-NEXT:    [[SCEVGEP8]] = getelementptr i8, ptr [[LSR_IV7]], i64 [[LSR_IV5]]
+ ; CHECK-NEXT:    br label [[BB3]]
+ ; CHECK:       bb22:
+-; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi ptr [ [[LSR_IV1]], [[BB22_PREHEADER]] ], [ [[SCEVGEP4:%.*]], [[BB22]] ]
++; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi ptr [ [[LSR_IV1_LCSSA]], [[BB22_PREHEADER]] ], [ [[SCEVGEP4:%.*]], [[BB22]] ]
+ ; CHECK-NEXT:    store float undef, ptr [[LSR_IV3]], align 4
+ ; CHECK-NEXT:    [[SCEVGEP4]] = getelementptr i8, ptr [[LSR_IV3]], i64 4
+ ; CHECK-NEXT:    br label [[BB22]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/RISCV/icmp-zero.ll b/llvm/test/Transforms/LoopStrengthReduce/RISCV/icmp-zero.ll
+index a8446c5103176..2108e476312fe 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/RISCV/icmp-zero.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/RISCV/icmp-zero.ll
+@@ -357,11 +357,9 @@ define void @loop_invariant_definition(i64 %arg) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[T1:%.*]]
+ ; CHECK:       t1:
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[T1]] ], [ -1, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 true, label [[T4:%.*]], label [[T1]]
+ ; CHECK:       t4:
+-; CHECK-NEXT:    [[T5:%.*]] = trunc i64 [[LSR_IV_NEXT]] to i32
++; CHECK-NEXT:    [[T5:%.*]] = trunc i64 0 to i32
+ ; CHECK-NEXT:    [[T6:%.*]] = add i32 [[T5]], 1
+ ; CHECK-NEXT:    [[T7:%.*]] = icmp eq i32 [[T5]], [[T6]]
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/2011-11-29-postincphi.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/2011-11-29-postincphi.ll
+index 565b1c6c71195..5ab20a5990cf7 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/2011-11-29-postincphi.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/2011-11-29-postincphi.ll
+@@ -25,7 +25,6 @@ define i64 @sqlite3DropTriggerPtr() nounwind {
+ ; CHECK-NEXT:    je .LBB0_3
+ ; CHECK-NEXT:  # %bb.2: # %bb4
+ ; CHECK-NEXT:    # in Loop: Header=BB0_1 Depth=1
+-; CHECK-NEXT:    testb %al, %al
+ ; CHECK-NEXT:    jne .LBB0_1
+ ; CHECK-NEXT:  .LBB0_3: # %bb8
+ ; CHECK-NEXT:    movq %rbx, %rax
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/2011-12-04-loserreg.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/2011-12-04-loserreg.ll
+index 76faad105ee7e..62313ffcdb8a2 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/2011-12-04-loserreg.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/2011-12-04-loserreg.ll
+@@ -22,34 +22,35 @@ define i64 @test(i64 %count, ptr nocapture %srcrow, ptr nocapture %destrow) noun
+ ; CHECK-NEXT:    [[CMP34:%.*]] = icmp eq i64 [[COUNT]], 0
+ ; CHECK-NEXT:    br i1 [[CMP34]], label %[[FOR_END29:.*]], label %[[FOR_BODY_PREHEADER:.*]]
+ ; CHECK:       [[FOR_BODY_PREHEADER]]:
+-; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[SRCROW]], i64 4
+ ; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
+ ; CHECK:       [[FOR_BODY]]:
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi ptr [ [[SCEVGEP4]], %[[FOR_BODY_PREHEADER]] ], [ [[SCEVGEP5:%.*]], %[[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[DUMMYIV:%.*]] = phi i64 [ [[DUMMYCNT:%.*]], %[[FOR_BODY]] ], [ 0, %[[FOR_BODY_PREHEADER]] ]
+ ; CHECK-NEXT:    [[INDVARS_IV39:%.*]] = phi i64 [ [[INDVARS_IV_NEXT40:%.*]], %[[FOR_BODY]] ], [ 0, %[[FOR_BODY_PREHEADER]] ]
+ ; CHECK-NEXT:    [[DP_036:%.*]] = phi ptr [ [[SCEVGEP16:%.*]], %[[FOR_BODY]] ], [ [[DESTROW]], %[[FOR_BODY_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = load float, ptr [[LSR_IV]], align 4
++; CHECK-NEXT:    [[LSR_IV:%.*]] = phi ptr [ [[INCDEC_PTR4:%.*]], %[[FOR_BODY]] ], [ [[SRCROW]], %[[FOR_BODY_PREHEADER]] ]
+ ; CHECK-NEXT:    [[SCEVGEP9:%.*]] = getelementptr i8, ptr [[LSR_IV]], i64 4
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load float, ptr [[SCEVGEP9]], align 4
+ ; CHECK-NEXT:    [[SCEVGEP8:%.*]] = getelementptr i8, ptr [[LSR_IV]], i64 8
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load float, ptr [[SCEVGEP8]], align 4
+ ; CHECK-NEXT:    [[SCEVGEP7:%.*]] = getelementptr i8, ptr [[LSR_IV]], i64 12
+ ; CHECK-NEXT:    [[TMP3:%.*]] = load float, ptr [[SCEVGEP7]], align 4
++; CHECK-NEXT:    [[INCDEC_PTR4]] = getelementptr inbounds float, ptr [[LSR_IV]], i64 4
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[LSR_IV]], i64 16
++; CHECK-NEXT:    [[TMP13:%.*]] = load float, ptr [[SCEVGEP4]], align 4
+ ; CHECK-NEXT:    [[TMP4:%.*]] = load i32, ptr [[DP_036]], align 4
+-; CHECK-NEXT:    [[CONV5:%.*]] = fptoui float [[TMP0]] to i32
++; CHECK-NEXT:    [[CONV5:%.*]] = fptoui float [[TMP1]] to i32
+ ; CHECK-NEXT:    [[OR:%.*]] = or i32 [[TMP4]], [[CONV5]]
+ ; CHECK-NEXT:    [[SCEVGEP10:%.*]] = getelementptr i8, ptr [[DP_036]], i64 4
+ ; CHECK-NEXT:    [[TMP5:%.*]] = load i32, ptr [[SCEVGEP10]], align 4
+-; CHECK-NEXT:    [[CONV7:%.*]] = fptoui float [[TMP1]] to i32
++; CHECK-NEXT:    [[CONV7:%.*]] = fptoui float [[TMP2]] to i32
+ ; CHECK-NEXT:    [[OR8:%.*]] = or i32 [[TMP5]], [[CONV7]]
+ ; CHECK-NEXT:    [[SCEVGEP11:%.*]] = getelementptr i8, ptr [[DP_036]], i64 8
+ ; CHECK-NEXT:    [[TMP6:%.*]] = load i32, ptr [[SCEVGEP11]], align 4
+-; CHECK-NEXT:    [[CONV10:%.*]] = fptoui float [[TMP2]] to i32
++; CHECK-NEXT:    [[CONV10:%.*]] = fptoui float [[TMP3]] to i32
+ ; CHECK-NEXT:    [[OR11:%.*]] = or i32 [[TMP6]], [[CONV10]]
+ ; CHECK-NEXT:    [[SCEVGEP12:%.*]] = getelementptr i8, ptr [[DP_036]], i64 12
+ ; CHECK-NEXT:    [[TMP7:%.*]] = load i32, ptr [[SCEVGEP12]], align 4
+-; CHECK-NEXT:    [[CONV13:%.*]] = fptoui float [[TMP3]] to i32
++; CHECK-NEXT:    [[CONV13:%.*]] = fptoui float [[TMP13]] to i32
+ ; CHECK-NEXT:    [[OR14:%.*]] = or i32 [[TMP7]], [[CONV13]]
+ ; CHECK-NEXT:    store i32 [[OR]], ptr [[DP_036]], align 4
+ ; CHECK-NEXT:    [[SCEVGEP13:%.*]] = getelementptr i8, ptr [[DP_036]], i64 4
+@@ -61,12 +62,13 @@ define i64 @test(i64 %count, ptr nocapture %srcrow, ptr nocapture %destrow) noun
+ ; CHECK-NEXT:    [[ADD_PTR:%.*]] = getelementptr inbounds i32, ptr [[DP_036]], i64 4
+ ; CHECK-NEXT:    [[INDVARS_IV_NEXT40]] = add i64 [[INDVARS_IV39]], 4
+ ; CHECK-NEXT:    [[DUMMYCNT]] = add i64 [[DUMMYIV]], 1
+-; CHECK-NEXT:    [[SCEVGEP5]] = getelementptr i8, ptr [[LSR_IV]], i64 16
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i64 [[INDVARS_IV_NEXT40]], [[COUNT]]
+ ; CHECK-NEXT:    [[SCEVGEP16]] = getelementptr i8, ptr [[DP_036]], i64 16
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[FOR_BODY]], label %[[FOR_COND19_PREHEADER:.*]]
+ ; CHECK:       [[FOR_COND19_PREHEADER]]:
+ ; CHECK-NEXT:    [[DUMMYCNT_LCSSA:%.*]] = phi i64 [ [[DUMMYCNT]], %[[FOR_BODY]] ]
++; CHECK-NEXT:    [[SCEVGEP5:%.*]] = phi ptr [ [[INCDEC_PTR4]], %[[FOR_BODY]] ]
++; CHECK-NEXT:    [[ADD_PTR_LCSSA:%.*]] = phi ptr [ [[ADD_PTR]], %[[FOR_BODY]] ]
+ ; CHECK-NEXT:    [[REM:%.*]] = and i64 [[COUNT]], 3
+ ; CHECK-NEXT:    [[CMP2130:%.*]] = icmp eq i64 [[REM]], 0
+ ; CHECK-NEXT:    br i1 [[CMP2130]], label %[[FOR_COND19_PREHEADER_FOR_END29_CRIT_EDGE:.*]], label %[[FOR_BODY23_LR_PH:.*]]
+@@ -78,11 +80,12 @@ define i64 @test(i64 %count, ptr nocapture %srcrow, ptr nocapture %destrow) noun
+ ; CHECK:       [[FOR_BODY23]]:
+ ; CHECK-NEXT:    [[INDVARS_IV:%.*]] = phi i64 [ 0, %[[FOR_BODY23_LR_PH]] ], [ [[INDVARS_IV_NEXT:%.*]], %[[FOR_BODY23]] ]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = shl nuw nsw i64 [[INDVARS_IV]], 2
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[ADD_PTR]], i64 [[TMP9]]
++; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[ADD_PTR_LCSSA]], i64 [[TMP9]]
+ ; CHECK-NEXT:    [[TMP10:%.*]] = shl nuw nsw i64 [[INDVARS_IV]], 2
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[ADD_PTR]], i64 [[TMP10]]
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[ADD_PTR_LCSSA]], i64 [[TMP10]]
+ ; CHECK-NEXT:    [[SCEVGEP6:%.*]] = getelementptr i8, ptr [[SCEVGEP5]], i64 [[TMP10]]
+-; CHECK-NEXT:    [[TMP11:%.*]] = load float, ptr [[SCEVGEP6]], align 4
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[SCEVGEP6]], i64 4
++; CHECK-NEXT:    [[TMP11:%.*]] = load float, ptr [[SCEVGEP3]], align 4
+ ; CHECK-NEXT:    [[TMP12:%.*]] = load i32, ptr [[SCEVGEP1]], align 4
+ ; CHECK-NEXT:    [[CONV25:%.*]] = fptoui float [[TMP11]] to i32
+ ; CHECK-NEXT:    [[OR26:%.*]] = or i32 [[TMP12]], [[CONV25]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/bin_power.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/bin_power.ll
+index 26681c33a6607..2f1ae3851ea98 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/bin_power.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/bin_power.ll
+@@ -16,10 +16,11 @@ define i32 @test_01(i32 %a) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[TMP0]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i32 [[TMP1]], -1
+-; CHECK-NEXT:    [[TMP3:%.*]] = sub i32 [[TMP2]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP3:%.*]] = sub i32 [[TMP2]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+ 
+@@ -51,12 +52,13 @@ define i32 @test_02(i32 %a) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[TMP0]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP1]], [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[TMP2]], [[TMP2]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = add i32 [[TMP3]], -1
+-; CHECK-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP5:%.*]] = sub i32 [[TMP4]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP5]]
+ ;
+ entry:
+@@ -89,6 +91,7 @@ define i32 @test_03(i32 %a) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[TMP0]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP0]], [[TMP1]]
+@@ -98,7 +101,7 @@ define i32 @test_03(i32 %a) {
+ ; CHECK-NEXT:    [[TMP6:%.*]] = mul i32 [[TMP4]], [[TMP4]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = mul i32 [[TMP5]], [[TMP6]]
+ ; CHECK-NEXT:    [[TMP8:%.*]] = add i32 [[TMP7]], -1
+-; CHECK-NEXT:    [[TMP9:%.*]] = sub i32 [[TMP8]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP9:%.*]] = sub i32 [[TMP8]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP9]]
+ ;
+ entry:
+@@ -136,13 +139,14 @@ define i32 @test_04(i32 %a) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[TMP0]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP1]], [[TMP1]]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = mul i32 [[TMP2]], [[TMP2]]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = mul i32 [[TMP3]], [[TMP3]]
+ ; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[TMP4]], -1
+-; CHECK-NEXT:    [[TMP6:%.*]] = sub i32 [[TMP5]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP6:%.*]] = sub i32 [[TMP5]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP6]]
+ ;
+ entry:
+@@ -186,6 +190,7 @@ define i32 @test_05(i32 %a) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[A]], 1
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[TMP0]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = mul i32 [[TMP1]], [[TMP1]]
+@@ -326,7 +331,7 @@ define i32 @test_05(i32 %a) {
+ ; CHECK-NEXT:    [[TMP137:%.*]] = mul i32 [[TMP136]], [[TMP136]]
+ ; CHECK-NEXT:    [[TMP138:%.*]] = mul i32 [[TMP132]], [[TMP137]]
+ ; CHECK-NEXT:    [[TMP139:%.*]] = add i32 [[TMP138]], -1
+-; CHECK-NEXT:    [[TMP140:%.*]] = sub i32 [[TMP139]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP140:%.*]] = sub i32 [[TMP139]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP140]]
+ ;
+ 
+@@ -375,6 +380,7 @@ define i32 @test_06(i32 %a, i32 %c) {
+ ; CHECK-NEXT:    [[EXITCOND:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], -80
+ ; CHECK-NEXT:    br i1 [[EXITCOND]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = mul i32 [[C]], [[C]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul i32 [[C]], [[TMP0]]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = add i32 [[A]], 1
+@@ -384,7 +390,7 @@ define i32 @test_06(i32 %a, i32 %c) {
+ ; CHECK-NEXT:    [[TMP6:%.*]] = mul i32 [[TMP5]], [[TMP5]]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = mul i32 [[TMP1]], [[TMP6]]
+ ; CHECK-NEXT:    [[TMP8:%.*]] = add i32 [[TMP7]], -1
+-; CHECK-NEXT:    [[TMP9:%.*]] = sub i32 [[TMP8]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP9:%.*]] = sub i32 [[TMP8]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i32 [[TMP9]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/debuginfo-scev-salvage-ptrtoaddr.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/debuginfo-scev-salvage-ptrtoaddr.ll
+index 3cbe40ad0f2ef..376fcca33fea9 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/debuginfo-scev-salvage-ptrtoaddr.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/debuginfo-scev-salvage-ptrtoaddr.ll
+@@ -21,7 +21,8 @@ define i64 @test(ptr %p) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 false, label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    ret i64 [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i64 [[LSR_IV_NEXT_LCSSA]]
+ ;
+ entry:
+   br label %loop
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point-2.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point-2.ll
+index 02e00f505d424..4e01810afe925 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point-2.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point-2.ll
+@@ -14,11 +14,12 @@ define void @is_not_42(ptr %baseptr, ptr %finalptr) local_unnamed_addr align 2 p
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[PTR:%.*]] = phi ptr [ [[INCPTR:%.*]], [[LATCH:%.*]] ], [ [[BASEPTR:%.*]], [[PREHEADER:%.*]] ]
+ ; CHECK-NEXT:    invoke void @maybe_throws()
+-; CHECK-NEXT:    to label [[LATCH]] unwind label [[LPAD:%.*]]
++; CHECK-NEXT:            to label [[LATCH]] unwind label [[LPAD:%.*]]
+ ; CHECK:       lpad:
++; CHECK-NEXT:    [[PTR_LCSSA:%.*]] = phi ptr [ [[PTR]], [[HEADER]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    catch ptr inttoptr (i64 42 to ptr)
+-; CHECK-NEXT:    [[PTR_IS_NOT_42:%.*]] = icmp ne ptr [[PTR]], inttoptr (i64 42 to ptr)
++; CHECK-NEXT:            catch ptr inttoptr (i64 42 to ptr)
++; CHECK-NEXT:    [[PTR_IS_NOT_42:%.*]] = icmp ne ptr [[PTR_LCSSA]], inttoptr (i64 42 to ptr)
+ ; CHECK-NEXT:    call void @use1(i1 [[PTR_IS_NOT_42]])
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       latch:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point.ll
+index 82b6c52d33728..0dd1f8c079954 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/eh-insertion-point.ll
+@@ -14,11 +14,12 @@ define void @is_not_null(ptr %baseptr) local_unnamed_addr align 2 personality pt
+ ; CHECK:       header:
+ ; CHECK-NEXT:    [[PTR:%.*]] = phi ptr [ [[INCPTR:%.*]], [[LATCH:%.*]] ], [ [[BASEPTR:%.*]], [[PREHEADER:%.*]] ]
+ ; CHECK-NEXT:    invoke void @maybe_throws()
+-; CHECK-NEXT:    to label [[LATCH]] unwind label [[LPAD:%.*]]
++; CHECK-NEXT:            to label [[LATCH]] unwind label [[LPAD:%.*]]
+ ; CHECK:       lpad:
++; CHECK-NEXT:    [[PTR_LCSSA:%.*]] = phi ptr [ [[PTR]], [[HEADER]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    catch ptr null
+-; CHECK-NEXT:    [[PTR_IS_NOT_NULL:%.*]] = icmp ne ptr [[PTR]], null
++; CHECK-NEXT:            catch ptr null
++; CHECK-NEXT:    [[PTR_IS_NOT_NULL:%.*]] = icmp ne ptr [[PTR_LCSSA]], null
+ ; CHECK-NEXT:    call void @use1(i1 [[PTR_IS_NOT_NULL]])
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       latch:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
+index d652e5c5aa060..78bc384511d16 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/expander-crashes.ll
+@@ -21,8 +21,8 @@ define i64 @blam(ptr %start, ptr %end, ptr %ptr.2) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq ptr [[IV_NEXT]], [[END:%.*]]
+ ; CHECK-NEXT:    br i1 [[EC]], label [[LOOP_2_PH:%.*]], label [[LOOP_1_HEADER]]
+ ; CHECK:       loop.2.ph:
+-; CHECK-NEXT:    [[LSR_IV_NEXT5_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT5]], [[LOOP_1_HEADER]] ]
+ ; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi ptr [ [[IV_NEXT]], [[LOOP_1_HEADER]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT5_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT5]], [[LOOP_1_HEADER]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2_HEADER:%.*]]
+ ; CHECK:       loop.2.header:
+ ; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi i64 [ [[LSR_IV_NEXT3:%.*]], [[LOOP_2_LATCH:%.*]] ], [ [[LSR_IV_NEXT5_LCSSA]], [[LOOP_2_PH]] ]
+@@ -38,7 +38,8 @@ define i64 @blam(ptr %start, ptr %end, ptr %ptr.2) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT3]] = add i64 [[LSR_IV2]], 16
+ ; CHECK-NEXT:    br label [[LOOP_2_HEADER]]
+ ; CHECK:       loop.2.exit:
+-; CHECK-NEXT:    ret i64 [[LSR_IV2]]
++; CHECK-NEXT:    [[LSR_IV2_LCSSA:%.*]] = phi i64 [ [[LSR_IV2]], [[LOOP_2_HEADER]] ]
++; CHECK-NEXT:    ret i64 [[LSR_IV2_LCSSA]]
+ ;
+ entry:
+   br label %loop.1.header
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
+index 9006fa5849853..e800d5c194372 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/icmp-zero-offset-overflow.ll
+@@ -23,8 +23,9 @@ define i16 @test(i16 %start) #0 {
+ ; CHECK-NEXT:    [[IV1_CMP:%.*]] = icmp eq i64 [[LSR_IV_NEXT]], 65532
+ ; CHECK-NEXT:    br i1 [[IV1_CMP]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP3:%.*]] = zext i16 [[START]] to i64
+-; CHECK-NEXT:    [[TMP4:%.*]] = sub i64 [[TMP3]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TMP4:%.*]] = sub i64 [[TMP3]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc i64 [[TMP4]] to i16
+ ; CHECK-NEXT:    ret i16 [[TMP1]]
+ ;
+@@ -59,7 +60,8 @@ define i16 @test2(i16 %arg1, i16 %arg2) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i16 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 false, label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    ret i16 [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i16 [ [[LSR_IV_NEXT]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i16 [[LSR_IV_NEXT_LCSSA]]
+ ;
+ entry:
+   %start = add i16 %arg1, %arg2
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/incorrect-offset-scaling.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/incorrect-offset-scaling.ll
+index 7f4a8225b9afe..163ad8df68e46 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/incorrect-offset-scaling.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/incorrect-offset-scaling.ll
+@@ -24,13 +24,14 @@ define void @incorrect_offset_scaling(i1 %c, i1 %c2, i1 %c3, ptr %p, i64, ptr) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 [[C2]], label [[L_LOOPEXIT:%.*]], label [[L1]]
+ ; CHECK:       if6:
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i64 [ [[LSR_IV]], [[IDXEND_8]] ]
+ ; CHECK-NEXT:    [[R2:%.*]] = add i64 [[TMP0]], -1
+ ; CHECK-NEXT:    [[R3:%.*]] = load i64, ptr [[TMP1]], align 8
+ ; CHECK-NEXT:    br label [[IB:%.*]]
+ ; CHECK:       idxend.8:
+ ; CHECK-NEXT:    br i1 [[C3]], label [[IF6:%.*]], label [[L2]]
+ ; CHECK:       ib:
+-; CHECK-NEXT:    [[R4:%.*]] = mul i64 [[R3]], [[LSR_IV]]
++; CHECK-NEXT:    [[R4:%.*]] = mul i64 [[R3]], [[LSR_IV_LCSSA]]
+ ; CHECK-NEXT:    [[R5:%.*]] = add i64 [[R2]], [[R4]]
+ ; CHECK-NEXT:    [[R6:%.*]] = icmp ult i64 [[R5]], undef
+ ; CHECK-NEXT:    [[R7:%.*]] = getelementptr i64, ptr [[P]], i64 [[R5]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/lcssa-preservation-regression.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/lcssa-preservation-regression.ll
+new file mode 100644
+index 0000000000000..08b2867962f44
+--- /dev/null
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/lcssa-preservation-regression.ll
+@@ -0,0 +1,207 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes="loop-reduce" -S | FileCheck %s
++
++target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
++target triple = "x86_64-unknown-linux-gnu"
++
++define void @regression1() {
++; CHECK-LABEL: define void @regression1() {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[LOOP1_HEADER:.*]]
++; CHECK:       [[LOOP1_HEADER]]:
++; CHECK-NEXT:    br label %[[LOOP1:.*]]
++; CHECK:       [[LOOP1]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i32 [ 0, %[[LOOP1_HEADER]] ], [ 1, %[[LOOP1]] ]
++; CHECK-NEXT:    br i1 false, label %[[LOOP2_HEADER:.*]], label %[[LOOP1]]
++; CHECK:       [[LOOP2_HEADER]]:
++; CHECK-NEXT:    [[PHI_LCSSA1:%.*]] = phi i32 [ [[PHI]], %[[LOOP1]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add nuw nsw i32 [[PHI_LCSSA1]], 1
++; CHECK-NEXT:    br label %[[LOOP2:.*]]
++; CHECK:       [[LOOP2]]:
++; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], %[[LOOP2]] ], [ [[TMP0]], %[[LOOP2_HEADER]] ]
++; CHECK-NEXT:    [[SELECT:%.*]] = select i1 false, i32 [[LSR_IV]], i32 0
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
++; CHECK-NEXT:    br i1 false, label %[[EXIT:.*]], label %[[LOOP2]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    br label %[[LOOP1_HEADER]]
++;
++entry:
++  br label %loop1.header
++
++loop1.header:                                              ; preds = %exit, %entry
++  br label %loop1
++
++loop1:                                              ; preds = %loop1, %loop1.header
++  %phi = phi i32 [ 0, %loop1.header ], [ 1, %loop1 ]
++  br i1 false, label %loop2.header, label %loop1
++
++loop2.header:                                              ; preds = %loop1
++  br label %loop2
++
++loop2:                                              ; preds = %loop2.header, %loop2
++  %phi5 = phi i32 [ %add, %loop2 ], [ %phi, %loop2.header ]
++  %add = add i32 %phi5, 1
++  %select = select i1 false, i32 %add, i32 0
++  br i1 false, label %exit, label %loop2
++
++exit:                                              ; preds = %loop2
++  br label %loop1.header
++}
++
++define void @regression2() {
++; CHECK-LABEL: define void @regression2() {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[LOOP1_HEADER:.*]]
++; CHECK:       [[LOOP1_HEADER]]:
++; CHECK-NEXT:    switch i8 0, label %[[LOOP1_HEADER_BACKEDGE:.*]] [
++; CHECK-NEXT:      i8 63, label %[[LOOP1_LATCH1_PREHEADER:.*]]
++; CHECK-NEXT:      i8 43, label %[[LOOP1_LATCH1_PREHEADER]]
++; CHECK-NEXT:      i8 42, label %[[LOOP1_LATCH1_PREHEADER]]
++; CHECK-NEXT:    ]
++; CHECK:       [[LOOP1_HEADER_BACKEDGE]]:
++; CHECK-NEXT:    br label %[[LOOP1_HEADER]]
++; CHECK:       [[LOOP1_LATCH1_PREHEADER]]:
++; CHECK-NEXT:    br label %[[LOOP1_LATCH1:.*]]
++; CHECK:       [[LOOP1_LATCH1]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i32 [ [[ADD4:%.*]], %[[LOOP1_LATCH2:.*]] ], [ 0, %[[LOOP1_LATCH1_PREHEADER]] ]
++; CHECK-NEXT:    br i1 false, label %[[LOOP1_LATCH2]], label %[[LOOP1_LATCH1_LOOP1_LATCH3_CRIT_EDGE:.*]]
++; CHECK:       [[LOOP1_LATCH2]]:
++; CHECK-NEXT:    [[ADD:%.*]] = add i32 0, 0
++; CHECK-NEXT:    [[ADD4]] = add i32 [[PHI]], 1
++; CHECK-NEXT:    br i1 false, label %[[LOOP1_LATCH1]], label %[[LOOP1_LATCH3SPLIT:.*]]
++; CHECK:       [[LOOP1_LATCH3SPLIT]]:
++; CHECK-NEXT:    [[PHI6_PH:%.*]] = phi i32 [ [[ADD]], %[[LOOP1_LATCH2]] ]
++; CHECK-NEXT:    [[PHI7_PH:%.*]] = phi i32 [ 0, %[[LOOP1_LATCH2]] ]
++; CHECK-NEXT:    br label %[[LOOP1_LATCH3:.*]]
++; CHECK:       [[LOOP1_LATCH1_LOOP1_LATCH3_CRIT_EDGE]]:
++; CHECK-NEXT:    [[PHI_LCSSA:%.*]] = phi i32 [ [[PHI]], %[[LOOP1_LATCH1]] ]
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i32 [ 0, %[[LOOP1_LATCH1]] ]
++; CHECK-NEXT:    [[SPLIT1:%.*]] = phi i32 [ [[PHI]], %[[LOOP1_LATCH1]] ]
++; CHECK-NEXT:    br label %[[LOOP1_LATCH3]]
++; CHECK:       [[LOOP1_LATCH3]]:
++; CHECK-NEXT:    [[PHI6:%.*]] = phi i32 [ [[SPLIT]], %[[LOOP1_LATCH1_LOOP1_LATCH3_CRIT_EDGE]] ], [ [[PHI6_PH]], %[[LOOP1_LATCH3SPLIT]] ]
++; CHECK-NEXT:    [[PHI7:%.*]] = phi i32 [ [[PHI_LCSSA]], %[[LOOP1_LATCH1_LOOP1_LATCH3_CRIT_EDGE]] ], [ [[PHI7_PH]], %[[LOOP1_LATCH3SPLIT]] ]
++; CHECK-NEXT:    br label %[[LOOP1_HEADER_BACKEDGE]]
++;
++entry:
++  br label %loop1.header
++
++loop1.header:                                              ; preds = %loop1.latch3, %loop1.header, %entry
++  switch i8 0, label %loop1.header [
++  i8 63, label %loop1.latch1
++  i8 43, label %loop1.latch1
++  i8 42, label %loop1.latch1
++  ]
++
++loop1.latch1:                                              ; preds = %loop1.latch2, %loop1.header, %loop1.header, %loop1.header
++  %phi = phi i32 [ %add4, %loop1.latch2 ], [ 0, %loop1.header ], [ 0, %loop1.header ], [ 0, %loop1.header ]
++  br i1 false, label %loop1.latch2, label %loop1.latch3
++
++loop1.latch2:                                              ; preds = %loop1.latch1
++  %add = add i32 0, 0
++  %add4 = add i32 %phi, 1
++  br i1 false, label %loop1.latch1, label %loop1.latch3
++
++loop1.latch3:                                              ; preds = %loop1.latch2, %loop1.latch1
++  %phi6 = phi i32 [ %add, %loop1.latch2 ], [ 0, %loop1.latch1 ]
++  %phi7 = phi i32 [ 0, %loop1.latch2 ], [ %phi, %loop1.latch1 ]
++  br label %loop1.header
++}
++
++define i64 @regression3() {
++; CHECK-LABEL: define i64 @regression3() {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    [[ASHR:%.*]] = ashr i64 0, 1
++; CHECK-NEXT:    br label %[[LOOP2_HEADER:.*]]
++; CHECK:       [[FUNCEXITSPLIT:.*]]:
++; CHECK-NEXT:    [[PHI_PH:%.*]] = phi i64 [ [[PHI6:%.*]], %[[LOOP1_HEADER:.*]] ]
++; CHECK-NEXT:    br label %[[FUNCEXIT:.*]]
++; CHECK:       [[FUNCEXIT]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i64 [ [[ASHR]], %[[LOOP1_LATCH_FUNCEXIT_CRIT_EDGE:.*]] ], [ [[PHI_PH]], %[[FUNCEXITSPLIT]] ]
++; CHECK-NEXT:    ret i64 [[PHI]]
++; CHECK:       [[LOOP2_HEADER]]:
++; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], %[[LOOP2_LATCH:.*]] ], [ [[ASHR]], %[[ENTRY]] ]
++; CHECK-NEXT:    br i1 false, label %[[LOOP2_LATCH]], label %[[LOOP1_HEADER_PREHEADER:.*]]
++; CHECK:       [[LOOP1_HEADER_PREHEADER]]:
++; CHECK-NEXT:    br label %[[LOOP1_HEADER]]
++; CHECK:       [[LOOP2_LATCH]]:
++; CHECK-NEXT:    [[ICMP:%.*]] = icmp eq i64 [[LSR_IV]], 0
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw nsw i64 [[LSR_IV]], -1
++; CHECK-NEXT:    br label %[[LOOP2_HEADER]]
++; CHECK:       [[LOOP1_HEADER]]:
++; CHECK-NEXT:    [[PHI6]] = phi i64 [ 0, %[[LOOP1_LATCH:.*]] ], [ 1, %[[LOOP1_HEADER_PREHEADER]] ]
++; CHECK-NEXT:    br i1 false, label %[[LOOP1_LATCH]], label %[[FUNCEXITSPLIT]]
++; CHECK:       [[LOOP1_LATCH]]:
++; CHECK-NEXT:    br i1 false, label %[[LOOP1_LATCH_FUNCEXIT_CRIT_EDGE]], label %[[LOOP1_HEADER]]
++; CHECK:       [[LOOP1_LATCH_FUNCEXIT_CRIT_EDGE]]:
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i64 [ [[ASHR]], %[[LOOP1_LATCH]] ]
++; CHECK-NEXT:    br label %[[FUNCEXIT]]
++;
++entry:
++  %ashr = ashr i64 0, 1
++  br label %loop2.header
++
++funcexit:                                              ; preds = %loop1.latch, %loop1.header
++  %phi = phi i64 [ %phi6, %loop1.header ], [ %ashr, %loop1.latch ]
++  ret i64 %phi
++
++loop2.header:                                              ; preds = %loop2.latch, %entry
++  %phi3 = phi i64 [ 0, %entry ], [ %add, %loop2.latch ]
++  br i1 false, label %loop2.latch, label %loop1.header
++
++loop2.latch:                                              ; preds = %loop2.header
++  %add = add i64 %phi3, 1
++  %icmp = icmp eq i64 %phi3, %ashr
++  br label %loop2.header
++
++loop1.header:                                              ; preds = %loop1.latch, %loop2.header
++  %phi6 = phi i64 [ 0, %loop1.latch ], [ 1, %loop2.header ]
++  br i1 false, label %loop1.latch, label %funcexit
++
++loop1.latch:                                              ; preds = %loop1.header
++  br i1 false, label %funcexit, label %loop1.header
++}
++
++define i32 @regression4() {
++; CHECK-LABEL: define i32 @regression4() {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br label %[[WHILE_COND_OUTER:.*]]
++; CHECK:       [[WHILE_COND_OUTER_LOOPEXIT:.*]]:
++; CHECK-NEXT:    br label %[[WHILE_COND_OUTER]]
++; CHECK:       [[WHILE_COND_OUTER]]:
++; CHECK-NEXT:    br label %[[WHILE_COND:.*]]
++; CHECK:       [[WHILE_COND]]:
++; CHECK-NEXT:    [[PHI3:%.*]] = phi i32 [ 0, %[[WHILE_COND_OUTER]] ], [ [[ADD5:%.*]], %[[WHILE_COND]] ]
++; CHECK-NEXT:    [[ADD5]] = add i32 [[PHI3]], 1
++; CHECK-NEXT:    br i1 false, label %[[WHILE_COND]], label %[[FOR_BODY_PREHEADER:.*]]
++; CHECK:       [[FOR_BODY_PREHEADER]]:
++; CHECK-NEXT:    [[PHI3_LCSSA1:%.*]] = phi i32 [ [[PHI3]], %[[WHILE_COND]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = sub i32 0, [[PHI3_LCSSA1]]
++; CHECK-NEXT:    br label %[[FOR_BODY:.*]]
++; CHECK:       [[FOR_BODY]]:
++; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[TMP0]], %[[FOR_BODY_PREHEADER]] ], [ [[LSR_IV_NEXT:%.*]], %[[FOR_BODY]] ]
++; CHECK-NEXT:    [[ICMP:%.*]] = icmp eq i32 [[LSR_IV]], 0
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], -1
++; CHECK-NEXT:    br i1 false, label %[[WHILE_COND_OUTER_LOOPEXIT]], label %[[FOR_BODY]]
++;
++entry:
++  br label %while.cond.outer
++
++while.cond.outer:                                              ; preds = %for.body, %entry
++  %phi = phi i32 [ 0, %entry ], [ %add, %for.body ]
++  br label %while.cond
++
++while.cond:                                              ; preds = %while.cond, %while.cond.outer
++  %phi3 = phi i32 [ 0, %while.cond.outer ], [ %add5, %while.cond ]
++  %phi4 = phi i32 [ 0, %while.cond.outer ], [ %add, %while.cond ]
++  %add = add i32 %phi4, 1
++  %add5 = add i32 %phi3, 1
++  br i1 false, label %while.cond, label %for.body
++
++for.body:                                              ; preds = %for.body, %while.cond
++  %phi7 = phi i32 [ %add8, %for.body ], [ 0, %while.cond ]
++  %add8 = add i32 %phi7, 1
++  %sub = sub i32 0, %phi3
++  %icmp = icmp eq i32 %phi7, %sub
++  br i1 false, label %while.cond.outer, label %for.body
++}
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-expand-quadratic.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-expand-quadratic.ll
+index 91927410ffc77..d0e799b1b0f1f 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-expand-quadratic.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-expand-quadratic.ll
+@@ -24,20 +24,20 @@ define i32 @test2(i32 %a, i32 %b) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[TEST2_LOOP:%.*]]
+ ; CHECK:       test2.loop:
+-; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i32 [ [[LSR_IV_NEXT2:%.*]], [[TEST2_LOOP]] ], [ -16777216, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[TEST2_LOOP]] ], [ 1, [[ENTRY]] ]
++; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[TEST2_LOOP]] ], [ 1, [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    [[INC1115_US:%.*]] = phi i32 [ 0, [[ENTRY]] ], [ [[INC11_US:%.*]], [[TEST2_LOOP]] ]
+ ; CHECK-NEXT:    [[INC11_US]] = add nsw i32 [[INC1115_US]], 1
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i32 [[LSR_IV]], -1
+-; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add nsw i32 [[LSR_IV1]], 16777216
+ ; CHECK-NEXT:    [[CMP_US:%.*]] = icmp slt i32 [[INC11_US]], 2
+ ; CHECK-NEXT:    br i1 [[CMP_US]], label [[TEST2_LOOP]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
+-; CHECK-NEXT:    [[TOBOOL_US:%.*]] = icmp eq i32 [[LSR_IV_NEXT]], 0
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA3:%.*]] = phi i32 [ [[LSR_IV_NEXT]], [[TEST2_LOOP]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], [[TEST2_LOOP]] ]
++; CHECK-NEXT:    [[TOBOOL_US:%.*]] = icmp eq i32 [[LSR_IV_NEXT_LCSSA3]], 0
+ ; CHECK-NEXT:    [[SUB_US:%.*]] = select i1 [[TOBOOL_US]], i32 [[A:%.*]], i32 [[B:%.*]]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sub i32 0, [[SUB_US]]
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[TMP0]], [[LSR_IV_NEXT]]
+-; CHECK-NEXT:    [[SEXT_US:%.*]] = mul i32 [[LSR_IV_NEXT2]], [[TMP1]]
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[TMP0]], [[LSR_IV_NEXT_LCSSA]]
++; CHECK-NEXT:    [[SEXT_US:%.*]] = mul i32 16777216, [[TMP1]]
+ ; CHECK-NEXT:    [[F:%.*]] = ashr i32 [[SEXT_US]], 24
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       exit:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-overflow.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-overflow.ll
+index 0b71d92bf2a09..84567469ed0cc 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-overflow.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/lsr-overflow.ll
+@@ -17,7 +17,7 @@ define void @overflow1(i64 %a) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 [[TMP5]], label [[BB1]], label [[BB7:%.*]]
+ ; CHECK:       bb7:
+-; CHECK-NEXT:    [[TMP9:%.*]] = and i64 [[LSR_IV_NEXT]], 1
++; CHECK-NEXT:    [[TMP9:%.*]] = and i64 -9223372036854775808, 1
+ ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq i64 [[TMP9]], 0
+ ; CHECK-NEXT:    unreachable
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/missing-phi-operand-update.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/missing-phi-operand-update.ll
+index ae24da06415cc..59a1eef9e911c 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/missing-phi-operand-update.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/missing-phi-operand-update.ll
+@@ -1,4 +1,4 @@
+-; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 3
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --prefix-filecheck-ir-name LCSSA --version 3
+ ; PR41445: This test checks the case when LSR split critical edge
+ ; and phi node has other pending fixup operands
+ 
+@@ -18,28 +18,30 @@ define i32 @foo(ptr %A, i32 %t) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_32:%.*]]
+ ; CHECK:       loop.exit.loopexitsplitsplitsplit:
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV1:%.*]], [[IFMERGE_34:%.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[LSR_IV]], -1
++; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH_PH_PH_PH:%.*]] = phi i64 [ [[TMP2:%.*]], [[IFMERGE_34:%.*]] ]
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXITSPLITSPLIT:%.*]]
+ ; CHECK:       ifmerge.38.loop.exit.loopexitsplitsplit_crit_edge:
+-; CHECK-NEXT:    [[LSR_IV_LCSSA10:%.*]] = phi i64 [ [[LSR_IV1]], [[IFMERGE_38:%.*]] ]
++; CHECK-NEXT:    [[LSR_IV_LCSSA19:%.*]] = phi i64 [ [[LSR_IV:%.*]], [[IFMERGE_38:%.*]] ]
++; CHECK-NEXT:    [[SPLIT16:%.*]] = phi i64 [ [[LCSSATMP3:%.*]], [[IFMERGE_38]] ]
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXITSPLITSPLIT]]
+ ; CHECK:       loop.exit.loopexitsplitsplit:
+-; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH_PH_PH:%.*]] = phi i64 [ [[LSR_IV_LCSSA10]], [[IFMERGE_38_LOOP_EXIT_LOOPEXITSPLITSPLIT_CRIT_EDGE:%.*]] ], [ [[TMP0]], [[LOOP_EXIT_LOOPEXITSPLITSPLITSPLIT:%.*]] ]
++; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH_PH_PH:%.*]] = phi i64 [ [[LSR_IV_LCSSA19]], [[IFMERGE_38_LOOP_EXIT_LOOPEXITSPLITSPLIT_CRIT_EDGE:%.*]] ], [ [[INDVARS_IV_LCSSA_PH_PH_PH_PH]], [[LOOP_EXIT_LOOPEXITSPLITSPLITSPLIT:%.*]] ]
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXITSPLIT:%.*]]
+ ; CHECK:       ifmerge.42.loop.exit.loopexitsplit_crit_edge:
+-; CHECK-NEXT:    [[LSR_IV_LCSSA11:%.*]] = phi i64 [ [[LSR_IV1]], [[IFMERGE_42:%.*]] ]
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[LSR_IV_LCSSA11]], 1
++; CHECK-NEXT:    [[LSR_IV_LCSSA14:%.*]] = phi i64 [ [[LSR_IV]], [[IFMERGE_42:%.*]] ]
++; CHECK-NEXT:    [[SPLIT11:%.*]] = phi i64 [ [[LCSSATMP4:%.*]], [[IFMERGE_42]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[LSR_IV_LCSSA14]], 1
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXITSPLIT]]
+ ; CHECK:       loop.exit.loopexitsplit:
+-; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH_PH:%.*]] = phi i64 [ [[TMP1]], [[IFMERGE_42_LOOP_EXIT_LOOPEXITSPLIT_CRIT_EDGE:%.*]] ], [ [[INDVARS_IV_LCSSA_PH_PH_PH]], [[LOOP_EXIT_LOOPEXITSPLITSPLIT]] ]
++; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH_PH:%.*]] = phi i64 [ [[TMP0]], [[IFMERGE_42_LOOP_EXIT_LOOPEXITSPLIT_CRIT_EDGE:%.*]] ], [ [[INDVARS_IV_LCSSA_PH_PH_PH]], [[LOOP_EXIT_LOOPEXITSPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXIT:%.*]]
+ ; CHECK:       then.34.loop.exit.loopexit_crit_edge:
+-; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i64 [ [[LSR_IV1]], [[THEN_34:%.*]] ]
+-; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[LSR_IV_LCSSA]], -2
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i64 [ [[LSR_IV]], [[THEN_34:%.*]] ]
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i64 [ [[LCSSATMP1:%.*]], [[THEN_34]] ]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[LSR_IV_LCSSA]], -2
+ ; CHECK-NEXT:    br label [[LOOP_EXIT_LOOPEXIT]]
+ ; CHECK:       loop.exit.loopexit:
+-; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH:%.*]] = phi i64 [ [[TMP2]], [[THEN_34_LOOP_EXIT_LOOPEXIT_CRIT_EDGE:%.*]] ], [ [[INDVARS_IV_LCSSA_PH_PH]], [[LOOP_EXIT_LOOPEXITSPLIT]] ]
++; CHECK-NEXT:    [[INDVARS_IV_LCSSA_PH:%.*]] = phi i64 [ [[TMP1]], [[THEN_34_LOOP_EXIT_LOOPEXIT_CRIT_EDGE:%.*]] ], [ [[INDVARS_IV_LCSSA_PH_PH]], [[LOOP_EXIT_LOOPEXITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[LOOP_EXIT:%.*]]
+ ; CHECK:       loop.exit:
+ ; CHECK-NEXT:    [[INDVARS_IV_LCSSA:%.*]] = phi i64 [ 48, [[THEN_8:%.*]] ], [ 49, [[THEN_8_1:%.*]] ], [ [[INDVARS_IV_LCSSA_PH]], [[LOOP_EXIT_LOOPEXIT]] ]
+@@ -49,50 +51,54 @@ define i32 @foo(ptr %A, i32 %t) {
+ ; CHECK-NEXT:    [[I_0_LCSSA:%.*]] = phi i32 [ [[TMP]], [[LOOP_EXIT]] ], [ 50, [[THEN_8_1]] ], [ 50, [[IFMERGE_8:%.*]] ]
+ ; CHECK-NEXT:    ret i32 [[I_0_LCSSA]]
+ ; CHECK:       loop.32:
+-; CHECK-NEXT:    [[LSR_IV1]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[IFMERGE_46:%.*]] ], [ 2, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    [[LSR_IV]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[IFMERGE_46:%.*]] ], [ 2, [[ENTRY:%.*]] ]
+ ; CHECK-NEXT:    [[I1_I64_0:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[NEXTIVLOOP_32:%.*]], [[IFMERGE_46]] ]
+-; CHECK-NEXT:    [[TMP3:%.*]] = shl nuw nsw i64 [[LSR_IV1]], 2
+-; CHECK-NEXT:    [[SCEVGEP7:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP3]]
+-; CHECK-NEXT:    [[SCEVGEP8:%.*]] = getelementptr i8, ptr [[SCEVGEP7]], i64 -4
+-; CHECK-NEXT:    [[GEPLOAD:%.*]] = load i32, ptr [[SCEVGEP8]], align 4
++; CHECK-NEXT:    [[LCSSATMP1]] = shl i64 [[I1_I64_0]], 2
++; CHECK-NEXT:    [[TMP2]] = add i64 [[LSR_IV]], -1
++; CHECK-NEXT:    [[TMP3:%.*]] = shl nuw nsw i64 [[LSR_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP9:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP3]]
++; CHECK-NEXT:    [[SCEVGEP10:%.*]] = getelementptr i8, ptr [[SCEVGEP9]], i64 -4
++; CHECK-NEXT:    [[GEPLOAD:%.*]] = load i32, ptr [[SCEVGEP10]], align 4
+ ; CHECK-NEXT:    [[CMP_34:%.*]] = icmp sgt i32 [[GEPLOAD]], [[T]]
+ ; CHECK-NEXT:    br i1 [[CMP_34]], label [[THEN_34]], label [[IFMERGE_34]]
+ ; CHECK:       then.34:
+-; CHECK-NEXT:    [[TMP4:%.*]] = shl nuw nsw i64 [[LSR_IV1]], 2
+-; CHECK-NEXT:    [[SCEVGEP5:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP4]]
+-; CHECK-NEXT:    [[SCEVGEP6:%.*]] = getelementptr i8, ptr [[SCEVGEP5]], i64 -8
+-; CHECK-NEXT:    [[GEPLOAD18:%.*]] = load i32, ptr [[SCEVGEP6]], align 4
++; CHECK-NEXT:    [[TMP4:%.*]] = shl nuw nsw i64 [[LSR_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP7:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP4]]
++; CHECK-NEXT:    [[SCEVGEP8:%.*]] = getelementptr i8, ptr [[SCEVGEP7]], i64 -8
++; CHECK-NEXT:    [[GEPLOAD18:%.*]] = load i32, ptr [[SCEVGEP8]], align 4
+ ; CHECK-NEXT:    [[CMP_35:%.*]] = icmp slt i32 [[GEPLOAD18]], [[T]]
+ ; CHECK-NEXT:    br i1 [[CMP_35]], label [[THEN_34_LOOP_EXIT_LOOPEXIT_CRIT_EDGE]], label [[IFMERGE_34]]
+ ; CHECK:       ifmerge.34:
+-; CHECK-NEXT:    [[TMP5:%.*]] = shl nuw nsw i64 [[LSR_IV1]], 2
+-; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP5]]
+-; CHECK-NEXT:    [[GEPLOAD20:%.*]] = load i32, ptr [[SCEVGEP4]], align 4
++; CHECK-NEXT:    [[LCSSATMP3]] = or disjoint i64 [[LCSSATMP1]], 2
++; CHECK-NEXT:    [[TMP5:%.*]] = shl nuw nsw i64 [[LSR_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP6:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP5]]
++; CHECK-NEXT:    [[GEPLOAD20:%.*]] = load i32, ptr [[SCEVGEP6]], align 4
+ ; CHECK-NEXT:    [[CMP_38:%.*]] = icmp sgt i32 [[GEPLOAD20]], [[T]]
+ ; CHECK-NEXT:    [[CMP_39:%.*]] = icmp slt i32 [[GEPLOAD]], [[T]]
+ ; CHECK-NEXT:    [[OR_COND:%.*]] = and i1 [[CMP_38]], [[CMP_39]]
+ ; CHECK-NEXT:    br i1 [[OR_COND]], label [[LOOP_EXIT_LOOPEXITSPLITSPLITSPLIT]], label [[IFMERGE_38]]
+ ; CHECK:       ifmerge.38:
+-; CHECK-NEXT:    [[TMP6:%.*]] = shl nuw nsw i64 [[LSR_IV1]], 2
+-; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP6]]
+-; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[SCEVGEP2]], i64 4
+-; CHECK-NEXT:    [[GEPLOAD24:%.*]] = load i32, ptr [[SCEVGEP3]], align 4
++; CHECK-NEXT:    [[LCSSATMP4]] = or disjoint i64 [[LCSSATMP1]], 3
++; CHECK-NEXT:    [[TMP6:%.*]] = shl nuw nsw i64 [[LSR_IV]], 2
++; CHECK-NEXT:    [[SCEVGEP4:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP6]]
++; CHECK-NEXT:    [[SCEVGEP5:%.*]] = getelementptr i8, ptr [[SCEVGEP4]], i64 4
++; CHECK-NEXT:    [[GEPLOAD24:%.*]] = load i32, ptr [[SCEVGEP5]], align 4
+ ; CHECK-NEXT:    [[CMP_42:%.*]] = icmp sgt i32 [[GEPLOAD24]], [[T]]
+ ; CHECK-NEXT:    [[CMP_43:%.*]] = icmp slt i32 [[GEPLOAD20]], [[T]]
+ ; CHECK-NEXT:    [[OR_COND55:%.*]] = and i1 [[CMP_42]], [[CMP_43]]
+ ; CHECK-NEXT:    br i1 [[OR_COND55]], label [[IFMERGE_38_LOOP_EXIT_LOOPEXITSPLITSPLIT_CRIT_EDGE]], label [[IFMERGE_42]]
+ ; CHECK:       ifmerge.42:
+-; CHECK-NEXT:    [[TMP7:%.*]] = shl nuw nsw i64 [[LSR_IV1]], 2
++; CHECK-NEXT:    [[TMP7:%.*]] = shl nuw nsw i64 [[LSR_IV]], 2
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[A]], i64 [[TMP7]]
+-; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 8
+-; CHECK-NEXT:    [[GEPLOAD28:%.*]] = load i32, ptr [[SCEVGEP1]], align 4
++; CHECK-NEXT:    [[SCEVGEP3:%.*]] = getelementptr i8, ptr [[SCEVGEP]], i64 8
++; CHECK-NEXT:    [[GEPLOAD28:%.*]] = load i32, ptr [[SCEVGEP3]], align 4
+ ; CHECK-NEXT:    [[CMP_46:%.*]] = icmp sgt i32 [[GEPLOAD28]], [[T]]
+ ; CHECK-NEXT:    [[CMP_47:%.*]] = icmp slt i32 [[GEPLOAD24]], [[T]]
+ ; CHECK-NEXT:    [[OR_COND56:%.*]] = and i1 [[CMP_46]], [[CMP_47]]
+ ; CHECK-NEXT:    br i1 [[OR_COND56]], label [[IFMERGE_42_LOOP_EXIT_LOOPEXITSPLIT_CRIT_EDGE]], label [[IFMERGE_46]]
+ ; CHECK:       ifmerge.46:
+ ; CHECK-NEXT:    [[NEXTIVLOOP_32]] = add nuw nsw i64 [[I1_I64_0]], 1
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw nsw i64 [[LSR_IV1]], 4
++; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw nsw i64 [[LSR_IV]], 4
+ ; CHECK-NEXT:    [[CONDLOOP_32:%.*]] = icmp ult i64 [[NEXTIVLOOP_32]], 12
+ ; CHECK-NEXT:    br i1 [[CONDLOOP_32]], label [[LOOP_32]], label [[LOOP_25:%.*]]
+ ; CHECK:       loop.25:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/nested-ptr-addrec.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/nested-ptr-addrec.ll
+index a500cdc57298f..b664c6fa06b70 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/nested-ptr-addrec.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/nested-ptr-addrec.ll
+@@ -23,7 +23,8 @@ define void @test() {
+ ; CHECK-NEXT:    [[SCEVGEP2]] = getelementptr i8, ptr [[LSR_IV1]], i64 8
+ ; CHECK-NEXT:    br i1 false, label [[LOOP2_HEADER]], label [[LOOP2_CONT:%.*]]
+ ; CHECK:       loop2.cont:
+-; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[SCEVGEP2]], align 1
++; CHECK-NEXT:    [[SCEVGEP2_LCSSA:%.*]] = phi ptr [ [[SCEVGEP2]], [[LOOP2_HEADER]] ]
++; CHECK-NEXT:    [[V:%.*]] = load i8, ptr [[SCEVGEP2_LCSSA]], align 1
+ ; CHECK-NEXT:    [[C:%.*]] = icmp ne i8 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[C]], label [[LOOP_EXIT]], label [[LOOP_LATCH]]
+ ; CHECK:       loop.latch:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/normalization-during-scev-expansion.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/normalization-during-scev-expansion.ll
+index 3ee0833bc1300..fa77f9066a09a 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/normalization-during-scev-expansion.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/normalization-during-scev-expansion.ll
+@@ -7,8 +7,8 @@ target triple = "x86_64-apple-macos"
+ declare i1 @cond()
+ 
+ define ptr @test(ptr %dst, i64 %v4, i64 %v5, i64 %v6, i64 %v7)  {
+-; CHECK-LABEL: define ptr @test
+-; CHECK-SAME: (ptr [[DST:%.*]], i64 [[V4:%.*]], i64 [[V5:%.*]], i64 [[V6:%.*]], i64 [[V7:%.*]]) {
++; CHECK-LABEL: define ptr @test(
++; CHECK-SAME: ptr [[DST:%.*]], i64 [[V4:%.*]], i64 [[V5:%.*]], i64 [[V6:%.*]], i64 [[V7:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = mul i64 [[V5]], [[V4]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 4
+@@ -64,8 +64,8 @@ exit:
+ }
+ 
+ define i32 @test_pr63678(i1 %c) {
+-; CHECK-LABEL: define i32 @test_pr63678
+-; CHECK-SAME: (i1 [[C:%.*]]) {
++; CHECK-LABEL: define i32 @test_pr63678(
++; CHECK-SAME: i1 [[C:%.*]]) {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP_1_PREHEADER:%.*]]
+ ; CHECK:       bb:
+@@ -81,201 +81,234 @@ define i32 @test_pr63678(i1 %c) {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_1_LOOP_2_CRIT_EDGE:%.*]], label [[LOOP_1]]
+ ; CHECK:       loop.1.loop.2_crit_edge:
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i32 [ [[LSR_IV]], [[LOOP_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2:%.*]]
+ ; CHECK:       loop.2:
+-; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i32 [ [[LSR_IV_NEXT2:%.*]], [[LOOP_2]] ], [ [[LSR_IV]], [[LOOP_1_LOOP_2_CRIT_EDGE]] ]
++; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i32 [ [[LSR_IV_NEXT2:%.*]], [[LOOP_2]] ], [ [[LSR_IV_LCSSA]], [[LOOP_1_LOOP_2_CRIT_EDGE]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add i32 [[LSR_IV1]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_3_PREHEADER:%.*]], label [[LOOP_2]]
+ ; CHECK:       loop.3.preheader:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA:%.*]] = phi i32 [ [[LSR_IV1]], [[LOOP_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_3:%.*]]
+ ; CHECK:       loop.3:
+-; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i32 [ [[LSR_IV1]], [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT4:%.*]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i32 [ [[LSR_IV1_LCSSA]], [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT4:%.*]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT4]] = add i32 [[LSR_IV3]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_4_PREHEADER:%.*]], label [[LOOP_3]]
+ ; CHECK:       loop.4.preheader:
++; CHECK-NEXT:    [[LSR_IV3_LCSSA:%.*]] = phi i32 [ [[LSR_IV3]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_4:%.*]]
+ ; CHECK:       loop.4:
+-; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi i32 [ [[LSR_IV3]], [[LOOP_4_PREHEADER]] ], [ [[LSR_IV_NEXT6:%.*]], [[LOOP_4]] ]
++; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi i32 [ [[LSR_IV3_LCSSA]], [[LOOP_4_PREHEADER]] ], [ [[LSR_IV_NEXT6:%.*]], [[LOOP_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT6]] = add i32 [[LSR_IV5]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_5_PREHEADER:%.*]], label [[LOOP_4]]
+ ; CHECK:       loop.5.preheader:
++; CHECK-NEXT:    [[LSR_IV5_LCSSA:%.*]] = phi i32 [ [[LSR_IV5]], [[LOOP_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_5:%.*]]
+ ; CHECK:       loop.5:
+-; CHECK-NEXT:    [[LSR_IV7:%.*]] = phi i32 [ [[LSR_IV5]], [[LOOP_5_PREHEADER]] ], [ [[LSR_IV_NEXT8:%.*]], [[LOOP_5]] ]
++; CHECK-NEXT:    [[LSR_IV7:%.*]] = phi i32 [ [[LSR_IV5_LCSSA]], [[LOOP_5_PREHEADER]] ], [ [[LSR_IV_NEXT8:%.*]], [[LOOP_5]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT8]] = add i32 [[LSR_IV7]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_6_PREHEADER:%.*]], label [[LOOP_5]]
+ ; CHECK:       loop.6.preheader:
++; CHECK-NEXT:    [[LSR_IV7_LCSSA:%.*]] = phi i32 [ [[LSR_IV7]], [[LOOP_5]] ]
+ ; CHECK-NEXT:    br label [[LOOP_6:%.*]]
+ ; CHECK:       loop.6:
+-; CHECK-NEXT:    [[LSR_IV9:%.*]] = phi i32 [ [[LSR_IV7]], [[LOOP_6_PREHEADER]] ], [ [[LSR_IV_NEXT10:%.*]], [[LOOP_6]] ]
++; CHECK-NEXT:    [[LSR_IV9:%.*]] = phi i32 [ [[LSR_IV7_LCSSA]], [[LOOP_6_PREHEADER]] ], [ [[LSR_IV_NEXT10:%.*]], [[LOOP_6]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT10]] = add i32 [[LSR_IV9]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_135_PREHEADER:%.*]], label [[LOOP_6]]
+ ; CHECK:       loop.135.preheader:
++; CHECK-NEXT:    [[LSR_IV9_LCSSA:%.*]] = phi i32 [ [[LSR_IV9]], [[LOOP_6]] ]
+ ; CHECK-NEXT:    br label [[LOOP_135:%.*]]
+ ; CHECK:       loop.135:
+-; CHECK-NEXT:    [[LSR_IV11:%.*]] = phi i32 [ [[LSR_IV9]], [[LOOP_135_PREHEADER]] ], [ [[LSR_IV_NEXT12:%.*]], [[LOOP_135]] ]
++; CHECK-NEXT:    [[LSR_IV11:%.*]] = phi i32 [ [[LSR_IV9_LCSSA]], [[LOOP_135_PREHEADER]] ], [ [[LSR_IV_NEXT12:%.*]], [[LOOP_135]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT12]] = add i32 [[LSR_IV11]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_1_1_PREHEADER:%.*]], label [[LOOP_135]]
+ ; CHECK:       loop.1.1.preheader:
++; CHECK-NEXT:    [[LSR_IV11_LCSSA:%.*]] = phi i32 [ [[LSR_IV11]], [[LOOP_135]] ]
+ ; CHECK-NEXT:    br label [[LOOP_1_1:%.*]]
+ ; CHECK:       loop.1.1:
+-; CHECK-NEXT:    [[LSR_IV13:%.*]] = phi i32 [ [[LSR_IV11]], [[LOOP_1_1_PREHEADER]] ], [ [[LSR_IV_NEXT14:%.*]], [[LOOP_1_1]] ]
++; CHECK-NEXT:    [[LSR_IV13:%.*]] = phi i32 [ [[LSR_IV11_LCSSA]], [[LOOP_1_1_PREHEADER]] ], [ [[LSR_IV_NEXT14:%.*]], [[LOOP_1_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT14]] = add i32 [[LSR_IV13]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_2_1_PREHEADER:%.*]], label [[LOOP_1_1]]
+ ; CHECK:       loop.2.1.preheader:
++; CHECK-NEXT:    [[LSR_IV13_LCSSA:%.*]] = phi i32 [ [[LSR_IV13]], [[LOOP_1_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2_1:%.*]]
+ ; CHECK:       loop.2.1:
+-; CHECK-NEXT:    [[LSR_IV15:%.*]] = phi i32 [ [[LSR_IV13]], [[LOOP_2_1_PREHEADER]] ], [ [[LSR_IV_NEXT16:%.*]], [[LOOP_2_1]] ]
++; CHECK-NEXT:    [[LSR_IV15:%.*]] = phi i32 [ [[LSR_IV13_LCSSA]], [[LOOP_2_1_PREHEADER]] ], [ [[LSR_IV_NEXT16:%.*]], [[LOOP_2_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT16]] = add i32 [[LSR_IV15]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_3_1_PREHEADER:%.*]], label [[LOOP_2_1]]
+ ; CHECK:       loop.3.1.preheader:
++; CHECK-NEXT:    [[LSR_IV15_LCSSA:%.*]] = phi i32 [ [[LSR_IV15]], [[LOOP_2_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_3_1:%.*]]
+ ; CHECK:       loop.3.1:
+-; CHECK-NEXT:    [[LSR_IV17:%.*]] = phi i32 [ [[LSR_IV15]], [[LOOP_3_1_PREHEADER]] ], [ [[LSR_IV_NEXT18:%.*]], [[LOOP_3_1]] ]
++; CHECK-NEXT:    [[LSR_IV17:%.*]] = phi i32 [ [[LSR_IV15_LCSSA]], [[LOOP_3_1_PREHEADER]] ], [ [[LSR_IV_NEXT18:%.*]], [[LOOP_3_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT18]] = add i32 [[LSR_IV17]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_4_1_PREHEADER:%.*]], label [[LOOP_3_1]]
+ ; CHECK:       loop.4.1.preheader:
++; CHECK-NEXT:    [[LSR_IV17_LCSSA:%.*]] = phi i32 [ [[LSR_IV17]], [[LOOP_3_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_4_1:%.*]]
+ ; CHECK:       loop.4.1:
+-; CHECK-NEXT:    [[LSR_IV19:%.*]] = phi i32 [ [[LSR_IV17]], [[LOOP_4_1_PREHEADER]] ], [ [[LSR_IV_NEXT20:%.*]], [[LOOP_4_1]] ]
++; CHECK-NEXT:    [[LSR_IV19:%.*]] = phi i32 [ [[LSR_IV17_LCSSA]], [[LOOP_4_1_PREHEADER]] ], [ [[LSR_IV_NEXT20:%.*]], [[LOOP_4_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT20]] = add i32 [[LSR_IV19]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_5_1_PREHEADER:%.*]], label [[LOOP_4_1]]
+ ; CHECK:       loop.5.1.preheader:
++; CHECK-NEXT:    [[LSR_IV19_LCSSA:%.*]] = phi i32 [ [[LSR_IV19]], [[LOOP_4_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_5_1:%.*]]
+ ; CHECK:       loop.5.1:
+-; CHECK-NEXT:    [[LSR_IV21:%.*]] = phi i32 [ [[LSR_IV19]], [[LOOP_5_1_PREHEADER]] ], [ [[LSR_IV_NEXT22:%.*]], [[LOOP_5_1]] ]
++; CHECK-NEXT:    [[LSR_IV21:%.*]] = phi i32 [ [[LSR_IV19_LCSSA]], [[LOOP_5_1_PREHEADER]] ], [ [[LSR_IV_NEXT22:%.*]], [[LOOP_5_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT22]] = add i32 [[LSR_IV21]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_6_1_PREHEADER:%.*]], label [[LOOP_5_1]]
+ ; CHECK:       loop.6.1.preheader:
++; CHECK-NEXT:    [[LSR_IV21_LCSSA:%.*]] = phi i32 [ [[LSR_IV21]], [[LOOP_5_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_6_1:%.*]]
+ ; CHECK:       loop.6.1:
+-; CHECK-NEXT:    [[LSR_IV23:%.*]] = phi i32 [ [[LSR_IV21]], [[LOOP_6_1_PREHEADER]] ], [ [[LSR_IV_NEXT24:%.*]], [[LOOP_6_1]] ]
++; CHECK-NEXT:    [[LSR_IV23:%.*]] = phi i32 [ [[LSR_IV21_LCSSA]], [[LOOP_6_1_PREHEADER]] ], [ [[LSR_IV_NEXT24:%.*]], [[LOOP_6_1]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT24]] = add i32 [[LSR_IV23]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_241_PREHEADER:%.*]], label [[LOOP_6_1]]
+ ; CHECK:       loop.241.preheader:
++; CHECK-NEXT:    [[LSR_IV23_LCSSA:%.*]] = phi i32 [ [[LSR_IV23]], [[LOOP_6_1]] ]
+ ; CHECK-NEXT:    br label [[LOOP_241:%.*]]
+ ; CHECK:       loop.241:
+-; CHECK-NEXT:    [[LSR_IV25:%.*]] = phi i32 [ [[LSR_IV23]], [[LOOP_241_PREHEADER]] ], [ [[LSR_IV_NEXT26:%.*]], [[LOOP_241]] ]
++; CHECK-NEXT:    [[LSR_IV25:%.*]] = phi i32 [ [[LSR_IV23_LCSSA]], [[LOOP_241_PREHEADER]] ], [ [[LSR_IV_NEXT26:%.*]], [[LOOP_241]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT26]] = add i32 [[LSR_IV25]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_1_2_PREHEADER:%.*]], label [[LOOP_241]]
+ ; CHECK:       loop.1.2.preheader:
++; CHECK-NEXT:    [[LSR_IV25_LCSSA:%.*]] = phi i32 [ [[LSR_IV25]], [[LOOP_241]] ]
+ ; CHECK-NEXT:    br label [[LOOP_1_2:%.*]]
+ ; CHECK:       loop.1.2:
+-; CHECK-NEXT:    [[LSR_IV27:%.*]] = phi i32 [ [[LSR_IV25]], [[LOOP_1_2_PREHEADER]] ], [ [[LSR_IV_NEXT28:%.*]], [[LOOP_1_2]] ]
++; CHECK-NEXT:    [[LSR_IV27:%.*]] = phi i32 [ [[LSR_IV25_LCSSA]], [[LOOP_1_2_PREHEADER]] ], [ [[LSR_IV_NEXT28:%.*]], [[LOOP_1_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT28]] = add i32 [[LSR_IV27]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_2_2_PREHEADER:%.*]], label [[LOOP_1_2]]
+ ; CHECK:       loop.2.2.preheader:
++; CHECK-NEXT:    [[LSR_IV27_LCSSA:%.*]] = phi i32 [ [[LSR_IV27]], [[LOOP_1_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2_2:%.*]]
+ ; CHECK:       loop.2.2:
+-; CHECK-NEXT:    [[LSR_IV29:%.*]] = phi i32 [ [[LSR_IV27]], [[LOOP_2_2_PREHEADER]] ], [ [[LSR_IV_NEXT30:%.*]], [[LOOP_2_2]] ]
++; CHECK-NEXT:    [[LSR_IV29:%.*]] = phi i32 [ [[LSR_IV27_LCSSA]], [[LOOP_2_2_PREHEADER]] ], [ [[LSR_IV_NEXT30:%.*]], [[LOOP_2_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT30]] = add i32 [[LSR_IV29]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_3_2_PREHEADER:%.*]], label [[LOOP_2_2]]
+ ; CHECK:       loop.3.2.preheader:
++; CHECK-NEXT:    [[LSR_IV29_LCSSA:%.*]] = phi i32 [ [[LSR_IV29]], [[LOOP_2_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_3_2:%.*]]
+ ; CHECK:       loop.3.2:
+-; CHECK-NEXT:    [[LSR_IV31:%.*]] = phi i32 [ [[LSR_IV29]], [[LOOP_3_2_PREHEADER]] ], [ [[LSR_IV_NEXT32:%.*]], [[LOOP_3_2]] ]
++; CHECK-NEXT:    [[LSR_IV31:%.*]] = phi i32 [ [[LSR_IV29_LCSSA]], [[LOOP_3_2_PREHEADER]] ], [ [[LSR_IV_NEXT32:%.*]], [[LOOP_3_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT32]] = add i32 [[LSR_IV31]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_4_2_PREHEADER:%.*]], label [[LOOP_3_2]]
+ ; CHECK:       loop.4.2.preheader:
++; CHECK-NEXT:    [[LSR_IV31_LCSSA:%.*]] = phi i32 [ [[LSR_IV31]], [[LOOP_3_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_4_2:%.*]]
+ ; CHECK:       loop.4.2:
+-; CHECK-NEXT:    [[LSR_IV33:%.*]] = phi i32 [ [[LSR_IV31]], [[LOOP_4_2_PREHEADER]] ], [ [[LSR_IV_NEXT34:%.*]], [[LOOP_4_2]] ]
++; CHECK-NEXT:    [[LSR_IV33:%.*]] = phi i32 [ [[LSR_IV31_LCSSA]], [[LOOP_4_2_PREHEADER]] ], [ [[LSR_IV_NEXT34:%.*]], [[LOOP_4_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT34]] = add i32 [[LSR_IV33]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_5_2_PREHEADER:%.*]], label [[LOOP_4_2]]
+ ; CHECK:       loop.5.2.preheader:
++; CHECK-NEXT:    [[LSR_IV33_LCSSA:%.*]] = phi i32 [ [[LSR_IV33]], [[LOOP_4_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_5_2:%.*]]
+ ; CHECK:       loop.5.2:
+-; CHECK-NEXT:    [[LSR_IV35:%.*]] = phi i32 [ [[LSR_IV33]], [[LOOP_5_2_PREHEADER]] ], [ [[LSR_IV_NEXT36:%.*]], [[LOOP_5_2]] ]
++; CHECK-NEXT:    [[LSR_IV35:%.*]] = phi i32 [ [[LSR_IV33_LCSSA]], [[LOOP_5_2_PREHEADER]] ], [ [[LSR_IV_NEXT36:%.*]], [[LOOP_5_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT36]] = add i32 [[LSR_IV35]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_6_2_PREHEADER:%.*]], label [[LOOP_5_2]]
+ ; CHECK:       loop.6.2.preheader:
++; CHECK-NEXT:    [[LSR_IV35_LCSSA:%.*]] = phi i32 [ [[LSR_IV35]], [[LOOP_5_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_6_2:%.*]]
+ ; CHECK:       loop.6.2:
+-; CHECK-NEXT:    [[LSR_IV37:%.*]] = phi i32 [ [[LSR_IV35]], [[LOOP_6_2_PREHEADER]] ], [ [[LSR_IV_NEXT38:%.*]], [[LOOP_6_2]] ]
++; CHECK-NEXT:    [[LSR_IV37:%.*]] = phi i32 [ [[LSR_IV35_LCSSA]], [[LOOP_6_2_PREHEADER]] ], [ [[LSR_IV_NEXT38:%.*]], [[LOOP_6_2]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT38]] = add i32 [[LSR_IV37]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_347_PREHEADER:%.*]], label [[LOOP_6_2]]
+ ; CHECK:       loop.347.preheader:
++; CHECK-NEXT:    [[LSR_IV37_LCSSA:%.*]] = phi i32 [ [[LSR_IV37]], [[LOOP_6_2]] ]
+ ; CHECK-NEXT:    br label [[LOOP_347:%.*]]
+ ; CHECK:       loop.347:
+-; CHECK-NEXT:    [[LSR_IV39:%.*]] = phi i32 [ [[LSR_IV37]], [[LOOP_347_PREHEADER]] ], [ [[LSR_IV_NEXT40:%.*]], [[LOOP_347]] ]
++; CHECK-NEXT:    [[LSR_IV39:%.*]] = phi i32 [ [[LSR_IV37_LCSSA]], [[LOOP_347_PREHEADER]] ], [ [[LSR_IV_NEXT40:%.*]], [[LOOP_347]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT40]] = add i32 [[LSR_IV39]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_1_3_PREHEADER:%.*]], label [[LOOP_347]]
+ ; CHECK:       loop.1.3.preheader:
++; CHECK-NEXT:    [[LSR_IV39_LCSSA:%.*]] = phi i32 [ [[LSR_IV39]], [[LOOP_347]] ]
+ ; CHECK-NEXT:    br label [[LOOP_1_3:%.*]]
+ ; CHECK:       loop.1.3:
+-; CHECK-NEXT:    [[LSR_IV41:%.*]] = phi i32 [ [[LSR_IV39]], [[LOOP_1_3_PREHEADER]] ], [ [[LSR_IV_NEXT42:%.*]], [[LOOP_1_3]] ]
++; CHECK-NEXT:    [[LSR_IV41:%.*]] = phi i32 [ [[LSR_IV39_LCSSA]], [[LOOP_1_3_PREHEADER]] ], [ [[LSR_IV_NEXT42:%.*]], [[LOOP_1_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT42]] = add i32 [[LSR_IV41]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_2_3_PREHEADER:%.*]], label [[LOOP_1_3]]
+ ; CHECK:       loop.2.3.preheader:
++; CHECK-NEXT:    [[LSR_IV41_LCSSA:%.*]] = phi i32 [ [[LSR_IV41]], [[LOOP_1_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2_3:%.*]]
+ ; CHECK:       loop.2.3:
+-; CHECK-NEXT:    [[LSR_IV43:%.*]] = phi i32 [ [[LSR_IV41]], [[LOOP_2_3_PREHEADER]] ], [ [[LSR_IV_NEXT44:%.*]], [[LOOP_2_3]] ]
++; CHECK-NEXT:    [[LSR_IV43:%.*]] = phi i32 [ [[LSR_IV41_LCSSA]], [[LOOP_2_3_PREHEADER]] ], [ [[LSR_IV_NEXT44:%.*]], [[LOOP_2_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT44]] = add i32 [[LSR_IV43]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_3_3_PREHEADER:%.*]], label [[LOOP_2_3]]
+ ; CHECK:       loop.3.3.preheader:
++; CHECK-NEXT:    [[LSR_IV43_LCSSA:%.*]] = phi i32 [ [[LSR_IV43]], [[LOOP_2_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_3_3:%.*]]
+ ; CHECK:       loop.3.3:
+-; CHECK-NEXT:    [[LSR_IV45:%.*]] = phi i32 [ [[LSR_IV43]], [[LOOP_3_3_PREHEADER]] ], [ [[LSR_IV_NEXT46:%.*]], [[LOOP_3_3]] ]
++; CHECK-NEXT:    [[LSR_IV45:%.*]] = phi i32 [ [[LSR_IV43_LCSSA]], [[LOOP_3_3_PREHEADER]] ], [ [[LSR_IV_NEXT46:%.*]], [[LOOP_3_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT46]] = add i32 [[LSR_IV45]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_4_3_PREHEADER:%.*]], label [[LOOP_3_3]]
+ ; CHECK:       loop.4.3.preheader:
++; CHECK-NEXT:    [[LSR_IV45_LCSSA:%.*]] = phi i32 [ [[LSR_IV45]], [[LOOP_3_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_4_3:%.*]]
+ ; CHECK:       loop.4.3:
+-; CHECK-NEXT:    [[LSR_IV47:%.*]] = phi i32 [ [[LSR_IV45]], [[LOOP_4_3_PREHEADER]] ], [ [[LSR_IV_NEXT48:%.*]], [[LOOP_4_3]] ]
++; CHECK-NEXT:    [[LSR_IV47:%.*]] = phi i32 [ [[LSR_IV45_LCSSA]], [[LOOP_4_3_PREHEADER]] ], [ [[LSR_IV_NEXT48:%.*]], [[LOOP_4_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT48]] = add i32 [[LSR_IV47]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_5_3_PREHEADER:%.*]], label [[LOOP_4_3]]
+ ; CHECK:       loop.5.3.preheader:
++; CHECK-NEXT:    [[LSR_IV47_LCSSA:%.*]] = phi i32 [ [[LSR_IV47]], [[LOOP_4_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_5_3:%.*]]
+ ; CHECK:       loop.5.3:
+-; CHECK-NEXT:    [[LSR_IV49:%.*]] = phi i32 [ [[LSR_IV47]], [[LOOP_5_3_PREHEADER]] ], [ [[LSR_IV_NEXT50:%.*]], [[LOOP_5_3]] ]
++; CHECK-NEXT:    [[LSR_IV49:%.*]] = phi i32 [ [[LSR_IV47_LCSSA]], [[LOOP_5_3_PREHEADER]] ], [ [[LSR_IV_NEXT50:%.*]], [[LOOP_5_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT50]] = add i32 [[LSR_IV49]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_6_3_PREHEADER:%.*]], label [[LOOP_5_3]]
+ ; CHECK:       loop.6.3.preheader:
++; CHECK-NEXT:    [[LSR_IV49_LCSSA:%.*]] = phi i32 [ [[LSR_IV49]], [[LOOP_5_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_6_3:%.*]]
+ ; CHECK:       loop.6.3:
+-; CHECK-NEXT:    [[LSR_IV51:%.*]] = phi i32 [ [[LSR_IV49]], [[LOOP_6_3_PREHEADER]] ], [ [[LSR_IV_NEXT52:%.*]], [[LOOP_6_3]] ]
++; CHECK-NEXT:    [[LSR_IV51:%.*]] = phi i32 [ [[LSR_IV49_LCSSA]], [[LOOP_6_3_PREHEADER]] ], [ [[LSR_IV_NEXT52:%.*]], [[LOOP_6_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT52]] = add i32 [[LSR_IV51]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_453_PREHEADER:%.*]], label [[LOOP_6_3]]
+ ; CHECK:       loop.453.preheader:
++; CHECK-NEXT:    [[LSR_IV51_LCSSA:%.*]] = phi i32 [ [[LSR_IV51]], [[LOOP_6_3]] ]
+ ; CHECK-NEXT:    br label [[LOOP_453:%.*]]
+ ; CHECK:       loop.453:
+-; CHECK-NEXT:    [[LSR_IV53:%.*]] = phi i32 [ [[LSR_IV51]], [[LOOP_453_PREHEADER]] ], [ [[LSR_IV_NEXT54:%.*]], [[LOOP_453]] ]
++; CHECK-NEXT:    [[LSR_IV53:%.*]] = phi i32 [ [[LSR_IV51_LCSSA]], [[LOOP_453_PREHEADER]] ], [ [[LSR_IV_NEXT54:%.*]], [[LOOP_453]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT54]] = add i32 [[LSR_IV53]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_1_4_PREHEADER:%.*]], label [[LOOP_453]]
+ ; CHECK:       loop.1.4.preheader:
++; CHECK-NEXT:    [[LSR_IV53_LCSSA:%.*]] = phi i32 [ [[LSR_IV53]], [[LOOP_453]] ]
+ ; CHECK-NEXT:    br label [[LOOP_1_4:%.*]]
+ ; CHECK:       loop.1.4:
+-; CHECK-NEXT:    [[LSR_IV55:%.*]] = phi i32 [ [[LSR_IV53]], [[LOOP_1_4_PREHEADER]] ], [ [[LSR_IV_NEXT56:%.*]], [[LOOP_1_4]] ]
++; CHECK-NEXT:    [[LSR_IV55:%.*]] = phi i32 [ [[LSR_IV53_LCSSA]], [[LOOP_1_4_PREHEADER]] ], [ [[LSR_IV_NEXT56:%.*]], [[LOOP_1_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT56]] = add i32 [[LSR_IV55]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_2_4_PREHEADER:%.*]], label [[LOOP_1_4]]
+ ; CHECK:       loop.2.4.preheader:
++; CHECK-NEXT:    [[LSR_IV55_LCSSA:%.*]] = phi i32 [ [[LSR_IV55]], [[LOOP_1_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_2_4:%.*]]
+ ; CHECK:       loop.2.4:
+-; CHECK-NEXT:    [[LSR_IV57:%.*]] = phi i32 [ [[LSR_IV55]], [[LOOP_2_4_PREHEADER]] ], [ [[LSR_IV_NEXT58:%.*]], [[LOOP_2_4]] ]
++; CHECK-NEXT:    [[LSR_IV57:%.*]] = phi i32 [ [[LSR_IV55_LCSSA]], [[LOOP_2_4_PREHEADER]] ], [ [[LSR_IV_NEXT58:%.*]], [[LOOP_2_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT58]] = add i32 [[LSR_IV57]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_3_4_PREHEADER:%.*]], label [[LOOP_2_4]]
+ ; CHECK:       loop.3.4.preheader:
++; CHECK-NEXT:    [[LSR_IV57_LCSSA:%.*]] = phi i32 [ [[LSR_IV57]], [[LOOP_2_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_3_4:%.*]]
+ ; CHECK:       loop.3.4:
+-; CHECK-NEXT:    [[LSR_IV59:%.*]] = phi i32 [ [[LSR_IV57]], [[LOOP_3_4_PREHEADER]] ], [ [[LSR_IV_NEXT60:%.*]], [[LOOP_3_4]] ]
++; CHECK-NEXT:    [[LSR_IV59:%.*]] = phi i32 [ [[LSR_IV57_LCSSA]], [[LOOP_3_4_PREHEADER]] ], [ [[LSR_IV_NEXT60:%.*]], [[LOOP_3_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT60]] = add i32 [[LSR_IV59]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_4_4_PREHEADER:%.*]], label [[LOOP_3_4]]
+ ; CHECK:       loop.4.4.preheader:
++; CHECK-NEXT:    [[LSR_IV59_LCSSA:%.*]] = phi i32 [ [[LSR_IV59]], [[LOOP_3_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_4_4:%.*]]
+ ; CHECK:       loop.4.4:
+-; CHECK-NEXT:    [[LSR_IV61:%.*]] = phi i32 [ [[LSR_IV59]], [[LOOP_4_4_PREHEADER]] ], [ [[LSR_IV_NEXT62:%.*]], [[LOOP_4_4]] ]
++; CHECK-NEXT:    [[LSR_IV61:%.*]] = phi i32 [ [[LSR_IV59_LCSSA]], [[LOOP_4_4_PREHEADER]] ], [ [[LSR_IV_NEXT62:%.*]], [[LOOP_4_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT62]] = add i32 [[LSR_IV61]], -1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_5_4_PREHEADER:%.*]], label [[LOOP_4_4]]
+ ; CHECK:       loop.5.4.preheader:
++; CHECK-NEXT:    [[LSR_IV61_LCSSA:%.*]] = phi i32 [ [[LSR_IV61]], [[LOOP_4_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_5_4:%.*]]
+ ; CHECK:       loop.5.4:
+-; CHECK-NEXT:    [[LSR_IV63:%.*]] = phi i32 [ [[LSR_IV61]], [[LOOP_5_4_PREHEADER]] ], [ [[LSR_IV_NEXT64:%.*]], [[LOOP_5_4]] ]
++; CHECK-NEXT:    [[LSR_IV63:%.*]] = phi i32 [ [[LSR_IV61_LCSSA]], [[LOOP_5_4_PREHEADER]] ], [ [[LSR_IV_NEXT64:%.*]], [[LOOP_5_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT64]] = add i32 [[LSR_IV63]], 1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP_6_4_PREHEADER:%.*]], label [[LOOP_5_4]]
+ ; CHECK:       loop.6.4.preheader:
++; CHECK-NEXT:    [[LSR_IV63_LCSSA:%.*]] = phi i32 [ [[LSR_IV63]], [[LOOP_5_4]] ]
+ ; CHECK-NEXT:    br label [[LOOP_6_4:%.*]]
+ ; CHECK:       loop.6.4:
+-; CHECK-NEXT:    [[LSR_IV65:%.*]] = phi i32 [ [[LSR_IV63]], [[LOOP_6_4_PREHEADER]] ], [ [[LSR_IV_NEXT66]], [[LOOP_6_4]] ]
++; CHECK-NEXT:    [[LSR_IV65:%.*]] = phi i32 [ [[LSR_IV63_LCSSA]], [[LOOP_6_4_PREHEADER]] ], [ [[LSR_IV_NEXT66]], [[LOOP_6_4]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT66]] = add i32 [[LSR_IV65]], 1
+ ; CHECK-NEXT:    br label [[LOOP_6_4]]
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
+index 1fec73972ec51..cc2ddf1a4fb57 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/postinc-iv-used-by-urem-and-udiv.ll
+@@ -22,7 +22,8 @@ define i32 @test_pr38847() {
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp sgt i8 [[LSR]], -1
+ ; CHECK-NEXT:    br i1 [[CMP2]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[TMP2:%.*]] = urem i32 [[LSR_IV_NEXT2]], 9
++; CHECK-NEXT:    [[LSR_IV_NEXT2_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT2]], [[LOOP]] ]
++; CHECK-NEXT:    [[TMP2:%.*]] = urem i32 [[LSR_IV_NEXT2_LCSSA]], 9
+ ; CHECK-NEXT:    ret i32 [[TMP2]]
+ ;
+ entry:
+@@ -47,21 +48,21 @@ define i64 @test_pr58039() {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[LOOP]] ], [ -4294967213, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV:%.*]] = phi i64 [ 0, [[ENTRY:%.*]] ], [ [[IV_NEXT:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP2:%.*]] = trunc i64 [[IV]] to i32
+ ; CHECK-NEXT:    call void @use.i32(i32 [[TMP2]])
+ ; CHECK-NEXT:    [[IV_NEXT]] = add nuw nsw i64 [[IV]], 1
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i64 [[LSR_IV]], 4294967295
+ ; CHECK-NEXT:    br i1 false, label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[TMP0:%.*]] = udiv i64 [[LSR_IV_NEXT]], 12
++; CHECK-NEXT:    [[IV_NEXT_LCSSA1:%.*]] = phi i64 [ [[IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i64 [ [[IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = udiv i64 82, 12
+ ; CHECK-NEXT:    [[TMP1:%.*]] = mul nuw nsw i64 [[TMP0]], 12
+-; CHECK-NEXT:    [[TMP2:%.*]] = add nuw nsw i64 [[TMP1]], 4294967221
+-; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[TMP2]], [[IV_NEXT]]
++; CHECK-NEXT:    [[TMP4:%.*]] = add nuw nsw i64 [[TMP1]], 4294967221
++; CHECK-NEXT:    [[TMP3:%.*]] = add i64 [[IV_NEXT_LCSSA1]], [[TMP4]]
+ ; CHECK-NEXT:    [[TMP:%.*]] = trunc i64 [[TMP3]] to i32
+ ; CHECK-NEXT:    [[CMP3:%.*]] = icmp ult i32 [[TMP]], 32
+-; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[CMP3]], i64 0, i64 [[IV_NEXT]]
++; CHECK-NEXT:    [[SPEC_SELECT:%.*]] = select i1 [[CMP3]], i64 0, i64 [[IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    ret i64 [[SPEC_SELECT]]
+ ;
+ entry:
+@@ -94,20 +95,19 @@ define i32 @test_pr62852() {
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[LOOP]] ], [ 2, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[IV_1:%.*]] = phi i32 [ 1, [[ENTRY]] ], [ [[DEC_1:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[TMP0:%.*]] = phi i64 [ 0, [[ENTRY]] ], [ [[INC_1:%.*]], [[LOOP]] ]
+ ; CHECK-NEXT:    [[INC_1]] = add nsw i64 [[TMP0]], 1
+-; CHECK-NEXT:    [[DEC_1]] = add nsw i32 [[IV_1]], -1
+ ; CHECK-NEXT:    call void @use(i64 [[TMP0]])
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i64 [[LSR_IV]], -1
+ ; CHECK-NEXT:    [[TMP:%.*]] = trunc i64 [[LSR_IV_NEXT]] to i32
+ ; CHECK-NEXT:    [[CMP6_1:%.*]] = icmp sgt i32 [[TMP]], 0
+ ; CHECK-NEXT:    br i1 [[CMP6_1]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT]])
+-; CHECK-NEXT:    [[LSR_IV_NEXT2:%.*]] = add i64 [[INC_1]], -1
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT_LCSSA]])
++; CHECK-NEXT:    [[LSR_IV_NEXT2:%.*]] = add i64 2, -1
+ ; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT2]])
+-; CHECK-NEXT:    [[TMP3:%.*]] = urem i32 [[DEC_1]], 53
++; CHECK-NEXT:    [[TMP3:%.*]] = urem i32 -1, 53
+ ; CHECK-NEXT:    ret i32 [[TMP3]]
+ ;
+ entry:
+@@ -148,31 +148,43 @@ define i64 @test_normalization_failure_in_any_extend(ptr %i, i64 %i1, i8 %i25) {
+ ; CHECK:       loop.3.preheader:
+ ; CHECK-NEXT:    br label [[LOOP_3:%.*]]
+ ; CHECK:       loop.3:
+-; CHECK-NEXT:    [[LSR_IV5:%.*]] = phi i64 [ 0, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT6:%.*]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV6:%.*]] = phi i64 [ 0, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT7:%.*]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i64 [ 2, [[LOOP_3_PREHEADER]] ], [ [[LSR_IV_NEXT2:%.*]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    [[IV_5:%.*]] = phi i32 [ [[IV_5_NEXT:%.*]], [[LOOP_3]] ], [ 1, [[LOOP_3_PREHEADER]] ]
+ ; CHECK-NEXT:    [[IV_5_NEXT]] = add nsw i32 [[IV_5]], -1
+ ; CHECK-NEXT:    [[LSR:%.*]] = trunc i32 [[IV_5_NEXT]] to i8
+ ; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add nsw i64 [[LSR_IV1]], -1
+ ; CHECK-NEXT:    [[TMP:%.*]] = trunc i64 [[LSR_IV_NEXT2]] to i32
+-; CHECK-NEXT:    [[LSR_IV_NEXT6]] = add nsw i64 [[LSR_IV5]], -1
++; CHECK-NEXT:    [[LSR_IV_NEXT7]] = add nsw i64 [[LSR_IV6]], -1
+ ; CHECK-NEXT:    [[C_2:%.*]] = icmp sgt i32 [[TMP]], 0
+ ; CHECK-NEXT:    br i1 [[C_2]], label [[LOOP_3]], label [[LOOP_1_LATCH]]
+ ; CHECK:       loop.1.latch:
++; CHECK-NEXT:    [[LSR_IV_NEXT7_LCSSA8:%.*]] = phi i64 [ [[LSR_IV_NEXT7]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT7_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT7]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[IV_5_NEXT_LCSSA5:%.*]] = phi i32 [ [[IV_5_NEXT]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[IV_5_NEXT_LCSSA:%.*]] = phi i32 [ [[IV_5_NEXT]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT4_LCSSA:%.*]] = phi i8 [ [[LSR]], [[LOOP_3]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT2_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT2]], [[LOOP_3]] ]
+ ; CHECK-NEXT:    [[IV_1_NEXT]] = add nuw nsw i32 [[IV_1]], 1
+-; CHECK-NEXT:    [[TMP1]] = sub i64 [[TMP0]], [[LSR_IV_NEXT6]]
++; CHECK-NEXT:    [[TMP1]] = sub i64 [[TMP0]], [[LSR_IV_NEXT7_LCSSA8]]
+ ; CHECK-NEXT:    [[C_3:%.*]] = icmp eq i32 [[IV_1_NEXT]], 8
+ ; CHECK-NEXT:    br i1 [[C_3]], label [[EXIT:%.*]], label [[LOOP_1_HEADER]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    call void @use.i32(i32 [[IV_5_NEXT]])
+-; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[IV_2]], 1
+-; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[TMP2]], [[LSR_IV_NEXT6]]
++; CHECK-NEXT:    [[LSR_IV_NEXT7_LCSSA_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT7_LCSSA]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    [[IV_2_LCSSA:%.*]] = phi i64 [ [[IV_2]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    [[IV_5_NEXT_LCSSA5_LCSSA:%.*]] = phi i32 [ [[IV_5_NEXT_LCSSA5]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    [[IV_5_NEXT_LCSSA_LCSSA:%.*]] = phi i32 [ [[IV_5_NEXT_LCSSA]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT4_LCSSA_LCSSA:%.*]] = phi i8 [ [[LSR_IV_NEXT4_LCSSA]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT2_LCSSA_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT2_LCSSA]], [[LOOP_1_LATCH]] ]
++; CHECK-NEXT:    call void @use.i32(i32 [[IV_5_NEXT_LCSSA_LCSSA]])
++; CHECK-NEXT:    [[TMP2:%.*]] = add i64 [[IV_2_LCSSA]], 1
++; CHECK-NEXT:    [[TMP3:%.*]] = sub i64 [[TMP2]], [[LSR_IV_NEXT7_LCSSA_LCSSA]]
+ ; CHECK-NEXT:    call void @use(i64 [[TMP3]])
+-; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT2]])
+-; CHECK-NEXT:    [[TMP4:%.*]] = udiv i32 [[IV_5_NEXT]], 53
++; CHECK-NEXT:    call void @use(i64 [[LSR_IV_NEXT2_LCSSA_LCSSA]])
++; CHECK-NEXT:    [[TMP4:%.*]] = udiv i32 [[IV_5_NEXT_LCSSA_LCSSA]], 53
+ ; CHECK-NEXT:    [[TMP5:%.*]] = trunc i32 [[TMP4]] to i8
+ ; CHECK-NEXT:    [[TMP6:%.*]] = mul i8 [[TMP5]], 53
+-; CHECK-NEXT:    [[TMP7:%.*]] = sub i8 [[LSR]], [[TMP6]]
++; CHECK-NEXT:    [[TMP7:%.*]] = sub i8 [[LSR_IV_NEXT4_LCSSA_LCSSA]], [[TMP6]]
+ ; CHECK-NEXT:    call void @use.i8(i8 [[TMP7]])
+ ; CHECK-NEXT:    [[I26:%.*]] = xor i8 [[I25]], 5
+ ; CHECK-NEXT:    [[I27:%.*]] = zext i8 [[I26]] to i64
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/pr40514.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/pr40514.ll
+index a444e31abbcb9..ebdca00b45e0e 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/pr40514.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/pr40514.ll
+@@ -9,13 +9,9 @@ define i32 @pluto(i32 %arg) #0 {
+ ; CHECK-NEXT:  bb:
+ ; CHECK-NEXT:    br label [[BB10:%.*]]
+ ; CHECK:       bb1:
+-; CHECK-NEXT:    store i64 [[LSR_IV_NEXT2:%.*]], ptr addrspace(1) undef, align 8
+-; CHECK-NEXT:    ret i32 [[LSR_IV_NEXT:%.*]]
++; CHECK-NEXT:    store i64 10, ptr addrspace(1) undef, align 8
++; CHECK-NEXT:    ret i32 undef
+ ; CHECK:       bb10:
+-; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i64 [ [[LSR_IV_NEXT2]], [[BB10]] ], [ 9, [[BB:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT]], [[BB10]] ], [ undef, [[BB]] ]
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
+-; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add nuw nsw i64 [[LSR_IV1]], 1
+ ; CHECK-NEXT:    br i1 true, label [[BB1:%.*]], label [[BB10]]
+ ;
+ 
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
+index 89523b4487d49..8dc0023ba79d7 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/pr46943.ll
+@@ -19,7 +19,8 @@ define i8 @drop_nuw() {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[IV_NEXT]], 0
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT]], -1
++; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i8 [ [[IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT_LCSSA]], -1
+ ; CHECK-NEXT:    ret i8 [[TMP0]]
+ ;
+ entry:
+@@ -49,7 +50,8 @@ define i8 @drop_nsw() {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[IV_NEXT]], 127
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT]], 1
++; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i8 [ [[IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT_LCSSA]], 1
+ ; CHECK-NEXT:    ret i8 [[TMP0]]
+ ;
+ entry:
+@@ -79,7 +81,8 @@ define i8 @already_postinc() {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i8 [[IV_NEXT]], -1
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[EXIT:%.*]], label [[LOOP]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT]], -1
++; CHECK-NEXT:    [[IV_NEXT_LCSSA:%.*]] = phi i8 [ [[IV_NEXT]], [[LOOP]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i8 [[IV_NEXT_LCSSA]], -1
+ ; CHECK-NEXT:    ret i8 [[TMP0]]
+ ;
+ entry:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/pr47776-do-not-apply-info-from-guards-to-addrecs.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/pr47776-do-not-apply-info-from-guards-to-addrecs.ll
+index 009136001c861..eaeb26a19bab2 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/pr47776-do-not-apply-info-from-guards-to-addrecs.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/pr47776-do-not-apply-info-from-guards-to-addrecs.ll
+@@ -19,38 +19,39 @@ define void @bar() personality ptr @zot {
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i64 [ 0, [[BB1]] ], [ [[TMP7:%.*]], [[BB5:%.*]] ]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = invoke i32 @fn()
+-; CHECK-NEXT:    to label [[BB5]] unwind label [[BB23_LOOPEXIT_SPLIT_LP:%.*]]
++; CHECK-NEXT:            to label [[BB5]] unwind label [[BB23_LOOPEXIT_SPLIT_LP:%.*]]
+ ; CHECK:       bb5:
+ ; CHECK-NEXT:    [[TMP6:%.*]] = load atomic i32, ptr addrspace(1) undef unordered, align 8
+ ; CHECK-NEXT:    [[TMP7]] = add nuw nsw i64 [[TMP3]], 1
+ ; CHECK-NEXT:    [[C_0:%.*]] = icmp ult i64 [[TMP7]], 10000
+ ; CHECK-NEXT:    br i1 [[C_0]], label [[BB2]], label [[BB8:%.*]]
+ ; CHECK:       bb8:
++; CHECK-NEXT:    [[TMP7_LCSSA:%.*]] = phi i64 [ [[TMP7]], [[BB5]] ]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = icmp ult i32 [[TMP]], [[TMP6]]
+ ; CHECK-NEXT:    br i1 [[TMP9]], label [[BB10:%.*]], label [[BB29:%.*]]
+ ; CHECK:       bb10:
+ ; CHECK-NEXT:    [[TMP11:%.*]] = mul i32 [[TMP]], -1
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sext i32 [[TMP11]] to i64
+ ; CHECK-NEXT:    [[TMP1:%.*]] = add nsw i64 [[TMP0]], 1
+-; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 [[TMP1]], [[TMP7]]
++; CHECK-NEXT:    [[TMP2:%.*]] = sub i64 [[TMP1]], [[TMP7_LCSSA]]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = trunc i64 [[TMP2]] to i32
+ ; CHECK-NEXT:    [[TMP16:%.*]] = and i32 [[TMP1]], 7
+ ; CHECK-NEXT:    br label [[BB17:%.*]]
+ ; CHECK:       bb17:
+ ; CHECK-NEXT:    [[TMP18:%.*]] = phi i32 [ [[TMP21:%.*]], [[BB20:%.*]] ], [ [[TMP16]], [[BB10]] ]
+ ; CHECK-NEXT:    [[TMP19:%.*]] = invoke i32 @fn()
+-; CHECK-NEXT:    to label [[BB20]] unwind label [[BB23_LOOPEXIT:%.*]]
++; CHECK-NEXT:            to label [[BB20]] unwind label [[BB23_LOOPEXIT:%.*]]
+ ; CHECK:       bb20:
+ ; CHECK-NEXT:    [[TMP21]] = add i32 [[TMP18]], -1
+ ; CHECK-NEXT:    [[TMP22:%.*]] = icmp eq i32 [[TMP21]], 0
+ ; CHECK-NEXT:    br i1 [[TMP22]], label [[BB1_LOOPEXIT]], label [[BB17]]
+ ; CHECK:       bb23.loopexit:
+ ; CHECK-NEXT:    [[LPAD_LOOPEXIT:%.*]] = landingpad token
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    br label [[BB23:%.*]]
+ ; CHECK:       bb23.loopexit.split-lp:
+ ; CHECK-NEXT:    [[LPAD_LOOPEXIT_SPLIT_LP:%.*]] = landingpad token
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    br label [[BB23]]
+ ; CHECK:       bb23:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/pr62660-normalization-failure.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/pr62660-normalization-failure.ll
+index e6ee9b467c5e0..f364c184a2c54 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/pr62660-normalization-failure.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/pr62660-normalization-failure.ll
+@@ -19,7 +19,7 @@ define i64 @test_pr62660() {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i32 [[SUB]], 8
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[LOOP]], label [[EXIT:%.*]]
+ ; CHECK:       exit:
+-; CHECK-NEXT:    [[LSR_IV_NEXT:%.*]] = add i64 [[LSR_IV_NEXT1]], -1
++; CHECK-NEXT:    [[LSR_IV_NEXT:%.*]] = add i64 1, -1
+ ; CHECK-NEXT:    ret i64 [[LSR_IV_NEXT]]
+ ;
+ entry:
+@@ -58,6 +58,7 @@ define void @pr63840_crash(i64 %sext974, i64 %sext982, i8 %x) {
+ ; CHECK-NEXT:    br i1 false, label [[BB992:%.*]], label [[BB983]]
+ ; CHECK:       bb992:
+ ; CHECK-NEXT:    [[LSR_IV_NEXT8_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT8]], [[BB983]] ]
++; CHECK-NEXT:    [[LSR_IV1_LCSSA:%.*]] = phi i64 [ [[LSR_IV1]], [[BB983]] ]
+ ; CHECK-NEXT:    [[SEXT1046:%.*]] = sext i8 [[X]] to i64
+ ; CHECK-NEXT:    br label [[BB1092:%.*]]
+ ; CHECK:       bb1051:
+@@ -70,21 +71,23 @@ define void @pr63840_crash(i64 %sext974, i64 %sext982, i8 %x) {
+ ; CHECK-NEXT:    store i64 [[ADD1061]], ptr addrspace(1) null, align 8
+ ; CHECK-NEXT:    br i1 false, label [[BB1059_BB1064_CRIT_EDGE:%.*]], label [[BB1092]]
+ ; CHECK:       bb1064split:
++; CHECK-NEXT:    [[PHI1065_PH:%.*]] = phi i64 [ 0, [[BB1053:%.*]] ]
+ ; CHECK-NEXT:    br label [[BB1064:%.*]]
+ ; CHECK:       bb1059.bb1064_crit_edge:
+ ; CHECK-NEXT:    [[LSR_IV_NEXT4_LCSSA6:%.*]] = phi i64 [ [[LSR_IV_NEXT4:%.*]], [[BB1059]] ]
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i64 [ [[ADD1061]], [[BB1059]] ]
+ ; CHECK-NEXT:    br label [[BB1064]]
+ ; CHECK:       bb1064:
+-; CHECK-NEXT:    [[PHI1065:%.*]] = phi i64 [ [[LSR_IV_NEXT4_LCSSA6]], [[BB1059_BB1064_CRIT_EDGE]] ], [ 0, [[BB1064SPLIT]] ]
++; CHECK-NEXT:    [[PHI1065:%.*]] = phi i64 [ [[LSR_IV_NEXT4_LCSSA6]], [[BB1059_BB1064_CRIT_EDGE]] ], [ [[PHI1065_PH]], [[BB1064SPLIT]] ]
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       bb1092:
+-; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i64 [ [[LSR_IV_NEXT4]], [[BB1059]] ], [ [[LSR_IV1]], [[BB992]] ]
++; CHECK-NEXT:    [[LSR_IV3:%.*]] = phi i64 [ [[LSR_IV_NEXT4]], [[BB1059]] ], [ [[LSR_IV1_LCSSA]], [[BB992]] ]
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[BB1059]] ], [ -1, [[BB992]] ]
+ ; CHECK-NEXT:    [[PHI1094]] = phi i64 [ [[LSR_IV_NEXT8_LCSSA]], [[BB992]] ], [ [[ADD1054]], [[BB1059]] ]
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nsw i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    [[LSR_IV_NEXT4]] = add i64 [[LSR_IV3]], [[SEXT1046]]
+ ; CHECK-NEXT:    [[ICMP1050:%.*]] = icmp ult i64 [[LSR_IV_NEXT]], 0
+-; CHECK-NEXT:    br i1 [[ICMP1050]], label [[BB1053:%.*]], label [[BB1051:%.*]]
++; CHECK-NEXT:    br i1 [[ICMP1050]], label [[BB1053]], label [[BB1051:%.*]]
+ ;
+ bb:
+   %sub975 = sub i64 0, %sext974
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/sibling-loops.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/sibling-loops.ll
+index 11c8ae61b3064..087e2b7dd1b40 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/sibling-loops.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/sibling-loops.ll
+@@ -22,17 +22,20 @@ define void @foo(i64 %N) local_unnamed_addr {
+ ; CHECK-NEXT:    [[TOBOOL:%.*]] = icmp eq i64 [[T0]], 0
+ ; CHECK-NEXT:    br i1 [[TOBOOL]], label [[DO_BODY2_PREHEADER:%.*]], label [[DO_BODY]]
+ ; CHECK:       do.body2.preheader:
++; CHECK-NEXT:    [[INC_LCSSA1:%.*]] = phi i64 [ [[INC]], [[DO_BODY]] ]
++; CHECK-NEXT:    [[INC_LCSSA:%.*]] = phi i64 [ [[INC]], [[DO_BODY]] ]
+ ; CHECK-NEXT:    br label [[DO_BODY2:%.*]]
+ ; CHECK:       do.body2:
+ ; CHECK-NEXT:    [[I_1:%.*]] = phi i64 [ [[INC3:%.*]], [[DO_BODY2]] ], [ 0, [[DO_BODY2_PREHEADER]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[INC]], [[I_1]]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[INC_LCSSA1]], [[I_1]]
+ ; CHECK-NEXT:    tail call void @goo(i64 [[I_1]], i64 [[TMP0]])
+ ; CHECK-NEXT:    [[INC3]] = add nuw i64 [[I_1]], 1
+ ; CHECK-NEXT:    [[T1:%.*]] = load i64, ptr @cond, align 8
+ ; CHECK-NEXT:    [[TOBOOL6:%.*]] = icmp eq i64 [[T1]], 0
+ ; CHECK-NEXT:    br i1 [[TOBOOL6]], label [[DO_BODY8_PREHEADER:%.*]], label [[DO_BODY2]]
+ ; CHECK:       do.body8.preheader:
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[INC]], [[INC3]]
++; CHECK-NEXT:    [[INC3_LCSSA:%.*]] = phi i64 [ [[INC3]], [[DO_BODY2]] ]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[INC3_LCSSA]], [[INC_LCSSA]]
+ ; CHECK-NEXT:    br label [[DO_BODY8:%.*]]
+ ; CHECK:       do.body8:
+ ; CHECK-NEXT:    [[I_2:%.*]] = phi i64 [ [[INC9:%.*]], [[DO_BODY8]] ], [ 0, [[DO_BODY8_PREHEADER]] ]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/X86/zext-signed-addrec.ll b/llvm/test/Transforms/LoopStrengthReduce/X86/zext-signed-addrec.ll
+index f2fa771ac6f29..598b0cf84fb01 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/X86/zext-signed-addrec.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/X86/zext-signed-addrec.ll
+@@ -40,15 +40,16 @@ define i32 @foo() {
+ ; CHECK-NEXT:    [[CMP2:%.*]] = icmp sgt i8 [[DEC]], -1
+ ; CHECK-NEXT:    br i1 [[CMP2]], label %[[INNER_LOOP]], label %[[OUTER_LATCH]]
+ ; CHECK:       [[OUTER_LATCH]]:
+-; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], %[[INNER_LOOP]] ]
++; CHECK-NEXT:    [[DEC_LCSSA:%.*]] = phi i8 [ [[DEC]], %[[INNER_LOOP]] ]
+ ; CHECK-NEXT:    store i32 0, ptr @d, align 4
+ ; CHECK-NEXT:    [[INC]] = add nsw i32 [[TMP1]], 1
+ ; CHECK-NEXT:    store i32 [[INC]], ptr @b, align 4
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[TMP1]], 0
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[OUTER_HEADER]], label %[[OUTER_EXIT:.*]]
+ ; CHECK:       [[OUTER_EXIT]]:
+-; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT_LCSSA]], %[[OUTER_LATCH]] ]
+-; CHECK-NEXT:    store i8 [[DEC]], ptr @e, align 1
++; CHECK-NEXT:    [[DEC_LCSSA_LCSSA:%.*]] = phi i8 [ [[DEC_LCSSA]], %[[OUTER_LATCH]] ]
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA_LCSSA:%.*]] = phi i32 [ 0, %[[OUTER_LATCH]] ]
++; CHECK-NEXT:    store i8 [[DEC_LCSSA_LCSSA]], ptr @e, align 1
+ ; CHECK-NEXT:    br label %[[MERGE]]
+ ; CHECK:       [[MERGE]]:
+ ; CHECK-NEXT:    [[TMP3:%.*]] = phi i32 [ [[DOTPRE]], %[[ENTRY_ELSE]] ], [ [[LSR_IV_NEXT_LCSSA_LCSSA]], %[[OUTER_EXIT]] ]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/callbr-critical-edge-splitting.ll b/llvm/test/Transforms/LoopStrengthReduce/callbr-critical-edge-splitting.ll
+index e7afc96c72d5b..44e1ac3975335 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/callbr-critical-edge-splitting.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/callbr-critical-edge-splitting.ll
+@@ -10,24 +10,32 @@ define dso_local i32 @test1() local_unnamed_addr {
+ ; LEGACYPM-NEXT:    br label [[FOR_COND:%.*]]
+ ; LEGACYPM:       for.cond:
+ ; LEGACYPM-NEXT:    callbr void asm sideeffect "", "!i,!i,~{dirflag},~{fpsr},~{flags}"()
+-; LEGACYPM-NEXT:    to label [[ASM_FALLTHROUGH_I_I:%.*]] [label [[COND_TRUE_I:%.*]], label %for.endsplit]
++; LEGACYPM-NEXT:            to label [[ASM_FALLTHROUGH_I_I:%.*]] [label [[COND_TRUE_I:%.*]], label [[FOR_ENDSPLIT:%.*]]]
+ ; LEGACYPM:       asm.fallthrough.i.i:
+ ; LEGACYPM-NEXT:    unreachable
+ ; LEGACYPM:       cond.true.i:
+ ; LEGACYPM-NEXT:    br label [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE:%.*]]
+ ; LEGACYPM:       do.body.i.i.do.body.i.i_crit_edge:
++; LEGACYPM-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE]] ], [ undef, [[COND_TRUE_I]] ]
++; LEGACYPM-NEXT:    [[PGOCOUNT711:%.*]] = phi i64 [ [[TMP0:%.*]], [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE]] ], [ 0, [[COND_TRUE_I]] ]
++; LEGACYPM-NEXT:    [[TMP0]] = add nuw nsw i64 [[PGOCOUNT711]], 1
++; LEGACYPM-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 1
+ ; LEGACYPM-NEXT:    br i1 true, label [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE:%.*]], label [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE]]
+ ; LEGACYPM:       do.body.i.i.rdrand_int.exit.i_crit_edge:
++; LEGACYPM-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT]], [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE]] ]
++; LEGACYPM-NEXT:    [[TMP1:%.*]] = add i64 [[TMP0]], undef
+ ; LEGACYPM-NEXT:    br i1 true, label [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE_FOR_END_CRIT_EDGE:%.*]], label [[FOR_INC:%.*]]
+ ; LEGACYPM:       do.body.i.i.rdrand_int.exit.i_crit_edge.for.end_crit_edge:
+-; LEGACYPM-NEXT:    [[LSR_IV_NEXT_LCSSA_LCSSA:%.*]] = phi i64 [ undef, [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE]] ]
++; LEGACYPM-NEXT:    [[LSR_IV_NEXT_LCSSA_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT_LCSSA]], [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE]] ]
++; LEGACYPM-NEXT:    [[SPLIT:%.*]] = phi i64 [ [[TMP1]], [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE]] ]
+ ; LEGACYPM-NEXT:    br label [[FOR_END:%.*]]
+ ; LEGACYPM:       for.inc:
+ ; LEGACYPM-NEXT:    br label [[FOR_COND]]
+ ; LEGACYPM:       for.endsplit:
++; LEGACYPM-NEXT:    [[PGOCOUNT_PROMOTED24_PH:%.*]] = phi i64 [ undef, [[FOR_COND]] ]
+ ; LEGACYPM-NEXT:    br label [[FOR_END]]
+ ; LEGACYPM:       for.end:
+-; LEGACYPM-NEXT:    [[PGOCOUNT_PROMOTED24:%.*]] = phi i64 [ [[LSR_IV_NEXT_LCSSA_LCSSA]], [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE_FOR_END_CRIT_EDGE]] ], [ undef, [[FOR_ENDSPLIT:%.*]] ]
++; LEGACYPM-NEXT:    [[PGOCOUNT_PROMOTED24:%.*]] = phi i64 [ [[LSR_IV_NEXT_LCSSA_LCSSA]], [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE_FOR_END_CRIT_EDGE]] ], [ [[PGOCOUNT_PROMOTED24_PH]], [[FOR_ENDSPLIT]] ]
+ ; LEGACYPM-NEXT:    ret i32 undef
+ ;
+ ; NEWPM-LABEL: @test1(
+@@ -35,7 +43,7 @@ define dso_local i32 @test1() local_unnamed_addr {
+ ; NEWPM-NEXT:    br label [[FOR_COND:%.*]]
+ ; NEWPM:       for.cond:
+ ; NEWPM-NEXT:    callbr void asm sideeffect "", "!i,!i,~{dirflag},~{fpsr},~{flags}"()
+-; NEWPM-NEXT:    to label [[ASM_FALLTHROUGH_I_I:%.*]] [label [[COND_TRUE_I:%.*]], label %for.end]
++; NEWPM-NEXT:            to label [[ASM_FALLTHROUGH_I_I:%.*]] [label [[COND_TRUE_I:%.*]], label [[FOR_END:%.*]]]
+ ; NEWPM:       asm.fallthrough.i.i:
+ ; NEWPM-NEXT:    unreachable
+ ; NEWPM:       cond.true.i:
+@@ -44,7 +52,7 @@ define dso_local i32 @test1() local_unnamed_addr {
+ ; NEWPM-NEXT:    br i1 true, label [[DO_BODY_I_I_RDRAND_INT_EXIT_I_CRIT_EDGE:%.*]], label [[DO_BODY_I_I_DO_BODY_I_I_CRIT_EDGE]]
+ ; NEWPM:       do.body.i.i.rdrand_int.exit.i_crit_edge:
+ ; NEWPM-NEXT:    [[TMP0:%.*]] = add i64 1, undef
+-; NEWPM-NEXT:    br i1 true, label [[FOR_END:%.*]], label [[FOR_INC:%.*]]
++; NEWPM-NEXT:    br i1 true, label [[FOR_END]], label [[FOR_INC:%.*]]
+ ; NEWPM:       for.inc:
+ ; NEWPM-NEXT:    br label [[FOR_COND]]
+ ; NEWPM:       for.end:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll b/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
+index 9e0cfb1e39f61..114c59c43ba30 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/duplicated-phis.ll
+@@ -99,7 +99,8 @@ define i64 @duplicated_phis_compare_uses_mul_udiv(i64 %x) {
+ ; CHECK-NEXT:    [[EC:%.*]] = icmp eq i64 [[MASKED]], [[IV_1_NEXT]]
+ ; CHECK-NEXT:    br i1 [[EC]], label %[[EXIT:.*]], label %[[LOOP]]
+ ; CHECK:       [[EXIT]]:
+-; CHECK-NEXT:    ret i64 [[IV_1_NEXT]]
++; CHECK-NEXT:    [[IV_1_NEXT_LCSSA:%.*]] = phi i64 [ [[IV_1_NEXT]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i64 [[IV_1_NEXT_LCSSA]]
+ ;
+ entry:
+   %mul.2 = shl i64 %x, 1
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/lsr-overflow.ll b/llvm/test/Transforms/LoopStrengthReduce/lsr-overflow.ll
+index 0bfc62e6d7711..f46471963c181 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/lsr-overflow.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/lsr-overflow.ll
+@@ -6,19 +6,16 @@ target datalayout = "e-m:o-i64:64-f80:128-n8:16:32:64-S128"
+ define void @overflow1(i64 %a) {
+ ; CHECK-LABEL: @overflow1(
+ ; CHECK-NEXT:  bb:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[A:%.*]], -1
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[A]], -9223372036854775808
++; CHECK-NEXT:    [[TMP1:%.*]] = add i64 [[A:%.*]], -9223372036854775808
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       bb1:
+ ; CHECK-NEXT:    [[LSR_IV1:%.*]] = phi i64 [ [[LSR_IV_NEXT2:%.*]], [[BB1]] ], [ [[TMP1]], [[BB:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[BB1]] ], [ [[TMP0]], [[BB]] ]
+ ; CHECK-NEXT:    [[TMP4:%.*]] = icmp ne i64 [[LSR_IV1]], 0
+ ; CHECK-NEXT:    [[TMP5:%.*]] = and i1 [[TMP4]], true
+-; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], 1
+ ; CHECK-NEXT:    [[LSR_IV_NEXT2]] = add i64 [[LSR_IV1]], 1
+ ; CHECK-NEXT:    br i1 [[TMP5]], label [[BB1]], label [[BB7:%.*]]
+ ; CHECK:       bb7:
+-; CHECK-NEXT:    [[TMP9:%.*]] = and i64 [[LSR_IV_NEXT]], 1
++; CHECK-NEXT:    [[TMP9:%.*]] = and i64 -9223372036854775808, 1
+ ; CHECK-NEXT:    [[TMP10:%.*]] = icmp eq i64 [[TMP9]], 0
+ ; CHECK-NEXT:    unreachable
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll b/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
+index 6c0eb9bb4995d..0b357fbc028e4 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/nonintegral.ll
+@@ -15,27 +15,24 @@ define void @japi1__unsafe_getindex_65028(ptr addrspace(10) %arg) {
+ ; CHECK-NEXT:  top:
+ ; CHECK-NEXT:    br label [[L86:%.*]]
+ ; CHECK:       L86:
+-; CHECK-NEXT:    [[LSR_IV4:%.*]] = phi i64 [ [[LSR_IV_NEXT5:%.*]], [[L86]] ], [ -2, [[TOP:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV_NEXT5]] = add nsw i64 [[LSR_IV4]], 2
+ ; CHECK-NEXT:    br i1 false, label [[L86]], label [[IF29:%.*]]
+ ; CHECK:       if29:
+ ; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(10) [[ARG]], i64 -8
+ ; CHECK-NEXT:    br label [[IF31:%.*]]
+ ; CHECK:       if31:
+-; CHECK-NEXT:    %"#temp#1.sroa.0.022" = phi i64 [ 0, [[IF29]] ], [ [[TMP3_LCSSA:%.*]], [[IF38:%.*]] ]
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i64 [[LSR_IV_NEXT5]], %"#temp#1.sroa.0.022"
++; CHECK-NEXT:    %"#temp#1.sroa.0.022" = phi i64 [ 0, [[IF29]] ], [ [[TMP2:%.*]], [[IF38:%.*]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i64 0, %"#temp#1.sroa.0.022"
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shl i64 [[TMP0]], 3
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(10) [[SCEVGEP]], i64 [[TMP1]]
++; CHECK-NEXT:    [[TMP2]] = add i64 %"#temp#1.sroa.0.022", 1
+ ; CHECK-NEXT:    br label [[L119:%.*]]
+ ; CHECK:       L119:
+ ; CHECK-NEXT:    [[LSR_IV2:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP3:%.*]], [[L119]] ], [ [[SCEVGEP1]], [[IF31]] ]
+-; CHECK-NEXT:    [[I5_0:%.*]] = phi i64 [ %"#temp#1.sroa.0.022", [[IF31]] ], [ [[TMP3:%.*]], [[L119]] ]
+-; CHECK-NEXT:    [[TMP3]] = add i64 [[I5_0]], 1
+ ; CHECK-NEXT:    [[SCEVGEP3]] = getelementptr i8, ptr addrspace(10) [[LSR_IV2]], i64 8
+ ; CHECK-NEXT:    br i1 false, label [[L119]], label [[IF38]]
+ ; CHECK:       if38:
+-; CHECK-NEXT:    [[TMP3_LCSSA]] = phi i64 [ [[TMP3]], [[L119]] ]
+-; CHECK-NEXT:    [[TMP6:%.*]] = load i64, ptr addrspace(10) [[SCEVGEP3]], align 8
++; CHECK-NEXT:    [[SCEVGEP3_LCSSA:%.*]] = phi ptr addrspace(10) [ [[SCEVGEP3]], [[L119]] ]
++; CHECK-NEXT:    [[TMP6:%.*]] = load i64, ptr addrspace(10) [[SCEVGEP3_LCSSA]], align 8
+ ; CHECK-NEXT:    br i1 true, label [[DONE:%.*]], label [[IF31]]
+ ; CHECK:       done:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+index d0a910a0758a9..422c2991c07d2 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/post-inc-icmpzero.ll
+@@ -38,8 +38,9 @@ define void @_Z15IntegerToStringjjR7Vector2(i32 %i, i32 %radix, ptr nocapture %r
+ ; CHECK-NEXT:    [[LSR_IV_NEXT11]] = add i64 [[LSR_IV10]], 1
+ ; CHECK-NEXT:    br i1 [[TMP0]], label [[DO_BODY]], label [[DO_END:%.*]]
+ ; CHECK:       do.end:
++; CHECK-NEXT:    [[LSR_IV_NEXT11_LCSSA:%.*]] = phi i64 [ [[LSR_IV_NEXT11]], [[DO_BODY]] ]
+ ; CHECK-NEXT:    [[SCEVGEP9_LCSSA:%.*]] = phi ptr [ [[SCEVGEP9]], [[DO_BODY]] ]
+-; CHECK-NEXT:    [[XAP_0:%.*]] = inttoptr i64 [[LSR_IV_NEXT11]] to ptr
++; CHECK-NEXT:    [[XAP_0:%.*]] = inttoptr i64 [[LSR_IV_NEXT11_LCSSA]] to ptr
+ ; CHECK-NEXT:    [[CAP_0:%.*]] = ptrtoint ptr [[XAP_0]] to i64
+ ; CHECK-NEXT:    [[SUB_PTR_SUB:%.*]] = sub i64 [[SUB_PTR_LHS_CAST]], [[SUB_PTR_RHS_CAST]]
+ ; CHECK-NEXT:    [[SUB_PTR_DIV39:%.*]] = lshr exact i64 [[SUB_PTR_SUB]], 1
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/pr12691.ll b/llvm/test/Transforms/LoopStrengthReduce/pr12691.ll
+index 13c9807319416..e0ae3d5739ccc 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/pr12691.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/pr12691.ll
+@@ -17,13 +17,14 @@ define void @fn2(i32 %x) nounwind uwtable {
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 [[TOBOOL]], label [[FOR_COND]], label [[FOR_END:%.*]]
+ ; CHECK:       for.end:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], [[FOR_COND]] ]
+ ; CHECK-NEXT:    [[TMP1:%.*]] = load i32, ptr @d, align 4
+ ; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr @d, align 4
+ ; CHECK-NEXT:    [[TMP0:%.*]] = sub i32 [[TMP1]], [[TMP2]]
+ ; CHECK-NEXT:    [[TOBOOL26:%.*]] = icmp eq i32 [[X]], 0
+ ; CHECK-NEXT:    br i1 [[TOBOOL26]], label [[FOR_END5:%.*]], label [[FOR_BODY_LR_PH:%.*]]
+ ; CHECK:       for.body.lr.ph:
+-; CHECK-NEXT:    [[TOBOOL3:%.*]] = icmp ne i32 [[TMP0]], [[LSR_IV_NEXT]]
++; CHECK-NEXT:    [[TOBOOL3:%.*]] = icmp ne i32 [[TMP0]], [[LSR_IV_NEXT_LCSSA]]
+ ; CHECK-NEXT:    br label [[FOR_END5]]
+ ; CHECK:       for.end5:
+ ; CHECK-NEXT:    ret void
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/pr25541.ll b/llvm/test/Transforms/LoopStrengthReduce/pr25541.ll
+index 1995b8be179ae..5cd8014398d84 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/pr25541.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/pr25541.ll
+@@ -12,13 +12,14 @@ define void @f() personality ptr @__CxxFrameHandler3 {
+ ; CHECK-NEXT:    br label %[[FOR_COND_I:.*]]
+ ; CHECK:       [[FOR_COND_I]]:
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], %[[FOR_INC_I:.*]] ], [ 0, %[[ENTRY]] ]
+-; CHECK-NEXT:    [[LSR_IV_LCSSA1:%.*]] = inttoptr i64 [[LSR_IV]] to ptr
+ ; CHECK-NEXT:    invoke void @g()
+ ; CHECK-NEXT:            to label %[[FOR_INC_I]] unwind label %[[CATCH_DISPATCH_I:.*]]
+ ; CHECK:       [[CATCH_DISPATCH_I]]:
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i64 [ [[LSR_IV]], %[[FOR_COND_I]] ]
+ ; CHECK-NEXT:    [[CS:%.*]] = catchswitch within none [label %[[FOR_COND_1_PREHEADER_I:.*]]] unwind to caller
+ ; CHECK:       [[FOR_COND_1_PREHEADER_I]]:
+ ; CHECK-NEXT:    [[TMP0:%.*]] = catchpad within [[CS]] [ptr null, i32 64, ptr null]
++; CHECK-NEXT:    [[LSR_IV_LCSSA1:%.*]] = inttoptr i64 [[LSR_IV_LCSSA]] to ptr
+ ; CHECK-NEXT:    [[CMP_I:%.*]] = icmp eq ptr [[LSR_IV_LCSSA1]], null
+ ; CHECK-NEXT:    br label %[[FOR_COND_1_I:.*]]
+ ; CHECK:       [[FOR_COND_1_I]]:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/pr27056.ll b/llvm/test/Transforms/LoopStrengthReduce/pr27056.ll
+index 5f082dae7cf7b..50b966f08a5c6 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/pr27056.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/pr27056.ll
+@@ -17,18 +17,20 @@ define void @b_copy_ctor() personality ptr @__CxxFrameHandler3 {
+ ; CHECK-NEXT:    br label [[FOR_COND:%.*]]
+ ; CHECK:       for.cond:
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i64 [ [[LSR_IV_NEXT:%.*]], [[CALL_I_NOEXC:%.*]] ], [ 0, [[ENTRY:%.*]] ]
+-; CHECK-NEXT:    [[LSR_IV2:%.*]] = inttoptr i64 [[LSR_IV]] to ptr
+ ; CHECK-NEXT:    invoke void @a_copy_ctor()
+-; CHECK-NEXT:    to label [[CALL_I_NOEXC]] unwind label [[CATCH_DISPATCH:%.*]]
++; CHECK-NEXT:            to label [[CALL_I_NOEXC]] unwind label [[CATCH_DISPATCH:%.*]]
+ ; CHECK:       call.i.noexc:
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add i64 [[LSR_IV]], -16
+ ; CHECK-NEXT:    br label [[FOR_COND]]
+ ; CHECK:       catch.dispatch:
+-; CHECK-NEXT:    [[TMP2:%.*]] = catchswitch within none [label %catch] unwind to caller
++; CHECK-NEXT:    [[LSR_IV_LCSSA1:%.*]] = phi i64 [ [[LSR_IV]], [[FOR_COND]] ]
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i64 [ [[LSR_IV]], [[FOR_COND]] ]
++; CHECK-NEXT:    [[TMP2:%.*]] = catchswitch within none [label [[CATCH:%.*]]] unwind to caller
+ ; CHECK:       catch:
+ ; CHECK-NEXT:    [[TMP3:%.*]] = catchpad within [[TMP2]] [ptr null, i32 64, ptr null]
++; CHECK-NEXT:    [[LSR_IV2:%.*]] = inttoptr i64 [[LSR_IV_LCSSA1]] to ptr
+ ; CHECK-NEXT:    [[CMP16:%.*]] = icmp eq ptr [[LSR_IV2]], null
+-; CHECK-NEXT:    [[TMP4:%.*]] = mul i64 [[LSR_IV]], -1
++; CHECK-NEXT:    [[TMP4:%.*]] = sub i64 0, [[LSR_IV_LCSSA]]
+ ; CHECK-NEXT:    [[UGLYGEP:%.*]] = getelementptr i8, ptr [[TMP0]], i64 [[TMP4]]
+ ; CHECK-NEXT:    br i1 [[CMP16]], label [[FOR_END:%.*]], label [[FOR_BODY_PREHEADER:%.*]]
+ ; CHECK:       for.body.preheader:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/preserve-lcssa.ll b/llvm/test/Transforms/LoopStrengthReduce/preserve-lcssa.ll
+index 0add19e286f58..e1c3bdd157d16 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/preserve-lcssa.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/preserve-lcssa.ll
+@@ -18,6 +18,8 @@ define void @function_0(i32 %val_i32_8, i32 %val_i32_9) {
+ ; LEGACYPM-NEXT:    br label [[LOOP_4:%.*]]
+ ; LEGACYPM:       loop_4:
+ ; LEGACYPM-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[BE_6:%.*]] ], [ 7851, [[PRHDR_LOOP_3]] ]
++; LEGACYPM-NEXT:    [[LOOP_CNT_I32_11:%.*]] = phi i32 [ 7850, [[PRHDR_LOOP_3]] ], [ [[VAL_I32_24:%.*]], [[BE_6]] ]
++; LEGACYPM-NEXT:    [[VAL_I32_24]] = add i32 [[LOOP_CNT_I32_11]], 1
+ ; LEGACYPM-NEXT:    br i1 [[VAL_I1_22]], label [[BE_6]], label [[LOOP_EXIT_7SPLIT:%.*]]
+ ; LEGACYPM:       bb_5:
+ ; LEGACYPM-NEXT:    [[VAL_I32_40:%.*]] = mul i32 [[VAL_I32_9]], [[VAL_I32_24_LCSSA:%.*]]
+@@ -26,13 +28,14 @@ define void @function_0(i32 %val_i32_8, i32 %val_i32_9) {
+ ; LEGACYPM-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
+ ; LEGACYPM-NEXT:    br i1 [[VAL_I1_22]], label [[LOOP_4]], label [[BE_6_LOOP_EXIT_7_CRIT_EDGE:%.*]]
+ ; LEGACYPM:       loop_exit_7split:
+-; LEGACYPM-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i32 [ [[LSR_IV]], [[LOOP_4]] ]
++; LEGACYPM-NEXT:    [[VAL_I32_24_LCSSA_PH:%.*]] = phi i32 [ [[VAL_I32_24]], [[LOOP_4]] ]
+ ; LEGACYPM-NEXT:    br label [[LOOP_EXIT_7:%.*]]
+ ; LEGACYPM:       be_6.loop_exit_7_crit_edge:
+ ; LEGACYPM-NEXT:    [[LSR_IV_LCSSA1:%.*]] = phi i32 [ [[LSR_IV]], [[BE_6]] ]
++; LEGACYPM-NEXT:    [[SPLIT:%.*]] = phi i32 [ [[VAL_I32_24]], [[BE_6]] ]
+ ; LEGACYPM-NEXT:    br label [[LOOP_EXIT_7]]
+ ; LEGACYPM:       loop_exit_7:
+-; LEGACYPM-NEXT:    [[VAL_I32_24_LCSSA]] = phi i32 [ [[LSR_IV_LCSSA1]], [[BE_6_LOOP_EXIT_7_CRIT_EDGE]] ], [ [[LSR_IV_LCSSA]], [[LOOP_EXIT_7SPLIT]] ]
++; LEGACYPM-NEXT:    [[VAL_I32_24_LCSSA]] = phi i32 [ [[LSR_IV_LCSSA1]], [[BE_6_LOOP_EXIT_7_CRIT_EDGE]] ], [ [[VAL_I32_24_LCSSA_PH]], [[LOOP_EXIT_7SPLIT]] ]
+ ; LEGACYPM-NEXT:    br label [[BB_5:%.*]]
+ ;
+ ; NEWPM-LABEL: define void @function_0
+@@ -47,6 +50,8 @@ define void @function_0(i32 %val_i32_8, i32 %val_i32_9) {
+ ; NEWPM-NEXT:    br label [[LOOP_4:%.*]]
+ ; NEWPM:       loop_4:
+ ; NEWPM-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[BE_6:%.*]] ], [ 7851, [[PRHDR_LOOP_3]] ]
++; NEWPM-NEXT:    [[LOOP_CNT_I32_11:%.*]] = phi i32 [ 7850, [[PRHDR_LOOP_3]] ], [ [[VAL_I32_24:%.*]], [[BE_6]] ]
++; NEWPM-NEXT:    [[VAL_I32_24]] = add i32 [[LOOP_CNT_I32_11]], 1
+ ; NEWPM-NEXT:    br i1 [[VAL_I1_22]], label [[BE_6]], label [[LOOP_EXIT_7SPLIT:%.*]]
+ ; NEWPM:       bb_5:
+ ; NEWPM-NEXT:    [[VAL_I32_40:%.*]] = mul i32 [[VAL_I32_9]], [[VAL_I32_24_LCSSA:%.*]]
+@@ -55,13 +60,14 @@ define void @function_0(i32 %val_i32_8, i32 %val_i32_9) {
+ ; NEWPM-NEXT:    [[LSR_IV_NEXT]] = add i32 [[LSR_IV]], 1
+ ; NEWPM-NEXT:    br i1 [[VAL_I1_22]], label [[LOOP_4]], label [[BE_6_LOOP_EXIT_7_CRIT_EDGE:%.*]]
+ ; NEWPM:       loop_exit_7split:
+-; NEWPM-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i32 [ [[LSR_IV]], [[LOOP_4]] ]
++; NEWPM-NEXT:    [[VAL_I32_24_LCSSA_PH:%.*]] = phi i32 [ [[VAL_I32_24]], [[LOOP_4]] ]
+ ; NEWPM-NEXT:    br label [[LOOP_EXIT_7:%.*]]
+ ; NEWPM:       be_6.loop_exit_7_crit_edge:
+ ; NEWPM-NEXT:    [[LSR_IV_LCSSA1:%.*]] = phi i32 [ [[LSR_IV]], [[BE_6]] ]
++; NEWPM-NEXT:    [[SPLIT:%.*]] = phi i32 [ [[VAL_I32_24]], [[BE_6]] ]
+ ; NEWPM-NEXT:    br label [[LOOP_EXIT_7]]
+ ; NEWPM:       loop_exit_7:
+-; NEWPM-NEXT:    [[VAL_I32_24_LCSSA]] = phi i32 [ [[LSR_IV_LCSSA1]], [[BE_6_LOOP_EXIT_7_CRIT_EDGE]] ], [ [[LSR_IV_LCSSA]], [[LOOP_EXIT_7SPLIT]] ]
++; NEWPM-NEXT:    [[VAL_I32_24_LCSSA]] = phi i32 [ [[LSR_IV_LCSSA1]], [[BE_6_LOOP_EXIT_7_CRIT_EDGE]] ], [ [[VAL_I32_24_LCSSA_PH]], [[LOOP_EXIT_7SPLIT]] ]
+ ; NEWPM-NEXT:    br label [[BB_5:%.*]]
+ ;
+   %val_i1_22 = trunc i8 -66 to i1
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/scaling-factor-incompat-type.ll b/llvm/test/Transforms/LoopStrengthReduce/scaling-factor-incompat-type.ll
+index b76f29ad9e651..a1b9952418358 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/scaling-factor-incompat-type.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/scaling-factor-incompat-type.ll
+@@ -27,7 +27,8 @@ define void @foo() {
+ ; CHECK-NEXT:    [[T10:%.*]] = icmp eq i16 [[T9]], 1
+ ; CHECK-NEXT:    br i1 [[T10]], label [[BB11:%.*]], label [[BB13]]
+ ; CHECK:       bb11:
+-; CHECK-NEXT:    [[T12:%.*]] = udiv i16 1, [[LSR_IV]]
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i16 [ [[LSR_IV]], [[BB4]] ]
++; CHECK-NEXT:    [[T12:%.*]] = udiv i16 1, [[LSR_IV_LCSSA]]
+ ; CHECK-NEXT:    unreachable
+ ; CHECK:       bb13:
+ ; CHECK-NEXT:    br i1 true, label [[BB1:%.*]], label [[BB4]]
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/scev-incorrect-nuw-inference.ll b/llvm/test/Transforms/LoopStrengthReduce/scev-incorrect-nuw-inference.ll
+index 1b37b4cd2a2d8..8c29e89187650 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/scev-incorrect-nuw-inference.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/scev-incorrect-nuw-inference.ll
+@@ -23,7 +23,8 @@ define noundef i64 @test() {
+ ; CHECK-NEXT:    [[OR:%.*]] = or i1 [[ICMP5]], [[ICMP6]]
+ ; CHECK-NEXT:    br i1 [[OR]], label [[BB10]], label [[BB7:%.*]]
+ ; CHECK:       bb7:
+-; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[LSR_IV]], 1
++; CHECK-NEXT:    [[LSR_IV_LCSSA:%.*]] = phi i32 [ [[LSR_IV]], [[BB3]] ]
++; CHECK-NEXT:    [[TMP1:%.*]] = add i32 [[LSR_IV_LCSSA]], 1
+ ; CHECK-NEXT:    call void @foo(i32 [[TMP1]])
+ ; CHECK-NEXT:    unreachable
+ ; CHECK:       bb10:
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/uglygep-address-space.ll b/llvm/test/Transforms/LoopStrengthReduce/uglygep-address-space.ll
+index 3e83a8b0dadc1..1cbfcd97dfac8 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/uglygep-address-space.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/uglygep-address-space.ll
+@@ -17,20 +17,18 @@ define void @Z4(ptr addrspace(1) %ptr.i8, ptr addrspace(1) %ptr.float) {
+ ; CHECK:       bb1:
+ ; CHECK-NEXT:    br i1 true, label [[BB10:%.*]], label [[BB2:%.*]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[T:%.*]] = add i16 [[T4:%.*]], 1
+ ; CHECK-NEXT:    br label [[BB3]]
+ ; CHECK:       bb3:
+-; CHECK-NEXT:    [[T4]] = phi i16 [ [[T]], [[BB2]] ], [ 0, [[BB:%.*]] ]
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       bb10:
+-; CHECK-NEXT:    [[T7:%.*]] = icmp eq i16 [[T4]], 0
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[PTR_I8]], i16 [[T4]]
++; CHECK-NEXT:    [[T7:%.*]] = icmp eq i16 0, 0
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr addrspace(1) [[PTR_I8]], i16 0
+ ; CHECK-NEXT:    br label [[BB14:%.*]]
+ ; CHECK:       bb14:
+ ; CHECK-NEXT:    store i8 undef, ptr addrspace(1) [[SCEVGEP]], align 1
+ ; CHECK-NEXT:    [[T6:%.*]] = load ptr addrspace(1), ptr addrspace(1) [[PTR_FLOAT]], align 2
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr addrspace(1) [[T6]], i16 16
+-; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr addrspace(1) [[SCEVGEP1]], i16 [[T4]]
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr addrspace(1) [[SCEVGEP1]], i16 0
+ ; CHECK-NEXT:    store i8 undef, ptr addrspace(1) [[SCEVGEP2]], align 1
+ ; CHECK-NEXT:    br label [[BB14]]
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/uglygep.ll b/llvm/test/Transforms/LoopStrengthReduce/uglygep.ll
+index 752ea1c698afb..77c37c7e22ea0 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/uglygep.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/uglygep.ll
+@@ -17,20 +17,18 @@ define void @test(ptr %ptr.i8, ptr %ptr.float) {
+ ; CHECK:       bb1:
+ ; CHECK-NEXT:    br i1 true, label [[BB10:%.*]], label [[BB2:%.*]]
+ ; CHECK:       bb2:
+-; CHECK-NEXT:    [[T:%.*]] = add i64 [[T4:%.*]], 1
+ ; CHECK-NEXT:    br label [[BB3]]
+ ; CHECK:       bb3:
+-; CHECK-NEXT:    [[T4]] = phi i64 [ [[T]], [[BB2]] ], [ 0, [[BB:%.*]] ]
+ ; CHECK-NEXT:    br label [[BB1:%.*]]
+ ; CHECK:       bb10:
+-; CHECK-NEXT:    [[T7:%.*]] = icmp eq i64 [[T4]], 0
+-; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[PTR_I8]], i64 [[T4]]
++; CHECK-NEXT:    [[T7:%.*]] = icmp eq i64 0, 0
++; CHECK-NEXT:    [[SCEVGEP:%.*]] = getelementptr i8, ptr [[PTR_I8]], i64 0
+ ; CHECK-NEXT:    br label [[BB14:%.*]]
+ ; CHECK:       bb14:
+ ; CHECK-NEXT:    store i8 undef, ptr [[SCEVGEP]], align 1
+ ; CHECK-NEXT:    [[T6:%.*]] = load ptr, ptr [[PTR_FLOAT]], align 8
+ ; CHECK-NEXT:    [[SCEVGEP1:%.*]] = getelementptr i8, ptr [[T6]], i64 16
+-; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[SCEVGEP1]], i64 [[T4]]
++; CHECK-NEXT:    [[SCEVGEP2:%.*]] = getelementptr i8, ptr [[SCEVGEP1]], i64 0
+ ; CHECK-NEXT:    store i8 undef, ptr [[SCEVGEP2]], align 1
+ ; CHECK-NEXT:    br label [[BB14]]
+ ;
+@@ -72,12 +70,16 @@ define fastcc void @TransformLine() nounwind {
+ ; CHECK-NEXT:    br label [[LOOP0:%.*]]
+ ; CHECK:       loop0:
+ ; CHECK-NEXT:    [[LSR_IV:%.*]] = phi i32 [ [[LSR_IV_NEXT:%.*]], [[LOOP0]] ], [ -2, [[BB:%.*]] ]
++; CHECK-NEXT:    [[I0:%.*]] = phi i32 [ [[I0_NEXT:%.*]], [[LOOP0]] ], [ 0, [[BB]] ]
++; CHECK-NEXT:    [[I0_NEXT]] = add i32 [[I0]], 1
+ ; CHECK-NEXT:    [[LSR_IV_NEXT]] = add nuw nsw i32 [[LSR_IV]], 1
+ ; CHECK-NEXT:    br i1 false, label [[LOOP0]], label [[BB0:%.*]]
+ ; CHECK:       bb0:
++; CHECK-NEXT:    [[LSR_IV_NEXT_LCSSA:%.*]] = phi i32 [ [[LSR_IV_NEXT]], [[LOOP0]] ]
+ ; CHECK-NEXT:    br label [[LOOP1:%.*]]
+ ; CHECK:       loop1:
+ ; CHECK-NEXT:    [[I1:%.*]] = phi i32 [ 0, [[BB0]] ], [ [[I1_NEXT:%.*]], [[BB5:%.*]] ]
++; CHECK-NEXT:    [[T0:%.*]] = add i32 [[I0]], [[I1]]
+ ; CHECK-NEXT:    br i1 false, label [[BB2:%.*]], label [[LOOP1_BB6_CRIT_EDGE:%.*]]
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    br i1 true, label [[BB6SPLITSPLIT:%.*]], label [[BB5]]
+@@ -85,19 +87,26 @@ define fastcc void @TransformLine() nounwind {
+ ; CHECK-NEXT:    [[I1_NEXT]] = add i32 [[I1]], 1
+ ; CHECK-NEXT:    br i1 true, label [[BB5_BB6SPLIT_CRIT_EDGE:%.*]], label [[LOOP1]]
+ ; CHECK:       bb5.bb6split_crit_edge:
+-; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[LSR_IV_NEXT]], [[I1_NEXT]]
++; CHECK-NEXT:    [[I1_NEXT_LCSSA:%.*]] = phi i32 [ [[I1_NEXT]], [[BB5]] ]
++; CHECK-NEXT:    [[SPLIT3:%.*]] = phi i32 [ [[T0]], [[BB5]] ]
++; CHECK-NEXT:    [[SPLIT4:%.*]] = phi i32 [ undef, [[BB5]] ]
++; CHECK-NEXT:    [[TMP0:%.*]] = add i32 [[LSR_IV_NEXT_LCSSA]], [[I1_NEXT_LCSSA]]
+ ; CHECK-NEXT:    br label [[BB6SPLIT:%.*]]
+ ; CHECK:       bb6splitsplit:
++; CHECK-NEXT:    [[P8_PH_PH:%.*]] = phi i32 [ undef, [[BB2]] ]
++; CHECK-NEXT:    [[P9_PH_PH:%.*]] = phi i32 [ [[I1]], [[BB2]] ]
+ ; CHECK-NEXT:    br label [[BB6SPLIT]]
+ ; CHECK:       bb6split:
+-; CHECK-NEXT:    [[P8_PH:%.*]] = phi i32 [ [[TMP0]], [[BB5_BB6SPLIT_CRIT_EDGE]] ], [ undef, [[BB6SPLITSPLIT]] ]
+-; CHECK-NEXT:    [[P9_PH:%.*]] = phi i32 [ undef, [[BB5_BB6SPLIT_CRIT_EDGE]] ], [ [[I1]], [[BB6SPLITSPLIT]] ]
++; CHECK-NEXT:    [[P8_PH:%.*]] = phi i32 [ [[TMP0]], [[BB5_BB6SPLIT_CRIT_EDGE]] ], [ [[P8_PH_PH]], [[BB6SPLITSPLIT]] ]
++; CHECK-NEXT:    [[P9_PH:%.*]] = phi i32 [ [[SPLIT4]], [[BB5_BB6SPLIT_CRIT_EDGE]] ], [ [[P9_PH_PH]], [[BB6SPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[BB6:%.*]]
+ ; CHECK:       loop1.bb6_crit_edge:
+ ; CHECK-NEXT:    [[I1_LCSSA:%.*]] = phi i32 [ [[I1]], [[LOOP1]] ]
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i32 [ undef, [[LOOP1]] ]
++; CHECK-NEXT:    [[SPLIT1:%.*]] = phi i32 [ [[I1]], [[LOOP1]] ]
+ ; CHECK-NEXT:    br label [[BB6]]
+ ; CHECK:       bb6:
+-; CHECK-NEXT:    [[P8:%.*]] = phi i32 [ undef, [[LOOP1_BB6_CRIT_EDGE]] ], [ [[P8_PH]], [[BB6SPLIT]] ]
++; CHECK-NEXT:    [[P8:%.*]] = phi i32 [ [[SPLIT]], [[LOOP1_BB6_CRIT_EDGE]] ], [ [[P8_PH]], [[BB6SPLIT]] ]
+ ; CHECK-NEXT:    [[P9:%.*]] = phi i32 [ [[I1_LCSSA]], [[LOOP1_BB6_CRIT_EDGE]] ], [ [[P9_PH]], [[BB6SPLIT]] ]
+ ; CHECK-NEXT:    unreachable
+ ;
+diff --git a/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll b/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
+index 502042eaf9b9c..0ed74595e7faa 100644
+--- a/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
++++ b/llvm/test/Transforms/LoopStrengthReduce/wrong-hoisting-iv.ll
+@@ -33,95 +33,114 @@ define void @test1() {
+ ; CHECK:       bb11:
+ ; CHECK-NEXT:    unreachable
+ ; CHECK:       bb12:
++; CHECK-NEXT:    [[VAL13:%.*]] = add i32 [[LSR_IV1]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL14:%.*]] = icmp slt i32 undef, undef
+ ; CHECK-NEXT:    br i1 [[VAL14]], label [[BB17:%.*]], label [[BB12_BB15SPLITSPLITSPLITSPLITSPLIT_CRIT_EDGE:%.*]]
+ ; CHECK:       bb15splitsplitsplitsplitsplitsplit:
++; CHECK-NEXT:    [[VAL35:%.*]] = phi i32 [ [[VAL36:%.*]], [[BB32]] ]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLITSPLITSPLIT:%.*]]
+ ; CHECK:       bb12.bb15splitsplitsplitsplitsplit_crit_edge:
+-; CHECK-NEXT:    [[TMP6:%.*]] = add i32 [[VAL6]], [[LSR_IV1]]
++; CHECK-NEXT:    [[LSR_IV1_LCSSA23:%.*]] = phi i32 [ [[LSR_IV1]], [[BB12]] ]
++; CHECK-NEXT:    [[SPLIT27:%.*]] = phi i32 [ [[VAL13]], [[BB12]] ]
++; CHECK-NEXT:    [[TMP6:%.*]] = add i32 [[LSR_IV1_LCSSA23]], [[VAL6]]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLITSPLITSPLIT]]
+ ; CHECK:       bb15splitsplitsplitsplitsplit:
+-; CHECK-NEXT:    [[VAL16_PH_PH_PH_PH_PH:%.*]] = phi i32 [ [[TMP6]], [[BB12_BB15SPLITSPLITSPLITSPLITSPLIT_CRIT_EDGE]] ], [ [[VAL35:%.*]], [[BB15SPLITSPLITSPLITSPLITSPLITSPLIT:%.*]] ]
++; CHECK-NEXT:    [[VAL16_PH_PH_PH_PH_PH:%.*]] = phi i32 [ [[TMP6]], [[BB12_BB15SPLITSPLITSPLITSPLITSPLIT_CRIT_EDGE]] ], [ [[VAL35]], [[BB15SPLITSPLITSPLITSPLITSPLITSPLIT:%.*]] ]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLITSPLIT:%.*]]
+ ; CHECK:       bb17.bb15splitsplitsplitsplit_crit_edge:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA18:%.*]] = phi i32 [ [[LSR_IV1]], [[BB17]] ]
++; CHECK-NEXT:    [[SPLIT20:%.*]] = phi i32 [ [[VAL18:%.*]], [[BB17]] ]
+ ; CHECK-NEXT:    [[TMP7:%.*]] = shl i32 [[VAL]], 1
+ ; CHECK-NEXT:    [[TMP8:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+ ; CHECK-NEXT:    [[TMP9:%.*]] = shl i32 [[TMP8]], 1
+ ; CHECK-NEXT:    [[TMP10:%.*]] = sub i32 [[TMP7]], [[TMP9]]
+ ; CHECK-NEXT:    [[TMP11:%.*]] = shl i32 [[VAL5]], 1
+ ; CHECK-NEXT:    [[TMP12:%.*]] = sub i32 [[TMP10]], [[TMP11]]
+-; CHECK-NEXT:    [[TMP13:%.*]] = add i32 [[TMP12]], [[LSR_IV1]]
++; CHECK-NEXT:    [[TMP13:%.*]] = add i32 [[LSR_IV1_LCSSA18]], [[TMP12]]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLITSPLIT]]
+ ; CHECK:       bb15splitsplitsplitsplit:
+ ; CHECK-NEXT:    [[VAL16_PH_PH_PH_PH:%.*]] = phi i32 [ [[TMP13]], [[BB17_BB15SPLITSPLITSPLITSPLIT_CRIT_EDGE:%.*]] ], [ [[VAL16_PH_PH_PH_PH_PH]], [[BB15SPLITSPLITSPLITSPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLIT:%.*]]
+ ; CHECK:       bb20.bb15splitsplitsplit_crit_edge:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA13:%.*]] = phi i32 [ [[LSR_IV1]], [[BB20:%.*]] ]
++; CHECK-NEXT:    [[SPLIT14:%.*]] = phi i32 [ [[VAL21:%.*]], [[BB20]] ]
+ ; CHECK-NEXT:    [[TMP14:%.*]] = mul i32 [[VAL]], 3
+ ; CHECK-NEXT:    [[TMP15:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+ ; CHECK-NEXT:    [[TMP16:%.*]] = mul i32 [[TMP15]], 3
+ ; CHECK-NEXT:    [[TMP17:%.*]] = sub i32 [[TMP14]], [[TMP16]]
+ ; CHECK-NEXT:    [[TMP18:%.*]] = mul i32 [[VAL5]], 3
+ ; CHECK-NEXT:    [[TMP19:%.*]] = sub i32 [[TMP17]], [[TMP18]]
+-; CHECK-NEXT:    [[TMP20:%.*]] = add i32 [[TMP19]], [[LSR_IV1]]
++; CHECK-NEXT:    [[TMP20:%.*]] = add i32 [[LSR_IV1_LCSSA13]], [[TMP19]]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLITSPLIT]]
+ ; CHECK:       bb15splitsplitsplit:
+ ; CHECK-NEXT:    [[VAL16_PH_PH_PH:%.*]] = phi i32 [ [[TMP20]], [[BB20_BB15SPLITSPLITSPLIT_CRIT_EDGE:%.*]] ], [ [[VAL16_PH_PH_PH_PH]], [[BB15SPLITSPLITSPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLIT:%.*]]
+ ; CHECK:       bb23.bb15splitsplit_crit_edge:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA9:%.*]] = phi i32 [ [[LSR_IV1]], [[BB23:%.*]] ]
++; CHECK-NEXT:    [[SPLIT9:%.*]] = phi i32 [ [[VAL24:%.*]], [[BB23]] ]
+ ; CHECK-NEXT:    [[TMP21:%.*]] = shl i32 [[VAL]], 2
+ ; CHECK-NEXT:    [[TMP22:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+ ; CHECK-NEXT:    [[TMP23:%.*]] = shl i32 [[TMP22]], 2
+ ; CHECK-NEXT:    [[TMP24:%.*]] = sub i32 [[TMP21]], [[TMP23]]
+ ; CHECK-NEXT:    [[TMP25:%.*]] = shl i32 [[VAL5]], 2
+ ; CHECK-NEXT:    [[TMP26:%.*]] = sub i32 [[TMP24]], [[TMP25]]
+-; CHECK-NEXT:    [[TMP27:%.*]] = add i32 [[TMP26]], [[LSR_IV1]]
++; CHECK-NEXT:    [[TMP27:%.*]] = add i32 [[LSR_IV1_LCSSA9]], [[TMP26]]
+ ; CHECK-NEXT:    br label [[BB15SPLITSPLIT]]
+ ; CHECK:       bb15splitsplit:
+ ; CHECK-NEXT:    [[VAL16_PH_PH:%.*]] = phi i32 [ [[TMP27]], [[BB23_BB15SPLITSPLIT_CRIT_EDGE:%.*]] ], [ [[VAL16_PH_PH_PH]], [[BB15SPLITSPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[BB15SPLIT:%.*]]
+ ; CHECK:       bb26.bb15split_crit_edge:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA6:%.*]] = phi i32 [ [[LSR_IV1]], [[BB26:%.*]] ]
++; CHECK-NEXT:    [[SPLIT5:%.*]] = phi i32 [ [[VAL27:%.*]], [[BB26]] ]
+ ; CHECK-NEXT:    [[TMP28:%.*]] = mul i32 [[VAL]], 5
+ ; CHECK-NEXT:    [[TMP29:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+ ; CHECK-NEXT:    [[TMP30:%.*]] = mul i32 [[TMP29]], 5
+ ; CHECK-NEXT:    [[TMP31:%.*]] = sub i32 [[TMP28]], [[TMP30]]
+ ; CHECK-NEXT:    [[TMP32:%.*]] = mul i32 [[VAL5]], 5
+ ; CHECK-NEXT:    [[TMP33:%.*]] = sub i32 [[TMP31]], [[TMP32]]
+-; CHECK-NEXT:    [[TMP34:%.*]] = add i32 [[TMP33]], [[LSR_IV1]]
++; CHECK-NEXT:    [[TMP34:%.*]] = add i32 [[LSR_IV1_LCSSA6]], [[TMP33]]
+ ; CHECK-NEXT:    br label [[BB15SPLIT]]
+ ; CHECK:       bb15split:
+ ; CHECK-NEXT:    [[VAL16_PH:%.*]] = phi i32 [ [[TMP34]], [[BB26_BB15SPLIT_CRIT_EDGE:%.*]] ], [ [[VAL16_PH_PH]], [[BB15SPLITSPLIT]] ]
+ ; CHECK-NEXT:    br label [[BB15:%.*]]
+ ; CHECK:       bb29.bb15_crit_edge:
++; CHECK-NEXT:    [[LSR_IV1_LCSSA4:%.*]] = phi i32 [ [[LSR_IV1]], [[BB29:%.*]] ]
++; CHECK-NEXT:    [[SPLIT:%.*]] = phi i32 [ [[VAL30:%.*]], [[BB29]] ]
+ ; CHECK-NEXT:    [[TMP35:%.*]] = mul i32 [[VAL]], 6
+ ; CHECK-NEXT:    [[TMP36:%.*]] = mul i32 [[VAL1]], [[VAL2]]
+ ; CHECK-NEXT:    [[TMP37:%.*]] = mul i32 [[TMP36]], 6
+ ; CHECK-NEXT:    [[TMP38:%.*]] = sub i32 [[TMP35]], [[TMP37]]
+ ; CHECK-NEXT:    [[TMP39:%.*]] = mul i32 [[VAL5]], 6
+ ; CHECK-NEXT:    [[TMP40:%.*]] = sub i32 [[TMP38]], [[TMP39]]
+-; CHECK-NEXT:    [[TMP41:%.*]] = add i32 [[TMP40]], [[LSR_IV1]]
++; CHECK-NEXT:    [[TMP41:%.*]] = add i32 [[LSR_IV1_LCSSA4]], [[TMP40]]
+ ; CHECK-NEXT:    br label [[BB15]]
+ ; CHECK:       bb15:
+ ; CHECK-NEXT:    [[VAL16:%.*]] = phi i32 [ [[TMP41]], [[BB29_BB15_CRIT_EDGE:%.*]] ], [ [[VAL16_PH]], [[BB15SPLIT]] ]
+ ; CHECK-NEXT:    call void @widget() [ "deopt"(i32 [[VAL16]], i32 3, i32 [[VAL]]) ]
+ ; CHECK-NEXT:    unreachable
+ ; CHECK:       bb17:
++; CHECK-NEXT:    [[VAL18]] = add i32 [[VAL13]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL19:%.*]] = icmp slt i32 undef, undef
+-; CHECK-NEXT:    br i1 [[VAL19]], label [[BB20:%.*]], label [[BB17_BB15SPLITSPLITSPLITSPLIT_CRIT_EDGE]]
++; CHECK-NEXT:    br i1 [[VAL19]], label [[BB20]], label [[BB17_BB15SPLITSPLITSPLITSPLIT_CRIT_EDGE]]
+ ; CHECK:       bb20:
++; CHECK-NEXT:    [[VAL21]] = add i32 [[VAL18]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL22:%.*]] = icmp slt i32 undef, undef
+-; CHECK-NEXT:    br i1 [[VAL22]], label [[BB23:%.*]], label [[BB20_BB15SPLITSPLITSPLIT_CRIT_EDGE]]
++; CHECK-NEXT:    br i1 [[VAL22]], label [[BB23]], label [[BB20_BB15SPLITSPLITSPLIT_CRIT_EDGE]]
+ ; CHECK:       bb23:
++; CHECK-NEXT:    [[VAL24]] = add i32 [[VAL21]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL25:%.*]] = icmp slt i32 undef, undef
+-; CHECK-NEXT:    br i1 [[VAL25]], label [[BB26:%.*]], label [[BB23_BB15SPLITSPLIT_CRIT_EDGE]]
++; CHECK-NEXT:    br i1 [[VAL25]], label [[BB26]], label [[BB23_BB15SPLITSPLIT_CRIT_EDGE]]
+ ; CHECK:       bb26:
++; CHECK-NEXT:    [[VAL27]] = add i32 [[VAL24]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL28:%.*]] = icmp slt i32 undef, undef
+-; CHECK-NEXT:    br i1 [[VAL28]], label [[BB29:%.*]], label [[BB26_BB15SPLIT_CRIT_EDGE]]
++; CHECK-NEXT:    br i1 [[VAL28]], label [[BB29]], label [[BB26_BB15SPLIT_CRIT_EDGE]]
+ ; CHECK:       bb29:
++; CHECK-NEXT:    [[VAL30]] = add i32 [[VAL27]], [[VAL6]]
+ ; CHECK-NEXT:    [[VAL31:%.*]] = icmp slt i32 undef, undef
+ ; CHECK-NEXT:    br i1 [[VAL31]], label [[BB32]], label [[BB29_BB15_CRIT_EDGE]]
+ ; CHECK:       bb32:
+ ; CHECK-NEXT:    [[TMP42:%.*]] = add i32 [[TMP4]], [[LSR_IV1]]
+-; CHECK-NEXT:    [[VAL35]] = add i32 [[TMP42]], [[VAL6]]
++; CHECK-NEXT:    [[VAL36]] = add i32 [[TMP42]], [[VAL6]]
+ ; CHECK-NEXT:    br i1 false, label [[BB7]], label [[BB15SPLITSPLITSPLITSPLITSPLITSPLIT]]
+ ;
+ bb:
