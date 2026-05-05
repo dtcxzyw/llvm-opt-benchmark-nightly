@@ -305,26 +305,39 @@ def list_dataset_bc_tasks() -> List[Tuple[str, str]]:
     return tasks
 
 
-def extract_baseline_from_comment(comment_body: str) -> Tuple[str, Optional[str]]:
+def extract_baseline_from_comment(comment_body: str) -> Tuple[str, Optional[str], Optional[str]]:
     tokens = comment_body.split()
     baseline_idx = None
+    passes_idx = None
     for idx, token in enumerate(tokens):
         if token == "--baseline":
             baseline_idx = idx
-            break
+        elif token == "--passes":
+            passes_idx = idx
 
-    if baseline_idx is None:
-        return comment_body, None
+    baseline_url = None
+    passes = None
+    remove_indices = set()
 
-    if baseline_idx + 1 >= len(tokens):
-        raise ValueError("Missing baseline URL after --baseline.")
+    if baseline_idx is not None:
+        if baseline_idx + 1 >= len(tokens):
+            raise ValueError("Missing baseline URL after --baseline.")
+        baseline_url = tokens[baseline_idx + 1].strip()
+        remove_indices.add(baseline_idx)
+        remove_indices.add(baseline_idx + 1)
 
-    baseline_url = tokens[baseline_idx + 1].strip()
-    remaining_tokens = tokens[:baseline_idx] + tokens[baseline_idx + 2 :]
+    if passes_idx is not None:
+        if passes_idx + 1 >= len(tokens):
+            raise ValueError("Missing passes value after --passes.")
+        passes = tokens[passes_idx + 1].strip()
+        remove_indices.add(passes_idx)
+        remove_indices.add(passes_idx + 1)
+
+    remaining_tokens = [tokens[i] for i in range(len(tokens)) if i not in remove_indices]
     cleaned_comment = " ".join(remaining_tokens).strip()
     if not cleaned_comment:
         raise ValueError("Patch URL is required in comment body.")
-    return cleaned_comment, baseline_url
+    return cleaned_comment, baseline_url, passes
 
 
 def backup_opt_outputs(dest_dir: str):
@@ -360,14 +373,20 @@ def update_llvm() -> str:
 class TestConfig:
     comptime: bool = False
     stats: str = None
+    passes: Optional[str] = None
 
 
 def format_test_mode_label(config: TestConfig) -> str:
+    label = ""
     if config.comptime:
-        return "compile-time"
-    if config.stats:
-        return f"stats {config.stats}"
-    return "diff"
+        label = "compile-time"
+    elif config.stats:
+        label = f"stats {config.stats}"
+    else:
+        label = "diff"
+    if config.passes:
+        label += f" passes {config.passes}"
+    return label
 
 
 @dataclass
@@ -1059,7 +1078,10 @@ def run_opt_file(
         if opt_timeout <= 0:
             return "timeout"
 
-        cmd = [OPT_BINARY, "-O3", input_path]
+        if config.passes:
+            cmd = [OPT_BINARY, f"--passes={config.passes}", input_path]
+        else:
+            cmd = [OPT_BINARY, "-O3", input_path]
         if config.comptime:
             cmd = (
                 [
@@ -1733,7 +1755,7 @@ def test(user: str, comment_body: str, issue_url: str):
         # Ignore quoted comments.
         return
     try:
-        comment_body, baseline_patch_url = extract_baseline_from_comment(comment_body)
+        comment_body, baseline_patch_url, passes = extract_baseline_from_comment(comment_body)
     except ValueError as e:
         reply_issue_comment(
             issue_url,
@@ -1747,7 +1769,7 @@ def test(user: str, comment_body: str, issue_url: str):
     if comment_body.startswith("/comptime "):
         # /comptime <patch_url>
         patch_url = comment_body.removeprefix("/comptime ").strip()
-        config = TestConfig(comptime=True)
+        config = TestConfig(comptime=True, passes=passes)
     elif comment_body.startswith("/stat "):
         # /stat statname <patch_url>
         parts = comment_body.removeprefix("/stat ").strip().split()
@@ -1759,13 +1781,13 @@ def test(user: str, comment_body: str, issue_url: str):
                 user,
             )
             return
-        config = TestConfig(stats=parts[0].strip())
+        config = TestConfig(stats=parts[0].strip(), passes=passes)
         patch_url = parts[1].strip()
     else:
         if ("github.com" not in comment_body) or ("llvm-project" not in comment_body):
             # Ignore normal comments
             return
-        config = TestConfig(comptime=False, stats=None)
+        config = TestConfig(comptime=False, stats=None, passes=passes)
         patch_url = comment_body
 
     try:
@@ -1814,23 +1836,28 @@ def test(user: str, comment_body: str, issue_url: str):
     current_stage_opt_dir = os.path.join(ROOT_DIR, "work", "opt-out-current")
 
     # Optional stage A: run baseline patch first, then run current patch on a clean llvm base.
-    stages = []
+    stages = []  # (stage_name, patch_url, stage_config)
     if baseline_patch_url:
-        stages.append(("baseline", baseline_patch_url))
-    stages.append(("current", patch_url))
+        stages.append(("baseline", baseline_patch_url, TestConfig(comptime=config.comptime, stats=config.stats, passes=passes)))
+    elif passes:
+        stages.append(("baseline", None, TestConfig(comptime=config.comptime, stats=config.stats, passes=passes)))
+    stages.append(("current", patch_url, TestConfig(comptime=config.comptime, stats=config.stats, passes=passes)))
 
     try:
-        if config.comptime and not baseline_patch_url:
+        if config.comptime and not baseline_patch_url and not passes:
             if not build_llvm(config):
                 return
             baseline_comptime, _, _, _ = run_opt(config)
 
-        for idx, (stage_name, stage_patch_url) in enumerate(stages):
+        for idx, (stage_name, stage_patch_url, stage_config) in enumerate(stages):
             if idx > 0:
                 setup_llvm(old_revision)
 
             try:
-                patch_applied, patch_reject_reason = apply_llvm_patch(stage_patch_url)
+                patch_applied = True
+                patch_reject_reason = None
+                if stage_patch_url is not None:
+                    patch_applied, patch_reject_reason = apply_llvm_patch(stage_patch_url)
             except Exception:
                 reply_issue_comment(
                     issue_url,
@@ -1858,22 +1885,24 @@ def test(user: str, comment_body: str, issue_url: str):
                 )
                 return
 
-            if not build_llvm(config):
+            if not build_llvm(stage_config):
+                build_desc = "the current patch" if stage_patch_url is not None else "clean LLVM"
                 reply_issue_comment(
                     issue_url,
                     comment_body,
-                    f"Failed to build LLVM with the {stage_name} patch applied (base commit https://github.com/llvm/llvm-project/commit/{old_revision}). Please check if the patch can be built successfully.",
+                    f"Failed to build LLVM with {build_desc} (base commit https://github.com/llvm/llvm-project/commit/{old_revision}). Please check if the patch can be built successfully.",
                     user,
                 )
                 return
 
+            has_baseline = baseline_patch_url is not None or passes is not None
             stage_comptime, stage_stats, stage_rendered, stage_per_file_stats = run_opt(
-                config,
-                enable_ir_diff=(stage_name == "current" or not baseline_patch_url),
+                stage_config,
+                enable_ir_diff=(stage_name == "current" or not has_baseline),
                 compare_ref_root=(
                     baseline_stage_opt_dir
                     if stage_name == "current"
-                    and baseline_patch_url
+                    and has_baseline
                     and not config.comptime
                     and not config.stats
                     else None
@@ -1881,7 +1910,7 @@ def test(user: str, comment_body: str, issue_url: str):
                 compare_per_file_stats=(
                     baseline_stage_per_file_stats
                     if stage_name == "current"
-                    and baseline_patch_url
+                    and has_baseline
                     and not config.comptime
                     else None
                 ),
@@ -1904,7 +1933,7 @@ def test(user: str, comment_body: str, issue_url: str):
         stats = current_result["stats"]
         rendered_files = current_result["rendered"]
 
-        if baseline_patch_url:
+        if baseline_patch_url or passes:
             baseline_result = stage_results["baseline"]
             if config.comptime:
                 baseline_comptime = baseline_result["comptime"]
@@ -1941,11 +1970,15 @@ def test(user: str, comment_body: str, issue_url: str):
     pr_body += f"Current: {patch_url}\n"
     if baseline_patch_url:
         pr_body += f"Baseline: {baseline_patch_url}\n"
+    if passes:
+        pr_body += f"Passes: {passes}\n"
     pr_body += (
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
     if baseline_patch_url:
         pr_body += "Comparison mode: baseline patch vs current patch (baseline stage runs first, then current stage after reset).\n"
+    elif passes:
+        pr_body += "Comparison mode: clean LLVM vs current patch (baseline stage runs on clean LLVM first, then current stage after reset).\n"
     pr_body += get_opt_log_preview()
     base_branch_name = f"task-{JOB_ID}-base"
     change_branch_name = f"task-{JOB_ID}-change"
