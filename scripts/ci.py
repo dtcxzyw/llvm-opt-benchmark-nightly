@@ -1971,7 +1971,7 @@ def test(user: str, comment_body: str, issue_url: str):
     if baseline_patch_url:
         pr_body += f"Baseline: {baseline_patch_url}\n"
     if passes:
-        pr_body += f"Passes: {passes}\n"
+        pr_body += f"Passes: `{passes}`\n"
     pr_body += (
         f"Baseline commit: https://github.com/llvm/llvm-project/commit/{old_revision}\n"
     )
