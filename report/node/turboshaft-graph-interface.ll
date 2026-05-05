@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface13InlineMemC
   %.pre19.i = sub i64 %.pre10.i.i.i.i.i, %.pre18.i
   br label %.lr.ph.i.preheader.i
 
-.lr.ph.i.preheader.i:                             ; preds = %bb.y, %bb.z
+.lr.ph.i.preheader.i:                             ; preds = %bb.z, %bb.y
   %.pre-phi20.i = phi i64 [ %.pre19.i, %bb.z ], [ %i.cu, %bb.y ] ; 2 uses
   %i.de = phi ptr [ %.pre.i.i.i.i.i, %bb.z ], [ %i.cp, %bb.y ] ; 10 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 16
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface13InlineMemC
   %.pre22.i = sub i64 %.pre10.i.i.i.i.i137, %.pre21.i
   br label %.lr.ph.i.preheader.i127
 
-.lr.ph.i.preheader.i127:                          ; preds = %bb.ao, %bb.ap
+.lr.ph.i.preheader.i127:                          ; preds = %bb.ap, %bb.ao
   %.pre-phi23.i = phi i64 [ %.pre22.i, %bb.ap ], [ %i.hs, %bb.ao ] ; 2 uses
   %i.ic = phi ptr [ %.pre.i.i.i.i.i136, %bb.ap ], [ %i.hn, %bb.ao ] ; 13 uses
   %i.id = getelementptr inbounds nuw i8, ptr %i.ic, i64 24
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface13InlineMemF
   %.pre22.i = sub i64 %.pre10.i.i.i.i.i, %.pre21.i
   br label %.lr.ph.i.preheader.i
 
-.lr.ph.i.preheader.i:                             ; preds = %bb.x, %bb.y
+.lr.ph.i.preheader.i:                             ; preds = %bb.y, %bb.x
   %.pre-phi23.i = phi i64 [ %.pre22.i, %bb.y ], [ %i.dm, %bb.x ] ; 2 uses
   %i.dw = phi ptr [ %.pre.i.i.i.i.i, %bb.y ], [ %i.dh, %bb.x ] ; 13 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dw, i64 24
