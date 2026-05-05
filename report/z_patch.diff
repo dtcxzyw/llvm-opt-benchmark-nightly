@@ -1,0 +1,66 @@
+diff --git a/llvm/include/llvm/IR/IRBuilder.h b/llvm/include/llvm/IR/IRBuilder.h
+index d3c782a7b4a48..e28a9027740a3 100644
+--- a/llvm/include/llvm/IR/IRBuilder.h
++++ b/llvm/include/llvm/IR/IRBuilder.h
+@@ -2824,10 +2824,14 @@ class IRBuilderBase {
+                                                Value *Alignment,
+                                                Value *OffsetValue = nullptr);
+ 
+-  /// Create an assume intrinsic call that represents an dereferencable
++  /// Create an assume intrinsic call that represents a dereferencable
+   /// assumption on the provided pointer.
+   LLVM_ABI CallInst *CreateDereferenceableAssumption(Value *PtrValue,
+                                                      Value *SizeValue);
++
++  /// Create an assume intrinsic call that represents a nonnull assumption on
++  /// the provided pointer.
++  LLVM_ABI CallInst *CreateNonnullAssumption(Value *PtrValue);
+ };
+ 
+ /// This provides a uniform API for creating instructions and inserting
+diff --git a/llvm/lib/IR/IRBuilder.cpp b/llvm/lib/IR/IRBuilder.cpp
+index b322d5e0d0650..09945044c79a1 100644
+--- a/llvm/lib/IR/IRBuilder.cpp
++++ b/llvm/lib/IR/IRBuilder.cpp
+@@ -1386,13 +1386,20 @@ CallInst *IRBuilderBase::CreateAlignmentAssumption(const DataLayout &DL,
+ CallInst *IRBuilderBase::CreateDereferenceableAssumption(Value *PtrValue,
+                                                          Value *SizeValue) {
+   assert(isa<PointerType>(PtrValue->getType()) &&
+-         "trying to create an deferenceable assumption on a non-pointer?");
++         "trying to create a deferenceable assumption on a non-pointer?");
+   SmallVector<Value *, 4> Vals({PtrValue, SizeValue});
+   OperandBundleDefT<Value *> DereferenceableOpB("dereferenceable", Vals);
+   return CreateAssumption(ConstantInt::getTrue(getContext()),
+                           {DereferenceableOpB});
+ }
+ 
++CallInst *IRBuilderBase::CreateNonnullAssumption(Value *PtrValue) {
++  assert(isa<PointerType>(PtrValue->getType()) &&
++         "trying to create a nonnull assumption on a non-pointer?");
++  return CreateAssumption(ConstantInt::getTrue(getContext()),
++                          OperandBundleDef("nonnull", PtrValue));
++}
++
+ IRBuilderDefaultInserter::~IRBuilderDefaultInserter() = default;
+ IRBuilderCallbackInserter::~IRBuilderCallbackInserter() = default;
+ IRBuilderFolder::~IRBuilderFolder() = default;
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 7244981b7fa5b..da258b3b34e27 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3718,13 +3718,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+     if (match(IIOperand,
+               m_SpecificICmp(ICmpInst::ICMP_NE, m_Value(A), m_Zero())) &&
+         A->getType()->isPointerTy()) {
+-      if (auto *Replacement = buildAssumeFromKnowledge(
+-              {RetainedKnowledge{Attribute::NonNull, 0, A}}, Next, &AC, &DT)) {
+-
+-        InsertNewInstBefore(Replacement, Next->getIterator());
+-        AC.registerAssumption(Replacement);
+-        return RemoveConditionFromAssume(II);
+-      }
++      Builder.CreateNonnullAssumption(A);
++      return eraseInstFromFunction(*II);
+     }
+ 
+     // Convert alignment assume like:
