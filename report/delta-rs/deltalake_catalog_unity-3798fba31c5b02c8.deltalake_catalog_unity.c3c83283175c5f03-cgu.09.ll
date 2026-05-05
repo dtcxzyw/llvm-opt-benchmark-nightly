@@ -4,15 +4,17 @@ begin_hunk_0_@_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtN
   br i1 %i.n, label %_RINvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB7_4IteryENtNtNtNtBb_4iter6traits8iterator8Iterator4folduNCINvNtNtBY_8adapters3map8map_foldRyINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxSINtNtNtCs95DO3lnzZ3L_4moka6common5deque5DequeINtNtB2S_11timer_wheel9TimerNodeNtNtB2i_6string6StringEEEuNCNvMs0_B3z_INtB3z_10TimerWheelB42_E6enable0NCINvNvBS_8for_each4callB2d_NCINvMsj_NtB2i_3vecINtB5L_3VecB2d_E14extend_trustedINtB1I_3MapBF_B4s_EE0E0E0ECsgO8S5jLFugx_23deltalake_catalog_unity.exit.loopexit, label %bb.c
 
 bb.e:                                             ; preds = %bb.c
+  %.sroa.01.0.i.lcssa = phi i64 [ %.sroa.01.0.i, %bb.c ]
   %lpad10 = landingpad { ptr, i32 }
           cleanup
-  %i.p = add i64 %.sroa.6.0.copyload, %.sroa.01.0.i
+  %i.p = add i64 %.sroa.01.0.i.lcssa, %.sroa.6.0.copyload
   br label %bb.g
 
 bb.f:                                             ; preds = %.noexc.i
+  %.sroa.01.0.i.lcssa11 = phi i64 [ %.sroa.01.0.i, %.noexc.i ]
   %lpad = landingpad { ptr, i32 }
           cleanup
-  %i.q = add i64 %.sroa.6.0.copyload, %.sroa.01.0.i
+  %i.q = add i64 %.sroa.01.0.i.lcssa11, %.sroa.6.0.copyload
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f

@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN6hermes5regex4Node16optimizeNodeListERSt6vectorIPS1_SaIS3_EENS0
   br i1 %i.ck, label %bb.n, label %.critedgesplit
 
 bb.n:                                             ; preds = %bb.m
-  %i.cl = add i64 %.173, 1                        ; 3 uses
+  %i.cl = add i64 %.173, 1                        ; 4 uses
   %i.cm = icmp ult i64 %i.cl, %i.aa
   br i1 %i.cm, label %bb.m, label %..critedge_crit_edge, !llvm.loop !557
 
@@ -13,11 +13,12 @@ begin_hunk_1_@_ZN6hermes5regex4Node16optimizeNodeListERSt6vectorIPS1_SaIS3_EENS0
   br label %.critedge
 
 ..critedge_crit_edge:                             ; preds = %bb.n
-  %.lcssa176 = phi i64 [ %i.cl, %bb.n ]
+  %.lcssa174 = phi i64 [ %i.cl, %bb.n ]
+  %.lcssa176 = phi i64 [ %i.cl, %bb.n ]           ; 0 uses
   br label %.critedge, !llvm.loop !557
 
 .critedge:                                        ; preds = %.critedgesplit, %..critedge_crit_edge
-  %.1.lcssa = phi i64 [ %.lcssa176, %..critedge_crit_edge ], [ %.173.lcssa, %.critedgesplit ] ; 3 uses
+  %.1.lcssa = phi i64 [ %.lcssa174, %..critedge_crit_edge ], [ %.173.lcssa, %.critedgesplit ] ; 3 uses
   %i.cn = sub i64 %.1.lcssa, %.074
   %i.co = icmp ugt i64 %i.cn, 1
   br i1 %i.co, label %bb.o, label %_ZSt4fillIN9__gnu_cxx17__normal_iteratorIPPN6hermes5regex4NodeESt6vectorIS5_SaIS5_EEEEDnEvT_SB_RKT0_.exit

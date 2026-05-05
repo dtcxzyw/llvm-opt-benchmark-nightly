@@ -4,10 +4,12 @@ begin_hunk_0_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSNtCsbjGuDcEILED_11pr
 bb.c:                                             ; preds = %.lr.ph10
   %lsr.iv.next17 = add i64 %lsr.iv16, -1          ; 2 uses
   %scevgep22 = getelementptr i8, ptr %lsr.iv21, i64 32
-  %i.e = icmp eq i64 %lsr.iv, %lsr.iv.next17
+  %i.e = icmp eq i64 %lsr.iv.lcssa, %lsr.iv.next17
   br i1 %i.e, label %._crit_edge11.loopexit, label %.lr.ph10
 
 bb.d:                                             ; preds = %.lr.ph
+  %lsr.iv20.lcssa = phi ptr [ %lsr.iv19, %.lr.ph ]
+  %lsr.iv.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %i.f = landingpad { ptr, i32 }
           cleanup
@@ -16,7 +18,7 @@ begin_hunk_1_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSNtCsbjGuDcEILED_11pr
   br label %.lr.ph10
 
 .lr.ph10:                                         ; preds = %.lr.ph10.preheader, %bb.c
-  %lsr.iv21 = phi ptr [ %lsr.iv19, %.lr.ph10.preheader ], [ %scevgep22, %bb.c ] ; 2 uses
+  %lsr.iv21 = phi ptr [ %lsr.iv20.lcssa, %.lr.ph10.preheader ], [ %scevgep22, %bb.c ] ; 2 uses
   %lsr.iv16 = phi i64 [ %1, %.lr.ph10.preheader ], [ %lsr.iv.next17, %bb.c ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECsBGNUbrdbJ0_5quote(ptr align 8 %lsr.iv21) #22
           to label %bb.c unwind label %bb.e
@@ -25,10 +27,12 @@ begin_hunk_2_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSNtNtCs7nQiqFc7Txl_3s
 bb.c:                                             ; preds = %.lr.ph10
   %lsr.iv.next17 = add i64 %lsr.iv16, -1          ; 2 uses
   %scevgep22 = getelementptr i8, ptr %lsr.iv21, i64 232
-  %i.e = icmp eq i64 %lsr.iv, %lsr.iv.next17
+  %i.e = icmp eq i64 %lsr.iv.lcssa, %lsr.iv.next17
   br i1 %i.e, label %._crit_edge11.loopexit, label %.lr.ph10
 
 bb.d:                                             ; preds = %.lr.ph
+  %lsr.iv20.lcssa = phi ptr [ %lsr.iv19, %.lr.ph ]
+  %lsr.iv.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %i.f = landingpad { ptr, i32 }
           cleanup
@@ -37,7 +41,7 @@ begin_hunk_3_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSNtNtCs7nQiqFc7Txl_3s
   br label %.lr.ph10
 
 .lr.ph10:                                         ; preds = %.lr.ph10.preheader, %bb.c
-  %lsr.iv21 = phi ptr [ %lsr.iv19, %.lr.ph10.preheader ], [ %scevgep22, %bb.c ] ; 2 uses
+  %lsr.iv21 = phi ptr [ %lsr.iv20.lcssa, %.lr.ph10.preheader ], [ %scevgep22, %bb.c ] ; 2 uses
   %lsr.iv16 = phi i64 [ %1, %.lr.ph10.preheader ], [ %lsr.iv.next17, %bb.c ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs7nQiqFc7Txl_3syn4attr4MetaEBK_(ptr align 8 %lsr.iv21) #22
           to label %bb.c unwind label %bb.e
@@ -46,10 +50,12 @@ begin_hunk_4_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSTNtNtCs7nQiqFc7Txl_3
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7: ; preds = %.lr.ph10
   %lsr.iv.next16 = add i64 %lsr.iv15, -1          ; 2 uses
   %scevgep21 = getelementptr i8, ptr %lsr.iv20, i64 240
-  %i.e = icmp eq i64 %lsr.iv, %lsr.iv.next16
+  %i.e = icmp eq i64 %lsr.iv.lcssa, %lsr.iv.next16
   br i1 %i.e, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7._crit_edge.loopexit, label %.lr.ph10
 
 bb.b:                                             ; preds = %.lr.ph
+  %lsr.iv19.lcssa = phi ptr [ %lsr.iv18, %.lr.ph ]
+  %lsr.iv.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %.lcssa = phi i64 [ %lsr.iv, %.lr.ph ]
   %i.f = landingpad { ptr, i32 }
           cleanup
@@ -58,7 +64,7 @@ begin_hunk_5_@_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeSTNtNtCs7nQiqFc7Txl_3
   br label %.lr.ph10
 
 .lr.ph10:                                         ; preds = %.lr.ph10.preheader, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7
-  %lsr.iv20 = phi ptr [ %lsr.iv18, %.lr.ph10.preheader ], [ %scevgep21, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7 ] ; 2 uses
+  %lsr.iv20 = phi ptr [ %lsr.iv19.lcssa, %.lr.ph10.preheader ], [ %scevgep21, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7 ] ; 2 uses
   %lsr.iv15 = phi i64 [ %1, %.lr.ph10.preheader ], [ %lsr.iv.next16, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7 ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs7nQiqFc7Txl_3syn4attr4MetaEBK_(ptr align 8 %lsr.iv20)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeTNtNtCs7nQiqFc7Txl_3syn4attr4MetaNtNtBL_5token5CommaEECs4ZaLwAtrTbk_16deltalake_derive.exit7 unwind label %bb.c
