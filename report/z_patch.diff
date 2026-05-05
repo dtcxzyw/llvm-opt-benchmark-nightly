@@ -1,0 +1,37 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 8185f009bc9d0..903b4512504ed 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3611,12 +3611,6 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       replaceUse(II->getOperandUse(0), ConstantInt::getTrue(II->getContext()));
+       return nullptr;
+     };
+-    // Remove an assume if it is followed by an identical assume.
+-    // TODO: Do we need this? Unless there are conflicting assumptions, the
+-    // computeKnownBits(IIOperand) below here eliminates redundant assumes.
+-    Instruction *Next = II->getNextNode();
+-    if (match(Next, m_Intrinsic<Intrinsic::assume>(m_Specific(IIOperand))))
+-      return RemoveConditionFromAssume(Next);
+ 
+     // Canonicalize assume(a && b) -> assume(a); assume(b);
+     // Note: New assumption intrinsics created here are registered by
+@@ -3714,6 +3708,7 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       }
+     }
+ 
++    Instruction *Next = II->getNextNode();
+     // Convert nonnull assume like:
+     // %A = icmp ne i32* %PTR, null
+     // call void @llvm.assume(i1 %A)
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index 197d680babe11..1242fb1f90636 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -461,7 +461,6 @@ define i32 @assumption_conflicts_with_known_bits(i32 %a, i32 %b) {
+ 
+ define void @debug_interference(i8 %x) {
+ ; CHECK-LABEL: @debug_interference(
+-; CHECK-NEXT:      #dbg_value(i32 5, [[META7:![0-9]+]], !DIExpression(), [[META9:![0-9]+]])
+ ; CHECK-NEXT:    store i1 true, ptr poison, align 1
+ ; CHECK-NEXT:    ret void
+ ;
