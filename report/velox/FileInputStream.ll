@@ -1,0 +1,65 @@
+inline.NumInlined: 1524
+inline.NumDeleted: 827
+begin_hunk_0_@_ZN5folly7futures6detail8waitImplINS_10SemiFutureImEEmEEvRT_:bb.a
+
+bb.c:                                             ; preds = %_ZNK5folly7futures6detail10FutureBaseImE7isReadyEv.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #26
+  %i.c = tail call noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #33 ; 12 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store ptr null, ptr %i.d, align 16, !tbaa !49
+end_hunk_0
+begin_hunk_1_@_ZN5folly7futures6detail8waitImplINS_10SemiFutureImEEmEEvRT_:bb.a
+  store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly7futures6detail4CoreImEE, i64 16), ptr %i.c, align 16, !tbaa !11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
+  store ptr %i.c, ptr %2, align 8, !tbaa !40, !alias.scope !483
+  invoke void @_ZN5folly10SemiFutureImE23releaseDeferredExecutorEPNS_7futures6detail4CoreImEE(ptr noundef null)
+          to label %_ZN5folly10SemiFutureImED2Ev.exit unwind label %5
+
+5:                                                ; preds = %bb.c
+  %6 = landingpad { ptr, i32 }
+          catch ptr null
+  %7 = extractvalue { ptr, i32 } %6, 0
+  tail call void @__clang_call_terminate(ptr %7) #34
+  unreachable
+
+_ZN5folly10SemiFutureImED2Ev.exit:                ; preds = %bb.c
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
+  store i64 0, ptr %3, align 8, !tbaa !205
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
+  store ptr %3, ptr %4, align 8, !tbaa !486
+  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store i8 0, ptr %1, align 8, !tbaa !185
+  store i8 1, ptr %9, align 8, !tbaa !186
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  store ptr null, ptr %8, align 8, !tbaa !188
+  store ptr %i.c, ptr %10, align 8, !tbaa !189
+  invoke void @_ZN5folly7futures6detail10FutureBaseImE12setCallback_IZNS1_8waitImplINS_10SemiFutureImEEmEEvRT_EUlONS_17ExecutorKeepAliveINS_8ExecutorEEEONS_3TryImEEE_EEvOS8_NS1_18InlineContinuationE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(24) %4, i32 noundef 1)
+          to label %bb.d unwind label %bb.o
+
+bb.d:                                             ; preds = %_ZN5folly10SemiFutureImED2Ev.exit
+  %i.l = load ptr, ptr %10, align 8, !tbaa !189   ; 3 uses
+  %.not.i.i.i12 = icmp eq ptr %i.l, null
+  br i1 %.not.i.i.i12, label %_ZZN5folly7futures6detail8waitImplINS_10SemiFutureImEEmEEvRT_ENUlONS_17ExecutorKeepAliveINS_8ExecutorEEEONS_3TryImEEE_D2Ev.exit, label %bb.e
+
+bb.e:                                             ; preds = %bb.d
+  %i.m = load i8, ptr %9, align 8, !tbaa !186, !range !84, !noundef !85
+  %i.n = trunc nuw i8 %i.m to i1
+  br i1 %i.n, label %bb.g, label %bb.f
+
+bb.f:                                             ; preds = %bb.e
+  call void @_ZN5folly7futures6detail8CoreBase9detachOneEv(ptr noundef nonnull align 16 dereferenceable(136) %i.l) #26
+  %.pre.i.i.i = load ptr, ptr %10, align 8, !tbaa !189
+  br label %bb.g
+
+bb.g:                                             ; preds = %bb.f, %bb.e
+end_hunk_1
+begin_hunk_2_@_ZN5folly7futures6detail8waitImplINS_10SemiFutureImEEmEEvRT_:bb.a
+bb.n:                                             ; preds = %_ZNK5folly7futures6detail10FutureBaseImE7isReadyEv.exit, %_ZN5folly7PromiseImED2Ev.exit
+  ret void
+
+bb.o:                                             ; preds = %_ZN5folly10SemiFutureImED2Ev.exit
+  %i.x = landingpad { ptr, i32 }
+          cleanup
+  call void @_ZZN5folly7futures6detail8waitImplINS_10SemiFutureImEEmEEvRT_ENUlONS_17ExecutorKeepAliveINS_8ExecutorEEEONS_3TryImEEE_D2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %4) #26
+end_hunk_2
