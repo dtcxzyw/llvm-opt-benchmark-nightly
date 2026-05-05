@@ -1,10 +1,10 @@
-inline.NumInlined: 629
+inline.NumInlined: 630
 inline.NumDeleted: 394
 begin_hunk_0_@_ZN5folly16ManualTimekeeper5afterENSt6chrono8durationIlSt5ratioILl1ELl1000000EEEE:_ZN5folly19makePromiseContractINS_4UnitEEENS_19SemiPromiseContractIT_EEv.exit
   store i8 1, ptr %6, align 8, !tbaa !37, !alias.scope !22
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 3 uses
   store ptr %i.c, ptr %i.l, align 8, !tbaa !41, !alias.scope !22
-  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   store ptr %i.c, ptr %i.m, align 8, !tbaa !42, !alias.scope !22
   %i.n = icmp eq i64 %2, 0
   br i1 %i.n, label %bb.a, label %bb.h
@@ -13,42 +13,22 @@ begin_hunk_1_@_ZN5folly16ManualTimekeeper5afterENSt6chrono8durationIlSt5ratioILl
   %i.ca = load ptr, ptr %i.m, align 8, !tbaa !42
   store ptr %i.ca, ptr %0, align 8, !tbaa !42
   store ptr null, ptr %i.m, align 8, !tbaa !42
-  invoke void @_ZN5folly10SemiFutureINS_4UnitEE23releaseDeferredExecutorEPNS_7futures6detail4CoreIS1_EE(ptr noundef null)
-          to label %8 unwind label %11
-
-8:                                                ; preds = %bb.ab
-  %9 = load ptr, ptr %i.m, align 8, !tbaa !42     ; 2 uses
-  %.not.i.i.i.i11 = icmp eq ptr %9, null
-  br i1 %.not.i.i.i.i11, label %_ZN5folly10SemiFutureINS_4UnitEED2Ev.exit.i, label %10
-
-10:                                               ; preds = %8
-  call void @_ZN5folly7futures6detail8CoreBase9detachOneEv(ptr noundef nonnull align 16 dereferenceable(136) %9) #14
-  br label %_ZN5folly10SemiFutureINS_4UnitEED2Ev.exit.i
-
-11:                                               ; preds = %bb.ab
-  %12 = landingpad { ptr, i32 }
-          catch ptr null
-  %13 = extractvalue { ptr, i32 } %12, 0
-  call void @__clang_call_terminate(ptr %13) #26
-  unreachable
-
-_ZN5folly10SemiFutureINS_4UnitEED2Ev.exit.i:      ; preds = %10, %8
-  %14 = load ptr, ptr %i.l, align 8, !tbaa !41    ; 3 uses
-  %.not.i.i.i12 = icmp eq ptr %14, null
+  %8 = load ptr, ptr %i.l, align 8, !tbaa !41     ; 3 uses
+  %.not.i.i.i12 = icmp eq ptr %8, null
   br i1 %.not.i.i.i12, label %_ZN5folly19SemiPromiseContractINS_4UnitEED2Ev.exit, label %bb.ac
 
-bb.ac:                                            ; preds = %_ZN5folly10SemiFutureINS_4UnitEED2Ev.exit.i
+bb.ac:                                            ; preds = %bb.ab
   %i.cb = load i8, ptr %6, align 8, !tbaa !37, !range !70, !noundef !71
   %i.cc = trunc nuw i8 %i.cb to i1
   br i1 %i.cc, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  call void @_ZN5folly7futures6detail8CoreBase9detachOneEv(ptr noundef nonnull align 16 dereferenceable(136) %14) #14
+  call void @_ZN5folly7futures6detail8CoreBase9detachOneEv(ptr noundef nonnull align 16 dereferenceable(136) %8) #14
   %.pre.i.i.i = load ptr, ptr %i.l, align 8, !tbaa !41
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  %i.cd = phi ptr [ %.pre.i.i.i, %bb.ad ], [ %14, %bb.ac ]
+  %i.cd = phi ptr [ %.pre.i.i.i, %bb.ad ], [ %8, %bb.ac ]
   invoke void @_ZN5folly7futures6detail32coreDetachPromiseMaybeWithResultINS_4UnitEEEvRNS1_4CoreIT_EE(ptr noundef nonnull align 16 dereferenceable(160) %i.cd)
           to label %_ZN5folly19SemiPromiseContractINS_4UnitEED2Ev.exit unwind label %bb.af
 
@@ -57,7 +37,7 @@ begin_hunk_2_@_ZN5folly16ManualTimekeeper5afterENSt6chrono8durationIlSt5ratioILl
   call void @__clang_call_terminate(ptr %i.cf) #26
   unreachable
 
-_ZN5folly19SemiPromiseContractINS_4UnitEED2Ev.exit: ; preds = %_ZN5folly10SemiFutureINS_4UnitEED2Ev.exit.i, %bb.ae
+_ZN5folly19SemiPromiseContractINS_4UnitEED2Ev.exit: ; preds = %bb.ab, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   ret void
 
