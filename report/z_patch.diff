@@ -1,0 +1,223 @@
+diff --git a/llvm/include/llvm/Analysis/SimplifyQuery.h b/llvm/include/llvm/Analysis/SimplifyQuery.h
+index d1d34f22a2fc5..b81b1dae27471 100644
+--- a/llvm/include/llvm/Analysis/SimplifyQuery.h
++++ b/llvm/include/llvm/Analysis/SimplifyQuery.h
+@@ -86,6 +86,7 @@ struct SimplifyQuery {
+   /// possible values for uses of undef. If it is false, simplifications are not
+   /// allowed to assume a particular value for a use of undef for example.
+   bool CanUseUndef = true;
++  bool AllowEphemerals = false;
+ 
+   SimplifyQuery(const DataLayout &DL, const Instruction *CXTI = nullptr)
+       : DL(DL), CxtI(CXTI) {}
+@@ -115,6 +116,11 @@ struct SimplifyQuery {
+     Copy.CanUseUndef = false;
+     return Copy;
+   }
++  SimplifyQuery allowEphemerals(bool AllowEphemerals) const {
++    SimplifyQuery Copy(*this);
++    Copy.AllowEphemerals = AllowEphemerals;
++    return Copy;
++  }
+ 
+   /// If CanUseUndef is true, returns whether \p V is undef.
+   /// Otherwise always return false.
+diff --git a/llvm/include/llvm/Analysis/ValueTracking.h b/llvm/include/llvm/Analysis/ValueTracking.h
+index ff2712efe1ef5..00469421d55b4 100644
+--- a/llvm/include/llvm/Analysis/ValueTracking.h
++++ b/llvm/include/llvm/Analysis/ValueTracking.h
+@@ -629,6 +629,11 @@ LLVM_ABI bool isValidAssumeForContext(const Instruction *I,
+                                       const DominatorTree *DT = nullptr,
+                                       bool AllowEphemerals = false);
+ 
++inline bool isValidAssumeForContext(const Instruction *I,
++                                    const SimplifyQuery &Q) {
++  return isValidAssumeForContext(I, Q.CxtI, Q.DT, Q.AllowEphemerals);
++}
++
+ /// Returns true, if no instruction between \p Assume and \p CtxI may free
+ /// memory and the function is marked as NoSync. The latter ensures the current
+ /// function cannot arrange for another thread to free on its behalf.
+diff --git a/llvm/lib/Analysis/InstructionSimplify.cpp b/llvm/lib/Analysis/InstructionSimplify.cpp
+index af21e46563f94..2bd0eb269510f 100644
+--- a/llvm/lib/Analysis/InstructionSimplify.cpp
++++ b/llvm/lib/Analysis/InstructionSimplify.cpp
+@@ -3784,7 +3784,7 @@ static Value *simplifyICmpWithDominatingAssume(CmpPredicate Predicate,
+       CallInst *Assume = cast<CallInst>(AssumeVH);
+       if (std::optional<bool> Imp = isImpliedCondition(
+               Assume->getArgOperand(0), Predicate, LHS, RHS, Q.DL))
+-        if (isValidAssumeForContext(Assume, Q.CxtI, Q.DT))
++        if (isValidAssumeForContext(Assume, Q))
+           return ConstantInt::get(getCompareTy(LHS), *Imp);
+     }
+   }
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index 74037b7274336..e15ed1591ed64 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -6558,7 +6558,9 @@ APInt ScalarEvolution::getConstantMultipleImpl(const SCEV *S,
+         CtxI = I;
+     }
+     unsigned Known =
+-        computeKnownBits(U->getValue(), getDataLayout(), &AC, CtxI, &DT)
++        computeKnownBits(U->getValue(),
++                         SimplifyQuery(getDataLayout(), &DT, &AC, CtxI)
++                             .allowEphemerals(true))
+             .countMinTrailingZeros();
+     return GetShiftedByZeros(Known);
+   }
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 40f1025fed4fb..ed3476c6ad145 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -852,7 +852,7 @@ static bool isKnownNonZeroFromAssume(const Value *V, const SimplifyQuery &Q) {
+ 
+           return false;
+         }();
+-        if (AssumeImpliesNonNull && isValidAssumeForContext(I, Q.CxtI, Q.DT))
++        if (AssumeImpliesNonNull && isValidAssumeForContext(I, Q))
+           return true;
+       }
+       continue;
+@@ -868,7 +868,7 @@ static bool isKnownNonZeroFromAssume(const Value *V, const SimplifyQuery &Q) {
+     if (!match(I->getArgOperand(0), m_c_ICmp(Pred, m_V, m_Value(RHS))))
+       continue;
+ 
+-    if (cmpExcludesZero(Pred, RHS) && isValidAssumeForContext(I, Q.CxtI, Q.DT))
++    if (cmpExcludesZero(Pred, RHS) && isValidAssumeForContext(I, Q))
+       return true;
+   }
+ 
+@@ -1094,12 +1094,8 @@ void llvm::computeKnownBitsFromContext(const Value *V, KnownBits &Known,
+         continue;
+       if (RetainedKnowledge RK = getKnowledgeFromBundle(
+               *I, I->bundle_op_info_begin()[Elem.Index])) {
+-        // Allow AllowEphemerals in isValidAssumeForContext, as the CxtI might
+-        // be the producer of the pointer in the bundle. At the moment, align
+-        // assumptions aren't optimized away.
+         if (RK.WasOn == V && RK.AttrKind == Attribute::Alignment &&
+-            isPowerOf2_64(RK.ArgValue) &&
+-            isValidAssumeForContext(I, Q.CxtI, Q.DT, /*AllowEphemerals*/ true))
++            isPowerOf2_64(RK.ArgValue) && isValidAssumeForContext(I, Q))
+           Known.Zero.setLowBits(Log2_64(RK.ArgValue));
+       }
+       continue;
+@@ -1111,14 +1107,14 @@ void llvm::computeKnownBitsFromContext(const Value *V, KnownBits &Known,
+ 
+     Value *Arg = I->getArgOperand(0);
+ 
+-    if (Arg == V && isValidAssumeForContext(I, Q.CxtI, Q.DT)) {
++    if (Arg == V && isValidAssumeForContext(I, Q)) {
+       assert(BitWidth == 1 && "assume operand is not i1?");
+       (void)BitWidth;
+       Known.setAllOnes();
+       return;
+     }
+     if (match(Arg, m_Not(m_Specific(V))) &&
+-        isValidAssumeForContext(I, Q.CxtI, Q.DT)) {
++        isValidAssumeForContext(I, Q)) {
+       assert(BitWidth == 1 && "assume operand is not i1?");
+       (void)BitWidth;
+       Known.setAllZero();
+@@ -1126,7 +1122,7 @@ void llvm::computeKnownBitsFromContext(const Value *V, KnownBits &Known,
+     }
+     auto *Trunc = dyn_cast<TruncInst>(Arg);
+     if (Trunc && Trunc->getOperand(0) == V &&
+-        isValidAssumeForContext(I, Q.CxtI, Q.DT)) {
++        isValidAssumeForContext(I, Q)) {
+       if (Trunc->hasNoUnsignedWrap()) {
+         Known = KnownBits::makeConstant(APInt(BitWidth, 1));
+         return;
+@@ -1143,7 +1139,7 @@ void llvm::computeKnownBitsFromContext(const Value *V, KnownBits &Known,
+     if (!Cmp)
+       continue;
+ 
+-    if (!isValidAssumeForContext(I, Q.CxtI, Q.DT))
++    if (!isValidAssumeForContext(I, Q))
+       continue;
+ 
+     computeKnownBitsFromICmpCond(V, Cmp, Known, Q, /*Invert=*/false);
+@@ -2669,7 +2665,7 @@ bool llvm::isKnownToBeAPowerOfTwo(const Value *V, bool OrZero,
+       CallInst *I = cast<CallInst>(AssumeVH);
+       if (isImpliedToBeAPowerOfTwoFromCond(V, OrZero, I->getArgOperand(0),
+                                            /*CondIsTrue=*/true) &&
+-          isValidAssumeForContext(I, Q.CxtI, Q.DT))
++          isValidAssumeForContext(I, Q))
+         return true;
+     }
+   }
+@@ -4117,7 +4113,7 @@ static bool isKnownNonEqualFromContext(const Value *V1, const Value *V2,
+     if (isImpliedCondition(I->getArgOperand(0), ICmpInst::ICMP_NE, V1, V2, Q.DL,
+                            /*LHSIsTrue=*/true, Depth)
+             .value_or(false) &&
+-        isValidAssumeForContext(I, Q.CxtI, Q.DT))
++        isValidAssumeForContext(I, Q))
+       return true;
+   }
+ 
+@@ -4890,7 +4886,7 @@ static KnownFPClass computeKnownFPClassFromContext(const Value *V,
+     assert(I->getIntrinsicID() == Intrinsic::assume &&
+            "must be an assume intrinsic");
+ 
+-    if (!isValidAssumeForContext(I, Q.CxtI, Q.DT))
++    if (!isValidAssumeForContext(I, Q))
+       continue;
+ 
+     computeKnownFPClassFromCond(V, I->getArgOperand(0),
+@@ -10483,7 +10479,7 @@ ConstantRange llvm::computeConstantRange(const Value *V, bool ForSigned,
+       assert(I->getIntrinsicID() == Intrinsic::assume &&
+              "must be an assume intrinsic");
+ 
+-      if (!isValidAssumeForContext(I, SQ.CxtI, SQ.DT))
++      if (!isValidAssumeForContext(I, SQ))
+         continue;
+       Value *Arg = I->getArgOperand(0);
+       ICmpInst *Cmp = dyn_cast<ICmpInst>(Arg);
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index da258b3b34e27..91132d9d6ee02 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3677,10 +3677,8 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         // Compute known bits for the pointer, passing nullptr as context to
+         // avoid computeKnownBits using the assumption we are about to remove
+         // for reasoning.
+-        KnownBits Known = computeKnownBits(RK.WasOn, /*CtxI=*/nullptr);
+-        unsigned TZ = std::min(Known.countMinTrailingZeros(),
+-                               Value::MaxAlignmentExponent);
+-        if ((1ULL << TZ) < RK.ArgValue)
++        if ((1ULL << computeKnownBits(RK.WasOn, II).countMinTrailingZeros()) <
++            RK.ArgValue)
+           continue;
+         return CallBase::removeOperandBundle(II, OBU.getTagID());
+       }
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index 6b43430229388..40fe2f5f46f1e 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -7,6 +7,7 @@ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+ 
+ declare void @llvm.assume(i1) #1
++declare ptr @get_ptr()
+ 
+ ; Check that the assume has not been removed:
+ 
+@@ -80,6 +81,18 @@ entry:
+   ret void
+ }
+ 
++define void @redundant_align() {
++; CHECK-LABEL: @redundant_align(
++; CHECK-NEXT:    [[PTR:%.*]] = call ptr @get_ptr()
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "align"(ptr [[PTR]], i64 8) ]
++; CHECK-NEXT:    ret void
++;
++  %ptr = call ptr @get_ptr()
++  call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 8) ]
++  call void @llvm.assume(i1 true) [ "align"(ptr %ptr, i64 8) ]
++  ret void
++}
++
+ ; Same check as in @foo1, but make sure it works if the assume is first too.
+ 
+ define i32 @foo2(ptr %a) #0 {
