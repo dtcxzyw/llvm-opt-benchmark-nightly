@@ -1,0 +1,97 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 8f10bbae3d462..a20ccf2d0a65b 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -608,40 +608,41 @@ void llvm::computeKnownBitsFromRangeMetadata(const MDNode &Ranges,
+ }
+ 
+ static bool isEphemeralValueOf(const Instruction *I, const Value *E) {
+-  SmallVector<const Instruction *, 16> WorkSet(1, I);
+-  SmallPtrSet<const Instruction *, 32> Visited;
+-  SmallPtrSet<const Instruction *, 16> EphValues;
+-
+   // The instruction defining an assumption's condition itself is always
+   // considered ephemeral to that assumption (even if it has other
+   // non-ephemeral users). See r246696's test case for an example.
+   if (is_contained(I->operands(), E))
+     return true;
+ 
+-  while (!WorkSet.empty()) {
+-    const Instruction *V = WorkSet.pop_back_val();
+-    if (!Visited.insert(V).second)
+-      continue;
+-
+-    // If all uses of this value are ephemeral, then so is this value.
+-    if (all_of(V->users(), [&](const User *U) {
+-          return EphValues.count(cast<Instruction>(U));
+-        })) {
+-      if (V == E)
+-        return true;
++  const auto *EI = dyn_cast<Instruction>(E);
++  if (!EI)
++    return false;
+ 
+-      if (V == I || (!V->mayHaveSideEffects() && !V->isTerminator())) {
+-        EphValues.insert(V);
++  if (EI == I)
++    return true;
+ 
+-        for (const Use &U : V->operands()) {
+-          if (const auto *I = dyn_cast<Instruction>(U.get()))
+-            WorkSet.push_back(I);
+-        }
++  SmallPtrSet<const Instruction *, 16> Visited;
++  SmallVector<const Instruction *, 16> WorkList;
++  Visited.insert(EI);
++  WorkList.push_back(EI);
++  bool ReachesI = false;
++  while (!WorkList.empty()) {
++    const Instruction *V = WorkList.pop_back_val();
++    for (const User *U : V->users()) {
++      const auto *UI = dyn_cast<Instruction>(U);
++      if (!UI)
++        return false;
++      if (UI == I) {
++        ReachesI = true;
++        continue;
+       }
++      if (UI->mayHaveSideEffects() || UI->isTerminator())
++        return false;
++      if (Visited.insert(UI).second)
++        WorkList.push_back(UI);
+     }
+   }
+-
+-  return false;
++  return ReachesI;
+ }
+ 
+ // Is this an intrinsic that cannot be speculated but also cannot trap?
+diff --git a/llvm/test/Transforms/InstSimplify/ctpop-pow2.ll b/llvm/test/Transforms/InstSimplify/ctpop-pow2.ll
+index 92e43654806a4..fce04ec862321 100644
+--- a/llvm/test/Transforms/InstSimplify/ctpop-pow2.ll
++++ b/llvm/test/Transforms/InstSimplify/ctpop-pow2.ll
+@@ -119,6 +119,23 @@ define i64 @ctpop_x_and_negx_nz(i64 %x) {
+   ret i64 %cnt
+ }
+ 
++; issue #128152
++define i1 @ctpop_assume_eq_1_extra_use(i32 %x) {
++; CHECK-LABEL: @ctpop_assume_eq_1_extra_use(
++; CHECK-NEXT:    [[CTPOP:%.*]] = call i32 @llvm.ctpop.i32(i32 [[X:%.*]])
++; CHECK-NEXT:    [[COND:%.*]] = icmp eq i32 [[CTPOP]], 1
++; CHECK-NEXT:    call void @llvm.assume(i1 [[COND]])
++; CHECK-NEXT:    [[RES:%.*]] = icmp eq i32 [[X]], 0
++; CHECK-NEXT:    ret i1 [[RES]]
++;
++  %ctpop = call i32 @llvm.ctpop.i32(i32 %x)
++  %cond = icmp eq i32 %ctpop, 1
++  %ext = zext i1 %cond to i8
++  call void @llvm.assume(i1 %cond)
++  %res = icmp eq i32 %x, 0
++  ret i1 %res
++}
++
+ define <2 x i32> @ctpop_shl1_vec(<2 x i32> %x) {
+ ; CHECK-LABEL: @ctpop_shl1_vec(
+ ; CHECK-NEXT:    ret <2 x i32> splat (i32 1)
