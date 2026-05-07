@@ -1,0 +1,195 @@
+diff --git a/llvm/include/llvm/Analysis/AliasAnalysis.h b/llvm/include/llvm/Analysis/AliasAnalysis.h
+index 845ccdbfce776..799dd7a482b2c 100644
+--- a/llvm/include/llvm/Analysis/AliasAnalysis.h
++++ b/llvm/include/llvm/Analysis/AliasAnalysis.h
+@@ -689,6 +689,9 @@ class BatchAAResults {
+   ModRefInfo getModRefInfo(const Instruction *I, const CallBase *Call2) {
+     return AA.getModRefInfo(I, Call2, AAQI);
+   }
++  ModRefInfo getModRefInfo(const Instruction *I, const Instruction *I2) {
++    return AA.getModRefInfo(I, I2, AAQI);
++  }
+   ModRefInfo getArgModRefInfo(const CallBase *Call, unsigned ArgIdx) {
+     return AA.getArgModRefInfo(Call, ArgIdx);
+   }
+diff --git a/llvm/lib/Transforms/Scalar/LICM.cpp b/llvm/lib/Transforms/Scalar/LICM.cpp
+index 9f3535a506b7e..2ceadb1ac30e2 100644
+--- a/llvm/lib/Transforms/Scalar/LICM.cpp
++++ b/llvm/lib/Transforms/Scalar/LICM.cpp
+@@ -2319,9 +2319,7 @@ static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+   if (!MSSA->isLiveOnEntryDef(Source) && CurLoop->contains(Source->getBlock()))
+     return false;
+ 
+-  // If there are interfering Uses (i.e. their defining access is in the
+-  // loop), or ordered loads (stored as Defs!), don't move this store.
+-  // Could do better here, but this is conservatively correct.
++  // If there are interfering Uses don't move this store.
+   // TODO: Cache set of Uses on the first walk in runOnLoop, update when
+   // moving accesses. Can also extend to dominating uses.
+   for (auto *BB : CurLoop->getBlocks()) {
+@@ -2329,45 +2327,16 @@ static bool noConflictingReadWrites(Instruction *I, MemorySSA *MSSA,
+     if (!Accesses)
+       continue;
+     for (const auto &MA : *Accesses) {
++      // Accesses are ordered. If we find one that I dominates we can stop.
+       if (!Flags.getIsSink() && MSSA->dominates(IMD, &MA))
+-        continue;
+-      if (const auto *MU = dyn_cast<MemoryUse>(&MA)) {
+-        auto *MD = getClobberingMemoryAccess(*MSSA, BAA, Flags,
+-                                             const_cast<MemoryUse *>(MU));
+-        if (!MSSA->isLiveOnEntryDef(MD) && CurLoop->contains(MD->getBlock()))
+-          return false;
+-        // Disable hoisting past potentially interfering loads. Optimized
+-        // Uses may point to an access outside the loop, as getClobbering
+-        // checks the previous iteration when walking the backedge.
+-        // FIXME: More precise: no Uses that alias I.
+-        if (!Flags.getIsSink() && !MSSA->dominates(IMD, MU))
+-          return false;
+-      } else if (const auto *MD = dyn_cast<MemoryDef>(&MA)) {
+-        if (auto *LI = dyn_cast<LoadInst>(MD->getMemoryInst())) {
+-          (void)LI; // Silence warning.
+-          assert(!LI->isUnordered() && "Expected unordered load");
+-          return false;
+-        }
+-        // Any call, while it may not be clobbering I, it may be a use.
+-        if (auto *CI = dyn_cast<CallInst>(MD->getMemoryInst())) {
+-          // Check if the call may read from the memory location written
+-          // to by I. Check CI's attributes and arguments; the number of
+-          // such checks performed is limited above by NoOfMemAccTooLarge.
+-          if (auto *SI = dyn_cast<StoreInst>(I)) {
+-            ModRefInfo MRI = BAA.getModRefInfo(CI, MemoryLocation::get(SI));
+-            if (isModOrRefSet(MRI))
+-              return false;
+-          } else {
+-            auto *SCI = cast<CallInst>(I);
+-            // If the instruction we are wanting to hoist is also a call
+-            // instruction then we need not check mod/ref info with itself
+-            if (SCI == CI)
+-              continue;
+-            ModRefInfo MRI = BAA.getModRefInfo(CI, SCI);
+-            if (isModOrRefSet(MRI))
+-              return false;
+-          }
+-        }
++        break;
++
++      if (const auto *MemUseOrDef = dyn_cast<MemoryUseOrDef>(&MA)) {
++        // Skip unrelated accesses.
++        if (isNoModRef(BAA.getModRefInfo(MemUseOrDef->getMemoryInst(), I)))
++          continue;
++
++        return false;
+       }
+     }
+   }
+diff --git a/llvm/test/Transforms/LICM/call-hoisting.ll b/llvm/test/Transforms/LICM/call-hoisting.ll
+index 748810be3a709..2520e2277cf56 100644
+--- a/llvm/test/Transforms/LICM/call-hoisting.ll
++++ b/llvm/test/Transforms/LICM/call-hoisting.ll
+@@ -277,17 +277,16 @@ exit:
+   ret i32 %val
+ }
+ 
+-; FIXME: It's safe to hoist @store(), because @load() does not alias.
+ define i32 @unrelated_read(ptr noalias %loc, ptr noalias %otherloc) {
+ ; CHECK-LABEL: define i32 @unrelated_read(
+ ; CHECK-SAME: ptr noalias [[LOC:%.*]], ptr noalias [[OTHERLOC:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    call void @store(i32 0, ptr [[LOC]])
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[OTHERLOC_GEP:%.*]] = getelementptr i32, ptr [[OTHERLOC]], i32 [[IV]]
+ ; CHECK-NEXT:    [[VAL:%.*]] = call i32 @load(ptr [[OTHERLOC_GEP]])
+-; CHECK-NEXT:    call void @store(i32 0, ptr [[LOC]])
+ ; CHECK-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i32 [[IV]], 200
+ ; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[EXIT:.*]]
+diff --git a/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll b/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll
+index fd73080365993..89d3cc9d37033 100644
+--- a/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll
++++ b/llvm/test/Transforms/LICM/hoist-inaccesiblemem-call.ll
+@@ -4,18 +4,16 @@
+ ;; It should hoist fn_write_inaccessible_mem
+ ;; because there is no conflict between inaccessible memory
+ ;; fn_read_inaccessible_mem is a nice side effect
+-; FIXME: fn_write_inaccessible_mem is currently not hoisted due to the preceding
+-; load, even though it does not alias.
+ define i32 @loop_alias(i64 %x, ptr %start) {
+ ; CHECK-LABEL: define i32 @loop_alias(
+ ; CHECK-SAME: i64 [[X:%.*]], ptr [[START:%.*]]) {
+ ; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
+ ; CHECK-NEXT:    br label %[[LOOP:.*]]
+ ; CHECK:       [[LOOP]]:
+ ; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[GEP:%.*]], %[[LOOP]] ]
+ ; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[PHI]], align 4
+ ; CHECK-NEXT:    [[VAL:%.*]] = call i32 @fn_args(i32 [[LOAD]])
+-; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
+ ; CHECK-NEXT:    call void @fn_read_inaccessible_mem(i32 [[LOAD]])
+ ; CHECK-NEXT:    [[GEP]] = getelementptr inbounds nuw i32, ptr [[PHI]], i64 [[X]]
+ ; CHECK-NEXT:    [[ACC:%.*]] = add nuw nsw i32 [[VAL]], 1
+@@ -158,6 +156,43 @@ loop:
+   br label %loop
+ }
+ 
++define i32 @non_dominated_load_that_does_not_alias_inaccessible_mem(ptr %dst, i64 %x, ptr %start) {
++; CHECK-LABEL: define i32 @non_dominated_load_that_does_not_alias_inaccessible_mem(
++; CHECK-SAME: ptr [[DST:%.*]], i64 [[X:%.*]], ptr [[START:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*]]:
++; CHECK-NEXT:    call void @fn_write_inaccessible_mem()
++; CHECK-NEXT:    br label %[[LOOP:.*]]
++; CHECK:       [[LOOP]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi ptr [ [[START]], %[[ENTRY]] ], [ [[GEP:%.*]], %[[LOOP]] ]
++; CHECK-NEXT:    [[LOAD:%.*]] = load i32, ptr [[PHI]], align 4
++; CHECK-NEXT:    [[VAL:%.*]] = call i32 @fn_args(i32 [[LOAD]])
++; CHECK-NEXT:    [[RES:%.*]] = call i32 @fn_read_inaccessible_mem_2(i32 [[LOAD]])
++; CHECK-NEXT:    store i32 [[RES]], ptr [[DST]], align 4
++; CHECK-NEXT:    [[GEP]] = getelementptr inbounds nuw i32, ptr [[PHI]], i64 [[X]]
++; CHECK-NEXT:    [[ACC:%.*]] = add nuw nsw i32 [[VAL]], 1
++; CHECK-NEXT:    [[CMP:%.*]] = icmp ult i32 [[ACC]], 10
++; CHECK-NEXT:    br i1 [[CMP]], label %[[LOOP]], label %[[AFTER_LOOP:.*]]
++; CHECK:       [[AFTER_LOOP]]:
++; CHECK-NEXT:    [[ACC_LCSSA:%.*]] = phi i32 [ [[ACC]], %[[LOOP]] ]
++; CHECK-NEXT:    ret i32 [[ACC_LCSSA]]
++;
++entry:
++  br label %loop
++loop:
++  %phi = phi ptr [ %start, %entry ], [ %gep, %loop ]
++  %load = load i32, ptr %phi
++  %val = call i32 @fn_args(i32 %load)
++  call void @fn_write_inaccessible_mem()
++  %res = call i32 @fn_read_inaccessible_mem_2(i32 %load)
++  store i32 %res, ptr %dst
++  %gep = getelementptr inbounds nuw i32, ptr %phi, i64 %x
++  %acc = add nuw nsw i32 %val, 1
++  %cmp = icmp ult i32 %acc, 10
++  br i1 %cmp, label %loop, label %after_loop
++after_loop:
++  ret i32 %acc
++}
++
+ declare i32 @fn_args(i32) nounwind willreturn memory(argmem: read)
+ declare i32 @fn_read_inaccessible_mem_2(i32) nounwind willreturn memory(inaccessiblemem: read)
+ declare void @fn_write_inaccessible_mem() nounwind memory(inaccessiblemem: write)
+diff --git a/llvm/test/Transforms/LICM/pr54495.ll b/llvm/test/Transforms/LICM/pr54495.ll
+index d01ca69d55242..5e66758257ef0 100644
+--- a/llvm/test/Transforms/LICM/pr54495.ll
++++ b/llvm/test/Transforms/LICM/pr54495.ll
+@@ -6,6 +6,7 @@
+ define void @test(ptr %p1, ptr %p2, ptr noalias %p3) {
+ ; CHECK-LABEL: @test(
+ ; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store ptr [[P3:%.*]], ptr [[P3]], align 8
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[P:%.*]] = phi ptr [ [[P1:%.*]], [[ENTRY:%.*]] ], [ [[P2:%.*]], [[LOOP]] ]
+@@ -13,7 +14,6 @@ define void @test(ptr %p1, ptr %p2, ptr noalias %p3) {
+ ; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i64 [[V]], 0
+ ; CHECK-NEXT:    br i1 [[CMP]], label [[LOOP]], label [[LOOP_EXIT:%.*]]
+ ; CHECK:       loop.exit:
+-; CHECK-NEXT:    store ptr [[P3:%.*]], ptr [[P3]], align 8
+ ; CHECK-NEXT:    ret void
+ ;
+ entry:
