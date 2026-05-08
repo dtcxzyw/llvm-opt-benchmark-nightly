@@ -1,0 +1,524 @@
+diff --git a/llvm/include/llvm/Transforms/Scalar/MemCpyOptimizer.h b/llvm/include/llvm/Transforms/Scalar/MemCpyOptimizer.h
+index 1affd5a55a35f..8e737e895ca2a 100644
+--- a/llvm/include/llvm/Transforms/Scalar/MemCpyOptimizer.h
++++ b/llvm/include/llvm/Transforms/Scalar/MemCpyOptimizer.h
+@@ -86,6 +86,7 @@ class MemCpyOptPass : public OptionalPassInfoMixin<MemCpyOptPass> {
+   bool performStackMoveOptzn(Instruction *Load, Instruction *Store,
+                              Value *DestPtr, Value *SrcPtr, TypeSize Size,
+                              BatchAAResults &BAA);
++  bool performByValSrcMoveOptzn(MemCpyInst *M, BatchAAResults &BAA);
+   bool isMemMoveMemSetDependency(MemMoveInst *M);
+ 
+   void eraseInstruction(Instruction *I);
+diff --git a/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp b/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
+index 43779d5195714..612c918bc009f 100644
+--- a/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
++++ b/llvm/lib/Transforms/Scalar/MemCpyOptimizer.cpp
+@@ -75,6 +75,8 @@ STATISTIC(NumMoveToCpy, "Number of memmoves converted to memcpy");
+ STATISTIC(NumCpyToSet, "Number of memcpys converted to memset");
+ STATISTIC(NumCallSlot, "Number of call slot optimizations performed");
+ STATISTIC(NumStackMove, "Number of stack-move optimizations performed");
++STATISTIC(NumByValMove,
++          "Number of byval-src memcpy forwarding optimizations performed");
+ 
+ namespace {
+ 
+@@ -1776,6 +1778,137 @@ bool MemCpyOptPass::performStackMoveOptzn(Instruction *Load, Instruction *Store,
+   return true;
+ }
+ 
++/// Forward stores into a `byval` argument through a `memcpy(dest, byval, n)`
++/// that copies the byval out. If the byval is fully overwritten by stores
++/// before the memcpy and otherwise unused, replace the byval Argument's uses
++/// with the memcpy's destination pointer. The memcpy then becomes a
++/// self-copy that the caller erases, and the stores end up writing directly
++/// to dest.
++bool MemCpyOptPass::performByValSrcMoveOptzn(MemCpyInst *M,
++                                             BatchAAResults &BAA) {
++  auto *Arg = dyn_cast<Argument>(M->getSource());
++  if (!Arg || !Arg->hasByValAttr())
++    return false;
++
++  Type *ByValTy = Arg->getParamByValType();
++  const DataLayout &DL = M->getDataLayout();
++  TypeSize ByValTSize = DL.getTypeAllocSize(ByValTy);
++  if (ByValTSize.isScalable())
++    return false;
++  uint64_t ByValSize = ByValTSize.getFixedValue();
++
++  // The size of the memcpy should match the byval size
++  auto *Len = dyn_cast<ConstantInt>(M->getLength());
++  if (!Len || Len->getZExtValue() != ByValSize)
++    return false;
++
++  Value *DestPtr = M->getDest();
++  if (DestPtr->getType()->getPointerAddressSpace() !=
++      Arg->getType()->getPointerAddressSpace())
++    return false;
++
++  auto *DestArg = dyn_cast<Argument>(getUnderlyingObject(DestPtr));
++  if (!DestArg || DestArg == Arg || !DestArg->hasNoAliasAttr())
++    return false;
++
++  // `sret` is implicitly writable per LangRef
++  if (!DestArg->hasStructRetAttr() &&
++      !DestArg->hasAttribute(Attribute::Writable))
++    return false;
++
++  Instruction *FirstStore = nullptr;
++  SmallVector<std::pair<int64_t, int64_t>, 8> Intervals;
++  SmallVector<std::pair<Value *, int64_t>, 8> Worklist;
++  Worklist.push_back({Arg, 0});
++
++  while (!Worklist.empty()) {
++    auto [V, BaseOff] = Worklist.pop_back_val();
++    for (Use &U : V->uses()) {
++      auto *UI = dyn_cast<Instruction>(U.getUser());
++      if (!UI)
++        return false;
++
++      if (UI == M) {
++        if (&U != &M->getRawSourceUse())
++          return false;
++        continue;
++      }
++
++      if (auto *GEP = dyn_cast<GetElementPtrInst>(UI)) {
++        APInt Off(DL.getIndexTypeSizeInBits(GEP->getType()), 0);
++        if (!GEP->accumulateConstantOffset(DL, Off))
++          return false;
++        Worklist.push_back({GEP, BaseOff + Off.getSExtValue()});
++        continue;
++      }
++
++      if (auto *SI = dyn_cast<StoreInst>(UI)) {
++        // Use must be the pointer operand only.
++        if (U.getOperandNo() != StoreInst::getPointerOperandIndex())
++          return false;
++        if (!SI->isSimple())
++          return false;
++        if (SI->getParent() != M->getParent() || !SI->comesBefore(M))
++          return false;
++        TypeSize SSize = DL.getTypeStoreSize(SI->getValueOperand()->getType());
++        if (SSize.isScalable())
++          return false;
++        uint64_t Sz = SSize.getFixedValue();
++        if (BaseOff < 0 || Sz > ByValSize ||
++            static_cast<uint64_t>(BaseOff) > ByValSize - Sz)
++          return false;
++        int64_t Hi = BaseOff + static_cast<int64_t>(Sz);
++        Intervals.emplace_back(BaseOff, Hi);
++        if (!FirstStore || SI->comesBefore(FirstStore))
++          FirstStore = SI;
++        continue;
++      }
++
++      return false;
++    }
++  }
++
++  if (!FirstStore)
++    return false;
++
++  // Stores should cover [0, ByValSize).
++  llvm::sort(Intervals);
++  int64_t Cursor = 0;
++  for (auto [Lo, Hi] : Intervals) {
++    if (Lo > Cursor)
++      return false;
++    Cursor = std::max(Cursor, Hi);
++  }
++  if (static_cast<uint64_t>(Cursor) < ByValSize)
++    return false;
++
++  // The destination should be at least as aligned as the byval.
++  MaybeAlign ByValAlign = Arg->getParamAlign();
++  Align ReqAlign = ByValAlign ? *ByValAlign : DL.getABITypeAlign(ByValTy);
++  Align DestAlign = M->getDestAlign().valueOrOne();
++  if (DestAlign < ReqAlign)
++    return false;
++
++  if (!isDereferenceableAndAlignedPointer(
++          DestPtr, ReqAlign, APInt(64, ByValSize), DL, FirstStore, AC, DT))
++    return false;
++
++  // The [0, ByValSize) region should not be accessed between FirstStore and M.
++  MemoryLocation DestLoc(DestPtr, LocationSize::precise(ByValSize));
++  if (accessedBetween(BAA, DestLoc, MSSA->getMemoryAccess(FirstStore),
++                      MSSA->getMemoryAccess(M)))
++    return false;
++
++  Arg->replaceAllUsesWith(DestPtr);
++
++  LLVM_DEBUG(dbgs() << "MemCpyOpt: Forwarded stores into byval through"
++                       " memcpy by replacing byval arg with destination:\n"
++                    << "    arg: " << *Arg << "\n"
++                    << "    memcpy: " << *M << "\n");
++  ++NumByValMove;
++  return true;
++}
++
+ static bool isZeroSize(Value *Size) {
+   if (auto *I = dyn_cast<Instruction>(Size))
+     if (auto *Res = simplifyInstruction(I, I->getDataLayout()))
+@@ -1914,6 +2047,13 @@ bool MemCpyOptPass::processMemCpy(MemCpyInst *M, BasicBlock::iterator &BBI) {
+     return true;
+   }
+ 
++  if (performByValSrcMoveOptzn(M, BAA)) {
++    BBI = M->getNextNode()->getIterator();
++    eraseInstruction(M);
++    ++NumMemCpyInstr;
++    return true;
++  }
++
+   return false;
+ }
+ 
+diff --git a/llvm/test/Transforms/MemCpyOpt/byval-src-move.ll b/llvm/test/Transforms/MemCpyOpt/byval-src-move.ll
+new file mode 100644
+index 0000000000000..01679c2451bdf
+--- /dev/null
++++ b/llvm/test/Transforms/MemCpyOpt/byval-src-move.ll
+@@ -0,0 +1,341 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes=memcpyopt -S -verify-memoryssa | FileCheck %s
++
++declare void @llvm.memcpy.p0.p0.i64(ptr noalias nocapture writeonly,
++  ptr noalias nocapture readonly,
++  i64, i1 immarg)
++declare i32 @use(ptr)
++
++; Positive: stores fully cover the byval, dest is sret
++define void @byval_to_sret_full_cover(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @byval_to_sret_full_cover(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[RET]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[RET]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[RET]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Positive: dest is noalias writable
++define void @byval_to_writable_full_cover(ptr noalias align 4 writable dereferenceable(12) %ret,
++; CHECK-LABEL: define void @byval_to_writable_full_cover(
++; CHECK-SAME: ptr noalias writable align 4 dereferenceable(12) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[RET]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[RET]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[RET]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: only the first 4 bytes are stored
++define void @byval_to_sret_partial_cover(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @byval_to_sret_partial_cover(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++@sink = external global i32
++
++; Negative: the byval is read by something other than the memcpy
++define void @byval_with_extra_load(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @byval_with_extra_load(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[OBSERVE:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    store i32 [[OBSERVE]], ptr @sink, align 4
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %observe = load i32, ptr %a, align 4
++  store i32 %observe, ptr @sink, align 4
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: dest is not a noalias argument
++define void @dest_not_noalias(ptr sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @dest_not_noalias(
++; CHECK-SAME: ptr sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: stores live in a different basic block than the memcpy
++define void @stores_in_different_bb(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @stores_in_different_bb(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[COND]], label %[[STORE_BB:.*]], label %[[STORE_BB]]
++; CHECK:       [[STORE_BB]]:
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    br label %[[CPY_BB:.*]]
++; CHECK:       [[CPY_BB]]:
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b,
++  i1 %cond) {
++entry:
++  br i1 %cond, label %store_bb, label %store_bb
++
++store_bb:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  br label %cpy_bb
++
++cpy_bb:
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: byval is used elsewhere
++define void @byval_passed_to_call(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @byval_passed_to_call(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    [[U:%.*]] = call i32 @use(ptr [[A]])
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  %u = call i32 @use(ptr %a)
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: dest's memcpy alignment is weaker than the byval's
++define void @dest_underaligned(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @dest_underaligned(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) align 4 [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 1 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) align 4 %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: a call between the first store and the memcpy may modref dest
++define void @use_between_stores_and_memcpy(ptr noalias sret([3 x i32]) %ret,
++; CHECK-LABEL: define void @use_between_stores_and_memcpy(
++; CHECK-SAME: ptr noalias sret([3 x i32]) [[RET:%.*]], ptr noalias byval([3 x i32]) [[A:%.*]], ptr noalias readonly [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[V0:%.*]] = load i32, ptr [[B]], align 4
++; CHECK-NEXT:    store i32 [[V0]], ptr [[A]], align 4
++; CHECK-NEXT:    call void @use(ptr [[RET]])
++; CHECK-NEXT:    [[PB1:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 1
++; CHECK-NEXT:    [[V1:%.*]] = load i32, ptr [[PB1]], align 4
++; CHECK-NEXT:    [[PA1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 [[V1]], ptr [[PA1]], align 4
++; CHECK-NEXT:    [[PB2:%.*]] = getelementptr inbounds i32, ptr [[B]], i64 2
++; CHECK-NEXT:    [[V2:%.*]] = load i32, ptr [[PB2]], align 4
++; CHECK-NEXT:    [[PA2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 [[V2]], ptr [[PA2]], align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[RET]], ptr align 4 [[A]], i64 12, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval([3 x i32]) %a,
++  ptr noalias readonly %b) {
++entry:
++  %v0 = load i32, ptr %b, align 4
++  store i32 %v0, ptr %a, align 4
++  call void @use(ptr %ret)
++  %pb1 = getelementptr inbounds i32, ptr %b, i64 1
++  %v1 = load i32, ptr %pb1, align 4
++  %pa1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 %v1, ptr %pa1, align 4
++  %pb2 = getelementptr inbounds i32, ptr %b, i64 2
++  %v2 = load i32, ptr %pb2, align 4
++  %pa2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 %v2, ptr %pa2, align 4
++  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %ret, ptr align 4 %a, i64 12, i1 false)
++  ret void
++}
++
++; Negative: the byval pointer is stored as a value instead of just being a store address
++define void @byval_address_escapes_via_store(ptr noalias sret(ptr) %ret,
++; CHECK-LABEL: define void @byval_address_escapes_via_store(
++; CHECK-SAME: ptr noalias sret(ptr) [[RET:%.*]], ptr noalias byval(ptr) [[A:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    store ptr [[A]], ptr [[A]], align 8
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 8 [[RET]], ptr align 8 [[A]], i64 8, i1 false)
++; CHECK-NEXT:    ret void
++;
++  ptr noalias byval(ptr) %a) {
++entry:
++  store ptr %a, ptr %a, align 8
++  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %ret, ptr align 8 %a, i64 8, i1 false)
++  ret void
++}
