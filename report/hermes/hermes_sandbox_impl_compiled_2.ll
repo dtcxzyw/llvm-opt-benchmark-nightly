@@ -4,7 +4,7 @@ begin_hunk_0_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290
   br i1 %.not674.not, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %.not673 = icmp eq i32 %i.cv, 0                 ; 2 uses
+  %.not673 = icmp eq i32 %i.cv, 0                 ; 4 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 23 uses
   %i.da = zext i32 %i.c to i64                    ; 23 uses
   %.val735 = load ptr, ptr %i.cz, align 8, !tbaa !18
@@ -13,12 +13,12 @@ begin_hunk_1_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290
   %.val726 = load ptr, ptr %i.cz, align 8, !tbaa !18
   %i.dx = getelementptr inbounds nuw i8, ptr %.val726, i64 %i.da
   store i32 65249, ptr %i.dx, align 1
-  %i.dy = select i1 %.not673, i32 5, i32 9        ; 3 uses
+  %i.dy = select i1 %.not673, i32 5, i32 9
   %.val725 = load ptr, ptr %i.cz, align 8, !tbaa !18
   %i.dz = getelementptr inbounds nuw i8, ptr %.val725, i64 %i.da
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
   store i32 %i.dy, ptr %i.ea, align 1
-  %6 = add nuw nsw i32 %i.dy, 15
+  %6 = select i1 %.not673, i32 20, i32 24
   %.val724 = load ptr, ptr %i.cz, align 8, !tbaa !18
   %i.eb = getelementptr inbounds nuw i8, ptr %.val724, i64 %i.da
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 68
@@ -27,7 +27,7 @@ begin_hunk_2_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290
   %i.ee = getelementptr inbounds nuw i8, ptr %.val723, i64 %i.da
   %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 112
   store i32 %i.ed, ptr %i.ef, align 1
-  %7 = add nuw nsw i32 %i.dy, 38                  ; 2 uses
+  %7 = select i1 %.not673, i32 43, i32 47         ; 2 uses
   %.val722 = load ptr, ptr %i.cz, align 8, !tbaa !18
   %i.eg = getelementptr inbounds nuw i8, ptr %.val722, i64 %i.da
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 108
@@ -36,8 +36,8 @@ begin_hunk_3_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
   %.0.copyload.i6378 = load i8, ptr %i.aej, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i6378) #7, !srcloc !20
   %i.aek = zext i8 %.0.copyload.i6378 to i32
-  %.not5471 = icmp eq i8 %.0.copyload.i6378, 0    ; 9 uses
-  %i.ael = select i1 %.not5471, i32 -1, i32 1     ; 5 uses
+  %.not5471 = icmp eq i8 %.0.copyload.i6378, 0    ; 11 uses
+  %i.ael = select i1 %.not5471, i32 -1, i32 1     ; 2 uses
   %.val5765 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.aem = getelementptr inbounds nuw i8, ptr %.val5765, i64 %i.p
   %i.aen = getelementptr inbounds nuw i8, ptr %i.aem, i64 16
@@ -46,7 +46,7 @@ begin_hunk_4_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
 
 .preheader6597:                                   ; preds = %bb.gt
   %i.afc = shl nsw i32 %i.aeu, 1                  ; 2 uses
-  %5 = shl nsw i32 %i.ael, 1                      ; 2 uses
+  %5 = select i1 %.not5471, i32 -2, i32 2         ; 2 uses
   br label %bb.gu
 
 bb.gu:                                            ; preds = %.preheader6597, %bb.gw
@@ -55,7 +55,7 @@ begin_hunk_5_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
   br i1 %i.afp, label %.loopexit, label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy
-  %i.afq = select i1 %.not5471, i32 -2, i32 2     ; 2 uses
+  %i.afq = select i1 %.not5471, i32 -2, i32 2     ; 4 uses
   %i.afr = select i1 %.not5471, i32 -4, i32 0     ; 2 uses
   %.val5762 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.afs = getelementptr inbounds nuw i8, ptr %.val5762, i64 %i.n
@@ -64,7 +64,6 @@ begin_hunk_6_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
   %i.aft = getelementptr inbounds nuw i8, ptr %.val5761, i64 %i.k
   %.0.copyload.i6386 = load i32, ptr %i.aft, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i6386) #7, !srcloc !19
-  %6 = shl nsw i32 %i.ael, 1                      ; 2 uses
   %i.afu = shl nsw i32 %i.aeu, 1                  ; 2 uses
   br label %bb.ha
 
@@ -73,7 +72,7 @@ begin_hunk_7_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
   br i1 %.not5474, label %bb.hd, label %bb.hf
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.agf = add i32 %.55252, %6
+  %i.agf = add i32 %.55252, %i.afq
   %i.agg = zext i32 %i.agf to i64
   %.val6136 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.agh = getelementptr inbounds nuw i8, ptr %.val6136, i64 %i.agg
@@ -82,7 +81,7 @@ begin_hunk_8_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
   br i1 %.not5476, label %bb.hi, label %bb.hk
 
 bb.hi:                                            ; preds = %bb.hh
-  %i.aha = add i32 %.15230, %6
+  %i.aha = add i32 %.15230, %i.afq
   %i.ahb = zext i32 %i.aha to i64
   %.val6133 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ahc = getelementptr inbounds nuw i8, ptr %.val6133, i64 %i.ahb
@@ -91,7 +90,7 @@ begin_hunk_9_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Areg
 
 .preheader6599:                                   ; preds = %bb.ny
   %i.bda = shl nsw i32 %i.aeu, 1                  ; 2 uses
-  %7 = shl nsw i32 %i.ael, 1                      ; 2 uses
+  %6 = select i1 %.not5471, i32 -2, i32 2         ; 2 uses
   br label %bb.nz
 
 bb.nz:                                            ; preds = %.preheader6599, %bb.oi
@@ -100,8 +99,8 @@ begin_hunk_10_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Are
   br i1 %.not5482, label %bb.oi, label %.loopexit6598
 
 bb.oi:                                            ; preds = %bb.oh, %bb.oa
-  %i.bdw = add i32 %.75254, %7                    ; 2 uses
-  %i.bdx = add i32 %.55234, %7                    ; 2 uses
+  %i.bdw = add i32 %.75254, %6                    ; 2 uses
+  %i.bdx = add i32 %.55234, %6                    ; 2 uses
   %.not5483 = icmp eq i32 %i.bdx, %i.aes
   br i1 %.not5483, label %.loopexit, label %bb.nz
 
