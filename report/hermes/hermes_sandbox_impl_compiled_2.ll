@@ -1,0 +1,108 @@
+inline.NumInlined: 21302
+inline.NumDeleted: 19
+begin_hunk_0_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290x3A0x3AisCompatiblePropertyDescriptor0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3ADefinePropertyFlags0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AComputedPropertyDescriptor0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29:bb.a
+  br i1 %.not674.not, label %bb.p, label %bb.q
+
+bb.p:                                             ; preds = %bb.o
+  %.not673 = icmp eq i32 %i.cv, 0                 ; 2 uses
+  %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 23 uses
+  %i.da = zext i32 %i.c to i64                    ; 23 uses
+  %.val735 = load ptr, ptr %i.cz, align 8, !tbaa !18
+end_hunk_0
+begin_hunk_1_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290x3A0x3AisCompatiblePropertyDescriptor0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3ADefinePropertyFlags0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AComputedPropertyDescriptor0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29:bb.a
+  %.val726 = load ptr, ptr %i.cz, align 8, !tbaa !18
+  %i.dx = getelementptr inbounds nuw i8, ptr %.val726, i64 %i.da
+  store i32 65249, ptr %i.dx, align 1
+  %i.dy = select i1 %.not673, i32 5, i32 9        ; 3 uses
+  %.val725 = load ptr, ptr %i.cz, align 8, !tbaa !18
+  %i.dz = getelementptr inbounds nuw i8, ptr %.val725, i64 %i.da
+  %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 32
+  store i32 %i.dy, ptr %i.ea, align 1
+  %6 = add nuw nsw i32 %i.dy, 15
+  %.val724 = load ptr, ptr %i.cz, align 8, !tbaa !18
+  %i.eb = getelementptr inbounds nuw i8, ptr %.val724, i64 %i.da
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 68
+end_hunk_1
+begin_hunk_2_@w2c_hermes_hermes0x3A0x3Avm0x3A0x3A0x28anonymous0x20namespace0x290x3A0x3AisCompatiblePropertyDescriptor0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20hermes0x3A0x3Avm0x3A0x3ADefinePropertyFlags0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x2C0x20hermes0x3A0x3Avm0x3A0x3AComputedPropertyDescriptor0x20const0x260x2C0x20hermes0x3A0x3Avm0x3A0x3AHandle0x3Chermes0x3A0x3Avm0x3A0x3AHermesValue0x3E0x29:bb.a
+  %i.ee = getelementptr inbounds nuw i8, ptr %.val723, i64 %i.da
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.ee, i64 112
+  store i32 %i.ed, ptr %i.ef, align 1
+  %7 = add nuw nsw i32 %i.dy, 38                  ; 2 uses
+  %.val722 = load ptr, ptr %i.cz, align 8, !tbaa !18
+  %i.eg = getelementptr inbounds nuw i8, ptr %.val722, i64 %i.da
+  %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 108
+end_hunk_2
+begin_hunk_3_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  %.0.copyload.i6378 = load i8, ptr %i.aej, align 1 ; 3 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i6378) #7, !srcloc !20
+  %i.aek = zext i8 %.0.copyload.i6378 to i32
+  %.not5471 = icmp eq i8 %.0.copyload.i6378, 0    ; 9 uses
+  %i.ael = select i1 %.not5471, i32 -1, i32 1     ; 5 uses
+  %.val5765 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %i.aem = getelementptr inbounds nuw i8, ptr %.val5765, i64 %i.p
+  %i.aen = getelementptr inbounds nuw i8, ptr %i.aem, i64 16
+end_hunk_3
+begin_hunk_4_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+
+.preheader6597:                                   ; preds = %bb.gt
+  %i.afc = shl nsw i32 %i.aeu, 1                  ; 2 uses
+  %5 = shl nsw i32 %i.ael, 1                      ; 2 uses
+  br label %bb.gu
+
+bb.gu:                                            ; preds = %.preheader6597, %bb.gw
+end_hunk_4
+begin_hunk_5_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  br i1 %i.afp, label %.loopexit, label %bb.gz
+
+bb.gz:                                            ; preds = %bb.gy
+  %i.afq = select i1 %.not5471, i32 -2, i32 2     ; 2 uses
+  %i.afr = select i1 %.not5471, i32 -4, i32 0     ; 2 uses
+  %.val5762 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %i.afs = getelementptr inbounds nuw i8, ptr %.val5762, i64 %i.n
+end_hunk_5
+begin_hunk_6_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  %i.aft = getelementptr inbounds nuw i8, ptr %.val5761, i64 %i.k
+  %.0.copyload.i6386 = load i32, ptr %i.aft, align 1 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i6386) #7, !srcloc !19
+  %6 = shl nsw i32 %i.ael, 1                      ; 2 uses
+  %i.afu = shl nsw i32 %i.aeu, 1                  ; 2 uses
+  br label %bb.ha
+
+end_hunk_6
+begin_hunk_7_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  br i1 %.not5474, label %bb.hd, label %bb.hf
+
+bb.hd:                                            ; preds = %bb.hc
+  %i.agf = add i32 %.55252, %6
+  %i.agg = zext i32 %i.agf to i64
+  %.val6136 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %i.agh = getelementptr inbounds nuw i8, ptr %.val6136, i64 %i.agg
+end_hunk_7
+begin_hunk_8_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  br i1 %.not5476, label %bb.hi, label %bb.hk
+
+bb.hi:                                            ; preds = %bb.hh
+  %i.aha = add i32 %.15230, %6
+  %i.ahb = zext i32 %i.aha to i64
+  %.val6133 = load ptr, ptr %i.d, align 8, !tbaa !18
+  %i.ahc = getelementptr inbounds nuw i8, ptr %.val6133, i64 %i.ahb
+end_hunk_8
+begin_hunk_9_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+
+.preheader6599:                                   ; preds = %bb.ny
+  %i.bda = shl nsw i32 %i.aeu, 1                  ; 2 uses
+  %7 = shl nsw i32 %i.ael, 1                      ; 2 uses
+  br label %bb.nz
+
+bb.nz:                                            ; preds = %.preheader6599, %bb.oi
+end_hunk_9
+begin_hunk_10_@w2c_hermes_hermes0x3A0x3Aregex0x3A0x3AContext0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x3A0x3Amatch0x28hermes0x3A0x3Aregex0x3A0x3AState0x3Chermes0x3A0x3Aregex0x3A0x3AUTF16RegexTraits0x3E0x2A0x2C0x20bool0x29:bb.a
+  br i1 %.not5482, label %bb.oi, label %.loopexit6598
+
+bb.oi:                                            ; preds = %bb.oh, %bb.oa
+  %i.bdw = add i32 %.75254, %7                    ; 2 uses
+  %i.bdx = add i32 %.55234, %7                    ; 2 uses
+  %.not5483 = icmp eq i32 %i.bdx, %i.aes
+  br i1 %.not5483, label %.loopexit, label %bb.nz
+
+end_hunk_10
