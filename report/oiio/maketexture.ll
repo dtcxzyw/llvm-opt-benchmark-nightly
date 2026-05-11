@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN11OpenImageIO4v3_1L17make_texture_implENS0_12ImageBufAlgo15Make
   %i.y = alloca double, align 8                   ; 9 uses
   %i.z = alloca double, align 8                   ; 7 uses
   %i.aa = alloca double, align 8                  ; 8 uses
-  %i.ab = alloca i64, align 8                     ; 22 uses
+  %i.ab = alloca i64, align 8                     ; 21 uses
   %57 = alloca %"class.OpenImageIO::v3_1::Timer", align 8 ; 32 uses
   %58 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 82 uses
   %59 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZN11OpenImageIO4v3_1L17make_texture_implENS0_12ImageBufAlgo15Make
 
 bb.acw:                                           ; preds = %bb.acv
   %i.cuy = load i64, ptr %i.ab, align 8, !tbaa !18
-  %.sroa.speculated2191 = call i64 @llvm.umax.i64(i64 %i.cuy, i64 %i.cux) ; 4 uses
+  %.sroa.speculated2191 = call i64 @llvm.umax.i64(i64 %i.cuy, i64 %i.cux) ; 5 uses
   store i64 %.sroa.speculated2191, ptr %i.ab, align 8, !tbaa !18
   br i1 %i.zx, label %bb.acx, label %bb.adf
 
@@ -22,8 +22,7 @@ begin_hunk_2_@_ZN11OpenImageIO4v3_1L17make_texture_implENS0_12ImageBufAlgo15Make
           to label %bb.agc unwind label %bb.agh   ; 2 uses
 
 bb.agc:                                           ; preds = %bb.agb
-  %408 = load i64, ptr %i.ab, align 8, !tbaa !18
-  %.sroa.speculated2174 = call i64 @llvm.umax.i64(i64 %408, i64 %i.dcs) ; 2 uses
+  %.sroa.speculated2174 = call i64 @llvm.umax.i64(i64 %.sroa.speculated2191, i64 %i.dcs) ; 2 uses
   store i64 %.sroa.speculated2174, ptr %i.ab, align 8, !tbaa !18
   br i1 %i.zx, label %bb.agd, label %bb.agl
 
