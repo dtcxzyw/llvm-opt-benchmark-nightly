@@ -1,0 +1,156 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 05508d84c036b..74f48009a3b7a 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -1222,6 +1222,21 @@ Instruction *InstCombinerImpl::visitTrunc(TruncInst &Trunc) {
+     }
+   }
+ 
++  // trunc(scmp(x, y)) -> scmp(x, y) with a narrower result type.
++  // trunc(ucmp(x, y)) -> ucmp(x, y) with a narrower result type.
++  // scmp/ucmp produce only -1, 0, or 1, so any result type with at least 2
++  // bits can represent every possible value and the truncation is lossless.
++  if (DestWidth >= 2) {
++    if (auto *II = dyn_cast<IntrinsicInst>(Src)) {
++      Intrinsic::ID IID = II->getIntrinsicID();
++      if ((IID == Intrinsic::scmp || IID == Intrinsic::ucmp) && II->hasOneUse())
++        return replaceInstUsesWith(
++            Trunc,
++            Builder.CreateIntrinsic(
++                DestTy, IID, {II->getArgOperand(0), II->getArgOperand(1)}));
++    }
++  }
++
+   if (DestWidth == 1 &&
+       (Trunc.hasNoUnsignedWrap() || Trunc.hasNoSignedWrap()) &&
+       isKnownNonZero(Src, SQ.getWithInstruction(&Trunc)))
+diff --git a/llvm/test/Transforms/InstCombine/scmp.ll b/llvm/test/Transforms/InstCombine/scmp.ll
+index 871b56c15d18b..fcf67e5503496 100644
+--- a/llvm/test/Transforms/InstCombine/scmp.ll
++++ b/llvm/test/Transforms/InstCombine/scmp.ll
+@@ -824,3 +824,43 @@ define i64 @sext_scmp_multiuse(i32 %x, i32 %y) {
+   %ext = sext i8 %cmp to i64
+   ret i64 %ext
+ }
++
++declare void @use32(i32 %value)
++
++define i8 @trunc_scmp(i32 %x, i32 %y) {
++; CHECK-LABEL: define i8 @trunc_scmp(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.scmp.i8.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    ret i8 [[TMP1]]
++;
++  %cmp = call i32 @llvm.scmp(i32 %x, i32 %y)
++  %tr = trunc i32 %cmp to i8
++  ret i8 %tr
++}
++
++define <4 x i8> @trunc_scmp_vec(<4 x i32> %x, <4 x i32> %y) {
++; CHECK-LABEL: define <4 x i8> @trunc_scmp_vec(
++; CHECK-SAME: <4 x i32> [[X:%.*]], <4 x i32> [[Y:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = call <4 x i8> @llvm.scmp.v4i8.v4i32(<4 x i32> [[X]], <4 x i32> [[Y]])
++; CHECK-NEXT:    ret <4 x i8> [[TMP1]]
++;
++  %cmp = call <4 x i32> @llvm.scmp(<4 x i32> %x, <4 x i32> %y)
++  %tr = trunc <4 x i32> %cmp to <4 x i8>
++  ret <4 x i8> %tr
++}
++
++; Don't fold when scmp has multiple uses: would leave the wide scmp alive
++; and add a second narrower scmp.
++define i8 @trunc_scmp_multiuse(i32 %x, i32 %y) {
++; CHECK-LABEL: define i8 @trunc_scmp_multiuse(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = call i32 @llvm.scmp.i32.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    call void @use32(i32 [[CMP]])
++; CHECK-NEXT:    [[TR:%.*]] = trunc i32 [[CMP]] to i8
++; CHECK-NEXT:    ret i8 [[TR]]
++;
++  %cmp = call i32 @llvm.scmp(i32 %x, i32 %y)
++  call void @use32(i32 %cmp)
++  %tr = trunc i32 %cmp to i8
++  ret i8 %tr
++}
+diff --git a/llvm/test/Transforms/InstCombine/select-to-cmp.ll b/llvm/test/Transforms/InstCombine/select-to-cmp.ll
+index a76d4b138686b..ea018031d3639 100644
+--- a/llvm/test/Transforms/InstCombine/select-to-cmp.ll
++++ b/llvm/test/Transforms/InstCombine/select-to-cmp.ll
+@@ -48,8 +48,7 @@ define i8 @scmp_x_0_inverted_i8(i8 %x) {
+ define i32 @scmp_x_0_inverted_i64_neq(i32 %x) {
+ ; CHECK-LABEL: define i32 @scmp_x_0_inverted_i64_neq(
+ ; CHECK-SAME: i32 [[X:%.*]]) {
+-; CHECK-NEXT:    [[SEL:%.*]] = call i64 @llvm.scmp.i64.i32(i32 [[X]], i32 0)
+-; CHECK-NEXT:    [[RET:%.*]] = trunc i64 [[SEL]] to i32
++; CHECK-NEXT:    [[RET:%.*]] = call i32 @llvm.scmp.i32.i32(i32 [[X]], i32 0)
+ ; CHECK-NEXT:    ret i32 [[RET]]
+ ;
+   %x64 = sext i32 %x to i64
+@@ -65,8 +64,7 @@ define i32 @scmp_x_0_inverted_i64_neq(i32 %x) {
+ define i32 @scmp_x_0_inverted_i64_sgt(i32 %x) {
+ ; CHECK-LABEL: define i32 @scmp_x_0_inverted_i64_sgt(
+ ; CHECK-SAME: i32 [[X:%.*]]) {
+-; CHECK-NEXT:    [[SEL:%.*]] = call i64 @llvm.scmp.i64.i32(i32 [[X]], i32 0)
+-; CHECK-NEXT:    [[RET:%.*]] = trunc i64 [[SEL]] to i32
++; CHECK-NEXT:    [[RET:%.*]] = call i32 @llvm.scmp.i32.i32(i32 [[X]], i32 0)
+ ; CHECK-NEXT:    ret i32 [[RET]]
+ ;
+   %x64 = sext i32 %x to i64
+@@ -168,8 +166,7 @@ define <4 x i32> @scmp_x_0_inverted_splat_vec(<4 x i32> %x) {
+ define <4 x i32> @non_splat_vec_scmp_diff_bitwidth(<4 x i32> %x) {
+ ; CHECK-LABEL: define <4 x i32> @non_splat_vec_scmp_diff_bitwidth(
+ ; CHECK-SAME: <4 x i32> [[X:%.*]]) {
+-; CHECK-NEXT:    [[SEL:%.*]] = call <4 x i64> @llvm.scmp.v4i64.v4i32(<4 x i32> [[X]], <4 x i32> <i32 0, i32 1, i32 -1, i32 5>)
+-; CHECK-NEXT:    [[RET:%.*]] = trunc <4 x i64> [[SEL]] to <4 x i32>
++; CHECK-NEXT:    [[RET:%.*]] = call <4 x i32> @llvm.scmp.v4i32.v4i32(<4 x i32> [[X]], <4 x i32> <i32 0, i32 1, i32 -1, i32 5>)
+ ; CHECK-NEXT:    ret <4 x i32> [[RET]]
+ ;
+   %x64 = sext <4 x i32> %x to <4 x i64>
+diff --git a/llvm/test/Transforms/InstCombine/ucmp.ll b/llvm/test/Transforms/InstCombine/ucmp.ll
+index 3b23cde0b00bd..3ccfb4f6fd6e6 100644
+--- a/llvm/test/Transforms/InstCombine/ucmp.ll
++++ b/llvm/test/Transforms/InstCombine/ucmp.ll
+@@ -582,3 +582,43 @@ define i64 @sext_ucmp_multiuse(i32 %x, i32 %y) {
+   %ext = sext i8 %cmp to i64
+   ret i64 %ext
+ }
++
++declare void @use32(i32 %value)
++
++define i8 @trunc_ucmp(i32 %x, i32 %y) {
++; CHECK-LABEL: define i8 @trunc_ucmp(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.ucmp.i8.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    ret i8 [[TMP1]]
++;
++  %cmp = call i32 @llvm.ucmp(i32 %x, i32 %y)
++  %tr = trunc i32 %cmp to i8
++  ret i8 %tr
++}
++
++define <4 x i8> @trunc_ucmp_vec(<4 x i32> %x, <4 x i32> %y) {
++; CHECK-LABEL: define <4 x i8> @trunc_ucmp_vec(
++; CHECK-SAME: <4 x i32> [[X:%.*]], <4 x i32> [[Y:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = call <4 x i8> @llvm.ucmp.v4i8.v4i32(<4 x i32> [[X]], <4 x i32> [[Y]])
++; CHECK-NEXT:    ret <4 x i8> [[TMP1]]
++;
++  %cmp = call <4 x i32> @llvm.ucmp(<4 x i32> %x, <4 x i32> %y)
++  %tr = trunc <4 x i32> %cmp to <4 x i8>
++  ret <4 x i8> %tr
++}
++
++; Don't fold when ucmp has multiple uses: would leave the wide ucmp alive
++; and add a second narrower ucmp.
++define i8 @trunc_ucmp_multiuse(i32 %x, i32 %y) {
++; CHECK-LABEL: define i8 @trunc_ucmp_multiuse(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]]) {
++; CHECK-NEXT:    [[CMP:%.*]] = call i32 @llvm.ucmp.i32.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    call void @use32(i32 [[CMP]])
++; CHECK-NEXT:    [[TR:%.*]] = trunc i32 [[CMP]] to i8
++; CHECK-NEXT:    ret i8 [[TR]]
++;
++  %cmp = call i32 @llvm.ucmp(i32 %x, i32 %y)
++  call void @use32(i32 %cmp)
++  %tr = trunc i32 %cmp to i8
++  ret i8 %tr
++}
