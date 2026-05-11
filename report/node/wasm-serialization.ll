@@ -4,7 +4,7 @@ begin_hunk_0_@_ZNK2v88internal4wasm14WasmSerializer21SerializeNativeModuleENS_4b
   %i.bs = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 %2
   store ptr %i.bt, ptr %i.bs, align 8
-  %i.bu = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 21 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 20 uses
   store ptr %1, ptr %i.bu, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.a, i64 168
   %.sroa.0.0.copyload.i = load i32, ptr %i.bv, align 8
@@ -13,8 +13,7 @@ begin_hunk_1_@_ZNK2v88internal4wasm14WasmSerializer21SerializeNativeModuleENS_4b
   %i.od = getelementptr inbounds nuw [4 x i8], ptr %i.oc, i64 %.04.i.i
   %i.oe = load atomic i32, ptr %i.od monotonic, align 4
   store i32 %i.oe, ptr %i.nz, align 1
-  %i.of = getelementptr inbounds nuw i8, ptr %i.nz, i64 4 ; 2 uses
-  store ptr %i.of, ptr %i.bu, align 8
+  %i.of = getelementptr inbounds nuw i8, ptr %i.nz, i64 4
   %i.og = add nuw nsw i64 %.04.i.i, 1             ; 2 uses
   %i.oh = load ptr, ptr %8, align 8               ; 2 uses
   %i.oi = getelementptr inbounds nuw i8, ptr %i.oh, i64 216
