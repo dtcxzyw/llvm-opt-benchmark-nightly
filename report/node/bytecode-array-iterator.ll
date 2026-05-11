@@ -1,0 +1,71 @@
+inline.NumInlined: 190
+inline.NumDeleted: 84
+begin_hunk_0_@_ZNK2v88internal11interpreter22JumpTableTargetOffsets5beginEv
+define hidden void @_ZNK2v88internal11interpreter22JumpTableTargetOffsets5beginEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.v8::internal::interpreter::JumpTableTargetOffsets::iterator") align 8 captures(none) initializes((0, 28)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #7 align 2 {
+bb.a:
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %i.b = load i32, ptr %i.a, align 8              ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.d = load i32, ptr %i.c, align 8              ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %i.f = load i32, ptr %i.e, align 4              ; 2 uses
+  %i.g = add nsw i32 %i.f, %i.d                   ; 2 uses
+  %i.h = load ptr, ptr %1, align 8                ; 2 uses
+  store ptr %i.h, ptr %0, align 8
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store i64 0, ptr %i.i, align 8
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store i32 %i.b, ptr %i.j, align 8
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  store i32 %i.d, ptr %i.k, align 4
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store i32 %i.g, ptr %i.l, align 8
+end_hunk_0
+begin_hunk_1_@_ZNK2v88internal11interpreter22JumpTableTargetOffsets5beginEv:bb.a
+  br i1 %i.m, label %.lr.ph.i.i, label %_ZN2v88internal11interpreter22JumpTableTargetOffsets8iteratorC2EiiiPKNS1_21BytecodeArrayIteratorE.exit
+
+.lr.ph.i.i:                                       ; preds = %bb.a
+  %i.n = sext i32 %i.d to i64
+  %wide.trip.count.i.i = sext i32 %i.g to i64
+  %.sroa.0.0.copyload.i1.i.i.i = load ptr, ptr %i.h, align 8
+  %i.o = load i64, ptr %.sroa.0.0.copyload.i1.i.i.i, align 8
+  %i.p = add i64 %i.o, 39
+end_hunk_1
+begin_hunk_2_@_ZNK2v88internal11interpreter22JumpTableTargetOffsets5beginEv:bb.a
+  %i.r = load i64, ptr %i.q, align 8
+  %i.s = add i64 %i.r, -1
+  %i.t = inttoptr i64 %i.s to ptr
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
+  br label %bb.b
+
+bb.b:                                             ; preds = %bb.c, %.lr.ph.i.i
+  %i.v = phi i32 [ %i.b, %.lr.ph.i.i ], [ %3, %bb.c ]
+  %indvars.iv.i.i = phi i64 [ %i.n, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.c ] ; 3 uses
+  %i.w = getelementptr inbounds [8 x i8], ptr %i.u, i64 %indvars.iv.i.i
+  %i.x = load atomic volatile i64, ptr %i.w monotonic, align 8
+  %i.y = and i64 %i.x, 1
+  %i.z = icmp eq i64 %i.y, 0
+  br i1 %i.z, label %bb.d, label %bb.c
+
+bb.c:                                             ; preds = %bb.b
+  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i, 1 ; 3 uses
+  %2 = trunc nsw i64 %indvars.iv.next.i.i to i32
+  store i32 %2, ptr %i.k, align 4
+  %3 = add nsw i32 %i.v, 1                        ; 2 uses
+  store i32 %3, ptr %i.j, align 8
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  br i1 %exitcond.not.i.i, label %_ZN2v88internal11interpreter22JumpTableTargetOffsets8iteratorC2EiiiPKNS1_21BytecodeArrayIteratorE.exit, label %bb.b, !llvm.loop !11
+
+bb.d:                                             ; preds = %bb.b
+  %sext.i.i = shl i64 %indvars.iv.i.i, 32
+  %i.aa = ashr exact i64 %sext.i.i, 29
+  %i.ab = getelementptr inbounds i8, ptr %i.u, i64 %i.aa
+  %i.ac = load atomic volatile i64, ptr %i.ab monotonic, align 8
+  store i64 %i.ac, ptr %i.i, align 8
+  br label %_ZN2v88internal11interpreter22JumpTableTargetOffsets8iteratorC2EiiiPKNS1_21BytecodeArrayIteratorE.exit
+
+_ZN2v88internal11interpreter22JumpTableTargetOffsets8iteratorC2EiiiPKNS1_21BytecodeArrayIteratorE.exit: ; preds = %bb.c, %bb.a, %bb.d
+  ret void
+}
+
+end_hunk_2
