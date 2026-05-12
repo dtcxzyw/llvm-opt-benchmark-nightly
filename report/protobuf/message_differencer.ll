@@ -1,0 +1,43 @@
+inline.NumInlined: 4932
+inline.NumDeleted: 2065
+begin_hunk_0_@_ZN6google8protobuf4util18MessageDifferencer15TreatAsSmartSetEPKNS0_15FieldDescriptorE:bb.a
+; Function Attrs: mustprogress uwtable
+define void @_ZN6google8protobuf4util18MessageDifferencer35SetMatchIndicesForSmartListCallbackESt8functionIFvPSt6vectorIiSaIiEES7_EE(ptr noundef nonnull align 8 captures(none) dereferenceable(408) %0, ptr noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+bb.a:
+  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
+  %2 = alloca %"class.std::function", align 8     ; 11 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #40
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !160  ; 2 uses
+  %.not.i.i.not.i.i = icmp eq ptr %i.d, null
+  br i1 %.not.i.i.not.i.i, label %_ZNSt8functionIFvPSt6vectorIiSaIiEES3_EEC2ERKS5_.exit.i, label %bb.b
+end_hunk_0
+begin_hunk_1_@_ZN6google8protobuf4util18MessageDifferencer35SetMatchIndicesForSmartListCallbackESt8functionIFvPSt6vectorIiSaIiEES7_EE:bb.a
+bb.d:                                             ; preds = %bb.b
+  %i.g = landingpad { ptr, i32 }
+          cleanup
+  %i.h = load ptr, ptr %i.b, align 8, !tbaa !160  ; 2 uses
+  %.not.i.i.i = icmp eq ptr %i.h, null
+  br i1 %.not.i.i.i, label %_ZNSt14_Function_baseD2Ev.exit.i.i, label %bb.e
+
+end_hunk_1
+begin_hunk_2_@_ZN6google8protobuf4util18MessageDifferencer35SetMatchIndicesForSmartListCallbackESt8functionIFvPSt6vectorIiSaIiEES7_EE:bb.a
+
+_ZNSt8functionIFvPSt6vectorIiSaIiEES3_EEC2ERKS5_.exit.i: ; preds = %bb.c, %bb.a
+  %i.l = phi <2 x ptr> [ splat (ptr null), %bb.a ], [ %i.f, %bb.c ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !236
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 16, i1 false), !tbaa.struct !236
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !236
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 3 uses
+  %i.n = load <2 x ptr>, ptr %i.m, align 8, !tbaa !158
+  %i.o = load ptr, ptr %i.m, align 8, !tbaa !158  ; 2 uses
+  store <2 x ptr> %i.n, ptr %i.b, align 8, !tbaa !158
+  store <2 x ptr> %i.l, ptr %i.m, align 8, !tbaa !158
+  %.not.i.i = icmp eq ptr %i.o, null
+  br i1 %.not.i.i, label %_ZNSt8functionIFvPSt6vectorIiSaIiEES3_EEaSERKS5_.exit, label %bb.g
+end_hunk_2
