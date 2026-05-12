@@ -1,0 +1,45 @@
+diff --git a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+index 5670d9b6f9f89..9147f387bdf4f 100644
+--- a/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
++++ b/llvm/include/llvm/Transforms/InstCombine/InstCombiner.h
+@@ -19,6 +19,7 @@
+ #define LLVM_TRANSFORMS_INSTCOMBINE_INSTCOMBINER_H
+ 
+ #include "llvm/ADT/PostOrderIterator.h"
++#include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/DomConditionCache.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/Analysis/TargetFolder.h"
+@@ -417,7 +418,19 @@ class LLVM_LIBRARY_VISIBILITY InstCombiner {
+     if (V->use_empty() && isa<Instruction>(V) && !V->hasName() && I.hasName())
+       V->takeName(&I);
+ 
++    SmallVector<User *> Users;
++    if (!isa<Constant>(V))
++      Users.assign(I.user_begin(), I.user_end());
++
+     I.replaceAllUsesWith(V);
++    
++    for (auto *U : Users) {
++      for (auto &AssumeVH : AC.assumptionsFor(U)) {
++        if (!AssumeVH)
++            continue;
++        AC.updateAffectedValues(cast<AssumeInst>(AssumeVH));
++      }
++    }
+     return &I;
+   }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index c39f606382650..8a3c248e1f569 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -495,7 +495,7 @@ define void @redundant_nonnull3(ptr %ptr) {
+ define i32 @assumption_conflicts_with_known_bits(i32 %a, i32 %b) {
+ ; CHECK-LABEL: @assumption_conflicts_with_known_bits(
+ ; CHECK-NEXT:    store i1 true, ptr poison, align 1
+-; CHECK-NEXT:    ret i32 poison
++; CHECK-NEXT:    ret i32 1
+ ;
+   %and1 = and i32 %b, 3
+   %B1 = lshr i32 %and1, %and1
