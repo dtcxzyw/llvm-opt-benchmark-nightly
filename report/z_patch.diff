@@ -1,0 +1,146 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+index 90ea19541653e..b05f3bc5cc01c 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAddSub.cpp
+@@ -2616,16 +2616,6 @@ Instruction *InstCombinerImpl::visitSub(BinaryOperator &I) {
+ 
+   const APInt *Op0C;
+   if (match(Op0, m_APInt(Op0C))) {
+-    if (Op0C->isMask()) {
+-      // Turn this into a xor if LHS is 2^n-1 and the remaining bits are known
+-      // zero. We don't use information from dominating conditions so this
+-      // transform is easier to reverse if necessary.
+-      KnownBits RHSKnown = llvm::computeKnownBits(
+-          Op1, SQ.getWithInstruction(&I).getWithoutDomCondCache());
+-      if ((*Op0C | RHSKnown.Zero).isAllOnes())
+-        return BinaryOperator::CreateXor(Op1, Op0);
+-    }
+-
+     // C - ((C3 -nuw X) & C2) --> (C - (C2 & C3)) + (X & C2) when:
+     // (C3 - ((C2 & C3) - 1)) is pow2
+     // ((C2 + C3) & ((C2 & C3) - 1)) == ((C2 & C3) - 1)
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 3547a79df1355..329fadbfa99b5 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -473,32 +473,30 @@ Instruction *InstCombinerImpl::commonShiftTransforms(BinaryOperator &I) {
+     if (match(Op1, m_Add(m_Value(A), m_APInt(AddC))) && AddC->isNegative() &&
+         (-*AddC).ult(BitWidth)) {
+       unsigned PosOffset = (-*AddC).getZExtValue();
+-
+-      auto isSuitableForPreShift = [PosOffset, &I, AC]() {
+-        switch (I.getOpcode()) {
+-        default:
+-          return false;
+-        case Instruction::Shl:
+-          return (I.hasNoSignedWrap() || I.hasNoUnsignedWrap()) &&
+-                 AC->eq(AC->lshr(PosOffset).shl(PosOffset));
+-        case Instruction::LShr:
+-          return I.isExact() && AC->eq(AC->shl(PosOffset).lshr(PosOffset));
+-        case Instruction::AShr:
+-          return I.isExact() && AC->eq(AC->shl(PosOffset).ashr(PosOffset));
+-        }
+-      };
+-      if (isSuitableForPreShift()) {
+-        Constant *NewC = ConstantInt::get(Ty, I.getOpcode() == Instruction::Shl
+-                                                  ? AC->lshr(PosOffset)
+-                                                  : AC->shl(PosOffset));
+-        BinaryOperator *NewShiftOp =
+-            BinaryOperator::Create(I.getOpcode(), NewC, A);
+-        if (I.getOpcode() == Instruction::Shl) {
++      switch (I.getOpcode()) {
++      default:
++        llvm_unreachable("Expected a shift");
++      case Instruction::Shl:
++        if ((I.hasNoSignedWrap() || I.hasNoUnsignedWrap()) &&
++            AC->eq(AC->lshr(PosOffset).shl(PosOffset))) {
++          Constant *NewC = ConstantInt::get(Ty, AC->lshr(PosOffset));
++          BinaryOperator *NewShiftOp = BinaryOperator::CreateShl(NewC, A);
+           NewShiftOp->setHasNoUnsignedWrap(I.hasNoUnsignedWrap());
+-        } else {
+-          NewShiftOp->setIsExact();
++          return NewShiftOp;
++        }
++        break;
++      case Instruction::LShr:
++        if (I.isExact() && AC->eq(AC->shl(PosOffset).lshr(PosOffset))) {
++          Constant *NewC = ConstantInt::get(Ty, AC->shl(PosOffset));
++          return BinaryOperator::CreateExactLShr(NewC, A);
++        }
++        break;
++      case Instruction::AShr:
++        if (I.isExact() && AC->eq(AC->shl(PosOffset).ashr(PosOffset))) {
++          Constant *NewC = ConstantInt::get(Ty, AC->shl(PosOffset));
++          return BinaryOperator::CreateExactAShr(NewC, A);
+         }
+-        return NewShiftOp;
++        break;
+       }
+     }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/cttz.ll b/llvm/test/Transforms/InstCombine/cttz.ll
+index 7af67faab1d47..765fab5760be5 100644
+--- a/llvm/test/Transforms/InstCombine/cttz.ll
++++ b/llvm/test/Transforms/InstCombine/cttz.ll
+@@ -356,7 +356,7 @@ define i8 @fold_ctz_log2_maybe_z_okay(i8 %x, i8 %y, i1 %c) {
+ define i8 @fold_clz_log2(i8 %x) {
+ ; CHECK-LABEL: @fold_clz_log2(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 5)
+-; CHECK-NEXT:    [[R:%.*]] = xor i8 [[TMP1]], 7
++; CHECK-NEXT:    [[R:%.*]] = sub nuw nsw i8 7, [[TMP1]]
+ ; CHECK-NEXT:    ret i8 [[R]]
+ ;
+   %p2 = shl i8 1, %x
+diff --git a/llvm/test/Transforms/InstCombine/known-bits-lerp-pattern.ll b/llvm/test/Transforms/InstCombine/known-bits-lerp-pattern.ll
+index 534573634ce4b..e18ed7de7a87b 100644
+--- a/llvm/test/Transforms/InstCombine/known-bits-lerp-pattern.ll
++++ b/llvm/test/Transforms/InstCombine/known-bits-lerp-pattern.ll
+@@ -11,7 +11,7 @@ define i32 @test_clamp(i8 %a, i8 %c, i8 %d) {
+ ; CHECK-NEXT:    [[A32:%.*]] = zext i8 [[A]] to i32
+ ; CHECK-NEXT:    [[C32:%.*]] = zext i8 [[C]] to i32
+ ; CHECK-NEXT:    [[D32:%.*]] = zext i8 [[D]] to i32
+-; CHECK-NEXT:    [[SUB:%.*]] = xor i32 [[C32]], 255
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 255, [[C32]]
+ ; CHECK-NEXT:    [[MUL1:%.*]] = mul nuw nsw i32 [[SUB]], [[A32]]
+ ; CHECK-NEXT:    [[MUL2:%.*]] = mul nuw nsw i32 [[C32]], [[D32]]
+ ; CHECK-NEXT:    [[ADD:%.*]] = add nuw nsw i32 [[MUL1]], [[MUL2]]
+@@ -35,7 +35,7 @@ define i1 @test_trunc_cmp(i8 %a, i8 %c, i8 %d) {
+ ; CHECK-NEXT:    [[A32:%.*]] = zext i8 [[A]] to i16
+ ; CHECK-NEXT:    [[C32:%.*]] = zext i8 [[C]] to i16
+ ; CHECK-NEXT:    [[D32:%.*]] = zext i8 [[D]] to i16
+-; CHECK-NEXT:    [[SUB:%.*]] = xor i16 [[C32]], 255
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i16 255, [[C32]]
+ ; CHECK-NEXT:    [[MUL1:%.*]] = mul nuw i16 [[SUB]], [[A32]]
+ ; CHECK-NEXT:    [[MUL2:%.*]] = mul nuw i16 [[C32]], [[D32]]
+ ; CHECK-NEXT:    [[ADD:%.*]] = add i16 [[MUL1]], [[MUL2]]
+diff --git a/llvm/test/Transforms/InstCombine/sub-xor.ll b/llvm/test/Transforms/InstCombine/sub-xor.ll
+index 48e6d830c41f6..86638dd9848e3 100644
+--- a/llvm/test/Transforms/InstCombine/sub-xor.ll
++++ b/llvm/test/Transforms/InstCombine/sub-xor.ll
+@@ -6,7 +6,7 @@ declare void @use(i32)
+ define i32 @low_mask_nsw_nuw(i32 %x) {
+ ; CHECK-LABEL: @low_mask_nsw_nuw(
+ ; CHECK-NEXT:    [[AND:%.*]] = and i32 [[X:%.*]], 31
+-; CHECK-NEXT:    [[SUB:%.*]] = xor i32 [[AND]], 63
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 63, [[AND]]
+ ; CHECK-NEXT:    ret i32 [[SUB]]
+ ;
+   %and = and i32 %x, 31
+@@ -17,7 +17,7 @@ define i32 @low_mask_nsw_nuw(i32 %x) {
+ define <2 x i32> @low_mask_nsw_nuw_vec(<2 x i32> %x) {
+ ; CHECK-LABEL: @low_mask_nsw_nuw_vec(
+ ; CHECK-NEXT:    [[AND:%.*]] = and <2 x i32> [[X:%.*]], splat (i32 31)
+-; CHECK-NEXT:    [[SUB:%.*]] = xor <2 x i32> [[AND]], splat (i32 63)
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw <2 x i32> splat (i32 63), [[AND]]
+ ; CHECK-NEXT:    ret <2 x i32> [[SUB]]
+ ;
+   %and = and <2 x i32> %x, <i32 31, i32 31>
+@@ -98,7 +98,7 @@ declare i32 @llvm.ctlz.i32(i32, i1)
+ define i32 @range_masked_sub(i32 %x) {
+ ; CHECK-LABEL: @range_masked_sub(
+ ; CHECK-NEXT:    [[COUNT:%.*]] = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 [[X:%.*]], i1 true) #[[ATTR1:[0-9]+]]
+-; CHECK-NEXT:    [[SUB:%.*]] = xor i32 [[COUNT]], 31
++; CHECK-NEXT:    [[SUB:%.*]] = sub nuw nsw i32 31, [[COUNT]]
+ ; CHECK-NEXT:    ret i32 [[SUB]]
+ ;
+   %count = tail call i32 @llvm.ctlz.i32(i32 %x, i1 true) nounwind readnone
