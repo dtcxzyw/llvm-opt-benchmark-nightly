@@ -4,7 +4,7 @@ begin_hunk_0_@_ZN6duckdb9make_uniqINS_23MaterializedQueryResultEJRKNS_13Statemen
   %i.z = getelementptr inbounds nuw i8, ptr %8, i64 112
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 112
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.z, ptr noundef nonnull align 8 dereferenceable(17) %i.aa, i64 17, i1 false)
-  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !111 ; 3 uses
   %i.ad = load ptr, ptr %3, align 8, !tbaa !112   ; 3 uses
   %i.ae = ptrtoint ptr %i.ac to i64
@@ -13,17 +13,24 @@ begin_hunk_1_@_ZN6duckdb9make_uniqINS_23MaterializedQueryResultEJRKNS_13Statemen
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.d
   %i.ai = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #27
-          to label %.noexc12 unwind label %bb.n
+          to label %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge unwind label %bb.n
 
-.noexc12:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i, %bb.c
-  %i.aj = phi ptr [ null, %bb.c ], [ %i.ai, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge: ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i
+  %.pre = load ptr, ptr %3, align 8, !tbaa !115
+  %.pre19 = load ptr, ptr %i.ab, align 8, !tbaa !115
+  br label %.noexc12
+
+.noexc12:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge, %bb.c
+  %12 = phi ptr [ %i.ac, %bb.c ], [ %.pre19, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge ]
+  %13 = phi ptr [ %i.ad, %bb.c ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge ]
+  %i.aj = phi ptr [ null, %bb.c ], [ %i.ai, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc12_crit_edge ] ; 4 uses
   store ptr %i.aj, ptr %9, align 8, !tbaa !112
   %i.ak = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !111
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ag
   %i.am = getelementptr inbounds nuw i8, ptr %9, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !114
-  %i.an = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.ad, ptr %i.ac, ptr noundef %i.aj)
+  %i.an = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %13, ptr %12, ptr noundef %i.aj)
           to label %bb.g unwind label %bb.e
 
 bb.e:                                             ; preds = %.noexc12
@@ -32,7 +39,7 @@ begin_hunk_2_@_ZN6duckdb9make_uniqINS_17StreamQueryResultEJRKNS_13StatementTypeE
           to label %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit unwind label %bb.x
 
 _ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit: ; preds = %bb.c
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !111 ; 3 uses
   %i.ad = load ptr, ptr %4, align 8, !tbaa !112   ; 3 uses
   %i.ae = ptrtoint ptr %i.ac to i64
@@ -41,17 +48,24 @@ begin_hunk_3_@_ZN6duckdb9make_uniqINS_17StreamQueryResultEJRKNS_13StatementTypeE
 
 _ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = %bb.d
   %i.ai = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ag) #27
-          to label %.noexc16 unwind label %bb.y
+          to label %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge unwind label %bb.y
 
-.noexc16:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit
-  %i.aj = phi ptr [ null, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit ], [ %i.ai, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i ] ; 4 uses
+_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge: ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i
+  %.pre = load ptr, ptr %4, align 8, !tbaa !115
+  %.pre33 = load ptr, ptr %i.ab, align 8, !tbaa !115
+  br label %.noexc16
+
+.noexc16:                                         ; preds = %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit
+  %14 = phi ptr [ %i.ac, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit ], [ %.pre33, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge ]
+  %15 = phi ptr [ %i.ad, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit ], [ %.pre, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge ]
+  %i.aj = phi ptr [ null, %_ZN6duckdb6vectorINS_11LogicalTypeELb1ESaIS1_EEC2ERKS3_.exit ], [ %i.ai, %_ZNSt15__new_allocatorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8allocateEmPKv.exit.i.i.i.i.i..noexc16_crit_edge ] ; 4 uses
   store ptr %i.aj, ptr %11, align 8, !tbaa !112
   %i.ak = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !111
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.ag
   %i.am = getelementptr inbounds nuw i8, ptr %11, i64 16
   store ptr %i.al, ptr %i.am, align 8, !tbaa !114
-  %i.an = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %i.ad, ptr %i.ac, ptr noundef %i.aj)
+  %i.an = invoke noundef ptr @_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEEPS7_ET0_T_SG_SF_(ptr %15, ptr %14, ptr noundef %i.aj)
           to label %bb.g unwind label %bb.e
 
 bb.e:                                             ; preds = %.noexc16

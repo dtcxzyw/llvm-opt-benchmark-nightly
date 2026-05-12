@@ -4,8 +4,8 @@ begin_hunk_0_@_ZNSt8__detail9_Map_baseIN2v88internal4wasm22WasmImportWrapperCach
   %i.ar = mul i64 %i.aq, -4132994306676758123
   %i.as = xor i64 %i.aa, %i.ar
   %i.at = mul i64 %i.as, -4132994306676758123     ; 4 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.av = load i64, ptr %i.au, align 8            ; 3 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.av = load i64, ptr %i.au, align 8            ; 2 uses
   %i.aw = urem i64 %i.at, %i.av                   ; 3 uses
   %i.ax = load ptr, ptr %0, align 8
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ax, i64 %i.aw
@@ -14,9 +14,10 @@ begin_hunk_1_@_ZNSt8__detail9_Map_baseIN2v88internal4wasm22WasmImportWrapperCach
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bx, i8 0, i64 16, i1 false)
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %2 = load i64, ptr %i.au, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.ca = load i64, ptr %i.bz, align 8
-  %i.cb = tail call { i8, i64 } @_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm(ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 noundef %i.av, i64 noundef %i.ca, i64 noundef 1) #14 ; 2 uses
+  %i.cb = tail call { i8, i64 } @_ZNKSt8__detail20_Prime_rehash_policy14_M_need_rehashEmmm(ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 noundef %2, i64 noundef %i.ca, i64 noundef 1) #14 ; 2 uses
   %i.cc = extractvalue { i8, i64 } %i.cb, 0
   %i.cd = trunc i8 %i.cc to i1
   br i1 %i.cd, label %bb.h, label %bb.i

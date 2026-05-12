@@ -4,8 +4,8 @@ begin_hunk_0_@_ZNK6google8protobuf6Struct18_InternalSerializeEPhPNS0_2io19EpsCop
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN6google8protobuf8internal12MapSorterPtrINS0_3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_5ValueEEEEC2ERKSB_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i32, ptr %1, align 8, !tbaa !48     ; 3 uses
-  %i.b = zext i32 %i.a to i64                     ; 3 uses
+  %i.a = load i32, ptr %1, align 8, !tbaa !48     ; 2 uses
+  %i.b = zext i32 %i.a to i64                     ; 2 uses
   store i64 %i.b, ptr %0, align 8, !tbaa !56
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %.not = icmp eq i32 %i.a, 0
@@ -14,18 +14,23 @@ begin_hunk_1_@_ZN6google8protobuf8internal12MapSorterPtrINS0_3MapINSt7__cxx1112b
   br label %_ZSt4sortIPPKvN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SE_T0_.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = shl nuw nsw i64 %i.b, 3                  ; 2 uses
+  %i.d = shl nuw nsw i64 %i.b, 3
   %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #28 ; 7 uses
+  %.pr = load i64, ptr %0, align 8, !tbaa !56     ; 4 uses
   store ptr %i.e, ptr %i.c, align 8, !tbaa !55
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %3 = load i32, ptr %2, align 4, !tbaa !46, !noalias !81 ; 4 uses
-  %.not12.i.i.a = icmp eq i32 %3, 0
-  br i1 %.not12.i.i.a, label %._crit_edge, label %.lr.ph.i.i
+  %.not12.i.i.a = icmp eq i64 %.pr, 0
+  br i1 %.not12.i.i.a, label %_ZSt4sortIPPKvN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SE_T0_.exit, label %2
 
-.lr.ph.i.i:                                       ; preds = %bb.b
+2:                                                ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = load i32, ptr %3, align 4, !tbaa !46, !noalias !81 ; 4 uses
+  %.not12.i.i = icmp eq i32 %4, 0
+  br i1 %.not12.i.i, label %._crit_edge, label %.lr.ph.i.i
+
+.lr.ph.i.i:                                       ; preds = %2
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !32, !noalias !81
-  %i.h = zext i32 %3 to i64
+  %i.h = zext i32 %4 to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.i.i
@@ -34,16 +39,17 @@ begin_hunk_2_@_ZN6google8protobuf8internal12MapSorterPtrINS0_3MapINSt7__cxx1112b
   %i.n = load ptr, ptr %i.m, align 8
   br label %_ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_5ValueEE14const_iteratorppEv.exit.outer
 
-._crit_edge:                                      ; preds = %bb.d, %.preheader.preheader, %.preheader, %bb.b
-  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.d ; 3 uses
-  %i.p = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.b, i1 true)
+._crit_edge:                                      ; preds = %bb.d, %.preheader.preheader, %.preheader, %2
+  %.idx = shl nuw nsw i64 %.pr, 3
+  %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 %.idx ; 3 uses
+  %i.p = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %.pr, i1 true)
   %i.q = shl nuw nsw i64 %i.p, 1
   %i.r = xor i64 %i.q, 126
   invoke void @_ZSt16__introsort_loopIPPKvlN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEEvT_SI_T0_T1_(ptr noundef nonnull %i.e, ptr noundef nonnull %i.o, i64 noundef %i.r)
           to label %.noexc unwind label %bb.i
 
 .noexc:                                           ; preds = %._crit_edge
-  %i.s = icmp ugt i32 %i.a, 16
+  %i.s = icmp ugt i64 %.pr, 16
   br i1 %i.s, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %.noexc
@@ -52,12 +58,12 @@ begin_hunk_3_@_ZN6google8protobuf8internal12MapSorterPtrINS0_3MapINSt7__cxx1112b
 
 .preheader.preheader:                             ; preds = %_ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_5ValueEE14const_iteratorppEv.exit
   %.0.i.i54 = add i32 %.sroa.12.027.ph, 1         ; 2 uses
-  %i.am = icmp ult i32 %.0.i.i54, %3
+  %i.am = icmp ult i32 %.0.i.i54, %4
   br i1 %i.am, label %.lr.ph56, label %._crit_edge
 
 .preheader:                                       ; preds = %.lr.ph56
   %.0.i.i = add i32 %.0.i.i55, 1                  ; 2 uses
-  %i.an = icmp ult i32 %.0.i.i, %3
+  %i.an = icmp ult i32 %.0.i.i, %4
   br i1 %i.an, label %.lr.ph56, label %._crit_edge, !llvm.loop !80
 
 .lr.ph56:                                         ; preds = %.preheader.preheader, %.preheader
@@ -66,7 +72,7 @@ begin_hunk_4_@_ZN6google8protobuf8internal12MapSorterPtrINS0_3MapINSt7__cxx1112b
   %i.ar = icmp eq ptr %i.aq, null
   br i1 %i.ar, label %.preheader, label %_ZN6google8protobuf3MapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_5ValueEE14const_iteratorppEv.exit.outer, !llvm.loop !80
 
-_ZSt4sortIPPKvN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SE_T0_.exit: ; preds = %_ZSt25__unguarded_linear_insertIPPKvN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEEvT_T0_.exit.i.i.i.i, %bb.h, %.thread
+_ZSt4sortIPPKvN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEvT_SE_T0_.exit: ; preds = %_ZSt25__unguarded_linear_insertIPPKvN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf8internal20MapSorterPtrLessThanINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEEvT_T0_.exit.i.i.i.i, %bb.h, %.thread, %bb.b
   ret void
 
 _ZNKSt14default_deleteIA_PKvEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i: ; preds = %bb.i
