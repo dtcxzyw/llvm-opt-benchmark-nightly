@@ -4,7 +4,7 @@ begin_hunk_0_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -13,7 +13,7 @@ begin_hunk_1_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5ArrayILi
   %i.m = ashr exact i64 %i.l, 2
   %i.n = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.m, i1 true)
   %i.o = shl nuw nsw i64 %i.n, 1
-  %11 = xor i64 %i.o, 126
+  %11 = sub nuw nsw i64 126, %i.o
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.i, ptr %i.h, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.i, ptr %i.h)
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !1547 ; 2 uses
@@ -22,7 +22,7 @@ begin_hunk_2_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -31,7 +31,7 @@ begin_hunk_3_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5ArrayILi
   %i.m = ashr exact i64 %i.l, 2
   %i.n = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.m, i1 true)
   %i.o = shl nuw nsw i64 %i.n, 1
-  %11 = xor i64 %i.o, 126
+  %11 = sub nuw nsw i64 126, %i.o
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.i, ptr %i.h, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.i, ptr %i.h)
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !1547 ; 2 uses
@@ -40,7 +40,7 @@ begin_hunk_4_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -49,7 +49,7 @@ begin_hunk_5_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -58,7 +58,7 @@ begin_hunk_6_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -67,7 +67,7 @@ begin_hunk_7_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -76,7 +76,7 @@ begin_hunk_8_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI22
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -85,7 +85,7 @@ begin_hunk_9_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI9
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -94,7 +94,7 @@ begin_hunk_10_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -103,7 +103,7 @@ begin_hunk_11_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -112,7 +112,7 @@ begin_hunk_12_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI2
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -121,7 +121,7 @@ begin_hunk_13_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -130,7 +130,7 @@ begin_hunk_14_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -139,7 +139,7 @@ begin_hunk_15_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -148,7 +148,7 @@ begin_hunk_16_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -157,7 +157,7 @@ begin_hunk_17_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -166,7 +166,7 @@ begin_hunk_18_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -175,7 +175,7 @@ begin_hunk_19_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -184,7 +184,7 @@ begin_hunk_20_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -193,7 +193,7 @@ begin_hunk_21_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -202,7 +202,7 @@ begin_hunk_22_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -211,7 +211,7 @@ begin_hunk_23_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -220,7 +220,7 @@ begin_hunk_24_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -229,7 +229,7 @@ begin_hunk_25_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI2
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -238,7 +238,7 @@ begin_hunk_26_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI2
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -247,7 +247,7 @@ begin_hunk_27_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI2
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -256,7 +256,7 @@ begin_hunk_28_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -265,7 +265,7 @@ begin_hunk_29_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -274,7 +274,7 @@ begin_hunk_30_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -283,7 +283,7 @@ begin_hunk_31_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -292,7 +292,7 @@ begin_hunk_32_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -301,7 +301,7 @@ begin_hunk_33_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -310,7 +310,7 @@ begin_hunk_34_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -319,7 +319,7 @@ begin_hunk_35_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -328,7 +328,7 @@ begin_hunk_36_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -337,7 +337,7 @@ begin_hunk_37_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -346,7 +346,7 @@ begin_hunk_38_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -355,7 +355,7 @@ begin_hunk_39_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -364,7 +364,7 @@ begin_hunk_40_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -373,7 +373,7 @@ begin_hunk_41_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -382,7 +382,7 @@ begin_hunk_42_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -391,7 +391,7 @@ begin_hunk_43_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -400,7 +400,7 @@ begin_hunk_44_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -409,7 +409,7 @@ begin_hunk_45_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -418,7 +418,7 @@ begin_hunk_46_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %11 = xor i64 %i.t, 126
+  %11 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %11)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -427,7 +427,7 @@ begin_hunk_47_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -436,7 +436,7 @@ begin_hunk_48_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -445,7 +445,7 @@ begin_hunk_49_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -454,7 +454,7 @@ begin_hunk_50_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -463,7 +463,7 @@ begin_hunk_51_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %12 = xor i64 %i.t, 126
+  %12 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %12)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -472,7 +472,7 @@ begin_hunk_52_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -481,7 +481,7 @@ begin_hunk_53_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -490,7 +490,7 @@ begin_hunk_54_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %13 = xor i64 %i.t, 126
+  %13 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %13)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -499,7 +499,7 @@ begin_hunk_55_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -508,7 +508,7 @@ begin_hunk_56_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -517,7 +517,7 @@ begin_hunk_57_@_ZNK9EvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI5FieldI2
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %7 = xor i64 %i.t, 126
+  %7 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %7)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -526,7 +526,7 @@ begin_hunk_58_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %8 = xor i64 %i.t, 126
+  %8 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %8)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
@@ -535,7 +535,7 @@ begin_hunk_59_@_ZN17MultiArgEvaluatorI29RemoteSinglePatchEvaluatorTagE8evaluateI
   %i.r = ashr exact i64 %i.q, 2
   %i.s = tail call range(i64 0, 65) i64 @llvm.ctlz.i64(i64 %i.r, i1 true)
   %i.t = shl nuw nsw i64 %i.s, 1
-  %10 = xor i64 %i.t, 126
+  %10 = sub nuw nsw i64 126, %i.t
   tail call void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEElNS0_5__ops15_Iter_less_iterEEvT_S9_T0_T1_(ptr %i.n, ptr %i.m, i64 noundef %10)
   tail call void @_ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_less_iterEEvT_S9_T0_(ptr %i.n, ptr %i.m)
   %i.u = load ptr, ptr %i.b, align 8, !tbaa !1547 ; 2 uses
