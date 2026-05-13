@@ -1,0 +1,279 @@
+diff --git a/llvm/include/llvm/IR/CmpPredicate.h b/llvm/include/llvm/IR/CmpPredicate.h
+index 96b85426a4add..f73123fbe447c 100644
+--- a/llvm/include/llvm/IR/CmpPredicate.h
++++ b/llvm/include/llvm/IR/CmpPredicate.h
+@@ -77,6 +77,9 @@ class CmpPredicate {
+   /// appropriate.
+   LLVM_ABI static CmpPredicate get(const CmpInst *Cmp);
+ 
++  /// Get the inverse predicate of a CmpPredicate.
++  LLVM_ABI static CmpPredicate getInverse(CmpPredicate P);
++
+   /// Get the swapped predicate of a CmpPredicate.
+   LLVM_ABI static CmpPredicate getSwapped(CmpPredicate P);
+ 
+diff --git a/llvm/lib/IR/Instructions.cpp b/llvm/lib/IR/Instructions.cpp
+index 93ec59846d360..7d364889da29a 100644
+--- a/llvm/lib/IR/Instructions.cpp
++++ b/llvm/lib/IR/Instructions.cpp
+@@ -4050,6 +4050,10 @@ CmpPredicate CmpPredicate::get(const CmpInst *Cmp) {
+   return Cmp->getPredicate();
+ }
+ 
++CmpPredicate CmpPredicate::getInverse(CmpPredicate P) {
++  return {CmpInst::getInversePredicate(P), P.hasSameSign()};
++}
++
+ CmpPredicate CmpPredicate::getSwapped(CmpPredicate P) {
+   return {CmpInst::getSwappedPredicate(P), P.hasSameSign()};
+ }
+diff --git a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+index c457ff74610ce..4bb49d61f3617 100644
+--- a/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
++++ b/llvm/lib/Transforms/Scalar/ConstraintElimination.cpp
+@@ -1129,6 +1129,8 @@ void State::addInfoFor(BasicBlock &BB) {
+   addInfoForInductions(BB);
+   auto &DL = BB.getDataLayout();
+ 
++  Value *A, *B;
++  CmpPredicate Pred;
+   // True as long as the current instruction is guaranteed to execute.
+   bool GuaranteedToExecute = true;
+   // Queue conditions and assumes.
+@@ -1152,8 +1154,6 @@ void State::addInfoFor(BasicBlock &BB) {
+       if (!AccessSize.isFixed())
+         return;
+       if (GuaranteedToExecute) {
+-        CmpPredicate Pred;
+-        Value *A, *B;
+         if (getConstraintFromMemoryAccess(*GEP, AccessSize.getFixedValue(),
+                                           Pred, A, B, DL, TLI)) {
+           // The memory access is guaranteed to execute when BB is entered,
+@@ -1180,9 +1180,7 @@ void State::addInfoFor(BasicBlock &BB) {
+     Intrinsic::ID ID = II ? II->getIntrinsicID() : Intrinsic::not_intrinsic;
+     switch (ID) {
+     case Intrinsic::assume: {
+-      Value *A, *B;
+-      CmpPredicate Pred;
+-      if (!match(I.getOperand(0), m_ICmp(Pred, m_Value(A), m_Value(B))))
++      if (!match(I.getOperand(0), m_ICmpLike(Pred, m_Value(A), m_Value(B))))
+         break;
+       if (GuaranteedToExecute) {
+         // The assume is guaranteed to execute when BB is entered, hence Cond
+@@ -1278,11 +1276,10 @@ void State::addInfoFor(BasicBlock &BB) {
+       QueueValue(Op0);
+       while (!CondWorkList.empty()) {
+         Value *Cur = CondWorkList.pop_back_val();
+-        if (auto *Cmp = dyn_cast<ICmpInst>(Cur)) {
++        if (match(Cur, m_ICmpLike(Pred, m_Value(A), m_Value(B)))) {
+           WorkList.emplace_back(FactOrCheck::getConditionFact(
+               DT.getNode(Successor),
+-              IsOr ? Cmp->getInverseCmpPredicate() : Cmp->getCmpPredicate(),
+-              Cmp->getOperand(0), Cmp->getOperand(1)));
++              IsOr ? CmpPredicate::getInverse(Pred) : Pred, A, B));
+           continue;
+         }
+         if (IsOr && match(Cur, m_LogicalOr(m_Value(Op0), m_Value(Op1)))) {
+@@ -1300,17 +1297,14 @@ void State::addInfoFor(BasicBlock &BB) {
+     return;
+   }
+ 
+-  auto *CmpI = dyn_cast<ICmpInst>(Br->getCondition());
+-  if (!CmpI)
++  if (!match(Br->getCondition(), m_ICmpLike(Pred, m_Value(A), m_Value(B))))
+     return;
+   if (canAddSuccessor(BB, Br->getSuccessor(0)))
+     WorkList.emplace_back(FactOrCheck::getConditionFact(
+-        DT.getNode(Br->getSuccessor(0)), CmpI->getCmpPredicate(),
+-        CmpI->getOperand(0), CmpI->getOperand(1)));
++        DT.getNode(Br->getSuccessor(0)), Pred, A, B));
+   if (canAddSuccessor(BB, Br->getSuccessor(1)))
+     WorkList.emplace_back(FactOrCheck::getConditionFact(
+-        DT.getNode(Br->getSuccessor(1)), CmpI->getInverseCmpPredicate(),
+-        CmpI->getOperand(0), CmpI->getOperand(1)));
++        DT.getNode(Br->getSuccessor(1)), CmpPredicate::getInverse(Pred), A, B));
+ }
+ 
+ #ifndef NDEBUG
+@@ -2060,10 +2054,11 @@ static bool eliminateConstraints(Function &F, DominatorTree &DT, LoopInfo &LI,
+         continue;
+       }
+     } else {
+-      bool Matched = match(CB.Inst, m_Intrinsic<Intrinsic::assume>(
+-                                        m_ICmp(Pred, m_Value(A), m_Value(B))));
++      bool Matched = match(CB.Inst, m_Intrinsic<Intrinsic::assume>(m_ICmpLike(
++                                        Pred, m_Value(A), m_Value(B))));
+       (void)Matched;
+-      assert(Matched && "Must have an assume intrinsic with a icmp operand");
++      assert(Matched &&
++             "Must have an assume intrinsic with a icmp like operand");
+     }
+     AddFact(Pred, A, B);
+   }
+diff --git a/llvm/test/Transforms/ConstraintElimination/trunc.ll b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+index 620d978149874..b7cb2d1711cd3 100644
+--- a/llvm/test/Transforms/ConstraintElimination/trunc.ll
++++ b/llvm/test/Transforms/ConstraintElimination/trunc.ll
+@@ -209,4 +209,162 @@ if.else:
+   ret i1 false
+ }
+ 
++define void @test_trunc_nuw(i1 %c, i8 %x) {
++; CHECK-LABEL: define void @test_trunc_nuw(
++; CHECK-SAME: i1 [[C:%.*]], i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    br i1 [[C_1]], label %[[BB1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB1]]:
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    [[T_6:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_6]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %c.1 = trunc nuw i8 %x to i1
++  br i1 %c.1, label %if.then, label %if.else
++
++if.then:
++  %t.1 = icmp eq i8 %x, 0
++  call void @use(i1 %t.1)
++  %t.2 = icmp ne i8 %x, 0
++  call void @use(i1 %t.2)
++  %t.3 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.3)
++  ret void
++
++if.else:
++  %t.4 = icmp eq i8 %x, 0
++  call void @use(i1 %t.4)
++  %t.5 = icmp ne i8 %x, 0
++  call void @use(i1 %t.5)
++  %t.6 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.6)
++  ret void
++}
++
++define void @assume_trunc_nuw(i8 %x) {
++; CHECK-LABEL: define void @assume_trunc_nuw(
++; CHECK-SAME: i8 [[X:%.*]]) {
++; CHECK-NEXT:    [[C_1:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @llvm.assume(i1 [[C_1]])
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    ret void
++;
++  %c.1 = trunc nuw i8 %x to i1
++  call void @llvm.assume(i1 %c.1)
++  %t.1 = icmp eq i8 %x, 0
++  call void @use(i1 %t.1)
++  %t.2 = icmp ne i8 %x, 0
++  call void @use(i1 %t.2)
++  %t.3 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.3)
++  ret void
++}
++
++define void @test_or_trunc_nuw(i1 %c, i8 %x) {
++; CHECK-LABEL: define void @test_or_trunc_nuw(
++; CHECK-SAME: i1 [[C:%.*]], i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    [[OR:%.*]] = or i1 [[C]], [[C_1]]
++; CHECK-NEXT:    br i1 [[OR]], label %[[BB1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB1]]:
++; CHECK-NEXT:    [[T_1:%.*]] = icmp eq i8 [[X]], 0
++; CHECK-NEXT:    call void @use(i1 [[T_1]])
++; CHECK-NEXT:    [[T_2:%.*]] = icmp ne i8 [[X]], 0
++; CHECK-NEXT:    call void @use(i1 [[T_2]])
++; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    [[T_6:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_6]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %c.1 = trunc nuw i8 %x to i1
++  %or = or i1 %c, %c.1
++  br i1 %or, label %if.then, label %if.else
++
++if.then:
++  %t.1 = icmp eq i8 %x, 0
++  call void @use(i1 %t.1)
++  %t.2 = icmp ne i8 %x, 0
++  call void @use(i1 %t.2)
++  %t.3 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.3)
++  ret void
++
++if.else:
++  %t.4 = icmp eq i8 %x, 0
++  call void @use(i1 %t.4)
++  %t.5 = icmp ne i8 %x, 0
++  call void @use(i1 %t.5)
++  %t.6 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.6)
++  ret void
++}
++
++define void @test_and_trunc_nuw(i1 %c, i8 %x) {
++; CHECK-LABEL: define void @test_and_trunc_nuw(
++; CHECK-SAME: i1 [[C:%.*]], i8 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[C_1:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    [[AND:%.*]] = and i1 [[C]], [[C_1]]
++; CHECK-NEXT:    br i1 [[AND]], label %[[BB1:.*]], label %[[EXIT:.*]]
++; CHECK:       [[BB1]]:
++; CHECK-NEXT:    call void @use(i1 false)
++; CHECK-NEXT:    call void @use(i1 true)
++; CHECK-NEXT:    [[T_3:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_3]])
++; CHECK-NEXT:    ret void
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    [[T_4:%.*]] = icmp eq i8 [[X]], 0
++; CHECK-NEXT:    call void @use(i1 [[T_4]])
++; CHECK-NEXT:    [[T_5:%.*]] = icmp ne i8 [[X]], 0
++; CHECK-NEXT:    call void @use(i1 [[T_5]])
++; CHECK-NEXT:    [[T_6:%.*]] = trunc nuw i8 [[X]] to i1
++; CHECK-NEXT:    call void @use(i1 [[T_6]])
++; CHECK-NEXT:    ret void
++;
++entry:
++  %c.1 = trunc nuw i8 %x to i1
++  %and = and i1 %c, %c.1
++  br i1 %and, label %if.then, label %if.else
++
++if.then:
++  %t.1 = icmp eq i8 %x, 0
++  call void @use(i1 %t.1)
++  %t.2 = icmp ne i8 %x, 0
++  call void @use(i1 %t.2)
++  %t.3 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.3)
++  ret void
++
++if.else:
++  %t.4 = icmp eq i8 %x, 0
++  call void @use(i1 %t.4)
++  %t.5 = icmp ne i8 %x, 0
++  call void @use(i1 %t.5)
++  %t.6 = trunc nuw i8 %x to i1
++  call void @use(i1 %t.6)
++  ret void
++}
++
++declare void @use(i1)
++
+ declare void @cond()
