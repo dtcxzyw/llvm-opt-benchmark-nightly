@@ -201,11 +201,11 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ag
 
 bb.ae:                                            ; preds = %bb.ab
-  %i.bx = sub i64 %i.bf, %.2138
+  %i.bx = sub nsw i64 %i.bf, %.2138
   br label %bb.ag
 
 bb.af:                                            ; preds = %bb.aa
-  %i.by = sub i64 %i.bf, %.2138
+  %i.by = sub nsw i64 %i.bf, %.2138
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.af

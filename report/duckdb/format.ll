@@ -201,7 +201,7 @@ bb.ay:                                            ; preds = %bb.ax
   br label %_ZN10duckdb_fmt2v68internal7compareERKNS1_6bigintES4_.exit
 
 bb.az:                                            ; preds = %bb.ax
-  %i.ly = sub i32 %i.lp, %i.lt
+  %i.ly = sub nsw i32 %i.lp, %i.lt
   %spec.store.select.i = call i32 @llvm.smax.i32(i32 %i.ly, i32 0)
   %i.lz = load ptr, ptr %i.a, align 8
   %i.ma = load ptr, ptr %i.k, align 8
@@ -604,7 +604,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %select.unfold, label %_ZN10duckdb_fmt2v68internal7compareERKNS1_6bigintES4_.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = sub i32 %i.c, %i.i
+  %i.n = sub nsw i32 %i.c, %i.i
   %spec.store.select.i = tail call i32 @llvm.smax.i32(i32 %i.n, i32 0)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.p = load ptr, ptr %i.o, align 8
@@ -963,7 +963,7 @@ bb.m:                                             ; preds = %_ZN10duckdb_fmt2v68
   br i1 %i.fe, label %_ZN10duckdb_fmt2v68internal7compareERKNS1_6bigintES4_.exit41.backedge, label %_ZN10duckdb_fmt2v68internal7compareERKNS1_6bigintES4_.exit
 
 bb.n:                                             ; preds = %_ZN10duckdb_fmt2v68internal6bigint16subtract_alignedERKS2_.exit
-  %i.ff = sub i32 %.0.in.lcssa.i.i, %i.fb
+  %i.ff = sub nsw i32 %.0.in.lcssa.i.i, %i.fb
   %spec.store.select.i30 = tail call i32 @llvm.smax.i32(i32 %i.ff, i32 0) ; 2 uses
   %i.fg = load ptr, ptr %i.cg, align 8
   %i.fh = load ptr, ptr %i.ci, align 8

@@ -201,7 +201,7 @@ _ZNSt5dequeIN4absl12crc_internal12CrcCordState9PrefixCrcESaIS3_EE27_M_reserve_el
   %.sroa.7.0 = phi ptr [ %i.iu, %bb.ap ], [ %i.jf, %bb.as ] ; 2 uses
   %.sroa.9205.0 = phi ptr [ %i.is, %bb.ap ], [ %i.jd, %bb.as ] ; 2 uses
   %storemerge.i.i.i35 = phi ptr [ %i.iz, %bb.ap ], [ %i.ji, %bb.as ] ; 2 uses
-  %i.jj = sub i64 %i.as, %i.t                     ; 5 uses
+  %i.jj = sub nsw i64 %i.as, %i.t                 ; 5 uses
   %i.jk = sub nsw i64 0, %i.jj
   %i.jl = ptrtoint ptr %i.iv to i64
   %i.jm = sub i64 %i.jl, %.pre-phi
