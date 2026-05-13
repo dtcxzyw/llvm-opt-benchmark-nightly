@@ -201,19 +201,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.e = call i32 (ptr, ptr, ...) @PyArg_ParseTuple(ptr noundef nonnull %1, ptr noundef nonnull @.str.19, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #4
   %.not = icmp eq i32 %i.e, 0
-  br i1 %.not, label %syslog_syslog_impl.exit, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.c
-  %.pre = load i32, ptr %i.a, align 4, !tbaa !6
-  br label %bb.e
+  br i1 %.not, label %syslog_syslog_impl.exit, label %bb.e
 
 bb.d:                                             ; preds = %bb.a
   %i.f = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !16
   tail call void @PyErr_SetString(ptr noundef %i.f, ptr noundef nonnull @.str.20) #4
   br label %syslog_syslog_impl.exit
 
-bb.e:                                             ; preds = %._crit_edge, %bb.b
-  %2 = phi i32 [ %.pre, %._crit_edge ], [ 6, %bb.b ] ; 3 uses
+bb.e:                                             ; preds = %bb.c, %bb.b
+  %2 = load i32, ptr %i.a, align 4, !tbaa !6      ; 3 uses
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !27   ; 3 uses
   %i.h = call i32 (ptr, ptr, ...) @PySys_Audit(ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i32 noundef %2, ptr noundef %i.g) #4
   %i.i = icmp slt i32 %i.h, 0
