@@ -201,8 +201,8 @@ FT_Stream_Skip.exit85:                            ; preds = %bb.aa, %bb.ab
 
 bb.ac:                                            ; preds = %FT_Stream_Skip.exit85, %FT_Stream_ReadULong.exit80.thread, %bb.x
   %i.ci = add nuw nsw i32 %.02125, 1              ; 2 uses
-  %exitcond.not = icmp eq i32 %i.ci, %i.ba
-  br i1 %exitcond.not, label %.loopexit, label %.preheader, !llvm.loop !657
+  %3 = icmp samesign ult i32 %i.ci, %i.ba
+  br i1 %3, label %.preheader, label %.loopexit, !llvm.loop !657
 
 .loopexit:                                        ; preds = %bb.ac, %bb.aa, %bb.ab, %bb.i, %bb.j, %FT_Stream_ReadULong.exit68.thread, %.thread13, %FT_Stream_ReadUShort.exit.thread, %FT_Stream_ReadULong.exit48.thread, %.thread, %FT_Stream_ReadULong.exit.thread, %bb.o, %bb.e, %bb.y
   %.0 = phi i32 [ 85, %bb.i ], [ 85, %FT_Stream_ReadULong.exit.thread ], [ 2, %bb.e ], [ 85, %FT_Stream_ReadULong.exit48.thread ], [ 85, %bb.j ], [ 85, %FT_Stream_ReadUShort.exit.thread ], [ 2, %bb.o ], [ 0, %bb.y ], [ 85, %FT_Stream_ReadULong.exit68.thread ], [ 2, %.thread13 ], [ 2, %.thread ], [ 85, %bb.aa ], [ 85, %bb.ab ], [ 2, %bb.ac ]
