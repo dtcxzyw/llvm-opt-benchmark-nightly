@@ -201,7 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !1221 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.d = sext i32 %2 to i64                       ; 3 uses
+  %i.d = sext i32 %2 to i64                       ; 4 uses
   %i.e = getelementptr inbounds [72 x i8], ptr %i.c, i64 %i.d ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1233 ; 19 uses
@@ -252,7 +252,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not178, label %bb.i, label %bb.ba
 
 bb.i:                                             ; preds = %bb.g, %bb.h
-  %i.x = load i16, ptr %i.m, align 8, !tbaa !1229 ; 6 uses
+  %i.x = load i16, ptr %i.m, align 8, !tbaa !1229 ; 7 uses
   %i.y = icmp eq i16 %i.x, 0
   br i1 %i.y, label %bb.ba, label %bb.j
 
@@ -403,27 +403,30 @@ bb.z:                                             ; preds = %bb.y
   store ptr %i.bx, ptr %i.a, align 8, !tbaa !1221
   %i.bz = load i16, ptr %i.bx, align 8, !tbaa !1229 ; 2 uses
   %i.ca = sext i16 %i.bz to i32
-  %i.cb = sub nsw i32 %i.ca, %i.aw                ; 2 uses
+  %i.cb = sub nsw i32 %i.ca, %i.aw
   %.not188207 = icmp slt i32 %i.cb, %2
   br i1 %.not188207, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.z
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bx, i64 8 ; 2 uses
-  %i.cd = sext i16 %i.bz to i64
+  %i.cd = sext i16 %i.bz to i64                   ; 2 uses
+  %5 = sub nsw i32 0, %i.aw
+  %6 = sext i32 %5 to i64
+  %7 = add nsw i64 %i.cd, %6
+  %8 = zext nneg i16 %i.x to i64
+  %invariant.op = add nsw i64 %8, %i.d
   br label %bb.aa
 
 bb.aa:                                            ; preds = %.lr.ph, %bb.aa
-  %indvars.iv.a = phi i64 [ %i.cd, %.lr.ph ], [ %indvars.iv.next.a, %bb.aa ]
-  %5 = phi i32 [ %i.cb, %.lr.ph ], [ %8, %bb.aa ]
-  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, -1 ; 3 uses
+  %indvars.iv.a = phi i64 [ %i.cd, %.lr.ph ], [ %indvars.iv.next.a, %bb.aa ] ; 2 uses
+  %indvars.iv = phi i64 [ %7, %.lr.ph ], [ %indvars.iv.next, %bb.aa ] ; 2 uses
+  %indvars.iv.next.a = add nsw i64 %indvars.iv.a, -1 ; 2 uses
   %i.ce = getelementptr inbounds [72 x i8], ptr %i.cc, i64 %indvars.iv.next.a
-  %6 = sext i32 %5 to i64
-  %i.cf = getelementptr inbounds [72 x i8], ptr %i.cc, i64 %6
+  %i.cf = getelementptr inbounds [72 x i8], ptr %i.cc, i64 %indvars.iv
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.ce, ptr noundef nonnull align 8 dereferenceable(72) %i.cf, i64 72, i1 false), !tbaa.struct !1669
-  %7 = trunc nsw i64 %indvars.iv.next.a to i32
-  %8 = sub i32 %7, %i.aw                          ; 2 uses
-  %.not188 = icmp slt i32 %8, %2
-  br i1 %.not188, label %.loopexit, label %bb.aa, !llvm.loop !1671
+  %.not188.not = icmp sgt i64 %indvars.iv.a, %invariant.op
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  br i1 %.not188.not, label %bb.aa, label %.loopexit, !llvm.loop !1671
 
 .loopexit:                                        ; preds = %bb.aa, %bb.z, %sqlite3_free.exit199
   %.2158 = phi ptr [ %i.b, %sqlite3_free.exit199 ], [ %i.bx, %bb.z ], [ %i.bx, %bb.aa ] ; 2 uses
