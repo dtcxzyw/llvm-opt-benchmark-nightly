@@ -201,31 +201,29 @@ bb.e:                                             ; preds = %bb.a
   %i.k = phi ptr [ %i.s, %bb.g ], [ %i.c, %bb.e ]
   %.0.i = phi i32 [ %i.w, %bb.g ], [ 0, %bb.e ]   ; 2 uses
   %i.l = icmp sgt i32 %.0.i, 214748364
+  %.pre14.i = mul nsw i32 %.0.i, 10               ; 2 uses
   br i1 %i.l, label %.preheader._crit_edge.i, label %bb.f
 
 bb.f:                                             ; preds = %.preheader.i
-  %3 = mul nsw i32 %.0.i, 10                      ; 3 uses
   %i.m = sext i8 %i.j to i32
   %i.n = sub i32 -2147483601, %i.m
-  %i.o = icmp sgt i32 %3, %i.n
+  %i.o = icmp sgt i32 %.pre14.i, %i.n
   br i1 %i.o, label %.preheader._crit_edge.i, label %bb.g
 
 .preheader._crit_edge.i:                          ; preds = %bb.f, %.preheader.i
-  %.pre13.pre-phi.i = phi i32 [ %3, %bb.f ], [ 2147483647, %.preheader.i ]
   %i.p = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.6) #7 ; 0 uses
   %.pre.i = load ptr, ptr %2, align 8, !tbaa !12
   %.pre12.i = load ptr, ptr %i.a, align 8, !tbaa !33
   br label %bb.g
 
 bb.g:                                             ; preds = %.preheader._crit_edge.i, %bb.f
-  %.pre-phi.i = phi i32 [ %.pre13.pre-phi.i, %.preheader._crit_edge.i ], [ %3, %bb.f ]
   %i.q = phi ptr [ %.pre12.i, %.preheader._crit_edge.i ], [ %i.i, %bb.f ] ; 2 uses
   %i.r = phi ptr [ %.pre.i, %.preheader._crit_edge.i ], [ %i.k, %bb.f ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1 ; 3 uses
   store ptr %i.s, ptr %2, align 8, !tbaa !12
   %i.t = load i8, ptr %i.r, align 1, !tbaa !11
   %i.u = sext i8 %i.t to i32
-  %i.v = add i32 %.pre-phi.i, -48
+  %i.v = add i32 %.pre14.i, -48
   %i.w = add i32 %i.v, %i.u                       ; 2 uses
   %i.x = load i8, ptr %i.s, align 1, !tbaa !11    ; 2 uses
   %i.y = sext i8 %i.x to i64
@@ -257,31 +255,29 @@ bb.h:                                             ; preds = %bb.a, %bb.a
   %i.an = phi ptr [ %i.av, %bb.j ], [ %i.af, %bb.h ]
   %.0.i12 = phi i32 [ %i.az, %bb.j ], [ 0, %bb.h ] ; 2 uses
   %i.ao = icmp sgt i32 %.0.i12, 214748364
+  %.pre14.i13 = mul nsw i32 %.0.i12, 10           ; 2 uses
   br i1 %i.ao, label %.preheader._crit_edge.i16, label %bb.i
 
 bb.i:                                             ; preds = %.preheader.i11
-  %4 = mul nsw i32 %.0.i12, 10                    ; 3 uses
   %i.ap = sext i8 %i.am to i32
   %i.aq = sub i32 -2147483601, %i.ap
-  %i.ar = icmp sgt i32 %4, %i.aq
+  %i.ar = icmp sgt i32 %.pre14.i13, %i.aq
   br i1 %i.ar, label %.preheader._crit_edge.i16, label %bb.j
 
 .preheader._crit_edge.i16:                        ; preds = %bb.i, %.preheader.i11
-  %.pre13.pre-phi.i17 = phi i32 [ %4, %bb.i ], [ 2147483647, %.preheader.i11 ]
   %i.as = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.6) #7 ; 0 uses
   %.pre.i18 = load ptr, ptr %2, align 8, !tbaa !12
   %.pre12.i19 = load ptr, ptr %i.ad, align 8, !tbaa !33
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader._crit_edge.i16, %bb.i
-  %.pre-phi.i13 = phi i32 [ %.pre13.pre-phi.i17, %.preheader._crit_edge.i16 ], [ %4, %bb.i ]
   %i.at = phi ptr [ %.pre12.i19, %.preheader._crit_edge.i16 ], [ %i.al, %bb.i ] ; 2 uses
   %i.au = phi ptr [ %.pre.i18, %.preheader._crit_edge.i16 ], [ %i.an, %bb.i ] ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 1 ; 3 uses
   store ptr %i.av, ptr %2, align 8, !tbaa !12
   %i.aw = load i8, ptr %i.au, align 1, !tbaa !11
   %i.ax = sext i8 %i.aw to i32
-  %i.ay = add i32 %.pre-phi.i13, -48
+  %i.ay = add i32 %.pre14.i13, -48
   %i.az = add i32 %i.ay, %i.ax                    ; 5 uses
   %i.ba = load i8, ptr %i.av, align 1, !tbaa !11  ; 2 uses
   %i.bb = sext i8 %i.ba to i64
@@ -359,31 +355,29 @@ bb.d:                                             ; preds = %bb.a
   %i.k = phi ptr [ %i.s, %bb.f ], [ %i.c, %bb.d ]
   %.0.i = phi i32 [ %i.w, %bb.f ], [ 0, %bb.d ]   ; 2 uses
   %i.l = icmp sgt i32 %.0.i, 214748364
+  %.pre14.i = mul nsw i32 %.0.i, 10               ; 2 uses
   br i1 %i.l, label %.preheader._crit_edge.i, label %bb.e
 
 bb.e:                                             ; preds = %.preheader.i
-  %4 = mul nsw i32 %.0.i, 10                      ; 3 uses
   %i.m = sext i8 %i.j to i32
   %i.n = sub i32 -2147483601, %i.m
-  %i.o = icmp sgt i32 %4, %i.n
+  %i.o = icmp sgt i32 %.pre14.i, %i.n
   br i1 %i.o, label %.preheader._crit_edge.i, label %bb.f
 
 .preheader._crit_edge.i:                          ; preds = %bb.e, %.preheader.i
-  %.pre13.pre-phi.i = phi i32 [ %4, %bb.e ], [ 2147483647, %.preheader.i ]
   %i.p = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.6) #7 ; 0 uses
   %.pre.i = load ptr, ptr %2, align 8, !tbaa !12
   %.pre12.i = load ptr, ptr %i.a, align 8, !tbaa !33
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader._crit_edge.i, %bb.e
-  %.pre-phi.i = phi i32 [ %.pre13.pre-phi.i, %.preheader._crit_edge.i ], [ %4, %bb.e ]
   %i.q = phi ptr [ %.pre12.i, %.preheader._crit_edge.i ], [ %i.i, %bb.e ] ; 2 uses
   %i.r = phi ptr [ %.pre.i, %.preheader._crit_edge.i ], [ %i.k, %bb.e ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 1 ; 3 uses
   store ptr %i.s, ptr %2, align 8, !tbaa !12
   %i.t = load i8, ptr %i.r, align 1, !tbaa !11
   %i.u = sext i8 %i.t to i32
-  %i.v = add i32 %.pre-phi.i, -48
+  %i.v = add i32 %.pre14.i, -48
   %i.w = add i32 %i.v, %i.u                       ; 2 uses
   %i.x = load i8, ptr %i.s, align 1, !tbaa !11    ; 2 uses
   %i.y = sext i8 %i.x to i64
