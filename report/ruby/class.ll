@@ -201,9 +201,11 @@ duplicate_classext_m_tbl.exit:                    ; preds = %rbimpl_RB_TYPE_P_fa
   %.0.i57 = phi ptr [ %i.x, %bb.d ], [ %i.u, %bb.c ], [ null, %bb.b ], [ null, %rbimpl_RB_TYPE_P_fastpath.exit56.thread ]
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   store ptr %.0.i57, ptr %i.z, align 8, !tbaa !32
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 125 ; 4 uses
-  %i.ab = load i8, ptr %i.aa, align 1             ; 2 uses
-  %i.ac = and i8 %i.ab, -29
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 125 ; 7 uses
+  %i.ab = load i8, ptr %i.aa, align 1
+  %i.ac = and i8 %i.ab, -25
+  %7 = or disjoint i8 %i.ac, 8
+  store i8 %7, ptr %i.aa, align 1
   %i.ad = getelementptr i8, ptr %0, i64 16
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !62 ; 2 uses
   %.not = icmp eq i64 %i.ae, 0
@@ -235,7 +237,8 @@ rb_obj_write.exit:                                ; preds = %bb.f, %bb.e, %dupli
 bb.g:                                             ; preds = %rb_obj_write.exit
   %i.aq = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !33
-  %i.ar = or disjoint i8 %i.ac, 12
+  %8 = load i8, ptr %i.aa, align 1
+  %i.ar = or i8 %8, 4
   br label %bb.j
 
 bb.h:                                             ; preds = %rb_obj_write.exit
@@ -257,12 +260,12 @@ duplicate_classext_const_tbl.exit:                ; preds = %bb.h, %bb.i
   %.0.i59 = phi ptr [ %i.at, %bb.i ], [ null, %bb.h ]
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   store ptr %.0.i59, ptr %i.av, align 8, !tbaa !33
-  %7 = and i8 %i.ab, -29
-  %8 = or disjoint i8 %7, 8
+  %9 = load i8, ptr %i.aa, align 1
+  %10 = and i8 %9, -5
   br label %bb.j
 
 bb.j:                                             ; preds = %duplicate_classext_const_tbl.exit, %bb.g
-  %storemerge = phi i8 [ %8, %duplicate_classext_const_tbl.exit ], [ %i.ar, %bb.g ]
+  %storemerge = phi i8 [ %10, %duplicate_classext_const_tbl.exit ], [ %i.ar, %bb.g ]
   store i8 %storemerge, ptr %i.aa, align 1
   %i.aw = getelementptr i8, ptr %0, i64 56
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !34 ; 3 uses
@@ -665,7 +668,7 @@ bb.h:                                             ; preds = %RCLASS_EXT_WRITABLE
 define internal fastcc void @remove_class_from_subclasses(ptr noundef %0, i64 noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = alloca i64, align 8                      ; 2 uses
+  %i.b = alloca i64, align 8                      ; 3 uses
   store i64 %1, ptr %i.b, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   %i.c = call i32 @rb_st_lookup(ptr noundef %0, i64 noundef %1, ptr noundef nonnull %i.a) #18
@@ -721,8 +724,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.g, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %.thread
+  %3 = load i64, ptr %i.b, align 8, !tbaa !17
   %i.r = ptrtoint ptr %i.o to i64
-  %i.s = call i32 @rb_st_update(ptr noundef %0, i64 noundef %1, ptr noundef nonnull @remove_class_from_subclasses_replace_first_entry, i64 noundef %i.r) #18 ; 0 uses
+  %i.s = call i32 @rb_st_update(ptr noundef %0, i64 noundef %3, ptr noundef nonnull @remove_class_from_subclasses_replace_first_entry, i64 noundef %i.r) #18 ; 0 uses
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d

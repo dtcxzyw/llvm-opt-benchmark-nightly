@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.duckdb_snappy::SnappyArrayWriter", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #27
   store ptr %1, ptr %3, align 8, !tbaa !76
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store ptr %1, ptr %i.b, align 8, !tbaa !78
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   store ptr %1, ptr %i.c, align 8, !tbaa !79
@@ -257,7 +257,8 @@ bb.e:                                             ; preds = %bb.b
 bb.f:                                             ; preds = %bb.e
   %i.v = load i32, ptr %i.a, align 4, !tbaa !3
   %i.w = zext i32 %i.v to i64                     ; 2 uses
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w ; 2 uses
+  %4 = load ptr, ptr %i.b, align 8, !tbaa !78
+  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 %i.w ; 2 uses
   store ptr %i.x, ptr %i.c, align 8, !tbaa !79
   %.sroa.speculated.i.i.i = call i64 @llvm.umin.i64(i64 %i.w, i64 63)
   %i.y = sub nsw i64 0, %.sroa.speculated.i.i.i
@@ -660,7 +661,7 @@ bb.a:
   br i1 %.not, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -696,7 +697,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = sub i64 %i.z, %i.w                      ; 2 uses
   %.sroa.speculated20 = tail call i64 @llvm.umin.i64(i64 %i.ac, i64 65536) ; 4 uses
   %i.ad = trunc nuw nsw i64 %.sroa.speculated20 to i32
-  %i.ae = tail call noundef ptr @_ZN13duckdb_snappy19SnappySinkAllocator8AllocateEi(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.ad) ; 5 uses
+  %i.ae = tail call noundef ptr @_ZN13duckdb_snappy19SnappySinkAllocator8AllocateEi(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %i.ad) ; 4 uses
   store ptr %i.ae, ptr %i.h, align 8, !tbaa !120
   store ptr %i.ae, ptr %i.c, align 8, !tbaa !121
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.sroa.speculated20 ; 2 uses
@@ -740,7 +741,8 @@ _ZNKSt6vectorIPcSaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.e
   %i.av = shl nuw nsw i64 %i.au, 3
   %i.aw = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.av) #25 ; 4 uses
   %i.ax = getelementptr inbounds i8, ptr %i.aw, i64 %i.ao ; 2 uses
-  store ptr %i.ae, ptr %i.ax, align 8, !tbaa !133
+  %3 = load ptr, ptr %i.h, align 8, !tbaa !133
+  store ptr %3, ptr %i.ax, align 8, !tbaa !133
   %i.ay = icmp sgt i64 %i.ao, 0
   br i1 %i.ay, label %bb.g, label %_ZNSt6vectorIPcSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit16.i.i
 
