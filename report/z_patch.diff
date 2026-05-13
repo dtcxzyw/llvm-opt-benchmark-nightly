@@ -1,0 +1,647 @@
+diff --git a/llvm/lib/Analysis/AliasAnalysis.cpp b/llvm/lib/Analysis/AliasAnalysis.cpp
+index 9d89a6d90f706..21162a0d7ba6a 100644
+--- a/llvm/lib/Analysis/AliasAnalysis.cpp
++++ b/llvm/lib/Analysis/AliasAnalysis.cpp
+@@ -469,13 +469,19 @@ ModRefInfo llvm::getSyncEffects(AAResults *AA, const MemoryLocation &Loc,
+   // an effect if the object is only captured *later*. As such, set I to null
+   // and ReturnCaptures to true here.
+   const Value *Obj = getUnderlyingObject(Loc.Ptr);
+-  if (capturesNothing(AAQI.CA->getCapturesBefore(
+-          Obj, /*I=*/nullptr, /*OrAt=*/true, /*ReturnCaptures=*/true)))
++  CaptureComponents CC = AAQI.CA->getCapturesBefore(
++      Obj, /*I=*/nullptr, /*OrAt=*/true, /*ReturnCaptures=*/true);
++  if (capturesNothing(CC))
+     return ModRefInfo::NoModRef;
+ 
++  // If only read provenance was captured, other threads may only read the
++  // object.
++  ModRefInfo MR =
++      capturesReadProvenanceOnly(CC) ? ModRefInfo::Ref : ModRefInfo::ModRef;
++
+   // If Loc is a constant memory location, the synchronization operation
+   // definitely could not modify it.
+-  return AA->getModRefInfoMask(Loc);
++  return MR & AA->getModRefInfoMask(Loc);
+ }
+ 
+ ModRefInfo AAResults::getModRefInfo(const LoadInst *L,
+diff --git a/llvm/lib/Analysis/BasicAliasAnalysis.cpp b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+index 8b120f0ad1e11..767a8b0523002 100644
+--- a/llvm/lib/Analysis/BasicAliasAnalysis.cpp
++++ b/llvm/lib/Analysis/BasicAliasAnalysis.cpp
+@@ -963,11 +963,8 @@ ModRefInfo BasicAAResult::getModRefInfo(const CallBase *Call,
+   // We assume synchronization can not occur if the call does not read/write
+   // other memory (this in particular ensures that readonly/argmemonly continue
+   // to work as expected for frontends that do not emit nosync).
+-  // FIXME: This should apply to all calls, but is limited to inline asm to
+-  // limit impact. This ensures that inline asm memory barriers work correctly.
+   ModRefInfo SyncMR = ModRefInfo::NoModRef;
+-  if (isModAndRefSet(OtherMR) && Call->maySynchronize() &&
+-      Call->isInlineAsm()) {
++  if (isModAndRefSet(OtherMR) && Call->maySynchronize()) {
+     SyncMR = getSyncEffects(&AAQI.AAR, Loc, AAQI);
+     if (isModAndRefSet(SyncMR))
+       return SyncMR;
+diff --git a/llvm/test/Analysis/BasicAA/atomics.ll b/llvm/test/Analysis/BasicAA/atomics.ll
+index 0aedd7f3816ba..b4e66a6449f0a 100644
+--- a/llvm/test/Analysis/BasicAA/atomics.ll
++++ b/llvm/test/Analysis/BasicAA/atomics.ll
+@@ -227,7 +227,7 @@ define ptr @inline_asm() {
+ }
+ 
+ ; CHECK-LABEL: Function: arbitrary_call
+-; CHECK:  NoModRef:  Ptr: i32* %a	<->  call void @call()
++; CHECK:  Both ModRef:  Ptr: i32* %a	<->  call void @call()
+ ; CHECK:  NoModRef:  Ptr: i32* %a	<->  call void @call() #0
+ ; CHECK:  NoModRef:  Ptr: i32* %a	<->  call void @call() #1
+ ; CHECK:  NoModRef:  Ptr: i32* %a	<->  call void @call() #2
+diff --git a/llvm/test/Transforms/DeadStoreElimination/batchaa-caching-new-pointers.ll b/llvm/test/Transforms/DeadStoreElimination/batchaa-caching-new-pointers.ll
+index 4ec69bcfc9be6..8855916ebd35f 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/batchaa-caching-new-pointers.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/batchaa-caching-new-pointers.ll
+@@ -182,7 +182,7 @@ declare void @llvm.memset.p0.i64(ptr nocapture writeonly, i8, i64, i1 immarg)
+ declare void @llvm.lifetime.end.p0(ptr nocapture)
+ declare void @llvm.lifetime.start.p0(ptr nocapture)
+ 
+-declare noalias ptr @malloc(i64) willreturn allockind("alloc,uninitialized") "alloc-family"="malloc"
++declare noalias ptr @malloc(i64) willreturn allockind("alloc,uninitialized") memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc"
+ declare void @readnone(ptr) readnone nounwind
+ declare void @free(ptr nocapture) allockind("free") "alloc-family"="malloc"
+ 
+diff --git a/llvm/test/Transforms/DeadStoreElimination/captures-before-call.ll b/llvm/test/Transforms/DeadStoreElimination/captures-before-call.ll
+index 9a23c738ef689..061232b95f2ac 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/captures-before-call.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/captures-before-call.ll
+@@ -11,6 +11,7 @@ define i32 @other_value_escapes_before_call() {
+ ; CHECK-NEXT:    [[V2:%.*]] = alloca i32, align 4
+ ; CHECK-NEXT:    store i32 0, ptr [[V1]], align 4
+ ; CHECK-NEXT:    call void @escape(ptr nonnull [[V1]])
++; CHECK-NEXT:    store i32 55555, ptr [[V2]], align 4
+ ; CHECK-NEXT:    [[CALL:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 [[CALL]], ptr [[V2]], align 4
+ ; CHECK-NEXT:    call void @escape(ptr nonnull [[V2]])
+@@ -45,6 +46,7 @@ declare void @clobber()
+ define i32 @test_not_captured_before_call_same_bb() {
+ ; CHECK-LABEL: @test_not_captured_before_call_same_bb(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @escape_and_clobber(ptr [[A]])
+@@ -61,6 +63,7 @@ define i32 @test_not_captured_before_call_same_bb() {
+ define i32 @test_not_captured_before_call_same_bb_escape_unreachable_block() {
+ ; CHECK-LABEL: @test_not_captured_before_call_same_bb_escape_unreachable_block(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @escape_and_clobber(ptr [[A]])
+@@ -103,6 +106,7 @@ define i32 @test_captured_and_clobbered_after_load_same_bb_2() {
+ define i32 @test_captured_after_call_same_bb_2_clobbered_later() {
+ ; CHECK-LABEL: @test_captured_after_call_same_bb_2_clobbered_later(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    call void @escape_writeonly(ptr [[A]])
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+@@ -121,6 +125,7 @@ define i32 @test_captured_after_call_same_bb_2_clobbered_later() {
+ define i32 @test_captured_sibling_path_to_call_other_blocks_1(i1 %c.1) {
+ ; CHECK-LABEL: @test_captured_sibling_path_to_call_other_blocks_1(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    call void @escape_writeonly(ptr [[A]])
+@@ -291,6 +296,7 @@ exit:
+ define i32 @test_not_captured_before_call_other_blocks_1(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_1(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+@@ -322,6 +328,7 @@ exit:
+ define i32 @test_not_captured_before_call_other_blocks_2(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_2(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+@@ -355,6 +362,7 @@ exit:
+ define i32 @test_not_captured_before_call_other_blocks_3(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_3(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+@@ -386,6 +394,7 @@ exit:
+ define i32 @test_not_captured_before_call_other_blocks_4(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_4(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[ELSE:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+@@ -422,6 +431,7 @@ define i32 @test_not_captured_before_call_other_blocks_5(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_5(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[EXIT:%.*]]
+ ; CHECK:       then:
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+@@ -489,6 +499,7 @@ define i32 @test_not_captured_before_call_other_blocks_7(i1 %c.1) {
+ ; CHECK-LABEL: @test_not_captured_before_call_other_blocks_7(
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+ ; CHECK-NEXT:    call void @escape_writeonly(ptr [[A]])
+ ; CHECK-NEXT:    br i1 [[C_1:%.*]], label [[THEN:%.*]], label [[EXIT:%.*]]
+@@ -543,6 +554,7 @@ define i32 @test_not_captured_before_call_same_bb_but_read() {
+ define i32 @test_captured_after_loop(i1 %c.1) {
+ ; CHECK-LABEL: @test_captured_after_loop(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    br label [[LOOP:%.*]]
+ ; CHECK:       loop:
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval()
+@@ -600,6 +612,7 @@ define void @test_escaping_store_removed(ptr %src, ptr %escape) {
+ ; CHECK-LABEL: @test_escaping_store_removed(
+ ; CHECK-NEXT:  bb:
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i64, align 8
++; CHECK-NEXT:    store i64 0, ptr [[A]], align 8
+ ; CHECK-NEXT:    call void @clobber()
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr [[A]], ptr [[SRC:%.*]], i64 8, i1 false)
+ ; CHECK-NEXT:    store ptr [[A]], ptr [[ESCAPE:%.*]], align 8
+@@ -626,23 +639,24 @@ define void @test_invoke_captures() personality ptr undef {
+ ; CHECK-LABEL: @test_invoke_captures(
+ ; CHECK-NEXT:  bb:
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    invoke void @clobber()
+-; CHECK-NEXT:    to label [[BB2:%.*]] unwind label [[BB5:%.*]]
++; CHECK-NEXT:            to label [[BB2:%.*]] unwind label [[BB5:%.*]]
+ ; CHECK:       bb2:
+ ; CHECK-NEXT:    store i32 0, ptr [[A]], align 8
+ ; CHECK-NEXT:    invoke void @escape(ptr [[A]])
+-; CHECK-NEXT:    to label [[BB9:%.*]] unwind label [[BB10:%.*]]
++; CHECK-NEXT:            to label [[BB9:%.*]] unwind label [[BB10:%.*]]
+ ; CHECK:       bb4:
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       bb5:
+ ; CHECK-NEXT:    [[LP_1:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       bb9:
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       bb10:
+ ; CHECK-NEXT:    [[LP_2:%.*]] = landingpad { ptr, i32 }
+-; CHECK-NEXT:    cleanup
++; CHECK-NEXT:            cleanup
+ ; CHECK-NEXT:    unreachable
+ ;
+ bb:
+@@ -679,6 +693,7 @@ declare i32 @getval_nounwind() nounwind
+ define i32 @test_not_captured_before_load_same_bb_noalias_call() {
+ ; CHECK-LABEL: @test_not_captured_before_load_same_bb_noalias_call(
+ ; CHECK-NEXT:    [[A:%.*]] = call ptr @alloc()
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval_nounwind()
+ ; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @escape_and_clobber(ptr [[A]])
+@@ -694,8 +709,9 @@ define i32 @test_not_captured_before_load_same_bb_noalias_call() {
+ 
+ define i32 @test_not_captured_before_load_same_bb_noalias_arg(ptr noalias %a) {
+ ; CHECK-LABEL: @test_not_captured_before_load_same_bb_noalias_arg(
++; CHECK-NEXT:    store i32 55, ptr [[A:%.*]], align 4
+ ; CHECK-NEXT:    [[R:%.*]] = call i32 @getval_nounwind()
+-; CHECK-NEXT:    store i32 99, ptr [[A:%.*]], align 4
++; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @escape_and_clobber(ptr [[A]])
+ ; CHECK-NEXT:    ret i32 [[R]]
+ ;
+diff --git a/llvm/test/Transforms/DeadStoreElimination/captures-before-load.ll b/llvm/test/Transforms/DeadStoreElimination/captures-before-load.ll
+index 56c84c7ed5c77..65420a36306eb 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/captures-before-load.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/captures-before-load.ll
+@@ -184,6 +184,7 @@ define i32 @test_captured_before_load_same_bb_2(ptr %in.ptr) {
+ define i32 @test_not_captured_before_load_same_bb_clobber(ptr %in.ptr) {
+ ; CHECK-LABEL: @test_not_captured_before_load_same_bb_clobber(
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 55, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @clobber()
+ ; CHECK-NEXT:    [[IN_LV_1:%.*]] = load ptr, ptr [[IN_PTR:%.*]], align 2
+ ; CHECK-NEXT:    [[IN_LV_2:%.*]] = load i32, ptr [[IN_LV_1]], align 2
+@@ -271,6 +272,7 @@ define i32 @test_only_captured_sibling_path_with_ret_to_load_other_blocks(ptr %i
+ ; CHECK-NEXT:    [[IN_LV_2:%.*]] = load i32, ptr [[IN_LV_1]], align 2
+ ; CHECK-NEXT:    br label [[EXIT:%.*]]
+ ; CHECK:       exit:
++; CHECK-NEXT:    store i32 99, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @clobber()
+ ; CHECK-NEXT:    ret i32 [[IN_LV_2]]
+ ;
+diff --git a/llvm/test/Transforms/DeadStoreElimination/debuginfo.ll b/llvm/test/Transforms/DeadStoreElimination/debuginfo.ll
+index bac14ba483cd1..c86bfa495551b 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/debuginfo.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/debuginfo.ll
+@@ -18,7 +18,7 @@ define ptr @test_salvage(i32 %arg) {
+   %p = tail call ptr @malloc(i32 4)
+   %DEAD = add i32 %arg, 1
+   store i32 %DEAD, ptr %p
+-  call void @test_f()
++  call void @test_f() nosync
+   store i32 0, ptr %p
+   ret ptr %p
+ }
+diff --git a/llvm/test/Transforms/DeadStoreElimination/simple.ll b/llvm/test/Transforms/DeadStoreElimination/simple.ll
+index 60a6602f030f7..136680a8c3a6b 100644
+--- a/llvm/test/Transforms/DeadStoreElimination/simple.ll
++++ b/llvm/test/Transforms/DeadStoreElimination/simple.ll
+@@ -205,7 +205,7 @@ declare void @may_unwind()
+ define ptr @test_malloc_no_escape_before_return() {
+ ; CHECK-LABEL: @test_malloc_no_escape_before_return(
+ ; CHECK-NEXT:    [[PTR:%.*]] = tail call ptr @malloc(i64 4)
+-; CHECK-NEXT:    call void @may_unwind()
++; CHECK-NEXT:    call void @may_unwind() #[[ATTR12:[0-9]+]]
+ ; CHECK-NEXT:    store i32 0, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    ret ptr [[PTR]]
+ ;
+@@ -213,6 +213,27 @@ define ptr @test_malloc_no_escape_before_return() {
+   %DEAD = load i32, ptr %ptr
+   %DEAD2 = add i32 %DEAD, 1
+   store i32 %DEAD2, ptr %ptr
++  call void @may_unwind() nosync
++  store i32 0, ptr %ptr
++  ret ptr %ptr
++}
++
++; Do not remove stores, as the function call may synchronize and the pointer
++; later escape to a different thread.
++define ptr @test_malloc_no_escape_before_return_may_sync() {
++; CHECK-LABEL: @test_malloc_no_escape_before_return_may_sync(
++; CHECK-NEXT:    [[PTR:%.*]] = tail call ptr @malloc(i64 4)
++; CHECK-NEXT:    [[DEAD:%.*]] = load i32, ptr [[PTR]], align 4
++; CHECK-NEXT:    [[DEAD2:%.*]] = add i32 [[DEAD]], 1
++; CHECK-NEXT:    store i32 [[DEAD2]], ptr [[PTR]], align 4
++; CHECK-NEXT:    call void @may_unwind()
++; CHECK-NEXT:    store i32 0, ptr [[PTR]], align 4
++; CHECK-NEXT:    ret ptr [[PTR]]
++;
++  %ptr = tail call ptr @malloc(i64 4)
++  %NOT_DEAD = load i32, ptr %ptr
++  %NOT_DEAD2 = add i32 %NOT_DEAD, 1
++  store i32 %NOT_DEAD2, ptr %ptr
+   call void @may_unwind()
+   store i32 0, ptr %ptr
+   ret ptr %ptr
+@@ -221,7 +242,7 @@ define ptr @test_malloc_no_escape_before_return() {
+ define ptr @test_custom_malloc_no_escape_before_return() {
+ ; CHECK-LABEL: @test_custom_malloc_no_escape_before_return(
+ ; CHECK-NEXT:    [[PTR:%.*]] = tail call ptr @custom_malloc(i32 4)
+-; CHECK-NEXT:    call void @may_unwind()
++; CHECK-NEXT:    call void @may_unwind() #[[ATTR12]]
+ ; CHECK-NEXT:    store i32 0, ptr [[PTR]], align 4
+ ; CHECK-NEXT:    ret ptr [[PTR]]
+ ;
+@@ -229,7 +250,7 @@ define ptr @test_custom_malloc_no_escape_before_return() {
+   %DEAD = load i32, ptr %ptr
+   %DEAD2 = add i32 %DEAD, 1
+   store i32 %DEAD2, ptr %ptr
+-  call void @may_unwind()
++  call void @may_unwind() nosync
+   store i32 0, ptr %ptr
+   ret ptr %ptr
+ }
+@@ -238,7 +259,7 @@ define ptr addrspace(1) @test13_addrspacecast() {
+ ; CHECK-LABEL: @test13_addrspacecast(
+ ; CHECK-NEXT:    [[P:%.*]] = tail call ptr @malloc(i64 4)
+ ; CHECK-NEXT:    [[P_AC:%.*]] = addrspacecast ptr [[P]] to ptr addrspace(1)
+-; CHECK-NEXT:    call void @may_unwind()
++; CHECK-NEXT:    call void @may_unwind() #[[ATTR12]]
+ ; CHECK-NEXT:    store i32 0, ptr addrspace(1) [[P_AC]], align 4
+ ; CHECK-NEXT:    ret ptr addrspace(1) [[P_AC]]
+ ;
+@@ -247,7 +268,7 @@ define ptr addrspace(1) @test13_addrspacecast() {
+   %DEAD = load i32, ptr addrspace(1) %p.ac
+   %DEAD2 = add i32 %DEAD, 1
+   store i32 %DEAD2, ptr addrspace(1) %p.ac
+-  call void @may_unwind()
++  call void @may_unwind() nosync
+   store i32 0, ptr addrspace(1) %p.ac
+   ret ptr addrspace(1) %p.ac
+ }
+@@ -391,7 +412,7 @@ define noalias ptr @test23() nounwind uwtable ssp {
+ ; CHECK-NEXT:    store i8 97, ptr [[X]], align 1
+ ; CHECK-NEXT:    [[ARRAYIDX1:%.*]] = getelementptr inbounds [2 x i8], ptr [[X]], i64 0, i64 1
+ ; CHECK-NEXT:    store i8 0, ptr [[ARRAYIDX1]], align 1
+-; CHECK-NEXT:    [[CALL:%.*]] = call ptr @strdup(ptr [[X]]) #[[ATTR5:[0-9]+]]
++; CHECK-NEXT:    [[CALL:%.*]] = call ptr @strdup(ptr [[X]]) #[[ATTR4:[0-9]+]]
+ ; CHECK-NEXT:    ret ptr [[CALL]]
+ ;
+   %x = alloca [2 x i8], align 1
+@@ -425,7 +446,7 @@ define ptr @test25(ptr %p) nounwind {
+ ; CHECK-NEXT:    [[P_4:%.*]] = getelementptr i8, ptr [[P:%.*]], i64 4
+ ; CHECK-NEXT:    [[TMP:%.*]] = load i8, ptr [[P_4]], align 1
+ ; CHECK-NEXT:    store i8 0, ptr [[P_4]], align 1
+-; CHECK-NEXT:    [[Q:%.*]] = call ptr @strdup(ptr [[P]]) #[[ATTR14:[0-9]+]]
++; CHECK-NEXT:    [[Q:%.*]] = call ptr @strdup(ptr [[P]]) #[[ATTR13:[0-9]+]]
+ ; CHECK-NEXT:    store i8 [[TMP]], ptr [[P_4]], align 1
+ ; CHECK-NEXT:    ret ptr [[Q]]
+ ;
+diff --git a/llvm/test/Transforms/GVN/MemdepMiscompile.ll b/llvm/test/Transforms/GVN/MemdepMiscompile.ll
+index 7c8accb542ac1..83e2f99d2f30a 100644
+--- a/llvm/test/Transforms/GVN/MemdepMiscompile.ll
++++ b/llvm/test/Transforms/GVN/MemdepMiscompile.ll
+@@ -17,9 +17,9 @@ define i32 @test() nounwind ssp {
+ ; CHECK-NEXT:    store i32 0, ptr [[SHOULDEXIT]], align 4
+ ; CHECK-NEXT:    store i32 0, ptr [[TASKSIDLE]], align 4
+ ; CHECK-NEXT:    call void @CTestInitialize(ptr [[TASKSIDLE]]) #[[ATTR1:[0-9]+]]
+-; CHECK-NEXT:    br i1 true, label %[[WHILE_BODY_LR_PH:.*]], label %[[ENTRY_WHILE_END_CRIT_EDGE:.*]]
+-; CHECK:       [[ENTRY_WHILE_END_CRIT_EDGE]]:
+-; CHECK-NEXT:    br label %[[WHILE_END:.*]]
++; CHECK-NEXT:    [[TMP2:%.*]] = load i32, ptr [[SHOULDEXIT]], align 4
++; CHECK-NEXT:    [[CMP1:%.*]] = icmp eq i32 [[TMP2]], 0
++; CHECK-NEXT:    br i1 [[CMP1]], label %[[WHILE_BODY_LR_PH:.*]], label %[[WHILE_END:.*]]
+ ; CHECK:       [[WHILE_BODY_LR_PH]]:
+ ; CHECK-NEXT:    br label %[[WHILE_BODY:.*]]
+ ; CHECK:       [[WHILE_BODY]]:
+diff --git a/llvm/test/Transforms/GVN/PRE/rle.ll b/llvm/test/Transforms/GVN/PRE/rle.ll
+index e495163fa43cd..4d049cd6eba52 100644
+--- a/llvm/test/Transforms/GVN/PRE/rle.ll
++++ b/llvm/test/Transforms/GVN/PRE/rle.ll
+@@ -1506,7 +1506,7 @@ define i32 @phi_trans6(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMDEP:       [[HEADER]]:
+ ; LE-MEMDEP-NEXT:    [[L1:%.*]] = phi i32 [ [[L0]], %[[ENTRY]] ], [ [[L1_PRE:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+ ; LE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE]] ]
+-; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH:.*]]), [label %latch]
++; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; LE-MEMDEP:       [[LATCH]]:
+ ; LE-MEMDEP-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; LE-MEMDEP-NEXT:    br i1 [[COND]], label %[[EXIT:.*]], label %[[LATCH_HEADER_CRIT_EDGE]]
+@@ -1525,7 +1525,7 @@ define i32 @phi_trans6(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMSSA-NEXT:    br label %[[HEADER:.*]]
+ ; LE-MEMSSA:       [[HEADER]]:
+ ; LE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+-; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH]]), [label %latch]
++; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH]]), [label %[[LATCH]]]
+ ; LE-MEMSSA:       [[LATCH]]:
+ ; LE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[IV]]
+ ; LE-MEMSSA-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1543,7 +1543,7 @@ define i32 @phi_trans6(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMDEP:       [[HEADER]]:
+ ; BE-MEMDEP-NEXT:    [[L1:%.*]] = phi i32 [ [[L0]], %[[ENTRY]] ], [ [[L1_PRE:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+ ; BE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE]] ]
+-; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH:.*]]), [label %latch]
++; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; BE-MEMDEP:       [[LATCH]]:
+ ; BE-MEMDEP-NEXT:    [[IV_NEXT]] = add i32 [[IV]], 1
+ ; BE-MEMDEP-NEXT:    br i1 [[COND]], label %[[EXIT:.*]], label %[[LATCH_HEADER_CRIT_EDGE]]
+@@ -1562,7 +1562,7 @@ define i32 @phi_trans6(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMSSA-NEXT:    br label %[[HEADER:.*]]
+ ; BE-MEMSSA:       [[HEADER]]:
+ ; BE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 0, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+-; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH]]), [label %latch]
++; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans6, %[[LATCH]]), [label %[[LATCH]]]
+ ; BE-MEMSSA:       [[LATCH]]:
+ ; BE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[IV]]
+ ; BE-MEMSSA-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1601,7 +1601,7 @@ define i32 @phi_trans7(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMDEP:       [[HEADER]]:
+ ; LE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+ ; LE-MEMDEP-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+-; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH:.*]]), [label %latch]
++; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; LE-MEMDEP:       [[LATCH]]:
+ ; LE-MEMDEP-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+ ; LE-MEMDEP-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1621,7 +1621,7 @@ define i32 @phi_trans7(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMSSA:       [[HEADER]]:
+ ; LE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+ ; LE-MEMSSA-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+-; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH]]), [label %latch]
++; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH]]), [label %[[LATCH]]]
+ ; LE-MEMSSA:       [[LATCH]]:
+ ; LE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+ ; LE-MEMSSA-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1639,7 +1639,7 @@ define i32 @phi_trans7(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMDEP:       [[HEADER]]:
+ ; BE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+ ; BE-MEMDEP-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+-; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH:.*]]), [label %latch]
++; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; BE-MEMDEP:       [[LATCH]]:
+ ; BE-MEMDEP-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+ ; BE-MEMDEP-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1659,7 +1659,7 @@ define i32 @phi_trans7(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMSSA:       [[HEADER]]:
+ ; BE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+ ; BE-MEMSSA-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+-; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH]]), [label %latch]
++; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans7, %[[LATCH]]), [label %[[LATCH]]]
+ ; BE-MEMSSA:       [[LATCH]]:
+ ; BE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+ ; BE-MEMSSA-NEXT:    [[L1:%.*]] = load i32, ptr [[GEP_1]], align 4
+@@ -1698,7 +1698,7 @@ define i32 @phi_trans8(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMDEP-NEXT:    br label %[[HEADER:.*]]
+ ; LE-MEMDEP:       [[HEADER]]:
+ ; LE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+-; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH:.*]]), [label %latch]
++; LE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; LE-MEMDEP:       [[LATCH]]:
+ ; LE-MEMDEP-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+ ; LE-MEMDEP-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+@@ -1718,7 +1718,7 @@ define i32 @phi_trans8(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; LE-MEMSSA-NEXT:    br label %[[HEADER:.*]]
+ ; LE-MEMSSA:       [[HEADER]]:
+ ; LE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+-; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH]]), [label %latch]
++; LE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH]]), [label %[[LATCH]]]
+ ; LE-MEMSSA:       [[LATCH]]:
+ ; LE-MEMSSA-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+ ; LE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+@@ -1736,7 +1736,7 @@ define i32 @phi_trans8(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMDEP-NEXT:    br label %[[HEADER:.*]]
+ ; BE-MEMDEP:       [[HEADER]]:
+ ; BE-MEMDEP-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH_HEADER_CRIT_EDGE:.*]] ]
+-; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH:.*]]), [label %latch]
++; BE-MEMDEP-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH:.*]]), [label %[[LATCH]]]
+ ; BE-MEMDEP:       [[LATCH]]:
+ ; BE-MEMDEP-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+ ; BE-MEMDEP-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+@@ -1756,7 +1756,7 @@ define i32 @phi_trans8(ptr noalias nocapture readonly %x, i1 %cond) {
+ ; BE-MEMSSA-NEXT:    br label %[[HEADER:.*]]
+ ; BE-MEMSSA:       [[HEADER]]:
+ ; BE-MEMSSA-NEXT:    [[IV:%.*]] = phi i32 [ 2, %[[ENTRY]] ], [ [[IV_NEXT:%.*]], %[[LATCH:.*]] ]
+-; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH]]), [label %latch]
++; BE-MEMSSA-NEXT:    indirectbr ptr blockaddress(@phi_trans8, %[[LATCH]]), [label %[[LATCH]]]
+ ; BE-MEMSSA:       [[LATCH]]:
+ ; BE-MEMSSA-NEXT:    [[OFFSET:%.*]] = add i32 [[IV]], -2
+ ; BE-MEMSSA-NEXT:    [[GEP_1:%.*]] = getelementptr i32, ptr [[X]], i32 [[OFFSET]]
+@@ -2352,39 +2352,14 @@ declare void @use3(ptr, ptr)
+ 
+ ; PR8908
+ define void @test_escape1() nounwind {
+-; LE-MEMDEP-LABEL: define void @test_escape1(
+-; LE-MEMDEP-SAME: ) #[[ATTR3]] {
+-; LE-MEMDEP-NEXT:    [[X:%.*]] = alloca ptr, align 8
+-; LE-MEMDEP-NEXT:    store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr [[X]], align 8
+-; LE-MEMDEP-NEXT:    call void @use() #[[ATTR3]]
+-; LE-MEMDEP-NEXT:    call void @use3(ptr [[X]], ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2)) #[[ATTR3]]
+-; LE-MEMDEP-NEXT:    ret void
+-;
+-; LE-MEMSSA-LABEL: define void @test_escape1(
+-; LE-MEMSSA-SAME: ) #[[ATTR3]] {
+-; LE-MEMSSA-NEXT:    [[X:%.*]] = alloca ptr, align 8
+-; LE-MEMSSA-NEXT:    store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr [[X]], align 8
+-; LE-MEMSSA-NEXT:    call void @use() #[[ATTR3]]
+-; LE-MEMSSA-NEXT:    [[DEAD:%.*]] = load ptr, ptr [[X]], align 8
+-; LE-MEMSSA-NEXT:    call void @use3(ptr [[X]], ptr [[DEAD]]) #[[ATTR3]]
+-; LE-MEMSSA-NEXT:    ret void
+-;
+-; BE-MEMDEP-LABEL: define void @test_escape1(
+-; BE-MEMDEP-SAME: ) #[[ATTR3]] {
+-; BE-MEMDEP-NEXT:    [[X:%.*]] = alloca ptr, align 8
+-; BE-MEMDEP-NEXT:    store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr [[X]], align 8
+-; BE-MEMDEP-NEXT:    call void @use() #[[ATTR3]]
+-; BE-MEMDEP-NEXT:    call void @use3(ptr [[X]], ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2)) #[[ATTR3]]
+-; BE-MEMDEP-NEXT:    ret void
+-;
+-; BE-MEMSSA-LABEL: define void @test_escape1(
+-; BE-MEMSSA-SAME: ) #[[ATTR3]] {
+-; BE-MEMSSA-NEXT:    [[X:%.*]] = alloca ptr, align 8
+-; BE-MEMSSA-NEXT:    store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr [[X]], align 8
+-; BE-MEMSSA-NEXT:    call void @use() #[[ATTR3]]
+-; BE-MEMSSA-NEXT:    [[DEAD:%.*]] = load ptr, ptr [[X]], align 8
+-; BE-MEMSSA-NEXT:    call void @use3(ptr [[X]], ptr [[DEAD]]) #[[ATTR3]]
+-; BE-MEMSSA-NEXT:    ret void
++; CHECK-LABEL: define void @test_escape1(
++; CHECK-SAME: ) #[[ATTR3]] {
++; CHECK-NEXT:    [[X:%.*]] = alloca ptr, align 8
++; CHECK-NEXT:    store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr [[X]], align 8
++; CHECK-NEXT:    call void @use() #[[ATTR3]]
++; CHECK-NEXT:    [[DEAD:%.*]] = load ptr, ptr [[X]], align 8
++; CHECK-NEXT:    call void @use3(ptr [[X]], ptr [[DEAD]]) #[[ATTR3]]
++; CHECK-NEXT:    ret void
+ ;
+   %x = alloca ptr, align 8
+   store ptr getelementptr inbounds ([5 x ptr], ptr @_ZTV1X, i64 0, i64 2), ptr %x, align 8
+diff --git a/llvm/test/Transforms/GVN/captured-before.ll b/llvm/test/Transforms/GVN/captured-before.ll
+index 0977f6e577b56..d729a5a5e7873 100644
+--- a/llvm/test/Transforms/GVN/captured-before.ll
++++ b/llvm/test/Transforms/GVN/captured-before.ll
+@@ -10,8 +10,9 @@ define i32 @test_call_before_capture(ptr %p) {
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
+ ; CHECK-NEXT:    store i32 123, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @some_call()
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @capture(ptr [[A]])
+-; CHECK-NEXT:    ret i32 123
++; CHECK-NEXT:    ret i32 [[V]]
+ ;
+   %a = alloca i32
+   store i32 123, ptr %a
+@@ -83,7 +84,8 @@ define i32 @test_capture_readonly() {
+ ; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
+ ; CHECK-NEXT:    store i32 123, ptr [[A]], align 4
+ ; CHECK-NEXT:    call void @capture(ptr readonly [[A]])
+-; CHECK-NEXT:    ret i32 123
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[A]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
+ ;
+   %a = alloca i32
+   store i32 123, ptr %a
+diff --git a/llvm/test/Transforms/GVN/nonescaping.ll b/llvm/test/Transforms/GVN/nonescaping.ll
+index 0866a27b249f5..09f3712e6cdda 100644
+--- a/llvm/test/Transforms/GVN/nonescaping.ll
++++ b/llvm/test/Transforms/GVN/nonescaping.ll
+@@ -54,18 +54,13 @@ define i8 @test_calloc(ptr %p) {
+ }
+ 
+ define i8 @test_opnew(ptr %p) {
+-; MDEP-LABEL: @test_opnew(
+-; MDEP-NEXT:    [[OBJ:%.*]] = call ptr @_Znwm(i64 16)
+-; MDEP-NEXT:    call void @escape(ptr [[OBJ]])
+-; MDEP-NEXT:    ret i8 0
+-;
+-; MSSA-LABEL: @test_opnew(
+-; MSSA-NEXT:    [[V1:%.*]] = load i8, ptr [[P:%.*]], align 1
+-; MSSA-NEXT:    [[OBJ:%.*]] = call ptr @_Znwm(i64 16)
+-; MSSA-NEXT:    [[V2:%.*]] = load i8, ptr [[P]], align 1
+-; MSSA-NEXT:    [[SUB:%.*]] = sub i8 [[V1]], [[V2]]
+-; MSSA-NEXT:    call void @escape(ptr [[OBJ]])
+-; MSSA-NEXT:    ret i8 [[SUB]]
++; CHECK-LABEL: @test_opnew(
++; CHECK-NEXT:    [[V1:%.*]] = load i8, ptr [[P:%.*]], align 1
++; CHECK-NEXT:    [[OBJ:%.*]] = call ptr @_Znwm(i64 16)
++; CHECK-NEXT:    [[V2:%.*]] = load i8, ptr [[P]], align 1
++; CHECK-NEXT:    [[SUB:%.*]] = sub i8 [[V1]], [[V2]]
++; CHECK-NEXT:    call void @escape(ptr [[OBJ]])
++; CHECK-NEXT:    ret i8 [[SUB]]
+ ;
+   %v1 = load i8, ptr %p
+   %obj = call ptr @_Znwm(i64 16)
+@@ -74,5 +69,3 @@ define i8 @test_opnew(ptr %p) {
+   call void @escape(ptr %obj)
+   ret i8 %sub
+ }
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; CHECK: {{.*}}
+diff --git a/llvm/test/Transforms/MemCpyOpt/memcpy.ll b/llvm/test/Transforms/MemCpyOpt/memcpy.ll
+index 937b3bf281034..b5eccfb8b7d4c 100644
+--- a/llvm/test/Transforms/MemCpyOpt/memcpy.ll
++++ b/llvm/test/Transforms/MemCpyOpt/memcpy.ll
+@@ -851,7 +851,7 @@ define void @memcpy_memcpy_escape_after1(ptr noalias %P, ptr noalias %Q) {
+ ; CHECK-NEXT:    [[MEMTMP:%.*]] = alloca [32 x i8], align 16
+ ; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[MEMTMP]], ptr align 16 [[P:%.*]], i32 32, i1 false)
+ ; CHECK-NEXT:    call void @do_something()
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[Q:%.*]], ptr align 16 [[P]], i32 32, i1 false)
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[Q:%.*]], ptr align 16 [[MEMTMP]], i32 32, i1 false)
+ ; CHECK-NEXT:    call void @capture(ptr [[MEMTMP]])
+ ; CHECK-NEXT:    ret void
+ ;
+@@ -865,9 +865,11 @@ define void @memcpy_memcpy_escape_after1(ptr noalias %P, ptr noalias %Q) {
+ 
+ define void @memcpy_memcpy_escape_after2(ptr noalias %P, ptr noalias %Q) {
+ ; CHECK-LABEL: @memcpy_memcpy_escape_after2(
++; CHECK-NEXT:    [[P:%.*]] = alloca [32 x i8], align 16
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[P]], ptr align 16 [[P1:%.*]], i32 32, i1 false)
+ ; CHECK-NEXT:    call void @do_something()
+-; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[Q:%.*]], ptr align 16 [[P:%.*]], i32 32, i1 false)
+-; CHECK-NEXT:    call void @capture(ptr [[P]])
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i32(ptr align 16 [[Q:%.*]], ptr align 16 [[P]], i32 32, i1 false)
++; CHECK-NEXT:    call void @capture(ptr [[P1]])
+ ; CHECK-NEXT:    ret void
+ ;
+   %memtmp = alloca [32 x i8], align 16
+@@ -880,9 +882,11 @@ define void @memcpy_memcpy_escape_after2(ptr noalias %P, ptr noalias %Q) {
+ 
+ define void @memcpy_byval_escape_after(ptr noalias %P) {
+ ; CHECK-LABEL: @memcpy_byval_escape_after(
++; CHECK-NEXT:    [[P:%.*]] = alloca [8 x i8], align 1
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[P]], ptr align 4 [[P1:%.*]], i64 8, i1 false)
+ ; CHECK-NEXT:    call void @do_something()
+-; CHECK-NEXT:    call void @test4a(ptr byval(i8) align 1 [[P:%.*]])
+-; CHECK-NEXT:    call void @capture(ptr [[P]])
++; CHECK-NEXT:    call void @test4a(ptr byval(i8) align 1 [[P]])
++; CHECK-NEXT:    call void @capture(ptr [[P1]])
+ ; CHECK-NEXT:    ret void
+ ;
+   %A = alloca [8 x i8]
+@@ -895,9 +899,11 @@ define void @memcpy_byval_escape_after(ptr noalias %P) {
+ 
+ define void @memcpy_immut_escape_after(ptr align 4 noalias %val) {
+ ; CHECK-LABEL: @memcpy_immut_escape_after(
++; CHECK-NEXT:    [[VAL:%.*]] = alloca i8, align 4
++; CHECK-NEXT:    call void @llvm.memcpy.p0.p0.i64(ptr align 4 [[VAL]], ptr align 4 [[VAL1:%.*]], i64 1, i1 false)
+ ; CHECK-NEXT:    call void @do_something()
+-; CHECK-NEXT:    call void @f(ptr noalias readonly align 4 captures(none) [[VAL:%.*]])
+-; CHECK-NEXT:    call void @capture(ptr [[VAL]])
++; CHECK-NEXT:    call void @f(ptr noalias readonly align 4 captures(none) [[VAL]])
++; CHECK-NEXT:    call void @capture(ptr [[VAL1]])
+ ; CHECK-NEXT:    ret void
+ ;
+   %val1 = alloca i8, align 4
