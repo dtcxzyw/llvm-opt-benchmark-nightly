@@ -1,0 +1,290 @@
+diff --git a/llvm/include/llvm/IR/ConstantRange.h b/llvm/include/llvm/IR/ConstantRange.h
+index 4abe53a06ef87..0d36fddac505f 100644
+--- a/llvm/include/llvm/IR/ConstantRange.h
++++ b/llvm/include/llvm/IR/ConstantRange.h
+@@ -442,18 +442,11 @@ class [[nodiscard]] ConstantRange {
+                 PreferredRangeType RangeType = Smallest) const;
+ 
+   /// Return a new range representing the possible values resulting
+-  /// from a multiplication of a value in this range and a value in \p Other,
+-  /// treating both this and \p Other as unsigned ranges.
+-  LLVM_ABI ConstantRange multiply(const ConstantRange &Other) const;
+-
+-  /// Return a new range representing the possible values resulting
+-  /// from a multiplication with wrap type \p NoWrapKind of a value in this
+-  /// range and a value in \p Other.
+-  /// If the result range is disjoint, the preferred range is determined by the
+-  /// \p PreferredRangeType.
+-  LLVM_ABI ConstantRange
+-  multiplyWithNoWrap(const ConstantRange &Other, unsigned NoWrapKind,
+-                     PreferredRangeType RangeType = Smallest) const;
++  /// from a multiplication of a value in this range and a value in \p Other.
++  /// If \p NoWrapKind is set, assume that corresponding wrapping can not
++  /// occur.
++  LLVM_ABI ConstantRange multiply(const ConstantRange &Other,
++                                  unsigned NoWrapKind = 0) const;
+ 
+   /// Return range of possible values for a signed multiplication of this and
+   /// \p Other. However, if overflow is possible always return a full range
+diff --git a/llvm/lib/IR/ConstantRange.cpp b/llvm/lib/IR/ConstantRange.cpp
+index e78351e965a2f..74b329b59bd73 100644
+--- a/llvm/lib/IR/ConstantRange.cpp
++++ b/llvm/lib/IR/ConstantRange.cpp
+@@ -1034,7 +1034,7 @@ ConstantRange ConstantRange::overflowingBinaryOp(Instruction::BinaryOps BinOp,
+   case Instruction::Sub:
+     return subWithNoWrap(Other, NoWrapKind);
+   case Instruction::Mul:
+-    return multiplyWithNoWrap(Other, NoWrapKind);
++    return multiply(Other, NoWrapKind);
+   case Instruction::Shl:
+     return shlWithNoWrap(Other, NoWrapKind);
+   default:
+@@ -1206,8 +1206,8 @@ ConstantRange ConstantRange::subWithNoWrap(const ConstantRange &Other,
+   return Result;
+ }
+ 
+-ConstantRange
+-ConstantRange::multiply(const ConstantRange &Other) const {
++ConstantRange ConstantRange::multiply(const ConstantRange &Other,
++                                      unsigned NoWrapKind) const {
+   // TODO: If either operand is a single element and the multiply is known to
+   // be non-wrapping, round the result min and max value to the appropriate
+   // multiple of that element. If wrapping is possible, at least adjust the
+@@ -1237,20 +1237,33 @@ ConstantRange::multiply(const ConstantRange &Other) const {
+   // and the other signed, then return the smallest of these ranges.
+ 
+   // Unsigned range first.
+-  APInt this_min = getUnsignedMin().zext(getBitWidth() * 2);
+-  APInt this_max = getUnsignedMax().zext(getBitWidth() * 2);
+-  APInt Other_min = Other.getUnsignedMin().zext(getBitWidth() * 2);
+-  APInt Other_max = Other.getUnsignedMax().zext(getBitWidth() * 2);
++  unsigned BW = getBitWidth();
++  ConstantRange UR = getEmpty();
++  if (NoWrapKind & OverflowingBinaryOperator::NoUnsignedWrap) {
++    bool MinOv;
++    APInt MinMul = getUnsignedMin().umul_ov(Other.getUnsignedMin(), MinOv);
++    if (MinOv)
++      return getEmpty();
+ 
+-  ConstantRange Result_zext = ConstantRange(this_min * Other_min,
+-                                            this_max * Other_max + 1);
+-  ConstantRange UR = Result_zext.truncate(getBitWidth());
++    APInt MaxMul = getUnsignedMax().umul_sat(Other.getUnsignedMax());
++    UR = ConstantRange::getNonEmpty(MinMul, MaxMul + 1);
++  } else {
++    APInt this_min = getUnsignedMin().zext(BW * 2);
++    APInt this_max = getUnsignedMax().zext(BW * 2);
++    APInt Other_min = Other.getUnsignedMin().zext(BW * 2);
++    APInt Other_max = Other.getUnsignedMax().zext(BW * 2);
++
++    ConstantRange Result_zext =
++        ConstantRange(this_min * Other_min, this_max * Other_max + 1);
++    UR = Result_zext.truncate(BW);
++  }
+ 
+   // If the unsigned range doesn't wrap, and isn't negative then it's a range
+   // from one positive number to another which is as good as we can generate.
+   // In this case, skip the extra work of generating signed ranges which aren't
+   // going to be better than this range.
+-  if (!UR.isUpperWrapped() &&
++  if (!(NoWrapKind & OverflowingBinaryOperator::NoSignedWrap) &&
++      !UR.isUpperWrapped() &&
+       (UR.getUpper().isNonNegative() || UR.getUpper().isMinSignedValue()))
+     return UR;
+ 
+@@ -1260,36 +1273,23 @@ ConstantRange::multiply(const ConstantRange &Other) const {
+   //   [-1,4) * [-2,3) = min(-1*-2, -1*2, 3*-2, 3*2) = -6.
+   // Similarly for the upper bound, swapping min for max.
+ 
+-  this_min = getSignedMin().sext(getBitWidth() * 2);
+-  this_max = getSignedMax().sext(getBitWidth() * 2);
+-  Other_min = Other.getSignedMin().sext(getBitWidth() * 2);
+-  Other_max = Other.getSignedMax().sext(getBitWidth() * 2);
++  // FIXME: Avoid wide multiplications if nsw.
++  APInt this_min = getSignedMin().sext(BW * 2);
++  APInt this_max = getSignedMax().sext(BW * 2);
++  APInt Other_min = Other.getSignedMin().sext(BW * 2);
++  APInt Other_max = Other.getSignedMax().sext(BW * 2);
+ 
+   auto L = {this_min * Other_min, this_min * Other_max,
+             this_max * Other_min, this_max * Other_max};
+   auto Compare = [](const APInt &A, const APInt &B) { return A.slt(B); };
+   ConstantRange Result_sext(std::min(L, Compare), std::max(L, Compare) + 1);
+-  ConstantRange SR = Result_sext.truncate(getBitWidth());
+-
+-  return UR.isSizeStrictlySmallerThan(SR) ? UR : SR;
+-}
+-
+-ConstantRange
+-ConstantRange::multiplyWithNoWrap(const ConstantRange &Other,
+-                                  unsigned NoWrapKind,
+-                                  PreferredRangeType RangeType) const {
+-  if (isEmptySet() || Other.isEmptySet())
+-    return getEmpty();
+-  if (isFullSet() && Other.isFullSet())
+-    return getFull();
+-
+-  ConstantRange Result = multiply(Other);
+-
+-  if (NoWrapKind & OverflowingBinaryOperator::NoSignedWrap)
+-    Result = Result.intersectWith(smul_sat(Other), RangeType);
+-
+-  if (NoWrapKind & OverflowingBinaryOperator::NoUnsignedWrap)
+-    Result = Result.intersectWith(umul_sat(Other), RangeType);
++  if (NoWrapKind & OverflowingBinaryOperator::NoSignedWrap) {
++    Result_sext = Result_sext.intersectWith(
++        ConstantRange(APInt::getSignedMinValue(BW).sext(BW * 2),
++                      APInt::getSignedMaxValue(BW).sext(BW * 2) + 1));
++  }
++  ConstantRange SR = Result_sext.truncate(BW);
++  ConstantRange Result = UR.isSizeStrictlySmallerThan(SR) ? UR : SR;
+ 
+   // mul nsw nuw X, Y s>= 0 if X s> 1 or Y s> 1
+   if ((NoWrapKind == (OverflowingBinaryOperator::NoSignedWrap |
+@@ -1298,8 +1298,7 @@ ConstantRange::multiplyWithNoWrap(const ConstantRange &Other,
+     if (getSignedMin().sgt(1) || Other.getSignedMin().sgt(1))
+       Result = Result.intersectWith(
+           getNonEmpty(APInt::getZero(getBitWidth()),
+-                      APInt::getSignedMinValue(getBitWidth())),
+-          RangeType);
++                      APInt::getSignedMinValue(getBitWidth())));
+   }
+ 
+   return Result;
+diff --git a/llvm/unittests/IR/ConstantRangeTest.cpp b/llvm/unittests/IR/ConstantRangeTest.cpp
+index bb6b2a1cb7249..872f220a34842 100644
+--- a/llvm/unittests/IR/ConstantRangeTest.cpp
++++ b/llvm/unittests/IR/ConstantRangeTest.cpp
+@@ -1107,72 +1107,68 @@ TEST_F(ConstantRangeTest, Multiply) {
+ TEST_F(ConstantRangeTest, MultiplyWithNoWrap) {
+   using OBO = OverflowingBinaryOperator;
+ 
+-  EXPECT_EQ(Empty.multiplyWithNoWrap(Some, OBO::NoUnsignedWrap), Empty);
+-  EXPECT_EQ(Some.multiplyWithNoWrap(Empty, OBO::NoUnsignedWrap), Empty);
+-  EXPECT_EQ(Full.multiplyWithNoWrap(Full, OBO::NoUnsignedWrap), Full);
+-  EXPECT_EQ(Full.multiplyWithNoWrap(Some, OBO::NoUnsignedWrap), Full);
+-  EXPECT_EQ(Some.multiplyWithNoWrap(Full, OBO::NoUnsignedWrap), Full);
++  EXPECT_EQ(Empty.multiply(Some, OBO::NoUnsignedWrap), Empty);
++  EXPECT_EQ(Some.multiply(Empty, OBO::NoUnsignedWrap), Empty);
++  EXPECT_EQ(Full.multiply(Full, OBO::NoUnsignedWrap), Full);
++  EXPECT_EQ(Full.multiply(Some, OBO::NoUnsignedWrap), Full);
++  EXPECT_EQ(Some.multiply(Full, OBO::NoUnsignedWrap), Full);
+   EXPECT_EQ(ConstantRange(APInt(4, 0), APInt(4, 2))
+-                .multiplyWithNoWrap(ConstantRange(APInt(4, 2), APInt(4, 0)),
+-                                    OBO::NoUnsignedWrap),
++                .multiply(ConstantRange(APInt(4, 2), APInt(4, 0)),
++                          OBO::NoUnsignedWrap),
+             ConstantRange::getFull(4));
+   EXPECT_EQ(ConstantRange(APInt(4, 1), APInt(4, 5))
+-                .multiplyWithNoWrap(ConstantRange(APInt(4, 1), APInt(4, 5)),
+-                                    OBO::NoUnsignedWrap),
++                .multiply(ConstantRange(APInt(4, 1), APInt(4, 5)),
++                          OBO::NoUnsignedWrap),
+             ConstantRange(APInt(4, 1), APInt(4, 0)));
+   EXPECT_EQ(ConstantRange(APInt(8, 254), APInt(8, 0))
+-                .multiplyWithNoWrap(ConstantRange(APInt(8, 252), APInt(8, 4)),
+-                                    OBO::NoUnsignedWrap),
++                .multiply(ConstantRange(APInt(8, 252), APInt(8, 4)),
++                          OBO::NoUnsignedWrap),
+             ConstantRange(APInt(8, 250), APInt(8, 9)));
+   EXPECT_EQ(ConstantRange(APInt(8, 254), APInt(8, 255))
+-                .multiplyWithNoWrap(ConstantRange(APInt(8, 2), APInt(8, 4)),
+-                                    OBO::NoUnsignedWrap),
++                .multiply(ConstantRange(APInt(8, 2), APInt(8, 4)),
++                          OBO::NoUnsignedWrap),
+             ConstantRange::getEmpty(8));
+ 
+-  EXPECT_EQ(Empty.multiplyWithNoWrap(Some, OBO::NoSignedWrap), Empty);
+-  EXPECT_EQ(Some.multiplyWithNoWrap(Empty, OBO::NoSignedWrap), Empty);
+-  EXPECT_EQ(Full.multiplyWithNoWrap(Full, OBO::NoSignedWrap), Full);
+-  EXPECT_EQ(Full.multiplyWithNoWrap(Some, OBO::NoSignedWrap), Full);
+-  EXPECT_EQ(Some.multiplyWithNoWrap(Full, OBO::NoSignedWrap), Full);
++  EXPECT_EQ(Empty.multiply(Some, OBO::NoSignedWrap), Empty);
++  EXPECT_EQ(Some.multiply(Empty, OBO::NoSignedWrap), Empty);
++  EXPECT_EQ(Full.multiply(Full, OBO::NoSignedWrap), Full);
++  EXPECT_EQ(Full.multiply(Some, OBO::NoSignedWrap), Full);
++  EXPECT_EQ(Some.multiply(Full, OBO::NoSignedWrap), Full);
++  EXPECT_EQ(ConstantRange(APInt(4, 0), APInt(4, 4))
++                .multiply(ConstantRange(APInt(4, -5, true), APInt(4, 4)),
++                          OBO::NoSignedWrap),
++            ConstantRange::getFull(4));
+   EXPECT_EQ(
+-      ConstantRange(APInt(4, 0), APInt(4, 4))
+-          .multiplyWithNoWrap(ConstantRange(APInt(4, -5, true), APInt(4, 4)),
+-                              OBO::NoSignedWrap),
+-      ConstantRange::getFull(4));
+-  EXPECT_EQ(ConstantRange(APInt(4, 0), APInt(4, 3))
+-                .multiplyWithNoWrap(ConstantRange(APInt(4, 0), APInt(4, 5)),
+-                                    OBO::NoSignedWrap),
+-            ConstantRange(APInt(4, 0), APInt(4, -8, true)));
++      ConstantRange(APInt(4, 0), APInt(4, 3))
++          .multiply(ConstantRange(APInt(4, 0), APInt(4, 5)), OBO::NoSignedWrap),
++      ConstantRange(APInt(4, 0), APInt(4, -8, true)));
+   EXPECT_EQ(ConstantRange(APInt(8, 3), APInt(8, -11, true))
+-                .multiplyWithNoWrap(ConstantRange(APInt(8, -1, true)),
+-                                    OBO::NoSignedWrap),
++                .multiply(ConstantRange(APInt(8, -1, true)), OBO::NoSignedWrap),
+             ConstantRange(APInt(8, 12), APInt(8, -2, true)));
+   EXPECT_EQ(ConstantRange(APInt(8, 254), APInt(8, 255))
+-                .multiplyWithNoWrap(ConstantRange(APInt(8, 100), APInt(8, 121)),
+-                                    OBO::NoSignedWrap),
++                .multiply(ConstantRange(APInt(8, 100), APInt(8, 121)),
++                          OBO::NoSignedWrap),
+             ConstantRange::getEmpty(8));
+   EXPECT_TRUE(ConstantRange::getFull(8)
+-                  .multiplyWithNoWrap(ConstantRange(APInt(8, 2), APInt(8, 128)),
+-                                      OBO::NoUnsignedWrap | OBO::NoSignedWrap)
++                  .multiply(ConstantRange(APInt(8, 2), APInt(8, 128)),
++                            OBO::NoUnsignedWrap | OBO::NoSignedWrap)
+                   .isAllNonNegative());
+   EXPECT_TRUE(ConstantRange(APInt(8, 2), APInt(8, 128))
+-                  .multiplyWithNoWrap(ConstantRange::getFull(8),
+-                                      OBO::NoUnsignedWrap | OBO::NoSignedWrap)
++                  .multiply(ConstantRange::getFull(8),
++                            OBO::NoUnsignedWrap | OBO::NoSignedWrap)
+                   .isAllNonNegative());
+-  EXPECT_FALSE(
+-      ConstantRange::getFull(8)
+-          .multiplyWithNoWrap(ConstantRange(APInt(8, 1), APInt(8, 128)),
+-                              OBO::NoUnsignedWrap | OBO::NoSignedWrap)
+-          .isAllNonNegative());
+-  EXPECT_FALSE(
+-      ConstantRange::getFull(8)
+-          .multiplyWithNoWrap(ConstantRange(APInt(8, 2), APInt(8, 128)),
+-                              OBO::NoSignedWrap)
+-          .isAllNonNegative());
++  EXPECT_FALSE(ConstantRange::getFull(8)
++                   .multiply(ConstantRange(APInt(8, 1), APInt(8, 128)),
++                             OBO::NoUnsignedWrap | OBO::NoSignedWrap)
++                   .isAllNonNegative());
++  EXPECT_FALSE(ConstantRange::getFull(8)
++                   .multiply(ConstantRange(APInt(8, 2), APInt(8, 128)),
++                             OBO::NoSignedWrap)
++                   .isAllNonNegative());
+ 
+   TestBinaryOpExhaustive(
+       [](const ConstantRange &CR1, const ConstantRange &CR2) {
+-        return CR1.multiplyWithNoWrap(CR2, OBO::NoUnsignedWrap);
++        return CR1.multiply(CR2, OBO::NoUnsignedWrap);
+       },
+       [](const APInt &N1, const APInt &N2) -> std::optional<APInt> {
+         bool IsOverflow;
+@@ -1184,7 +1180,7 @@ TEST_F(ConstantRangeTest, MultiplyWithNoWrap) {
+       PreferSmallest, CheckCorrectnessOnly);
+   TestBinaryOpExhaustive(
+       [](const ConstantRange &CR1, const ConstantRange &CR2) {
+-        return CR1.multiplyWithNoWrap(CR2, OBO::NoSignedWrap);
++        return CR1.multiply(CR2, OBO::NoSignedWrap);
+       },
+       [](const APInt &N1, const APInt &N2) -> std::optional<APInt> {
+         bool IsOverflow;
+@@ -1196,8 +1192,7 @@ TEST_F(ConstantRangeTest, MultiplyWithNoWrap) {
+       PreferSmallest, CheckCorrectnessOnly);
+   TestBinaryOpExhaustive(
+       [](const ConstantRange &CR1, const ConstantRange &CR2) {
+-        return CR1.multiplyWithNoWrap(CR2,
+-                                      OBO::NoUnsignedWrap | OBO::NoSignedWrap);
++        return CR1.multiply(CR2, OBO::NoUnsignedWrap | OBO::NoSignedWrap);
+       },
+       [](const APInt &N1, const APInt &N2) -> std::optional<APInt> {
+         bool IsOverflow1, IsOverflow2;
