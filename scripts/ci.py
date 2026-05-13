@@ -987,7 +987,7 @@ def compute_diff(
         raise subprocess.TimeoutExpired("diff", timeout=0)
 
     diff_ret = subprocess.run(
-        ["diff", "-U", "3", ref_ir, new_ir],
+        ["diff", "-U", "200", ref_ir, new_ir],
         stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
