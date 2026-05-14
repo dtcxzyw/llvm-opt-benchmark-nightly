@@ -201,34 +201,34 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit11: ; preds = %bb.
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow7MapTypeC2ESt10shared_ptrINS_8DataTypeEES3_b(ptr noundef nonnull align 8 dereferenceable(73) %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, i1 noundef zeroext %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i:
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 3 uses
-  %5 = alloca %"class.std::shared_ptr.27", align 8 ; 5 uses
-  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %7 = alloca %"class.std::shared_ptr", align 8   ; 4 uses
-  %8 = alloca %"class.std::shared_ptr.19", align 8 ; 4 uses
-  %9 = alloca %"class.std::shared_ptr.27", align 8 ; 5 uses
-  %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
-  %11 = alloca %"class.std::shared_ptr", align 8  ; 4 uses
-  %12 = alloca %"class.std::shared_ptr.19", align 8 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 9 uses
-  store ptr %i.a, ptr %6, align 8, !tbaa !38
+  %.sroa.074 = alloca <32 x i8>, align 32         ; 4 uses
+  %4 = alloca %"class.std::shared_ptr.27", align 8 ; 5 uses
+  %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
+  %6 = alloca %"class.std::shared_ptr", align 8   ; 4 uses
+  %7 = alloca %"class.std::shared_ptr.19", align 8 ; 4 uses
+  %8 = alloca %"class.std::shared_ptr.27", align 8 ; 5 uses
+  %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
+  %10 = alloca %"class.std::shared_ptr", align 8  ; 4 uses
+  %11 = alloca %"class.std::shared_ptr.19", align 8 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 9 uses
+  store ptr %i.a, ptr %5, align 8, !tbaa !38
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %i.a, ptr noundef nonnull align 1 dereferenceable(3) @.str.92, i64 3, i1 false)
-  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 3, ptr %i.b, align 8, !tbaa !41
-  %i.c = getelementptr inbounds nuw i8, ptr %6, i64 19
+  %i.c = getelementptr inbounds nuw i8, ptr %5, i64 19
   store i8 0, ptr %i.c, align 1, !tbaa !43
   %i.d = load ptr, ptr %1, align 8, !tbaa !336    ; 2 uses
-  store ptr %i.d, ptr %7, align 8, !tbaa !336
-  %i.e = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  store ptr %i.d, ptr %6, align 8, !tbaa !336
+  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !355  ; 2 uses
   store ptr null, ptr %i.f, align 8, !tbaa !355
   store ptr %i.g, ptr %i.e, align 8, !tbaa !355
   store ptr null, ptr %1, align 8, !tbaa !336
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !955)
   call void @llvm.experimental.noalias.scope.decl(metadata !958)
-  store ptr null, ptr %5, align 8, !tbaa !573, !alias.scope !961
+  store ptr null, ptr %4, align 8, !tbaa !573, !alias.scope !961
   %i.h = invoke noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #36
           to label %._crit_edge.i.i14 unwind label %bb.am ; 13 uses
 
@@ -240,20 +240,20 @@ define void @_ZN5arrow7MapTypeC2ESt10shared_ptrINS_8DataTypeEES3_b(ptr noundef n
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow5FieldESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.h, align 8, !tbaa !331, !noalias !961
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.l = load i32, ptr %i.a, align 8, !noalias !961
-  store ptr %i.a, ptr %6, align 8, !tbaa !48, !noalias !961
+  store ptr %i.a, ptr %5, align 8, !tbaa !48, !noalias !961
   store i64 0, ptr %i.b, align 8, !tbaa !41, !noalias !961
   store i8 0, ptr %i.a, align 8, !tbaa !43, !noalias !961
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false), !noalias !961
-  %i.m = getelementptr inbounds nuw i8, ptr %8, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false), !noalias !961
+  %i.m = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false), !noalias !961
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, i8 0, i64 16, i1 false), !noalias !961
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.n, i8 0, i64 16, i1 false), !noalias !961
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN5arrow5FieldE, i64 16), ptr %i.k, align 8, !tbaa !331, !noalias !961
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.p = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 2 uses
   store ptr %i.p, ptr %i.o, align 8, !tbaa !38, !noalias !961
   store i32 %i.l, ptr %i.p, align 8, !noalias !961
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   store i64 3, ptr %i.r, align 8, !tbaa !41, !noalias !961
   %i.s = getelementptr inbounds nuw i8, ptr %i.h, i64 72
@@ -265,26 +265,26 @@ define void @_ZN5arrow7MapTypeC2ESt10shared_ptrINS_8DataTypeEES3_b(ptr noundef n
   %i.v = getelementptr inbounds nuw i8, ptr %i.h, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 0, i64 16, i1 false)
   store ptr %i.h, ptr %i.q, align 8, !tbaa !355, !alias.scope !961
-  store ptr %i.k, ptr %5, align 8, !tbaa !579, !alias.scope !961
-  %i.w = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 9 uses
-  store ptr %i.w, ptr %10, align 8, !tbaa !38
+  store ptr %i.k, ptr %4, align 8, !tbaa !579, !alias.scope !961
+  %i.w = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 9 uses
+  store ptr %i.w, ptr %9, align 8, !tbaa !38
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(5) %i.w, ptr noundef nonnull align 1 dereferenceable(5) @.str.93, i64 5, i1 false)
-  %i.x = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   store i64 5, ptr %i.x, align 8, !tbaa !41
-  %i.y = getelementptr inbounds nuw i8, ptr %10, i64 21
+  %i.y = getelementptr inbounds nuw i8, ptr %9, i64 21
   store i8 0, ptr %i.y, align 1, !tbaa !43
   %i.z = load ptr, ptr %2, align 8, !tbaa !336    ; 2 uses
-  store ptr %i.z, ptr %11, align 8, !tbaa !336
-  %i.aa = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
+  store ptr %i.z, ptr %10, align 8, !tbaa !336
+  %i.aa = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !355 ; 2 uses
   store ptr null, ptr %i.ab, align 8, !tbaa !355
   store ptr %i.ac, ptr %i.aa, align 8, !tbaa !355
   store ptr null, ptr %2, align 8, !tbaa !336
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !962)
   call void @llvm.experimental.noalias.scope.decl(metadata !965)
-  store ptr null, ptr %9, align 8, !tbaa !573, !alias.scope !968
+  store ptr null, ptr %8, align 8, !tbaa !573, !alias.scope !968
   %i.ad = invoke noalias noundef nonnull dereferenceable(112) ptr @_Znwm(i64 noundef 112) #36
           to label %bb.a unwind label %bb.an      ; 13 uses
 
@@ -295,23 +295,24 @@ bb.a:                                             ; preds = %._crit_edge.i.i14
   store i32 1, ptr %i.af, align 4, !tbaa !495, !noalias !968
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVSt23_Sp_counted_ptr_inplaceIN5arrow5FieldESaIvELN9__gnu_cxx12_Lock_policyE2EE, i64 16), ptr %i.ad, align 8, !tbaa !331, !noalias !968
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 16 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.ah, ptr noundef nonnull align 8 dereferenceable(6) %i.w, i64 6, i1 false), !noalias !968
-  store ptr %i.w, ptr %10, align 8, !tbaa !48, !noalias !968
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.074)
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.074, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(6) %i.ah, ptr noundef nonnull align 8 dereferenceable(6) %i.w, i64 6, i1 false), !noalias !968
+  store ptr %i.w, ptr %9, align 8, !tbaa !48, !noalias !968
   store i64 0, ptr %i.x, align 8, !tbaa !41, !noalias !968
   store i8 0, ptr %i.w, align 8, !tbaa !43, !noalias !968
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false), !noalias !968
-  %i.ai = getelementptr inbounds nuw i8, ptr %12, i64 8
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, i8 0, i64 16, i1 false), !noalias !968
+  %i.ai = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, i8 0, i64 16, i1 false), !noalias !968
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, i8 0, i64 16, i1 false), !noalias !968
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aj, i8 0, i64 16, i1 false), !noalias !968
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN5arrow5FieldE, i64 16), ptr %i.ag, align 8, !tbaa !331, !noalias !968
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
   %i.al = getelementptr inbounds nuw i8, ptr %i.ad, i64 56 ; 2 uses
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !38, !noalias !968
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.al, ptr noundef nonnull align 8 dereferenceable(6) %i.ah, i64 6, i1 false), !noalias !968
-  %i.am = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
+  %.sroa.074.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.074, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.al, ptr noundef nonnull align 16 dereferenceable(6) %.sroa.074.16..sroa_idx, i64 6, i1 false), !noalias !968
+  %i.am = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   store i64 5, ptr %i.an, align 8, !tbaa !41, !noalias !968
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ad, i64 72
@@ -322,10 +323,10 @@ bb.a:                                             ; preds = %._crit_edge.i.i14
   store i8 1, ptr %i.aq, align 8, !tbaa !651, !noalias !968
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ad, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ar, i8 0, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.074)
   store ptr %i.ad, ptr %i.am, align 8, !tbaa !355, !alias.scope !968
-  store ptr %i.ag, ptr %9, align 8, !tbaa !579, !alias.scope !968
-  invoke void @_ZN5arrow7MapTypeC2ESt10shared_ptrINS_5FieldEES3_b(ptr noundef nonnull align 8 dereferenceable(73) %0, ptr noundef nonnull %5, ptr noundef nonnull %9, i1 noundef zeroext %3)
+  store ptr %i.ag, ptr %8, align 8, !tbaa !579, !alias.scope !968
+  invoke void @_ZN5arrow7MapTypeC2ESt10shared_ptrINS_5FieldEES3_b(ptr noundef nonnull align 8 dereferenceable(73) %0, ptr noundef nonnull %4, ptr noundef nonnull %8, i1 noundef zeroext %3)
           to label %bb.b unwind label %bb.ao
 
 bb.b:                                             ; preds = %bb.a
@@ -476,7 +477,7 @@ bb.t:                                             ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i35, %bb.t
-  %i.co = load ptr, ptr %10, align 8, !tbaa !48   ; 2 uses
+  %i.co = load ptr, ptr %9, align 8, !tbaa !48    ; 2 uses
   %i.cp = icmp eq ptr %i.co, %i.w
   br i1 %i.cp, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -634,7 +635,7 @@ bb.al:                                            ; preds = %_ZN9__gnu_cxx27__ex
   br label %_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit51
 
 _ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit51: ; preds = %_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit46, %bb.ah, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i49, %bb.al
-  %i.eo = load ptr, ptr %6, align 8, !tbaa !48    ; 2 uses
+  %i.eo = load ptr, ptr %5, align 8, !tbaa !48    ; 2 uses
   %i.ep = icmp eq ptr %i.eo, %i.a
   br i1 %i.ep, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit54, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i52
 
@@ -660,14 +661,14 @@ bb.an:                                            ; preds = %._crit_edge.i.i14
 bb.ao:                                            ; preds = %bb.a
   %i.eu = landingpad { ptr, i32 }
           cleanup
-  call void @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %9) #37
+  call void @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %8) #37
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
   %.pn = phi { ptr, i32 } [ %i.eu, %bb.ao ], [ %i.et, %bb.an ]
-  call void @_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %12) #37
-  call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %11) #37
-  %i.ev = load ptr, ptr %10, align 8, !tbaa !48   ; 2 uses
+  call void @_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %11) #37
+  call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %10) #37
+  %i.ev = load ptr, ptr %9, align 8, !tbaa !48    ; 2 uses
   %i.ew = icmp eq ptr %i.ev, %i.w
   br i1 %i.ew, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i55
 
@@ -678,14 +679,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i55
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57: ; preds = %bb.ap, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i55
-  call void @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %5) #37
+  call void @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %4) #37
   br label %bb.aq
 
 bb.aq:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57, %bb.am
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit57 ], [ %i.es, %bb.am ]
-  call void @_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %8) #37
-  call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %7) #37
-  %i.ez = load ptr, ptr %6, align 8, !tbaa !48    ; 2 uses
+  call void @_ZNSt12__shared_ptrIKN5arrow16KeyValueMetadataELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %7) #37
+  call void @_ZNSt12__shared_ptrIN5arrow8DataTypeELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %6) #37
+  %i.ez = load ptr, ptr %5, align 8, !tbaa !48    ; 2 uses
   %i.fa = icmp eq ptr %i.ez, %i.a
   br i1 %i.fa, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit60, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i58
 
@@ -1088,7 +1089,7 @@ define void @_ZN5arrow8FieldRef11FromDotPathERKNSt7__cxx1112basic_stringIcSt11ch
 bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.sroa.4.i = alloca %union.anon, align 8        ; 4 uses
+  %.sroa.4.i.sroa.0 = alloca <16 x i8>, align 16  ; 4 uses
   %4 = alloca %"class.arrow::FieldRef", align 8   ; 5 uses
   %5 = alloca %"class.std::vector.287", align 8   ; 13 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 28 uses
@@ -1491,7 +1492,7 @@ bb.at:                                            ; preds = %bb.ar
   br i1 %.not.i27, label %bb.av, label %bb.au
 
 bb.au:                                            ; preds = %"_ZZN5arrow8FieldRef11FromDotPathERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEENK3$_0clB5cxx11Ev.exit"
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.sroa.0)
   %i.cx = load ptr, ptr %6, align 8, !tbaa !48    ; 2 uses
   %i.cy = icmp eq ptr %i.cx, %i.k
   br i1 %i.cy, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
@@ -1499,12 +1500,12 @@ bb.au:                                            ; preds = %"_ZZN5arrow8FieldRe
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread.i.i: ; preds = %bb.au
   %i.cz = load i64, ptr %i.l, align 8, !tbaa !41  ; 3 uses
   %i.da = add nuw nsw i64 %i.cz, 1                ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.4.i, ptr noundef nonnull align 8 dereferenceable(1) %i.k, i64 %i.da, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.4.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.k, i64 %i.da, i1 false)
   store i8 0, ptr %i.k, align 8, !tbaa !43
   %i.db = getelementptr inbounds nuw i8, ptr %i.cv, i64 16 ; 2 uses
   %i.dc = icmp ult i64 %i.cz, 16
   call void @llvm.assume(i1 %i.dc)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.db, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.4.i, i64 %i.da, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.db, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.4.i.sroa.0, i64 %i.da, i1 false)
   br label %_ZSt12construct_atIN5arrow8FieldRefEJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPS9_DpOSA_.exit.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds = %bb.au
@@ -1525,7 +1526,7 @@ _ZSt12construct_atIN5arrow8FieldRefEJNSt7__cxx1112basic_stringIcSt11char_traitsI
   store i64 %i.df, ptr %i.dg, align 8, !tbaa !41
   %i.dh = getelementptr inbounds nuw i8, ptr %i.cv, i64 32
   store i8 1, ptr %i.dh, align 8, !tbaa !1509
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.sroa.0)
   %i.di = getelementptr inbounds nuw i8, ptr %i.cv, i64 40
   store ptr %i.di, ptr %i.i, align 8, !tbaa !1518
   br label %_ZNSt6vectorIN5arrow8FieldRefESaIS1_EE12emplace_backIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEERS1_DpOT_.exit

@@ -4,11 +4,11 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%class.btTransform = type { %class.btMatrix3x3, %class.btVector3 }
-%class.btMatrix3x3 = type { [3 x %class.btVector3] }
 %class.btVector3 = type { [4 x float] }
 %struct.btDbvtAabbMm = type { %class.btVector3, %class.btVector3 }
 %struct.btCompoundShapeChild = type { %class.btTransform, ptr, i32, float, ptr }
+%class.btTransform = type { %class.btMatrix3x3, %class.btVector3 }
+%class.btMatrix3x3 = type { [3 x %class.btVector3] }
 
 $__clang_call_terminate = comdat any
 
@@ -278,7 +278,7 @@ bb.j:                                             ; preds = %.body
 ; Function Attrs: uwtable
 define dso_local void @_ZN15btCompoundShape13addChildShapeERK11btTransformP16btCollisionShape(ptr noundef nonnull align 8 captures(none) dereferenceable(120) %0, ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca %class.btTransform, align 8   ; 7 uses
+  %.sroa.0.sroa.0 = alloca <64 x i8>, align 64    ; 10 uses
   %3 = alloca %class.btVector3, align 4           ; 7 uses
   %4 = alloca %class.btVector3, align 4           ; 7 uses
   %5 = alloca %struct.btDbvtAabbMm, align 4       ; 5 uses
@@ -286,17 +286,17 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !27
   %i.c = add nsw i32 %i.b, 1
   store i32 %i.c, ptr %i.a, align 8, !tbaa !27
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !31
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.sroa.0)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0.sroa.0, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !31
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.0.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.16..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !31
+  %.sroa.0.16..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.16..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.d, i64 16, i1 false), !tbaa.struct !31
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.sroa.0.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.32..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.e, i64 16, i1 false), !tbaa.struct !31
+  %.sroa.0.32..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(16) %.sroa.0.32..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.e, i64 16, i1 false), !tbaa.struct !31
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %.sroa.0.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.48..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !31
+  %.sroa.0.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.48..sroa_idx, ptr noundef nonnull align 4 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !31
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.h = load i32, ptr %i.g, align 8, !tbaa !28
   %i.i = load ptr, ptr %2, align 8, !tbaa !11
@@ -484,13 +484,16 @@ _ZN20btAlignedObjectArrayI20btCompoundShapeChildE9push_backERKS0_.exit: ; preds 
   %i.cf = load ptr, ptr %i.ce, align 8, !tbaa !18
   %i.cg = sext i32 %i.cd to i64
   %i.ch = getelementptr inbounds [88 x i8], ptr %i.cf, i64 %i.cg ; 8 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ch, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !31
-  %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ci, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.16..sroa_idx, i64 16, i1 false), !tbaa.struct !31
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cj, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.32..sroa_idx, i64 16, i1 false), !tbaa.struct !31
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ck, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.48..sroa_idx, i64 16, i1 false), !tbaa.struct !31
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ch, ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0.sroa.0, i64 16, i1 false), !tbaa.struct !31
+  %6 = getelementptr inbounds nuw i8, ptr %i.ch, i64 16
+  %i.ci = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %i.ci, i64 16, i1 false), !tbaa.struct !31
+  %7 = getelementptr inbounds nuw i8, ptr %i.ch, i64 32
+  %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 32 dereferenceable(16) %i.cj, i64 16, i1 false), !tbaa.struct !31
+  %8 = getelementptr inbounds nuw i8, ptr %i.ch, i64 48
+  %i.ck = getelementptr inbounds nuw i8, ptr %.sroa.0.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 16 dereferenceable(16) %i.ck, i64 16, i1 false), !tbaa.struct !31
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ch, i64 64
   store ptr %2, ptr %i.cl, align 8
   %.sroa.12.64..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ch, i64 72
@@ -504,7 +507,7 @@ _ZN20btAlignedObjectArrayI20btCompoundShapeChildE9push_backERKS0_.exit: ; preds 
   store i32 %i.cn, ptr %i.az, align 4, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.sroa.0)
   ret void
 }
 

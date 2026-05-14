@@ -201,14 +201,14 @@ bb.o:                                             ; preds = %bb.m
 ; Function Attrs: uwtable
 define linkonce_odr dso_local void @_ZN22btCompoundLeafCallback17ProcessChildShapeEP16btCollisionShapei(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #6 comdat align 2 {
 bb.a:
-  %3 = alloca %class.btTransform, align 4         ; 7 uses
-  %4 = alloca %class.btTransform, align 8         ; 16 uses
+  %.sroa.0 = alloca <64 x i8>, align 64           ; 10 uses
+  %3 = alloca %class.btTransform, align 8         ; 16 uses
+  %4 = alloca %class.btVector3, align 4           ; 7 uses
   %5 = alloca %class.btVector3, align 4           ; 7 uses
   %6 = alloca %class.btVector3, align 4           ; 7 uses
   %7 = alloca %class.btVector3, align 4           ; 7 uses
-  %8 = alloca %class.btVector3, align 4           ; 7 uses
+  %8 = alloca %class.btVector3, align 16          ; 4 uses
   %9 = alloca %class.btVector3, align 16          ; 4 uses
-  %10 = alloca %class.btVector3, align 16         ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !66   ; 13 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 200
@@ -229,23 +229,23 @@ bb.a:
   %.sroa.20.48..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 60
   %i.l = load <4 x float>, ptr %i.k, align 8      ; 3 uses
   %.sroa.20.48.copyload = load float, ptr %.sroa.20.48..sroa_idx, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(64) %i.m, i64 16, i1 false), !tbaa.struct !108
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !108
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 88
-  %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %i.n, i64 16, i1 false), !tbaa.struct !108
+  %i.o = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.o, ptr noundef nonnull align 4 dereferenceable(16) %i.n, i64 16, i1 false), !tbaa.struct !108
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 104
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.q, ptr noundef nonnull align 4 dereferenceable(16) %i.p, i64 16, i1 false), !tbaa.struct !108
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.r, ptr noundef nonnull align 4 dereferenceable(16) %i.s, i64 16, i1 false), !tbaa.struct !108
+  %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(16) %i.q, ptr noundef nonnull align 4 dereferenceable(16) %i.p, i64 16, i1 false), !tbaa.struct !108
+  %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 120
+  %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.s, ptr noundef nonnull align 4 dereferenceable(16) %i.r, i64 16, i1 false), !tbaa.struct !108
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !58
   %i.v = sext i32 %2 to i64                       ; 4 uses
   %i.w = getelementptr inbounds [88 x i8], ptr %i.u, i64 %i.v ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   tail call void @llvm.experimental.noalias.scope.decl(metadata !127)
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16
   %i.y = extractelement <4 x float> %i.f, i64 0   ; 2 uses
@@ -303,12 +303,12 @@ bb.a:
   %i.bv = load <2 x float>, ptr %i.z, align 4, !tbaa !94, !noalias !130 ; 3 uses
   %i.bw = shufflevector <4 x float> %i.f, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.bx = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bv, <2 x float> %i.bw, <2 x float> %i.bu)
-  store <2 x float> %i.bx, ptr %4, align 8, !alias.scope !127
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store <2 x float> %i.bx, ptr %3, align 8, !alias.scope !127
+  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store float %i.aj, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !127
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 12
+  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 12
   store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx.i, align 4, !tbaa !107, !alias.scope !127
-  %i.by = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  %i.by = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.bz = insertelement <2 x float> poison, float %.sroa.10.16.copyload, i64 0
   %i.ca = shufflevector <2 x float> %i.bz, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cb = fmul <2 x float> %i.ca, %i.bp
@@ -317,11 +317,11 @@ bb.a:
   %i.ce = shufflevector <4 x float> %i.h, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.cf = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bv, <2 x float> %i.ce, <2 x float> %i.cd)
   store <2 x float> %i.cf, ptr %i.by, align 8, !alias.scope !127
-  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %.sroa.10.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 24
   store float %i.ao, ptr %.sroa.10.16..sroa_idx.i, align 8, !alias.scope !127
-  %.sroa.11.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 28
+  %.sroa.11.16..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 28
   store float 0.000000e+00, ptr %.sroa.11.16..sroa_idx.i, align 4, !tbaa !107, !alias.scope !127
-  %i.cg = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 3 uses
+  %i.cg = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 3 uses
   %i.ch = insertelement <2 x float> poison, float %.sroa.15.32.copyload, i64 0
   %i.ci = shufflevector <2 x float> %i.ch, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cj = fmul <2 x float> %i.ci, %i.bp
@@ -330,22 +330,22 @@ bb.a:
   %i.cm = shufflevector <4 x float> %i.j, <4 x float> poison, <2 x i32> <i32 2, i32 2>
   %i.cn = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bv, <2 x float> %i.cm, <2 x float> %i.cl)
   store <2 x float> %i.cn, ptr %i.cg, align 8, !alias.scope !127
-  %.sroa.15.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 40
+  %.sroa.15.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 40
   store float %i.at, ptr %.sroa.15.32..sroa_idx.i, align 8, !alias.scope !127
-  %.sroa.16.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 44
+  %.sroa.16.32..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 44
   store float 0.000000e+00, ptr %.sroa.16.32..sroa_idx.i, align 4, !tbaa !107, !alias.scope !127
-  %i.co = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 3 uses
+  %i.co = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 3 uses
   store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.co, align 8, !alias.scope !127
-  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 56
+  %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 56
   store <2 x float> %.sroa.3.12.vec.insert.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !107, !alias.scope !127
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
   %i.cp = load ptr, ptr %1, align 8, !tbaa !8
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 16
   %i.cr = load ptr, ptr %i.cq, align 8
-  call void %i.cr(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 4 dereferenceable(64) %4, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %6)
+  call void %i.cr(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5)
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !72 ; 2 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.ct, i64 200
@@ -354,15 +354,15 @@ bb.a:
   %i.cx = load ptr, ptr %i.cv, align 8, !tbaa !8
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 16
   %i.cz = load ptr, ptr %i.cy, align 8
-  call void %i.cz(ptr noundef nonnull align 8 dereferenceable(24) %i.cv, ptr noundef nonnull align 4 dereferenceable(64) %i.cw, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %8)
-  %i.da = load float, ptr %5, align 4, !tbaa !94
-  %i.db = load float, ptr %8, align 4, !tbaa !94
+  call void %i.cz(ptr noundef nonnull align 8 dereferenceable(24) %i.cv, ptr noundef nonnull align 4 dereferenceable(64) %i.cw, ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(16) %7)
+  %i.da = load float, ptr %4, align 4, !tbaa !94
+  %i.db = load float, ptr %7, align 4, !tbaa !94
   %i.dc = fcmp ogt float %i.da, %i.db
   br i1 %i.dc, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.dd = load float, ptr %6, align 4, !tbaa !94
-  %i.de = load float, ptr %7, align 4, !tbaa !94
+  %i.dd = load float, ptr %5, align 4, !tbaa !94
+  %i.de = load float, ptr %6, align 4, !tbaa !94
   %i.df = fcmp olt float %i.dd, %i.de
   br i1 %i.df, label %bb.d, label %bb.c
 
@@ -371,17 +371,17 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.dg = phi i1 [ false, %bb.c ], [ true, %bb.b ], [ true, %bb.a ]
-  %i.dh = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.dh = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.di = load float, ptr %i.dh, align 4, !tbaa !94
-  %i.dj = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %i.dj = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.dk = load float, ptr %i.dj, align 4, !tbaa !94
   %i.dl = fcmp ogt float %i.di, %i.dk
   br i1 %i.dl, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.dm = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.dm = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.dn = load float, ptr %i.dm, align 4, !tbaa !94
-  %i.do = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.do = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.dp = load float, ptr %i.do, align 4, !tbaa !94
   %i.dq = fcmp olt float %i.dn, %i.dp
   br i1 %i.dq, label %bb.g, label %bb.f
@@ -391,17 +391,17 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.not51 = phi i1 [ %i.dg, %bb.f ], [ true, %bb.e ], [ true, %bb.d ]
-  %i.dr = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.dr = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.ds = load float, ptr %i.dr, align 4, !tbaa !94
-  %i.dt = getelementptr inbounds nuw i8, ptr %8, i64 4
+  %i.dt = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.du = load float, ptr %i.dt, align 4, !tbaa !94
   %i.dv = fcmp ogt float %i.ds, %i.du
   br i1 %i.dv, label %_Z20TestAabbAgainstAabb2RK9btVector3S1_S1_S1_.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.dw = getelementptr inbounds nuw i8, ptr %6, i64 4
+  %i.dw = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.dx = load float, ptr %i.dw, align 4, !tbaa !94
-  %i.dy = getelementptr inbounds nuw i8, ptr %7, i64 4
+  %i.dy = getelementptr inbounds nuw i8, ptr %6, i64 4
   %i.dz = load float, ptr %i.dy, align 4, !tbaa !94
   %i.ea = fcmp olt float %i.dx, %i.dz
   %brmerge = or i1 %.not51, %i.ea
@@ -410,7 +410,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.eb = load ptr, ptr %i.a, align 8, !tbaa !66  ; 4 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ec, ptr noundef nonnull align 8 dereferenceable(64) %4, i64 16, i1 false), !tbaa.struct !108
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ec, ptr noundef nonnull align 8 dereferenceable(64) %3, i64 16, i1 false), !tbaa.struct !108
   %i.ed = getelementptr inbounds nuw i8, ptr %i.eb, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ed, ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 16, i1 false), !tbaa.struct !108
   %i.ee = getelementptr inbounds nuw i8, ptr %i.eb, i64 40
@@ -419,7 +419,7 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ef, ptr noundef nonnull align 8 dereferenceable(16) %i.co, i64 16, i1 false), !tbaa.struct !108
   %i.eg = load ptr, ptr %i.a, align 8, !tbaa !66  ; 4 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.eh, ptr noundef nonnull align 8 dereferenceable(64) %4, i64 16, i1 false), !tbaa.struct !108
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.eh, ptr noundef nonnull align 8 dereferenceable(64) %3, i64 16, i1 false), !tbaa.struct !108
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eg, i64 88
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ei, ptr noundef nonnull align 8 dereferenceable(16) %i.by, i64 16, i1 false), !tbaa.struct !108
   %i.ej = getelementptr inbounds nuw i8, ptr %i.eg, i64 104
@@ -496,17 +496,17 @@ bb.m:                                             ; preds = %bb.l
   %i.gf = load ptr, ptr %i.fr, align 8, !tbaa !133, !nonnull !47, !align !134
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 24
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !135
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
-  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %9, align 16, !tbaa !94
-  call void @_ZN12btIDebugDraw8drawAabbERK9btVector3S2_S2_(ptr noundef nonnull align 8 dereferenceable(8) %i.gh, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(16) %9)
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #14
+  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %8, align 16, !tbaa !94
+  call void @_ZN12btIDebugDraw8drawAabbERK9btVector3S2_S2_(ptr noundef nonnull align 8 dereferenceable(8) %i.gh, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %8)
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   %i.gi = load ptr, ptr %i.fr, align 8, !tbaa !133, !nonnull !47, !align !134
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 24
   %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !135
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #14
-  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %10, align 16, !tbaa !94
-  call void @_ZN12btIDebugDraw8drawAabbERK9btVector3S2_S2_(ptr noundef nonnull align 8 dereferenceable(8) %i.gk, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %8, ptr noundef nonnull align 4 dereferenceable(16) %10)
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #14
+  store <4 x float> <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %9, align 16, !tbaa !94
+  call void @_ZN12btIDebugDraw8drawAabbERK9btVector3S2_S2_(ptr noundef nonnull align 8 dereferenceable(8) %i.gk, ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef nonnull align 4 dereferenceable(16) %7, ptr noundef nonnull align 4 dereferenceable(16) %9)
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
@@ -523,22 +523,25 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   store <4 x float> %i.l, ptr %i.gq, align 8
   %i.gr = load ptr, ptr %i.a, align 8, !tbaa !66  ; 4 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %i.gr, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.gs, ptr noundef nonnull align 4 dereferenceable(64) %3, i64 16, i1 false), !tbaa.struct !108
-  %i.gt = getelementptr inbounds nuw i8, ptr %i.gr, i64 88
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, ptr noundef nonnull align 4 dereferenceable(16) %i.o, i64 16, i1 false), !tbaa.struct !108
-  %i.gu = getelementptr inbounds nuw i8, ptr %i.gr, i64 104
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gu, ptr noundef nonnull align 4 dereferenceable(16) %i.q, i64 16, i1 false), !tbaa.struct !108
-  %i.gv = getelementptr inbounds nuw i8, ptr %i.gr, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gv, ptr noundef nonnull align 4 dereferenceable(16) %i.r, i64 16, i1 false), !tbaa.struct !108
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gs, ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !108
+  %10 = getelementptr inbounds nuw i8, ptr %i.gr, i64 88
+  %i.gt = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 16 dereferenceable(16) %i.gt, i64 16, i1 false), !tbaa.struct !108
+  %11 = getelementptr inbounds nuw i8, ptr %i.gr, i64 104
+  %i.gu = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull align 32 dereferenceable(16) %i.gu, i64 16, i1 false), !tbaa.struct !108
+  %12 = getelementptr inbounds nuw i8, ptr %i.gr, i64 120
+  %i.gv = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 16 dereferenceable(16) %i.gv, i64 16, i1 false), !tbaa.struct !108
   br label %_Z20TestAabbAgainstAabb2RK9btVector3S1_S1_S1_.exit.thread
 
 _Z20TestAabbAgainstAabb2RK9btVector3S1_S1_S1_.exit.thread: ; preds = %bb.h, %bb.g, %bb.n
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret void
 }
 

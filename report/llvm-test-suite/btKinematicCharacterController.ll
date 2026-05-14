@@ -201,8 +201,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
 ; Function Attrs: uwtable
 define dso_local void @_ZN30btKinematicCharacterController10playerStepEP16btCollisionWorldf(ptr noundef nonnull align 8 captures(none) dereferenceable(192) %0, ptr noundef %1, float noundef %2) unnamed_addr #6 align 2 {
 bb.a:
-  %3 = alloca %class.btTransform, align 4         ; 7 uses
-  %4 = alloca %class.btVector3, align 8           ; 5 uses
+  %.sroa.0 = alloca <64 x i8>, align 64           ; 10 uses
+  %3 = alloca %class.btVector3, align 8           ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 181 ; 2 uses
   %i.b = load i8, ptr %i.a, align 1, !tbaa !35, !range !37, !noundef !85
   %i.c = trunc nuw i8 %i.b to i1
@@ -213,18 +213,17 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !31   ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(64) %i.i, i64 16, i1 false), !tbaa.struct !58
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !58
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
-  %i.k = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.k, ptr noundef nonnull align 4 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !58
+  %i.k = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.k, ptr noundef nonnull align 4 dereferenceable(16) %i.j, i64 16, i1 false), !tbaa.struct !58
   %i.l = getelementptr inbounds nuw i8, ptr %i.h, i64 40
-  %i.m = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %i.l, i64 16, i1 false), !tbaa.struct !58
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %i.l, i64 16, i1 false), !tbaa.struct !58
   tail call void @_ZN30btKinematicCharacterController6stepUpEP16btCollisionWorld(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef %1)
   %i.n = load i8, ptr %i.a, align 1, !tbaa !35, !range !37, !noundef !85
   %i.o = trunc nuw i8 %i.n to i1
@@ -241,7 +240,7 @@ bb.d:                                             ; preds = %bb.b
   %. = select i1 %i.r, float %2, float %i.q       ; 2 uses
   %i.s = fsub float %i.q, %2
   store float %i.s, ptr %i.d, align 8, !tbaa !36
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.u = load <2 x float>, ptr %i.t, align 8, !tbaa !8
   %i.v = insertelement <2 x float> poison, float %., i64 0
@@ -251,27 +250,31 @@ bb.d:                                             ; preds = %bb.b
   %i.z = load float, ptr %i.y, align 8, !tbaa !8
   %i.aa = fmul float %., %i.z
   %.sroa.3.12.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.aa, i64 0
-  store <2 x float> %i.x, ptr %4, align 8
-  %i.ab = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store <2 x float> %i.x, ptr %3, align 8
+  %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8
   store <2 x float> %.sroa.3.12.vec.insert.i, ptr %i.ab, align 8
-  call void @_ZN30btKinematicCharacterController20stepForwardAndStrafeEP16btCollisionWorldRK9btVector3(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef %1, ptr noundef nonnull align 4 dereferenceable(16) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
+  call void @_ZN30btKinematicCharacterController20stepForwardAndStrafeEP16btCollisionWorldRK9btVector3(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef %1, ptr noundef nonnull align 4 dereferenceable(16) %3)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void @_ZN30btKinematicCharacterController8stepDownEP16btCollisionWorldf(ptr noundef nonnull align 8 dereferenceable(192) %0, ptr noundef %1, float poison)
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 88
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !58
+  %.sroa.0.48..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.0.48..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !58
   %i.ad = load ptr, ptr %i.g, align 8, !tbaa !31  ; 4 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ae, ptr noundef nonnull align 4 dereferenceable(64) %3, i64 16, i1 false), !tbaa.struct !58
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.af, ptr noundef nonnull align 4 dereferenceable(16) %i.k, i64 16, i1 false), !tbaa.struct !58
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !58
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ad, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ah, ptr noundef nonnull align 4 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !58
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noundef nonnull align 64 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !58
+  %4 = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
+  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 16 dereferenceable(16) %i.af, i64 16, i1 false), !tbaa.struct !58
+  %5 = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
+  %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 32 dereferenceable(16) %i.ag, i64 16, i1 false), !tbaa.struct !58
+  %6 = getelementptr inbounds nuw i8, ptr %i.ad, i64 56
+  %i.ah = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 48
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 16 dereferenceable(16) %i.ah, i64 16, i1 false), !tbaa.struct !58
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %bb.e
