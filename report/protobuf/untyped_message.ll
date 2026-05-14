@@ -201,36 +201,29 @@ declare void @_ZN4absl12lts_2025051217internal_statusor6Helper26HandleInvalidSta
 
 ; Function Attrs: mustprogress noinline nounwind uwtable
 define linkonce_odr hidden void @_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIiSt10unique_ptrISt7variantIJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES9_St6vectorISA_SaISA_EESH_IiSaIiEESH_IjSaIjEESH_IlSaIlEESH_ImSaImEESH_IfSaIfEESH_IdSaIdEESH_ISG_SaISG_EESH_IS9_SaIS9_EEEESt14default_deleteIS10_EEEENS0_13hash_internal4HashIiEESt8equal_toIiESaISt4pairIKiS13_EEEC2EOS1E_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) unnamed_addr #17 comdat align 2 personality ptr @__gxx_personality_v0 {
-  %.sroa.6 = alloca %"struct.absl::lts_20250512::container_internal::HeapPtrs", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  %3 = load i64, ptr %1, align 8, !tbaa !111      ; 3 uses
-  %4 = icmp ne i64 %3, 0
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp ult i64 %3, 2
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %7 = load i64, ptr %6, align 8                  ; 2 uses
-  %.not.i.i = icmp ugt i64 %7, 131071
-  %8 = select i1 %5, i1 %.not.i.i, i1 false
-  br i1 %8, label %bb.a, label %9
-
-9:                                                ; preds = %2
+bb.a:
+  %2 = load i64, ptr %1, align 8, !tbaa !111      ; 3 uses
+  %3 = icmp ne i64 %2, 0
+  tail call void @llvm.assume(i1 %3)
+  %4 = icmp ult i64 %2, 2
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  %6 = load i64, ptr %5, align 8                  ; 2 uses
+  %.not.i.i = icmp ugt i64 %6, 131071
+  %7 = select i1 %4, i1 %.not.i.i, i1 false       ; 2 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, i64 16, i1 false)
-  br label %bb.a
-
-bb.a:                                             ; preds = %9, %2
-  %.sroa.513.0 = phi i64 [ %7, %9 ], [ 131072, %2 ]
-  store i64 %3, ptr %0, align 8
+  %.sroa.6.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.6.0..sroa_idx, align 8
+  %.sroa.6.sroa.0.0 = select i1 %7, <16 x i8> undef, <16 x i8> %.sroa.6.sroa.0.0.copyload
+  %.sroa.513.0 = select i1 %7, i64 131072, i64 %6
+  store i64 %2, ptr %0, align 8
   %.sroa.513.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.513.0, ptr %.sroa.513.0..sroa_idx14, align 8
   %.sroa.6.0..sroa_idx16 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx16, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
+  store <16 x i8> %.sroa.6.sroa.0.0, ptr %.sroa.6.0..sroa_idx16, align 8
   %i.a = load i64, ptr %1, align 8, !tbaa !111    ; 2 uses
   %i.b = icmp ne i64 %i.a, 0
   tail call void @llvm.assume(i1 %i.b)
   %i.c = icmp ult i64 %i.a, 2
-  %i.d = load i64, ptr %6, align 8
+  %i.d = load i64, ptr %5, align 8
   %.not.i.i10 = icmp ugt i64 %i.d, 131071
   %i.e = select i1 %i.c, i1 %.not.i.i10, i1 false
   br i1 %i.e, label %bb.b, label %bb.c
@@ -248,7 +241,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   store i64 1, ptr %1, align 8
-  store i64 0, ptr %6, align 8
+  store i64 0, ptr %5, align 8
   ret void
 }
 

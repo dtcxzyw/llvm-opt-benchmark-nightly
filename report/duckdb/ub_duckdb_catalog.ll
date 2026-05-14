@@ -201,12 +201,11 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb21CatalogEntryRetriever7InheritERKS0_(ptr noundef nonnull align 8 captures(address) dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %2 = alloca %"class.std::function.513", align 8 ; 11 uses
+  %2 = alloca %"class.std::function.513", align 16 ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #35
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !154  ; 2 uses
   %.not.i.i.not.i.i = icmp eq ptr %i.c, null
   br i1 %.not.i.i.not.i.i, label %_ZNSt8functionIFvRN6duckdb12CatalogEntryEEEC2ERKS4_.exit.i, label %bb.b
@@ -222,7 +221,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.f = landingpad { ptr, i32 }
           cleanup
-  %i.g = load ptr, ptr %i.a, align 8, !tbaa !154  ; 2 uses
+  %i.g = load ptr, ptr %i.a, align 16, !tbaa !154 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i.i, label %_ZNSt14_Function_baseD2Ev.exit.i.i, label %bb.e
 
@@ -242,15 +241,13 @@ _ZNSt14_Function_baseD2Ev.exit.i.i:               ; preds = %bb.e, %bb.d
 
 _ZNSt8functionIFvRN6duckdb12CatalogEntryEEEC2ERKS4_.exit.i: ; preds = %bb.c, %bb.a
   %i.k = phi <2 x ptr> [ splat (ptr null), %bb.a ], [ %i.e, %bb.c ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 16, !tbaa !65
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 16, i1 false), !tbaa.struct !194
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %0, align 8, !tbaa !65
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.m = load <2 x ptr>, ptr %i.l, align 8, !tbaa !193
   %i.n = load ptr, ptr %i.l, align 8, !tbaa !193  ; 2 uses
-  store <2 x ptr> %i.m, ptr %i.a, align 8, !tbaa !193
+  store <2 x ptr> %i.m, ptr %i.a, align 16, !tbaa !193
   store <2 x ptr> %i.k, ptr %i.l, align 8, !tbaa !193
   %.not.i.i = icmp eq ptr %i.n, null
   br i1 %.not.i.i, label %_ZNSt8functionIFvRN6duckdb12CatalogEntryEEEaSERKS4_.exit, label %bb.g
@@ -653,10 +650,9 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN6duckdb21CatalogEntryRetriever11SetCallbackESt8functionIFvRNS_12CatalogEntryEEE(ptr noundef nonnull align 8 captures(none) dereferenceable(64) %0, ptr noundef captures(none) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %2 = alloca %"class.std::function.513", align 8 ; 9 uses
+  %2 = alloca %"class.std::function.513", align 16 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #35
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.b = load <2 x ptr>, ptr %i.a, align 8, !tbaa !193
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !154
@@ -664,21 +660,19 @@ bb.a:
   br i1 %.not.i.i.not.i.i, label %_ZNSt8functionIFvRN6duckdb12CatalogEntryEEEC2EOS4_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 16, i1 false), !tbaa.struct !194
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 16, i1 false), !tbaa.struct !194
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFvRN6duckdb12CatalogEntryEEEC2EOS4_.exit.i
 
 _ZNSt8functionIFvRN6duckdb12CatalogEntryEEEC2EOS4_.exit.i: ; preds = %bb.b, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !194
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 16, !tbaa !65
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 16, i1 false), !tbaa.struct !194
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %0, align 8, !tbaa !65
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   %i.f = load <2 x ptr>, ptr %i.e, align 8, !tbaa !193
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !193  ; 2 uses
-  store <2 x ptr> %i.f, ptr %i.d, align 8, !tbaa !193
+  store <2 x ptr> %i.f, ptr %i.d, align 16, !tbaa !193
   store <2 x ptr> %i.b, ptr %i.e, align 8, !tbaa !193
   %.not.i.i = icmp eq ptr %i.g, null
   br i1 %.not.i.i, label %_ZNSt8functionIFvRN6duckdb12CatalogEntryEEEaSEOS4_.exit, label %bb.c

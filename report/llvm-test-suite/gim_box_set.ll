@@ -4,9 +4,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%class.GIM_AABB = type { %class.btVector3, %class.btVector3 }
-%class.btVector3 = type { [4 x float] }
-
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef range(i32 0, 3) i32 @_ZN12GIM_BOX_TREE20_calc_splitting_axisER9gim_arrayI13GIM_AABB_DATAEjj(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
@@ -118,18 +115,11 @@ bb.c:                                             ; preds = %.lr.ph100, %bb.c
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #2 align 2 {
 bb.a:
-  %.sroa.0.i.i = alloca %class.GIM_AABB, align 8  ; 5 uses
   %i.a = sub i32 %3, %2                           ; 3 uses
   %i.b = icmp ult i32 %2, %3
   br i1 %i.b, label %.lr.ph, label %._crit_edge52
@@ -193,7 +183,6 @@ bb.a:
   %i.ah = uitofp i32 %i.a to float
   %i.ai = fdiv float %.lcssa, %i.ah
   %i.aj = zext i32 %4 to i64                      ; 2 uses
-  %.sroa.0.16..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i, i64 16
   %i.ak = zext i32 %2 to i64
   %wide.trip.count58 = zext i32 %3 to i64
   br label %bb.b
@@ -215,17 +204,18 @@ bb.b:                                             ; preds = %.lr.ph51, %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.av = zext i32 %.04248 to i64
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i, ptr noundef nonnull align 4 dereferenceable(16) %i.am, i64 16, i1 false), !tbaa.struct !14
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.16..sroa_idx.i.i, ptr noundef nonnull align 4 dereferenceable(16) %i.an, i64 16, i1 false), !tbaa.struct !14
+  %.sroa.0.i.i.sroa.0.0.copyload64 = load <16 x i8>, ptr %i.am, align 4, !tbaa !14
+  %.sroa.0.i.i.sroa.0.0.vec.expand = shufflevector <16 x i8> %.sroa.0.i.i.sroa.0.0.copyload64, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %.sroa.0.i.i.sroa.0.16.copyload = load <16 x i8>, ptr %i.an, align 4, !tbaa !14
+  %.sroa.0.i.i.sroa.0.16.vec.expand = shufflevector <16 x i8> %.sroa.0.i.i.sroa.0.16.copyload, <16 x i8> poison, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %.sroa.0.i.i.sroa.0.16.vecblend = shufflevector <32 x i8> %.sroa.0.i.i.sroa.0.0.vec.expand, <32 x i8> %.sroa.0.i.i.sroa.0.16.vec.expand, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.aw = getelementptr inbounds nuw i8, ptr %i.am, i64 32
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !16
+  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !15
   %i.ay = getelementptr inbounds nuw [36 x i8], ptr %i.al, i64 %i.av ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.am, ptr noundef nonnull align 4 dereferenceable(36) %i.ay, i64 36, i1 false), !tbaa.struct !20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.ay, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.i.i, i64 32, i1 false), !tbaa.struct !20
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.am, ptr noundef nonnull align 4 dereferenceable(36) %i.ay, i64 36, i1 false), !tbaa.struct !19
+  store <32 x i8> %.sroa.0.i.i.sroa.0.16.vecblend, ptr %i.ay, align 4
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
   store i32 %i.ax, ptr %.sroa.5.0..sroa_idx.i.i, align 4, !tbaa !4
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
   %i.az = add i32 %.04248, 1
   br label %bb.d
 
@@ -256,33 +246,32 @@ declare float @llvm.fmuladd.f32(float, float, float) #3
 ; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN12GIM_BOX_TREE15_build_sub_treeER9gim_arrayI13GIM_AABB_DATAEjj(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #4 align 2 {
 bb.a:
-  %.sroa.0.i.i.i = alloca %class.GIM_AABB, align 8 ; 5 uses
-  %i.a = load i32, ptr %0, align 8, !tbaa !21     ; 3 uses
+  %i.a = load i32, ptr %0, align 8, !tbaa !20     ; 3 uses
   %i.b = add i32 %i.a, 1                          ; 2 uses
-  store i32 %i.b, ptr %0, align 8, !tbaa !21
+  store i32 %i.b, ptr %0, align 8, !tbaa !20
   %i.c = sub i32 %3, %2                           ; 4 uses
   %i.d = icmp eq i32 %i.c, 1
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.f = zext i32 %i.a to i64                     ; 4 uses
-  %i.g = load ptr, ptr %i.e, align 8, !tbaa !25   ; 2 uses
+  %i.g = load ptr, ptr %i.e, align 8, !tbaa !24   ; 2 uses
   %i.h = getelementptr inbounds nuw [48 x i8], ptr %i.g, i64 %i.f ; 13 uses
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  store i32 0, ptr %i.i, align 4, !tbaa !26
+  store i32 0, ptr %i.i, align 4, !tbaa !25
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 36
-  store i32 0, ptr %i.j, align 4, !tbaa !28
+  store i32 0, ptr %i.j, align 4, !tbaa !27
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 40
-  store i32 0, ptr %i.k, align 4, !tbaa !29
+  store i32 0, ptr %i.k, align 4, !tbaa !28
   %i.l = zext i32 %2 to i64                       ; 2 uses
   %i.m = load ptr, ptr %1, align 8, !tbaa !8
   %i.n = getelementptr inbounds nuw [36 x i8], ptr %i.m, i64 %i.l
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.h, ptr noundef nonnull align 4 dereferenceable(32) %i.n, i64 32, i1 false), !tbaa.struct !30
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.h, ptr noundef nonnull align 4 dereferenceable(32) %i.n, i64 32, i1 false), !tbaa.struct !29
   %i.o = load ptr, ptr %1, align 8, !tbaa !8
   %i.p = getelementptr inbounds nuw [36 x i8], ptr %i.o, i64 %i.l
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 32
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !16
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !15
   br label %common.ret
 
 bb.c:                                             ; preds = %bb.a
@@ -417,7 +406,6 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %.lcssa = phi float [ %.lcssa.unr, %.prol.loopexit ], [ %i.ck, %.lr.ph.i.new ]
   %i.cl = uitofp i32 %i.c to float
   %i.cm = fdiv float %.lcssa, %i.cl
-  %.sroa.0.16..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i.i.i, i64 16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %.lr.ph51.i
@@ -437,17 +425,18 @@ bb.e:                                             ; preds = %bb.g, %.lr.ph51.i
 
 bb.f:                                             ; preds = %bb.e
   %i.cx = zext i32 %.04248.i to i64
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 4 dereferenceable(16) %i.co, i64 16, i1 false), !tbaa.struct !14
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.16..sroa_idx.i.i.i, ptr noundef nonnull align 4 dereferenceable(16) %i.cp, i64 16, i1 false), !tbaa.struct !14
+  %.sroa.0.i.i.i.sroa.0.0.copyload54 = load <16 x i8>, ptr %i.co, align 4, !tbaa !14
+  %.sroa.0.i.i.i.sroa.0.0.vec.expand = shufflevector <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload54, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %.sroa.0.i.i.i.sroa.0.16.copyload = load <16 x i8>, ptr %i.cp, align 4, !tbaa !14
+  %.sroa.0.i.i.i.sroa.0.16.vec.expand = shufflevector <16 x i8> %.sroa.0.i.i.i.sroa.0.16.copyload, <16 x i8> poison, <32 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %.sroa.0.i.i.i.sroa.0.16.vecblend = shufflevector <32 x i8> %.sroa.0.i.i.i.sroa.0.0.vec.expand, <32 x i8> %.sroa.0.i.i.i.sroa.0.16.vec.expand, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
   %i.cy = getelementptr inbounds nuw i8, ptr %i.co, i64 32
-  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !16
+  %i.cz = load i32, ptr %i.cy, align 4, !tbaa !15
   %i.da = getelementptr inbounds nuw [36 x i8], ptr %i.cn, i64 %i.cx ; 3 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.co, ptr noundef nonnull align 4 dereferenceable(36) %i.da, i64 36, i1 false), !tbaa.struct !20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.da, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.i.i.i, i64 32, i1 false), !tbaa.struct !20
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.co, ptr noundef nonnull align 4 dereferenceable(36) %i.da, i64 36, i1 false), !tbaa.struct !19
+  store <32 x i8> %.sroa.0.i.i.i.sroa.0.16.vecblend, ptr %i.da, align 4
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.da, i64 32
   store i32 %i.cz, ptr %.sroa.5.0..sroa_idx.i.i.i, align 4, !tbaa !4
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
   %i.db = add i32 %.04248.i, 1
   %.pre = load ptr, ptr %1, align 8, !tbaa !8
   br label %bb.g
@@ -462,15 +451,15 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 common.ret:                                       ; preds = %bb.b, %_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit
   %.sink52 = phi i64 [ 44, %bb.b ], [ 40, %_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit ]
   %.sink = phi i32 [ %i.r, %bb.b ], [ %i.dx, %_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit ]
-  %i.dd = load ptr, ptr %i.e, align 8, !tbaa !25
+  %i.dd = load ptr, ptr %i.e, align 8, !tbaa !24
   %i.de = getelementptr inbounds nuw [48 x i8], ptr %i.dd, i64 %i.f
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %.sink52
   store i32 %.sink, ptr %i.df, align 4, !tbaa !4
   ret void
 
 _ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit.loopexit: ; preds = %bb.g
-  %.pre45 = load i32, ptr %0, align 8, !tbaa !21
-  %.pre46 = load ptr, ptr %i.e, align 8, !tbaa !25
+  %.pre45 = load i32, ptr %0, align 8, !tbaa !20
+  %.pre46 = load ptr, ptr %i.e, align 8, !tbaa !24
   br label %_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit
 
 _ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit: ; preds = %._crit_edge, %_ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjjj.exit.loopexit
@@ -489,15 +478,15 @@ _ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjj
   %.2.i = select i1 %i.dn, i32 %i.dp, i32 %.042.lcssa.i ; 2 uses
   %i.dq = getelementptr inbounds nuw [48 x i8], ptr %i.dg, i64 %i.f
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dq, i64 32
-  store i32 %i.dh, ptr %i.dr, align 4, !tbaa !26
+  store i32 %i.dh, ptr %i.dr, align 4, !tbaa !25
   tail call void @_ZN12GIM_BOX_TREE15_build_sub_treeER9gim_arrayI13GIM_AABB_DATAEjj(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2, i32 noundef %.2.i)
-  %i.ds = load i32, ptr %0, align 8, !tbaa !21
-  %i.dt = load ptr, ptr %i.e, align 8, !tbaa !25
+  %i.ds = load i32, ptr %0, align 8, !tbaa !20
+  %i.dt = load ptr, ptr %i.e, align 8, !tbaa !24
   %i.du = getelementptr inbounds nuw [48 x i8], ptr %i.dt, i64 %i.f
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 36
-  store i32 %i.ds, ptr %i.dv, align 4, !tbaa !28
+  store i32 %i.ds, ptr %i.dv, align 4, !tbaa !27
   tail call void @_ZN12GIM_BOX_TREE15_build_sub_treeER9gim_arrayI13GIM_AABB_DATAEjj(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %.2.i, i32 noundef %3)
-  %i.dw = load i32, ptr %0, align 8, !tbaa !21
+  %i.dw = load i32, ptr %0, align 8, !tbaa !20
   %i.dx = sub i32 %i.dw, %i.a
   br label %common.ret
 }
@@ -505,19 +494,19 @@ _ZN12GIM_BOX_TREE30_sort_and_calc_splitting_indexER9gim_arrayI13GIM_AABB_DATAEjj
 ; Function Attrs: uwtable
 define dso_local void @_ZN12GIM_BOX_TREE10build_treeER9gim_arrayI13GIM_AABB_DATAE(ptr noundef nonnull align 8 dereferenceable(24) initializes((0, 4)) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) local_unnamed_addr #5 align 2 {
 bb.a:
-  store i32 0, ptr %0, align 8, !tbaa !21
+  store i32 0, ptr %0, align 8, !tbaa !20
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !31
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !30
   %i.d = shl i32 %i.c, 1                          ; 9 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
-  %i.f = load i32, ptr %i.e, align 8, !tbaa !32   ; 5 uses
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !31   ; 5 uses
   %i.g = icmp ugt i32 %i.d, %i.f
   br i1 %i.g, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !33
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !32
   %.not.i.i = icmp ult i32 %i.i, %i.d
   br i1 %.not.i.i, label %bb.c, label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i
 
@@ -526,7 +515,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = load ptr, ptr %i.a, align 8, !tbaa !25
+  %i.j = load ptr, ptr %i.a, align 8, !tbaa !24
   %i.k = zext i32 %i.f to i64
   %i.l = mul nuw nsw i64 %i.k, 48
   %i.m = zext i32 %i.d to i64
@@ -542,9 +531,9 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN9gim_arrayI17GIM_BOX_TREE_NODEE10resizeDataEj.exit.i.i: ; preds = %bb.e, %bb.d
   %storemerge.i.i.i = phi ptr [ %i.r, %bb.e ], [ %i.o, %bb.d ]
-  store ptr %storemerge.i.i.i, ptr %i.a, align 8, !tbaa !25
-  store i32 %i.d, ptr %i.h, align 4, !tbaa !33
-  %.pre = load i32, ptr %i.e, align 8, !tbaa !32
+  store ptr %storemerge.i.i.i, ptr %i.a, align 8, !tbaa !24
+  store i32 %i.d, ptr %i.h, align 4, !tbaa !32
+  %.pre = load i32, ptr %i.e, align 8, !tbaa !31
   br label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i
 
 _ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i: ; preds = %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE10resizeDataEj.exit.i.i, %bb.b
@@ -554,14 +543,14 @@ _ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i: ; preds = %_ZN9gim_arrayI17
 
 .lr.ph.i:                                         ; preds = %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i, %.lr.ph.i
   %i.u = phi i32 [ %i.aa, %.lr.ph.i ], [ %i.s, %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i ]
-  %i.v = load ptr, ptr %i.a, align 8, !tbaa !25
+  %i.v = load ptr, ptr %i.a, align 8, !tbaa !24
   %i.w = zext i32 %i.u to i64
   %i.x = getelementptr inbounds nuw [48 x i8], ptr %i.v, i64 %i.w
   %i.y = getelementptr i8, ptr %i.x, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
-  %i.z = load i32, ptr %i.e, align 8, !tbaa !32
+  %i.z = load i32, ptr %i.e, align 8, !tbaa !31
   %i.aa = add i32 %i.z, 1                         ; 3 uses
-  store i32 %i.aa, ptr %i.e, align 8, !tbaa !32
+  store i32 %i.aa, ptr %i.e, align 8, !tbaa !31
   %i.ab = icmp ult i32 %i.aa, %i.d
   br i1 %i.ab, label %.lr.ph.i, label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE6resizeEjb.exit
 
@@ -570,11 +559,11 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ac, label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE11clear_rangeEj.exit.i, label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE6resizeEjb.exit
 
 _ZN9gim_arrayI17GIM_BOX_TREE_NODEE11clear_rangeEj.exit.i: ; preds = %bb.f
-  store i32 %i.d, ptr %i.e, align 8, !tbaa !32
+  store i32 %i.d, ptr %i.e, align 8, !tbaa !31
   br label %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE6resizeEjb.exit
 
 _ZN9gim_arrayI17GIM_BOX_TREE_NODEE6resizeEjb.exit: ; preds = %.lr.ph.i, %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE7reserveEj.exit.i, %bb.f, %_ZN9gim_arrayI17GIM_BOX_TREE_NODEE11clear_rangeEj.exit.i
-  %i.ad = load i32, ptr %i.b, align 8, !tbaa !31
+  %i.ad = load i32, ptr %i.b, align 8, !tbaa !30
   tail call void @_ZN12GIM_BOX_TREE15_build_sub_treeER9gim_arrayI13GIM_AABB_DATAEjj(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef 0, i32 noundef %i.ad)
   ret void
 }
@@ -613,24 +602,23 @@ attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !11 = !{!"any pointer", !6, i64 0}
 !12 = !{!13, !13, i64 0}
 !13 = !{!"float", !6, i64 0}
-!14 = !{i64 0, i64 16, !15}
-!15 = !{!6, !6, i64 0}
-!16 = !{!17, !5, i64 32}
-!17 = !{!"_ZTS13GIM_AABB_DATA", !18, i64 0, !5, i64 32}
-!18 = !{!"_ZTS8GIM_AABB", !19, i64 0, !19, i64 16}
-!19 = !{!"_ZTS9btVector3", !6, i64 0}
-!20 = !{i64 0, i64 16, !15, i64 16, i64 16, !15, i64 32, i64 4, !4}
-!21 = !{!22, !5, i64 0}
-!22 = !{!"_ZTS12GIM_BOX_TREE", !5, i64 0, !23, i64 8}
-!23 = !{!"_ZTS9gim_arrayI17GIM_BOX_TREE_NODEE", !24, i64 0, !5, i64 8, !5, i64 12}
-!24 = !{!"p1 _ZTS17GIM_BOX_TREE_NODE", !11, i64 0}
-!25 = !{!23, !24, i64 0}
-!26 = !{!27, !5, i64 32}
-!27 = !{!"_ZTS17GIM_BOX_TREE_NODE", !18, i64 0, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44}
-!28 = !{!27, !5, i64 36}
-!29 = !{!27, !5, i64 40}
-!30 = !{i64 0, i64 16, !15, i64 16, i64 16, !15}
-!31 = !{!9, !5, i64 8}
-!32 = !{!23, !5, i64 8}
-!33 = !{!23, !5, i64 12}
+!14 = !{!6, !6, i64 0}
+!15 = !{!16, !5, i64 32}
+!16 = !{!"_ZTS13GIM_AABB_DATA", !17, i64 0, !5, i64 32}
+!17 = !{!"_ZTS8GIM_AABB", !18, i64 0, !18, i64 16}
+!18 = !{!"_ZTS9btVector3", !6, i64 0}
+!19 = !{i64 0, i64 16, !14, i64 16, i64 16, !14, i64 32, i64 4, !4}
+!20 = !{!21, !5, i64 0}
+!21 = !{!"_ZTS12GIM_BOX_TREE", !5, i64 0, !22, i64 8}
+!22 = !{!"_ZTS9gim_arrayI17GIM_BOX_TREE_NODEE", !23, i64 0, !5, i64 8, !5, i64 12}
+!23 = !{!"p1 _ZTS17GIM_BOX_TREE_NODE", !11, i64 0}
+!24 = !{!22, !23, i64 0}
+!25 = !{!26, !5, i64 32}
+!26 = !{!"_ZTS17GIM_BOX_TREE_NODE", !17, i64 0, !5, i64 32, !5, i64 36, !5, i64 40, !5, i64 44}
+!27 = !{!26, !5, i64 36}
+!28 = !{!26, !5, i64 40}
+!29 = !{i64 0, i64 16, !14, i64 16, i64 16, !14}
+!30 = !{!9, !5, i64 8}
+!31 = !{!22, !5, i64 8}
+!32 = !{!22, !5, i64 12}
 end_hunk_0

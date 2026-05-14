@@ -201,7 +201,6 @@ define internal fastcc void @_ZN12_GLOBAL__N_118StringTableBuilder15packIntoStor
 bb.a:
   %4 = alloca %"struct.(anonymous namespace)::StringPacker<char16_t>::HashedSuffix", align 8 ; 8 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %.sroa.0.i.i.i.i.i.i.i15 = alloca %"class.llvh::ArrayRef", align 8 ; 4 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %5 = alloca %"struct.(anonymous namespace)::StringPacker<char16_t>::HashedSuffix", align 8 ; 7 uses
   %6 = alloca %"struct.llvh::detail::DenseSetEmpty", align 1 ; 3 uses
@@ -210,7 +209,6 @@ bb.a:
   %8 = alloca %"class.llvh::DenseSet.87", align 8 ; 11 uses
   %9 = alloca %"struct.(anonymous namespace)::StringPacker<unsigned char>::HashedSuffix", align 8 ; 8 uses
   %i.d = alloca ptr, align 8                      ; 4 uses
-  %.sroa.0.i.i.i.i.i.i.i = alloca %"class.llvh::ArrayRef.25", align 8 ; 4 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
   %10 = alloca %"struct.(anonymous namespace)::StringPacker<unsigned char>::HashedSuffix", align 8 ; 7 uses
   %11 = alloca %"struct.llvh::detail::DenseSetEmpty", align 1 ; 3 uses
@@ -613,8 +611,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIhE12HashedSuff
   %.sroa.11.0.i = phi ptr [ %.sroa.11.1.i, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %i.iq, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 6 uses
   %.sroa.074.0.i = phi ptr [ %.sroa.074.1.i, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %i.iq, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 5 uses
   %.sroa.011.013.i.i.i.i.i.i.i = phi ptr [ %.sroa.011.2.i.i.i.i.i.i.i, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %.pn9.i.i.i, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.013.i.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !131, !noalias !89
+  %.sroa.0.i.i.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.011.013.i.i.i.i.i.i.i, align 8, !noalias !89
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.ja = load ptr, ptr %i.iz, align 8, !tbaa !129, !noalias !89 ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i, i64 32
@@ -659,7 +656,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE12_M_ch
   %i.js = mul nuw nsw i64 %i.jr, 40
   %i.jt = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.js) #17, !noalias !89 ; 5 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 %i.jk ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ju, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !131, !noalias !89
+  store <16 x i8> %.sroa.0.i.i.i.i.i.i.i.sroa.0.0.copyload, ptr %i.ju, align 8, !noalias !89
   %i.jv = getelementptr inbounds nuw i8, ptr %i.ju, i64 16
   store ptr %i.ja, ptr %i.jv, align 8, !tbaa !129, !noalias !89
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ju, i64 24
@@ -671,18 +668,18 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE12_M_ch
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i:               ; preds = %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i
   %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.kf, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %i.jt, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
   %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i = phi ptr [ %i.ke, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.074.0.i, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !132)
-  call void @llvm.experimental.noalias.scope.decl(metadata !135)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !131, !alias.scope !137, !noalias !89
+  call void @llvm.experimental.noalias.scope.decl(metadata !131)
+  call void @llvm.experimental.noalias.scope.decl(metadata !134)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(40) %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !136, !alias.scope !137, !noalias !89
   %i.jy = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16
   %i.jz = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 16 ; 2 uses
-  %i.ka = load <2 x ptr>, ptr %i.jz, align 8, !tbaa !122, !alias.scope !135, !noalias !138
-  store <2 x ptr> %i.ka, ptr %i.jy, align 8, !tbaa !122, !alias.scope !132, !noalias !139
+  %i.ka = load <2 x ptr>, ptr %i.jz, align 8, !tbaa !122, !alias.scope !134, !noalias !138
+  store <2 x ptr> %i.ka, ptr %i.jy, align 8, !tbaa !122, !alias.scope !131, !noalias !139
   %i.kb = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 32
   %i.kc = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 32
-  %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !124, !alias.scope !135, !noalias !138
-  store ptr %i.kd, ptr %i.kb, align 8, !tbaa !124, !alias.scope !132, !noalias !139
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jz, i8 0, i64 24, i1 false), !alias.scope !135, !noalias !138
+  %i.kd = load ptr, ptr %i.kc, align 8, !tbaa !124, !alias.scope !134, !noalias !138
+  store ptr %i.kd, ptr %i.kb, align 8, !tbaa !124, !alias.scope !131, !noalias !139
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.jz, i8 0, i64 24, i1 false), !alias.scope !134, !noalias !138
   %i.ke = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 40 ; 2 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 40 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ke, %.sroa.17.0.i
@@ -699,7 +696,6 @@ _ZN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryD2Ev.exit.i.i.i.i.i.i.i: ; p
   %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.pn.i = phi ptr [ %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.11.0.i, %bb.ag ]
   %.sroa.074.1.i = phi ptr [ %i.jt, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.074.0.i, %bb.ag ] ; 2 uses
   %.sroa.11.1.i = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.pn.i, i64 40 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i.i)
   %i.kh = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i, i64 48 ; 3 uses
   %.not18.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.kh, %i.it
   br i1 %.not18.i.i.i.i.i.i.i.i.i, label %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIhE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i
@@ -1102,8 +1098,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIDsE12HashedSuf
   %.sroa.11.0.i96 = phi ptr [ %.sroa.11.1.i103, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %i.ahs, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 6 uses
   %.sroa.074.0.i97 = phi ptr [ %.sroa.074.1.i102, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %i.ahs, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 5 uses
   %.sroa.011.013.i.i.i.i.i.i.i98 = phi ptr [ %.sroa.011.2.i.i.i.i.i.i.i106, %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i ], [ %.pn9.i.i.i92, %_ZN4llvh12DenseMapBaseINS_8DenseMapIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS4_11StringEntryESaIS8_EES5_NS_6detail12DenseMapPairIS5_SA_EEEES5_SA_S5_SD_E5beginEv.exit.i.i ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i.i15)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i.i15, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.013.i.i.i.i.i.i.i98, i64 16, i1 false), !tbaa.struct !264, !noalias !227
+  %.sroa.0.i.i.i.i.i.i.i15.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.011.013.i.i.i.i.i.i.i98, align 8, !noalias !227
   %i.aib = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i98, i64 24 ; 2 uses
   %i.aic = load ptr, ptr %i.aib, align 8, !tbaa !262, !noalias !227 ; 2 uses
   %i.aid = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i98, i64 32
@@ -1148,7 +1143,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE12_M_c
   %i.aiu = mul nuw nsw i64 %i.ait, 40
   %i.aiv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aiu) #17, !noalias !227 ; 5 uses
   %i.aiw = getelementptr inbounds nuw i8, ptr %i.aiv, i64 %i.aim ; 4 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aiw, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i.i15, i64 16, i1 false), !tbaa.struct !264, !noalias !227
+  store <16 x i8> %.sroa.0.i.i.i.i.i.i.i15.sroa.0.0.copyload, ptr %i.aiw, align 8, !noalias !227
   %i.aix = getelementptr inbounds nuw i8, ptr %i.aiw, i64 16
   store ptr %i.aic, ptr %i.aix, align 8, !tbaa !262, !noalias !227
   %i.aiy = getelementptr inbounds nuw i8, ptr %i.aiw, i64 24
@@ -1160,18 +1155,18 @@ _ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE12_M_c
 .lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i369:            ; preds = %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i369
   %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370 = phi ptr [ %i.ajh, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i369 ], [ %i.aiv, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
   %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371 = phi ptr [ %i.ajg, %.lr.ph.i.i.i.i.i.i.i.i.i.i.i.i.i.i369 ], [ %.sroa.074.0.i97, %_ZNKSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i.i.i.i.i.i.i.i.i ] ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !265)
-  call void @llvm.experimental.noalias.scope.decl(metadata !268)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370, ptr noundef nonnull align 8 dereferenceable(40) %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371, i64 16, i1 false), !tbaa.struct !264, !alias.scope !270, !noalias !227
+  call void @llvm.experimental.noalias.scope.decl(metadata !264)
+  call void @llvm.experimental.noalias.scope.decl(metadata !267)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370, ptr noundef nonnull align 8 dereferenceable(40) %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371, i64 16, i1 false), !tbaa.struct !269, !alias.scope !270, !noalias !227
   %i.aja = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370, i64 16
   %i.ajb = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371, i64 16 ; 2 uses
-  %i.ajc = load <2 x ptr>, ptr %i.ajb, align 8, !tbaa !255, !alias.scope !268, !noalias !271
-  store <2 x ptr> %i.ajc, ptr %i.aja, align 8, !tbaa !255, !alias.scope !265, !noalias !272
+  %i.ajc = load <2 x ptr>, ptr %i.ajb, align 8, !tbaa !255, !alias.scope !267, !noalias !271
+  store <2 x ptr> %i.ajc, ptr %i.aja, align 8, !tbaa !255, !alias.scope !264, !noalias !272
   %i.ajd = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370, i64 32
   %i.aje = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371, i64 32
-  %i.ajf = load ptr, ptr %i.aje, align 8, !tbaa !257, !alias.scope !268, !noalias !271
-  store ptr %i.ajf, ptr %i.ajd, align 8, !tbaa !257, !alias.scope !265, !noalias !272
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ajb, i8 0, i64 24, i1 false), !alias.scope !268, !noalias !271
+  %i.ajf = load ptr, ptr %i.aje, align 8, !tbaa !257, !alias.scope !267, !noalias !271
+  store ptr %i.ajf, ptr %i.ajd, align 8, !tbaa !257, !alias.scope !264, !noalias !272
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ajb, i8 0, i64 24, i1 false), !alias.scope !267, !noalias !271
   %i.ajg = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i.i.i.i.i.i.i.i.i.i.i371, i64 40 ; 2 uses
   %i.ajh = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i.i.i.i.i.i.i.i.i.i.i370, i64 40 ; 2 uses
   %.not.i.i.i.i.i.i.i.i.i.i.i.i.i.i372 = icmp eq ptr %i.ajg, %.sroa.17.0.i95
@@ -1188,7 +1183,6 @@ _ZN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryD2Ev.exit.i.i.i.i.i.i.i: ; 
   %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.pn.i101 = phi ptr [ %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.i373, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.11.0.i96, %bb.dv ]
   %.sroa.074.1.i102 = phi ptr [ %i.aiv, %_ZNSt6vectorIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i.i.i.i.i.i.i.i.i ], [ %.sroa.074.0.i97, %bb.dv ] ; 2 uses
   %.sroa.11.1.i103 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.i.i.i.i.i.i.i.i.pn.i101, i64 40 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i.i15)
   %i.ajj = getelementptr inbounds nuw i8, ptr %.sroa.011.013.i.i.i.i.i.i.i98, i64 48 ; 3 uses
   %.not19.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ajj, %i.ahv
   br i1 %.not19.i.i.i.i.i.i.i.i.i, label %_ZN4llvh16DenseMapIteratorIN12_GLOBAL__N_112StringPackerIDsE12HashedSuffixESt6vectorIPNS3_11StringEntryESaIS7_EES4_NS_6detail12DenseMapPairIS4_S9_EELb0EEppEv.exit.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i104
@@ -1591,8 +1585,6 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #7
 ; Function Attrs: mustprogress nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_112StringPackerIhE14radixQuicksortEPNS1_16SuffixArrayEntryES3_m(ptr noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #8 align 2 {
 bb.a:
-  %.sroa.0.i47 = alloca %"class.llvh::ArrayRef.25", align 8 ; 4 uses
-  %.sroa.0.i = alloca %"class.llvh::ArrayRef.25", align 8 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
@@ -1657,8 +1649,7 @@ _ZNK12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntry9extCharAtEm.exit46: ; pred
 bb.f:                                             ; preds = %_ZNK12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntry9extCharAtEm.exit46
   %i.s = getelementptr inbounds nuw i8, ptr %.03548, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %.03150, i64 40
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(40) %.03548, i64 16, i1 false), !tbaa.struct !131
+  %.sroa.0.i.sroa.0.0.copyload = load <16 x i8>, ptr %.03548, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %.03548, i64 16 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.03548, i64 32 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !124
@@ -1666,15 +1657,14 @@ bb.f:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %i.y = getelementptr inbounds nuw i8, ptr %.03150, i64 32 ; 2 uses
   %i.z = load <2 x ptr>, ptr %i.u, align 8, !tbaa !122
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, i8 0, i64 24, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03548, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !131
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03548, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !136
   %i.aa = load <2 x ptr>, ptr %i.x, align 8, !tbaa !122
   store <2 x ptr> %i.aa, ptr %i.u, align 8, !tbaa !122
   %i.ab = load ptr, ptr %i.y, align 8, !tbaa !124
   store ptr %i.ab, ptr %i.v, align 8, !tbaa !124
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03150, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !tbaa.struct !131
+  store <16 x i8> %.sroa.0.i.sroa.0.0.copyload, ptr %.03150, align 8
   store <2 x ptr> %i.z, ptr %i.x, align 8, !tbaa !122
   store ptr %i.w, ptr %i.y, align 8, !tbaa !124
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %bb.j
 
 bb.g:                                             ; preds = %_ZNK12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntry9extCharAtEm.exit46
@@ -1683,8 +1673,7 @@ bb.g:                                             ; preds = %_ZNK12_GLOBAL__N_11
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr inbounds i8, ptr %.03349, i64 -40 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i47)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i47, ptr noundef nonnull align 8 dereferenceable(40) %i.ad, i64 16, i1 false), !tbaa.struct !131
+  %.sroa.0.i47.sroa.0.0.copyload = load <16 x i8>, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds i8, ptr %.03349, i64 -24 ; 3 uses
   %i.af = getelementptr inbounds i8, ptr %.03349, i64 -8 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !124
@@ -1692,15 +1681,14 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %.03150, i64 32 ; 2 uses
   %i.aj = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !122
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ae, i8 0, i64 24, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !131
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !136
   %i.ak = load <2 x ptr>, ptr %i.ah, align 8, !tbaa !122
   store <2 x ptr> %i.ak, ptr %i.ae, align 8, !tbaa !122
   %i.al = load ptr, ptr %i.ai, align 8, !tbaa !124
   store ptr %i.al, ptr %i.af, align 8, !tbaa !124
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03150, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i47, i64 16, i1 false), !tbaa.struct !131
+  store <16 x i8> %.sroa.0.i47.sroa.0.0.copyload, ptr %.03150, align 8
   store <2 x ptr> %i.aj, ptr %i.ah, align 8, !tbaa !122
   store ptr %i.ag, ptr %i.ai, align 8, !tbaa !124
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i47)
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -2103,8 +2091,6 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapImNS_6detail13DenseSetEmptyENS_12DenseMapInfo
 ; Function Attrs: mustprogress nofree nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN12_GLOBAL__N_112StringPackerIDsE14radixQuicksortEPNS1_16SuffixArrayEntryES3_m(ptr noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #8 align 2 {
 bb.a:
-  %.sroa.0.i47 = alloca %"class.llvh::ArrayRef", align 8 ; 4 uses
-  %.sroa.0.i = alloca %"class.llvh::ArrayRef", align 8 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
@@ -2169,8 +2155,7 @@ _ZNK12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntry9extCharAtEm.exit46: ; pre
 bb.f:                                             ; preds = %_ZNK12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntry9extCharAtEm.exit46
   %i.s = getelementptr inbounds nuw i8, ptr %.03548, i64 40
   %i.t = getelementptr inbounds nuw i8, ptr %.03150, i64 40
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(40) %.03548, i64 16, i1 false), !tbaa.struct !264
+  %.sroa.0.i.sroa.0.0.copyload = load <16 x i8>, ptr %.03548, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %.03548, i64 16 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.03548, i64 32 ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !257
@@ -2178,15 +2163,14 @@ bb.f:                                             ; preds = %_ZNK12_GLOBAL__N_11
   %i.y = getelementptr inbounds nuw i8, ptr %.03150, i64 32 ; 2 uses
   %i.z = load <2 x ptr>, ptr %i.u, align 8, !tbaa !255
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.u, i8 0, i64 24, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03548, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !264
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03548, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !269
   %i.aa = load <2 x ptr>, ptr %i.x, align 8, !tbaa !255
   store <2 x ptr> %i.aa, ptr %i.u, align 8, !tbaa !255
   %i.ab = load ptr, ptr %i.y, align 8, !tbaa !257
   store ptr %i.ab, ptr %i.v, align 8, !tbaa !257
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03150, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i, i64 16, i1 false), !tbaa.struct !264
+  store <16 x i8> %.sroa.0.i.sroa.0.0.copyload, ptr %.03150, align 8
   store <2 x ptr> %i.z, ptr %i.x, align 8, !tbaa !255
   store ptr %i.w, ptr %i.y, align 8, !tbaa !257
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %bb.j
 
 bb.g:                                             ; preds = %_ZNK12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntry9extCharAtEm.exit46
@@ -2195,8 +2179,7 @@ bb.g:                                             ; preds = %_ZNK12_GLOBAL__N_11
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = getelementptr inbounds i8, ptr %.03349, i64 -40 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i47)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i47, ptr noundef nonnull align 8 dereferenceable(40) %i.ad, i64 16, i1 false), !tbaa.struct !264
+  %.sroa.0.i47.sroa.0.0.copyload = load <16 x i8>, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds i8, ptr %.03349, i64 -24 ; 3 uses
   %i.af = getelementptr inbounds i8, ptr %.03349, i64 -8 ; 2 uses
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !257
@@ -2204,15 +2187,14 @@ bb.h:                                             ; preds = %bb.g
   %i.ai = getelementptr inbounds nuw i8, ptr %.03150, i64 32 ; 2 uses
   %i.aj = load <2 x ptr>, ptr %i.ae, align 8, !tbaa !255
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ae, i8 0, i64 24, i1 false)
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !264
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ad, ptr noundef nonnull align 8 dereferenceable(40) %.03150, i64 16, i1 false), !tbaa.struct !269
   %i.ak = load <2 x ptr>, ptr %i.ah, align 8, !tbaa !255
   store <2 x ptr> %i.ak, ptr %i.ae, align 8, !tbaa !255
   %i.al = load ptr, ptr %i.ai, align 8, !tbaa !257
   store ptr %i.al, ptr %i.af, align 8, !tbaa !257
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.03150, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i47, i64 16, i1 false), !tbaa.struct !264
+  store <16 x i8> %.sroa.0.i47.sroa.0.0.copyload, ptr %.03150, align 8
   store <2 x ptr> %i.aj, ptr %i.ah, align 8, !tbaa !255
   store ptr %i.ag, ptr %i.ai, align 8, !tbaa !257
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i47)
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
@@ -2615,15 +2597,15 @@ attributes #20 = { nounwind allocsize(0) }
 !128 = !{!74, !74, i64 0}
 !129 = !{!125, !123, i64 0}
 !130 = distinct !{!130, !65}
-!131 = !{i64 0, i64 8, !54, i64 8, i64 8, !92}
-!132 = !{!133}
-!133 = distinct !{!133, !134, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!134 = distinct !{!134, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_"}
-!135 = !{!136}
-!136 = distinct !{!136, !134, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!137 = !{!133, !136}
-!138 = !{!133, !90, !77}
-!139 = !{!136, !90, !77}
+!131 = !{!132}
+!132 = distinct !{!132, !133, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!133 = distinct !{!133, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_"}
+!134 = !{!135}
+!135 = distinct !{!135, !133, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIhE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!136 = !{i64 0, i64 8, !54, i64 8, i64 8, !92}
+!137 = !{!132, !135}
+!138 = !{!132, !90, !77}
+!139 = !{!135, !90, !77}
 !140 = distinct !{!140, !65}
 !141 = distinct !{!141, !65}
 !142 = distinct !{!142, !65}
@@ -2748,15 +2730,15 @@ attributes #20 = { nounwind allocsize(0) }
 !261 = !{!212, !212, i64 0}
 !262 = !{!258, !256, i64 0}
 !263 = distinct !{!263, !65}
-!264 = !{i64 0, i64 8, !230, i64 8, i64 8, !92}
-!265 = !{!266}
-!266 = distinct !{!266, !267, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
-!267 = distinct !{!267, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_"}
-!268 = !{!269}
-!269 = distinct !{!269, !267, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
-!270 = !{!266, !269}
-!271 = !{!266, !228, !215}
-!272 = !{!269, !228, !215}
+!264 = !{!265}
+!265 = distinct !{!265, !266, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 0"}
+!266 = distinct !{!266, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_"}
+!267 = !{!268}
+!268 = distinct !{!268, !266, !"_ZSt19__relocate_object_aIN12_GLOBAL__N_112StringPackerIDsE16SuffixArrayEntryES3_SaIS3_EEvPT_PT0_RT1_: argument 1"}
+!269 = !{i64 0, i64 8, !230, i64 8, i64 8, !92}
+!270 = !{!265, !268}
+!271 = !{!265, !228, !215}
+!272 = !{!268, !228, !215}
 !273 = distinct !{!273, !65}
 !274 = distinct !{!274, !65}
 !275 = distinct !{!275, !65}

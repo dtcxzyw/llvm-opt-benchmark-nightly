@@ -201,12 +201,6 @@ declare i32 @llvm.bswap.i32(i32) #19
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN6duckdb8string_tESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_SB_T0_(ptr %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.0.i.i54 = alloca %struct.anon.252, align 8 ; 4 uses
-  %.sroa.0.i.i53 = alloca %struct.anon.252, align 8 ; 4 uses
-  %.sroa.0.i.i46 = alloca %struct.anon.252, align 8 ; 4 uses
-  %.sroa.0.i.i39 = alloca %struct.anon.252, align 8 ; 4 uses
-  %.sroa.0.i.i38 = alloca %struct.anon.252, align 8 ; 4 uses
-  %.sroa.0.i.i = alloca %struct.anon.252, align 8 ; 4 uses
   %i.a = load i32, ptr %2, align 8, !tbaa !14     ; 9 uses
   %i.b = load i32, ptr %1, align 8, !tbaa !14     ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 4 uses
@@ -274,11 +268,9 @@ bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__op
   br i1 %or.cond62, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit31.thread, label %bb.f
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit31.thread: ; preds = %bb.e, %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
+  store <16 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %2, align 8, !tbaa !14
   br label %bb.q
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -311,19 +303,15 @@ bb.h:                                             ; preds = %bb.f
   br i1 %or.cond64, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit37.thread, label %bb.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit37.thread: ; preds = %bb.h, %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i38)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i38, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i38.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i38, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i38)
+  store <16 x i8> %.sroa.0.i.i38.sroa.0.0.copyload, ptr %3, align 8, !tbaa !14
   br label %bb.q
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i39)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i39, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i39.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i39, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i39)
+  store <16 x i8> %.sroa.0.i.i39.sroa.0.0.copyload, ptr %1, align 8, !tbaa !14
   br label %bb.q
 
 bb.j:                                             ; preds = %bb.c, %bb.b
@@ -359,11 +347,9 @@ bb.l:                                             ; preds = %bb.j
   br i1 %or.cond66, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit45.thread, label %bb.m
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit45.thread: ; preds = %bb.l, %bb.k
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i46)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i46, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i46.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i46, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i46)
+  store <16 x i8> %.sroa.0.i.i46.sroa.0.0.copyload, ptr %1, align 8, !tbaa !14
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.l, %bb.k
@@ -396,19 +382,15 @@ bb.o:                                             ; preds = %bb.m
   br i1 %or.cond68, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit52.thread, label %bb.p
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit52.thread: ; preds = %bb.o, %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i53)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i53, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i53.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i53, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i53)
+  store <16 x i8> %.sroa.0.i.i53.sroa.0.0.copyload, ptr %3, align 8, !tbaa !14
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.o, %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i54)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i54, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i54.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i54, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i54)
+  store <16 x i8> %.sroa.0.i.i54.sroa.0.0.copyload, ptr %2, align 8, !tbaa !14
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit45.thread, %bb.p, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit52.thread, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit31.thread, %bb.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit37.thread
@@ -418,7 +400,6 @@ bb.q:                                             ; preds = %_ZNK9__gnu_cxx5__op
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr ptr @_ZSt21__unguarded_partitionIN9__gnu_cxx17__normal_iteratorIPN6duckdb8string_tESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEET_SB_SB_SB_T0_(ptr %0, ptr %1, ptr %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.0.i.i = alloca %struct.anon.252, align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   br label %bb.b
@@ -511,11 +492,9 @@ bb.i:                                             ; preds = %bb.h
   ret ptr %.sroa.016.1
 
 bb.j:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.016.1, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.0.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.016.1, align 8, !tbaa !14
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.016.1, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i)
+  store <16 x i8> %.sroa.0.i.i.sroa.0.0.copyload, ptr %.sroa.0.1, align 8, !tbaa !14
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.016.1, i64 16
   br label %bb.b, !llvm.loop !1067
 }
@@ -524,7 +503,6 @@ bb.j:                                             ; preds = %bb.h
 define linkonce_odr void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN6duckdb8string_tESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_(ptr %0, ptr %1) local_unnamed_addr #0 comdat {
 bb.a:
   %2 = alloca %"struct.duckdb::string_t", align 8 ; 7 uses
-  %.sroa.05 = alloca %struct.anon.252, align 8    ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
 
@@ -577,8 +555,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %or.cond, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread, label %bb.h
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb8string_tESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread: ; preds = %bb.d, %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.05)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.05, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.021, i64 16, i1 false), !tbaa.struct !1056
+  %.sroa.05.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.0.021, align 8, !tbaa !14
   %i.z = ptrtoint ptr %.sroa.0.021 to i64
   %i.aa = sub i64 %i.z, %i.f                      ; 3 uses
   %i.ab = ashr exact i64 %i.aa, 4                 ; 2 uses
@@ -602,8 +579,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb8string_tESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb8string_tESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit: ; preds = %bb.e, %bb.f, %bb.g
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.05, i64 16, i1 false), !tbaa.struct !1056
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.05)
+  store <16 x i8> %.sroa.05.sroa.0.0.copyload, ptr %0, align 8, !tbaa !14
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.d, %bb.c

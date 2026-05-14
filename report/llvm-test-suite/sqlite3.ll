@@ -201,7 +201,6 @@ define internal fastcc void @sqlite3CodeSubselect(ptr noundef %0, ptr noundef ca
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %.sroa.0 = alloca [12 x i8], align 8            ; 5 uses
-  %.sroa.6 = alloca { ptr, [1 x ptr] }, align 8   ; 5 uses
   %2 = alloca %struct.SelectDest, align 4         ; 8 uses
   %3 = alloca %struct.SelectDest, align 4         ; 9 uses
   %i.b = tail call fastcc ptr @sqlite3GetVdbe(ptr noundef %0) ; 48 uses
@@ -386,7 +385,6 @@ sqlite3VdbeAddOp2.exit:                           ; preds = %bb.m, %resizeOpArra
 
 bb.n:                                             ; preds = %sqlite3VdbeAddOp2.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   br label %tailrecurse.i
 
@@ -552,7 +550,6 @@ sqlite3VdbeAddOp1.exit117:                        ; preds = %resizeOpArray.exit.
   %i.em = phi i32 [ %.pre205, %resizeOpArray.exit._crit_edge.i.i113 ], [ %.pre206, %resizeOpArray.exit.i.i110 ] ; 3 uses
   %.0.i.i112 = phi i32 [ %i.dh, %resizeOpArray.exit._crit_edge.i.i113 ], [ 0, %resizeOpArray.exit.i.i110 ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0, i8 0, i64 12, i1 false)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i8 0, i64 16, i1 false)
   %i.en = load i32, ptr %i.df, align 8, !tbaa !1338
   %i.eo = load i32, ptr %i.di, align 4, !tbaa !147 ; 6 uses
   %.not.i.i118 = icmp sgt i32 %i.eo, %i.em
@@ -955,7 +952,7 @@ bb.bn:                                            ; preds = %bb.bm
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mh, i64 12
   store i32 1, ptr %.sroa.5.0..sroa_idx, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.mh, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6, i64 16, i1 false)
+  store <16 x i8> zeroinitializer, ptr %.sroa.6.0..sroa_idx, align 8
   br label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bm
@@ -971,13 +968,11 @@ bb.bp:                                            ; preds = %bb.bo, %bb.bn
 
 sqlite3VdbeChangeP4.exit.thread:                  ; preds = %sqlite3ReleaseTempReg.exit157, %bb.bj, %bb.bl, %bb.bp
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.cg
 
 sqlite3VdbeChangeP4.exit:                         ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %sqlite3VdbeJumpHere.exit
 
 bb.bq:                                            ; preds = %sqlite3VdbeAddOp2.exit, %sqlite3VdbeAddOp2.exit

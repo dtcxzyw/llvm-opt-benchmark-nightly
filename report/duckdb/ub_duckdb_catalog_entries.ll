@@ -201,7 +201,6 @@ define void @_ZNK6duckdb20SequenceCatalogEntry4CopyERNS_13ClientContextE(ptr dea
 bb.a:
   %3 = alloca %"class.duckdb::unique_ptr.244", align 8 ; 7 uses
   %4 = alloca %"class.duckdb::unique_ptr.570", align 8 ; 7 uses
-  %5 = alloca %"struct.duckdb::SequenceData", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   %i.a = load ptr, ptr %1, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
@@ -232,7 +231,6 @@ bb.c:                                             ; preds = %.noexc
 
 bb.d:                                             ; preds = %.noexc
   store ptr %i.i, ptr %4, align 8, !tbaa !1404, !alias.scope !1400
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 312 ; 2 uses
   %i.l = call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.k) #30, !noalias !1406 ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.l, 0
@@ -247,15 +245,15 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 352
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %5, ptr noundef nonnull align 8 dereferenceable(64) %i.m, i64 64, i1 false), !tbaa.struct !1409
+  %.sroa.0.0.copyload = load <64 x i8>, ptr %i.m, align 8
   %i.n = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.k) #30, !noalias !1406 ; 0 uses
   %i.o = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_20SequenceCatalogEntryESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %_ZNSt10unique_ptrIN6duckdb20SequenceCatalogEntryESt14default_deleteIS1_EED2Ev.exit unwind label %bb.i
 
 _ZNSt10unique_ptrIN6duckdb20SequenceCatalogEntryESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 352
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(57) %i.p, ptr noundef nonnull align 8 dereferenceable(57) %5, i64 57, i1 false), !tbaa.struct !1409
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  %.sroa.0.0.vec.extract = shufflevector <64 x i8> %.sroa.0.0.copyload, <64 x i8> poison, <57 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56>
+  store <57 x i8> %.sroa.0.0.vec.extract, ptr %i.p, align 8
   %i.q = load ptr, ptr %4, align 8, !tbaa !1404
   store ptr %i.q, ptr %0, align 8, !tbaa !213
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
@@ -287,7 +285,6 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.e, %bb.f
   %i.x = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.y = load ptr, ptr %4, align 8, !tbaa !1404   ; 3 uses
   %.not.i9 = icmp eq ptr %i.y, null
   br i1 %.not.i9, label %.body, label %_ZNKSt14default_deleteIN6duckdb20SequenceCatalogEntryEEclEPS1_.exit.i10
@@ -296,7 +293,7 @@ _ZNKSt14default_deleteIN6duckdb20SequenceCatalogEntryEEclEPS1_.exit.i10: ; preds
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !7
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ab = load ptr, ptr %i.aa, align 8
-  call void %i.ab(ptr noundef nonnull align 8 dereferenceable(416) %i.y) #30, !inline_history !1410
+  call void %i.ab(ptr noundef nonnull align 8 dereferenceable(416) %i.y) #30, !inline_history !1409
   br label %.body
 
 .body:                                            ; preds = %_ZNKSt14default_deleteIN6duckdb20SequenceCatalogEntryEEclEPS1_.exit.i10, %bb.i, %bb.h, %bb.c
@@ -336,7 +333,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 352
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.c, i64 64, i1 false), !tbaa.struct !1409
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %i.c, i64 64, i1 false), !tbaa.struct !1410
   %i.d = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #30 ; 0 uses
   ret void
 }
@@ -739,8 +736,7 @@ declare noundef zeroext i1 @_ZNK6duckdb14ScalarFunction5EqualERKS0_(ptr noundef 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(360) ptr @_ZN6duckdb14ScalarFunctionaSERKS0_(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull align 8 dereferenceable(360) %1) local_unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %2 = alloca %"class.std::function.615", align 8 ; 11 uses
+  %2 = alloca %"class.std::function.615", align 16 ; 11 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(208) ptr @_ZN6duckdb14SimpleFunctionaSERKS0_(ptr noundef nonnull align 8 dereferenceable(236) %0, ptr noundef nonnull align 8 dereferenceable(236) %1) ; 0 uses
   %i.b = icmp eq ptr %0, %1                       ; 2 uses
   br i1 %i.b, label %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit, label %bb.b
@@ -838,7 +834,7 @@ _ZN6duckdb18BaseScalarFunctionaSERKS0_.exit:      ; preds = %bb.a, %_ZN6duckdb10
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !1057 ; 2 uses
   %.not.i.i.not.i.i = icmp eq ptr %i.ap, null
   br i1 %.not.i.i.not.i.i, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2ERKS8_.exit.i, label %bb.l
@@ -855,7 +851,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.at = landingpad { ptr, i32 }
           cleanup
-  %i.au = load ptr, ptr %i.an, align 8, !tbaa !1057 ; 2 uses
+  %i.au = load ptr, ptr %i.an, align 16, !tbaa !1057 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i.i.i, label %_ZNSt14_Function_baseD2Ev.exit.i.i, label %bb.o
 
@@ -875,15 +871,13 @@ _ZNSt14_Function_baseD2Ev.exit.i.i:               ; preds = %bb.o, %bb.n
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2ERKS8_.exit.i: ; preds = %bb.m, %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit
   %i.ay = phi <2 x ptr> [ splat (ptr null), %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit ], [ %i.as, %bb.m ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !2321
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 16, i1 false), !tbaa.struct !2321
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.am, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !2321
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 16, !tbaa !20
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 16, i1 false), !tbaa.struct !2321
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %i.am, align 8, !tbaa !20
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
   %i.ba = load <2 x ptr>, ptr %i.az, align 8, !tbaa !95
   %i.bb = load ptr, ptr %i.az, align 8, !tbaa !95 ; 2 uses
-  store <2 x ptr> %i.ba, ptr %i.an, align 8, !tbaa !95
+  store <2 x ptr> %i.ba, ptr %i.an, align 16, !tbaa !95
   store <2 x ptr> %i.ay, ptr %i.az, align 8, !tbaa !95
   %.not.i.i = icmp eq ptr %i.bb, null
   br i1 %.not.i.i, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSERKS8_.exit, label %bb.q
@@ -1286,8 +1280,8 @@ begin_hunk_2_@bcmp
 !1406 = !{!1407}
 !1407 = distinct !{!1407, !1408, !"_ZNK6duckdb20SequenceCatalogEntry7GetDataEv: argument 0"}
 !1408 = distinct !{!1408, !"_ZNK6duckdb20SequenceCatalogEntry7GetDataEv"}
-!1409 = !{i64 0, i64 8, !19, i64 8, i64 8, !19, i64 16, i64 8, !19, i64 24, i64 8, !19, i64 32, i64 8, !19, i64 40, i64 8, !19, i64 48, i64 8, !19, i64 56, i64 1, !433}
-!1410 = distinct !{null, null}
+!1409 = distinct !{null, null}
+!1410 = !{i64 0, i64 8, !19, i64 8, i64 8, !19, i64 16, i64 8, !19, i64 24, i64 8, !19, i64 32, i64 8, !19, i64 40, i64 8, !19, i64 48, i64 8, !19, i64 56, i64 1, !433}
 !1411 = !{!1412, !17, i64 352}
 !1412 = !{!"_ZTSN6duckdb20SequenceCatalogEntryE", !155, i64 0, !1413, i64 312, !1391, i64 352}
 !1413 = !{!"_ZTSSt5mutex", !1414, i64 0}

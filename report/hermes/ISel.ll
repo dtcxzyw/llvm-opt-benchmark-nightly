@@ -201,13 +201,6 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #14
 ; Function Attrs: mustprogress nounwind uwtable
 define internal fastcc void @"_ZSt16__introsort_loopIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEElN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_T0_T1_"(ptr noundef %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
-  %.sroa.4.i.i.i13.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i35.i.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i34.i.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i33.i.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i32.i.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i31.i.i = alloca { i32, ptr }, align 8 ; 4 uses
-  %.sroa.4.i.i.i.i = alloca { i32, ptr }, align 8 ; 4 uses
   %3 = alloca %"struct.llvh::detail::DenseMapPair.98", align 8 ; 7 uses
   %4 = alloca %"struct.llvh::detail::DenseMapPair.98", align 8 ; 7 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -347,9 +340,8 @@ bb.g:                                             ; preds = %.lr.ph51
   br i1 %i.bk, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i.i)
   %i.bl = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.bm = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bf, i64 24 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bf, i64 40 ; 2 uses
@@ -363,10 +355,9 @@ bb.h:                                             ; preds = %bb.g
   %i.bs = load ptr, ptr %i.bo, align 8, !tbaa !142
   store ptr %i.bs, ptr %i.i, align 8, !tbaa !142
   store ptr %i.bl, ptr %i.bf, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bh, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i.i.i.sroa.0.0.copyload, ptr %i.bh, align 8
   store <2 x ptr> %i.bp, ptr %i.bn, align 8, !tbaa !141
   store ptr %i.bm, ptr %i.bo, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 bb.i:                                             ; preds = %bb.g
@@ -374,9 +365,8 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.bt, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i31.i.i)
   %i.bu = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i31.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i31.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.bv = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.bw = getelementptr inbounds i8, ptr %.02949, i64 -24 ; 2 uses
   %i.bx = getelementptr inbounds i8, ptr %.02949, i64 -8 ; 2 uses
@@ -390,16 +380,14 @@ bb.j:                                             ; preds = %bb.i
   %i.cb = load ptr, ptr %i.bx, align 8, !tbaa !142
   store ptr %i.cb, ptr %i.i, align 8, !tbaa !142
   store ptr %i.bu, ptr %i.bg, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i31.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i31.i.i.sroa.0.0.copyload, ptr %i.bj, align 8
   store <2 x ptr> %i.by, ptr %i.bw, align 8, !tbaa !141
   store ptr %i.bv, ptr %i.bx, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i31.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 bb.k:                                             ; preds = %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i32.i.i)
   %i.cc = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i32.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i32.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.cd = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.ce = load ptr, ptr %i.e, align 8, !tbaa !116
   store ptr %i.ce, ptr %0, align 8, !tbaa !139
@@ -408,12 +396,11 @@ bb.k:                                             ; preds = %bb.i
   %i.cg = load ptr, ptr %i.k, align 8, !tbaa !142
   store ptr %i.cg, ptr %i.i, align 8, !tbaa !142
   store ptr %i.cc, ptr %i.e, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i32.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i32.i.i.sroa.0.0.copyload, ptr %i.f, align 8
   %i.ch = load <2 x ptr>, ptr %i.h, align 8, !tbaa !141
   store <2 x ptr> %i.cf, ptr %i.h, align 8, !tbaa !141
   store <2 x ptr> %i.ch, ptr %i.j, align 8, !tbaa !141
   store ptr %i.cd, ptr %i.k, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i32.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 bb.l:                                             ; preds = %.lr.ph51
@@ -421,9 +408,8 @@ bb.l:                                             ; preds = %.lr.ph51
   br i1 %i.ci, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i33.i.i)
   %i.cj = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i33.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i33.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.ck = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.cl = load ptr, ptr %i.e, align 8, !tbaa !116
   store ptr %i.cl, ptr %0, align 8, !tbaa !139
@@ -432,12 +418,11 @@ bb.m:                                             ; preds = %bb.l
   %i.cn = load ptr, ptr %i.k, align 8, !tbaa !142
   store ptr %i.cn, ptr %i.i, align 8, !tbaa !142
   store ptr %i.cj, ptr %i.e, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i33.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i33.i.i.sroa.0.0.copyload, ptr %i.f, align 8
   %i.co = load <2 x ptr>, ptr %i.h, align 8, !tbaa !141
   store <2 x ptr> %i.cm, ptr %i.h, align 8, !tbaa !141
   store <2 x ptr> %i.co, ptr %i.j, align 8, !tbaa !141
   store ptr %i.ck, ptr %i.k, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i33.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 bb.n:                                             ; preds = %bb.l
@@ -445,9 +430,8 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.cp, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i34.i.i)
   %i.cq = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i34.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i34.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.cr = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.cs = getelementptr inbounds i8, ptr %.02949, i64 -24 ; 2 uses
   %i.ct = getelementptr inbounds i8, ptr %.02949, i64 -8 ; 2 uses
@@ -461,16 +445,14 @@ bb.o:                                             ; preds = %bb.n
   %i.cx = load ptr, ptr %i.ct, align 8, !tbaa !142
   store ptr %i.cx, ptr %i.i, align 8, !tbaa !142
   store ptr %i.cq, ptr %i.bg, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bj, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i34.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i34.i.i.sroa.0.0.copyload, ptr %i.bj, align 8
   store <2 x ptr> %i.cu, ptr %i.cs, align 8, !tbaa !141
   store ptr %i.cr, ptr %i.ct, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i34.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 bb.p:                                             ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i35.i.i)
   %i.cy = load ptr, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i35.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false)
+  %.sroa.4.i.i35.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   %i.cz = load ptr, ptr %i.i, align 8, !tbaa !142
   %i.da = getelementptr inbounds nuw i8, ptr %i.bf, i64 24 ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.bf, i64 40 ; 2 uses
@@ -484,10 +466,9 @@ bb.p:                                             ; preds = %bb.n
   %i.df = load ptr, ptr %i.db, align 8, !tbaa !142
   store ptr %i.df, ptr %i.i, align 8, !tbaa !142
   store ptr %i.cy, ptr %i.bf, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bh, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i35.i.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i35.i.i.sroa.0.0.copyload, ptr %i.bh, align 8
   store <2 x ptr> %i.dc, ptr %i.da, align 8, !tbaa !141
   store ptr %i.cz, ptr %i.db, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i35.i.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader"
 
 "_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i.preheader": ; preds = %bb.p, %bb.o, %bb.m, %bb.k, %bb.j, %bb.h
@@ -525,9 +506,8 @@ bb.r:                                             ; preds = %.preheader.i.i
 
 bb.s:                                             ; preds = %bb.r
   %i.dn = getelementptr i8, ptr %.013.pn.i.i, i64 -40 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.i.i13.i)
   %i.do = load ptr, ptr %.1.i.i, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i13.i, ptr noundef nonnull align 8 dereferenceable(16) %i.dj, i64 16, i1 false)
+  %.sroa.4.i.i.i13.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.dj, align 8
   %i.dp = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 24 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.1.i.i, i64 40 ; 2 uses
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !142
@@ -543,10 +523,9 @@ bb.s:                                             ; preds = %bb.r
   %i.dx = load ptr, ptr %i.dt, align 8, !tbaa !142
   store ptr %i.dx, ptr %i.dq, align 8, !tbaa !142
   store ptr %i.do, ptr %.114.i.i, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.dn, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.i.i.i13.i, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.i.i.i13.i.sroa.0.0.copyload, ptr %i.dn, align 8
   store <2 x ptr> %i.du, ptr %i.ds, align 8, !tbaa !141
   store ptr %i.dr, ptr %i.dt, align 8, !tbaa !142
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.i.i13.i)
   br label %"_ZSt22__move_median_to_firstIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_SG_SG_T0_.exit.i", !llvm.loop !588
 
 "_ZSt27__unguarded_partition_pivotIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEET_SG_SG_T0_.exit": ; preds = %bb.r
@@ -748,7 +727,6 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #15
 define internal fastcc void @"_ZSt16__insertion_sortIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops15_Iter_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_SG_T0_"(ptr noundef %0, ptr noundef readnone captures(address) %1) unnamed_addr #0 {
 bb.a:
   %.sroa.7.i = alloca [12 x i8], align 4          ; 4 uses
-  %.sroa.4 = alloca { i32, ptr }, align 8         ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
 
@@ -774,9 +752,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.i
   br i1 %i.g, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.h = load ptr, ptr %.022, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false)
+  %.sroa.4.sroa.0.0.copyload = load <16 x i8>, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %.pn21, i64 72 ; 2 uses
   %i.j = load <2 x ptr>, ptr %i.i, align 8, !tbaa !141
   %i.k = getelementptr inbounds nuw i8, ptr %.pn21, i64 88
@@ -831,23 +808,19 @@ _ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchI
 
 _ZSt13move_backwardIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEESA_ET0_T_SC_SB_.exit: ; preds = %_ZN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS2_3hbc7HBCISel13SwitchImmInfoEEaSEOS8_.exit.i.i.i.i.i, %bb.c
   store ptr %i.h, ptr %0, align 8, !tbaa !139
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4, i64 16, i1 false)
+  store <16 x i8> %.sroa.4.sroa.0.0.copyload, ptr %i.b, align 8
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !144 ; 3 uses
   %i.ak = load ptr, ptr %i.e, align 8, !tbaa !142
   store <2 x ptr> %i.j, ptr %i.d, align 8, !tbaa !141
   store ptr %i.l, ptr %i.e, align 8, !tbaa !142
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.aj, null
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit, label %bb.e
+  br i1 %.not.i.i.i.i.i.i.i.i, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZSt13move_backwardIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEESA_ET0_T_SC_SB_.exit
   %i.al = ptrtoint ptr %i.ak to i64
   %i.am = ptrtoint ptr %i.aj to i64
   %i.an = sub i64 %i.al, %i.am
   tail call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef %i.an) #22
-  br label %_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit
-
-_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit: ; preds = %bb.e, %_ZSt13move_backwardIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEESA_ET0_T_SC_SB_.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   br label %bb.i
 
 bb.f:                                             ; preds = %bb.b
@@ -933,7 +906,7 @@ bb.h:                                             ; preds = %._crit_edge.i
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.i)
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZNSt4pairIPN6hermes13SwitchImmInstENS0_3hbc7HBCISel13SwitchImmInfoEED2Ev.exit, %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit"
+bb.i:                                             ; preds = %_ZSt13move_backwardIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEESA_ET0_T_SC_SB_.exit, %bb.e, %"_ZSt25__unguarded_linear_insertIPN4llvh6detail12DenseMapPairIPN6hermes13SwitchImmInstENS3_3hbc7HBCISel13SwitchImmInfoEEEN9__gnu_cxx5__ops14_Val_comp_iterIZNS7_17generateJumpTableEvE3$_0EEEvT_T0_.exit"
   %.0 = getelementptr inbounds nuw i8, ptr %.022, i64 48 ; 2 uses
   %.not = icmp eq ptr %.0, %1
   br i1 %.not, label %.loopexit, label %bb.b, !llvm.loop !592

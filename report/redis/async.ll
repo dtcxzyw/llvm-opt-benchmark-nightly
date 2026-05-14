@@ -201,7 +201,6 @@ __redisAsyncDisconnect.exit:                      ; preds = %.thread, %bb.c, %bb
 ; Function Attrs: nounwind uwtable
 define void @redisProcessCallbacks(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = alloca %struct.redisCallback, align 8      ; 4 uses
   %i.a = alloca ptr, align 8                      ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   store ptr null, ptr %i.a, align 8, !tbaa !15
@@ -604,10 +603,9 @@ bb.bo:                                            ; preds = %bb.bn
   %i.jn = load i32, ptr %i.c, align 8, !tbaa !47
   %i.jo = and i32 %i.jn, -33
   store i32 %i.jo, ptr %i.c, align 8, !tbaa !47
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.jp = load ptr, ptr %i.i, align 8, !tbaa !83  ; 2 uses
   %.not.i5878.i = icmp eq ptr %i.jp, null
-  br i1 %.not.i5878.i, label %__redisShiftCallback.exit.i, label %.lr.ph.i
+  br i1 %.not.i5878.i, label %bb.bw, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.bo, %__redisPushCallback.exit.i
   %i.jq = phi ptr [ %i.kb, %__redisPushCallback.exit.i ], [ %i.jp, %bb.bo ] ; 4 uses
@@ -622,7 +620,7 @@ bb.bp:                                            ; preds = %.lr.ph.i
   br label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp, %.lr.ph.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %i.jq, i64 32, i1 false)
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.jq, align 8
   %i.ju = load ptr, ptr getelementptr inbounds nuw (i8, ptr @hiredisAllocFns, i64 32), align 8, !tbaa !44
   call void %i.ju(ptr noundef nonnull %i.jq) #16, !inline_history !140
   %i.jv = load ptr, ptr @hiredisAllocFns, align 8, !tbaa !19
@@ -631,7 +629,7 @@ bb.bq:                                            ; preds = %bb.bp, %.lr.ph.i
   br i1 %i.jx, label %__redisPushCallback.exit.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.jw, ptr noundef nonnull readonly align 8 dereferenceable(32) %1, i64 32, i1 false)
+  store <32 x i8> %.sroa.0.0.copyload, ptr %i.jw, align 8
   store ptr null, ptr %i.jw, align 8, !tbaa !84
   %i.jy = load ptr, ptr %i.d, align 8, !tbaa !83
   %i.jz = icmp eq ptr %i.jy, null
@@ -657,13 +655,9 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt
 __redisPushCallback.exit.i:                       ; preds = %bb.bv, %bb.bq
   %i.kb = load ptr, ptr %i.i, align 8, !tbaa !83  ; 2 uses
   %.not.i58.i = icmp eq ptr %i.kb, null
-  br i1 %.not.i58.i, label %__redisShiftCallback.exit.i, label %.lr.ph.i
+  br i1 %.not.i58.i, label %bb.bw, label %.lr.ph.i
 
-__redisShiftCallback.exit.i:                      ; preds = %__redisPushCallback.exit.i, %bb.bo
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  br label %bb.bw
-
-bb.bw:                                            ; preds = %__redisShiftCallback.exit.i, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.au, %bb.at
+bb.bw:                                            ; preds = %bb.bo, %__redisPushCallback.exit.i, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %bb.au, %bb.at
   call void @hi_sdsfree(ptr noundef %.047.i) #16
   br label %__redisGetSubscribeCallback.exit
 

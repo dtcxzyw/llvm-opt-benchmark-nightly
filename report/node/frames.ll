@@ -201,7 +201,6 @@ _ZN2v88internal18StackFrameIterator5ResetEPNS0_14ThreadLocalTopEPNS0_4wasm11Stac
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal18StackFrameIterator5ResetEPNS0_14ThreadLocalTopEPNS0_4wasm11StackMemoryE(ptr noundef nonnull align 8 dereferenceable(128) %0, ptr noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %.sroa.7.sroa.4 = alloca <{ i64, ptr }>, align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 112
@@ -223,7 +222,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7.sroa.4)
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.o = load i64, ptr %i.n, align 8
   %i.p = load ptr, ptr @_ZN2v88internal10StackFrame33return_address_location_resolver_E, align 8 ; 2 uses
@@ -236,7 +234,6 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN2v88internal13WasmJspiFrame21GetStateForJumpBufferEPNS0_4wasm10JumpBufferEPNS0_10StackFrame5StateE.exit
 
 _ZN2v88internal13WasmJspiFrame21GetStateForJumpBufferEPNS0_4wasm10JumpBufferEPNS0_10StackFrame5StateE.exit: ; preds = %bb.c, %bb.d
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.4, i8 0, i64 16, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 136
   %i.v = load i64, ptr %i.u, align 8
@@ -264,12 +261,11 @@ _ZN2v88internal13WasmJspiFrame21GetStateForJumpBufferEPNS0_4wasm10JumpBufferEPNS
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 0, ptr %.sroa.7.0..sroa_idx, align 8
   %.sroa.7.sroa.4.0..sroa.7.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 72
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.4.0..sroa.7.0..sroa_idx.sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7.sroa.4, i64 16, i1 false)
+  store <16 x i8> zeroinitializer, ptr %.sroa.7.sroa.4.0..sroa.7.0..sroa_idx.sroa_idx, align 8
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 88
   store i8 0, ptr %.sroa.8.0..sroa_idx, align 8
   %.sroa.87.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 89
   store i8 1, ptr %.sroa.87.0..sroa_idx, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.4)
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %_ZN2v88internal13WasmJspiFrame21GetStateForJumpBufferEPNS0_4wasm10JumpBufferEPNS0_10StackFrame5StateE.exit

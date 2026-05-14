@@ -201,8 +201,7 @@ declare noundef nonnull align 8 dereferenceable(32) ptr @_ZN6duckdb15BufferAlloc
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb16PipelineExecutor16FinishProcessingEi(ptr noundef nonnull align 8 captures(none) dereferenceable(513) initializes((460, 464)) %0, i32 noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i.i.i = alloca { ptr, i64 }, align 8 ; 4 uses
-  %2 = alloca %"class.std::stack", align 8        ; 16 uses
+  %2 = alloca %"class.std::stack", align 16       ; 16 uses
   %3 = alloca %"class.duckdb::optional_ptr", align 8 ; 5 uses
   %4 = alloca %"class.duckdb::optional_ptr", align 8 ; 6 uses
   %5 = alloca %"class.duckdb::optional_ptr", align 8 ; 6 uses
@@ -210,11 +209,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 460
   store i32 %spec.select, ptr %i.a, align 4, !tbaa !998
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #36
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %2, i8 0, i64 80, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(80) %2, i8 0, i64 80, i1 false)
   call void @_ZNSt11_Deque_baseImSaImEE17_M_initialize_mapEm(ptr noundef nonnull align 8 dereferenceable(80) %2, i64 noundef 0)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(80) %i.b, i64 16, i1 false)
+  %.sroa.0.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !903  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 400
@@ -235,16 +233,15 @@ bb.a:
   %.sroa.9.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   %.sroa.10.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 64
   %i.o = load <2 x ptr>, ptr %i.j, align 8, !tbaa !905
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 8 dereferenceable(80) %2, i64 80, i1 false), !tbaa.struct !1084
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %2, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !1084
-  store ptr %i.d, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.b, ptr noundef nonnull align 16 dereferenceable(80) %2, i64 80, i1 false), !tbaa.struct !1084
+  store <16 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.copyload, ptr %2, align 16
+  store ptr %i.d, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !905
   store ptr %i.f, ptr %.sroa.5.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
-  store ptr %i.h, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
+  store ptr %i.h, ptr %.sroa.6.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !905
   store <2 x ptr> %i.m, ptr %.sroa.7.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !58
   store <2 x ptr> %i.o, ptr %.sroa.9.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
   %.sroa.11.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   store ptr %i.l, ptr %.sroa.11.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !1085
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
   %i.p = icmp ult ptr %i.n, %i.l
   br i1 %i.p, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt5stackImSt5dequeImSaImEEEaSEOS3_.exit
 
@@ -257,11 +254,11 @@ bb.a:
   br i1 %i.r, label %.lr.ph.i.i.i.i.i.i, label %_ZNSt5stackImSt5dequeImSaImEEEaSEOS3_.exit, !llvm.loop !1086
 
 _ZNSt5stackImSt5dequeImSaImEEEaSEOS3_.exit:       ; preds = %.lr.ph.i.i.i.i.i.i, %bb.a
-  store ptr %i.d, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
+  store ptr %i.d, ptr %.sroa.8.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !905
   store ptr %i.f, ptr %.sroa.9.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
-  store ptr %i.h, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !905
+  store ptr %i.h, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i, align 16, !tbaa !905
   store ptr %i.n, ptr %.sroa.11.0..sroa_idx.i.i.i.i.i, align 8, !tbaa !1085
-  %i.s = load ptr, ptr %2, align 8, !tbaa !1087   ; 2 uses
+  %i.s = load ptr, ptr %2, align 16, !tbaa !1087  ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.s, null
   br i1 %.not.i.i.i, label %_ZNSt5stackImSt5dequeImSaImEEED2Ev.exit, label %bb.b
 
@@ -280,7 +277,7 @@ bb.b:                                             ; preds = %_ZNSt5stackImSt5deq
   br i1 %i.y, label %.lr.ph.i.i.i.i, label %_ZNSt11_Deque_baseImSaImEE16_M_destroy_nodesEPPmS3_.exit.loopexit.i.i.i, !llvm.loop !1086
 
 _ZNSt11_Deque_baseImSaImEE16_M_destroy_nodesEPPmS3_.exit.loopexit.i.i.i: ; preds = %.lr.ph.i.i.i.i
-  %.pre.i.i.i = load ptr, ptr %2, align 8, !tbaa !1087
+  %.pre.i.i.i = load ptr, ptr %2, align 16, !tbaa !1087
   br label %_ZNSt11_Deque_baseImSaImEE16_M_destroy_nodesEPPmS3_.exit.i.i.i
 
 _ZNSt11_Deque_baseImSaImEE16_M_destroy_nodesEPPmS3_.exit.i.i.i: ; preds = %_ZNSt11_Deque_baseImSaImEE16_M_destroy_nodesEPPmS3_.exit.loopexit.i.i.i, %bb.b

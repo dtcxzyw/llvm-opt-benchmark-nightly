@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %_ZNSt8__detail9__va
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden void @_ZZNSt8__detail9__variant17_Move_assign_baseILb0EJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt8functionIFbvEEEEaSEOSB_ENUlOT_T0_E_clIRSA_St17integral_constantImLm1EEEEDaSE_SF_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(32) %1) local_unnamed_addr #10 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %2 = alloca %"class.std::function", align 8     ; 10 uses
+  %2 = alloca %"class.std::function", align 16    ; 10 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !181    ; 14 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !137
@@ -215,7 +214,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !184
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !170  ; 2 uses
@@ -223,20 +222,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i.i.not.i.i, label %_ZNSt8functionIFbvEEC2EOS1_.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 16, i1 false), !tbaa.struct !186
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 16, i1 false), !tbaa.struct !186
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFbvEEC2EOS1_.exit.i
 
 _ZNSt8functionIFbvEEC2EOS1_.exit.i:               ; preds = %bb.c, %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !186
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 16, i1 false), !tbaa.struct !186
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !186
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 16, !tbaa !26
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 16, i1 false), !tbaa.struct !186
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %i.a, align 8, !tbaa !26
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !187  ; 3 uses
-  store ptr %i.k, ptr %i.i, align 8, !tbaa !187
+  store ptr %i.k, ptr %i.i, align 16, !tbaa !187
   store ptr %i.h, ptr %i.j, align 8, !tbaa !187
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !187
@@ -639,7 +636,7 @@ declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #14
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef nonnull align 8 dereferenceable(184) ptr @_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12emplace_backIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_EEERS4_DpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.4.i = alloca %union.anon, align 8        ; 4 uses
+  %.sroa.4.i.sroa.0 = alloca <16 x i8>, align 16  ; 4 uses
   %.sroa.4 = alloca %union.anon, align 8          ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !115  ; 17 uses
@@ -691,7 +688,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i: ; preds = %
   %i.r = phi i64 [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit ], [ %i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread ]
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.r, ptr %i.s, align 8, !tbaa !23
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4.i.sroa.0)
   %i.t = load ptr, ptr %2, align 8, !tbaa !27     ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.v = icmp eq ptr %i.t, %i.u
@@ -701,14 +698,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.thread.i.i: ; 
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !23   ; 3 uses
   %i.y = add nuw nsw i64 %i.x, 1                  ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %.sroa.4.i, ptr noundef nonnull align 8 dereferenceable(1) %i.u, i64 %i.y, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %.sroa.4.i.sroa.0, ptr noundef nonnull align 8 dereferenceable(1) %i.u, i64 %i.y, i1 false)
   store ptr %i.u, ptr %2, align 8, !tbaa !27
   store i64 0, ptr %i.w, align 8, !tbaa !23
   store i8 0, ptr %i.u, align 8, !tbaa !26
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.aa = icmp ult i64 %i.x, 16
   tail call void @llvm.assume(i1 %i.aa)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.z, ptr noundef nonnull align 8 dereferenceable(1) %.sroa.4.i, i64 %i.y, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.z, ptr noundef nonnull align 16 dereferenceable(1) %.sroa.4.i.sroa.0, i64 %i.y, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i
@@ -739,7 +736,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8: ; preds = %_ZNS
   store i8 0, ptr %i.ai, align 8, !tbaa !26
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 104
   store i8 0, ptr %i.ak, align 8, !tbaa !139
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4.i.sroa.0)
   %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 176
   store i8 0, ptr %i.al, align 8, !tbaa !147
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)

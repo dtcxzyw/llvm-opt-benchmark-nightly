@@ -5,8 +5,6 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 %class.btVector3 = type { [4 x float] }
-%struct.btQuantizedBvhNode = type { [3 x i16], [3 x i16], i32 }
-%struct.btOptimizedBvhNode = type { %class.btVector3, %class.btVector3, i32, i32, i32, [5 x i32] }
 
 $__clang_call_terminate = comdat any
 
@@ -409,15 +407,13 @@ _ZNK14btQuantizedBvh10getAabbMinEi.exit45:        ; preds = %_ZNK14btQuantizedBv
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @_ZN14btQuantizedBvh25sortAndCalcSplittingIndexEiii(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(244) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #10 align 2 {
 bb.a:
-  %4 = alloca %struct.btQuantizedBvhNode, align 4 ; 4 uses
-  %5 = alloca %struct.btOptimizedBvhNode, align 4 ; 4 uses
-  %6 = alloca %class.btVector3, align 8           ; 6 uses
-  %7 = alloca %class.btVector3, align 8           ; 5 uses
+  %4 = alloca %class.btVector3, align 8           ; 6 uses
+  %5 = alloca %class.btVector3, align 8           ; 5 uses
   %i.a = sub nsw i32 %2, %1                       ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
-  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = icmp slt i32 %1, %2                      ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 12
   store i32 0, ptr %i.d, align 4
   br i1 %i.c, label %.lr.ph, label %._crit_edge
 
@@ -560,11 +556,11 @@ _ZNK14btQuantizedBvh10getAabbMinEi.exit:          ; preds = %_ZNK14btQuantizedBv
   %i.ch = insertelement <2 x float> poison, float %i.cg, i64 0
   %i.ci = shufflevector <2 x float> %i.ch, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cj = fmul <2 x float> %i.ci, %i.ce
-  store <2 x float> %i.cj, ptr %6, align 8, !tbaa !40
+  store <2 x float> %i.cj, ptr %4, align 8, !tbaa !40
   %i.ck = fmul float %i.cg, %.0.95100.lcssa
   store float %i.ck, ptr %i.b, align 8, !tbaa !40
   %i.cl = sext i32 %3 to i64                      ; 2 uses
-  %i.cm = getelementptr inbounds [4 x i8], ptr %6, i64 %i.cl
+  %i.cm = getelementptr inbounds [4 x i8], ptr %4, i64 %i.cl
   %i.cn = load float, ptr %i.cm, align 4, !tbaa !40
   br i1 %i.c, label %.lr.ph138, label %._crit_edge139
 
@@ -576,8 +572,8 @@ _ZNK14btQuantizedBvh10getAabbMinEi.exit:          ; preds = %_ZNK14btQuantizedBv
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.cv = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.cw = getelementptr inbounds [4 x i8], ptr %7, i64 %i.cl
+  %i.cv = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.cw = getelementptr inbounds [4 x i8], ptr %5, i64 %i.cl
   %i.cx = sext i32 %1 to i64
   %wide.trip.count157 = sext i32 %2 to i64
   br label %bb.b
@@ -585,7 +581,7 @@ _ZNK14btQuantizedBvh10getAabbMinEi.exit:          ; preds = %_ZNK14btQuantizedBv
 bb.b:                                             ; preds = %.lr.ph138, %bb.h
   %indvars.iv154 = phi i64 [ %i.cx, %.lr.ph138 ], [ %indvars.iv.next155, %bb.h ] ; 5 uses
   %.037135 = phi i32 [ %1, %.lr.ph138 ], [ %.138, %bb.h ] ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   %i.cy = load i8, ptr %i.co, align 8, !tbaa !25, !range !44, !noundef !48
   %i.cz = trunc nuw i8 %i.cy to i1                ; 2 uses
   br i1 %i.cz, label %bb.c, label %bb.d
@@ -643,7 +639,7 @@ _ZNK14btQuantizedBvh10getAabbMinEi.exit68:        ; preds = %bb.c, %bb.d
   %i.ee = fmul <2 x float> %i.ed, splat (float 5.000000e-01)
   %i.ef = fmul float %i.ec, 5.000000e-01
   %.sroa.3.12.vec.insert.i.i76 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.ef, i64 0
-  store <2 x float> %i.ee, ptr %7, align 8
+  store <2 x float> %i.ee, ptr %5, align 8
   store <2 x float> %.sroa.3.12.vec.insert.i.i76, ptr %i.cv, align 8
   %i.eg = load float, ptr %i.cw, align 4, !tbaa !40
   %i.eh = fcmp ogt float %i.eg, %i.cn
@@ -654,29 +650,25 @@ bb.e:                                             ; preds = %_ZNK14btQuantizedBv
   br i1 %i.cz, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.ej = load ptr, ptr %i.cq, align 8, !tbaa !31 ; 2 uses
   %i.ek = getelementptr inbounds [16 x i8], ptr %i.ej, i64 %indvars.iv154 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %i.ek, i64 16, i1 false), !tbaa.struct !42
+  %.sroa.0184.0.copyload = load <16 x i8>, ptr %i.ek, align 4
   %i.el = getelementptr inbounds [16 x i8], ptr %i.ej, i64 %i.ei
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ek, ptr noundef nonnull align 4 dereferenceable(16) %i.el, i64 16, i1 false), !tbaa.struct !42
   %i.em = load ptr, ptr %i.cq, align 8, !tbaa !31
   %i.en = getelementptr inbounds [16 x i8], ptr %i.em, i64 %i.ei
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.en, ptr noundef nonnull align 4 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !42
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <16 x i8> %.sroa.0184.0.copyload, ptr %i.en, align 4
   br label %_ZN14btQuantizedBvh13swapLeafNodesEii.exit
 
 bb.g:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.eo = load ptr, ptr %i.cp, align 8, !tbaa !27 ; 2 uses
   %i.ep = getelementptr inbounds [64 x i8], ptr %i.eo, i64 %indvars.iv154 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %5, ptr noundef nonnull align 4 dereferenceable(64) %i.ep, i64 64, i1 false), !tbaa.struct !57
+  %.sroa.0.0.copyload = load <64 x i8>, ptr %i.ep, align 4
   %i.eq = getelementptr inbounds [64 x i8], ptr %i.eo, i64 %i.ei
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.ep, ptr noundef nonnull align 4 dereferenceable(64) %i.eq, i64 64, i1 false), !tbaa.struct !57
   %i.er = load ptr, ptr %i.cp, align 8, !tbaa !27
   %i.es = getelementptr inbounds [64 x i8], ptr %i.er, i64 %i.ei
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.es, ptr noundef nonnull align 4 dereferenceable(64) %5, i64 64, i1 false), !tbaa.struct !57
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <64 x i8> %.sroa.0.0.copyload, ptr %i.es, align 4
   br label %_ZN14btQuantizedBvh13swapLeafNodesEii.exit
 
 _ZN14btQuantizedBvh13swapLeafNodesEii.exit:       ; preds = %bb.f, %bb.g
@@ -685,7 +677,7 @@ _ZN14btQuantizedBvh13swapLeafNodesEii.exit:       ; preds = %bb.f, %bb.g
 
 bb.h:                                             ; preds = %_ZN14btQuantizedBvh13swapLeafNodesEii.exit, %_ZNK14btQuantizedBvh10getAabbMinEi.exit68
   %.138 = phi i32 [ %i.et, %_ZN14btQuantizedBvh13swapLeafNodesEii.exit ], [ %.037135, %_ZNK14btQuantizedBvh10getAabbMinEi.exit68 ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
   %indvars.iv.next155 = add nsw i64 %indvars.iv154, 1 ; 2 uses
   %exitcond158.not = icmp eq i64 %indvars.iv.next155, %wide.trip.count157
   br i1 %exitcond158.not, label %._crit_edge139, label %bb.b
@@ -702,7 +694,7 @@ bb.h:                                             ; preds = %_ZN14btQuantizedBvh
   %i.fa = ashr i32 %i.a, 1
   %i.fb = add nsw i32 %i.fa, %1
   %.2 = select i1 %i.ez, i32 %i.fb, i32 %.037.lcssa
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #17
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   ret i32 %.2
 }
 
@@ -1105,8 +1097,6 @@ _ZN20btAlignedObjectArrayI16btBvhSubtreeInfoE6expandERKS0_.exit37: ; preds = %bb
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @_ZN14btQuantizedBvh13swapLeafNodesEii(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(244) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #8 align 2 {
 bb.a:
-  %3 = alloca %struct.btQuantizedBvhNode, align 4 ; 4 uses
-  %4 = alloca %struct.btOptimizedBvhNode, align 4 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i8, ptr %i.a, align 8, !tbaa !25, !range !44, !noundef !48
   %i.c = trunc nuw i8 %i.b to i1
@@ -1115,31 +1105,27 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !31   ; 2 uses
   %i.h = getelementptr inbounds [16 x i8], ptr %i.g, i64 %i.d ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !42
+  %.sroa.09.0.copyload = load <16 x i8>, ptr %i.h, align 4
   %i.i = getelementptr inbounds [16 x i8], ptr %i.g, i64 %i.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.h, ptr noundef nonnull align 4 dereferenceable(16) %i.i, i64 16, i1 false), !tbaa.struct !42
   %i.j = load ptr, ptr %i.f, align 8, !tbaa !31
   %i.k = getelementptr inbounds [16 x i8], ptr %i.j, i64 %i.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.k, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !42
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <16 x i8> %.sroa.09.0.copyload, ptr %i.k, align 4
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !27   ; 2 uses
   %i.n = getelementptr inbounds [64 x i8], ptr %i.m, i64 %i.d ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %4, ptr noundef nonnull align 4 dereferenceable(64) %i.n, i64 64, i1 false), !tbaa.struct !57
+  %.sroa.0.0.copyload = load <64 x i8>, ptr %i.n, align 4
   %i.o = getelementptr inbounds [64 x i8], ptr %i.m, i64 %i.e
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.n, ptr noundef nonnull align 4 dereferenceable(64) %i.o, i64 64, i1 false), !tbaa.struct !57
   %i.p = load ptr, ptr %i.l, align 8, !tbaa !27
   %i.q = getelementptr inbounds [64 x i8], ptr %i.p, i64 %i.e
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(64) %i.q, ptr noundef nonnull align 4 dereferenceable(64) %4, i64 64, i1 false), !tbaa.struct !57
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <64 x i8> %.sroa.0.0.copyload, ptr %i.q, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

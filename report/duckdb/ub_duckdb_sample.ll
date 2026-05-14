@@ -201,7 +201,6 @@ _ZNSt6vectorIjSaIjEED2Ev.exit26:                  ; preds = %.body, %bb.n
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb15ReservoirSample16NormalizeWeightsEv(ptr noundef nonnull align 8 dereferenceable(88) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %1 = alloca %"struct.std::pair", align 8        ; 5 uses
   %i.a = alloca i64, align 8                      ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   br label %bb.b
@@ -222,14 +221,13 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.m, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.i = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_21BaseReservoirSamplingESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.b)
           to label %bb.e unwind label %.loopexit29
 
 bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 88
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !47   ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.k, i64 16, i1 false)
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.k, align 8
   %.not.i.i = icmp eq ptr %.sroa.11.0, %.sroa.18.0
   br i1 %.not.i.i, label %bb.g, label %bb.f
 
@@ -266,7 +264,7 @@ _ZNKSt6vectorISt4pairIdmESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
 
 .noexc5:                                          ; preds = %_ZNKSt6vectorISt4pairIdmESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.w, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.w, align 8
   %.not10.i.i.i.i.i.i.i = icmp eq ptr %.sroa.0.0, %.sroa.11.0
   br i1 %.not10.i.i.i.i.i.i.i, label %_ZNSt6vectorISt4pairIdmESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i, label %.lr.ph.i.i.i.i.i.i.i
 
@@ -335,7 +333,6 @@ bb.l:                                             ; preds = %.noexc6, %bb.j
   %i.aq = phi ptr [ %i.ae, %bb.j ], [ %.pre.i, %.noexc6 ]
   %i.ar = getelementptr inbounds i8, ptr %i.aq, i64 -16
   store ptr %i.ar, ptr %i.ad, align 8, !tbaa !54
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %bb.b, !llvm.loop !235
 
 .loopexit24:                                      ; preds = %bb.b
@@ -352,17 +349,11 @@ bb.l:                                             ; preds = %.noexc6, %bb.j
   %.sroa.0.1.ph = phi ptr [ %.sroa.0.0, %bb.d ], [ %.sroa.0.0, %_ZNKSt6vectorISt4pairIdmESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %.sroa.0.3, %_ZNSt6vectorISt4pairIdmESaIS1_EE9push_backEOS1_.exit ], [ %.sroa.0.3, %bb.k ]
   %lpad.loopexit31 = landingpad { ptr, i32 }
           cleanup
-  br label %2
+  br label %bb.ae
 
 .loopexit.split-lp30:                             ; preds = %bb.h
   %lpad.loopexit.split-lp32 = landingpad { ptr, i32 }
           cleanup
-  br label %2
-
-2:                                                ; preds = %.loopexit.split-lp30, %.loopexit29
-  %.sroa.0.1 = phi ptr [ %.sroa.0.1.ph, %.loopexit29 ], [ %.sroa.0.0, %.loopexit.split-lp30 ]
-  %lpad.phi33 = phi { ptr, i32 } [ %lpad.loopexit31, %.loopexit29 ], [ %lpad.loopexit.split-lp32, %.loopexit.split-lp30 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %bb.ae
 
 bb.m:                                             ; preds = %bb.c
@@ -765,9 +756,9 @@ bb.ad:                                            ; preds = %bb.ac
 _ZNSt6vectorISt4pairIdmESaIS1_EED2Ev.exit:        ; preds = %bb.ac, %bb.ad
   ret void
 
-bb.ae:                                            ; preds = %.loopexit24, %.loopexit.split-lp25, %bb.z, %2
-  %.sroa.0.2 = phi ptr [ %.sroa.0.0, %bb.z ], [ %.sroa.0.1, %2 ], [ %.sroa.0.0, %.loopexit24 ], [ %.sroa.0.0, %.loopexit.split-lp25 ] ; 2 uses
-  %.pn = phi { ptr, i32 } [ %lpad.phi, %bb.z ], [ %lpad.phi33, %2 ], [ %lpad.loopexit26, %.loopexit24 ], [ %lpad.loopexit.split-lp27, %.loopexit.split-lp25 ]
+bb.ae:                                            ; preds = %.loopexit29, %.loopexit.split-lp30, %.loopexit24, %.loopexit.split-lp25, %bb.z
+  %.sroa.0.2 = phi ptr [ %.sroa.0.0, %bb.z ], [ %.sroa.0.0, %.loopexit.split-lp25 ], [ %.sroa.0.0, %.loopexit24 ], [ %.sroa.0.1.ph, %.loopexit29 ], [ %.sroa.0.0, %.loopexit.split-lp30 ] ; 2 uses
+  %.pn = phi { ptr, i32 } [ %lpad.phi, %bb.z ], [ %lpad.loopexit.split-lp27, %.loopexit.split-lp25 ], [ %lpad.loopexit26, %.loopexit24 ], [ %lpad.loopexit31, %.loopexit29 ], [ %lpad.loopexit.split-lp32, %.loopexit.split-lp30 ]
   %.not.i.i.i12 = icmp eq ptr %.sroa.0.2, null
   br i1 %.not.i.i.i12, label %_ZNSt6vectorISt4pairIdmESaIS1_EED2Ev.exit13, label %bb.af
 

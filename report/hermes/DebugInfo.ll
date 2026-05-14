@@ -201,8 +201,7 @@ define hidden void @_ZN6hermes3hbc18DebugInfoGeneratorC2EONS0_21UniquingFilename
 bb.a:
   %2 = alloca %"struct.std::_Deque_iterator", align 16 ; 5 uses
   %3 = alloca %"struct.std::_Deque_iterator", align 16 ; 5 uses
-  %.sroa.0.i.i.i.i.i.i = alloca { ptr, i64 }, align 8 ; 4 uses
-  %4 = alloca %"struct.hermes::hbc::UniquingFilenameTable", align 8 ; 19 uses
+  %4 = alloca %"struct.hermes::hbc::UniquingFilenameTable", align 16 ; 19 uses
   store i8 1, ptr %0, align 8, !tbaa !184
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -210,7 +209,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i8 0, i64 24, i1 false)
   store i64 8, ptr %i.c, align 8, !tbaa !187
   %i.d = tail call noalias noundef nonnull dereferenceable(64) ptr @_Znwm(i64 noundef 64) #16 ; 2 uses
-  store ptr %i.d, ptr %4, align 8, !tbaa !193
+  store ptr %i.d, ptr %4, align 16, !tbaa !193
   %.06.i.i.ptr.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 24 ; 5 uses
   %i.e = tail call noalias noundef nonnull dereferenceable(512) ptr @_Znwm(i64 noundef 512) #16 ; 10 uses
   store ptr %i.e, ptr %.06.i.i.ptr.i.i.i.i, align 8, !tbaa !194
@@ -221,25 +220,24 @@ bb.a:
   store ptr %i.e, ptr %i.h, align 8, !tbaa !196
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 512 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
-  store ptr %i.i, ptr %i.j, align 8, !tbaa !197
+  store ptr %i.i, ptr %i.j, align 16, !tbaa !197
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 72 ; 2 uses
   store ptr %.06.i.i.ptr.i.i.i.i, ptr %i.l, align 8, !tbaa !195
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 56
   store ptr %i.e, ptr %i.m, align 8, !tbaa !196
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
-  store ptr %i.i, ptr %i.n, align 8, !tbaa !197
-  store ptr %i.e, ptr %i.f, align 8, !tbaa !198
-  store ptr %i.e, ptr %i.k, align 8, !tbaa !199
+  store ptr %i.i, ptr %i.n, align 16, !tbaa !197
+  store ptr %i.e, ptr %i.f, align 16, !tbaa !198
+  store ptr %i.e, ptr %i.k, align 16, !tbaa !199
   %i.o = load ptr, ptr %1, align 8, !tbaa !193
   %.not.i.i.i.i = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i, label %_ZN6hermes3hbc21UniquingFilenameTableC2EOS1_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(104) %4, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %4, ptr noundef nonnull align 8 dereferenceable(104) %1, i64 80, i1 false), !tbaa.struct !200
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %1, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !200
+  %.sroa.0.i.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %4, align 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(104) %4, ptr noundef nonnull align 8 dereferenceable(104) %1, i64 80, i1 false), !tbaa.struct !200
+  store <16 x i8> %.sroa.0.i.i.i.i.i.i.sroa.0.0.copyload, ptr %1, align 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   store ptr %i.e, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !194
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -256,14 +254,13 @@ bb.b:                                             ; preds = %bb.a
   store ptr %i.i, ptr %.sroa.10.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !194
   %.sroa.11.0..sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 72
   store ptr %.06.i.i.ptr.i.i.i.i, ptr %.sroa.11.0..sroa_idx.i.i.i.i.i.i, align 8, !tbaa !201
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i.i)
   br label %_ZN6hermes3hbc21UniquingFilenameTableC2EOS1_.exit
 
 _ZN6hermes3hbc21UniquingFilenameTableC2EOS1_.exit: ; preds = %bb.a, %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !202
-  store ptr %i.r, ptr %i.p, align 8, !tbaa !202
+  store ptr %i.r, ptr %i.p, align 16, !tbaa !202
   store ptr null, ptr %i.q, align 8, !tbaa !202
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 88
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
@@ -275,27 +272,27 @@ _ZN6hermes3hbc21UniquingFilenameTableC2EOS1_.exit: ; preds = %bb.a, %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 96
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.y = load i32, ptr %i.x, align 8, !tbaa !3
-  store i32 %i.y, ptr %i.w, align 8, !tbaa !3
+  store i32 %i.y, ptr %i.w, align 16, !tbaa !3
   store i32 0, ptr %i.x, align 8, !tbaa !3
   call void @_ZN6hermes3hbc21UniquingFilenameTable9toStorageES1_(ptr dead_on_unwind nonnull writable sret(%"class.hermes::hbc::ConsecutiveStringStorage") align 8 %i.b, ptr noundef nonnull %4) #14
-  %i.z = load ptr, ptr %i.p, align 8, !tbaa !204
+  %i.z = load ptr, ptr %i.p, align 16, !tbaa !204
   call void @_ZdlPv(ptr noundef %i.z) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %i.aa = load <2 x ptr>, ptr %i.f, align 8, !tbaa !194, !noalias !206
+  %i.aa = load <2 x ptr>, ptr %i.f, align 16, !tbaa !194, !noalias !206
   store <2 x ptr> %i.aa, ptr %2, align 16, !tbaa !194
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.ac = load <2 x ptr>, ptr %i.j, align 8, !tbaa !209, !noalias !206
+  %i.ac = load <2 x ptr>, ptr %i.j, align 16, !tbaa !209, !noalias !206
   store <2 x ptr> %i.ac, ptr %i.ab, align 16, !tbaa !209
-  %i.ad = load <2 x ptr>, ptr %i.k, align 8, !tbaa !194, !noalias !210
+  %i.ad = load <2 x ptr>, ptr %i.k, align 16, !tbaa !194, !noalias !210
   store <2 x ptr> %i.ad, ptr %3, align 16, !tbaa !194
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.af = load <2 x ptr>, ptr %i.n, align 8, !tbaa !209, !noalias !210
+  %i.af = load <2 x ptr>, ptr %i.n, align 16, !tbaa !209, !noalias !210
   store <2 x ptr> %i.af, ptr %i.ae, align 16, !tbaa !209
   call void @_ZNSt5dequeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE19_M_destroy_data_auxESt15_Deque_iteratorIS5_RS5_PS5_ESB_(ptr noundef nonnull align 8 dereferenceable(104) %4, ptr noundef nonnull dead_on_return %2, ptr noundef nonnull dead_on_return %3)
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  %i.ag = load ptr, ptr %4, align 8, !tbaa !193   ; 2 uses
+  %i.ag = load ptr, ptr %4, align 16, !tbaa !193  ; 2 uses
   %.not.i.i.i.i2 = icmp eq ptr %i.ag, null
   br i1 %.not.i.i.i.i2, label %_ZN6hermes3hbc21UniquingFilenameTableD2Ev.exit, label %bb.c
 
@@ -315,7 +312,7 @@ bb.c:                                             ; preds = %_ZN6hermes3hbc21Uni
   br i1 %i.an, label %.lr.ph.i.i.i.i.i, label %_ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_destroy_nodesEPPS5_S9_.exit.loopexit.i.i.i.i, !llvm.loop !215
 
 _ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_destroy_nodesEPPS5_S9_.exit.loopexit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i
-  %.pre.i.i.i.i = load ptr, ptr %4, align 8, !tbaa !193
+  %.pre.i.i.i.i = load ptr, ptr %4, align 16, !tbaa !193
   br label %_ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_destroy_nodesEPPS5_S9_.exit.i.i.i.i
 
 _ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_destroy_nodesEPPS5_S9_.exit.i.i.i.i: ; preds = %_ZNSt11_Deque_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE16_M_destroy_nodesEPPS5_S9_.exit.loopexit.i.i.i.i, %bb.c

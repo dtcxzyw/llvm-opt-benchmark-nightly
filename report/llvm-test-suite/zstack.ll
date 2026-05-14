@@ -3,8 +3,6 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 %struct.op_def = type { ptr, ptr }
-%struct.ref_s = type { %union.v, i16, i16 }
-%union.v = type { i64 }
 
 @osp_nargs = external local_unnamed_addr global [6 x ptr], align 16
 @osp = external local_unnamed_addr global ptr, align 8
@@ -42,33 +40,24 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -17, 1) i32 @zexch(ptr noundef captures(address) %0) #1 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @osp_nargs, i64 8), align 8, !tbaa !8
   %i.b = icmp ult ptr %0, %i.a
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false), !tbaa.struct !11
+  %.sroa.0.0.copyload9 = load <16 x i8>, ptr %i.c, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !11
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
+  store <16 x i8> %.sroa.0.0.copyload9, ptr %0, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %.0 = phi i32 [ 0, %bb.b ], [ -17, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret i32 %.0
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -17, 1) i32 @zdup(ptr noundef %0) #3 {
@@ -132,7 +121,6 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -20, 1) i32 @zroll(ptr noundef %0) #4 {
 bb.a:
-  %1 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !15
@@ -199,9 +187,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i, %._crit_edge
   %indvars.iv = phi i64 [ 0, %bb.i ], [ %indvars.iv.next, %._crit_edge ] ; 7 uses
   %.03750 = phi i32 [ %i.q, %bb.i ], [ %.lcssa, %._crit_edge ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
   %i.ah = getelementptr inbounds nuw [16 x i8], ptr %i.ag, i64 %indvars.iv
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.ah, i64 16, i1 false), !tbaa.struct !11
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.ah, align 8
   %i.ai = add nsw i32 %.03750, -1                 ; 2 uses
   %i.aj = trunc i64 %indvars.iv to i32
   %i.ak = add i32 %i.ad, %i.aj
@@ -239,9 +226,8 @@ bb.j:                                             ; preds = %bb.i, %._crit_edge
   %.pre-phi = phi i64 [ %.pre, %.._crit_edge_crit_edge ], [ %i.as, %.lr.ph ]
   %.lcssa = phi i32 [ %i.ai, %.._crit_edge_crit_edge ], [ %i.au, %.lr.ph ] ; 2 uses
   %i.ay = getelementptr inbounds [16 x i8], ptr %i.ag, i64 %.pre-phi
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ay, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !11
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.ay, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
   %.not = icmp eq i32 %.lcssa, 0
   br i1 %.not, label %.loopexit, label %bb.j, !llvm.loop !19
 

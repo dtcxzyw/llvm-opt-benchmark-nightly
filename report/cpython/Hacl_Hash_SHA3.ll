@@ -4,8 +4,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.Hacl_Hash_SHA3_hash_buf_s = type { i8, ptr }
-
 @_Py_LibHacl_Hacl_Hash_SHA3_keccak_rotc = hidden local_unnamed_addr constant [24 x i32] [i32 1, i32 3, i32 6, i32 10, i32 15, i32 21, i32 28, i32 36, i32 45, i32 55, i32 2, i32 14, i32 27, i32 41, i32 56, i32 8, i32 25, i32 43, i32 62, i32 18, i32 39, i32 61, i32 20, i32 44], align 16
 @_Py_LibHacl_Hacl_Hash_SHA3_keccak_piln = hidden local_unnamed_addr constant [24 x i32] [i32 10, i32 7, i32 11, i32 17, i32 18, i32 3, i32 5, i32 16, i32 8, i32 21, i32 24, i32 4, i32 15, i32 23, i32 19, i32 13, i32 12, i32 2, i32 20, i32 14, i32 22, i32 9, i32 6, i32 1], align 16
 @_Py_LibHacl_Hacl_Hash_SHA3_keccak_rndc = hidden local_unnamed_addr constant [24 x i64] [i64 1, i64 32898, i64 -9223372036854742902, i64 -9223372034707259392, i64 32907, i64 2147483649, i64 -9223372034707259263, i64 -9223372036854743031, i64 138, i64 136, i64 2147516425, i64 2147483658, i64 2147516555, i64 -9223372036854775669, i64 -9223372036854742903, i64 -9223372036854743037, i64 -9223372036854743038, i64 -9223372036854775680, i64 32778, i64 -9223372034707292150, i64 -9223372034707259263, i64 -9223372036854742912, i64 2147483649, i64 -9223372034707259384], align 16
@@ -408,9 +406,7 @@ bb.a:
 ; Function Attrs: nofree nounwind uwtable
 define hidden zeroext range(i8 0, 4) i8 @_Py_LibHacl_Hacl_Hash_SHA3_update(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #2 {
 bb.a:
-  %3 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 2 uses
   %.sroa.697 = alloca [7 x i8], align 1           ; 2 uses
-  %4 = alloca %struct.Hacl_Hash_SHA3_hash_buf_s, align 8 ; 3 uses
   %.sroa.0159.0.copyload = load i8, ptr %0, align 8, !tbaa !18 ; 28 uses
   %.sroa.4160.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
   %.sroa.5161.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -507,7 +503,7 @@ block_len.exit212:                                ; preds = %bb.d, %block_len.ex
   br i1 %.not, label %bb.i, label %switch.lookup402
 
 switch.lookup402:                                 ; preds = %block_len.exit212
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
+  %.sroa.0467.0.copyload = load <16 x i8>, ptr %0, align 8
   %.sroa.4119.0.copyload = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 2 uses
   %i.p = zext nneg i8 %.sroa.0159.0.copyload to i64
   %i.q = getelementptr [8 x i8], ptr @switch.table.digest_.19, i64 %i.p
@@ -536,7 +532,7 @@ block_len.exit216:                                ; preds = %switch.lookup406, %
   %i.v = getelementptr i8, ptr %.sroa.4119.0.copyload, i64 %.0195
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.v, ptr align 1 %1, i64 %i.a, i1 false)
   %i.w = add i64 %.sroa.5162.0.copyload, %i.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
+  store <16 x i8> %.sroa.0467.0.copyload, ptr %0, align 8
   br label %.sink.split
 
 bb.i:                                             ; preds = %block_len.exit212
@@ -738,7 +734,7 @@ block_len.exit240:                                ; preds = %block_len.exit238.t
 
 bb.o:                                             ; preds = %bb.i
   %.sroa.454.0.copyload328 = load ptr, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21 ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
+  %.sroa.0.0.copyload465 = load <16 x i8>, ptr %0, align 8 ; 2 uses
   switch i8 %.sroa.0159.0.copyload, label %default.unreachable374 [
     i8 9, label %block_len.exit242.thread
     i8 8, label %block_len.exit242
@@ -831,11 +827,10 @@ block_len.exit246:                                ; preds = %switch.lookup430, %
   %i.co = getelementptr i8, ptr %.sroa.454.0.copyload328, i64 %.0198
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.co, ptr align 1 %1, i64 %i.ci, i1 false)
   %i.cp = add i64 %i.ci, %.sroa.5162.0.copyload   ; 5 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.0.copyload465, ptr %0, align 8
   store ptr %.sroa.454.0.copyload328, ptr %.sroa.5161.0..sroa_idx, align 8, !tbaa !21
   store i64 %i.cp, ptr %.sroa.5162.0..sroa_idx, align 8, !tbaa !15
   %.sroa.0.0.copyload = load i8, ptr %0, align 8, !tbaa !18 ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 1
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !19 ; 3 uses
   %i.cq = zext nneg i8 %.sroa.0159.0.copyload to i64
@@ -1021,7 +1016,8 @@ switch.lookup456:                                 ; preds = %block_len.exit268
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %.sroa.454.0.copyload328, ptr align 1 %i.ee, i64 %i.ei, i1 false)
   %i.ej = add i64 %i.cp, %i.dg
   store i8 %.sroa.0.0.copyload, ptr %0, align 8, !tbaa !18
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.4160.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) %5, i64 7, i1 false)
+  %.sroa.0.1.vec.extract = shufflevector <16 x i8> %.sroa.0.0.copyload465, <16 x i8> poison, <7 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  store <7 x i8> %.sroa.0.1.vec.extract, ptr %.sroa.4160.0..sroa_idx, align 1
   store ptr %.sroa.5.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !19
   br label %.sink.split
 

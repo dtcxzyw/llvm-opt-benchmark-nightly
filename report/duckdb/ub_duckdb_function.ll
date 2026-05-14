@@ -201,8 +201,7 @@ bb.s:                                             ; preds = %bb.g
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(360) ptr @_ZN6duckdb14ScalarFunctionaSEOS0_(ptr noundef nonnull align 8 dereferenceable(360) %0, ptr noundef nonnull align 8 dereferenceable(360) %1) local_unnamed_addr #9 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %2 = alloca %"class.std::function", align 8     ; 9 uses
+  %2 = alloca %"class.std::function", align 16    ; 9 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(208) ptr @_ZN6duckdb14SimpleFunctionaSERKS0_(ptr noundef nonnull align 8 dereferenceable(236) %0, ptr noundef nonnull align 8 dereferenceable(236) %1) ; 0 uses
   %i.b = icmp eq ptr %0, %1
   br i1 %i.b, label %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit, label %bb.b
@@ -298,7 +297,7 @@ _ZN6duckdb18BaseScalarFunctionaSERKS0_.exit:      ; preds = %bb.a, %_ZN6duckdb10
   store i32 %i.al, ptr %i.aj, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #31
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 24, i1 false)
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 3 uses
   %i.ao = load <2 x ptr>, ptr %i.an, align 8, !tbaa !33
   %i.ap = load ptr, ptr %i.an, align 8, !tbaa !31
@@ -307,21 +306,19 @@ _ZN6duckdb18BaseScalarFunctionaSERKS0_.exit:      ; preds = %bb.a, %_ZN6duckdb10
 
 bb.l:                                             ; preds = %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 240
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.aq, i64 16, i1 false), !tbaa.struct !32
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.aq, i64 16, i1 false), !tbaa.struct !32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i
 
 _ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEC2EOS8_.exit.i: ; preds = %bb.l, %_ZN6duckdb18BaseScalarFunctionaSERKS0_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 16, i1 false), !tbaa.struct !32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 16, i1 false), !tbaa.struct !32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.am, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !32
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 16, !tbaa !25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %i.am, i64 16, i1 false), !tbaa.struct !32
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %i.am, align 8, !tbaa !25
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
   %i.at = load <2 x ptr>, ptr %i.as, align 8, !tbaa !33
   %i.au = load ptr, ptr %i.as, align 8, !tbaa !33 ; 2 uses
-  store <2 x ptr> %i.at, ptr %i.ar, align 8, !tbaa !33
+  store <2 x ptr> %i.at, ptr %i.ar, align 16, !tbaa !33
   store <2 x ptr> %i.ao, ptr %i.as, align 8, !tbaa !33
   %.not.i.i = icmp eq ptr %i.au, null
   br i1 %.not.i.i, label %_ZNSt8functionIFvRN6duckdb9DataChunkERNS0_15ExpressionStateERNS0_6VectorEEEaSEOS8_.exit, label %bb.m

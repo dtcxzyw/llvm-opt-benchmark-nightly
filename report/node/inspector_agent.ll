@@ -201,10 +201,9 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca i64, align 8                      ; 4 uses
-  %.sroa.0 = alloca %class.anon.1199, align 8     ; 2 uses
   %i.d = load i64, ptr %2, align 8
   %i.e = inttoptr i64 %i.d to ptr
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %3, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.g = load i64, ptr %i.f, align 8
   %i.h = inttoptr i64 %i.g to ptr                 ; 4 uses
@@ -218,7 +217,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 32
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 40
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.l, align 8
   store ptr @_ZNSt17_Function_handlerIFvvEZN4node9inspector19NodeInspectorClient19startRepeatingTimerEdPFvPvES4_EUlvE_E9_M_invokeERKSt9_Any_data, ptr %i.n, align 8
   store ptr @_ZNSt17_Function_handlerIFvvEZN4node9inspector19NodeInspectorClient19startRepeatingTimerEdPFvPvES4_EUlvE_E10_M_managerERSt9_Any_dataRKS9_St18_Manager_operation, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.h, i64 216

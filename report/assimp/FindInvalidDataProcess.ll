@@ -33,8 +33,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::__detail::_Prime_rehash_policy" = type { float, i64 }
 %struct.aiVectorKey = type { double, %class.aiVector3t, i32 }
 %class.aiVector3t = type { float, float, float }
-%struct.aiQuatKey = type <{ double, %class.aiQuaterniont, i32, [4 x i8] }>
-%class.aiQuaterniont = type { float, float, float, float }
 
 $_ZN17DeadlyImportErrorC2EPKc = comdat any
 
@@ -437,8 +435,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b,
 define void @_ZN6Assimp22FindInvalidDataProcess23ProcessAnimationChannelEP10aiNodeAnim(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(29) %0, ptr noundef captures(none) %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %2 = alloca %struct.aiVectorKey, align 8        ; 4 uses
-  %3 = alloca %struct.aiQuatKey, align 8          ; 4 uses
-  %4 = alloca %struct.aiVectorKey, align 8        ; 4 uses
+  %3 = alloca %struct.aiVectorKey, align 8        ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 1028 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4              ; 2 uses
   switch i32 %i.b, label %bb.e [
@@ -674,14 +671,13 @@ _ZNK9aiQuatKeyneERKS_.exit.i:                     ; preds = %bb.l
   br i1 %i.dm, label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit.thread, label %.preheader.i40, !llvm.loop !22
 
 _Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit:          ; preds = %.preheader29.i35, %.preheader.i40, %.preheader29.i35.preheader, %.preheader.i40.preheader
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %i.bi, i64 32, i1 false)
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.bi, align 8
   tail call void @_ZdaPv(ptr noundef %i.bi) #22
   store i32 1, ptr %i.be, align 8
   %i.dn = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znam(i64 noundef 32) #23 ; 2 uses
   store ptr %i.dn, ptr %i.bh, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.dn, ptr noundef nonnull align 8 dereferenceable(28) %3, i64 28, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  %.sroa.0.0.vec.extract = shufflevector <32 x i8> %.sroa.0.0.copyload, <32 x i8> poison, <28 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
+  store <28 x i8> %.sroa.0.0.vec.extract, ptr %i.dn, align 8
   br label %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit.thread
 
 _Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit.thread:   ; preds = %_Z14EpsilonCompareI9aiQuatKeyEbRKT_S3_f.exit.i, %bb.j, %bb.i, %.lr.ph98, %_ZNK9aiQuatKeyneERKS_.exit.i, %bb.l, %bb.k, %.lr.ph101, %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit, %.thread
@@ -779,14 +775,14 @@ _ZNK11aiVectorKeyneERKS_.exit.i55:                ; preds = %bb.o
   br i1 %i.fk, label %_Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56.thread, label %.preheader.i51, !llvm.loop !20
 
 _Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56:     ; preds = %.preheader29.i45, %.preheader.i51, %.preheader29.i45.preheader, %.preheader.i51.preheader
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %i.ds, i64 24, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %i.ds, i64 24, i1 false)
   tail call void @_ZdaPv(ptr noundef %i.ds) #22
   store i32 1, ptr %i.do, align 8
   %i.fl = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znam(i64 noundef 24) #23 ; 2 uses
   store ptr %i.fl, ptr %i.dr, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fl, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fl, ptr noundef nonnull align 8 dereferenceable(24) %3, i64 24, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.p
 
 _Z12AllIdenticalI11aiVectorKeyEbPT_jf.exit56.thread: ; preds = %_Z14EpsilonCompareI11aiVectorKeyEbRKT_S3_f.exit.i50, %bb.n, %.lr.ph104, %_ZNK11aiVectorKeyneERKS_.exit.i55, %bb.o, %.lr.ph107, %_Z12AllIdenticalI9aiQuatKeyEbPT_jf.exit.thread

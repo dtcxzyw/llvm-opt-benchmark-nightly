@@ -201,18 +201,13 @@ bb.a:
   %16 = alloca %struct.VP8LBitEntropy, align 8    ; 8 uses
   %17 = alloca %struct.VP8LStreaks, align 4       ; 9 uses
   %18 = alloca %struct.VP8LBitEntropy, align 8    ; 8 uses
-  %19 = alloca %struct.HistogramPair, align 8     ; 4 uses
+  %19 = alloca %struct.HistogramPair, align 8     ; 8 uses
   %20 = alloca %struct.HistogramPair, align 8     ; 8 uses
-  %21 = alloca %struct.HistogramPair, align 8     ; 4 uses
-  %22 = alloca %struct.HistogramPair, align 8     ; 4 uses
-  %23 = alloca %struct.HistogramPair, align 8     ; 8 uses
-  %24 = alloca %struct.HistogramPair, align 8     ; 4 uses
-  %25 = alloca %struct.HistogramPair, align 8     ; 4 uses
-  %26 = alloca %struct.HistogramPair, align 8     ; 9 uses
+  %21 = alloca %struct.HistogramPair, align 8     ; 9 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca [5 x i64], align 16               ; 7 uses
-  %27 = alloca [64 x %struct.anon], align 16      ; 8 uses
-  %28 = alloca %struct.VP8LRefsCursor, align 8    ; 9 uses
+  %22 = alloca [64 x %struct.anon], align 16      ; 8 uses
+  %23 = alloca %struct.VP8LRefsCursor, align 8    ; 9 uses
   %.not = icmp eq i32 %5, 0
   br i1 %.not, label %.thread, label %bb.b
 
@@ -399,8 +394,8 @@ bb.e:                                             ; preds = %.thread
   %i.cj = add i32 %0, -1
   %i.ck = add i32 %i.cj, %i.ci
   %i.cl = lshr i32 %i.ck, %5
-  call void @llvm.lifetime.start.p0(ptr nonnull %28) #10
-  call void @VP8LRefsCursorInit(ptr dead_on_unwind nonnull writable sret(%struct.VP8LRefsCursor) align 8 %28, ptr noundef %2) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %23) #10
+  call void @VP8LRefsCursorInit(ptr dead_on_unwind nonnull writable sret(%struct.VP8LRefsCursor) align 8 %23, ptr noundef %2) #10
   %i.cm = load ptr, ptr %i.x, align 8, !tbaa !22
   %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !27
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 3240
@@ -572,12 +567,12 @@ VP8LHistogramSetClear.exit.i.loopexit.unr-lcssa:  ; preds = %.lr.ph.i.i64
   br i1 %epil.iter.cmp.not, label %VP8LHistogramSetClear.exit.i, label %.lr.ph.i.i64.epil, !llvm.loop !42
 
 VP8LHistogramSetClear.exit.i:                     ; preds = %VP8LHistogramSetClear.exit.i.loopexit.unr-lcssa, %.lr.ph.i.i64.epil, %.loopexit164
-  %.val29.i = load ptr, ptr %28, align 8, !tbaa !16 ; 2 uses
+  %.val29.i = load ptr, ptr %23, align 8, !tbaa !16 ; 2 uses
   %.not2430.i = icmp eq ptr %.val29.i, null
   br i1 %.not2430.i, label %HistogramBuild.exit, label %.lr.ph34.i
 
 .lr.ph34.i:                                       ; preds = %VP8LHistogramSetClear.exit.i
-  %i.fs = getelementptr inbounds nuw i8, ptr %28, i64 16
+  %i.fs = getelementptr inbounds nuw i8, ptr %23, i64 16
   br label %bb.g
 
 bb.g:                                             ; preds = %VP8LRefsCursorNext.exit.i, %.lr.ph34.i
@@ -610,16 +605,16 @@ bb.g:                                             ; preds = %VP8LRefsCursorNext.
 ._crit_edge.i:                                    ; preds = %.lr.ph.i63, %bb.g
   %.120.lcssa.i = phi i32 [ %.01931.i, %bb.g ], [ %i.ge, %.lr.ph.i63 ]
   %.1.lcssa.i = phi i32 [ %i.gc, %bb.g ], [ %i.gd, %.lr.ph.i63 ]
-  %i.gf = load ptr, ptr %28, align 8, !tbaa !16
+  %i.gf = load ptr, ptr %23, align 8, !tbaa !16
   %i.gg = getelementptr inbounds nuw i8, ptr %i.gf, i64 8 ; 3 uses
-  store ptr %i.gg, ptr %28, align 8, !tbaa !16
+  store ptr %i.gg, ptr %23, align 8, !tbaa !16
   %i.gh = load ptr, ptr %i.fs, align 8, !tbaa !19
   %i.gi = icmp eq ptr %i.gg, %i.gh
   br i1 %i.gi, label %bb.h, label %VP8LRefsCursorNext.exit.i
 
 bb.h:                                             ; preds = %._crit_edge.i
-  call void @VP8LRefsCursorNextBlock(ptr noundef nonnull %28) #10
-  %.val.pre.i = load ptr, ptr %28, align 8, !tbaa !16
+  call void @VP8LRefsCursorNextBlock(ptr noundef nonnull %23) #10
+  %.val.pre.i = load ptr, ptr %23, align 8, !tbaa !16
   br label %VP8LRefsCursorNext.exit.i
 
 VP8LRefsCursorNext.exit.i:                        ; preds = %bb.h, %._crit_edge.i
@@ -628,7 +623,7 @@ VP8LRefsCursorNext.exit.i:                        ; preds = %bb.h, %._crit_edge.
   br i1 %.not24.i, label %HistogramBuild.exit, label %bb.g, !llvm.loop !44
 
 HistogramBuild.exit:                              ; preds = %VP8LRefsCursorNext.exit.i, %VP8LHistogramSetClear.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %28) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %23) #10
   %i.gj = load ptr, ptr %i.x, align 8, !tbaa !22
   %i.gk = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 15 uses
   %i.gl = load ptr, ptr %i.gk, align 8, !tbaa !22
@@ -1025,7 +1020,7 @@ GetBinIdForEntropy.exit.i.i.epil.preheader:       ; preds = %HistogramAnalyzeEnt
   br label %HistogramAnalyzeEntropyBin.exit
 
 HistogramAnalyzeEntropyBin.exit:                  ; preds = %GetBinIdForEntropy.exit.i.i.epil.preheader, %HistogramAnalyzeEntropyBin.exit.loopexit335.unr-lcssa, %HistogramAnalyzeEntropyBin.exit.loopexit334.unr-lcssa, %GetBinIdForEntropy.exit.i.us21.i.epil, %GetBinIdForEntropy.exit17.i.us.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %27) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %22) #10
   %wide.trip.count.i80 = zext nneg i32 %i.ch to i64 ; 2 uses
   br i1 %i.cg, label %scalar.ph, label %vector.ph
 
@@ -1035,8 +1030,8 @@ vector.ph:                                        ; preds = %HistogramAnalyzeEnt
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.od = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %index
-  %i.oe = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %index
+  %i.od = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %index
+  %i.oe = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %index
   %i.of = getelementptr inbounds nuw i8, ptr %i.oe, i64 16
   store <8 x i16> <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>, ptr %i.od, align 16, !tbaa !14
   store <8 x i16> <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>, ptr %i.of, align 16, !tbaa !14
@@ -1058,7 +1053,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.om = getelementptr inbounds nuw i8, ptr %i.ol, i64 3310
   %i.on = load i16, ptr %i.om, align 2, !tbaa !48
   %i.oo = zext i16 %i.on to i64
-  %i.op = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %i.oo ; 3 uses
+  %i.op = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %i.oo ; 3 uses
   %i.oq = load i16, ptr %i.op, align 4, !tbaa !55 ; 2 uses
   %i.or = icmp eq i16 %i.oq, -1
   br i1 %i.or, label %bb.aj, label %bb.u
@@ -1233,7 +1228,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %.th
 
 scalar.ph:                                        ; preds = %HistogramAnalyzeEntropyBin.exit, %scalar.ph
   %indvars.iv.i81 = phi i64 [ %indvars.iv.next.i82, %scalar.ph ], [ 0, %HistogramAnalyzeEntropyBin.exit ] ; 2 uses
-  %i.rr = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %indvars.iv.i81 ; 2 uses
+  %i.rr = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %indvars.iv.i81 ; 2 uses
   store i16 -1, ptr %i.rr, align 4, !tbaa !55
   %i.rs = getelementptr inbounds nuw i8, ptr %i.rr, i64 2
   store i16 0, ptr %i.rs, align 2, !tbaa !57
@@ -1250,7 +1245,7 @@ scalar.ph:                                        ; preds = %HistogramAnalyzeEnt
   %i.rx = getelementptr inbounds nuw i8, ptr %i.rw, i64 3310
   %i.ry = load i16, ptr %i.rx, align 2, !tbaa !48
   %i.rz = zext i16 %i.ry to i64
-  %i.sa = getelementptr inbounds nuw [4 x i8], ptr %27, i64 %i.rz ; 2 uses
+  %i.sa = getelementptr inbounds nuw [4 x i8], ptr %22, i64 %i.rz ; 2 uses
   %i.sb = load i16, ptr %i.sa, align 4, !tbaa !55 ; 2 uses
   %i.sc = icmp eq i16 %i.sb, -1
   br i1 %i.sc, label %bb.al, label %bb.am
@@ -1347,11 +1342,11 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.um, label %.lr.ph82.i, label %.loopexit160.thread, !llvm.loop !60
 
 .loopexit160.thread:                              ; preds = %.lr.ph82.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %27) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #10
   br label %.thread153
 
 .loopexit160:                                     ; preds = %._crit_edge.i84
-  call void @llvm.lifetime.end.p0(ptr nonnull %27) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %22) #10
   br i1 %i.cg, label %.thread153, label %.thread138
 
 .thread138:                                       ; preds = %HistogramBuild.exit, %HistogramCopyAndAnalyze.exit, %.loopexit160
@@ -1392,10 +1387,10 @@ bb.aq:                                            ; preds = %DivRound.exit
 
 .lr.ph156.i:                                      ; preds = %.preheader.i
   %i.va = getelementptr inbounds nuw i8, ptr %i.uy, i64 8 ; 3 uses
-  %i.vb = getelementptr inbounds nuw i8, ptr %26, i64 4
-  %i.vc = getelementptr inbounds nuw i8, ptr %26, i64 16 ; 2 uses
-  %i.vd = getelementptr inbounds nuw i8, ptr %26, i64 24
-  %i.ve = getelementptr inbounds nuw i8, ptr %26, i64 8
+  %i.vb = getelementptr inbounds nuw i8, ptr %21, i64 4
+  %i.vc = getelementptr inbounds nuw i8, ptr %21, i64 16 ; 2 uses
+  %i.vd = getelementptr inbounds nuw i8, ptr %21, i64 24
+  %i.ve = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.vf = getelementptr inbounds nuw i8, ptr %i.uy, i64 4
   %i.vg = getelementptr inbounds nuw i8, ptr %i.uy, i64 16
   %i.vh = getelementptr inbounds nuw i8, ptr %i.uy, i64 24
@@ -1445,7 +1440,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
   %i.vy = mul nuw nsw i64 %i.vx, 48271
   %i.vz = urem i64 %i.vy, 2147483647
   %i.wa = trunc nuw nsw i64 %i.vz to i32          ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %26) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %21) #10
   %i.wb = icmp eq i32 %.sroa.13.1140.i, 9
   br i1 %i.wb, label %HistoQueuePush.exit.thread.i, label %bb.aw
 
@@ -1459,7 +1454,7 @@ bb.aw:                                            ; preds = %.lr.ph.i94
   %spec.select.i95 = add nuw nsw i32 %i.we, %i.wg ; 2 uses
   %i.wh = call i32 @llvm.umax.i32(i32 %i.wf, i32 %spec.select.i95) ; 2 uses
   %i.wi = call i32 @llvm.umin.i32(i32 %i.wf, i32 %spec.select.i95) ; 2 uses
-  store i32 %i.wi, ptr %26, align 8, !tbaa !63
+  store i32 %i.wi, ptr %21, align 8, !tbaa !63
   store i32 %i.wh, ptr %i.vb, align 4, !tbaa !64
   %i.wj = zext nneg i32 %i.wi to i64
   %i.wk = getelementptr inbounds nuw [8 x i8], ptr %i.ux, i64 %i.wj
@@ -1489,7 +1484,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.xa = add nsw i32 %.sroa.13.1140.i, 1         ; 3 uses
   %i.xb = sext i32 %.sroa.13.1140.i to i64
   %i.xc = getelementptr inbounds [64 x i8], ptr %i.uy, i64 %i.xb
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.xc, ptr noundef nonnull align 8 dereferenceable(64) %26, i64 64, i1 false), !tbaa.struct !66
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.xc, ptr noundef nonnull align 8 dereferenceable(64) %21, i64 64, i1 false), !tbaa.struct !66
   %i.xd = sext i32 %i.xa to i64
   %i.xe = getelementptr [64 x i8], ptr %i.uy, i64 %i.xd ; 2 uses
   %i.xf = getelementptr i8, ptr %i.xe, i64 -56
@@ -1500,19 +1495,17 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.xj = getelementptr i8, ptr %i.xe, i64 -64    ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %25)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %25, ptr noundef nonnull align 8 dereferenceable(64) %i.uy, i64 64, i1 false), !tbaa.struct !66
+  %.sroa.0.0.copyload = load <64 x i8>, ptr %i.uy, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.uy, ptr noundef nonnull align 8 dereferenceable(64) %i.xj, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.xj, ptr noundef nonnull align 8 dereferenceable(64) %25, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.lifetime.end.p0(ptr nonnull %25)
+  store <64 x i8> %.sroa.0.0.copyload, ptr %i.xj, align 8
   br label %HistoQueuePush.exit.i
 
 HistoQueuePush.exit.thread.i:                     ; preds = %bb.aw, %.lr.ph.i94
-  call void @llvm.lifetime.end.p0(ptr nonnull %26) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #10
   br label %bb.az
 
 HistoQueuePush.exit.i:                            ; preds = %bb.ay, %bb.ax
-  call void @llvm.lifetime.end.p0(ptr nonnull %26) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %21) #10
   %i.xk = icmp sgt i64 %i.wz, -1                  ; 2 uses
   %i.xl = icmp ne i32 %i.xa, 9
   %.290.i = select i1 %i.xk, i64 %.088142.i, i64 %i.wz
@@ -1707,11 +1700,9 @@ HistoQueueFixPair.exit105.i:                      ; preds = %bb.bo, %bb.bn
   br i1 %i.aav, label %bb.bp, label %HistoQueueUpdateHead.exit.i
 
 bb.bp:                                            ; preds = %HistoQueueFixPair.exit105.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %24)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %24, ptr noundef nonnull align 8 dereferenceable(64) %i.uy, i64 64, i1 false), !tbaa.struct !66
+  %.sroa.0388.0.copyload = load <64 x i8>, ptr %i.uy, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.uy, ptr noundef nonnull align 8 dereferenceable(64) %i.yx, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.yx, ptr noundef nonnull align 8 dereferenceable(64) %24, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.lifetime.end.p0(ptr nonnull %24)
+  store <64 x i8> %.sroa.0388.0.copyload, ptr %i.yx, align 8
   br label %HistoQueueUpdateHead.exit.i
 
 HistoQueueUpdateHead.exit.i:                      ; preds = %bb.bp, %HistoQueueFixPair.exit105.i
@@ -1763,9 +1754,9 @@ bb.br:                                            ; preds = %bb.aq
   br i1 %i.abh, label %.lr.ph130.i, label %HistogramCombineGreedy.exit.thread
 
 .lr.ph130.i:                                      ; preds = %.preheader119.i
-  %i.abi = getelementptr inbounds nuw i8, ptr %23, i64 4
-  %i.abj = getelementptr inbounds nuw i8, ptr %23, i64 16
-  %i.abk = getelementptr inbounds nuw i8, ptr %23, i64 24
+  %i.abi = getelementptr inbounds nuw i8, ptr %20, i64 4
+  %i.abj = getelementptr inbounds nuw i8, ptr %20, i64 16
+  %i.abk = getelementptr inbounds nuw i8, ptr %20, i64 24
   %i.abl = getelementptr inbounds nuw i8, ptr %18, i64 12
   %i.abm = getelementptr inbounds nuw i8, ptr %18, i64 8 ; 2 uses
   %i.abn = getelementptr inbounds nuw i8, ptr %18, i64 16
@@ -1774,7 +1765,7 @@ bb.br:                                            ; preds = %bb.aq
   %i.abq = getelementptr inbounds nuw i8, ptr %17, i64 4
   %i.abr = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.abs = getelementptr inbounds nuw i8, ptr %17, i64 20
-  %i.abt = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %i.abt = getelementptr inbounds nuw i8, ptr %20, i64 8
   %i.abu = getelementptr inbounds nuw i8, ptr %i.abg, i64 8 ; 3 uses
   br label %bb.bs
 
@@ -1795,9 +1786,9 @@ bb.br:                                            ; preds = %bb.aq
   %i.aca = getelementptr inbounds nuw i8, ptr %i.abg, i64 40
   %i.acb = getelementptr inbounds nuw i8, ptr %i.abg, i64 48
   %i.acc = getelementptr inbounds nuw i8, ptr %i.abg, i64 56
-  %i.acd = getelementptr inbounds nuw i8, ptr %20, i64 4
-  %i.ace = getelementptr inbounds nuw i8, ptr %20, i64 16
-  %i.acf = getelementptr inbounds nuw i8, ptr %20, i64 24
+  %i.acd = getelementptr inbounds nuw i8, ptr %19, i64 4
+  %i.ace = getelementptr inbounds nuw i8, ptr %19, i64 16
+  %i.acf = getelementptr inbounds nuw i8, ptr %19, i64 24
   %i.acg = getelementptr inbounds nuw i8, ptr %16, i64 12
   %i.ach = getelementptr inbounds nuw i8, ptr %16, i64 8 ; 2 uses
   %i.aci = getelementptr inbounds nuw i8, ptr %16, i64 16
@@ -1806,7 +1797,7 @@ bb.br:                                            ; preds = %bb.aq
   %i.acl = getelementptr inbounds nuw i8, ptr %15, i64 4
   %i.acm = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.acn = getelementptr inbounds nuw i8, ptr %15, i64 20
-  %i.aco = getelementptr inbounds nuw i8, ptr %20, i64 8
+  %i.aco = getelementptr inbounds nuw i8, ptr %19, i64 8
   br label %bb.cn
 
 bb.bs:                                            ; preds = %.loopexit118.i, %.lr.ph130.i
@@ -1819,14 +1810,14 @@ bb.bs:                                            ; preds = %.loopexit118.i, %.l
 .lr.ph.i106:                                      ; preds = %bb.bs, %HistoQueuePush.exit.i109
   %.049127.i = phi i32 [ %i.ahd, %HistoQueuePush.exit.i109 ], [ %i.acp, %bb.bs ] ; 3 uses
   %.sroa.13.1126.i = phi i32 [ %.sroa.13.7.i, %HistoQueuePush.exit.i109 ], [ %.sroa.13.0128.i, %bb.bs ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %23) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %20) #10
   %i.acr = icmp eq i32 %.sroa.13.1126.i, %i.abd
   br i1 %i.acr, label %HistoQueuePush.exit.i109, label %bb.bt
 
 bb.bt:                                            ; preds = %.lr.ph.i106
   %spec.select.i.i = call i32 @llvm.smax.i32(i32 %.048129.i, i32 %.049127.i) ; 2 uses
   %spec.select26.i.i = call i32 @llvm.smin.i32(i32 %.048129.i, i32 %.049127.i) ; 2 uses
-  store i32 %spec.select26.i.i, ptr %23, align 8, !tbaa !63
+  store i32 %spec.select26.i.i, ptr %20, align 8, !tbaa !63
   store i32 %spec.select.i.i, ptr %i.abi, align 4, !tbaa !64
   %i.acs = zext nneg i32 %spec.select26.i.i to i64
   %i.act = getelementptr inbounds nuw [8 x i8], ptr %i.abb, i64 %i.acs
@@ -2055,7 +2046,7 @@ GetCombinedHistogramEntropy.exit.i:               ; preds = %bb.bv
   %i.agt = add nsw i32 %.sroa.13.1126.i, 1        ; 3 uses
   %i.agu = sext i32 %.sroa.13.1126.i to i64
   %i.agv = getelementptr inbounds [64 x i8], ptr %i.abg, i64 %i.agu
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.agv, ptr noundef nonnull align 8 dereferenceable(64) %23, i64 64, i1 false), !tbaa.struct !66
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.agv, ptr noundef nonnull align 8 dereferenceable(64) %20, i64 64, i1 false), !tbaa.struct !66
   %i.agw = sext i32 %i.agt to i64
   %i.agx = getelementptr [64 x i8], ptr %i.abg, i64 %i.agw ; 2 uses
   %i.agy = getelementptr i8, ptr %i.agx, i64 -56
@@ -2066,16 +2057,14 @@ GetCombinedHistogramEntropy.exit.i:               ; preds = %bb.bv
 
 bb.cm:                                            ; preds = %GetCombinedHistogramEntropy.exit.i
   %i.ahc = getelementptr i8, ptr %i.agx, i64 -64  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %22)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %22, ptr noundef nonnull align 8 dereferenceable(64) %i.abg, i64 64, i1 false), !tbaa.struct !66
+  %.sroa.0390.0.copyload = load <64 x i8>, ptr %i.abg, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.abg, ptr noundef nonnull align 8 dereferenceable(64) %i.ahc, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ahc, ptr noundef nonnull align 8 dereferenceable(64) %22, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.lifetime.end.p0(ptr nonnull %22)
+  store <64 x i8> %.sroa.0390.0.copyload, ptr %i.ahc, align 8
   br label %HistoQueuePush.exit.i109
 
 HistoQueuePush.exit.i109:                         ; preds = %GetCombinedEntropy.exit.i.i, %bb.cm, %GetCombinedHistogramEntropy.exit.i, %bb.bt, %.lr.ph.i106
   %.sroa.13.7.i = phi i32 [ %i.abd, %.lr.ph.i106 ], [ %i.agt, %GetCombinedHistogramEntropy.exit.i ], [ %i.agt, %bb.cm ], [ %.sroa.13.1126.i, %bb.bt ], [ %.sroa.13.1126.i, %GetCombinedEntropy.exit.i.i ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %23) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %20) #10
   %i.ahd = add nuw i32 %.049127.i, 1              ; 2 uses
   %exitcond.not.i110 = icmp eq i32 %i.ahd, %i.abc
   br i1 %exitcond.not.i110, label %.loopexit118.i, label %.lr.ph.i106, !llvm.loop !73
@@ -2195,11 +2184,9 @@ HistoQueueFixPair.exit.i99:                       ; preds = %bb.cw, %bb.cv
   br i1 %i.ajg, label %bb.cx, label %HistoQueueUpdateHead.exit.i100
 
 bb.cx:                                            ; preds = %HistoQueueFixPair.exit.i99
-  call void @llvm.lifetime.start.p0(ptr nonnull %21)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %21, ptr noundef nonnull align 8 dereferenceable(64) %i.abg, i64 64, i1 false), !tbaa.struct !66
+  %.sroa.0392.0.copyload = load <64 x i8>, ptr %i.abg, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.abg, ptr noundef nonnull align 8 dereferenceable(64) %i.ail, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.ail, ptr noundef nonnull align 8 dereferenceable(64) %21, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.lifetime.end.p0(ptr nonnull %21)
+  store <64 x i8> %.sroa.0392.0.copyload, ptr %i.ail, align 8
   br label %HistoQueueUpdateHead.exit.i100
 
 HistoQueueUpdateHead.exit.i100:                   ; preds = %bb.cx, %HistoQueueFixPair.exit.i99
@@ -2221,14 +2208,14 @@ bb.cy:                                            ; preds = %HistoQueueUpdateHea
 
 bb.cz:                                            ; preds = %.lr.ph142.i
   %i.ajl = load ptr, ptr %i.gk, align 8, !tbaa !22 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %20) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %19) #10
   %i.ajm = icmp eq i32 %.sroa.13.5139.i, %i.abd
   br i1 %i.ajm, label %HistoQueuePush.exit61.i, label %bb.da
 
 bb.da:                                            ; preds = %bb.cz
   %spec.select.i57.i = call i32 @llvm.smax.i32(i32 %i.ahf, i32 %.3140.i) ; 2 uses
   %spec.select26.i58.i = call i32 @llvm.smin.i32(i32 %i.ahf, i32 %.3140.i) ; 2 uses
-  store i32 %spec.select26.i58.i, ptr %20, align 8, !tbaa !63
+  store i32 %spec.select26.i58.i, ptr %19, align 8, !tbaa !63
   store i32 %spec.select.i57.i, ptr %i.acd, align 4, !tbaa !64
   %i.ajn = sext i32 %spec.select26.i58.i to i64
   %i.ajo = getelementptr inbounds [8 x i8], ptr %i.ajl, i64 %i.ajn
@@ -2457,7 +2444,7 @@ GetCombinedHistogramEntropy.exit92.i:             ; preds = %bb.dc
   %i.ano = add nsw i32 %.sroa.13.5139.i, 1        ; 3 uses
   %i.anp = sext i32 %.sroa.13.5139.i to i64
   %i.anq = getelementptr inbounds [64 x i8], ptr %i.abg, i64 %i.anp
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.anq, ptr noundef nonnull align 8 dereferenceable(64) %20, i64 64, i1 false), !tbaa.struct !66
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.anq, ptr noundef nonnull align 8 dereferenceable(64) %19, i64 64, i1 false), !tbaa.struct !66
   %i.anr = sext i32 %i.ano to i64
   %i.ans = getelementptr [64 x i8], ptr %i.abg, i64 %i.anr ; 2 uses
   %i.ant = getelementptr i8, ptr %i.ans, i64 -56
@@ -2468,16 +2455,14 @@ GetCombinedHistogramEntropy.exit92.i:             ; preds = %bb.dc
 
 bb.dt:                                            ; preds = %GetCombinedHistogramEntropy.exit92.i
   %i.anx = getelementptr i8, ptr %i.ans, i64 -64  ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %19)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %19, ptr noundef nonnull align 8 dereferenceable(64) %i.abg, i64 64, i1 false), !tbaa.struct !66
+  %.sroa.0394.0.copyload = load <64 x i8>, ptr %i.abg, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.abg, ptr noundef nonnull align 8 dereferenceable(64) %i.anx, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.anx, ptr noundef nonnull align 8 dereferenceable(64) %19, i64 64, i1 false), !tbaa.struct !66
-  call void @llvm.lifetime.end.p0(ptr nonnull %19)
+  store <64 x i8> %.sroa.0394.0.copyload, ptr %i.anx, align 8
   br label %HistoQueuePush.exit61.i
 
 HistoQueuePush.exit61.i:                          ; preds = %GetCombinedEntropy.exit.i68.i, %bb.dt, %GetCombinedHistogramEntropy.exit92.i, %bb.da, %bb.cz
   %.sroa.13.8.i = phi i32 [ %i.abd, %bb.cz ], [ %i.ano, %GetCombinedHistogramEntropy.exit92.i ], [ %i.ano, %bb.dt ], [ %.sroa.13.5139.i, %bb.da ], [ %.sroa.13.5139.i, %GetCombinedEntropy.exit.i68.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %20) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %19) #10
   %.pre.i105 = load i32, ptr %7, align 8, !tbaa !26
   br label %bb.du
 

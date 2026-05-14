@@ -9,7 +9,6 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"class.std::shared_ptr" = type { %"class.std::__shared_ptr" }
 %"class.std::__shared_ptr" = type { ptr, %"class.std::__shared_count" }
 %"class.std::__shared_count" = type { ptr }
-%"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd" = type { [3 x i64], i64 }
 %"class.OpenColorIO_v2_5::Lut3DOpData::Lut3DArray" = type { %"class.OpenColorIO_v2_5::ArrayT" }
 %"class.OpenColorIO_v2_5::ArrayT" = type { %"class.OpenColorIO_v2_5::ArrayBase", i64, i64, %"class.std::vector.11" }
 %"class.OpenColorIO_v2_5::ArrayBase" = type { ptr }
@@ -412,11 +411,9 @@ bb.a:
   %i.c = alloca [4 x float], align 16             ; 10 uses
   %i.d = alloca [16 x i64], align 16              ; 24 uses
   %.sroa.06.i.i20.i.i.i.i = alloca [3 x i64], align 8 ; 4 uses
-  %2 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
   %.sroa.06.i.i9.i.i.i.i = alloca [3 x i64], align 8 ; 4 uses
   %.sroa.06.i.i.i.i.i.i = alloca [3 x i64], align 8 ; 4 uses
-  %3 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %4 = alloca %"class.OpenColorIO_v2_5::Lut3DOpData::Lut3DArray", align 8 ; 15 uses
+  %2 = alloca %"class.OpenColorIO_v2_5::Lut3DOpData::Lut3DArray", align 8 ; 15 uses
   %i.e = alloca [3 x float], align 4              ; 5 uses
   %i.f = alloca [3 x float], align 8              ; 8 uses
   %i.g = alloca [3 x float], align 8              ; 8 uses
@@ -434,8 +431,8 @@ bb.a:
   %i.s = add i64 %i.r, 2
   %i.t = load ptr, ptr %1, align 8, !tbaa !7
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 176 ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayC1Em(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.s)
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #25
+  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayC1Em(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.s)
   %.not.i = icmp eq i64 %i.r, 0
   br i1 %.not.i, label %._crit_edge.i, label %.preheader221.i
 
@@ -471,7 +468,7 @@ bb.d:                                             ; preds = %bb.f, %.preheader22
 
 bb.e:                                             ; preds = %bb.d
   %i.aa = add nuw i64 %.0174222.i, 1              ; 3 uses
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.v, i64 noundef %i.z, i64 noundef %i.aa, ptr noundef nonnull %i.e)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.v, i64 noundef %i.z, i64 noundef %i.aa, ptr noundef nonnull %i.e)
           to label %bb.f unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -524,7 +521,7 @@ bb.k:                                             ; preds = %bb.j
   %i.al = fadd float %i.ak, -5.000000e-01
   %i.am = call float @llvm.fmuladd.f32(float %i.al, float 4.000000e+00, float 5.000000e-01)
   store float %i.am, ptr %i.x, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.ac, i64 noundef %i.ae, i64 noundef %i.ag, ptr noundef nonnull %i.f)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.ac, i64 noundef %i.ae, i64 noundef %i.ag, ptr noundef nonnull %i.f)
           to label %bb.l unwind label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -579,7 +576,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bb = fadd float %i.ba, -5.000000e-01
   %i.bc = call float @llvm.fmuladd.f32(float %i.bb, float 4.000000e+00, float 5.000000e-01)
   store float %i.bc, ptr %i.ad, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.aq, i64 noundef %i.at, i64 noundef %i.aw, ptr noundef nonnull %i.g)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.aq, i64 noundef %i.at, i64 noundef %i.aw, ptr noundef nonnull %i.g)
           to label %bb.r unwind label %bb.s
 
 bb.r:                                             ; preds = %bb.q
@@ -633,7 +630,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bp = fadd float %i.bo, -5.000000e-01
   %i.bq = call float @llvm.fmuladd.f32(float %i.bp, float 4.000000e+00, float 5.000000e-01)
   store float %i.bq, ptr %i.ar, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.bf, i64 noundef %i.bh, i64 noundef %i.bk, ptr noundef nonnull %i.h)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.bf, i64 noundef %i.bh, i64 noundef %i.bk, ptr noundef nonnull %i.h)
           to label %bb.x unwind label %bb.y
 
 bb.x:                                             ; preds = %bb.w
@@ -689,7 +686,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.cg = fadd float %i.cf, -5.000000e-01
   %i.ch = call float @llvm.fmuladd.f32(float %i.cg, float 4.000000e+00, float 5.000000e-01)
   store float %i.ch, ptr %i.bg, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.bt, i64 noundef %i.bw, i64 noundef %i.cb, ptr noundef nonnull %i.i)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.bt, i64 noundef %i.bw, i64 noundef %i.cb, ptr noundef nonnull %i.i)
           to label %bb.ad unwind label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
@@ -744,7 +741,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.cv = fadd float %i.cu, -5.000000e-01
   %i.cw = call float @llvm.fmuladd.f32(float %i.cv, float 4.000000e+00, float 5.000000e-01)
   store float %i.cw, ptr %i.bu, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.cj, i64 noundef %i.cm, i64 noundef %i.cq, ptr noundef nonnull %i.j)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.cj, i64 noundef %i.cm, i64 noundef %i.cq, ptr noundef nonnull %i.j)
           to label %bb.aj unwind label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
@@ -800,7 +797,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.dm = fadd float %i.dl, -5.000000e-01
   %i.dn = call float @llvm.fmuladd.f32(float %i.dm, float 4.000000e+00, float 5.000000e-01)
   store float %i.dn, ptr %i.ck, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.db, i64 noundef %i.dd, i64 noundef %i.dh, ptr noundef nonnull %i.k)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.db, i64 noundef %i.dd, i64 noundef %i.dh, ptr noundef nonnull %i.k)
           to label %bb.ap unwind label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
@@ -822,7 +819,7 @@ bb.aq:                                            ; preds = %bb.ao, %bb.an
   br label %.preheader.i
 
 ._crit_edge.i:                                    ; preds = %bb.ar, %bb.a
-  %i.dt = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.dt = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.dv = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIfSaIfEEaSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.du, ptr noundef nonnull align 8 dereferenceable(24) %i.dt)
           to label %_ZN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer18extrapolate3DArrayERSt10shared_ptrIKNS_11Lut3DOpDataEE.exit unwind label %bb.ax ; 0 uses
@@ -860,7 +857,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ei = fadd float %i.eh, -5.000000e-01
   %i.ej = call float @llvm.fmuladd.f32(float %i.ei, float 4.000000e+00, float 5.000000e-01)
   store float %i.ej, ptr %i.dc, align 8, !tbaa !102
-  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %i.ds, i64 noundef %i.dx, i64 noundef %i.ed, ptr noundef nonnull %i.l)
+  invoke void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArray6setRGBElllPf(ptr noundef nonnull align 8 dereferenceable(48) %2, i64 noundef %i.ds, i64 noundef %i.dx, i64 noundef %i.ed, ptr noundef nonnull %i.l)
           to label %bb.av unwind label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
@@ -886,13 +883,13 @@ common.resume:                                    ; preds = %.body.i, %bb.ea, %b
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw, %bb.aq, %bb.ak, %bb.ae, %bb.y, %bb.s, %bb.m, %bb.g
   %.pn198.i = phi { ptr, i32 } [ %i.ab, %bb.g ], [ %i.ap, %bb.m ], [ %i.bd, %bb.s ], [ %i.br, %bb.y ], [ %i.ci, %bb.ae ], [ %i.cz, %bb.ak ], [ %i.dq, %bb.aq ], [ %i.em, %bb.aw ], [ %i.en, %bb.ax ]
-  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayD1Ev(ptr noundef nonnull align 8 dereferenceable(48) %4) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
+  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayD1Ev(ptr noundef nonnull align 8 dereferenceable(48) %2) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br label %common.resume
 
 _ZN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer18extrapolate3DArrayERSt10shared_ptrIKNS_11Lut3DOpDataEE.exit: ; preds = %._crit_edge.i
-  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayD1Ev(ptr noundef nonnull align 8 dereferenceable(48) %4) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
+  call void @_ZN16OpenColorIO_v2_511Lut3DOpData10Lut3DArrayD1Ev(ptr noundef nonnull align 8 dereferenceable(48) %2) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   %i.eo = load ptr, ptr %1, align 8, !tbaa !7
   %i.ep = getelementptr inbounds nuw i8, ptr %i.eo, i64 176 ; 2 uses
   %i.eq = load ptr, ptr %i.ep, align 8, !tbaa !51
@@ -1295,10 +1292,9 @@ bb.bq:                                            ; preds = %bb.bv, %.lr.ph.i.i.
   br i1 %i.of, label %bb.br, label %bb.bu
 
 bb.br:                                            ; preds = %bb.bq
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.019.i.ptr.i.i.i.i, i64 32, i1 false), !tbaa.struct !189
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %.sroa.0.019.i.ptr.i.i.i.i, align 8
   %i.og = icmp samesign ugt i64 %.sroa.0.019.i.idx.i.i.i.i, 32
-  br i1 %i.og, label %bb.bs, label %bb.bt, !prof !190
+  br i1 %i.og, label %bb.bs, label %bb.bt, !prof !189
 
 bb.bs:                                            ; preds = %bb.br
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(1) %.val72.i, i64 %.sroa.0.019.i.idx.i.i.i.i, i1 false)
@@ -1306,17 +1302,16 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.br
   %i.oh = getelementptr inbounds nuw i8, ptr %.pn18.i.i.i.i.i, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.oh, ptr noundef nonnull readonly align 8 dereferenceable(32) %.val72.i, i64 32, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.oh, ptr noundef nonnull readonly align 8 dereferenceable(32) %.val72.i, i64 32, i1 false), !tbaa.struct !190
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i.i.i.i: ; preds = %bb.bt, %bb.bs
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.val72.i, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <32 x i8> %.sroa.0.0.copyload, ptr %.val72.i, align 8
   br label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bq
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i.ptr.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i.ptr.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %i.oi = getelementptr i8, ptr %.pn18.i.i.i.i.i, i64 24
   %.val2.i9.i.i.i.i.i.i = load i64, ptr %i.oi, align 8, !tbaa !184
   %i.oj = icmp ult i64 %.val2.i.i.i.i.i.i, %.val2.i9.i.i.i.i.i.i
@@ -1325,7 +1320,7 @@ bb.bu:                                            ; preds = %bb.bq
 .lr.ph.i.i.i.i.i80.i:                             ; preds = %bb.bu, %.lr.ph.i.i.i.i.i80.i
   %.sroa.08.010.i.i.i.i.i.i = phi ptr [ %.sroa.0.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i80.i ], [ %.sroa.0.019.i.ptr.i.i.i.i, %bb.bu ] ; 3 uses
   %.sroa.0.0.i.i.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.08.010.i.i.i.i.i.i, i64 -32 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i.i.i.i.i, i64 32, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i.i.i.i.i, i64 32, i1 false), !tbaa.struct !190
   %i.ok = getelementptr i8, ptr %.sroa.08.010.i.i.i.i.i.i, i64 -40
   %.val2.i.i.i.i.i.i.i = load i64, ptr %i.ok, align 8, !tbaa !184
   %i.ol = icmp ult i64 %.val2.i.i.i.i.i.i, %.val2.i.i.i.i.i.i.i
@@ -1333,7 +1328,7 @@ bb.bu:                                            ; preds = %bb.bq
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i80.i, %bb.bu
   %.sroa.08.0.lcssa.i.i.i.i.i.i = phi ptr [ %.sroa.0.019.i.ptr.i.i.i.i, %bb.bu ], [ %.sroa.0.0.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i80.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %.sroa.4.0..val.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.lcssa.i.i.i.i.i.i, i64 24
   store i64 %.val2.i.i.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i.i.i.i.i, align 8, !tbaa !117
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.i.i.i.i.i.i)
@@ -1352,7 +1347,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLO
 .lr.ph.i10.i.i.i.i:                               ; preds = %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_.exit.i.i.i.i, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i12.i.i.i.i
   %.sroa.0.05.i.i.i.i.i = phi ptr [ %i.or, %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i12.i.i.i.i ], [ %i.om, %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_T0_.exit.i.i.i.i ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i.i9.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i9.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.05.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i9.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.05.i.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %.sroa.4.0..val3.sroa_idx.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.05.i.i.i.i.i, i64 24
   %.sroa.4.0.copyload.i.i.i.i.i.i = load i64, ptr %.sroa.4.0..val3.sroa_idx.i.i.i.i.i.i, align 8, !tbaa !117 ; 3 uses
   %i.on = getelementptr i8, ptr %.sroa.0.05.i.i.i.i.i, i64 -8
@@ -1363,7 +1358,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLO
 .lr.ph.i.i16.i.i.i.i:                             ; preds = %.lr.ph.i10.i.i.i.i, %.lr.ph.i.i16.i.i.i.i
   %.sroa.08.010.i.i17.i.i.i.i = phi ptr [ %.sroa.0.0.i.i18.i.i.i.i, %.lr.ph.i.i16.i.i.i.i ], [ %.sroa.0.05.i.i.i.i.i, %.lr.ph.i10.i.i.i.i ] ; 3 uses
   %.sroa.0.0.i.i18.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.08.010.i.i17.i.i.i.i, i64 -32 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i17.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i18.i.i.i.i, i64 32, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i17.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i18.i.i.i.i, i64 32, i1 false), !tbaa.struct !190
   %i.op = getelementptr i8, ptr %.sroa.08.010.i.i17.i.i.i.i, i64 -40
   %.val2.i.i.i19.i.i.i.i = load i64, ptr %i.op, align 8, !tbaa !184
   %i.oq = icmp ult i64 %.sroa.4.0.copyload.i.i.i.i.i.i, %.val2.i.i.i19.i.i.i.i
@@ -1371,7 +1366,7 @@ _ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLO
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i12.i.i.i.i: ; preds = %.lr.ph.i.i16.i.i.i.i, %.lr.ph.i10.i.i.i.i
   %.sroa.08.0.lcssa.i.i13.i.i.i.i = phi ptr [ %.sroa.0.05.i.i.i.i.i, %.lr.ph.i10.i.i.i.i ], [ %.sroa.0.0.i.i18.i.i.i.i, %.lr.ph.i.i16.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i13.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i9.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i13.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i9.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %.sroa.4.0..val.sroa_idx.i.i14.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.lcssa.i.i13.i.i.i.i, i64 24
   store i64 %.sroa.4.0.copyload.i.i.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i14.i.i.i.i, align 8, !tbaa !117
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.i.i9.i.i.i.i)
@@ -1398,13 +1393,12 @@ bb.bw:                                            ; preds = %bb.cc, %.lr.ph.i24.
   br i1 %i.ou, label %bb.bx, label %bb.cb
 
 bb.bx:                                            ; preds = %bb.bw
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.019.i25.i.i.i.i, i64 32, i1 false), !tbaa.struct !189
+  %.sroa.0378.0.copyload = load <32 x i8>, ptr %.sroa.0.019.i25.i.i.i.i, align 8
   %i.ov = ptrtoint ptr %.sroa.0.019.i25.i.i.i.i to i64
   %i.ow = sub i64 %i.ov, %i.mm                    ; 3 uses
   %i.ox = ashr exact i64 %i.ow, 5                 ; 2 uses
   %i.oy = icmp sgt i64 %i.ox, 1
-  br i1 %i.oy, label %bb.by, label %bb.bz, !prof !190
+  br i1 %i.oy, label %bb.by, label %bb.bz, !prof !189
 
 bb.by:                                            ; preds = %bb.bx
   %i.oz = getelementptr inbounds nuw i8, ptr %.pn18.i26.i.i.i.i, i64 64
@@ -1419,17 +1413,16 @@ bb.bz:                                            ; preds = %bb.bx
 
 bb.ca:                                            ; preds = %bb.bz
   %i.pd = getelementptr inbounds nuw i8, ptr %.pn18.i26.i.i.i.i, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.pd, ptr noundef nonnull readonly align 8 dereferenceable(32) %.val72.i, i64 32, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.pd, ptr noundef nonnull readonly align 8 dereferenceable(32) %.val72.i, i64 32, i1 false), !tbaa.struct !190
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i39.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i39.i.i.i.i: ; preds = %bb.ca, %bb.bz, %bb.by
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.val72.i, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <32 x i8> %.sroa.0378.0.copyload, ptr %.val72.i, align 8
   br label %bb.cc
 
 bb.cb:                                            ; preds = %bb.bw
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.06.i.i20.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i20.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i25.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i20.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.019.i25.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %i.pe = getelementptr i8, ptr %.pn18.i26.i.i.i.i, i64 24
   %.val2.i9.i.i29.i.i.i.i = load i64, ptr %i.pe, align 8, !tbaa !184
   %i.pf = icmp ult i64 %.val2.i.i27.i.i.i.i, %.val2.i9.i.i29.i.i.i.i
@@ -1438,7 +1431,7 @@ bb.cb:                                            ; preds = %bb.bw
 .lr.ph.i.i35.i.i.i.i:                             ; preds = %bb.cb, %.lr.ph.i.i35.i.i.i.i
   %.sroa.08.010.i.i36.i.i.i.i = phi ptr [ %.sroa.0.0.i.i37.i.i.i.i, %.lr.ph.i.i35.i.i.i.i ], [ %.sroa.0.019.i25.i.i.i.i, %bb.cb ] ; 3 uses
   %.sroa.0.0.i.i37.i.i.i.i = getelementptr inbounds i8, ptr %.sroa.08.010.i.i36.i.i.i.i, i64 -32 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i36.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i37.i.i.i.i, i64 32, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.08.010.i.i36.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.0.i.i37.i.i.i.i, i64 32, i1 false), !tbaa.struct !190
   %i.pg = getelementptr i8, ptr %.sroa.08.010.i.i36.i.i.i.i, i64 -40
   %.val2.i.i.i38.i.i.i.i = load i64, ptr %i.pg, align 8, !tbaa !184
   %i.ph = icmp ult i64 %.val2.i.i27.i.i.i.i, %.val2.i.i.i38.i.i.i.i
@@ -1446,7 +1439,7 @@ bb.cb:                                            ; preds = %bb.bw
 
 _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_less_iterEEvT_T0_.exit.i30.i.i.i.i: ; preds = %.lr.ph.i.i35.i.i.i.i, %bb.cb
   %.sroa.08.0.lcssa.i.i31.i.i.i.i = phi ptr [ %.sroa.0.019.i25.i.i.i.i, %bb.cb ], [ %.sroa.0.0.i.i37.i.i.i.i, %.lr.ph.i.i35.i.i.i.i ] ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i31.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i20.i.i.i.i, i64 24, i1 false), !tbaa.struct !189
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.08.0.lcssa.i.i31.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.06.i.i20.i.i.i.i, i64 24, i1 false), !tbaa.struct !190
   %.sroa.4.0..val.sroa_idx.i.i32.i.i.i.i = getelementptr inbounds nuw i8, ptr %.sroa.08.0.lcssa.i.i31.i.i.i.i, i64 24
   store i64 %.val2.i.i27.i.i.i.i, ptr %.sroa.4.0..val.sroa_idx.i.i32.i.i.i.i, align 8, !tbaa !117
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.06.i.i20.i.i.i.i)
@@ -1849,7 +1842,7 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i: ; preds = %bb.c
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.f) #24 ; 4 uses
   %i.p = icmp samesign ugt i64 %i.f, 4
-  br i1 %i.p, label %bb.e, label %bb.f, !prof !190
+  br i1 %i.p, label %bb.e, label %bb.f, !prof !189
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm.exit.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.o, ptr align 4 %i.c, i64 %i.f, i1 false)
@@ -1888,7 +1881,7 @@ bb.i:                                             ; preds = %bb.b
 
 bb.j:                                             ; preds = %bb.i
   %i.x = icmp sgt i64 %i.f, 4
-  br i1 %i.x, label %bb.k, label %bb.l, !prof !190
+  br i1 %i.x, label %bb.k, label %bb.l, !prof !189
 
 bb.k:                                             ; preds = %bb.j
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.i, ptr align 4 %i.c, i64 %i.f, i1 false)
@@ -1905,7 +1898,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.i
   %i.aa = icmp sgt i64 %i.w, 4
-  br i1 %i.aa, label %bb.o, label %bb.p, !prof !190
+  br i1 %i.aa, label %bb.o, label %bb.p, !prof !189
 
 bb.o:                                             ; preds = %bb.n
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.i, ptr align 4 %i.c, i64 %i.w, i1 false)
@@ -1937,7 +1930,7 @@ _ZSt4copyIPfS0_ET0_T_S2_S1_.exit:                 ; preds = %bb.o, %bb.p, %bb.q
   %i.ag = ptrtoint ptr %i.af to i64
   %i.ah = sub i64 %.pre-phi34, %i.ag              ; 3 uses
   %i.ai = icmp sgt i64 %i.ah, 4
-  br i1 %i.ai, label %bb.r, label %bb.s, !prof !190
+  br i1 %i.ai, label %bb.r, label %bb.s, !prof !189
 
 bb.r:                                             ; preds = %_ZSt4copyIPfS0_ET0_T_S2_S1_.exit
   tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %i.ad, ptr align 4 %i.af, i64 %i.ah, i1 false)
@@ -2133,7 +2126,7 @@ _ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESaIS3_
 .lr.ph.i.i.i.i:                                   ; preds = %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESaIS3_EE12_M_check_lenEmPKc.exit.i, %.lr.ph.i.i.i.i
   %.03.i.i.i.i = phi ptr [ %i.y, %.lr.ph.i.i.i.i ], [ %i.u, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESaIS3_EE12_M_check_lenEmPKc.exit.i ] ; 2 uses
   %.092.i.i.i.i = phi ptr [ %i.x, %.lr.ph.i.i.i.i ], [ %.val7, %_ZNKSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESaIS3_EE12_M_check_lenEmPKc.exit.i ] ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.03.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(32) %.092.i.i.i.i, i64 32, i1 false), !tbaa.struct !189, !alias.scope !229
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.03.i.i.i.i, ptr noundef nonnull readonly align 8 dereferenceable(32) %.092.i.i.i.i, i64 32, i1 false), !tbaa.struct !190, !alias.scope !229
   %i.x = getelementptr inbounds nuw i8, ptr %.092.i.i.i.i, i64 32 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.03.i.i.i.i, i64 32
   %.not.i.i.i.i = icmp eq ptr %i.x, %.val8
@@ -2176,13 +2169,6 @@ _ZNSt6vectorIN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESaIS3_E
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEElNS0_5__ops15_Iter_less_iterEEvT_SD_T0_T1_(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #20 {
 bb.a:
-  %3 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %4 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %5 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %6 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %7 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %8 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
-  %9 = alloca %"struct.OpenColorIO_v2_5::(anonymous namespace)::InvLut3DRenderer::baseInd", align 8 ; 4 uses
   %.sroa.03.i.i8.i = alloca [3 x i64], align 8    ; 4 uses
   %.sroa.03.i.i.i = alloca [3 x i64], align 8     ; 4 uses
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
@@ -2244,7 +2230,7 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   %spec.select.i.i.i.i = select i1 %i.ad, i64 %i.z, i64 %i.x ; 4 uses
   %i.ae = getelementptr inbounds [32 x i8], ptr %0, i64 %spec.select.i.i.i.i
   %i.af = getelementptr inbounds [32 x i8], ptr %0, i64 %.042.i.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.af, ptr noundef nonnull align 8 dereferenceable(32) %i.ae, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.af, ptr noundef nonnull align 8 dereferenceable(32) %i.ae, i64 32, i1 false), !tbaa.struct !190
   %i.ag = icmp slt i64 %spec.select.i.i.i.i, %i.o
   br i1 %i.ag, label %.lr.ph.i.i.i.i, label %._crit_edge.i.i.i.i, !llvm.loop !235
 
@@ -2255,7 +2241,7 @@ bb.c:                                             ; preds = %_ZSt13__adjust_heap
   br i1 %or.cond.i.i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.t, ptr noundef nonnull align 8 dereferenceable(32) %i.s, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.t, ptr noundef nonnull align 8 dereferenceable(32) %i.s, i64 32, i1 false), !tbaa.struct !190
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge.i.i.i.i
@@ -2275,7 +2261,7 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i.i.i
   %i.am = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %.06.i.i.i.i.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.am, ptr noundef nonnull align 8 dereferenceable(32) %i.aj, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.am, ptr noundef nonnull align 8 dereferenceable(32) %i.aj, i64 32, i1 false), !tbaa.struct !190
   %i.an = icmp sgt i64 %.097.i.i.i.i.i, %.07.i.i.i
   br i1 %i.an, label %.lr.ph.i.i.i.i.i, label %_ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEElS5_NS0_5__ops15_Iter_less_iterEEvT_T0_SE_T1_T2_.exit.i.i.i, !llvm.loop !236
 
@@ -2301,7 +2287,7 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.i.i8.i, ptr noundef nonnull align 8 dereferenceable(24) %i.ar, i64 24, i1 false)
   %.sroa.46.0..sroa.0.0..val4.sroa_idx.i.i.i = getelementptr inbounds i8, ptr %.sroa.0.02.i.i, i64 -8
   %.sroa.46.0.copyload.i.i10.i = load i64, ptr %.sroa.46.0..sroa.0.0..val4.sroa_idx.i.i.i, align 8, !tbaa !117 ; 2 uses
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ar, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ar, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !190
   %i.as = ptrtoint ptr %i.ar to i64
   %i.at = sub i64 %i.as, %i.a                     ; 3 uses
   %i.au = ashr exact i64 %i.at, 5                 ; 3 uses
@@ -2325,7 +2311,7 @@ _ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__
   %spec.select.i.i.i30.i = select i1 %i.bf, i64 %i.bb, i64 %i.az ; 4 uses
   %i.bg = getelementptr inbounds [32 x i8], ptr %0, i64 %spec.select.i.i.i30.i
   %i.bh = getelementptr inbounds [32 x i8], ptr %0, i64 %.042.i.i.i27.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bh, ptr noundef nonnull align 8 dereferenceable(32) %i.bg, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bh, ptr noundef nonnull align 8 dereferenceable(32) %i.bg, i64 32, i1 false), !tbaa.struct !190
   %i.bi = icmp slt i64 %spec.select.i.i.i30.i, %i.aw
   br i1 %i.bi, label %.lr.ph.i.i.i26.i, label %._crit_edge.i.i.i11.i, !llvm.loop !235
 
@@ -2346,7 +2332,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i11
   %i.bp = or disjoint i64 %i.bo, 1                ; 2 uses
   %i.bq = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.bp
   %i.br = getelementptr inbounds [32 x i8], ptr %0, i64 %.0.lcssa.i.i.i12.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.br, ptr noundef nonnull align 8 dereferenceable(32) %i.bq, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.br, ptr noundef nonnull align 8 dereferenceable(32) %i.bq, i64 32, i1 false), !tbaa.struct !190
   br label %.lr.ph.i.i.i.i16.i.preheader
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge.i.i.i11.i
@@ -2369,7 +2355,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge.
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i.i16.i
   %i.bv = getelementptr inbounds [32 x i8], ptr %0, i64 %.06.i.i.i.i17.i
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bv, ptr noundef nonnull align 8 dereferenceable(32) %i.bs, i64 32, i1 false), !tbaa.struct !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.bv, ptr noundef nonnull align 8 dereferenceable(32) %i.bs, i64 32, i1 false), !tbaa.struct !190
   %.not9.i.i24.i = icmp eq i64 %.097.i.i78.i.i19.i, 0
   br i1 %.not9.i.i24.i, label %_ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_RT0_.exit.i21.i, label %.lr.ph.i.i.i.i16.i, !llvm.loop !236
 
@@ -2404,11 +2390,9 @@ bb.j:                                             ; preds = %.lr.ph35
   br i1 %i.cg, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cb, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cb, ptr noundef nonnull align 8 dereferenceable(32) %9, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cb, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.0.0.copyload, ptr %i.cb, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 bb.l:                                             ; preds = %bb.j
@@ -2416,19 +2400,15 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.ch, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cc, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cc, ptr noundef nonnull align 8 dereferenceable(32) %8, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  %.sroa.041.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cc, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.041.0.copyload, ptr %i.cc, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 bb.n:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  %.sroa.043.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.043.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 bb.o:                                             ; preds = %.lr.ph35
@@ -2436,11 +2416,9 @@ bb.o:                                             ; preds = %.lr.ph35
   br i1 %i.ci, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.f, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  %.sroa.045.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.f, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.045.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 bb.q:                                             ; preds = %bb.o
@@ -2448,19 +2426,15 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.cj, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cc, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cc, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  %.sroa.047.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cc, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.047.0.copyload, ptr %i.cc, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 bb.s:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %0, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cb, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cb, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %.sroa.049.0.copyload = load <32 x i8>, ptr %0, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.cb, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.049.0.copyload, ptr %i.cb, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader
 
 _ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i.preheader: ; preds = %bb.s, %bb.r, %bb.p, %bb.n, %bb.m, %bb.k
@@ -2493,11 +2467,9 @@ bb.u:                                             ; preds = %.preheader.i.i
   br i1 %i.cp, label %bb.v, label %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.012.1.i.i, i64 32, i1 false), !tbaa.struct !189
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.012.1.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.1.i.i, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.1.i.i, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !189
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  %.sroa.051.0.copyload = load <32 x i8>, ptr %.sroa.012.1.i.i, align 8
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.012.1.i.i, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.1.i.i, i64 32, i1 false), !tbaa.struct !190
+  store <32 x i8> %.sroa.051.0.copyload, ptr %.sroa.0.1.i.i, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEEvT_SD_SD_SD_T0_.exit.i, !llvm.loop !241
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN16OpenColorIO_v2_512_GLOBAL__N_116InvLut3DRenderer7baseIndESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_less_iterEET_SD_SD_T0_.exit: ; preds = %bb.u
@@ -2860,8 +2832,8 @@ attributes #28 = { noreturn nounwind }
 !186 = distinct !{!186, !104}
 !187 = distinct !{!187, !104}
 !188 = distinct !{!188, !180}
-!189 = !{i64 0, i64 24, !96, i64 24, i64 8, !117}
-!190 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!189 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!190 = !{i64 0, i64 24, !96, i64 24, i64 8, !117}
 !191 = distinct !{!191, !104}
 !192 = distinct !{!192, !104}
 !193 = distinct !{!193, !104}

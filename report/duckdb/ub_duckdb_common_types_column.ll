@@ -201,7 +201,6 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"struct.std::_Vector_base<duckdb::Value, std::allocator<duckdb::Value>>::_Vector_impl" = type { %"struct.std::_Vector_base<duckdb::Value, std::allocator<duckdb::Value>>::_Vector_impl_data" }
 %"struct.std::_Vector_base<duckdb::Value, std::allocator<duckdb::Value>>::_Vector_impl_data" = type { ptr, ptr, ptr }
 %"struct.__gnu_cxx::__ops::_Iter_less_val" = type { i8 }
-%"struct.duckdb::ColumnDataConsumer::ChunkReference" = type <{ ptr, i32, [4 x i8] }>
 
 $_ZNSt6vectorIN6duckdb13AllocatedDataESaIS1_EED2Ev = comdat any
 
@@ -604,12 +603,6 @@ bb.e:                                             ; preds = %bb.c, %_ZNK9__gnu_c
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_less_iterEEvT_SC_SC_SC_T0_(ptr %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %4 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
-  %5 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
-  %6 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
-  %7 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
-  %8 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
-  %9 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !1137   ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !284  ; 3 uses
   %i.c = load ptr, ptr %2, align 8, !tbaa !1137   ; 2 uses
@@ -771,11 +764,10 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18Column
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit42
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %2, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %2, ptr noundef nonnull align 8 dereferenceable(12) %9, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  %.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.0.vec.extract, ptr %2, align 8
   br label %bb.v
 
 bb.h:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit42._crit_edge, %bb.e
@@ -851,19 +843,17 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18Column
   br i1 %i.dr, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit59
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0121.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %3, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %3, ptr noundef nonnull align 8 dereferenceable(12) %8, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  %.sroa.0121.0.vec.extract = shufflevector <16 x i8> %.sroa.0121.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0121.0.vec.extract, ptr %3, align 8
   br label %bb.v
 
 bb.l:                                             ; preds = %bb.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit59
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0122.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef nonnull align 8 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  %.sroa.0122.0.vec.extract = shufflevector <16 x i8> %.sroa.0122.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0122.0.vec.extract, ptr %1, align 8
   br label %bb.v
 
 bb.m:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit._crit_edge, %bb.b
@@ -945,11 +935,10 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18Column
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.n, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit76
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0123.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %1, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef nonnull align 8 dereferenceable(12) %6, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  %.sroa.0123.0.vec.extract = shufflevector <16 x i8> %.sroa.0123.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0123.0.vec.extract, ptr %1, align 8
   br label %bb.v
 
 bb.q:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit76._crit_edge, %bb.n
@@ -1025,19 +1014,17 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18Column
   br i1 %i.gu, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.r, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit93
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0124.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %3, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %3, ptr noundef nonnull align 8 dereferenceable(12) %5, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  %.sroa.0124.0.vec.extract = shufflevector <16 x i8> %.sroa.0124.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0124.0.vec.extract, ptr %3, align 8
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.r, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit93
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0125.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %2, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %2, ptr noundef nonnull align 8 dereferenceable(12) %4, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %.sroa.0125.0.vec.extract = shufflevector <16 x i8> %.sroa.0125.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0125.0.vec.extract, ptr %2, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.p, %bb.u, %bb.t, %bb.g, %bb.l, %bb.k
@@ -1063,7 +1050,6 @@ bb.a:
   %i.k = alloca i64, align 8                      ; 4 uses
   %i.l = alloca i64, align 8                      ; 4 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %7 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   br label %bb.b
 
@@ -1466,11 +1452,10 @@ bb.w:                                             ; preds = %bb.v
   ret ptr %.sroa.063.1
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.063.1, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.063.1, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.063.1, ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.1, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %.sroa.0.1, ptr noundef nonnull align 8 dereferenceable(12) %7, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  %.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.0.vec.extract, ptr %.sroa.0.1, align 8
   %i.fb = getelementptr inbounds nuw i8, ptr %.sroa.063.1, i64 16
   br label %bb.b, !llvm.loop !1563
 }
@@ -1489,7 +1474,6 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 4 uses
   %i.f = alloca i64, align 8                      ; 4 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %4 = alloca %"struct.duckdb::ColumnDataConsumer::ChunkReference", align 8 ; 4 uses
   %i.g = icmp eq ptr %0, %1
   br i1 %i.g, label %.loopexit, label %.preheader
 
@@ -1582,8 +1566,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18Column
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.c, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.035, i64 16, i1 false), !tbaa.struct !1159
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.0.035, align 8
   %i.ax = ptrtoint ptr %.sroa.0.035 to i64
   %i.ay = sub i64 %i.ax, %i.i                     ; 3 uses
   %i.az = ashr exact i64 %i.ay, 4                 ; 2 uses
@@ -1607,8 +1590,8 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit: ; preds = %bb.f, %bb.g, %bb.h
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr noundef nonnull align 8 dereferenceable(12) %4, i64 12, i1 false), !tbaa.struct !1159
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  %.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.0.copyload, <16 x i8> poison, <12 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
+  store <12 x i8> %.sroa.0.0.vec.extract, ptr %0, align 8
   br label %bb.t
 
 bb.i:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN6duckdb18ColumnDataConsumer14ChunkReferenceESt6vectorIS6_SaIS6_EEEESB_EEbT_T0_.exit._crit_edge, %bb.c

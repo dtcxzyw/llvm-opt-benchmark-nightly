@@ -201,7 +201,6 @@ define linkonce_odr void @_ZN5arrow3ipc27RecordBatchStreamReaderImplC2ESt10uniqu
 bb.a:
   %3 = alloca %"class.std::shared_ptr.64", align 8 ; 4 uses
   %4 = alloca %"class.std::shared_ptr.762", align 8 ; 6 uses
-  %.sroa.0 = alloca { i32, ptr }, align 8         ; 2 uses
   %.sroa.15 = alloca { i8, i8, i64, %"struct.arrow::io::CacheOptions" }, align 8 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 64) (i8, ptr @_ZTVN5arrow3ipc23RecordBatchStreamReaderE, i64 16), ptr %0, align 8, !tbaa !80
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -225,7 +224,7 @@ bb.b:                                             ; preds = %bb.a
   store ptr null, ptr %i.c, align 8, !tbaa !69
   store ptr %i.b, ptr %i.h, align 8, !tbaa !69
   store ptr null, ptr %4, align 8, !tbaa !2374
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !96   ; 2 uses
@@ -286,7 +285,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   store ptr %i.b, ptr %i.aa, align 8, !tbaa !69
   store ptr null, ptr %3, align 8, !tbaa !526
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 32
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ab, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.ab, align 8
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   store ptr %i.x, ptr %i.ac, align 8, !tbaa !98
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -689,8 +688,7 @@ _ZN5arrow6ResultINS_23RecordBatchWithMetadataEED2Ev.exit: ; preds = %_ZN5arrow6R
 define internal void @_ZN5arrow3ipc12_GLOBAL__N_125RecordBatchFileReaderImpl33ReadRecordBatchWithCustomMetadataEi(ptr dead_on_unwind noalias writable sret(%"class.arrow::Result.13") align 8 %0, ptr noundef nonnull align 8 dereferenceable(513) %1, i32 noundef %2) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
-  %.sroa.0.i.i.i = alloca { i64, i64 }, align 8   ; 4 uses
-  %4 = alloca %"class.std::function.855", align 8 ; 9 uses
+  %4 = alloca %"class.std::function.855", align 16 ; 9 uses
   %5 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %6 = alloca %"class.arrow::Result", align 8     ; 16 uses
   %7 = alloca %"class.arrow::Future.843", align 8 ; 8 uses
@@ -703,7 +701,7 @@ bb.a:
   %14 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %15 = alloca %"class.arrow::Status", align 8    ; 8 uses
   %16 = alloca %"class.arrow::Status", align 8    ; 7 uses
-  %17 = alloca %"class.std::function.855", align 8 ; 15 uses
+  %17 = alloca %"class.std::function.855", align 16 ; 15 uses
   %18 = alloca %class.anon.858, align 16          ; 21 uses
   %19 = alloca %"class.arrow::Result.859", align 8 ; 11 uses
   %20 = alloca %"struct.arrow::ipc::internal::FileBlock", align 8 ; 5 uses
@@ -1106,7 +1104,7 @@ _ZN5arrow6StatusD2Ev.exit124:                     ; preds = %bb.cl, %bb.cm, %bb.
 _ZN5arrow6StatusD2Ev.exit128:                     ; preds = %_ZN5arrow6StatusD2Ev.exit122, %_ZN5arrow6StatusD2Ev.exit122.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #37
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #37
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %17, i8 0, i64 32, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %17, i8 0, i64 32, i1 false)
   %i.ib = getelementptr inbounds nuw i8, ptr %1, i64 120 ; 3 uses
   %i.ic = load ptr, ptr %i.ib, align 8, !tbaa !33 ; 3 uses
   %i.id = getelementptr inbounds nuw i8, ptr %1, i64 136 ; 2 uses
@@ -1364,18 +1362,16 @@ bb.db:                                            ; preds = %bb.da, %bb.cz, %bb.
   store ptr %i.ln, ptr %i.lz, align 8, !tbaa !388
   %i.ma = getelementptr inbounds nuw i8, ptr %i.ls, i64 96
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ma, ptr noundef nonnull align 8 dereferenceable(48) %i.lq, i64 48, i1 false)
-  store ptr %i.ls, ptr %4, align 8, !tbaa !75
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 16, i1 false), !tbaa.struct !2589
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull align 8 dereferenceable(32) %17, i64 16, i1 false), !tbaa.struct !2589
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %17, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i, i64 16, i1 false), !tbaa.struct !2589
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i)
+  store ptr %i.ls, ptr %4, align 16, !tbaa !75
+  %.sroa.0.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %4, align 16, !tbaa !76
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %4, ptr noundef nonnull align 16 dereferenceable(32) %17, i64 16, i1 false), !tbaa.struct !2589
+  store <16 x i8> %.sroa.0.i.i.i.sroa.0.0.copyload, ptr %17, align 16, !tbaa !76
   %i.mb = getelementptr inbounds nuw i8, ptr %17, i64 16 ; 3 uses
   %i.mc = getelementptr inbounds nuw i8, ptr %17, i64 24
-  %i.md = load <2 x ptr>, ptr %i.mb, align 8, !tbaa !75
-  %i.me = load ptr, ptr %i.mb, align 8, !tbaa !75 ; 2 uses
-  store ptr @_ZNSt17_Function_handlerIFN5arrow6StatusEPKvPNS0_2io16RandomAccessFileEEZNS0_3ipc12_GLOBAL__N_125RecordBatchFileReaderImpl33ReadRecordBatchWithCustomMetadataEiEUlS3_S6_E_E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation, ptr %i.mb, align 8, !tbaa !75
-  store <2 x ptr> %i.md, ptr %i.lt, align 8, !tbaa !75
+  %i.md = load <2 x ptr>, ptr %i.mb, align 16, !tbaa !75
+  %i.me = load ptr, ptr %i.mb, align 16, !tbaa !75 ; 2 uses
+  store ptr @_ZNSt17_Function_handlerIFN5arrow6StatusEPKvPNS0_2io16RandomAccessFileEEZNS0_3ipc12_GLOBAL__N_125RecordBatchFileReaderImpl33ReadRecordBatchWithCustomMetadataEiEUlS3_S6_E_E10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation, ptr %i.mb, align 16, !tbaa !75
+  store <2 x ptr> %i.md, ptr %i.lt, align 16, !tbaa !75
   store ptr @_ZNSt17_Function_handlerIFN5arrow6StatusEPKvPNS0_2io16RandomAccessFileEEZNS0_3ipc12_GLOBAL__N_125RecordBatchFileReaderImpl33ReadRecordBatchWithCustomMetadataEiEUlS3_S6_E_E9_M_invokeERKSt9_Any_dataOS3_OS6_, ptr %i.mc, align 8, !tbaa !75
   %.not.i.i136 = icmp eq ptr %i.me, null
   br i1 %.not.i.i136, label %_ZZN5arrow3ipc12_GLOBAL__N_125RecordBatchFileReaderImpl33ReadRecordBatchWithCustomMetadataEiENUlPKvPNS_2io16RandomAccessFileEE_D2Ev.exit, label %bb.dc
@@ -1778,7 +1774,7 @@ bb.gh:                                            ; preds = %bb.gg
 _ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit200: ; preds = %bb.gf, %bb.gg, %bb.gh
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #37
   %i.um = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %i.un = load ptr, ptr %i.um, align 8, !tbaa !2022 ; 2 uses
+  %i.un = load ptr, ptr %i.um, align 16, !tbaa !2022 ; 2 uses
   %.not.i201 = icmp eq ptr %i.un, null
   br i1 %.not.i201, label %_ZNSt14_Function_baseD2Ev.exit, label %bb.gi
 
@@ -1800,7 +1796,7 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %_ZN5arrow6ResultINS
 bb.gk:                                            ; preds = %bb.dl, %_ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit, %bb.di
   %.pn61.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn55, %bb.di ], [ %.pn61.pn.pn.pn.pn, %_ZN5arrow6ResultINS_3ipc8internal9FileBlockEED2Ev.exit ], [ %i.nk, %bb.dl ]
   %i.ur = getelementptr inbounds nuw i8, ptr %17, i64 16
-  %i.us = load ptr, ptr %i.ur, align 8, !tbaa !2022 ; 2 uses
+  %i.us = load ptr, ptr %i.ur, align 16, !tbaa !2022 ; 2 uses
   %.not.i202 = icmp eq ptr %i.us, null
   br i1 %.not.i202, label %_ZNSt14_Function_baseD2Ev.exit203, label %bb.gl
 
@@ -2203,7 +2199,6 @@ bb.k:                                             ; preds = %bb.a
 define linkonce_odr void @_ZN5arrow3ipc13StreamDecoder17StreamDecoderImplC2ESt10shared_ptrINS0_8ListenerEENS0_14IpcReadOptionsE(ptr noundef nonnull align 8 dereferenceable(272) %0, ptr noundef %1, ptr noundef %2) unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %"class.std::shared_ptr.64", align 8 ; 4 uses
-  %.sroa.0 = alloca { i32, ptr }, align 8         ; 2 uses
   %.sroa.15 = alloca { i8, i8, i64, %"struct.arrow::io::CacheOptions" }, align 8 ; 2 uses
   %4 = alloca %"class.std::shared_ptr.1047", align 8 ; 4 uses
   %5 = alloca %"class.std::shared_ptr.1050", align 8 ; 6 uses
@@ -2215,7 +2210,7 @@ bb.a:
   store ptr null, ptr %i.c, align 8, !tbaa !69
   store ptr %i.d, ptr %i.b, align 8, !tbaa !69
   store ptr null, ptr %1, align 8, !tbaa !526
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %2, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !96   ; 2 uses
@@ -2276,7 +2271,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
   store ptr %i.d, ptr %i.w, align 8, !tbaa !69
   store ptr null, ptr %3, align 8, !tbaa !526
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.x, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.x, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   store ptr %i.t, ptr %i.y, align 8, !tbaa !98
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 48

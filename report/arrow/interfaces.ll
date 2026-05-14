@@ -102,7 +102,6 @@ target triple = "x86_64-pc-linux-gnu"
 %"class.arrow::internal::AlignedStorage.106" = type { [16 x i8] }
 %"class.arrow::Result.88" = type { %"class.arrow::Status", %"class.arrow::internal::AlignedStorage.91" }
 %"class.arrow::internal::AlignedStorage.91" = type { [24 x i8] }
-%"struct.arrow::io::ReadRange" = type { i64, i64 }
 %"class.std::vector.64" = type { %"struct.std::_Vector_base.65" }
 %"struct.std::_Vector_base.65" = type { %"struct.std::_Vector_base<arrow::io::ReadRange, std::allocator<arrow::io::ReadRange>>::_Vector_impl" }
 %"struct.std::_Vector_base<arrow::io::ReadRange, std::allocator<arrow::io::ReadRange>>::_Vector_impl" = type { %"struct.std::_Vector_base<arrow::io::ReadRange, std::allocator<arrow::io::ReadRange>>::_Vector_impl_data" }
@@ -505,16 +504,14 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN5arrow2io8internal18CoalesceReadRangesESt6vectorINS0_9ReadRangeESaIS3_EEll(ptr dead_on_unwind noalias writable writeonly sret(%"class.arrow::Result.88") align 8 captures(none) %0, ptr noundef captures(none) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %5 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %6 = alloca %"class.std::vector.64", align 8    ; 7 uses
+  %4 = alloca %"class.std::vector.64", align 8    ; 7 uses
   %i.a = load ptr, ptr %1, align 8, !tbaa !348    ; 27 uses
-  store ptr %i.a, ptr %6, align 8, !tbaa !348
-  %i.b = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
+  store ptr %i.a, ptr %4, align 8, !tbaa !348
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !350  ; 11 uses
   store ptr %i.d, ptr %i.b, align 8, !tbaa !350
-  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !351  ; 2 uses
   store ptr %i.g, ptr %i.e, align 8, !tbaa !351
@@ -689,8 +686,7 @@ bb.o:                                             ; preds = %_ZSt9remove_ifIN9__
   br i1 %i.bc, label %bb.p, label %bb.s
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i.i32.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.018.i.ptr.i.i.i.i, i64 16, i1 false), !tbaa.struct !358, !noalias !352
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.0.018.i.ptr.i.i.i.i, align 8, !noalias !352
   %i.bd = icmp samesign ugt i64 %.sroa.0.018.i.idx.i.i.i.i, 16
   br i1 %i.bd, label %bb.q, label %bb.r, !prof !89
 
@@ -704,8 +700,7 @@ bb.r:                                             ; preds = %bb.p
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i: ; preds = %bb.r, %bb.q
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !358, !noalias !352
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.a, align 8, !noalias !352
   br label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph.i.i.i.i32.i
@@ -779,8 +774,7 @@ bb.u:                                             ; preds = %bb.o
   br i1 %i.bq, label %bb.v, label %bb.z
 
 bb.v:                                             ; preds = %.lr.ph.i26.i.i.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.018.i27.i.i.i.i, i64 16, i1 false), !tbaa.struct !358, !noalias !352
+  %.sroa.099.0.copyload = load <16 x i8>, ptr %.sroa.0.018.i27.i.i.i.i, align 8, !noalias !352
   %i.br = ptrtoint ptr %.sroa.0.018.i27.i.i.i.i to i64
   %i.bs = sub i64 %i.br, %i.m                     ; 3 uses
   %i.bt = ashr exact i64 %i.bs, 4                 ; 2 uses
@@ -804,8 +798,7 @@ bb.y:                                             ; preds = %bb.x
   br label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i43.i.i.i.i
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i43.i.i.i.i: ; preds = %bb.y, %bb.x, %bb.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !358, !noalias !352
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <16 x i8> %.sroa.099.0.copyload, ptr %i.a, align 8, !noalias !352
   br label %bb.aa
 
 bb.z:                                             ; preds = %.lr.ph.i26.i.i.i.i
@@ -908,11 +901,11 @@ _ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_Sa
 
 bb.ae:                                            ; preds = %_ZSt6uniqueIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEEZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SE_E0_ET_SG_SG_T0_.exit.i
   %i.dd = sub nuw nsw i64 %i.da, %i.db
-  invoke void @_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %6, i64 noundef %i.dd)
+  invoke void @_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE17_M_default_appendEm(ptr noundef nonnull align 8 dereferenceable(24) %4, i64 noundef %i.dd)
           to label %.noexc unwind label %bb.az
 
 .noexc:                                           ; preds = %bb.ae
-  %.pre78.i = load ptr, ptr %6, align 8, !tbaa !244, !noalias !352
+  %.pre78.i = load ptr, ptr %4, align 8, !tbaa !244, !noalias !352
   %.pre79.i = load ptr, ptr %i.b, align 8, !tbaa !244, !noalias !352
   br label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE6resizeEm.exit.i
 
@@ -1158,7 +1151,7 @@ _ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9R
   store ptr %.sroa.12.4.i, ptr %i.fo, align 8, !tbaa !350, !alias.scope !352
   %i.fp = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %.sroa.21.4.i, ptr %i.fp, align 8, !tbaa !351, !alias.scope !352
-  %.pr = load ptr, ptr %6, align 8, !tbaa !348    ; 3 uses
+  %.pr = load ptr, ptr %4, align 8, !tbaa !348    ; 3 uses
   %.not.i.i.i4 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i4, label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit, label %bb.ay
 
@@ -1180,7 +1173,7 @@ bb.az:                                            ; preds = %bb.ae
 
 .body:                                            ; preds = %bb.aw, %bb.ax, %bb.az
   %eh.lpad-body = phi { ptr, i32 } [ %i.fu, %bb.az ], [ %.pn.i, %bb.ax ], [ %.pn.i, %bb.aw ]
-  %i.fv = load ptr, ptr %6, align 8, !tbaa !348   ; 3 uses
+  %i.fv = load ptr, ptr %4, align 8, !tbaa !348   ; 3 uses
   %.not.i.i.i5 = icmp eq ptr %i.fv, null
   br i1 %.not.i.i.i5, label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit6, label %bb.ba
 
@@ -1583,13 +1576,6 @@ declare void @_ZSt19__throw_logic_errorPKc(ptr noundef) local_unnamed_addr #19
 ; Function Attrs: mustprogress nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_T0_T1_(ptr %0, ptr %1, i64 noundef %2) unnamed_addr #22 {
 bb.a:
-  %3 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %4 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %5 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %6 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %7 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %8 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
-  %9 = alloca %"struct.arrow::io::ReadRange", align 8 ; 4 uses
   %.fr33 = freeze ptr %1                          ; 3 uses
   %.fr26 = freeze ptr %0                          ; 36 uses
   %i.a = ptrtoint ptr %.fr26 to i64               ; 3 uses
@@ -1790,11 +1776,9 @@ bb.j:                                             ; preds = %.lr.ph42
   br i1 %i.by, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.bv, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bv, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.bv, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 bb.l:                                             ; preds = %bb.j
@@ -1802,19 +1786,15 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.bz, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.049.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.bw, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bw, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  store <16 x i8> %.sroa.049.0.copyload, ptr %i.bw, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 bb.n:                                             ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.051.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  store <16 x i8> %.sroa.051.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 bb.o:                                             ; preds = %.lr.ph42
@@ -1822,11 +1802,9 @@ bb.o:                                             ; preds = %.lr.ph42
   br i1 %i.ca, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.053.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  store <16 x i8> %.sroa.053.0.copyload, ptr %i.f, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 bb.q:                                             ; preds = %bb.o
@@ -1834,19 +1812,15 @@ bb.q:                                             ; preds = %bb.o
   br i1 %i.cb, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.055.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.bw, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bw, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <16 x i8> %.sroa.055.0.copyload, ptr %i.bw, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 bb.s:                                             ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.fr26, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.057.0.copyload = load <16 x i8>, ptr %.fr26, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.fr26, ptr noundef nonnull align 8 dereferenceable(16) %i.bv, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bv, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <16 x i8> %.sroa.057.0.copyload, ptr %i.bv, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader
 
 _ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i.preheader: ; preds = %bb.s, %bb.r, %bb.p, %bb.n, %bb.m, %bb.k
@@ -1877,11 +1851,9 @@ bb.u:                                             ; preds = %.preheader.i.i
   br i1 %.not.i.i, label %bb.v, label %_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEET_SJ_SJ_T0_.exit
 
 bb.v:                                             ; preds = %bb.u
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.014.1.i.i, i64 16, i1 false), !tbaa.struct !358
+  %.sroa.059.0.copyload = load <16 x i8>, ptr %.sroa.014.1.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.014.1.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1.i.i, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.1.i.i, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !358
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <16 x i8> %.sroa.059.0.copyload, ptr %.sroa.0.1.i.i, align 8
   br label %_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEEvT_SJ_SJ_SJ_T0_.exit.i, !llvm.loop !389
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPN5arrow2io9ReadRangeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNS3_8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceES8_EUlRKS4_SG_E_EEET_SJ_SJ_T0_.exit: ; preds = %bb.u

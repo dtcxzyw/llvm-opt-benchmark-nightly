@@ -4,7 +4,6 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-%struct.opj_image_comp = type { i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, i32, ptr, i16 }
 %struct.opj_jp2_box = type { i32, i32, i32 }
 %struct.opj_jp2_img_header_writer_handler = type { ptr, ptr, i32 }
 
@@ -121,7 +120,6 @@ declare i32 @opj_event_msg(ptr noundef, i32 noundef, ptr noundef, ...) local_unn
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @opj_jp2_apply_color_postprocessing(ptr noundef captures(none) %0, ptr noundef nonnull captures(none) %1, ptr noundef %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.opj_image_comp, align 8     ; 4 uses
   %i.a = load ptr, ptr %0, align 8, !tbaa !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 76
   %i.c = load i32, ptr %i.b, align 4, !tbaa !19
@@ -524,20 +522,19 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.lh, label %bb.bi, label %bb.bl
 
 bb.bi:                                            ; preds = %bb.bh
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.li = load ptr, ptr %i.kh, align 8, !tbaa !57 ; 2 uses
   %i.lj = zext i16 %i.kp to i64
   %i.lk = getelementptr inbounds nuw [64 x i8], ptr %i.li, i64 %i.lj ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %i.lk, i64 64, i1 false)
+  %.sroa.0.0.copyload = load <64 x i8>, ptr %i.lk, align 8
   %i.ll = zext i16 %i.lc to i64                   ; 2 uses
   %i.lm = getelementptr inbounds nuw [64 x i8], ptr %i.li, i64 %i.ll
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.lk, ptr noundef nonnull align 8 dereferenceable(64) %i.lm, i64 64, i1 false)
   %i.ln = load ptr, ptr %i.kh, align 8, !tbaa !57
   %i.lo = getelementptr inbounds nuw [64 x i8], ptr %i.ln, i64 %i.ll
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.lo, ptr noundef nonnull align 8 dereferenceable(64) %3, i64 64, i1 false)
+  store <64 x i8> %.sroa.0.0.copyload, ptr %i.lo, align 8
   %i.lp = add nuw nsw i64 %indvars.iv88.i, 1
   %i.lq = icmp samesign ult i64 %i.lp, %i.ki
-  br i1 %i.lq, label %.lr.ph.i44.preheader, label %._crit_edge.i43
+  br i1 %i.lq, label %.lr.ph.i44.preheader, label %bb.bl
 
 .lr.ph.i44.preheader:                             ; preds = %bb.bi
   %min.iters.check155 = icmp ult i16 %i.kl, 8
@@ -693,13 +690,9 @@ bb.bk:                                            ; preds = %.sink.split.i, %bb.
   %indvars.iv.next86.i = add nuw nsw i64 %indvars.iv85.i, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next86.i to i16
   %exitcond89 = icmp eq i16 %i.kf, %lftr.wideiv
-  br i1 %exitcond89, label %._crit_edge.i43, label %.lr.ph.i44, !llvm.loop !80
+  br i1 %exitcond89, label %bb.bl, label %.lr.ph.i44, !llvm.loop !80
 
-._crit_edge.i43:                                  ; preds = %bb.bk, %bb.bi
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  br label %bb.bl
-
-bb.bl:                                            ; preds = %._crit_edge.i43, %bb.bh, %bb.bg
+bb.bl:                                            ; preds = %bb.bi, %bb.bk, %bb.bh, %bb.bg
   %i.ny = getelementptr inbounds nuw i8, ptr %i.ko, i64 2
   %i.nz = load i16, ptr %i.ny, align 2, !tbaa !77
   %i.oa = load ptr, ptr %i.kh, align 8, !tbaa !57

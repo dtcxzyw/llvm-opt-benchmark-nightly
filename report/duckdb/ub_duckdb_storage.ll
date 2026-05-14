@@ -201,7 +201,6 @@ declare void @_ZN6duckdb14BaseStatisticsC1EOS0_(ptr noundef nonnull align 8 dere
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN6duckdb11DataPointerC2EOS0_(ptr noundef nonnull align 8 dereferenceable(176) initializes((16, 32)) %0, ptr noundef nonnull align 8 dereferenceable(176) %1) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.duckdb::BlockPointer", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   store i64 -1, ptr %i.a, align 8, !tbaa !821
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -224,11 +223,9 @@ bb.a:
   store i64 %i.l, ptr %i.i, align 8, !tbaa !70
   store i64 %i.k, ptr %i.j, align 8, !tbaa !70
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false), !tbaa.struct !883
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.a, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.m, i64 16, i1 false), !tbaa.struct !883
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false), !tbaa.struct !883
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.m, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.p = load i8, ptr %i.n, align 8, !tbaa !1235
@@ -274,7 +271,6 @@ _ZSt4swapIN6duckdb10unique_ptrINS0_18ColumnSegmentStateESt14default_deleteIS2_EL
 define noundef nonnull align 8 dereferenceable(176) ptr @_ZN6duckdb11DataPointeraSEOS0_(ptr noundef nonnull returned align 8 dereferenceable(176) %0, ptr noundef nonnull align 8 dereferenceable(176) %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"class.duckdb::BaseStatistics", align 8 ; 5 uses
-  %3 = alloca %"struct.duckdb::BlockPointer", align 8 ; 4 uses
   %i.a = load i64, ptr %0, align 8, !tbaa !70
   %i.b = load i64, ptr %1, align 8, !tbaa !70
   store i64 %i.b, ptr %0, align 8, !tbaa !70
@@ -287,11 +283,9 @@ bb.a:
   store i64 %i.e, ptr %i.d, align 8, !tbaa !70
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %i.g, i64 16, i1 false), !tbaa.struct !883
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.g, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull align 8 dereferenceable(16) %i.h, i64 16, i1 false), !tbaa.struct !883
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !883
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.h, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.k = load i8, ptr %i.i, align 8, !tbaa !1235

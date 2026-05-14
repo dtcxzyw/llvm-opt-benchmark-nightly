@@ -201,14 +201,12 @@ _ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit9: ; preds = %_ZN2v88inter
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal8compiler12BinopMatcherINS1_10IntMatcherIiLNS1_8IrOpcode5ValueE27EEES6_LNS0_21MachineRepresentationE4EE10SwapInputsEv(ptr noundef nonnull align 8 dereferenceable(40) %0) local_unnamed_addr #2 comdat align 2 {
 bb.a:
-  %1 = alloca %"struct.v8::internal::compiler::IntMatcher", align 8 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false)
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %i.a, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.b, i64 13, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.b, ptr noundef nonnull align 8 dereferenceable(13) %1, i64 13, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  %.sroa.0.0.vec.extract = shufflevector <16 x i8> %.sroa.0.0.copyload, <16 x i8> poison, <13 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12>
+  store <13 x i8> %.sroa.0.0.vec.extract, ptr %i.b, align 8
   %i.c = load ptr, ptr %0, align 8                ; 3 uses
   %i.d = load ptr, ptr %i.a, align 8              ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.c, i64 20

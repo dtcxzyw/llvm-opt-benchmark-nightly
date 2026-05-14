@@ -201,7 +201,6 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4pugi14xpath_node_set4sortEb(ptr noundef nonnull align 8 captures(none) dereferenceable(40) %0, i1 noundef zeroext %1) local_unnamed_addr #6 align 2 {
 bb.a:
-  %2 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8              ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -254,11 +253,9 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_get_orderEPKNS_10xpath_nodeES4_.exit.thread.i
   %.045.i.i = phi ptr [ %i.s, %.lr.ph.i.i ], [ %i.b, %_ZN4pugi4impl12_GLOBAL__N_115xpath_get_orderEPKNS_10xpath_nodeES4_.exit.thread.i ] ; 3 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.045.i.i, i64 16 ; 2 uses
   %i.t = getelementptr inbounds i8, ptr %.06.i.i, i64 -16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %.045.i.i, i64 16, i1 false)
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.045.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.045.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.t, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.t, ptr noundef nonnull align 8 dereferenceable(16) %2, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.t, align 8
   %i.u = ptrtoint ptr %i.t to i64
   %i.v = ptrtoint ptr %i.s to i64
   %i.w = sub i64 %i.u, %i.v
@@ -661,14 +658,13 @@ bb.a:
   %6 = alloca %"class.pugi::xml_node", align 8    ; 5 uses
   %7 = alloca %"class.pugi::xml_node", align 8    ; 4 uses
   %8 = alloca %"class.pugi::xml_node", align 8    ; 4 uses
-  %9 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
-  %10 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_allocator_capture", align 8 ; 7 uses
-  %11 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_stack", align 8 ; 6 uses
-  %12 = alloca %"class.pugi::impl::(anonymous namespace)::xpath_node_set_raw", align 8 ; 6 uses
-  %13 = alloca %"class.pugi::xpath_node", align 8 ; 5 uses
-  %14 = alloca %"class.pugi::xml_node", align 8   ; 4 uses
-  %15 = alloca %"class.pugi::xpath_node", align 8 ; 5 uses
-  %16 = alloca %"class.pugi::xml_node", align 8   ; 4 uses
+  %9 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_allocator_capture", align 8 ; 7 uses
+  %10 = alloca %"struct.pugi::impl::(anonymous namespace)::xpath_stack", align 8 ; 6 uses
+  %11 = alloca %"class.pugi::impl::(anonymous namespace)::xpath_node_set_raw", align 8 ; 6 uses
+  %12 = alloca %"class.pugi::xpath_node", align 8 ; 5 uses
+  %13 = alloca %"class.pugi::xml_node", align 8   ; 4 uses
+  %14 = alloca %"class.pugi::xpath_node", align 8 ; 5 uses
+  %15 = alloca %"class.pugi::xml_node", align 8   ; 4 uses
   %i.a = load i8, ptr %1, align 8
   switch i8 %i.a, label %bb.ba [
     i8 15, label %bb.b
@@ -680,15 +676,15 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #51
+  call void @llvm.lifetime.start.p0(ptr nonnull %9) #51
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 6 uses
-  store ptr %i.c, ptr %10, align 8
-  %i.d = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
+  store ptr %i.c, ptr %9, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #51
-  store ptr %i.c, ptr %11, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %11, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #51
+  store ptr %i.c, ptr %10, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.f = load ptr, ptr %3, align 8
   store ptr %i.f, ptr %i.e, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -697,17 +693,17 @@ bb.b:                                             ; preds = %bb.a
           to label %bb.c unwind label %bb.h
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #51
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #51
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.j = load ptr, ptr %i.i, align 8
-  invoke fastcc void @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node13eval_node_setERKNS1_13xpath_contextERKNS1_11xpath_stackENS1_14nodeset_eval_tE(ptr dead_on_unwind noalias writable align 8 %12, ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(16) %11, i32 noundef %4)
+  invoke fastcc void @_ZN4pugi4impl12_GLOBAL__N_114xpath_ast_node13eval_node_setERKNS1_13xpath_contextERKNS1_11xpath_stackENS1_14nodeset_eval_tE(ptr dead_on_unwind noalias writable align 8 %11, ptr noundef nonnull align 8 dereferenceable(40) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %2, ptr noundef nonnull align 8 dereferenceable(16) %10, i32 noundef %4)
           to label %bb.d unwind label %bb.i
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %0, align 8
-  %i.k = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %11, i64 8
   %.val = load ptr, ptr %i.k, align 8
-  %i.l = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.l = getelementptr inbounds nuw i8, ptr %11, i64 16
   %.val67 = load ptr, ptr %i.l, align 8
   %i.m = load ptr, ptr %3, align 8
   invoke fastcc void @_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw6appendEPKNS_10xpath_nodeES5_PNS1_15xpath_allocatorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %.val, ptr noundef %.val67, ptr noundef %i.m)
@@ -719,8 +715,8 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.i
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #51
   %i.o = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.p = load ptr, ptr %i.d, align 8              ; 3 uses
   %.not9.i.i = icmp eq ptr %i.o, %i.p
@@ -746,11 +742,11 @@ bb.g:                                             ; preds = %.lr.ph.i.i
 
 _ZN4pugi4impl12_GLOBAL__N_123xpath_allocator_captureD2Ev.exit: ; preds = %.noexc.i, %bb.f
   store ptr %i.p, ptr %i.c, align 8
-  %i.u = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %i.u = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.v = load i64, ptr %i.u, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %i.v, ptr %i.w, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #51
   br label %bb.bb
 
 bb.h:                                             ; preds = %bb.b
@@ -761,14 +757,14 @@ bb.h:                                             ; preds = %bb.b
 bb.i:                                             ; preds = %bb.e, %bb.d, %bb.c
   %i.y = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.pn = phi { ptr, i32 } [ %i.y, %bb.i ], [ %i.x, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #51
-  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_123xpath_allocator_captureD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %10) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #51
+  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_123xpath_allocator_captureD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %9) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #51
   resume { ptr, i32 } %.pn
 
 bb.k:                                             ; preds = %bb.a
@@ -836,11 +832,9 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_get_orderEPKNS_10xpath_nodeES4_.exit.thread.i
   %.045.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i ], [ %i.ah, %_ZN4pugi4impl12_GLOBAL__N_115xpath_get_orderEPKNS_10xpath_nodeES4_.exit.thread.i.i ] ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.045.i.i.i, i64 16 ; 2 uses
   %i.ax = getelementptr inbounds i8, ptr %.06.i.i.i, i64 -16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(16) %.045.i.i.i, i64 16, i1 false)
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.045.i.i.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.045.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %i.ax, align 8
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = ptrtoint ptr %i.aw to i64
   %i.ba = sub i64 %i.ay, %i.az
@@ -976,8 +970,8 @@ _ZNK4pugi10xpath_node4nodeEv.exit:                ; preds = %bb.ak, %bb.al
   br i1 %.not.i, label %bb.at, label %bb.am
 
 bb.am:                                            ; preds = %_ZNK4pugi10xpath_node4nodeEv.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %12) #51
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #51
-  call void @llvm.lifetime.start.p0(ptr nonnull %14) #51
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   %i.bs = load ptr, ptr %i.bn, align 8
   %.not.i.i71 = icmp eq ptr %i.bs, null
@@ -1017,8 +1011,8 @@ bb.aq:                                            ; preds = %_ZNK4pugi10xpath_no
 _ZNK4pugi8xml_node4rootEv.exit:                   ; preds = %bb.ap, %bb.aq
   %i.cc = load ptr, ptr %6, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
-  store ptr %i.cc, ptr %14, align 8
-  call void @_ZN4pugi10xpath_nodeC1ERKNS_8xml_nodeE(ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull align 8 dereferenceable(8) %14)
+  store ptr %i.cc, ptr %13, align 8
+  call void @_ZN4pugi10xpath_nodeC1ERKNS_8xml_nodeE(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(8) %13)
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8            ; 3 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1029,17 +1023,17 @@ _ZNK4pugi8xml_node4rootEv.exit:                   ; preds = %bb.ap, %bb.aq
 bb.ar:                                            ; preds = %_ZNK4pugi8xml_node4rootEv.exit
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   store ptr %i.ch, ptr %i.cd, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ce, ptr noundef nonnull readonly align 8 dereferenceable(16) %13, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ce, ptr noundef nonnull readonly align 8 dereferenceable(16) %12, i64 16, i1 false)
   br label %_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit
 
 bb.as:                                            ; preds = %_ZNK4pugi8xml_node4rootEv.exit
   %i.ci = load ptr, ptr %3, align 8
-  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw14push_back_growERKNS_10xpath_nodeEPNS1_15xpath_allocatorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull readonly align 8 dereferenceable(16) %13, ptr noundef %i.ci)
+  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw14push_back_growERKNS_10xpath_nodeEPNS1_15xpath_allocatorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull readonly align 8 dereferenceable(16) %12, ptr noundef %i.ci)
   br label %_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit
 
 _ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit: ; preds = %bb.ar, %bb.as
-  call void @llvm.lifetime.end.p0(ptr nonnull %14) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %12) #51
   br label %bb.bb
 
 bb.at:                                            ; preds = %_ZNK4pugi10xpath_node4nodeEv.exit
@@ -1048,8 +1042,8 @@ bb.at:                                            ; preds = %_ZNK4pugi10xpath_no
   br i1 %.not.i76, label %bb.bb, label %_ZNK4pugi10xpath_node6parentEv.exit
 
 _ZNK4pugi10xpath_node6parentEv.exit:              ; preds = %bb.at
+  call void @llvm.lifetime.start.p0(ptr nonnull %14) #51
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #51
-  call void @llvm.lifetime.start.p0(ptr nonnull %16) #51
   %.sroa.0.0.copyload.i78 = load ptr, ptr %2, align 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %.not.i79 = icmp eq ptr %.sroa.0.0.copyload.i78, null
@@ -1072,8 +1066,8 @@ bb.av:                                            ; preds = %_ZNK4pugi10xpath_no
 _ZNK4pugi8xml_node4rootEv.exit80:                 ; preds = %bb.au, %bb.av
   %i.cp = load ptr, ptr %5, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
-  store ptr %i.cp, ptr %16, align 8
-  call void @_ZN4pugi10xpath_nodeC1ERKNS_8xml_nodeE(ptr noundef nonnull align 8 dereferenceable(16) %15, ptr noundef nonnull align 8 dereferenceable(8) %16)
+  store ptr %i.cp, ptr %15, align 8
+  call void @_ZN4pugi10xpath_nodeC1ERKNS_8xml_nodeE(ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull align 8 dereferenceable(8) %15)
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cr = load ptr, ptr %i.cq, align 8            ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1084,17 +1078,17 @@ _ZNK4pugi8xml_node4rootEv.exit80:                 ; preds = %bb.au, %bb.av
 bb.aw:                                            ; preds = %_ZNK4pugi8xml_node4rootEv.exit80
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cr, i64 16
   store ptr %i.cu, ptr %i.cq, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cr, ptr noundef nonnull readonly align 8 dereferenceable(16) %15, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cr, ptr noundef nonnull readonly align 8 dereferenceable(16) %14, i64 16, i1 false)
   br label %_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit82
 
 bb.ax:                                            ; preds = %_ZNK4pugi8xml_node4rootEv.exit80
   %i.cv = load ptr, ptr %3, align 8
-  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw14push_back_growERKNS_10xpath_nodeEPNS1_15xpath_allocatorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull readonly align 8 dereferenceable(16) %15, ptr noundef %i.cv)
+  call fastcc void @_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw14push_back_growERKNS_10xpath_nodeEPNS1_15xpath_allocatorE(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull readonly align 8 dereferenceable(16) %14, ptr noundef %i.cv)
   br label %_ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit82
 
 _ZN4pugi4impl12_GLOBAL__N_118xpath_node_set_raw9push_backERKNS_10xpath_nodeEPNS1_15xpath_allocatorE.exit82: ; preds = %bb.aw, %bb.ax
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #51
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #51
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #51
   br label %bb.bb
 
 bb.ay:                                            ; preds = %bb.a
@@ -1497,10 +1491,7 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #35
 define internal fastcc void @_ZN4pugi4impl12_GLOBAL__N_14sortIPNS_10xpath_nodeENS1_25document_order_comparatorEEEvT_S6_RKT0_(ptr noundef %0, ptr noundef %1) unnamed_addr #6 {
 bb.a:
   %2 = alloca %"class.pugi::xpath_node", align 8  ; 5 uses
-  %3 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
-  %4 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
-  %5 = alloca %"class.pugi::xpath_node", align 8  ; 4 uses
-  %6 = alloca %"class.pugi::xpath_node", align 8  ; 5 uses
+  %3 = alloca %"class.pugi::xpath_node", align 8  ; 5 uses
   %i.a = ptrtoint ptr %1 to i64                   ; 2 uses
   %i.b = ptrtoint ptr %0 to i64                   ; 2 uses
   %i.c = sub i64 %i.a, %i.b
@@ -1509,7 +1500,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.j
@@ -1531,8 +1522,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.j
   %.sroa.0.0.copyload = load ptr, ptr %.2.i, align 8 ; 2 uses
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.2.i, i64 8
   %.sroa.2.0.copyload = load ptr, ptr %.sroa.2.0..sroa_idx, align 8 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  store ptr %.sroa.0.0.copyload, ptr %6, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  store ptr %.sroa.0.0.copyload, ptr %3, align 8
   store ptr %.sroa.2.0.copyload, ptr %i.f, align 8
   %i.p = icmp ult ptr %.05, %.0224
   br i1 %i.p, label %.lr.ph.i, label %_ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_S5_RKT0_PS6_SA_.exit
@@ -1545,7 +1536,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.j
   %.0253.i = phi ptr [ %.1.i25, %bb.g ], [ %.0224, %bb.b ] ; 3 uses
   %.0262.i = phi ptr [ %.127.i, %bb.g ], [ %.05, %bb.b ] ; 10 uses
   %.0281.i = phi ptr [ %.129.i, %bb.g ], [ %.05, %bb.b ] ; 5 uses
-  %i.q = call fastcc noundef zeroext i1 @_ZNK4pugi4impl12_GLOBAL__N_125document_order_comparatorclERKNS_10xpath_nodeES5_(ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, ptr noundef nonnull align 8 dereferenceable(16) %6)
+  %i.q = call fastcc noundef zeroext i1 @_ZNK4pugi4impl12_GLOBAL__N_125document_order_comparatorclERKNS_10xpath_nodeES5_(ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, ptr noundef nonnull align 8 dereferenceable(16) %3)
   br i1 %i.q, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -1564,20 +1555,16 @@ bb.d:                                             ; preds = %.lr.ph.i
 bb.e:                                             ; preds = %bb.d
   %i.y = getelementptr inbounds nuw i8, ptr %.0281.i, i64 16
   %i.z = getelementptr inbounds nuw i8, ptr %.0262.i, i64 16
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %.0281.i, i64 16, i1 false)
+  %.sroa.0.0.copyload12 = load <16 x i8>, ptr %.0281.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0281.i, ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <16 x i8> %.sroa.0.0.copyload12, ptr %.0262.i, align 8
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
   %i.aa = getelementptr inbounds i8, ptr %.0253.i, i64 -16 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, i64 16, i1 false)
+  %.sroa.014.0.copyload = load <16 x i8>, ptr %.0262.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.0262.i, ptr noundef nonnull align 8 dereferenceable(16) %i.aa, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aa, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <16 x i8> %.sroa.014.0.copyload, ptr %i.aa, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
@@ -1591,11 +1578,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
   %.07.i = phi ptr [ %i.ad, %.lr.ph8.i ], [ %.05, %.preheader.i ] ; 3 uses
   %.0246.i = phi ptr [ %i.ac, %.lr.ph8.i ], [ %.1.i25, %.preheader.i ]
   %i.ac = getelementptr inbounds i8, ptr %.0246.i, i64 -16 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %.07.i, i64 16, i1 false)
+  %.sroa.016.0.copyload = load <16 x i8>, ptr %.07.i, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.07.i, ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ac, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <16 x i8> %.sroa.016.0.copyload, ptr %i.ac, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %.07.i, i64 16 ; 2 uses
   %.not.i = icmp eq ptr %i.ad, %.129.i
   br i1 %.not.i, label %_ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_S5_RKT0_PS6_SA_.exit, label %.lr.ph8.i, !llvm.loop !383
@@ -1603,7 +1588,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.c
 _ZN4pugi4impl12_GLOBAL__N_110partition3INS_10xpath_nodeENS1_25document_order_comparatorEEEvPT_S6_S5_RKT0_PS6_SA_.exit: ; preds = %.lr.ph8.i, %bb.b, %.preheader.i
   %.025.lcssa16.i = phi ptr [ %.1.i25, %.preheader.i ], [ %.0224, %bb.b ], [ %.1.i25, %.lr.ph8.i ] ; 3 uses
   %.024.lcssa.i = phi ptr [ %.1.i25, %.preheader.i ], [ %.0224, %bb.b ], [ %i.ac, %.lr.ph8.i ] ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.ae = ptrtoint ptr %.024.lcssa.i to i64       ; 2 uses
   %i.af = sub i64 %i.ae, %i.h
   %i.ag = ptrtoint ptr %.025.lcssa16.i to i64     ; 2 uses

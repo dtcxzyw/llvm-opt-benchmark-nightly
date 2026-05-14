@@ -201,7 +201,6 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %7 = alloca %"struct.duckdb::LogicalType", align 8 ; 5 uses
-  %.sroa.0 = alloca { ptr, ptr }, align 8         ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !386  ; 11 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -212,7 +211,6 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6)
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %i.f = load i64, ptr %1, align 8, !tbaa !13
   %i.g = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
   store ptr %i.g, ptr %6, align 8, !tbaa !108
@@ -275,7 +273,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.e,
 _ZNSt15__new_allocatorIN6duckdb18UnionBoundCastDataEE9constructIS1_JRmRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_11LogicalTypeERlNS0_13BoundCastInfoEEEEvPT_DpOT0_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit
   %i.w = trunc i64 %i.f to i8
   %i.x = load i64, ptr %4, align 8, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %5, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.z = load i64, ptr %i.y, align 8, !tbaa !28
   store ptr null, ptr %i.y, align 8, !tbaa !28
@@ -316,7 +314,7 @@ _ZN6duckdb13BoundCastInfoD2Ev.exit:               ; preds = %_ZNKSt7__cxx1112bas
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 72
   store i64 %i.x, ptr %i.am, align 8, !tbaa !384
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.an, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.an, align 8
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 96
   store i64 %i.z, ptr %i.ao, align 8, !tbaa !28
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %7) #28
@@ -331,7 +329,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit14: ; preds = %_ZN6duckdb13BoundCastInfoD2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i12
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   %i.ar = load ptr, ptr %i.b, align 8, !tbaa !386
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 104
   store ptr %i.as, ptr %i.b, align 8, !tbaa !386
@@ -601,7 +598,6 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %8 = alloca %"struct.duckdb::LogicalType", align 8 ; 5 uses
-  %.sroa.054 = alloca { ptr, ptr }, align 8       ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !386  ; 3 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !388    ; 5 uses
@@ -637,7 +633,6 @@ _ZNSt12_Vector_baseIN6duckdb18UnionBoundCastDataESaIS1_EE11_M_allocateEm.exit: ;
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.o ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.054)
   %i.t = load i64, ptr %2, align 8, !tbaa !13
   %i.u = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 10 uses
   store ptr %i.u, ptr %7, align 8, !tbaa !108
@@ -700,7 +695,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt15__new_allocatorIN6duckdb18UnionBoundCastDataEE9constructIS1_JRmRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS0_11LogicalTypeERlNS0_13BoundCastInfoEEEEvPT_DpOT0_.exit: ; preds = %.noexc
   %i.ak = trunc i64 %i.t to i8
   %i.al = load i64, ptr %5, align 8, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.054, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false)
+  %.sroa.054.sroa.0.0.copyload = load <16 x i8>, ptr %6, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.an = load i64, ptr %i.am, align 8, !tbaa !28
   store ptr null, ptr %i.am, align 8, !tbaa !28
@@ -741,7 +736,7 @@ _ZN6duckdb13BoundCastInfoD2Ev.exit:               ; preds = %_ZNKSt7__cxx1112bas
   %i.ba = getelementptr inbounds nuw i8, ptr %i.s, i64 72
   store i64 %i.al, ptr %i.ba, align 8, !tbaa !384
   %i.bb = getelementptr inbounds nuw i8, ptr %i.s, i64 80
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bb, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.054, i64 16, i1 false)
+  store <16 x i8> %.sroa.054.sroa.0.0.copyload, ptr %i.bb, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %i.s, i64 96
   store i64 %i.an, ptr %i.bc, align 8, !tbaa !28
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #28
@@ -756,7 +751,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i33
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i34: ; preds = %_ZN6duckdb13BoundCastInfoD2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i33
   call void @llvm.lifetime.end.p0(ptr nonnull %7)
   call void @llvm.lifetime.end.p0(ptr nonnull %8)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.054)
   %.not10.i.i.i.i = icmp eq ptr %i.d, %1
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN6duckdb18UnionBoundCastDataESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.i
 
@@ -1151,7 +1145,6 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"struct.duckdb::LogicalType", align 8 ; 3 uses
-  %.sroa.0 = alloca { ptr, ptr }, align 8         ; 2 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(104) ptr @_Znwm(i64 noundef 104) #29 ; 11 uses
   %i.c = load i8, ptr %1, align 1, !tbaa !100
   %i.d = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 10 uses
@@ -1203,7 +1196,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %._cri
 
 bb.e:                                             ; preds = %bb.d
   %i.q = load i64, ptr %4, align 8, !tbaa !13
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %5, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.s = load i64, ptr %i.r, align 8, !tbaa !28
   store ptr null, ptr %i.r, align 8, !tbaa !28
@@ -1244,7 +1237,7 @@ _ZN6duckdb13BoundCastInfoD2Ev.exit:               ; preds = %_ZNKSt7__cxx1112bas
   %i.af = getelementptr inbounds nuw i8, ptr %i.b, i64 72
   store i64 %i.q, ptr %i.af, align 8, !tbaa !384
   %i.ag = getelementptr inbounds nuw i8, ptr %i.b, i64 80
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false)
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %i.ag, align 8
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   store i64 %i.s, ptr %i.ah, align 8, !tbaa !28
   store ptr %i.b, ptr %0, align 8, !tbaa !375

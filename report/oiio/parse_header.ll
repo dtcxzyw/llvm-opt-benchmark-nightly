@@ -12,7 +12,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.exr_attr_v2i_t = type { i32, i32 }
 %struct.exr_attr_chlist_t = type { i32, i32, ptr }
 %struct._internal_exr_seq_scratch = type { ptr, i64, i64, i64, ptr, ptr, ptr }
-%struct.exr_attr_string_t = type { i32, i32, ptr }
 
 @.str = private unnamed_addr constant [92 x i8] c"Invalid data window x dims (%d, %d) resulting in invalid tile level size (%ld) for level %d\00", align 1
 @.str.1 = private unnamed_addr constant [92 x i8] c"Invalid data window y dims (%d, %d) resulting in invalid tile level size (%ld) for level %d\00", align 1
@@ -415,10 +414,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 define internal fastcc i32 @extract_attr_string_vector(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef nonnull %4, i32 noundef %5) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 10 uses
-  %6 = alloca %struct.exr_attr_string_t, align 8  ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
   %i.b = icmp slt i32 %5, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -604,7 +600,7 @@ bb.r:                                             ; preds = %._crit_edge, %bb.o
   %.284 = phi i32 [ %i.ba, %._crit_edge ], [ %.183, %bb.o ] ; 2 uses
   %.2 = phi ptr [ %i.be, %._crit_edge ], [ %.1, %bb.o ] ; 5 uses
   %i.bs = getelementptr inbounds nuw [16 x i8], ptr %.2, i64 %indvars.iv197 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bs, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !145
+  store <16 x i8> zeroinitializer, ptr %i.bs, align 8
   %i.bt = load i32, ptr %i.a, align 4, !tbaa !3
   %i.bu = call i32 @exr_attr_string_init(ptr noundef %0, ptr noundef nonnull %i.bs, i32 noundef %i.bt) #8 ; 2 uses
   %.not100 = icmp eq i32 %i.bu, 0
@@ -680,7 +676,6 @@ bb.v:                                             ; preds = %._crit_edge154
 
 bb.w:                                             ; preds = %._crit_edge154, %bb.v, %check_bad_attrsz.exit, %._crit_edge148
   %.088 = phi i32 [ 0, %._crit_edge148 ], [ %.0.i, %check_bad_attrsz.exit ], [ %.087, %bb.v ], [ %.087, %._crit_edge154 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.088
 }

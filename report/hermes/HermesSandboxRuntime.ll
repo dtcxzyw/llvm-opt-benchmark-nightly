@@ -201,13 +201,12 @@ bb.ae:                                            ; preds = %bb.d
 ; Function Attrs: mustprogress uwtable
 define internal void @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl30createFunctionFromHostFunctionERKN8facebook3jsi10PropNameIDEjSt8functionIFNS2_5ValueERNS2_7RuntimeERKS7_PSA_mEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.facebook::jsi::Function") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(1038) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %2, i32 noundef %3, ptr noundef captures(none) %4) unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0.i.i.i.i.i = alloca { i64, i64 }, align 8 ; 4 uses
-  %5 = alloca %"class.std::function", align 8     ; 10 uses
-  %6 = alloca %"class.std::function", align 8     ; 5 uses
-  %7 = alloca %"class.std::function", align 8     ; 15 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %7, i64 24 ; 3 uses
+  %5 = alloca %"class.std::function", align 16    ; 10 uses
+  %.sroa.0 = alloca <32 x i8>, align 32           ; 5 uses
+  %6 = alloca %"class.std::function", align 8     ; 15 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, i8 0, i64 24, i1 false)
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !297
   store ptr %i.c, ptr %i.a, align 8, !tbaa !297
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -216,8 +215,8 @@ bb.a:
   br i1 %.not.i.i.not.i, label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 16, i1 false), !tbaa.struct !598
+  %i.f = getelementptr inbounds nuw i8, ptr %6, i64 16
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %4, i64 16, i1 false), !tbaa.struct !598
   store ptr %i.e, ptr %i.f, align 8, !tbaa !278
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit
@@ -276,14 +275,14 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.y, i8 0, i64 24, i1 false)
   %i.ad = load ptr, ptr %i.a, align 8, !tbaa !297
   store ptr %i.ad, ptr %i.ac, align 8, !tbaa !297
-  %i.ae = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !278
   %.not.i.i.not.i.i.i.i = icmp eq ptr %i.af, null
   br i1 %.not.i.i.not.i.i.i.i, label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.y, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 16, i1 false), !tbaa.struct !598
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.y, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 16, i1 false), !tbaa.struct !598
   %i.ah = load ptr, ptr %i.ae, align 8, !tbaa !278
   store ptr %i.ah, ptr %i.ag, align 8, !tbaa !278
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ae, i8 0, i64 16, i1 false)
@@ -296,7 +295,7 @@ _ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i.i.
   br label %_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EE12emplace_backIJSA_EEERSA_DpOT_.exit.i.i
 
 bb.i:                                             ; preds = %bb.f
-  invoke void @_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EE16_M_push_back_auxIJSA_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(104) %i.r, ptr noundef nonnull align 8 dereferenceable(32) %7)
+  invoke void @_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EE16_M_push_back_auxIJSA_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(104) %i.r, ptr noundef nonnull align 8 dereferenceable(32) %6)
           to label %.noexc7 unwind label %bb.z
 
 .noexc7:                                          ; preds = %bb.i
@@ -341,16 +340,16 @@ bb.j:                                             ; preds = %_ZN12_GLOBAL__N_124
   %i.bo = getelementptr inbounds i8, ptr %i.v, i64 -4 ; 2 uses
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !3  ; 2 uses
   store ptr %i.bo, ptr %i.u, align 8, !tbaa !280
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 24, i1 false)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 32 dereferenceable(24) %.sroa.0, i8 0, i64 24, i1 false)
   %i.bq = load ptr, ptr %i.a, align 8, !tbaa !297
-  %i.br = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !278 ; 2 uses
   %.not.i.i.not.i.i.i = icmp eq ptr %i.bs, null   ; 2 uses
   br i1 %.not.i.i.not.i.i.i, label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 16, i1 false), !tbaa.struct !598
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !598
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.br, i8 0, i64 16, i1 false)
   br label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i.i
 
@@ -399,23 +398,21 @@ _ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EE
   %storemerge.i.i.i.i.i.i = phi ptr [ %i.cp, %bb.p ], [ %i.ch, %bb.m ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #31
   %i.cq = getelementptr inbounds nuw i8, ptr %5, i64 24
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %5, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.not.i.i.i, label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i6.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EEixEm.exit.i.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %6, i64 16, i1 false), !tbaa.struct !598
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, ptr noundef nonnull align 32 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !598
   br label %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i6.i.i
 
 _ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i6.i.i: ; preds = %bb.q, %_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EEixEm.exit.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(32) %5, i64 16, i1 false), !tbaa.struct !598
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %storemerge.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !598
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %storemerge.i.i.i.i.i.i, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !598
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i.i.i.i.i)
+  %.sroa.0.i.i.i.i.i.sroa.0.0.copyload = load <16 x i8>, ptr %5, align 16, !tbaa !24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %5, ptr noundef nonnull align 8 dereferenceable(32) %storemerge.i.i.i.i.i.i, i64 16, i1 false), !tbaa.struct !598
+  store <16 x i8> %.sroa.0.i.i.i.i.i.sroa.0.0.copyload, ptr %storemerge.i.i.i.i.i.i, align 8, !tbaa !24
   %i.cr = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.cs = getelementptr inbounds nuw i8, ptr %storemerge.i.i.i.i.i.i, i64 16 ; 2 uses
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !308 ; 3 uses
-  store ptr %i.ct, ptr %i.cr, align 8, !tbaa !308
+  store ptr %i.ct, ptr %i.cr, align 16, !tbaa !308
   store ptr %i.bs, ptr %i.cs, align 8, !tbaa !308
   %i.cu = getelementptr inbounds nuw i8, ptr %storemerge.i.i.i.i.i.i, i64 24 ; 2 uses
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !308
@@ -437,7 +434,7 @@ bb.s:                                             ; preds = %bb.r
 
 _ZNSt14_Function_baseD2Ev.exit.i.i:               ; preds = %bb.r, %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit.i6.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZNSt14_Function_baseD2Ev.exit.i.i, %_ZNSt5dequeISt8functionIFN8facebook3jsi5ValueERNS2_7RuntimeERKS3_PS6_mEESaISA_EE12emplace_backIJSA_EEERSA_DpOT_.exit.i.i
@@ -446,13 +443,13 @@ bb.t:                                             ; preds = %_ZNSt14_Function_ba
   %i.cz = getelementptr inbounds nuw i8, ptr %.val.val.i, i64 %i.i
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 4
   store i32 %.0.i.i, ptr %i.da, align 4, !tbaa !267
-  %i.db = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.db = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !278 ; 2 uses
   %.not.i = icmp eq ptr %i.dc, null
   br i1 %.not.i, label %_ZNSt14_Function_baseD2Ev.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.dd = invoke noundef zeroext i1 %i.dc(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %7, i32 noundef 3)
+  %i.dd = invoke noundef zeroext i1 %i.dc(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 3)
           to label %_ZNSt14_Function_baseD2Ev.exit unwind label %bb.v ; 0 uses
 
 bb.v:                                             ; preds = %bb.u
@@ -524,13 +521,13 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl15intoJSIFunctionENS_22SandboxFunctio
 bb.z:                                             ; preds = %bb.i, %_ZNSt8functionIFN8facebook3jsi5ValueERNS1_7RuntimeERKS2_PS5_mEEC2EOS9_.exit
   %i.ec = landingpad { ptr, i32 }
           cleanup
-  %i.ed = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.ed = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.ee = load ptr, ptr %i.ed, align 8, !tbaa !278 ; 2 uses
   %.not.i10 = icmp eq ptr %i.ee, null
   br i1 %.not.i10, label %_ZNSt14_Function_baseD2Ev.exit11, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ef = invoke noundef zeroext i1 %i.ee(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(32) %7, i32 noundef 3)
+  %i.ef = invoke noundef zeroext i1 %i.ee(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(32) %6, i32 noundef 3)
           to label %_ZNSt14_Function_baseD2Ev.exit11 unwind label %bb.ab ; 0 uses
 
 bb.ab:                                            ; preds = %bb.aa

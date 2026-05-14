@@ -201,12 +201,6 @@ _ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124S
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_less_iterEEvT_SG_SG_SG_T0_(ptr %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #0 comdat {
 bb.a:
-  %4 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
-  %5 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
-  %6 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
-  %7 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
-  %8 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
-  %9 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
   %.sroa.05.0.copyload.i.i = load ptr, ptr %1, align 8, !tbaa !63 ; 16 uses
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.sroa.26.0.copyload.i.i = load i64, ptr %.sroa.26.0..sroa_idx.i.i, align 8, !tbaa !64 ; 9 uses
@@ -358,11 +352,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.aw, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52.thread137
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i34, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i38, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52
-  call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 8 dereferenceable(16) %9, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %9)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %2, align 8
   br label %bb.v
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52.thread137: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i44, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i48, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52
@@ -435,19 +427,15 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.bt, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread139
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i61, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i65, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79
-  call void @llvm.lifetime.start.p0(ptr nonnull %8)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0234.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %3, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %3, ptr noundef nonnull align 8 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %8)
+  store <16 x i8> %.sroa.0234.0.copyload, ptr %3, align 8
   br label %bb.v
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread139: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i71, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i75, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79
-  call void @llvm.lifetime.start.p0(ptr nonnull %7)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0236.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %1, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %1, ptr noundef nonnull align 8 dereferenceable(16) %7, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %7)
+  store <16 x i8> %.sroa.0236.0.copyload, ptr %1, align 8
   br label %bb.v
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread135: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit
@@ -524,11 +512,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.cr, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106.thread141
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i88, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i92, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0238.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %1, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %1, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  store <16 x i8> %.sroa.0238.0.copyload, ptr %1, align 8
   br label %bb.v
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106.thread141: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i98, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i102, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106
@@ -600,19 +586,15 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.do, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread143
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i115, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i119, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133
-  call void @llvm.lifetime.start.p0(ptr nonnull %5)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0240.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %3, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %3, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  store <16 x i8> %.sroa.0240.0.copyload, ptr %3, align 8
   br label %bb.v
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread143: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i125, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i129, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133
-  call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, ptr noundef nonnull align 8 dereferenceable(20) %0, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0242.0.copyload = load <16 x i8>, ptr %0, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef nonnull align 8 dereferenceable(20) %2, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %2, ptr noundef nonnull align 8 dereferenceable(16) %4, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  store <16 x i8> %.sroa.0242.0.copyload, ptr %2, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit106.thread, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread143, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit133.thread, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit52.thread, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread139, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit79.thread
@@ -629,7 +611,6 @@ bb.v:                                             ; preds = %_ZNK9__gnu_cxx5__op
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local ptr @_ZSt21__unguarded_partitionIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_less_iterEET_SG_SG_SG_T0_(ptr %0, ptr %1, ptr %2) local_unnamed_addr #0 comdat {
 bb.a:
-  %3 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
   %.sroa.24.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   br label %bb.b
@@ -808,16 +789,14 @@ bb.l:                                             ; preds = %_ZNK9__gnu_cxx5__op
   ret ptr %.sroa.037.1
 
 bb.m:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit34.thread43
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.037.1, i64 16, i1 false), !tbaa.struct !222
+  %.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.037.1, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.037.1, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.0.1, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.0.1, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false), !tbaa.struct !222
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
+  store <16 x i8> %.sroa.0.0.copyload, ptr %.sroa.0.1, align 8
   %i.ay = getelementptr inbounds nuw i8, ptr %.sroa.037.1, i64 16 ; 2 uses
   %i.az = getelementptr inbounds i8, ptr %.sroa.0.0.pn, i64 -8 ; 2 uses
-  %i.ba = load i32, ptr %i.ay, align 4, !tbaa !4
+  %i.ba = load i32, ptr %i.ay, align 8, !tbaa !4
   %i.bb = load i32, ptr %i.az, align 4, !tbaa !4
-  store i32 %i.bb, ptr %i.ay, align 4, !tbaa !4
+  store i32 %i.bb, ptr %i.ay, align 8, !tbaa !4
   store i32 %i.ba, ptr %i.az, align 4, !tbaa !4
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.037.1, i64 24
   br label %bb.b, !llvm.loop !230
@@ -829,7 +808,6 @@ declare i64 @llvm.ctlz.i64(i64, i1 immarg) #14
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_less_iterEEvT_SG_T0_(ptr %0, ptr %1) local_unnamed_addr #0 comdat {
 bb.a:
-  %.sroa.0 = alloca %"class.absl::lts_20250512::Span", align 8 ; 4 uses
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %.preheader
 
@@ -923,8 +901,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.aa, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread17
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.07.027, i64 16, i1 false)
+  %.sroa.0.sroa.0.0.copyload = load <16 x i8>, ptr %.sroa.07.027, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.pn26, i64 40
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 8
   %i.ab = ptrtoint ptr %.sroa.07.027 to i64
@@ -953,9 +930,8 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12
   br i1 %i.am, label %.lr.ph.i.i.i.i.i, label %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit, !llvm.loop !231
 
 _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorIS8_SaIS8_EEEESD_ET0_T_SF_SE_.exit: ; preds = %.lr.ph.i.i.i.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0, i64 16, i1 false), !tbaa.struct !222
+  store <16 x i8> %.sroa.0.sroa.0.0.copyload, ptr %0, align 8
   store i32 %.sroa.4.0.copyload, ptr %i.b, align 8, !tbaa !49
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %bb.l
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit.thread17: ; preds = %.lr.ph.i.i.i.i.i.i.i14.i.i, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit21.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIN4absl12lts_202505124SpanIKiEEiESt6vectorISA_SaISA_EEEESF_EEbT_T0_.exit

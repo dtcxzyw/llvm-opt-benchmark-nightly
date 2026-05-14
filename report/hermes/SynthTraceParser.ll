@@ -201,9 +201,8 @@ _ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14def
 define linkonce_odr hidden void @_ZN8facebook6hermes7tracing10SynthTrace12emplace_backINS2_23SetPropertyNativeRecordEJRNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEddPKcNS2_10TraceValueEEEEvDpOT0_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(16) %5) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %6 = alloca %"class.facebook::hermes::tracing::SynthTrace::TraceValue", align 8 ; 4 uses
   %i.b = alloca i64, align 8                      ; 6 uses
-  %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.d = tail call noalias noundef nonnull dereferenceable(80) ptr @_Znwm(i64 noundef 80) #17 ; 11 uses
   %.sroa.0.0.copyload = load i64, ptr %1, align 8, !tbaa !175
@@ -211,10 +210,10 @@ bb.a:
   %i.f = fptoui double %i.e to i64
   %i.g = load double, ptr %3, align 8, !tbaa !227
   %i.h = fptoui double %i.g to i64
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
   %i.i = load ptr, ptr %4, align 8, !tbaa !216    ; 4 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 5 uses
-  store ptr %i.j, ptr %7, align 8, !tbaa !91
+  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 5 uses
+  store ptr %i.j, ptr %6, align 8, !tbaa !91
   %i.k = icmp eq ptr %i.i, null
   br i1 %i.k, label %bb.b, label %bb.c
 
@@ -230,8 +229,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.d, label %._crit_edge.i.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.n = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0) #16 ; 2 uses
-  store ptr %i.n, ptr %7, align 8, !tbaa !176
+  %i.n = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(8) %i.b, i64 noundef 0) #16 ; 2 uses
+  store ptr %i.n, ptr %6, align 8, !tbaa !176
   %i.o = load i64, ptr %i.b, align 8, !tbaa !175
   store i64 %i.o, ptr %i.j, align 8, !tbaa !147
   br label %._crit_edge.i.i
@@ -254,14 +253,13 @@ bb.f:                                             ; preds = %._crit_edge.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit: ; preds = %._crit_edge.i.i, %bb.e, %bb.f
   %i.r = load i64, ptr %i.b, align 8, !tbaa !175  ; 2 uses
-  %i.s = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i64 %i.r, ptr %i.s, align 8, !tbaa !146
-  %i.t = load ptr, ptr %7, align 8, !tbaa !176
+  %i.t = load ptr, ptr %6, align 8, !tbaa !176
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.r
   store i8 0, ptr %i.u, align 1, !tbaa !147
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #16
-  call void @llvm.lifetime.start.p0(ptr nonnull %6)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %5, i64 16, i1 false)
+  %.sroa.0.0.copyload18 = load <16 x i8>, ptr %5, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %.sroa.0.0.copyload, ptr %i.v, align 8, !tbaa !175
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN8facebook6hermes7tracing10SynthTrace28GetOrSetPropertyNativeRecordE, i64 16), ptr %i.d, align 8, !tbaa !36
@@ -272,7 +270,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_.exit: ; pr
   %i.y = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 4 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.d, i64 48 ; 3 uses
   store ptr %i.z, ptr %i.y, align 8, !tbaa !91
-  %i.aa = load ptr, ptr %7, align 8, !tbaa !176   ; 2 uses
+  %i.aa = load ptr, ptr %6, align 8, !tbaa !176   ; 2 uses
   %i.ab = load i64, ptr %i.s, align 8, !tbaa !146 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   store i64 %i.ab, ptr %i.a, align 8, !tbaa !175
@@ -312,8 +310,7 @@ _ZN8facebook6hermes7tracing10SynthTrace23SetPropertyNativeRecordC2ENSt6chrono8du
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #16
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN8facebook6hermes7tracing10SynthTrace23SetPropertyNativeRecordE, i64 16), ptr %i.d, align 8, !tbaa !36
   %i.al = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.al, ptr noundef nonnull align 8 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !786
-  call void @llvm.lifetime.end.p0(ptr nonnull %6)
+  store <16 x i8> %.sroa.0.0.copyload18, ptr %i.al, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !408 ; 6 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -442,7 +439,7 @@ _ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14def
   br label %_ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14default_deleteIS5_EESaIS8_EE12emplace_backIJPNS4_23SetPropertyNativeRecordEEEERS8_DpOT_.exit
 
 _ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14default_deleteIS5_EESaIS8_EE12emplace_backIJPNS4_23SetPropertyNativeRecordEEEERS8_DpOT_.exit: ; preds = %bb.j, %_ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14default_deleteIS5_EESaIS8_EE17_M_realloc_insertIJPNS4_23SetPropertyNativeRecordEEEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i
-  %i.bz = load ptr, ptr %7, align 8, !tbaa !176   ; 2 uses
+  %i.bz = load ptr, ptr %6, align 8, !tbaa !176   ; 2 uses
   %i.ca = icmp eq ptr %i.bz, %i.j
   br i1 %i.ca, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -453,7 +450,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN8facebook6hermes7tracing10SynthTrace6RecordESt14default_deleteIS5_EESaIS8_EE12emplace_backIJPNS4_23SetPropertyNativeRecordEEEERS8_DpOT_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #16
   call void @_ZN8facebook6hermes7tracing10SynthTrace23flushRecordsIfNecessaryEv(ptr noundef nonnull align 8 dereferenceable(56) %0) #16
   ret void
 }

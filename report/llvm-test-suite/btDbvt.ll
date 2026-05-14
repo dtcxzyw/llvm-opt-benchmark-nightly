@@ -6,7 +6,6 @@ target triple = "x86_64-pc-linux-gnu"
 
 %class.btVector3 = type { [4 x float] }
 %class.btAlignedObjectArray.0 = type <{ [4 x i8], i32, i32, [4 x i8], ptr, i8, [7 x i8] }>
-%struct.btDbvtAabbMm = type { %class.btVector3, %class.btVector3 }
 %struct.btDbvtNodeEnumerator = type { %"struct.btDbvt::ICollide", %class.btAlignedObjectArray.2 }
 %"struct.btDbvt::ICollide" = type { ptr }
 %class.btAlignedObjectArray.2 = type <{ [4 x i8], i32, i32, [4 x i8], ptr, i8, [7 x i8] }>
@@ -409,7 +408,6 @@ bb.bj:                                            ; preds = %.loopexit.split-lp,
 ; Function Attrs: uwtable
 define dso_local void @_ZN6btDbvt19optimizeIncrementalEi(ptr noundef nonnull align 8 captures(none) dereferenceable(64) %0, i32 noundef %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %2 = alloca %struct.btDbvtAabbMm, align 4       ; 4 uses
   %i.a = icmp slt i32 %1, 0
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.c = load i32, ptr %i.b, align 4
@@ -490,11 +488,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store ptr %i.l, ptr %i.am, align 8, !tbaa !25
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %i.s
   store ptr %i.u, ptr %i.an, align 8, !tbaa !25
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %2, ptr noundef nonnull align 4 dereferenceable(32) %i.l, i64 32, i1 false), !tbaa.struct !76
+  %.sroa.0.0.copyload = load <32 x i8>, ptr %i.l, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.l, ptr noundef nonnull align 4 dereferenceable(32) %.0918, i64 32, i1 false), !tbaa.struct !76
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %.0918, ptr noundef nonnull align 4 dereferenceable(32) %2, i64 32, i1 false), !tbaa.struct !76
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  store <32 x i8> %.sroa.0.0.copyload, ptr %.0918, align 8
   br label %_ZL4sortP10btDbvtNodeRS0_.exit
 
 _ZL4sortP10btDbvtNodeRS0_.exit:                   ; preds = %.lr.ph, %bb.f
