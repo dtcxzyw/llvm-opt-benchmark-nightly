@@ -201,7 +201,7 @@ bb.a:                                             ; preds = %.loopexit
 
 .noexc45._ZNK4geos4util21GeometricShapeFactory5coordEdd.exit_crit_edge: ; preds = %.noexc45
   %.pre = load i32, ptr %i.u, align 8, !tbaa !18
-  %.pre85.pre = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !104
+  %.pre85.pre = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !86
   br label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit
 
 _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit: ; preds = %.noexc45._ZNK4geos4util21GeometricShapeFactory5coordEdd.exit_crit_edge, %.loopexit
@@ -218,7 +218,7 @@ _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit: ; preds = %.noexc45._ZNK4ge
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit
-  %i.bj = load i32, ptr %.pre85, align 8, !tbaa !40, !noalias !107
+  %i.bj = load i32, ptr %.pre85, align 8, !tbaa !40, !noalias !104
   %i.bk = icmp eq i32 %i.bj, 1
   br i1 %i.bk, label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us, label %.lr.ph.split
 
@@ -244,16 +244,16 @@ _ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us: ; preds = %.lr.ph, %_Z
   %i.bv = add nuw i32 %.03674.us, 1               ; 2 uses
   %i.bw = load i32, ptr %i.u, align 8, !tbaa !18
   %i.bx = icmp ult i32 %i.bv, %i.bw
-  br i1 %i.bx, label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us, label %._crit_edge, !llvm.loop !110
+  br i1 %i.bx, label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us, label %._crit_edge, !llvm.loop !107
 
 ._crit_edge.loopexit76:                           ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52
-  %.pre84 = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !104
+  %.pre84 = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !108
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us, %._crit_edge.loopexit76, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit
   %i.by = phi ptr [ %.pre85, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit ], [ %.pre84, %._crit_edge.loopexit76 ], [ %.pre85, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us ] ; 3 uses
   %.035.lcssa = phi i64 [ 1, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit ], [ %indvars.iv.next, %._crit_edge.loopexit76 ], [ %indvars.iv.next81, %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52.us ]
-  %i.bz = load i32, ptr %i.by, align 8, !tbaa !40, !noalias !104
+  %i.bz = load i32, ptr %i.by, align 8, !tbaa !40, !noalias !108
   %i.ca = icmp eq i32 %i.bz, 1
   br i1 %i.ca, label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit49, label %bb.b
 
@@ -282,8 +282,8 @@ bb.c:                                             ; preds = %.noexc45, %bb.a
   %i.ck = tail call double @sin(double noundef %i.cg) #11, !tbaa !3
   %i.cl = fmul double %i.p, %i.ck
   %i.cm = fadd double %i.r, %i.cl                 ; 2 uses
-  %i.cn = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !107 ; 3 uses
-  %i.co = load i32, ptr %i.cn, align 8, !tbaa !40, !noalias !107
+  %i.cn = load ptr, ptr %i.bc, align 8, !tbaa !17, !noalias !104 ; 3 uses
+  %i.co = load i32, ptr %i.cn, align 8, !tbaa !40, !noalias !104
   %i.cp = icmp eq i32 %i.co, 1
   br i1 %i.cp, label %_ZNK4geos4util21GeometricShapeFactory5coordEdd.exit52, label %bb.d
 
@@ -621,9 +621,9 @@ attributes #13 = { builtin nounwind }
 !104 = !{!105}
 !105 = distinct !{!105, !106, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd: argument 0"}
 !106 = distinct !{!106, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd"}
-!107 = !{!108}
-!108 = distinct !{!108, !109, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd: argument 0"}
-!109 = distinct !{!109, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd"}
-!110 = distinct !{!110, !35}
+!107 = distinct !{!107, !35}
+!108 = !{!109}
+!109 = distinct !{!109, !110, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd: argument 0"}
+!110 = distinct !{!110, !"_ZNK4geos4util21GeometricShapeFactory5coordEdd"}
 !111 = distinct !{!111, !35, !52}
 end_hunk_0

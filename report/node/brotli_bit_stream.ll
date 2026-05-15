@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge
   %i.gb = zext nneg i32 %i.da to i64
   %i.gc = add i64 %4, %i.gb                       ; 2 uses
   tail call fastcc void @BuildAndStoreHuffmanTree(ptr noundef nonnull %1, i64 noundef %i.gc, i64 noundef %i.gc, ptr noundef %5, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %6, ptr noundef nonnull %7)
-  %.pre98 = load i64, ptr %6, align 8, !tbaa !9, !alias.scope !502, !noalias !505 ; 2 uses
+  %.pre98 = load i64, ptr %6, align 8, !tbaa !9, !noalias !155 ; 2 uses
   br i1 %.not86, label %._crit_edge85, label %.lr.ph84
 
 .lr.ph84:                                         ; preds = %bb.k, %bb.m
@@ -217,18 +217,18 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge
   %i.gl = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.gh
   %i.gm = load i16, ptr %i.gl, align 2, !tbaa !37
   %i.gn = zext i16 %i.gm to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !507)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !510)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !502)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !505)
   %i.go = lshr i64 %i.gd, 3
   %i.gp = getelementptr inbounds nuw i8, ptr %7, i64 %i.go ; 2 uses
-  %i.gq = load i8, ptr %i.gp, align 1, !tbaa !11, !alias.scope !510, !noalias !507
+  %i.gq = load i8, ptr %i.gp, align 1, !tbaa !11, !alias.scope !505, !noalias !502
   %i.gr = zext i8 %i.gq to i64
   %i.gs = and i64 %i.gd, 7
   %i.gt = shl nuw nsw i64 %i.gn, %i.gs
   %i.gu = or i64 %i.gt, %i.gr
-  store i64 %i.gu, ptr %i.gp, align 1, !noalias !507
+  store i64 %i.gu, ptr %i.gp, align 1, !noalias !502
   %i.gv = add i64 %i.gd, %i.gk                    ; 5 uses
-  store i64 %i.gv, ptr %6, align 8, !tbaa !9, !alias.scope !507, !noalias !510
+  store i64 %i.gv, ptr %6, align 8, !tbaa !9, !alias.scope !502, !noalias !505
   %i.gw = add nsw i32 %i.gg, -1
   %or.cond.not = icmp ult i32 %i.gw, %i.da
   br i1 %or.cond.not, label %bb.l, label %bb.m
@@ -236,40 +236,40 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge
 bb.l:                                             ; preds = %.lr.ph84
   %i.gx = lshr i32 %i.gf, 9
   %i.gy = zext nneg i32 %i.gx to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !512)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !515)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !507)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !510)
   %i.gz = lshr i64 %i.gv, 3
   %i.ha = getelementptr inbounds nuw i8, ptr %7, i64 %i.gz ; 2 uses
-  %i.hb = load i8, ptr %i.ha, align 1, !tbaa !11, !alias.scope !515, !noalias !512
+  %i.hb = load i8, ptr %i.ha, align 1, !tbaa !11, !alias.scope !510, !noalias !507
   %i.hc = zext i8 %i.hb to i64
   %i.hd = and i64 %i.gv, 7
   %i.he = shl nuw nsw i64 %i.gy, %i.hd
   %i.hf = or i64 %i.he, %i.hc
-  store i64 %i.hf, ptr %i.ha, align 1, !noalias !512
+  store i64 %i.hf, ptr %i.ha, align 1, !noalias !507
   %i.hg = add i64 %i.gv, %i.gh                    ; 2 uses
-  store i64 %i.hg, ptr %6, align 8, !tbaa !9, !alias.scope !512, !noalias !515
+  store i64 %i.hg, ptr %6, align 8, !tbaa !9, !alias.scope !507, !noalias !510
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %.lr.ph84
   %i.hh = phi i64 [ %i.hg, %bb.l ], [ %i.gv, %.lr.ph84 ] ; 2 uses
   %i.hi = add nuw i64 %.182, 1                    ; 2 uses
   %exitcond97.not = icmp eq i64 %i.hi, %.172
-  br i1 %exitcond97.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !517
+  br i1 %exitcond97.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !512
 
 ._crit_edge85:                                    ; preds = %bb.m, %bb.k
   %i.hj = phi i64 [ %.pre98, %bb.k ], [ %i.hh, %bb.m ] ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !502)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !505)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !513)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !516)
   %i.hk = lshr i64 %i.hj, 3
   %i.hl = getelementptr inbounds nuw i8, ptr %7, i64 %i.hk ; 2 uses
-  %i.hm = load i8, ptr %i.hl, align 1, !tbaa !11, !alias.scope !505, !noalias !502
+  %i.hm = load i8, ptr %i.hl, align 1, !tbaa !11, !alias.scope !516, !noalias !513
   %i.hn = zext i8 %i.hm to i64
   %i.ho = and i64 %i.hj, 7
   %i.hp = shl nuw nsw i64 1, %i.ho
   %i.hq = or i64 %i.hp, %i.hn
-  store i64 %i.hq, ptr %i.hl, align 1, !noalias !502
+  store i64 %i.hq, ptr %i.hl, align 1, !noalias !513
   %i.hr = add i64 %i.hj, 1
-  store i64 %i.hr, ptr %6, align 8, !tbaa !9, !alias.scope !502, !noalias !505
+  store i64 %i.hr, ptr %6, align 8, !tbaa !9, !alias.scope !513, !noalias !516
   tail call void @BrotliFree(ptr noundef %0, ptr noundef nonnull %i.aq) #11
   br label %bb.n
 
@@ -672,12 +672,12 @@ begin_hunk_1_@llvm.vector.reduce.umax.v4i32
 !509 = distinct !{!509, !"BrotliWriteBits"}
 !510 = !{!511}
 !511 = distinct !{!511, !509, !"BrotliWriteBits: argument 1"}
-!512 = !{!513}
-!513 = distinct !{!513, !514, !"BrotliWriteBits: argument 0"}
-!514 = distinct !{!514, !"BrotliWriteBits"}
-!515 = !{!516}
-!516 = distinct !{!516, !514, !"BrotliWriteBits: argument 1"}
-!517 = distinct !{!517, !15}
+!512 = distinct !{!512, !15}
+!513 = !{!514}
+!514 = distinct !{!514, !515, !"BrotliWriteBits: argument 0"}
+!515 = distinct !{!515, !"BrotliWriteBits"}
+!516 = !{!517}
+!517 = distinct !{!517, !515, !"BrotliWriteBits: argument 1"}
 !518 = !{!519}
 !519 = distinct !{!519, !520, !"BrotliWriteBits: argument 0"}
 !520 = distinct !{!520, !"BrotliWriteBits"}

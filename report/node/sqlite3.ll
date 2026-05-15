@@ -201,7 +201,7 @@ sqlite3FpDecode.exit:                             ; preds = %bb.gn, %bb.fi
   ]
 
 sqlite3FpDecode.exit.sqlite3FpDecode.exit._crit_edge_crit_edge: ; preds = %sqlite3FpDecode.exit
-  %.pre.pre.pre = load i32, ptr %i.af, align 4, !tbaa !328
+  %.pre.pre.pre = load i32, ptr %i.af, align 4
   br label %sqlite3FpDecode.exit._crit_edge
 
 bb.go:                                            ; preds = %sqlite3FpDecode.exit
@@ -604,7 +604,7 @@ bb.ak:                                            ; preds = %.loopexit328, %.thr
 .preheader295:                                    ; preds = %bb.ak
   %i.fl = load i32, ptr %i.s, align 8, !tbaa !60  ; 2 uses
   %i.fm = icmp sgt i32 %i.fl, 0
-  %.pre349 = load ptr, ptr %i.a, align 8, !tbaa !1309 ; 15 uses
+  %.pre349 = load ptr, ptr %i.a, align 8          ; 15 uses
   br i1 %i.fm, label %.lr.ph311, label %._crit_edge
 
 sqlite3DbFree.exit:                               ; preds = %.loopexit328, %bb.ak
@@ -1007,7 +1007,7 @@ bb.cx:                                            ; preds = %bb.cu, %bb.cw, %bb.
   %.0531 = phi i32 [ %i.uo, %bb.ct ], [ %i.ur, %bb.cw ], [ %i.ur, %bb.cv ], [ 0, %bb.cu ] ; 2 uses
   %i.uv = load i16, ptr %i.fp, align 2, !tbaa !881 ; 2 uses
   %i.uw = icmp sgt i16 %i.uv, 0
-  %.pre857 = load i32, ptr %i.c, align 4, !tbaa !5 ; 2 uses
+  %.pre857 = load i32, ptr %i.c, align 4          ; 2 uses
   br i1 %i.uw, label %.lr.ph823, label %.._crit_edge_crit_edge
 
 .._crit_edge_crit_edge:                           ; preds = %bb.cx
@@ -1410,7 +1410,7 @@ bb.bk:                                            ; preds = %bb.bf, %bb.bi, %bb.
   %.1 = phi i16 [ %i.ik, %bb.bf ], [ %.0364, %bb.bh ], [ %.0364, %bb.bj ], [ %.0364, %bb.bi ], [ %.0364, %._crit_edge ] ; 4 uses
   %.not407 = icmp eq i32 %spec.select, 1
   %.pre629 = load ptr, ptr %10, align 8, !tbaa !4262 ; 13 uses
-  %.pre631 = load ptr, ptr %i.bx, align 8, !tbaa !4266 ; 17 uses
+  %.pre631 = load ptr, ptr %i.bx, align 8         ; 17 uses
   br i1 %.not407, label %bb.bl, label %bb.cl
 
 bb.bl:                                            ; preds = %bb.bk
@@ -1813,17 +1813,17 @@ bb.dn:                                            ; preds = %bb.dm
   %i.tq = getelementptr inbounds nuw i8, ptr %i.tk, i64 36 ; 2 uses
   %i.tr = load i32, ptr %i.tq, align 4, !tbaa !6005
   %i.ts = icmp sgt i32 %i.tp, %i.tr
-  %.pre205.i = load ptr, ptr %i.tn, align 8, !tbaa !6053 ; 2 uses
+  %.pre205.i = load ptr, ptr %i.tn, align 8, !tbaa !6006 ; 2 uses
   br i1 %i.ts, label %bb.do, label %.lr.ph192.i
 
 bb.do:                                            ; preds = %._crit_edge186.i
-  %i.tt = call i32 @sqlite3_initialize(), !inline_history !6054
+  %i.tt = call i32 @sqlite3_initialize(), !inline_history !6053
   %.not.i.i112.i = icmp eq i32 %i.tt, 0
   br i1 %.not.i.i112.i, label %sqlite3_realloc64.exit.i.i157, label %.loopexit.thread.i
 
 sqlite3_realloc64.exit.i.i157:                    ; preds = %bb.do
   %i.tu = sext i32 %i.tp to i64
-  %i.tv = call fastcc ptr @sqlite3Realloc(ptr noundef %.pre205.i, i64 noundef %i.tu), !inline_history !6054 ; 3 uses
+  %i.tv = call fastcc ptr @sqlite3Realloc(ptr noundef %.pre205.i, i64 noundef %i.tu), !inline_history !6053 ; 3 uses
   %.not.i113.i = icmp eq ptr %i.tv, null
   br i1 %.not.i113.i, label %.loopexit.thread.i, label %bb.dp
 
@@ -1841,8 +1841,8 @@ bb.dp:                                            ; preds = %sqlite3_realloc64.e
   %i.ty = sext i32 %i.pc to i64                   ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.tx, ptr nonnull align 1 %i.pd, i64 %i.ty, i1 false)
   %i.tz = getelementptr inbounds nuw i8, ptr %i.tk, i64 32
-  store i32 %i.pc, ptr %i.tz, align 8, !tbaa !6055
-  %i.ua = load ptr, ptr %i.tn, align 8, !tbaa !6053
+  store i32 %i.pc, ptr %i.tz, align 8, !tbaa !6054
+  %i.ua = load ptr, ptr %i.tn, align 8, !tbaa !6055
   %i.ub = getelementptr inbounds i8, ptr %i.ua, i64 %i.ty
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.ub, i8 0, i64 20, i1 false)
   br label %bb.dq
@@ -1852,13 +1852,13 @@ bb.dq:                                            ; preds = %nodeReaderRelease.e
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #71
   %i.uc = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %indvars.iv201.i ; 9 uses
   %i.ud = getelementptr inbounds nuw i8, ptr %i.uc, i64 24
-  %i.ue = load ptr, ptr %i.ud, align 8, !tbaa !6053 ; 4 uses
+  %i.ue = load ptr, ptr %i.ud, align 8, !tbaa !6055 ; 4 uses
   %.not.i156 = icmp eq ptr %i.ue, null
   br i1 %.not.i156, label %nodeReaderRelease.exit139.i, label %bb.dr
 
 bb.dr:                                            ; preds = %bb.dq
   %i.uf = getelementptr inbounds nuw i8, ptr %i.uc, i64 32
-  %i.ug = load i32, ptr %i.uf, align 8, !tbaa !6055
+  %i.ug = load i32, ptr %i.uf, align 8, !tbaa !6054
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.ck, i8 0, i64 40, i1 false)
   store ptr %i.ue, ptr %4, align 8, !tbaa !6028
   store i32 %i.ug, ptr %i.cj, align 8, !tbaa !6030
@@ -1905,13 +1905,13 @@ bb.ds:                                            ; preds = %._crit_edge188.i
 
 bb.dt:                                            ; preds = %bb.ds
   %i.va = load ptr, ptr %i.uv, align 8, !tbaa !6006
-  %i.vb = call i32 @sqlite3_initialize(), !inline_history !6054
+  %i.vb = call i32 @sqlite3_initialize(), !inline_history !6053
   %.not.i.i120.i = icmp eq i32 %i.vb, 0
   br i1 %.not.i.i120.i, label %sqlite3_realloc64.exit.i122.i, label %blobGrowBuffer.exit124.thread.i
 
 sqlite3_realloc64.exit.i122.i:                    ; preds = %bb.dt
   %i.vc = sext i32 %i.uw to i64
-  %i.vd = call fastcc ptr @sqlite3Realloc(ptr noundef %i.va, i64 noundef %i.vc), !inline_history !6054 ; 2 uses
+  %i.vd = call fastcc ptr @sqlite3Realloc(ptr noundef %i.va, i64 noundef %i.vc), !inline_history !6053 ; 2 uses
   %.not.i123.i = icmp eq ptr %i.vd, null
   br i1 %.not.i123.i, label %blobGrowBuffer.exit124.thread.i, label %bb.du
 
@@ -1958,17 +1958,17 @@ bb.dy:                                            ; preds = %bb.dx
   %i.vr = getelementptr i8, ptr %i.uc, i64 -4     ; 2 uses
   %i.vs = load i32, ptr %i.vr, align 4, !tbaa !6005
   %i.vt = icmp sgt i32 %i.vp, %i.vs
-  %.pre206.i = load ptr, ptr %i.vm, align 8, !tbaa !6053 ; 2 uses
+  %.pre206.i = load ptr, ptr %i.vm, align 8, !tbaa !6006 ; 2 uses
   br i1 %i.vt, label %bb.dz, label %blobGrowBuffer.exit129.i
 
 bb.dz:                                            ; preds = %bb.dy
-  %i.vu = call i32 @sqlite3_initialize(), !inline_history !6054
+  %i.vu = call i32 @sqlite3_initialize(), !inline_history !6053
   %.not.i.i125.i = icmp eq i32 %i.vu, 0
   br i1 %.not.i.i125.i, label %sqlite3_realloc64.exit.i127.i, label %blobGrowBuffer.exit129.thread.i
 
 sqlite3_realloc64.exit.i127.i:                    ; preds = %bb.dz
   %i.vv = sext i32 %i.vp to i64
-  %i.vw = call fastcc ptr @sqlite3Realloc(ptr noundef %.pre206.i, i64 noundef %i.vv), !inline_history !6054 ; 3 uses
+  %i.vw = call fastcc ptr @sqlite3Realloc(ptr noundef %.pre206.i, i64 noundef %i.vv), !inline_history !6053 ; 3 uses
   %.not.i128.i = icmp eq ptr %i.vw, null
   br i1 %.not.i128.i, label %blobGrowBuffer.exit129.thread.i, label %bb.ea
 
@@ -1983,8 +1983,8 @@ blobGrowBuffer.exit129.i:                         ; preds = %bb.ea, %bb.dy
   %i.vz = sext i32 %i.vn to i64                   ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.vx, ptr align 1 %i.vy, i64 %i.vz, i1 false)
   %i.wa = getelementptr i8, ptr %i.uc, i64 -8
-  store i32 %i.vn, ptr %i.wa, align 8, !tbaa !6055
-  %i.wb = load ptr, ptr %i.vm, align 8, !tbaa !6053
+  store i32 %i.vn, ptr %i.wa, align 8, !tbaa !6054
+  %i.wb = load ptr, ptr %i.vm, align 8, !tbaa !6055
   %i.wc = getelementptr inbounds i8, ptr %i.wb, i64 %i.vz
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(20) %i.wc, i8 0, i64 20, i1 false)
   br label %blobGrowBuffer.exit129.thread.i
@@ -2387,7 +2387,7 @@ sqlite3Fts3VarintLen.exit70.i:                    ; preds = %bb.fk
   %i.abk = add i32 %i.abj, %i.abb
   %i.abl = add i32 %i.abk, %i.abe
   %i.abm = add i32 %i.abl, %i.abh                 ; 2 uses
-  %i.abn = load i32, ptr %i.ct, align 8, !tbaa !6055 ; 4 uses
+  %i.abn = load i32, ptr %i.ct, align 8, !tbaa !6054 ; 4 uses
   %i.abo = icmp sgt i32 %i.abn, 0
   %i.abp = add nsw i32 %i.abn, %i.abm             ; 2 uses
   br i1 %i.abo, label %bb.fl, label %.thread.i180
@@ -2406,7 +2406,7 @@ bb.fm:                                            ; preds = %bb.fl
   br i1 %i.abw, label %bb.fn, label %.thread.i180
 
 bb.fn:                                            ; preds = %bb.fm
-  %i.abx = load ptr, ptr %i.cs, align 8, !tbaa !6053
+  %i.abx = load ptr, ptr %i.cs, align 8, !tbaa !6055
   %i.aby = call fastcc i32 @fts3WriteSegment(ptr noundef nonnull %0, i64 noundef %i.abs, ptr noundef %i.abx, i32 noundef %i.abn), !inline_history !6063 ; 2 uses
   %i.abz = load i64, ptr %i.cu, align 8, !tbaa !6064
   %i.aca = add nsw i64 %i.abz, 1
@@ -2684,12 +2684,12 @@ sqlite3Fts3PutVarint.exit102.i.i:                 ; preds = %bb.gi
 bb.gj:                                            ; preds = %bb.fu
   %i.afy = getelementptr inbounds nuw i8, ptr %i.ace, i64 24 ; 3 uses
   %i.afz = load i64, ptr %i.ace, align 8, !tbaa !6049
-  %i.aga = load ptr, ptr %i.afy, align 8, !tbaa !6053
+  %i.aga = load ptr, ptr %i.afy, align 8, !tbaa !6055
   %i.agb = call fastcc i32 @fts3WriteSegment(ptr noundef nonnull %0, i64 noundef %i.afz, ptr noundef %i.aga, i32 noundef %.pre.i.i), !inline_history !6066 ; 2 uses
   %i.agc = trunc i64 %indvars.iv.i71.i to i8
-  %i.agd = load ptr, ptr %i.afy, align 8, !tbaa !6053
+  %i.agd = load ptr, ptr %i.afy, align 8, !tbaa !6055
   store i8 %i.agc, ptr %i.agd, align 1, !tbaa !227
-  %i.age = load ptr, ptr %i.afy, align 8, !tbaa !6053
+  %i.age = load ptr, ptr %i.afy, align 8, !tbaa !6055
   %i.agf = getelementptr inbounds nuw i8, ptr %i.age, i64 1 ; 2 uses
   %i.agg = add nsw i64 %.072156.i.i, 1
   br label %bb.gk
@@ -2712,7 +2712,7 @@ bb.gl:                                            ; preds = %bb.gk
   %i.agn = sub i64 %i.agl, %i.agm
   %i.ago = trunc i64 %i.agn to i32
   %i.agp = add nsw i32 %i.ago, 1
-  store i32 %i.agp, ptr %.phi.trans.insert.i.i, align 8, !tbaa !6055
+  store i32 %i.agp, ptr %.phi.trans.insert.i.i, align 8, !tbaa !6054
   %i.agq = load i64, ptr %i.ace, align 8, !tbaa !6049 ; 3 uses
   %i.agr = add nsw i64 %i.agq, 1
   store i64 %i.agr, ptr %i.ace, align 8, !tbaa !6049
@@ -2733,7 +2733,7 @@ fts3IncrmergePush.exit.i:                         ; preds = %bb.gm, %bb.gl, %fts
   %i.agv = add nsw i64 %i.agu, 1
   store i64 %i.agv, ptr %i.bj, align 8, !tbaa !6049
   store i32 0, ptr %i.cr, align 8, !tbaa !6058
-  store i32 0, ptr %i.ct, align 8, !tbaa !6055
+  store i32 0, ptr %i.ct, align 8, !tbaa !6054
   %i.agw = sext i32 %i.aan to i64
   br label %bb.gn
 
@@ -2794,7 +2794,7 @@ sqlite3_realloc64.exit.i.i183:                    ; preds = %bb.gq
 bb.gr:                                            ; preds = %sqlite3_realloc64.exit.i.i183
   store i32 %i.ahm, ptr %i.cv, align 4, !tbaa !6005
   store ptr %i.aht, ptr %i.cs, align 8, !tbaa !6006
-  %.pre.i184 = load i32, ptr %i.ct, align 8, !tbaa !6055
+  %.pre.i184 = load i32, ptr %i.ct, align 8, !tbaa !6054
   br label %blobGrowBuffer.exit.i181
 
 blobGrowBuffer.exit.i181:                         ; preds = %bb.gr, %bb.gp
@@ -2803,8 +2803,8 @@ blobGrowBuffer.exit.i181:                         ; preds = %bb.gr, %bb.gp
   br i1 %i.ahv, label %bb.gs, label %fts3IncrmergeAppend.exit
 
 bb.gs:                                            ; preds = %blobGrowBuffer.exit.i181
-  store i32 1, ptr %i.ct, align 8, !tbaa !6055
-  %i.ahw = load ptr, ptr %i.cs, align 8, !tbaa !6053
+  store i32 1, ptr %i.ct, align 8, !tbaa !6054
+  %i.ahw = load ptr, ptr %i.cs, align 8, !tbaa !6055
   store i8 0, ptr %i.ahw, align 1, !tbaa !227
   br label %fts3IncrmergeAppend.exit
 
@@ -2885,13 +2885,13 @@ bb.gy:                                            ; preds = %bb.hk, %.thread256
   %i.aio = zext nneg i32 %.04486.i to i64         ; 2 uses
   %i.aip = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %i.aio ; 5 uses
   %i.aiq = getelementptr inbounds nuw i8, ptr %i.aip, i64 32
-  %i.air = load i32, ptr %i.aiq, align 8, !tbaa !6055
+  %i.air = load i32, ptr %i.aiq, align 8, !tbaa !6054
   %i.ais = icmp sgt i32 %i.air, 0
   br i1 %i.ais, label %sqlite3_free.exit51.i, label %bb.gz
 
 bb.gz:                                            ; preds = %bb.gy
   %i.ait = getelementptr inbounds nuw i8, ptr %i.aip, i64 24
-  %i.aiu = load ptr, ptr %i.ait, align 8, !tbaa !6053 ; 4 uses
+  %i.aiu = load ptr, ptr %i.ait, align 8, !tbaa !6055 ; 4 uses
   %i.aiv = icmp eq ptr %i.aiu, null
   br i1 %i.aiv, label %sqlite3_free.exit.i195, label %bb.ha
 
@@ -3062,7 +3062,7 @@ blobGrowBuffer.exit.thread.i:                     ; preds = %sqlite3_free.exit51
   %i.aky = getelementptr inbounds nuw [40 x i8], ptr %i.bj, i64 %indvars.iv.i201 ; 4 uses
   %i.akz = getelementptr inbounds nuw i8, ptr %i.aky, i64 24 ; 2 uses
   %i.ala = getelementptr inbounds nuw i8, ptr %i.aky, i64 32
-  %i.alb = load i32, ptr %i.ala, align 8, !tbaa !6055 ; 2 uses
+  %i.alb = load i32, ptr %i.ala, align 8, !tbaa !6054 ; 2 uses
   %i.alc = icmp sgt i32 %i.alb, 0
   %i.ald = icmp eq i32 %.18087.i, 0
   %or.cond.i202 = select i1 %i.alc, i1 %i.ald, i1 false
@@ -3070,13 +3070,13 @@ blobGrowBuffer.exit.thread.i:                     ; preds = %sqlite3_free.exit51
 
 bb.hq:                                            ; preds = %.lr.ph.i200
   %i.ale = load i64, ptr %i.aky, align 8, !tbaa !6049
-  %i.alf = load ptr, ptr %i.akz, align 8, !tbaa !6053
+  %i.alf = load ptr, ptr %i.akz, align 8, !tbaa !6055
   %i.alg = call fastcc i32 @fts3WriteSegment(ptr noundef %0, i64 noundef %i.ale, ptr noundef %i.alf, i32 noundef %i.alb), !inline_history !6076
   br label %bb.hr
 
 bb.hr:                                            ; preds = %bb.hq, %.lr.ph.i200
   %.2.i = phi i32 [ %i.alg, %bb.hq ], [ %.18087.i, %.lr.ph.i200 ] ; 2 uses
-  %i.alh = load ptr, ptr %i.akz, align 8, !tbaa !6053 ; 4 uses
+  %i.alh = load ptr, ptr %i.akz, align 8, !tbaa !6055 ; 4 uses
   %i.ali = icmp eq ptr %i.alh, null
   br i1 %i.ali, label %sqlite3_free.exit59.i, label %bb.hs
 
@@ -3197,16 +3197,16 @@ bb.id:                                            ; preds = %bb.ic
 bb.ie:                                            ; preds = %bb.id, %bb.ic
   %i.amz = phi i64 [ %i.amy, %bb.id ], [ 0, %bb.ic ]
   %i.ana = getelementptr inbounds nuw i8, ptr %i.amo, i64 24
-  %i.anb = load ptr, ptr %i.ana, align 8, !tbaa !6053
+  %i.anb = load ptr, ptr %i.ana, align 8, !tbaa !6055
   %i.anc = getelementptr inbounds nuw i8, ptr %i.amo, i64 32
-  %i.and = load i32, ptr %i.anc, align 8, !tbaa !6055
+  %i.and = load i32, ptr %i.anc, align 8, !tbaa !6054
   %i.ane = call fastcc i32 @fts3WriteSegdir(ptr noundef %0, i64 noundef %i.amr, i32 noundef %i.ams, i64 noundef %i.amt, i64 noundef %i.amu, i64 noundef %i.amv, i64 noundef %i.amz, ptr noundef %i.anb, i32 noundef %i.and), !inline_history !6076
   br label %bb.if
 
 bb.if:                                            ; preds = %bb.ie, %._crit_edge.i197
   %.3.i198 = phi i32 [ %i.ane, %bb.ie ], [ %.180.lcssa.i, %._crit_edge.i197 ] ; 2 uses
   %i.anf = getelementptr inbounds nuw i8, ptr %i.amo, i64 24
-  %i.ang = load ptr, ptr %i.anf, align 8, !tbaa !6053 ; 4 uses
+  %i.ang = load ptr, ptr %i.anf, align 8, !tbaa !6055 ; 4 uses
   %i.anh = icmp eq ptr %i.ang, null
   br i1 %i.anh, label %sqlite3_free.exit69.i, label %bb.ig
 
@@ -3609,7 +3609,7 @@ bb.bt:                                            ; preds = %sqlite3Malloc.exit.
   %i.gq = call fastcc i32 @fts3ExprIterate2(ptr noundef %i.gp, ptr noundef %i.m, ptr noundef nonnull @fts3SnippetFindPositions, ptr noundef nonnull %4), !inline_history !6121 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #71
   %i.gr = icmp eq i32 %i.gq, 0                    ; 2 uses
-  %.pre60.i.i = load ptr, ptr %i.ej, align 8, !tbaa !6131 ; 15 uses
+  %.pre60.i.i = load ptr, ptr %i.ej, align 8      ; 15 uses
   br i1 %i.gr, label %.preheader.i.i, label %fts3SnippetNextCandidate.exit.i.i
 
 .preheader.i.i:                                   ; preds = %bb.bt
@@ -4012,7 +4012,7 @@ bb.e:                                             ; preds = %sqlite3_malloc64.ex
 sqlite3Fts5MallocZero.exit:                       ; preds = %bb.c, %bb.e
   %.0.i = phi ptr [ null, %bb.c ], [ %i.y, %bb.e ] ; 2 uses
   %i.ab = icmp sgt i32 %.358, 0
-  %.pre110 = load i32, ptr %i.q, align 4, !tbaa !6362 ; 2 uses
+  %.pre110 = load i32, ptr %i.q, align 4, !tbaa !5 ; 2 uses
   br i1 %i.ab, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %sqlite3Fts5MallocZero.exit.thread, %sqlite3Fts5MallocZero.exit
@@ -4199,7 +4199,7 @@ sqlite3Fts5MallocZero.exit67.thread:              ; preds = %.lr.ph.split, %sqli
   br i1 %i.bz, label %bb.w, label %.critedge.thread
 
 ._crit_edge.thread136:                            ; preds = %sqlite3_malloc64.exit.thread.i
-  %.pre110132 = load i32, ptr %i.q, align 4, !tbaa !6362
+  %.pre110132 = load i32, ptr %i.q, align 4, !tbaa !5
   %i.ca = icmp eq i32 %.pre110132, 0
   br i1 %i.ca, label %.preheader78.i, label %.critedge.thread
 
@@ -4602,9 +4602,9 @@ begin_hunk_8_@llvm.fmuladd.v2f64
 !6050 = !{!"NodeWriter", !15, i64 0, !6001, i64 8, !6001, i64 24}
 !6051 = distinct !{!6051, !334}
 !6052 = distinct !{!6052, !52}
-!6053 = !{!6050, !64, i64 24}
-!6054 = distinct !{null, null, ptr @sqlite3_realloc64}
-!6055 = !{!6050, !6, i64 32}
+!6053 = distinct !{null, null, ptr @sqlite3_realloc64}
+!6054 = !{!6050, !6, i64 32}
+!6055 = !{!6050, !64, i64 24}
 !6056 = distinct !{!6056, !52}
 !6057 = !{!6050, !64, i64 8}
 !6058 = !{!6050, !6, i64 16}

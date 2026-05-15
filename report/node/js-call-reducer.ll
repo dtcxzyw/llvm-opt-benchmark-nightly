@@ -201,23 +201,23 @@ _ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit: ; preds = 
   %i.v = load ptr, ptr %i.u, align 8, !noalias !1592
   %i.w = call noundef i32 %i.v(ptr noundef nonnull align 8 dereferenceable(16) %3) #22, !noalias !1592, !inline_history !1572
   %i.x = icmp sgt i32 %i.w, 0
-  %.pre = load ptr, ptr %i.a, align 8, !noalias !1595 ; 7 uses
+  %.pre = load ptr, ptr %i.a, align 8, !noalias !65 ; 7 uses
   br i1 %i.x, label %bb.e, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
 
 bb.e:                                             ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit
-  %i.y = load ptr, ptr %.pre, align 8, !noalias !1598
+  %i.y = load ptr, ptr %.pre, align 8, !noalias !1595
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 20
-  %i.aa = load i32, ptr %i.z, align 4, !noalias !1598
+  %i.aa = load i32, ptr %i.z, align 4, !noalias !1595
   %i.ab = icmp sgt i32 %i.aa, 2
   br i1 %i.ab, label %bb.g, label %bb.f, !prof !66
 
 bb.f:                                             ; preds = %bb.e
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1598
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1595
   unreachable
 
 bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.ad = load i32, ptr %i.ac, align 4, !noalias !1598
+  %i.ad = load i32, ptr %i.ac, align 4, !noalias !1595
   %i.ae = and i32 %i.ad, 251658240
   %.not.i.i.i.i.i.i = icmp eq i32 %i.ae, 251658240
   %i.af = ptrtoint ptr %.pre to i64
@@ -226,7 +226,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i.i.i, label %bb.h, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !1598
+  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !1595
   %i.aj = ptrtoint ptr %i.ai to i64
   %i.ak = add i64 %i.aj, 16
   %i.al = inttoptr i64 %i.ak to ptr
@@ -241,20 +241,20 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i: ; preds = 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit: ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
   %storemerge.in.i.sroa.speculated.i = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i ], [ %i.t, %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22, !noalias !1589
-  %i.an = load ptr, ptr %.pre, align 8, !noalias !1595
-  %i.ao = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.an) #22, !noalias !1595
+  %i.an = load ptr, ptr %.pre, align 8, !noalias !1598
+  %i.ao = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.an) #22, !noalias !1598
   br i1 %i.ao, label %bb.j, label %bb.i, !prof !66
 
 bb.i:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1595
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1598
   unreachable
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  %i.ap = load ptr, ptr %.pre, align 8, !noalias !1595
+  %i.ap = load ptr, ptr %.pre, align 8, !noalias !1598
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 20
-  %i.ar = load i32, ptr %i.aq, align 4, !noalias !1595
+  %i.ar = load i32, ptr %i.aq, align 4, !noalias !1598
   %i.as = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.at = load i32, ptr %i.as, align 4, !noalias !1595
+  %i.at = load i32, ptr %i.as, align 4, !noalias !1598
   %i.au = and i32 %i.at, 251658240
   %.not.i.i.i.i14 = icmp eq i32 %i.au, 251658240
   %i.av = ptrtoint ptr %.pre to i64
@@ -263,7 +263,7 @@ bb.j:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i14, label %bb.k, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !1595
+  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !1598
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = add i64 %i.az, 16
   %i.bb = inttoptr i64 %i.ba to ptr
@@ -273,7 +273,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.j, %b
   %.sink.i.i.i.i15 = phi ptr [ %i.bb, %bb.k ], [ %i.ax, %bb.j ]
   %i.bc = sext i32 %i.ar to i64
   %i.bd = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i15, i64 %i.bc
-  %i.be = load ptr, ptr %i.bd, align 8, !noalias !1595 ; 5 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !noalias !1598 ; 5 uses
   %i.bf = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.bg = load ptr, ptr %i.bf, align 8
   %i.bh = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef %i.bg) #22
@@ -676,22 +676,22 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSG
   %i.ab = load i32, ptr %i.aa, align 8, !noalias !1762
   %i.ac = and i32 %i.ab, 67108863
   %i.ad = icmp samesign ugt i32 %i.ac, 4
-  %.pre = load ptr, ptr %1, align 8, !noalias !1765 ; 2 uses
+  %.pre = load ptr, ptr %1, align 8, !noalias !65 ; 2 uses
   br i1 %i.ad, label %bb.f, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit52
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
   %i.ae = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.af = load i32, ptr %i.ae, align 4, !noalias !1768
+  %i.af = load i32, ptr %i.ae, align 4, !noalias !1765
   %i.ag = icmp sgt i32 %i.af, 3
   br i1 %i.ag, label %bb.h, label %bb.g, !prof !66
 
 bb.g:                                             ; preds = %bb.f
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1768
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1765
   unreachable
 
 bb.h:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %i.ai = load i32, ptr %i.ah, align 4, !noalias !1768
+  %i.ai = load i32, ptr %i.ah, align 4, !noalias !1765
   %i.aj = and i32 %i.ai, 251658240
   %.not.i.i.i.i.i.i48 = icmp eq i32 %i.aj, 251658240
   %i.ak = ptrtoint ptr %1 to i64
@@ -700,7 +700,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i.i.i48, label %bb.i, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i49
 
 bb.i:                                             ; preds = %bb.h
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !1768
+  %i.an = load ptr, ptr %i.am, align 8, !noalias !1765
   %i.ao = ptrtoint ptr %i.an to i64
   %i.ap = add i64 %i.ao, 16
   %i.aq = inttoptr i64 %i.ap to ptr
@@ -715,19 +715,19 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i49: ; preds 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit52: ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i49
   %storemerge.in.i.sroa.speculated.i47 = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i51, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i49 ], [ %i.y, %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22, !noalias !1759
-  %i.as = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre) #22, !noalias !1765
+  %i.as = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre) #22, !noalias !1768
   br i1 %i.as, label %bb.k, label %bb.j, !prof !66
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit52
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1765
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1768
   unreachable
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit52
-  %i.at = load ptr, ptr %1, align 8, !noalias !1765 ; 3 uses
+  %i.at = load ptr, ptr %1, align 8, !noalias !1768 ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 20
-  %i.av = load i32, ptr %i.au, align 4, !noalias !1765 ; 2 uses
+  %i.av = load i32, ptr %i.au, align 4, !noalias !1768 ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
-  %i.ax = load i32, ptr %i.aw, align 4, !noalias !1765
+  %i.ax = load i32, ptr %i.aw, align 4, !noalias !1768
   %i.ay = and i32 %i.ax, 251658240
   %.not.i.i.i.i = icmp eq i32 %i.ay, 251658240
   %i.az = ptrtoint ptr %1 to i64
@@ -736,7 +736,7 @@ bb.k:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i, label %bb.l, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.bc = load ptr, ptr %i.bb, align 8, !noalias !1765
+  %i.bc = load ptr, ptr %i.bb, align 8, !noalias !1768
   %i.bd = ptrtoint ptr %i.bc to i64
   %i.be = add i64 %i.bd, 16
   %i.bf = inttoptr i64 %i.be to ptr
@@ -746,7 +746,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.k, %b
   %.sink.i.i.i.i = phi ptr [ %i.bf, %bb.l ], [ %i.bb, %bb.k ]
   %i.bg = sext i32 %i.av to i64
   %i.bh = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i, i64 %i.bg
-  %i.bi = load ptr, ptr %i.bh, align 8, !noalias !1765 ; 2 uses
+  %i.bi = load ptr, ptr %i.bh, align 8, !noalias !1768 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.at, i64 24
   %i.bk = load i32, ptr %i.bj, align 8
   %i.bl = icmp sgt i32 %i.bk, 0
@@ -1149,23 +1149,23 @@ _ZNK2v88internal8compiler13JSCallReducer14native_contextEv.exit: ; preds = %_ZNK
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   %i.ae = load i32, ptr %i.c, align 8
   %i.af = icmp ult i32 %i.ae, 1073741824
-  %.pre = load ptr, ptr %i.a, align 8, !noalias !1776 ; 6 uses
-  %.pre246 = load ptr, ptr %.pre, align 8, !noalias !1776 ; 2 uses
+  %.pre = load ptr, ptr %i.a, align 8, !noalias !65 ; 6 uses
+  %.pre246 = load ptr, ptr %.pre, align 8, !noalias !65 ; 2 uses
   br i1 %i.af, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler13JSCallReducer14native_contextEv.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %.pre246, i64 20
-  %i.ah = load i32, ptr %i.ag, align 4, !noalias !1779
+  %i.ah = load i32, ptr %i.ag, align 4, !noalias !1776
   %i.ai = icmp sgt i32 %i.ah, 1
   br i1 %i.ai, label %bb.h, label %bb.g, !prof !66
 
 bb.g:                                             ; preds = %bb.f
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1779
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1776
   unreachable
 
 bb.h:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.ak = load i32, ptr %i.aj, align 4, !noalias !1779
+  %i.ak = load i32, ptr %i.aj, align 4, !noalias !1776
   %i.al = and i32 %i.ak, 251658240
   %.not.i.i.i.i108 = icmp eq i32 %i.al, 251658240
   %i.am = ptrtoint ptr %.pre to i64
@@ -1174,7 +1174,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %.not.i.i.i.i108, label %bb.i, label %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.ap = load ptr, ptr %i.ao, align 8, !noalias !1779
+  %i.ap = load ptr, ptr %i.ao, align 8, !noalias !1776
   %i.aq = ptrtoint ptr %i.ap to i64
   %i.ar = add i64 %i.aq, 16
   %i.as = inttoptr i64 %i.ar to ptr
@@ -1183,24 +1183,24 @@ bb.i:                                             ; preds = %bb.h
 _ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit: ; preds = %bb.h, %bb.i
   %.sink.i.i.i.i109 = phi ptr [ %i.as, %bb.i ], [ %i.ao, %bb.h ]
   %i.at = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i109, i64 8
-  %i.au = load ptr, ptr %i.at, align 8, !noalias !1779
+  %i.au = load ptr, ptr %i.at, align 8, !noalias !1776
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler13JSCallReducer14native_contextEv.exit, %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit
   %i.av = phi ptr [ %i.au, %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit ], [ %i.ad, %_ZNK2v88internal8compiler13JSCallReducer14native_contextEv.exit ] ; 4 uses
-  %i.aw = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre246) #22, !noalias !1776
+  %i.aw = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre246) #22, !noalias !1779
   br i1 %i.aw, label %bb.l, label %bb.k, !prof !66
 
 bb.k:                                             ; preds = %bb.j
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1776
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1779
   unreachable
 
 bb.l:                                             ; preds = %bb.j
-  %i.ax = load ptr, ptr %.pre, align 8, !noalias !1776
+  %i.ax = load ptr, ptr %.pre, align 8, !noalias !1779
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 20
-  %i.az = load i32, ptr %i.ay, align 4, !noalias !1776
+  %i.az = load i32, ptr %i.ay, align 4, !noalias !1779
   %i.ba = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bb = load i32, ptr %i.ba, align 4, !noalias !1776
+  %i.bb = load i32, ptr %i.ba, align 4, !noalias !1779
   %i.bc = and i32 %i.bb, 251658240
   %.not.i.i.i.i110 = icmp eq i32 %i.bc, 251658240
   %i.bd = ptrtoint ptr %.pre to i64
@@ -1209,7 +1209,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not.i.i.i.i110, label %bb.m, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.m:                                             ; preds = %bb.l
-  %i.bg = load ptr, ptr %i.bf, align 8, !noalias !1776
+  %i.bg = load ptr, ptr %i.bf, align 8, !noalias !1779
   %i.bh = ptrtoint ptr %i.bg to i64
   %i.bi = add i64 %i.bh, 16
   %i.bj = inttoptr i64 %i.bi to ptr
@@ -1219,7 +1219,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.l, %b
   %.sink.i.i.i.i111 = phi ptr [ %i.bj, %bb.m ], [ %i.bf, %bb.l ]
   %i.bk = sext i32 %i.az to i64
   %i.bl = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i111, i64 %i.bk
-  %i.bm = load ptr, ptr %i.bl, align 8, !noalias !1776
+  %i.bm = load ptr, ptr %i.bl, align 8, !noalias !1779
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #22
   %i.bn = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.bo = load ptr, ptr %i.bn, align 8            ; 3 uses
@@ -1622,23 +1622,23 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6Ob
   %i.ax = load ptr, ptr %i.aw, align 8, !noalias !1875
   %i.ay = call noundef i32 %i.ax(ptr noundef nonnull align 8 dereferenceable(16) %4) #22, !noalias !1875, !inline_history !1572
   %i.az = icmp sgt i32 %i.ay, 1
-  %.pre = load ptr, ptr %i.c, align 8, !noalias !1878 ; 7 uses
+  %.pre = load ptr, ptr %i.c, align 8, !noalias !65 ; 7 uses
   br i1 %i.az, label %bb.k, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit
-  %i.ba = load ptr, ptr %.pre, align 8, !noalias !1881
+  %i.ba = load ptr, ptr %.pre, align 8, !noalias !1878
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 20
-  %i.bc = load i32, ptr %i.bb, align 4, !noalias !1881
+  %i.bc = load i32, ptr %i.bb, align 4, !noalias !1878
   %i.bd = icmp sgt i32 %i.bc, 3
   br i1 %i.bd, label %bb.m, label %bb.l, !prof !66
 
 bb.l:                                             ; preds = %bb.k
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1881
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !1878
   unreachable
 
 bb.m:                                             ; preds = %bb.k
   %i.be = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bf = load i32, ptr %i.be, align 4, !noalias !1881
+  %i.bf = load i32, ptr %i.be, align 4, !noalias !1878
   %i.bg = and i32 %i.bf, 251658240
   %.not.i.i.i.i.i.i = icmp eq i32 %i.bg, 251658240
   %i.bh = ptrtoint ptr %.pre to i64
@@ -1647,7 +1647,7 @@ bb.m:                                             ; preds = %bb.k
   br i1 %.not.i.i.i.i.i.i, label %bb.n, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.bk = load ptr, ptr %i.bj, align 8, !noalias !1881
+  %i.bk = load ptr, ptr %i.bj, align 8, !noalias !1878
   %i.bl = ptrtoint ptr %i.bk to i64
   %i.bm = add i64 %i.bl, 16
   %i.bn = inttoptr i64 %i.bm to ptr
@@ -1662,20 +1662,20 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i: ; preds = 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit: ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
   %storemerge.in.i.sroa.speculated.i = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i ], [ %i.av, %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22, !noalias !1872
-  %i.bp = load ptr, ptr %.pre, align 8, !noalias !1878
-  %i.bq = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.bp) #22, !noalias !1878
+  %i.bp = load ptr, ptr %.pre, align 8, !noalias !1881
+  %i.bq = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.bp) #22, !noalias !1881
   br i1 %i.bq, label %bb.p, label %bb.o, !prof !66
 
 bb.o:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1878
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !1881
   unreachable
 
 bb.p:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  %i.br = load ptr, ptr %.pre, align 8, !noalias !1878
+  %i.br = load ptr, ptr %.pre, align 8, !noalias !1881
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 20
-  %i.bt = load i32, ptr %i.bs, align 4, !noalias !1878
+  %i.bt = load i32, ptr %i.bs, align 4, !noalias !1881
   %i.bu = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bv = load i32, ptr %i.bu, align 4, !noalias !1878
+  %i.bv = load i32, ptr %i.bu, align 4, !noalias !1881
   %i.bw = and i32 %i.bv, 251658240
   %.not.i.i.i.i28 = icmp eq i32 %i.bw, 251658240
   %i.bx = ptrtoint ptr %.pre to i64
@@ -1684,7 +1684,7 @@ bb.p:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i28, label %bb.q, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.ca = load ptr, ptr %i.bz, align 8, !noalias !1878
+  %i.ca = load ptr, ptr %i.bz, align 8, !noalias !1881
   %i.cb = ptrtoint ptr %i.ca to i64
   %i.cc = add i64 %i.cb, 16
   %i.cd = inttoptr i64 %i.cc to ptr
@@ -1694,7 +1694,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.p, %b
   %.sink.i.i.i.i29 = phi ptr [ %i.cd, %bb.q ], [ %i.bz, %bb.p ]
   %i.ce = sext i32 %i.bt to i64
   %i.cf = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i29, i64 %i.ce
-  %i.cg = load ptr, ptr %i.cf, align 8, !noalias !1878
+  %i.cg = load ptr, ptr %i.cf, align 8, !noalias !1881
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   %i.ch = load ptr, ptr %i.c, align 8             ; 4 uses
   %i.ci = load ptr, ptr %i.ch, align 8            ; 3 uses
@@ -2097,23 +2097,23 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSG
   %i.av = load ptr, ptr %i.au, align 8, !noalias !2138
   %i.aw = call noundef i32 %i.av(ptr noundef nonnull align 8 dereferenceable(16) %12) #22, !noalias !2138, !inline_history !1572
   %i.ax = icmp sgt i32 %i.aw, 1
-  %.pre = load ptr, ptr %i.a, align 8, !noalias !2141 ; 7 uses
+  %.pre = load ptr, ptr %i.a, align 8, !noalias !65 ; 7 uses
   br i1 %i.ax, label %bb.j, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit35
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  %i.ay = load ptr, ptr %.pre, align 8, !noalias !2144
+  %i.ay = load ptr, ptr %.pre, align 8, !noalias !2141
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 20
-  %i.ba = load i32, ptr %i.az, align 4, !noalias !2144
+  %i.ba = load i32, ptr %i.az, align 4, !noalias !2141
   %i.bb = icmp sgt i32 %i.ba, 3
   br i1 %i.bb, label %bb.l, label %bb.k, !prof !66
 
 bb.k:                                             ; preds = %bb.j
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2144
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2141
   unreachable
 
 bb.l:                                             ; preds = %bb.j
   %i.bc = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bd = load i32, ptr %i.bc, align 4, !noalias !2144
+  %i.bd = load i32, ptr %i.bc, align 4, !noalias !2141
   %i.be = and i32 %i.bd, 251658240
   %.not.i.i.i.i.i.i31 = icmp eq i32 %i.be, 251658240
   %i.bf = ptrtoint ptr %.pre to i64
@@ -2122,7 +2122,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %.not.i.i.i.i.i.i31, label %bb.m, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i32
 
 bb.m:                                             ; preds = %bb.l
-  %i.bi = load ptr, ptr %i.bh, align 8, !noalias !2144
+  %i.bi = load ptr, ptr %i.bh, align 8, !noalias !2141
   %i.bj = ptrtoint ptr %i.bi to i64
   %i.bk = add i64 %i.bj, 16
   %i.bl = inttoptr i64 %i.bk to ptr
@@ -2137,20 +2137,20 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i32: ; preds 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit35: ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i32
   %storemerge.in.i.sroa.speculated.i30 = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i34, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i32 ], [ %i.at, %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22, !noalias !2135
-  %i.bn = load ptr, ptr %.pre, align 8, !noalias !2141
-  %i.bo = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.bn) #22, !noalias !2141
+  %i.bn = load ptr, ptr %.pre, align 8, !noalias !2144
+  %i.bo = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.bn) #22, !noalias !2144
   br i1 %i.bo, label %bb.o, label %bb.n, !prof !66
 
 bb.n:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit35
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2141
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2144
   unreachable
 
 bb.o:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit35
-  %i.bp = load ptr, ptr %.pre, align 8, !noalias !2141
+  %i.bp = load ptr, ptr %.pre, align 8, !noalias !2144
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 20
-  %i.br = load i32, ptr %i.bq, align 4, !noalias !2141
+  %i.br = load i32, ptr %i.bq, align 4, !noalias !2144
   %i.bs = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bt = load i32, ptr %i.bs, align 4, !noalias !2141
+  %i.bt = load i32, ptr %i.bs, align 4, !noalias !2144
   %i.bu = and i32 %i.bt, 251658240
   %.not.i.i.i.i36 = icmp eq i32 %i.bu, 251658240
   %i.bv = ptrtoint ptr %.pre to i64
@@ -2159,7 +2159,7 @@ bb.o:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i36, label %bb.p, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.by = load ptr, ptr %i.bx, align 8, !noalias !2141
+  %i.by = load ptr, ptr %i.bx, align 8, !noalias !2144
   %i.bz = ptrtoint ptr %i.by to i64
   %i.ca = add i64 %i.bz, 16
   %i.cb = inttoptr i64 %i.ca to ptr
@@ -2169,7 +2169,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.o, %b
   %.sink.i.i.i.i37 = phi ptr [ %i.cb, %bb.p ], [ %i.bx, %bb.o ]
   %i.cc = sext i32 %i.br to i64
   %i.cd = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i37, i64 %i.cc
-  %i.ce = load ptr, ptr %i.cd, align 8, !noalias !2141 ; 2 uses
+  %i.ce = load ptr, ptr %i.cd, align 8, !noalias !2144 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #22
   %i.cf = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.cg = load ptr, ptr %i.cf, align 8            ; 3 uses
@@ -2536,23 +2536,23 @@ _ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit: ; preds = 
   %i.v = load ptr, ptr %i.u, align 8, !noalias !2153
   %i.w = call noundef i32 %i.v(ptr noundef nonnull align 8 dereferenceable(16) %3) #22, !noalias !2153, !inline_history !1572
   %i.x = icmp sgt i32 %i.w, 0
-  %.pre = load ptr, ptr %i.a, align 8, !noalias !2156 ; 7 uses
+  %.pre = load ptr, ptr %i.a, align 8, !noalias !65 ; 7 uses
   br i1 %i.x, label %bb.e, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
 
 bb.e:                                             ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit
-  %i.y = load ptr, ptr %.pre, align 8, !noalias !2159
+  %i.y = load ptr, ptr %.pre, align 8, !noalias !2156
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 20
-  %i.aa = load i32, ptr %i.z, align 4, !noalias !2159
+  %i.aa = load i32, ptr %i.z, align 4, !noalias !2156
   %i.ab = icmp sgt i32 %i.aa, 2
   br i1 %i.ab, label %bb.g, label %bb.f, !prof !66
 
 bb.f:                                             ; preds = %bb.e
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2159
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2156
   unreachable
 
 bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.ad = load i32, ptr %i.ac, align 4, !noalias !2159
+  %i.ad = load i32, ptr %i.ac, align 4, !noalias !2156
   %i.ae = and i32 %i.ad, 251658240
   %.not.i.i.i.i.i.i = icmp eq i32 %i.ae, 251658240
   %i.af = ptrtoint ptr %.pre to i64
@@ -2561,7 +2561,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %.not.i.i.i.i.i.i, label %bb.h, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !2159
+  %i.ai = load ptr, ptr %i.ah, align 8, !noalias !2156
   %i.aj = ptrtoint ptr %i.ai to i64
   %i.ak = add i64 %i.aj, 16
   %i.al = inttoptr i64 %i.ak to ptr
@@ -2576,20 +2576,20 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i: ; preds = 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit: ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i
   %storemerge.in.i.sroa.speculated.i = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i ], [ %i.t, %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22, !noalias !2150
-  %i.an = load ptr, ptr %.pre, align 8, !noalias !2156
-  %i.ao = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.an) #22, !noalias !2156
+  %i.an = load ptr, ptr %.pre, align 8, !noalias !2159
+  %i.ao = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %i.an) #22, !noalias !2159
   br i1 %i.ao, label %bb.j, label %bb.i, !prof !66
 
 bb.i:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2156
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2159
   unreachable
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit
-  %i.ap = load ptr, ptr %.pre, align 8, !noalias !2156
+  %i.ap = load ptr, ptr %.pre, align 8, !noalias !2159
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 20
-  %i.ar = load i32, ptr %i.aq, align 4, !noalias !2156
+  %i.ar = load i32, ptr %i.aq, align 4, !noalias !2159
   %i.as = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.at = load i32, ptr %i.as, align 4, !noalias !2156
+  %i.at = load i32, ptr %i.as, align 4, !noalias !2159
   %i.au = and i32 %i.at, 251658240
   %.not.i.i.i.i16 = icmp eq i32 %i.au, 251658240
   %i.av = ptrtoint ptr %.pre to i64
@@ -2598,7 +2598,7 @@ bb.j:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i16, label %bb.k, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !2156
+  %i.ay = load ptr, ptr %i.ax, align 8, !noalias !2159
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = add i64 %i.az, 16
   %i.bb = inttoptr i64 %i.ba to ptr
@@ -2608,7 +2608,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.j, %b
   %.sink.i.i.i.i17 = phi ptr [ %i.bb, %bb.k ], [ %i.ax, %bb.j ]
   %i.bc = sext i32 %i.ar to i64
   %i.bd = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i17, i64 %i.bc
-  %i.be = load ptr, ptr %i.bd, align 8, !noalias !2156 ; 5 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !noalias !2159 ; 5 uses
   %i.bf = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.bg = load ptr, ptr %i.bf, align 8            ; 3 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
@@ -3011,27 +3011,27 @@ _ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit: ; preds = 
   %i.w = load i32, ptr %i.v, align 8, !noalias !2175
   %i.x = and i32 %i.w, 67108860
   %.not = icmp eq i32 %i.x, 0
-  %.pre = load ptr, ptr %1, align 8, !noalias !2178 ; 2 uses
+  %.pre = load ptr, ptr %1, align 8, !noalias !65 ; 2 uses
   br i1 %.not, label %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit
   %i.y = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.z = load i32, ptr %i.y, align 4, !noalias !2181
+  %i.z = load i32, ptr %i.y, align 4, !noalias !2178
   %i.aa = icmp sgt i32 %i.z, 2
   br i1 %i.aa, label %bb.h, label %bb.g, !prof !66
 
 bb.g:                                             ; preds = %bb.f
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2181
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2178
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.ab = load i32, ptr %i.e, align 4, !noalias !2181
+  %i.ab = load i32, ptr %i.e, align 4, !noalias !2178
   %i.ac = and i32 %i.ab, 251658240
   %.not.i.i.i.i.i = icmp eq i32 %i.ac, 251658240
   br i1 %.not.i.i.i.i.i, label %bb.i, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = load ptr, ptr %i.j, align 8, !noalias !2181
+  %i.ad = load ptr, ptr %i.j, align 8, !noalias !2178
   %i.ae = ptrtoint ptr %i.ad to i64
   %i.af = add i64 %i.ae, 16
   %i.ag = inttoptr i64 %i.af to ptr
@@ -3046,24 +3046,24 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i: ; preds = %b
 _ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit: ; preds = %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i
   %storemerge.in.i.sroa.speculated = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i ], [ %i.t, %_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
-  %i.ai = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre) #22, !noalias !2178
+  %i.ai = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef %.pre) #22, !noalias !2181
   br i1 %i.ai, label %bb.k, label %bb.j, !prof !66
 
 bb.j:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2178
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.43) #24, !noalias !2181
   unreachable
 
 bb.k:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE.exit
-  %i.aj = load ptr, ptr %1, align 8, !noalias !2178 ; 2 uses
+  %i.aj = load ptr, ptr %1, align 8, !noalias !2181 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 20
-  %i.al = load i32, ptr %i.ak, align 4, !noalias !2178
-  %i.am = load i32, ptr %i.e, align 4, !noalias !2178
+  %i.al = load i32, ptr %i.ak, align 4, !noalias !2181
+  %i.am = load i32, ptr %i.e, align 4, !noalias !2181
   %i.an = and i32 %i.am, 251658240
   %.not.i.i.i.i15 = icmp eq i32 %i.an, 251658240
   br i1 %.not.i.i.i.i15, label %bb.l, label %_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit
 
 bb.l:                                             ; preds = %bb.k
-  %i.ao = load ptr, ptr %i.j, align 8, !noalias !2178
+  %i.ao = load ptr, ptr %i.j, align 8, !noalias !2181
   %i.ap = ptrtoint ptr %i.ao to i64
   %i.aq = add i64 %i.ap, 16
   %i.ar = inttoptr i64 %i.aq to ptr
@@ -3073,7 +3073,7 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv.exit: ; preds = %bb.k, %b
   %.sink.i.i.i.i16 = phi ptr [ %i.ar, %bb.l ], [ %i.j, %bb.k ]
   %i.as = sext i32 %i.al to i64
   %i.at = getelementptr inbounds [8 x i8], ptr %.sink.i.i.i.i16, i64 %i.as
-  %i.au = load ptr, ptr %i.at, align 8, !noalias !2178
+  %i.au = load ptr, ptr %i.at, align 8, !noalias !2181
   %i.av = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties18HasFrameStateInputEPKNS1_8OperatorE(ptr noundef nonnull %i.aj) #22
   br i1 %i.av, label %bb.n, label %bb.m, !prof !66
 
@@ -3476,23 +3476,23 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSG
   %i.bm = load ptr, ptr %i.bl, align 8, !noalias !2293
   %i.bn = call noundef i32 %i.bm(ptr noundef nonnull align 8 dereferenceable(16) %7) #22, !noalias !2293, !inline_history !1572
   %i.bo = icmp sgt i32 %i.bn, 2
-  %.pre = load ptr, ptr %i.a, align 8, !noalias !2296 ; 7 uses
+  %.pre = load ptr, ptr %i.a, align 8, !noalias !65 ; 7 uses
   br i1 %i.bo, label %bb.m, label %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit34
 
 bb.m:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit28
-  %i.bp = load ptr, ptr %.pre, align 8, !noalias !2299
+  %i.bp = load ptr, ptr %.pre, align 8, !noalias !2296
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 20
-  %i.br = load i32, ptr %i.bq, align 4, !noalias !2299
+  %i.br = load i32, ptr %i.bq, align 4, !noalias !2296
   %i.bs = icmp sgt i32 %i.br, 4
   br i1 %i.bs, label %bb.o, label %bb.n, !prof !66
 
 bb.n:                                             ; preds = %bb.m
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2299
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2296
   unreachable
 
 bb.o:                                             ; preds = %bb.m
   %i.bt = getelementptr inbounds nuw i8, ptr %.pre, i64 20
-  %i.bu = load i32, ptr %i.bt, align 4, !noalias !2299
+  %i.bu = load i32, ptr %i.bt, align 4, !noalias !2296
   %i.bv = and i32 %i.bu, 251658240
   %.not.i.i.i.i.i.i30 = icmp eq i32 %i.bv, 251658240
   %i.bw = ptrtoint ptr %.pre to i64
@@ -3501,7 +3501,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %.not.i.i.i.i.i.i30, label %bb.p, label %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i31
 
 bb.p:                                             ; preds = %bb.o
-  %i.bz = load ptr, ptr %i.by, align 8, !noalias !2299
+  %i.bz = load ptr, ptr %i.by, align 8, !noalias !2296
   %i.ca = ptrtoint ptr %i.bz to i64
   %i.cb = add i64 %i.ca, 16
   %i.cc = inttoptr i64 %i.cb to ptr
@@ -3516,19 +3516,19 @@ _ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i31: ; preds 
 _ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit34: ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit28, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i31
   %storemerge.in.i.sroa.speculated.i29 = phi ptr [ %storemerge.in.i.sroa.speculate.load._ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i33, %_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi.exit.i.i31 ], [ %i.bk, %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit28 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22, !noalias !2290
-  %i.ce = load ptr, ptr %.pre, align 8, !noalias !2296 ; 2 uses
+  %i.ce = load ptr, ptr %.pre, align 8, !noalias !2299 ; 2 uses
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 20
-  %i.cg = load i32, ptr %i.cf, align 4, !noalias !2296
+  %i.cg = load i32, ptr %i.cf, align 4, !noalias !2299
   %i.ch = icmp sgt i32 %i.cg, 1
   br i1 %i.ch, label %bb.r, label %bb.q, !prof !66
 
 bb.q:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit34
-  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2296
+  call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.7, ptr noundef nonnull @.str.30) #24, !noalias !2299
   unreachable
 
 bb.r:                                             ; preds = %_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE.exit34
   %i.ci = getelementptr inbounds nuw i8, ptr %.pre, i64 20 ; 2 uses
-  %i.cj = load i32, ptr %i.ci, align 4, !noalias !2296
+  %i.cj = load i32, ptr %i.ci, align 4, !noalias !2299
   %i.ck = and i32 %i.cj, 251658240
   %.not.i.i.i.i35 = icmp eq i32 %i.ck, 251658240
   %i.cl = ptrtoint ptr %.pre to i64
@@ -3537,7 +3537,7 @@ bb.r:                                             ; preds = %_ZNK2v88internal8co
   br i1 %.not.i.i.i.i35, label %bb.s, label %_ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv.exit
 
 bb.s:                                             ; preds = %bb.r
-  %i.co = load ptr, ptr %i.cn, align 8, !noalias !2296
+  %i.co = load ptr, ptr %i.cn, align 8, !noalias !2299
   %i.cp = ptrtoint ptr %i.co to i64
   %i.cq = add i64 %i.cp, 16
   %i.cr = inttoptr i64 %i.cq to ptr
@@ -3546,7 +3546,7 @@ bb.s:                                             ; preds = %bb.r
 _ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv.exit: ; preds = %bb.r, %bb.s
   %.sink.i.i.i.i36 = phi ptr [ %i.cr, %bb.s ], [ %i.cn, %bb.r ]
   %i.cs = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i36, i64 8
-  %i.ct = load ptr, ptr %i.cs, align 8, !noalias !2296
+  %i.ct = load ptr, ptr %i.cs, align 8, !noalias !2299
   %i.cu = call noundef zeroext i1 @_ZN2v88internal8compiler18OperatorProperties15HasContextInputEPKNS1_8OperatorE(ptr noundef nonnull %i.ce) #22, !noalias !2302
   br i1 %i.cu, label %bb.u, label %bb.t, !prof !66
 
@@ -3949,12 +3949,12 @@ begin_hunk_7_@llvm.umax.i8
 !1592 = !{!1593, !1590}
 !1593 = distinct !{!1593, !1594, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !1594 = distinct !{!1594, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!1595 = !{!1596}
-!1596 = distinct !{!1596, !1597, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!1597 = distinct !{!1597, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!1598 = !{!1599, !1593, !1590}
-!1599 = distinct !{!1599, !1600, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!1600 = distinct !{!1600, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1595 = !{!1596, !1593, !1590}
+!1596 = distinct !{!1596, !1597, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!1597 = distinct !{!1597, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1598 = !{!1599}
+!1599 = distinct !{!1599, !1600, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!1600 = distinct !{!1600, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !1601 = distinct !{!1601, !83}
 !1602 = !{!1603}
 !1603 = distinct !{!1603, !1604, !"_ZNK2v88internal8compiler21JSCallOrConstructNode19ArgumentOrUndefinedEiPNS1_7JSGraphE: argument 0"}
@@ -4119,23 +4119,23 @@ begin_hunk_7_@llvm.umax.i8
 !1762 = !{!1763, !1760}
 !1763 = distinct !{!1763, !1764, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !1764 = distinct !{!1764, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!1765 = !{!1766}
-!1766 = distinct !{!1766, !1767, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!1767 = distinct !{!1767, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!1768 = !{!1769, !1763, !1760}
-!1769 = distinct !{!1769, !1770, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!1770 = distinct !{!1770, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1765 = !{!1766, !1763, !1760}
+!1766 = distinct !{!1766, !1767, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!1767 = distinct !{!1767, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1768 = !{!1769}
+!1769 = distinct !{!1769, !1770, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!1770 = distinct !{!1770, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !1771 = distinct !{!1771, !83}
 !1772 = distinct !{!1772, !83}
 !1773 = !{!1774}
 !1774 = distinct !{!1774, !1775, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE6targetEv: argument 0"}
 !1775 = distinct !{!1775, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE6targetEv"}
 !1776 = !{!1777}
-!1777 = distinct !{!1777, !1778, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!1778 = distinct !{!1778, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
+!1777 = distinct !{!1777, !1778, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv: argument 0"}
+!1778 = distinct !{!1778, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv"}
 !1779 = !{!1780}
-!1780 = distinct !{!1780, !1781, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv: argument 0"}
-!1781 = distinct !{!1781, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv"}
+!1780 = distinct !{!1780, !1781, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!1781 = distinct !{!1781, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !1782 = distinct !{!1782, !83}
 !1783 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
 !1784 = !{!1785}
@@ -4232,12 +4232,12 @@ begin_hunk_7_@llvm.umax.i8
 !1875 = !{!1876, !1873}
 !1876 = distinct !{!1876, !1877, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !1877 = distinct !{!1877, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!1878 = !{!1879}
-!1879 = distinct !{!1879, !1880, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!1880 = distinct !{!1880, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!1881 = !{!1882, !1876, !1873}
-!1882 = distinct !{!1882, !1883, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!1883 = distinct !{!1883, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1878 = !{!1879, !1876, !1873}
+!1879 = distinct !{!1879, !1880, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!1880 = distinct !{!1880, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!1881 = !{!1882}
+!1882 = distinct !{!1882, !1883, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!1883 = distinct !{!1883, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !1884 = !{!1885}
 !1885 = distinct !{!1885, !1886, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv: argument 0"}
 !1886 = distinct !{!1886, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv"}
@@ -4495,12 +4495,12 @@ begin_hunk_7_@llvm.umax.i8
 !2138 = !{!2139, !2136}
 !2139 = distinct !{!2139, !2140, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !2140 = distinct !{!2140, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!2141 = !{!2142}
-!2142 = distinct !{!2142, !2143, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!2143 = distinct !{!2143, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!2144 = !{!2145, !2139, !2136}
-!2145 = distinct !{!2145, !2146, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!2146 = distinct !{!2146, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2141 = !{!2142, !2139, !2136}
+!2142 = distinct !{!2142, !2143, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!2143 = distinct !{!2143, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2144 = !{!2145}
+!2145 = distinct !{!2145, !2146, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!2146 = distinct !{!2146, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !2147 = !{!2148}
 !2148 = distinct !{!2148, !2149, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv: argument 0"}
 !2149 = distinct !{!2149, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv"}
@@ -4510,12 +4510,12 @@ begin_hunk_7_@llvm.umax.i8
 !2153 = !{!2154, !2151}
 !2154 = distinct !{!2154, !2155, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !2155 = distinct !{!2155, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!2156 = !{!2157}
-!2157 = distinct !{!2157, !2158, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!2158 = distinct !{!2158, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!2159 = !{!2160, !2154, !2151}
-!2160 = distinct !{!2160, !2161, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!2161 = distinct !{!2161, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2156 = !{!2157, !2154, !2151}
+!2157 = distinct !{!2157, !2158, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!2158 = distinct !{!2158, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2159 = !{!2160}
+!2160 = distinct !{!2160, !2161, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!2161 = distinct !{!2161, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !2162 = !{!2163}
 !2163 = distinct !{!2163, !2164, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv: argument 0"}
 !2164 = distinct !{!2164, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE8receiverEv"}
@@ -4532,12 +4532,12 @@ begin_hunk_7_@llvm.umax.i8
 !2175 = !{!2176}
 !2176 = distinct !{!2176, !2177, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !2177 = distinct !{!2177, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!2178 = !{!2179}
-!2179 = distinct !{!2179, !2180, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
-!2180 = distinct !{!2180, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
-!2181 = !{!2182, !2176}
-!2182 = distinct !{!2182, !2183, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!2183 = distinct !{!2183, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2178 = !{!2179, !2176}
+!2179 = distinct !{!2179, !2180, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!2180 = distinct !{!2180, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2181 = !{!2182}
+!2182 = distinct !{!2182, !2183, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
+!2183 = distinct !{!2183, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}
 !2184 = !{!2185}
 !2185 = distinct !{!2185, !2186, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE6targetEv: argument 0"}
 !2186 = distinct !{!2186, !"_ZNK2v88internal8compiler14JSCallNodeBaseIJLi1132EEE6targetEv"}
@@ -4650,12 +4650,12 @@ begin_hunk_7_@llvm.umax.i8
 !2293 = !{!2294, !2291}
 !2294 = distinct !{!2294, !2295, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE: argument 0"}
 !2295 = distinct !{!2295, !"_ZNK2v88internal8compiler21JSCallOrConstructNode10ArgumentOrEiNS0_5TNodeINS0_6ObjectEEE"}
-!2296 = !{!2297}
-!2297 = distinct !{!2297, !2298, !"_ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv: argument 0"}
-!2298 = distinct !{!2298, !"_ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv"}
-!2299 = !{!2300, !2294, !2291}
-!2300 = distinct !{!2300, !2301, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
-!2301 = distinct !{!2301, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2296 = !{!2297, !2294, !2291}
+!2297 = distinct !{!2297, !2298, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi: argument 0"}
+!2298 = distinct !{!2298, !"_ZNK2v88internal8compiler21JSCallOrConstructNode8ArgumentEi"}
+!2299 = !{!2300}
+!2300 = distinct !{!2300, !2301, !"_ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv: argument 0"}
+!2301 = distinct !{!2301, !"_ZNK2v88internal8compiler19JSConstructNodeBaseILi1139EE10new_targetEv"}
 !2302 = !{!2303}
 !2303 = distinct !{!2303, !2304, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv: argument 0"}
 !2304 = distinct !{!2304, !"_ZNK2v88internal8compiler17JSNodeWrapperBase7contextEv"}

@@ -201,8 +201,8 @@ days_in_month.exit.i:                             ; preds = %is_leap.exit.thread
   %i.di = load i32, ptr %i.d, align 4, !tbaa !7   ; 3 uses
   %.not53.i = icmp sgt i32 %i.di, %.0.i.i
   %.pre91.i = load i32, ptr %i.f, align 4, !tbaa !7 ; 2 uses
-  %.pre93.i = load i32, ptr %i.g, align 4, !tbaa !7 ; 2 uses
-  %.pre95.i = load i32, ptr %i.h, align 4, !tbaa !7 ; 2 uses
+  %.pre93.i = load i32, ptr %i.g, align 4         ; 2 uses
+  %.pre95.i = load i32, ptr %i.h, align 4         ; 2 uses
   br i1 %.not53.i, label %.thread78.i, label %bb.ak
 
 bb.ak:                                            ; preds = %days_in_month.exit.i

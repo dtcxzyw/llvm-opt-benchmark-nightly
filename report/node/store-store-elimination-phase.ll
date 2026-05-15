@@ -201,12 +201,12 @@ bb.a:
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -8
   %i.h = load ptr, ptr %i.g, align 8
   %.not20 = icmp eq ptr %.040, %i.h
-  %.pre.pre45 = load ptr, ptr %i.b, align 8, !noalias !204 ; 3 uses
+  %.pre.pre45 = load ptr, ptr %i.b, align 8       ; 3 uses
   br i1 %.not20, label %.critedge, label %bb.b
 
 .critedge:                                        ; preds = %.lr.ph, %_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit..critedge.loopexit_crit_edge
   %.pre = phi ptr [ %.pre.pre, %_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit..critedge.loopexit_crit_edge ], [ %.pre.pre45, %.lr.ph ] ; 2 uses
-  %.pre44 = load ptr, ptr %2, align 8, !noalias !207
+  %.pre44 = load ptr, ptr %2, align 8, !noalias !204
   %i.i = icmp eq ptr %.pre, %.pre44
   br i1 %i.i, label %._crit_edge, label %.lr.ph43
 
@@ -242,11 +242,11 @@ _ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9
   %.0.in = getelementptr inbounds nuw i8, ptr %.040, i64 24
   %.0 = load ptr, ptr %.0.in, align 8             ; 2 uses
   %.not = icmp eq ptr %.0, null
-  br i1 %.not, label %_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit..critedge.loopexit_crit_edge, label %.lr.ph, !llvm.loop !210
+  br i1 %.not, label %_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit..critedge.loopexit_crit_edge, label %.lr.ph, !llvm.loop !207
 
 _ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit..critedge.loopexit_crit_edge: ; preds = %_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE9push_backES6_.exit
-  %.pre.pre = load ptr, ptr %i.b, align 8, !noalias !204
-  br label %.critedge, !llvm.loop !210
+  %.pre.pre = load ptr, ptr %i.b, align 8, !noalias !208
+  br label %.critedge, !llvm.loop !207
 
 ._crit_edge:                                      ; preds = %bb.n, %bb.a, %.critedge
   call preserve_mostcc void @_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE11FreeStorageEv(ptr noundef nonnull align 8 dereferenceable(280) %2)
@@ -424,7 +424,7 @@ _ZN2v88internal8compiler10turboshaft14LayeredHashMapINS2_1VINS2_12WordWithBitsIL
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.g, %_ZN2v88internal8compiler10turboshaft14LayeredHashMapINS2_1VINS2_12WordWithBitsILm32EEEEEbE12InsertNewKeyES7_b.exit, %_ZN2v88internal8compiler10turboshaft24BranchEliminationReducerINS2_21EmitProjectionReducerINS2_21ValueNumberingReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_28LoopStackCheckElisionReducerENS2_28StoreStoreEliminationReducerENS2_26LateLoadEliminationReducerENS2_26MachineOptimizationReducerES3_S5_S7_EEEEEEEEEEEEEE10StartLayerEPNS2_5BlockE.exit
-  %i.dt = load ptr, ptr %2, align 8, !noalias !207
+  %i.dt = load ptr, ptr %2, align 8, !noalias !204
   %i.du = icmp eq ptr %i.y, %i.dt
   br i1 %i.du, label %._crit_edge, label %bb.d, !llvm.loop !211
 }
@@ -827,12 +827,12 @@ begin_hunk_1_@llvm.bswap.i64
 !202 = distinct !{!202, !10}
 !203 = distinct !{!203, !10}
 !204 = !{!205}
-!205 = distinct !{!205, !206, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE6rbeginEv: argument 0"}
-!206 = distinct !{!206, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE6rbeginEv"}
-!207 = !{!208}
-!208 = distinct !{!208, !209, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE4rendEv: argument 0"}
-!209 = distinct !{!209, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE4rendEv"}
-!210 = distinct !{!210, !10}
+!205 = distinct !{!205, !206, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE4rendEv: argument 0"}
+!206 = distinct !{!206, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE4rendEv"}
+!207 = distinct !{!207, !10}
+!208 = !{!209}
+!209 = distinct !{!209, !210, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE6rbeginEv: argument 0"}
+!210 = distinct !{!210, !"_ZN2v84base11SmallVectorIPNS_8internal8compiler10turboshaft5BlockELm32ESaIS6_EE6rbeginEv"}
 !211 = distinct !{!211, !10}
 !212 = !{!213}
 !213 = distinct !{!213, !214, !"_ZNK2v88internal8compiler10turboshaft5Block12PredecessorsEv: argument 0"}

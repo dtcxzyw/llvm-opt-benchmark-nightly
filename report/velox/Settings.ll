@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %8, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %8, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
@@ -550,7 +550,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %8, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %8, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
@@ -901,7 +901,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %6, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %6, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
@@ -1304,7 +1304,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %5, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %5, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
@@ -1651,7 +1651,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %5, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %5, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n
@@ -2054,7 +2054,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !64 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.r, i64 8 ; 5 uses
   %.not10.i.i.i = icmp eq ptr %i.af, null
-  %.pre = load ptr, ptr %5, align 8, !tbaa !28    ; 4 uses
+  %.pre = load ptr, ptr %5, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPN5folly8settings6detail15SettingCoreBaseESt4lessIS5_ESaISt4pairIKS5_SA_EEE4findERSE_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.n

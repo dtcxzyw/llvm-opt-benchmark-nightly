@@ -201,14 +201,14 @@ bb.d:                                             ; preds = %_ZNKSt3mapINSt7__cx
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 64
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !558
   %i.ae = icmp eq i8 %i.ab, %i.ad
-  %.pre = load i64, ptr %i.e, align 8, !tbaa !16, !noalias !643 ; 4 uses
-  br i1 %i.ae, label %bb.e, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  %.pre = load i64, ptr %i.e, align 8, !tbaa !16  ; 4 uses
+  br i1 %i.ae, label %bb.e, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 bb.e:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !16
   %i.ah = icmp eq i64 %.pre, %i.ag
-  br i1 %i.ah, label %bb.f, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.ah, label %bb.f, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = icmp eq i64 %.pre, 0
@@ -219,7 +219,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.ak = load ptr, ptr %1, align 8, !tbaa !7
   %bcmp.i.i = tail call i32 @bcmp(ptr %i.ak, ptr %i.aj, i64 %.pre)
   %i.al = icmp eq i32 %bcmp.i.i, 0
-  br i1 %i.al, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.al, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -229,7 +229,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 40
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !16
   %i.as = icmp eq i64 %i.ap, %i.ar
-  br i1 %i.as, label %bb.g, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.as, label %bb.g, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 bb.g:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
   %i.at = icmp eq i64 %i.ap, 0
@@ -240,42 +240,42 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8
   %i.av = load ptr, ptr %i.am, align 8, !tbaa !7
   %bcmp.i7.i = tail call i32 @bcmp(ptr %i.av, ptr %i.au, i64 %i.ap)
   %i.aw = icmp eq i32 %bcmp.i7.i, 0
-  br i1 %i.aw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.aw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %bb.g
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 65
-  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !647, !range !78, !noundef !79
+  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !644, !range !78, !noundef !79
   %i.az = getelementptr inbounds nuw i8, ptr %i.z, i64 65
-  %i.ba = load i8, ptr %i.az, align 1, !tbaa !647, !range !78, !noundef !79
+  %i.ba = load i8, ptr %i.az, align 1, !tbaa !644, !range !78, !noundef !79
   %i.bb = icmp eq i8 %i.ay, %i.ba
-  br i1 %i.bb, label %bb.h, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.bb, label %bb.h, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 bb.h:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 66
-  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !648, !range !78, !noundef !79
+  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !645, !range !78, !noundef !79
   %i.be = getelementptr inbounds nuw i8, ptr %i.z, i64 66
-  %i.bf = load i8, ptr %i.be, align 2, !tbaa !648, !range !78, !noundef !79
+  %i.bf = load i8, ptr %i.be, align 2, !tbaa !645, !range !78, !noundef !79
   %i.bg = icmp eq i8 %i.bd, %i.bf
-  br i1 %i.bg, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !646
+  br i1 %i.bg, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !643
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit: ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 67
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !649, !range !78, !noundef !79
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !646, !range !78, !noundef !79
   %i.bj = getelementptr inbounds nuw i8, ptr %i.z, i64 67
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !649, !range !78, !noundef !79
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !646, !range !78, !noundef !79
   %i.bl = icmp eq i8 %i.bi, %i.bk
-  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !650
+  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !647
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, %bb.e, %bb.d, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, %bb.h, %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !643
-  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !643
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !648
+  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !648
   %i.bn = ptrtoint ptr %i.bm to i64
-  store i64 %i.bn, ptr %2, align 16, !noalias !643
+  store i64 %i.bn, ptr %2, align 16, !noalias !648
   %.sroa_idx3.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !643
+  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !648
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr nonnull @.str.35, i64 56, i64 13, ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #33, !noalias !643
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #33, !noalias !648
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox4core19TypeAnalysisResults11addVariableEONS0_4exec17SignatureVariableEE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr nonnull @.str.35) #35
           to label %bb.i unwind label %bb.j
 
@@ -678,14 +678,14 @@ begin_hunk_1_@llvm.abs.i64
 !640 = !{!506, !506, i64 0}
 !641 = distinct !{!641, !103}
 !642 = distinct !{!642, !103}
-!643 = !{!644}
-!644 = distinct !{!644, !645, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
-!645 = distinct !{!645, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
-!646 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!647 = !{!559, !54, i64 65}
-!648 = !{!559, !54, i64 66}
-!649 = !{!559, !54, i64 67}
-!650 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!643 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!644 = !{!559, !54, i64 65}
+!645 = !{!559, !54, i64 66}
+!646 = !{!559, !54, i64 67}
+!647 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!648 = !{!649}
+!649 = distinct !{!649, !650, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
+!650 = distinct !{!650, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
 !651 = !{!652, !652, i64 0}
 !652 = !{!"p1 _ZTSSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N8facebook5velox4exec17SignatureVariableEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE", !11, i64 0}
 !653 = !{!654, !655, i64 8}

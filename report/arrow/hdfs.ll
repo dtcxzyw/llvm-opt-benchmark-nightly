@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN5arrow6StatusD2Ev.exit19:                      ; preds = %_ZN5arrow6StatusD2Ev.exit
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !344  ; 2 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !341  ; 2 uses
   %i.f = icmp eq ptr %.pre28, %i.e
   br i1 %i.f, label %._crit_edge, label %.lr.ph
 
@@ -211,7 +211,7 @@ _ZN5arrow6StatusD2Ev.exit19:                      ; preds = %_ZN5arrow6StatusD2E
   br label %bb.c
 
 ._crit_edge.loopexit:                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE9push_backERKS5_.exit
-  %.pre.pre = load ptr, ptr %4, align 8, !tbaa !341
+  %.pre.pre = load ptr, ptr %4, align 8, !tbaa !343
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN5arrow6StatusD2Ev.exit19
@@ -366,7 +366,7 @@ _ZSt8_DestroyIN5arrow2io12HdfsPathInfoEEvPT_.exit.i.i.i: ; preds = %_ZNSt7__cxx1
   br i1 %.not.i.i.i, label %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, label %.lr.ph.i.i.i, !llvm.loop !353
 
 _ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i: ; preds = %_ZSt8_DestroyIN5arrow2io12HdfsPathInfoEEvPT_.exit.i.i.i
-  %.pr.i = load ptr, ptr %4, align 8, !tbaa !341
+  %.pr.i = load ptr, ptr %4, align 8, !tbaa !343
   br label %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exit.i
 
 _ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exit.i: ; preds = %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split.i, %.critedge
@@ -455,7 +455,7 @@ bb.f:                                             ; preds = %._crit_edge19, %bb.
   %i.p = phi i32 [ %.pre, %._crit_edge19 ], [ 0, %bb.d ]
   %i.q = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !352
-  %i.s = load ptr, ptr %3, align 8, !tbaa !341
+  %i.s = load ptr, ptr %3, align 8, !tbaa !343
   %i.t = ptrtoint ptr %i.r to i64
   %i.u = ptrtoint ptr %i.s to i64
   %i.v = sub i64 %i.t, %i.u
@@ -483,7 +483,7 @@ bb.f:                                             ; preds = %._crit_edge19, %bb.
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 3 uses
   %i.ae = getelementptr inbounds nuw [80 x i8], ptr %i.g, i64 %indvars.iv
-  %i.af = load ptr, ptr %3, align 8, !tbaa !341
+  %i.af = load ptr, ptr %3, align 8, !tbaa !343
   %i.ag = getelementptr [136 x i8], ptr %i.af, i64 %indvars.iv
   %i.ah = getelementptr [136 x i8], ptr %i.ag, i64 %i.ac
   call fastcc void @_ZN5arrow2ioL11SetPathInfoEPK12hdfsFileInfoPNS0_12HdfsPathInfoE(ptr noundef %i.ae, ptr noundef nonnull %i.ah)
@@ -886,7 +886,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i3:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZNSt6vectorIN5arrow2io12HdfsPathInfoESaIS2_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #4 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !tbaa !341    ; 3 uses
+  %i.a = load ptr, ptr %0, align 8, !tbaa !343    ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !352  ; 2 uses
   %.not4.i.i = icmp eq ptr %i.a, %i.c
@@ -938,7 +938,7 @@ _ZSt8_DestroyIN5arrow2io12HdfsPathInfoEEvPT_.exit.i.i: ; preds = %_ZNSt7__cxx111
   br i1 %.not.i.i, label %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split, label %.lr.ph.i.i, !llvm.loop !353
 
 _ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split: ; preds = %_ZSt8_DestroyIN5arrow2io12HdfsPathInfoEEvPT_.exit.i.i
-  %.pr = load ptr, ptr %0, align 8, !tbaa !341
+  %.pr = load ptr, ptr %0, align 8, !tbaa !343
   br label %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exit
 
 _ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exit: ; preds = %_ZSt8_DestroyIPN5arrow2io12HdfsPathInfoES2_EvT_S4_RSaIT0_E.exitthread-pre-split, %bb.a
@@ -1280,7 +1280,7 @@ define linkonce_odr void @_ZNSt6vectorIN5arrow2io12HdfsPathInfoESaIS2_EE6resizeE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !352  ; 3 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !341    ; 2 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !343    ; 2 uses
   %i.d = ptrtoint ptr %i.b to i64
   %i.e = ptrtoint ptr %i.c to i64
   %i.f = sub i64 %i.d, %i.e
@@ -1494,7 +1494,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !352  ; 5 uses
-  %i.c = load ptr, ptr %0, align 8, !tbaa !341    ; 5 uses
+  %i.c = load ptr, ptr %0, align 8, !tbaa !343    ; 5 uses
   %i.d = ptrtoint ptr %i.b to i64                 ; 2 uses
   %i.e = ptrtoint ptr %i.c to i64                 ; 2 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
@@ -1829,7 +1829,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN5arro
   br label %_ZNSt12_Vector_baseIN5arrow2io12HdfsPathInfoESaIS2_EE13_M_deallocateEPS2_m.exit41
 
 _ZNSt12_Vector_baseIN5arrow2io12HdfsPathInfoESaIS2_EE13_M_deallocateEPS2_m.exit41: ; preds = %_ZNSt6vectorIN5arrow2io12HdfsPathInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, %bb.h
-  store ptr %i.bf, ptr %0, align 8, !tbaa !341
+  store ptr %i.bf, ptr %0, align 8, !tbaa !343
   %i.er = getelementptr inbounds nuw [136 x i8], ptr %i.bg, i64 %1
   store ptr %i.er, ptr %i.a, align 8, !tbaa !352
   %i.es = getelementptr inbounds nuw [136 x i8], ptr %i.bf, i64 %i.bd
@@ -2232,10 +2232,10 @@ begin_hunk_2_@llvm.umax.i64
 !338 = !{!339, !336}
 !339 = distinct !{!339, !340, !"_ZN5arrow6Status2OKEv: argument 0"}
 !340 = distinct !{!340, !"_ZN5arrow6Status2OKEv"}
-!341 = !{!342, !343, i64 0}
-!342 = !{!"_ZTSNSt12_Vector_baseIN5arrow2io12HdfsPathInfoESaIS2_EE17_Vector_impl_dataE", !343, i64 0, !343, i64 8, !343, i64 16}
-!343 = !{!"p1 _ZTSN5arrow2io12HdfsPathInfoE", !12, i64 0}
-!344 = !{!343, !343, i64 0}
+!341 = !{!342, !342, i64 0}
+!342 = !{!"p1 _ZTSN5arrow2io12HdfsPathInfoE", !12, i64 0}
+!343 = !{!344, !342, i64 0}
+!344 = !{!"_ZTSNSt12_Vector_baseIN5arrow2io12HdfsPathInfoESaIS2_EE17_Vector_impl_dataE", !342, i64 0, !342, i64 8, !342, i64 16}
 !345 = !{!346}
 !346 = distinct !{!346, !347, !"_ZN5arrow6Status2OKEv: argument 0"}
 !347 = distinct !{!347, !"_ZN5arrow6Status2OKEv"}
@@ -2243,9 +2243,9 @@ begin_hunk_2_@llvm.umax.i64
 !349 = !{!"_ZTSNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE17_Vector_impl_dataE", !350, i64 0, !350, i64 8, !350, i64 16}
 !350 = !{!"p1 _ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !12, i64 0}
 !351 = !{!349, !350, i64 16}
-!352 = !{!342, !343, i64 8}
+!352 = !{!344, !342, i64 8}
 !353 = distinct !{!353, !213}
-!354 = !{!342, !343, i64 16}
+!354 = !{!344, !342, i64 16}
 !355 = !{!356}
 !356 = distinct !{!356, !357, !"_ZN5arrow6Status2OKEv: argument 0"}
 !357 = distinct !{!357, !"_ZN5arrow6Status2OKEv"}

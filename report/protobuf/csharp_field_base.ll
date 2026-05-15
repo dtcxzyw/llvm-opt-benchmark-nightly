@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 
 _ZN6google8protobuf8compiler6csharp19SupportsPresenceApiEPKNS0_15FieldDescriptorE.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.ax = call noundef zeroext i1 @_ZNK6google8protobuf15FieldDescriptor12has_presenceEv(ptr noundef nonnull align 8 dereferenceable(88) %i.at)
-  %.pre = load ptr, ptr %i.a, align 8, !tbaa !7, !noalias !419 ; 2 uses
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !7, !noalias !66 ; 2 uses
   br i1 %i.ax, label %bb.j, label %_ZN6google8protobuf8compiler6csharp19SupportsPresenceApiEPKNS0_15FieldDescriptorE.exit.thread
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8compiler6csharp19SupportsPresenceApiEPKNS0_15FieldDescriptorE.exit
@@ -229,13 +229,13 @@ bb.k:                                             ; preds = %bb.j
 
 .noexc27:                                         ; preds = %bb.k
   %i.bd = getelementptr inbounds nuw i8, ptr %6, i64 16
-  %i.be = load i8, ptr %i.bd, align 8, !tbaa !57, !range !60, !alias.scope !422, !noundef !66
+  %i.be = load i8, ptr %i.bd, align 8, !tbaa !57, !range !60, !alias.scope !419, !noundef !66
   %i.bf = trunc nuw i8 %i.be to i1
   br i1 %i.bf, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %.noexc27
   %.sroa.2.0..sroa_idx.i.i.i25 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %.sroa.2.0.copyload.i.i.i26 = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i25, align 8, !alias.scope !422 ; 5 uses
+  %.sroa.2.0.copyload.i.i.i26 = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i25, align 8, !alias.scope !419 ; 5 uses
   store i64 18, ptr %.sroa.2.0.copyload.i.i.i26, align 8, !tbaa !41
   %i.bg = getelementptr inbounds nuw i8, ptr %.sroa.2.0.copyload.i.i.i26, i64 8
   store ptr @.str.19, ptr %i.bg, align 8, !tbaa !43
@@ -423,10 +423,10 @@ _ZN6google8protobuf8compiler6csharp19SupportsPresenceApiEPKNS0_15FieldDescriptor
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #27
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 40
-  %i.dm = load ptr, ptr %i.dl, align 8, !noalias !419, !nonnull !66
+  %i.dm = load ptr, ptr %i.dl, align 8, !noalias !424, !nonnull !66
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 8
-  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !133, !noalias !419 ; 2 uses
-  %.0.copyload.i.i.i.i52 = load i16, ptr %i.do, align 1, !noalias !419
+  %i.do = load ptr, ptr %i.dn, align 8, !tbaa !133, !noalias !424 ; 2 uses
+  %.0.copyload.i.i.i.i52 = load i16, ptr %i.do, align 1, !noalias !424
   %i.dp = zext i16 %.0.copyload.i.i.i.i52 to i64  ; 2 uses
   %i.dq = xor i64 %i.dp, -1
   %i.dr = getelementptr inbounds i8, ptr %i.do, i64 %i.dq
@@ -829,14 +829,14 @@ begin_hunk_1_@llvm.umax.i64
 !416 = distinct !{!416, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE16try_emplace_implIRA11_KcJEEESF_INS1_12raw_hash_setISC_SD_SE_SI_E8iteratorEbEOT_DpOT0_"}
 !417 = distinct !{!417, !418, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA11_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_: argument 0"}
 !418 = distinct !{!418, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA11_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_"}
-!419 = !{!420}
-!420 = distinct !{!420, !421, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase10oneof_nameB5cxx11Ev: argument 0"}
-!421 = distinct !{!421, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase10oneof_nameB5cxx11Ev"}
-!422 = !{!423, !425}
-!423 = distinct !{!423, !424, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE16try_emplace_implIRA19_KcJEEESF_INS1_12raw_hash_setISC_SD_SE_SI_E8iteratorEbEOT_DpOT0_: argument 0"}
-!424 = distinct !{!424, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE16try_emplace_implIRA19_KcJEEESF_INS1_12raw_hash_setISC_SD_SE_SI_E8iteratorEbEOT_DpOT0_"}
-!425 = distinct !{!425, !426, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA19_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_: argument 0"}
-!426 = distinct !{!426, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA19_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_"}
+!419 = !{!420, !422}
+!420 = distinct !{!420, !421, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE16try_emplace_implIRA19_KcJEEESF_INS1_12raw_hash_setISC_SD_SE_SI_E8iteratorEbEOT_DpOT0_: argument 0"}
+!421 = distinct !{!421, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE16try_emplace_implIRA19_KcJEEESF_INS1_12raw_hash_setISC_SD_SE_SI_E8iteratorEbEOT_DpOT0_"}
+!422 = distinct !{!422, !423, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA19_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_: argument 0"}
+!423 = distinct !{!423, !"_ZN4absl12lts_2025051218container_internal12raw_hash_mapINS1_17FlatHashMapPolicyISt17basic_string_viewIcSt11char_traitsIcEENSt7__cxx1112basic_stringIcS6_SaIcEEEEENS1_10StringHashENS1_8StringEqESaISt4pairIKS7_SB_EEE11try_emplaceIA19_cLi0EJETnNSt9enable_ifIXntsr3std14is_convertibleIT_NS1_12raw_hash_setISC_SD_SE_SI_E14const_iteratorEEE5valueEiE4typeELi0EEESF_INSP_8iteratorEbERKSN_DpOT1_"}
+!424 = !{!425}
+!425 = distinct !{!425, !426, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase10oneof_nameB5cxx11Ev: argument 0"}
+!426 = distinct !{!426, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase10oneof_nameB5cxx11Ev"}
 !427 = !{!428}
 !428 = distinct !{!428, !429, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase19oneof_property_nameB5cxx11Ev: argument 0"}
 !429 = distinct !{!429, !"_ZN6google8protobuf8compiler6csharp18FieldGeneratorBase19oneof_property_nameB5cxx11Ev"}

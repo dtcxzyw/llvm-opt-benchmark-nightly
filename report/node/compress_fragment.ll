@@ -201,7 +201,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 2176 ; 4 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.as = icmp ugt i64 %i.ar, 7
-  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !alias.scope !65, !noalias !68 ; 2 uses
+  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !noalias !37 ; 2 uses
   br i1 %i.as, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
@@ -215,23 +215,23 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !11
   %i.ay = zext i8 %i.ax to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !70)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !73)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
   %i.az = lshr i64 %i.au, 3
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 %i.az ; 2 uses
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !73, !noalias !70
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !68, !noalias !65
   %i.bc = zext i8 %i.bb to i64
   %i.bd = and i64 %i.au, 7
   %i.be = shl nuw nsw i64 %i.ay, %i.bd
   %i.bf = or i64 %i.be, %i.bc
-  store i64 %i.bf, ptr %i.ba, align 1, !noalias !70
+  store i64 %i.bf, ptr %i.ba, align 1, !noalias !65
   %i.bg = add i64 %i.au, 8                        ; 3 uses
-  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !70, !noalias !73
+  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !65, !noalias !68
   %i.bh = add i64 %.0347.i182, 8                  ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
-  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !75
+  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.bl = phi i64 [ %.pre360, %bb.a ], [ %i.bg, %bb.b ] ; 3 uses
@@ -242,18 +242,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !11
   %i.br = zext i8 %i.bq to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !72)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !75)
   %i.bs = lshr i64 %i.bl, 3
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 %i.bs ; 2 uses
-  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !68, !noalias !65
+  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !75, !noalias !72
   %i.bv = zext i8 %i.bu to i64
   %i.bw = and i64 %i.bl, 7
   %i.bx = shl nuw nsw i64 %i.br, %i.bw
   %i.by = or i64 %i.bx, %i.bv
-  store i64 %i.by, ptr %i.bt, align 1, !noalias !65
+  store i64 %i.by, ptr %i.bt, align 1, !noalias !72
   %i.bz = add i64 %i.bl, %i.bm
-  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !65, !noalias !68
+  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !72, !noalias !75
   %i.ca = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 831 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 1022 ; 2 uses
@@ -656,7 +656,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 2176 ; 4 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.as = icmp ugt i64 %i.ar, 7
-  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !alias.scope !400, !noalias !403 ; 2 uses
+  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !noalias !37 ; 2 uses
   br i1 %i.as, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
@@ -670,23 +670,23 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !11
   %i.ay = zext i8 %i.ax to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !408)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !400)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !403)
   %i.az = lshr i64 %i.au, 3
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 %i.az ; 2 uses
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !408, !noalias !405
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !403, !noalias !400
   %i.bc = zext i8 %i.bb to i64
   %i.bd = and i64 %i.au, 7
   %i.be = shl nuw nsw i64 %i.ay, %i.bd
   %i.bf = or i64 %i.be, %i.bc
-  store i64 %i.bf, ptr %i.ba, align 1, !noalias !405
+  store i64 %i.bf, ptr %i.ba, align 1, !noalias !400
   %i.bg = add i64 %i.au, 8                        ; 3 uses
-  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !405, !noalias !408
+  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !400, !noalias !403
   %i.bh = add i64 %.0347.i182, 8                  ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
-  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !75
+  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.bl = phi i64 [ %.pre360, %bb.a ], [ %i.bg, %bb.b ] ; 3 uses
@@ -697,18 +697,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !11
   %i.br = zext i8 %i.bq to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !400)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !403)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !405)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !408)
   %i.bs = lshr i64 %i.bl, 3
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 %i.bs ; 2 uses
-  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !403, !noalias !400
+  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !408, !noalias !405
   %i.bv = zext i8 %i.bu to i64
   %i.bw = and i64 %i.bl, 7
   %i.bx = shl nuw nsw i64 %i.br, %i.bw
   %i.by = or i64 %i.bx, %i.bv
-  store i64 %i.by, ptr %i.bt, align 1, !noalias !400
+  store i64 %i.by, ptr %i.bt, align 1, !noalias !405
   %i.bz = add i64 %i.bl, %i.bm
-  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !400, !noalias !403
+  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !405, !noalias !408
   %i.ca = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 831 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 1022 ; 2 uses
@@ -1111,7 +1111,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 2176 ; 4 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.as = icmp ugt i64 %i.ar, 7
-  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !alias.scope !717, !noalias !720 ; 2 uses
+  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !noalias !37 ; 2 uses
   br i1 %i.as, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
@@ -1125,23 +1125,23 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !11
   %i.ay = zext i8 %i.ax to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !722)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !725)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !720)
   %i.az = lshr i64 %i.au, 3
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 %i.az ; 2 uses
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !725, !noalias !722
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !720, !noalias !717
   %i.bc = zext i8 %i.bb to i64
   %i.bd = and i64 %i.au, 7
   %i.be = shl nuw nsw i64 %i.ay, %i.bd
   %i.bf = or i64 %i.be, %i.bc
-  store i64 %i.bf, ptr %i.ba, align 1, !noalias !722
+  store i64 %i.bf, ptr %i.ba, align 1, !noalias !717
   %i.bg = add i64 %i.au, 8                        ; 3 uses
-  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !722, !noalias !725
+  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !717, !noalias !720
   %i.bh = add i64 %.0347.i182, 8                  ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
-  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !75
+  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.bl = phi i64 [ %.pre360, %bb.a ], [ %i.bg, %bb.b ] ; 3 uses
@@ -1152,18 +1152,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !11
   %i.br = zext i8 %i.bq to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !717)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !720)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !722)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !725)
   %i.bs = lshr i64 %i.bl, 3
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 %i.bs ; 2 uses
-  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !720, !noalias !717
+  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !725, !noalias !722
   %i.bv = zext i8 %i.bu to i64
   %i.bw = and i64 %i.bl, 7
   %i.bx = shl nuw nsw i64 %i.br, %i.bw
   %i.by = or i64 %i.bx, %i.bv
-  store i64 %i.by, ptr %i.bt, align 1, !noalias !717
+  store i64 %i.by, ptr %i.bt, align 1, !noalias !722
   %i.bz = add i64 %i.bl, %i.bm
-  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !717, !noalias !720
+  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !722, !noalias !725
   %i.ca = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 831 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 1022 ; 2 uses
@@ -1566,7 +1566,7 @@ bb.a:
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 2176 ; 4 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.as = icmp ugt i64 %i.ar, 7
-  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !alias.scope !1034, !noalias !1037 ; 2 uses
+  %.pre360 = load i64, ptr %5, align 8, !tbaa !9, !noalias !37 ; 2 uses
   br i1 %i.as, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
@@ -1580,23 +1580,23 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 %i.av
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !11
   %i.ay = zext i8 %i.ax to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1039)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1042)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1034)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1037)
   %i.az = lshr i64 %i.au, 3
   %i.ba = getelementptr inbounds nuw i8, ptr %6, i64 %i.az ; 2 uses
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !1042, !noalias !1039
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !11, !alias.scope !1037, !noalias !1034
   %i.bc = zext i8 %i.bb to i64
   %i.bd = and i64 %i.au, 7
   %i.be = shl nuw nsw i64 %i.ay, %i.bd
   %i.bf = or i64 %i.be, %i.bc
-  store i64 %i.bf, ptr %i.ba, align 1, !noalias !1039
+  store i64 %i.bf, ptr %i.ba, align 1, !noalias !1034
   %i.bg = add i64 %i.au, 8                        ; 3 uses
-  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !1039, !noalias !1042
+  store i64 %i.bg, ptr %5, align 8, !tbaa !9, !alias.scope !1034, !noalias !1037
   %i.bh = add i64 %.0347.i182, 8                  ; 2 uses
   %i.bi = or disjoint i64 %i.bh, 7
   %i.bj = load i64, ptr %i.aq, align 8, !tbaa !63 ; 2 uses
   %i.bk = icmp ult i64 %i.bi, %i.bj
-  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !75
+  br i1 %i.bk, label %bb.b, label %._crit_edge, !llvm.loop !70
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
   %i.bl = phi i64 [ %.pre360, %bb.a ], [ %i.bg, %bb.b ] ; 3 uses
@@ -1607,18 +1607,18 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 %i.bo
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !11
   %i.br = zext i8 %i.bq to i64
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1034)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1037)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1039)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !1042)
   %i.bs = lshr i64 %i.bl, 3
   %i.bt = getelementptr inbounds nuw i8, ptr %6, i64 %i.bs ; 2 uses
-  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !1037, !noalias !1034
+  %i.bu = load i8, ptr %i.bt, align 1, !tbaa !11, !alias.scope !1042, !noalias !1039
   %i.bv = zext i8 %i.bu to i64
   %i.bw = and i64 %i.bl, 7
   %i.bx = shl nuw nsw i64 %i.br, %i.bw
   %i.by = or i64 %i.bx, %i.bv
-  store i64 %i.by, ptr %i.bt, align 1, !noalias !1034
+  store i64 %i.by, ptr %i.bt, align 1, !noalias !1039
   %i.bz = add i64 %i.bl, %i.bm
-  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !1034, !noalias !1037
+  store i64 %i.bz, ptr %5, align 8, !tbaa !9, !alias.scope !1039, !noalias !1042
   %i.ca = ptrtoint ptr %1 to i64                  ; 5 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 831 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 1022 ; 2 uses
@@ -2021,22 +2021,22 @@ attributes #11 = { nounwind }
 !67 = distinct !{!67, !"BrotliWriteBits"}
 !68 = !{!69}
 !69 = distinct !{!69, !67, !"BrotliWriteBits: argument 1"}
-!70 = !{!71}
-!71 = distinct !{!71, !72, !"BrotliWriteBits: argument 0"}
-!72 = distinct !{!72, !"BrotliWriteBits"}
-!73 = !{!74}
-!74 = distinct !{!74, !72, !"BrotliWriteBits: argument 1"}
-!75 = distinct !{!75, !76}
-!76 = !{!"llvm.loop.mustprogress"}
-!77 = distinct !{!77, !76}
+!70 = distinct !{!70, !71}
+!71 = !{!"llvm.loop.mustprogress"}
+!72 = !{!73}
+!73 = distinct !{!73, !74, !"BrotliWriteBits: argument 0"}
+!74 = distinct !{!74, !"BrotliWriteBits"}
+!75 = !{!76}
+!76 = distinct !{!76, !74, !"BrotliWriteBits: argument 1"}
+!77 = distinct !{!77, !71}
 !78 = !{!"branch_weights", !"expected", i32 2000, i32 1}
 !79 = !{!"branch_weights", i32 2146410443, i32 1073205}
 !80 = !{!"branch_weights", i32 1, i32 127}
 !81 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !82 = !{!"branch_weights", i32 127, i32 255873}
-!83 = distinct !{!83, !76}
-!84 = distinct !{!84, !76}
-!85 = distinct !{!85, !76}
+!83 = distinct !{!83, !71}
+!84 = distinct !{!84, !71}
+!85 = distinct !{!85, !71}
 !86 = !{!87, !87, i64 0}
 !87 = !{!"short", !7, i64 0}
 !88 = !{!89}
@@ -2103,7 +2103,7 @@ attributes #11 = { nounwind }
 !149 = distinct !{!149, !145, !"BrotliWriteBits: argument 0:It1"}
 !150 = !{!151}
 !151 = distinct !{!151, !145, !"BrotliWriteBits: argument 1:It1"}
-!152 = distinct !{!152, !76}
+!152 = distinct !{!152, !71}
 !153 = !{!154}
 !154 = distinct !{!154, !155, !"BrotliWriteBits: argument 0"}
 !155 = distinct !{!155, !"BrotliWriteBits"}
@@ -2224,10 +2224,10 @@ attributes #11 = { nounwind }
 !270 = distinct !{!270, !"BrotliWriteBits"}
 !271 = !{!272}
 !272 = distinct !{!272, !270, !"BrotliWriteBits: argument 1"}
-!273 = distinct !{!273, !76}
+!273 = distinct !{!273, !71}
 !274 = !{!275, !275, i64 0}
 !275 = !{!"double", !7, i64 0}
-!276 = distinct !{!276, !76}
+!276 = distinct !{!276, !71}
 !277 = !{!278}
 !278 = distinct !{!278, !279, !"BrotliWriteBits: argument 0"}
 !279 = distinct !{!279, !"BrotliWriteBits"}
@@ -2630,11 +2630,11 @@ begin_hunk_5_@llvm.vector.reduce.add.v2i64
 !1345 = distinct !{!1345, !1343, !"BrotliWriteBits: argument 0"}
 !1346 = distinct !{!1346, !1347}
 !1347 = !{!"llvm.loop.unroll.disable"}
-!1348 = distinct !{!1348, !76, !1349, !1350}
+!1348 = distinct !{!1348, !71, !1349, !1350}
 !1349 = !{!"llvm.loop.isvectorized", i32 1}
 !1350 = !{!"llvm.loop.unroll.runtime.disable"}
-!1351 = distinct !{!1351, !76}
-!1352 = distinct !{!1352, !76}
-!1353 = distinct !{!1353, !76, !1349, !1350}
-!1354 = distinct !{!1354, !76}
+!1351 = distinct !{!1351, !71}
+!1352 = distinct !{!1352, !71}
+!1353 = distinct !{!1353, !71, !1349, !1350}
+!1354 = distinct !{!1354, !71}
 end_hunk_5

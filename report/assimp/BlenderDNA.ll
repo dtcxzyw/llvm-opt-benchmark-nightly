@@ -201,7 +201,7 @@ bb.do:                                            ; preds = %bb.dj
   store i64 1, ptr %i.qy, align 8
   %i.ra = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %i.ov, i8 noundef signext 91, i64 noundef 0) #20 ; 2 uses
   %i.rb = icmp eq i64 %i.ra, -1
-  %.pre400 = load ptr, ptr %i.ov, align 8, !noalias !16 ; 2 uses
+  %.pre400 = load ptr, ptr %i.ov, align 8         ; 2 uses
   br i1 %i.rb, label %_ZN6Assimp7Blender3DNA16ExtractArraySizeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPm.exit, label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do
@@ -224,7 +224,7 @@ bb.dp:                                            ; preds = %bb.do
   %i.rl = load i8, ptr %i.rk, align 1             ; 2 uses
   %i.rm = add i8 %i.rl, -58
   %or.cond.i.i = icmp ult i8 %i.rm, -10
-  br i1 %or.cond.i.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !19
+  br i1 %or.cond.i.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !16
 
 _ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit.i:     ; preds = %.lr.ph.i.i
   %i.rn = zext i32 %i.rj to i64
@@ -235,7 +235,7 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit.i:              ; preds = %_ZN6Assimp9strtoul1
   store i64 %.0.lcssa.i.i, ptr %i.qy, align 8
   %i.ro = call noundef i64 @_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm(ptr noundef nonnull align 8 dereferenceable(32) %i.ov, i8 noundef signext 91, i64 noundef %i.rc) #20 ; 2 uses
   %i.rp = icmp eq i64 %i.ro, -1
-  %.pre399 = load ptr, ptr %i.ov, align 8, !noalias !16 ; 3 uses
+  %.pre399 = load ptr, ptr %i.ov, align 8         ; 3 uses
   br i1 %i.rp, label %_ZN6Assimp7Blender3DNA16ExtractArraySizeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPm.exit, label %bb.dq
 
 bb.dq:                                            ; preds = %_ZN6Assimp9strtoul10EPKcPS1_.exit.i
@@ -258,7 +258,7 @@ bb.dq:                                            ; preds = %_ZN6Assimp9strtoul1
   %i.rz = load i8, ptr %i.ry, align 1             ; 2 uses
   %i.sa = add i8 %i.rz, -58
   %or.cond.i17.i = icmp ult i8 %i.sa, -10
-  br i1 %or.cond.i17.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit.i, label %.lr.ph.i13.i, !llvm.loop !19
+  br i1 %or.cond.i17.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit.i, label %.lr.ph.i13.i, !llvm.loop !16
 
 _ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit.i:   ; preds = %.lr.ph.i13.i
   %i.sb = zext i32 %i.rx to i64
@@ -272,12 +272,12 @@ _ZN6Assimp9strtoul10EPKcPS1_.exit20.i:            ; preds = %_ZN6Assimp9strtoul1
 _ZN6Assimp7Blender3DNA16ExtractArraySizeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPm.exit: ; preds = %_ZN6Assimp9strtoul10EPKcPS1_.exit20.i, %_ZN6Assimp9strtoul10EPKcPS1_.exit.i, %bb.do
   %i.sc = phi ptr [ %.pre399, %_ZN6Assimp9strtoul10EPKcPS1_.exit20.i ], [ %.pre399, %_ZN6Assimp9strtoul10EPKcPS1_.exit.i ], [ %.pre400, %bb.do ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #20
-  call void @llvm.experimental.noalias.scope.decl(metadata !16)
-  %i.sd = load i64, ptr %i.ql, align 8, !noalias !16
-  store ptr %i.kl, ptr %8, align 8, !alias.scope !16
+  call void @llvm.experimental.noalias.scope.decl(metadata !17)
+  %i.sd = load i64, ptr %i.ql, align 8, !noalias !17
+  store ptr %i.kl, ptr %8, align 8, !alias.scope !17
   %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %i.qr, i64 %i.sd) ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !16
-  store i64 %spec.select.i.i.i, ptr %i.a, align 8, !noalias !16
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20, !noalias !17
+  store i64 %spec.select.i.i.i, ptr %i.a, align 8, !noalias !17
   %i.se = icmp ugt i64 %spec.select.i.i.i, 15
   br i1 %i.se, label %.noexc10.i.i, label %._crit_edge.i.i.i
 
@@ -286,9 +286,9 @@ _ZN6Assimp7Blender3DNA16ExtractArraySizeERKNSt7__cxx1112basic_stringIcSt11char_t
           to label %.noexc259 unwind label %bb.ea ; 2 uses
 
 .noexc259:                                        ; preds = %.noexc10.i.i
-  store ptr %i.sf, ptr %8, align 8, !alias.scope !16
-  %i.sg = load i64, ptr %i.a, align 8, !noalias !16
-  store i64 %i.sg, ptr %i.kl, align 8, !alias.scope !16
+  store ptr %i.sf, ptr %8, align 8, !alias.scope !17
+  %i.sg = load i64, ptr %i.a, align 8, !noalias !17
+  store i64 %i.sg, ptr %i.kl, align 8, !alias.scope !17
   br label %._crit_edge.i.i.i
 
 ._crit_edge.i.i.i:                                ; preds = %.noexc259, %_ZN6Assimp7Blender3DNA16ExtractArraySizeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPm.exit
@@ -308,12 +308,12 @@ bb.ds:                                            ; preds = %._crit_edge.i.i.i
   br label %bb.dt
 
 bb.dt:                                            ; preds = %bb.ds, %bb.dr, %._crit_edge.i.i.i
-  %i.sj = load i64, ptr %i.a, align 8, !noalias !16 ; 2 uses
-  store i64 %i.sj, ptr %i.km, align 8, !alias.scope !16
-  %i.sk = load ptr, ptr %8, align 8, !alias.scope !16
+  %i.sj = load i64, ptr %i.a, align 8, !noalias !17 ; 2 uses
+  store i64 %i.sj, ptr %i.km, align 8, !alias.scope !17
+  %i.sk = load ptr, ptr %8, align 8, !alias.scope !17
   %i.sl = getelementptr inbounds nuw i8, ptr %i.sk, i64 %i.sj
   store i8 0, ptr %i.sl, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !16
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !17
   %i.sm = load ptr, ptr %i.ov, align 8            ; 6 uses
   %i.sn = getelementptr inbounds i8, ptr %i.ou, i64 -88 ; 4 uses
   %i.so = icmp eq ptr %i.sm, %i.sn
@@ -716,7 +716,7 @@ bb.b:                                             ; preds = %bb.a
   %i.n = load i8, ptr %i.m, align 1               ; 2 uses
   %i.o = add i8 %i.n, -58
   %or.cond.i = icmp ult i8 %i.o, -10
-  br i1 %or.cond.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit, label %.lr.ph.i, !llvm.loop !19
+  br i1 %or.cond.i, label %_ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit, label %.lr.ph.i, !llvm.loop !16
 
 _ZN6Assimp9strtoul10EPKcPS1_.exit.loopexit:       ; preds = %.lr.ph.i
   %i.p = zext i32 %i.l to i64
@@ -750,7 +750,7 @@ bb.c:                                             ; preds = %_ZN6Assimp9strtoul1
   %i.ac = load i8, ptr %i.ab, align 1             ; 2 uses
   %i.ad = add i8 %i.ac, -58
   %or.cond.i17 = icmp ult i8 %i.ad, -10
-  br i1 %or.cond.i17, label %_ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit, label %.lr.ph.i13, !llvm.loop !19
+  br i1 %or.cond.i17, label %_ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit, label %.lr.ph.i13, !llvm.loop !16
 
 _ZN6Assimp9strtoul10EPKcPS1_.exit20.loopexit:     ; preds = %.lr.ph.i13
   %i.ae = zext i32 %i.aa to i64
@@ -1153,10 +1153,10 @@ attributes #25 = { nounwind willreturn memory(read) }
 !13 = !{!14}
 !14 = distinct !{!14, !15, !"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6rbeginEv: argument 0"}
 !15 = distinct !{!15, !"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6rbeginEv"}
-!16 = !{!17}
-!17 = distinct !{!17, !18, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
-!18 = distinct !{!18, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
-!19 = distinct !{!19, !9}
+!16 = distinct !{!16, !9}
+!17 = !{!18}
+!18 = distinct !{!18, !19, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm: argument 0"}
+!19 = distinct !{!19, !"_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6substrEmm"}
 !20 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !21 = distinct !{!21, !9}
 !22 = distinct !{!22, !9}

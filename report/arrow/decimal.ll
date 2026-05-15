@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %i.d = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow15BasicDecimal1286NegateEv(ptr noundef nonnull align 8 dereferenceable(16) %6) ; 0 uses
   %i.e = icmp slt i32 %1, 1
-  %.val14.pre.i.i = load i64, ptr %6, align 8, !tbaa !121 ; 2 uses
+  %.val14.pre.i.i = load i64, ptr %6, align 8     ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.val15.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !121 ; 2 uses
   br i1 %i.e, label %._crit_edge.i.i, label %bb.c
@@ -295,7 +295,7 @@ _ZN5arrow12_GLOBAL__N_124Decimal128RealConversion14ToRealPositiveIfEET_RKNS_10De
 
 bb.j:                                             ; preds = %bb.a
   %i.ao = icmp slt i32 %1, 1
-  %.val14.pre.i5.i = load i64, ptr %0, align 8, !tbaa !121 ; 2 uses
+  %.val14.pre.i5.i = load i64, ptr %0, align 8    ; 2 uses
   br i1 %i.ao, label %._crit_edge.i21.i, label %bb.k
 
 ._crit_edge.i21.i:                                ; preds = %bb.j
@@ -402,7 +402,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %0, i64 16, i1 false)
   %i.d = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow15BasicDecimal1286NegateEv(ptr noundef nonnull align 8 dereferenceable(16) %6) ; 0 uses
   %i.e = icmp slt i32 %1, 1
-  %.val14.pre.i.i = load i64, ptr %6, align 8, !tbaa !121 ; 2 uses
+  %.val14.pre.i.i = load i64, ptr %6, align 8     ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.val15.pre.i.i = load i64, ptr %.phi.trans.insert.i.i, align 8, !tbaa !121 ; 2 uses
   br i1 %i.e, label %._crit_edge.i.i, label %bb.c
@@ -496,7 +496,7 @@ _ZN5arrow12_GLOBAL__N_124Decimal128RealConversion14ToRealPositiveIdEET_RKNS_10De
 
 bb.j:                                             ; preds = %bb.a
   %i.ao = icmp slt i32 %1, 1
-  %.val14.pre.i5.i = load i64, ptr %0, align 8, !tbaa !121 ; 2 uses
+  %.val14.pre.i5.i = load i64, ptr %0, align 8    ; 2 uses
   br i1 %i.ao, label %._crit_edge.i21.i, label %bb.k
 
 ._crit_edge.i21.i:                                ; preds = %bb.j
