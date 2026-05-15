@@ -25,33 +25,22 @@ vector.ph:
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 10 uses
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 4 uses
   %vec.ind = phi <4 x i8> [ <i8 0, i8 1, i8 2, i8 3>, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 3 uses
   %step.add = add <4 x i8> %vec.ind, splat (i8 4)
-  %1 = or disjoint i64 %index, 1                  ; 2 uses
-  %2 = or disjoint i64 %index, 2
-  %3 = or disjoint i64 %index, 3
-  %4 = or disjoint i64 %index, 4
-  %5 = insertelement <4 x i64> poison, i64 %1, i64 0
-  %6 = insertelement <4 x i64> %5, i64 %2, i64 1
-  %7 = insertelement <4 x i64> %6, i64 %3, i64 2
-  %8 = insertelement <4 x i64> %7, i64 %4, i64 3
-  %9 = or disjoint i64 %index, 5
-  %10 = or disjoint i64 %index, 6
-  %11 = or disjoint i64 %index, 7
-  %12 = add nuw nsw i64 %index, 8
-  %i.a = insertelement <4 x i64> poison, i64 %9, i64 0
-  %13 = insertelement <4 x i64> %i.a, i64 %10, i64 1
-  %14 = insertelement <4 x i64> %13, i64 %11, i64 2
-  %15 = insertelement <4 x i64> %14, i64 %12, i64 3
-  %16 = getelementptr inbounds nuw [4 x i8], ptr @char_to_index, i64 %index ; 2 uses
-  %i.b = trunc nuw nsw <4 x i64> %8 to <4 x i32>
-  %17 = trunc nuw nsw <4 x i64> %15 to <4 x i32>
-  %i.c = getelementptr inbounds nuw i8, ptr %16, i64 16
-  store <4 x i32> %i.b, ptr %16, align 16, !tbaa !4
-  store <4 x i32> %17, ptr %i.c, align 16, !tbaa !4
-  %i.d = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %1 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %i.a = insertelement <4 x i64> poison, i64 %index, i64 0
+  %1 = shufflevector <4 x i64> %i.a, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %2 = getelementptr inbounds nuw [4 x i8], ptr @char_to_index, i64 %index ; 2 uses
+  %3 = trunc <4 x i64> %1 to <4 x i32>
+  %4 = or disjoint <4 x i32> %3, <i32 1, i32 2, i32 3, i32 4>
+  %i.b = trunc <4 x i64> %1 to <4 x i32>
+  %5 = add <4 x i32> %i.b, <i32 5, i32 6, i32 7, i32 8>
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 16
+  store <4 x i32> %4, ptr %2, align 16, !tbaa !4
+  store <4 x i32> %5, ptr %i.c, align 16, !tbaa !4
+  %6 = getelementptr inbounds nuw i8, ptr @index_to_char, i64 %index ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %6, i64 1
+  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 5
   store <4 x i8> %vec.ind, ptr %i.d, align 1, !tbaa !8
   store <4 x i8> %step.add, ptr %i.e, align 1, !tbaa !8
   %index.next = add nuw i64 %index, 8             ; 2 uses
