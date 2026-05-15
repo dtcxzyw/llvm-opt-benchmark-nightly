@@ -201,7 +201,7 @@ _ZN11CStringBaseIwEC2EPKw.exit:                   ; preds = %bb.e
 
 bb.f:                                             ; preds = %_ZN11CStringBaseIwEC2EPKw.exit
   %i.x = icmp eq i32 %i.i, 0
-  %.pre = load i32, ptr %i.c, align 8, !tbaa !27, !noalias !73 ; 3 uses
+  %.pre = load i32, ptr %i.c, align 8, !tbaa !27  ; 3 uses
   br i1 %i.x, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread41, label %.preheader23.i.i
 
 .preheader23.i.i:                                 ; preds = %bb.f
@@ -239,12 +239,12 @@ bb.h:                                             ; preds = %bb.g
 .critedge.us.i.i:                                 ; preds = %bb.h, %bb.g
   %indvars.iv.next36.i.i = add nuw nsw i64 %indvars.iv35.i.i, 1 ; 2 uses
   %i.ai = icmp eq i64 %indvars.iv.next36.i.i, %i.ab
-  br i1 %i.ai, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread, label %.preheader.us.i.i, !llvm.loop !76
+  br i1 %i.ai, label %_ZNK11CStringBaseIwE4FindERKS0_.exit.thread, label %.preheader.us.i.i, !llvm.loop !73
 
 bb.i:                                             ; preds = %bb.h
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
-  br i1 %exitcond.not.i.i, label %_ZNK11CStringBaseIwE4FindERKS0_.exit, label %bb.g, !llvm.loop !77
+  br i1 %exitcond.not.i.i, label %_ZNK11CStringBaseIwE4FindERKS0_.exit, label %bb.g, !llvm.loop !74
 
 _ZNK11CStringBaseIwE4FindERKS0_.exit:             ; preds = %bb.i
   %i.aj = icmp eq i64 %indvars.iv35.i.i, 0
@@ -470,7 +470,7 @@ _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %bb.b, %bb.c
 bb.d:                                             ; preds = %bb.a, %_ZN11CStringBaseIwED2Ev.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.q = icmp samesign ult i64 %indvars.iv.next, %i.i
-  br i1 %i.q, label %bb.a, label %._crit_edge, !llvm.loop !78
+  br i1 %i.q, label %bb.a, label %._crit_edge, !llvm.loop !75
 }
 
 ; Function Attrs: nounwind
@@ -621,10 +621,7 @@ attributes #19 = { noreturn }
 !70 = !{!71, !29, i64 0}
 !71 = !{!"_ZTSN18NCommandLineParser12CCommandFormE", !29, i64 0, !21, i64 8}
 !72 = !{!71, !21, i64 8}
-!73 = !{!74}
-!74 = distinct !{!74, !75, !"_ZNK11CStringBaseIwE3MidEi: argument 0"}
-!75 = distinct !{!75, !"_ZNK11CStringBaseIwE3MidEi"}
-!76 = distinct !{!76, !35}
-!77 = distinct !{!77, !35}
-!78 = distinct !{!78, !35}
+!73 = distinct !{!73, !35}
+!74 = distinct !{!74, !35}
+!75 = distinct !{!75, !35}
 end_hunk_0
