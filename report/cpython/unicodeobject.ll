@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   %i.bu = add nsw i64 %3, -1                      ; 12 uses
   %i.bv = getelementptr [2 x i8], ptr %2, i64 %i.bu
   %i.bw = load i16, ptr %i.bv, align 2, !tbaa !208 ; 4 uses
-  %min.iters.check = icmp ult i64 %3, 7
+  %min.iters.check = icmp ult i64 %3, 9
   br i1 %min.iters.check, label %.lr.ph.i69.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.ab
@@ -604,7 +604,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.cg = add nsw i64 %3, -1                      ; 12 uses
   %i.ch = getelementptr [4 x i8], ptr %2, i64 %i.cg
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !7  ; 4 uses
-  %min.iters.check = icmp ult i64 %3, 13
+  %min.iters.check = icmp ult i64 %3, 15
   br i1 %min.iters.check, label %.lr.ph.i72.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.ae

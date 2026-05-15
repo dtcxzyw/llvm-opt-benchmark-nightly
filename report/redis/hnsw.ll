@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %._crit_edge
   br i1 %.not73, label %.lr.ph85.split.us.preheader, label %.lr.ph85.split.preheader
 
 .lr.ph85.split.preheader:                         ; preds = %.lr.ph85
-  %min.iters.check = icmp ult i32 %., 48
+  %min.iters.check = icmp ult i32 %., 50
   br i1 %min.iters.check, label %.lr.ph85.split.preheader137, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph85.split.preheader
@@ -307,7 +307,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.bz, label %pq_free.exit78, label %.lr.ph85.split
 
 .lr.ph85.split.us.preheader:                      ; preds = %.lr.ph85
-  %min.iters.check125 = icmp ult i32 %., 32
+  %min.iters.check125 = icmp ult i32 %., 34
   br i1 %min.iters.check125, label %.lr.ph85.split.us.preheader136, label %vector.scevcheck116
 
 vector.scevcheck116:                              ; preds = %.lr.ph85.split.us.preheader
@@ -710,7 +710,7 @@ bb.p:                                             ; preds = %.lr.ph.i
   br i1 %.not49, label %.lr.ph68.split.us.preheader, label %.lr.ph68.split.preheader
 
 .lr.ph68.split.preheader:                         ; preds = %.lr.ph68
-  %min.iters.check = icmp ult i32 %., 48
+  %min.iters.check = icmp ult i32 %., 50
   br i1 %min.iters.check, label %.lr.ph68.split.preheader126, label %vector.scevcheck
 
 vector.scevcheck:                                 ; preds = %.lr.ph68.split.preheader
@@ -816,7 +816,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.dv, label %pq_free.exit, label %.lr.ph68.split
 
 .lr.ph68.split.us.preheader:                      ; preds = %.lr.ph68
-  %min.iters.check114 = icmp ult i32 %., 32
+  %min.iters.check114 = icmp ult i32 %., 34
   br i1 %min.iters.check114, label %.lr.ph68.split.us.preheader125, label %vector.scevcheck105
 
 vector.scevcheck105:                              ; preds = %.lr.ph68.split.us.preheader

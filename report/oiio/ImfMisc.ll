@@ -201,7 +201,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i: ; preds = %
 
 .lr.ph.i5.i.preheader:                            ; preds = %._crit_edge.i
   %i.il = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
-  %min.iters.check2046 = icmp ult i32 %.0.lcssa.i, 12
+  %min.iters.check2046 = icmp ult i32 %.0.lcssa.i, 14
   br i1 %min.iters.check2046, label %.lr.ph.i5.i.preheader2091, label %vector.memcheck2028
 
 vector.memcheck2028:                              ; preds = %.lr.ph.i5.i.preheader
@@ -454,7 +454,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i790: ; preds 
 
 .lr.ph.i5.i779.preheader:                         ; preds = %._crit_edge.i776
   %i.lj = zext nneg i32 %.0.lcssa.i778 to i64     ; 2 uses
-  %min.iters.check1986 = icmp ult i32 %.0.lcssa.i778, 12
+  %min.iters.check1986 = icmp ult i32 %.0.lcssa.i778, 14
   br i1 %min.iters.check1986, label %.lr.ph.i5.i779.preheader2096, label %vector.memcheck1968
 
 vector.memcheck1968:                              ; preds = %.lr.ph.i5.i779.preheader
@@ -720,7 +720,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i818: ; preds 
 
 .lr.ph.i5.i807.preheader:                         ; preds = %._crit_edge.i804
   %i.om = zext nneg i32 %.0.lcssa.i806 to i64     ; 2 uses
-  %min.iters.check1926 = icmp ult i32 %.0.lcssa.i806, 12
+  %min.iters.check1926 = icmp ult i32 %.0.lcssa.i806, 14
   br i1 %min.iters.check1926, label %.lr.ph.i5.i807.preheader2102, label %vector.memcheck1908
 
 vector.memcheck1908:                              ; preds = %.lr.ph.i5.i807.preheader
@@ -1096,7 +1096,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i846: ; preds 
 
 .lr.ph.i5.i835.preheader:                         ; preds = %._crit_edge.i832
   %i.tg = zext nneg i32 %.0.lcssa.i834 to i64     ; 2 uses
-  %min.iters.check1866 = icmp ult i32 %.0.lcssa.i834, 12
+  %min.iters.check1866 = icmp ult i32 %.0.lcssa.i834, 14
   br i1 %min.iters.check1866, label %.lr.ph.i5.i835.preheader2108, label %vector.memcheck1848
 
 vector.memcheck1848:                              ; preds = %.lr.ph.i5.i835.preheader
@@ -1370,7 +1370,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i868: ; preds 
 
 .lr.ph.i5.i857.preheader:                         ; preds = %._crit_edge.i854
   %i.wj = zext nneg i32 %.0.lcssa.i856 to i64     ; 2 uses
-  %min.iters.check1806 = icmp ult i32 %.0.lcssa.i856, 12
+  %min.iters.check1806 = icmp ult i32 %.0.lcssa.i856, 14
   br i1 %min.iters.check1806, label %.lr.ph.i5.i857.preheader2114, label %vector.memcheck1788
 
 vector.memcheck1788:                              ; preds = %.lr.ph.i5.i857.preheader
@@ -1658,7 +1658,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i896: ; preds 
 
 .lr.ph.i5.i885.preheader:                         ; preds = %._crit_edge.i882
   %i.zq = zext nneg i32 %.0.lcssa.i884 to i64     ; 2 uses
-  %min.iters.check1746 = icmp ult i32 %.0.lcssa.i884, 12
+  %min.iters.check1746 = icmp ult i32 %.0.lcssa.i884, 14
   br i1 %min.iters.check1746, label %.lr.ph.i5.i885.preheader2120, label %vector.memcheck1728
 
 vector.memcheck1728:                              ; preds = %.lr.ph.i5.i885.preheader
@@ -2039,7 +2039,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i924: ; preds 
 
 .lr.ph.i5.i913.preheader:                         ; preds = %._crit_edge.i910
   %i.aem = zext nneg i32 %.0.lcssa.i912 to i64    ; 2 uses
-  %min.iters.check1686 = icmp ult i32 %.0.lcssa.i912, 12
+  %min.iters.check1686 = icmp ult i32 %.0.lcssa.i912, 14
   br i1 %min.iters.check1686, label %.lr.ph.i5.i913.preheader2126, label %vector.memcheck1668
 
 vector.memcheck1668:                              ; preds = %.lr.ph.i5.i913.preheader
@@ -2317,7 +2317,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i946: ; preds 
 
 .lr.ph.i5.i935.preheader:                         ; preds = %._crit_edge.i932
   %i.ahv = zext nneg i32 %.0.lcssa.i934 to i64    ; 2 uses
-  %min.iters.check1626 = icmp ult i32 %.0.lcssa.i934, 12
+  %min.iters.check1626 = icmp ult i32 %.0.lcssa.i934, 14
   br i1 %min.iters.check1626, label %.lr.ph.i5.i935.preheader2132, label %vector.memcheck1608
 
 vector.memcheck1608:                              ; preds = %.lr.ph.i5.i935.preheader
@@ -2609,7 +2609,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i974: ; preds 
 
 .lr.ph.i5.i963.preheader:                         ; preds = %._crit_edge.i960
   %i.ale = zext nneg i32 %.0.lcssa.i962 to i64    ; 2 uses
-  %min.iters.check = icmp ult i32 %.0.lcssa.i962, 12
+  %min.iters.check = icmp ult i32 %.0.lcssa.i962, 14
   br i1 %min.iters.check, label %.lr.ph.i5.i963.preheader2138, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.i5.i963.preheader
@@ -3012,7 +3012,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i: ; preds = %
 
 .lr.ph.i5.i.preheader:                            ; preds = %._crit_edge.i
   %i.af = zext nneg i32 %.0.lcssa.i to i64        ; 2 uses
-  %min.iters.check207 = icmp ult i32 %.0.lcssa.i, 26
+  %min.iters.check207 = icmp ult i32 %.0.lcssa.i, 28
   br i1 %min.iters.check207, label %.lr.ph.i5.i.preheader224, label %vector.memcheck191
 
 vector.memcheck191:                               ; preds = %.lr.ph.i5.i.preheader
@@ -3230,7 +3230,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i23: ; preds =
 
 .lr.ph.i5.i12.preheader:                          ; preds = %._crit_edge.i9
   %i.cn = zext nneg i32 %.0.lcssa.i11 to i64      ; 2 uses
-  %min.iters.check148 = icmp ult i32 %.0.lcssa.i11, 26
+  %min.iters.check148 = icmp ult i32 %.0.lcssa.i11, 28
   br i1 %min.iters.check148, label %.lr.ph.i5.i12.preheader228, label %vector.memcheck132
 
 vector.memcheck132:                               ; preds = %.lr.ph.i5.i12.preheader
@@ -3448,7 +3448,7 @@ _ZN27OpenImageIO_v3_1_Imf__3_3_59CharPtrIO9readCharsERPKcPci.exit.i40: ; preds =
 
 .lr.ph.i5.i29.preheader:                          ; preds = %._crit_edge.i26
   %i.ev = zext nneg i32 %.0.lcssa.i28 to i64      ; 2 uses
-  %min.iters.check = icmp ult i32 %.0.lcssa.i28, 26
+  %min.iters.check = icmp ult i32 %.0.lcssa.i28, 28
   br i1 %min.iters.check, label %.lr.ph.i5.i29.preheader233, label %vector.memcheck78
 
 vector.memcheck78:                                ; preds = %.lr.ph.i5.i29.preheader

@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %_ZN11duckdb_zstdL25
   %i.jo = shl i32 %i.io, 16
   %invariant.op133.reass = add i32 %i.jo, %invariant.op137 ; 6 uses
   %i.jp = sub nsw i64 %i.iv, %i.it                ; 3 uses
-  %min.iters.check322 = icmp ult i64 %i.jp, 8
+  %min.iters.check322 = icmp ult i64 %i.jp, 10
   br i1 %min.iters.check322, label %scalar.ph321.preheader, label %vector.memcheck315
 
 vector.memcheck315:                               ; preds = %.lr.ph98.i.i
