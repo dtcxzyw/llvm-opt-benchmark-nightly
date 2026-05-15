@@ -201,12 +201,12 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.sroa.7.4.extract.trunc = trunc i32 %i.o to i8
   %.sroa.0.3.extract.trunc = trunc nuw i32 %.sroa.0.3.extract.shift to i8
   %.sroa.0.2.extract.trunc = trunc i32 %.sroa.0.2.extract.shift to i8
-  %.sroa.0.1.extract.trunc = trunc i32 %.sroa.0.1.extract.shift to i8
-  %.sroa.0.0.extract.trunc = trunc i32 %i.p to i8
-  %3 = load <16 x i8>, ptr %.01014, align 1, !tbaa !8
-  %4 = insertelement <16 x i8> poison, i8 %.sroa.0.0.extract.trunc, i64 0
-  %5 = insertelement <16 x i8> %4, i8 %.sroa.0.1.extract.trunc, i64 1
-  %i.q = insertelement <16 x i8> %5, i8 %.sroa.0.2.extract.trunc, i64 2
+  %3 = insertelement <2 x i32> poison, i32 %i.p, i64 0
+  %4 = insertelement <2 x i32> %3, i32 %.sroa.0.1.extract.shift, i64 1
+  %5 = trunc <2 x i32> %4 to <2 x i8>
+  %6 = load <16 x i8>, ptr %.01014, align 1, !tbaa !8
+  %7 = shufflevector <2 x i8> %5, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.q = insertelement <16 x i8> %7, i8 %.sroa.0.2.extract.trunc, i64 2
   %i.r = insertelement <16 x i8> %i.q, i8 %.sroa.0.3.extract.trunc, i64 3
   %i.s = insertelement <16 x i8> %i.r, i8 %.sroa.7.4.extract.trunc, i64 4
   %i.t = insertelement <16 x i8> %i.s, i8 %.sroa.7.5.extract.trunc, i64 5
@@ -220,7 +220,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = insertelement <16 x i8> %i.aa, i8 %.sroa.17.13.extract.trunc, i64 13
   %i.ac = insertelement <16 x i8> %i.ab, i8 %.sroa.17.14.extract.trunc, i64 14
   %i.ad = insertelement <16 x i8> %i.ac, i8 %.sroa.17.15.extract.trunc, i64 15
-  %i.ae = xor <16 x i8> %3, %i.ad
+  %i.ae = xor <16 x i8> %6, %i.ad
   store <16 x i8> %i.ae, ptr %.01014, align 1, !tbaa !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   %i.af = add i64 %.0915, -1                      ; 2 uses
