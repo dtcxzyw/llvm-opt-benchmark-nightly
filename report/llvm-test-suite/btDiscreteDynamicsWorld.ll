@@ -201,7 +201,7 @@ bb.a:
 define dso_local void @_ZN23btDiscreteDynamicsWorld26calculateSimulationIslandsEv(ptr noundef nonnull align 8 dereferenceable(372) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   tail call void @_ZN15CProfileManager13Start_ProfileEPKc(ptr noundef nonnull @.str.7)
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !65   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !81
@@ -215,7 +215,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.i = load i32, ptr %i.h, align 4, !tbaa !51   ; 2 uses
   %i.j = icmp sgt i32 %i.i, 0
-  %.pre27 = load ptr, ptr %i.a, align 8, !tbaa !65 ; 3 uses
+  %.pre27 = load ptr, ptr %i.a, align 8           ; 2 uses
   br i1 %i.j, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.b
@@ -336,13 +336,18 @@ bb.i:                                             ; preds = %._crit_edge, %bb.a
 _ZN11btUnionFind5uniteEii.exit:                   ; preds = %bb.f, %bb.f, %bb.h, %_ZN11btUnionFind4findEi.exit13.i, %bb.d, %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.c
 
-._crit_edge:                                      ; preds = %_ZN11btUnionFind5uniteEii.exit, %bb.b
-  %i.bp = load ptr, ptr %.pre27, align 8, !tbaa !19
+._crit_edge.loopexit:                             ; preds = %_ZN11btUnionFind5uniteEii.exit
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !65
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.b
+  %1 = phi ptr [ %.pre, %._crit_edge.loopexit ], [ %.pre27, %bb.b ] ; 2 uses
+  %i.bp = load ptr, ptr %1, align 8, !tbaa !19
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 24
   %i.br = load ptr, ptr %i.bq, align 8
-  invoke void %i.br(ptr noundef nonnull align 8 dereferenceable(105) %.pre27, ptr noundef nonnull %0)
+  invoke void %i.br(ptr noundef nonnull align 8 dereferenceable(105) %1, ptr noundef nonnull %0)
           to label %bb.j unwind label %bb.i
 
 bb.j:                                             ; preds = %._crit_edge
