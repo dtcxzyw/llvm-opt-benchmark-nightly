@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  store i8 1, ptr %i.p, align 1, !noalias !17
+  store i8 1, ptr %i.p, align 8, !noalias !17
   resume { ptr, i32 } %i.aa
 
 bb.l:                                             ; preds = %bb.i
@@ -604,7 +604,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.val.i217 = load ptr, ptr %i.u, align 8, !alias.scope !123 ; 5 uses
+  %.val.i217 = load ptr, ptr %i.u, align 16, !alias.scope !123 ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.val1.i218 = load ptr, ptr %i.v, align 8, !alias.scope !123, !nonnull !3, !align !5, !noundef !3 ; 5 uses
   %i.w = load ptr, ptr %.val1.i218, align 8, !invariant.load !3, !noalias !123 ; 2 uses
@@ -892,7 +892,7 @@ bb.bf:                                            ; preds = %_RINvNtCsbvkFyIu7lg
 .body.i:                                          ; preds = %bb.bf, %bb.ar
   %eh.lpad-body.i = phi { ptr, i32 } [ %i.bx, %bb.bf ], [ %i.bj, %bb.ar ]
   %i.by = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %.val3.i212 = load ptr, ptr %i.by, align 8, !alias.scope !123, !nonnull !3, !noundef !3
+  %.val3.i212 = load ptr, ptr %i.by, align 16, !alias.scope !123, !nonnull !3, !noundef !3
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std2io5error5ErrorECsj34PGqTgg0L_16deltalake_lakefs(ptr nonnull %.val3.i212) #26
           to label %bb.hq unwind label %bb.bg
 
@@ -964,7 +964,7 @@ bb.bq:                                            ; preds = %bb.a
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.val.i = load ptr, ptr %i.ck, align 8, !alias.scope !119 ; 5 uses
   %i.cl = getelementptr i8, ptr %i.a, i64 16
-  %.val2.i = load ptr, ptr %i.cl, align 8, !alias.scope !119, !nonnull !3, !align !5, !noundef !3 ; 5 uses
+  %.val2.i = load ptr, ptr %i.cl, align 16, !alias.scope !119, !nonnull !3, !align !5, !noundef !3 ; 5 uses
   %i.cm = load ptr, ptr %.val2.i, align 8, !invariant.load !3 ; 2 uses
   %.not.i = icmp eq ptr %i.cm, null
   br i1 %.not.i, label %bb.bs, label %bb.br
@@ -1100,7 +1100,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.bz
   %i.dp = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.val.i174 = load ptr, ptr %i.dp, align 8, !alias.scope !127 ; 5 uses
+  %.val.i174 = load ptr, ptr %i.dp, align 16, !alias.scope !127 ; 5 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.val1.i = load ptr, ptr %i.dq, align 8, !alias.scope !127, !nonnull !3, !align !5, !noundef !3 ; 5 uses
   %i.dr = load ptr, ptr %.val1.i, align 8, !invariant.load !3, !noalias !127 ; 2 uses
@@ -1503,13 +1503,13 @@ bb.hg:                                            ; preds = %bb.e
   %i.jc = landingpad { ptr, i32 }
           cleanup
   %i.jd = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.val5.i = load ptr, ptr %i.jd, align 8, !alias.scope !119, !nonnull !3, !noundef !3
+  %.val5.i = load ptr, ptr %i.jd, align 16, !alias.scope !119, !nonnull !3, !noundef !3
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs2pqxYH9ZEk8_3std9backtrace9BacktraceEECsj34PGqTgg0L_16deltalake_lakefs(ptr nonnull %.val5.i) #26
           to label %bb.hq unwind label %bb.hk, !inline_history !122
 
 bb.hh:                                            ; preds = %bb.e
   %i.je = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %.val4.i = load ptr, ptr %i.je, align 8, !alias.scope !119, !nonnull !3, !noundef !3 ; 4 uses
+  %.val4.i = load ptr, ptr %i.je, align 16, !alias.scope !119, !nonnull !3, !noundef !3 ; 4 uses
   %i.jf = load i64, ptr %.val4.i, align 8, !range !30, !alias.scope !148, !noundef !3
   %switch.i.i.i = icmp samesign ult i64 %i.jf, 2
   br i1 %switch.i.i.i, label %.noexc33, label %bb.hi

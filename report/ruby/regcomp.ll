@@ -201,7 +201,7 @@ bb.bd:                                            ; preds = %bb.ap
 
 bb.be:                                            ; preds = %bb.bd
   %i.gu = getelementptr i8, ptr %.tr, i64 8       ; 2 uses
-  %i.gv = load i32, ptr %i.gu, align 4, !tbaa !7
+  %i.gv = load i32, ptr %i.gu, align 8, !tbaa !7
   %.not.i40.i = icmp eq i32 %i.gv, 0
   br i1 %.not.i40.i, label %bb.bf, label %bitset_is_empty.exit.thread.i
 
@@ -213,7 +213,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bf
   %i.gy = getelementptr i8, ptr %.tr, i64 16
-  %i.gz = load i32, ptr %i.gy, align 4, !tbaa !7
+  %i.gz = load i32, ptr %i.gy, align 8, !tbaa !7
   %.not.2.i.i = icmp eq i32 %i.gz, 0
   br i1 %.not.2.i.i, label %bb.bh, label %bitset_is_empty.exit.thread.i
 
@@ -225,7 +225,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   %i.hc = getelementptr i8, ptr %.tr, i64 24
-  %i.hd = load i32, ptr %i.hc, align 4, !tbaa !7
+  %i.hd = load i32, ptr %i.hc, align 8, !tbaa !7
   %.not.4.i.i = icmp eq i32 %i.hd, 0
   br i1 %.not.4.i.i, label %bb.bj, label %bitset_is_empty.exit.thread.i
 
@@ -237,7 +237,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hg = getelementptr i8, ptr %.tr, i64 32
-  %i.hh = load i32, ptr %i.hg, align 4, !tbaa !7
+  %i.hh = load i32, ptr %i.hg, align 8, !tbaa !7
   %.not.6.i.i = icmp eq i32 %i.hh, 0
   br i1 %.not.6.i.i, label %bitset_is_empty.exit.i, label %bitset_is_empty.exit.thread.i
 
@@ -640,9 +640,9 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.au
   %i.ld = load <2 x i32>, ptr %i.kj, align 8, !tbaa !7
-  %i.le = load <2 x i32>, ptr %i.ki, align 4, !tbaa !7
+  %i.le = load <2 x i32>, ptr %i.ki, align 8, !tbaa !7
   %i.lf = and <2 x i32> %i.le, %i.ld
-  store <2 x i32> %i.lf, ptr %i.ki, align 4, !tbaa !7
+  store <2 x i32> %i.lf, ptr %i.ki, align 8, !tbaa !7
   call fastcc void @alt_merge_opt_exact_info(ptr noundef nonnull %i.t, ptr noundef nonnull readonly %i.kk, ptr noundef nonnull readonly %2)
   call fastcc void @alt_merge_opt_exact_info(ptr noundef nonnull %i.k, ptr noundef nonnull readonly %i.kl, ptr noundef nonnull readonly %2)
   call fastcc void @alt_merge_opt_exact_info(ptr noundef nonnull %i.o, ptr noundef nonnull readonly %i.km, ptr noundef nonnull readonly %2)
@@ -691,11 +691,11 @@ alt_merge_mml.exit.i.i:                           ; preds = %bb.bd, %bb.bc
   br i1 %.not.peel.i.i, label %bb.be, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %alt_merge_mml.exit.i.i
-  store i8 1, ptr %i.kt, align 1, !tbaa !35
+  store i8 1, ptr %i.kt, align 4, !tbaa !35
   br label %bb.bf
 
 bb.be:                                            ; preds = %alt_merge_mml.exit.i.i
-  %.pre.i.i = load i8, ptr %i.kt, align 1, !tbaa !35
+  %.pre.i.i = load i8, ptr %i.kt, align 4, !tbaa !35
   %i.lu = icmp eq i8 %.pre.i.i, 0
   br i1 %i.lu, label %.peel.next.i.i.preheader, label %bb.bf
 
@@ -1098,7 +1098,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.tl = getelementptr i8, ptr %.tr, i64 8       ; 2 uses
   %i.tm = getelementptr i8, ptr %1, i64 244       ; 3 uses
   %i.tn = getelementptr i8, ptr %1, i64 240       ; 4 uses
-  %i.to = load i32, ptr %i.tl, align 4, !tbaa !7
+  %i.to = load i32, ptr %i.tl, align 8, !tbaa !7
   %i.tp = and i32 %i.to, 1
   %.not306.peel = icmp eq i32 %i.tp, 0
   br i1 %.not306.peel, label %.peel.next676.preheader, label %bb.ci
@@ -1107,14 +1107,14 @@ bb.ch:                                            ; preds = %bb.cg
   br label %.peel.next676
 
 bb.ci:                                            ; preds = %.preheader
-  %i.tq = load i8, ptr %i.tm, align 1, !tbaa !35
+  %i.tq = load i8, ptr %i.tm, align 4, !tbaa !35
   %i.tr = icmp eq i8 %i.tq, 0
   br i1 %i.tr, label %map_position_value.exit.i343.peel, label %.peel.next676.preheader
 
 map_position_value.exit.i343.peel:                ; preds = %bb.ci
   %i.ts = getelementptr i8, ptr %2, i64 16
   %i.tt = load ptr, ptr %i.ts, align 8, !tbaa !76
-  store i8 1, ptr %i.tm, align 1, !tbaa !35
+  store i8 1, ptr %i.tm, align 4, !tbaa !35
   %i.tu = getelementptr i8, ptr %i.tt, i64 20
   %i.tv = load i32, ptr %i.tu, align 4, !tbaa !156
   %i.tw = icmp sgt i32 %i.tv, 1
@@ -1225,13 +1225,13 @@ bb.cp:                                            ; preds = %bb.co
   br i1 %.not302.peel.not, label %bb.cq, label %.peel.next.preheader
 
 bb.cq:                                            ; preds = %.preheader386
-  %i.vv = load i8, ptr %i.vp, align 1, !tbaa !35
+  %i.vv = load i8, ptr %i.vp, align 4, !tbaa !35
   %i.vw = icmp eq i8 %i.vv, 0
   br i1 %i.vw, label %map_position_value.exit.i346.peel, label %.peel.next.preheader
 
 map_position_value.exit.i346.peel:                ; preds = %bb.cq
   %i.vx = load ptr, ptr %i.vd, align 8, !tbaa !76
-  store i8 1, ptr %i.vp, align 1, !tbaa !35
+  store i8 1, ptr %i.vp, align 4, !tbaa !35
   %i.vy = getelementptr i8, ptr %i.vx, i64 20
   %i.vz = load i32, ptr %i.vy, align 4, !tbaa !156
   %i.wa = icmp sgt i32 %i.vz, 1
@@ -1388,7 +1388,7 @@ bb.db:                                            ; preds = %tailrecurse
 
 is_left_anchor.exit.i:                            ; preds = %.split, %.split, %.split, %.split
   %i.yf = getelementptr i8, ptr %1, i64 16
-  store i32 %i.yb, ptr %i.yf, align 4, !tbaa !105
+  store i32 %i.yb, ptr %i.yf, align 8, !tbaa !105
   br label %common.ret1057
 
 bb.dc:                                            ; preds = %.split, %.split, %.split, %.split
@@ -1631,10 +1631,10 @@ distance_multiply.exit.thread.sink.split:         ; preds = %bb.ea
   %i.aca = and i32 %i.abz, 4
   %.not289 = icmp eq i32 %i.aca, 0
   %i.acb = getelementptr i8, ptr %1, i64 16       ; 2 uses
-  %i.acc = load i32, ptr %i.acb, align 4, !tbaa !105
+  %i.acc = load i32, ptr %i.acb, align 8, !tbaa !105
   %. = select i1 %.not289, i32 16384, i32 32768
   %i.acd = or i32 %i.acc, %.
-  store i32 %i.acd, ptr %i.acb, align 4, !tbaa !105
+  store i32 %i.acd, ptr %i.acb, align 8, !tbaa !105
   br label %distance_multiply.exit.thread
 
 bb.eb:                                            ; preds = %bb.dw
@@ -2037,7 +2037,7 @@ bb.ey:                                            ; preds = %bb.es
   %i.ahw = load ptr, ptr %i.ahv, align 8, !tbaa !139
   %i.ahx = tail call fastcc i32 @optimize_node_left(ptr noundef %i.ahw, ptr noundef %1, ptr noundef %2) ; 4 uses
   %i.ahy = getelementptr i8, ptr %1, i64 16       ; 2 uses
-  %i.ahz = load i32, ptr %i.ahy, align 4, !tbaa !105 ; 2 uses
+  %i.ahz = load i32, ptr %i.ahy, align 8, !tbaa !105 ; 2 uses
   %i.aia = and i32 %i.ahz, 49152
   %.not.i369 = icmp eq i32 %i.aia, 0
   br i1 %.not.i369, label %is_set_opt_anc_info.exit, label %is_set_opt_anc_info.exit.thread
@@ -2072,7 +2072,7 @@ bb.fa:                                            ; preds = %is_set_opt_anc_info
 
 bb.fb:                                            ; preds = %bb.fa, %bb.ez
   %i.aio = and i32 %i.ahz, -49153
-  store i32 %i.aio, ptr %i.ahy, align 4, !tbaa !105
+  store i32 %i.aio, ptr %i.ahy, align 8, !tbaa !105
   br label %common.ret1057
 
 bb.fc:                                            ; preds = %.split6, %.split6
@@ -2475,10 +2475,10 @@ bb.q:                                             ; preds = %.sink.split, %bb.o
   %i.bn = getelementptr i8, ptr %0, i64 16        ; 2 uses
   %i.bo = getelementptr i8, ptr %1, i64 16
   %i.bp = getelementptr i8, ptr %0, i64 20
-  %i.bq = load <2 x i32>, ptr %i.bo, align 4, !tbaa !7
-  %i.br = load <2 x i32>, ptr %i.bn, align 4, !tbaa !7
+  %i.bq = load <2 x i32>, ptr %i.bo, align 8, !tbaa !7
+  %i.br = load <2 x i32>, ptr %i.bn, align 8, !tbaa !7
   %i.bs = and <2 x i32> %i.br, %i.bq              ; 2 uses
-  store <2 x i32> %i.bs, ptr %i.bn, align 4, !tbaa !7
+  store <2 x i32> %i.bs, ptr %i.bn, align 8, !tbaa !7
   %i.bt = getelementptr i8, ptr %0, i64 24
   %i.bu = load i32, ptr %i.bt, align 8, !tbaa !268
   %.not65 = icmp eq i32 %i.bu, 0
@@ -2881,7 +2881,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ad
   %i.em = getelementptr i8, ptr %0, i64 8
-  %i.en = load i32, ptr %i.em, align 4, !tbaa !7
+  %i.en = load i32, ptr %i.em, align 8, !tbaa !7
   %.not.i.i = icmp eq i32 %i.en, 0
   br i1 %.not.i.i, label %bb.af, label %bitset_is_empty.exit.thread.i
 
@@ -2893,7 +2893,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.eq = getelementptr i8, ptr %0, i64 16
-  %i.er = load i32, ptr %i.eq, align 4, !tbaa !7
+  %i.er = load i32, ptr %i.eq, align 8, !tbaa !7
   %.not.2.i.i = icmp eq i32 %i.er, 0
   br i1 %.not.2.i.i, label %bb.ah, label %bitset_is_empty.exit.thread.i
 
@@ -2905,7 +2905,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.eu = getelementptr i8, ptr %0, i64 24
-  %i.ev = load i32, ptr %i.eu, align 4, !tbaa !7
+  %i.ev = load i32, ptr %i.eu, align 8, !tbaa !7
   %.not.4.i.i = icmp eq i32 %i.ev, 0
   br i1 %.not.4.i.i, label %bb.aj, label %bitset_is_empty.exit.thread.i
 
@@ -2917,7 +2917,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ey = getelementptr i8, ptr %0, i64 32
-  %i.ez = load i32, ptr %i.ey, align 4, !tbaa !7
+  %i.ez = load i32, ptr %i.ey, align 8, !tbaa !7
   %.not.6.i.i = icmp eq i32 %i.ez, 0
   br i1 %.not.6.i.i, label %bitset_is_empty.exit.i, label %bitset_is_empty.exit.thread.i
 

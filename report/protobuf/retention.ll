@@ -201,7 +201,7 @@ _ZN6google8protobuf8compiler12_GLOBAL__N_18IsPrefixEN4absl12lts_202505124SpanIKi
 
 bb.q:                                             ; preds = %.noexc39.i
   %.sroa.2.0.copyload.i.i.i.i.i.i.i = load ptr, ptr %.sroa.2.0..sroa_idx.i.i.i.i.i.i.i, align 8, !alias.scope !87
-  %i.df = load i32, ptr %i.dc, align 4, !tbaa !4, !noalias !87
+  %i.df = load i32, ptr %i.dc, align 8, !tbaa !4, !noalias !87
   store i32 %i.df, ptr %.sroa.2.0.copyload.i.i.i.i.i.i.i, align 4, !tbaa !4
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIiEENS0_13hash_internal4HashIiEESt8equal_toIiESaIiEE6insertIiLi0EEESt4pairINSB_8iteratorEbERKT_.exit.i
 
@@ -604,7 +604,7 @@ bb.bc:                                            ; preds = %_ZNK6google8protobu
   %i.jr = phi ptr [ %i.je, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.thread.i.i.i.i ], [ %i.jn, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit12.i.i.i.i ], [ %i.s, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i.i.i.i ]
   %i.js = phi i32 [ %i.jf, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.thread.i.i.i.i ], [ %i.jm, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit12.i.i.i.i ], [ %i.jc, %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i.i.i.i ] ; 2 uses
   %i.jt = add nsw i32 %i.js, 1
-  store i32 %i.jt, ptr %i.t, align 4, !tbaa !4
+  store i32 %i.jt, ptr %i.t, align 8, !tbaa !4
   %i.ju = sext i32 %i.js to i64
   %i.jv = getelementptr inbounds [8 x i8], ptr %i.jr, i64 %i.ju
   store ptr %i.ia, ptr %i.jv, align 8, !tbaa !41
@@ -1007,7 +1007,7 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiEN
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.thread.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.i.i, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.08.0.i.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.0.0.i.i, i64 16, i1 false), !tbaa.struct !222
   %i.ac = getelementptr inbounds i8, ptr %.sroa.08.0.i.i, i64 -8
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !4
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !4
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i.i, i64 16
   store i32 %i.ad, ptr %i.ae, align 8, !tbaa !49
   br label %bb.c, !llvm.loop !224
@@ -1256,7 +1256,7 @@ _ZNK9__gnu_cxx5__ops14_Iter_less_valclINS_17__normal_iteratorIPSt4pairIN4absl12l
   %i.bz = getelementptr inbounds [24 x i8], ptr %0, i64 %.024.i ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %i.bz, ptr noundef nonnull align 8 dereferenceable(20) %i.bc, i64 16, i1 false), !tbaa.struct !222
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bc, i64 16
-  %i.cb = load i32, ptr %i.ca, align 4, !tbaa !4
+  %i.cb = load i32, ptr %i.ca, align 8, !tbaa !4
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
   store i32 %i.cb, ptr %i.cc, align 8, !tbaa !49
   %i.cd = icmp sgt i64 %.0925.i, %1
@@ -1659,7 +1659,7 @@ _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiEN
 _ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.thread.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairIN4absl12lts_202505124SpanIKiEEiENS_17__normal_iteratorIPS9_St6vectorIS9_SaIS9_EEEEEEbRT_T0_.exit.i, %_ZN4absl12lts_20250512ltIKiEEbNS0_4SpanIT_EES5_.exit.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(20) %.sroa.08.0.i, ptr noundef nonnull align 8 dereferenceable(20) %.sroa.0.0.i, i64 16, i1 false), !tbaa.struct !222
   %i.bj = getelementptr inbounds i8, ptr %.sroa.08.0.i, i64 -8
-  %i.bk = load i32, ptr %i.bj, align 4, !tbaa !4
+  %i.bk = load i32, ptr %i.bj, align 8, !tbaa !4
   %i.bl = getelementptr inbounds nuw i8, ptr %.sroa.08.0.i, i64 16
   store i32 %i.bk, ptr %i.bl, align 8, !tbaa !49
   br label %bb.g, !llvm.loop !224

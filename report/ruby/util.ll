@@ -201,13 +201,13 @@ lo0bits.exit.thread:                              ; preds = %bb.i, %bb.g, %bb.f,
   %i.ae = sub nuw nsw i32 32, %.031.i83
   %i.af = shl i32 %spec.select, %i.ae
   %i.ag = or i32 %i.af, %.07882
-  store i32 %i.ag, ptr %i.f, align 4, !tbaa !7
+  store i32 %i.ag, ptr %i.f, align 8, !tbaa !7
   %i.ah = lshr i32 %spec.select, %.031.i83
   br label %bb.j
 
 lo0bits.exit.thread85:                            ; preds = %bb.d, %lo0bits.exit
   %.07889 = phi i32 [ %.3.i, %lo0bits.exit ], [ %.sroa.0.0.extract.trunc, %bb.d ]
-  store i32 %.07889, ptr %i.f, align 4, !tbaa !7
+  store i32 %.07889, ptr %i.f, align 8, !tbaa !7
   br label %bb.j
 
 bb.j:                                             ; preds = %lo0bits.exit.thread85, %lo0bits.exit.thread
@@ -282,7 +282,7 @@ bb.q:                                             ; preds = %bb.p
 lo0bits.exit64:                                   ; preds = %bb.q, %bb.n, %bb.o, %bb.p, %bb.l
   %.1 = phi i32 [ %spec.select93, %bb.q ], [ %spec.select, %bb.l ], [ %i.an, %bb.n ], [ %i.ao, %bb.o ], [ %.3.i61, %bb.p ]
   %.031.i45 = phi i32 [ %spec.select94, %bb.q ], [ 0, %bb.l ], [ 1, %bb.n ], [ 2, %bb.o ], [ %.329.i60, %bb.p ]
-  store i32 %.1, ptr %i.f, align 4, !tbaa !7
+  store i32 %.1, ptr %i.f, align 8, !tbaa !7
   store i32 1, ptr %i.d, align 4, !tbaa !49
   %i.bd = add nuw nsw i32 %.031.i45, 32
   br label %bb.r

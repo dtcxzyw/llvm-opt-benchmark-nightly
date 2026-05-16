@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.c
 
 _ZN4absl12lts_2025051213base_internalL7IntLog2Emm.exit.i: ; preds = %.lr.ph.i.i, %bb.e
   %.06.lcssa.i.i = phi i32 [ 0, %bb.e ], [ %i.p, %.lr.ph.i.i ]
-  %i.s = load i32, ptr %i.l, align 4, !tbaa !3
+  %i.s = load i32, ptr %i.l, align 8, !tbaa !3
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %_ZN4absl12lts_2025051213base_internalL7IntLog2Emm.exit.i
@@ -215,7 +215,7 @@ bb.f:                                             ; preds = %bb.f, %_ZN4absl12lt
   br i1 %i.w, label %bb.f, label %_ZN4absl12lts_2025051213base_internalL6RandomEPj.exit.i, !llvm.loop !45
 
 _ZN4absl12lts_2025051213base_internalL6RandomEPj.exit.i: ; preds = %bb.f
-  store i32 %i.u, ptr %i.l, align 4, !tbaa !3
+  store i32 %i.u, ptr %i.l, align 8, !tbaa !3
   %i.y = add nsw i32 %.0.i.i, %.06.lcssa.i.i
   %i.z = sext i32 %i.y to i64
   %spec.select12.i = tail call i64 @llvm.umin.i64(i64 %i.n, i64 %i.z)
@@ -618,7 +618,7 @@ bb.q:                                             ; preds = %.invoke207
   br label %bb.au
 
 .critedge.thread:                                 ; preds = %bb.i, %bb.g
-  %i.bn = load atomic i32, ptr %1 monotonic, align 4
+  %i.bn = load atomic i32, ptr %1 monotonic, align 8
   %i.bo = and i32 %i.bn, 2
   %i.bp = atomicrmw xchg ptr %1, i32 %i.bo release, align 4 ; 2 uses
   %.not4.i = icmp ult i32 %i.bp, 8
@@ -685,7 +685,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.x
   %i.cf = call i32 (i32, ...) @prctl(i32 noundef 1398164801, i32 noundef 0, ptr noundef %.065, i64 noundef %i.bu, ptr noundef nonnull @.str.32) #13 ; 0 uses
-  %i.cg = load atomic i32, ptr %1 monotonic, align 4 ; 3 uses
+  %i.cg = load atomic i32, ptr %1 monotonic, align 8 ; 3 uses
   %i.ch = and i32 %i.cg, 1
   %.not.i.i.i = icmp eq i32 %i.ch, 0
   br i1 %.not.i.i.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.i, label %_ZN4absl12lts_2025051213base_internal8SpinLock11TryLockImplEv.exit.thread.i
@@ -1088,7 +1088,7 @@ _ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19A
 
 _ZN4absl12lts_2025051213base_internalL7IntLog2Emm.exit.i: ; preds = %.lr.ph.i.i, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38
   %.06.lcssa.i.i = phi i32 [ 0, %_ZN4absl12lts_2025051213base_internalL18LLA_SkiplistDeleteEPNS1_12_GLOBAL__N_19AllocListES4_PS4_.exit38 ], [ %i.db, %.lr.ph.i.i ]
-  %i.de = load i32, ptr %i.cx, align 4, !tbaa !3
+  %i.de = load i32, ptr %i.cx, align 8, !tbaa !3
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.q, %_ZN4absl12lts_2025051213base_internalL7IntLog2Emm.exit.i
@@ -1102,7 +1102,7 @@ bb.q:                                             ; preds = %bb.q, %_ZN4absl12lt
   br i1 %i.di, label %bb.q, label %_ZN4absl12lts_2025051213base_internalL6RandomEPj.exit.i, !llvm.loop !45
 
 _ZN4absl12lts_2025051213base_internalL6RandomEPj.exit.i: ; preds = %bb.q
-  store i32 %i.dg, ptr %i.cx, align 4, !tbaa !3
+  store i32 %i.dg, ptr %i.cx, align 8, !tbaa !3
   %i.dk = add nsw i32 %.0.i.i, %.06.lcssa.i.i
   %i.dl = sext i32 %i.dk to i64
   %spec.select12.i = tail call i64 @llvm.umin.i64(i64 %i.cz, i64 %i.dl)

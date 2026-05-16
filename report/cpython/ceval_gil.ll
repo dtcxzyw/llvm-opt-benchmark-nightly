@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 bb.h:                                             ; preds = %bb.f
-  %i.s = load atomic i32, ptr %i.k monotonic, align 4
+  %i.s = load atomic i32, ptr %i.k monotonic, align 8
   %.not59 = icmp eq i32 %i.s, 0
   br i1 %.not59, label %bb.q, label %bb.i
 
@@ -245,7 +245,7 @@ bb.p:                                             ; preds = %bb.o, %bb.j
 
 bb.q:                                             ; preds = %bb.f, %bb.p, %bb.i, %bb.h
   %.1 = phi i32 [ 1, %bb.p ], [ %.067, %bb.i ], [ %.067, %bb.h ], [ %.067, %bb.f ]
-  %i.ac = load atomic i32, ptr %i.k monotonic, align 4
+  %i.ac = load atomic i32, ptr %i.k monotonic, align 8
   %.not49 = icmp eq i32 %i.ac, 0
   br i1 %.not49, label %._crit_edge, label %bb.f, !llvm.loop !109
 
@@ -417,7 +417,7 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  store atomic i32 0, ptr %i.c monotonic, align 4
+  store atomic i32 0, ptr %i.c monotonic, align 8
   %.not7.i = icmp eq ptr %1, null
   br i1 %.not7.i, label %bb.h, label %bb.g
 

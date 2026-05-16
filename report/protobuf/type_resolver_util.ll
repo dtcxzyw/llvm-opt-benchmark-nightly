@@ -201,9 +201,9 @@ bb.t:                                             ; preds = %bb.s
 
 _ZN6google8protobuf10FeatureSet9MergeFromERKS1_.exit27.i: ; preds = %bb.t
   %i.bx = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 2 uses
-  %i.by = load i32, ptr %i.bx, align 4, !tbaa !3
+  %i.by = load i32, ptr %i.bx, align 8, !tbaa !3
   %i.bz = or i32 %i.by, 512
-  store i32 %i.bz, ptr %i.bx, align 4, !tbaa !3
+  store i32 %i.bz, ptr %i.bx, align 8, !tbaa !3
   %i.ca = load ptr, ptr %i.br, align 8, !tbaa !17 ; 2 uses
   %i.cb = icmp eq ptr %i.ca, null
   br i1 %i.cb, label %bb.u, label %_ZN6google8protobuf15DescriptorProto15mutable_optionsEv.exit.i
@@ -606,9 +606,9 @@ bb.aw:                                            ; preds = %bb.au
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw, %bb.av, %bb.at
-  %i.jz = load i32, ptr %i.jq, align 4, !tbaa !3  ; 3 uses
+  %i.jz = load i32, ptr %i.jq, align 8, !tbaa !3  ; 3 uses
   %i.ka = or i32 %i.jz, 64
-  store i32 %i.ka, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.ka, ptr %i.jq, align 8, !tbaa !3
   %i.kb = getelementptr inbounds nuw i8, ptr %i.it, i64 4
   %i.kc = load i32, ptr %i.kb, align 4, !tbaa !73
   %i.kd = getelementptr inbounds nuw i8, ptr %i.jj, i64 80
@@ -654,9 +654,9 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit.i.i: ; preds = %bb.az, %bb.ay
   %i.kx = zext i16 %.0.copyload.i1.i.i.i.i to i64
   %i.ky = sub nsw i64 0, %i.kv
   %i.kz = getelementptr inbounds i8, ptr %i.kt, i64 %i.ky
-  %i.la = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.la = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.lb = or i32 %i.la, 8
-  store i32 %i.lb, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.lb, ptr %i.jq, align 8, !tbaa !3
   %i.lc = getelementptr inbounds nuw i8, ptr %i.jj, i64 56
   %i.ld = load i64, ptr %i.km, align 8, !tbaa !40 ; 3 uses
   %i.le = trunc i64 %i.ld to i1
@@ -1059,9 +1059,9 @@ bb.cc:                                            ; preds = %bb.cb, %bb.ca, %._c
   br label %_ZN6google8protobuf4util12_GLOBAL__N_120DefaultValueAsStringB5cxx11ERKNS0_15FieldDescriptorE.exit.i.i
 
 _ZN6google8protobuf4util12_GLOBAL__N_120DefaultValueAsStringB5cxx11ERKNS0_15FieldDescriptorE.exit.i.i: ; preds = %bb.bs, %bb.bq, %bb.bp, %._crit_edge.i.i46.i.i.i, %bb.cc, %bb.bx, %._crit_edge.i.i.i.i.i, %_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumE.exit29.i.i.i, %_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumE.exit24.i.i.i, %_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumE.exit19.i.i.i, %_ZN4absl12lts_202505126StrCatB5cxx11ERKNS0_8AlphaNumE.exit.i.i.i
-  %i.pf = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.pf = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.pg = or i32 %i.pf, 16
-  store i32 %i.pg, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.pg, ptr %i.jq, align 8, !tbaa !3
   %i.ph = getelementptr inbounds nuw i8, ptr %i.jj, i64 64
   %i.pi = load i64, ptr %i.km, align 8, !tbaa !40 ; 3 uses
   %i.pj = trunc i64 %i.pi to i1
@@ -1151,9 +1151,9 @@ bb.ch:                                            ; preds = %bb.cg, %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20, !noalias !106
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20, !noalias !106
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20, !noalias !106
-  %i.qe = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.qe = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.qf = or i32 %i.qe, 4
-  store i32 %i.qf, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.qf, ptr %i.jq, align 8, !tbaa !3
   %i.qg = getelementptr inbounds nuw i8, ptr %i.jj, i64 48
   %i.qh = load i64, ptr %i.km, align 8, !tbaa !40 ; 3 uses
   %i.qi = trunc i64 %i.qh to i1
@@ -1235,9 +1235,9 @@ bb.cl:                                            ; preds = %bb.cg
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #20, !noalias !110
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #20, !noalias !110
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #20, !noalias !110
-  %i.rc = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.rc = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.rd = or i32 %i.rc, 4
-  store i32 %i.rd, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.rd, ptr %i.jq, align 8, !tbaa !3
   %i.re = getelementptr inbounds nuw i8, ptr %i.jj, i64 48
   %i.rf = load i64, ptr %i.km, align 8, !tbaa !40 ; 3 uses
   %i.rg = trunc i64 %i.rf to i1
@@ -1311,9 +1311,9 @@ bb.cq:                                            ; preds = %bb.cp
   %i.sh = add nsw i32 %i.sg, 1
   %i.si = getelementptr inbounds nuw i8, ptr %i.jj, i64 84
   store i32 %i.sh, ptr %i.si, align 4, !tbaa !17
-  %i.sj = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.sj = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.sk = or i32 %i.sj, 256
-  store i32 %i.sk, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.sk, ptr %i.jq, align 8, !tbaa !3
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %bb.cp
@@ -1321,7 +1321,7 @@ bb.cr:                                            ; preds = %bb.cq, %bb.cp
           to label %.noexc54 unwind label %.loopexit.split-lp.loopexit
 
 .noexc54:                                         ; preds = %bb.cr
-  %.pre.i.i = load i32, ptr %i.jq, align 4, !tbaa !3 ; 2 uses
+  %.pre.i.i = load i32, ptr %i.jq, align 8, !tbaa !3 ; 2 uses
   br i1 %i.sl, label %bb.cs, label %_ZN6google8protobuf4util12_GLOBAL__N_122ConvertFieldDescriptorESt17basic_string_viewIcSt11char_traitsIcEERKNS0_15FieldDescriptorERKNS0_20FieldDescriptorProtoEPNS0_5FieldE.exit.i
 
 bb.cs:                                            ; preds = %.noexc54
@@ -1338,7 +1338,7 @@ _ZN6google8protobuf4util12_GLOBAL__N_122ConvertFieldDescriptorESt17basic_string_
   %.not.i.i.i.i22 = icmp eq ptr %i.sq, null
   %i.sr = select i1 %.not.i.i.i.i22, ptr @_ZN6google8protobuf31_FieldOptions_default_instance_E, ptr %i.sq
   %i.ss = or i32 %i.so, 1
-  store i32 %i.ss, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.ss, ptr %i.jq, align 8, !tbaa !3
   %i.st = getelementptr inbounds nuw i8, ptr %i.jj, i64 24
   invoke fastcc void @_ZN6google8protobuf4util12_GLOBAL__N_122ConvertOptionsInternalERKNS0_7MessageERNS0_16RepeatedPtrFieldINS0_6OptionEEE(ptr noundef nonnull align 8 dereferenceable(128) %i.sr, ptr noundef nonnull align 8 dereferenceable(16) %i.st)
           to label %.noexc55 unwind label %.loopexit.split-lp.loopexit
@@ -1741,9 +1741,9 @@ bb.t:                                             ; preds = %bb.s
 
 _ZN6google8protobuf10FeatureSet9MergeFromERKS1_.exit27.i: ; preds = %bb.t
   %i.br = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
-  %i.bs = load i32, ptr %i.br, align 4, !tbaa !3
+  %i.bs = load i32, ptr %i.br, align 8, !tbaa !3
   %i.bt = or i32 %i.bs, 16
-  store i32 %i.bt, ptr %i.br, align 4, !tbaa !3
+  store i32 %i.bt, ptr %i.br, align 8, !tbaa !3
   %i.bu = load ptr, ptr %i.bl, align 8, !tbaa !17 ; 2 uses
   %i.bv = icmp eq ptr %i.bu, null
   br i1 %i.bv, label %bb.u, label %_ZN6google8protobuf19EnumDescriptorProto15mutable_optionsEv.exit.i
@@ -2146,9 +2146,9 @@ bb.c:                                             ; preds = %bb.a
 _ZNK6google8protobuf11MessageLite8GetArenaEv.exit: ; preds = %bb.b, %bb.c
   %.0.i.i = phi ptr [ %i.u, %bb.b ], [ %i.v, %bb.c ]
   tail call void @_ZN6google8protobuf8internal14ArenaStringPtr3SetESt17basic_string_viewIcSt11char_traitsIcEEPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(8) %i.o, i64 %i.i, ptr nonnull %i.k, ptr noundef %.0.i.i)
-  %i.w = load i32, ptr %i.l, align 4, !tbaa !3
+  %i.w = load i32, ptr %i.l, align 8, !tbaa !3
   %i.x = or i32 %i.w, 2
-  store i32 %i.x, ptr %i.l, align 4, !tbaa !3
+  store i32 %i.x, ptr %i.l, align 8, !tbaa !3
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !17   ; 2 uses
   %i.aa = icmp eq ptr %i.z, null
@@ -2234,9 +2234,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i: ; preds = %bb.l, %bb.
   %.0.i.i.i.i.i = phi ptr [ %i.bb, %bb.k ], [ %i.bc, %bb.l ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ai, i64 24
   %i.be = tail call noundef ptr @_ZN6google8protobuf8internal14ArenaStringPtr7MutableB5cxx11EPNS0_5ArenaE(ptr noundef nonnull align 8 dereferenceable(8) %i.bd, ptr noundef %.0.i.i.i.i.i)
-  %i.bf = load i32, ptr %i.at, align 4, !tbaa !3
+  %i.bf = load i32, ptr %i.at, align 8, !tbaa !3
   %i.bg = or i32 %i.bf, 2
-  store i32 %i.bg, ptr %i.at, align 4, !tbaa !3
+  store i32 %i.bg, ptr %i.at, align 8, !tbaa !3
   %i.bh = load i64, ptr %i.aw, align 8, !tbaa !40 ; 3 uses
   %i.bi = trunc i64 %i.bh to i1
   br i1 %i.bi, label %bb.m, label %bb.n, !prof !42
@@ -2308,9 +2308,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i119: ; preds = %bb.t, %
           to label %.noexc unwind label %bb.w
 
 .noexc:                                           ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i119
-  %i.cl = load i32, ptr %i.bz, align 4, !tbaa !3
+  %i.cl = load i32, ptr %i.bz, align 8, !tbaa !3
   %i.cm = or i32 %i.cl, 2
-  store i32 %i.cm, ptr %i.bz, align 4, !tbaa !3
+  store i32 %i.cm, ptr %i.bz, align 8, !tbaa !3
   %i.cn = load i64, ptr %i.cc, align 8, !tbaa !40 ; 3 uses
   %i.co = trunc i64 %i.cn to i1
   br i1 %i.co, label %bb.u, label %bb.v, !prof !42
@@ -2397,9 +2397,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i125: ; preds = %bb.ac, 
           to label %.noexc129 unwind label %bb.af
 
 .noexc129:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i125
-  %i.ds = load i32, ptr %i.dg, align 4, !tbaa !3
+  %i.ds = load i32, ptr %i.dg, align 8, !tbaa !3
   %i.dt = or i32 %i.ds, 2
-  store i32 %i.dt, ptr %i.dg, align 4, !tbaa !3
+  store i32 %i.dt, ptr %i.dg, align 8, !tbaa !3
   %i.du = load i64, ptr %i.dj, align 8, !tbaa !40 ; 3 uses
   %i.dv = trunc i64 %i.du to i1
   br i1 %i.dv, label %bb.ad, label %bb.ae, !prof !42
@@ -2486,9 +2486,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i133: ; preds = %bb.al, 
           to label %.noexc137 unwind label %bb.ao
 
 .noexc137:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i133
-  %i.ez = load i32, ptr %i.en, align 4, !tbaa !3
+  %i.ez = load i32, ptr %i.en, align 8, !tbaa !3
   %i.fa = or i32 %i.ez, 2
-  store i32 %i.fa, ptr %i.en, align 4, !tbaa !3
+  store i32 %i.fa, ptr %i.en, align 8, !tbaa !3
   %i.fb = load i64, ptr %i.eq, align 8, !tbaa !40 ; 3 uses
   %i.fc = trunc i64 %i.fb to i1
   br i1 %i.fc, label %bb.am, label %bb.an, !prof !42
@@ -2575,9 +2575,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i141: ; preds = %bb.au, 
           to label %.noexc145 unwind label %bb.ax
 
 .noexc145:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i141
-  %i.gg = load i32, ptr %i.fu, align 4, !tbaa !3
+  %i.gg = load i32, ptr %i.fu, align 8, !tbaa !3
   %i.gh = or i32 %i.gg, 2
-  store i32 %i.gh, ptr %i.fu, align 4, !tbaa !3
+  store i32 %i.gh, ptr %i.fu, align 8, !tbaa !3
   %i.gi = load i64, ptr %i.fx, align 8, !tbaa !40 ; 3 uses
   %i.gj = trunc i64 %i.gi to i1
   br i1 %i.gj, label %bb.av, label %bb.aw, !prof !42
@@ -2664,9 +2664,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i149: ; preds = %bb.bd, 
           to label %.noexc153 unwind label %bb.bg
 
 .noexc153:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i149
-  %i.hn = load i32, ptr %i.hb, align 4, !tbaa !3
+  %i.hn = load i32, ptr %i.hb, align 8, !tbaa !3
   %i.ho = or i32 %i.hn, 2
-  store i32 %i.ho, ptr %i.hb, align 4, !tbaa !3
+  store i32 %i.ho, ptr %i.hb, align 8, !tbaa !3
   %i.hp = load i64, ptr %i.he, align 8, !tbaa !40 ; 3 uses
   %i.hq = trunc i64 %i.hp to i1
   br i1 %i.hq, label %bb.be, label %bb.bf, !prof !42
@@ -2753,9 +2753,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i157: ; preds = %bb.bm, 
           to label %.noexc161 unwind label %bb.bp
 
 .noexc161:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i157
-  %i.iu = load i32, ptr %i.ii, align 4, !tbaa !3
+  %i.iu = load i32, ptr %i.ii, align 8, !tbaa !3
   %i.iv = or i32 %i.iu, 2
-  store i32 %i.iv, ptr %i.ii, align 4, !tbaa !3
+  store i32 %i.iv, ptr %i.ii, align 8, !tbaa !3
   %i.iw = load i64, ptr %i.il, align 8, !tbaa !40 ; 3 uses
   %i.ix = trunc i64 %i.iw to i1
   br i1 %i.ix, label %bb.bn, label %bb.bo, !prof !42
@@ -2843,9 +2843,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i165: ; preds = %bb.bv, 
           to label %.noexc169 unwind label %bb.by
 
 .noexc169:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i165
-  %i.kc = load i32, ptr %i.jq, align 4, !tbaa !3
+  %i.kc = load i32, ptr %i.jq, align 8, !tbaa !3
   %i.kd = or i32 %i.kc, 2
-  store i32 %i.kd, ptr %i.jq, align 4, !tbaa !3
+  store i32 %i.kd, ptr %i.jq, align 8, !tbaa !3
   %i.ke = load i64, ptr %i.jt, align 8, !tbaa !40 ; 3 uses
   %i.kf = trunc i64 %i.ke to i1
   br i1 %i.kf, label %bb.bw, label %bb.bx, !prof !42
@@ -3010,9 +3010,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i176: ; preds = %bb.cl, 
           to label %.noexc180 unwind label %bb.cq
 
 .noexc180:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i176
-  %i.md = load i32, ptr %i.lr, align 4, !tbaa !3
+  %i.md = load i32, ptr %i.lr, align 8, !tbaa !3
   %i.me = or i32 %i.md, 2
-  store i32 %i.me, ptr %i.lr, align 4, !tbaa !3
+  store i32 %i.me, ptr %i.lr, align 8, !tbaa !3
   %i.mf = load i64, ptr %i.lu, align 8, !tbaa !40 ; 3 uses
   %i.mg = trunc i64 %i.mf to i1
   br i1 %i.mg, label %bb.cm, label %bb.cn, !prof !42
@@ -3193,9 +3193,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i196: ; preds = %bb.cz, 
           to label %.noexc200 unwind label %bb.de
 
 .noexc200:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i196
-  %i.oj = load i32, ptr %i.nx, align 4, !tbaa !3
+  %i.oj = load i32, ptr %i.nx, align 8, !tbaa !3
   %i.ok = or i32 %i.oj, 2
-  store i32 %i.ok, ptr %i.nx, align 4, !tbaa !3
+  store i32 %i.ok, ptr %i.nx, align 8, !tbaa !3
   %i.ol = load i64, ptr %i.oa, align 8, !tbaa !40 ; 3 uses
   %i.om = trunc i64 %i.ol to i1
   br i1 %i.om, label %bb.da, label %bb.db, !prof !42
@@ -3354,9 +3354,9 @@ _ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i216: ; preds = %bb.dm, 
           to label %.noexc220 unwind label %bb.dp
 
 .noexc220:                                        ; preds = %_ZN6google8protobuf3Any16mutable_type_urlB5cxx11Ev.exit.i216
-  %i.qm = load i32, ptr %i.qa, align 4, !tbaa !3
+  %i.qm = load i32, ptr %i.qa, align 8, !tbaa !3
   %i.qn = or i32 %i.qm, 2
-  store i32 %i.qn, ptr %i.qa, align 4, !tbaa !3
+  store i32 %i.qn, ptr %i.qa, align 8, !tbaa !3
   %i.qo = load i64, ptr %i.qd, align 8, !tbaa !40 ; 3 uses
   %i.qp = trunc i64 %i.qo to i1
   br i1 %i.qp, label %bb.dn, label %bb.do, !prof !42

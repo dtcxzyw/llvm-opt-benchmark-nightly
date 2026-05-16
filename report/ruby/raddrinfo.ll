@@ -201,7 +201,7 @@ bb.ac:                                            ; preds = %.lr.ph211.epil.preh
 
 ._crit_edge.thread:                               ; preds = %.thread232, %._crit_edge
   %.0.lcssa237 = phi ptr [ %i.bc, %._crit_edge ], [ %i.f, %.thread232 ]
-  %i.ca = load i8, ptr %i.f, align 1, !tbaa !46
+  %i.ca = load i8, ptr %i.f, align 2, !tbaa !46
   %.not176 = icmp eq i8 %i.ca, 47
   br i1 %.not176, label %bb.ae, label %bb.ad
 
@@ -268,7 +268,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj
 bb.al:                                            ; preds = %bb.ak
   %i.da = call i64 @rb_str_cat_cstr(i64 noundef %2, ptr noundef nonnull @.str.32) #17 ; 0 uses
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.dc = load i16, ptr %i.db, align 4, !tbaa !106
+  %i.dc = load i16, ptr %i.db, align 8, !tbaa !106
   %i.dd = zext i16 %i.dc to i32
   %i.de = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %2, ptr noundef nonnull @.str.36, i32 noundef %i.dd) #17 ; 0 uses
   %.not205 = icmp eq i32 %1, 10
@@ -353,7 +353,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %wide.trip.count = zext i32 %spec.select to i64
   %i.ei = call i64 @rb_str_cat_cstr(i64 noundef %2, ptr noundef nonnull @.str.45) #17 ; 0 uses
-  %i.ej = load i8, ptr %i.eh, align 1, !tbaa !46
+  %i.ej = load i8, ptr %i.eh, align 4, !tbaa !46
   %i.ek = zext i8 %i.ej to i32
   %i.el = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %2, ptr noundef nonnull @.str.47, i32 noundef %i.ek) #17 ; 0 uses
   %exitcond.peel.not = icmp eq i32 %spec.select, 1
@@ -756,7 +756,7 @@ bb.d:                                             ; preds = %inspect_sockaddr.ex
 
 ai_get_afamily.exit:                              ; preds = %bb.d
   %i.r = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.s = load i16, ptr %i.r, align 2, !tbaa !77
+  %i.s = load i16, ptr %i.r, align 8, !tbaa !77
   %i.t = zext i16 %i.s to i32
   %i.u = icmp eq i32 %i.n, %i.t
   br i1 %i.u, label %bb.g, label %.critedge
@@ -1159,7 +1159,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 bb.c:                                             ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %i.h = zext i16 %i.g to i64
   %i.i = shl nuw nsw i64 %i.h, 1
   %i.j = or disjoint i64 %i.i, 1
@@ -1271,7 +1271,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr = freeze i16 %i.g
   %i.h = icmp eq i16 %.fr, 2
   %spec.select = select i1 %i.h, i64 20, i64 0
@@ -1302,7 +1302,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr = freeze i16 %i.g
   %i.h = icmp eq i16 %.fr, 10
   %spec.select = select i1 %i.h, i64 20, i64 0
@@ -1333,7 +1333,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr = freeze i16 %i.g
   %i.h = icmp eq i16 %.fr, 1
   %spec.select = select i1 %i.h, i64 20, i64 0
@@ -1364,7 +1364,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 bb.c:                                             ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %i.h = and i16 %i.g, -9
   %i.i = icmp eq i16 %i.h, 2
   %i.j = select i1 %i.i, i64 20, i64 0
@@ -1402,7 +1402,7 @@ ai_get_afamily.exit.thread:                       ; preds = %get_addrinfo.exit
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.i = load i16, ptr %i.h, align 2, !tbaa !77
+  %i.i = load i16, ptr %i.h, align 4, !tbaa !77
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.j = and i16 %i.i, -9
@@ -1455,7 +1455,7 @@ ai_get_afamily.exit.thread:                       ; preds = %get_addrinfo.exit
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %i.h = load i16, ptr %i.g, align 2, !tbaa !77
+  %i.h = load i16, ptr %i.g, align 4, !tbaa !77
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   %i.i = and i16 %i.h, -9
   %or.cond = icmp eq i16 %i.i, 2
@@ -1494,7 +1494,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77   ; 2 uses
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77   ; 2 uses
   %i.h = and i16 %i.g, -9
   %or.cond = icmp eq i16 %i.h, 2
   br i1 %or.cond, label %bb.c, label %ai_get_afamily.exit.thread
@@ -1558,7 +1558,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.not.i = icmp eq i16 %i.g, 2
   br i1 %.not.i, label %bb.c, label %extract_in_addr.exit.thread
 
@@ -1602,7 +1602,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.not.i = icmp eq i16 %i.g, 2
   br i1 %.not.i, label %extract_in_addr.exit, label %bb.c
 
@@ -1639,7 +1639,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.not.i = icmp eq i16 %i.g, 2
   br i1 %.not.i, label %extract_in_addr.exit, label %bb.c
 
@@ -1676,7 +1676,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %.critedge
@@ -1733,7 +1733,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %.critedge
@@ -1790,14 +1790,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -1829,7 +1829,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
@@ -1869,7 +1869,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
@@ -1909,7 +1909,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
@@ -1949,7 +1949,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %.critedge
@@ -2000,7 +2000,7 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %.critedge
@@ -2058,14 +2058,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -2104,14 +2104,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -2150,14 +2150,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -2196,14 +2196,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -2242,14 +2242,14 @@ get_addrinfo.exit.i:                              ; preds = %bb.a
 
 ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.fr.i = freeze i16 %i.g
   %.not.i = icmp eq i16 %.fr.i, 10
   br i1 %.not.i, label %extract_in6_addr.exit, label %extract_in6_addr.exit.thread
 
 extract_in6_addr.exit:                            ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.i = load i8, ptr %i.h, align 1, !tbaa !46
+  %i.i = load i8, ptr %i.h, align 4, !tbaa !46
   %i.j = icmp eq i8 %i.i, -1
   br i1 %i.j, label %bb.c, label %extract_in6_addr.exit.thread
 
@@ -2288,7 +2288,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.not = icmp eq i16 %i.g, 10
   br i1 %.not, label %bb.c, label %.critedge24
 
@@ -2312,7 +2312,7 @@ bb.e:                                             ; preds = %bb.d
 
 ._crit_edge:                                      ; preds = %bb.e
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 52
-  %.pre = load i32, ptr %.phi.trans.insert, align 1
+  %.pre = load i32, ptr %.phi.trans.insert, align 4
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
@@ -2405,7 +2405,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 ai_get_afamily.exit:                              ; preds = %get_addrinfo.exit
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 2 uses
-  %i.g = load i16, ptr %i.f, align 2, !tbaa !77
+  %i.g = load i16, ptr %i.f, align 4, !tbaa !77
   %.not = icmp eq i16 %i.g, 1
   br i1 %.not, label %bb.c, label %ai_get_afamily.exit.thread
 
@@ -2554,7 +2554,7 @@ get_addrinfo.exit:                                ; preds = %bb.a
 
 bb.c:                                             ; preds = %get_addrinfo.exit
   %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  %i.i = load i16, ptr %i.h, align 2, !tbaa !77
+  %i.i = load i16, ptr %i.h, align 4, !tbaa !77
   %i.j = zext i16 %i.i to i32
   br label %ai_get_afamily.exit
 

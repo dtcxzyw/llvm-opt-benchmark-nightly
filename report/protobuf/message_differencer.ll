@@ -201,7 +201,7 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unknow
   br i1 %i.bm, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6google8protobuf12UnknownFieldEESt6vectorIS8_SaIS8_EEEENS0_5__ops14_Val_comp_iterINS4_4util12_GLOBAL__N_120UnknownFieldOrderingEEEEvT_T0_.exit.i
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i, %bb.e
-  %i.bn = load i32, ptr %.sroa.0.0.i.i, align 4, !tbaa !3
+  %i.bn = load i32, ptr %.sroa.0.0.i.i, align 8, !tbaa !3
   store i32 %i.bn, ptr %.sroa.05.0.i.i, align 8, !tbaa !431
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i, i64 8
   store ptr %.val2.i.i.i, ptr %i.bo, align 8, !tbaa !419
@@ -338,7 +338,7 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unknow
   br i1 %i.aa, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6google8protobuf12UnknownFieldEESt6vectorIS8_SaIS8_EEEENS0_5__ops14_Val_comp_iterINS4_4util12_GLOBAL__N_120UnknownFieldOrderingEEEEvT_T0_.exit.i.i
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.i, %bb.c
-  %i.ab = load i32, ptr %.sroa.0.0.i.i.i, align 4, !tbaa !3
+  %i.ab = load i32, ptr %.sroa.0.0.i.i.i, align 8, !tbaa !3
   store i32 %i.ab, ptr %.sroa.05.0.i.i.i, align 8, !tbaa !431
   %i.ac = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i, i64 8
   store ptr %.val2.i.i.i.i, ptr %i.ac, align 8, !tbaa !419
@@ -408,7 +408,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6goo
   br label %bb.i
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.1.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.1.i, %bb.g
-  %i.az = load i32, ptr %.sroa.0.0.i.i.1.i, align 4, !tbaa !3
+  %i.az = load i32, ptr %.sroa.0.0.i.i.1.i, align 8, !tbaa !3
   store i32 %i.az, ptr %.sroa.05.0.i.i.1.i, align 8, !tbaa !431
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.1.i, i64 8
   store ptr %.val2.i.i.i.1.i, ptr %i.ba, align 8, !tbaa !419
@@ -489,7 +489,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6goo
   br label %bb.m
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.2.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.2.i, %bb.k
-  %i.cf = load i32, ptr %.sroa.0.0.i.i.2.i, align 4, !tbaa !3
+  %i.cf = load i32, ptr %.sroa.0.0.i.i.2.i, align 8, !tbaa !3
   store i32 %i.cf, ptr %.sroa.05.0.i.i.2.i, align 8, !tbaa !431
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.2.i, i64 8
   store ptr %.val2.i.i.i.2.i, ptr %i.cg, align 8, !tbaa !419
@@ -578,7 +578,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6goo
   br label %bb.q
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.3.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.3.i, %bb.o
-  %i.dr = load i32, ptr %.sroa.0.0.i.i.3.i, align 4, !tbaa !3
+  %i.dr = load i32, ptr %.sroa.0.0.i.i.3.i, align 8, !tbaa !3
   store i32 %i.dr, ptr %.sroa.05.0.i.i.3.i, align 8, !tbaa !431
   %i.ds = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.3.i, i64 8
   store ptr %.val2.i.i.i.3.i, ptr %i.ds, align 8, !tbaa !419
@@ -675,7 +675,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6goo
   br label %bb.u
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.4.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.4.i, %bb.s
-  %i.fj = load i32, ptr %.sroa.0.0.i.i.4.i, align 4, !tbaa !3
+  %i.fj = load i32, ptr %.sroa.0.0.i.i.4.i, align 8, !tbaa !3
   store i32 %i.fj, ptr %.sroa.05.0.i.i.4.i, align 8, !tbaa !431
   %i.fk = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.4.i, i64 8
   store ptr %.val2.i.i.i.4.i, ptr %i.fk, align 8, !tbaa !419
@@ -778,7 +778,7 @@ _ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6goo
   br label %_ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6google8protobuf12UnknownFieldEESt6vectorIS8_SaIS8_EEEENS0_5__ops15_Iter_comp_iterINS4_4util12_GLOBAL__N_120UnknownFieldOrderingEEEEvT_SK_T0_.exit.i
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i.5.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i.5.i, %bb.w
-  %i.hh = load i32, ptr %.sroa.0.0.i.i.5.i, align 4, !tbaa !3
+  %i.hh = load i32, ptr %.sroa.0.0.i.i.5.i, align 8, !tbaa !3
   store i32 %i.hh, ptr %.sroa.05.0.i.i.5.i, align 8, !tbaa !431
   %i.hi = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.5.i, i64 8
   store ptr %.val2.i.i.i.5.i, ptr %i.hi, align 8, !tbaa !419
@@ -990,7 +990,7 @@ _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unknow
   br i1 %i.lb, label %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i28.i, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiPKN6google8protobuf12UnknownFieldEESt6vectorIS8_SaIS8_EEEENS0_5__ops14_Val_comp_iterINS4_4util12_GLOBAL__N_120UnknownFieldOrderingEEEEvT_T0_.exit.i25.i
 
 _ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.thread.i.i28.i: ; preds = %_ZN9__gnu_cxx5__ops14_Val_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclISt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorIPSD_St6vectorISD_SaISD_EEEEEEbRT_T0_.exit.i.i24.i, %bb.aa
-  %i.lc = load i32, ptr %.sroa.0.0.i.i22.i, align 4, !tbaa !3
+  %i.lc = load i32, ptr %.sroa.0.0.i.i22.i, align 8, !tbaa !3
   store i32 %i.lc, ptr %.sroa.05.0.i.i21.i, align 8, !tbaa !431
   %i.ld = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i21.i, i64 8
   store ptr %.val2.i.i.i23.i, ptr %i.ld, align 8, !tbaa !419
@@ -1060,7 +1060,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.lu, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread23.i.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread.i.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i.i24, %.lr.ph.i.i21
-  %i.lv = load i32, ptr %.sroa.015.027.i.i, align 4, !tbaa !3
+  %i.lv = load i32, ptr %.sroa.015.027.i.i, align 8, !tbaa !3
   store i32 %i.lv, ptr %.029.i.i, align 8, !tbaa !431
   %i.lw = getelementptr inbounds nuw i8, ptr %.029.i.i, i64 8
   store ptr %.val.i.i.i22, ptr %i.lw, align 8, !tbaa !419
@@ -1068,7 +1068,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br label %bb.ag
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread23.i.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i.i24, %bb.af
-  %i.ly = load i32, ptr %.sroa.019.028.i.i, align 4, !tbaa !3
+  %i.ly = load i32, ptr %.sroa.019.028.i.i, align 8, !tbaa !3
   store i32 %i.ly, ptr %.029.i.i, align 8, !tbaa !431
   %i.lz = getelementptr inbounds nuw i8, ptr %.029.i.i, i64 8
   store ptr %.val1.i.i.i23, ptr %i.lz, align 8, !tbaa !419
@@ -1291,7 +1291,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.pt, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread.i43.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread23.i39.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread.i43.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i38.i, %.lr.ph.i32.i
-  %i.pu = load i32, ptr %.sroa.015.027.i35.i, align 4, !tbaa !3
+  %i.pu = load i32, ptr %.sroa.015.027.i35.i, align 8, !tbaa !3
   store i32 %i.pu, ptr %.029.i33.i, align 8, !tbaa !431
   %i.pv = getelementptr inbounds nuw i8, ptr %.029.i33.i, i64 8
   store ptr %.val.i.i36.i, ptr %i.pv, align 8, !tbaa !419
@@ -1299,7 +1299,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br label %bb.ai
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread23.i39.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.i38.i, %bb.ah
-  %i.px = load i32, ptr %.sroa.019.028.i34.i, align 4, !tbaa !3
+  %i.px = load i32, ptr %.sroa.019.028.i34.i, align 8, !tbaa !3
   store i32 %i.px, ptr %.029.i33.i, align 8, !tbaa !431
   %i.py = getelementptr inbounds nuw i8, ptr %.029.i33.i, i64 8
   store ptr %.val1.i.i37.i, ptr %i.py, align 8, !tbaa !419
@@ -1519,7 +1519,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.tp, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread.i.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread27.i.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread.i.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.i.i, %.lr.ph.i.i28
-  %i.tq = load i32, ptr %.01632.i.i, align 4, !tbaa !3
+  %i.tq = load i32, ptr %.01632.i.i, align 8, !tbaa !3
   store i32 %i.tq, ptr %.sroa.0.030.i.i, align 8, !tbaa !431
   %i.tr = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.i, i64 8
   store ptr %.016.val.i.i, ptr %i.tr, align 8, !tbaa !419
@@ -1527,7 +1527,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br label %bb.al
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread27.i.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.i.i, %bb.ak
-  %i.tt = load i32, ptr %.033.i.i, align 4, !tbaa !3
+  %i.tt = load i32, ptr %.033.i.i, align 8, !tbaa !3
   store i32 %i.tt, ptr %.sroa.0.030.i.i, align 8, !tbaa !431
   %i.tu = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i.i, i64 8
   store ptr %.0.val.i.i, ptr %i.tu, align 8, !tbaa !419
@@ -1761,7 +1761,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.xx, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread.i51.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread27.i48.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread.i51.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.i47.i, %.lr.ph.i41.i
-  %i.xy = load i32, ptr %.01632.i43.i, align 4, !tbaa !3
+  %i.xy = load i32, ptr %.01632.i43.i, align 8, !tbaa !3
   store i32 %i.xy, ptr %.sroa.0.030.i44.i, align 8, !tbaa !431
   %i.xz = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i44.i, i64 8
   store ptr %.016.val.i45.i, ptr %i.xz, align 8, !tbaa !419
@@ -1769,7 +1769,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br label %bb.an
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.thread27.i48.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEESE_EEbT_T0_.exit.i47.i, %bb.am
-  %i.yb = load i32, ptr %.033.i42.i, align 4, !tbaa !3
+  %i.yb = load i32, ptr %.033.i42.i, align 8, !tbaa !3
   store i32 %i.yb, ptr %.sroa.0.030.i44.i, align 8, !tbaa !431
   %i.yc = getelementptr inbounds nuw i8, ptr %.sroa.0.030.i44.i, i64 8
   store ptr %.0.val.i46.i, ptr %i.yc, align 8, !tbaa !419
@@ -2076,7 +2076,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.ax, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.thread.i, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.thread20.i
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.thread.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.i, %bb.c
-  %i.ay = load i32, ptr %.sroa.016.027.i, align 4, !tbaa !3
+  %i.ay = load i32, ptr %.sroa.016.027.i, align 8, !tbaa !3
   store i32 %i.ay, ptr %.sroa.0.028.i, align 8, !tbaa !431
   %i.az = getelementptr inbounds nuw i8, ptr %.sroa.0.028.i, i64 8
   store ptr %.val.i.i, ptr %i.az, align 8, !tbaa !419
@@ -2084,7 +2084,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br label %bb.e
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.thread20.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESF_EEbT_T0_.exit.i, %bb.d
-  %i.bb = load i32, ptr %.030.i, align 4, !tbaa !3
+  %i.bb = load i32, ptr %.030.i, align 8, !tbaa !3
   store i32 %i.bb, ptr %.sroa.0.028.i, align 8, !tbaa !431
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.0.028.i, i64 8
   store ptr %.0.val.i, ptr %i.bc, align 8, !tbaa !419
@@ -2379,7 +2379,7 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorISE_St6vectorISD_SaISD_EEEEEEbT_T0_.exit.thread.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorISE_St6vectorISD_SaISD_EEEEEEbT_T0_.exit.i, %bb.j
   %i.gg = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -16 ; 4 uses
-  %i.gh = load i32, ptr %.sroa.027.0.i.ph, align 4, !tbaa !3
+  %i.gh = load i32, ptr %.sroa.027.0.i.ph, align 8, !tbaa !3
   store i32 %i.gh, ptr %i.gg, align 8, !tbaa !431
   %i.gi = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -8
   store ptr %.val2.i.i, ptr %i.gi, align 8, !tbaa !419
@@ -2467,7 +2467,7 @@ bb.l:                                             ; preds = %_ZN9__gnu_cxx5__ops
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorISE_St6vectorISD_SaISD_EEEEEEbT_T0_.exit.thread35.i: ; preds = %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclIPSt4pairIiPKNS3_12UnknownFieldEENS_17__normal_iteratorISE_St6vectorISD_SaISD_EEEEEEbT_T0_.exit.i, %bb.k
   %i.hy = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -16 ; 2 uses
-  %i.hz = load i32, ptr %.0.i, align 4, !tbaa !3
+  %i.hz = load i32, ptr %.0.i, align 8, !tbaa !3
   store i32 %i.hz, ptr %i.hy, align 8, !tbaa !431
   %i.ia = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -8
   store ptr %.0.val.i29, ptr %i.ia, align 8, !tbaa !419
@@ -2526,10 +2526,10 @@ _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120Unkno
   br i1 %i.p, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread, label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread76
 
 _ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread: ; preds = %bb.c, %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit
-  %i.q = load i32, ptr %.tr87, align 4, !tbaa !3
-  %i.r = load i32, ptr %.tr8088, align 4, !tbaa !3
-  store i32 %i.r, ptr %.tr87, align 4, !tbaa !3
-  store i32 %i.q, ptr %.tr8088, align 4, !tbaa !3
+  %i.q = load i32, ptr %.tr87, align 8, !tbaa !3
+  %i.r = load i32, ptr %.tr8088, align 8, !tbaa !3
+  store i32 %i.r, ptr %.tr87, align 8, !tbaa !3
+  store i32 %i.q, ptr %.tr8088, align 8, !tbaa !3
   store ptr %.val.i, ptr %i.g, align 8, !tbaa !660
   store ptr %.val1.i, ptr %i.f, align 8, !tbaa !660
   br label %_ZN9__gnu_cxx5__ops15_Iter_comp_iterIN6google8protobuf4util12_GLOBAL__N_120UnknownFieldOrderingEEclINS_17__normal_iteratorIPSt4pairIiPKNS3_12UnknownFieldEESt6vectorISE_SaISE_EEEESJ_EEbT_T0_.exit.thread76

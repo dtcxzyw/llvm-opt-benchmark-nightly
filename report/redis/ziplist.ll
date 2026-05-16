@@ -201,7 +201,7 @@ ziplistResize.exit:                               ; preds = %bb.s
 
 bb.u:                                             ; preds = %ziplistResize.exit
   %i.cb = sub i16 %i.ca, %.060.lcssa114
-  store i16 %i.cb, ptr %i.bz, align 2, !tbaa !16
+  store i16 %i.cb, ptr %i.bz, align 4, !tbaa !16
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %ziplistResize.exit
@@ -604,7 +604,7 @@ zipRawEntryLengthSafe.exit:                       ; preds = %bb.d
 ._crit_edge.thread:                               ; preds = %bb.c, %._crit_edge
   %.0.lcssa21 = phi i32 [ %i.p, %._crit_edge ], [ 0, %bb.c ] ; 2 uses
   %i.s = trunc nuw i32 %.0.lcssa21 to i16
-  store i16 %i.s, ptr %i.a, align 2, !tbaa !16
+  store i16 %i.s, ptr %i.a, align 4, !tbaa !16
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %._crit_edge.thread, %bb.b
@@ -830,7 +830,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.l = load i16, ptr %i.k, align 2, !tbaa !16   ; 2 uses
+  %i.l = load i16, ptr %i.k, align 4, !tbaa !16   ; 2 uses
   %i.m = zext i16 %i.l to i32                     ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 3 uses
   %i.o = load i8, ptr %i.n, align 2, !tbaa !13
@@ -1075,7 +1075,7 @@ zipRawEntryLengthSafe.exit.i:                     ; preds = %bb.d
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.i, %bb.c
   %.0.lcssa21.i = phi i32 [ %i.y, %._crit_edge.i ], [ 0, %bb.c ] ; 2 uses
   %i.ab = trunc nuw i32 %.0.lcssa21.i to i16
-  store i16 %i.ab, ptr %i.j, align 2, !tbaa !16
+  store i16 %i.ab, ptr %i.j, align 4, !tbaa !16
   br label %ziplistLen.exit
 
 ziplistLen.exit:                                  ; preds = %bb.b, %._crit_edge.i, %._crit_edge.thread.i
@@ -1325,7 +1325,7 @@ zipRawEntryLengthSafe.exit.i:                     ; preds = %bb.d
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.i, %bb.c
   %.0.lcssa21.i = phi i32 [ %i.s, %._crit_edge.i ], [ 0, %bb.c ] ; 2 uses
   %i.v = trunc nuw i32 %.0.lcssa21.i to i16
-  store i16 %i.v, ptr %i.d, align 2, !tbaa !16
+  store i16 %i.v, ptr %i.d, align 4, !tbaa !16
   br label %ziplistLen.exit
 
 ziplistLen.exit:                                  ; preds = %bb.b, %._crit_edge.i, %._crit_edge.thread.i

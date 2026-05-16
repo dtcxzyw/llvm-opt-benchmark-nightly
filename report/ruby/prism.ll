@@ -201,9 +201,9 @@ bb.p:                                             ; preds = %.loopexit263
 
 bb.q:                                             ; preds = %bb.p, %.loopexit263
   %i.bz = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %i.ca = load i32, ptr %i.bz, align 4, !tbaa !7
+  %i.ca = load i32, ptr %i.bz, align 8, !tbaa !7
   %i.cb = shl i32 %i.ca, 1
-  store i32 %i.cb, ptr %i.bz, align 4, !tbaa !7
+  store i32 %i.cb, ptr %i.bz, align 8, !tbaa !7
   %i.cc = icmp ugt i64 %2, 2
   br i1 %i.cc, label %bb.r, label %bb.x
 
@@ -606,9 +606,9 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 320        ; 6 uses
   %i.e = tail call fastcc ptr @pm_array_node_create(ptr noundef nonnull %0, ptr noundef %i.d) ; 7 uses
   %i.f = getelementptr i8, ptr %0, i64 24         ; 4 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !7
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !7
   %i.h = shl i32 %i.g, 1
-  store i32 %i.h, ptr %i.f, align 4, !tbaa !7
+  store i32 %i.h, ptr %i.f, align 8, !tbaa !7
   %i.i = getelementptr i8, ptr %i.e, i64 24       ; 3 uses
   %i.j = getelementptr i8, ptr %0, i64 336        ; 5 uses
   %i.k = getelementptr i8, ptr %0, i64 472        ; 8 uses
@@ -1011,9 +1011,9 @@ accept1.exit2351:                                 ; preds = %accept1.exit2349
 
 bb.ap:                                            ; preds = %accept1.exit2351.thread, %accept1.exit2351
   call fastcc void @pm_array_node_close_set(ptr noundef %i.e, ptr noundef %i.d)
-  %i.cz = load i32, ptr %i.f, align 4, !tbaa !7
+  %i.cz = load i32, ptr %i.f, align 8, !tbaa !7
   %i.da = lshr i32 %i.cz, 1
-  store i32 %i.da, ptr %i.f, align 4, !tbaa !7
+  store i32 %i.da, ptr %i.f, align 8, !tbaa !7
   br label %.loopexit3341
 
 bb.aq:                                            ; preds = %bb.a, %bb.a
@@ -1060,9 +1060,9 @@ bb.at:                                            ; preds = %bb.ar, %bb.ar
 
 bb.au:                                            ; preds = %bb.ar
   %i.df = getelementptr i8, ptr %0, i64 24        ; 6 uses
-  %i.dg = load i32, ptr %i.df, align 4, !tbaa !7
+  %i.dg = load i32, ptr %i.df, align 8, !tbaa !7
   %i.dh = shl i32 %i.dg, 1
-  store i32 %i.dh, ptr %i.df, align 4, !tbaa !7
+  store i32 %i.dh, ptr %i.df, align 8, !tbaa !7
   %i.di = call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #28 ; 5 uses
   %.not3337 = icmp eq ptr %i.di, null
   br i1 %.not3337, label %context_push.exit, label %bb.av
@@ -1142,9 +1142,9 @@ bb.ba:                                            ; preds = %bb.az
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
   call fastcc void @parser_lex(ptr noundef nonnull %0)
-  %i.du = load i32, ptr %i.df, align 4, !tbaa !7
+  %i.du = load i32, ptr %i.df, align 8, !tbaa !7
   %i.dv = lshr i32 %i.du, 1
-  store i32 %i.dv, ptr %i.df, align 4, !tbaa !7
+  store i32 %i.dv, ptr %i.df, align 8, !tbaa !7
   call fastcc void @pop_block_exits(ptr noundef nonnull %0, ptr noundef %i.dc)
   call void @pm_node_list_free(ptr noundef nonnull %9) #27
   %i.dw = load i16, ptr %i.dm, align 8, !tbaa !115
@@ -1544,9 +1544,9 @@ bb.cm:                                            ; preds = %bb.cl
   br label %accept1.exit2394
 
 accept1.exit2394:                                 ; preds = %bb.ch, %bb.cm, %bb.cl
-  %i.iv = load i32, ptr %i.ih, align 4, !tbaa !7
+  %i.iv = load i32, ptr %i.ih, align 8, !tbaa !7
   %i.iw = lshr i32 %i.iv, 1
-  store i32 %i.iw, ptr %i.ih, align 4, !tbaa !7
+  store i32 %i.iw, ptr %i.ih, align 8, !tbaa !7
   call fastcc void @expect1_opening(ptr noundef nonnull %0, i32 noundef 2, i32 noundef 135, ptr noundef %11)
   %i.ix = getelementptr i8, ptr %0, i64 328
   %i.iy = getelementptr i8, ptr %0, i64 336
@@ -1673,7 +1673,7 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %bb.cz, %bb.cx
   %.val2119.pr = phi i32 [ %.val2165, %bb.cz ], [ %.val2121, %bb.cx ] ; 2 uses
   %i.kn = getelementptr i8, ptr %0, i64 24
-  %.val2253 = load i32, ptr %i.kn, align 4, !tbaa !7
+  %.val2253 = load i32, ptr %i.kn, align 8, !tbaa !7
   %i.ko = trunc i32 %.val2253 to i1
   %.not3614 = xor i1 %i.ko, true
   %i.kp = icmp eq i32 %.val2119.pr, 5
@@ -1954,7 +1954,7 @@ bb.ep:                                            ; preds = %bb.eo
 
 bb.eq:                                            ; preds = %bb.ep, %bb.en
   %i.oe = getelementptr i8, ptr %0, i64 24
-  %.val2252 = load i32, ptr %i.oe, align 4, !tbaa !7
+  %.val2252 = load i32, ptr %i.oe, align 8, !tbaa !7
   %i.of = trunc i32 %.val2252 to i1
   %.val2112.pr = load i32, ptr %i.b, align 8, !tbaa !170 ; 2 uses
   %.not3642 = xor i1 %i.of, true
@@ -2357,14 +2357,14 @@ accept2.exit2495:                                 ; preds = %bb.iz, %bb.ja
 
 bb.jb:                                            ; preds = %accept2.exit2495
   %i.aai = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.aaj = load i32, ptr %i.aai, align 4, !tbaa !7
+  %i.aaj = load i32, ptr %i.aai, align 8, !tbaa !7
   %i.aak = shl i32 %i.aaj, 1
-  store i32 %i.aak, ptr %i.aai, align 4, !tbaa !7
+  store i32 %i.aak, ptr %i.aai, align 8, !tbaa !7
   %i.aal = add i16 %5, 1
   %i.aam = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 1, i16 noundef zeroext %i.aal) ; 2 uses
-  %i.aan = load i32, ptr %i.aai, align 4, !tbaa !7
+  %i.aan = load i32, ptr %i.aai, align 8, !tbaa !7
   %i.aao = lshr i32 %i.aan, 1
-  store i32 %i.aao, ptr %i.aai, align 4, !tbaa !7
+  store i32 %i.aao, ptr %i.aai, align 8, !tbaa !7
   %.val.i2499 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val.i2499, label %accept2.exit2501 [
     i32 17, label %bb.jc
@@ -2687,13 +2687,13 @@ bb.kj:                                            ; preds = %bb.kh, %bb.kh, %bb.
 
 bb.kk:                                            ; preds = %bb.kj
   %i.aeo = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.aep = load i32, ptr %i.aeo, align 4, !tbaa !7
+  %i.aep = load i32, ptr %i.aeo, align 8, !tbaa !7
   %i.aeq = shl i32 %i.aep, 1
-  store i32 %i.aeq, ptr %i.aeo, align 4, !tbaa !7
+  store i32 %i.aeq, ptr %i.aeo, align 8, !tbaa !7
   %i.aer = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 47, i16 noundef zeroext %i.aef) ; 4 uses
-  %i.aes = load i32, ptr %i.aeo, align 4, !tbaa !7
+  %i.aes = load i32, ptr %i.aeo, align 8, !tbaa !7
   %i.aet = lshr i32 %i.aes, 1
-  store i32 %i.aet, ptr %i.aeo, align 4, !tbaa !7
+  store i32 %i.aet, ptr %i.aeo, align 8, !tbaa !7
   %.val2146 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val2146, label %bb.ko [
     i32 11, label %bb.kl
@@ -2834,13 +2834,13 @@ accept2.exit2512:                                 ; preds = %accept2.exit2512thr
 
 bb.kw:                                            ; preds = %accept2.exit2512
   %i.afv = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.afw = load i32, ptr %i.afv, align 4, !tbaa !7
+  %i.afw = load i32, ptr %i.afv, align 8, !tbaa !7
   %i.afx = shl i32 %i.afw, 1
-  store i32 %i.afx, ptr %i.afv, align 4, !tbaa !7
+  store i32 %i.afx, ptr %i.afv, align 8, !tbaa !7
   %i.afy = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 13, i16 noundef zeroext %i.afl) ; 4 uses
-  %i.afz = load i32, ptr %i.afv, align 4, !tbaa !7
+  %i.afz = load i32, ptr %i.afv, align 8, !tbaa !7
   %i.aga = lshr i32 %i.afz, 1
-  store i32 %i.aga, ptr %i.afv, align 4, !tbaa !7
+  store i32 %i.aga, ptr %i.afv, align 8, !tbaa !7
   %.val2145 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val2145, label %bb.la [
     i32 11, label %bb.kx
@@ -3243,7 +3243,7 @@ bb.nh:                                            ; preds = %bb.ng, %bb.ng
 accept2.exit2546:                                 ; preds = %bb.ng, %bb.nh, %bb.nf
   %i.anf = getelementptr i8, ptr %0, i64 24       ; 4 uses
   %i.ang = getelementptr i8, ptr %0, i64 20       ; 4 uses
-  %i.anh = load i32, ptr %i.anf, align 4, !tbaa !7
+  %i.anh = load i32, ptr %i.anf, align 8, !tbaa !7
   %i.ani = load <2 x i32>, ptr %i.ang, align 4, !tbaa !7
   %i.anj = shl <2 x i32> %i.ani, splat (i32 1)
   store <2 x i32> %i.anj, ptr %i.ang, align 4, !tbaa !7
@@ -3258,12 +3258,12 @@ accept2.exit2546:                                 ; preds = %bb.ng, %bb.nh, %bb.
 
 bb.ni:                                            ; preds = %accept2.exit2546
   %i.anl = shl i32 %i.anh, 2
-  store i32 %i.anl, ptr %i.anf, align 4, !tbaa !7
+  store i32 %i.anl, ptr %i.anf, align 8, !tbaa !7
   %i.anm = add i16 %5, 1
   %i.ann = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 17, i16 noundef zeroext %i.anm)
-  %i.ano = load i32, ptr %i.anf, align 4, !tbaa !7
+  %i.ano = load i32, ptr %i.anf, align 8, !tbaa !7
   %i.anp = lshr i32 %i.ano, 1
-  store i32 %i.anp, ptr %i.anf, align 4, !tbaa !7
+  store i32 %i.anp, ptr %i.anf, align 8, !tbaa !7
   br label %bb.nj
 
 switch.lookup:                                    ; preds = %accept2.exit2546
@@ -3666,13 +3666,13 @@ accept2.exit2604:                                 ; preds = %bb.pz, %bb.qa
 
 bb.qb:                                            ; preds = %accept2.exit2604
   %i.awj = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.awk = load i32, ptr %i.awj, align 4, !tbaa !7
+  %i.awk = load i32, ptr %i.awj, align 8, !tbaa !7
   %i.awl = shl i32 %i.awk, 1
-  store i32 %i.awl, ptr %i.awj, align 4, !tbaa !7
+  store i32 %i.awl, ptr %i.awj, align 8, !tbaa !7
   %i.awm = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 37, i16 noundef zeroext %i.avl)
-  %i.awn = load i32, ptr %i.awj, align 4, !tbaa !7
+  %i.awn = load i32, ptr %i.awj, align 8, !tbaa !7
   %i.awo = lshr i32 %i.awn, 1
-  store i32 %i.awo, ptr %i.awj, align 4, !tbaa !7
+  store i32 %i.awo, ptr %i.awj, align 8, !tbaa !7
   br label %bb.qc
 
 switch.lookup3715:                                ; preds = %accept2.exit2604
@@ -3895,13 +3895,13 @@ bb.qu:                                            ; preds = %accept1.exit2624, %
 
 bb.qv:                                            ; preds = %bb.qu
   %i.ayt = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.ayu = load i32, ptr %i.ayt, align 4, !tbaa !7
+  %i.ayu = load i32, ptr %i.ayt, align 8, !tbaa !7
   %i.ayv = shl i32 %i.ayu, 1
-  store i32 %i.ayv, ptr %i.ayt, align 4, !tbaa !7
+  store i32 %i.ayv, ptr %i.ayt, align 8, !tbaa !7
   %i.ayw = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 53, i16 noundef zeroext %i.ayi) ; 2 uses
-  %i.ayx = load i32, ptr %i.ayt, align 4, !tbaa !7
+  %i.ayx = load i32, ptr %i.ayt, align 8, !tbaa !7
   %i.ayy = lshr i32 %i.ayx, 1
-  store i32 %i.ayy, ptr %i.ayt, align 4, !tbaa !7
+  store i32 %i.ayy, ptr %i.ayt, align 8, !tbaa !7
   %.val.i2625 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val.i2625, label %accept2.exit2627 [
     i32 17, label %bb.qw
@@ -3994,13 +3994,13 @@ bb.ra:                                            ; preds = %accept1.exit2632, %
 
 bb.rb:                                            ; preds = %bb.ra
   %i.azw = getelementptr i8, ptr %0, i64 24       ; 4 uses
-  %i.azx = load i32, ptr %i.azw, align 4, !tbaa !7
+  %i.azx = load i32, ptr %i.azw, align 8, !tbaa !7
   %i.azy = shl i32 %i.azx, 1
-  store i32 %i.azy, ptr %i.azw, align 4, !tbaa !7
+  store i32 %i.azy, ptr %i.azw, align 8, !tbaa !7
   %i.azz = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 54, i16 noundef zeroext %i.azl) ; 2 uses
-  %i.baa = load i32, ptr %i.azw, align 4, !tbaa !7
+  %i.baa = load i32, ptr %i.azw, align 8, !tbaa !7
   %i.bab = lshr i32 %i.baa, 1
-  store i32 %i.bab, ptr %i.azw, align 4, !tbaa !7
+  store i32 %i.bab, ptr %i.azw, align 8, !tbaa !7
   %.val.i2633 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val.i2633, label %accept2.exit2635 [
     i32 17, label %bb.rc
@@ -4403,10 +4403,10 @@ accept1.exit2968:                                 ; preds = %bb.zc, %bb.zd
   br label %thread-pre-split3317
 
 bb.ze:                                            ; preds = %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy, %bb.yy
-  %i.bzb = load i32, ptr %i.byr, align 4, !tbaa !7
+  %i.bzb = load i32, ptr %i.byr, align 8, !tbaa !7
   %i.bzc = shl i32 %i.bzb, 1
   %i.bzd = or disjoint i32 %i.bzc, 1
-  store i32 %i.bzd, ptr %i.byr, align 4, !tbaa !7
+  store i32 %i.bzd, ptr %i.byr, align 8, !tbaa !7
   call void @llvm.lifetime.start.p0(ptr nonnull %113) #27
   %i.bze = getelementptr i8, ptr %0, i64 304
   %.val2185 = load ptr, ptr %i.bze, align 8, !tbaa !74 ; 2 uses
@@ -4467,14 +4467,14 @@ accept1.exit2970:                                 ; preds = %bb.zf
   ]
 
 bb.zj:                                            ; preds = %accept1.exit2970
-  %i.bzq = load i32, ptr %i.byr, align 4, !tbaa !7
+  %i.bzq = load i32, ptr %i.byr, align 8, !tbaa !7
   %i.bzr = shl i32 %i.bzq, 1
-  store i32 %i.bzr, ptr %i.byr, align 4, !tbaa !7
+  store i32 %i.bzr, ptr %i.byr, align 8, !tbaa !7
   %i.bzs = add i16 %5, 1                          ; 2 uses
   %i.bzt = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 31, i16 noundef zeroext %i.bzs) ; 4 uses
-  %i.bzu = load i32, ptr %i.byr, align 4, !tbaa !7
+  %i.bzu = load i32, ptr %i.byr, align 8, !tbaa !7
   %i.bzv = lshr i32 %i.bzu, 1
-  store i32 %i.bzv, ptr %i.byr, align 4, !tbaa !7
+  store i32 %i.bzv, ptr %i.byr, align 8, !tbaa !7
   %.val2135 = load i32, ptr %i.b, align 8, !tbaa !170
   switch i32 %.val2135, label %bb.zn [
     i32 11, label %bb.zk
@@ -4541,9 +4541,9 @@ pm_parser_scope_toplevel_p.exit:                  ; preds = %bb.zq, %bb.zr
   call fastcc void @pm_locals_order(ptr noundef %0, ptr noundef %i.cai, ptr noundef %115, i1 noundef zeroext %i.cak)
   %i.cao = call fastcc ptr @parse_blocklike_parameters(ptr noundef %0, ptr noundef %.11889, ptr noundef %111, ptr noundef nonnull %i.byu)
   call fastcc void @pm_parser_scope_pop(ptr noundef %0)
-  %i.cap = load i32, ptr %i.byr, align 4, !tbaa !7
+  %i.cap = load i32, ptr %i.byr, align 8, !tbaa !7
   %i.caq = lshr i32 %i.cap, 1
-  store i32 %i.caq, ptr %i.byr, align 4, !tbaa !7
+  store i32 %i.caq, ptr %i.byr, align 8, !tbaa !7
   %i.car = getelementptr inbounds nuw i8, ptr %111, i64 8
   %.val2331 = load ptr, ptr %i.car, align 8
   %i.cas = getelementptr inbounds nuw i8, ptr %111, i64 16
@@ -4946,14 +4946,14 @@ accept1.exit1076.thread:                          ; preds = %bb.ew
 
 accept1.exit1076:                                 ; preds = %bb.ew
   %i.vf = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.vg = load i32, ptr %i.vf, align 4, !tbaa !7
+  %i.vg = load i32, ptr %i.vf, align 8, !tbaa !7
   %i.vh = shl i32 %i.vg, 1
-  store i32 %i.vh, ptr %i.vf, align 4, !tbaa !7
+  store i32 %i.vh, ptr %i.vf, align 8, !tbaa !7
   %narrow907 = add nuw nsw i16 %5, 1
   call fastcc void @parse_arguments(ptr noundef nonnull %0, ptr noundef %18, i1 noundef zeroext false, i32 noundef 33, i16 noundef zeroext %narrow907)
-  %i.vi = load i32, ptr %i.vf, align 4, !tbaa !7
+  %i.vi = load i32, ptr %i.vf, align 8, !tbaa !7
   %i.vj = lshr i32 %i.vi, 1
-  store i32 %i.vj, ptr %i.vf, align 4, !tbaa !7
+  store i32 %i.vj, ptr %i.vf, align 8, !tbaa !7
   tail call fastcc void @expect1(ptr noundef nonnull %0, i32 noundef 33, i32 noundef 109)
   br label %bb.ex
 
@@ -4986,7 +4986,7 @@ bb.ez:                                            ; preds = %thread-pre-split110
 
 accept1.exit1078:                                 ; preds = %thread-pre-split1104
   %i.vs = getelementptr i8, ptr %0, i64 24
-  %.val1011 = load i32, ptr %i.vs, align 4, !tbaa !7
+  %.val1011 = load i32, ptr %i.vs, align 8, !tbaa !7
   %i.vt = trunc i32 %.val1011 to i1
   %i.vu = icmp ne i32 %.val996, 5
   %or.cond1153.not = or i1 %i.vu, %i.vt
@@ -5389,9 +5389,9 @@ bb.c:                                             ; preds = %bb.b
 
 accept1.exit82:                                   ; preds = %bb.b
   %i.j = getelementptr i8, ptr %0, i64 24         ; 4 uses
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !7
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !7
   %i.l = shl i32 %i.k, 1
-  store i32 %i.l, ptr %i.j, align 4, !tbaa !7
+  store i32 %i.l, ptr %i.j, align 8, !tbaa !7
   %i.m = add i16 %4, 1
   tail call fastcc void @parse_arguments(ptr noundef nonnull %0, ptr noundef %1, i1 noundef zeroext %2, i32 noundef 15, i16 noundef zeroext %i.m)
   %.val.i83 = load i32, ptr %i.a, align 8, !tbaa !170 ; 2 uses
@@ -5420,9 +5420,9 @@ accept1.exit84:                                   ; preds = %accept1.exit82
 
 bb.d:                                             ; preds = %accept1.exit84.thread, %accept1.exit84
   %i.z = phi <2 x ptr> [ %i.o, %accept1.exit84.thread ], [ %i.y, %accept1.exit84 ]
-  %i.aa = load i32, ptr %i.j, align 4, !tbaa !7
+  %i.aa = load i32, ptr %i.j, align 8, !tbaa !7
   %i.ab = lshr i32 %i.aa, 1
-  store i32 %i.ab, ptr %i.j, align 4, !tbaa !7
+  store i32 %i.ab, ptr %i.j, align 8, !tbaa !7
   %i.ac = getelementptr i8, ptr %1, i64 24
   store <2 x ptr> %i.z, ptr %i.ac, align 8, !tbaa !14
   br label %bb.k
@@ -5448,10 +5448,10 @@ bb.g:                                             ; preds = %bb.e
 
 .thread:                                          ; preds = %bb.f, %bb.f, %bb.f, %bb.g
   %i.af = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !7
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !7
   %i.ah = shl i32 %i.ag, 1
   %i.ai = or disjoint i32 %i.ah, 1
-  store i32 %i.ai, ptr %i.af, align 4, !tbaa !7
+  store i32 %i.ai, ptr %i.af, align 8, !tbaa !7
   %i.aj = add i16 %4, 1
   tail call fastcc void @parse_arguments(ptr noundef nonnull %0, ptr noundef %1, i1 noundef zeroext %2, i32 noundef 1, i16 noundef zeroext %i.aj)
   %i.ak = getelementptr i8, ptr %0, i64 320
@@ -5475,9 +5475,9 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %.thread
-  %i.av = load i32, ptr %i.af, align 4, !tbaa !7
+  %i.av = load i32, ptr %i.af, align 8, !tbaa !7
   %i.aw = lshr i32 %i.av, 1
-  store i32 %i.aw, ptr %i.af, align 4, !tbaa !7
+  store i32 %i.aw, ptr %i.af, align 8, !tbaa !7
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.f, %accept1.exit, %bb.g, %bb.j, %bb.c, %bb.d
@@ -5529,7 +5529,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 accept1.exit86:                                   ; preds = %bb.l
   %i.br = getelementptr i8, ptr %0, i64 24
-  %.val80 = load i32, ptr %i.br, align 4, !tbaa !7
+  %.val80 = load i32, ptr %i.br, align 8, !tbaa !7
   %i.bs = trunc i32 %.val80 to i1
   %i.bt = icmp ne i32 %.val.i85, 5
   %or.cond.not = or i1 %i.bt, %i.bs
@@ -5932,14 +5932,14 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.ab = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !7
+  %i.ac = load i32, ptr %i.ab, align 8, !tbaa !7
   %i.ad = shl i32 %i.ac, 1
-  store i32 %i.ad, ptr %i.ab, align 4, !tbaa !7
+  store i32 %i.ad, ptr %i.ab, align 8, !tbaa !7
   %i.ae = add i16 %1, 1
   %i.af = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 26, i16 noundef zeroext %i.ae) ; 2 uses
-  %i.ag = load i32, ptr %i.ab, align 4, !tbaa !7
+  %i.ag = load i32, ptr %i.ab, align 8, !tbaa !7
   %i.ah = lshr i32 %i.ag, 1
-  store i32 %i.ah, ptr %i.ab, align 4, !tbaa !7
+  store i32 %i.ah, ptr %i.ab, align 8, !tbaa !7
   %.val.i.i.pr = load i32, ptr %i.a, align 8, !tbaa !170
   store i32 %i.x, ptr %i.w, align 8, !tbaa !203
   store i32 %i.v, ptr %i.u, align 4, !tbaa !195
@@ -6342,9 +6342,9 @@ accept1.exit168:                                  ; preds = %accept1.exit168thre
   ]
 
 switch.lookup:                                    ; preds = %accept1.exit168
-  %i.br = load i32, ptr %i.h, align 4, !tbaa !7
+  %i.br = load i32, ptr %i.h, align 8, !tbaa !7
   %i.bs = shl i32 %i.br, 1
-  store i32 %i.bs, ptr %i.h, align 4, !tbaa !7
+  store i32 %i.bs, ptr %i.h, align 8, !tbaa !7
   %switch.load = load i32, ptr %switch.gep, align 4
   %i.bt = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load, i16 noundef zeroext %i.e) ; 4 uses
   %.not148 = icmp eq ptr %i.bt, null
@@ -6365,9 +6365,9 @@ bb.w:                                             ; preds = %bb.v
   br label %pm_rescue_node_statements_set.exit
 
 pm_rescue_node_statements_set.exit:               ; preds = %bb.w, %bb.v, %switch.lookup
-  %i.bz = load i32, ptr %i.h, align 4, !tbaa !7
+  %i.bz = load i32, ptr %i.h, align 8, !tbaa !7
   %i.ca = lshr i32 %i.bz, 1
-  store i32 %i.ca, ptr %i.h, align 4, !tbaa !7
+  store i32 %i.ca, ptr %i.h, align 8, !tbaa !7
   %.val.i171 = load i32, ptr %i.a, align 8, !tbaa !170
   switch i32 %.val.i171, label %accept2.exit173 [
     i32 17, label %bb.x
@@ -6485,18 +6485,18 @@ accept2.exit177:                                  ; preds = %token_newline_index
 
 switch.lookup278:                                 ; preds = %accept2.exit177
   %i.dc = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.dd = load i32, ptr %i.dc, align 4, !tbaa !7
+  %i.dd = load i32, ptr %i.dc, align 8, !tbaa !7
   %i.de = shl i32 %i.dd, 1
-  store i32 %i.de, ptr %i.dc, align 4, !tbaa !7
+  store i32 %i.de, ptr %i.dc, align 8, !tbaa !7
   %i.df = zext nneg i32 %4 to i64
   %i.dg = getelementptr [4 x i8], ptr @switch.table.parse_rescues.109, i64 %i.df
   %switch.gep279 = getelementptr i8, ptr %i.dg, i64 -4
   %switch.load280 = load i32, ptr %switch.gep279, align 4
   %i.dh = add i16 %5, 1
   %i.di = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load280, i16 noundef zeroext %i.dh) ; 2 uses
-  %i.dj = load i32, ptr %i.dc, align 4, !tbaa !7
+  %i.dj = load i32, ptr %i.dc, align 8, !tbaa !7
   %i.dk = lshr i32 %i.dj, 1
-  store i32 %i.dk, ptr %i.dc, align 4, !tbaa !7
+  store i32 %i.dk, ptr %i.dc, align 8, !tbaa !7
   %.val.i179 = load i32, ptr %i.a, align 8, !tbaa !170
   switch i32 %.val.i179, label %accept2.exit181 [
     i32 17, label %bb.ai
@@ -6616,18 +6616,18 @@ accept2.exit187:                                  ; preds = %bb.aq, %bb.ar
 
 switch.lookup282:                                 ; preds = %accept2.exit187
   %i.ee = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.ef = load i32, ptr %i.ee, align 4, !tbaa !7
+  %i.ef = load i32, ptr %i.ee, align 8, !tbaa !7
   %i.eg = shl i32 %i.ef, 1
-  store i32 %i.eg, ptr %i.ee, align 4, !tbaa !7
+  store i32 %i.eg, ptr %i.ee, align 8, !tbaa !7
   %i.eh = zext nneg i32 %4 to i64
   %i.ei = getelementptr [4 x i8], ptr @switch.table.parse_rescues.110, i64 %i.eh
   %switch.gep283 = getelementptr i8, ptr %i.ei, i64 -4
   %switch.load284 = load i32, ptr %switch.gep283, align 4
   %i.ej = add i16 %5, 1
   %i.ek = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %switch.load284, i16 noundef zeroext %i.ej) ; 2 uses
-  %i.el = load i32, ptr %i.ee, align 4, !tbaa !7
+  %i.el = load i32, ptr %i.ee, align 8, !tbaa !7
   %i.em = lshr i32 %i.el, 1
-  store i32 %i.em, ptr %i.ee, align 4, !tbaa !7
+  store i32 %i.em, ptr %i.ee, align 8, !tbaa !7
   %.val.i188 = load i32, ptr %i.a, align 8, !tbaa !170
   switch i32 %.val.i188, label %accept2.exit190 [
     i32 17, label %bb.as
@@ -7030,9 +7030,9 @@ bb.ao:                                            ; preds = %context_push.exit, 
   br i1 %5, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.gl = load i32, ptr %i.ad, align 4, !tbaa !7
+  %i.gl = load i32, ptr %i.ad, align 8, !tbaa !7
   %i.gm = shl i32 %i.gl, 1
-  store i32 %i.gm, ptr %i.ad, align 4, !tbaa !7
+  store i32 %i.gm, ptr %i.ad, align 8, !tbaa !7
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
@@ -7053,9 +7053,9 @@ pm_assert_value_expression.exit:                  ; preds = %bb.aq, %bb.ar
   br i1 %5, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %pm_assert_value_expression.exit
-  %i.gs = load i32, ptr %i.ad, align 4, !tbaa !7
+  %i.gs = load i32, ptr %i.ad, align 8, !tbaa !7
   %i.gt = lshr i32 %i.gs, 1
-  store i32 %i.gt, ptr %i.ad, align 4, !tbaa !7
+  store i32 %i.gt, ptr %i.ad, align 8, !tbaa !7
   br label %bb.at
 
 bb.at:                                            ; preds = %bb.as, %pm_assert_value_expression.exit
@@ -7458,9 +7458,9 @@ bb.cj:                                            ; preds = %bb.cb, %pm_locals_r
   br i1 %5, label %bb.ck, label %bb.cl
 
 bb.ck:                                            ; preds = %bb.cj
-  %i.nu = load i32, ptr %i.ad, align 4, !tbaa !7
+  %i.nu = load i32, ptr %i.ad, align 8, !tbaa !7
   %i.nv = shl i32 %i.nu, 1
-  store i32 %i.nv, ptr %i.ad, align 4, !tbaa !7
+  store i32 %i.nv, ptr %i.ad, align 8, !tbaa !7
   br label %bb.cl
 
 bb.cl:                                            ; preds = %bb.ck, %bb.cj
@@ -7481,9 +7481,9 @@ pm_assert_value_expression.exit498:               ; preds = %bb.cl, %bb.cm
   br i1 %5, label %bb.cn, label %bb.co
 
 bb.cn:                                            ; preds = %pm_assert_value_expression.exit498
-  %i.ob = load i32, ptr %i.ad, align 4, !tbaa !7
+  %i.ob = load i32, ptr %i.ad, align 8, !tbaa !7
   %i.oc = lshr i32 %i.ob, 1
-  store i32 %i.oc, ptr %i.ad, align 4, !tbaa !7
+  store i32 %i.oc, ptr %i.ad, align 8, !tbaa !7
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %pm_assert_value_expression.exit498
@@ -7886,13 +7886,13 @@ parse_predicate.exit:                             ; preds = %accept2.exit132, %.
 
 bb.d:                                             ; preds = %parse_predicate.exit
   %i.ai = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !7
+  %i.aj = load i32, ptr %i.ai, align 8, !tbaa !7
   %i.ak = shl i32 %i.aj, 1
-  store i32 %i.ak, ptr %i.ai, align 4, !tbaa !7
+  store i32 %i.ak, ptr %i.ai, align 8, !tbaa !7
   %i.al = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef %1, i16 noundef zeroext %i.h) ; 2 uses
-  %i.am = load i32, ptr %i.ai, align 4, !tbaa !7
+  %i.am = load i32, ptr %i.ai, align 8, !tbaa !7
   %i.an = lshr i32 %i.am, 1
-  store i32 %i.an, ptr %i.ai, align 4, !tbaa !7
+  store i32 %i.an, ptr %i.ai, align 8, !tbaa !7
   %.val.i = load i32, ptr %i.u, align 8, !tbaa !170
   switch i32 %.val.i, label %accept2.exit [
     i32 17, label %bb.e
@@ -8144,13 +8144,13 @@ token_newline_index.exit:                         ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #27
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !tbaa.struct !163
   %i.dm = getelementptr i8, ptr %0, i64 24        ; 4 uses
-  %i.dn = load i32, ptr %i.dm, align 4, !tbaa !7
+  %i.dn = load i32, ptr %i.dm, align 8, !tbaa !7
   %i.do = shl i32 %i.dn, 1
-  store i32 %i.do, ptr %i.dm, align 4, !tbaa !7
+  store i32 %i.do, ptr %i.dm, align 8, !tbaa !7
   %i.dp = call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 24, i16 noundef zeroext %i.h) ; 3 uses
-  %i.dq = load i32, ptr %i.dm, align 4, !tbaa !7
+  %i.dq = load i32, ptr %i.dm, align 8, !tbaa !7
   %i.dr = lshr i32 %i.dq, 1
-  store i32 %i.dr, ptr %i.dm, align 4, !tbaa !7
+  store i32 %i.dr, ptr %i.dm, align 8, !tbaa !7
   %.val.i111 = load i32, ptr %i.u, align 8, !tbaa !170
   switch i32 %.val.i111, label %accept2.exit113 [
     i32 17, label %bb.u
@@ -8553,9 +8553,9 @@ bb.b:                                             ; preds = %bb.a
 
 accept1.exit:                                     ; preds = %bb.a, %bb.b
   %i.d = getelementptr i8, ptr %0, i64 24         ; 8 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !7
   %i.f = shl i32 %i.e, 1
-  store i32 %i.f, ptr %i.d, align 4, !tbaa !7
+  store i32 %i.f, ptr %i.d, align 8, !tbaa !7
   %i.g = tail call noalias dereferenceable_or_null(56) ptr @malloc(i64 noundef 56) #28 ; 6 uses
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %pm_parser_scope_push.exit, label %bb.c
@@ -8749,14 +8749,14 @@ bb.o:                                             ; preds = %accept1.exit65
   ]
 
 bb.p:                                             ; preds = %bb.o
-  %i.bd = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.bd = load i32, ptr %i.d, align 8, !tbaa !7
   %i.be = shl i32 %i.bd, 1
-  store i32 %i.be, ptr %i.d, align 4, !tbaa !7
+  store i32 %i.be, ptr %i.d, align 8, !tbaa !7
   %i.bf = add i16 %1, 1
   %i.bg = tail call fastcc ptr @parse_statements(ptr noundef nonnull %0, i32 noundef 6, i16 noundef zeroext %i.bf) ; 5 uses
-  %i.bh = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.bh = load i32, ptr %i.d, align 8, !tbaa !7
   %i.bi = lshr i32 %i.bh, 1
-  store i32 %i.bi, ptr %i.d, align 4, !tbaa !7
+  store i32 %i.bi, ptr %i.d, align 8, !tbaa !7
   %.val51 = load i32, ptr %i.b, align 8, !tbaa !170 ; 2 uses
   switch i32 %.val51, label %bb.v [
     i32 11, label %bb.q
@@ -8915,9 +8915,9 @@ pm_parser_scope_pop.exit:                         ; preds = %pm_parser_scope_top
   %i.cz = getelementptr i8, ptr %i.ct, i64 24
   call void @pm_node_list_free(ptr noundef %i.cz) #27
   call void @free(ptr noundef nonnull %i.ct) #27
-  %i.da = load i32, ptr %i.d, align 4, !tbaa !7
+  %i.da = load i32, ptr %i.d, align 8, !tbaa !7
   %i.db = lshr i32 %i.da, 1
-  store i32 %i.db, ptr %i.d, align 4, !tbaa !7
+  store i32 %i.db, ptr %i.d, align 8, !tbaa !7
   %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.dd = load <2 x ptr>, ptr %i.dc, align 8
   %.val54 = load ptr, ptr %i.dc, align 8
@@ -9320,7 +9320,7 @@ bb.h:                                             ; preds = %pm_node_alloc.exit
 pm_call_write_read_name_init.exit:                ; preds = %bb.g, %bb.h
   %storemerge.i = phi i32 [ %i.ah, %bb.h ], [ %i.ag, %bb.g ]
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !7
+  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !7
   tail call void @free(ptr noundef nonnull %1) #27
   ret ptr %i.f
 }
@@ -9723,7 +9723,7 @@ bb.h:                                             ; preds = %pm_node_alloc.exit
 pm_call_write_read_name_init.exit:                ; preds = %bb.g, %bb.h
   %storemerge.i = phi i32 [ %i.ah, %bb.h ], [ %i.ag, %bb.g ]
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !7
+  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !7
   tail call void @free(ptr noundef nonnull %1) #27
   ret ptr %i.f
 }
@@ -10126,7 +10126,7 @@ bb.f:                                             ; preds = %pm_node_alloc.exit
 pm_call_write_read_name_init.exit:                ; preds = %bb.e, %bb.f
   %storemerge.i = phi i32 [ %i.an, %bb.f ], [ %i.am, %bb.e ]
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 64
-  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !7
+  store i32 %storemerge.i, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !7
   tail call void @free(ptr noundef nonnull %1) #27
   ret ptr %i.d
 }

@@ -201,9 +201,9 @@ _ZN6google8protobuf16RepeatedPtrFieldINS0_23SourceCodeInfo_LocationEE26InternalM
   %i.gp = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
   %i.gq = getelementptr inbounds nuw i8, ptr %i.fv, i64 16
   %i.gr = getelementptr inbounds nuw i8, ptr %i.fv, i64 32 ; 2 uses
-  %i.gs = load i32, ptr %i.gr, align 4, !tbaa !3
+  %i.gs = load i32, ptr %i.gr, align 8, !tbaa !3
   %i.gt = or i32 %i.gs, %i.gi
-  store i32 %i.gt, ptr %i.gr, align 4, !tbaa !3
+  store i32 %i.gt, ptr %i.gr, align 8, !tbaa !3
   %i.gu = getelementptr inbounds nuw i8, ptr %i.fy, i64 8 ; 2 uses
   %i.gv = load i64, ptr %i.gu, align 8, !tbaa !10 ; 3 uses
   %i.gw = trunc i64 %i.gv to i1

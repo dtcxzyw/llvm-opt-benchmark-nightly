@@ -201,14 +201,14 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.jr = getelementptr i8, ptr %.32937, i64 -16
-  %.val3167 = load i16, ptr %i.jr, align 4
+  %.val3167 = load i16, ptr %i.jr, align 8
   %i.js = and i16 %.val3167, 768
   %i.jt = icmp eq i16 %i.js, 256
-  %i.ju = load i16, ptr %i.y, align 4
+  %i.ju = load i16, ptr %i.y, align 8
   %i.jv = select i1 %i.jt, i16 256, i16 512
   %i.jw = and i16 %i.ju, -769
   %i.jx = or disjoint i16 %i.jv, %i.jw
-  store i16 %i.jx, ptr %i.y, align 4
+  store i16 %i.jx, ptr %i.y, align 8
   br label %fixpos.exit
 
 bb.br:                                            ; preds = %yy_reduce_print.exit
@@ -216,11 +216,11 @@ bb.br:                                            ; preds = %yy_reduce_print.exi
   %.val3166 = load i16, ptr %i.jy, align 4
   %i.jz = and i16 %.val3166, 768
   %i.ka = icmp eq i16 %i.jz, 256
-  %i.kb = load i16, ptr %i.y, align 4
+  %i.kb = load i16, ptr %i.y, align 8
   %i.kc = select i1 %i.ka, i16 256, i16 768
   %i.kd = and i16 %i.kb, -769
   %i.ke = or disjoint i16 %i.kc, %i.kd
-  store i16 %i.ke, ptr %i.y, align 4
+  store i16 %i.ke, ptr %i.y, align 8
   br label %fixpos.exit
 
 bb.bs:                                            ; preds = %yy_reduce_print.exit
@@ -240,11 +240,11 @@ bb.bt:                                            ; preds = %yy_reduce_print.exi
   %.val3165 = load i16, ptr %i.kn, align 4
   %i.ko = and i16 %.val3165, 768
   %i.kp = icmp eq i16 %i.ko, 256
-  %i.kq = load i16, ptr %i.y, align 4
+  %i.kq = load i16, ptr %i.y, align 8
   %i.kr = select i1 %i.kp, i16 256, i16 768
   %i.ks = and i16 %i.kq, -769
   %i.kt = or disjoint i16 %i.kr, %i.ks
-  store i16 %i.kt, ptr %i.y, align 4
+  store i16 %i.kt, ptr %i.y, align 8
   br label %fixpos.exit
 
 bb.bu:                                            ; preds = %yy_reduce_print.exit
@@ -647,7 +647,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @rb_node_init(ptr noundef %i.g, i32 noundef range(i32 0, 115) 1) #33
   %i.h = getelementptr i8, ptr %i.g, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.e, i64 16, i1 false), !tbaa.struct !57
-  %i.i = load i32, ptr %i.e, align 4, !tbaa !51
+  %i.i = load i32, ptr %i.e, align 8, !tbaa !51
   %i.j = sext i32 %i.i to i64
   %i.k = load i64, ptr %i.g, align 8, !tbaa !69
   %i.l = and i64 %i.k, 32767
@@ -719,7 +719,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @rb_node_init(ptr noundef %i.al, i32 noundef range(i32 0, 115) 1) #33
   %i.am = getelementptr i8, ptr %i.al, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.am, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.aj, i64 16, i1 false), !tbaa.struct !57
-  %i.an = load i32, ptr %i.aj, align 4, !tbaa !51
+  %i.an = load i32, ptr %i.aj, align 8, !tbaa !51
   %i.ao = sext i32 %i.an to i64
   %i.ap = load i64, ptr %i.al, align 8, !tbaa !69
   %i.aq = and i64 %i.ap, 32767
@@ -881,21 +881,21 @@ bb.c:                                             ; preds = %.lr.ph, %parser_yye
 bb.d:                                             ; preds = %bb.c
   tail call void (ptr, ptr, ptr, ...) @parser_compile_error(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.m, ptr noundef nonnull @.str.561, ptr noundef nonnull @.str.566)
   %i.n = load i32, ptr %i.e, align 4, !tbaa !29   ; 2 uses
-  %i.o = load i32, ptr %i.m, align 4, !tbaa !51
+  %i.o = load i32, ptr %i.m, align 8, !tbaa !51
   %i.p = icmp eq i32 %i.o, %i.n
   br i1 %i.p, label %parser_yyerror.exit.sink.split, label %parser_yyerror.exit
 
 bb.e:                                             ; preds = %bb.c
   tail call void (ptr, ptr, ptr, ...) @parser_compile_error(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.m, ptr noundef nonnull @.str.561, ptr noundef nonnull @.str.567)
   %i.q = load i32, ptr %i.e, align 4, !tbaa !29   ; 2 uses
-  %i.r = load i32, ptr %i.m, align 4, !tbaa !51
+  %i.r = load i32, ptr %i.m, align 8, !tbaa !51
   %i.s = icmp eq i32 %i.r, %i.q
   br i1 %i.s, label %parser_yyerror.exit.sink.split, label %parser_yyerror.exit
 
 bb.f:                                             ; preds = %bb.c
   tail call void (ptr, ptr, ptr, ...) @parser_compile_error(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.m, ptr noundef nonnull @.str.561, ptr noundef nonnull @.str.568)
   %i.t = load i32, ptr %i.e, align 4, !tbaa !29   ; 2 uses
-  %i.u = load i32, ptr %i.m, align 4, !tbaa !51
+  %i.u = load i32, ptr %i.m, align 8, !tbaa !51
   %i.v = icmp eq i32 %i.u, %i.t
   br i1 %i.v, label %parser_yyerror.exit.sink.split, label %parser_yyerror.exit
 
@@ -1298,7 +1298,7 @@ bb.c:                                             ; preds = %bb.b
   tail call void (ptr, ptr, ptr, ...) @parser_compile_error(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.e, ptr noundef nonnull @.str.561, ptr noundef nonnull @.str.930)
   %i.f = getelementptr i8, ptr %0, i64 196
   %i.g = load i32, ptr %i.f, align 4, !tbaa !29   ; 2 uses
-  %i.h = load i32, ptr %i.e, align 4, !tbaa !51
+  %i.h = load i32, ptr %i.e, align 8, !tbaa !51
   %i.i = icmp eq i32 %i.h, %i.g
   br i1 %i.i, label %bb.d, label %parser_yyerror.exit
 
@@ -1701,7 +1701,7 @@ list_append.exit:                                 ; preds = %bb.a
   tail call void @rb_node_init(ptr noundef %i.l, i32 noundef range(i32 0, 115) 64) #33
   %i.m = getelementptr i8, ptr %i.l, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.c, i64 16, i1 false), !tbaa.struct !57
-  %i.n = load i32, ptr %i.c, align 4, !tbaa !51
+  %i.n = load i32, ptr %i.c, align 8, !tbaa !51
   %i.o = sext i32 %i.n to i64
   %i.p = load i64, ptr %i.l, align 8, !tbaa !69
   %i.q = and i64 %i.p, 32767
@@ -1725,7 +1725,7 @@ list_append.exit:                                 ; preds = %bb.a
   tail call void @rb_node_init(ptr noundef %i.aa, i32 noundef range(i32 0, 115) 43) #33
   %i.ab = getelementptr i8, ptr %i.aa, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ab, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.c, i64 16, i1 false), !tbaa.struct !57
-  %i.ac = load i32, ptr %i.c, align 4, !tbaa !51
+  %i.ac = load i32, ptr %i.c, align 8, !tbaa !51
   %i.ad = sext i32 %i.ac to i64
   %i.ae = load i64, ptr %i.aa, align 8, !tbaa !69
   %i.af = and i64 %i.ae, 32767
@@ -1817,7 +1817,7 @@ list_append.exit:                                 ; preds = %bb.c
   tail call void @rb_node_init(ptr noundef %i.ad, i32 noundef range(i32 0, 115) 43) #33
   %i.ae = getelementptr i8, ptr %i.ad, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !57
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !51
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !51
   %i.ag = sext i32 %i.af to i64
   %i.ah = load i64, ptr %i.ad, align 8, !tbaa !69
   %i.ai = and i64 %i.ah, 32767
@@ -2220,7 +2220,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   tail call void @rb_node_init(ptr noundef %i.jg, i32 noundef range(i32 0, 115) 43) #33
   %i.jh = getelementptr i8, ptr %i.jg, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jh, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.iu, i64 16, i1 false), !tbaa.struct !57
-  %i.ji = load i32, ptr %i.iu, align 4, !tbaa !51
+  %i.ji = load i32, ptr %i.iu, align 8, !tbaa !51
   %i.jj = sext i32 %i.ji to i64
   %i.jk = load i64, ptr %i.jg, align 8, !tbaa !69
   %i.jl = and i64 %i.jk, 32767
@@ -2284,7 +2284,7 @@ list_append.exit:                                 ; preds = %bb.ao, %bb.ap
   tail call void @rb_node_init(ptr noundef %i.kp, i32 noundef range(i32 0, 115) 43) #33
   %i.kq = getelementptr i8, ptr %i.kp, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kq, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.kb, i64 16, i1 false), !tbaa.struct !57
-  %i.kr = load i32, ptr %i.kb, align 4, !tbaa !51
+  %i.kr = load i32, ptr %i.kb, align 8, !tbaa !51
   %i.ks = sext i32 %i.kr to i64
   %i.kt = load i64, ptr %i.kp, align 8, !tbaa !69
   %i.ku = and i64 %i.kt, 32767
@@ -2687,7 +2687,7 @@ nd_line.exit:                                     ; preds = %bb.a
   br i1 %.not.i8, label %parser_show_error_line.exit, label %bb.b
 
 bb.b:                                             ; preds = %nd_line.exit
-  %i.m = load i32, ptr %i.j, align 4, !tbaa !51
+  %i.m = load i32, ptr %i.j, align 8, !tbaa !51
   %i.n = icmp eq i32 %i.m, %i.l
   br i1 %i.n, label %bb.c, label %parser_show_error_line.exit
 
@@ -2947,7 +2947,7 @@ nd_line.exit:                                     ; preds = %bb.a
   br i1 %.not.i8, label %parser_show_error_line.exit, label %bb.b
 
 bb.b:                                             ; preds = %nd_line.exit
-  %i.m = load i32, ptr %i.j, align 4, !tbaa !51
+  %i.m = load i32, ptr %i.j, align 8, !tbaa !51
   %i.n = icmp eq i32 %i.m, %i.l
   br i1 %i.n, label %bb.c, label %parser_show_error_line.exit
 
@@ -3350,7 +3350,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void (ptr, ptr, ptr, ...) @parser_compile_error(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.ac, ptr noundef nonnull @.str.561, ptr noundef nonnull @.str.902)
   %i.ad = getelementptr i8, ptr %0, i64 196
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !29 ; 2 uses
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !51
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !51
   %i.ag = icmp eq i32 %i.af, %i.ae
   br i1 %i.ag, label %bb.i, label %parser_yyerror.exit
 

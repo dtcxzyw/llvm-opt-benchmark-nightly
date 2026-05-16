@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %name_find.exit.i
 
 onig_name_to_group_numbers.exit.thread25.thread32: ; preds = %bb.b
   %i.i = getelementptr i8, ptr %.pre.i.i, i64 24
-  %i.j = load i32, ptr %i.i, align 4, !tbaa !7
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !7
   br label %onig_name_to_group_numbers.exit.thread
 
 onig_name_to_group_numbers.exit:                  ; preds = %bb.b
@@ -604,7 +604,7 @@ bb.fb:                                            ; preds = %bb.fa
 
 .preheader:                                       ; preds = %bb.fb
   %i.po = getelementptr i8, ptr %.3306543, i64 8
-  %i.pp = load i32, ptr %i.po, align 4, !tbaa !7
+  %i.pp = load i32, ptr %i.po, align 8, !tbaa !7
   %.not381 = icmp eq i32 %i.pp, 0
   br i1 %.not381, label %bb.fc, label %.loopexit
 
@@ -616,7 +616,7 @@ bb.fc:                                            ; preds = %.preheader
 
 bb.fd:                                            ; preds = %bb.fc
   %i.ps = getelementptr i8, ptr %.3306543, i64 16
-  %i.pt = load i32, ptr %i.ps, align 4, !tbaa !7
+  %i.pt = load i32, ptr %i.ps, align 8, !tbaa !7
   %.not381.2 = icmp eq i32 %i.pt, 0
   br i1 %.not381.2, label %bb.fe, label %.loopexit
 
@@ -628,7 +628,7 @@ bb.fe:                                            ; preds = %bb.fd
 
 bb.ff:                                            ; preds = %bb.fe
   %i.pw = getelementptr i8, ptr %.3306543, i64 24
-  %i.px = load i32, ptr %i.pw, align 4, !tbaa !7
+  %i.px = load i32, ptr %i.pw, align 8, !tbaa !7
   %.not381.4 = icmp eq i32 %i.px, 0
   br i1 %.not381.4, label %bb.fg, label %.loopexit
 
@@ -640,7 +640,7 @@ bb.fg:                                            ; preds = %bb.ff
 
 bb.fh:                                            ; preds = %bb.fg
   %i.qa = getelementptr i8, ptr %.3306543, i64 32
-  %i.qb = load i32, ptr %i.qa, align 4, !tbaa !7
+  %i.qb = load i32, ptr %i.qa, align 8, !tbaa !7
   %.not381.6 = icmp eq i32 %i.qb, 0
   br i1 %.not381.6, label %bb.fi, label %.loopexit
 
@@ -802,7 +802,7 @@ bb.f:                                             ; preds = %bb.e
 .thread:                                          ; preds = %bb.e, %bb.f, %bb.b
   %.232 = phi i32 [ -1, %bb.b ], [ %i.j, %bb.e ], [ %spec.store.select, %bb.f ] ; 2 uses
   %i.w = getelementptr i8, ptr %0, i64 8
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !7    ; 3 uses
+  %i.x = load i32, ptr %i.w, align 8, !tbaa !7    ; 3 uses
   %.not43 = icmp eq i32 %i.x, 0
   br i1 %.not43, label %bb.i, label %bb.g
 
@@ -841,7 +841,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.i
   %.5.ph.1 = phi i32 [ %.5.ph, %bb.i ], [ %i.ak, %bb.k ] ; 2 uses
   %i.al = getelementptr i8, ptr %0, i64 16
-  %i.am = load i32, ptr %i.al, align 4, !tbaa !7  ; 3 uses
+  %i.am = load i32, ptr %i.al, align 8, !tbaa !7  ; 3 uses
   %.not43.2 = icmp eq i32 %i.am, 0
   br i1 %.not43.2, label %bb.o, label %bb.m
 
@@ -881,7 +881,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q, %bb.o
   %.5.ph.3 = phi i32 [ %.5.ph.2, %bb.o ], [ %i.ba, %bb.q ] ; 2 uses
   %i.bb = getelementptr i8, ptr %0, i64 24
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !7  ; 3 uses
+  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !7  ; 3 uses
   %.not43.4 = icmp eq i32 %i.bc, 0
   br i1 %.not43.4, label %bb.u, label %bb.s
 
@@ -921,7 +921,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w, %bb.u
   %.5.ph.5 = phi i32 [ %.5.ph.4, %bb.u ], [ %i.bq, %bb.w ] ; 2 uses
   %i.br = getelementptr i8, ptr %0, i64 32
-  %i.bs = load i32, ptr %i.br, align 4, !tbaa !7  ; 3 uses
+  %i.bs = load i32, ptr %i.br, align 8, !tbaa !7  ; 3 uses
   %.not43.6 = icmp eq i32 %i.bs, 0
   br i1 %.not43.6, label %bb.aa, label %bb.y
 
@@ -1324,19 +1324,19 @@ bb.a:
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = load <4 x i32>, ptr %i.k, align 4, !tbaa !7
+  %i.u = load <4 x i32>, ptr %i.k, align 8, !tbaa !7
   %i.v = xor <4 x i32> %i.u, splat (i32 -1)
   store <4 x i32> %i.v, ptr %i.b, align 16, !tbaa !7
   %i.w = getelementptr i8, ptr %0, i64 24
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.y = load <4 x i32>, ptr %i.w, align 4, !tbaa !7
+  %i.y = load <4 x i32>, ptr %i.w, align 8, !tbaa !7
   %i.z = xor <4 x i32> %i.y, splat (i32 -1)
   store <4 x i32> %i.z, ptr %i.x, align 16, !tbaa !7
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.044 = phi ptr [ %i.b, %bb.b ], [ %i.k, %bb.a ] ; 10 uses
-  %i.aa = load i32, ptr %i.r, align 4, !tbaa !7   ; 2 uses
+  %i.aa = load i32, ptr %i.r, align 8, !tbaa !7   ; 2 uses
   br i1 %i.p, label %bb.d, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
@@ -1411,25 +1411,25 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge
-  store i32 %i.aq, ptr %i.k, align 4, !tbaa !7
+  store i32 %i.aq, ptr %i.k, align 8, !tbaa !7
   %i.ca = load i32, ptr %i.at, align 4, !tbaa !7
   %i.cb = getelementptr i8, ptr %0, i64 12
   store i32 %i.ca, ptr %i.cb, align 4, !tbaa !7
   %i.cc = load i32, ptr %i.ay, align 4, !tbaa !7
   %i.cd = getelementptr i8, ptr %0, i64 16
-  store i32 %i.cc, ptr %i.cd, align 4, !tbaa !7
+  store i32 %i.cc, ptr %i.cd, align 8, !tbaa !7
   %i.ce = load i32, ptr %i.bd, align 4, !tbaa !7
   %i.cf = getelementptr i8, ptr %0, i64 20
   store i32 %i.ce, ptr %i.cf, align 4, !tbaa !7
   %i.cg = load i32, ptr %i.bi, align 4, !tbaa !7
   %i.ch = getelementptr i8, ptr %0, i64 24
-  store i32 %i.cg, ptr %i.ch, align 4, !tbaa !7
+  store i32 %i.cg, ptr %i.ch, align 8, !tbaa !7
   %i.ci = load i32, ptr %i.bn, align 4, !tbaa !7
   %i.cj = getelementptr i8, ptr %0, i64 28
   store i32 %i.ci, ptr %i.cj, align 4, !tbaa !7
   %i.ck = load i32, ptr %i.bs, align 4, !tbaa !7
   %i.cl = getelementptr i8, ptr %0, i64 32
-  store i32 %i.ck, ptr %i.cl, align 4, !tbaa !7
+  store i32 %i.ck, ptr %i.cl, align 8, !tbaa !7
   %i.cm = load i32, ptr %i.bx, align 4, !tbaa !7
   %i.cn = getelementptr i8, ptr %0, i64 36
   store i32 %i.cm, ptr %i.cn, align 4, !tbaa !7
@@ -1439,13 +1439,13 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge
   br i1 %i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.co = load <4 x i32>, ptr %i.k, align 4, !tbaa !7
+  %i.co = load <4 x i32>, ptr %i.k, align 8, !tbaa !7
   %i.cp = xor <4 x i32> %i.co, splat (i32 -1)
-  store <4 x i32> %i.cp, ptr %i.k, align 4, !tbaa !7
+  store <4 x i32> %i.cp, ptr %i.k, align 8, !tbaa !7
   %i.cq = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %i.cr = load <4 x i32>, ptr %i.cq, align 4, !tbaa !7
+  %i.cr = load <4 x i32>, ptr %i.cq, align 8, !tbaa !7
   %i.cs = xor <4 x i32> %i.cr, splat (i32 -1)
-  store <4 x i32> %i.cs, ptr %i.cq, align 4, !tbaa !7
+  store <4 x i32> %i.cs, ptr %i.cq, align 8, !tbaa !7
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -1608,19 +1608,19 @@ bb.a:
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.u = load <4 x i32>, ptr %i.k, align 4, !tbaa !7
+  %i.u = load <4 x i32>, ptr %i.k, align 8, !tbaa !7
   %i.v = xor <4 x i32> %i.u, splat (i32 -1)
   store <4 x i32> %i.v, ptr %i.b, align 16, !tbaa !7
   %i.w = getelementptr i8, ptr %0, i64 24
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %i.y = load <4 x i32>, ptr %i.w, align 4, !tbaa !7
+  %i.y = load <4 x i32>, ptr %i.w, align 8, !tbaa !7
   %i.z = xor <4 x i32> %i.y, splat (i32 -1)
   store <4 x i32> %i.z, ptr %i.x, align 16, !tbaa !7
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.044 = phi ptr [ %i.b, %bb.b ], [ %i.k, %bb.a ] ; 10 uses
-  %i.aa = load i32, ptr %i.r, align 4, !tbaa !7   ; 2 uses
+  %i.aa = load i32, ptr %i.r, align 8, !tbaa !7   ; 2 uses
   br i1 %i.p, label %bb.d, label %._crit_edge
 
 bb.d:                                             ; preds = %bb.c
@@ -1695,25 +1695,25 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %._crit_edge
-  store i32 %i.aq, ptr %i.k, align 4, !tbaa !7
+  store i32 %i.aq, ptr %i.k, align 8, !tbaa !7
   %i.ca = load i32, ptr %i.at, align 4, !tbaa !7
   %i.cb = getelementptr i8, ptr %0, i64 12
   store i32 %i.ca, ptr %i.cb, align 4, !tbaa !7
   %i.cc = load i32, ptr %i.ay, align 4, !tbaa !7
   %i.cd = getelementptr i8, ptr %0, i64 16
-  store i32 %i.cc, ptr %i.cd, align 4, !tbaa !7
+  store i32 %i.cc, ptr %i.cd, align 8, !tbaa !7
   %i.ce = load i32, ptr %i.bd, align 4, !tbaa !7
   %i.cf = getelementptr i8, ptr %0, i64 20
   store i32 %i.ce, ptr %i.cf, align 4, !tbaa !7
   %i.cg = load i32, ptr %i.bi, align 4, !tbaa !7
   %i.ch = getelementptr i8, ptr %0, i64 24
-  store i32 %i.cg, ptr %i.ch, align 4, !tbaa !7
+  store i32 %i.cg, ptr %i.ch, align 8, !tbaa !7
   %i.ci = load i32, ptr %i.bn, align 4, !tbaa !7
   %i.cj = getelementptr i8, ptr %0, i64 28
   store i32 %i.ci, ptr %i.cj, align 4, !tbaa !7
   %i.ck = load i32, ptr %i.bs, align 4, !tbaa !7
   %i.cl = getelementptr i8, ptr %0, i64 32
-  store i32 %i.ck, ptr %i.cl, align 4, !tbaa !7
+  store i32 %i.ck, ptr %i.cl, align 8, !tbaa !7
   %i.cm = load i32, ptr %i.bx, align 4, !tbaa !7
   %i.cn = getelementptr i8, ptr %0, i64 36
   store i32 %i.cm, ptr %i.cn, align 4, !tbaa !7
@@ -1723,13 +1723,13 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge
   br i1 %i.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.co = load <4 x i32>, ptr %i.k, align 4, !tbaa !7
+  %i.co = load <4 x i32>, ptr %i.k, align 8, !tbaa !7
   %i.cp = xor <4 x i32> %i.co, splat (i32 -1)
-  store <4 x i32> %i.cp, ptr %i.k, align 4, !tbaa !7
+  store <4 x i32> %i.cp, ptr %i.k, align 8, !tbaa !7
   %i.cq = getelementptr i8, ptr %0, i64 24        ; 2 uses
-  %i.cr = load <4 x i32>, ptr %i.cq, align 4, !tbaa !7
+  %i.cr = load <4 x i32>, ptr %i.cq, align 8, !tbaa !7
   %i.cs = xor <4 x i32> %i.cr, splat (i32 -1)
-  store <4 x i32> %i.cs, ptr %i.cq, align 4, !tbaa !7
+  store <4 x i32> %i.cs, ptr %i.cq, align 8, !tbaa !7
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f

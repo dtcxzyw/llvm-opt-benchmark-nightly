@@ -201,9 +201,9 @@ bb.h:                                             ; preds = %bb.g
 _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110Symbolizer17FindSymbolInCacheEPKv.exit.i: ; preds = %bb.h, %bb.g, %bb.f, %bb.e
   %.01418.lcssa.i.i = phi i64 [ 0, %bb.e ], [ 1, %bb.f ], [ 2, %bb.g ], [ 3, %bb.h ] ; 2 uses
   %.0.ptr.i.i.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 64 ; 3 uses
-  %i.ap = load <4 x i32>, ptr %.0.ptr.i.i.i, align 4, !tbaa !3
+  %i.ap = load <4 x i32>, ptr %.0.ptr.i.i.i, align 8, !tbaa !3
   %i.aq = add <4 x i32> %i.ap, splat (i32 1)
-  store <4 x i32> %i.aq, ptr %.0.ptr.i.i.i, align 4, !tbaa !3
+  store <4 x i32> %i.aq, ptr %.0.ptr.i.i.i, align 8, !tbaa !3
   %i.ar = getelementptr inbounds nuw [4 x i8], ptr %.0.ptr.i.i.i, i64 %.01418.lcssa.i.i
   store i32 0, ptr %i.ar, align 4, !tbaa !3
   %i.as = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
@@ -606,7 +606,7 @@ bb.bz:                                            ; preds = %bb.cd, %bb.cc, %bb.
   %.04063.lcssa.i.i.i = phi i64 [ 0, %bb.by ], [ 1, %bb.cb ], [ 2, %bb.cc ], [ 3, %bb.cd ] ; 3 uses
   %i.mi = getelementptr inbounds nuw [8 x i8], ptr %i.me, i64 %.04063.lcssa.i.i.i
   %i.mj = add i32 %.pre.i77.i.i, 1
-  store i32 %i.mj, ptr %i.mf, align 4, !tbaa !3
+  store i32 %i.mj, ptr %i.mf, align 8, !tbaa !3
   %.0.ptr.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.me, i64 68 ; 2 uses
   %i.mk = load <2 x i32>, ptr %.0.ptr.1.i.i.i.i, align 4, !tbaa !3
   %i.ml = add <2 x i32> %i.mk, splat (i32 1)
@@ -656,7 +656,7 @@ bb.ce:                                            ; preds = %bb.bz
 
 bb.cf:                                            ; preds = %bb.cd
   %i.nf = getelementptr inbounds nuw i8, ptr %i.me, i64 72 ; 2 uses
-  %i.ng = load i32, ptr %i.nf, align 4, !tbaa !3  ; 3 uses
+  %i.ng = load i32, ptr %i.nf, align 8, !tbaa !3  ; 3 uses
   %.146.1.i.i.i = call i32 @llvm.umax.i32(i32 %i.mw, i32 %.pre.i77.i.i) ; 2 uses
   %.not49.2.not.i.i.i = icmp ult i32 %i.ng, %.146.1.i.i.i
   %.not49.1.not.i.i.i = icmp uge i32 %i.mw, %.pre.i77.i.i
@@ -668,11 +668,11 @@ bb.cf:                                            ; preds = %bb.cd
   %.not49.3.not.i.i.i = icmp ult i32 %i.ni, %.146.2.i.i.i
   %.144.3.i.i.i = select i1 %.not49.3.not.i.i.i, i64 %.144.2.i.i.i, i64 3 ; 3 uses
   %i.nj = add i32 %.pre.i77.i.i, 1
-  store i32 %i.nj, ptr %i.mf, align 4, !tbaa !3
+  store i32 %i.nj, ptr %i.mf, align 8, !tbaa !3
   %i.nk = add i32 %i.mw, 1
   store i32 %i.nk, ptr %i.mv, align 4, !tbaa !3
   %i.nl = add i32 %i.ng, 1
-  store i32 %i.nl, ptr %i.nf, align 4, !tbaa !3
+  store i32 %i.nl, ptr %i.nf, align 8, !tbaa !3
   %i.nm = add i32 %i.ni, 1
   store i32 %i.nm, ptr %i.nh, align 4, !tbaa !3
   %i.nn = getelementptr inbounds nuw i8, ptr %i.me, i64 32

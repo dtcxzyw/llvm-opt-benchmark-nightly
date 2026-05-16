@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  store i8 1, ptr %i.p, align 1, !noalias !58
+  store i8 1, ptr %i.p, align 8, !noalias !58
   resume { ptr, i32 } %i.aa
 
 bb.l:                                             ; preds = %bb.i
@@ -604,8 +604,8 @@ bb.c:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   store i64 %i.r, ptr %i.h, align 8, !noalias !900
   tail call void @llvm.experimental.noalias.scope.decl(metadata !904)
-  %i.t = load ptr, ptr %i.s, align 8, !alias.scope !904, !noalias !907, !align !285, !noundef !16 ; 5 uses
-  store ptr null, ptr %i.s, align 8, !alias.scope !904, !noalias !907
+  %i.t = load ptr, ptr %i.s, align 16, !alias.scope !904, !noalias !907, !align !285, !noundef !16 ; 5 uses
+  store ptr null, ptr %i.s, align 16, !alias.scope !904, !noalias !907
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.t, null
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %bb.e, label %bb.d, !prof !10
 
@@ -1008,8 +1008,8 @@ bb.c:                                             ; preds = %bb.b
   store i64 %i.p, ptr %i.f, align 8, !noalias !954
   tail call void @llvm.experimental.noalias.scope.decl(metadata !958)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !961
-  %.sroa.01.0.copyload.i.i.i.i.i.i.i.i.i = load i64, ptr %i.q, align 8, !alias.scope !958, !noalias !963 ; 2 uses
-  store i64 2, ptr %i.q, align 8, !alias.scope !958, !noalias !963
+  %.sroa.01.0.copyload.i.i.i.i.i.i.i.i.i = load i64, ptr %i.q, align 16, !alias.scope !958, !noalias !963 ; 2 uses
+  store i64 2, ptr %i.q, align 16, !alias.scope !958, !noalias !963
   %.not.i.i.i.i.i.i.i.i.i = icmp eq i64 %.sroa.01.0.copyload.i.i.i.i.i.i.i.i.i, 2
   br i1 %.not.i.i.i.i.i.i.i.i.i, label %bb.e, label %bb.d, !prof !10
 

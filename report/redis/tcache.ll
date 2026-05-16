@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ak, i64 10536
   tail call void @je_malloc_mutex_lock_slow(ptr noundef nonnull %i.aq) #13
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ak, i64 10640
-  store atomic i8 1, ptr %i.ar monotonic, align 1
+  store atomic i8 1, ptr %i.ar monotonic, align 8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -270,7 +270,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ak, i64 10640
-  store atomic i8 0, ptr %i.bm monotonic, align 1
+  store atomic i8 0, ptr %i.bm monotonic, align 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ak, i64 10600
   %i.bo = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.bn) #13 ; 0 uses
   br label %.critedge139.i.preheader
@@ -537,7 +537,7 @@ bb.h:                                             ; preds = %bb.g
   %i.bx = getelementptr inbounds nuw i8, ptr %i.aw, i64 10536
   tail call void @je_malloc_mutex_lock_slow(ptr noundef nonnull %i.bx) #13
   %i.by = getelementptr inbounds nuw i8, ptr %i.aw, i64 10640
-  store atomic i8 1, ptr %i.by monotonic, align 1
+  store atomic i8 1, ptr %i.by monotonic, align 8
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -625,7 +625,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.db = getelementptr inbounds nuw i8, ptr %i.aw, i64 10640
-  store atomic i8 0, ptr %i.db monotonic, align 1
+  store atomic i8 0, ptr %i.db monotonic, align 8
   %i.dc = getelementptr inbounds nuw i8, ptr %i.aw, i64 10600
   %i.dd = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.dc) #13 ; 0 uses
   br label %.critedge139.i
@@ -1028,7 +1028,7 @@ bb.j:                                             ; preds = %bb.i, %.thread7
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !135
   tail call void @je_tcache_stats_merge(ptr noundef %0, ptr noundef %i.aq, ptr noundef nonnull %i.b)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 10512
-  store atomic i8 0, ptr %i.ar monotonic, align 1
+  store atomic i8 0, ptr %i.ar monotonic, align 8
   %i.as = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.c) #13 ; 0 uses
   store ptr null, ptr %i.a, align 8, !tbaa !47
   ret void
@@ -1431,7 +1431,7 @@ bb.p:                                             ; preds = %bb.m
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = call ptr @je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext true) #13 ; 5 uses
-  %i.by = load i8, ptr %0, align 1, !tbaa !14, !range !16, !noundef !17
+  %i.by = load i8, ptr %0, align 8, !tbaa !14, !range !16, !noundef !17
   %i.bz = trunc nuw i8 %i.by to i1
   br i1 %i.bz, label %bb.r, label %arena_ichoose.exit
 
@@ -1834,7 +1834,7 @@ bb.o:                                             ; preds = %bb.n
 arena_get.exit.i:                                 ; preds = %bb.o, %bb.n
   %.0.i18.i = phi ptr [ %i.ao, %bb.o ], [ %i.am, %bb.n ] ; 2 uses
   tail call void @je_arena_migrate(ptr noundef nonnull %0, ptr noundef nonnull %i.ai, ptr noundef %.0.i18.i) #13
-  %i.ap = load i8, ptr %0, align 1, !tbaa !14, !range !16, !noundef !17
+  %i.ap = load i8, ptr %0, align 8, !tbaa !14, !range !16, !noundef !17
   %i.aq = trunc nuw i8 %i.ap to i1
   br i1 %i.aq, label %bb.p, label %percpu_arena_update.exit
 

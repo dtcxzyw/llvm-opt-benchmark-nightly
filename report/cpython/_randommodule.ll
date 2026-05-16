@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %.preheader43
   %.phi.trans.insert = getelementptr i8, ptr %0, i64 928
-  %.pre51 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !6
+  %.pre51 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !6
   br label %.lr.ph
 
 .preheader43:                                     ; preds = %.preheader43.1, %.preheader43.preheader
@@ -289,7 +289,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph
   %i.bo = getelementptr i8, ptr %0, i64 2512      ; 2 uses
-  %i.bp = load i32, ptr %i.bo, align 4, !tbaa !6
+  %i.bp = load i32, ptr %i.bo, align 8, !tbaa !6
   %i.bq = and i32 %i.bp, -2147483648
   %i.br = load i32, ptr %i.a, align 4, !tbaa !6   ; 2 uses
   %i.bs = and i32 %i.br, 2147483646
@@ -303,7 +303,7 @@ bb.a:
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !6
   %i.cb = xor i32 %i.ca, %i.bv
   %i.cc = xor i32 %i.cb, %i.bw
-  store i32 %i.cc, ptr %i.bo, align 4, !tbaa !6
+  store i32 %i.cc, ptr %i.bo, align 8, !tbaa !6
   br label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge, %bb.a
@@ -410,7 +410,7 @@ bb.f:                                             ; preds = %bb.h, %init_genrand
   br i1 %i.al, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.am = load i32, ptr %i.v, align 4, !tbaa !6
+  %i.am = load i32, ptr %i.v, align 8, !tbaa !6
   store i32 %i.am, ptr %i.h, align 4, !tbaa !6
   br label %bb.h
 
@@ -441,7 +441,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.az, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %.preheader.i.i
-  %i.ba = load i32, ptr %i.v, align 4, !tbaa !6
+  %i.ba = load i32, ptr %i.v, align 8, !tbaa !6
   store i32 %i.ba, ptr %i.h, align 4, !tbaa !6
   br label %bb.j
 
@@ -547,7 +547,7 @@ bb.p:                                             ; preds = %bb.r, %init_genrand
   br i1 %i.cp, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.cq = load i32, ptr %i.bz, align 4, !tbaa !6
+  %i.cq = load i32, ptr %i.bz, align 8, !tbaa !6
   store i32 %i.cq, ptr %i.bl, align 4, !tbaa !6
   br label %bb.r
 
@@ -578,7 +578,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   br i1 %i.dd, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.preheader.i.i57
-  %i.de = load i32, ptr %i.bz, align 4, !tbaa !6
+  %i.de = load i32, ptr %i.bz, align 8, !tbaa !6
   store i32 %i.de, ptr %i.bl, align 4, !tbaa !6
   br label %bb.t
 
@@ -724,7 +724,7 @@ bb.ai:                                            ; preds = %bb.ak, %init_genran
   br i1 %i.fl, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.fm = load i32, ptr %i.ev, align 4, !tbaa !6
+  %i.fm = load i32, ptr %i.ev, align 8, !tbaa !6
   store i32 %i.fm, ptr %i.eg, align 4, !tbaa !6
   br label %bb.ak
 
@@ -755,7 +755,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %i.fz, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %.preheader.i
-  %i.ga = load i32, ptr %i.ev, align 4, !tbaa !6
+  %i.ga = load i32, ptr %i.ev, align 8, !tbaa !6
   store i32 %i.ga, ptr %i.eg, align 4, !tbaa !6
   br label %bb.am
 

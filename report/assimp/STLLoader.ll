@@ -201,7 +201,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %._c
 
 bb.ar:                                            ; preds = %bb.aq
   %i.dt = trunc nuw nsw i64 %i.dr to i32
-  store i32 %i.dt, ptr %i.bp, align 4
+  store i32 %i.dt, ptr %i.bp, align 8
   %i.du = getelementptr inbounds nuw i8, ptr %i.bp, i64 4 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.du, ptr align 1 %.pre, i64 %i.dr, i1 false)
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 %i.dr

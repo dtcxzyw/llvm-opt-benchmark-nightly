@@ -201,10 +201,10 @@ bb.db:                                            ; preds = %_ZN6google8protobuf
           to label %bb.dc unwind label %bb.ct
 
 bb.dc:                                            ; preds = %bb.db, %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE5eraseENS0_8internal19RepeatedPtrIteratorIKS7_EE.exit.i.i.i.i
-  %i.wc = load i32, ptr %i.ti, align 4, !tbaa !3
+  %i.wc = load i32, ptr %i.ti, align 8, !tbaa !3
   %i.wd = and i32 %i.wc, -19
   %i.we = or disjoint i32 %i.wd, 2
-  store i32 %i.we, ptr %i.ti, align 4, !tbaa !3
+  store i32 %i.we, ptr %i.ti, align 8, !tbaa !3
   %i.wf = getelementptr inbounds nuw i8, ptr %i.sn, i64 40 ; 4 uses
   %i.wg = getelementptr inbounds nuw i8, ptr %i.sn, i64 48 ; 2 uses
   %i.wh = load i32, ptr %i.wg, align 8, !tbaa !192
@@ -248,9 +248,9 @@ bb.de:                                            ; preds = %.lr.ph324.i.i.i.i
 bb.df:                                            ; preds = %._crit_edge360.i.i.i.i, %.lr.ph324.i.i.i.i
   %i.wx = phi ptr [ %.pre.i.i.i.i, %._crit_edge360.i.i.i.i ], [ %i.wr, %.lr.ph324.i.i.i.i ] ; 2 uses
   %i.wy = getelementptr inbounds nuw i8, ptr %i.ws, i64 16 ; 2 uses
-  %i.wz = load i32, ptr %i.wy, align 4, !tbaa !3
+  %i.wz = load i32, ptr %i.wy, align 8, !tbaa !3
   %i.xa = and i32 %i.wz, -17
-  store i32 %i.xa, ptr %i.wy, align 4, !tbaa !3
+  store i32 %i.xa, ptr %i.wy, align 8, !tbaa !3
   %i.xb = getelementptr inbounds nuw i8, ptr %.sroa.0212.0322.i.i.i.i, i64 8 ; 2 uses
   %i.xc = ptrtoint ptr %i.wx to i64               ; 2 uses
   %i.xd = and i64 %i.xc, 1
@@ -653,10 +653,10 @@ bb.gj:                                            ; preds = %_ZN6google8protobuf
           to label %bb.gk unwind label %bb.gb
 
 bb.gk:                                            ; preds = %bb.gj, %_ZN6google8protobuf16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE5eraseENS0_8internal19RepeatedPtrIteratorIKS7_EE.exit.i.i.i
-  %i.aiz = load i32, ptr %i.agf, align 4, !tbaa !3
+  %i.aiz = load i32, ptr %i.agf, align 8, !tbaa !3
   %i.aja = and i32 %i.aiz, -19
   %i.ajb = or disjoint i32 %i.aja, 2
-  store i32 %i.ajb, ptr %i.agf, align 4, !tbaa !3
+  store i32 %i.ajb, ptr %i.agf, align 8, !tbaa !3
   %i.ajc = getelementptr inbounds nuw i8, ptr %i.adv, i64 40 ; 4 uses
   %i.ajd = getelementptr inbounds nuw i8, ptr %i.adv, i64 48 ; 2 uses
   %i.aje = load i32, ptr %i.ajd, align 8, !tbaa !192
@@ -710,9 +710,9 @@ bb.gm:                                            ; preds = %.lr.ph213.i.i.i
 bb.gn:                                            ; preds = %._crit_edge257.i.i.i, %.lr.ph213.i.i.i
   %i.ajx = phi ptr [ %.pre.i.i.i, %._crit_edge257.i.i.i ], [ %i.ajr, %.lr.ph213.i.i.i ] ; 2 uses
   %i.ajy = getelementptr inbounds nuw i8, ptr %i.ajs, i64 16 ; 2 uses
-  %i.ajz = load i32, ptr %i.ajy, align 4, !tbaa !3
+  %i.ajz = load i32, ptr %i.ajy, align 8, !tbaa !3
   %i.aka = and i32 %i.ajz, -17
-  store i32 %i.aka, ptr %i.ajy, align 4, !tbaa !3
+  store i32 %i.aka, ptr %i.ajy, align 8, !tbaa !3
   %i.akb = getelementptr inbounds nuw i8, ptr %.sroa.0148.0211.i.i.i, i64 8 ; 2 uses
   %i.akc = ptrtoint ptr %i.ajx to i64             ; 2 uses
   %i.akd = and i64 %i.akc, 1

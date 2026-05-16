@@ -201,18 +201,18 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.cg = and i32 %.sroa.512.0.copyload, %.sroa.010.0.copyload
-  %i.ch = load i32, ptr %i.i, align 4, !tbaa !93
+  %i.ch = load i32, ptr %i.i, align 8, !tbaa !93
   %i.ci = or i32 %i.ch, %.sroa.010.0.copyload
-  store i32 %i.ci, ptr %i.i, align 4, !tbaa !93
+  store i32 %i.ci, ptr %i.i, align 8, !tbaa !93
   %i.cj = load i32, ptr %.sroa.512.0..sroa_idx, align 4, !tbaa !94
   %i.ck = xor i32 %.sroa.010.0.copyload, -1
   %i.cl = and i32 %i.cj, %i.ck
   %i.cm = or i32 %i.cl, %i.cg
   store i32 %i.cm, ptr %.sroa.512.0..sroa_idx, align 4, !tbaa !94
   %i.cn = and i32 %.sroa.5.0.copyload, %.sroa.0.0.copyload
-  %i.co = load i32, ptr %i.j, align 4, !tbaa !93
+  %i.co = load i32, ptr %i.j, align 8, !tbaa !93
   %i.cp = or i32 %i.co, %.sroa.0.0.copyload
-  store i32 %i.cp, ptr %i.j, align 4, !tbaa !93
+  store i32 %i.cp, ptr %i.j, align 8, !tbaa !93
   %i.cq = load i32, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !94
   %i.cr = xor i32 %.sroa.0.0.copyload, -1
   %i.cs = and i32 %i.cq, %i.cr
@@ -615,9 +615,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   %.2268 = phi i32 [ 1, %bb.q ], [ %.1267, %bb.p ]
-  %i.az = load <2 x i32>, ptr %i.q, align 4, !tbaa !7
+  %i.az = load <2 x i32>, ptr %i.q, align 8, !tbaa !7
   %i.ba = or <2 x i32> %i.az, splat (i32 6)
-  store <2 x i32> %i.ba, ptr %i.q, align 4, !tbaa !7
+  store <2 x i32> %i.ba, ptr %i.q, align 8, !tbaa !7
   %i.bb = getelementptr i8, ptr %.0163, i64 1
   br label %thread-pre-split
 
@@ -1018,9 +1018,9 @@ name_match_p.exit.i:                              ; preds = %bb.ag, %._crit_edge
 .loopexit.i:                                      ; preds = %bb.w, %.lr.ph.i.i.preheader, %bb.aa, %.lr.ph.i62.i.preheader, %bb.ae, %.lr.ph.i84.i.preheader, %bb.ah, %.lr.ph.i106.i.preheader, %.lr.ph.i.i, %.lr.ph.i62.i, %.lr.ph.i84.i, %.lr.ph.i106.i
   %.036.ph.i = phi i32 [ 8, %.lr.ph.i84.i ], [ 16, %.lr.ph.i106.i ], [ 4, %.lr.ph.i62.i ], [ 2, %.lr.ph.i.i ], [ 4, %bb.aa ], [ 16, %bb.ah ], [ 8, %bb.ae ], [ 16, %.lr.ph.i106.i.preheader ], [ 8, %.lr.ph.i84.i.preheader ], [ 4, %.lr.ph.i62.i.preheader ], [ 2, %.lr.ph.i.i.preheader ], [ 2, %bb.w ] ; 3 uses
   %i.ha = select i1 %.not40216.i, i32 0, i32 %.036.ph.i
-  %i.hb = load i32, ptr %i.q, align 4, !tbaa !93
+  %i.hb = load i32, ptr %i.q, align 8, !tbaa !93
   %i.hc = or i32 %i.hb, %.036.ph.i
-  store i32 %i.hc, ptr %i.q, align 4, !tbaa !93
+  store i32 %i.hc, ptr %i.q, align 8, !tbaa !93
   %i.hd = load i32, ptr %i.r, align 4, !tbaa !94
   %i.he = xor i32 %.036.ph.i, -1
   %i.hf = and i32 %i.hd, %i.he
@@ -1076,25 +1076,25 @@ bb.an:                                            ; preds = %bb.am, %bb.ak
   ]
 
 bb.ao:                                            ; preds = %bb.an, %.thread127.i
-  %i.hp = load i32, ptr %i.q, align 4, !tbaa !93
+  %i.hp = load i32, ptr %i.q, align 8, !tbaa !93
   %i.hq = or i32 %i.hp, 6
-  store i32 %i.hq, ptr %i.q, align 4, !tbaa !93
+  store i32 %i.hq, ptr %i.q, align 8, !tbaa !93
   %i.hr = load i32, ptr %i.r, align 4, !tbaa !94
   %i.hs = and i32 %i.hr, -7
   br label %proc_W_option.exit
 
 bb.ap:                                            ; preds = %bb.an, %.thread128.i
-  %i.ht = load i32, ptr %i.q, align 4, !tbaa !93
+  %i.ht = load i32, ptr %i.q, align 8, !tbaa !93
   %i.hu = or i32 %i.ht, 2
-  store i32 %i.hu, ptr %i.q, align 4, !tbaa !93
+  store i32 %i.hu, ptr %i.q, align 8, !tbaa !93
   %i.hv = load i32, ptr %i.r, align 4, !tbaa !94
   %i.hw = and i32 %i.hv, -3
   br label %proc_W_option.exit
 
 bb.aq:                                            ; preds = %bb.an
-  %i.hx = load i32, ptr %i.q, align 4, !tbaa !93
+  %i.hx = load i32, ptr %i.q, align 8, !tbaa !93
   %i.hy = or i32 %i.hx, 6
-  store i32 %i.hy, ptr %i.q, align 4, !tbaa !93
+  store i32 %i.hy, ptr %i.q, align 8, !tbaa !93
   %i.hz = load i32, ptr %i.r, align 4, !tbaa !94
   %i.ia = or i32 %i.hz, 6
   br label %proc_W_option.exit
@@ -1497,9 +1497,9 @@ bb.gq:                                            ; preds = %bb.go
   br i1 %i.rf, label %bb.gr, label %bb.gs
 
 bb.gr:                                            ; preds = %bb.gq
-  %i.rg = load <2 x i32>, ptr %i.s, align 4, !tbaa !7
+  %i.rg = load <2 x i32>, ptr %i.s, align 8, !tbaa !7
   %i.rh = or <2 x i32> %i.rg, splat (i32 64)
-  store <2 x i32> %i.rh, ptr %i.s, align 4, !tbaa !7
+  store <2 x i32> %i.rh, ptr %i.s, align 8, !tbaa !7
   br label %proc_long_options.exit
 
 bb.gs:                                            ; preds = %bb.gq
@@ -1526,9 +1526,9 @@ bb.gv:                                            ; preds = %bb.gu, %bb.gt, %bb.
   %.not377.i = icmp eq i8 %i.rl, 0
   %i.ro = getelementptr i8, ptr %.0163, i64 6
   %spec.select401.i = select i1 %.not377.i, ptr %i.rk, ptr %i.ro
-  %i.rp = load <2 x i32>, ptr %i.s, align 4, !tbaa !7
+  %i.rp = load <2 x i32>, ptr %i.s, align 8, !tbaa !7
   %i.rq = or <2 x i32> %i.rp, splat (i32 64)
-  store <2 x i32> %i.rq, ptr %i.s, align 4, !tbaa !7
+  store <2 x i32> %i.rq, ptr %i.s, align 8, !tbaa !7
   call fastcc void @setup_yjit_options(ptr noundef %spec.select401.i)
   br label %proc_long_options.exit
 
@@ -1556,9 +1556,9 @@ bb.gz:                                            ; preds = %bb.gy, %bb.gx, %bb.
   %.not376.i = icmp eq i8 %i.ru, 0
   %i.rx = getelementptr i8, ptr %.0163, i64 6
   %spec.select402.i = select i1 %.not376.i, ptr %i.rt, ptr %i.rx
-  %i.ry = load <2 x i32>, ptr %i.s, align 4, !tbaa !7
+  %i.ry = load <2 x i32>, ptr %i.s, align 8, !tbaa !7
   %i.rz = or <2 x i32> %i.ry, splat (i32 128)
-  store <2 x i32> %i.rz, ptr %i.s, align 4, !tbaa !7
+  store <2 x i32> %i.rz, ptr %i.s, align 8, !tbaa !7
   call fastcc void @setup_zjit_options(ptr noundef %spec.select402.i)
   br label %proc_long_options.exit
 

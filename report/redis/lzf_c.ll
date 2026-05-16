@@ -110,9 +110,9 @@ bb.h:                                             ; preds = %._crit_edge320
 
 bb.i:                                             ; preds = %bb.h
   %i.bf = getelementptr inbounds nuw i8, ptr %i.aa, i64 4
-  %i.bg = load i8, ptr %i.bf, align 1, !tbaa !13
+  %i.bg = load i8, ptr %i.bf, align 2, !tbaa !13
   %i.bh = getelementptr inbounds nuw i8, ptr %.0211304, i64 4
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !13
+  %i.bi = load i8, ptr %i.bh, align 2, !tbaa !13
   %.not246 = icmp eq i8 %i.bg, %i.bi
   br i1 %.not246, label %bb.j, label %.critedge.thread273
 
@@ -126,9 +126,9 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.bn = getelementptr inbounds nuw i8, ptr %i.aa, i64 6
-  %i.bo = load i8, ptr %i.bn, align 1, !tbaa !13
+  %i.bo = load i8, ptr %i.bn, align 2, !tbaa !13
   %i.bp = getelementptr inbounds nuw i8, ptr %.0211304, i64 6
-  %i.bq = load i8, ptr %i.bp, align 1, !tbaa !13
+  %i.bq = load i8, ptr %i.bp, align 2, !tbaa !13
   %.not248 = icmp eq i8 %i.bo, %i.bq
   br i1 %.not248, label %bb.l, label %.critedge.thread273
 
@@ -142,9 +142,9 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.bv = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %i.bw = load i8, ptr %i.bv, align 1, !tbaa !13
+  %i.bw = load i8, ptr %i.bv, align 2, !tbaa !13
   %i.bx = getelementptr inbounds nuw i8, ptr %.0211304, i64 8
-  %i.by = load i8, ptr %i.bx, align 1, !tbaa !13
+  %i.by = load i8, ptr %i.bx, align 2, !tbaa !13
   %.not250 = icmp eq i8 %i.bw, %i.by
   br i1 %.not250, label %bb.n, label %.critedge.thread273
 
@@ -158,9 +158,9 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.cd = getelementptr inbounds nuw i8, ptr %i.aa, i64 10
-  %i.ce = load i8, ptr %i.cd, align 1, !tbaa !13
+  %i.ce = load i8, ptr %i.cd, align 2, !tbaa !13
   %i.cf = getelementptr inbounds nuw i8, ptr %.0211304, i64 10
-  %i.cg = load i8, ptr %i.cf, align 1, !tbaa !13
+  %i.cg = load i8, ptr %i.cf, align 2, !tbaa !13
   %.not252 = icmp eq i8 %i.ce, %i.cg
   br i1 %.not252, label %bb.p, label %.critedge.thread
 
@@ -174,9 +174,9 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.cl = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
-  %i.cm = load i8, ptr %i.cl, align 1, !tbaa !13
+  %i.cm = load i8, ptr %i.cl, align 2, !tbaa !13
   %i.cn = getelementptr inbounds nuw i8, ptr %.0211304, i64 12
-  %i.co = load i8, ptr %i.cn, align 1, !tbaa !13
+  %i.co = load i8, ptr %i.cn, align 2, !tbaa !13
   %.not254 = icmp eq i8 %i.cm, %i.co
   br i1 %.not254, label %bb.r, label %.critedge.thread
 
@@ -190,9 +190,9 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.ct = getelementptr inbounds nuw i8, ptr %i.aa, i64 14
-  %i.cu = load i8, ptr %i.ct, align 1, !tbaa !13
+  %i.cu = load i8, ptr %i.ct, align 2, !tbaa !13
   %i.cv = getelementptr inbounds nuw i8, ptr %.0211304, i64 14
-  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !13
+  %i.cw = load i8, ptr %i.cv, align 2, !tbaa !13
   %.not256 = icmp eq i8 %i.cu, %i.cw
   br i1 %.not256, label %bb.t, label %.critedge.thread
 
@@ -206,9 +206,9 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.db = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
-  %i.dc = load i8, ptr %i.db, align 1, !tbaa !13
+  %i.dc = load i8, ptr %i.db, align 2, !tbaa !13
   %i.dd = getelementptr inbounds nuw i8, ptr %.0211304, i64 16
-  %i.de = load i8, ptr %i.dd, align 1, !tbaa !13
+  %i.de = load i8, ptr %i.dd, align 2, !tbaa !13
   %.not258 = icmp eq i8 %i.dc, %i.de
   br i1 %.not258, label %bb.v, label %.critedge.thread
 
@@ -222,9 +222,9 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.dj = getelementptr inbounds nuw i8, ptr %i.aa, i64 18
-  %i.dk = load i8, ptr %i.dj, align 1, !tbaa !13
+  %i.dk = load i8, ptr %i.dj, align 2, !tbaa !13
   %i.dl = getelementptr inbounds nuw i8, ptr %.0211304, i64 18
-  %i.dm = load i8, ptr %i.dl, align 1, !tbaa !13
+  %i.dm = load i8, ptr %i.dl, align 2, !tbaa !13
   %.not260 = icmp eq i8 %i.dk, %i.dm
   br i1 %.not260, label %bb.x, label %.critedge.thread
 

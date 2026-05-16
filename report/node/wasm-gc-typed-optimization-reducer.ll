@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.d
   %i.ab = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.ac = icmp eq i64 %i.ah, %i.m
-  %.sroa.0.0.copyload.i.i.i.i.i = load i32, ptr %i.ab, align 4
+  %.sroa.0.0.copyload.i.i.i.i.i = load i32, ptr %i.ab, align 8
   %i.ad = icmp eq i32 %.sroa.0.0.copyload.i.i, %.sroa.0.0.copyload.i.i.i.i.i
   %i.ae = select i1 %i.ac, i1 %i.ad, i1 false
   br i1 %i.ae, label %.loopexit29, label %.lr.ph.i.i, !llvm.loop !79

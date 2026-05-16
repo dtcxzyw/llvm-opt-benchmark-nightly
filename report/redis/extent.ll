@@ -126,7 +126,7 @@ bb.g:                                             ; preds = %malloc_mutex_lock.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store atomic i8 0, ptr %i.ae monotonic, align 1
+  store atomic i8 0, ptr %i.ae monotonic, align 8
   %i.af = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #9 ; 0 uses
   br label %bb.ah
 
@@ -225,7 +225,7 @@ bb.r:                                             ; preds = %extent_split_interi
   %.val37.i = load ptr, ptr %i.ag, align 8, !tbaa !22
   tail call void @je_emap_deregister_boundary(ptr noundef %0, ptr noundef %.val37.i, ptr noundef nonnull %.1142841.i) #9
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 104 ; 2 uses
-  store atomic i8 0, ptr %i.bk monotonic, align 1
+  store atomic i8 0, ptr %i.bk monotonic, align 8
   %i.bl = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #9 ; 0 uses
   %i.bm = getelementptr i8, ptr %.1142841.i, i64 16 ; 2 uses
   %.val16.i.i = load i64, ptr %i.bm, align 8, !tbaa !40
@@ -259,7 +259,7 @@ extents_abandon_vm.exit.i:                        ; preds = %bb.t, %bb.s, %.thre
 
 bb.u:                                             ; preds = %extents_abandon_vm.exit.i
   tail call void @je_malloc_mutex_lock_slow(ptr noundef nonnull %3) #9
-  store atomic i8 1, ptr %i.bk monotonic, align 1
+  store atomic i8 1, ptr %i.bk monotonic, align 8
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %extents_abandon_vm.exit.i
@@ -280,13 +280,13 @@ bb.w:                                             ; preds = %bb.v
 
 extent_recycle_split.exit.thread:                 ; preds = %bb.v, %bb.w, %bb.i
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store atomic i8 0, ptr %i.ch monotonic, align 1
+  store atomic i8 0, ptr %i.ch monotonic, align 8
   %i.ci = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #9 ; 0 uses
   br label %bb.ah
 
 bb.x:                                             ; preds = %bb.q, %bb.p
   %i.cj = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store atomic i8 0, ptr %i.cj monotonic, align 1
+  store atomic i8 0, ptr %i.cj monotonic, align 8
   %i.ck = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.a) #9 ; 0 uses
   %i.cl = load i8, ptr %8, align 1, !tbaa !11, !range !42, !noundef !43
   %i.cm = trunc nuw i8 %i.cl to i1
@@ -410,7 +410,7 @@ malloc_mutex_lock.exit.i:                         ; preds = %bb.c, %bb.b
 
 extent_alloc_retained.exit.thread28:              ; preds = %malloc_mutex_lock.exit.i
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 58512
-  store atomic i8 0, ptr %i.s monotonic, align 1
+  store atomic i8 0, ptr %i.s monotonic, align 8
   %i.t = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.e) #9 ; 0 uses
   br label %bb.at
 
@@ -435,7 +435,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 58400 ; 3 uses
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !50 ; 2 uses
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !50 ; 2 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f
@@ -685,15 +685,15 @@ bb.aj:                                            ; preds = %bb.ai
   br label %extent_alloc_retained.exit
 
 bb.ak:                                            ; preds = %bb.ai, %bb.ah, %bb.ag
-  %i.dl = load i32, ptr %i.ac, align 4, !tbaa !50
+  %i.dl = load i32, ptr %i.ac, align 8, !tbaa !50
   %i.dm = add i32 %i.ae, 1
   %i.dn = add i32 %i.dm, %i.dl
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 58404
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !63
   %storemerge.i81.i.i = call i32 @llvm.umin.i32(i32 %i.dn, i32 %i.dp)
-  store i32 %storemerge.i81.i.i, ptr %i.ac, align 4, !tbaa !50
+  store i32 %storemerge.i81.i.i, ptr %i.ac, align 8, !tbaa !50
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 58512
-  store atomic i8 0, ptr %i.dq monotonic, align 4
+  store atomic i8 0, ptr %i.dq monotonic, align 8
   %i.dr = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.e) #9 ; 0 uses
   br i1 %7, label %bb.al, label %extent_alloc_retained.exit.thread30
 
@@ -726,7 +726,7 @@ bb.ao:                                            ; preds = %bb.am
 
 extent_alloc_retained.exit.thread:                ; preds = %bb.d
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 58512
-  store atomic i8 0, ptr %i.eb monotonic, align 1
+  store atomic i8 0, ptr %i.eb monotonic, align 8
   %i.ec = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.e) #9 ; 0 uses
   br label %bb.ap
 
@@ -737,7 +737,7 @@ extent_alloc_retained.exit.thread30:              ; preds = %bb.ao, %bb.an, %bb.
 
 extent_alloc_retained.exit:                       ; preds = %bb.h, %bb.e, %exp_grow_size_prepare.exit.i.i, %bb.r, %bb.t, %bb.w, %.thread134.i.i, %bb.aj
   %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 58512
-  store atomic i8 0, ptr %i.ed monotonic, align 1
+  store atomic i8 0, ptr %i.ed monotonic, align 8
   %i.ee = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.e) #9 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1022,7 +1022,7 @@ extent_may_force_decay.exit:                      ; preds = %bb.j
 
 bb.k:                                             ; preds = %extent_may_force_decay.exit
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store atomic i8 0, ptr %i.ad monotonic, align 1
+  store atomic i8 0, ptr %i.ad monotonic, align 8
   %i.ae = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.b) #9 ; 0 uses
   %.val.i = load i64, ptr %i.w, align 8, !tbaa !40 ; 2 uses
   %i.af = and i64 %.val.i, -4096
@@ -1175,7 +1175,7 @@ bb.m:                                             ; preds = %.loopexit
 .thread46:                                        ; preds = %bb.g, %bb.f, %bb.l, %bb.m
   %.244 = phi ptr [ %.033, %bb.l ], [ %.033, %bb.m ], [ null, %bb.f ], [ null, %bb.g ]
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 104
-  store atomic i8 0, ptr %i.aj monotonic, align 1
+  store atomic i8 0, ptr %i.aj monotonic, align 8
   %i.ak = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.b) #9 ; 0 uses
   ret ptr %.244
 }

@@ -201,7 +201,7 @@ murmur_hash.exit.i:                               ; preds = %.lr.ph.i.i.epil.pre
 
 .lr.ph.i7.i:                                      ; preds = %bb.b
   %i.ar = getelementptr i8, ptr %1, i64 40
-  %i.as = load i32, ptr %i.ar, align 1            ; 2 uses
+  %i.as = load i32, ptr %i.ar, align 8            ; 2 uses
   %i.at = mul i32 %i.as, -862048943
   %i.au = mul i32 %i.as, 380141568
   %i.av = lshr i32 %i.at, 17
@@ -261,7 +261,7 @@ integer_hash.exit:                                ; preds = %murmur_hash.exit.i,
 
 .lr.ph.i35:                                       ; preds = %bb.a
   %i.cn = getelementptr i8, ptr %1, i64 24
-  %i.co = load i32, ptr %i.cn, align 1            ; 2 uses
+  %i.co = load i32, ptr %i.cn, align 8            ; 2 uses
   %i.cp = getelementptr i8, ptr %1, i64 28
   %i.cq = mul i32 %i.co, -862048943
   %i.cr = mul i32 %i.co, 380141568
@@ -272,7 +272,7 @@ integer_hash.exit:                                ; preds = %murmur_hash.exit.i,
   %i.cw = tail call i32 @llvm.fshl.i32(i32 %i.cv, i32 %i.cv, i32 13)
   %i.cx = mul i32 %i.cw, 5
   %i.cy = add i32 %i.cx, -430675100
-  %i.cz = load i32, ptr %i.cp, align 1            ; 2 uses
+  %i.cz = load i32, ptr %i.cp, align 4            ; 2 uses
   %i.da = mul i32 %i.cz, -862048943
   %i.db = mul i32 %i.cz, 380141568
   %i.dc = lshr i32 %i.da, 17
@@ -377,7 +377,7 @@ murmur_hash.exit.i49:                             ; preds = %.lr.ph.i.i44.epil.p
 
 .lr.ph.i7.i54:                                    ; preds = %bb.d
   %i.fi = getelementptr i8, ptr %1, i64 40
-  %i.fj = load i32, ptr %i.fi, align 1            ; 2 uses
+  %i.fj = load i32, ptr %i.fi, align 8            ; 2 uses
   %i.fk = mul i32 %i.fj, -862048943
   %i.fl = mul i32 %i.fj, 380141568
   %i.fm = lshr i32 %i.fk, 17
@@ -485,7 +485,7 @@ murmur_hash.exit.i63:                             ; preds = %.lr.ph.i.i58.epil.p
 
 .lr.ph.i7.i68:                                    ; preds = %integer_hash.exit55
   %i.hu = getelementptr i8, ptr %1, i64 64
-  %i.hv = load i32, ptr %i.hu, align 1            ; 2 uses
+  %i.hv = load i32, ptr %i.hu, align 8            ; 2 uses
   %i.hw = mul i32 %i.hv, -862048943
   %i.hx = mul i32 %i.hv, 380141568
   %i.hy = lshr i32 %i.hw, 17

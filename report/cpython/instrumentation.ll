@@ -201,7 +201,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %i.fx = getelementptr i8, ptr %i.fq, i64 16
-  %i.fy = load i8, ptr %i.fx, align 1, !tbaa !39
+  %i.fy = load i8, ptr %i.fx, align 8, !tbaa !39
   %i.fz = zext i8 %i.fy to i32                    ; 2 uses
   %i.ga = and i32 %i.fe, %i.fz
   %i.gb = icmp eq i32 %i.ga, %i.fz
@@ -604,7 +604,7 @@ bb.f:                                             ; preds = %bb.d
   %i.be = shl nuw <16 x i32> %i.ay, %i.bd
   %i.bf = trunc <16 x i32> %i.be to <16 x i8>
   %i.bg = or <16 x i8> %i.bb, %i.bf
-  store <16 x i8> %i.bg, ptr %i.m, align 1, !tbaa !39
+  store <16 x i8> %i.bg, ptr %i.m, align 8, !tbaa !39
   %i.bh = load ptr, ptr %i.c, align 8, !tbaa !56  ; 3 uses
   %i.bi = load atomic i64, ptr %i.bh monotonic, align 8 ; 2 uses
   %i.bj = zext i32 %i.ap to i64                   ; 4 uses
@@ -1007,21 +1007,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %or.cond.i, label %bb.n, label %initialize_tools.exit.i
 
 .preheader135.i:                                  ; preds = %bb.e
-  %i.as = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.as = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.at = and <8 x i8> %i.as, splat (i8 -2)
-  store <8 x i8> %i.at, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.at, ptr %i.q, align 8, !tbaa !39
   %i.au = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !39
+  %i.av = load i8, ptr %i.au, align 8, !tbaa !39
   %i.aw = and i8 %i.av, -2
-  store i8 %i.aw, ptr %i.au, align 1, !tbaa !39
+  store i8 %i.aw, ptr %i.au, align 8, !tbaa !39
   %i.ax = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !39
   %i.az = and i8 %i.ay, -2
   store i8 %i.az, ptr %i.ax, align 1, !tbaa !39
   %i.ba = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !39
+  %i.bb = load i8, ptr %i.ba, align 2, !tbaa !39
   %i.bc = and i8 %i.bb, -2
-  store i8 %i.bc, ptr %i.ba, align 1, !tbaa !39
+  store i8 %i.bc, ptr %i.ba, align 2, !tbaa !39
   %.pre175.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.i
 
@@ -1035,21 +1035,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.1.i, label %.loopexit136.1.i, label %.preheader135.1.i
 
 .preheader135.1.i:                                ; preds = %.loopexit136.i
-  %i.bi = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.bi = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.bj = and <8 x i8> %i.bi, splat (i8 -3)
-  store <8 x i8> %i.bj, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.bj, ptr %i.q, align 8, !tbaa !39
   %i.bk = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !39
+  %i.bl = load i8, ptr %i.bk, align 8, !tbaa !39
   %i.bm = and i8 %i.bl, -3
-  store i8 %i.bm, ptr %i.bk, align 1, !tbaa !39
+  store i8 %i.bm, ptr %i.bk, align 8, !tbaa !39
   %i.bn = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !39
   %i.bp = and i8 %i.bo, -3
   store i8 %i.bp, ptr %i.bn, align 1, !tbaa !39
   %i.bq = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.br = load i8, ptr %i.bq, align 1, !tbaa !39
+  %i.br = load i8, ptr %i.bq, align 2, !tbaa !39
   %i.bs = and i8 %i.br, -3
-  store i8 %i.bs, ptr %i.bq, align 1, !tbaa !39
+  store i8 %i.bs, ptr %i.bq, align 2, !tbaa !39
   %.pre176.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.1.i
 
@@ -1063,21 +1063,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.2.i, label %.loopexit136.2.i, label %.preheader135.2.i
 
 .preheader135.2.i:                                ; preds = %.loopexit136.1.i
-  %i.by = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.by = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.bz = and <8 x i8> %i.by, splat (i8 -5)
-  store <8 x i8> %i.bz, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.bz, ptr %i.q, align 8, !tbaa !39
   %i.ca = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.cb = load i8, ptr %i.ca, align 1, !tbaa !39
+  %i.cb = load i8, ptr %i.ca, align 8, !tbaa !39
   %i.cc = and i8 %i.cb, -5
-  store i8 %i.cc, ptr %i.ca, align 1, !tbaa !39
+  store i8 %i.cc, ptr %i.ca, align 8, !tbaa !39
   %i.cd = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !39
   %i.cf = and i8 %i.ce, -5
   store i8 %i.cf, ptr %i.cd, align 1, !tbaa !39
   %i.cg = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.ch = load i8, ptr %i.cg, align 1, !tbaa !39
+  %i.ch = load i8, ptr %i.cg, align 2, !tbaa !39
   %i.ci = and i8 %i.ch, -5
-  store i8 %i.ci, ptr %i.cg, align 1, !tbaa !39
+  store i8 %i.ci, ptr %i.cg, align 2, !tbaa !39
   %.pre177.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.2.i
 
@@ -1091,21 +1091,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.3.i, label %.loopexit136.3.i, label %.preheader135.3.i
 
 .preheader135.3.i:                                ; preds = %.loopexit136.2.i
-  %i.co = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.co = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.cp = and <8 x i8> %i.co, splat (i8 -9)
-  store <8 x i8> %i.cp, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.cp, ptr %i.q, align 8, !tbaa !39
   %i.cq = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.cr = load i8, ptr %i.cq, align 1, !tbaa !39
+  %i.cr = load i8, ptr %i.cq, align 8, !tbaa !39
   %i.cs = and i8 %i.cr, -9
-  store i8 %i.cs, ptr %i.cq, align 1, !tbaa !39
+  store i8 %i.cs, ptr %i.cq, align 8, !tbaa !39
   %i.ct = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !39
   %i.cv = and i8 %i.cu, -9
   store i8 %i.cv, ptr %i.ct, align 1, !tbaa !39
   %i.cw = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.cx = load i8, ptr %i.cw, align 1, !tbaa !39
+  %i.cx = load i8, ptr %i.cw, align 2, !tbaa !39
   %i.cy = and i8 %i.cx, -9
-  store i8 %i.cy, ptr %i.cw, align 1, !tbaa !39
+  store i8 %i.cy, ptr %i.cw, align 2, !tbaa !39
   %.pre178.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.3.i
 
@@ -1119,21 +1119,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.4.i, label %.loopexit136.4.i, label %.preheader135.4.i
 
 .preheader135.4.i:                                ; preds = %.loopexit136.3.i
-  %i.de = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.de = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.df = and <8 x i8> %i.de, splat (i8 -17)
-  store <8 x i8> %i.df, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.df, ptr %i.q, align 8, !tbaa !39
   %i.dg = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.dh = load i8, ptr %i.dg, align 1, !tbaa !39
+  %i.dh = load i8, ptr %i.dg, align 8, !tbaa !39
   %i.di = and i8 %i.dh, -17
-  store i8 %i.di, ptr %i.dg, align 1, !tbaa !39
+  store i8 %i.di, ptr %i.dg, align 8, !tbaa !39
   %i.dj = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !39
   %i.dl = and i8 %i.dk, -17
   store i8 %i.dl, ptr %i.dj, align 1, !tbaa !39
   %i.dm = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.dn = load i8, ptr %i.dm, align 1, !tbaa !39
+  %i.dn = load i8, ptr %i.dm, align 2, !tbaa !39
   %i.do = and i8 %i.dn, -17
-  store i8 %i.do, ptr %i.dm, align 1, !tbaa !39
+  store i8 %i.do, ptr %i.dm, align 2, !tbaa !39
   %.pre179.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.4.i
 
@@ -1147,21 +1147,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.5.i, label %.loopexit136.5.i, label %.preheader135.5.i
 
 .preheader135.5.i:                                ; preds = %.loopexit136.4.i
-  %i.du = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.du = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.dv = and <8 x i8> %i.du, splat (i8 -33)
-  store <8 x i8> %i.dv, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.dv, ptr %i.q, align 8, !tbaa !39
   %i.dw = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.dx = load i8, ptr %i.dw, align 1, !tbaa !39
+  %i.dx = load i8, ptr %i.dw, align 8, !tbaa !39
   %i.dy = and i8 %i.dx, -33
-  store i8 %i.dy, ptr %i.dw, align 1, !tbaa !39
+  store i8 %i.dy, ptr %i.dw, align 8, !tbaa !39
   %i.dz = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !39
   %i.eb = and i8 %i.ea, -33
   store i8 %i.eb, ptr %i.dz, align 1, !tbaa !39
   %i.ec = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !39
+  %i.ed = load i8, ptr %i.ec, align 2, !tbaa !39
   %i.ee = and i8 %i.ed, -33
-  store i8 %i.ee, ptr %i.ec, align 1, !tbaa !39
+  store i8 %i.ee, ptr %i.ec, align 2, !tbaa !39
   %.pre180.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.5.i
 
@@ -1175,21 +1175,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.6.i, label %.loopexit136.6.i, label %.preheader135.6.i
 
 .preheader135.6.i:                                ; preds = %.loopexit136.5.i
-  %i.ek = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.ek = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.el = and <8 x i8> %i.ek, splat (i8 -65)
-  store <8 x i8> %i.el, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.el, ptr %i.q, align 8, !tbaa !39
   %i.em = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.en = load i8, ptr %i.em, align 1, !tbaa !39
+  %i.en = load i8, ptr %i.em, align 8, !tbaa !39
   %i.eo = and i8 %i.en, -65
-  store i8 %i.eo, ptr %i.em, align 1, !tbaa !39
+  store i8 %i.eo, ptr %i.em, align 8, !tbaa !39
   %i.ep = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !39
   %i.er = and i8 %i.eq, -65
   store i8 %i.er, ptr %i.ep, align 1, !tbaa !39
   %i.es = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.et = load i8, ptr %i.es, align 1, !tbaa !39
+  %i.et = load i8, ptr %i.es, align 2, !tbaa !39
   %i.eu = and i8 %i.et, -65
-  store i8 %i.eu, ptr %i.es, align 1, !tbaa !39
+  store i8 %i.eu, ptr %i.es, align 2, !tbaa !39
   %.pre181.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.6.i
 
@@ -1203,21 +1203,21 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.7.i, label %.loopexit136.7.i, label %.preheader135.7.i
 
 .preheader135.7.i:                                ; preds = %.loopexit136.6.i
-  %i.fa = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
+  %i.fa = load <8 x i8>, ptr %i.q, align 8, !tbaa !39
   %i.fb = and <8 x i8> %i.fa, splat (i8 127)
-  store <8 x i8> %i.fb, ptr %i.q, align 1, !tbaa !39
+  store <8 x i8> %i.fb, ptr %i.q, align 8, !tbaa !39
   %i.fc = getelementptr i8, ptr %i.q, i64 8       ; 2 uses
-  %i.fd = load i8, ptr %i.fc, align 1, !tbaa !39
+  %i.fd = load i8, ptr %i.fc, align 8, !tbaa !39
   %i.fe = and i8 %i.fd, 127
-  store i8 %i.fe, ptr %i.fc, align 1, !tbaa !39
+  store i8 %i.fe, ptr %i.fc, align 8, !tbaa !39
   %i.ff = getelementptr i8, ptr %i.q, i64 9       ; 2 uses
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !39
   %i.fh = and i8 %i.fg, 127
   store i8 %i.fh, ptr %i.ff, align 1, !tbaa !39
   %i.fi = getelementptr i8, ptr %i.q, i64 10      ; 2 uses
-  %i.fj = load i8, ptr %i.fi, align 1, !tbaa !39
+  %i.fj = load i8, ptr %i.fi, align 2, !tbaa !39
   %i.fk = and i8 %i.fj, 127
-  store i8 %i.fk, ptr %i.fi, align 1, !tbaa !39
+  store i8 %i.fk, ptr %i.fi, align 2, !tbaa !39
   %.pre182.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.7.i
 
@@ -1620,7 +1620,7 @@ bb.eo:                                            ; preds = %bb.en
   br i1 %i.alg, label %.._crit_edge.i212_crit_edge, label %remove_tools.exit
 
 .._crit_edge.i212_crit_edge:                      ; preds = %bb.eo
-  %.pre366 = load i8, ptr %i.ait, align 1, !tbaa !39
+  %.pre366 = load i8, ptr %i.ait, align 2, !tbaa !39
   br label %._crit_edge.i212
 
 bb.ep:                                            ; preds = %bb.en
@@ -1710,7 +1710,7 @@ bb.ey:                                            ; preds = %bb.ex
 
 bb.ez:                                            ; preds = %bb.ey, %bb.ex, %bb.ew
   %i.ams = phi ptr [ null, %bb.ew ], [ %i.amm, %bb.ex ], [ %.pre.i215, %bb.ey ] ; 2 uses
-  %i.amt = load i8, ptr %i.ait, align 1, !tbaa !39 ; 2 uses
+  %i.amt = load i8, ptr %i.ait, align 2, !tbaa !39 ; 2 uses
   %i.amu = icmp eq i8 %i.amt, -3
   br i1 %i.amu, label %bb.fa, label %bb.fb
 
@@ -1891,7 +1891,7 @@ bb.fq:                                            ; preds = %bb.fp
 
 bb.fr:                                            ; preds = %bb.fp
   %i.aqi = getelementptr i8, ptr %i.aqa, i64 16
-  %i.aqj = load i8, ptr %i.aqi, align 1, !tbaa !39 ; 2 uses
+  %i.aqj = load i8, ptr %i.aqi, align 8, !tbaa !39 ; 2 uses
   %i.aqk = and i8 %i.aqj, %i.aip
   %i.aql = icmp eq i8 %i.aqk, %i.aqj
   br i1 %i.aql, label %._crit_edge.i226, label %remove_line_tools.exit
@@ -2204,7 +2204,7 @@ bb.gw:                                            ; preds = %bb.gv
   br i1 %i.awc, label %.._crit_edge.i263_crit_edge, label %remove_per_instruction_tools.exit
 
 .._crit_edge.i263_crit_edge:                      ; preds = %bb.gw
-  %.pre367 = load i8, ptr %i.atf, align 1, !tbaa !39
+  %.pre367 = load i8, ptr %i.atf, align 2, !tbaa !39
   br label %._crit_edge.i263
 
 bb.gx:                                            ; preds = %bb.gv
@@ -2607,7 +2607,7 @@ bb.in:                                            ; preds = %bb.im
   %i.ber = or i8 %i.beq, %i.ayo
   store i8 %i.ber, ptr %i.bep, align 1, !tbaa !39
   %.pre.i309 = load ptr, ptr %i.f, align 8, !tbaa !32
-  %.pre368 = load i8, ptr %i.bbv, align 1, !tbaa !39
+  %.pre368 = load i8, ptr %i.bbv, align 2, !tbaa !39
   br label %._crit_edge.i310
 
 ._crit_edge.i310:                                 ; preds = %bb.in, %bb.im

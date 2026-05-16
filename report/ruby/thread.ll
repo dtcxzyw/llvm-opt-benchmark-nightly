@@ -201,7 +201,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.j = getelementptr i8, ptr %0, i64 32
-  %i.k = load atomic volatile i32, ptr %i.j monotonic, align 4
+  %i.k = load atomic volatile i32, ptr %i.j monotonic, align 8
   %i.l = getelementptr i8, ptr %0, i64 36
   %i.m = load i32, ptr %i.l, align 4, !tbaa !50
   %i.n = xor i32 %i.m, -1
@@ -225,7 +225,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr i8, ptr %0, i64 32
-  %i.w = load atomic volatile i32, ptr %i.v monotonic, align 4
+  %i.w = load atomic volatile i32, ptr %i.v monotonic, align 8
   %i.x = getelementptr i8, ptr %0, i64 36
   %i.y = load i32, ptr %i.x, align 4, !tbaa !50
   %i.z = xor i32 %i.y, -1
@@ -628,7 +628,7 @@ rb_native_mutex_lock.exit:                        ; preds = %bb.b
 
 bb.d:                                             ; preds = %rb_native_mutex_lock.exit
   %i.o = getelementptr i8, ptr %i.l, i64 32
-  %i.p = load atomic volatile i32, ptr %i.o monotonic, align 4
+  %i.p = load atomic volatile i32, ptr %i.o monotonic, align 8
   %i.q = getelementptr i8, ptr %i.l, i64 36
   %i.r = load i32, ptr %i.q, align 4, !tbaa !50
   %i.s = xor i32 %i.r, -1
@@ -1031,7 +1031,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.w, %bb.v
 
 bb.x:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.cn = getelementptr i8, ptr %i.cd, i64 32
-  %i.co = load atomic volatile i32, ptr %i.cn monotonic, align 4
+  %i.co = load atomic volatile i32, ptr %i.cn monotonic, align 8
   %i.cp = getelementptr i8, ptr %i.cd, i64 36
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !50
   %i.cr = xor i32 %i.cq, -1
@@ -1055,7 +1055,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
 
 bb.aa:                                            ; preds = %bb.z
   %i.cz = getelementptr i8, ptr %i.cd, i64 32
-  %i.da = load atomic volatile i32, ptr %i.cz monotonic, align 4
+  %i.da = load atomic volatile i32, ptr %i.cz monotonic, align 8
   %i.db = getelementptr i8, ptr %i.cd, i64 36
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !50
   %i.dd = xor i32 %i.dc, -1
@@ -1458,7 +1458,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.i, %bb.h
 
 bb.j:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.am = getelementptr i8, ptr %0, i64 32
-  %i.an = load atomic volatile i32, ptr %i.am monotonic, align 4
+  %i.an = load atomic volatile i32, ptr %i.am monotonic, align 8
   %i.ao = getelementptr i8, ptr %0, i64 36
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !50
   %i.aq = xor i32 %i.ap, -1
@@ -1482,7 +1482,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ay = getelementptr i8, ptr %0, i64 32
-  %i.az = load atomic volatile i32, ptr %i.ay monotonic, align 4
+  %i.az = load atomic volatile i32, ptr %i.ay monotonic, align 8
   %i.ba = getelementptr i8, ptr %0, i64 36
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !50
   %i.bc = xor i32 %i.bb, -1
@@ -1885,7 +1885,7 @@ bb.v:                                             ; preds = %bb.u
   br i1 %.not33, label %.critedge, label %.loopexit, !llvm.loop !217
 
 .critedge:                                        ; preds = %bb.v
-  %.val = load i64, ptr %i.af, align 1, !tbaa !209 ; 2 uses
+  %.val = load i64, ptr %i.af, align 8, !tbaa !209 ; 2 uses
   %.not.i.i36 = icmp eq i64 %.val, 0
   br i1 %.not.i.i36, label %._crit_edge, label %check_array.exit.i37, !prof !216
 
@@ -2288,7 +2288,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.r, %bb.q
 
 bb.s:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.br = getelementptr i8, ptr %.0..0..0..0.7, i64 32
-  %i.bs = load atomic volatile i32, ptr %i.br monotonic, align 4
+  %i.bs = load atomic volatile i32, ptr %i.br monotonic, align 8
   %i.bt = getelementptr i8, ptr %.0..0..0..0.7, i64 36
   %i.bu = load i32, ptr %i.bt, align 4, !tbaa !50
   %i.bv = xor i32 %i.bu, -1
@@ -2312,7 +2312,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 bb.v:                                             ; preds = %bb.u
   %i.cd = getelementptr i8, ptr %.0..0..0..0.7, i64 32
-  %i.ce = load atomic volatile i32, ptr %i.cd monotonic, align 4
+  %i.ce = load atomic volatile i32, ptr %i.cd monotonic, align 8
   %i.cf = getelementptr i8, ptr %.0..0..0..0.7, i64 36
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !50
   %i.ch = xor i32 %i.cg, -1
@@ -2715,7 +2715,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.d, %bb.c
 
 bb.e:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.s = getelementptr i8, ptr %i.i, i64 32
-  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.u = getelementptr i8, ptr %i.i, i64 36
   %i.v = load i32, ptr %i.u, align 4, !tbaa !50
   %i.w = xor i32 %i.v, -1
@@ -2739,7 +2739,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr i8, ptr %i.i, i64 32
-  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 4
+  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 8
   %i.ag = getelementptr i8, ptr %i.i, i64 36
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !50
   %i.ai = xor i32 %i.ah, -1
@@ -2836,7 +2836,7 @@ bb.p:                                             ; preds = %rb_threadptr_pendin
 
 bb.q:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i26.us
   %i.bv = getelementptr i8, ptr %i.bg, i64 32
-  %i.bw = load atomic volatile i32, ptr %i.bv monotonic, align 4
+  %i.bw = load atomic volatile i32, ptr %i.bv monotonic, align 8
   %i.bx = getelementptr i8, ptr %i.bg, i64 36
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !50
   %i.bz = xor i32 %i.by, -1
@@ -2851,7 +2851,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 bb.s:                                             ; preds = %bb.r
   %i.cc = getelementptr i8, ptr %i.bg, i64 32
-  %i.cd = load atomic volatile i32, ptr %i.cc monotonic, align 4
+  %i.cd = load atomic volatile i32, ptr %i.cc monotonic, align 8
   %i.ce = getelementptr i8, ptr %i.bg, i64 36
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !50
   %i.cg = xor i32 %i.cf, -1
@@ -2999,7 +2999,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.s = getelementptr i8, ptr %i.i, i64 32
-  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.u = getelementptr i8, ptr %i.i, i64 36
   %i.v = load i32, ptr %i.u, align 4, !tbaa !50
   %i.w = xor i32 %i.v, -1
@@ -3023,7 +3023,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr i8, ptr %i.i, i64 32
-  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 4
+  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 8
   %i.ag = getelementptr i8, ptr %i.i, i64 36
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !50
   %i.ai = xor i32 %i.ah, -1
@@ -3099,7 +3099,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i19:  ; preds = %bb.n, %bb.m
 
 bb.o:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i19
   %i.bh = getelementptr i8, ptr %i.ax, i64 32
-  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 4
+  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 8
   %i.bj = getelementptr i8, ptr %i.ax, i64 36
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !50
   %i.bl = xor i32 %i.bk, -1
@@ -3123,7 +3123,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.bt = getelementptr i8, ptr %i.ax, i64 32
-  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 4
+  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 8
   %i.bv = getelementptr i8, ptr %i.ax, i64 36
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !50
   %i.bx = xor i32 %i.bw, -1
@@ -3204,7 +3204,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.j = getelementptr i8, ptr %0, i64 32
-  %i.k = load atomic volatile i32, ptr %i.j monotonic, align 4
+  %i.k = load atomic volatile i32, ptr %i.j monotonic, align 8
   %i.l = getelementptr i8, ptr %0, i64 36
   %i.m = load i32, ptr %i.l, align 4, !tbaa !50
   %i.n = xor i32 %i.m, -1
@@ -3228,7 +3228,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr i8, ptr %0, i64 32
-  %i.w = load atomic volatile i32, ptr %i.v monotonic, align 4
+  %i.w = load atomic volatile i32, ptr %i.v monotonic, align 8
   %i.x = getelementptr i8, ptr %0, i64 36
   %i.y = load i32, ptr %i.x, align 4, !tbaa !50
   %i.z = xor i32 %i.y, -1
@@ -3287,7 +3287,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i.i:  ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i.i
   %i.m = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 32
-  %i.n = load atomic volatile i32, ptr %i.m monotonic, align 4
+  %i.n = load atomic volatile i32, ptr %i.m monotonic, align 8
   %i.o = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 36
   %i.p = load i32, ptr %i.o, align 4, !tbaa !50
   %i.q = xor i32 %i.p, -1
@@ -3311,7 +3311,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 32
-  %i.z = load atomic volatile i32, ptr %i.y monotonic, align 4
+  %i.z = load atomic volatile i32, ptr %i.y monotonic, align 8
   %i.aa = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 36
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !50
   %i.ac = xor i32 %i.ab, -1
@@ -3714,7 +3714,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.n, %bb.m
 
 bb.o:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.av = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 32
-  %i.aw = load atomic volatile i32, ptr %i.av monotonic, align 4
+  %i.aw = load atomic volatile i32, ptr %i.av monotonic, align 8
   %i.ax = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 36
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !50
   %i.az = xor i32 %i.ay, -1
@@ -3738,7 +3738,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.bh = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 32
-  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 4
+  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 8
   %i.bj = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 36
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !50
   %i.bl = xor i32 %i.bk, -1
@@ -3816,7 +3816,7 @@ rb_native_mutex_lock.exit.us.i:                   ; preds = %rb_vm_check_ints.ex
 
 bb.c:                                             ; preds = %rb_native_mutex_lock.exit.us.i
   %i.t = getelementptr i8, ptr %i.q, i64 32
-  %i.u = load atomic volatile i32, ptr %i.t monotonic, align 4
+  %i.u = load atomic volatile i32, ptr %i.t monotonic, align 8
   %i.v = getelementptr i8, ptr %i.q, i64 36
   %i.w = load i32, ptr %i.v, align 4, !tbaa !50
   %i.x = xor i32 %i.w, -1
@@ -3859,7 +3859,7 @@ rb_native_mutex_lock.exit.i:                      ; preds = %rb_vm_check_ints.ex
 
 bb.e:                                             ; preds = %rb_native_mutex_lock.exit.i
   %i.al = getelementptr i8, ptr %i.ai, i64 32
-  %i.am = load atomic volatile i32, ptr %i.al monotonic, align 4
+  %i.am = load atomic volatile i32, ptr %i.al monotonic, align 8
   %i.an = getelementptr i8, ptr %i.ai, i64 36
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !50
   %i.ap = xor i32 %i.ao, -1
@@ -4262,7 +4262,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.db = getelementptr i8, ptr %.0..0..0..0.30, i64 32
-  %i.dc = load atomic volatile i32, ptr %i.db monotonic, align 4
+  %i.dc = load atomic volatile i32, ptr %i.db monotonic, align 8
   %i.dd = getelementptr i8, ptr %.0..0..0..0.30, i64 36
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !50
   %i.df = xor i32 %i.de, -1
@@ -4289,7 +4289,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.dn = getelementptr i8, ptr %.0..0..0..0.30, i64 32
-  %i.do = load atomic volatile i32, ptr %i.dn monotonic, align 4
+  %i.do = load atomic volatile i32, ptr %i.dn monotonic, align 8
   %i.dp = getelementptr i8, ptr %.0..0..0..0.30, i64 36
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !50
   %i.dr = xor i32 %i.dq, -1
@@ -4336,7 +4336,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i57:  ; preds = %bb.s, %bb.r
 
 bb.t:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i57
   %i.ef = getelementptr i8, ptr %.0..0..0..0.31, i64 32
-  %i.eg = load atomic volatile i32, ptr %i.ef monotonic, align 4
+  %i.eg = load atomic volatile i32, ptr %i.ef monotonic, align 8
   %i.eh = getelementptr i8, ptr %.0..0..0..0.31, i64 36
   %i.ei = load i32, ptr %i.eh, align 4, !tbaa !50
   %i.ej = xor i32 %i.ei, -1
@@ -4360,7 +4360,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 bb.w:                                             ; preds = %bb.v
   %i.er = getelementptr i8, ptr %.0..0..0..0.31, i64 32
-  %i.es = load atomic volatile i32, ptr %i.er monotonic, align 4
+  %i.es = load atomic volatile i32, ptr %i.er monotonic, align 8
   %i.et = getelementptr i8, ptr %.0..0..0..0.31, i64 36
   %i.eu = load i32, ptr %i.et, align 4, !tbaa !50
   %i.ev = xor i32 %i.eu, -1
@@ -4763,7 +4763,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.s = getelementptr i8, ptr %i.i, i64 32
-  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.t = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.u = getelementptr i8, ptr %i.i, i64 36
   %i.v = load i32, ptr %i.u, align 4, !tbaa !50
   %i.w = xor i32 %i.v, -1
@@ -4787,7 +4787,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = getelementptr i8, ptr %i.i, i64 32
-  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 4
+  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 8
   %i.ag = getelementptr i8, ptr %i.i, i64 36
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !50
   %i.ai = xor i32 %i.ah, -1
@@ -5190,7 +5190,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.k, %bb.j
 
 bb.l:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.ca = getelementptr i8, ptr %i.bq, i64 32
-  %i.cb = load atomic volatile i32, ptr %i.ca monotonic, align 4
+  %i.cb = load atomic volatile i32, ptr %i.ca monotonic, align 8
   %i.cc = getelementptr i8, ptr %i.bq, i64 36
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !50
   %i.ce = xor i32 %i.cd, -1
@@ -5214,7 +5214,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.cm = getelementptr i8, ptr %i.bq, i64 32
-  %i.cn = load atomic volatile i32, ptr %i.cm monotonic, align 4
+  %i.cn = load atomic volatile i32, ptr %i.cm monotonic, align 8
   %i.co = getelementptr i8, ptr %i.bq, i64 36
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !50
   %i.cq = xor i32 %i.cp, -1
@@ -5371,7 +5371,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i49:  ; preds = %bb.ae, %bb.ad
 
 bb.af:                                            ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i49
   %i.eo = getelementptr i8, ptr %i.ee, i64 32
-  %i.ep = load atomic volatile i32, ptr %i.eo monotonic, align 4
+  %i.ep = load atomic volatile i32, ptr %i.eo monotonic, align 8
   %i.eq = getelementptr i8, ptr %i.ee, i64 36
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !50
   %i.es = xor i32 %i.er, -1
@@ -5395,7 +5395,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 
 bb.ai:                                            ; preds = %bb.ah
   %i.fa = getelementptr i8, ptr %i.ee, i64 32
-  %i.fb = load atomic volatile i32, ptr %i.fa monotonic, align 4
+  %i.fb = load atomic volatile i32, ptr %i.fa monotonic, align 8
   %i.fc = getelementptr i8, ptr %i.ee, i64 36
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !50
   %i.fe = xor i32 %i.fd, -1
@@ -5640,7 +5640,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.l, %bb.k
 
 bb.m:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.bh = getelementptr i8, ptr %i.i, i64 32
-  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 4
+  %i.bi = load atomic volatile i32, ptr %i.bh monotonic, align 8
   %i.bj = getelementptr i8, ptr %i.i, i64 36
   %i.bk = load i32, ptr %i.bj, align 4, !tbaa !50
   %i.bl = xor i32 %i.bk, -1
@@ -5664,7 +5664,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.bt = getelementptr i8, ptr %i.i, i64 32
-  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 4
+  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 8
   %i.bv = getelementptr i8, ptr %i.i, i64 36
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !50
   %i.bx = xor i32 %i.bw, -1
@@ -5739,7 +5739,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i47:  ; preds = %bb.u, %bb.t
   br i1 %.not.i49, label %bb.v, label %bb.w, !prof !49
 
 bb.v:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i47
-  %i.cx = load atomic volatile i32, ptr %i.cm monotonic, align 4
+  %i.cx = load atomic volatile i32, ptr %i.cm monotonic, align 8
   %i.cy = load i32, ptr %i.cn, align 4, !tbaa !50
   %i.cz = xor i32 %i.cy, -1
   %i.da = and i32 %i.cx, %i.cz
@@ -5760,7 +5760,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br i1 %.not13.i50, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  %i.dg = load atomic volatile i32, ptr %i.cm monotonic, align 4
+  %i.dg = load atomic volatile i32, ptr %i.cm monotonic, align 8
   %i.dh = load i32, ptr %i.cn, align 4, !tbaa !50
   %i.di = xor i32 %i.dh, -1
   %i.dj = and i32 %i.dg, 10
@@ -5848,7 +5848,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i61:  ; preds = %bb.ak, %bb.aj
   br i1 %.not.i63, label %bb.al, label %bb.am, !prof !49
 
 bb.al:                                            ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i61
-  %i.ec = load atomic volatile i32, ptr %i.cm monotonic, align 4
+  %i.ec = load atomic volatile i32, ptr %i.cm monotonic, align 8
   %i.ed = load i32, ptr %i.cn, align 4, !tbaa !50
   %i.ee = xor i32 %i.ed, -1
   %i.ef = and i32 %i.ec, %i.ee
@@ -5869,7 +5869,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %.not13.i64, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %bb.an
-  %i.el = load atomic volatile i32, ptr %i.cm monotonic, align 4
+  %i.el = load atomic volatile i32, ptr %i.cm monotonic, align 8
   %i.em = load i32, ptr %i.cn, align 4, !tbaa !50
   %i.en = xor i32 %i.em, -1
   %i.eo = and i32 %i.el, 10
@@ -6272,7 +6272,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not26, label %queue_timeout2hrtime.exit.split, label %.thread
 
 .thread:                                          ; preds = %bb.s
-  %.pre = load i64, ptr %i.a, align 1, !tbaa !209
+  %.pre = load i64, ptr %i.a, align 8, !tbaa !209
   br label %.loopexit
 
 .loopexit:                                        ; preds = %rb_array_len.exit31, %rb_array_len.exit31.us, %.thread
@@ -6358,7 +6358,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i.i.i: ; preds = %bb.f, %bb.e
 
 bb.g:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i.i.i
   %i.ae = getelementptr i8, ptr %i.u, i64 32
-  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 4
+  %i.af = load atomic volatile i32, ptr %i.ae monotonic, align 8
   %i.ag = getelementptr i8, ptr %i.u, i64 36
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !50
   %i.ai = xor i32 %i.ah, -1
@@ -6382,7 +6382,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.aq = getelementptr i8, ptr %i.u, i64 32
-  %i.ar = load atomic volatile i32, ptr %i.aq monotonic, align 4
+  %i.ar = load atomic volatile i32, ptr %i.aq monotonic, align 8
   %i.as = getelementptr i8, ptr %i.u, i64 36
   %i.at = load i32, ptr %i.as, align 4, !tbaa !50
   %i.au = xor i32 %i.at, -1
@@ -6457,7 +6457,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i19.i.i: ; preds = %bb.q, %bb.p
 
 bb.r:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i19.i.i
   %i.bt = getelementptr i8, ptr %i.bj, i64 32
-  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 4
+  %i.bu = load atomic volatile i32, ptr %i.bt monotonic, align 8
   %i.bv = getelementptr i8, ptr %i.bj, i64 36
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !50
   %i.bx = xor i32 %i.bw, -1
@@ -6481,7 +6481,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 
 bb.u:                                             ; preds = %bb.t
   %i.cf = getelementptr i8, ptr %i.bj, i64 32
-  %i.cg = load atomic volatile i32, ptr %i.cf monotonic, align 4
+  %i.cg = load atomic volatile i32, ptr %i.cf monotonic, align 8
   %i.ch = getelementptr i8, ptr %i.bj, i64 36
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !50
   %i.cj = xor i32 %i.ci, -1
@@ -6884,7 +6884,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.f, %bb.e
 
 bb.g:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.ac = getelementptr i8, ptr %i.q, i64 32
-  %i.ad = load atomic volatile i32, ptr %i.ac monotonic, align 4
+  %i.ad = load atomic volatile i32, ptr %i.ac monotonic, align 8
   %i.ae = getelementptr i8, ptr %i.q, i64 36
   %i.af = load i32, ptr %i.ae, align 4, !tbaa !50
   %i.ag = xor i32 %i.af, -1
@@ -6908,7 +6908,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ao = getelementptr i8, ptr %i.q, i64 32
-  %i.ap = load atomic volatile i32, ptr %i.ao monotonic, align 4
+  %i.ap = load atomic volatile i32, ptr %i.ao monotonic, align 8
   %i.aq = getelementptr i8, ptr %i.q, i64 36
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !50
   %i.as = xor i32 %i.ar, -1
@@ -6988,7 +6988,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i46:  ; preds = %bb.p, %bb.o
 
 bb.q:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i46
   %i.bz = getelementptr i8, ptr %i.bp, i64 32
-  %i.ca = load atomic volatile i32, ptr %i.bz monotonic, align 4
+  %i.ca = load atomic volatile i32, ptr %i.bz monotonic, align 8
   %i.cb = getelementptr i8, ptr %i.bp, i64 36
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !50
   %i.cd = xor i32 %i.cc, -1
@@ -7012,7 +7012,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.cl = getelementptr i8, ptr %i.bp, i64 32
-  %i.cm = load atomic volatile i32, ptr %i.cl monotonic, align 4
+  %i.cm = load atomic volatile i32, ptr %i.cl monotonic, align 8
   %i.cn = getelementptr i8, ptr %i.bp, i64 36
   %i.co = load i32, ptr %i.cn, align 4, !tbaa !50
   %i.cp = xor i32 %i.co, -1
@@ -7147,7 +7147,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i66:  ; preds = %bb.aj, %bb.ai
 
 bb.ak:                                            ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i66
   %i.ec = getelementptr i8, ptr %i.ds, i64 32
-  %i.ed = load atomic volatile i32, ptr %i.ec monotonic, align 4
+  %i.ed = load atomic volatile i32, ptr %i.ec monotonic, align 8
   %i.ee = getelementptr i8, ptr %i.ds, i64 36
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !50
   %i.eg = xor i32 %i.ef, -1
@@ -7171,7 +7171,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
 
 bb.an:                                            ; preds = %bb.am
   %i.eo = getelementptr i8, ptr %i.ds, i64 32
-  %i.ep = load atomic volatile i32, ptr %i.eo monotonic, align 4
+  %i.ep = load atomic volatile i32, ptr %i.eo monotonic, align 8
   %i.eq = getelementptr i8, ptr %i.ds, i64 36
   %i.er = load i32, ptr %i.eq, align 4, !tbaa !50
   %i.es = xor i32 %i.er, -1
@@ -7574,7 +7574,7 @@ rb_threadptr_pending_interrupt_empty_p.exit.i:    ; preds = %bb.n, %bb.m
 
 bb.o:                                             ; preds = %rb_threadptr_pending_interrupt_empty_p.exit.i
   %i.bp = getelementptr i8, ptr %i.bf, i64 32
-  %i.bq = load atomic volatile i32, ptr %i.bp monotonic, align 4
+  %i.bq = load atomic volatile i32, ptr %i.bp monotonic, align 8
   %i.br = getelementptr i8, ptr %i.bf, i64 36
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !50
   %i.bt = xor i32 %i.bs, -1
@@ -7598,7 +7598,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 bb.r:                                             ; preds = %bb.q
   %i.cb = getelementptr i8, ptr %i.bf, i64 32
-  %i.cc = load atomic volatile i32, ptr %i.cb monotonic, align 4
+  %i.cc = load atomic volatile i32, ptr %i.cb monotonic, align 8
   %i.cd = getelementptr i8, ptr %i.bf, i64 36
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !50
   %i.cf = xor i32 %i.ce, -1
@@ -7890,7 +7890,7 @@ rb_obj_write.exit:                                ; preds = %rb_scan_args_set.ex
   br i1 %.not.not, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %rb_obj_write.exit
-  %i.an = load i64, ptr %i.ag, align 1, !tbaa !209
+  %i.an = load i64, ptr %i.ag, align 8, !tbaa !209
   %i.ao = tail call i64 @rb_ary_concat(i64 noundef %i.an, i64 noundef %.sink) #17 ; 0 uses
   br label %bb.j
 

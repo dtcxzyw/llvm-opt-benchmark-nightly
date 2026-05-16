@@ -201,7 +201,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cf = add nsw i32 %i.bw, -1
-  store i32 %i.cf, ptr %i.bt, align 4, !tbaa !3
+  store i32 %i.cf, ptr %i.bt, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
 
 bb.ac:                                            ; preds = %bb.aa
@@ -278,7 +278,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %i.de = add nsw i32 %i.cv, -1
-  store i32 %i.de, ptr %i.cs, align 4, !tbaa !3
+  store i32 %i.de, ptr %i.cs, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.al:                                            ; preds = %bb.aj
@@ -335,7 +335,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dx = add nsw i32 %i.do, -1
-  store i32 %i.dx, ptr %i.dl, align 4, !tbaa !3
+  store i32 %i.dx, ptr %i.dl, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -407,7 +407,7 @@ bb.aw:                                            ; preds = %bb.au
 
 bb.ax:                                            ; preds = %bb.aw
   %i.eu = add nsw i32 %i.el, -1
-  store i32 %i.eu, ptr %i.ei, align 4, !tbaa !3
+  store i32 %i.eu, ptr %i.ei, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23
 
 bb.ay:                                            ; preds = %bb.aw
@@ -443,7 +443,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.fe = add nsw i32 %i.fc, -1
-  store i32 %i.fe, ptr %i.ez, align 4, !tbaa !3
+  store i32 %i.fe, ptr %i.ez, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23.1
 
 bb.bd:                                            ; preds = %bb.bb
@@ -507,7 +507,7 @@ bb.bi:                                            ; preds = %bb.bg
 
 bb.bj:                                            ; preds = %bb.bi
   %i.gb = add nsw i32 %i.fs, -1
-  store i32 %i.gb, ptr %i.fp, align 4, !tbaa !3
+  store i32 %i.gb, ptr %i.fp, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i27
 
 bb.bk:                                            ; preds = %bb.bi
@@ -601,7 +601,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.r = add nsw i32 %i.i, -1
-  store i32 %i.r, ptr %i.f, align 4, !tbaa !3
+  store i32 %i.r, ptr %i.f, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -683,7 +683,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -739,7 +739,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -1142,7 +1142,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cg = add nsw i32 %i.bx, -1
-  store i32 %i.cg, ptr %i.bu, align 4, !tbaa !3
+  store i32 %i.cg, ptr %i.bu, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
 
 bb.ac:                                            ; preds = %bb.aa
@@ -1218,7 +1218,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %i.de = add nsw i32 %i.cv, -1
-  store i32 %i.de, ptr %i.cs, align 4, !tbaa !3
+  store i32 %i.de, ptr %i.cs, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.al:                                            ; preds = %bb.aj
@@ -1275,7 +1275,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dx = add nsw i32 %i.do, -1
-  store i32 %i.dx, ptr %i.dl, align 4, !tbaa !3
+  store i32 %i.dx, ptr %i.dl, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -1347,7 +1347,7 @@ bb.aw:                                            ; preds = %bb.au
 
 bb.ax:                                            ; preds = %bb.aw
   %i.eu = add nsw i32 %i.el, -1
-  store i32 %i.eu, ptr %i.ei, align 4, !tbaa !3
+  store i32 %i.eu, ptr %i.ei, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23
 
 bb.ay:                                            ; preds = %bb.aw
@@ -1383,7 +1383,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.fe = add nsw i32 %i.fc, -1
-  store i32 %i.fe, ptr %i.ez, align 4, !tbaa !3
+  store i32 %i.fe, ptr %i.ez, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23.1
 
 bb.bd:                                            ; preds = %bb.bb
@@ -1447,7 +1447,7 @@ bb.bi:                                            ; preds = %bb.bg
 
 bb.bj:                                            ; preds = %bb.bi
   %i.gb = add nsw i32 %i.fs, -1
-  store i32 %i.gb, ptr %i.fp, align 4, !tbaa !3
+  store i32 %i.gb, ptr %i.fp, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i27
 
 bb.bk:                                            ; preds = %bb.bi
@@ -1533,7 +1533,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -1865,7 +1865,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.aa
   %i.cg = add nsw i32 %i.bx, -1
-  store i32 %i.cg, ptr %i.bu, align 4, !tbaa !3
+  store i32 %i.cg, ptr %i.bu, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
 
 bb.ac:                                            ; preds = %bb.aa
@@ -1941,7 +1941,7 @@ bb.aj:                                            ; preds = %bb.ah
 
 bb.ak:                                            ; preds = %bb.aj
   %i.de = add nsw i32 %i.cv, -1
-  store i32 %i.de, ptr %i.cs, align 4, !tbaa !3
+  store i32 %i.de, ptr %i.cs, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.al:                                            ; preds = %bb.aj
@@ -1998,7 +1998,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dx = add nsw i32 %i.do, -1
-  store i32 %i.dx, ptr %i.dl, align 4, !tbaa !3
+  store i32 %i.dx, ptr %i.dl, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -2070,7 +2070,7 @@ bb.aw:                                            ; preds = %bb.au
 
 bb.ax:                                            ; preds = %bb.aw
   %i.eu = add nsw i32 %i.el, -1
-  store i32 %i.eu, ptr %i.ei, align 4, !tbaa !3
+  store i32 %i.eu, ptr %i.ei, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23
 
 bb.ay:                                            ; preds = %bb.aw
@@ -2106,7 +2106,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.fe = add nsw i32 %i.fc, -1
-  store i32 %i.fe, ptr %i.ez, align 4, !tbaa !3
+  store i32 %i.fe, ptr %i.ez, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i23.1
 
 bb.bd:                                            ; preds = %bb.bb
@@ -2170,7 +2170,7 @@ bb.bi:                                            ; preds = %bb.bg
 
 bb.bj:                                            ; preds = %bb.bi
   %i.gb = add nsw i32 %i.fs, -1
-  store i32 %i.gb, ptr %i.fp, align 4, !tbaa !3
+  store i32 %i.gb, ptr %i.fp, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i27
 
 bb.bk:                                            ; preds = %bb.bi
@@ -2256,7 +2256,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -2343,7 +2343,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2401,7 +2401,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2459,7 +2459,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2517,7 +2517,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2574,7 +2574,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2632,7 +2632,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2750,7 +2750,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.aj = add nsw i32 %i.aa, -1
-  store i32 %i.aj, ptr %i.x, align 4, !tbaa !3
+  store i32 %i.aj, ptr %i.x, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.m:                                             ; preds = %bb.k

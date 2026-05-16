@@ -179,7 +179,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.k
   %i.an = trunc i64 %1 to i16
   %i.ao = getelementptr inbounds nuw i8, ptr %i.q, i64 8
-  store i16 %i.an, ptr %i.ao, align 2, !tbaa !16
+  store i16 %i.an, ptr %i.ao, align 4, !tbaa !16
   br label %intsetUpgradeAndAdd.exit
 
 bb.o:                                             ; preds = %._crit_edge.i
@@ -391,7 +391,7 @@ bb.j:                                             ; preds = %bb.h
   br label %_intsetGet.exit54
 
 bb.k:                                             ; preds = %bb.h
-  %.0.copyload.i.i53 = load i16, ptr %i.g, align 2
+  %.0.copyload.i.i53 = load i16, ptr %i.g, align 4
   %i.p = sext i16 %.0.copyload.i.i53 to i64
   br label %_intsetGet.exit54
 
@@ -751,7 +751,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_intsetGet.exit
 
 bb.d:                                             ; preds = %bb.a
-  %.0.copyload.i.i = load i16, ptr %i.c, align 2
+  %.0.copyload.i.i = load i16, ptr %i.c, align 4
   %i.e = sext i16 %.0.copyload.i.i to i64
   br label %_intsetGet.exit
 
@@ -880,7 +880,7 @@ bb.i:                                             ; preds = %bb.g
   br label %_intsetGet.exit
 
 bb.j:                                             ; preds = %bb.g
-  %.0.copyload.i.i = load i16, ptr %i.j, align 2
+  %.0.copyload.i.i = load i16, ptr %i.j, align 4
   %i.l = sext i16 %.0.copyload.i.i to i64
   br label %_intsetGet.exit
 

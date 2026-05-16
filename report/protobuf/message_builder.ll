@@ -201,7 +201,7 @@ bb.ar:                                            ; preds = %bb.aq
 
 bb.as:                                            ; preds = %.lr.ph.i.i.i
   %i.lg = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.lh = load i8, ptr %i.lg, align 1, !tbaa !107 ; 2 uses
+  %i.lh = load i8, ptr %i.lg, align 8, !tbaa !107 ; 2 uses
   %i.li = getelementptr inbounds nuw i8, ptr %i.ld, i64 10
   %i.lj = load i8, ptr %i.li, align 1, !tbaa !107
   %i.lk = icmp eq i8 %i.lh, %i.lj
@@ -604,7 +604,7 @@ bb.d:                                             ; preds = %bb.c
 
 _ZZN4absl12lts_2025051218container_internal5btreeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE16internal_emplaceIJRPNS1_13map_slot_typeIiS8_EEEEENS1_14btree_iteratorINS1_10btree_nodeISF_EERSD_PSD_EESR_DpOT_ENKUlhE_clEh.exit: ; preds = %.lr.ph.i.i.i4.prol.loopexit, %.lr.ph.i.i.i4, %bb.d
   %i.aw = getelementptr inbounds nuw i8, ptr %i.af, i64 10
-  store i8 %i.aj, ptr %i.aw, align 1, !tbaa !107
+  store i8 %i.aj, ptr %i.aw, align 2, !tbaa !107
   store i8 0, ptr %i.x, align 1, !tbaa !107
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE16clear_and_deleteEPSG_PSE_(ptr noundef nonnull %i.v, ptr noundef nonnull %i.w)
   store ptr %i.af, ptr %i.w, align 8, !tbaa !106
@@ -701,7 +701,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !107   ; 5 uses
+  %i.f = load i8, ptr %i.e, align 8, !tbaa !107   ; 5 uses
   %.not112 = icmp eq i8 %i.f, 0
   br i1 %.not112, label %bb.g, label %bb.c
 
@@ -718,7 +718,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %narrow = sub nuw nsw i8 15, %i.m
-  %i.o = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.o = load i32, ptr %i.a, align 8, !tbaa !3
   %i.p = and i32 %i.o, 255                        ; 2 uses
   %i.q = icmp samesign ult i32 %i.p, 15
   %i.r = zext i1 %i.q to i8
@@ -734,10 +734,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE23rebalance_right_to_leftEhPSG_PSE_(ptr noundef nonnull align 1 dereferenceable(1) %i.k, i8 noundef zeroext %.sroa.speculated99, ptr noundef nonnull %i.b, ptr noundef nonnull %i.v)
-  %i.w = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.w = load i32, ptr %i.a, align 8, !tbaa !3
   %i.x = and i32 %i.w, 255
   %i.y = sub nsw i32 %i.x, %i.t                   ; 3 uses
-  store i32 %i.y, ptr %i.a, align 4, !tbaa !3
+  store i32 %i.y, ptr %i.a, align 8, !tbaa !3
   %i.z = icmp slt i32 %i.y, 0
   br i1 %i.z, label %bb.f, label %.critedge
 
@@ -767,14 +767,14 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %narrow114 = sub nuw nsw i8 15, %i.an
-  %i.ap = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.ap = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.aq = icmp sgt i32 %i.ap, 0
   %i.ar = zext i1 %i.aq to i8
   %i.as = lshr i8 %narrow114, %i.ar
   %.sroa.speculated = tail call i8 @llvm.umax.i8(i8 %i.as, i8 1) ; 3 uses
   %i.at = and i32 %i.ap, 255
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !107
+  %i.av = load i8, ptr %i.au, align 2, !tbaa !107
   %i.aw = zext i8 %i.av to i32
   %i.ax = zext nneg i8 %.sroa.speculated to i32
   %i.ay = sub nsw i32 %i.aw, %i.ax
@@ -787,7 +787,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE23rebalance_left_to_rightEhPSG_PSE_(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 noundef zeroext %.sroa.speculated, ptr noundef nonnull %i.al, ptr noundef nonnull %i.ba)
-  %i.bb = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.bb = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.bc = load ptr, ptr %1, align 8, !tbaa !106
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 10
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !107
@@ -824,7 +824,7 @@ bb.n:                                             ; preds = %bb.a
   store i32 0, ptr %i.bp, align 8
   store ptr %i.b, ptr %i.bq, align 8, !tbaa !106
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i8 0, ptr %i.br, align 1, !tbaa !107
+  store i8 0, ptr %i.br, align 8, !tbaa !107
   store ptr %i.bo, ptr %i.b, align 8, !tbaa !106
   store ptr %i.bo, ptr %0, align 8, !tbaa !106
   %.pre = load ptr, ptr %1, align 8, !tbaa !106
@@ -853,7 +853,7 @@ bb.p:                                             ; preds = %bb.o
   store i8 0, ptr %i.cc, align 2, !tbaa !107
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 11
   store i8 15, ptr %i.cd, align 1, !tbaa !107
-  %i.ce = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.ce = load i32, ptr %i.a, align 8, !tbaa !3
   call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE5splitEiPSG_PSE_(ptr noundef nonnull align 1 dereferenceable(1) %i.bs, i32 noundef %i.ce, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.by)
   %i.cf = load ptr, ptr %i.by, align 8, !tbaa !106
   %i.cg = load ptr, ptr %1, align 8, !tbaa !106
@@ -875,13 +875,13 @@ bb.r:                                             ; preds = %bb.o
   store i8 0, ptr %i.cl, align 2, !tbaa !107
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 11
   store i8 0, ptr %i.cm, align 1, !tbaa !107
-  %i.cn = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.cn = load i32, ptr %i.a, align 8, !tbaa !3
   call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE5splitEiPSG_PSE_(ptr noundef nonnull align 1 dereferenceable(1) %i.bs, i32 noundef %i.cn, ptr noundef nonnull %i.ci, ptr noundef nonnull %i.by)
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.p, %bb.q, %bb.r
   %.0 = phi ptr [ %i.bz, %bb.q ], [ %i.bz, %bb.p ], [ %i.ci, %bb.r ]
-  %i.co = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.co = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.cp = load ptr, ptr %1, align 8, !tbaa !106
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 10
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !107
@@ -897,7 +897,7 @@ bb.t:                                             ; preds = %bb.s
 .critedge.sink.split:                             ; preds = %bb.t, %bb.f, %bb.k
   %.sink127 = phi i32 [ %i.bi, %bb.k ], [ %i.ad, %bb.f ], [ %i.cv, %bb.t ]
   %.sink = phi ptr [ %i.al, %bb.k ], [ %i.k, %bb.f ], [ %.0, %bb.t ]
-  store i32 %.sink127, ptr %i.a, align 4, !tbaa !3
+  store i32 %.sink127, ptr %i.a, align 8, !tbaa !3
   store ptr %.sink, ptr %1, align 8, !tbaa !106
   br label %.critedge
 
@@ -1001,7 +1001,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6goo
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod62 = trunc i8 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod62)
-  %i.ak = load i8, ptr %i.a, align 1, !tbaa !107
+  %i.ak = load i8, ptr %i.a, align 2, !tbaa !107
   %i.al = trunc i64 %indvars.iv.epil.init to i8
   %i.am = add i8 %i.al, 1
   %i.an = add i8 %i.ak, %i.am                     ; 2 uses
@@ -1027,7 +1027,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6goo
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
-  %i.av = load i8, ptr %i.a, align 1, !tbaa !107
+  %i.av = load i8, ptr %i.a, align 2, !tbaa !107
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.aw = trunc nuw i64 %indvars.iv.next to i8
   %i.ax = add i8 %i.av, %i.aw                     ; 2 uses
@@ -1039,7 +1039,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.bc = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   store i8 %i.ax, ptr %i.bc, align 1, !tbaa !107
   store ptr %0, ptr %i.az, align 8, !tbaa !106
-  %i.bd = load i8, ptr %i.a, align 1, !tbaa !107
+  %i.bd = load i8, ptr %i.a, align 2, !tbaa !107
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.be = trunc nuw i64 %indvars.iv.next.1 to i8
   %i.bf = add i8 %i.bd, %i.be                     ; 2 uses
@@ -1076,9 +1076,9 @@ bb.c:                                             ; preds = %.lr.ph57, %bb.c
   br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !311
 
 .loopexit:                                        ; preds = %bb.c, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE10transfer_nEmmmPSG_PSE_.exit51
-  %i.bx = load i8, ptr %i.a, align 1, !tbaa !107
+  %i.bx = load i8, ptr %i.a, align 2, !tbaa !107
   %i.by = add i8 %i.bx, %1
-  store i8 %i.by, ptr %i.a, align 1, !tbaa !107
+  store i8 %i.by, ptr %i.a, align 2, !tbaa !107
   %i.bz = load i8, ptr %i.v, align 1, !tbaa !107
   %i.ca = sub i8 %i.bz, %1
   store i8 %i.ca, ptr %i.v, align 1, !tbaa !107
@@ -1177,7 +1177,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6goo
   br i1 %.not.i49, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE10transfer_nEmmmPSG_PSE_.exit.loopexit, label %.lr.ph.i48, !llvm.loop !308
 
 _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE10transfer_nEmmmPSG_PSE_.exit.loopexit: ; preds = %.lr.ph.i48
-  %.pre = load i8, ptr %i.ag, align 1, !tbaa !107
+  %.pre = load i8, ptr %i.ag, align 2, !tbaa !107
   %.pre62 = zext i8 %.pre to i32
   br label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE10transfer_nEmmmPSG_PSE_.exit
 
@@ -1284,7 +1284,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %indvars.iv58 = phi i64 [ 1, %.lr.ph56.new ], [ %indvars.iv.next59.1, %bb.c ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph56.new ], [ %niter.next.1, %bb.c ]
   %i.cl = add nsw i64 %indvars.iv58, -1           ; 2 uses
-  %i.cm = load i8, ptr %i.ag, align 1, !tbaa !107
+  %i.cm = load i8, ptr %i.ag, align 2, !tbaa !107
   %i.cn = trunc nuw i64 %indvars.iv58 to i8
   %i.co = sub i8 %i.cn, %1
   %i.cp = add i8 %i.co, %i.cm
@@ -1297,7 +1297,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %i.cv = trunc nuw i64 %i.cl to i8
   store i8 %i.cv, ptr %i.cu, align 1, !tbaa !107
   store ptr %2, ptr %i.cs, align 8, !tbaa !106
-  %i.cw = load i8, ptr %i.ag, align 1, !tbaa !107
+  %i.cw = load i8, ptr %i.ag, align 2, !tbaa !107
   %i.cx = trunc i64 %indvars.iv58 to i8
   %.reass = add i8 %i.cx, %invariant.op
   %i.cy = add i8 %.reass, %i.cw
@@ -1324,7 +1324,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %lcmp.mod70 = trunc i64 %i.bq to i1
   tail call void @llvm.assume(i1 %lcmp.mod70)
   %i.df = add nsw i64 %indvars.iv58.epil.init, -1 ; 2 uses
-  %i.dg = load i8, ptr %i.ag, align 1, !tbaa !107
+  %i.dg = load i8, ptr %i.ag, align 2, !tbaa !107
   %i.dh = trunc nuw i64 %indvars.iv58.epil.init to i8
   %i.di = sub i8 %i.dh, %1
   %i.dj = add i8 %i.di, %i.dg
@@ -1340,9 +1340,9 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE10transfer_nEmmmPSG_PSE_.exit
-  %i.dq = load i8, ptr %i.ag, align 1, !tbaa !107
+  %i.dq = load i8, ptr %i.ag, align 2, !tbaa !107
   %i.dr = sub i8 %i.dq, %1
-  store i8 %i.dr, ptr %i.ag, align 1, !tbaa !107
+  store i8 %i.dr, ptr %i.ag, align 2, !tbaa !107
   %i.ds = load i8, ptr %i.a, align 1, !tbaa !107
   %i.dt = add i8 %i.ds, %1
   store i8 %i.dt, ptr %i.a, align 1, !tbaa !107
@@ -1513,7 +1513,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6goo
   br i1 %.not.i28, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10map_paramsIiPKN6google8protobuf15OneofDescriptorESt4lessIiESaISt4pairIKiS8_EELi256ELb0EEEE13emplace_valueIJPNS1_13map_slot_typeIiS8_EEEEEvhPSE_DpOT_.exit
-  %i.br = load i8, ptr %i.h, align 1, !tbaa !107
+  %i.br = load i8, ptr %i.h, align 2, !tbaa !107
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.bt = getelementptr inbounds nuw i8, ptr %2, i64 256
   br label %bb.h

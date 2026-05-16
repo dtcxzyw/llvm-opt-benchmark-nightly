@@ -201,12 +201,12 @@ vector.ph27:                                      ; preds = %vector.body
   %i.ap = select i1 %.not29.i, i32 0, i32 -1727483681
   %i.aq = xor i32 %i.ap, %i.ah
   %i.ar = xor i32 %i.aq, %i.an
-  store i32 %i.ar, ptr %i.e, align 4, !tbaa !7
+  store i32 %i.ar, ptr %i.e, align 8, !tbaa !7
   %i.as = getelementptr i8, ptr %0, i64 2488
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !7
+  %i.at = load i32, ptr %i.as, align 8, !tbaa !7
   %i.au = and i32 %i.ak, -2147483648
   %i.av = getelementptr i8, ptr %0, i64 904       ; 2 uses
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !7  ; 3 uses
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !7  ; 3 uses
   %i.ax = and i32 %i.aw, 2147483646
   %i.ay = or disjoint i32 %i.ax, %i.au
   %i.az = lshr exact i32 %i.ay, 1
@@ -229,7 +229,7 @@ vector.ph27:                                      ; preds = %vector.body
   %i.bn = select i1 %.not29.i.2, i32 0, i32 -1727483681
   %i.bo = xor i32 %i.bn, %i.bf
   %i.bp = xor i32 %i.bo, %i.bl
-  store i32 %i.bp, ptr %i.av, align 4, !tbaa !7
+  store i32 %i.bp, ptr %i.av, align 8, !tbaa !7
   %i.bq = getelementptr i8, ptr %0, i64 2492
   %vector.recur.init30 = insertelement <4 x i32> poison, i32 %i.bi, i64 3
   br label %vector.body28
@@ -261,7 +261,7 @@ vector.body28:                                    ; preds = %vector.body28, %vec
 next_state.exit:                                  ; preds = %vector.body28
   %i.cf = extractelement <4 x i32> %wide.load34, i64 3
   %i.cg = getelementptr i8, ptr %0, i64 1584
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !7
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !7
   %i.ci = and i32 %i.cf, -2147483648
   %i.cj = load i32, ptr %0, align 8, !tbaa !7     ; 2 uses
   %i.ck = and i32 %i.cj, 2147483646

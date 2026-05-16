@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.z = add nsw i32 %i.q, -1
-  store i32 %i.z, ptr %i.n, align 4
+  store i32 %i.z, ptr %i.n, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -249,7 +249,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.us
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 48
-  %char0 = load i8, ptr %i.m, align 1
+  %char0 = load i8, ptr %i.m, align 8
   %i.n = icmp eq i8 %char0, 0
   br i1 %i.n, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread9.us
 
@@ -345,7 +345,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph.split.us.i
   %i.m = getelementptr inbounds nuw i8, ptr %i.i, i64 48
-  %char0.i = load i8, ptr %i.m, align 1, !noalias !22
+  %char0.i = load i8, ptr %i.m, align 8, !noalias !22
   %i.n = icmp eq i8 %char0.i, 0
   br i1 %i.n, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread9.us.i
 
@@ -437,7 +437,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.av = add nsw i32 %i.am, -1
-  store i32 %i.av, ptr %i.aj, align 4
+  store i32 %i.av, ptr %i.aj, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.k:                                             ; preds = %bb.i

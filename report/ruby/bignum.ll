@@ -201,7 +201,7 @@ BIGNUM_DIGITS.exit:                               ; preds = %BIGNUM_LEN.exit
 
 BIGNUM_DIGITS.exit.thread:                        ; preds = %BIGNUM_LEN.exit.thread
   %i.m = getelementptr i8, ptr %i.a, i64 16       ; 2 uses
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !7
+  %i.n = load i32, ptr %i.m, align 8, !tbaa !7
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %BIGNUM_LEN.exit8.thread, label %bigzero_p.exit
 
@@ -346,7 +346,7 @@ BIGNUM_DIGITS.exit:                               ; preds = %BIGNUM_LEN.exit
 
 BIGNUM_DIGITS.exit.thread:                        ; preds = %BIGNUM_LEN.exit.thread
   %i.v = getelementptr i8, ptr %i.h, i64 16       ; 2 uses
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !7
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !7
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %BIGNUM_LEN.exit24.thread, label %bigzero_p.exit
 
@@ -749,7 +749,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr i8, ptr %i.c, i64 16
   %i.g = trunc i64 %0 to i32
-  store i32 %i.g, ptr %i.f, align 4, !tbaa !7
+  store i32 %i.g, ptr %i.f, align 8, !tbaa !7
   %i.h = lshr i64 %0, 32                          ; 2 uses
   %i.i = trunc nuw i64 %i.h to i32
   %i.j = getelementptr i8, ptr %i.c, i64 20
@@ -795,7 +795,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.d, i64 16
-  store i64 %.07, ptr %i.g, align 4
+  store i64 %.07, ptr %i.g, align 8
   %.not18.i = icmp ult i64 %.07, 4294967296
   %.us-phi.i = select i1 %.not18.i, i64 32768, i64 65536
   %i.h = and i64 %i.e, -16744449
@@ -848,7 +848,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr i8, ptr %i.f, i64 16
-  store i64 %0, ptr %i.i, align 4
+  store i64 %0, ptr %i.i, align 8
   %i.j = and i64 %i.g, -16744449
   %i.k = or disjoint i64 %i.j, 65536
   store i64 %i.k, ptr %i.f, align 8, !tbaa !13
@@ -892,7 +892,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %.07.i, ptr %i.j, align 4
+  store i64 %.07.i, ptr %i.j, align 8
   %i.k = and i64 %i.h, -16744449
   %i.l = or disjoint i64 %i.k, 65536
   store i64 %i.l, ptr %i.g, align 8, !tbaa !13
@@ -1295,7 +1295,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %i.d, i64 16
-  store i64 %.07, ptr %i.g, align 4
+  store i64 %.07, ptr %i.g, align 8
   %.not17.i = icmp ult i64 %.07, 4294967296
   %i.h = and i64 %.07, 4294967295
   %.not17.1.i.not = icmp eq i64 %i.h, 0
@@ -1354,7 +1354,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr i8, ptr %i.f, i64 16
-  store i64 %0, ptr %i.i, align 4
+  store i64 %0, ptr %i.i, align 8
   %i.j = and i64 %i.g, -16744449
   %i.k = or disjoint i64 %i.j, 65536
   store i64 %i.k, ptr %i.f, align 8, !tbaa !13
@@ -1398,7 +1398,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %.07.i, ptr %i.j, align 4
+  store i64 %.07.i, ptr %i.j, align 8
   %i.k = and i64 %i.h, -16744449
   %i.l = or disjoint i64 %i.k, 65536
   store i64 %i.l, ptr %i.g, align 8, !tbaa !13
@@ -1801,7 +1801,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr i8, ptr %i.s, i64 16
-  store i64 4611686018427387904, ptr %i.v, align 4
+  store i64 4611686018427387904, ptr %i.v, align 8
   %i.w = and i64 %i.t, -16744449
   %i.x = or disjoint i64 %i.w, 65536
   store i64 %i.x, ptr %i.s, align 8, !tbaa !13
@@ -2204,7 +2204,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr i8, ptr %i.f, i64 16
-  store i64 %.07.i, ptr %i.i, align 4
+  store i64 %.07.i, ptr %i.i, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.j = and i64 %i.g, -16744449
@@ -2607,7 +2607,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %.07.i, ptr %i.j, align 4
+  store i64 %.07.i, ptr %i.j, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.k = and i64 %i.h, -16744449
@@ -2941,7 +2941,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %.07.i, ptr %i.j, align 4
+  store i64 %.07.i, ptr %i.j, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.k = and i64 %i.h, -16744449
@@ -3171,7 +3171,7 @@ BIGNUM_DIGITS.exit:                               ; preds = %BIGNUM_LEN.exit
 
 BIGNUM_DIGITS.exit.thread:                        ; preds = %BIGNUM_LEN.exit.thread
   %i.u = getelementptr i8, ptr %i.i, i64 16       ; 2 uses
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !7
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !7
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %BIGNUM_LEN.exit20.thread, label %bigzero_p.exit
 
@@ -3222,7 +3222,7 @@ bb.d:                                             ; preds = %bigzero_p.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.al = getelementptr i8, ptr %i.ai, i64 16
-  store i64 1, ptr %i.al, align 4
+  store i64 1, ptr %i.al, align 8
   %i.am = and i64 %i.aj, -16744449
   %i.an = or disjoint i64 %i.am, 32768
   store i64 %i.an, ptr %i.ai, align 8, !tbaa !13
@@ -3290,7 +3290,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %.07.i, ptr %i.j, align 4
+  store i64 %.07.i, ptr %i.j, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.k = and i64 %i.h, -16744449
@@ -3622,7 +3622,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ax = getelementptr i8, ptr %i.au, i64 16
-  store i64 0, ptr %i.ax, align 4
+  store i64 0, ptr %i.ax, align 8
   %i.ay = and i64 %i.av, -16744449
   %i.az = or disjoint i64 %i.ay, 32768
   store i64 %i.az, ptr %i.au, align 8, !tbaa !13
@@ -3838,7 +3838,7 @@ bb.y:                                             ; preds = %bigdivrem_single.ex
 
 bb.z:                                             ; preds = %bb.y
   %i.ei = getelementptr i8, ptr %i.ef, i64 16
-  store i32 %.027.i.i, ptr %i.ei, align 4, !tbaa !7
+  store i32 %.027.i.i, ptr %i.ei, align 8, !tbaa !7
   %i.ej = getelementptr i8, ptr %i.ef, i64 20
   store i32 0, ptr %i.ej, align 4, !tbaa !7
   %i.ek = and i64 %i.eg, -16744449
@@ -4192,7 +4192,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr i8, ptr %i.h, i64 16
-  store i64 %.07.i, ptr %i.k, align 4
+  store i64 %.07.i, ptr %i.k, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.l = and i64 %i.i, -16744449
@@ -4548,7 +4548,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr i8, ptr %i.k, i64 16
-  store i64 %.07.i, ptr %i.n, align 4
+  store i64 %.07.i, ptr %i.n, align 8
   %.not18.i.i = icmp samesign ult i64 %.07.i, 4294967296
   %.us-phi.i.i = select i1 %.not18.i.i, i64 32768, i64 65536
   %i.o = and i64 %i.l, -16744449
@@ -4951,7 +4951,7 @@ BIGNUM_DIGITS.exit:                               ; preds = %BIGNUM_LEN.exit
 
 BIGNUM_DIGITS.exit.thread:                        ; preds = %BIGNUM_LEN.exit.thread
   %i.ae = getelementptr i8, ptr %i.r, i64 16
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !7
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !7
   %i.ag = icmp eq i32 %i.af, 0
   br i1 %i.ag, label %.thread109, label %bb.j
 
@@ -5155,7 +5155,7 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   %i.db = getelementptr i8, ptr %i.cy, i64 16
-  store i64 4611686018427387904, ptr %i.db, align 4
+  store i64 4611686018427387904, ptr %i.db, align 8
   %i.dc = and i64 %i.cz, -16744449
   %i.dd = or disjoint i64 %i.dc, 65536
   store i64 %i.dd, ptr %i.cy, align 8, !tbaa !13
@@ -5558,7 +5558,7 @@ BIGNUM_DIGITS.exit:                               ; preds = %BIGNUM_LEN.exit
 
 BIGNUM_DIGITS.exit.thread:                        ; preds = %BIGNUM_LEN.exit.thread
   %i.q = getelementptr i8, ptr %i.e, i64 16       ; 2 uses
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !7
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !7
   %i.s = icmp eq i32 %i.r, 0
   br i1 %i.s, label %BIGNUM_LEN.exit31.thread, label %bigzero_p.exit
 
@@ -5961,7 +5961,7 @@ bb.ae:                                            ; preds = %bb.ac
 
 bb.af:                                            ; preds = %bb.ae
   %i.dr = getelementptr i8, ptr %i.do, i64 16
-  store i64 %i.di, ptr %i.dr, align 4
+  store i64 %i.di, ptr %i.dr, align 8
   %i.ds = and i64 %i.dp, -16744449
   %i.dt = or disjoint i64 %i.ds, 65536
   store i64 %i.dt, ptr %i.do, align 8, !tbaa !13
@@ -6028,7 +6028,7 @@ bb.al:                                            ; preds = %bb.aj
 
 bb.am:                                            ; preds = %bb.al
   %i.es = getelementptr i8, ptr %i.ep, i64 16
-  store i64 %i.ej, ptr %i.es, align 4
+  store i64 %i.ej, ptr %i.es, align 8
   %i.et = and i64 %i.eq, -16744449
   %i.eu = or disjoint i64 %i.et, 65536
   store i64 %i.eu, ptr %i.ep, align 8, !tbaa !13
@@ -6083,7 +6083,7 @@ bb.ar:                                            ; preds = %bb.ap
 
 bb.as:                                            ; preds = %bb.ar
   %i.fm = getelementptr i8, ptr %i.fj, i64 16
-  store i64 %.07.i.i.i, ptr %i.fm, align 4
+  store i64 %.07.i.i.i, ptr %i.fm, align 8
   %i.fn = and i64 %i.fk, -16744449
   %i.fo = or disjoint i64 %i.fn, 65536
   store i64 %i.fo, ptr %i.fj, align 8, !tbaa !13
@@ -6364,7 +6364,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr i8, ptr %i.g, i64 16
-  store i64 %i.a, ptr %i.j, align 4
+  store i64 %i.a, ptr %i.j, align 8
   %i.k = and i64 %i.h, -16744449
   %i.l = or disjoint i64 %i.k, 65536
   store i64 %i.l, ptr %i.g, align 8, !tbaa !13
@@ -6598,7 +6598,7 @@ bb.y:                                             ; preds = %bb.w
 
 bb.z:                                             ; preds = %bb.y
   %i.ca = getelementptr i8, ptr %i.bx, i64 16
-  store i64 %i.br, ptr %i.ca, align 4
+  store i64 %i.br, ptr %i.ca, align 8
   %i.cb = and i64 %i.by, -16744449
   %i.cc = or disjoint i64 %i.cb, 65536
   store i64 %i.cc, ptr %i.bx, align 8, !tbaa !13
@@ -6857,7 +6857,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.ae = getelementptr i8, ptr %i.ab, i64 16
-  store i64 %i.v, ptr %i.ae, align 4
+  store i64 %i.v, ptr %i.ae, align 8
   %i.af = and i64 %i.ac, -16744449
   %i.ag = or disjoint i64 %i.af, 65536
   store i64 %i.ag, ptr %i.ab, align 8, !tbaa !13
@@ -6912,7 +6912,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bd = getelementptr i8, ptr %i.ba, i64 16
-  store i64 %i.as, ptr %i.bd, align 4
+  store i64 %i.as, ptr %i.bd, align 8
   %i.be = and i64 %i.bb, -16744449
   %i.bf = or disjoint i64 %i.be, 65536
   store i64 %i.bf, ptr %i.ba, align 8, !tbaa !13
@@ -6950,7 +6950,7 @@ bb.s:                                             ; preds = %rb_ull2num_inline.e
 
 bb.t:                                             ; preds = %bb.s
   %i.bv = getelementptr i8, ptr %i.bs, i64 16
-  store i64 %i.bk, ptr %i.bv, align 4
+  store i64 %i.bk, ptr %i.bv, align 8
   %i.bw = and i64 %i.bt, -16744449
   %i.bx = or disjoint i64 %i.bw, 65536
   store i64 %i.bx, ptr %i.bs, align 8, !tbaa !13
@@ -7295,7 +7295,7 @@ BIGNUM_DIGITS.exit.i:                             ; preds = %BIGNUM_LEN.exit.i
 
 BIGNUM_DIGITS.exit.thread.i:                      ; preds = %BIGNUM_LEN.exit.thread.i
   %i.cp = getelementptr i8, ptr %i.cd, i64 16     ; 2 uses
-  %i.cq = load i32, ptr %i.cp, align 4, !tbaa !7
+  %i.cq = load i32, ptr %i.cp, align 8, !tbaa !7
   %i.cr = icmp eq i32 %i.cq, 0
   br i1 %i.cr, label %BIGNUM_LEN.exit8.thread.i, label %rb_bigzero_p.exit
 

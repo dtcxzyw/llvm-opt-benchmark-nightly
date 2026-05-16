@@ -158,7 +158,7 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %bb.m
   %i.bf = tail call ptr @je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext true) #15 ; 7 uses
-  %i.bg = load i8, ptr %0, align 1, !tbaa !29, !range !31, !noundef !32
+  %i.bg = load i8, ptr %0, align 8, !tbaa !29, !range !31, !noundef !32
   %i.bh = trunc nuw i8 %i.bg to i1
   br i1 %i.bh, label %bb.o, label %tsdn_witness_tsdp_get.exit
 
@@ -507,7 +507,7 @@ bb.m:                                             ; preds = %bb.j
 
 bb.n:                                             ; preds = %bb.m
   %i.bg = tail call ptr @je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext true) #15 ; 7 uses
-  %i.bh = load i8, ptr %0, align 1, !tbaa !29, !range !31, !noundef !32
+  %i.bh = load i8, ptr %0, align 8, !tbaa !29, !range !31, !noundef !32
   %i.bi = trunc nuw i8 %i.bh to i1
   br i1 %i.bi, label %bb.o, label %tsdn_witness_tsdp_get.exit43.i
 
@@ -910,7 +910,7 @@ bb.r:                                             ; preds = %bb.o
 
 bb.s:                                             ; preds = %bb.r
   %i.br = tail call ptr @je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext true) #15 ; 7 uses
-  %i.bs = load i8, ptr %0, align 1, !tbaa !29, !range !31, !noundef !32
+  %i.bs = load i8, ptr %0, align 8, !tbaa !29, !range !31, !noundef !32
   %i.bt = trunc nuw i8 %i.bs to i1
   br i1 %i.bt, label %bb.t, label %tsdn_witness_tsdp_get.exit35.i
 

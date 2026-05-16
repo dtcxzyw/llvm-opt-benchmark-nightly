@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %luaK_patchtohere.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !4    ; 2 uses
+  %i.g = load i32, ptr %i.e, align 8, !tbaa !4    ; 2 uses
   %i.h = icmp eq i32 %i.g, -1
   br i1 %i.h, label %bb.d, label %.preheader.i.i
 
@@ -212,7 +212,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %1, ptr %i.e, align 4, !tbaa !4
+  store i32 %1, ptr %i.e, align 8, !tbaa !4
   br label %luaK_patchtohere.exit
 
 bb.e:                                             ; preds = %bb.e, %.preheader.i.i
@@ -355,7 +355,7 @@ bb.a:
   br i1 %i.e, label %luaK_concat.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = load i32, ptr %i.d, align 4, !tbaa !4    ; 2 uses
+  %i.f = load i32, ptr %i.d, align 8, !tbaa !4    ; 2 uses
   %i.g = icmp eq i32 %i.f, -1
   br i1 %i.g, label %bb.c, label %.preheader.i
 
@@ -366,7 +366,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  store i32 %1, ptr %i.d, align 4, !tbaa !4
+  store i32 %1, ptr %i.d, align 8, !tbaa !4
   br label %luaK_concat.exit
 
 bb.d:                                             ; preds = %bb.d, %.preheader.i
@@ -769,7 +769,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %luaK_concat.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = load i32, ptr %i.c, align 4, !tbaa !4    ; 2 uses
+  %i.g = load i32, ptr %i.c, align 8, !tbaa !4    ; 2 uses
   %i.h = icmp eq i32 %i.g, -1
   br i1 %i.h, label %bb.d, label %.preheader.i
 
@@ -780,7 +780,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %i.e, ptr %i.c, align 4, !tbaa !4
+  store i32 %i.e, ptr %i.c, align 8, !tbaa !4
   br label %luaK_concat.exit
 
 bb.e:                                             ; preds = %bb.e, %.preheader.i
@@ -1016,7 +1016,7 @@ luaK_jump.exit:                                   ; preds = %fixjump.exit.i.i, %
   br i1 %i.dn, label %luaK_patchtohere.exit, label %bb.t
 
 bb.t:                                             ; preds = %luaK_jump.exit
-  %i.do = load i32, ptr %i.dm, align 4, !tbaa !4  ; 2 uses
+  %i.do = load i32, ptr %i.dm, align 8, !tbaa !4  ; 2 uses
   %i.dp = icmp eq i32 %i.do, -1
   br i1 %i.dp, label %bb.u, label %.preheader.i.i58
 
@@ -1027,7 +1027,7 @@ bb.t:                                             ; preds = %luaK_jump.exit
   br label %bb.v
 
 bb.u:                                             ; preds = %bb.t
-  store i32 %i.cu, ptr %i.dm, align 4, !tbaa !4
+  store i32 %i.cu, ptr %i.dm, align 8, !tbaa !4
   br label %luaK_patchtohere.exit
 
 bb.v:                                             ; preds = %bb.v, %.preheader.i.i58
@@ -1430,7 +1430,7 @@ luaK_concat.exit:                                 ; preds = %bb.a, %bb.a, %bb.a,
   br i1 %i.ax, label %luaK_patchtohere.exit, label %bb.l
 
 bb.l:                                             ; preds = %luaK_concat.exit
-  %i.ay = load i32, ptr %i.aw, align 4, !tbaa !4  ; 2 uses
+  %i.ay = load i32, ptr %i.aw, align 8, !tbaa !4  ; 2 uses
   %i.az = icmp eq i32 %i.ay, -1
   br i1 %i.az, label %bb.m, label %.preheader.i.i
 
@@ -1441,7 +1441,7 @@ bb.l:                                             ; preds = %luaK_concat.exit
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  store i32 %i.as, ptr %i.aw, align 4, !tbaa !4
+  store i32 %i.as, ptr %i.aw, align 8, !tbaa !4
   br label %luaK_patchtohere.exit
 
 bb.n:                                             ; preds = %bb.n, %.preheader.i.i
@@ -1844,7 +1844,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %i.f, label %luaK_concat.exit.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.g = load i32, ptr %i.e, align 4, !tbaa !4    ; 2 uses
+  %i.g = load i32, ptr %i.e, align 8, !tbaa !4    ; 2 uses
   %i.h = icmp eq i32 %i.g, -1
   br i1 %i.h, label %bb.h, label %.preheader.i.i
 
@@ -1855,7 +1855,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  store i32 %.0.i, ptr %i.e, align 4, !tbaa !4
+  store i32 %.0.i, ptr %i.e, align 8, !tbaa !4
   br label %luaK_concat.exit.i
 
 bb.i:                                             ; preds = %bb.i, %.preheader.i.i
@@ -1908,7 +1908,7 @@ luaK_concat.exit.i:                               ; preds = %fixjump.exit.i.i, %
   br i1 %i.ai, label %luaK_goiffalse.exit, label %bb.l
 
 bb.l:                                             ; preds = %luaK_concat.exit.i
-  %i.aj = load i32, ptr %i.ah, align 4, !tbaa !4  ; 2 uses
+  %i.aj = load i32, ptr %i.ah, align 8, !tbaa !4  ; 2 uses
   %i.ak = icmp eq i32 %i.aj, -1
   br i1 %i.ak, label %bb.m, label %.preheader.i.i.i
 
@@ -1919,7 +1919,7 @@ bb.l:                                             ; preds = %luaK_concat.exit.i
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  store i32 %i.ad, ptr %i.ah, align 4, !tbaa !4
+  store i32 %i.ad, ptr %i.ah, align 8, !tbaa !4
   br label %luaK_goiffalse.exit
 
 bb.n:                                             ; preds = %bb.n, %.preheader.i.i.i

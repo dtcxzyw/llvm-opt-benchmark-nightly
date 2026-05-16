@@ -201,7 +201,7 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i: ; 
 
 _ZN6google8protobuf8internal20RepeatedPtrFieldBase14AddFromClearedINS1_18GenericTypeHandlerINS0_11MessageLiteEEEEEPNT_4TypeEv.exit: ; preds = %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i
   %i.aj = add nsw i32 %i.x, 1
-  store i32 %i.aj, ptr %i.w, align 4, !tbaa !3
+  store i32 %i.aj, ptr %i.w, align 8, !tbaa !3
   %i.ak = add i64 %i.z, -1
   %i.al = inttoptr i64 %i.ak to ptr
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
@@ -272,7 +272,7 @@ bb.i:                                             ; preds = %_ZN6google8protobuf
   br i1 %i.bj, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %.critedge
-  store i32 1, ptr %i.w, align 4, !tbaa !3
+  store i32 1, ptr %i.w, align 8, !tbaa !3
   %i.bk = load ptr, ptr %.020, align 8, !tbaa !33
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 32
   %i.bm = load ptr, ptr %i.bl, align 8
@@ -296,7 +296,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bv, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  store i32 1, ptr %i.w, align 4, !tbaa !3
+  store i32 1, ptr %i.w, align 8, !tbaa !3
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase11AddInternalEPNS0_5ArenaEN4absl12lts_2025051211FunctionRefIFvS4_RPvEEE.exit
 
 bb.n:                                             ; preds = %bb.l
@@ -346,7 +346,7 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit.i: ; pr
 bb.p:                                             ; preds = %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase12ClearedCountEv.exit.i
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ck, i64 8
   %i.cx = add nsw i32 %i.cl, 1
-  store i32 %i.cx, ptr %i.w, align 4, !tbaa !3
+  store i32 %i.cx, ptr %i.w, align 8, !tbaa !3
   %i.cy = sext i32 %i.cl to i64
   %i.cz = getelementptr inbounds [8 x i8], ptr %i.cw, i64 %i.cy
   %.1.i.pre = load ptr, ptr %i.cz, align 8, !tbaa !60
@@ -361,7 +361,7 @@ bb.q:                                             ; preds = %_ZNK6google8protobu
   store i32 %i.dd, ptr %i.dc, align 4, !tbaa !58
   %i.de = getelementptr inbounds nuw i8, ptr %.015.i, i64 8
   %i.df = add nsw i32 %i.da, 1
-  store i32 %i.df, ptr %i.w, align 4, !tbaa !3
+  store i32 %i.df, ptr %i.w, align 8, !tbaa !3
   %i.dg = sext i32 %i.da to i64
   %i.dh = getelementptr inbounds [8 x i8], ptr %i.de, i64 %i.dg
   %i.di = load ptr, ptr %.020, align 8, !tbaa !33
@@ -764,7 +764,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !22    ; 2 uses
+  %i.x = load i8, ptr %i.w, align 8, !tbaa !22    ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 10
   %i.z = load i8, ptr %i.y, align 1, !tbaa !22
   %i.aa = icmp eq i8 %i.x, %i.z
@@ -855,7 +855,7 @@ bb.e:                                             ; preds = %.lr.ph113
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i14
   %i.bp = getelementptr inbounds nuw i8, ptr %.01521.i.i.i15, i64 8
-  %i.bq = load i8, ptr %i.bp, align 1, !tbaa !22  ; 2 uses
+  %i.bq = load i8, ptr %i.bp, align 8, !tbaa !22  ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 10
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !22
   %i.bt = icmp eq i8 %i.bq, %i.bs
@@ -908,7 +908,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i30
   %i.cn = getelementptr inbounds nuw i8, ptr %.01521.i.i.i31, i64 8
-  %i.co = load i8, ptr %i.cn, align 1, !tbaa !22  ; 2 uses
+  %i.co = load i8, ptr %i.cn, align 8, !tbaa !22  ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ck, i64 10
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !22
   %i.cr = icmp eq i8 %i.co, %i.cq
@@ -976,7 +976,7 @@ bb.k:                                             ; preds = %.lr.ph119
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i50
   %i.dt = getelementptr inbounds nuw i8, ptr %.01521.i.i.i51, i64 8
-  %i.du = load i8, ptr %i.dt, align 1, !tbaa !22  ; 2 uses
+  %i.du = load i8, ptr %i.dt, align 8, !tbaa !22  ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dq, i64 10
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !22
   %i.dx = icmp eq i8 %i.du, %i.dw
@@ -1379,7 +1379,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !22    ; 2 uses
+  %i.x = load i8, ptr %i.w, align 8, !tbaa !22    ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 10
   %i.z = load i8, ptr %i.y, align 1, !tbaa !22
   %i.aa = icmp eq i8 %i.x, %i.z
@@ -1471,7 +1471,7 @@ bb.e:                                             ; preds = %.lr.ph115
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i15
   %i.bq = getelementptr inbounds nuw i8, ptr %.01521.i.i.i16, i64 8
-  %i.br = load i8, ptr %i.bq, align 1, !tbaa !22  ; 2 uses
+  %i.br = load i8, ptr %i.bq, align 8, !tbaa !22  ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bn, i64 10
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !22
   %i.bu = icmp eq i8 %i.br, %i.bt
@@ -1524,7 +1524,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i31
   %i.co = getelementptr inbounds nuw i8, ptr %.01521.i.i.i32, i64 8
-  %i.cp = load i8, ptr %i.co, align 1, !tbaa !22  ; 2 uses
+  %i.cp = load i8, ptr %i.co, align 8, !tbaa !22  ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cl, i64 10
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !22
   %i.cs = icmp eq i8 %i.cp, %i.cr
@@ -1593,7 +1593,7 @@ bb.k:                                             ; preds = %.lr.ph121
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i51
   %i.dv = getelementptr inbounds nuw i8, ptr %.01521.i.i.i52, i64 8
-  %i.dw = load i8, ptr %i.dv, align 1, !tbaa !22  ; 2 uses
+  %i.dw = load i8, ptr %i.dv, align 8, !tbaa !22  ; 2 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.ds, i64 10
   %i.dy = load i8, ptr %i.dx, align 1, !tbaa !22
   %i.dz = icmp eq i8 %i.dw, %i.dy

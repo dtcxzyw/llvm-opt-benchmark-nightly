@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.a
   %i.cb = sext i8 %i.e to i64
   %i.cc = lshr i64 %i.cb, 1                       ; 2 uses
   store i64 %i.cc, ptr %i.b, align 8, !tbaa !84
-  %i.cd = load i8, ptr %1, align 1, !tbaa !78
+  %i.cd = load i8, ptr %1, align 8, !tbaa !78
   %i.ce = trunc i8 %i.cd to i1
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 1
   %spec.select.i.i = select i1 %i.ce, ptr null, ptr %i.cf
@@ -424,7 +424,7 @@ bb.m:                                             ; preds = %bb.b
 
 bb.n:                                             ; preds = %bb.m
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 14
-  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !78
+  %i.cn = load i8, ptr %i.cm, align 2, !tbaa !78
   %i.co = zext i8 %i.cn to i64                    ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cj, i64 16 ; 2 uses
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %i.co

@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %rb_io_check_closed.
 
 bb.e:                                             ; preds = %rb_io_check_closed.exit
   %i.j = getelementptr i8, ptr %0, i64 80
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !46
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !46
   %.not4 = icmp eq i32 %i.k, 0
   br i1 %.not4, label %bb.g, label %bb.f
 
@@ -238,7 +238,7 @@ bb.c:                                             ; preds = %rb_io_check_initial
 
 rb_io_check_closed.exit:                          ; preds = %rb_io_check_initialized.exit.i
   %i.f = getelementptr i8, ptr %0, i64 80         ; 3 uses
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !46
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !46
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.o, label %bb.d
 
@@ -284,7 +284,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.i, %bb.f, %bb.e
   %i.z = getelementptr i8, ptr %0, i64 76
   store i32 0, ptr %i.z, align 4, !tbaa !47
-  store i32 0, ptr %i.f, align 4, !tbaa !46
+  store i32 0, ptr %i.f, align 8, !tbaa !46
   %i.aa = getelementptr i8, ptr %0, i64 128       ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !48 ; 2 uses
   %.not.i.i11 = icmp eq ptr %i.ab, null
@@ -297,13 +297,13 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.ac = getelementptr i8, ptr %0, i64 136       ; 2 uses
-  %i.ad = load ptr, ptr %i.ac, align 1, !tbaa !49 ; 2 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !49 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.ad, null
   br i1 %.not.i.i.i, label %clear_readconv.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   tail call void @ruby_xfree(ptr noundef nonnull %i.ad) #28
-  store ptr null, ptr %i.ac, align 1, !tbaa !49
+  store ptr null, ptr %i.ac, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.m, %bb.l
@@ -706,7 +706,7 @@ bb.e:                                             ; preds = %rb_io_check_closed.
 
 bb.f:                                             ; preds = %rb_io_check_closed.exit.i
   %i.u = getelementptr i8, ptr %i.k, i64 80
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !46
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.v, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.g
 
@@ -1082,7 +1082,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
 
 bb.e:                                             ; preds = %rb_io_check_closed.exit
   %i.s = getelementptr i8, ptr %i.k, i64 80
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !46
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !46
   %.not7 = icmp eq i32 %i.t, 0
   br i1 %.not7, label %rb_io_check_initialized.exit.i10, label %bb.g
 
@@ -1485,20 +1485,20 @@ bb.av:                                            ; preds = %bb.au
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
-  %i.er = load ptr, ptr %i.by, align 1, !tbaa !49 ; 2 uses
+  %i.er = load ptr, ptr %i.by, align 8, !tbaa !49 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.er, null
   br i1 %.not.i.i.i, label %.thread207, label %bb.ax
 
 bb.ax:                                            ; preds = %bb.aw
   call void @ruby_xfree(ptr noundef nonnull %i.er) #28
-  store ptr null, ptr %i.by, align 1, !tbaa !49
+  store ptr null, ptr %i.by, align 8, !tbaa !49
   br label %.thread207
 
 .preheader.i:                                     ; preds = %bb.aa, %bb.bn
   %.7 = phi i64 [ %.8, %bb.bn ], [ %.0180, %bb.aa ] ; 2 uses
   %.3121.i = phi i64 [ %.4122.i, %bb.bn ], [ %.0184, %bb.aa ] ; 4 uses
   %.5111.i = phi i64 [ %.7.i, %bb.bn ], [ %.0180, %bb.aa ] ; 5 uses
-  %i.es = load i32, ptr %i.cc, align 4, !tbaa !46 ; 3 uses
+  %i.es = load i32, ptr %i.cc, align 8, !tbaa !46 ; 3 uses
   %i.et = icmp sgt i32 %i.es, 0
   br i1 %i.et, label %bb.ay, label %thread-pre-split.i
 
@@ -1593,7 +1593,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 RSTRING_PTR.exit153.i:                            ; preds = %bb.bh, %bb.bg
   %i.ge = phi ptr [ %i.gd, %bb.bh ], [ %i.gc, %bb.bg ]
-  %i.gf = load i32, ptr %i.cc, align 4, !tbaa !46 ; 3 uses
+  %i.gf = load i32, ptr %i.cc, align 8, !tbaa !46 ; 3 uses
   %i.gg = icmp slt i32 %i.gf, 1
   br i1 %i.gg, label %read_buffered_data.exit.i, label %bb.bi
 
@@ -1612,9 +1612,9 @@ bb.bi:                                            ; preds = %RSTRING_PTR.exit153
   %i.go = load i32, ptr %i.ce, align 4, !tbaa !47
   %i.gp = add i32 %i.go, %spec.select.i154.i
   store i32 %i.gp, ptr %i.ce, align 4, !tbaa !47
-  %i.gq = load i32, ptr %i.cc, align 4, !tbaa !46
+  %i.gq = load i32, ptr %i.cc, align 8, !tbaa !46
   %i.gr = sub i32 %i.gq, %spec.select.i154.i      ; 2 uses
-  store i32 %i.gr, ptr %i.cc, align 4, !tbaa !46
+  store i32 %i.gr, ptr %i.cc, align 8, !tbaa !46
   br label %read_buffered_data.exit.i
 
 read_buffered_data.exit.i:                        ; preds = %bb.bi, %RSTRING_PTR.exit153.i
@@ -1934,7 +1934,7 @@ bb.e:                                             ; preds = %rb_io_check_closed.
 rb_io_check_byte_readable.exit:                   ; preds = %rb_io_check_closed.exit
   %i.t = getelementptr i8, ptr %i.k, i64 68
   %i.u = getelementptr i8, ptr %i.k, i64 80
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !46
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !46
   %.not = icmp eq i32 %i.v, 0
   br i1 %.not, label %rb_io_check_initialized.exit.i20, label %rb_io_check_closed.exit21
 
@@ -2220,7 +2220,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.n = getelementptr i8, ptr %1, i64 76
   store i32 0, ptr %i.n, align 4, !tbaa !47
   %i.o = getelementptr i8, ptr %1, i64 80
-  store i32 0, ptr %i.o, align 4, !tbaa !46
+  store i32 0, ptr %i.o, align 8, !tbaa !46
   %i.p = icmp sgt i64 %i.c, 2147483647
   br i1 %i.p, label %bb.e, label %bb.f
 
@@ -2623,18 +2623,18 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ruby_xfree(ptr noundef nonnull %i.g) #28
-  store ptr null, ptr %i.f, align 1, !tbaa !49
+  store ptr null, ptr %i.f, align 4, !tbaa !49
   br label %free_io_buffer.exit
 
 free_io_buffer.exit:                              ; preds = %bb.c, %bb.d
   %i.h = getelementptr i8, ptr %0, i64 48         ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 1, !tbaa !49   ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !49   ; 2 uses
   %.not.i7 = icmp eq ptr %i.i, null
   br i1 %.not.i7, label %free_io_buffer.exit8, label %bb.e
 
 bb.e:                                             ; preds = %free_io_buffer.exit
   tail call void @ruby_xfree(ptr noundef nonnull %i.i) #28
-  store ptr null, ptr %i.h, align 1, !tbaa !49
+  store ptr null, ptr %i.h, align 8, !tbaa !49
   br label %free_io_buffer.exit8
 
 free_io_buffer.exit8:                             ; preds = %free_io_buffer.exit, %bb.e
@@ -2650,13 +2650,13 @@ bb.f:                                             ; preds = %free_io_buffer.exit
 
 bb.g:                                             ; preds = %bb.f, %free_io_buffer.exit8
   %i.l = getelementptr i8, ptr %0, i64 136        ; 2 uses
-  %i.m = load ptr, ptr %i.l, align 1, !tbaa !49   ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !49   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.m, null
   br i1 %.not.i.i.i, label %clear_readconv.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void @ruby_xfree(ptr noundef nonnull %i.m) #28
-  store ptr null, ptr %i.l, align 1, !tbaa !49
+  store ptr null, ptr %i.l, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.h, %bb.g
@@ -3059,13 +3059,13 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.o = getelementptr i8, ptr %0, i64 136        ; 2 uses
-  %i.p = load ptr, ptr %i.o, align 1, !tbaa !49   ; 2 uses
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !49   ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i.i.i, label %clear_readconv.exit.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void @ruby_xfree(ptr noundef nonnull %i.p) #28
-  store ptr null, ptr %i.o, align 1, !tbaa !49
+  store ptr null, ptr %i.o, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.h, %bb.g
@@ -3468,13 +3468,13 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bf, %bb.be
   %i.hn = getelementptr i8, ptr %i.hb, i64 136    ; 2 uses
-  %i.ho = load ptr, ptr %i.hn, align 1, !tbaa !49 ; 2 uses
+  %i.ho = load ptr, ptr %i.hn, align 8, !tbaa !49 ; 2 uses
   %.not.i.i.i148 = icmp eq ptr %i.ho, null
   br i1 %.not.i.i.i148, label %clear_readconv.exit.i, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   call void @ruby_xfree(ptr noundef nonnull %i.ho) #28
-  store ptr null, ptr %i.hn, align 1, !tbaa !49
+  store ptr null, ptr %i.hn, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.bh, %bb.bg
@@ -3877,7 +3877,7 @@ bb.i:                                             ; preds = %rb_io_check_initial
 rb_io_check_closed.exit:                          ; preds = %rb_io_check_initialized.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #28
   %i.am = getelementptr i8, ptr %i.ag, i64 80
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !46
+  %i.an = load i32, ptr %i.am, align 8, !tbaa !46
   %i.ao = sext i32 %i.an to i64                   ; 3 uses
   %i.ap = call i32 @fstat(i32 noundef %i.aj, ptr noundef nonnull %2) #28
   %i.aq = icmp eq i32 %i.ap, 0
@@ -4280,7 +4280,7 @@ bb.bz:                                            ; preds = %bb.by
 
 bb.ca:                                            ; preds = %bb.by, %bb.bx
   %i.jh = getelementptr i8, ptr %.055, i64 80
-  store i32 0, ptr %i.jh, align 4, !tbaa !46
+  store i32 0, ptr %i.jh, align 8, !tbaa !46
   %i.ji = getelementptr i8, ptr %.055, i64 76
   store i32 0, ptr %i.ji, align 4, !tbaa !47
   %i.jj = getelementptr i8, ptr %.055, i64 8      ; 5 uses
@@ -4683,7 +4683,7 @@ bb.f:                                             ; preds = %rb_io_check_initial
   unreachable
 
 rb_io_check_closed.exit:                          ; preds = %rb_io_check_closed.exit.preheader, %rb_io_check_closed.exit17
-  %i.y = load i32, ptr %i.t, align 4, !tbaa !46   ; 3 uses
+  %i.y = load i32, ptr %i.t, align 8, !tbaa !46   ; 3 uses
   %i.z = icmp sgt i32 %i.y, 0
   br i1 %i.z, label %.lr.ph, label %._crit_edge
 
@@ -4696,7 +4696,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_closed.
   %i.ae = sext i32 %i.ac to i64
   %i.af = getelementptr i8, ptr %i.ab, i64 %i.ae
   %i.ag = add nsw i32 %i.aa, -1
-  store i32 %i.ag, ptr %i.t, align 4, !tbaa !46
+  store i32 %i.ag, ptr %i.t, align 8, !tbaa !46
   %i.ah = load i8, ptr %i.af, align 1, !tbaa !86
   %i.ai = zext i8 %i.ah to i64
   %i.aj = shl nuw nsw i64 %i.ai, 1
@@ -4715,7 +4715,7 @@ bb.g:                                             ; preds = %.lr.ph
 rb_io_check_byte_readable.exit:                   ; preds = %.lr.ph
   %i.ao = tail call ptr @rb_errno_ptr() #28
   store i32 0, ptr %i.ao, align 4, !tbaa !7
-  %i.ap = load i32, ptr %i.t, align 4, !tbaa !46  ; 3 uses
+  %i.ap = load i32, ptr %i.t, align 8, !tbaa !46  ; 3 uses
   %i.aq = icmp sgt i32 %i.ap, 0
   br i1 %i.aq, label %.lr.ph, label %._crit_edge, !llvm.loop !227
 
@@ -4831,7 +4831,7 @@ bb.h:                                             ; preds = %bb.g
 io_input_encoding.exit:                           ; preds = %rb_io_check_closed.exit, %bb.g, %bb.h
   %.0.i = phi ptr [ %i.v, %rb_io_check_closed.exit ], [ %i.x, %bb.h ], [ %.val.i, %bb.g ] ; 2 uses
   %i.y = getelementptr i8, ptr %i.o, i64 80
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !46
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !46
   %.not10 = icmp eq i32 %i.z, 0
   br i1 %.not10, label %rb_io_check_initialized.exit.i14, label %rb_io_check_closed.exit15
 
@@ -4934,7 +4934,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
   tail call void @rb_io_check_char_readable(ptr noundef nonnull %i.p)
   %i.v = getelementptr i8, ptr %i.p, i64 68       ; 3 uses
   %i.w = getelementptr i8, ptr %i.p, i64 80       ; 9 uses
-  %i.x = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.x = load i32, ptr %i.w, align 8, !tbaa !46
   %.not101 = icmp eq i32 %i.x, 0
   br i1 %.not101, label %rb_io_check_initialized.exit.i110, label %rb_io_check_closed.exit111
 
@@ -5050,13 +5050,13 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %i.bi = load ptr, ptr %i.am, align 1, !tbaa !49 ; 2 uses
+  %i.bi = load ptr, ptr %i.am, align 8, !tbaa !49 ; 2 uses
   %.not.i.i113 = icmp eq ptr %i.bi, null
   br i1 %.not.i.i113, label %clear_readconv.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   tail call void @ruby_xfree(ptr noundef nonnull %i.bi) #28
-  store ptr null, ptr %i.am, align 1, !tbaa !49
+  store ptr null, ptr %i.am, align 8, !tbaa !49
   br label %clear_readconv.exit
 
 clear_readconv.exit:                              ; preds = %bb.t, %bb.u
@@ -5094,7 +5094,7 @@ bb.x:                                             ; preds = %.lr.ph, %rb_io_chec
   %i.cc = load i32, ptr %i.ak, align 4, !tbaa !47
   %i.cd = sext i32 %i.cc to i64
   %i.ce = getelementptr i8, ptr %i.cb, i64 %i.cd  ; 2 uses
-  %i.cf = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.cf = load i32, ptr %i.w, align 8, !tbaa !46
   %i.cg = sext i32 %i.cf to i64
   %i.ch = getelementptr i8, ptr %i.ce, i64 %i.cg
   %i.ci = call i32 @rb_enc_precise_mbclen(ptr noundef %i.ce, ptr noundef %i.ch, ptr noundef %.0.i) #28 ; 8 uses
@@ -5102,7 +5102,7 @@ bb.x:                                             ; preds = %.lr.ph, %rb_io_chec
   br i1 %i.cj, label %bb.y, label %bb.aa
 
 bb.y:                                             ; preds = %bb.x
-  %i.ck = load i32, ptr %i.w, align 4, !tbaa !46  ; 2 uses
+  %i.ck = load i32, ptr %i.w, align 8, !tbaa !46  ; 2 uses
   %.not104 = icmp sgt i32 %i.ci, %i.ck
   br i1 %.not104, label %rb_io_check_byte_readable.exit.backedge, label %bb.z
 
@@ -5117,9 +5117,9 @@ bb.z:                                             ; preds = %bb.y
   %i.cs = load i32, ptr %i.ak, align 4, !tbaa !47
   %i.ct = add i32 %i.cs, %i.ci
   store i32 %i.ct, ptr %i.ak, align 4, !tbaa !47
-  %i.cu = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.cu = load i32, ptr %i.w, align 8, !tbaa !46
   %i.cv = sub i32 %i.cu, %i.ci
-  store i32 %i.cv, ptr %i.w, align 4, !tbaa !46
+  store i32 %i.cv, ptr %i.w, align 8, !tbaa !46
   %i.cw = zext i32 %i.cr to i64
   %i.cx = shl nuw nsw i64 %i.cw, 1
   %i.cy = or disjoint i64 %i.cx, 1
@@ -5146,7 +5146,7 @@ bb.ab:                                            ; preds = %.thread
 
 bb.ac:                                            ; preds = %bb.ab
   %i.df = xor i32 %i.ci, -1
-  %i.dg = load i32, ptr %i.w, align 4, !tbaa !46  ; 3 uses
+  %i.dg = load i32, ptr %i.w, align 8, !tbaa !46  ; 3 uses
   %i.dh = add i32 %i.dg, %i.df                    ; 2 uses
   %i.di = icmp sgt i32 %i.dh, 8
   br i1 %i.di, label %.thread116, label %.preheader
@@ -5171,9 +5171,9 @@ read_buffered_data.exit:                          ; preds = %.preheader, %bb.af
   %i.dr = load i32, ptr %i.ak, align 4, !tbaa !47
   %i.ds = add i32 %i.dr, %spec.select.i
   store i32 %i.ds, ptr %i.ak, align 4, !tbaa !47
-  %i.dt = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.dt = load i32, ptr %i.w, align 8, !tbaa !46
   %i.du = sub i32 %i.dt, %spec.select.i
-  store i32 %i.du, ptr %i.w, align 4, !tbaa !46
+  store i32 %i.du, ptr %i.w, align 8, !tbaa !46
   %i.dv = icmp sgt i32 %.0136, 0
   br i1 %i.dv, label %bb.ad, label %.critedge
 
@@ -5189,7 +5189,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %i.ea, label %.thread116, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae
-  %i.eb = load i32, ptr %i.w, align 4, !tbaa !46  ; 2 uses
+  %i.eb = load i32, ptr %i.w, align 8, !tbaa !46  ; 2 uses
   %i.ec = icmp slt i32 %i.eb, 1
   br i1 %i.ec, label %.critedge, label %read_buffered_data.exit, !llvm.loop !231
 
@@ -5339,7 +5339,7 @@ bb.g:                                             ; preds = %rb_io_check_closed.
 
 bb.h:                                             ; preds = %rb_io_check_closed.exit.i
   %i.aj = getelementptr i8, ptr %i.z, i64 80
-  %i.ak = load i32, ptr %i.aj, align 4, !tbaa !46
+  %i.ak = load i32, ptr %i.aj, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.ak, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.i
 
@@ -5543,7 +5543,7 @@ bb.o:                                             ; preds = %rb_io_check_closed.
 
 rb_io_check_byte_readable.exit:                   ; preds = %rb_io_check_closed.exit
   %i.ar = getelementptr i8, ptr %i.ai, i64 80
-  %i.as = load i32, ptr %i.ar, align 4, !tbaa !46
+  %i.as = load i32, ptr %i.ar, align 8, !tbaa !46
   %.not = icmp eq i32 %i.as, 0
   br i1 %.not, label %rb_io_check_initialized.exit.i26, label %bb.p
 
@@ -5946,7 +5946,7 @@ bb.i:                                             ; preds = %rb_io_check_closed.
 
 bb.j:                                             ; preds = %rb_io_check_closed.exit.i
   %i.ao = getelementptr i8, ptr %i.ae, i64 80
-  %i.ap = load i32, ptr %i.ao, align 4, !tbaa !46
+  %i.ap = load i32, ptr %i.ao, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.ap, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.k
 
@@ -6349,7 +6349,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
   tail call void @rb_io_check_char_readable(ptr noundef nonnull %i.w)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
   %i.ac = getelementptr i8, ptr %i.w, i64 80
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !46
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !46
   %i.ae = sext i32 %i.ad to i64                   ; 3 uses
   %i.af = load i32, ptr %i.y, align 8, !tbaa !20
   %i.ag = call i32 @fstat(i32 noundef %i.af, ptr noundef nonnull %4) #28
@@ -6551,7 +6551,7 @@ io_set_read_length.exit:                          ; preds = %bb.ad, %bb.ae, %bb.
 
 bb.ah:                                            ; preds = %rb_io_check_byte_readable.exit
   %i.cu = getelementptr i8, ptr %i.cc, i64 80
-  %i.cv = load i32, ptr %i.cu, align 4, !tbaa !46
+  %i.cv = load i32, ptr %i.cu, align 8, !tbaa !46
   %.not = icmp eq i32 %i.cv, 0
   br i1 %.not, label %rb_io_check_initialized.exit.i39, label %rb_io_check_closed.exit40
 
@@ -6790,7 +6790,7 @@ bb.f:                                             ; preds = %bb.e
 io_input_encoding.exit:                           ; preds = %rb_io_check_closed.exit, %bb.e, %bb.f
   %.0.i = phi ptr [ %i.r, %rb_io_check_closed.exit ], [ %i.t, %bb.f ], [ %.val.i, %bb.e ]
   %i.u = getelementptr i8, ptr %i.k, i64 80
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !46
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !46
   %.not = icmp eq i32 %i.v, 0
   br i1 %.not, label %rb_io_check_initialized.exit.i9, label %rb_io_check_closed.exit10
 
@@ -6929,7 +6929,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f, %flush_before_seek.exit
   %i.ac = getelementptr i8, ptr %i.k, i64 80
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !46
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !46
   %i.ae = sext i32 %i.ad to i64
   %i.af = sub i64 %i.u, %i.ae                     ; 3 uses
   %i.ag = add i64 %i.af, 4611686018427387904
@@ -7146,7 +7146,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   tail call void @ruby_xfree(ptr noundef nonnull %i.au) #28
-  store ptr null, ptr %i.at, align 1, !tbaa !49
+  store ptr null, ptr %i.at, align 8, !tbaa !49
   br label %clear_readconv.exit
 
 clear_readconv.exit:                              ; preds = %bb.l, %bb.k, %bb.j
@@ -7549,7 +7549,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
 
 bb.p:                                             ; preds = %rb_io_check_closed.exit
   %i.ap = getelementptr i8, ptr %i.ag, i64 80
-  %i.aq = load i32, ptr %i.ap, align 4, !tbaa !46
+  %i.aq = load i32, ptr %i.ap, align 8, !tbaa !46
   %.not14 = icmp eq i32 %i.aq, 0
   br i1 %.not14, label %bb.q, label %bb.r
 
@@ -7952,7 +7952,7 @@ rb_io_read_pending.exit.thread:                   ; preds = %rb_io_check_closed.
 
 rb_io_read_pending.exit:                          ; preds = %rb_io_check_closed.exit
   %i.ct = getelementptr i8, ptr %i.cl, i64 80
-  %i.cu = load i32, ptr %i.ct, align 4, !tbaa !46
+  %i.cu = load i32, ptr %i.ct, align 8, !tbaa !46
   %i.cv = icmp eq i32 %i.cu, 0                    ; 2 uses
   %brmerge = or i1 %.not38.not121, %i.cv
   %.mux = select i1 %brmerge, i64 20, i64 3
@@ -8060,7 +8060,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
 
 rb_io_read_pending.exit:                          ; preds = %rb_io_check_closed.exit
   %i.s = getelementptr i8, ptr %i.k, i64 80
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !46
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !46
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %bb.e, label %io_wait_event.exit
 
@@ -8180,7 +8180,7 @@ bb.e:                                             ; preds = %rb_io_check_closed.
 
 bb.f:                                             ; preds = %rb_io_check_closed.exit.i
   %i.u = getelementptr i8, ptr %i.k, i64 80
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !46
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.v, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.g
 
@@ -8299,7 +8299,7 @@ rb_io_check_closed.exit:                          ; preds = %rb_io_check_initial
 
 rb_io_read_pending.exit:                          ; preds = %rb_io_check_closed.exit
   %i.s = getelementptr i8, ptr %i.k, i64 80
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !46
+  %i.t = load i32, ptr %i.s, align 8, !tbaa !46
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %bb.e, label %io_wait_event.exit
 
@@ -8702,7 +8702,7 @@ bb.s:                                             ; preds = %bb.r
 RSTRING_PTR.exit:                                 ; preds = %bb.r, %bb.s
   %i.ba = phi ptr [ %i.az, %bb.s ], [ %i.ay, %bb.r ]
   %i.bb = getelementptr i8, ptr %i.ae, i64 80     ; 3 uses
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !46 ; 2 uses
+  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !46 ; 2 uses
   %i.bd = icmp slt i32 %i.bc, 1
   br i1 %i.bd, label %read_buffered_data.exit.thread, label %read_buffered_data.exit
 
@@ -8720,9 +8720,9 @@ read_buffered_data.exit:                          ; preds = %RSTRING_PTR.exit
   %i.bm = load i32, ptr %i.bi, align 4, !tbaa !47
   %i.bn = add i32 %i.bm, %spec.select.i
   store i32 %i.bn, ptr %i.bi, align 4, !tbaa !47
-  %i.bo = load i32, ptr %i.bb, align 4, !tbaa !46
+  %i.bo = load i32, ptr %i.bb, align 8, !tbaa !46
   %i.bp = sub i32 %i.bo, %spec.select.i
-  store i32 %i.bp, ptr %i.bb, align 4, !tbaa !46
+  store i32 %i.bp, ptr %i.bb, align 8, !tbaa !46
   br label %bb.ae
 
 read_buffered_data.exit.thread:                   ; preds = %RSTRING_PTR.exit
@@ -8987,7 +8987,7 @@ bb.g:                                             ; preds = %rb_io_check_closed.
 
 bb.h:                                             ; preds = %rb_io_check_closed.exit.i
   %i.an = getelementptr i8, ptr %i.ad, i64 80
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !46
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.ao, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.i
 
@@ -9390,13 +9390,13 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
-  %i.bj = load ptr, ptr %i.y, align 1, !tbaa !49  ; 2 uses
+  %i.bj = load ptr, ptr %i.y, align 8, !tbaa !49  ; 2 uses
   %.not.i.i = icmp eq ptr %i.bj, null
   br i1 %.not.i.i, label %clear_readconv.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   call void @ruby_xfree(ptr noundef nonnull %i.bj) #28
-  store ptr null, ptr %i.y, align 1, !tbaa !49
+  store ptr null, ptr %i.y, align 8, !tbaa !49
   br label %clear_readconv.exit
 
 clear_readconv.exit:                              ; preds = %bb.y, %bb.z
@@ -9500,7 +9500,7 @@ bb.al:                                            ; preds = %.backedge, %io_sets
   %.060 = phi i64 [ 0, %io_setstrbuf.exit83 ], [ %i.ea, %.backedge ] ; 4 uses
   %.058 = phi i64 [ 0, %io_setstrbuf.exit83 ], [ %.159, %.backedge ] ; 3 uses
   %.057 = phi i64 [ %spec.store.select, %io_setstrbuf.exit83 ], [ %i.ep, %.backedge ] ; 6 uses
-  %i.cq = load i32, ptr %i.cl, align 4, !tbaa !46
+  %i.cq = load i32, ptr %i.cl, align 8, !tbaa !46
   %.not65 = icmp eq i32 %i.cq, 0
   br i1 %.not65, label %rb_io_check_initialized.exit.i, label %rb_io_check_closed.exit
 
@@ -9903,7 +9903,7 @@ more_char.exit:                                   ; preds = %.critedge92
   br i1 %.not87, label %.loopexit, label %io_read_encoding.exit.split, !llvm.loop !325
 
 bb.k:                                             ; preds = %.preheader99, %rb_io_check_closed.exit.thread
-  %i.cb = load i32, ptr %i.h, align 4, !tbaa !46  ; 2 uses
+  %i.cb = load i32, ptr %i.h, align 8, !tbaa !46  ; 2 uses
   %.not78.not106 = icmp eq i32 %i.cb, 0
   br i1 %.not78.not106, label %rb_io_check_initialized.exit.i, label %.lr.ph107.preheader
 
@@ -9960,9 +9960,9 @@ read_buffered_data.exit:                          ; preds = %.critedge7
   %i.cu = load i32, ptr %i.j, align 4, !tbaa !47
   %i.cv = add i32 %i.cu, %spec.select.i           ; 2 uses
   store i32 %i.cv, ptr %i.j, align 4, !tbaa !47
-  %i.cw = load i32, ptr %i.h, align 4, !tbaa !46
+  %i.cw = load i32, ptr %i.h, align 8, !tbaa !46
   %i.cx = sub i32 %i.cw, %spec.select.i           ; 3 uses
-  store i32 %i.cx, ptr %i.h, align 4, !tbaa !46
+  store i32 %i.cx, ptr %i.h, align 8, !tbaa !46
   %.not81 = icmp eq i32 %i.ch, %.lcssa
   br i1 %.not81, label %read_buffered_data.exit.thread, label %bb.l
 
@@ -10145,7 +10145,7 @@ bb.g:                                             ; preds = %bb.p, %bb.f
   %i.ae = sext i32 %i.ad to i64
   %i.af = getelementptr i8, ptr %i.ac, i64 %i.ae  ; 3 uses
   store ptr %i.af, ptr %i.a, align 8, !tbaa !159
-  %i.ag = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.ag = load i32, ptr %i.w, align 8, !tbaa !46
   %i.ah = sext i32 %i.ag to i64
   %i.ai = getelementptr i8, ptr %i.af, i64 %i.ah
   %i.aj = load ptr, ptr %i.d, align 8, !tbaa !87  ; 2 uses
@@ -10219,7 +10219,7 @@ bb.k:                                             ; preds = %bb.j
   ]
 
 bb.l:                                             ; preds = %bb.k
-  %i.cc = load i32, ptr %i.w, align 4, !tbaa !46
+  %i.cc = load i32, ptr %i.w, align 8, !tbaa !46
   %i.cd = icmp eq i32 %i.cc, 0
   br i1 %i.cd, label %rb_io_check_initialized.exit.i, label %bb.p
 
@@ -10421,7 +10421,7 @@ bb.g:                                             ; preds = %bb.a
   br label %bb.h
 
 thread-pre-split.i:                               ; preds = %rb_io_check_closed.exit53.i
-  %.pr.i = load i32, ptr %i.g, align 4, !tbaa !46
+  %.pr.i = load i32, ptr %i.g, align 8, !tbaa !46
   br label %bb.h
 
 bb.h:                                             ; preds = %thread-pre-split.i, %.preheader.i
@@ -10524,24 +10524,24 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call fastcc void @fptr_finalize_flush(ptr noundef nonnull %0, i32 noundef range(i32 0, 2) %1)
   %i.c = getelementptr i8, ptr %0, i64 68         ; 2 uses
-  %i.d = load ptr, ptr %i.c, align 1, !tbaa !49   ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 4, !tbaa !49   ; 2 uses
   %.not.i.i = icmp eq ptr %i.d, null
   br i1 %.not.i.i, label %free_io_buffer.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ruby_xfree(ptr noundef nonnull %i.d) #28
-  store ptr null, ptr %i.c, align 1, !tbaa !49
+  store ptr null, ptr %i.c, align 4, !tbaa !49
   br label %free_io_buffer.exit.i
 
 free_io_buffer.exit.i:                            ; preds = %bb.d, %bb.c
   %i.e = getelementptr i8, ptr %0, i64 48         ; 2 uses
-  %i.f = load ptr, ptr %i.e, align 1, !tbaa !49   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !49   ; 2 uses
   %.not.i4.i = icmp eq ptr %i.f, null
   br i1 %.not.i4.i, label %free_io_buffer.exit5.i, label %bb.e
 
 bb.e:                                             ; preds = %free_io_buffer.exit.i
   tail call void @ruby_xfree(ptr noundef nonnull %i.f) #28
-  store ptr null, ptr %i.e, align 1, !tbaa !49
+  store ptr null, ptr %i.e, align 8, !tbaa !49
   br label %free_io_buffer.exit5.i
 
 free_io_buffer.exit5.i:                           ; preds = %bb.e, %free_io_buffer.exit.i
@@ -10557,13 +10557,13 @@ bb.f:                                             ; preds = %free_io_buffer.exit
 
 bb.g:                                             ; preds = %bb.f, %free_io_buffer.exit5.i
   %i.i = getelementptr i8, ptr %0, i64 136        ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 1, !tbaa !49   ; 2 uses
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !49   ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.j, null
   br i1 %.not.i.i.i.i, label %clear_readconv.exit.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call void @ruby_xfree(ptr noundef nonnull %i.j) #28
-  store ptr null, ptr %i.i, align 1, !tbaa !49
+  store ptr null, ptr %i.i, align 8, !tbaa !49
   br label %clear_readconv.exit.i.i
 
 clear_readconv.exit.i.i:                          ; preds = %bb.h, %bb.g
@@ -10966,13 +10966,13 @@ bb.al:                                            ; preds = %validate_enc_binmod
 
 bb.am:                                            ; preds = %bb.al, %validate_enc_binmode.exit
   %i.cc = getelementptr i8, ptr %0, i64 136       ; 2 uses
-  %i.cd = load ptr, ptr %i.cc, align 1, !tbaa !49 ; 2 uses
+  %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !49 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cd, null
   br i1 %.not.i.i.i, label %clear_readconv.exit.i, label %bb.an
 
 bb.an:                                            ; preds = %bb.am
   call void @ruby_xfree(ptr noundef nonnull %i.cd) #28
-  store ptr null, ptr %i.cc, align 1, !tbaa !49
+  store ptr null, ptr %i.cc, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.an, %bb.am
@@ -11040,7 +11040,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %0, i64 28         ; 2 uses
   %i.e = getelementptr i8, ptr %0, i64 32
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !7
+  %i.f = load i32, ptr %i.e, align 8, !tbaa !7
   %i.g = tail call i32 @close(i32 noundef %i.f) #28 ; 0 uses
   %i.h = load i32, ptr %i.d, align 4, !tbaa !7    ; 2 uses
   %.not26 = icmp eq i32 %i.h, 0
@@ -11057,7 +11057,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.m = load i32, ptr %i.l, align 4, !tbaa !7
   %i.n = tail call i32 @close(i32 noundef %i.m) #28 ; 0 uses
   %i.o = getelementptr i8, ptr %0, i64 24         ; 2 uses
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !7    ; 2 uses
+  %i.p = load i32, ptr %i.o, align 8, !tbaa !7    ; 2 uses
   %.not27 = icmp eq i32 %i.p, 1
   br i1 %.not27, label %bb.k, label %bb.e
 
@@ -11075,7 +11075,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = load i32, ptr %i.s, align 4, !tbaa !7
   %i.u = tail call i32 @close(i32 noundef %i.t) #28 ; 0 uses
   %i.v = getelementptr i8, ptr %0, i64 24         ; 2 uses
-  %i.w = load i32, ptr %i.v, align 4, !tbaa !7    ; 2 uses
+  %i.w = load i32, ptr %i.v, align 8, !tbaa !7    ; 2 uses
   %.not25 = icmp eq i32 %i.w, 1
   br i1 %.not25, label %bb.k, label %bb.h
 
@@ -11085,7 +11085,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.f
   %i.y = getelementptr i8, ptr %0, i64 24
-  %i.z = load i32, ptr %i.y, align 4, !tbaa !7
+  %i.z = load i32, ptr %i.y, align 8, !tbaa !7
   %i.aa = tail call i32 @close(i32 noundef %i.z) #28 ; 0 uses
   %i.ab = load i32, ptr %i.s, align 4, !tbaa !7   ; 2 uses
   %.not24 = icmp eq i32 %i.ab, 0
@@ -11219,7 +11219,7 @@ bb.h:                                             ; preds = %rb_io_check_closed.
 
 bb.i:                                             ; preds = %rb_io_check_closed.exit.i
   %i.af = getelementptr i8, ptr %i.v, i64 80
-  %i.ag = load i32, ptr %i.af, align 4, !tbaa !46
+  %i.ag = load i32, ptr %i.af, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.ag, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.j
 
@@ -11622,7 +11622,7 @@ bb.g:                                             ; preds = %rb_io_check_initial
 rb_io_check_closed.exit.i:                        ; preds = %rb_io_check_initialized.exit.i.i
   tail call void @rb_fd_set(i32 noundef %i.at, ptr noundef %i.i) #28
   %i.aw = getelementptr i8, ptr %i.aq, i64 80
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !46
+  %i.ax = load i32, ptr %i.aw, align 8, !tbaa !46
   %.not146.i = icmp eq i32 %i.ax, 0
   br i1 %.not146.i, label %bb.h, label %bb.i
 
@@ -12025,7 +12025,7 @@ bb.i:                                             ; preds = %rb_io_check_closed.
 
 bb.j:                                             ; preds = %rb_io_check_closed.exit.i
   %i.ak = getelementptr i8, ptr %i.aa, i64 80
-  %i.al = load i32, ptr %i.ak, align 4, !tbaa !46
+  %i.al = load i32, ptr %i.ak, align 8, !tbaa !46
   %.not4.i = icmp eq i32 %i.al, 0
   br i1 %.not4.i, label %rb_io_check_writable.exit, label %bb.k
 
@@ -12428,7 +12428,7 @@ bb.x:                                             ; preds = %rb_io_check_closed.
 
 bb.y:                                             ; preds = %rb_io_check_closed.exit.i
   %i.ek = getelementptr i8, ptr %i.dz, i64 80
-  %i.el = load i32, ptr %i.ek, align 4, !tbaa !46
+  %i.el = load i32, ptr %i.ek, align 8, !tbaa !46
   %.not4.i127 = icmp eq i32 %i.el, 0
   br i1 %.not4.i127, label %rb_io_check_writable.exit, label %bb.z
 
@@ -12831,13 +12831,13 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.bu = getelementptr i8, ptr %i.bd, i64 136    ; 2 uses
-  %i.bv = load ptr, ptr %i.bu, align 1, !tbaa !49 ; 2 uses
+  %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !49 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bv, null
   br i1 %.not.i.i.i, label %clear_readconv.exit.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   call void @ruby_xfree(ptr noundef nonnull %i.bv) #28
-  store ptr null, ptr %i.bu, align 1, !tbaa !49
+  store ptr null, ptr %i.bu, align 8, !tbaa !49
   br label %clear_readconv.exit.i
 
 clear_readconv.exit.i:                            ; preds = %bb.t, %bb.s
@@ -13240,13 +13240,13 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.af = load ptr, ptr %i.h, align 1, !tbaa !49  ; 2 uses
+  %i.af = load ptr, ptr %i.h, align 8, !tbaa !49  ; 2 uses
   %.not.i.i = icmp eq ptr %i.af, null
   br i1 %.not.i.i, label %clear_readconv.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   tail call void @ruby_xfree(ptr noundef nonnull %i.af) #28
-  store ptr null, ptr %i.h, align 1, !tbaa !49
+  store ptr null, ptr %i.h, align 8, !tbaa !49
   br label %clear_readconv.exit
 
 bb.p:                                             ; preds = %bb.k
@@ -13274,13 +13274,13 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %i.ar = load ptr, ptr %i.h, align 1, !tbaa !49  ; 2 uses
+  %i.ar = load ptr, ptr %i.h, align 8, !tbaa !49  ; 2 uses
   %.not.i.i101 = icmp eq ptr %i.ar, null
   br i1 %.not.i.i101, label %clear_readconv.exit102, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   tail call void @ruby_xfree(ptr noundef nonnull %i.ar) #28
-  store ptr null, ptr %i.h, align 1, !tbaa !49
+  store ptr null, ptr %i.h, align 8, !tbaa !49
   br label %clear_readconv.exit102
 
 clear_readconv.exit102:                           ; preds = %bb.t, %bb.s, %bb.p
@@ -13467,7 +13467,7 @@ rb_enc_asciicompat.exit117.thread:                ; preds = %bb.ag, %bb.ah, %rb_
   %i.dz = sext i32 %i.dy to i64
   %i.ea = getelementptr i8, ptr %i.dw, i64 %i.dz  ; 2 uses
   %i.eb = getelementptr i8, ptr %0, i64 80        ; 6 uses
-  %i.ec = load i32, ptr %i.eb, align 4, !tbaa !46
+  %i.ec = load i32, ptr %i.eb, align 8, !tbaa !46
   %i.ed = sext i32 %i.ec to i64
   %i.ee = getelementptr i8, ptr %i.ea, i64 %i.ed
   %i.ef = tail call i32 @rb_enc_precise_mbclen(ptr noundef %i.ea, ptr noundef %i.ee, ptr noundef nonnull %1) #28 ; 6 uses
@@ -13475,7 +13475,7 @@ rb_enc_asciicompat.exit117.thread:                ; preds = %bb.ag, %bb.ah, %rb_
   br i1 %i.eg, label %bb.aj, label %bb.al
 
 bb.aj:                                            ; preds = %rb_enc_asciicompat.exit117.thread
-  %i.eh = load i32, ptr %i.eb, align 4, !tbaa !46
+  %i.eh = load i32, ptr %i.eb, align 8, !tbaa !46
   %.not91 = icmp sgt i32 %i.ef, %i.eh
   br i1 %.not91, label %.thread, label %bb.ak
 
@@ -13489,9 +13489,9 @@ bb.ak:                                            ; preds = %bb.aj
   %i.eo = load i32, ptr %i.dx, align 4, !tbaa !47
   %i.ep = add i32 %i.eo, %i.ef
   store i32 %i.ep, ptr %i.dx, align 4, !tbaa !47
-  %i.eq = load i32, ptr %i.eb, align 4, !tbaa !46
+  %i.eq = load i32, ptr %i.eb, align 8, !tbaa !46
   %i.er = sub i32 %i.eq, %i.ef
-  store i32 %i.er, ptr %i.eb, align 4, !tbaa !46
+  store i32 %i.er, ptr %i.eb, align 8, !tbaa !46
   br label %.loopexit
 
 bb.al:                                            ; preds = %rb_enc_asciicompat.exit117.thread
@@ -13503,10 +13503,10 @@ bb.am:                                            ; preds = %bb.al
   %i.eu = load i32, ptr %i.dx, align 4, !tbaa !47
   %i.ev = sext i32 %i.eu to i64
   %i.ew = getelementptr i8, ptr %i.et, i64 %i.ev
-  %i.ex = load i32, ptr %i.eb, align 4, !tbaa !46
+  %i.ex = load i32, ptr %i.eb, align 8, !tbaa !46
   %i.ey = sext i32 %i.ex to i64
   %i.ez = tail call i64 @rb_str_new(ptr noundef %i.ew, i64 noundef %i.ey) #28 ; 4 uses
-  store i32 0, ptr %i.eb, align 4, !tbaa !46
+  store i32 0, ptr %i.eb, align 8, !tbaa !46
   %i.fa = inttoptr i64 %i.ez to ptr               ; 3 uses
   %i.fb = getelementptr i8, ptr %i.fa, i64 24     ; 2 uses
   %i.fc = getelementptr i8, ptr %i.fa, i64 16
@@ -13909,7 +13909,7 @@ bb.t:                                             ; preds = %rb_io_check_byte_re
 
 bb.u:                                             ; preds = %bb.t
   %i.bb = getelementptr i8, ptr %i.aj, i64 80
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !46
+  %i.bc = load i32, ptr %i.bb, align 8, !tbaa !46
   %.not40 = icmp eq i32 %i.bc, 0
   br i1 %.not40, label %rb_io_check_initialized.exit.i48, label %rb_io_check_closed.exit49
 
@@ -13940,7 +13940,7 @@ bb.w:                                             ; preds = %rb_io_check_closed.
 RSTRING_PTR.exit:                                 ; preds = %rb_io_check_closed.exit49, %bb.w
   %i.bm = phi ptr [ %i.bl, %bb.w ], [ %i.bk, %rb_io_check_closed.exit49 ]
   %i.bn = getelementptr i8, ptr %i.aj, i64 80     ; 3 uses
-  %i.bo = load i32, ptr %i.bn, align 4, !tbaa !46 ; 2 uses
+  %i.bo = load i32, ptr %i.bn, align 8, !tbaa !46 ; 2 uses
   %i.bp = icmp slt i32 %i.bo, 1
   br i1 %i.bp, label %read_buffered_data.exit.preheader, label %read_buffered_data.exit.thread
 
@@ -13968,9 +13968,9 @@ read_buffered_data.exit.thread:                   ; preds = %RSTRING_PTR.exit
   %i.cf = load i32, ptr %i.cb, align 4, !tbaa !47
   %i.cg = add i32 %i.cf, %spec.select.i51
   store i32 %i.cg, ptr %i.cb, align 4, !tbaa !47
-  %i.ch = load i32, ptr %i.bn, align 4, !tbaa !46
+  %i.ch = load i32, ptr %i.bn, align 8, !tbaa !46
   %i.ci = sub i32 %i.ch, %spec.select.i51
-  store i32 %i.ci, ptr %i.bn, align 4, !tbaa !46
+  store i32 %i.ci, ptr %i.bn, align 8, !tbaa !46
   br label %.loopexit
 
 read_buffered_data.exit:                          ; preds = %read_buffered_data.exit.preheader, %rb_io_check_initialized.exit.i.i

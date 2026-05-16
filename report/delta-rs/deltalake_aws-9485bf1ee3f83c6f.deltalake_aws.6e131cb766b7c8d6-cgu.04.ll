@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  store i8 1, ptr %i.p, align 1, !noalias !77
+  store i8 1, ptr %i.p, align 8, !noalias !77
   resume { ptr, i32 } %i.aa
 
 bb.l:                                             ; preds = %bb.i
@@ -604,7 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtim
 
 bb.e:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking8schedule16BlockingScheduleECs9rVkZwOUgsI_13deltalake_aws.exit.i.i
   %i.j = getelementptr inbounds nuw i8, ptr %.0.val, i64 80
-  %.val.i.i.i.i.i.i = load ptr, ptr %i.j, align 8, !alias.scope !231, !align !64, !noundef !3 ; 2 uses
+  %.val.i.i.i.i.i.i = load ptr, ptr %i.j, align 16, !alias.scope !231, !align !64, !noundef !3 ; 2 uses
   %i.k = icmp eq ptr %.val.i.i.i.i.i.i, null
   br i1 %i.k, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4core4CoreINtNtNtBN_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB2O_8logstore18get_latest_version00INtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB4W_5error5ErrorEEs_0EENtNtB1B_8schedule16BlockingScheduleEECs9rVkZwOUgsI_13deltalake_aws.exit.i, label %bb.f
 
@@ -636,7 +636,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4core4CoreINtNtNtBN_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB2O_8logstore18get_latest_version00INtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB4W_5error5ErrorEEs_0EENtNtB1B_8schedule16BlockingScheduleEECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.g, %bb.f, %bb.e, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtNtCskQDtHcQtBkN_5tokio7runtime8blocking8schedule16BlockingScheduleECs9rVkZwOUgsI_13deltalake_aws.exit.i.i
   %i.p = getelementptr inbounds nuw i8, ptr %.0.val, i64 640
-  %.val.i.i = load ptr, ptr %i.p, align 8, !align !64, !noundef !3 ; 2 uses
+  %.val.i.i = load ptr, ptr %i.p, align 16, !align !64, !noundef !3 ; 2 uses
   %i.q = icmp eq ptr %.val.i.i, null
   br i1 %i.q, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio4loom3std11unsafe_cell10UnsafeCellINtNtB4_6option6OptionNtNtNtB4_4task4wake5WakerEEECs9rVkZwOUgsI_13deltalake_aws.exit.i.i, label %bb.j
 
@@ -654,7 +654,7 @@ bb.k:                                             ; preds = %bb.j
   %i.v = getelementptr inbounds nuw i8, ptr %.0.val, i64 656 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !241)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !244)
-  %i.w = load ptr, ptr %i.v, align 8, !alias.scope !247, !noundef !3 ; 2 uses
+  %i.w = load ptr, ptr %i.v, align 16, !alias.scope !247, !noundef !3 ; 2 uses
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bb.s, label %bb.l
 
@@ -672,7 +672,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio4loom3
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.val, i64 656 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !253)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !256)
-  %i.ab = load ptr, ptr %i.aa, align 8, !alias.scope !259, !noundef !3 ; 2 uses
+  %i.ab = load ptr, ptr %i.aa, align 16, !alias.scope !259, !noundef !3 ; 2 uses
   %i.ac = icmp eq ptr %i.ab, null
   br i1 %i.ac, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4core4CellINtNtNtBN_8blocking4task12BlockingTaskINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNCINvNtCs14kWLkQVSKO_14deltalake_core6kernel24spawn_blocking_with_spanNCNCNvNtB2O_8logstore18get_latest_version00INtNtB4_6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel11log_segment10LogSegmentNtNtB4W_5error5ErrorEEs_0EENtNtB1B_8schedule16BlockingScheduleEECs9rVkZwOUgsI_13deltalake_aws.exit, label %bb.n
 
@@ -1075,7 +1075,7 @@ bb.e:                                             ; preds = %_RINvNtCsbvkFyIu7lg
 bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !480)
   %i.m = getelementptr inbounds nuw i8, ptr %.0.val, i64 104
-  %.val.i.i.i.i.i.i.i.i.i = load i32, ptr %i.m, align 4, !range !483, !alias.scope !484, !noundef !3
+  %.val.i.i.i.i.i.i.i.i.i = load i32, ptr %i.m, align 8, !range !483, !alias.scope !484, !noundef !3
   %i.n = tail call noundef i32 @close(i32 noundef %.val.i.i.i.i.i.i.i.i.i) #29, !noalias !485 ; 0 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.j)
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNCNvMs0_CsjyY8HP3IvQ6_12object_storeNtBQ_9GetResult5bytes00ECs9rVkZwOUgsI_13deltalake_aws.exit.i.i.i.i.i.i.i.i unwind label %bb.g

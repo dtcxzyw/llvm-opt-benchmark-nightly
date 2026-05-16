@@ -201,7 +201,7 @@ _ZNSt6vectorIP11aiAnimationSaIS1_EE9push_backERKS1_.exit: ; preds = %_ZNSt6vecto
 
 bb.j:                                             ; preds = %_ZNSt6vectorIP11aiAnimationSaIS1_EE9push_backERKS1_.exit
   %i.as = trunc nuw nsw i64 %i.aq to i32
-  store i32 %i.as, ptr %i.s, align 4
+  store i32 %i.as, ptr %i.s, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.s, i64 4 ; 2 uses
   %i.au = load ptr, ptr %i.m, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.at, ptr align 1 %i.au, i64 %i.aq, i1 false)
@@ -269,7 +269,7 @@ bb.l:                                             ; preds = %.lr.ph308
 
 bb.m:                                             ; preds = %bb.l
   %i.bu = trunc nuw nsw i64 %i.bs to i32
-  store i32 %i.bu, ptr %i.bn, align 4
+  store i32 %i.bu, ptr %i.bn, align 8
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 4 ; 2 uses
   %i.bw = load ptr, ptr %i.bm, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.bv, ptr align 1 %i.bw, i64 %i.bs, i1 false)

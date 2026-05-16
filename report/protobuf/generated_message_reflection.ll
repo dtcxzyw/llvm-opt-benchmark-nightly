@@ -201,7 +201,7 @@ _ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i: ; 
 
 _ZN6google8protobuf8internal20RepeatedPtrFieldBase14AddFromClearedINS1_18GenericTypeHandlerINS0_7MessageEEEEEPNT_4TypeEv.exit: ; preds = %_ZNK6google8protobuf8internal20RepeatedPtrFieldBase14allocated_sizeEv.exit.i
   %i.eb = add nsw i32 %i.dp, 1                    ; 2 uses
-  store i32 %i.eb, ptr %i.do, align 4, !tbaa !3
+  store i32 %i.eb, ptr %i.do, align 8, !tbaa !3
   %i.ec = add i64 %i.dr, -1
   %i.ed = inttoptr i64 %i.ec to ptr
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 8
@@ -604,7 +604,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.k
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load i8, ptr %.sroa.040.047, align 2, !tbaa !513 ; 2 uses
+  %i.i = load i8, ptr %.sroa.040.047, align 8, !tbaa !513 ; 2 uses
   %i.j = add i8 %i.i, -118
   %or.cond.i = icmp ult i8 %i.j, -117
   br i1 %or.cond.i, label %_ZN6google8protobufL20GetFastParseFunctionENS0_8internal15TcParseFunctionE.exit, label %bb.d
@@ -1007,7 +1007,7 @@ bb.ay:                                            ; preds = %bb.bh, %.lr.ph.i93
   br i1 %.not.i94, label %bb.bb, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.mj = load i8, ptr %.sroa.040.047.i, align 2, !tbaa !513 ; 2 uses
+  %i.mj = load i8, ptr %.sroa.040.047.i, align 8, !tbaa !513 ; 2 uses
   %i.mk = add i8 %i.mj, -118
   %or.cond.i.i = icmp ult i8 %i.mk, -117
   br i1 %or.cond.i.i, label %_ZN6google8protobufL20GetFastParseFunctionENS0_8internal15TcParseFunctionE.exit.i, label %bb.ba
@@ -1410,7 +1410,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb1EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper8GetInt32Ev.exit: ; preds = %bb.b
-  %i.t = load i32, ptr %2, align 4, !tbaa !3
+  %i.t = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store i32 %i.t, ptr %i.i, align 4, !tbaa !3
   %i.u = load ptr, ptr %3, align 8, !tbaa !1002
@@ -1464,7 +1464,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb1EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper9GetUint32Ev.exit: ; preds = %bb.f
-  %i.an = load i32, ptr %2, align 4, !tbaa !3
+  %i.an = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store i32 %i.an, ptr %i.g, align 4, !tbaa !3
   %i.ao = load ptr, ptr %3, align 8, !tbaa !1002
@@ -1518,7 +1518,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb1EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper8GetFloatEv.exit: ; preds = %bb.j
-  %i.bh = load float, ptr %2, align 4, !tbaa !259
+  %i.bh = load float, ptr %2, align 8, !tbaa !259
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store float %i.bh, ptr %i.e, align 4, !tbaa !259
   %i.bi = load ptr, ptr %3, align 8, !tbaa !1002
@@ -1572,7 +1572,7 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb1EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper7GetBoolEv.exit: ; preds = %bb.n
-  %i.cb = load i8, ptr %2, align 1, !tbaa !263, !range !84, !noundef !50
+  %i.cb = load i8, ptr %2, align 8, !tbaa !263, !range !84, !noundef !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %i.cb, ptr %i.c, align 1, !tbaa !263
   %i.cc = load ptr, ptr %3, align 8, !tbaa !1002
@@ -1599,7 +1599,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb1EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper7GetEnumEv.exit: ; preds = %bb.p
-  %i.cl = load i32, ptr %2, align 4, !tbaa !3
+  %i.cl = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 %i.cl, ptr %i.b, align 4, !tbaa !3
   %i.cm = load ptr, ptr %3, align 8, !tbaa !1002
@@ -2002,7 +2002,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb0EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper8GetInt32Ev.exit: ; preds = %bb.b
-  %i.t = load i32, ptr %2, align 4, !tbaa !3
+  %i.t = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   store i32 %i.t, ptr %i.i, align 4, !tbaa !3
   %i.u = load ptr, ptr %3, align 8, !tbaa !1043
@@ -2056,7 +2056,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb0EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper9GetUint32Ev.exit: ; preds = %bb.f
-  %i.an = load i32, ptr %2, align 4, !tbaa !3
+  %i.an = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store i32 %i.an, ptr %i.g, align 4, !tbaa !3
   %i.ao = load ptr, ptr %3, align 8, !tbaa !1043
@@ -2110,7 +2110,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb0EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper8GetFloatEv.exit: ; preds = %bb.j
-  %i.bh = load float, ptr %2, align 4, !tbaa !259
+  %i.bh = load float, ptr %2, align 8, !tbaa !259
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store float %i.bh, ptr %i.e, align 4, !tbaa !259
   %i.bi = load ptr, ptr %3, align 8, !tbaa !1043
@@ -2164,7 +2164,7 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb0EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper7GetBoolEv.exit: ; preds = %bb.n
-  %i.cb = load i8, ptr %2, align 1, !tbaa !263, !range !84, !noundef !50
+  %i.cb = load i8, ptr %2, align 8, !tbaa !263, !range !84, !noundef !50
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i8 %i.cb, ptr %i.c, align 1, !tbaa !263
   %i.cc = load ptr, ptr %3, align 8, !tbaa !1043
@@ -2191,7 +2191,7 @@ bb.q:                                             ; preds = %bb.p
   unreachable
 
 _ZZNK6google8protobuf10Reflection14SwapOneofFieldILb0EEEvPNS0_7MessageES4_PKNS0_15OneofDescriptorEENK15LocalVarWrapper7GetEnumEv.exit: ; preds = %bb.p
-  %i.cl = load i32, ptr %2, align 4, !tbaa !3
+  %i.cl = load i32, ptr %2, align 8, !tbaa !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i32 %i.cl, ptr %i.b, align 4, !tbaa !3
   %i.cm = load ptr, ptr %3, align 8, !tbaa !1043
@@ -2594,7 +2594,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 bb.c:                                             ; preds = %.lr.ph.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !31    ; 2 uses
+  %i.x = load i8, ptr %i.w, align 8, !tbaa !31    ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 10
   %i.z = load i8, ptr %i.y, align 1, !tbaa !31
   %i.aa = icmp eq i8 %i.x, %i.z
@@ -2685,7 +2685,7 @@ bb.e:                                             ; preds = %.lr.ph113
 
 bb.f:                                             ; preds = %.lr.ph.i.i.i14
   %i.bp = getelementptr inbounds nuw i8, ptr %.01521.i.i.i15, i64 8
-  %i.bq = load i8, ptr %i.bp, align 1, !tbaa !31  ; 2 uses
+  %i.bq = load i8, ptr %i.bp, align 8, !tbaa !31  ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bm, i64 10
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !31
   %i.bt = icmp eq i8 %i.bq, %i.bs
@@ -2738,7 +2738,7 @@ bb.h:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i30
   %i.cn = getelementptr inbounds nuw i8, ptr %.01521.i.i.i31, i64 8
-  %i.co = load i8, ptr %i.cn, align 1, !tbaa !31  ; 2 uses
+  %i.co = load i8, ptr %i.cn, align 8, !tbaa !31  ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ck, i64 10
   %i.cq = load i8, ptr %i.cp, align 1, !tbaa !31
   %i.cr = icmp eq i8 %i.co, %i.cq
@@ -2806,7 +2806,7 @@ bb.k:                                             ; preds = %.lr.ph119
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i50
   %i.dt = getelementptr inbounds nuw i8, ptr %.01521.i.i.i51, i64 8
-  %i.du = load i8, ptr %i.dt, align 1, !tbaa !31  ; 2 uses
+  %i.du = load i8, ptr %i.dt, align 8, !tbaa !31  ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dq, i64 10
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !31
   %i.dx = icmp eq i8 %i.du, %i.dw

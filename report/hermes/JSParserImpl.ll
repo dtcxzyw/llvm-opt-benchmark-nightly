@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %_ZN6hermes6parser6d
   br i1 %.not.i.i.i.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.ab = load i32, ptr %i.b, align 4, !tbaa !3
+  %i.ab = load i32, ptr %i.b, align 8, !tbaa !3
   %i.ac = add nsw i32 %i.ab, 1
-  store i32 %i.ac, ptr %i.b, align 4, !tbaa !3
+  store i32 %i.ac, ptr %i.b, align 8, !tbaa !3
   br label %_ZNSt10shared_ptrIN6hermes6parser6detail12JSParserImplEEC2INS2_12_GLOBAL__N_19PreParserEEERKS_IT_EPS3_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -236,7 +236,7 @@ bb.f:                                             ; preds = %_ZNSt10shared_ptrIN
 
 bb.g:                                             ; preds = %bb.f
   %i.ao = add nsw i32 %i.ag, -1
-  store i32 %i.ao, ptr %i.b, align 4, !tbaa !3
+  store i32 %i.ao, ptr %i.b, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.f

@@ -180,7 +180,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %atomic_exchange_u8.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = load i8, ptr %0, align 1, !tbaa !49, !range !50, !noundef !51
+  %i.f = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %tsd_local_slow.exit.i, label %atomic_exchange_u8.exit
 
@@ -363,7 +363,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.az, label %atomic_exchange_u8.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ba = load i8, ptr %0, align 1, !tbaa !49, !range !50, !noundef !51
+  %i.ba = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.bb = trunc nuw i8 %i.ba to i1
   br i1 %i.bb, label %tsd_local_slow.exit.i.i, label %atomic_exchange_u8.exit.i
 
@@ -424,7 +424,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.f, label %atomic_exchange_u8.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = load i8, ptr %0, align 1, !tbaa !49, !range !50, !noundef !51
+  %i.g = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %tsd_local_slow.exit.i.i, label %atomic_exchange_u8.exit.i
 
@@ -473,7 +473,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %atomic_exchange_u8.exit.i30, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.t = load i8, ptr %0, align 1, !tbaa !49, !range !50, !noundef !51
+  %i.t = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.u = trunc nuw i8 %i.t to i1
   br i1 %i.u, label %tsd_local_slow.exit.i.i32, label %atomic_exchange_u8.exit.i30
 
@@ -560,7 +560,7 @@ bb.v:                                             ; preds = %bb.u
 tsd_set.exit25:                                   ; preds = %bb.t, %bb.u
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 448
   tail call void @je_rtree_ctx_data_init(ptr noundef nonnull %i.ao) #7
-  store i8 0, ptr %0, align 1, !tbaa !49
+  store i8 0, ptr %0, align 8, !tbaa !49
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.ap, align 1, !tbaa !48
   %i.aq = ptrtoint ptr %0 to i64
@@ -592,7 +592,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.ax, label %atomic_exchange_u8.exit.i37, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ay = load i8, ptr %0, align 1, !tbaa !49, !range !50, !noundef !51
+  %i.ay = load i8, ptr %0, align 8, !tbaa !49, !range !50, !noundef !51
   %i.az = trunc nuw i8 %i.ay to i1
   br i1 %i.az, label %tsd_local_slow.exit.i.i39, label %atomic_exchange_u8.exit.i37
 
@@ -654,7 +654,7 @@ bb.ag:                                            ; preds = %bb.af
 tsd_set.exit:                                     ; preds = %bb.ae, %bb.af
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 448
   tail call void @je_rtree_ctx_data_init(ptr noundef nonnull %i.bo) #7
-  store i8 0, ptr %0, align 1, !tbaa !49
+  store i8 0, ptr %0, align 8, !tbaa !49
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.bp, align 1, !tbaa !48
   %i.bq = ptrtoint ptr %0 to i64

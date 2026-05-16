@@ -201,7 +201,7 @@ bb.bg:                                            ; preds = %bb.be
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.fe, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(344) %.sroa.731.i.i, ptr noundef nonnull align 8 dereferenceable(344) %.sroa.5.0..sroa_idx.i.i.i, i64 344, i1 false), !noalias !30
   %i.gi = getelementptr inbounds nuw i8, ptr %i.fe, i64 352
-  store atomic i8 1, ptr %i.gi release, align 1, !noalias !74
+  store atomic i8 1, ptr %i.gi release, align 16, !noalias !74
   br label %bb.bi
 
 bb.bh:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtNtBN_4mpmc4zero5InnerEECs7p2uQeJxui2_9deltalake.exit.i.i
@@ -604,7 +604,7 @@ bb.gh:                                            ; preds = %bb.gg, %.loopexit.i
   %i.we = add nsw i64 %i.wd, %i.vx
   %i.wf = mul nsw i64 %i.we, 1000
   %i.wg = getelementptr inbounds nuw i8, ptr %i.ra, i64 88
-  %i.wh = load i32, ptr %i.wg, align 4, !alias.scope !2742, !noalias !2743, !noundef !3
+  %i.wh = load i32, ptr %i.wg, align 8, !alias.scope !2742, !noalias !2743, !noundef !3
   %i.wi = udiv i32 %i.wh, 1000000
   %i.wj = zext nneg i32 %i.wi to i64
   %i.wk = add nsw i64 %i.wf, %i.wj
@@ -1007,7 +1007,7 @@ bb.x:                                             ; preds = %bb.v
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val8, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.7, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx.i, i64 16, i1 false)
   %i.co = getelementptr inbounds nuw i8, ptr %.val8, i64 24
-  store atomic i8 1, ptr %i.co release, align 1, !noalias !11968
+  store atomic i8 1, ptr %i.co release, align 8, !noalias !11968
   br label %bb.z
 
 bb.y:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtNtBN_4mpmc4zero5InnerEECs7p2uQeJxui2_9deltalake.exit
@@ -1410,7 +1410,7 @@ bb.t:                                             ; preds = %_RNvMs1_NtNtNtCs2pq
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 24
   %i.bv = atomicrmw or ptr %i.bu, i64 1 release, align 8, !noalias !12063 ; 0 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.8.val, i64 312 ; 3 uses
-  %i.bx = load atomic i8, ptr %i.bw seq_cst, align 1, !noalias !12063
+  %i.bx = load atomic i8, ptr %i.bw seq_cst, align 8, !noalias !12063
   %i.by = icmp eq i8 %i.bx, 0
   br i1 %i.by, label %.noexc6.i, label %_RNvMs1_NtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc4listINtB5_7ChannelINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCscq8Lx7CD32J_17opentelemetry_sdk5error12OTelSdkErrorEE5writeCs7p2uQeJxui2_9deltalake.exit.thread.i
 
@@ -1463,7 +1463,7 @@ bb.z:                                             ; preds = %.noexc6.i
   %i.cn = load i8, ptr %i.cm, align 8, !range !40, !alias.scope !12064, !noalias !12067, !noundef !3 ; 2 uses
   %i.co = trunc nuw i8 %i.cn to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !12063
-  %i.cp = load atomic i8, ptr %i.bw seq_cst, align 1, !noalias !12063
+  %i.cp = load atomic i8, ptr %i.bw seq_cst, align 8, !noalias !12063
   %i.cq = icmp eq i8 %i.cp, 0
   br i1 %i.cq, label %bb.aa, label %bb.al
 
@@ -1581,7 +1581,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
   %.sroa.0.0.i.i.i = phi i8 [ %i.eg, %bb.aj ], [ 0, %bb.ai ]
-  store atomic i8 %.sroa.0.0.i.i.i, ptr %i.bw seq_cst, align 1, !noalias !12063
+  store atomic i8 %.sroa.0.0.i.i.i, ptr %i.bw seq_cst, align 8, !noalias !12063
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.z
@@ -1984,7 +1984,7 @@ bb.i:                                             ; preds = %bb.h
   %i.af = trunc i64 %i.ac to i32                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12647
   store i32 %i.ae, ptr %i.b, align 4, !noalias !12647
-  %i.ag = load i32, ptr %i.k, align 4, !noalias !12647, !noundef !3
+  %i.ag = load i32, ptr %i.k, align 8, !noalias !12647, !noundef !3
   %i.ah = icmp eq i32 %i.ag, %i.af
   br i1 %i.ah, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtNtCskQDtHcQtBkN_5tokio7runtime4task8NotifiedINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtNtNtB17_9scheduler12multi_thread6handle6HandleEEEECs7p2uQeJxui2_9deltalake.exit, label %.lr.ph.i
 

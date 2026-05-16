@@ -201,9 +201,9 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.cq, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #22
-  %i.hi = load i32, ptr %i.gm, align 4, !tbaa !3
+  %i.hi = load i32, ptr %i.gm, align 8, !tbaa !3
   %i.hj = or i32 %i.hi, 1
-  store i32 %i.hj, ptr %i.gm, align 4, !tbaa !3
+  store i32 %i.hj, ptr %i.gm, align 8, !tbaa !3
   %i.hk = getelementptr inbounds nuw i8, ptr %i.gj, i64 24 ; 2 uses
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !39 ; 2 uses
   %i.hm = icmp eq ptr %i.hl, null
@@ -290,7 +290,7 @@ bb.cv:                                            ; preds = %_ZNSt10unique_ptrIN
 
 bb.cw:                                            ; preds = %.lr.ph.i.i.i
   %i.it = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.iu = load i8, ptr %i.it, align 1, !tbaa !39  ; 2 uses
+  %i.iu = load i8, ptr %i.it, align 8, !tbaa !39  ; 2 uses
   %i.iv = getelementptr inbounds nuw i8, ptr %i.iq, i64 10
   %i.iw = load i8, ptr %i.iv, align 1, !tbaa !39
   %i.ix = icmp eq i8 %i.iu, %i.iw
@@ -693,7 +693,7 @@ bb.k:                                             ; preds = %bb.i
 bb.l:                                             ; preds = %._crit_edge
   tail call void @llvm.experimental.noalias.scope.decl(metadata !101)
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ao, i64 32
-  %i.cy = load i32, ptr %i.cx, align 4, !tbaa !3, !noalias !101
+  %i.cy = load i32, ptr %i.cx, align 8, !tbaa !3, !noalias !101
   %i.cz = and i32 %i.cy, 8
   %.not.i = icmp eq i32 %i.cz, 0
   br i1 %.not.i, label %bb.m, label %bb.n
@@ -1096,7 +1096,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZZN4absl12lts_2025051218container_internal5btreeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE16internal_emplaceIJRKS6_EEENS1_14btree_iteratorINS1_10btree_nodeISA_EESE_PSD_EESJ_DpOT_ENKUlhE_clEh.exit.i: ; preds = %.lr.ph.i.i.i4.i, %middle.block, %bb.o
   %i.ee = getelementptr inbounds nuw i8, ptr %i.dg, i64 10
-  store i8 %i.dk, ptr %i.ee, align 1, !tbaa !39, !noalias !112
+  store i8 %i.dk, ptr %i.ee, align 2, !tbaa !39, !noalias !112
   %i.ef = getelementptr inbounds nuw i8, ptr %i.cv, i64 11
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !39, !noalias !112 ; 2 uses
   %.not57.i = icmp eq i8 %i.eg, 0
@@ -1499,7 +1499,7 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.j unwind label %bb.c
 
 bb.f:                                             ; preds = %bb.e
-  %i.bo = load i32, ptr %i.u, align 4, !tbaa !3, !noalias !189 ; 2 uses
+  %i.bo = load i32, ptr %i.u, align 8, !tbaa !3, !noalias !189 ; 2 uses
   %i.bp = and i32 %i.bo, 16
   %.not.i = icmp eq i32 %i.bp, 0
   br i1 %.not.i, label %bb.h, label %bb.g
@@ -1902,7 +1902,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZZN4absl12lts_2025051218container_internal5btreeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE16internal_emplaceIJRKS6_EEENS1_14btree_iteratorINS1_10btree_nodeISA_EESE_PSD_EESJ_DpOT_ENKUlhE_clEh.exit: ; preds = %.lr.ph.i.i.i4, %middle.block, %bb.d
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ah, i64 10
-  store i8 %i.al, ptr %i.bf, align 1, !tbaa !39
+  store i8 %i.al, ptr %i.bf, align 2, !tbaa !39
   store i8 0, ptr %i.y, align 1, !tbaa !39
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE16clear_and_deleteEPSB_PS9_(ptr noundef nonnull %i.v, ptr noundef nonnull %i.x)
   store ptr %i.ah, ptr %i.x, align 8, !tbaa !60
@@ -2002,7 +2002,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !39    ; 5 uses
+  %i.f = load i8, ptr %i.e, align 8, !tbaa !39    ; 5 uses
   %.not112 = icmp eq i8 %i.f, 0
   br i1 %.not112, label %bb.g, label %bb.c
 
@@ -2019,7 +2019,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %narrow = sub nuw nsw i8 61, %i.m
-  %i.o = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.o = load i32, ptr %i.a, align 8, !tbaa !3
   %i.p = and i32 %i.o, 255                        ; 2 uses
   %i.q = icmp samesign ult i32 %i.p, 61
   %i.r = zext i1 %i.q to i8
@@ -2035,10 +2035,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE23rebalance_right_to_leftEhPSB_PS9_(ptr noundef nonnull align 1 dereferenceable(1) %i.k, i8 noundef zeroext %.sroa.speculated99, ptr noundef nonnull %i.b, ptr noundef nonnull %i.v)
-  %i.w = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.w = load i32, ptr %i.a, align 8, !tbaa !3
   %i.x = and i32 %i.w, 255
   %i.y = sub nsw i32 %i.x, %i.t                   ; 3 uses
-  store i32 %i.y, ptr %i.a, align 4, !tbaa !3
+  store i32 %i.y, ptr %i.a, align 8, !tbaa !3
   %i.z = icmp slt i32 %i.y, 0
   br i1 %i.z, label %bb.f, label %.critedge
 
@@ -2068,14 +2068,14 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %narrow114 = sub nuw nsw i8 61, %i.an
-  %i.ap = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.ap = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.aq = icmp sgt i32 %i.ap, 0
   %i.ar = zext i1 %i.aq to i8
   %i.as = lshr i8 %narrow114, %i.ar
   %.sroa.speculated = tail call i8 @llvm.umax.i8(i8 %i.as, i8 1) ; 3 uses
   %i.at = and i32 %i.ap, 255
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 10
-  %i.av = load i8, ptr %i.au, align 1, !tbaa !39
+  %i.av = load i8, ptr %i.au, align 2, !tbaa !39
   %i.aw = zext i8 %i.av to i32
   %i.ax = zext nneg i8 %.sroa.speculated to i32
   %i.ay = sub nsw i32 %i.aw, %i.ax
@@ -2088,7 +2088,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE23rebalance_left_to_rightEhPSB_PS9_(ptr noundef nonnull align 1 dereferenceable(1) %i.b, i8 noundef zeroext %.sroa.speculated, ptr noundef nonnull %i.al, ptr noundef nonnull %i.ba)
-  %i.bb = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.bb = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.bc = load ptr, ptr %1, align 8, !tbaa !60
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 10
   %i.be = load i8, ptr %i.bd, align 1, !tbaa !39
@@ -2125,7 +2125,7 @@ bb.n:                                             ; preds = %bb.a
   store i32 0, ptr %i.bp, align 8
   store ptr %i.b, ptr %i.bq, align 8, !tbaa !60
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 8
-  store i8 0, ptr %i.br, align 1, !tbaa !39
+  store i8 0, ptr %i.br, align 8, !tbaa !39
   store ptr %i.bo, ptr %i.b, align 8, !tbaa !60
   store ptr %i.bo, ptr %0, align 8, !tbaa !60
   %.pre = load ptr, ptr %1, align 8, !tbaa !60
@@ -2154,7 +2154,7 @@ bb.p:                                             ; preds = %bb.o
   store i8 0, ptr %i.cc, align 2, !tbaa !39
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 11
   store i8 61, ptr %i.cd, align 1, !tbaa !39
-  %i.ce = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.ce = load i32, ptr %i.a, align 8, !tbaa !3
   call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE5splitEiPSB_PS9_(ptr noundef nonnull align 1 dereferenceable(1) %i.bs, i32 noundef %i.ce, ptr noundef nonnull %i.bz, ptr noundef nonnull %i.by)
   %i.cf = load ptr, ptr %i.by, align 8, !tbaa !60
   %i.cg = load ptr, ptr %1, align 8, !tbaa !60
@@ -2176,13 +2176,13 @@ bb.r:                                             ; preds = %bb.o
   store i8 0, ptr %i.cl, align 2, !tbaa !39
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ci, i64 11
   store i8 0, ptr %i.cm, align 1, !tbaa !39
-  %i.cn = load i32, ptr %i.a, align 4, !tbaa !3
+  %i.cn = load i32, ptr %i.a, align 8, !tbaa !3
   call void @_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE5splitEiPSB_PS9_(ptr noundef nonnull align 1 dereferenceable(1) %i.bs, i32 noundef %i.cn, ptr noundef nonnull %i.ci, ptr noundef nonnull %i.by)
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.p, %bb.q, %bb.r
   %.0 = phi ptr [ %i.bz, %bb.q ], [ %i.bz, %bb.p ], [ %i.ci, %bb.r ]
-  %i.co = load i32, ptr %i.a, align 4, !tbaa !3   ; 2 uses
+  %i.co = load i32, ptr %i.a, align 8, !tbaa !3   ; 2 uses
   %i.cp = load ptr, ptr %1, align 8, !tbaa !60
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 10
   %i.cr = load i8, ptr %i.cq, align 1, !tbaa !39
@@ -2198,7 +2198,7 @@ bb.t:                                             ; preds = %bb.s
 .critedge.sink.split:                             ; preds = %bb.t, %bb.f, %bb.k
   %.sink127 = phi i32 [ %i.bi, %bb.k ], [ %i.ad, %bb.f ], [ %i.cv, %bb.t ]
   %.sink = phi ptr [ %i.al, %bb.k ], [ %i.k, %bb.f ], [ %.0, %bb.t ]
-  store i32 %.sink127, ptr %i.a, align 4, !tbaa !3
+  store i32 %.sink127, ptr %i.a, align 8, !tbaa !3
   store ptr %.sink, ptr %1, align 8, !tbaa !60
   br label %.critedge
 
@@ -2519,7 +2519,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %.preheader.loopexit.unr-lcssa ] ; 2 uses
   %lcmp.mod83 = trunc i8 %1 to i1
   tail call void @llvm.assume(i1 %lcmp.mod83)
-  %i.bu = load i8, ptr %i.c, align 1, !tbaa !39
+  %i.bu = load i8, ptr %i.c, align 2, !tbaa !39
   %i.bv = trunc i64 %indvars.iv.epil.init to i8
   %i.bw = add i8 %i.bv, 1
   %i.bx = add i8 %i.bu, %i.bw                     ; 2 uses
@@ -2545,7 +2545,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google
 bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %indvars.iv = phi i64 [ 0, %.lr.ph.new ], [ %indvars.iv.next.1, %bb.b ] ; 3 uses
   %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %bb.b ]
-  %i.cf = load i8, ptr %i.c, align 1, !tbaa !39
+  %i.cf = load i8, ptr %i.c, align 2, !tbaa !39
   %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
   %i.cg = trunc nuw i64 %indvars.iv.next to i8
   %i.ch = add i8 %i.cf, %i.cg                     ; 2 uses
@@ -2557,7 +2557,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
   store i8 %i.ch, ptr %i.cm, align 1, !tbaa !39
   store ptr %0, ptr %i.cj, align 8, !tbaa !60
-  %i.cn = load i8, ptr %i.c, align 1, !tbaa !39
+  %i.cn = load i8, ptr %i.c, align 2, !tbaa !39
   %indvars.iv.next.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %i.co = trunc nuw i64 %indvars.iv.next.1 to i8
   %i.cp = add i8 %i.cn, %i.co                     ; 2 uses
@@ -2594,9 +2594,9 @@ bb.c:                                             ; preds = %.lr.ph57, %bb.c
   br i1 %.not, label %.loopexit, label %bb.c, !llvm.loop !220
 
 .loopexit:                                        ; preds = %bb.c, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit51
-  %i.dh = load i8, ptr %i.c, align 1, !tbaa !39
+  %i.dh = load i8, ptr %i.c, align 2, !tbaa !39
   %i.di = add i8 %i.dh, %1
-  store i8 %i.di, ptr %i.c, align 1, !tbaa !39
+  store i8 %i.di, ptr %i.c, align 2, !tbaa !39
   %i.dj = load i8, ptr %i.aq, align 1, !tbaa !39
   %i.dk = sub i8 %i.dj, %1
   store i8 %i.dk, ptr %i.aq, align 1, !tbaa !39
@@ -2757,7 +2757,7 @@ middle.block83:                                   ; preds = %vector.body76
   br i1 %.not.i49, label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit.loopexit, label %.lr.ph.i48, !llvm.loop !224
 
 _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit.loopexit: ; preds = %.lr.ph.i48, %middle.block83
-  %.pre = load i8, ptr %i.ak, align 1, !tbaa !39
+  %.pre = load i8, ptr %i.ak, align 2, !tbaa !39
   %.pre62 = zext i8 %.pre to i32
   br label %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit
 
@@ -2865,7 +2865,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %indvars.iv58 = phi i64 [ 1, %.lr.ph56.new ], [ %indvars.iv.next59.1, %bb.c ] ; 6 uses
   %niter = phi i64 [ 0, %.lr.ph56.new ], [ %niter.next.1, %bb.c ]
   %i.dk = add nsw i64 %indvars.iv58, -1           ; 2 uses
-  %i.dl = load i8, ptr %i.ak, align 1, !tbaa !39
+  %i.dl = load i8, ptr %i.ak, align 2, !tbaa !39
   %i.dm = trunc nuw i64 %indvars.iv58 to i8
   %i.dn = sub i8 %i.dm, %1
   %i.do = add i8 %i.dn, %i.dl
@@ -2878,7 +2878,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %i.du = trunc nuw i64 %i.dk to i8
   store i8 %i.du, ptr %i.dt, align 1, !tbaa !39
   store ptr %2, ptr %i.dr, align 8, !tbaa !60
-  %i.dv = load i8, ptr %i.ak, align 1, !tbaa !39
+  %i.dv = load i8, ptr %i.ak, align 2, !tbaa !39
   %i.dw = trunc i64 %indvars.iv58 to i8
   %.reass = add i8 %i.dw, %invariant.op
   %i.dx = add i8 %.reass, %i.dv
@@ -2905,7 +2905,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   %lcmp.mod90 = trunc i64 %i.cp to i1
   tail call void @llvm.assume(i1 %lcmp.mod90)
   %i.ee = add nsw i64 %indvars.iv58.epil.init, -1 ; 2 uses
-  %i.ef = load i8, ptr %i.ak, align 1, !tbaa !39
+  %i.ef = load i8, ptr %i.ak, align 2, !tbaa !39
   %i.eg = trunc nuw i64 %indvars.iv58.epil.init to i8
   %i.eh = sub i8 %i.eg, %1
   %i.ei = add i8 %i.eh, %i.ef
@@ -2921,9 +2921,9 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph56.new
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.epil.preheader, %.loopexit.loopexit.unr-lcssa, %.preheader, %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE10transfer_nEmmmPSB_PS9_.exit
-  %i.ep = load i8, ptr %i.ak, align 1, !tbaa !39
+  %i.ep = load i8, ptr %i.ak, align 2, !tbaa !39
   %i.eq = sub i8 %i.ep, %1
-  store i8 %i.eq, ptr %i.ak, align 1, !tbaa !39
+  store i8 %i.eq, ptr %i.ak, align 2, !tbaa !39
   %i.er = load i8, ptr %i.c, align 1, !tbaa !39
   %i.es = add i8 %i.er, %1
   store i8 %i.es, ptr %i.c, align 1, !tbaa !39
@@ -3110,7 +3110,7 @@ _ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google
   br i1 %.not.i28, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051218container_internal10btree_nodeINS1_10set_paramsIN6google8protobuf7EditionESt4lessIS6_ESaIS6_ELi256ELb0EEEE13emplace_valueIJPS6_EEEvhPS9_DpOT_.exit
-  %i.cc = load i8, ptr %i.j, align 1, !tbaa !39
+  %i.cc = load i8, ptr %i.j, align 2, !tbaa !39
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 256
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 256
   br label %bb.h

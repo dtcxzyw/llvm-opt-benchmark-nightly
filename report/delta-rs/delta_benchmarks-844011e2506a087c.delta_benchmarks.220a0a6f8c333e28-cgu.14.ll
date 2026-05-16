@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  store i8 1, ptr %i.p, align 1, !noalias !271
+  store i8 1, ptr %i.p, align 8, !noalias !271
   resume { ptr, i32 } %i.aa
 
 bb.l:                                             ; preds = %bb.i
@@ -604,7 +604,7 @@ bb.b:                                             ; preds = %bb.af
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !20796
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.val, i64 1968
-  %.val83.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !noalias !20796
+  %.val83.pre.i = load ptr, ptr %.phi.trans.insert.i, align 16, !noalias !20796
   %.phi.trans.insert228.i = getelementptr i8, ptr %.val, i64 1976
   %.val84.pre.i = load ptr, ptr %.phi.trans.insert228.i, align 8, !noalias !20796
   br label %bb.y
@@ -678,7 +678,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.j, %bb.i
   %i.ap = getelementptr inbounds nuw i8, ptr %.val, i64 1936
-  %i.aq = load ptr, ptr %i.ap, align 8, !alias.scope !20798, !noalias !20796, !noundef !17 ; 2 uses
+  %i.aq = load ptr, ptr %i.ap, align 16, !alias.scope !20798, !noalias !20796, !noundef !17 ; 2 uses
   %.not.i.i = icmp eq ptr %i.aq, null
   br i1 %.not.i.i, label %bb.m, label %bb.o
 
@@ -782,7 +782,7 @@ bb.x:                                             ; preds = %bb.y
   %i.bq = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !20796
-  %.val60.i = load ptr, ptr %i.br, align 8, !noalias !20796
+  %.val60.i = load ptr, ptr %i.br, align 16, !noalias !20796
   %.val61.i = load ptr, ptr %i.bs, align 8, !noalias !20796, !nonnull !17, !align !187, !noundef !17
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultNtNtNtCs8Hz2sPNgbCO_10datafusion9execution7context16RegisterFunctionNtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorENtNtB4_6marker4SendEL_EEECs2VbMhdeEr66_16delta_benchmarks(ptr %.val60.i, ptr nonnull %.val61.i) #37
           to label %.body.i unwind label %bb.u, !noalias !20793
@@ -821,7 +821,7 @@ bb.aa:                                            ; preds = %_RNvXs_NtNtCsbvkFyI
   %.sroa.10.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.l, i64 40
   %.sroa.10.0.copyload.i = load ptr, ptr %.sroa.10.0..sroa_idx.i, align 8, !noalias !20796 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !20796
-  %.val58.i = load ptr, ptr %i.br, align 8, !noalias !20796 ; 5 uses
+  %.val58.i = load ptr, ptr %i.br, align 16, !noalias !20796 ; 5 uses
   %.val59.i = load ptr, ptr %i.bs, align 8, !noalias !20796, !nonnull !17, !align !187, !noundef !17 ; 5 uses
   %i.bx = load ptr, ptr %.val59.i, align 8, !invariant.load !17, !noalias !20793 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.bx, null
@@ -1224,7 +1224,7 @@ bb.w:                                             ; preds = %bb.t
 
 bb.x:                                             ; preds = %bb.u
   %i.de = getelementptr inbounds nuw i8, ptr %.val, i64 1024
-  %i.df = load ptr, ptr %i.de, align 8, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
+  %i.df = load ptr, ptr %i.de, align 16, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %.val, i64 1032
   %i.dh = load i64, ptr %i.dg, align 8, !alias.scope !20961, !noalias !20963, !noundef !17
   %i.di = atomicrmw add ptr %i.df, i64 1 monotonic, align 8, !noalias !20964
@@ -1241,7 +1241,7 @@ bb.z:                                             ; preds = %bb.x
 
 bb.aa:                                            ; preds = %bb.v
   %i.dk = getelementptr inbounds nuw i8, ptr %.val, i64 1024
-  %i.dl = load ptr, ptr %i.dk, align 8, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
+  %i.dl = load ptr, ptr %i.dk, align 16, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %.val, i64 1032
   %i.dn = load i64, ptr %i.dm, align 8, !alias.scope !20961, !noalias !20963, !noundef !17
   %i.do = atomicrmw add ptr %i.dl, i64 1 monotonic, align 8, !noalias !20964
@@ -1254,7 +1254,7 @@ bb.ab:                                            ; preds = %bb.v
 
 bb.ac:                                            ; preds = %bb.aa
   %i.dq = getelementptr inbounds nuw i8, ptr %.val, i64 1040
-  %i.dr = load ptr, ptr %i.dq, align 8, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
+  %i.dr = load ptr, ptr %i.dq, align 16, !alias.scope !20961, !noalias !20963, !nonnull !17, !noundef !17 ; 2 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %.val, i64 1048
   %i.dt = load i64, ptr %i.ds, align 8, !alias.scope !20961, !noalias !20963, !noundef !17
   %i.du = atomicrmw add ptr %i.dr, i64 1 monotonic, align 8, !noalias !20964
@@ -1657,7 +1657,7 @@ bb.ep:                                            ; preds = %bb.en
   %i.jj = getelementptr inbounds nuw i8, ptr %.val, i64 1080
   %.sroa.0338.0.copyload.i = load i64, ptr %i.jj, align 8, !noalias !20928
   %.sroa.5339.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 1088
-  %.sroa.5339.0.copyload.i = load ptr, ptr %.sroa.5339.0..sroa_idx.i, align 8, !noalias !20928, !nonnull !17, !noundef !17 ; 3 uses
+  %.sroa.5339.0.copyload.i = load ptr, ptr %.sroa.5339.0..sroa_idx.i, align 16, !noalias !20928, !nonnull !17, !noundef !17 ; 3 uses
   %.sroa.6340.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 1096
   %.sroa.6340.0.copyload.i = load i64, ptr %.sroa.6340.0..sroa_idx.i, align 8, !noalias !20928 ; 2 uses
   %i.jk = icmp ult i64 %.sroa.6340.0.copyload.i, 64051194700380388
@@ -1779,7 +1779,7 @@ bb.fa:                                            ; preds = %bb.ex
 
 bb.fb:                                            ; preds = %bb.ey
   %i.kh = getelementptr inbounds nuw i8, ptr %.val, i64 1024
-  %i.ki = load ptr, ptr %i.kh, align 8, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
+  %i.ki = load ptr, ptr %i.kh, align 16, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %.val, i64 1032
   %i.kk = load i64, ptr %i.kj, align 8, !alias.scope !21101, !noalias !21103, !noundef !17
   %i.kl = atomicrmw add ptr %i.ki, i64 1 monotonic, align 8, !noalias !21104
@@ -1796,7 +1796,7 @@ bb.fd:                                            ; preds = %bb.fb
 
 bb.fe:                                            ; preds = %bb.ez
   %i.kn = getelementptr inbounds nuw i8, ptr %.val, i64 1024
-  %i.ko = load ptr, ptr %i.kn, align 8, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
+  %i.ko = load ptr, ptr %i.kn, align 16, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
   %i.kp = getelementptr inbounds nuw i8, ptr %.val, i64 1032
   %i.kq = load i64, ptr %i.kp, align 8, !alias.scope !21101, !noalias !21103, !noundef !17
   %i.kr = atomicrmw add ptr %i.ko, i64 1 monotonic, align 8, !noalias !21104
@@ -1809,7 +1809,7 @@ bb.ff:                                            ; preds = %bb.ez
 
 bb.fg:                                            ; preds = %bb.fe
   %i.kt = getelementptr inbounds nuw i8, ptr %.val, i64 1040
-  %i.ku = load ptr, ptr %i.kt, align 8, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
+  %i.ku = load ptr, ptr %i.kt, align 16, !alias.scope !21101, !noalias !21103, !nonnull !17, !noundef !17 ; 2 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %.val, i64 1048
   %i.kw = load i64, ptr %i.kv, align 8, !alias.scope !21101, !noalias !21103, !noundef !17
   %i.kx = atomicrmw add ptr %i.ku, i64 1 monotonic, align 8, !noalias !21104
@@ -2085,7 +2085,7 @@ bb.gl:                                            ; preds = %bb.gj
   %i.ms = getelementptr inbounds nuw i8, ptr %.val, i64 1080
   %.sroa.0386.0.copyload.i = load i64, ptr %i.ms, align 8, !noalias !20928
   %.sroa.5387.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 1088
-  %.sroa.5387.0.copyload.i = load ptr, ptr %.sroa.5387.0..sroa_idx.i, align 8, !noalias !20928, !nonnull !17, !noundef !17 ; 3 uses
+  %.sroa.5387.0.copyload.i = load ptr, ptr %.sroa.5387.0..sroa_idx.i, align 16, !noalias !20928, !nonnull !17, !noundef !17 ; 3 uses
   %.sroa.6388.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.val, i64 1096
   %.sroa.6388.0.copyload.i = load i64, ptr %.sroa.6388.0..sroa_idx.i, align 8, !noalias !20928 ; 2 uses
   %i.mt = icmp ult i64 %.sroa.6388.0.copyload.i, 64051194700380388

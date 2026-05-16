@@ -201,7 +201,7 @@ bb.x:                                             ; preds = %bb.w, %bb.m
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.v
-  %i.cg = load i32, ptr %i.h, align 4, !tbaa !216
+  %i.cg = load i32, ptr %i.h, align 8, !tbaa !216
   %i.ch = and i32 %i.cg, 1
   %i.ci = icmp eq i32 %i.ch, 0
   %i.cj = load ptr, ptr %i.ap, align 8
@@ -484,7 +484,7 @@ bb.w:                                             ; preds = %bb.v, %bb.l
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.u
-  %i.ch = load i32, ptr %i.h, align 4, !tbaa !216
+  %i.ch = load i32, ptr %i.h, align 8, !tbaa !216
   %i.ci = and i32 %i.ch, 1
   %i.cj = icmp eq i32 %i.ci, 0
   %i.ck = load ptr, ptr %i.aq, align 8
@@ -887,7 +887,7 @@ bb.x:                                             ; preds = %bb.w, %bb.m
   br label %bb.aa
 
 bb.y:                                             ; preds = %bb.v
-  %i.cg = load i32, ptr %i.h, align 4, !tbaa !216
+  %i.cg = load i32, ptr %i.h, align 8, !tbaa !216
   %i.ch = and i32 %i.cg, 1
   %i.ci = icmp eq i32 %i.ch, 0
   %i.cj = load ptr, ptr %i.ap, align 8
@@ -1174,7 +1174,7 @@ bb.w:                                             ; preds = %bb.v, %bb.l
   br label %bb.z
 
 bb.x:                                             ; preds = %bb.u
-  %i.ch = load i32, ptr %i.h, align 4, !tbaa !216
+  %i.ch = load i32, ptr %i.h, align 8, !tbaa !216
   %i.ci = and i32 %i.ch, 1
   %i.cj = icmp eq i32 %i.ci, 0
   %i.ck = load ptr, ptr %i.aq, align 8
@@ -1577,7 +1577,7 @@ bb.r:                                             ; preds = %_ZNK6google8protobu
 _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPNS1_11SerialArenaEPNS1_12ParseContextERNS0_16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE.exit: ; preds = %bb.r, %bb.q, %bb.p
   %i.cl = phi i32 [ %i.bj, %bb.q ], [ %i.bj, %bb.r ], [ %.pre.i.i, %bb.p ]
   %i.cm = add nsw i32 %i.cl, 1
-  store i32 %i.cm, ptr %i.al, align 4, !tbaa !3
+  store i32 %i.cm, ptr %i.al, align 8, !tbaa !3
   %i.cn = icmp eq ptr %.0.i11, null
   br i1 %i.cn, label %.critedge55.i, label %bb.s, !prof !186
 
@@ -1858,7 +1858,7 @@ bb.r:                                             ; preds = %_ZNK6google8protobu
 _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPNS1_11SerialArenaEPNS1_12ParseContextERNS0_16RepeatedPtrFieldINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE.exit: ; preds = %bb.r, %bb.q, %bb.p
   %i.ck = phi i32 [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %.pre.i.i, %bb.p ]
   %i.cl = add nsw i32 %i.ck, 1
-  store i32 %i.cl, ptr %i.ak, align 4, !tbaa !3
+  store i32 %i.cl, ptr %i.ak, align 8, !tbaa !3
   %i.cm = icmp eq ptr %.0.i11, null
   br i1 %i.cm, label %.critedge55.i, label %bb.s, !prof !186
 
@@ -2140,7 +2140,7 @@ _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPN
   %i.cl = phi ptr [ %.0.i7, %bb.q ], [ %i.ce, %bb.r ], [ %i.bu, %bb.p ]
   %i.cm = phi i32 [ %i.bj, %bb.q ], [ %i.bj, %bb.r ], [ %.pre.i.i, %bb.p ]
   %i.cn = add nsw i32 %i.cm, 1                    ; 2 uses
-  store i32 %i.cn, ptr %i.al, align 4, !tbaa !3
+  store i32 %i.cn, ptr %i.al, align 8, !tbaa !3
   %i.co = icmp eq ptr %.0.i11, null
   br i1 %i.co, label %.critedge55.i, label %bb.s, !prof !186
 
@@ -2469,7 +2469,7 @@ _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPN
   %i.ck = phi ptr [ %.0.i7, %bb.q ], [ %i.cd, %bb.r ], [ %i.bt, %bb.p ]
   %i.cl = phi i32 [ %i.bi, %bb.q ], [ %i.bi, %bb.r ], [ %.pre.i.i, %bb.p ]
   %i.cm = add nsw i32 %i.cl, 1                    ; 2 uses
-  store i32 %i.cm, ptr %i.ak, align 4, !tbaa !3
+  store i32 %i.cm, ptr %i.ak, align 8, !tbaa !3
   %i.cn = icmp eq ptr %.0.i11, null
   br i1 %i.cn, label %.critedge55.i, label %bb.s, !prof !186
 
@@ -2872,7 +2872,7 @@ _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPN
   %i.cw = phi ptr [ %.0.i, %bb.r ], [ %i.cp, %bb.s ], [ %i.cf, %bb.q ]
   %i.cx = phi i32 [ %i.bu, %bb.r ], [ %i.bu, %bb.s ], [ %.pre.i.i, %bb.q ]
   %i.cy = add nsw i32 %i.cx, 1                    ; 2 uses
-  store i32 %i.cy, ptr %i.aw, align 4, !tbaa !3
+  store i32 %i.cy, ptr %i.aw, align 8, !tbaa !3
   %i.cz = icmp eq ptr %.0.i97, null
   br i1 %i.cz, label %.critedge89, label %bb.t, !prof !186
 
@@ -3275,7 +3275,7 @@ _ZN6google8protobuf8internal8TcParser23ParseRepeatedStringOnceEPKcPNS0_5ArenaEPN
   %i.eq = phi ptr [ %.0.i, %bb.ab ], [ %i.ej, %bb.ac ], [ %i.dz, %bb.aa ]
   %i.er = phi i32 [ %i.do, %bb.ab ], [ %i.do, %bb.ac ], [ %.pre.i.i, %bb.aa ]
   %i.es = add nsw i32 %i.er, 1                    ; 2 uses
-  store i32 %i.es, ptr %i.cq, align 4, !tbaa !3
+  store i32 %i.es, ptr %i.cq, align 8, !tbaa !3
   %i.et = icmp eq ptr %.0.i98, null
   br i1 %i.et, label %.critedge89, label %bb.ad, !prof !186
 

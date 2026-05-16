@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h
 
 .thread:                                          ; preds = %bb.i
   %i.q = getelementptr i8, ptr %1, i64 32
-  %i.r = load i8, ptr %i.q, align 1, !tbaa !26
+  %i.r = load i8, ptr %i.q, align 8, !tbaa !26
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !100
   %i.t = getelementptr i8, ptr %i.s, i64 32
   %i.u = getelementptr i8, ptr %i.t, i64 %.val41
@@ -604,7 +604,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   %i.aj = getelementptr i8, ptr %.0, i64 32
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !26
+  %i.ak = load i8, ptr %i.aj, align 8, !tbaa !26
   %i.al = icmp eq i8 %i.ak, 42
   %spec.select11.i = select i1 %i.al, ptr @_Py_NoneStruct, ptr %.0
   br label %_elementtree_Element_iter_impl.exit
@@ -1007,7 +1007,7 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.bf, label %bb.aj, label %bb.am
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.bg = load i8, ptr %i.bd, align 1, !tbaa !26
+  %i.bg = load i8, ptr %i.bd, align 8, !tbaa !26
   %i.bh = icmp eq i8 %i.bg, 123
   br i1 %i.bh, label %bb.ak, label %.lr.ph132.preheader
 
@@ -1021,7 +1021,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ak
   %i.bk = getelementptr i8, ptr %0, i64 34
-  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !26
+  %i.bl = load i8, ptr %i.bk, align 2, !tbaa !26
   %i.bm = icmp eq i8 %i.bl, 125
   br i1 %i.bm, label %.loopexit, label %.lr.ph132.preheader
 
