@@ -143,6 +143,7 @@ def run_perf_record(
                 "--",
                 PERF_OPT_BINARY,
                 "-O3",
+                "--disable-verify",
                 input_path,
                 "--disable-output",
             ]
