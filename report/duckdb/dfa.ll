@@ -201,9 +201,9 @@ bb.q:                                             ; preds = %bb.p
   br i1 %or.cond.not, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.bz = getelementptr inbounds nuw i8, ptr %i.br, i64 12
-  %4 = load i32, ptr %i.bz, align 4, !tbaa !111
-  %5 = icmp ult i32 %4, 65536
+  %i.bz = getelementptr inbounds nuw i8, ptr %i.br, i64 14
+  %4 = load i16, ptr %i.bz, align 2, !tbaa !111
+  %5 = icmp eq i16 %4, 0
   br i1 %5, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r

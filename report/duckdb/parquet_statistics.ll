@@ -201,7 +201,7 @@ bb.ch:                                            ; preds = %bb.ak
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.by = load i64, ptr %i.bx, align 8, !tbaa !73
   %i.bz = invoke noundef nonnull align 8 dereferenceable(753) ptr @_ZNK6duckdb6vectorIN14duckdb_parquet11ColumnChunkELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.by)
-          to label %bb.ci unwind label %bb.cl     ; 28 uses
+          to label %bb.ci unwind label %bb.cl     ; 29 uses
 
 bb.ci:                                            ; preds = %bb.ch
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 752
@@ -211,7 +211,7 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %.not, label %bb.ck, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 584 ; 2 uses
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 584
   %i.ce = load i16, ptr %i.cd, align 8
   %i.cf = and i16 %i.ce, 8
   %.not151 = icmp eq i16 %i.cf, 0
@@ -614,10 +614,10 @@ bb.et:                                            ; preds = %bb.es
 
 bb.eu:                                            ; preds = %bb.et
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %31) #22
-  %36 = load i16, ptr %i.cd, align 8
-  %37 = and i16 %36, 256
-  %.not152 = icmp eq i16 %37, 0
-  br i1 %.not152, label %.loopexit, label %bb.ev
+  %.shift = getelementptr inbounds nuw i8, ptr %i.bz, i64 585
+  %36 = load i8, ptr %.shift, align 1
+  %37 = trunc i8 %36 to i1
+  br i1 %37, label %bb.ev, label %.loopexit
 
 bb.ev:                                            ; preds = %bb.eu
   %i.fk = getelementptr inbounds nuw i8, ptr %i.bz, i64 576 ; 2 uses

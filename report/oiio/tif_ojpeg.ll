@@ -201,8 +201,6 @@ bb.bi:                                            ; preds = %._crit_edge.i.i109,
   store ptr %i.hb, ptr %i.gy, align 8, !tbaa !100
   %i.hc = add i16 %i.gx, -1                       ; 3 uses
   store i16 %i.hc, ptr %i.gs, align 8, !tbaa !95
-  %1 = zext i8 %i.ha to i16
-  %2 = shl nuw i16 %1, 8
   %i.hd = icmp eq i16 %i.hc, 0
   br i1 %i.hd, label %bb.bj, label %bb.bk
 
@@ -224,8 +222,10 @@ bb.bk:                                            ; preds = %._crit_edge12.i.i10
   store ptr %i.hj, ptr %i.gy, align 8, !tbaa !100
   %i.hk = add i16 %i.hg, -1                       ; 4 uses
   store i16 %i.hk, ptr %i.gs, align 8, !tbaa !95
+  %.sroa.7.0.insert.ext.i = zext i8 %i.ha to i16
+  %.sroa.7.0.insert.shift.i = shl nuw i16 %.sroa.7.0.insert.ext.i, 8
   %i.hl = zext i8 %i.hi to i16
-  %i.hm = or disjoint i16 %2, %i.hl               ; 4 uses
+  %i.hm = or disjoint i16 %.sroa.7.0.insert.shift.i, %i.hl ; 4 uses
   %i.hn = icmp ult i16 %i.hm, 3
   %i.ho = getelementptr inbounds nuw i8, ptr %i.gr, i64 289
   %i.hp = load i8, ptr %i.ho, align 1, !tbaa !178
@@ -628,24 +628,24 @@ OJPEGWriteStreamAcTable.exit98.i:                 ; preds = %bb.aa, %bb.z
 bb.ab:                                            ; preds = %bb.b
   %.val73.i = load ptr, ptr %i.c, align 8, !tbaa !68 ; 5 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.val73.i, i64 472
-  %i.de = load i16, ptr %i.dd, align 8, !tbaa !91 ; 3 uses
+  %i.de = load i16, ptr %i.dd, align 8            ; 3 uses
   %.not.i99.i = icmp eq i16 %i.de, 0
   br i1 %.not.i99.i, label %OJPEGWriteStreamDri.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %1 = getelementptr inbounds nuw i8, ptr %.val73.i, i64 3700 ; 2 uses
-  store <4 x i8> <i8 -1, i8 -35, i8 0, i8 4>, ptr %1, align 4, !tbaa !101
-  %2 = lshr i16 %i.de, 8
-  %3 = trunc nuw i16 %2 to i8
+  %1 = lshr i16 %i.de, 8
+  %2 = trunc nuw i16 %1 to i8
+  %3 = getelementptr inbounds nuw i8, ptr %.val73.i, i64 3700 ; 2 uses
+  store <4 x i8> <i8 -1, i8 -35, i8 0, i8 4>, ptr %3, align 4, !tbaa !101
   %i.df = getelementptr inbounds nuw i8, ptr %.val73.i, i64 3704
-  store i8 %3, ptr %i.df, align 4, !tbaa !101
+  store i8 %2, ptr %i.df, align 4, !tbaa !101
   %i.dg = trunc i16 %i.de to i8
   %i.dh = getelementptr inbounds nuw i8, ptr %.val73.i, i64 3705
   store i8 %i.dg, ptr %i.dh, align 1, !tbaa !101
   br label %OJPEGWriteStreamDri.exit.i
 
 OJPEGWriteStreamDri.exit.i:                       ; preds = %bb.ac, %bb.ab
-  %.210 = phi ptr [ %.08, %bb.ab ], [ %1, %bb.ac ]
+  %.210 = phi ptr [ %.08, %bb.ab ], [ %3, %bb.ac ]
   %.2 = phi i32 [ 0, %bb.ab ], [ 6, %bb.ac ]
   %i.di = getelementptr inbounds nuw i8, ptr %.val73.i, i64 3696 ; 2 uses
   %i.dj = load i32, ptr %i.di, align 8, !tbaa !107

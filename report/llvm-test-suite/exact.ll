@@ -137,9 +137,9 @@ bb.j:                                             ; preds = %bb.i
   %i.as = load i32, ptr @cube, align 8, !tbaa !16
   %i.at = call i32 (ptr, ...) @set_ord(ptr noundef %.05368) #8
   %i.au = sub nsw i32 %i.as, %i.at
-  %5 = load i32, ptr %.05368, align 4, !tbaa !4
-  %6 = lshr i32 %5, 16
-  %i.av = zext nneg i32 %6 to i64
+  %.shift = getelementptr inbounds nuw i8, ptr %.05368, i64 2
+  %5 = load i16, ptr %.shift, align 2, !tbaa !4
+  %i.av = zext i16 %5 to i64
   %i.aw = getelementptr inbounds nuw [4 x i8], ptr %i.ah, i64 %i.av
   store i32 %i.au, ptr %i.aw, align 4, !tbaa !4
   %i.ax = load ptr, ptr %i.c, align 8, !tbaa !8

@@ -201,12 +201,12 @@ bb.em:                                            ; preds = %.lr.ph2047
   %i.alx = getelementptr inbounds nuw i8, ptr %i.aks, i64 %i.alw
   %i.aly = load i16, ptr %i.alx, align 1
   %i.alz = call noundef i16 @llvm.bswap.i16(i16 %i.aly) ; 2 uses
+  %.sroa.7.0.extract.shift2430 = lshr i16 %i.alz, 8
+  %.sroa.7.0.extract.trunc2431 = trunc nuw i16 %.sroa.7.0.extract.shift2430 to i8
   %30 = trunc i16 %i.alz to i8
   %31 = getelementptr inbounds nuw i8, ptr %.84292044, i64 1
   store i8 %30, ptr %.84292044, align 1, !tbaa !16
-  %32 = lshr i16 %i.alz, 8
-  %33 = trunc nuw i16 %32 to i8
-  store i8 %33, ptr %31, align 1, !tbaa !16
+  store i8 %.sroa.7.0.extract.trunc2431, ptr %31, align 1, !tbaa !16
   %i.ama = and i64 %indvars.iv.next2403, 4294967295
   %i.amb = icmp eq i64 %i.ama, 0
   br i1 %i.amb, label %._crit_edge2048, label %.lr.ph2047

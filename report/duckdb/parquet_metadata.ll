@@ -201,7 +201,7 @@ bb.a:
   %59 = alloca %"class.duckdb::Value", align 8    ; 7 uses
   %i.c = tail call noundef ptr @_ZNK6duckdb13ParquetReader15GetFileMetadataEv(ptr noundef nonnull align 8 dereferenceable(432) %4)
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  %i.e = tail call noundef nonnull align 8 dereferenceable(434) ptr @_ZNK6duckdb6vectorIN14duckdb_parquet13SchemaElementELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %3) ; 30 uses
+  %i.e = tail call noundef nonnull align 8 dereferenceable(434) ptr @_ZNK6duckdb6vectorIN14duckdb_parquet13SchemaElementELb1ESaIS2_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %3) ; 31 uses
   %i.f = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_6VectorEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 0)
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %40) #27
@@ -333,7 +333,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit82: ; preds = %bb.
   %i.ap = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_6VectorEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 2)
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %44) #27
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.e, i64 432 ; 10 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.e, i64 432 ; 9 uses
   %i.as = load i16, ptr %i.ar, align 8
   %i.at = trunc i16 %i.as to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %38)
@@ -736,9 +736,9 @@ bb.bm:                                            ; preds = %_ZN6duckdbL20Parque
   %i.fl = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_6VectorEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %1, i64 noundef 10)
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %52) #27
-  %60 = load i16, ptr %i.ar, align 8
-  %61 = and i16 %60, 256
-  %.not146 = icmp eq i16 %61, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %i.e, i64 433
+  %60 = load i8, ptr %.shift, align 1
+  %61 = trunc i8 %60 to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
   call void @llvm.lifetime.start.p0(ptr nonnull %10)
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
@@ -757,7 +757,7 @@ bb.bm:                                            ; preds = %_ZN6duckdbL20Parque
   call void @llvm.lifetime.start.p0(ptr nonnull %24)
   call void @llvm.lifetime.start.p0(ptr nonnull %25)
   call void @llvm.lifetime.start.p0(ptr nonnull %26)
-  br i1 %.not146, label %bb.bn, label %bb.bq
+  br i1 %61, label %bb.bq, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
   call void @_ZN6duckdb11LogicalTypeC1ENS_13LogicalTypeIdE(ptr noundef nonnull align 8 dereferenceable(24) %9, i8 noundef zeroext 1), !noalias !330

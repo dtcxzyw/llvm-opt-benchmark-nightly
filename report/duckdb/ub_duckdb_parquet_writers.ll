@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_ZN6duckdb18Parquet
   br label %bb.l
 
 bb.e:                                             ; preds = %_ZN6duckdb18ParquetDecodeUtils12VarintEncodeImEEvT_RNS_11WriteStreamE.exit
-  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !168
   %i.ad = trunc i32 %i.ac to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -219,9 +219,9 @@ bb.e:                                             ; preds = %_ZN6duckdb18Parquet
   %i.ak = load ptr, ptr %i.aj, align 8
   call void %i.ak(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.c, i64 noundef 1), !inline_history !132
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %4 = load i32, ptr %i.ab, align 8, !tbaa !168
-  %5 = lshr i32 %4, 16
-  %i.al = trunc i32 %5 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %4 = load i16, ptr %.shift, align 2, !tbaa !168
+  %i.al = trunc i16 %4 to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i8 %i.al, ptr %i.b, align 1, !tbaa !28
   %i.am = load ptr, ptr %1, align 8, !tbaa !7

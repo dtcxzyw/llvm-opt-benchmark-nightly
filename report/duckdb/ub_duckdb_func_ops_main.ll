@@ -201,18 +201,18 @@ _ZN6duckdb12_GLOBAL__N_123OverflowCheckedMultiply9OperationIjmEEbT_S3_RS3_.exit:
 define noundef zeroext i1 @_ZN6duckdb19TryMultiplyOperator9OperationImmmEEbT_T0_RT1_(i64 noundef %0, i64 noundef %1, ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %2) local_unnamed_addr #6 align 2 {
 bb.a:
   %spec.select = tail call i64 @llvm.umin.i64(i64 %0, i64 %1) ; 3 uses
-  %spec.select16 = tail call i64 @llvm.umax.i64(i64 %0, i64 %1) ; 2 uses
   %i.a = icmp ugt i64 %spec.select, 4294967295
   br i1 %i.a, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = lshr i64 %spec.select16, 32
+  %.sroa.0.0.v = tail call i64 @llvm.umax.i64(i64 %0, i64 %1) ; 2 uses
+  %i.b = lshr i64 %.sroa.0.0.v, 32
   %i.c = mul nuw i64 %i.b, %spec.select           ; 2 uses
   %i.d = icmp ugt i64 %i.c, 4294967295
   br i1 %i.d, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = and i64 %spec.select16, 4294967295
+  %i.e = and i64 %.sroa.0.0.v, 4294967295
   %i.f = mul nuw i64 %i.e, %spec.select
   %i.g = shl nuw i64 %i.c, 32
   %i.h = xor i64 %i.f, -1
@@ -220,7 +220,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = mul i64 %1, %0
+  %i.j = mul i64 %0, %1
   store i64 %i.j, ptr %2, align 8, !tbaa !18
   br label %bb.e
 
@@ -623,18 +623,18 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %spec.select.i = tail call i64 @llvm.umin.i64(i64 %0, i64 %1) ; 3 uses
-  %spec.select16.i = tail call i64 @llvm.umax.i64(i64 %0, i64 %1) ; 2 uses
   %i.a = icmp ugt i64 %spec.select.i, 4294967295
   br i1 %i.a, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = lshr i64 %spec.select16.i, 32
+  %.sroa.0.0.v.i = tail call i64 @llvm.umax.i64(i64 %0, i64 %1) ; 2 uses
+  %i.b = lshr i64 %.sroa.0.0.v.i, 32
   %i.c = mul nuw i64 %i.b, %spec.select.i         ; 2 uses
   %i.d = icmp ugt i64 %i.c, 4294967295
   br i1 %i.d, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = and i64 %spec.select16.i, 4294967295
+  %i.e = and i64 %.sroa.0.0.v.i, 4294967295
   %i.f = mul nuw i64 %i.e, %spec.select.i
   %i.g = shl nuw i64 %i.c, 32
   %i.h = xor i64 %i.f, -1

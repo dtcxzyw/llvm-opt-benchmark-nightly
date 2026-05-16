@@ -201,10 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2056
-  %i.b = getelementptr i8, ptr %1, i64 4          ; 4 uses
-  %.val24 = load i32, ptr %i.b, align 4, !tbaa !35
-  %4 = lshr i32 %.val24, 24
-  %i.c = zext nneg i32 %4 to i64
+  %i.b = getelementptr i8, ptr %1, i64 4          ; 3 uses
+  %.val24.shift = getelementptr i8, ptr %1, i64 7
+  %.val2439 = load i8, ptr %.val24.shift, align 1, !tbaa !35
+  %i.c = zext i8 %.val2439 to i64
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %i.c ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !3
   %i.f = add i32 %i.e, 1

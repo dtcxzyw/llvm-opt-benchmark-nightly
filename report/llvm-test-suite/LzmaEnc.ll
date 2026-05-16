@@ -201,8 +201,8 @@ bb.bm:                                            ; preds = %bb.bk, %bb.bl, %Len
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @RangeEnc_ShiftLow(ptr noundef captures(none) %0) unnamed_addr #6 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !75   ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = and i64 %i.b, -16777216
   %or.cond = icmp eq i64 %i.c, 4278190080
   br i1 %or.cond, label %._crit_edge, label %.peel.begin
@@ -214,9 +214,12 @@ bb.a:
   br label %bb.j
 
 .peel.begin:                                      ; preds = %bb.a
+  %1 = lshr i64 %i.b, 32
+  %2 = trunc i64 %1 to i8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.f = load i8, ptr %i.e, align 4, !tbaa !78
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
@@ -224,8 +227,6 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.n = load ptr, ptr %i.g, align 8, !tbaa !79   ; 2 uses
-  %1 = lshr i64 %i.b, 32
-  %2 = trunc i64 %1 to i8
   %i.o = add i8 %i.f, %2
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 1 ; 5 uses
   store i8 %i.o, ptr %i.n, align 1, !tbaa !21
@@ -272,9 +273,8 @@ RangeEnc_FlushStream.exit.peel:                   ; preds = %bb.e, %bb.b, %.peel
 
 .peel.next:                                       ; preds = %RangeEnc_FlushStream.exit.peel, %RangeEnc_FlushStream.exit
   %i.ag = phi ptr [ %i.ax, %RangeEnc_FlushStream.exit ], [ %i.ad, %RangeEnc_FlushStream.exit.peel ] ; 2 uses
-  %3 = load i64, ptr %i.a, align 8, !tbaa !75
-  %4 = lshr i64 %3, 32
-  %i.ah = trunc i64 %4 to i8
+  %3 = load i32, ptr %.shift, align 4, !tbaa !75
+  %i.ah = trunc i32 %3 to i8
   %i.ai = add i8 %i.ah, -1
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 5 uses
   store i8 %i.ai, ptr %i.ag, align 1, !tbaa !21

@@ -201,11 +201,14 @@ define internal fastcc noundef i32 @png_deflate_claim(ptr noalias noundef %0, i3
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 15 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 4 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !70   ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8              ; 5 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %3 = lshr i32 %i.c, 16
+  %4 = lshr i32 %i.c, 24
+  %5 = trunc nuw i32 %4 to i8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.d = lshr i32 %1, 24
   %i.e = trunc nuw nsw i32 %i.d to i8
@@ -225,12 +228,9 @@ bb.b:                                             ; preds = %bb.a
   store i8 58, ptr %i.n, align 4, !tbaa !7
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   store i8 32, ptr %i.o, align 1, !tbaa !7
-  %3 = lshr i32 %i.c, 24
-  %4 = trunc nuw i32 %3 to i8
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %4, ptr %i.p, align 2, !tbaa !7
-  %5 = lshr i32 %i.c, 16
-  %i.q = trunc i32 %5 to i8
+  store i8 %5, ptr %i.p, align 2, !tbaa !7
+  %i.q = trunc i32 %3 to i8
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 7
   store i8 %i.q, ptr %i.r, align 1, !tbaa !7
   %i.s = lshr i32 %i.c, 8

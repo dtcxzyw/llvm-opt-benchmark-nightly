@@ -201,8 +201,8 @@ declare void @_ZN10COutBuffer4FreeEv(ptr noundef nonnull align 8 dereferenceable
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN9NCompress11NRangeCoder8CEncoder8ShiftLowEv(ptr noundef nonnull align 8 dereferenceable(80) %0) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !33   ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 3 uses
   %i.c = and i64 %i.b, -16777216
   %or.cond = icmp eq i64 %i.c, 4278190080
   br i1 %or.cond, label %._crit_edge, label %.peel.begin
@@ -213,23 +213,24 @@ bb.a:
   br label %bb.d
 
 .peel.begin:                                      ; preds = %bb.a
+  %1 = lshr i64 %i.b, 32
+  %2 = trunc i64 %1 to i8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.f = load i8, ptr %i.e, align 4, !tbaa !36
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
-  %1 = lshr i64 %i.b, 32
-  %2 = trunc i64 %1 to i8
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 12
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 6 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.j = add i8 %i.f, %2
   %i.k = load ptr, ptr %i.g, align 8, !tbaa !47
-  %i.l = load i32, ptr %i.h, align 8, !tbaa !48   ; 2 uses
+  %i.l = load i32, ptr %i.i, align 8, !tbaa !48   ; 2 uses
   %i.m = add i32 %i.l, 1
-  store i32 %i.m, ptr %i.h, align 8, !tbaa !48
+  store i32 %i.m, ptr %i.i, align 8, !tbaa !48
   %i.n = zext i32 %i.l to i64
   %i.o = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.n
   store i8 %i.j, ptr %i.o, align 1, !tbaa !42
-  %i.p = load i32, ptr %i.h, align 8, !tbaa !48
-  %i.q = load i32, ptr %i.i, align 4, !tbaa !49
+  %i.p = load i32, ptr %i.i, align 8, !tbaa !48
+  %i.q = load i32, ptr %3, align 4, !tbaa !49
   %i.r = icmp eq i32 %i.p, %i.q
   br i1 %i.r, label %bb.b, label %_ZN10COutBuffer9WriteByteEh.exit.peel
 
@@ -245,19 +246,18 @@ _ZN10COutBuffer9WriteByteEh.exit.peel:            ; preds = %bb.b, %.peel.begin
   br i1 %.not2.peel, label %.loopexit, label %.peel.next
 
 .peel.next:                                       ; preds = %_ZN10COutBuffer9WriteByteEh.exit.peel, %_ZN10COutBuffer9WriteByteEh.exit
-  %3 = load i64, ptr %i.a, align 8, !tbaa !33
-  %4 = lshr i64 %3, 32
-  %i.u = trunc i64 %4 to i8
+  %4 = load i32, ptr %i.h, align 4, !tbaa !33
+  %i.u = trunc i32 %4 to i8
   %i.v = add i8 %i.u, -1
   %i.w = load ptr, ptr %i.g, align 8, !tbaa !47
-  %i.x = load i32, ptr %i.h, align 8, !tbaa !48   ; 2 uses
+  %i.x = load i32, ptr %i.i, align 8, !tbaa !48   ; 2 uses
   %i.y = add i32 %i.x, 1
-  store i32 %i.y, ptr %i.h, align 8, !tbaa !48
+  store i32 %i.y, ptr %i.i, align 8, !tbaa !48
   %i.z = zext i32 %i.x to i64
   %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.z
   store i8 %i.v, ptr %i.aa, align 1, !tbaa !42
-  %i.ab = load i32, ptr %i.h, align 8, !tbaa !48
-  %i.ac = load i32, ptr %i.i, align 4, !tbaa !49
+  %i.ab = load i32, ptr %i.i, align 8, !tbaa !48
+  %i.ac = load i32, ptr %3, align 4, !tbaa !49
   %i.ad = icmp eq i32 %i.ab, %i.ac
   br i1 %i.ad, label %bb.c, label %_ZN10COutBuffer9WriteByteEh.exit
 

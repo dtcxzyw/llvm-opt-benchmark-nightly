@@ -201,8 +201,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   store i8 40, ptr %i.b, align 16, !tbaa !66
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %i.bx = load i32, ptr %i.bl, align 4, !tbaa !55
-  %i.by = load <2 x i32>, ptr %i.bv, align 8, !tbaa !4
+  %i.bx = load i32, ptr %i.bl, align 4
+  %i.by = load <2 x i32>, ptr %i.bv, align 8
   %i.bz = mul i32 %i.bx, %i.bk
   %i.ca = add i32 %i.bi, %i.bz
   store i32 %i.ca, ptr %i.bo, align 1

@@ -201,12 +201,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ax = add i32 %i.aw, -1
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store i32 %i.ax, ptr %i.ay, align 4, !tbaa !4
-  %2 = load i16, ptr %0, align 8, !tbaa !33       ; 2 uses
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %2 = load i8, ptr %.shift, align 1, !tbaa !33
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %4, ptr %i.az, align 8, !tbaa !8
-  %i.ba = trunc i16 %2 to i8
+  store i8 %2, ptr %i.az, align 8, !tbaa !8
+  %3 = load i16, ptr %0, align 8, !tbaa !33
+  %i.ba = trunc i16 %3 to i8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.a, i64 9
   store i8 %i.ba, ptr %i.bb, align 1, !tbaa !8
   %i.bc = call i32 @CrcCalc(ptr noundef nonnull %i.ay, i64 noundef 6) #4
