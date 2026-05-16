@@ -201,7 +201,7 @@ define hidden void @_ZN6Assimp11LWOImporter14InternReadFileERKNSt7__cxx1112basic
   %7 = alloca %"class.std::vector.10", align 8    ; 10 uses
   %8 = alloca %"class.std::vector.29", align 8    ; 10 uses
   %9 = alloca %"struct.Assimp::LWO::Layer", align 8 ; 22 uses
-  %i.a = alloca [5 x i8], align 1                 ; 8 uses
+  %i.a = alloca [5 x i8], align 2                 ; 7 uses
   %10 = alloca %"class.std::map", align 8         ; 14 uses
   %11 = alloca %"class.std::vector.76", align 8   ; 10 uses
   %12 = alloca %"struct.Assimp::LWO::Surface", align 8 ; 47 uses
@@ -361,7 +361,7 @@ bb.o:                                             ; preds = %_ZN6Assimp3IFF10Rea
 
 bb.p:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
-  %i.ay = load i32, ptr %i.ax, align 1
+  %i.ay = load i32, ptr %i.ax, align 1            ; 2 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.aj, i64 12
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 168
   store ptr %i.az, ptr %i.ba, align 8
@@ -465,7 +465,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit: ; preds = %bb.
   store i8 0, ptr %i.cq, align 2
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 73 ; 2 uses
   store i8 0, ptr %i.cr, align 1
-  %.sroa.0397.0.insert.insert = call i32 @llvm.bswap.i32(i32 %i.ay) ; 5 uses
+  %.sroa.0397.0.insert.insert = call i32 @llvm.bswap.i32(i32 %i.ay) ; 3 uses
   switch i32 %.sroa.0397.0.insert.insert, label %bb.aa [
     i32 1280790338, label %bb.r
     i32 1280790322, label %bb.w
@@ -526,22 +526,17 @@ bb.z:                                             ; preds = %_ZNSt7__cxx1112basi
 
 bb.aa:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %14 = lshr i32 %.sroa.0397.0.insert.insert, 24
-  %15 = trunc nuw i32 %14 to i8
-  store i8 %15, ptr %i.a, align 1
-  %16 = lshr i32 %.sroa.0397.0.insert.insert, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %17, ptr %18, align 1
+  %14 = trunc i32 %i.ay to i16
+  store i16 %14, ptr %i.a, align 2
   %i.da = lshr i32 %.sroa.0397.0.insert.insert, 8
   %i.db = trunc i32 %i.da to i8
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %i.db, ptr %i.dc, align 1
+  store i8 %i.db, ptr %i.dc, align 2
   %i.dd = trunc i32 %.sroa.0397.0.insert.insert to i8
   %i.de = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.dd, ptr %i.de, align 1
   %i.df = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 0, ptr %i.df, align 1
+  store i8 0, ptr %i.df, align 2
   %i.dg = call ptr @__cxa_allocate_exception(i64 16) #25 ; 3 uses
   invoke void @_ZN17DeadlyImportErrorC2IJRA25_KcRA5_cEEEDpOT_(ptr noundef nonnull align 8 dereferenceable(16) %i.dg, ptr noundef nonnull align 1 dereferenceable(25) @.str.12, ptr noundef nonnull align 1 dereferenceable(5) %i.a)
           to label %bb.ab unwind label %bb.ac

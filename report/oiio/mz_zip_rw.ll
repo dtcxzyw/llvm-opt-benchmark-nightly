@@ -201,12 +201,11 @@ bb.ai:                                            ; preds = %bb.ah
   %i.bz = load i64, ptr %i.by, align 8, !tbaa !55
   %i.ca = call i32 @mz_os_set_file_date(ptr noundef nonnull %i.i, i64 noundef %i.bv, i64 noundef %i.bx, i64 noundef %i.bz) #18 ; 0 uses
   %i.cb = load ptr, ptr %i.e, align 8, !tbaa !24  ; 2 uses
-  %2 = load i16, ptr %i.cb, align 8, !tbaa !56
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %i.cb, i64 1
+  %2 = load i8, ptr %.shift, align 1, !tbaa !56
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 84
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !57
-  %i.ce = call i32 @mz_zip_attrib_convert(i8 noundef zeroext %4, i32 noundef %i.cd, i8 noundef zeroext 3, ptr noundef nonnull %i.b) #18
+  %i.ce = call i32 @mz_zip_attrib_convert(i8 noundef zeroext %2, i32 noundef %i.cd, i8 noundef zeroext 3, ptr noundef nonnull %i.b) #18
   %i.cf = icmp eq i32 %i.ce, 0
   br i1 %i.cf, label %bb.aj, label %.critedge
 
@@ -609,17 +608,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.z = call i32 @mz_os_get_file_date(ptr noundef nonnull %1, ptr noundef nonnull %i.w, ptr noundef nonnull %i.x, ptr noundef nonnull %i.y) #18 ; 0 uses
   %i.aa = call i32 @mz_os_get_file_attribs(ptr noundef nonnull %1, ptr noundef nonnull %i.b) #18 ; 0 uses
-  %4 = load i16, ptr %3, align 8, !tbaa !56
-  %5 = lshr i16 %4, 8
-  %trunc = trunc nuw i16 %5 to i8                 ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %4 = load i8, ptr %.shift, align 1, !tbaa !56   ; 2 uses
   %i.ab = load i32, ptr %i.b, align 4, !tbaa !3   ; 2 uses
-  switch i8 %trunc, label %bb.i [
+  switch i8 %4, label %bb.i [
     i8 10, label %bb.j
     i8 0, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
-  %i.ac = call i32 @mz_zip_attrib_convert(i8 noundef zeroext %trunc, i32 noundef %i.ab, i8 noundef zeroext 0, ptr noundef nonnull %i.a) #18
+  %i.ac = call i32 @mz_zip_attrib_convert(i8 noundef zeroext %4, i32 noundef %i.ab, i8 noundef zeroext 0, ptr noundef nonnull %i.a) #18
   %i.ad = icmp eq i32 %i.ac, 0
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %3, i64 84
   %.pre = load i32, ptr %.phi.trans.insert, align 4

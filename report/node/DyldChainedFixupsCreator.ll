@@ -152,12 +152,10 @@ define hidden { i64, i8 } @_ZN4LIEF5MachO24DyldChainedFixupsCreator7lib2ordERKNS
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %4 = alloca %"struct.std::pair.169", align 8    ; 11 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 58
-  %5 = load i16, ptr %i.b, align 2
-  %6 = lshr i16 %5, 8                             ; 2 uses
-  %i.c = zext nneg i16 %6 to i64
-  %trunc = trunc nuw i16 %6 to i8
-  %trunc.off = add i8 %trunc, -1
+  %i.b = getelementptr inbounds nuw i8, ptr %2, i64 59
+  %5 = load i8, ptr %i.b, align 1                 ; 2 uses
+  %i.c = zext i8 %5 to i64
+  %trunc.off = add i8 %5, -1
   %switch = icmp ult i8 %trunc.off, -3
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.e = load i64, ptr %i.d, align 8

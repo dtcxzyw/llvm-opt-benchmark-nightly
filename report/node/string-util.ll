@@ -201,10 +201,9 @@ bb.c:                                             ; preds = %bb.b
 _ZNK2v85Value22QuickIsNullOrUndefinedEv.exit:     ; preds = %bb.c
   %i.k = add i64 %i.b, 39
   %i.l = inttoptr i64 %i.k to ptr
-  %3 = load i64, ptr %i.l, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.m = add i32 %5, -3
+  %.shift = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %3 = load i32, ptr %.shift, align 4
+  %i.m = add i32 %3, -3
   %i.n = icmp ult i32 %i.m, 2
   br i1 %i.n, label %bb.d, label %_ZNSt10unique_ptrIA_DsSt14default_deleteIS0_EED2Ev.exit
 

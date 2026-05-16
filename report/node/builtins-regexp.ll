@@ -201,11 +201,9 @@ _ZN2v88internal7Isolate22regexp_last_match_infoEv.exit.i: ; preds = %bb.b, %bb.a
   store i64 %i.q, ptr %.0.i.i.i.i, align 8
   %i.y = add i64 %i.q, -1
   %i.z = inttoptr i64 %i.y to ptr
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %3 = load i64, ptr %i.aa, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32                    ; 2 uses
-  %i.ab = icmp slt i32 %5, 3
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 20
+  %3 = load i32, ptr %i.aa, align 4               ; 2 uses
+  %i.ab = icmp slt i32 %3, 3
   br i1 %i.ab, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZN2v88internal7Isolate22regexp_last_match_infoEv.exit.i
@@ -213,7 +211,7 @@ bb.c:                                             ; preds = %_ZN2v88internal7Iso
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZN2v88internal7Isolate22regexp_last_match_infoEv.exit.i
-  %i.ad = lshr i32 %5, 1
+  %i.ad = lshr i32 %3, 1
   %i.ae = add nsw i32 %i.ad, -1
   %i.af = tail call ptr @_ZN2v88internal11RegExpUtils20GenericCaptureGetterEPNS0_7IsolateENS0_12DirectHandleINS0_15RegExpMatchInfoEEEiPb(ptr noundef nonnull %2, ptr nonnull %.0.i.i.i.i, i32 noundef %i.ae, ptr noundef null) #11
   br label %bb.e

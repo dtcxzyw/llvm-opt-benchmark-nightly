@@ -201,20 +201,18 @@ _ZN2v88internal13IsLoadHandlerENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v
   br i1 %i.ap, label %bb.f, label %_ZN2v88internal13IsLoadHandlerENS0_6TaggedINS0_6ObjectEEE.exit.thread
 
 bb.f:                                             ; preds = %_ZN2v88internal13IsLoadHandlerENS0_6TaggedINS0_6ObjectEEE.exit
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  %4 = load i64, ptr %i.aq, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32                    ; 3 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 12
+  %4 = load i32, ptr %i.aq, align 4               ; 3 uses
   %i.ar = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.4, i64 noundef 53) #7 ; 0 uses
-  %i.as = and i32 %6, 16
+  %i.as = and i32 %4, 16
   %i.at = icmp ne i32 %i.as, 0
   %i.au = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIbEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, i1 noundef zeroext %i.at) #7 ; 2 uses
   %i.av = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.au, ptr noundef nonnull @.str.5, i64 noundef 34) #7 ; 0 uses
-  %i.aw = and i32 %6, 32
+  %i.aw = and i32 %4, 32
   %i.ax = icmp ne i32 %i.aw, 0
   %i.ay = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIbEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %i.au, i1 noundef zeroext %i.ax) #7
   %i.az = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.ay, ptr noundef nonnull @.str.6, i64 noundef 2) #7 ; 0 uses
-  tail call fastcc void @_ZN2v88internal12_GLOBAL__N_119PrintSmiLoadHandlerEiRSo(i32 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %1)
+  tail call fastcc void @_ZN2v88internal12_GLOBAL__N_119PrintSmiLoadHandlerEiRSo(i32 noundef %4, ptr noundef nonnull align 8 dereferenceable(8) %1)
   %i.ba = load atomic volatile i64, ptr %i.h monotonic, align 8
   %i.bb = add i64 %i.ba, 7
   %i.bc = inttoptr i64 %i.bb to ptr

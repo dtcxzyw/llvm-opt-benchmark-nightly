@@ -87,9 +87,11 @@ bb.a:
   br i1 %i.j, label %bb.b, label %bb.o, !prof !11
 
 bb.b:                                             ; preds = %bb.a
-  %i.k = load i32, ptr %i.e, align 4              ; 4 uses
+  %i.k = load i32, ptr %i.e, align 4              ; 3 uses
   %i.l = and i32 %i.k, 16777216
   %i.m = icmp eq i32 %i.l, 0
+  %3 = lshr i32 %i.k, 24
+  %4 = trunc nuw i32 %3 to i8                     ; 2 uses
   %i.n = icmp ugt i32 %i.k, 150994943             ; 2 uses
   br i1 %i.m, label %bb.c, label %bb.i
 
@@ -102,10 +104,9 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZNK6hermes2vm15StringPrimitive18castToASCIIPointerEv.exit.i
 
 bb.e:                                             ; preds = %bb.c
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.k, 234881024
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i, label %bb.h [
-    i32 134217728, label %bb.f
-    i32 67108864, label %bb.g
+  switch i8 %4, label %bb.h [
+    i8 8, label %bb.f
+    i8 4, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -142,10 +143,9 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK6hermes2vm15StringPrimitive18castToUTF16PointerEv.exit.i
 
 bb.k:                                             ; preds = %bb.i
-  %.mask.i.i.i.i.i.i.i.i3.i = and i32 %i.k, 251658240
-  switch i32 %.mask.i.i.i.i.i.i.i.i3.i, label %bb.n [
-    i32 117440512, label %bb.l
-    i32 50331648, label %bb.m
+  switch i8 %4, label %bb.n [
+    i8 7, label %bb.l
+    i8 3, label %bb.m
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -548,9 +548,11 @@ _ZN6hermes2vm13MutableHandleINS0_15StringPrimitiveEEC2ERNS0_15HandleRootOwnerEPS
   %.sroa.0.0.copyload.i.i44 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !19
   %i.bc = and i64 %.sroa.0.0.copyload.i.i44, 281474976710655
   %i.bd = inttoptr i64 %i.bc to ptr               ; 17 uses
-  %i.be = load i32, ptr %i.bd, align 4            ; 6 uses
+  %i.be = load i32, ptr %i.bd, align 4            ; 3 uses
   %i.bf = and i32 %i.be, 16777216
   %i.bg = icmp eq i32 %i.bf, 0                    ; 2 uses
+  %2 = lshr i32 %i.be, 24
+  %3 = trunc nuw i32 %2 to i8                     ; 4 uses
   %i.bh = icmp ugt i32 %i.be, 150994943           ; 4 uses
   br i1 %i.bg, label %bb.l, label %bb.r
 
@@ -563,10 +565,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNK6hermes2vm15StringPrimitive18castToASCIIPointerEv.exit.i
 
 bb.n:                                             ; preds = %bb.l
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.be, 234881024
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i, label %bb.q [
-    i32 134217728, label %bb.o
-    i32 67108864, label %bb.p
+  switch i8 %3, label %bb.q [
+    i8 8, label %bb.o
+    i8 4, label %bb.p
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -603,10 +604,9 @@ bb.s:                                             ; preds = %bb.r
   br label %_ZNK6hermes2vm15StringPrimitive18castToUTF16PointerEv.exit.i
 
 bb.t:                                             ; preds = %bb.r
-  %.mask.i.i.i.i.i.i.i.i3.i = and i32 %i.be, 251658240
-  switch i32 %.mask.i.i.i.i.i.i.i.i3.i, label %bb.w [
-    i32 117440512, label %bb.u
-    i32 50331648, label %bb.v
+  switch i8 %3, label %bb.w [
+    i8 7, label %bb.u
+    i8 3, label %bb.v
   ]
 
 bb.u:                                             ; preds = %bb.t
@@ -664,10 +664,9 @@ bb.ab:                                            ; preds = %bb.aa
   br label %_ZNK6hermes2vm15StringPrimitive18castToASCIIPointerEv.exit.i53
 
 bb.ac:                                            ; preds = %bb.aa
-  %.mask.i.i.i.i.i.i.i.i.i52 = and i32 %i.be, 234881024
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i52, label %bb.af [
-    i32 134217728, label %bb.ad
-    i32 67108864, label %bb.ae
+  switch i8 %3, label %bb.af [
+    i8 8, label %bb.ad
+    i8 4, label %bb.ae
   ]
 
 bb.ad:                                            ; preds = %bb.ac
@@ -704,10 +703,9 @@ bb.ah:                                            ; preds = %bb.ag
   br label %_ZNK6hermes2vm15StringPrimitive18castToUTF16PointerEv.exit.i48
 
 bb.ai:                                            ; preds = %bb.ag
-  %.mask.i.i.i.i.i.i.i.i3.i47 = and i32 %i.be, 251658240
-  switch i32 %.mask.i.i.i.i.i.i.i.i3.i47, label %bb.al [
-    i32 117440512, label %bb.aj
-    i32 50331648, label %bb.ak
+  switch i8 %3, label %bb.al [
+    i8 7, label %bb.aj
+    i8 3, label %bb.ak
   ]
 
 bb.aj:                                            ; preds = %bb.ai

@@ -201,9 +201,9 @@ bb.c:                                             ; preds = %bb.b
   %i.k = add i64 %i.j, -1
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %1 = load i64, ptr %i.n, align 8
-  %2 = ashr i64 %1, 32
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %1 = load i32, ptr %i.n, align 4
+  %2 = sext i32 %1 to i64
   %i.o = getelementptr inbounds i8, ptr %i.m, i64 %2
   br label %_ZNK2v88internal12_GLOBAL__N_17CodeOps14relocation_endEv.exit
 
@@ -276,10 +276,8 @@ bb.c:                                             ; preds = %bb.b
   %i.j = load i64, ptr %i.i, align 8
   %i.k = add i64 %i.j, -1
   %i.l = inttoptr i64 %i.k to ptr
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %1 = load i64, ptr %i.m, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 12
+  %1 = load i32, ptr %i.m, align 4
   br label %_ZNK2v88internal12_GLOBAL__N_17CodeOps15relocation_sizeEv.exit
 
 bb.d:                                             ; preds = %bb.a
@@ -306,7 +304,7 @@ bb.g:                                             ; preds = %bb.a
   unreachable
 
 _ZNK2v88internal12_GLOBAL__N_17CodeOps15relocation_sizeEv.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.f
-  %.0 = phi i32 [ %.val2.val, %bb.f ], [ 0, %bb.b ], [ %3, %bb.c ], [ %i.q, %bb.d ]
+  %.0 = phi i32 [ %.val2.val, %bb.f ], [ 0, %bb.b ], [ %1, %bb.c ], [ %i.q, %bb.d ]
   ret i32 %.0
 }
 

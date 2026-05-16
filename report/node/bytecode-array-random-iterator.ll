@@ -25,15 +25,14 @@ bb.a:
   %i.c = load i64, ptr %1, align 8
   %i.d = add i64 %i.c, 7
   %i.e = inttoptr i64 %i.d to ptr
-  %3 = load i64, ptr %i.e, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32                    ; 2 uses
-  %.off = add i32 %5, 1
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %3 = load i32, ptr %.shift.i, align 4           ; 2 uses
+  %.off = add i32 %3, 1
   %.not.i.i.not = icmp ult i32 %.off, 3
   br i1 %.not.i.i.not, label %_ZN2v88internal10ZoneVectorIiE7reserveEm.exit, label %bb.b, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = sdiv i32 %5, 2
+  %i.f = sdiv i32 %3, 2
   %i.g = sext i32 %i.f to i64
   tail call preserve_mostcc void @_ZN2v88internal10ZoneVectorIiE4GrowEm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef %i.g)
   br label %_ZN2v88internal10ZoneVectorIiE7reserveEm.exit

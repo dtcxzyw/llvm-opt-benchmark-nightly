@@ -201,11 +201,9 @@ bb.a:
   br i1 %i.c, label %bb.b, label %_ZNK5folly7TcpInfo26deliveryRateBytesPerSecondEv.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 6
-  %2 = load i16, ptr %i.d, align 2
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
-  %i.e = and i8 %4, 1
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %2 = load i8, ptr %i.d, align 1
+  %i.e = and i8 %2, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 %i.e, ptr %0, align 1, !tbaa !2888
   store i8 1, ptr %i.f, align 1, !tbaa !2889

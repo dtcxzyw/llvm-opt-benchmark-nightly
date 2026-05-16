@@ -201,14 +201,12 @@ bb.h:                                             ; preds = %_ZN2v88internal12St
   %i.bh = load i64, ptr %i.bg, align 8
   %i.bi = add i64 %i.bh, -1
   %i.bj = inttoptr i64 %i.bi to ptr
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  %2 = load i64, ptr %i.bk, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 12
+  %2 = load i32, ptr %i.bk, align 4
   br label %_ZNK2v88internal4Code15relocation_sizeEv.exit
 
 _ZNK2v88internal4Code15relocation_sizeEv.exit:    ; preds = %_ZN2v88internal12StatsCounter9IncrementEi.exit, %bb.h
-  %i.bl = phi i32 [ %4, %bb.h ], [ 0, %_ZN2v88internal12StatsCounter9IncrementEi.exit ]
+  %i.bl = phi i32 [ %2, %bb.h ], [ 0, %_ZN2v88internal12StatsCounter9IncrementEi.exit ]
   %i.bm = getelementptr inbounds nuw i8, ptr %i.am, i64 8352
   %i.bn = load atomic ptr, ptr %i.bm acquire, align 8 ; 2 uses
   %.not.i.i17 = icmp eq ptr %i.bn, null

@@ -111,9 +111,10 @@ bb.a:
   %6 = alloca %struct.RedisModuleKeyOptCtx, align 8 ; 7 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
-  %7 = load i64, ptr %0, align 8                  ; 3 uses
-  %8 = and i64 %7, 4294967296
-  %.not = icmp eq i64 %8, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %7 = load i32, ptr %.shift, align 4             ; 3 uses
+  %8 = and i32 %7, 1
+  %.not = icmp eq i32 %8, 0
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -134,19 +135,18 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub nsw i64 8, %i.j
   %i.l = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.k
   store i64 %i.c, ptr %i.l, align 8, !tbaa !22
-  %.pre.pre = load i64, ptr %0, align 8
+  %.pre.pre = load i32, ptr %.shift, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.pre = phi i64 [ %.pre.pre, %bb.c ], [ %7, %bb.b ]
+  %.pre = phi i32 [ %.pre.pre, %bb.c ], [ %7, %bb.b ]
   %i.m = getelementptr inbounds i8, ptr %0, i64 -16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.a
-  %9 = phi i64 [ %.pre, %bb.d ], [ %7, %bb.a ]
+  %9 = phi i32 [ %.pre, %bb.d ], [ %7, %bb.a ]
   %.023 = phi ptr [ %i.m, %bb.d ], [ %i.b, %bb.a ]
-  %sum.shift = lshr i64 %9, 33
-  %10 = trunc nuw nsw i64 %sum.shift to i32
+  %10 = lshr i32 %9, 1
   %i.n = and i32 %10, 127                         ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.q, label %bb.f, !prof !27
@@ -272,9 +272,10 @@ bb.a:
   %5 = alloca %struct.RedisModuleKeyOptCtx, align 8 ; 7 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds i8, ptr %1, i64 -8 ; 2 uses
-  %6 = load i64, ptr %1, align 8                  ; 3 uses
-  %7 = and i64 %6, 4294967296
-  %.not = icmp eq i64 %7, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  %6 = load i32, ptr %.shift, align 4             ; 3 uses
+  %7 = and i32 %6, 1
+  %.not = icmp eq i32 %7, 0
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -295,19 +296,18 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub nsw i64 8, %i.j
   %i.l = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.k
   store i64 %i.c, ptr %i.l, align 8, !tbaa !22
-  %.pre.pre = load i64, ptr %1, align 8
+  %.pre.pre = load i32, ptr %.shift, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.pre = phi i64 [ %.pre.pre, %bb.c ], [ %6, %bb.b ]
+  %.pre = phi i32 [ %.pre.pre, %bb.c ], [ %6, %bb.b ]
   %i.m = getelementptr inbounds i8, ptr %1, i64 -16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.a
-  %8 = phi i64 [ %.pre, %bb.d ], [ %6, %bb.a ]
+  %8 = phi i32 [ %.pre, %bb.d ], [ %6, %bb.a ]
   %.028 = phi ptr [ %i.m, %bb.d ], [ %i.b, %bb.a ]
-  %sum.shift = lshr i64 %8, 33
-  %9 = trunc nuw nsw i64 %sum.shift to i32
+  %9 = lshr i32 %8, 1
   %i.n = and i32 %9, 127                          ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.r, label %bb.f, !prof !27
@@ -424,9 +424,10 @@ bb.a:
   %5 = alloca %struct.RedisModuleKeyOptCtx, align 8 ; 7 uses
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
-  %6 = load i64, ptr %0, align 8                  ; 3 uses
-  %7 = and i64 %6, 4294967296
-  %.not = icmp eq i64 %7, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %6 = load i32, ptr %.shift, align 4             ; 3 uses
+  %7 = and i32 %6, 1
+  %.not = icmp eq i32 %7, 0
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -447,19 +448,18 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub nsw i64 8, %i.j
   %i.l = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.k
   store i64 %i.c, ptr %i.l, align 8, !tbaa !22
-  %.pre.pre = load i64, ptr %0, align 8
+  %.pre.pre = load i32, ptr %.shift, align 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.pre = phi i64 [ %.pre.pre, %bb.c ], [ %6, %bb.b ]
+  %.pre = phi i32 [ %.pre.pre, %bb.c ], [ %6, %bb.b ]
   %i.m = getelementptr inbounds i8, ptr %0, i64 -16
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.a
-  %8 = phi i64 [ %.pre, %bb.d ], [ %6, %bb.a ]
+  %8 = phi i32 [ %.pre, %bb.d ], [ %6, %bb.a ]
   %.025 = phi ptr [ %i.m, %bb.d ], [ %i.b, %bb.a ]
-  %sum.shift = lshr i64 %8, 33
-  %9 = trunc nuw nsw i64 %sum.shift to i32
+  %9 = lshr i32 %8, 1
   %i.n = and i32 %9, 127                          ; 2 uses
   %i.o = icmp eq i32 %i.n, 0
   br i1 %i.o, label %bb.q, label %bb.f, !prof !27
@@ -564,13 +564,13 @@ bb.q:                                             ; preds = %bb.e, %bb.p
 define dso_local void @keyMetaOnUnlink(ptr noundef readonly captures(address_is_null) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #4 {
 bb.a:
   %3 = alloca %struct.RedisModuleKeyOptCtx, align 8 ; 7 uses
-  %4 = load i64, ptr %2, align 8                  ; 2 uses
-  %5 = and i64 %4, 4294967296
-  %.not = icmp eq i64 %5, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %4 = load i32, ptr %.shift, align 4             ; 2 uses
+  %5 = and i32 %4, 1
+  %.not = icmp eq i32 %5, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %2, i64 %spec.select.v
-  %sum.shift = lshr i64 %4, 33
-  %6 = trunc nuw nsw i64 %sum.shift to i32
+  %6 = lshr i32 %4, 1
   %i.a = and i32 %6, 127                          ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %bb.n, label %bb.b, !prof !27
@@ -655,16 +655,16 @@ bb.n:                                             ; preds = %bb.a, %bb.m
 ; Function Attrs: nounwind uwtable
 define dso_local void @keyMetaOnFree(ptr noundef %0) local_unnamed_addr #4 {
 bb.a:
-  %1 = load i64, ptr %0, align 8                  ; 2 uses
-  %sum.shift = lshr i64 %1, 33
-  %2 = trunc nuw nsw i64 %sum.shift to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = load i32, ptr %.shift, align 4             ; 2 uses
+  %2 = lshr i32 %1, 1
   %i.a = and i32 %2, 127                          ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %.loopexit, label %bb.b, !prof !27
 
 bb.b:                                             ; preds = %bb.a
-  %3 = and i64 %1, 4294967296
-  %.not = icmp eq i64 %3, 0
+  %3 = and i32 %1, 1
+  %.not = icmp eq i32 %3, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v
   %i.c = tail call ptr @kvobjGetKey(ptr noundef nonnull %0) #16
@@ -1067,16 +1067,15 @@ bb.a:
   %4 = alloca %struct._rio, align 8               ; 8 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %5 = alloca %struct.RedisModuleIO, align 8      ; 12 uses
-  %6 = load i64, ptr %2, align 8
-  %7 = lshr i64 %6, 32
-  %8 = trunc nuw i64 %7 to i32                    ; 2 uses
-  %i.b = lshr i32 %8, 1
+  %.shift = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %6 = load i32, ptr %.shift, align 4             ; 2 uses
+  %i.b = lshr i32 %6, 1
   %i.c = and i32 %i.b, 127                        ; 2 uses
   %i.d = icmp eq i32 %i.c, 0
   br i1 %i.d, label %bb.v, label %bb.b, !prof !27
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = and i32 %8, 1
+  %i.e = and i32 %6, 1
   %.not = icmp eq i32 %i.e, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %2, i64 %spec.select.v
@@ -1151,7 +1150,7 @@ bb.i:                                             ; preds = %bb.h
   store ptr null, ptr %i.m, align 8, !tbaa !101
   store ptr null, ptr %i.n, align 8, !tbaa !102
   %i.ag = load ptr, ptr %i.x, align 8, !tbaa !105
-  call void %i.ag(ptr noundef nonnull %5, ptr noundef nonnull %2, ptr noundef nonnull %.138) #16
+  call void %i.ag(ptr noundef nonnull %5, ptr noundef %2, ptr noundef nonnull %.138) #16
   %i.ah = load ptr, ptr %i.m, align 8, !tbaa !101 ; 2 uses
   %.not54 = icmp eq ptr %i.ah, null
   br i1 %.not54, label %bb.k, label %bb.j
@@ -1314,16 +1313,16 @@ declare i32 @rdbSaveType(ptr noundef, i8 noundef zeroext) local_unnamed_addr #6
 define dso_local range(i32 0, 2) i32 @keyMetaOnAof(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #4 {
 bb.a:
   %4 = alloca %struct.RedisModuleIO, align 8      ; 11 uses
-  %5 = load i64, ptr %2, align 8                  ; 2 uses
-  %sum.shift = lshr i64 %5, 33
-  %6 = trunc nuw nsw i64 %sum.shift to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %5 = load i32, ptr %.shift, align 4             ; 2 uses
+  %6 = lshr i32 %5, 1
   %i.a = and i32 %6, 127                          ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %.loopexit, label %.preheader, !prof !27
 
 .preheader:                                       ; preds = %bb.a
-  %7 = and i64 %5, 4294967296
-  %.not = icmp eq i64 %7, 0
+  %7 = and i32 %5, 1
+  %.not = icmp eq i32 %7, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %2, i64 %spec.select.v
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -1379,7 +1378,7 @@ bb.g:                                             ; preds = %bb.f
   store i32 %3, ptr %i.g, align 8, !tbaa !100
   store ptr null, ptr %i.h, align 8, !tbaa !101
   store ptr null, ptr %i.i, align 8, !tbaa !102
-  call void %i.s(ptr noundef nonnull %4, ptr noundef nonnull %2, i64 noundef %i.o) #16
+  call void %i.s(ptr noundef nonnull %4, ptr noundef %2, i64 noundef %i.o) #16
   %i.u = load ptr, ptr %i.h, align 8, !tbaa !101  ; 2 uses
   %.not40 = icmp eq ptr %i.u, null
   br i1 %.not40, label %bb.i, label %bb.h
@@ -1415,25 +1414,25 @@ bb.j:                                             ; preds = %.thread, %bb.b
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @keyMetaTransition(ptr noundef captures(none) %0, ptr noundef captures(none) %1) local_unnamed_addr #11 {
 bb.a:
-  %2 = load i64, ptr %0, align 8                  ; 2 uses
-  %sum.shift = lshr i64 %2, 33
-  %3 = trunc nuw nsw i64 %sum.shift to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %2 = load i32, ptr %.shift, align 4             ; 2 uses
+  %3 = lshr i32 %2, 1
   %i.a = and i32 %3, 127                          ; 2 uses
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %.loopexit, label %bb.b, !prof !27
 
 bb.b:                                             ; preds = %bb.a
-  %4 = load i64, ptr %1, align 8                  ; 2 uses
-  %5 = and i64 %4, 4294967296
-  %.not29 = icmp eq i64 %5, 0
+  %.shift29 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = load i32, ptr %.shift29, align 4           ; 2 uses
+  %5 = and i32 %4, 1
+  %.not29 = icmp eq i32 %5, 0
   %.023.v = select i1 %.not29, i64 -8, i64 -16
   %.023 = getelementptr inbounds i8, ptr %1, i64 %.023.v
-  %6 = and i64 %2, 4294967296
-  %.not = icmp eq i64 %6, 0
+  %6 = and i32 %2, 1
+  %.not = icmp eq i32 %6, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v
-  %sum.shift30 = lshr i64 %4, 33
-  %7 = trunc nuw nsw i64 %sum.shift30 to i32
+  %7 = lshr i32 %4, 1
   %i.c = and i32 %7, 127
   br label %bb.c
 
@@ -1699,11 +1698,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.v
 
 bb.d:                                             ; preds = %bb.c
-  %4 = load i64, ptr %1, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  %4 = load i32, ptr %.shift, align 4
   %i.i = shl nuw nsw i32 1, %2                    ; 2 uses
-  %i.j = and i32 %i.i, %6
+  %i.j = and i32 %4, %i.i
   %.not53 = icmp eq i32 %i.j, 0
   br i1 %.not53, label %bb.f, label %bb.e
 
@@ -1771,10 +1769,8 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %.0 = phi i64 [ %i.aa, %bb.n ], [ 0, %bb.m ]
-  %7 = load i64, ptr %1, align 8
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
-  %i.ab = and i32 %9, 255
+  %5 = load i32, ptr %.shift, align 4
+  %i.ab = and i32 %5, 255
   %i.ac = or i32 %i.ab, %i.i
   %i.ad = tail call ptr @kvobjSet(ptr noundef %i.l, ptr noundef nonnull %1, i32 noundef %i.ac) #16 ; 8 uses
   %i.ae = load ptr, ptr %0, align 8, !tbaa !118
@@ -1862,11 +1858,10 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
-  %3 = load i64, ptr %1, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %3 = load i32, ptr %.shift, align 4
   %i.g = shl nuw nsw i32 1, %0
-  %i.h = and i32 %i.g, %5
+  %i.h = and i32 %3, %i.g
   %.not9 = icmp eq i32 %i.h, 0
   br i1 %.not9, label %bb.f, label %bb.e
 
@@ -1884,13 +1879,13 @@ bb.f:                                             ; preds = %bb.d, %bb.c, %bb.e
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @keyMetaResetModuleValues(ptr noundef captures(none) %0) local_unnamed_addr #11 {
 bb.a:
-  %1 = load i64, ptr %0, align 8                  ; 2 uses
-  %2 = and i64 %1, 4294967296
-  %.not = icmp eq i64 %2, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = load i32, ptr %.shift, align 4             ; 2 uses
+  %2 = and i32 %1, 1
+  %.not = icmp eq i32 %2, 0
   %spec.select.v = select i1 %.not, i64 -8, i64 -16
   %spec.select = getelementptr inbounds i8, ptr %0, i64 %spec.select.v
-  %sum.shift = lshr i64 %1, 33
-  %3 = trunc nuw nsw i64 %sum.shift to i32
+  %3 = lshr i32 %1, 1
   %i.a = and i32 %3, 127
   br label %bb.b
 

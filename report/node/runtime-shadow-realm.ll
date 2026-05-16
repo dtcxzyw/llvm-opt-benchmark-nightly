@@ -116,16 +116,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %4 = load i64, ptr %1, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = load i32, ptr %.shift, align 4
   %i.h = ptrtoint ptr %1 to i64
   %i.i = add i64 %i.h, -8
   %i.j = inttoptr i64 %i.i to ptr                 ; 2 uses
   %i.k = tail call ptr @_ZN2v88internal6Object21NoSideEffectsToStringEPNS0_7IsolateENS0_12DirectHandleIS1_EE(ptr noundef nonnull %2, ptr %i.j) #5
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
   store ptr %i.k, ptr %3, align 8
-  %i.l = call ptr @_ZN2v88internal7Factory27ShadowRealmNewTypeErrorCopyENS0_12DirectHandleINS0_6ObjectEEENS0_15MessageTemplateENS_4base6VectorIKS4_EE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr %i.j, i32 noundef %6, ptr nonnull %3, i64 1) #5
+  %i.l = call ptr @_ZN2v88internal7Factory27ShadowRealmNewTypeErrorCopyENS0_12DirectHandleINS0_6ObjectEEENS0_15MessageTemplateENS_4base6VectorIKS4_EE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr %i.j, i32 noundef %4, ptr nonnull %3, i64 1) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
   %i.m = load i64, ptr %i.l, align 8
   %i.n = call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %2, i64 %i.m, ptr noundef null) #5

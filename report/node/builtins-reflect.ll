@@ -201,11 +201,9 @@ _ZNK2v88internal11MaybeHandleINS0_10FixedArrayEE8ToHandleIS2_EEbPNS0_12DirectHan
   %i.ad = load i64, ptr %i.aa, align 8
   %i.ae = add i64 %i.ad, -1
   %i.af = inttoptr i64 %i.ae to ptr
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 8
-  %4 = load i64, ptr %i.ag, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.ah = tail call ptr @_ZN2v88internal7Factory22NewJSArrayWithElementsENS0_12DirectHandleINS0_14FixedArrayBaseEEENS0_12ElementsKindEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull %i.aa, i8 noundef zeroext 3, i32 noundef %6, i8 noundef zeroext 0) #10
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 12
+  %4 = load i32, ptr %i.ag, align 4
+  %i.ah = tail call ptr @_ZN2v88internal7Factory22NewJSArrayWithElementsENS0_12DirectHandleINS0_14FixedArrayBaseEEENS0_12ElementsKindEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr nonnull %i.aa, i8 noundef zeroext 3, i32 noundef %4, i8 noundef zeroext 0) #10
   %i.ai = load i64, ptr %i.ah, align 8
   br label %bb.e
 

@@ -201,15 +201,13 @@ _ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   store i64 %i.bz, ptr %.0.i.i42, align 8
   %i.ch = add i64 %i.bz, -1
   %i.ci = inttoptr i64 %i.ch to ptr
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
-  %2 = load i64, ptr %i.cj, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32                    ; 2 uses
-  %i.ck = icmp sgt i32 %4, 0
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 12
+  %2 = load i32, ptr %i.cj, align 4               ; 2 uses
+  %i.ck = icmp sgt i32 %2, 0
   br i1 %i.ck, label %.lr.ph59.preheader, label %_ZN2v88internal21CodeKindCanDeoptimizeENS0_8CodeKindE.exit.thread
 
 .lr.ph59.preheader:                               ; preds = %_ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
-  %i.cl = tail call i32 @llvm.umin.i32(i32 %i.f, i32 %4)
+  %i.cl = tail call i32 @llvm.umin.i32(i32 %2, i32 %i.f)
   %wide.trip.count64 = zext nneg i32 %i.cl to i64
   br label %.lr.ph59
 

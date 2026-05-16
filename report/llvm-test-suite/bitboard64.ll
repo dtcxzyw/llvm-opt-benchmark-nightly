@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %2 = load i32, ptr %0, align 4, !tbaa !8
-  %3 = lshr i32 %2, 16
-  %i.j = trunc i32 %3 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %2 = load i16, ptr %.shift, align 2, !tbaa !8
+  %i.j = trunc i16 %2 to i8
   store i8 %i.j, ptr %i.a, align 1, !tbaa !11
   %i.k = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 1, ptr noundef %1)
   %.not.2 = icmp eq i64 %i.k, 1
@@ -212,17 +212,16 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %4 = load i32, ptr %0, align 4, !tbaa !8
-  %5 = lshr i32 %4, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.a, align 1, !tbaa !11
+  %.shift29 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %3 = load i8, ptr %.shift29, align 1, !tbaa !8
+  store i8 %3, ptr %i.a, align 1, !tbaa !11
   %i.l = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 1, ptr noundef %1)
   %.not.3 = icmp eq i64 %i.l, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br i1 %.not.3, label %.preheader, label %.thread
 
 .preheader:                                       ; preds = %bb.d
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.n = load i32, ptr %i.m, align 4, !tbaa !10
   %i.o = trunc i32 %i.n to i8
@@ -245,9 +244,9 @@ bb.e:                                             ; preds = %.preheader
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  %7 = load i32, ptr %i.m, align 4, !tbaa !10
-  %8 = lshr i32 %7, 16
-  %i.u = trunc i32 %8 to i8
+  %.shift30 = getelementptr inbounds nuw i8, ptr %0, i64 6
+  %4 = load i16, ptr %.shift30, align 2, !tbaa !10
+  %i.u = trunc i16 %4 to i8
   store i8 %i.u, ptr %i.b, align 1, !tbaa !11
   %i.v = call i64 @fwrite(ptr noundef nonnull %i.b, i64 noundef 1, i64 noundef 1, ptr noundef %1)
   %.not20.2 = icmp eq i64 %i.v, 1
@@ -256,10 +255,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  %9 = load i32, ptr %i.m, align 4, !tbaa !10
-  %10 = lshr i32 %9, 24
-  %11 = trunc nuw i32 %10 to i8
-  store i8 %11, ptr %i.b, align 1, !tbaa !11
+  %.shift31 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %5 = load i8, ptr %.shift31, align 1, !tbaa !10
+  store i8 %5, ptr %i.b, align 1, !tbaa !11
   %i.w = call i64 @fwrite(ptr noundef nonnull %i.b, i64 noundef 1, i64 noundef 1, ptr noundef %1)
   %.not20.3 = icmp ne i64 %i.w, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9

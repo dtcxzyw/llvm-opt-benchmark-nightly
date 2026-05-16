@@ -201,10 +201,9 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.fk = add i64 %i.k, 7
   %i.fl = inttoptr i64 %i.fk to ptr
-  %15 = load i64, ptr %i.fl, align 8
-  %16 = lshr i64 %15, 32
-  %17 = trunc nuw i64 %16 to i32                  ; 2 uses
-  %i.fm = icmp slt i32 %17, 1
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.fl, i64 4
+  %15 = load i32, ptr %.shift.i, align 4          ; 2 uses
+  %i.fm = icmp slt i32 %15, 1
   br i1 %i.fm, label %.critedge, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -232,7 +231,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a
   %.sroa.09.0.copyload = load ptr, ptr %i.fx, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 632
   %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8
-  tail call void @_ZN2v88internal17ContextSerializer33SerializeObjectWithEmbedderFieldsINS0_17EmbedderDataArrayEPFNS_11StartupDataEibNS_28SerializeContextDataCallbackENS_5LocalINS_7ContextEEEES5_S8_EEvNS0_6HandleIT_EEiT0_T1_T2_(ptr noundef nonnull align 8 dereferenceable(720) %0, ptr nonnull %1, i32 noundef %17, ptr noundef nonnull @_ZN2v88internal27ContextDataSerializeWrapperEibNS_28SerializeContextDataCallbackENS_5LocalINS_7ContextEEE, ptr %.sroa.09.0.copyload, ptr %.sroa.4.0.copyload, i64 %i.fu)
+  tail call void @_ZN2v88internal17ContextSerializer33SerializeObjectWithEmbedderFieldsINS0_17EmbedderDataArrayEPFNS_11StartupDataEibNS_28SerializeContextDataCallbackENS_5LocalINS_7ContextEEEES5_S8_EEvNS0_6HandleIT_EEiT0_T1_T2_(ptr noundef nonnull align 8 dereferenceable(720) %0, ptr nonnull %1, i32 noundef %15, ptr noundef nonnull @_ZN2v88internal27ContextDataSerializeWrapperEibNS_28SerializeContextDataCallbackENS_5LocalINS_7ContextEEE, ptr %.sroa.09.0.copyload, ptr %.sroa.4.0.copyload, i64 %i.fu)
   br label %.thread
 
 .critedge:                                        ; preds = %_ZNSt14_Optional_baseISt8functionIFvN2v88internal6TaggedINS2_10HeapObjectEEENS2_14FullObjectSlotES5_EELb0ELb0EED2Ev.exit, %bb.ac, %_ZNK2v88internal18SharedFunctionInfo15HasBaselineCodeEv.exit.thread, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.thread, %bb.af, %bb.ae, %bb.ad, %bb.q

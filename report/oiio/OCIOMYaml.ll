@@ -201,11 +201,9 @@ bb.g:                                             ; preds = %_ZStlsISt11char_tra
 bb.h:                                             ; preds = %bb.g
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !52
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !55
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %.sroa.04.0.copyload.i = load i64, ptr %i.m, align 4
-  %7 = lshr i64 %.sroa.04.0.copyload.i, 32
-  %8 = trunc nuw i64 %7 to i32
-  %i.n = add nsw i32 %8, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %.sroa.04.0.copyload.i35 = load i32, ptr %i.m, align 4
+  %i.n = add nsw i32 %.sroa.04.0.copyload.i35, 1
   br label %_ZNK4YAML4Node4MarkEv.exit
 
 _ZNK4YAML4Node4MarkEv.exit:                       ; preds = %bb.h, %bb.g

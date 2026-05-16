@@ -201,6 +201,7 @@ _ZN6hermes3hbc18BytecodeSerializer3padEj.exit:    ; preds = %_ZN6hermes3hbc18Byt
 .lr.ph:                                           ; preds = %_ZN6hermes3hbc18BytecodeSerializer3padEj.exit
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 64
+  %.shift.i = getelementptr inbounds nuw i8, ptr %1, i64 3
   br label %bb.d
 
 ._crit_edge:                                      ; preds = %_ZN6hermes3hbc18BytecodeSerializer11writeBinaryINS0_21SmallStringTableEntryEEEvRKT_.exit, %_ZN6hermes3hbc18BytecodeSerializer3padEj.exit
@@ -242,6 +243,8 @@ _ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit: ; preds 
   store i32 %storemerge.i, ptr %1, align 4
   %i.au = load i8, ptr %i.ad, align 8, !tbaa !105, !range !106, !noundef !107
   %i.av = trunc nuw i8 %i.au to i1
+  %2 = lshr i32 %storemerge.i, 24
+  %3 = trunc nuw i32 %2 to i8
   br i1 %i.av, label %_ZN6hermes3hbc18BytecodeSerializer11writeBinaryINS0_21SmallStringTableEntryEEEvRKT_.exit, label %bb.g
 
 bb.g:                                             ; preds = %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit
@@ -249,16 +252,16 @@ bb.g:                                             ; preds = %_ZN6hermes3hbc21Sma
   %i.aw = load ptr, ptr %0, align 8, !tbaa !108, !nonnull !107, !align !109
   %i.ax = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %i.aw, ptr noundef nonnull align 1 dereferenceable(4) %1, i64 noundef 4) #12 ; 0 uses
   %.pre = load i64, ptr %i.b, align 8, !tbaa !110
-  %.pre18 = load i32, ptr %1, align 4
+  %.pre18 = load i8, ptr %.shift.i, align 1
   br label %_ZN6hermes3hbc18BytecodeSerializer11writeBinaryINS0_21SmallStringTableEntryEEEvRKT_.exit
 
 _ZN6hermes3hbc18BytecodeSerializer11writeBinaryINS0_21SmallStringTableEntryEEEvRKT_.exit: ; preds = %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit, %bb.g
-  %2 = phi i32 [ %storemerge.i, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit ], [ %.pre18, %bb.g ]
+  %4 = phi i8 [ %3, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit ], [ %.pre18, %bb.g ]
   %i.ay = phi i64 [ %i.ag, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit ], [ %.pre, %bb.g ]
   %i.az = add i64 %i.ay, 4                        ; 2 uses
   store i64 %i.az, ptr %i.b, align 8, !tbaa !110
-  %3 = icmp ugt i32 %2, -16777217
-  %i.ba = zext i1 %3 to i32
+  %5 = icmp eq i8 %4, -1
+  %i.ba = zext i1 %5 to i32
   %i.bb = add i32 %.015, %i.ba                    ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
   %i.bc = getelementptr inbounds nuw i8, ptr %.01014, i64 8 ; 2 uses
@@ -378,21 +381,17 @@ _ZN4llvh11SmallVectorIN6hermes3hbc24OverflowStringTableEntryELj64EED2Ev.exit: ; 
   %.022 = phi ptr [ %i.bi, %bb.g ], [ %i.ac, %_ZN6hermes3hbc18BytecodeSerializer3padEj.exit ] ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.022, i64 4
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !179 ; 2 uses
-  %i.ax = load i32, ptr %.022, align 4, !tbaa !181 ; 3 uses
-  %2 = icmp ult i32 %i.ax, 8388608
-  %i.ay = and i32 %i.aw, 2147483647               ; 2 uses
-  %3 = icmp samesign ult i32 %i.ay, 255
-  %or.cond = select i1 %2, i1 %3, i1 false
-  br i1 %or.cond, label %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit, label %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit.thread
+  %i.ax = load i32, ptr %.022, align 4, !tbaa !181 ; 2 uses
+  %2 = icmp ugt i32 %i.ax, 8388607
+  %3 = and i32 %i.aw, 2147483647                  ; 2 uses
+  %4 = icmp samesign ugt i32 %3, 254
+  %i.ay = and i32 %i.aw, 255
+  %5 = icmp eq i32 %i.ay, 255
+  %6 = or i1 %4, %5
+  %or.cond = select i1 %2, i1 true, i1 %6
+  br i1 %or.cond, label %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit.thread, label %bb.g
 
-_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit: ; preds = %.lr.ph
-  %4 = shl nuw nsw i32 %i.ax, 1
-  %5 = shl i32 %i.aw, 24
-  %6 = or disjoint i32 %4, %5
-  %7 = icmp ugt i32 %6, -16777217
-  br i1 %7, label %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit.thread, label %bb.g
-
-_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit.thread: ; preds = %.lr.ph, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit
+_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit.thread: ; preds = %.lr.ph
   %i.az = load i32, ptr %i.y, align 4, !tbaa !182
   %.not.i = icmp ult i32 %i.au, %i.az
   br i1 %.not.i, label %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit, label %bb.f, !prof !183
@@ -410,14 +409,14 @@ _ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_back
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.ba, i64 %i.bc ; 2 uses
   store i32 %i.ax, ptr %i.bd, align 1, !tbaa !184
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
-  store i32 %i.ay, ptr %i.be, align 1, !tbaa !186
+  store i32 %3, ptr %i.be, align 1, !tbaa !186
   %i.bf = add i32 %i.bb, 1                        ; 2 uses
   store i32 %i.bf, ptr %i.x, align 8, !tbaa !160
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit
-  %i.bg = phi ptr [ %i.ba, %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit ], [ %i.at, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit ] ; 2 uses
-  %i.bh = phi i32 [ %i.bf, %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit ], [ %i.au, %_ZN6hermes3hbc21SmallStringTableEntryC2ERKNS_16StringTableEntryEj.exit ] ; 2 uses
+bb.g:                                             ; preds = %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit, %.lr.ph
+  %i.bg = phi ptr [ %i.ba, %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit ], [ %i.at, %.lr.ph ] ; 2 uses
+  %i.bh = phi i32 [ %i.bf, %_ZN4llvh15SmallVectorImplIN6hermes3hbc24OverflowStringTableEntryEE12emplace_backIJjjEEEvDpOT_.exit ], [ %i.au, %.lr.ph ] ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %.022, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.bi, %i.ae
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph

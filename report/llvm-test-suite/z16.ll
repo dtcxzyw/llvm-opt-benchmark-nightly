@@ -201,11 +201,10 @@ bb.p:                                             ; preds = %.loopexit86
   br i1 %i.ax, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 44
-  %7 = load i16, ptr %i.ay, align 4
-  %8 = and i16 %7, 256
-  %.not76 = icmp eq i16 %8, 0
-  %i.az = select i1 %.not76, i32 153, i32 152
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.aw, i64 45
+  %7 = load i8, ptr %i.ay, align 1
+  %8 = trunc i8 %7 to i1
+  %i.az = select i1 %8, i32 152, i32 153
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.p, %bb.q, %.loopexit86

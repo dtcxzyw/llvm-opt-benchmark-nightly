@@ -24,8 +24,9 @@ define dso_local void @Ppmd7z_RangeEnc_FlushData(ptr noundef captures(none) %0) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 10 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 26 uses
-  %i.d = load i64, ptr %0, align 8, !tbaa !8      ; 3 uses
+  %i.d = load i64, ptr %0, align 8                ; 3 uses
   %i.e = and i64 %i.d, -16777216
   %or.cond.i = icmp eq i64 %i.e, 4278190080
   br i1 %or.cond.i, label %._crit_edge.i, label %.peel.begin.i
@@ -36,11 +37,11 @@ bb.a:
   br label %RangeEnc_ShiftLow.exit
 
 .peel.begin.i:                                    ; preds = %bb.a
+  %1 = lshr i64 %i.d, 32
+  %2 = trunc i64 %1 to i8
   %i.g = load i8, ptr %i.a, align 4, !tbaa !13
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !15   ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !16
-  %1 = lshr i64 %i.d, 32
-  %2 = trunc i64 %1 to i8
   %i.j = add i8 %i.g, %2
   tail call void %i.i(ptr noundef nonnull %i.h, i8 noundef zeroext %i.j) #5, !inline_history !18
   %i.k = load i64, ptr %i.c, align 8, !tbaa !14
@@ -52,9 +53,8 @@ bb.a:
 .peel.next.i:                                     ; preds = %.peel.begin.i, %.peel.next.i
   %i.m = load ptr, ptr %i.b, align 8, !tbaa !15   ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !16
-  %3 = load i64, ptr %0, align 8, !tbaa !8
-  %4 = lshr i64 %3, 32
-  %i.o = trunc i64 %4 to i8
+  %3 = load i32, ptr %.shift.i, align 4, !tbaa !8
+  %i.o = trunc i32 %3 to i8
   %i.p = add i8 %i.o, -1
   tail call void %i.n(ptr noundef nonnull %i.m, i8 noundef zeroext %i.p) #5, !inline_history !18
   %i.q = load i64, ptr %i.c, align 8, !tbaa !14
@@ -94,9 +94,8 @@ RangeEnc_ShiftLow.exit:                           ; preds = %._crit_edge.i, %.lo
 .peel.next.i.1:                                   ; preds = %.peel.begin.i.1, %.peel.next.i.1
   %i.ae = load ptr, ptr %i.b, align 8, !tbaa !15  ; 2 uses
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !16
-  %5 = load i64, ptr %0, align 8, !tbaa !8
-  %6 = lshr i64 %5, 32
-  %i.ag = trunc i64 %6 to i8
+  %4 = load i32, ptr %.shift.i, align 4, !tbaa !8
+  %i.ag = trunc i32 %4 to i8
   %i.ah = add i8 %i.ag, -1
   tail call void %i.af(ptr noundef nonnull %i.ae, i8 noundef zeroext %i.ah) #5, !inline_history !18
   %i.ai = load i64, ptr %i.c, align 8, !tbaa !14
@@ -140,9 +139,8 @@ RangeEnc_ShiftLow.exit.1:                         ; preds = %._crit_edge.i.1, %.
 .peel.next.i.2:                                   ; preds = %.peel.begin.i.2, %.peel.next.i.2
   %i.ax = load ptr, ptr %i.b, align 8, !tbaa !15  ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !16
-  %7 = load i64, ptr %0, align 8, !tbaa !8
-  %8 = lshr i64 %7, 32
-  %i.az = trunc i64 %8 to i8
+  %5 = load i32, ptr %.shift.i, align 4, !tbaa !8
+  %i.az = trunc i32 %5 to i8
   %i.ba = add i8 %i.az, -1
   tail call void %i.ay(ptr noundef nonnull %i.ax, i8 noundef zeroext %i.ba) #5, !inline_history !18
   %i.bb = load i64, ptr %i.c, align 8, !tbaa !14
@@ -186,9 +184,8 @@ RangeEnc_ShiftLow.exit.2:                         ; preds = %._crit_edge.i.2, %.
 .peel.next.i.3:                                   ; preds = %.peel.begin.i.3, %.peel.next.i.3
   %i.bq = load ptr, ptr %i.b, align 8, !tbaa !15  ; 2 uses
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !16
-  %9 = load i64, ptr %0, align 8, !tbaa !8
-  %10 = lshr i64 %9, 32
-  %i.bs = trunc i64 %10 to i8
+  %6 = load i32, ptr %.shift.i, align 4, !tbaa !8
+  %i.bs = trunc i32 %6 to i8
   %i.bt = add i8 %i.bs, -1
   tail call void %i.br(ptr noundef nonnull %i.bq, i8 noundef zeroext %i.bt) #5, !inline_history !18
   %i.bu = load i64, ptr %i.c, align 8, !tbaa !14
@@ -232,9 +229,8 @@ RangeEnc_ShiftLow.exit.3:                         ; preds = %._crit_edge.i.3, %.
 .peel.next.i.4:                                   ; preds = %.peel.begin.i.4, %.peel.next.i.4
   %i.cj = load ptr, ptr %i.b, align 8, !tbaa !15  ; 2 uses
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !16
-  %11 = load i64, ptr %0, align 8, !tbaa !8
-  %12 = lshr i64 %11, 32
-  %i.cl = trunc i64 %12 to i8
+  %7 = load i32, ptr %.shift.i, align 4, !tbaa !8
+  %i.cl = trunc i32 %7 to i8
   %i.cm = add i8 %i.cl, -1
   tail call void %i.ck(ptr noundef nonnull %i.cj, i8 noundef zeroext %i.cm) #5, !inline_history !18
   %i.cn = load i64, ptr %i.c, align 8, !tbaa !14
@@ -312,6 +308,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph.i:                                         ; preds = %bb.c
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   br label %bb.d
 
@@ -330,11 +327,11 @@ bb.d:                                             ; preds = %RangeEnc_ShiftLow.e
   br label %RangeEnc_ShiftLow.exit.i
 
 .peel.begin.i.i:                                  ; preds = %bb.d
+  %3 = lshr i64 %i.ac, 32
+  %4 = trunc i64 %3 to i8
   %i.ah = load i8, ptr %i.z, align 4, !tbaa !13
   %i.ai = load ptr, ptr %i.aa, align 8, !tbaa !15 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !16
-  %3 = lshr i64 %i.ac, 32
-  %4 = trunc i64 %3 to i8
   %i.ak = add i8 %i.ah, %4
   tail call void %i.aj(ptr noundef nonnull %i.ai, i8 noundef zeroext %i.ak) #5, !inline_history !36
   %i.al = load i64, ptr %i.ab, align 8, !tbaa !14
@@ -346,9 +343,8 @@ bb.d:                                             ; preds = %RangeEnc_ShiftLow.e
 .peel.next.i.i:                                   ; preds = %.peel.begin.i.i, %.peel.next.i.i
   %i.an = load ptr, ptr %i.aa, align 8, !tbaa !15 ; 2 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !16
-  %5 = load i64, ptr %1, align 8, !tbaa !8
-  %6 = lshr i64 %5, 32
-  %i.ap = trunc i64 %6 to i8
+  %5 = load i32, ptr %.shift.i.i, align 4, !tbaa !8
+  %i.ap = trunc i32 %5 to i8
   %i.aq = add i8 %i.ap, -1
   tail call void %i.ao(ptr noundef nonnull %i.an, i8 noundef zeroext %i.aq) #5, !inline_history !36
   %i.ar = load i64, ptr %i.ab, align 8, !tbaa !14
@@ -425,6 +421,7 @@ bb.g:                                             ; preds = %bb.f
 .lr.ph.i177:                                      ; preds = %bb.g
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %.shift.i.i178 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   br label %bb.h
 
@@ -443,12 +440,12 @@ bb.h:                                             ; preds = %RangeEnc_ShiftLow.e
   br label %RangeEnc_ShiftLow.exit.i185
 
 .peel.begin.i.i179:                               ; preds = %bb.h
+  %6 = lshr i64 %i.ce, 32
+  %7 = trunc i64 %6 to i8
   %i.cj = load i8, ptr %i.cb, align 4, !tbaa !13
   %i.ck = load ptr, ptr %i.cc, align 8, !tbaa !15 ; 2 uses
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !16
-  %7 = lshr i64 %i.ce, 32
-  %8 = trunc i64 %7 to i8
-  %i.cm = add i8 %i.cj, %8
+  %i.cm = add i8 %i.cj, %7
   tail call void %i.cl(ptr noundef nonnull %i.ck, i8 noundef zeroext %i.cm) #5, !inline_history !36
   %i.cn = load i64, ptr %i.cd, align 8, !tbaa !14
   %i.co = add i64 %i.cn, -1                       ; 2 uses
@@ -459,9 +456,8 @@ bb.h:                                             ; preds = %RangeEnc_ShiftLow.e
 .peel.next.i.i181:                                ; preds = %.peel.begin.i.i179, %.peel.next.i.i181
   %i.cp = load ptr, ptr %i.cc, align 8, !tbaa !15 ; 2 uses
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !16
-  %9 = load i64, ptr %1, align 8, !tbaa !8
-  %10 = lshr i64 %9, 32
-  %i.cr = trunc i64 %10 to i8
+  %8 = load i32, ptr %.shift.i.i178, align 4, !tbaa !8
+  %i.cr = trunc i32 %8 to i8
   %i.cs = add i8 %i.cr, -1
   tail call void %i.cq(ptr noundef nonnull %i.cp, i8 noundef zeroext %i.cs) #5, !inline_history !36
   %i.ct = load i64, ptr %i.cd, align 8, !tbaa !14
@@ -589,6 +585,7 @@ bb.j:                                             ; preds = %bb.i
 .lr.ph.i190:                                      ; preds = %.unr-lcssa
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %.shift.i.i192 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   br label %bb.k
 
@@ -607,12 +604,12 @@ bb.k:                                             ; preds = %RangeEnc_ShiftLow.e
   br label %RangeEnc_ShiftLow.exit.i198
 
 .peel.begin.i.i192:                               ; preds = %bb.k
+  %9 = lshr i64 %i.ff, 32
+  %10 = trunc i64 %9 to i8
   %i.fk = load i8, ptr %i.fc, align 4, !tbaa !13
   %i.fl = load ptr, ptr %i.fd, align 8, !tbaa !15 ; 2 uses
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !16
-  %11 = lshr i64 %i.ff, 32
-  %12 = trunc i64 %11 to i8
-  %i.fn = add i8 %i.fk, %12
+  %i.fn = add i8 %i.fk, %10
   tail call void %i.fm(ptr noundef nonnull %i.fl, i8 noundef zeroext %i.fn) #5, !inline_history !36
   %i.fo = load i64, ptr %i.fe, align 8, !tbaa !14
   %i.fp = add i64 %i.fo, -1                       ; 2 uses
@@ -623,9 +620,8 @@ bb.k:                                             ; preds = %RangeEnc_ShiftLow.e
 .peel.next.i.i194:                                ; preds = %.peel.begin.i.i192, %.peel.next.i.i194
   %i.fq = load ptr, ptr %i.fd, align 8, !tbaa !15 ; 2 uses
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !16
-  %13 = load i64, ptr %1, align 8, !tbaa !8
-  %14 = lshr i64 %13, 32
-  %i.fs = trunc i64 %14 to i8
+  %11 = load i32, ptr %.shift.i.i192, align 4, !tbaa !8
+  %i.fs = trunc i32 %11 to i8
   %i.ft = add i8 %i.fs, -1
   tail call void %i.fr(ptr noundef nonnull %i.fq, i8 noundef zeroext %i.ft) #5, !inline_history !36
   %i.fu = load i64, ptr %i.fe, align 8, !tbaa !14
@@ -718,8 +714,9 @@ bb.m:                                             ; preds = %bb.l
 .lr.ph.i203:                                      ; preds = %bb.m
   %i.if = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.ig = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %.shift.i.i206 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ih = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
-  %.pre.i = load i64, ptr %1, align 8, !tbaa !8
+  %.pre.i = load i64, ptr %1, align 8
   br label %bb.n
 
 bb.n:                                             ; preds = %RangeEnc_ShiftLow.exit.i211, %.lr.ph.i203
@@ -737,12 +734,12 @@ bb.n:                                             ; preds = %RangeEnc_ShiftLow.e
   br label %RangeEnc_ShiftLow.exit.i211
 
 .peel.begin.i.i205:                               ; preds = %bb.n
+  %12 = lshr i64 %i.ii, 32
+  %13 = trunc i64 %12 to i8
   %i.in = load i8, ptr %i.if, align 4, !tbaa !13
   %i.io = load ptr, ptr %i.ig, align 8, !tbaa !15 ; 2 uses
   %i.ip = load ptr, ptr %i.io, align 8, !tbaa !16
-  %15 = lshr i64 %i.ii, 32
-  %16 = trunc i64 %15 to i8
-  %i.iq = add i8 %i.in, %16
+  %i.iq = add i8 %i.in, %13
   tail call void %i.ip(ptr noundef nonnull %i.io, i8 noundef zeroext %i.iq) #5, !inline_history !51
   %i.ir = load i64, ptr %i.ih, align 8, !tbaa !14
   %i.is = add i64 %i.ir, -1                       ; 2 uses
@@ -753,9 +750,8 @@ bb.n:                                             ; preds = %RangeEnc_ShiftLow.e
 .peel.next.i.i207:                                ; preds = %.peel.begin.i.i205, %.peel.next.i.i207
   %i.it = load ptr, ptr %i.ig, align 8, !tbaa !15 ; 2 uses
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !16
-  %17 = load i64, ptr %1, align 8, !tbaa !8
-  %18 = lshr i64 %17, 32
-  %i.iv = trunc i64 %18 to i8
+  %14 = load i32, ptr %.shift.i.i206, align 4, !tbaa !8
+  %i.iv = trunc i32 %14 to i8
   %i.iw = add i8 %i.iv, -1
   tail call void %i.iu(ptr noundef nonnull %i.it, i8 noundef zeroext %i.iw) #5, !inline_history !51
   %i.ix = load i64, ptr %i.ih, align 8, !tbaa !14
@@ -813,6 +809,7 @@ bb.o:                                             ; preds = %bb.l
 .lr.ph.i215:                                      ; preds = %bb.o
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.js = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
+  %.shift.i.i219 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.jt = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
   br label %bb.p
 
@@ -831,12 +828,12 @@ bb.p:                                             ; preds = %RangeEnc_ShiftLow.e
   br label %RangeEnc_ShiftLow.exit.i223
 
 .peel.begin.i.i217:                               ; preds = %bb.p
+  %15 = lshr i64 %i.ju, 32
+  %16 = trunc i64 %15 to i8
   %i.jz = load i8, ptr %i.jr, align 4, !tbaa !13
   %i.ka = load ptr, ptr %i.js, align 8, !tbaa !15 ; 2 uses
   %i.kb = load ptr, ptr %i.ka, align 8, !tbaa !16
-  %19 = lshr i64 %i.ju, 32
-  %20 = trunc i64 %19 to i8
-  %i.kc = add i8 %i.jz, %20
+  %i.kc = add i8 %i.jz, %16
   tail call void %i.kb(ptr noundef nonnull %i.ka, i8 noundef zeroext %i.kc) #5, !inline_history !53
   %i.kd = load i64, ptr %i.jt, align 8, !tbaa !14
   %i.ke = add i64 %i.kd, -1                       ; 2 uses
@@ -847,9 +844,8 @@ bb.p:                                             ; preds = %RangeEnc_ShiftLow.e
 .peel.next.i.i219:                                ; preds = %.peel.begin.i.i217, %.peel.next.i.i219
   %i.kf = load ptr, ptr %i.js, align 8, !tbaa !15 ; 2 uses
   %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !16
-  %21 = load i64, ptr %1, align 8, !tbaa !8
-  %22 = lshr i64 %21, 32
-  %i.kh = trunc i64 %22 to i8
+  %17 = load i32, ptr %.shift.i.i219, align 4, !tbaa !8
+  %i.kh = trunc i32 %17 to i8
   %i.ki = add i8 %i.kh, -1
   tail call void %i.kg(ptr noundef nonnull %i.kf, i8 noundef zeroext %i.ki) #5, !inline_history !53
   %i.kj = load i64, ptr %i.jt, align 8, !tbaa !14
@@ -915,6 +911,7 @@ RangeEnc_Encode.exit202:                          ; preds = %RangeEnc_ShiftLow.e
   %i.lh = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 8 uses
   %i.li = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
   %i.lj = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 4 uses
+  %.shift.i.i246 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   %i.lk = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 12 uses
   br label %bb.r
 
@@ -1058,12 +1055,12 @@ bb.v:                                             ; preds = %.thread, %bb.u
   br label %RangeEnc_ShiftLow.exit.i235
 
 .peel.begin.i.i229:                               ; preds = %.lr.ph.i227
+  %18 = lshr i64 %i.of, 32
+  %19 = trunc i64 %18 to i8
   %i.ok = load i8, ptr %i.li, align 4, !tbaa !13
   %i.ol = load ptr, ptr %i.lj, align 8, !tbaa !15 ; 2 uses
   %i.om = load ptr, ptr %i.ol, align 8, !tbaa !16
-  %23 = lshr i64 %i.of, 32
-  %24 = trunc i64 %23 to i8
-  %i.on = add i8 %i.ok, %24
+  %i.on = add i8 %i.ok, %19
   call void %i.om(ptr noundef nonnull %i.ol, i8 noundef zeroext %i.on) #5, !inline_history !36
   %i.oo = load i64, ptr %i.lk, align 8, !tbaa !14
   %i.op = add i64 %i.oo, -1                       ; 2 uses
@@ -1074,9 +1071,8 @@ bb.v:                                             ; preds = %.thread, %bb.u
 .peel.next.i.i231:                                ; preds = %.peel.begin.i.i229, %.peel.next.i.i231
   %i.oq = load ptr, ptr %i.lj, align 8, !tbaa !15 ; 2 uses
   %i.or = load ptr, ptr %i.oq, align 8, !tbaa !16
-  %25 = load i64, ptr %1, align 8, !tbaa !8
-  %26 = lshr i64 %25, 32
-  %i.os = trunc i64 %26 to i8
+  %20 = load i32, ptr %.shift.i.i246, align 4, !tbaa !8
+  %i.os = trunc i32 %20 to i8
   %i.ot = add i8 %i.os, -1
   call void %i.or(ptr noundef nonnull %i.oq, i8 noundef zeroext %i.ot) #5, !inline_history !36
   %i.ou = load i64, ptr %i.lk, align 8, !tbaa !14
@@ -1182,12 +1178,12 @@ bb.y:                                             ; preds = %RangeEnc_Encode.exi
   br label %RangeEnc_ShiftLow.exit.i248
 
 .peel.begin.i.i242:                               ; preds = %.lr.ph.i240
+  %21 = lshr i64 %i.qm, 32
+  %22 = trunc i64 %21 to i8
   %i.qr = load i8, ptr %i.li, align 4, !tbaa !13
   %i.qs = load ptr, ptr %i.lj, align 8, !tbaa !15 ; 2 uses
   %i.qt = load ptr, ptr %i.qs, align 8, !tbaa !16
-  %27 = lshr i64 %i.qm, 32
-  %28 = trunc i64 %27 to i8
-  %i.qu = add i8 %i.qr, %28
+  %i.qu = add i8 %i.qr, %22
   call void %i.qt(ptr noundef nonnull %i.qs, i8 noundef zeroext %i.qu) #5, !inline_history !36
   %i.qv = load i64, ptr %i.lk, align 8, !tbaa !14
   %i.qw = add i64 %i.qv, -1                       ; 2 uses
@@ -1198,9 +1194,8 @@ bb.y:                                             ; preds = %RangeEnc_Encode.exi
 .peel.next.i.i244:                                ; preds = %.peel.begin.i.i242, %.peel.next.i.i244
   %i.qx = load ptr, ptr %i.lj, align 8, !tbaa !15 ; 2 uses
   %i.qy = load ptr, ptr %i.qx, align 8, !tbaa !16
-  %29 = load i64, ptr %1, align 8, !tbaa !8
-  %30 = lshr i64 %29, 32
-  %i.qz = trunc i64 %30 to i8
+  %23 = load i32, ptr %.shift.i.i246, align 4, !tbaa !8
+  %i.qz = trunc i32 %23 to i8
   %i.ra = add i8 %i.qz, -1
   call void %i.qy(ptr noundef nonnull %i.qx, i8 noundef zeroext %i.ra) #5, !inline_history !36
   %i.rb = load i64, ptr %i.lk, align 8, !tbaa !14

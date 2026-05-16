@@ -201,10 +201,9 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 bb.d:                                             ; preds = %bb.b
-  %7 = load i64, ptr %i.s, align 1
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
-  %i.ad = and i32 %9, 32767
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  %7 = load i32, ptr %.shift.i, align 1
+  %i.ad = and i32 %7, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit: ; preds = %bb.c, %bb.d

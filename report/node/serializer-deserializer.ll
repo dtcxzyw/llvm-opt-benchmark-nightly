@@ -201,10 +201,9 @@ bb.g:                                             ; preds = %_ZNK2v88internal8JS
 bb.h:                                             ; preds = %bb.g
   %i.az = add i64 %0, 7
   %i.ba = inttoptr i64 %i.az to ptr
-  %2 = load i64, ptr %i.ba, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.bb = icmp slt i32 %4, 1
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
+  %2 = load i32, ptr %.shift.i, align 4
+  %i.bb = icmp slt i32 %2, 1
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.b, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit, %_ZNK2v88internal8JSObject21GetEmbedderFieldCountEv.exit.thread, %bb.h, %bb.g, %bb.a

@@ -201,7 +201,7 @@ bb.a:
   %4 = alloca %"struct.folly::dynamic", align 8   ; 11 uses
   %5 = alloca %"struct.folly::dynamic", align 8   ; 9 uses
   tail call void @_ZNK8facebook5velox6common6Filter13serializeBaseEv(ptr dead_on_unwind writable sret(%"struct.folly::dynamic") align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %1)
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i128, ptr %i.a, align 16, !tbaa !534
   %i.c = trunc i128 %i.b to i64
   %i.d = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZNR5folly7dynamicixENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr nonnull @.str.61, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.61, i64 9))
@@ -220,9 +220,8 @@ bb.c:                                             ; preds = %bb.b
 _ZN5folly7dynamicaSImlEERS0_T_.exit:              ; preds = %bb.b, %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %i.c, ptr %i.g, align 8, !tbaa !33
-  %6 = load i128, ptr %i.a, align 16, !tbaa !534
-  %7 = lshr i128 %6, 64
-  %8 = trunc nuw i128 %7 to i64
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = load i64, ptr %.shift, align 8, !tbaa !534
   %i.h = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZNR5folly7dynamicixENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr nonnull @.str.62, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.62, i64 9))
           to label %bb.d unwind label %bb.k       ; 4 uses
 
@@ -238,8 +237,8 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN5folly7dynamicaSImlEERS0_T_.exit25:            ; preds = %bb.d, %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store i64 %8, ptr %i.k, align 8, !tbaa !33
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  store i64 %6, ptr %i.k, align 8, !tbaa !33
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.m = load i128, ptr %i.l, align 16, !tbaa !543
   %i.n = trunc i128 %i.m to i64
   %i.o = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZNR5folly7dynamicixENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr nonnull @.str.63, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.63, i64 9))
@@ -258,9 +257,8 @@ bb.g:                                             ; preds = %bb.f
 _ZN5folly7dynamicaSImlEERS0_T_.exit26:            ; preds = %bb.f, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 %i.n, ptr %i.r, align 8, !tbaa !33
-  %9 = load i128, ptr %i.l, align 16, !tbaa !543
-  %10 = lshr i128 %9, 64
-  %11 = trunc nuw i128 %10 to i64
+  %.shift49 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %7 = load i64, ptr %.shift49, align 8, !tbaa !543
   %i.s = invoke noundef nonnull align 8 dereferenceable(40) ptr @_ZNR5folly7dynamicixENS_5RangeIPKcEE(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr nonnull @.str.64, ptr nonnull getelementptr inbounds nuw (i8, ptr @.str.64, i64 9))
           to label %bb.h unwind label %bb.k       ; 4 uses
 
@@ -276,7 +274,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  store i64 %11, ptr %i.v, align 8, !tbaa !33
+  store i64 %7, ptr %i.v, align 8, !tbaa !33
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #45
   store i32 1, ptr %2, align 8, !tbaa !119
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses

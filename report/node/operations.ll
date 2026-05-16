@@ -201,11 +201,10 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.0.i14 = phi ptr [ %i.at, %.lr.ph ], [ %.sroa.0.0.copyload.i, %bb.a ] ; 3 uses
   %.013 = phi i64 [ %i.as, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
-  %.sroa.0.0.copyload.i2 = load i64, ptr %.0.i14, align 8
   %.sroa.2.0..sroa_idx.i3 = getelementptr inbounds nuw i8, ptr %.0.i14, i64 8
   %.sroa.2.0.copyload.i4 = load ptr, ptr %.sroa.2.0..sroa_idx.i3, align 8
-  %.sroa.1.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload.i2, 32
-  %.sroa.1.0.extract.trunc.i = trunc nuw i64 %.sroa.1.0.extract.shift.i to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2.shift = getelementptr inbounds nuw i8, ptr %.0.i14, i64 4
+  %.sroa.0.0.copyload.i212 = load i32, ptr %.sroa.0.0.copyload.i2.shift, align 4 ; 2 uses
   %i.f = ptrtoint ptr %.sroa.2.0.copyload.i4 to i64 ; 2 uses
   %i.g = xor i64 %i.f, -1
   %i.h = shl i64 %i.f, 21
@@ -218,8 +217,8 @@ bb.a:
   %i.o = mul i64 %i.n, 21                         ; 2 uses
   %i.p = lshr i64 %i.o, 28
   %i.q = xor i64 %i.p, %i.o
-  %i.r = xor i32 %.sroa.1.0.extract.trunc.i, -1
-  %i.s = shl i32 %.sroa.1.0.extract.trunc.i, 15
+  %i.r = xor i32 %.sroa.0.0.copyload.i212, -1
+  %i.s = shl i32 %.sroa.0.0.copyload.i212, 15
   %i.t = add i32 %i.s, %i.r                       ; 2 uses
   %i.u = lshr i32 %i.t, 12
   %i.v = xor i32 %i.u, %i.t

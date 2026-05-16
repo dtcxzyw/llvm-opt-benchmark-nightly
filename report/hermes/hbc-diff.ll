@@ -201,10 +201,9 @@ bb.cu:                                            ; preds = %_ZNK6hermes3hbc20BC
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i
 
 bb.cv:                                            ; preds = %_ZNK6hermes3hbc20BCProviderFromBuffer17getFunctionHeaderEj.exit.i
-  %11 = load i64, ptr %.sroa.0.0.i.i, align 1
-  %12 = lshr i64 %11, 32
-  %13 = trunc nuw i64 %12 to i32
-  %i.sn = and i32 %13, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 4
+  %11 = load i32, ptr %.shift.i.i, align 1
+  %i.sn = and i32 %11, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i: ; preds = %bb.cv, %bb.cu
@@ -607,10 +606,9 @@ bb.ej:                                            ; preds = %bb.ei
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit277.i
 
 bb.ek:                                            ; preds = %bb.ei
-  %14 = load i64, ptr %i.zm, align 1
-  %15 = lshr i64 %14, 32
-  %16 = trunc nuw i64 %15 to i32
-  %i.zr = and i32 %16, 32767
+  %.shift.i276.i = getelementptr inbounds nuw i8, ptr %i.zm, i64 4
+  %12 = load i32, ptr %.shift.i276.i, align 1
+  %i.zr = and i32 %12, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit277.i
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit277.i: ; preds = %bb.ek, %bb.ej

@@ -201,15 +201,15 @@ _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16: ; preds = %_ZN5arrow15BasicDe
 _ZN5arrow15BasicDecimal1283AbsERKS0_.exit18:      ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16
   %.sroa.6.0.i12 = phi i64 [ %.sroa.6.0.i.i.i17, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16 ], [ %i.d, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit ]
   %.sroa.0.0.i13 = phi i64 [ %i.o, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16 ], [ %.sroa.0.0.copyload1.i9, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit ]
-  %i.p = sext i64 %.sroa.6.0.i to i128
+  %i.p = sext i64 %.sroa.6.0.i12 to i128
   %i.q = shl nsw i128 %i.p, 64
-  %i.r = zext i64 %.sroa.0.0.i to i128
+  %i.r = zext i64 %.sroa.0.0.i13 to i128
   %i.s = or disjoint i128 %i.q, %i.r
-  %2 = sext i64 %.sroa.6.0.i12 to i128
-  %i.t = shl nsw i128 %2, 64
-  %i.u = zext i64 %.sroa.0.0.i13 to i128
+  %.sroa.6.0.insert.ext26 = zext i64 %.sroa.6.0.i to i128
+  %i.t = shl nuw i128 %.sroa.6.0.insert.ext26, 64
+  %i.u = zext i64 %.sroa.0.0.i to i128
   %i.v = or disjoint i128 %i.t, %i.u
-  %i.w = mul i128 %i.v, %i.s                      ; 2 uses
+  %i.w = mul i128 %i.s, %i.v                      ; 2 uses
   %i.x = lshr i128 %i.w, 64
   %i.y = trunc nuw i128 %i.x to i64               ; 3 uses
   %i.z = trunc i128 %i.w to i64                   ; 3 uses
@@ -412,15 +412,15 @@ _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i: ; preds = %_ZN5arrow15Basic
 _ZN5arrow15BasicDecimal1283AbsERKS0_.exit18.i:    ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i
   %.sroa.6.0.i12.i = phi i64 [ %.sroa.6.0.i.i.i17.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i ], [ %i.e, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i ]
   %.sroa.0.0.i13.i = phi i64 [ %i.p, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i ], [ %.sroa.0.0.copyload1.i9.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i ]
-  %i.q = sext i64 %.sroa.6.0.i.i to i128
+  %i.q = sext i64 %.sroa.6.0.i12.i to i128
   %i.r = shl nsw i128 %i.q, 64
-  %i.s = zext i64 %.sroa.0.0.i.i to i128
+  %i.s = zext i64 %.sroa.0.0.i13.i to i128
   %i.t = or disjoint i128 %i.r, %i.s
-  %2 = sext i64 %.sroa.6.0.i12.i to i128
-  %i.u = shl nsw i128 %2, 64
-  %i.v = zext i64 %.sroa.0.0.i13.i to i128
+  %.sroa.6.0.insert.ext26.i = zext i64 %.sroa.6.0.i.i to i128
+  %i.u = shl nuw i128 %.sroa.6.0.insert.ext26.i, 64
+  %i.v = zext i64 %.sroa.0.0.i.i to i128
   %i.w = or disjoint i128 %i.u, %i.v
-  %i.x = mul i128 %i.w, %i.t                      ; 2 uses
+  %i.x = mul i128 %i.t, %i.w                      ; 2 uses
   %i.y = lshr i128 %i.x, 64
   %i.z = trunc nuw i128 %i.y to i64               ; 3 uses
   %i.aa = trunc i128 %i.x to i64                  ; 3 uses
@@ -654,15 +654,15 @@ _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i: ; preds = %bb.e
 _ZN5arrow15BasicDecimal1283AbsERKS0_.exit18.i.i.i: ; preds = %bb.e, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i
   %.sroa.6.0.i.i.i.i = phi i64 [ %.sroa.6.0.i.i.i.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i ], [ %i.m, %bb.e ]
   %.sroa.0.0.i.i.i.i = phi i64 [ %i.t, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i ], [ %i.n, %bb.e ]
-  %i.u = sext i64 %.sroa.6.0.i.i.i.i to i128
+  %i.u = sext i64 %.sroa.4.0.copyload to i128
   %i.v = shl nsw i128 %i.u, 64
-  %i.w = zext i64 %.sroa.0.0.i.i.i.i to i128
+  %i.w = zext i64 %.sroa.0.0.copyload to i128
   %i.x = or disjoint i128 %i.v, %i.w
-  %6 = sext i64 %.sroa.4.0.copyload to i128
-  %i.y = shl nsw i128 %6, 64
-  %i.z = zext i64 %.sroa.0.0.copyload to i128
+  %.sroa.6.0.insert.ext26.i.i.i = zext i64 %.sroa.6.0.i.i.i.i to i128
+  %i.y = shl nuw i128 %.sroa.6.0.insert.ext26.i.i.i, 64
+  %i.z = zext i64 %.sroa.0.0.i.i.i.i to i128
   %i.aa = or disjoint i128 %i.y, %i.z
-  %i.ab = mul i128 %i.aa, %i.x                    ; 2 uses
+  %i.ab = mul i128 %i.x, %i.aa                    ; 2 uses
   %i.ac = lshr i128 %i.ab, 64
   %i.ad = trunc nuw i128 %i.ac to i64             ; 3 uses
   %i.ae = trunc i128 %i.ab to i64                 ; 3 uses
@@ -794,15 +794,15 @@ _ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i:    ; preds = %_ZN5arrowltERKNS_15
   %.sroa.6.0.i.i.i = phi i64 [ %.sroa.6.0.i.i.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %i.d, %bb.a ]
   %.sroa.0.0.i.i.i = phi i64 [ %i.m, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %i.e, %bb.a ]
   %.sroa.0.0.copyload1.i9.i.i = load i64, ptr %i.b, align 16
-  %i.n = sext i64 %.sroa.6.0.i.i.i to i128
+  %i.n = sext i64 %i.g to i128
   %i.o = shl nsw i128 %i.n, 64
-  %i.p = zext i64 %.sroa.0.0.i.i.i to i128
+  %i.p = zext i64 %.sroa.0.0.copyload1.i9.i.i to i128
   %i.q = or disjoint i128 %i.o, %i.p
-  %2 = sext i64 %i.g to i128
-  %i.r = shl nsw i128 %2, 64
-  %i.s = zext i64 %.sroa.0.0.copyload1.i9.i.i to i128
+  %.sroa.6.0.insert.ext26.i.i = zext i64 %.sroa.6.0.i.i.i to i128
+  %i.r = shl nuw i128 %.sroa.6.0.insert.ext26.i.i, 64
+  %i.s = zext i64 %.sroa.0.0.i.i.i to i128
   %i.t = or disjoint i128 %i.r, %i.s
-  %i.u = mul i128 %i.t, %i.q                      ; 2 uses
+  %i.u = mul i128 %i.q, %i.t                      ; 2 uses
   %i.v = lshr i128 %i.u, 64
   %i.w = trunc nuw i128 %i.v to i64               ; 3 uses
   %i.x = trunc i128 %i.u to i64                   ; 3 uses
@@ -1205,11 +1205,11 @@ _ZN5arrow15BasicDecimal2563AbsERKS0_.exit17:      ; preds = %_ZN5arrow15BasicDec
   %i.ah = zext i64 %.sroa.0.0.i to i128           ; 3 uses
   %i.ai = zext i64 %.sroa.0.0.i13 to i128         ; 4 uses
   %i.aj = mul nuw i128 %i.ai, %i.ah               ; 2 uses
+  %.sroa.10.0.extract.shift55.i = lshr i128 %i.aj, 64
   %2 = trunc i128 %i.aj to i64                    ; 3 uses
-  %3 = lshr i128 %i.aj, 64
   %i.ak = zext i64 %.sroa.6.0.i to i128           ; 3 uses
   %i.al = mul nuw i128 %i.ai, %i.ak
-  %i.am = add nuw i128 %3, %i.al                  ; 2 uses
+  %i.am = add nuw i128 %.sroa.10.0.extract.shift55.i, %i.al ; 2 uses
   %i.an = lshr i128 %i.am, 64
   %i.ao = zext i64 %.sroa.8.0.i to i128           ; 2 uses
   %i.ap = mul nuw i128 %i.ai, %i.ao
@@ -1221,32 +1221,32 @@ _ZN5arrow15BasicDecimal2563AbsERKS0_.exit17:      ; preds = %_ZN5arrow15BasicDec
   %i.av = mul nuw i128 %i.au, %i.ah
   %i.aw = and i128 %i.am, 18446744073709551615
   %i.ax = add nuw i128 %i.aw, %i.av               ; 2 uses
-  %4 = trunc i128 %i.ax to i64                    ; 2 uses
-  %5 = lshr i128 %i.ax, 64
+  %.sroa.10.0.extract.shift55.1.i = lshr i128 %i.ax, 64
+  %3 = trunc i128 %i.ax to i64                    ; 2 uses
   %i.ay = mul nuw i128 %i.au, %i.ak
   %i.az = and i128 %i.aq, 18446744073709551615
   %i.ba = add nuw i128 %i.az, %i.ay
-  %i.bb = add nuw i128 %i.ba, %5                  ; 2 uses
+  %i.bb = add nuw i128 %i.ba, %.sroa.10.0.extract.shift55.1.i ; 2 uses
   %i.bc = lshr i128 %i.bb, 64
   %i.bd = mul nuw i128 %i.au, %i.ao
   %i.be = zext i64 %.sroa.8.0.i11 to i128         ; 2 uses
   %i.bf = mul nuw i128 %i.be, %i.ah
   %i.bg = and i128 %i.bb, 18446744073709551615
   %i.bh = add nuw i128 %i.bg, %i.bf               ; 2 uses
-  %6 = trunc i128 %i.bh to i64                    ; 2 uses
-  %7 = lshr i128 %i.bh, 64
+  %.sroa.10.0.extract.shift55.2.i = lshr i128 %i.bh, 64
+  %4 = trunc i128 %i.bh to i64                    ; 2 uses
   %i.bi = mul nuw i128 %i.be, %i.ak
   %i.bj = add i128 %i.bd, %i.bi
   %i.bk = add i128 %i.bj, %i.at
   %i.bl = add i128 %i.bk, %i.ar
   %i.bm = add i128 %i.bl, %i.bc
-  %i.bn = add i128 %i.bm, %7
+  %i.bn = add i128 %i.bm, %.sroa.10.0.extract.shift55.2.i
   %i.bo = trunc i128 %i.bn to i64
   %i.bp = mul i64 %.sroa.10.0.i10, %.sroa.0.0.i
   %i.bq = add i64 %i.bp, %i.bo                    ; 2 uses
   store i64 %2, ptr %0, align 8
-  store i64 %4, ptr %.sroa.6.0..sroa_idx.i, align 8
-  store i64 %6, ptr %.sroa.8.0..sroa_idx.i, align 8
+  store i64 %3, ptr %.sroa.6.0..sroa_idx.i, align 8
+  store i64 %4, ptr %.sroa.8.0..sroa_idx.i, align 8
   store i64 %i.bq, ptr %i.a, align 8, !tbaa !8
   br i1 %isneg, label %bb.e, label %bb.d
 
@@ -1255,12 +1255,12 @@ bb.d:                                             ; preds = %_ZN5arrow15BasicDec
   store i64 %i.br, ptr %0, align 8, !tbaa !9
   %i.bs = icmp eq i64 %2, 0
   %i.bt = zext i1 %i.bs to i64                    ; 2 uses
-  %i.bu = xor i64 %4, -1
+  %i.bu = xor i64 %3, -1
   %i.bv = add i64 %i.bu, %i.bt                    ; 2 uses
   store i64 %i.bv, ptr %.sroa.6.0..sroa_idx.i, align 8, !tbaa !9
   %i.bw = icmp eq i64 %i.bv, 0
   %i.bx = select i1 %i.bw, i64 %i.bt, i64 0       ; 2 uses
-  %i.by = xor i64 %6, -1
+  %i.by = xor i64 %4, -1
   %i.bz = add i64 %i.bx, %i.by                    ; 2 uses
   store i64 %i.bz, ptr %.sroa.8.0..sroa_idx.i, align 8, !tbaa !9
   %i.ca = icmp eq i64 %i.bz, 0
@@ -1281,20 +1281,21 @@ bb.a:
   %5 = alloca %"struct.std::array.2", align 8     ; 13 uses
   %6 = alloca %"struct.std::array.2", align 8     ; 13 uses
   %i.a = alloca [65 x i32], align 16              ; 8 uses
-  %7 = alloca %"class.arrow::BasicDecimal256", align 8 ; 13 uses
-  %8 = alloca %"class.arrow::BasicDecimal256", align 8 ; 13 uses
+  %7 = alloca %"class.arrow::BasicDecimal256", align 8 ; 14 uses
+  %8 = alloca %"class.arrow::BasicDecimal256", align 8 ; 14 uses
   %i.b = alloca [65 x i32], align 16              ; 23 uses
-  %i.c = alloca [64 x i32], align 16              ; 22 uses
+  %i.c = alloca [64 x i32], align 16              ; 23 uses
   %i.d = alloca [64 x i32], align 16              ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   store i32 0, ptr %i.b, align 16, !tbaa !3
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #10
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull readonly align 8 dereferenceable(32) %0, i64 32, i1 false)
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 24 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8, !tbaa !9    ; 3 uses
   %i.h = icmp slt i64 %i.g, 0                     ; 5 uses
+  %.01939.i.i106.i.sroa.gep = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %.02234.i.i.i.i.lcssa.sroa.gep190 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %.02234.i.i.i.i.lcssa.sroa.gep191 = getelementptr inbounds nuw i8, ptr %6, i64 16
   %.02234.i.i.i.i.lcssa.sroa.gep192 = getelementptr inbounds nuw i8, ptr %6, i64 24
@@ -1378,40 +1379,37 @@ bb.g:                                             ; preds = %bb.f
   %.140.i.i.i = phi i64 [ %i.ai, %.loopexit.i.i.i ], [ %.01827.lcssa.i.i.i, %bb.d ], [ 0, %.thread.i.i ] ; 4 uses
   %.01939.i.i.i = phi i64 [ 1, %.loopexit.i.i.i ], [ 0, %bb.d ], [ 0, %.thread.i.i ] ; 3 uses
   %i.aj = add nsw i64 %.140.i.i.i, 1              ; 3 uses
-  %min.iters.check = icmp ult i64 %i.aj, 4
+  %min.iters.check = icmp ult i64 %i.aj, 2
   br i1 %min.iters.check, label %.lr.ph.i.i.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i.i.i
-  %n.vec = and i64 %i.aj, -4                      ; 4 uses
+  %n.vec = and i64 %i.aj, -2                      ; 4 uses
   %i.ak = sub nsw i64 %.140.i.i.i, %n.vec
   %i.al = shl nsw i64 %n.vec, 1
   %i.am = or disjoint i64 %.01939.i.i.i, %i.al    ; 2 uses
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.01939.i.i.i
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
-  %i.an = sub i64 %.140.i.i.i, %index
-  %9 = shl i64 %index, 1
-  %10 = or disjoint i64 %.01939.i.i.i, %9         ; 2 uses
-  %i.ao = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.an ; 2 uses
-  %i.ap = getelementptr inbounds i8, ptr %i.ao, i64 -8
-  %i.aq = getelementptr inbounds i8, ptr %i.ao, i64 -24
-  %wide.load = load <2 x i64>, ptr %i.ap, align 8, !tbaa !9 ; 2 uses
-  %wide.load84 = load <2 x i64>, ptr %i.aq, align 8, !tbaa !9 ; 2 uses
-  %11 = lshr <2 x i64> %wide.load, splat (i64 32)
-  %12 = shufflevector <2 x i64> %11, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %13 = lshr <2 x i64> %wide.load84, splat (i64 32)
-  %14 = shufflevector <2 x i64> %13, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %10
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %10
-  %i.ar = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %17 = shufflevector <2 x i64> %12, <2 x i64> %wide.load, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
-  %interleaved.vec = trunc <4 x i64> %17 to <4 x i32>
-  store <4 x i32> %interleaved.vec, ptr %15, align 4, !tbaa !3
-  %18 = shufflevector <2 x i64> %14, <2 x i64> %wide.load84, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
-  %interleaved.vec86 = trunc <4 x i64> %18 to <4 x i32>
-  store <4 x i32> %interleaved.vec86, ptr %i.ar, align 4, !tbaa !3
-  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %i.an = sub i64 %.140.i.i.i, %index             ; 2 uses
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.an ; 2 uses
+  %i.ao = getelementptr [8 x i8], ptr %8, i64 %i.an
+  %i.ap = getelementptr inbounds nuw i8, ptr %10, i64 4
+  %i.aq = getelementptr i8, ptr %i.ao, i64 -4
+  %11 = load i32, ptr %i.ap, align 4, !tbaa !9
+  %12 = load i32, ptr %i.aq, align 4, !tbaa !9
+  %13 = insertelement <2 x i32> poison, i32 %11, i64 0
+  %14 = insertelement <2 x i32> %13, i32 %12, i64 1
+  %.idx = shl i64 %index, 3
+  %i.ar = getelementptr inbounds nuw i8, ptr %9, i64 %.idx
+  %15 = getelementptr inbounds i8, ptr %10, i64 -8
+  %wide.load = load <2 x i64>, ptr %15, align 8, !tbaa !9
+  %reverse = shufflevector <2 x i64> %wide.load, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %16 = trunc <2 x i64> %reverse to <2 x i32>
+  %interleaved.vec = shufflevector <2 x i32> %14, <2 x i32> %16, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %interleaved.vec, ptr %i.ar, align 4, !tbaa !3
+  %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.as = icmp eq i64 %index.next, %n.vec
   br i1 %i.as, label %middle.block, label %vector.body, !llvm.loop !37
 
@@ -1427,15 +1425,15 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %.lr.ph.i.i.i
   %.029.i.i.i = phi i64 [ %i.ax, %.lr.ph.i.i.i ], [ %.029.i.i.i.ph, %.lr.ph.i.i.i.preheader ] ; 3 uses
   %.12028.i.i.i = phi i64 [ %i.av, %.lr.ph.i.i.i ], [ %.12028.i.i.i.ph, %.lr.ph.i.i.i.preheader ] ; 2 uses
-  %i.at = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.029.i.i.i
-  %19 = load i64, ptr %i.at, align 8, !tbaa !9    ; 2 uses
-  %20 = lshr i64 %19, 32
-  %21 = trunc nuw i64 %20 to i32
-  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.12028.i.i.i ; 2 uses
-  store i32 %21, ptr %22, align 4, !tbaa !3
+  %i.at = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.029.i.i.i ; 2 uses
+  %.shift.i.i.i = getelementptr inbounds nuw i8, ptr %i.at, i64 4
+  %17 = load i32, ptr %.shift.i.i.i, align 4, !tbaa !9
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %i.e, i64 %.12028.i.i.i ; 2 uses
+  store i32 %17, ptr %18, align 4, !tbaa !3
+  %19 = load i64, ptr %i.at, align 8, !tbaa !9
   %i.au = trunc i64 %19 to i32
   %i.av = add nuw nsw i64 %.12028.i.i.i, 2        ; 2 uses
-  %i.aw = getelementptr inbounds nuw i8, ptr %22, i64 4
+  %i.aw = getelementptr inbounds nuw i8, ptr %18, i64 4
   store i32 %i.au, ptr %i.aw, align 4, !tbaa !3
   %i.ax = add nsw i64 %.029.i.i.i, -1
   %.not44.i.i.i = icmp eq i64 %.029.i.i.i, 0
@@ -1522,13 +1520,14 @@ bb.m:                                             ; preds = %bb.l
 
 .lr.ph.preheader.i.i104.i:                        ; preds = %.loopexit.i.i103.i, %.thread.i115.i, %bb.j
   %.140.i.i105.i = phi i64 [ %i.cc, %.loopexit.i.i103.i ], [ %.01827.lcssa.i.i100.i, %bb.j ], [ 0, %.thread.i115.i ] ; 4 uses
-  %.01939.i.i106.i = phi i64 [ 1, %.loopexit.i.i103.i ], [ 0, %bb.j ], [ 0, %.thread.i115.i ] ; 3 uses
+  %.01939.i.i106.i.sroa.phi = phi ptr [ %.01939.i.i106.i.sroa.gep, %.loopexit.i.i103.i ], [ %i.c, %bb.j ], [ %i.c, %.thread.i115.i ]
+  %.01939.i.i106.i = phi i64 [ 1, %.loopexit.i.i103.i ], [ 0, %bb.j ], [ 0, %.thread.i115.i ] ; 2 uses
   %i.cd = add nsw i64 %.140.i.i105.i, 1           ; 3 uses
-  %min.iters.check89 = icmp ult i64 %i.cd, 4
+  %min.iters.check89 = icmp ult i64 %i.cd, 2
   br i1 %min.iters.check89, label %.lr.ph.i.i107.i.preheader, label %vector.ph90
 
 vector.ph90:                                      ; preds = %.lr.ph.preheader.i.i104.i
-  %n.vec92 = and i64 %i.cd, -4                    ; 4 uses
+  %n.vec92 = and i64 %i.cd, -2                    ; 4 uses
   %i.ce = sub nsw i64 %.140.i.i105.i, %n.vec92
   %i.cf = shl nsw i64 %n.vec92, 1
   %i.cg = or disjoint i64 %.01939.i.i106.i, %i.cf ; 2 uses
@@ -1536,28 +1535,24 @@ vector.ph90:                                      ; preds = %.lr.ph.preheader.i.
 
 vector.body93:                                    ; preds = %vector.body93, %vector.ph90
   %index94 = phi i64 [ 0, %vector.ph90 ], [ %index.next101, %vector.body93 ] ; 3 uses
-  %i.ch = sub i64 %.140.i.i105.i, %index94
-  %23 = shl i64 %index94, 1
-  %24 = or disjoint i64 %.01939.i.i106.i, %23     ; 2 uses
-  %i.ci = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ch ; 2 uses
-  %i.cj = getelementptr inbounds i8, ptr %i.ci, i64 -8
-  %i.ck = getelementptr inbounds i8, ptr %i.ci, i64 -24
-  %wide.load95 = load <2 x i64>, ptr %i.cj, align 8, !tbaa !9 ; 2 uses
-  %wide.load96 = load <2 x i64>, ptr %i.ck, align 8, !tbaa !9 ; 2 uses
-  %25 = lshr <2 x i64> %wide.load95, splat (i64 32)
-  %26 = shufflevector <2 x i64> %25, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %27 = lshr <2 x i64> %wide.load96, splat (i64 32)
-  %28 = shufflevector <2 x i64> %27, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
-  %29 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %24
-  %30 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %24
-  %i.cl = getelementptr inbounds nuw i8, ptr %30, i64 16
-  %31 = shufflevector <2 x i64> %26, <2 x i64> %wide.load95, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
-  %interleaved.vec99 = trunc <4 x i64> %31 to <4 x i32>
-  store <4 x i32> %interleaved.vec99, ptr %29, align 4, !tbaa !3
-  %32 = shufflevector <2 x i64> %28, <2 x i64> %wide.load96, <4 x i32> <i32 0, i32 3, i32 1, i32 2>
-  %interleaved.vec100 = trunc <4 x i64> %32 to <4 x i32>
-  store <4 x i32> %interleaved.vec100, ptr %i.cl, align 4, !tbaa !3
-  %index.next101 = add nuw i64 %index94, 4        ; 2 uses
+  %i.ch = sub i64 %.140.i.i105.i, %index94        ; 2 uses
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %i.ch ; 2 uses
+  %i.ci = getelementptr [8 x i8], ptr %7, i64 %i.ch
+  %i.cj = getelementptr inbounds nuw i8, ptr %20, i64 4
+  %i.ck = getelementptr i8, ptr %i.ci, i64 -4
+  %21 = load i32, ptr %i.cj, align 4, !tbaa !9
+  %22 = load i32, ptr %i.ck, align 4, !tbaa !9
+  %23 = insertelement <2 x i32> poison, i32 %21, i64 0
+  %24 = insertelement <2 x i32> %23, i32 %22, i64 1
+  %.idx160 = shl i64 %index94, 3
+  %i.cl = getelementptr inbounds nuw i8, ptr %.01939.i.i106.i.sroa.phi, i64 %.idx160
+  %25 = getelementptr inbounds i8, ptr %20, i64 -8
+  %wide.load92 = load <2 x i64>, ptr %25, align 8, !tbaa !9
+  %reverse93 = shufflevector <2 x i64> %wide.load92, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %26 = trunc <2 x i64> %reverse93 to <2 x i32>
+  %interleaved.vec94 = shufflevector <2 x i32> %24, <2 x i32> %26, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
+  store <4 x i32> %interleaved.vec94, ptr %i.cl, align 4, !tbaa !3
+  %index.next101 = add nuw i64 %index94, 2        ; 2 uses
   %i.cm = icmp eq i64 %index.next101, %n.vec92
   br i1 %i.cm, label %middle.block102, label %vector.body93, !llvm.loop !39
 
@@ -1573,15 +1568,15 @@ middle.block102:                                  ; preds = %vector.body93
 .lr.ph.i.i107.i:                                  ; preds = %.lr.ph.i.i107.i.preheader, %.lr.ph.i.i107.i
   %.029.i.i108.i = phi i64 [ %i.cr, %.lr.ph.i.i107.i ], [ %.029.i.i108.i.ph, %.lr.ph.i.i107.i.preheader ] ; 3 uses
   %.12028.i.i109.i = phi i64 [ %i.cp, %.lr.ph.i.i107.i ], [ %.12028.i.i109.i.ph, %.lr.ph.i.i107.i.preheader ] ; 2 uses
-  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.029.i.i108.i
-  %33 = load i64, ptr %i.cn, align 8, !tbaa !9    ; 2 uses
-  %34 = lshr i64 %33, 32
-  %35 = trunc nuw i64 %34 to i32
-  %36 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.12028.i.i109.i ; 2 uses
-  store i32 %35, ptr %36, align 4, !tbaa !3
-  %i.co = trunc i64 %33 to i32
+  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.029.i.i108.i ; 2 uses
+  %.shift.i.i110.i = getelementptr inbounds nuw i8, ptr %i.cn, i64 4
+  %27 = load i32, ptr %.shift.i.i110.i, align 4, !tbaa !9
+  %28 = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %.12028.i.i109.i ; 2 uses
+  store i32 %27, ptr %28, align 4, !tbaa !3
+  %29 = load i64, ptr %i.cn, align 8, !tbaa !9
+  %i.co = trunc i64 %29 to i32
   %i.cp = add nuw nsw i64 %.12028.i.i109.i, 2     ; 2 uses
-  %i.cq = getelementptr inbounds nuw i8, ptr %36, i64 4
+  %i.cq = getelementptr inbounds nuw i8, ptr %28, i64 4
   store i32 %i.co, ptr %i.cq, align 4, !tbaa !3
   %i.cr = add nsw i64 %.029.i.i108.i, -1
   %.not44.i.i110.i = icmp eq i64 %.029.i.i108.i, 0

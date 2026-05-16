@@ -48,12 +48,11 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %1, align 8
   %i.d = add i64 %i.c, 63
   %i.e = inttoptr i64 %i.d to ptr
-  %3 = load i64, ptr %i.e, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %3 = load i32, ptr %.shift.i, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1960
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void @_ZN2v88internal11LocalLogger11ScriptEventENS0_15ScriptEventTypeEi(ptr noundef nonnull align 8 dereferenceable(10) %i.g, i32 noundef %2, i32 noundef %5) #4
+  tail call void @_ZN2v88internal11LocalLogger11ScriptEventENS0_15ScriptEventTypeEi(ptr noundef nonnull align 8 dereferenceable(10) %i.g, i32 noundef %2, i32 noundef %3) #4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a

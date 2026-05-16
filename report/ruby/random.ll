@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i32, ptr %i.b, align 16, !tbaa !7
   %i.h = trunc i64 %i.f to i32
   %i.i = xor i32 %i.g, %i.h
-  %i.j = load i64, ptr %0, align 8, !tbaa !69     ; 2 uses
+  %i.j = load i64, ptr %0, align 8                ; 2 uses
   %i.k = trunc i64 %i.j to i32
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 4 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4, !tbaa !7
@@ -283,7 +283,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   store <4 x i32> %i.bg, ptr %i.bh, align 8, !tbaa !7
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.bi = icmp eq i64 %index.next, 224
-  br i1 %i.bi, label %vector.ph180, label %vector.body, !llvm.loop !70
+  br i1 %i.bi, label %vector.ph180, label %vector.body, !llvm.loop !69
 
 vector.ph180:                                     ; preds = %vector.body
   %vector.recur.extract = extractelement <4 x i32> %wide.load178, i64 3
@@ -355,7 +355,7 @@ vector.body181:                                   ; preds = %vector.body181, %ve
   store <4 x i32> %i.dg, ptr %next.gep185, align 4, !tbaa !7
   %index.next188 = add nuw i64 %index182, 4       ; 2 uses
   %i.dh = icmp eq i64 %index.next188, 396
-  br i1 %i.dh, label %next_state.exit.i69, label %vector.body181, !llvm.loop !71
+  br i1 %i.dh, label %next_state.exit.i69, label %vector.body181, !llvm.loop !70
 
 next_state.exit.i69:                              ; preds = %vector.body181
   %i.di = extractelement <4 x i32> %wide.load187, i64 3
@@ -441,7 +441,7 @@ vector.body192:                                   ; preds = %vector.body192, %ve
   store <4 x i32> %i.fj, ptr %i.fk, align 8, !tbaa !7
   %index.next201 = add nuw i64 %index193, 8       ; 2 uses
   %i.fl = icmp eq i64 %index.next201, 224
-  br i1 %i.fl, label %vector.ph205, label %vector.body192, !llvm.loop !72
+  br i1 %i.fl, label %vector.ph205, label %vector.body192, !llvm.loop !71
 
 vector.ph205:                                     ; preds = %vector.body192
   %vector.recur.extract203 = extractelement <4 x i32> %wide.load200, i64 3
@@ -513,7 +513,7 @@ vector.body206:                                   ; preds = %vector.body206, %ve
   store <4 x i32> %i.hj, ptr %next.gep210, align 4, !tbaa !7
   %index.next213 = add nuw i64 %index207, 4       ; 2 uses
   %i.hk = icmp eq i64 %index.next213, 396
-  br i1 %i.hk, label %next_state.exit.i55, label %vector.body206, !llvm.loop !73
+  br i1 %i.hk, label %next_state.exit.i55, label %vector.body206, !llvm.loop !72
 
 next_state.exit.i55:                              ; preds = %vector.body206
   %i.hl = extractelement <4 x i32> %wide.load212, i64 3
@@ -599,7 +599,7 @@ vector.body218:                                   ; preds = %vector.body218, %ve
   store <4 x i32> %i.jm, ptr %i.jn, align 8, !tbaa !7
   %index.next227 = add nuw i64 %index219, 8       ; 2 uses
   %i.jo = icmp eq i64 %index.next227, 224
-  br i1 %i.jo, label %vector.ph231, label %vector.body218, !llvm.loop !74
+  br i1 %i.jo, label %vector.ph231, label %vector.body218, !llvm.loop !73
 
 vector.ph231:                                     ; preds = %vector.body218
   %vector.recur.extract229 = extractelement <4 x i32> %wide.load226, i64 3
@@ -671,7 +671,7 @@ vector.body232:                                   ; preds = %vector.body232, %ve
   store <4 x i32> %i.lm, ptr %next.gep236, align 4, !tbaa !7
   %index.next239 = add nuw i64 %index233, 4       ; 2 uses
   %i.ln = icmp eq i64 %index.next239, 396
-  br i1 %i.ln, label %next_state.exit.i41, label %vector.body232, !llvm.loop !75
+  br i1 %i.ln, label %next_state.exit.i41, label %vector.body232, !llvm.loop !74
 
 next_state.exit.i41:                              ; preds = %vector.body232
   %i.lo = extractelement <4 x i32> %wide.load238, i64 3
@@ -758,7 +758,7 @@ vector.body244:                                   ; preds = %vector.body244, %ve
   store <4 x i32> %i.np, ptr %i.nq, align 8, !tbaa !7
   %index.next253 = add nuw i64 %index245, 8       ; 2 uses
   %i.nr = icmp eq i64 %index.next253, 224
-  br i1 %i.nr, label %vector.ph257, label %vector.body244, !llvm.loop !76
+  br i1 %i.nr, label %vector.ph257, label %vector.body244, !llvm.loop !75
 
 vector.ph257:                                     ; preds = %vector.body244
   %vector.recur.extract255 = extractelement <4 x i32> %wide.load252, i64 3
@@ -830,7 +830,7 @@ vector.body258:                                   ; preds = %vector.body258, %ve
   store <4 x i32> %i.pp, ptr %next.gep262, align 4, !tbaa !7
   %index.next265 = add nuw i64 %index259, 4       ; 2 uses
   %i.pq = icmp eq i64 %index.next265, 396
-  br i1 %i.pq, label %next_state.exit.i27, label %vector.body258, !llvm.loop !77
+  br i1 %i.pq, label %next_state.exit.i27, label %vector.body258, !llvm.loop !76
 
 next_state.exit.i27:                              ; preds = %vector.body258
   %i.pr = extractelement <4 x i32> %wide.load264, i64 3
@@ -916,7 +916,7 @@ vector.body270:                                   ; preds = %vector.body270, %ve
   store <4 x i32> %i.rs, ptr %i.rt, align 8, !tbaa !7
   %index.next279 = add nuw i64 %index271, 8       ; 2 uses
   %i.ru = icmp eq i64 %index.next279, 224
-  br i1 %i.ru, label %vector.ph283, label %vector.body270, !llvm.loop !78
+  br i1 %i.ru, label %vector.ph283, label %vector.body270, !llvm.loop !77
 
 vector.ph283:                                     ; preds = %vector.body270
   %vector.recur.extract281 = extractelement <4 x i32> %wide.load278, i64 3
@@ -988,7 +988,7 @@ vector.body284:                                   ; preds = %vector.body284, %ve
   store <4 x i32> %i.ts, ptr %next.gep288, align 4, !tbaa !7
   %index.next291 = add nuw i64 %index285, 4       ; 2 uses
   %i.tt = icmp eq i64 %index.next291, 396
-  br i1 %i.tt, label %next_state.exit.i13, label %vector.body284, !llvm.loop !79
+  br i1 %i.tt, label %next_state.exit.i13, label %vector.body284, !llvm.loop !78
 
 next_state.exit.i13:                              ; preds = %vector.body284
   %i.tu = extractelement <4 x i32> %wide.load290, i64 3
@@ -1074,7 +1074,7 @@ vector.body296:                                   ; preds = %vector.body296, %ve
   store <4 x i32> %i.vv, ptr %i.vw, align 8, !tbaa !7
   %index.next305 = add nuw i64 %index297, 8       ; 2 uses
   %i.vx = icmp eq i64 %index.next305, 224
-  br i1 %i.vx, label %vector.ph309, label %vector.body296, !llvm.loop !80
+  br i1 %i.vx, label %vector.ph309, label %vector.body296, !llvm.loop !79
 
 vector.ph309:                                     ; preds = %vector.body296
   %vector.recur.extract307 = extractelement <4 x i32> %wide.load304, i64 3
@@ -1146,7 +1146,7 @@ vector.body310:                                   ; preds = %vector.body310, %ve
   store <4 x i32> %i.xv, ptr %next.gep314, align 4, !tbaa !7
   %index.next317 = add nuw i64 %index311, 4       ; 2 uses
   %i.xw = icmp eq i64 %index.next317, 396
-  br i1 %i.xw, label %next_state.exit.i, label %vector.body310, !llvm.loop !81
+  br i1 %i.xw, label %next_state.exit.i, label %vector.body310, !llvm.loop !80
 
 next_state.exit.i:                                ; preds = %vector.body310
   %i.xx = extractelement <4 x i32> %wide.load316, i64 3
@@ -1255,7 +1255,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %spec.store.select.i = select i1 %.not48.i, i32 %i.aac, i32 0
   %i.aaf = add nsw i32 %.051.i, -1                ; 2 uses
   %.not.i = icmp eq i32 %i.aaf, 0
-  br i1 %.not.i, label %.preheader.i, label %bb.e, !llvm.loop !82
+  br i1 %.not.i, label %.preheader.i, label %bb.e, !llvm.loop !81
 
 .preheader.i:                                     ; preds = %bb.g, %bb.i
   %.153.i = phi i32 [ %i.aav, %bb.i ], [ 623, %bb.g ]
@@ -1286,7 +1286,7 @@ bb.i:                                             ; preds = %bb.h, %.preheader.i
   %.3.i = phi i32 [ 1, %bb.h ], [ %i.aas, %.preheader.i ]
   %i.aav = add nsw i32 %.153.i, -1                ; 2 uses
   %.not47.i = icmp eq i32 %i.aav, 0
-  br i1 %.not47.i, label %init_by_array.exit, label %.preheader.i, !llvm.loop !83
+  br i1 %.not47.i, label %init_by_array.exit, label %.preheader.i, !llvm.loop !82
 
 init_by_array.exit:                               ; preds = %bb.i
   store i32 -2147483648, ptr %1, align 8, !tbaa !7
@@ -1596,7 +1596,7 @@ bb.a:
   br i1 %i.e, label %RTYPEDDATA_GET_DATA.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !84
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit
 
 RTYPEDDATA_GET_DATA.exit:                         ; preds = %bb.a, %bb.b
@@ -1668,14 +1668,14 @@ bb.h:                                             ; preds = %try_get_rnd.exit
 
 bb.i:                                             ; preds = %try_get_rnd.exit
   %i.y = getelementptr i8, ptr %i.v, i64 8
-  %i.z = load i8, ptr %i.y, align 8, !tbaa !85    ; 2 uses
+  %i.z = load i8, ptr %i.y, align 8, !tbaa !84    ; 2 uses
   %.not22 = icmp eq i8 %i.z, 1
   br i1 %.not22, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = zext i8 %i.z to i32
   %i.ab = getelementptr i8, ptr %i.v, i64 9
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !86
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !85
   %i.ad = zext i8 %i.ac to i32
   %i.ae = load i64, ptr @rb_eTypeError, align 8, !tbaa !35
   tail call void (i64, ptr, ...) @rb_raise(i64 noundef %i.ae, ptr noundef nonnull @.str.31, i32 noundef %i.aa, i32 noundef %i.ad) #25
@@ -1694,7 +1694,7 @@ rb_check_arity.exit:                              ; preds = %bb.k
   %i.ag = and i64 %2, 7
   %i.ah = icmp eq i64 %i.ag, 0
   %.not3.i.i = and i1 %i.af, %i.ah
-  br i1 %.not3.i.i, label %RB_OBJ_FROZEN.exit.i, label %RB_OBJ_FROZEN.exit.thread.i, !prof !87
+  br i1 %.not3.i.i, label %RB_OBJ_FROZEN.exit.i, label %RB_OBJ_FROZEN.exit.thread.i, !prof !86
 
 RB_OBJ_FROZEN.exit.i:                             ; preds = %rb_check_arity.exit
   %i.ai = load i64, ptr %i.p, align 8, !tbaa !53  ; 3 uses
@@ -1712,7 +1712,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %RB_OBJ_FROZEN.exit.
   %i.am = and i64 %i.ai, 49152
   %.not8.i = icmp eq i64 %i.am, 0
   %or.cond.i24 = or i1 %i.al, %.not8.i
-  br i1 %or.cond.i24, label %rb_check_frozen_inline.exit, label %bb.m, !prof !88
+  br i1 %or.cond.i24, label %rb_check_frozen_inline.exit, label %bb.m, !prof !87
 
 bb.m:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
   tail call void @rb_str_modify(i64 noundef %2) #23
@@ -1916,7 +1916,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.a
   %i.e = load i64, ptr %.pre5.i, align 8, !tbaa !53
   %i.f = and i64 %i.e, 95
   %or.cond.not.i.i = icmp eq i64 %i.f, 76
-  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !89
+  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !88
 
 bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
   %i.g = getelementptr i8, ptr %.pre5.i, i64 24
@@ -1928,13 +1928,13 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.k, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !84
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i
 
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %bb.b ] ; 2 uses
   %i.o = icmp eq i64 %i.i, ptrtoint (ptr @rb_random_data_type_1_0 to i64)
-  br i1 %i.o, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !90
+  br i1 %i.o, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !89
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.q, %bb.d ], [ %i.j, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -1943,9 +1943,9 @@ RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %.preheader.i.i
   %i.p = getelementptr i8, ptr %.016.i.i, i64 48
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !91   ; 2 uses
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !90   ; 2 uses
   %i.r = icmp eq ptr %i.q, @rb_random_data_type_1_0
-  br i1 %i.r, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !llvm.loop !92
+  br i1 %i.r, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !llvm.loop !91
 
 .critedge.i.i:                                    ; preds = %.preheader.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.a
   %i.s = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @rb_random_data_type_1_0) #23
@@ -1988,7 +1988,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.b
   %i.g = load i64, ptr %i.f, align 8, !tbaa !53
   %i.h = and i64 %i.g, 95
   %or.cond.not.i.i = icmp eq i64 %i.h, 76
-  br i1 %or.cond.not.i.i, label %bb.c, label %.critedge.i.i, !prof !89
+  br i1 %or.cond.not.i.i, label %bb.c, label %.critedge.i.i, !prof !88
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
   %i.i = getelementptr i8, ptr %i.f, i64 24
@@ -2000,13 +2000,13 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.m, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !84
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i
 
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.d, %bb.c
   %i.p = phi ptr [ %i.o, %bb.d ], [ %i.n, %bb.c ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.q, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !90
+  br i1 %i.q, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !89
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.e
   %.016.i.i = phi ptr [ %i.s, %bb.e ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2015,9 +2015,9 @@ RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.d, %bb.c
 
 bb.e:                                             ; preds = %.preheader.i.i
   %i.r = getelementptr i8, ptr %.016.i.i, i64 48
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !91   ; 2 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !90   ; 2 uses
   %i.t = icmp eq ptr %i.s, @random_mt_type
-  br i1 %i.t, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !92
+  br i1 %i.t, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !91
 
 .critedge.i.i:                                    ; preds = %.preheader.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.b
   %i.u = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @random_mt_type) #23
@@ -2036,7 +2036,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i17:             ; preds = %get_rnd_mt.exit
   %i.aa = load i64, ptr %i.z, align 8, !tbaa !53
   %i.ab = and i64 %i.aa, 95
   %or.cond.not.i.i18 = icmp eq i64 %i.ab, 76
-  br i1 %or.cond.not.i.i18, label %bb.f, label %.critedge.i.i19, !prof !89
+  br i1 %or.cond.not.i.i18, label %bb.f, label %.critedge.i.i19, !prof !88
 
 bb.f:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i17
   %i.ac = getelementptr i8, ptr %i.z, i64 24
@@ -2048,13 +2048,13 @@ bb.f:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.ag, label %RTYPEDDATA_GET_DATA.exit.i.i21, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !84
+  %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i21
 
 RTYPEDDATA_GET_DATA.exit.i.i21:                   ; preds = %bb.g, %bb.f
   %i.aj = phi ptr [ %i.ai, %bb.g ], [ %i.ah, %bb.f ] ; 2 uses
   %i.ak = icmp eq i64 %i.ae, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.ak, label %get_rnd_mt.exit25, label %.preheader.i.i22, !prof !90
+  br i1 %i.ak, label %get_rnd_mt.exit25, label %.preheader.i.i22, !prof !89
 
 .preheader.i.i22:                                 ; preds = %RTYPEDDATA_GET_DATA.exit.i.i21, %bb.h
   %.016.i.i23 = phi ptr [ %i.am, %bb.h ], [ %i.af, %RTYPEDDATA_GET_DATA.exit.i.i21 ] ; 2 uses
@@ -2063,9 +2063,9 @@ RTYPEDDATA_GET_DATA.exit.i.i21:                   ; preds = %bb.g, %bb.f
 
 bb.h:                                             ; preds = %.preheader.i.i22
   %i.al = getelementptr i8, ptr %.016.i.i23, i64 48
-  %i.am = load ptr, ptr %i.al, align 8, !tbaa !91 ; 2 uses
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !90 ; 2 uses
   %i.an = icmp eq ptr %i.am, @random_mt_type
-  br i1 %i.an, label %get_rnd_mt.exit25, label %.preheader.i.i22, !llvm.loop !92
+  br i1 %i.an, label %get_rnd_mt.exit25, label %.preheader.i.i22, !llvm.loop !91
 
 .critedge.i.i19:                                  ; preds = %.preheader.i.i22, %rbimpl_RB_TYPE_P_fastpath.exit.i.i17, %get_rnd_mt.exit
   %i.ao = tail call ptr @rb_check_typeddata(i64 noundef %1, ptr noundef nonnull @random_mt_type) #23
@@ -2073,7 +2073,7 @@ bb.h:                                             ; preds = %.preheader.i.i22
 
 get_rnd_mt.exit25:                                ; preds = %bb.h, %RTYPEDDATA_GET_DATA.exit.i.i21, %.critedge.i.i19
   %.1.i.i20 = phi ptr [ %i.ao, %.critedge.i.i19 ], [ %i.aj, %RTYPEDDATA_GET_DATA.exit.i.i21 ], [ %i.aj, %bb.h ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2520) %.1.i.i, ptr noundef nonnull align 8 dereferenceable(2520) %.1.i.i20, i64 2520, i1 false), !tbaa.struct !93
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2520) %.1.i.i, ptr noundef nonnull align 8 dereferenceable(2520) %.1.i.i20, i64 2520, i1 false), !tbaa.struct !92
   %i.ap = load i64, ptr %.1.i.i, align 8, !tbaa !20 ; 3 uses
   %i.aq = icmp eq i64 %i.ap, 0
   %i.ar = and i64 %i.ap, 7
@@ -2111,7 +2111,7 @@ bb.a:
   %i.d = tail call i64 @rb_integer_unpack(ptr noundef %i.c, i64 noundef 624, i64 noundef 4, i64 noundef 0, i32 noundef 66) #23
   %i.e = tail call i64 @rb_ary_push(i64 noundef %i.b, i64 noundef %i.d) #23 ; 0 uses
   %i.f = getelementptr i8, ptr %i.a, i64 2512
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !94
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !93
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i64 %i.h, 1
   %i.j = or disjoint i64 %i.i, 1
@@ -2288,7 +2288,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.a
   %i.f = load i64, ptr %i.e, align 8, !tbaa !53
   %i.g = and i64 %i.f, 95
   %or.cond.not.i.i = icmp eq i64 %i.g, 76
-  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !89
+  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !88
 
 bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
   %i.h = getelementptr i8, ptr %i.e, i64 24
@@ -2300,13 +2300,13 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !84
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i
 
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.p, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !90
+  br i1 %i.p, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !89
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2315,9 +2315,9 @@ RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %.preheader.i.i
   %i.q = getelementptr i8, ptr %.016.i.i, i64 48
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !91   ; 2 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !90   ; 2 uses
   %i.s = icmp eq ptr %i.r, @random_mt_type
-  br i1 %i.s, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !92
+  br i1 %i.s, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !91
 
 .critedge.i.i:                                    ; preds = %.preheader.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.a
   %i.t = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @random_mt_type) #23
@@ -2344,7 +2344,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.a
   %i.f = load i64, ptr %i.e, align 8, !tbaa !53
   %i.g = and i64 %i.f, 95
   %or.cond.not.i.i = icmp eq i64 %i.g, 76
-  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !89
+  br i1 %or.cond.not.i.i, label %bb.b, label %.critedge.i.i, !prof !88
 
 bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
   %i.h = getelementptr i8, ptr %i.e, i64 24
@@ -2356,13 +2356,13 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.l, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !84
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i
 
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.p, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !90
+  br i1 %i.p, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !89
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2371,9 +2371,9 @@ RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
 
 bb.d:                                             ; preds = %.preheader.i.i
   %i.q = getelementptr i8, ptr %.016.i.i, i64 48
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !91   ; 2 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !90   ; 2 uses
   %i.s = icmp eq ptr %i.r, @random_mt_type
-  br i1 %i.s, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !92
+  br i1 %i.s, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !91
 
 .critedge.i.i:                                    ; preds = %.preheader.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.a
   %i.t = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @random_mt_type) #23
@@ -2382,7 +2382,7 @@ bb.d:                                             ; preds = %.preheader.i.i
 get_rnd_mt.exit:                                  ; preds = %bb.d, %RTYPEDDATA_GET_DATA.exit.i.i, %.critedge.i.i
   %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ]
   %i.u = getelementptr i8, ptr %.1.i.i, i64 2512
-  %i.v = load i32, ptr %i.u, align 8, !tbaa !94
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !93
   %i.w = sext i32 %i.v to i64
   %i.x = shl nsw i64 %i.w, 1
   %i.y = or disjoint i64 %i.x, 1
@@ -2409,7 +2409,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.b
   %i.h = load i64, ptr %i.g, align 8, !tbaa !53
   %i.i = and i64 %i.h, 95
   %or.cond.not.i.i = icmp eq i64 %i.i, 76
-  br i1 %or.cond.not.i.i, label %bb.c, label %.critedge.i.i, !prof !89
+  br i1 %or.cond.not.i.i, label %bb.c, label %.critedge.i.i, !prof !88
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
   %i.j = getelementptr i8, ptr %i.g, i64 24
@@ -2421,13 +2421,13 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.n, label %RTYPEDDATA_GET_DATA.exit.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !84
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i
 
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.d, %bb.c
   %i.q = phi ptr [ %i.p, %bb.d ], [ %i.o, %bb.c ] ; 2 uses
   %i.r = icmp eq i64 %i.l, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.r, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !90
+  br i1 %i.r, label %get_rnd_mt.exit, label %.preheader.i.i, !prof !89
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.e
   %.016.i.i = phi ptr [ %i.t, %bb.e ], [ %i.m, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2436,9 +2436,9 @@ RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.d, %bb.c
 
 bb.e:                                             ; preds = %.preheader.i.i
   %i.s = getelementptr i8, ptr %.016.i.i, i64 48
-  %i.t = load ptr, ptr %i.s, align 8, !tbaa !91   ; 2 uses
+  %i.t = load ptr, ptr %i.s, align 8, !tbaa !90   ; 2 uses
   %i.u = icmp eq ptr %i.t, @random_mt_type
-  br i1 %i.u, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !92
+  br i1 %i.u, label %get_rnd_mt.exit, label %.preheader.i.i, !llvm.loop !91
 
 .critedge.i.i:                                    ; preds = %.preheader.i.i, %rbimpl_RB_TYPE_P_fastpath.exit.i.i, %bb.b
   %i.v = tail call ptr @rb_check_typeddata(i64 noundef %0, ptr noundef nonnull @random_mt_type) #23
@@ -2457,7 +2457,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i17:             ; preds = %get_rnd_mt.exit
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !53
   %i.ac = and i64 %i.ab, 95
   %or.cond.not.i.i18 = icmp eq i64 %i.ac, 76
-  br i1 %or.cond.not.i.i18, label %bb.f, label %.critedge.i.i19, !prof !89
+  br i1 %or.cond.not.i.i18, label %bb.f, label %.critedge.i.i19, !prof !88
 
 bb.f:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i17
   %i.ad = getelementptr i8, ptr %i.aa, i64 24
@@ -2469,13 +2469,13 @@ bb.f:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br i1 %i.ah, label %RTYPEDDATA_GET_DATA.exit.i.i21, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !84
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !83
   br label %RTYPEDDATA_GET_DATA.exit.i.i21
 
 RTYPEDDATA_GET_DATA.exit.i.i21:                   ; preds = %bb.g, %bb.f
   %i.ak = phi ptr [ %i.aj, %bb.g ], [ %i.ai, %bb.f ] ; 2 uses
   %i.al = icmp eq i64 %i.af, ptrtoint (ptr @random_mt_type to i64)
-  br i1 %i.al, label %get_rnd_mt.exit25, label %.preheader.i.i22, !prof !90
+  br i1 %i.al, label %get_rnd_mt.exit25, label %.preheader.i.i22, !prof !89
 
 .preheader.i.i22:                                 ; preds = %RTYPEDDATA_GET_DATA.exit.i.i21, %bb.h
   %.016.i.i23 = phi ptr [ %i.an, %bb.h ], [ %i.ag, %RTYPEDDATA_GET_DATA.exit.i.i21 ] ; 2 uses
@@ -2484,9 +2484,9 @@ RTYPEDDATA_GET_DATA.exit.i.i21:                   ; preds = %bb.g, %bb.f
 
 bb.h:                                             ; preds = %.preheader.i.i22
   %i.am = getelementptr i8, ptr %.016.i.i23, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !tbaa !91 ; 2 uses
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !90 ; 2 uses
   %i.ao = icmp eq ptr %i.an, @random_mt_type
-  br i1 %i.ao, label %get_rnd_mt.exit25, label %.preheader.i.i22, !llvm.loop !92
+  br i1 %i.ao, label %get_rnd_mt.exit25, label %.preheader.i.i22, !llvm.loop !91
 
 .critedge.i.i19:                                  ; preds = %.preheader.i.i22, %rbimpl_RB_TYPE_P_fastpath.exit.i.i17, %get_rnd_mt.exit
   %i.ap = tail call ptr @rb_check_typeddata(i64 noundef %1, ptr noundef nonnull @random_mt_type) #23
@@ -2516,9 +2516,9 @@ bb.i:                                             ; preds = %get_rnd_mt.exit25
 
 bb.j:                                             ; preds = %bb.i
   %i.bc = getelementptr i8, ptr %.1.i.i, i64 2512
-  %i.bd = load i32, ptr %i.bc, align 8, !tbaa !94
+  %i.bd = load i32, ptr %i.bc, align 8, !tbaa !93
   %i.be = getelementptr i8, ptr %.1.i.i20, i64 2512
-  %i.bf = load i32, ptr %i.be, align 8, !tbaa !94
+  %i.bf = load i32, ptr %i.be, align 8, !tbaa !93
   %.not16 = icmp eq i32 %i.bd, %i.bf
   br i1 %.not16, label %bb.k, label %bb.l
 
@@ -2762,7 +2762,7 @@ bb.b:                                             ; preds = %bb.a
 default_rand.exit:                                ; preds = %bb.a, %bb.b
   %.0.i = phi ptr [ %i.d, %bb.b ], [ %i.b, %bb.a ]
   %i.f = getelementptr i8, ptr %.0.i, i64 2512
-  %i.g = load i32, ptr %i.f, align 8, !tbaa !94
+  %i.g = load i32, ptr %i.f, align 8, !tbaa !93
   %i.h = sext i32 %i.g to i64
   %i.i = shl nsw i64 %i.h, 1
   %i.j = or disjoint i64 %i.i, 1
@@ -2890,7 +2890,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.d = icmp ugt i64 %i.b, 4611686018427387903
-  br i1 %i.d, label %bb.c, label %.thread, !prof !95
+  br i1 %i.d, label %bb.c, label %.thread, !prof !94
 
 bb.c:                                             ; preds = %bb.b
   tail call void @ruby_malloc_size_overflow(i64 noundef range(i64 256, 0) %spec.store.select, i64 noundef 4) #25
@@ -2914,7 +2914,7 @@ bb.d:                                             ; preds = %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %0, i64 24
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !96
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !95
   %i.p = load i32, ptr %i.k, align 16, !tbaa !7
   call void %i.o(ptr noundef %1, i32 noundef %i.p) #23
   br label %bb.i
@@ -2938,7 +2938,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.024 = phi i64 [ %spec.store.select, %bb.f ], [ %spec.select27, %bb.g ] ; 2 uses
   %i.x = getelementptr i8, ptr %0, i64 16
-  %i.y = load ptr, ptr %i.x, align 8, !tbaa !97
+  %i.y = load ptr, ptr %i.x, align 8, !tbaa !96
   call void %i.y(ptr noundef %1, ptr noundef nonnull %i.r, i64 noundef %.024) #23
   %i.z = shl i64 %.024, 2
   br label %bb.i
@@ -3064,7 +3064,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %spec.store.select.i = select i1 %.not48.i, i32 %i.aj, i32 0
   %i.am = add nsw i32 %.051.i, -1                 ; 2 uses
   %.not.i = icmp eq i32 %i.am, 0
-  br i1 %.not.i, label %.preheader.i, label %bb.d, !llvm.loop !82
+  br i1 %.not.i, label %.preheader.i, label %bb.d, !llvm.loop !81
 
 .preheader.i:                                     ; preds = %bb.f, %bb.h
   %.153.i = phi i32 [ %i.bc, %bb.h ], [ 623, %bb.f ]
@@ -3095,7 +3095,7 @@ bb.h:                                             ; preds = %bb.g, %.preheader.i
   %.3.i = phi i32 [ 1, %bb.g ], [ %i.az, %.preheader.i ]
   %i.bc = add nsw i32 %.153.i, -1                 ; 2 uses
   %.not47.i = icmp eq i32 %i.bc, 0
-  br i1 %.not47.i, label %init_by_array.exit, label %.preheader.i, !llvm.loop !83
+  br i1 %.not47.i, label %init_by_array.exit, label %.preheader.i, !llvm.loop !82
 
 init_by_array.exit:                               ; preds = %bb.h
   store i32 -2147483648, ptr %i.a, align 8, !tbaa !7
@@ -3464,7 +3464,7 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.q
   %i.ay = inttoptr i64 %i.ap to ptr
   %i.az = getelementptr i8, ptr %i.ay, i64 16
-  %i.ba = load double, ptr %i.az, align 8, !tbaa !98
+  %i.ba = load double, ptr %i.az, align 8, !tbaa !97
   br label %rb_float_value_inline.exit
 
 rb_float_value_inline.exit:                       ; preds = %bb.s, %bb.t
@@ -3500,7 +3500,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.u
   %i.bm = inttoptr i64 %i.be to ptr
   %i.bn = getelementptr i8, ptr %i.bm, i64 16
-  %i.bo = load double, ptr %i.bn, align 8, !tbaa !98
+  %i.bo = load double, ptr %i.bn, align 8, !tbaa !97
   br label %rb_float_value_inline.exit.i
 
 rb_float_value_inline.exit.i:                     ; preds = %bb.x, %bb.w, %bb.v
@@ -3536,7 +3536,7 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %float_value.exit
   %i.ca = inttoptr i64 %i.bs to ptr
   %i.cb = getelementptr i8, ptr %i.ca, i64 16
-  %i.cc = load double, ptr %i.cb, align 8, !tbaa !98
+  %i.cc = load double, ptr %i.cb, align 8, !tbaa !97
   br label %rb_float_value_inline.exit.i55
 
 rb_float_value_inline.exit.i55:                   ; preds = %bb.ab, %bb.aa, %bb.z
@@ -3739,7 +3739,7 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.az
   %i.ew = inttoptr i64 %i.dp to ptr
   %i.ex = getelementptr i8, ptr %i.ew, i64 16
-  %i.ey = load double, ptr %i.ex, align 8, !tbaa !98
+  %i.ey = load double, ptr %i.ex, align 8, !tbaa !97
   br label %rb_float_value_inline.exit70
 
 rb_float_value_inline.exit70:                     ; preds = %bb.ba, %bb.bb, %bb.bc
@@ -3764,7 +3764,7 @@ bb.be:                                            ; preds = %bb.bd
 bb.bf:                                            ; preds = %rb_float_value_inline.exit70
   %i.fg = inttoptr i64 %i.en to ptr
   %i.fh = getelementptr i8, ptr %i.fg, i64 16
-  %i.fi = load double, ptr %i.fh, align 8, !tbaa !98
+  %i.fi = load double, ptr %i.fh, align 8, !tbaa !97
   br label %rb_float_value_inline.exit74
 
 rb_float_value_inline.exit74:                     ; preds = %bb.bd, %bb.be, %bb.bf
@@ -3900,9 +3900,9 @@ bb.q:                                             ; preds = %bb.o
 bb.r:                                             ; preds = %bb.m
   %i.ab = tail call fastcc i64 @random_ulong_limited_big(i64 noundef %0, ptr noundef %1, i64 noundef %i.s)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
-  store ptr %i.a, ptr %i.b, align 8, !tbaa !101
-  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.b) #23, !srcloc !103
-  %i.ac = load ptr, ptr %i.b, align 8, !tbaa !101
+  store ptr %i.a, ptr %i.b, align 8, !tbaa !100
+  call void asm sideeffect "", "*m,~{dirflag},~{fpsr},~{flags}"(ptr nonnull elementtype(ptr) %i.b) #23, !srcloc !102
+  %i.ac = load ptr, ptr %i.b, align 8, !tbaa !100
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   %i.ad = load volatile i64, ptr %i.ac, align 8, !tbaa !35 ; 0 uses
   br label %rb_ulong2num_inline.exit
@@ -3974,7 +3974,7 @@ bb.e:                                             ; preds = %bb.d, %.split.us
   %i.q = lshr i64 %.1.us, %narrow
   %i.r = and i64 %.128.us, %i.e                   ; 2 uses
   %i.s = icmp ult i64 %2, %i.r
-  br i1 %i.s, label %.split.us, label %limited_rand.exit, !llvm.loop !104
+  br i1 %i.s, label %.split.us, label %limited_rand.exit, !llvm.loop !103
 
 .split:                                           ; preds = %bb.c, %bb.g
   %.027 = phi i64 [ %i.w, %bb.g ], [ 0, %bb.c ]
@@ -3997,7 +3997,7 @@ bb.g:                                             ; preds = %bb.f, %.split
   %i.x = lshr i64 %.1, %narrow
   %i.y = and i64 %.128, %i.e                      ; 2 uses
   %i.z = icmp ult i64 %2, %i.y
-  br i1 %i.z, label %.split, label %limited_rand.exit, !llvm.loop !104
+  br i1 %i.z, label %.split, label %limited_rand.exit, !llvm.loop !103
 
 bb.h:                                             ; preds = %bb.b
   %i.aa = load ptr, ptr @default_rand_key, align 8, !tbaa !11
@@ -4138,7 +4138,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.h = icmp ugt i64 %i.d, 4611686018427387903
-  br i1 %i.h, label %bb.e, label %rb_alloc_tmp_buffer2.exit, !prof !95
+  br i1 %i.h, label %bb.e, label %rb_alloc_tmp_buffer2.exit, !prof !94
 
 bb.e:                                             ; preds = %bb.d
   call void @ruby_malloc_size_overflow(i64 noundef range(i64 256, 0) %i.d, i64 noundef 4) #25
@@ -4183,7 +4183,7 @@ bb.g:                                             ; preds = %.lr.ph.us
 
 .lr.ph.us.backedge:                               ; preds = %bb.g, %.loopexit.us
   %.03641.us.be = phi i64 [ %i.ab, %bb.g ], [ 0, %.loopexit.us ]
-  br label %.lr.ph.us, !llvm.loop !105
+  br label %.lr.ph.us, !llvm.loop !104
 
 .loopexit.us:                                     ; preds = %.lr.ph.us
   %i.ad = call fastcc i64 @obj_random_bytes(i64 noundef %0, ptr noundef nonnull %i.p, i64 noundef %i.r) ; 0 uses
@@ -4279,7 +4279,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.g = icmp ugt i64 %i.c, 4611686018427387903
-  br i1 %i.g, label %bb.d, label %rb_alloc_tmp_buffer2.exit, !prof !95
+  br i1 %i.g, label %bb.d, label %rb_alloc_tmp_buffer2.exit, !prof !94
 
 bb.d:                                             ; preds = %bb.c
   tail call void @ruby_malloc_size_overflow(i64 noundef range(i64 256, 0) %i.c, i64 noundef 4) #25
@@ -4356,7 +4356,7 @@ bb.i:                                             ; preds = %bb.f, %.thread, %bb
   %.03451.be = phi i64 [ %.034, %bb.i ], [ %.03448, %bb.g ]
   %.03250.be = phi i32 [ %i.aj, %bb.i ], [ 0, %bb.g ]
   %.03549.be = phi i32 [ %.1, %bb.i ], [ 1, %bb.g ]
-  br label %.lr.ph, !llvm.loop !106
+  br label %.lr.ph, !llvm.loop !105
 
 .loopexit._crit_edge:                             ; preds = %bb.i, %bb.e
   %i.am = call i64 @rb_integer_unpack(ptr noundef %i.l, i64 noundef %i.b, i64 noundef 4, i64 noundef 0, i32 noundef 66) #23
@@ -4380,7 +4380,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
   store i64 0, ptr %i.a, align 8, !tbaa !35
-  %i.b = load i64, ptr %0, align 8, !tbaa !107
+  %i.b = load i64, ptr %0, align 8, !tbaa !106
   %i.c = add i64 %i.b, 31                         ; 2 uses
   %i.d = lshr i64 %i.c, 5                         ; 5 uses
   %i.e = add nuw nsw i64 %i.d, 1                  ; 2 uses
@@ -4403,7 +4403,7 @@ bb.c:                                             ; preds = %rb_alloc_tmp_buffer
   %i.m = shl nuw nsw i64 %i.d, 2                  ; 2 uses
   %i.n = call i32 @ruby_fill_random_bytes(ptr noundef nonnull %i.l, i64 noundef %i.m, i32 noundef 0) ; 0 uses
   %i.o = getelementptr i8, ptr %0, i64 16
-  %i.p = load ptr, ptr %i.o, align 8, !tbaa !97
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !96
   call void %i.p(ptr noundef %1, ptr noundef nonnull %i.l, i64 noundef %i.d) #23
   %i.q = getelementptr [4 x i8], ptr %i.l, i64 %i.d ; 2 uses
   %i.r = getelementptr i8, ptr %i.q, i64 -4
@@ -4530,7 +4530,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.l
   %i.al = inttoptr i64 %i.ac to ptr
   %i.am = getelementptr i8, ptr %i.al, i64 16
-  %i.an = load double, ptr %i.am, align 8, !tbaa !98
+  %i.an = load double, ptr %i.am, align 8, !tbaa !97
   br label %rb_float_value_inline.exit.i
 
 rb_float_value_inline.exit.i:                     ; preds = %bb.o, %bb.n
@@ -4739,7 +4739,7 @@ attributes #29 = { memory(none) }
 !66 = distinct !{!66, !24}
 !67 = !{!19, !19, i64 0}
 !68 = !{!32, !17, i64 8}
-!69 = !{!32, !17, i64 0}
+!69 = distinct !{!69, !24, !25, !26}
 !70 = distinct !{!70, !24, !25, !26}
 !71 = distinct !{!71, !24, !25, !26}
 !72 = distinct !{!72, !24, !25, !26}
@@ -4751,31 +4751,30 @@ attributes #29 = { memory(none) }
 !78 = distinct !{!78, !24, !25, !26}
 !79 = distinct !{!79, !24, !25, !26}
 !80 = distinct !{!80, !24, !25, !26}
-!81 = distinct !{!81, !24, !25, !26}
+!81 = distinct !{!81, !24}
 !82 = distinct !{!82, !24}
-!83 = distinct !{!83, !24}
-!84 = !{!37, !13, i64 32}
-!85 = !{!48, !9, i64 8}
-!86 = !{!48, !9, i64 9}
-!87 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!88 = !{!"branch_weights", i32 4001, i32 1}
-!89 = !{!"branch_weights", i32 -100663296, i32 2097152}
-!90 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!91 = !{!42, !45, i64 48}
-!92 = distinct !{!92, !24}
-!93 = !{i64 0, i64 8, !35, i64 8, i64 2496, !57, i64 2504, i64 8, !67, i64 2512, i64 4, !7}
-!94 = !{!15, !8, i64 2512}
-!95 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!96 = !{!48, !13, i64 24}
-!97 = !{!48, !13, i64 16}
-!98 = !{!99, !100, i64 16}
-!99 = !{!"RFloat", !38, i64 0, !100, i64 16}
-!100 = !{!"double", !9, i64 0}
-!101 = !{!102, !102, i64 0}
-!102 = !{!"p1 long", !13, i64 0}
-!103 = !{i64 2155753400}
+!83 = !{!37, !13, i64 32}
+!84 = !{!48, !9, i64 8}
+!85 = !{!48, !9, i64 9}
+!86 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!87 = !{!"branch_weights", i32 4001, i32 1}
+!88 = !{!"branch_weights", i32 -100663296, i32 2097152}
+!89 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!90 = !{!42, !45, i64 48}
+!91 = distinct !{!91, !24}
+!92 = !{i64 0, i64 8, !35, i64 8, i64 2496, !57, i64 2504, i64 8, !67, i64 2512, i64 4, !7}
+!93 = !{!15, !8, i64 2512}
+!94 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!95 = !{!48, !13, i64 24}
+!96 = !{!48, !13, i64 16}
+!97 = !{!98, !99, i64 16}
+!98 = !{!"RFloat", !38, i64 0, !99, i64 16}
+!99 = !{!"double", !9, i64 0}
+!100 = !{!101, !101, i64 0}
+!101 = !{!"p1 long", !13, i64 0}
+!102 = !{i64 2155753400}
+!103 = distinct !{!103, !24}
 !104 = distinct !{!104, !24}
 !105 = distinct !{!105, !24}
-!106 = distinct !{!106, !24}
-!107 = !{!48, !17, i64 0}
+!106 = !{!48, !17, i64 0}
 end_hunk_0

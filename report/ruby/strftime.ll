@@ -132,7 +132,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.c
   %.not2115 = icmp eq ptr %7, null                ; 2 uses
   %i.ae = getelementptr i8, ptr %7, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.ag = getelementptr i8, ptr %5, i64 32        ; 21 uses
+  %i.ag = getelementptr i8, ptr %5, i64 32        ; 20 uses
   %.sroa.4.0..sroa_idx.i.i2763 = getelementptr inbounds nuw i8, ptr %10, i64 4
   %.sroa.5.0..sroa_idx.i.i2764 = getelementptr inbounds nuw i8, ptr %10, i64 8
   %.sroa.6.0..sroa_idx.i.i2765 = getelementptr inbounds nuw i8, ptr %10, i64 12
@@ -155,6 +155,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.c
   %i.ah = getelementptr i8, ptr %5, i64 24
   %.not2201 = icmp eq ptr %.01900, null
   %i.ai = getelementptr i8, ptr %5, i64 16
+  %.shift = getelementptr i8, ptr %5, i64 36
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph3350, %case_conv.exit2868
@@ -557,10 +558,8 @@ RSTRING_PTR.exit2440:                             ; preds = %bb.dp, %bb.dq
   br label %case_conv.exit2868
 
 bb.dr:                                            ; preds = %.lr.ph
-  %12 = load i64, ptr %i.ag, align 8
-  %13 = lshr i64 %12, 32
-  %14 = trunc nuw i64 %13 to i32
-  %i.ade = and i32 %14, 63
+  %12 = load i32, ptr %.shift, align 4
+  %i.ade = and i32 %12, 63
   %i.adf = call range(i32 0, 367) i32 @llvm.umin.i32(i32 range(i32 0, 512) %i.ade, i32 60)
   %i.adg = and i32 %.019243306, 1
   %.not2255 = icmp eq i32 %i.adg, 0

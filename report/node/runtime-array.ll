@@ -131,9 +131,9 @@ bb.b:                                             ; preds = %_ZNK2v88internal9Ar
   %i.h = ptrtoint ptr %1 to i64
   %i.i = add i64 %i.h, -8
   %i.j = inttoptr i64 %i.i to ptr
-  %3 = load i64, ptr %i.j, align 8
-  %4 = lshr i64 %3, 32
-  %i.k = trunc i64 %4 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %3 = load i32, ptr %.shift, align 4
+  %i.k = trunc i32 %3 to i8
   tail call void @_ZN2v88internal8JSObject22TransitionElementsKindEPNS0_7IsolateENS0_12DirectHandleIS1_EENS0_12ElementsKindE(ptr noundef nonnull %2, ptr %1, i8 noundef zeroext %i.k) #11
   %i.l = load i64, ptr %1, align 8
   store ptr %i.b, ptr %i.a, align 8
@@ -506,11 +506,9 @@ bb.f:                                             ; preds = %bb.e
   %i.al = load i64, ptr %i.ak, align 8
   %i.am = add i64 %i.al, -1
   %i.an = inttoptr i64 %i.am to ptr
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
-  %3 = load i64, ptr %i.ao, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %.not.i = icmp ult i32 %.2.i, %5
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 12
+  %3 = load i32, ptr %i.ao, align 4
+  %.not.i = icmp ult i32 %.2.i, %3
   br i1 %.not.i, label %bb.h, label %_ZNK2v85MaybeIbE2ToEPb.exit
 
 _ZNK2v85MaybeIbE2ToEPb.exit:                      ; preds = %.critedge.i

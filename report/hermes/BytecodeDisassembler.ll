@@ -201,10 +201,9 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 bb.c:                                             ; preds = %bb.a
-  %2 = load i64, ptr %i.g, align 1
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.q = and i32 %4, 32767
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %2 = load i32, ptr %.shift.i, align 1
+  %i.q = and i32 %2, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit: ; preds = %bb.b, %bb.c
@@ -585,10 +584,9 @@ bb.s:                                             ; preds = %_ZNSt12__shared_ptr
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 bb.t:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %5 = load i64, ptr %i.bl, align 1
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.bu = and i32 %7, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
+  %5 = load i32, ptr %.shift.i.i, align 1
+  %i.bu = and i32 %5, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit: ; preds = %bb.s, %bb.t
@@ -991,10 +989,9 @@ bb.s:                                             ; preds = %_ZNSt12__shared_ptr
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 bb.t:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %5 = load i64, ptr %i.bn, align 1
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.bx = and i32 %7, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.bn, i64 4
+  %5 = load i32, ptr %.shift.i.i, align 1
+  %i.bx = and i32 %5, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit: ; preds = %bb.s, %bb.t
@@ -1215,10 +1212,9 @@ bb.al:                                            ; preds = %_ZNSt12__shared_ptr
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit36
 
 bb.am:                                            ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit34
-  %8 = load i64, ptr %i.ez, align 1
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.fj = and i32 %10, 32767
+  %.shift.i.i35 = getelementptr inbounds nuw i8, ptr %i.ez, i64 4
+  %6 = load i32, ptr %.shift.i.i35, align 1
+  %i.fj = and i32 %6, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit36
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit36: ; preds = %bb.al, %bb.am
@@ -1621,10 +1617,9 @@ bb.s:                                             ; preds = %_ZNSt12__shared_ptr
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 bb.t:                                             ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %4 = load i64, ptr %i.bi, align 1
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.br = and i32 %6, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.bi, i64 4
+  %4 = load i32, ptr %.shift.i.i, align 1
+  %i.br = and i32 %4, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit: ; preds = %bb.s, %bb.t
@@ -2027,10 +2022,9 @@ bb.u:                                             ; preds = %bb.t
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 bb.v:                                             ; preds = %bb.t
-  %4 = load i64, ptr %i.ch, align 1
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.cr = and i32 %6, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.ch, i64 4
+  %4 = load i32, ptr %.shift.i.i, align 1
+  %i.cr = and i32 %4, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit: ; preds = %bb.u, %bb.v
@@ -2433,10 +2427,9 @@ bb.ae:                                            ; preds = %_ZNSt12__shared_ptr
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 bb.af:                                            ; preds = %_ZNSt12__shared_ptrIN6hermes3hbc14BCProviderBaseELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %10 = load i64, ptr %i.dv, align 1
-  %11 = lshr i64 %10, 32
-  %12 = trunc nuw i64 %11 to i32
-  %i.ef = and i32 %12, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.dv, i64 4
+  %10 = load i32, ptr %.shift.i.i, align 1
+  %i.ef = and i32 %10, 32767
   br label %_ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit
 
 _ZN6hermes3hbc15BytecodeVisitor27visitInstructionsInFunctionEj.exit: ; preds = %bb.ae, %bb.af

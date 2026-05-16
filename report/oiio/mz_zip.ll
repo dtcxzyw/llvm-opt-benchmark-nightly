@@ -201,10 +201,9 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %.sink.split, %bb.q, %bb.n
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.cd = load i32, ptr %i.cc, align 4, !tbaa !75 ; 5 uses
-  %5 = load i16, ptr %0, align 8, !tbaa !76
-  %6 = lshr i16 %5, 8
-  %7 = trunc nuw i16 %6 to i8
-  switch i8 %7, label %mz_zip_attrib_is_dir.exit [
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %5 = load i8, ptr %.shift, align 1, !tbaa !76
+  switch i8 %5, label %mz_zip_attrib_is_dir.exit [
     i8 10, label %bb.t
     i8 0, label %bb.t
     i8 19, label %bb.u
@@ -440,10 +439,9 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ac = getelementptr inbounds nuw i8, ptr %2, i64 84
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !79 ; 5 uses
-  %4 = load i16, ptr %2, align 8, !tbaa !80
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  switch i8 %6, label %.thread.thread [
+  %.shift.i = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %4 = load i8, ptr %.shift.i, align 1, !tbaa !80
+  switch i8 %4, label %.thread.thread [
     i8 10, label %bb.m
     i8 0, label %bb.m
     i8 19, label %bb.n
@@ -803,10 +801,9 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   %i.et = and i32 %i.es, 65535                    ; 3 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %2, i64 84 ; 2 uses
   %i.ev = load i32, ptr %i.eu, align 4, !tbaa !79 ; 5 uses
-  %7 = load i16, ptr %2, align 8, !tbaa !80
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  switch i8 %9, label %mz_zip_attrib_is_dir.exit [
+  %.shift = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %5 = load i8, ptr %.shift, align 1, !tbaa !80
+  switch i8 %5, label %mz_zip_attrib_is_dir.exit [
     i8 10, label %bb.bb
     i8 0, label %bb.bb
     i8 19, label %bb.bc
@@ -1209,10 +1206,9 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !79 ; 5 uses
-  %4 = load i16, ptr %0, align 8, !tbaa !80
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  switch i8 %6, label %mz_zip_attrib_is_dir.exit.i [
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %4 = load i8, ptr %.shift.i, align 1, !tbaa !80
+  switch i8 %4, label %mz_zip_attrib_is_dir.exit.i [
     i8 10, label %bb.o
     i8 0, label %bb.o
     i8 19, label %bb.p
@@ -1615,10 +1611,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 5 uses
-  %1 = load i16, ptr %0, align 8, !tbaa !76
-  %2 = lshr i16 %1, 8
-  %3 = trunc nuw i16 %2 to i8
-  switch i8 %3, label %mz_zip_attrib_is_dir.exit [
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %1 = load i8, ptr %.shift, align 1, !tbaa !76
+  switch i8 %1, label %mz_zip_attrib_is_dir.exit [
     i8 10, label %bb.d
     i8 0, label %bb.d
     i8 19, label %bb.e
@@ -1693,10 +1688,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.d = load i32, ptr %i.c, align 4, !tbaa !75   ; 5 uses
-  %1 = load i16, ptr %0, align 8, !tbaa !76
-  %2 = lshr i16 %1, 8
-  %3 = trunc nuw i16 %2 to i8
-  switch i8 %3, label %mz_zip_attrib_is_symlink.exit [
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %1 = load i8, ptr %.shift, align 1, !tbaa !76
+  switch i8 %1, label %mz_zip_attrib_is_symlink.exit [
     i8 10, label %bb.d
     i8 0, label %bb.d
     i8 19, label %bb.e

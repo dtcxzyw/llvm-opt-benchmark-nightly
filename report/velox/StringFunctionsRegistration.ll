@@ -201,10 +201,9 @@ bb.ak:                                            ; preds = %bb.ai, %bb.ah, %bb.
   br i1 %.not206, label %.critedge, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.by = getelementptr inbounds nuw i8, ptr %.lcssa260, i64 20
-  %5 = load i16, ptr %i.by, align 4
-  %6 = lshr i16 %5, 8
-  %i.bz = zext nneg i16 %6 to i32
+  %i.by = getelementptr inbounds nuw i8, ptr %.lcssa260, i64 21
+  %5 = load i8, ptr %i.by, align 1
+  %i.bz = zext i8 %5 to i32
   %i.ca = load i32, ptr %4, align 4, !tbaa !3
   %i.cb = tail call fastcc noundef zeroext i1 @_ZL23grapheme_break_extendediiPi(i32 noundef %i.ca, i32 noundef %i.bz, ptr noundef %4)
   br i1 %i.cb, label %bb.am, label %.critedge

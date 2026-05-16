@@ -201,10 +201,9 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.i = mul nuw i8 %i.h, 17
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i8 %i.i, ptr %i.j, align 1, !tbaa !9
-  %3 = load i16, ptr %0, align 2, !tbaa !7
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  %i.k = and i8 %5, 15
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %3 = load i8, ptr %.shift, align 1, !tbaa !7
+  %i.k = and i8 %3, 15
   %i.l = mul nuw i8 %i.k, 17
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i8 %i.l, ptr %i.m, align 1, !tbaa !9
@@ -215,7 +214,7 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i8 %i.q, ptr %i.r, align 1, !tbaa !9
   %i.s = getelementptr inbounds i8, ptr %1, i64 %i.a ; 5 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
   %i.u = load i16, ptr %i.t, align 2, !tbaa !7
   %i.v = trunc i16 %i.u to i8
   %i.w = and i8 %i.v, 15
@@ -227,10 +226,9 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.ab = mul nuw i8 %i.aa, 17
   %i.ac = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   store i8 %i.ab, ptr %i.ac, align 1, !tbaa !9
-  %6 = load i16, ptr %i.t, align 2, !tbaa !7
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
-  %i.ad = and i8 %8, 15
+  %.shift19 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %4 = load i8, ptr %.shift19, align 1, !tbaa !7
+  %i.ad = and i8 %4, 15
   %i.ae = mul nuw i8 %i.ad, 17
   %i.af = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i8 %i.ae, ptr %i.af, align 1, !tbaa !9
@@ -241,7 +239,7 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.ak = getelementptr inbounds nuw i8, ptr %i.s, i64 12
   store i8 %i.aj, ptr %i.ak, align 1, !tbaa !9
   %i.al = getelementptr inbounds i8, ptr %i.s, i64 %i.a ; 5 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
+  %i.am = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.an = load i16, ptr %i.am, align 2, !tbaa !7
   %i.ao = trunc i16 %i.an to i8
   %i.ap = and i8 %i.ao, 15
@@ -253,10 +251,9 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.au = mul nuw i8 %i.at, 17
   %i.av = getelementptr inbounds nuw i8, ptr %i.al, i64 4
   store i8 %i.au, ptr %i.av, align 1, !tbaa !9
-  %9 = load i16, ptr %i.am, align 2, !tbaa !7
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
-  %i.aw = and i8 %11, 15
+  %.shift20 = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %5 = load i8, ptr %.shift20, align 1, !tbaa !7
+  %i.aw = and i8 %5, 15
   %i.ax = mul nuw i8 %i.aw, 17
   %i.ay = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   store i8 %i.ax, ptr %i.ay, align 1, !tbaa !9
@@ -267,7 +264,7 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.bd = getelementptr inbounds nuw i8, ptr %i.al, i64 12
   store i8 %i.bc, ptr %i.bd, align 1, !tbaa !9
   %i.be = getelementptr inbounds i8, ptr %i.al, i64 %i.a ; 4 uses
-  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 4 uses
+  %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
   %i.bg = load i16, ptr %i.bf, align 2, !tbaa !7
   %i.bh = trunc i16 %i.bg to i8
   %i.bi = and i8 %i.bh, 15
@@ -279,10 +276,9 @@ define hidden void @_Z24bcdec__sharp_alpha_blockPKvPvi(ptr noundef readonly capt
   %i.bn = mul nuw i8 %i.bm, 17
   %i.bo = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   store i8 %i.bn, ptr %i.bo, align 1, !tbaa !9
-  %12 = load i16, ptr %i.bf, align 2, !tbaa !7
-  %13 = lshr i16 %12, 8
-  %14 = trunc nuw i16 %13 to i8
-  %i.bp = and i8 %14, 15
+  %.shift21 = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %6 = load i8, ptr %.shift21, align 1, !tbaa !7
+  %i.bp = and i8 %6, 15
   %i.bq = mul nuw i8 %i.bp, 17
   %i.br = getelementptr inbounds nuw i8, ptr %i.be, i64 8
   store i8 %i.bq, ptr %i.br, align 1, !tbaa !9
@@ -644,10 +640,9 @@ bb.a:
   %i.k = mul nuw i8 %i.j, 17
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 7
   store i8 %i.k, ptr %i.l, align 1, !tbaa !9
-  %3 = load i16, ptr %0, align 2, !tbaa !7
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  %i.m = and i8 %5, 15
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 1
+  %3 = load i8, ptr %.shift.i, align 1, !tbaa !7
+  %i.m = and i8 %3, 15
   %i.n = mul nuw i8 %i.m, 17
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 11
   store i8 %i.n, ptr %i.o, align 1, !tbaa !9
@@ -658,7 +653,7 @@ bb.a:
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 15
   store i8 %i.s, ptr %i.t, align 1, !tbaa !9
   %i.u = getelementptr inbounds i8, ptr %i.b, i64 %i.c ; 5 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 4 uses
+  %i.v = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 3 uses
   %i.w = load i16, ptr %i.v, align 2, !tbaa !7
   %i.x = trunc i16 %i.w to i8
   %i.y = and i8 %i.x, 15
@@ -670,10 +665,9 @@ bb.a:
   %i.ad = mul nuw i8 %i.ac, 17
   %i.ae = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store i8 %i.ad, ptr %i.ae, align 1, !tbaa !9
-  %6 = load i16, ptr %i.v, align 2, !tbaa !7
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
-  %i.af = and i8 %8, 15
+  %.shift19.i = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %4 = load i8, ptr %.shift19.i, align 1, !tbaa !7
+  %i.af = and i8 %4, 15
   %i.ag = mul nuw i8 %i.af, 17
   %i.ah = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   store i8 %i.ag, ptr %i.ah, align 1, !tbaa !9
@@ -684,7 +678,7 @@ bb.a:
   %i.am = getelementptr inbounds nuw i8, ptr %i.u, i64 12
   store i8 %i.al, ptr %i.am, align 1, !tbaa !9
   %i.an = getelementptr inbounds i8, ptr %i.u, i64 %i.c ; 5 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 3 uses
   %i.ap = load i16, ptr %i.ao, align 2, !tbaa !7
   %i.aq = trunc i16 %i.ap to i8
   %i.ar = and i8 %i.aq, 15
@@ -696,10 +690,9 @@ bb.a:
   %i.aw = mul nuw i8 %i.av, 17
   %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   store i8 %i.aw, ptr %i.ax, align 1, !tbaa !9
-  %9 = load i16, ptr %i.ao, align 2, !tbaa !7
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
-  %i.ay = and i8 %11, 15
+  %.shift20.i = getelementptr inbounds nuw i8, ptr %0, i64 5
+  %5 = load i8, ptr %.shift20.i, align 1, !tbaa !7
+  %i.ay = and i8 %5, 15
   %i.az = mul nuw i8 %i.ay, 17
   %i.ba = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   store i8 %i.az, ptr %i.ba, align 1, !tbaa !9
@@ -710,7 +703,7 @@ bb.a:
   %i.bf = getelementptr inbounds nuw i8, ptr %i.an, i64 12
   store i8 %i.be, ptr %i.bf, align 1, !tbaa !9
   %i.bg = getelementptr inbounds i8, ptr %i.an, i64 %i.c ; 4 uses
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 4 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 3 uses
   %i.bi = load i16, ptr %i.bh, align 2, !tbaa !7
   %i.bj = trunc i16 %i.bi to i8
   %i.bk = and i8 %i.bj, 15
@@ -722,10 +715,9 @@ bb.a:
   %i.bp = mul nuw i8 %i.bo, 17
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
   store i8 %i.bp, ptr %i.bq, align 1, !tbaa !9
-  %12 = load i16, ptr %i.bh, align 2, !tbaa !7
-  %13 = lshr i16 %12, 8
-  %14 = trunc nuw i16 %13 to i8
-  %i.br = and i8 %14, 15
+  %.shift21.i = getelementptr inbounds nuw i8, ptr %0, i64 7
+  %6 = load i8, ptr %.shift21.i, align 1, !tbaa !7
+  %i.br = and i8 %6, 15
   %i.bs = mul nuw i8 %i.br, 17
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   store i8 %i.bs, ptr %i.bt, align 1, !tbaa !9
@@ -1128,7 +1120,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.critedge.i.i.i, %.lr.ph189.i.i.i
   %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph189.i.i.i ], [ %indvars.iv.next.i.i.i, %.critedge.i.i.i ] ; 3 uses
-  %.1188.i.i.i = phi ptr [ %.0191.i.i.i, %.lr.ph189.i.i.i ], [ %i.akh, %.critedge.i.i.i ] ; 21 uses
+  %.1188.i.i.i = phi ptr [ %.0191.i.i.i, %.lr.ph189.i.i.i ], [ %i.akh, %.critedge.i.i.i ] ; 24 uses
   %i.dz = load ptr, ptr %i.r, align 8, !tbaa !214, !nonnull !203, !align !208
   %i.ea = load i32, ptr %i.dz, align 4, !tbaa !145 ; 2 uses
   switch i32 %i.ea, label %"_ZSt10__invoke_rIvRZN11OpenImageIO4v3_1L15DecompressImageEPhiiPKhNS1_7DDS_pvt11CompressionERKNS5_13dds_pixformatEiE3$_0JllEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESD_E4typeEOSE_DpOSF_.exit" [
@@ -1349,10 +1341,9 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.kg = lshr i8 %i.kf, 4
   %i.kh = mul nuw i8 %i.kg, 17
   store i8 %i.kh, ptr %i.aw, align 1, !tbaa !9
-  %3 = load i16, ptr %.1188.i.i.i, align 4, !tbaa !7
-  %4 = lshr i16 %3, 8
-  %5 = trunc nuw i16 %4 to i8
-  %i.ki = and i8 %5, 15
+  %.shift.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 1
+  %3 = load i8, ptr %.shift.i.i.i.i.i, align 1, !tbaa !7
+  %i.ki = and i8 %3, 15
   %i.kj = mul nuw i8 %i.ki, 17
   store i8 %i.kj, ptr %i.ay, align 1, !tbaa !9
   %i.kk = load i16, ptr %.1188.i.i.i, align 4, !tbaa !7
@@ -1360,7 +1351,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.km = trunc nuw nsw i16 %i.kl to i8
   %i.kn = mul nuw i8 %i.km, 17
   store i8 %i.kn, ptr %i.ba, align 1, !tbaa !9
-  %i.ko = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 2 ; 4 uses
+  %i.ko = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 2 ; 3 uses
   %i.kp = load i16, ptr %i.ko, align 2, !tbaa !7
   %i.kq = trunc i16 %i.kp to i8
   %i.kr = and i8 %i.kq, 15
@@ -1371,10 +1362,9 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.kv = lshr i8 %i.ku, 4
   %i.kw = mul nuw i8 %i.kv, 17
   store i8 %i.kw, ptr %i.be, align 1, !tbaa !9
-  %6 = load i16, ptr %i.ko, align 2, !tbaa !7
-  %7 = lshr i16 %6, 8
-  %8 = trunc nuw i16 %7 to i8
-  %i.kx = and i8 %8, 15
+  %.shift19.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 3
+  %4 = load i8, ptr %.shift19.i.i.i.i.i, align 1, !tbaa !7
+  %i.kx = and i8 %4, 15
   %i.ky = mul nuw i8 %i.kx, 17
   store i8 %i.ky, ptr %i.bg, align 1, !tbaa !9
   %i.kz = load i16, ptr %i.ko, align 2, !tbaa !7
@@ -1382,7 +1372,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.lb = trunc nuw nsw i16 %i.la to i8
   %i.lc = mul nuw i8 %i.lb, 17
   store i8 %i.lc, ptr %i.bi, align 1, !tbaa !9
-  %i.ld = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 4 ; 4 uses
+  %i.ld = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 4 ; 3 uses
   %i.le = load i16, ptr %i.ld, align 4, !tbaa !7
   %i.lf = trunc i16 %i.le to i8
   %i.lg = and i8 %i.lf, 15
@@ -1393,10 +1383,9 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.lk = lshr i8 %i.lj, 4
   %i.ll = mul nuw i8 %i.lk, 17
   store i8 %i.ll, ptr %i.ch, align 1, !tbaa !9
-  %9 = load i16, ptr %i.ld, align 4, !tbaa !7
-  %10 = lshr i16 %9, 8
-  %11 = trunc nuw i16 %10 to i8
-  %i.lm = and i8 %11, 15
+  %.shift20.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 5
+  %5 = load i8, ptr %.shift20.i.i.i.i.i, align 1, !tbaa !7
+  %i.lm = and i8 %5, 15
   %i.ln = mul nuw i8 %i.lm, 17
   store i8 %i.ln, ptr %i.ci, align 1, !tbaa !9
   %i.lo = load i16, ptr %i.ld, align 4, !tbaa !7
@@ -1404,7 +1393,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.lq = trunc nuw nsw i16 %i.lp to i8
   %i.lr = mul nuw i8 %i.lq, 17
   store i8 %i.lr, ptr %i.cj, align 1, !tbaa !9
-  %i.ls = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 6 ; 4 uses
+  %i.ls = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 6 ; 3 uses
   %i.lt = load i16, ptr %i.ls, align 2, !tbaa !7
   %i.lu = trunc i16 %i.lt to i8
   %i.lv = and i8 %i.lu, 15
@@ -1415,10 +1404,9 @@ bb.d:                                             ; preds = %bb.b, %bb.b
   %i.lz = lshr i8 %i.ly, 4
   %i.ma = mul nuw i8 %i.lz, 17
   store i8 %i.ma, ptr %i.cl, align 1, !tbaa !9
-  %12 = load i16, ptr %i.ls, align 2, !tbaa !7
-  %13 = lshr i16 %12, 8
-  %14 = trunc nuw i16 %13 to i8
-  %i.mb = and i8 %14, 15
+  %.shift21.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.1188.i.i.i, i64 7
+  %6 = load i8, ptr %.shift21.i.i.i.i.i, align 1, !tbaa !7
+  %i.mb = and i8 %6, 15
   %i.mc = mul nuw i8 %i.mb, 17
   store i8 %i.mc, ptr %i.cm, align 1, !tbaa !9
   %i.md = load i16, ptr %i.ls, align 2, !tbaa !7

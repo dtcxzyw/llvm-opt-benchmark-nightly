@@ -201,11 +201,10 @@ define hidden zeroext i1 @rb_get_iseq_flags_accepts_no_kwarg(ptr noundef readonl
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !11
-  %i.c = getelementptr i8, ptr %i.b, i64 16
-  %1 = load i16, ptr %i.c, align 8
-  %2 = and i16 %1, 256
-  %3 = icmp ne i16 %2, 0
-  ret i1 %3
+  %i.c = getelementptr i8, ptr %i.b, i64 17
+  %1 = load i8, ptr %i.c, align 1
+  %2 = trunc i8 %1 to i1
+  ret i1 %2
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable

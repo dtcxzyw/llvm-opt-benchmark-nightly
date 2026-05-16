@@ -201,10 +201,9 @@ bb.d:                                             ; preds = %bb.a
   %i.j = inttoptr i64 %i.i to ptr
   %i.k = add i64 %i.h, -16
   %i.l = inttoptr i64 %i.k to ptr
-  %3 = load i64, ptr %i.l, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.m = tail call noundef zeroext i1 @_ZN2v88internal16JSWeakCollection6DeleteENS0_12DirectHandleIS1_EENS2_INS0_6ObjectEEEi(ptr %1, ptr %i.j, i32 noundef %5) #6
+  %.shift = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %3 = load i32, ptr %.shift, align 4
+  %i.m = tail call noundef zeroext i1 @_ZN2v88internal16JSWeakCollection6DeleteENS0_12DirectHandleIS1_EENS2_INS0_6ObjectEEEi(ptr %1, ptr %i.j, i32 noundef %3) #6
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 55464
   %i.o = ptrtoint ptr %i.n to i64
   %i.p = add i64 %i.o, -55464
@@ -271,10 +270,9 @@ bb.e:                                             ; preds = %_ZNK2v88internal9Ar
   %i.m = inttoptr i64 %i.l to ptr
   %i.n = add i64 %i.h, -24
   %i.o = inttoptr i64 %i.n to ptr
-  %3 = load i64, ptr %i.o, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  tail call void @_ZN2v88internal16JSWeakCollection3SetENS0_12DirectHandleIS1_EENS2_INS0_6ObjectEEES5_i(ptr %1, ptr %i.j, ptr %i.m, i32 noundef %5) #6
+  %.shift = getelementptr inbounds nuw i8, ptr %i.o, i64 4
+  %3 = load i32, ptr %.shift, align 4
+  tail call void @_ZN2v88internal16JSWeakCollection3SetENS0_12DirectHandleIS1_EENS2_INS0_6ObjectEEES5_i(ptr %1, ptr %i.j, ptr %i.m, i32 noundef %3) #6
   %i.p = load i64, ptr %1, align 8
   store ptr %i.b, ptr %i.a, align 8
   %i.q = load i32, ptr %i.e, align 8

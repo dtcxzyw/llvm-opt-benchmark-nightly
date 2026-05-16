@@ -201,10 +201,8 @@ bb.s:                                             ; preds = %._crit_edge.i.i.i36
           to label %.noexc23 unwind label %bb.e, !inline_history !1819
 
 .noexc23:                                         ; preds = %.critedge.i
-  %2 = load i16, ptr @_ZN5folly6detail14to_ascii_tableILm16ENS_17to_ascii_alphabetILb0EEEE4dataE, align 2, !tbaa !1820
-  %3 = lshr i16 %2, 8
-  %4 = trunc nuw i16 %3 to i8
-  store i8 %4, ptr %i.a, align 16, !tbaa !31
+  %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN5folly6detail14to_ascii_tableILm16ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 1), align 1, !tbaa !1820
+  store i8 %2, ptr %i.a, align 16, !tbaa !31
   %i.dy = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %i.dz = load ptr, ptr %i.be, align 8, !tbaa !11
   %i.ea = getelementptr inbounds nuw i8, ptr %i.dz, i64 24

@@ -200,7 +200,7 @@ bb.j:                                             ; preds = %bb.i
   br label %rb_Digest_MD5_Update.exit26
 
 rb_Digest_MD5_Update.exit26:                      ; preds = %bb.i, %._crit_edge.i19, %._crit_edge.i19.thread
-  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !6
   %i.bx = trunc i32 %i.bw to i8
   store i8 %i.bx, ptr %1, align 1, !tbaa !12
@@ -209,17 +209,16 @@ rb_Digest_MD5_Update.exit26:                      ; preds = %bb.i, %._crit_edge.
   %i.ca = trunc i32 %i.bz to i8
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.ca, ptr %i.cb, align 1, !tbaa !12
-  %2 = load i32, ptr %i.bv, align 4, !tbaa !6
-  %3 = lshr i32 %2, 16
-  %i.cc = trunc i32 %3 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 10
+  %2 = load i16, ptr %.shift, align 2, !tbaa !6
+  %i.cc = trunc i16 %2 to i8
   %i.cd = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i8 %i.cc, ptr %i.cd, align 1, !tbaa !12
-  %4 = load i32, ptr %i.bv, align 4, !tbaa !6
-  %5 = lshr i32 %4, 24
-  %6 = trunc nuw i32 %5 to i8
+  %.shift45 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  %3 = load i8, ptr %.shift45, align 1, !tbaa !6
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %6, ptr %i.ce, align 1, !tbaa !12
-  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 4 uses
+  store i8 %3, ptr %i.ce, align 1, !tbaa !12
+  %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !6
   %i.ch = trunc i32 %i.cg to i8
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -229,17 +228,16 @@ rb_Digest_MD5_Update.exit26:                      ; preds = %bb.i, %._crit_edge.
   %i.cl = trunc i32 %i.ck to i8
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 5
   store i8 %i.cl, ptr %i.cm, align 1, !tbaa !12
-  %7 = load i32, ptr %i.cf, align 4, !tbaa !6
-  %8 = lshr i32 %7, 16
-  %i.cn = trunc i32 %8 to i8
+  %.shift46 = getelementptr inbounds nuw i8, ptr %0, i64 14
+  %4 = load i16, ptr %.shift46, align 2, !tbaa !6
+  %i.cn = trunc i16 %4 to i8
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 6
   store i8 %i.cn, ptr %i.co, align 1, !tbaa !12
-  %9 = load i32, ptr %i.cf, align 4, !tbaa !6
-  %10 = lshr i32 %9, 24
-  %11 = trunc nuw i32 %10 to i8
+  %.shift47 = getelementptr inbounds nuw i8, ptr %0, i64 15
+  %5 = load i8, ptr %.shift47, align 1, !tbaa !6
   %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %11, ptr %i.cp, align 1, !tbaa !12
-  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
+  store i8 %5, ptr %i.cp, align 1, !tbaa !12
+  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !6
   %i.cs = trunc i32 %i.cr to i8
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -249,17 +247,16 @@ rb_Digest_MD5_Update.exit26:                      ; preds = %bb.i, %._crit_edge.
   %i.cw = trunc i32 %i.cv to i8
   %i.cx = getelementptr inbounds nuw i8, ptr %1, i64 9
   store i8 %i.cw, ptr %i.cx, align 1, !tbaa !12
-  %12 = load i32, ptr %i.cq, align 4, !tbaa !6
-  %13 = lshr i32 %12, 16
-  %i.cy = trunc i32 %13 to i8
+  %.shift48 = getelementptr inbounds nuw i8, ptr %0, i64 18
+  %6 = load i16, ptr %.shift48, align 2, !tbaa !6
+  %i.cy = trunc i16 %6 to i8
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 10
   store i8 %i.cy, ptr %i.cz, align 1, !tbaa !12
-  %14 = load i32, ptr %i.cq, align 4, !tbaa !6
-  %15 = lshr i32 %14, 24
-  %16 = trunc nuw i32 %15 to i8
+  %.shift49 = getelementptr inbounds nuw i8, ptr %0, i64 19
+  %7 = load i8, ptr %.shift49, align 1, !tbaa !6
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 11
-  store i8 %16, ptr %i.da, align 1, !tbaa !12
-  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
+  store i8 %7, ptr %i.da, align 1, !tbaa !12
+  %i.db = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !6
   %i.dd = trunc i32 %i.dc to i8
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -269,16 +266,15 @@ rb_Digest_MD5_Update.exit26:                      ; preds = %bb.i, %._crit_edge.
   %i.dh = trunc i32 %i.dg to i8
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 13
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !12
-  %17 = load i32, ptr %i.db, align 4, !tbaa !6
-  %18 = lshr i32 %17, 16
-  %i.dj = trunc i32 %18 to i8
+  %.shift50 = getelementptr inbounds nuw i8, ptr %0, i64 22
+  %8 = load i16, ptr %.shift50, align 2, !tbaa !6
+  %i.dj = trunc i16 %8 to i8
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 14
   store i8 %i.dj, ptr %i.dk, align 1, !tbaa !12
-  %19 = load i32, ptr %i.db, align 4, !tbaa !6
-  %20 = lshr i32 %19, 24
-  %21 = trunc nuw i32 %20 to i8
+  %.shift51 = getelementptr inbounds nuw i8, ptr %0, i64 23
+  %9 = load i8, ptr %.shift51, align 1, !tbaa !6
   %i.dl = getelementptr inbounds nuw i8, ptr %1, i64 15
-  store i8 %21, ptr %i.dl, align 1, !tbaa !12
+  store i8 %9, ptr %i.dl, align 1, !tbaa !12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 1
 }

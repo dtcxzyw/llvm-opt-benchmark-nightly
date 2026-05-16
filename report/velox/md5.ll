@@ -201,10 +201,9 @@ bb.c:                                             ; preds = %bb.b
   store i16 %i.be, ptr %i.bf, align 1
   %i.bg = udiv i64 %i.j, 1000000000000000000
   %i.bh = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.bg
-  %4 = load i16, ptr %i.bh, align 2, !tbaa !42
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  store i8 %6, ptr %i.n, align 1, !tbaa !9
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
+  %4 = load i8, ptr %.shift.i, align 1, !tbaa !42
+  store i8 %4, ptr %i.n, align 1, !tbaa !9
   %i.bi = load i64, ptr %i.c, align 8, !tbaa !36
   %i.bj = add i64 %i.bi, 19                       ; 2 uses
   store i64 %i.bj, ptr %i.c, align 8, !tbaa !36
@@ -273,10 +272,9 @@ bb.c:                                             ; preds = %bb.b
   store i16 %i.dc, ptr %i.dd, align 1
   %i.de = udiv i64 %i.h, 1000000000000000000
   %i.df = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.de
-  %7 = load i16, ptr %i.df, align 2, !tbaa !42
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
-  store i8 %9, ptr %i.bl, align 1, !tbaa !9
+  %.shift.i22 = getelementptr inbounds nuw i8, ptr %i.df, i64 1
+  %5 = load i8, ptr %.shift.i22, align 1, !tbaa !42
+  store i8 %5, ptr %i.bl, align 1, !tbaa !9
   %i.dg = load i64, ptr %i.c, align 8, !tbaa !36
   %i.dh = add i64 %i.dg, 19
   br label %bb.f
@@ -349,10 +347,9 @@ bb.d:                                             ; preds = %bb.b
   store i16 %i.fb, ptr %i.fc, align 1
   %i.fd = udiv i64 %i.h, 1000000000000000000
   %i.fe = getelementptr inbounds nuw [2 x i8], ptr @_ZN5folly6detail14to_ascii_tableILm10ENS_17to_ascii_alphabetILb0EEEE4dataE, i64 %i.fd
-  %10 = load i16, ptr %i.fe, align 2, !tbaa !42
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8
-  store i8 %12, ptr %i.dk, align 1, !tbaa !9
+  %.shift.i32 = getelementptr inbounds nuw i8, ptr %i.fe, i64 1
+  %6 = load i8, ptr %.shift.i32, align 1, !tbaa !42
+  store i8 %6, ptr %i.dk, align 1, !tbaa !9
   %i.ff = load i64, ptr %i.c, align 8, !tbaa !36
   %i.fg = add i64 %i.ff, 19
   br label %bb.f

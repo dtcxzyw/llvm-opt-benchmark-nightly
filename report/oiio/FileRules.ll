@@ -201,12 +201,11 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !322
   %i.h = zext i8 %i.e to i64
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.h
-  %4 = load i16, ptr %i.i, align 2, !tbaa !328
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !382, !nonnull !166, !align !167 ; 2 uses
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  %i.l = and i8 %6, 1
+  %.shift = getelementptr inbounds nuw i8, ptr %i.i, i64 1
+  %4 = load i8, ptr %.shift, align 1, !tbaa !328
+  %i.l = and i8 %4, 1
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 104
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(152) %1, i8 0, i64 99, i1 false)
   store ptr %i.k, ptr %i.m, align 8, !tbaa !218
@@ -488,15 +487,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !322
   %i.h = zext i8 %i.e to i64
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.h
-  %4 = load i16, ptr %i.i, align 2, !tbaa !328
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !382, !nonnull !166, !align !167 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 104
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.k, ptr %i.l, align 8, !tbaa !218
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  %i.m = and i8 %6, 1
+  %.shift = getelementptr inbounds nuw i8, ptr %i.i, i64 1
+  %4 = load i8, ptr %.shift, align 1, !tbaa !328
+  %i.m = and i8 %4, 1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112
   store ptr %i.k, ptr %i.n, align 16, !tbaa !218
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -685,15 +683,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !322
   %i.h = zext i8 %i.e to i64
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.h
-  %4 = load i16, ptr %i.i, align 2, !tbaa !328
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !382, !nonnull !166, !align !167 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 104
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.k, ptr %i.l, align 8, !tbaa !218
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  %i.m = and i8 %6, 1
+  %.shift = getelementptr inbounds nuw i8, ptr %i.i, i64 1
+  %4 = load i8, ptr %.shift, align 1, !tbaa !328
+  %i.m = and i8 %4, 1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112
   store ptr %i.k, ptr %i.n, align 16, !tbaa !218
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -974,15 +971,14 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !322
   %i.h = zext i8 %i.e to i64
   %i.i = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %i.h
-  %4 = load i16, ptr %i.i, align 2, !tbaa !328
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !382, !nonnull !166, !align !167 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 104
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(160) %1, i8 0, i64 99, i1 false)
   store ptr %i.k, ptr %i.l, align 8, !tbaa !218
-  %5 = lshr i16 %4, 8
-  %6 = trunc nuw i16 %5 to i8
-  %i.m = and i8 %6, 1
+  %.shift = getelementptr inbounds nuw i8, ptr %i.i, i64 1
+  %4 = load i8, ptr %.shift, align 1, !tbaa !328
+  %i.m = and i8 %4, 1
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112
   store ptr %i.k, ptr %i.n, align 16, !tbaa !218
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 120

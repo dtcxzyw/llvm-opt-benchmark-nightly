@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b, %bb.b, %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 80 ; 8 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 %.034
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.r = getelementptr inbounds nuw i8, ptr %4, i64 17
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 52 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 28
@@ -394,10 +394,8 @@ zip_mkpath.exit:                                  ; preds = %bb.p
 
 .loopexit:                                        ; preds = %bb.q, %bb.m, %.lr.ph.preheader.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
-  %5 = load i16, ptr %i.r, align 8
-  %6 = lshr i16 %5, 8
-  %trunc = trunc nuw i16 %6 to i8
-  switch i8 %trunc, label %bb.v [
+  %5 = load i8, ptr %i.r, align 1
+  switch i8 %5, label %bb.v [
     i8 3, label %bb.r
     i8 19, label %bb.r
   ]

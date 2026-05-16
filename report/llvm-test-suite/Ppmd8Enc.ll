@@ -10,13 +10,12 @@ target triple = "x86_64-pc-linux-gnu"
 define dso_local void @Ppmd8_RangeEnc_FlushData(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 9 uses
-  %1 = load ptr, ptr %i.a, align 8, !tbaa !8      ; 2 uses
-  %i.c = load ptr, ptr %1, align 8, !tbaa !9
-  %2 = load i32, ptr %i.b, align 8, !tbaa !12
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
-  tail call void %i.c(ptr noundef nonnull %1, i8 noundef zeroext %4) #4
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 8 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 115
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %1 = load ptr, ptr %i.c, align 8, !tbaa !9
+  %2 = load i8, ptr %.shift, align 1, !tbaa !12
+  tail call void %1(ptr noundef nonnull %i.c, i8 noundef zeroext %2) #4
   %i.d = load i32, ptr %i.b, align 8, !tbaa !12
   %i.e = shl i32 %i.d, 8                          ; 2 uses
   store i32 %i.e, ptr %i.b, align 8, !tbaa !12
@@ -96,6 +95,8 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.critedge.i.i, %bb.c
   %i.aa = phi i32 [ %i.al, %.critedge.i.i ], [ %i.y, %bb.c ] ; 2 uses
   %i.ab = phi i32 [ %i.an, %.critedge.i.i ], [ %i.x, %bb.c ] ; 4 uses
+  %.in.i.i = lshr i32 %i.ab, 24
+  %2 = trunc nuw i32 %.in.i.i to i8
   %i.ac = add i32 %i.ab, %i.aa
   %i.ad = xor i32 %i.ac, %i.ab
   %i.ae = icmp ult i32 %i.ad, 16777216
@@ -114,9 +115,7 @@ bb.f:                                             ; preds = %bb.e
 .critedge.i.i:                                    ; preds = %bb.f, %bb.d
   %i.ai = load ptr, ptr %i.z, align 8, !tbaa !8   ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !9
-  %2 = lshr i32 %i.ab, 24
-  %3 = trunc nuw i32 %2 to i8
-  tail call void %i.aj(ptr noundef nonnull %i.ai, i8 noundef zeroext %3) #4, !inline_history !28
+  tail call void %i.aj(ptr noundef nonnull %i.ai, i8 noundef zeroext %2) #4, !inline_history !28
   %i.ak = load i32, ptr %i.t, align 8, !tbaa !27
   %i.al = shl i32 %i.ak, 8                        ; 2 uses
   store i32 %i.al, ptr %i.t, align 8, !tbaa !27
@@ -173,6 +172,8 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %.critedge.i.i171, %bb.i
   %i.bn = phi i32 [ %i.by, %.critedge.i.i171 ], [ %i.bl, %bb.i ] ; 2 uses
   %i.bo = phi i32 [ %i.ca, %.critedge.i.i171 ], [ %i.bk, %bb.i ] ; 4 uses
+  %.in.i.i171 = lshr i32 %i.bo, 24
+  %3 = trunc nuw i32 %.in.i.i171 to i8
   %i.bp = add i32 %i.bo, %i.bn
   %i.bq = xor i32 %i.bp, %i.bo
   %i.br = icmp ult i32 %i.bq, 16777216
@@ -191,9 +192,7 @@ bb.l:                                             ; preds = %bb.k
 .critedge.i.i171:                                 ; preds = %bb.l, %bb.j
   %i.bv = load ptr, ptr %i.bm, align 8, !tbaa !8  ; 2 uses
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !9
-  %4 = lshr i32 %i.bo, 24
-  %5 = trunc nuw i32 %4 to i8
-  tail call void %i.bw(ptr noundef nonnull %i.bv, i8 noundef zeroext %5) #4, !inline_history !28
+  tail call void %i.bw(ptr noundef nonnull %i.bv, i8 noundef zeroext %3) #4, !inline_history !28
   %i.bx = load i32, ptr %i.be, align 8, !tbaa !27
   %i.by = shl i32 %i.bx, 8                        ; 2 uses
   store i32 %i.by, ptr %i.be, align 8, !tbaa !27
@@ -291,6 +290,8 @@ bb.m:                                             ; preds = %bb.h
 bb.n:                                             ; preds = %.critedge.i.i173, %.unr-lcssa
   %i.dq = phi i32 [ %i.eb, %.critedge.i.i173 ], [ %i.do, %.unr-lcssa ] ; 2 uses
   %i.dr = phi i32 [ %i.ed, %.critedge.i.i173 ], [ %i.dn, %.unr-lcssa ] ; 4 uses
+  %.in.i.i174 = lshr i32 %i.dr, 24
+  %4 = trunc nuw i32 %.in.i.i174 to i8
   %i.ds = add i32 %i.dr, %i.dq
   %i.dt = xor i32 %i.ds, %i.dr
   %i.du = icmp ult i32 %i.dt, 16777216
@@ -309,9 +310,7 @@ bb.p:                                             ; preds = %bb.o
 .critedge.i.i173:                                 ; preds = %bb.p, %bb.n
   %i.dy = load ptr, ptr %i.dp, align 8, !tbaa !8  ; 2 uses
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !9
-  %6 = lshr i32 %i.dr, 24
-  %7 = trunc nuw i32 %6 to i8
-  tail call void %i.dz(ptr noundef nonnull %i.dy, i8 noundef zeroext %7) #4, !inline_history !28
+  tail call void %i.dz(ptr noundef nonnull %i.dy, i8 noundef zeroext %4) #4, !inline_history !28
   %i.ea = load i32, ptr %i.dh, align 8, !tbaa !27
   %i.eb = shl i32 %i.ea, 8                        ; 2 uses
   store i32 %i.eb, ptr %i.dh, align 8, !tbaa !27
@@ -372,12 +371,14 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.fv, ptr %i.fs, align 8, !tbaa !27
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 120
-  %.pre.i.i = load i32, ptr %i.fw, align 8, !tbaa !12
+  %.pre.i.i = load i32, ptr %i.fw, align 8
   br label %bb.s
 
 bb.s:                                             ; preds = %.critedge.i.i175, %bb.r
   %i.fy = phi i32 [ %i.gj, %.critedge.i.i175 ], [ %i.fv, %bb.r ] ; 2 uses
   %i.fz = phi i32 [ %i.gl, %.critedge.i.i175 ], [ %.pre.i.i, %bb.r ] ; 4 uses
+  %.in.i.i177 = lshr i32 %i.fz, 24
+  %5 = trunc nuw i32 %.in.i.i177 to i8
   %i.ga = add i32 %i.fz, %i.fy
   %i.gb = xor i32 %i.ga, %i.fz
   %i.gc = icmp ult i32 %i.gb, 16777216
@@ -396,9 +397,7 @@ bb.u:                                             ; preds = %bb.t
 .critedge.i.i175:                                 ; preds = %bb.u, %bb.s
   %i.gg = load ptr, ptr %i.fx, align 8, !tbaa !8  ; 2 uses
   %i.gh = load ptr, ptr %i.gg, align 8, !tbaa !9
-  %8 = lshr i32 %i.fz, 24
-  %9 = trunc nuw i32 %8 to i8
-  tail call void %i.gh(ptr noundef nonnull %i.gg, i8 noundef zeroext %9) #4, !inline_history !43
+  tail call void %i.gh(ptr noundef nonnull %i.gg, i8 noundef zeroext %5) #4, !inline_history !43
   %i.gi = load i32, ptr %i.fs, align 8, !tbaa !27
   %i.gj = shl i32 %i.gi, 8                        ; 2 uses
   store i32 %i.gj, ptr %i.fs, align 8, !tbaa !27
@@ -435,6 +434,8 @@ bb.v:                                             ; preds = %bb.q
 bb.w:                                             ; preds = %.critedge.i.i176, %bb.v
   %i.ha = phi i32 [ %i.hl, %.critedge.i.i176 ], [ %i.gy, %bb.v ] ; 2 uses
   %i.hb = phi i32 [ %i.hn, %.critedge.i.i176 ], [ %i.gw, %bb.v ] ; 4 uses
+  %.in.i.i179 = lshr i32 %i.hb, 24
+  %6 = trunc nuw i32 %.in.i.i179 to i8
   %i.hc = add i32 %i.hb, %i.ha
   %i.hd = xor i32 %i.hc, %i.hb
   %i.he = icmp ult i32 %i.hd, 16777216
@@ -453,9 +454,7 @@ bb.y:                                             ; preds = %bb.x
 .critedge.i.i176:                                 ; preds = %bb.y, %bb.w
   %i.hi = load ptr, ptr %i.gz, align 8, !tbaa !8  ; 2 uses
   %i.hj = load ptr, ptr %i.hi, align 8, !tbaa !9
-  %10 = lshr i32 %i.hb, 24
-  %11 = trunc nuw i32 %10 to i8
-  tail call void %i.hj(ptr noundef nonnull %i.hi, i8 noundef zeroext %11) #4, !inline_history !44
+  tail call void %i.hj(ptr noundef nonnull %i.hi, i8 noundef zeroext %6) #4, !inline_history !44
   %i.hk = load i32, ptr %i.fs, align 8, !tbaa !27
   %i.hl = shl i32 %i.hk, 8                        ; 2 uses
   store i32 %i.hl, ptr %i.fs, align 8, !tbaa !27
@@ -624,6 +623,8 @@ bb.ae:                                            ; preds = %.thread, %bb.ad
 bb.af:                                            ; preds = %.critedge.i.i177, %.unr-lcssa277
   %i.la = phi i32 [ %i.ll, %.critedge.i.i177 ], [ %i.kz, %.unr-lcssa277 ] ; 2 uses
   %i.lb = phi i32 [ %i.ln, %.critedge.i.i177 ], [ %i.ky, %.unr-lcssa277 ] ; 4 uses
+  %.in.i.i181 = lshr i32 %i.lb, 24
+  %7 = trunc nuw i32 %.in.i.i181 to i8
   %i.lc = add i32 %i.lb, %i.la
   %i.ld = xor i32 %i.lc, %i.lb
   %i.le = icmp ult i32 %i.ld, 16777216
@@ -642,9 +643,7 @@ bb.ah:                                            ; preds = %bb.ag
 .critedge.i.i177:                                 ; preds = %bb.ah, %bb.af
   %i.li = load ptr, ptr %i.ih, align 8, !tbaa !8  ; 2 uses
   %i.lj = load ptr, ptr %i.li, align 8, !tbaa !9
-  %12 = lshr i32 %i.lb, 24
-  %13 = trunc nuw i32 %12 to i8
-  call void %i.lj(ptr noundef nonnull %i.li, i8 noundef zeroext %13) #4, !inline_history !28
+  call void %i.lj(ptr noundef nonnull %i.li, i8 noundef zeroext %7) #4, !inline_history !28
   %i.lk = load i32, ptr %i.if, align 8, !tbaa !27
   %i.ll = shl i32 %i.lk, 8                        ; 2 uses
   store i32 %i.ll, ptr %i.if, align 8, !tbaa !27
@@ -717,6 +716,8 @@ bb.ak:                                            ; preds = %RangeEnc_Encode.exi
 bb.al:                                            ; preds = %.critedge.i.i179, %.critedge170
   %i.mu = phi i32 [ %i.nf, %.critedge.i.i179 ], [ %i.mt, %.critedge170 ] ; 2 uses
   %i.mv = phi i32 [ %i.nh, %.critedge.i.i179 ], [ %i.ms, %.critedge170 ] ; 4 uses
+  %.in.i.i184 = lshr i32 %i.mv, 24
+  %8 = trunc nuw i32 %.in.i.i184 to i8
   %i.mw = add i32 %i.mv, %i.mu
   %i.mx = xor i32 %i.mw, %i.mv
   %i.my = icmp ult i32 %i.mx, 16777216
@@ -735,9 +736,7 @@ bb.an:                                            ; preds = %bb.am
 .critedge.i.i179:                                 ; preds = %bb.an, %bb.al
   %i.nc = load ptr, ptr %i.ih, align 8, !tbaa !8  ; 2 uses
   %i.nd = load ptr, ptr %i.nc, align 8, !tbaa !9
-  %14 = lshr i32 %i.mv, 24
-  %15 = trunc nuw i32 %14 to i8
-  call void %i.nd(ptr noundef nonnull %i.nc, i8 noundef zeroext %15) #4, !inline_history !28
+  call void %i.nd(ptr noundef nonnull %i.nc, i8 noundef zeroext %8) #4, !inline_history !28
   %i.ne = load i32, ptr %i.if, align 8, !tbaa !27
   %i.nf = shl i32 %i.ne, 8                        ; 2 uses
   store i32 %i.nf, ptr %i.if, align 8, !tbaa !27

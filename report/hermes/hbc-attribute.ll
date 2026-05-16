@@ -201,10 +201,9 @@ bb.af:                                            ; preds = %.lr.ph.i.i
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i.i
 
 bb.ag:                                            ; preds = %.lr.ph.i.i
-  %16 = load i64, ptr %i.hw, align 1
-  %17 = lshr i64 %16, 32
-  %18 = trunc nuw i64 %17 to i32
-  %i.id = and i32 %18, 32767
+  %.shift.i.i.i = getelementptr inbounds nuw i8, ptr %i.hw, i64 4
+  %16 = load i32, ptr %.shift.i.i.i, align 1
+  %i.id = and i32 %16, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i.i
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit.i.i: ; preds = %bb.ag, %bb.af
@@ -607,10 +606,9 @@ bb.e:                                             ; preds = %_ZN4llvh12DenseMapB
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 bb.f:                                             ; preds = %_ZN4llvh12DenseMapBaseINS_8DenseMapISt4pairINS_9StringRefEjEjNS_12DenseMapInfoIS4_EENS_6detail12DenseMapPairIS4_jEEEES4_jS6_S9_E5clearEv.exit
-  %5 = load i64, ptr %i.at, align 1
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.ay = and i32 %7, 32767
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.at, i64 4
+  %5 = load i32, ptr %.shift.i, align 1
+  %i.ay = and i32 %5, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit: ; preds = %bb.e, %bb.f
@@ -735,10 +733,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZN12_GLOBAL__N_112UsageCounter20emitFunctionLocationEv.exit
 
 bb.n:                                             ; preds = %bb.l
-  %8 = load i64, ptr %i.dc, align 1
-  %9 = lshr i64 %8, 32
-  %10 = trunc nuw i64 %9 to i32
-  %i.dh = and i32 %10, 32767
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.dc, i64 4
+  %6 = load i32, ptr %.shift.i.i, align 1
+  %i.dh = and i32 %6, 32767
   br label %_ZN12_GLOBAL__N_112UsageCounter20emitFunctionLocationEv.exit
 
 _ZN12_GLOBAL__N_112UsageCounter20emitFunctionLocationEv.exit: ; preds = %bb.m, %bb.n
@@ -1141,18 +1138,16 @@ _ZN12_GLOBAL__N_112UsageCounter15countStringKindEj.exit: ; preds = %_ZSt11upper_
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8
   %i.ad = tail call i64 %i.ac(ptr noundef nonnull align 8 dereferenceable(280) %i.z, i32 noundef %1) #24 ; 3 uses
-  %.sroa.016.0.extract.trunc = trunc i64 %i.ad to i32 ; 3 uses
+  %.sroa.016.0.extract.trunc = trunc i64 %i.ad to i32 ; 2 uses
   %.sroa.5.0.extract.shift = lshr i64 %i.ad, 32
   %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32 ; 2 uses
   %i.ae = icmp ugt i32 %.sroa.016.0.extract.trunc, 8388607
   %i.af = and i32 %.sroa.5.0.extract.trunc, 2147483647 ; 3 uses
   %i.ag = icmp samesign ugt i32 %i.af, 254
-  %or.cond.not = select i1 %i.ae, i1 true, i1 %i.ag
-  %2 = shl nuw nsw i32 %.sroa.016.0.extract.trunc, 1
-  %3 = shl i32 %.sroa.5.0.extract.trunc, 24
-  %4 = add nuw nsw i32 %3, %2
-  %5 = icmp ugt i32 %4, -16777217
-  %storemerge.i = select i1 %or.cond.not, i1 true, i1 %5
+  %.mask = and i32 %.sroa.5.0.extract.trunc, 255
+  %2 = icmp eq i32 %.mask, 255
+  %3 = or i1 %i.ag, %2
+  %storemerge.i = select i1 %i.ae, i1 true, i1 %3
   tail call fastcc void @_ZN12_GLOBAL__N_112UsageCounter12appendRecordEN4llvh9StringRefEjj(ptr noundef nonnull align 8 dereferenceable(152) %0, ptr nonnull @.str.31, i64 23, i32 noundef %1, i32 noundef 4)
   br i1 %storemerge.i, label %bb.c, label %bb.d
 
@@ -1555,18 +1550,16 @@ _ZN12_GLOBAL__N_112UsageCounter15countStringKindEj.exit.i58: ; preds = %_ZN12_GL
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 8
   %i.kv = load ptr, ptr %i.ku, align 8
   %i.kw = call i64 %i.kv(ptr noundef nonnull align 8 dereferenceable(280) %i.ks, i32 noundef %i.fd) #24, !inline_history !317 ; 3 uses
-  %.sroa.016.0.extract.trunc.i59 = trunc i64 %i.kw to i32 ; 3 uses
+  %.sroa.016.0.extract.trunc.i59 = trunc i64 %i.kw to i32 ; 2 uses
   %.sroa.5.0.extract.shift.i60 = lshr i64 %i.kw, 32
   %.sroa.5.0.extract.trunc.i61 = trunc nuw i64 %.sroa.5.0.extract.shift.i60 to i32 ; 2 uses
   %i.kx = icmp ugt i32 %.sroa.016.0.extract.trunc.i59, 8388607
   %i.ky = and i32 %.sroa.5.0.extract.trunc.i61, 2147483647 ; 3 uses
   %i.kz = icmp samesign ugt i32 %i.ky, 254
-  %or.cond.not.i62 = select i1 %i.kx, i1 true, i1 %i.kz
-  %47 = shl nuw nsw i32 %.sroa.016.0.extract.trunc.i59, 1
-  %48 = shl i32 %.sroa.5.0.extract.trunc.i61, 24
-  %49 = add nuw nsw i32 %48, %47
-  %50 = icmp ugt i32 %49, -16777217
-  %storemerge.i.i63 = select i1 %or.cond.not.i62, i1 true, i1 %50
+  %.mask.i62 = and i32 %.sroa.5.0.extract.trunc.i61, 255
+  %47 = icmp eq i32 %.mask.i62, 255
+  %48 = or i1 %i.kz, %47
+  %storemerge.i.i63 = select i1 %i.kx, i1 true, i1 %48
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #24
   store ptr @.str.31, ptr %25, align 8, !tbaa !205
   store i64 23, ptr %.sroa.3.0..sroa_idx.i212, align 8, !tbaa !147
@@ -1969,18 +1962,16 @@ _ZN12_GLOBAL__N_112UsageCounter15countStringKindEj.exit.i28: ; preds = %_ZN12_GL
   %i.acv = getelementptr inbounds nuw i8, ptr %i.acu, i64 8
   %i.acw = load ptr, ptr %i.acv, align 8
   %i.acx = call i64 %i.acw(ptr noundef nonnull align 8 dereferenceable(280) %i.act, i32 noundef %i.xe) #24, !inline_history !317 ; 3 uses
-  %.sroa.016.0.extract.trunc.i29 = trunc i64 %i.acx to i32 ; 3 uses
+  %.sroa.016.0.extract.trunc.i29 = trunc i64 %i.acx to i32 ; 2 uses
   %.sroa.5.0.extract.shift.i30 = lshr i64 %i.acx, 32
   %.sroa.5.0.extract.trunc.i31 = trunc nuw i64 %.sroa.5.0.extract.shift.i30 to i32 ; 2 uses
   %i.acy = icmp ugt i32 %.sroa.016.0.extract.trunc.i29, 8388607
   %i.acz = and i32 %.sroa.5.0.extract.trunc.i31, 2147483647 ; 3 uses
   %i.ada = icmp samesign ugt i32 %i.acz, 254
-  %or.cond.not.i32 = select i1 %i.acy, i1 true, i1 %i.ada
-  %51 = shl nuw nsw i32 %.sroa.016.0.extract.trunc.i29, 1
-  %52 = shl i32 %.sroa.5.0.extract.trunc.i31, 24
-  %53 = add nuw nsw i32 %52, %51
-  %54 = icmp ugt i32 %53, -16777217
-  %storemerge.i.i33 = select i1 %or.cond.not.i32, i1 true, i1 %54
+  %.mask.i32 = and i32 %.sroa.5.0.extract.trunc.i31, 255
+  %49 = icmp eq i32 %.mask.i32, 255
+  %50 = or i1 %i.ada, %49
+  %storemerge.i.i33 = select i1 %i.acy, i1 true, i1 %50
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #24
   store ptr @.str.31, ptr %31, align 8, !tbaa !205
   store i64 23, ptr %.sroa.3.0..sroa_idx.i166, align 8, !tbaa !147
@@ -2383,18 +2374,16 @@ _ZN12_GLOBAL__N_112UsageCounter15countStringKindEj.exit.i: ; preds = %_ZN12_GLOB
   %i.auv = getelementptr inbounds nuw i8, ptr %i.auu, i64 8
   %i.auw = load ptr, ptr %i.auv, align 8
   %i.aux = call i64 %i.auw(ptr noundef nonnull align 8 dereferenceable(280) %i.aut, i32 noundef %.0.copyload.i23.i) #24, !inline_history !317 ; 3 uses
-  %.sroa.016.0.extract.trunc.i = trunc i64 %i.aux to i32 ; 3 uses
+  %.sroa.016.0.extract.trunc.i = trunc i64 %i.aux to i32 ; 2 uses
   %.sroa.5.0.extract.shift.i = lshr i64 %i.aux, 32
   %.sroa.5.0.extract.trunc.i = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32 ; 2 uses
   %i.auy = icmp ugt i32 %.sroa.016.0.extract.trunc.i, 8388607
   %i.auz = and i32 %.sroa.5.0.extract.trunc.i, 2147483647 ; 3 uses
   %i.ava = icmp samesign ugt i32 %i.auz, 254
-  %or.cond.not.i = select i1 %i.auy, i1 true, i1 %i.ava
-  %55 = shl nuw nsw i32 %.sroa.016.0.extract.trunc.i, 1
-  %56 = shl i32 %.sroa.5.0.extract.trunc.i, 24
-  %57 = add nuw nsw i32 %56, %55
-  %58 = icmp ugt i32 %57, -16777217
-  %storemerge.i.i = select i1 %or.cond.not.i, i1 true, i1 %58
+  %.mask.i = and i32 %.sroa.5.0.extract.trunc.i, 255
+  %51 = icmp eq i32 %.mask.i, 255
+  %52 = or i1 %i.ava, %51
+  %storemerge.i.i = select i1 %i.auy, i1 true, i1 %52
   call void @llvm.lifetime.start.p0(ptr nonnull %37) #24
   store ptr @.str.31, ptr %37, align 8, !tbaa !205
   store i64 23, ptr %.sroa.3.0..sroa_idx.i120, align 8, !tbaa !147

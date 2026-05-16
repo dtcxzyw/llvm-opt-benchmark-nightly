@@ -201,11 +201,9 @@ bb.d:                                             ; preds = %_ZStlsISt11char_tra
 bb.e:                                             ; preds = %bb.d
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !34
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !37
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %.sroa.04.0.copyload.i = load i64, ptr %i.k, align 4
-  %4 = lshr i64 %.sroa.04.0.copyload.i, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.l = add nsw i32 %5, 1
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %.sroa.04.0.copyload.i27 = load i32, ptr %i.k, align 4
+  %i.l = add nsw i32 %.sroa.04.0.copyload.i27, 1
   br label %_ZNK4YAML4Node4MarkEv.exit
 
 _ZNK4YAML4Node4MarkEv.exit:                       ; preds = %bb.e, %bb.d
@@ -608,11 +606,9 @@ bb.g:                                             ; preds = %_ZStlsISt11char_tra
 bb.h:                                             ; preds = %bb.g
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !34
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !37
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %.sroa.04.0.copyload.i = load i64, ptr %i.m, align 4
-  %6 = lshr i64 %.sroa.04.0.copyload.i, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.n = add nsw i32 %7, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %.sroa.04.0.copyload.i34 = load i32, ptr %i.m, align 4
+  %i.n = add nsw i32 %.sroa.04.0.copyload.i34, 1
   br label %_ZNK4YAML4Node4MarkEv.exit
 
 _ZNK4YAML4Node4MarkEv.exit:                       ; preds = %bb.h, %bb.g
@@ -1015,11 +1011,9 @@ bb.f:                                             ; preds = %_ZStlsISt11char_tra
 bb.g:                                             ; preds = %bb.f
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !34
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !37
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %.sroa.04.0.copyload.i = load i64, ptr %i.m, align 4
-  %5 = lshr i64 %.sroa.04.0.copyload.i, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.n = add nsw i32 %6, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %.sroa.04.0.copyload.i38 = load i32, ptr %i.m, align 4
+  %i.n = add nsw i32 %.sroa.04.0.copyload.i38, 1
   br label %_ZNK4YAML4Node4MarkEv.exit
 
 _ZNK4YAML4Node4MarkEv.exit:                       ; preds = %bb.g, %bb.f
@@ -1422,11 +1416,9 @@ bb.g:                                             ; preds = %_ZStlsISt11char_tra
 bb.h:                                             ; preds = %bb.g
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !34
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !37
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
-  %.sroa.04.0.copyload.i = load i64, ptr %i.m, align 4
-  %5 = lshr i64 %.sroa.04.0.copyload.i, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.n = add nsw i32 %6, 1
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %.sroa.04.0.copyload.i29 = load i32, ptr %i.m, align 4
+  %i.n = add nsw i32 %.sroa.04.0.copyload.i29, 1
   br label %_ZNK4YAML4Node4MarkEv.exit
 
 _ZNK4YAML4Node4MarkEv.exit:                       ; preds = %bb.h, %bb.g

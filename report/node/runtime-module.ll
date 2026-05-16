@@ -62,9 +62,8 @@ bb.b:                                             ; preds = %_ZNK2v88internal9Ar
 _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EEixEi.exit: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
   %i.k = add i64 %i.h, -16
   %i.l = inttoptr i64 %i.k to ptr
-  %3 = load i64, ptr %i.l, align 8
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %3 = load i32, ptr %.shift, align 4
   %i.m = icmp eq i32 %0, 4
   %i.n = add i64 %i.h, -24
   %i.o = inttoptr i64 %i.n to ptr
@@ -130,7 +129,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %_ZN2
   %i.ax = inttoptr i64 %i.aw to ptr
   store ptr %i.ax, ptr %i.a, align 8
   store i64 %.sroa.013.0.i, ptr %.0.i, align 8
-  %i.ay = tail call ptr @_ZN2v88internal7Isolate38RunHostImportModuleDynamicallyCallbackENS0_17MaybeDirectHandleINS0_6ScriptEEENS0_6HandleINS0_6ObjectEEENS_17ModuleImportPhaseENS2_IS6_EE(ptr noundef nonnull align 8 dereferenceable(64320) %2, ptr nonnull %.0.i, ptr %i.j, i32 noundef %5, ptr %.sroa.024.0) #5 ; 2 uses
+  %i.ay = tail call ptr @_ZN2v88internal7Isolate38RunHostImportModuleDynamicallyCallbackENS0_17MaybeDirectHandleINS0_6ScriptEEENS0_6HandleINS0_6ObjectEEENS_17ModuleImportPhaseENS2_IS6_EE(ptr noundef nonnull align 8 dereferenceable(64320) %2, ptr nonnull %.0.i, ptr %i.j, i32 noundef %3, ptr %.sroa.024.0) #5 ; 2 uses
   %.not61 = icmp eq ptr %i.ay, null
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 912
   %.sroa.036.0.in = select i1 %.not61, ptr %i.az, ptr %i.ay
@@ -170,9 +169,8 @@ bb.a:
   %i.f = load i32, ptr %i.e, align 8
   %i.g = add nsw i32 %i.f, 1
   store i32 %i.g, ptr %i.e, align 8
-  %4 = load i64, ptr %1, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = load i32, ptr %.shift, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 344
   %.sroa.0.0.copyload.i2 = load i64, ptr %i.h, align 8
@@ -195,7 +193,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   store ptr %i.p, ptr %i.a, align 8
   store i64 %i.i, ptr %.0.i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
-  %i.q = call ptr @_ZN2v88internal16SourceTextModule18GetModuleNamespaceEPNS0_7IsolateENS0_12DirectHandleIS1_EEi(ptr noundef nonnull %2, ptr nonnull %.0.i.i, i32 noundef %6) #5
+  %i.q = call ptr @_ZN2v88internal16SourceTextModule18GetModuleNamespaceEPNS0_7IsolateENS0_12DirectHandleIS1_EEi(ptr noundef nonnull %2, ptr nonnull %.0.i.i, i32 noundef %4) #5
   %i.r = load i64, ptr %i.q, align 8
   store ptr %i.b, ptr %i.a, align 8
   %i.s = load i32, ptr %i.e, align 8

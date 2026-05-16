@@ -201,9 +201,9 @@ bb.a:
   %.sroa.0.0.copyload.i.i = load i64, ptr %0, align 8
   %i.b = add i64 %.sroa.0.0.copyload.i.i, 7
   %i.c = inttoptr i64 %i.b to ptr
-  %3 = load i64, ptr %i.c, align 8
-  %4 = lshr i64 %3, 32
-  %i.d = trunc i64 %4 to i8
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %3 = load i32, ptr %.shift.i.i, align 4
+  %i.d = trunc i32 %3 to i8
   %i.e = tail call noundef ptr @_ZN2v88internal20ElementsKindToStringENS0_12ElementsKindE(i8 noundef zeroext %i.d) #12 ; 3 uses
   %.not.i = icmp eq ptr %i.e, null
   br i1 %.not.i, label %bb.b, label %bb.c
@@ -266,10 +266,9 @@ bb.a:
   %.sroa.0.0.copyload.i = load i64, ptr %0, align 8
   %i.l = add i64 %.sroa.0.0.copyload.i, 23
   %i.m = inttoptr i64 %i.l to ptr
-  %4 = load i64, ptr %i.m, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.n = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i32 noundef %6) #12 ; 0 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.m, i64 4
+  %4 = load i32, ptr %.shift.i, align 4
+  %i.n = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %i.j, i32 noundef %4) #12 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void

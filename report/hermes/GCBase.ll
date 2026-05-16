@@ -201,11 +201,11 @@ bb.a:
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %.val = load ptr, ptr %1, align 8, !tbaa !403   ; 9 uses
+  %.val = load ptr, ptr %1, align 8, !tbaa !403   ; 8 uses
   %i.c = load ptr, ptr %0, align 8, !tbaa !405, !nonnull !78, !align !124 ; 10 uses
-  %11 = load i32, ptr %.val, align 4
-  %12 = lshr i32 %11, 24
-  %i.d = zext nneg i32 %12 to i64
+  %.shift.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val, i64 3 ; 3 uses
+  %11 = load i8, ptr %.shift.i.i.i.i, align 1
+  %i.d = zext i8 %11 to i64
   %i.e = getelementptr inbounds nuw [96 x i8], ptr @_ZN6hermes2vm8Metadata13metadataTableE, i64 %i.d ; 12 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !407
   %.not.i.i.i.i.i.i.i.i = icmp eq i8 %i.f, 0
@@ -417,9 +417,8 @@ _ZN6hermes2vm6GCBase8markCellIZNS1_20sizeDiagnosticCensusEmE26HeapSizeDiagnostic
   %i.ck = load i64, ptr %i.cj, align 8, !tbaa !429
   %i.cl = add i64 %i.ck, 1
   store i64 %i.cl, ptr %i.cj, align 8, !tbaa !429
-  %13 = load i32, ptr %.val, align 4
-  %14 = lshr i32 %13, 24
-  %i.cm = zext nneg i32 %14 to i64
+  %12 = load i8, ptr %.shift.i.i.i.i, align 1
+  %i.cm = zext i8 %12 to i64
   %i.cn = getelementptr inbounds nuw [8 x i8], ptr @_ZN6hermes2vm6VTable11vtableArrayE, i64 %i.cm
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !430
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 12
@@ -458,7 +457,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i: ; preds = %._crit_edge.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31
-  br label %15
+  br label %bb.j
 
 ._crit_edge.i.i43.i.i.i:                          ; preds = %_ZN6hermes2vm6GCBase8markCellIZNS1_20sizeDiagnosticCensusEmE26HeapSizeDiagnosticAcceptorEEvPNS0_6GCCellERT_.exit.i.i.i
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ci, i64 112
@@ -487,22 +486,20 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.i.i.i: ; preds = %._crit_edge.i.i43.i.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i45.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
-  br label %15
+  br label %bb.j
 
-15:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
-  %16 = load i32, ptr %.val, align 4              ; 3 uses
-  %17 = add i32 %16, -184549376
-  %18 = icmp ult i32 %17, -134217728
-  br i1 %18, label %"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit", label %bb.j
-
-bb.j:                                             ; preds = %15
-  %19 = lshr i32 %16, 24
-  %20 = add nsw i32 %19, -5
-  %spec.select.i.i.i.i = icmp ult i32 %20, 2
-  br i1 %spec.select.i.i.i.i, label %"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit", label %bb.k
+bb.j:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
+  %13 = load i8, ptr %.shift.i.i.i.i, align 1     ; 2 uses
+  %14 = add i8 %13, -11
+  %15 = icmp ult i8 %14, -8
+  %16 = add i8 %13, -5
+  %spec.select.i.i.i.i = icmp ult i8 %16, 2
+  %or.cond.i.i.i = or i1 %spec.select.i.i.i.i, %15
+  br i1 %or.cond.i.i.i, label %"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit", label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.dt = and i32 %16, 16777216
+  %17 = load i32, ptr %.val, align 4
+  %i.dt = and i32 %17, 16777216
   %i.du = icmp eq i32 %i.dt, 0
   %i.dv = load ptr, ptr %0, align 8, !tbaa !405, !nonnull !78, !align !124
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 112 ; 2 uses
@@ -724,7 +721,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71.i.i.i: ; preds 
   store <2 x i64> %i.hc, ptr %i.gn, align 8, !tbaa !91
   br label %"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit"
 
-"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit": ; preds = %15, %bb.j, %.critedge42.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71.i.i.i
+"_ZSt10__invoke_rIvRZN6hermes2vm6GCBase20sizeDiagnosticCensusEmE3$_0JPNS1_6GCCellEEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES8_E4typeEOS9_DpOSA_.exit": ; preds = %bb.j, %.critedge42.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit71.i.i.i
   ret void
 }
 

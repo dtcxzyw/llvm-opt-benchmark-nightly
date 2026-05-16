@@ -144,17 +144,16 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %1 = load i16, ptr %i.i, align 1
-  %2 = lshr i16 %1, 8
-  %3 = and i16 %2, 3                              ; 2 uses
-  %i.j = icmp eq i16 %3, 1
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %1 = load i8, ptr %i.i, align 2
+  %2 = and i8 %1, 3                               ; 2 uses
+  %i.j = icmp eq i8 %2, 1
   br i1 %i.j, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = add i32 %i.f, -3
   %i.l = icmp ult i32 %i.k, 2
-  %i.m = icmp eq i16 %3, 0
+  %i.m = icmp eq i8 %2, 0
   %i.n = and i1 %i.l, %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.p = load i32, ptr %i.o, align 8
@@ -225,17 +224,16 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %bb.e, label %_ZN6google8protobuf13SymbolChecker22IsEnumNamespaceMessageERKNS0_10DescriptorE.exit
 
 bb.e:                                             ; preds = %bb.d
-  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %1 = load i16, ptr %i.w, align 1
-  %2 = lshr i16 %1, 8
-  %3 = and i16 %2, 3                              ; 2 uses
-  %i.x = icmp eq i16 %3, 1
+  %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %1 = load i8, ptr %i.w, align 1
+  %2 = and i8 %1, 3                               ; 2 uses
+  %i.x = icmp eq i8 %2, 1
   br i1 %i.x, label %.critedge.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.y = add i32 %i.t, -3
   %i.z = icmp ult i32 %i.y, 2
-  %i.aa = icmp eq i16 %3, 0
+  %i.aa = icmp eq i8 %2, 0
   %i.ab = and i1 %i.z, %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.ad = load i32, ptr %i.ac, align 8
@@ -474,10 +472,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %.sroa.075.094 = phi ptr [ %i.at, %.lr.ph ], [ %i.ct, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 3 uses
   %i.bi = phi ptr [ null, %.lr.ph ], [ %i.cs, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit ] ; 12 uses
   %i.bj = load ptr, ptr %.sroa.075.094, align 8, !tbaa !102 ; 3 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 1
-  %3 = load i16, ptr %i.bk, align 1
-  %4 = and i16 %3, 768
-  %i.bl = icmp eq i16 %4, 512
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 2
+  %3 = load i8, ptr %i.bk, align 1
+  %4 = and i8 %3, 3
+  %i.bl = icmp eq i8 %4, 2
   br i1 %i.bl, label %bb.d, label %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -880,17 +878,16 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i.i.i.i, label %bb.e, label %_ZN6google8protobuf13SymbolChecker16IsNamespacedEnumERKNS0_14EnumDescriptorE.exit.thread.i.i
 
 bb.e:                                             ; preds = %bb.d
-  %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %2 = load i16, ptr %i.v, align 1
-  %3 = lshr i16 %2, 8
-  %4 = and i16 %3, 3                              ; 2 uses
-  %i.w = icmp eq i16 %4, 1
+  %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %2 = load i8, ptr %i.v, align 1
+  %3 = and i8 %2, 3                               ; 2 uses
+  %i.w = icmp eq i8 %3, 1
   br i1 %i.w, label %.critedge.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.x = add i32 %i.s, -3
   %i.y = icmp ult i32 %i.x, 2
-  %i.z = icmp eq i16 %4, 0
+  %i.z = icmp eq i8 %3, 0
   %i.aa = and i1 %i.y, %i.z
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 152
   %i.ac = load i32, ptr %i.ab, align 8

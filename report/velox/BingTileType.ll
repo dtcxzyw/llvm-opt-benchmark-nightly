@@ -201,7 +201,6 @@ bb.ax:                                            ; preds = %bb.aq
   unreachable
 
 _ZNR5folly8ExpectedImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE5valueEv.exit304: ; preds = %bb.aq
-  %26 = load i64, ptr %20, align 8, !tbaa !41
   %i.gc = call double @sin(double noundef %i.cj) #18, !tbaa !3
   %i.gd = call double @cos(double noundef %i.ci) #18, !tbaa !3
   %i.ge = fmul double %i.gc, %i.gd
@@ -307,26 +306,24 @@ bb.bi:                                            ; preds = %bb.bb
   unreachable
 
 _ZNR5folly8ExpectedImNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE5valueEv.exit317: ; preds = %bb.bb
-  %27 = load i64, ptr %22, align 8, !tbaa !41
-  %28 = lshr i64 %27, 32
-  %29 = trunc nuw i64 %28 to i32
-  %i.hk = and i32 %29, 16777215                   ; 4 uses
-  %30 = lshr i64 %26, 32
-  %31 = trunc nuw i64 %30 to i32
-  %i.hl = and i32 %31, 16777215                   ; 4 uses
-  %i.hm = icmp samesign ult i32 %i.hk, %i.hl      ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %22, i64 4
+  %26 = load i32, ptr %.shift, align 4, !tbaa !41
+  %i.hk = and i32 %26, 16777215                   ; 3 uses
+  %.shift601 = getelementptr inbounds nuw i8, ptr %20, i64 4
+  %27 = load i32, ptr %.shift601, align 4, !tbaa !41
+  %i.hl = and i32 %27, 16777215                   ; 5 uses
+  %i.hm = icmp samesign ult i32 %i.hk, %i.hl
   %i.hn = trunc i64 %i.eq to i32
   %i.ho = and i32 %i.hn, 16777215                 ; 3 uses
   %i.hp = trunc i64 %i.dm to i32
   %i.hq = and i32 %i.hp, 16777215                 ; 2 uses
   %i.hr = add nuw nsw i32 %i.cg, 1
-  %.sink1416 = select i1 %i.hm, i32 %i.hr, i32 %i.hk
-  %.sink1415 = select i1 %i.hm, i32 %i.hk, i32 1
-  %reass.sub.a = sub nsw i32 %.sink1416, %i.hl
-  %32 = add nsw i32 %reass.sub.a, %.sink1415      ; 3 uses
+  %.sink1416 = select i1 %i.hm, i32 %i.hr, i32 1
+  %.pn893 = add nuw nsw i32 %.sink1416, %i.hk     ; 2 uses
+  %reass.sub.a = sub nsw i32 %.pn893, %i.hl       ; 2 uses
   %reass.sub892 = sub nsw i32 %i.ho, %i.hq
   %i.hs = add nsw i32 %reass.sub892, 1
-  %i.ht = mul i32 %32, %i.hs                      ; 4 uses
+  %i.ht = mul i32 %reass.sub.a, %i.hs             ; 4 uses
   %i.hu = icmp ugt i32 %i.ht, 1000000
   br i1 %i.hu, label %bb.bj, label %bb.bp
 
@@ -428,7 +425,7 @@ _ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i: ; preds = %_ZNSt12_Vector
 _ZNSt6vectorImSaImEE7reserveEm.exit:              ; preds = %bb.bp, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i
   %.sroa.63.15 = phi ptr [ %i.iy, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ null, %bb.bp ] ; 2 uses
   %.sroa.30.13 = phi ptr [ %i.ix, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i ], [ null, %bb.bp ] ; 4 uses
-  %.not893 = icmp eq i32 %32, 0
+  %.not893 = icmp eq i32 %.pn893, %i.hl
   br i1 %.not893, label %.preheader642, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt6vectorImSaImEE7reserveEm.exit
@@ -553,7 +550,7 @@ _ZNSt6vectorImSaImEE9push_backEOm.exit:           ; preds = %_ZNSt6vectorImSaImE
   %.sroa.0537.16 = phi ptr [ %i.jx, %_ZNSt6vectorImSaImEE17_M_realloc_insertIJmEEEvN9__gnu_cxx17__normal_iteratorIPmS1_EEDpOT_.exit.i.i ], [ %.sroa.0537.0879, %bb.bt ] ; 2 uses
   %.sroa.30.14 = getelementptr inbounds nuw i8, ptr %.pn, i64 8 ; 2 uses
   %i.kb = add nuw i32 %.0163880, 1                ; 2 uses
-  %exitcond.not = icmp eq i32 %i.kb, %32
+  %exitcond.not = icmp eq i32 %i.kb, %reass.sub.a
   br i1 %exitcond.not, label %.preheader642, label %bb.bq, !llvm.loop !156
 
 .loopexit648:                                     ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i

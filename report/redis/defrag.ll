@@ -201,6 +201,8 @@ bb.a:
   %i.a = load i64, ptr %0, align 8                ; 3 uses
   %i.b = and i64 %i.a, 2147483392
   %.not = icmp eq i64 %i.b, 256
+  %2 = lshr i64 %i.a, 32
+  %3 = trunc nuw i64 %2 to i32
   br i1 %.not, label %bb.b, label %activeDefragAllocWithoutFree.exit.thread
 
 bb.b:                                             ; preds = %bb.a
@@ -218,8 +220,6 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.019 = phi i64 [ %i.h, %bb.c ], [ -9223372036854775808, %bb.b ] ; 2 uses
-  %2 = lshr i64 %i.a, 32
-  %3 = trunc nuw i64 %2 to i32
   %i.i = and i32 %3, 255
   %i.j = tail call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.i)
   %i.k = shl nuw nsw i32 %i.j, 3
@@ -355,6 +355,8 @@ bb.h:                                             ; preds = %._crit_edge, %bb.f
   %i.v = phi i64 [ %.pre, %._crit_edge ], [ %i.r, %bb.f ] ; 3 uses
   %i.w = and i64 %i.v, 2147483392
   %.not.i = icmp eq i64 %i.w, 256
+  %3 = lshr i64 %i.v, 32
+  %4 = trunc nuw i64 %3 to i32
   br i1 %.not.i, label %bb.i, label %activeDefragKvobj.exit.thread
 
 bb.i:                                             ; preds = %bb.h
@@ -372,8 +374,6 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.019.i = phi i64 [ %i.ac, %bb.j ], [ -9223372036854775808, %bb.i ] ; 2 uses
-  %3 = lshr i64 %i.v, 32
-  %4 = trunc nuw i64 %3 to i32
   %i.ad = and i32 %4, 255
   %i.ae = tail call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.ad)
   %i.af = shl nuw nsw i32 %i.ae, 3
@@ -776,6 +776,8 @@ bb.f:                                             ; preds = %bb.d, %bb.c
   %i.l = load i64, ptr %0, align 8                ; 3 uses
   %i.m = and i64 %i.l, 2147483392
   %.not.i = icmp eq i64 %i.m, 256
+  %2 = lshr i64 %i.l, 32
+  %3 = trunc nuw i64 %2 to i32
   br i1 %.not.i, label %bb.g, label %activeDefragKvobj.exit.thread
 
 bb.g:                                             ; preds = %bb.f
@@ -793,8 +795,6 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.019.i = phi i64 [ %i.s, %bb.h ], [ -9223372036854775808, %bb.g ] ; 2 uses
-  %2 = lshr i64 %i.l, 32
-  %3 = trunc nuw i64 %2 to i32
   %i.t = and i32 %3, 255
   %i.u = tail call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.t)
   %i.v = shl nuw nsw i32 %i.u, 3
@@ -858,10 +858,9 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.m
-  %4 = load i64, ptr %0, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.aq = and i32 %6, 255
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %4 = load i32, ptr %.shift.i, align 4
+  %i.aq = and i32 %4, 255
   %i.ar = call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.aq)
   %i.as = shl nuw nsw i32 %i.ar, 3
   %i.at = zext nneg i32 %i.as to i64

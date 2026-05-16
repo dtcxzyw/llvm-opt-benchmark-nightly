@@ -201,15 +201,14 @@ _ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   store i64 %i.q, ptr %.0.i.i, align 8
   %i.y = add i64 %i.q, -1
   %i.z = inttoptr i64 %i.y to ptr
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
-  %3 = load i64, ptr %i.aa, align 8
-  %4 = lshr i64 %3, 32                            ; 2 uses
-  %5 = trunc nuw i64 %4 to i32
-  %i.ab = icmp sgt i32 %5, 0
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 12
+  %3 = load i32, ptr %i.aa, align 4               ; 2 uses
+  %i.ab = icmp sgt i32 %3, 0
   br i1 %i.ab, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 656
+  %wide.trip.count = zext nneg i32 %3 to i64
   br label %bb.i
 
 ._crit_edge:                                      ; preds = %bb.l, %_ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
@@ -295,7 +294,7 @@ bb.k:                                             ; preds = %_ZN2v88internal6Han
 bb.l:                                             ; preds = %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   %i.bk = tail call ptr @_ZN2v88internal19ObjectHashTableBaseINS0_15ObjectHashTableENS0_20ObjectHashTableShapeEE3PutENS0_6HandleIS2_EENS0_12DirectHandleINS0_6ObjectEEES9_(ptr nonnull %.sroa.047.072, ptr nonnull %.0.i.i25, ptr %i.aq) #4 ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %4
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.i, !llvm.loop !9
 }
 
