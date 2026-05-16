@@ -1,0 +1,37 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 2a8bf3ffecd6f..c2e2b90529a1b 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3675,6 +3675,12 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+         if (!RK || RK.AttrKind != Attribute::NonNull)
+           continue;
+ 
++        if (isa<ConstantPointerNull>(RK.WasOn)) {
++          CreateNonTerminatorUnreachable(II);
++          // This is unreachable - any other assumes are meaningless now.
++          return eraseInstFromFunction(*II);
++        }
++
+         // Drop assume if we can prove nonnull without it
+         if (isKnownNonZero(RK.WasOn, getSimplifyQuery().getWithInstruction(II)))
+           return CallBase::removeOperandBundle(II, OBU.getTagID());
+diff --git a/llvm/test/Transforms/InstCombine/assume.ll b/llvm/test/Transforms/InstCombine/assume.ll
+index c39f606382650..403d9b0d2fcc4 100644
+--- a/llvm/test/Transforms/InstCombine/assume.ll
++++ b/llvm/test/Transforms/InstCombine/assume.ll
+@@ -490,6 +490,15 @@ define void @redundant_nonnull3(ptr %ptr) {
+   ret void
+ }
+ 
++define void @nonnull_on_nullptr() {
++; CHECK-LABEL: @nonnull_on_nullptr(
++; CHECK-NEXT:    store i1 true, ptr poison, align 1
++; CHECK-NEXT:    ret void
++;
++  call void @llvm.assume(i1 true) [ "nonnull"(ptr null) ]
++  ret void
++}
++
+ ; PR35846 - https://bugs.llvm.org/show_bug.cgi?id=35846
+ 
+ define i32 @assumption_conflicts_with_known_bits(i32 %a, i32 %b) {
