@@ -1079,10 +1079,11 @@ def run_opt_file(
             return "timeout"
 
         if config.passes:
-            cmd = [OPT_BINARY, f"--passes={config.passes}", "--disable-verify", input_path]
+            cmd = [OPT_BINARY, f"--passes={config.passes}", input_path]
         else:
-            cmd = [OPT_BINARY, "-O3", "--disable-verify", input_path]
+            cmd = [OPT_BINARY, "-O3", input_path]
         if config.comptime:
+            cmd.insert(-1, "--disable-verify")
             cmd = (
                 [
                     "taskset",
