@@ -190,7 +190,7 @@ def _run_perf_task(args):
 
 def _flamegraph_from_collapsed(collapsed: str, title: str, output_path: str):
     result = subprocess.run(
-        ["inferno-flamegraph", "--title", title],
+        ["inferno-flamegraph", "--title", title, "--minwidth", "0.5"],
         input=collapsed,
         capture_output=True,
         text=True,
@@ -202,23 +202,74 @@ def _flamegraph_from_collapsed(collapsed: str, title: str, output_path: str):
     return output_path
 
 
+def compute_hotspots(collapsed: str, top_n: int = 50):
+    counts = {}
+    for line in collapsed.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        parts = line.rsplit(" ", 1)
+        if len(parts) != 2:
+            continue
+        stack_part, count_part = parts
+        try:
+            count = int(count_part)
+        except ValueError:
+            continue
+        for func in stack_part.split(";"):
+            func = func.strip()
+            if func:
+                counts[func] = counts.get(func, 0) + count
+
+    total = sum(counts.values())
+    return sorted(
+        ((func, cnt, cnt / total * 100) for func, cnt in counts.items()),
+        key=lambda x: x[1],
+        reverse=True,
+    )[:top_n]
+
+
 def generate_combined_flamegraph(
     collapsed_sections: List[str],
     llvm_revision: str,
 ):
     if not collapsed_sections:
         print("No collapsed data, skipping combined flamegraph")
-        return None
+        return None, []
 
     merged = "".join(collapsed_sections)
 
     combined_svg = os.path.join(PERF_REPORT_DIR, "combined.svg")
     title = f"opt -O3 ({llvm_revision[:12]}, {len(collapsed_sections)} files)"
-    return _flamegraph_from_collapsed(merged, title, combined_svg)
+    svg_path = _flamegraph_from_collapsed(merged, title, combined_svg)
+
+    hotspots = compute_hotspots(merged)
+    hotspots_path = os.path.join(PERF_REPORT_DIR, "hotspots.txt")
+    with open(hotspots_path, "w") as f:
+        f.write(f"{'samples':>12}  {'pct':>6}  function\n")
+        f.write(f"{'─' * 12}  {'─' * 6}  {'─' * 60}\n")
+        for func, cnt, pct in hotspots:
+            f.write(f"{cnt:>12}  {pct:>5.1f}%  {func}\n")
+
+    return svg_path, hotspots
 
 
-def generate_index_html(llvm_revision: str, file_count: int):
+def generate_index_html(
+    llvm_revision: str,
+    file_count: int,
+    hotspots: list,
+):
     escaped_revision = llvm_revision[:12]
+
+    rows = ""
+    for i, (func, cnt, pct) in enumerate(hotspots):
+        rows += (
+            f'<tr><td style="text-align:right;color:#888">{i + 1}</td>'
+            f'<td style="text-align:right">{cnt}</td>'
+            f'<td style="text-align:right;color:#7eb8ff">{pct:.1f}%</td>'
+            f"<td>{func}</td></tr>\n"
+        )
+
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -228,12 +279,19 @@ def generate_index_html(llvm_revision: str, file_count: int):
 body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; background: #1a1a2e; color: #e0e0e0; }}
 h1 {{ font-size: 1.2em; margin: 0.5em 1em; }}
 p {{ margin: 0.3em 1em; color: #888; }}
+table {{ margin: 1em; border-collapse: collapse; font-size: 0.85em; }}
+td {{ padding: 2px 8px; white-space: nowrap; max-width: 40em; overflow: hidden; text-overflow: ellipsis; }}
+tr:nth-child(even) {{ background: #222244; }}
 </style>
 </head>
 <body>
 <h1>opt -O3 Flamegraph</h1>
 <p>LLVM <code>{escaped_revision}</code> — {file_count} files</p>
-<object data="combined.svg" type="image/svg+xml" style="width:100%;height:calc(100vh - 3em);border:none;"></object>
+<table>
+<thead><tr><th>#</th><th>samples</th><th>pct</th><th>function</th></tr></thead>
+<tbody>{rows}</tbody>
+</table>
+<object data="combined.svg" type="image/svg+xml" style="width:100%;height:calc(100vh - 20em);border:none;"></object>
 </body>
 </html>"""
 
@@ -359,13 +417,13 @@ def main():
     os.makedirs(PERF_REPORT_DIR)
 
     print(f"Generating combined flamegraph from {len(collapsed_sections)} profiles...")
-    combined_svg = generate_combined_flamegraph(collapsed_sections, llvm_revision)
+    combined_svg, hotspots = generate_combined_flamegraph(collapsed_sections, llvm_revision)
     if not combined_svg:
         print("Failed to generate combined flamegraph")
         sys.exit(1)
 
     print("Generating index.html...")
-    generate_index_html(llvm_revision, len(collapsed_sections))
+    generate_index_html(llvm_revision, len(collapsed_sections), hotspots)
 
     print(f"Done. Report at {PERF_REPORT_DIR}/index.html")
 
