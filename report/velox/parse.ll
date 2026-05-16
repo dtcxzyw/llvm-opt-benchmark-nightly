@@ -201,7 +201,7 @@ bb.a:
 .noexc:                                           ; preds = %.noexc.backedge, %.noexc.preheader
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !99   ; 12 uses
   %i.j = getelementptr inbounds i8, ptr %i.i, i64 -48 ; 6 uses
-  %i.k = getelementptr inbounds i8, ptr %i.i, i64 -40 ; 7 uses
+  %i.k = getelementptr inbounds i8, ptr %i.i, i64 -40 ; 8 uses
   %i.l = getelementptr inbounds i8, ptr %i.i, i64 -36 ; 6 uses
   %i.m = getelementptr inbounds i8, ptr %i.i, i64 -32 ; 6 uses
   %i.n = getelementptr inbounds i8, ptr %i.i, i64 -8 ; 2 uses
@@ -217,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.am
 
 bb.c:                                             ; preds = %.noexc
-  %i.t = load i32, ptr %i.n, align 4, !tbaa !3    ; 2 uses
+  %i.t = load i32, ptr %i.n, align 8, !tbaa !3    ; 2 uses
   %i.u = ptrtoint ptr %i.q to i64
   %i.v = ptrtoint ptr %i.o to i64
   %i.w = sub i64 %i.u, %i.v
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %.noexc
   br i1 %i.z, label %bb.d, label %.preheader113
 
 .preheader113:                                    ; preds = %bb.c
-  %i.aa = load i32, ptr %i.k, align 4, !tbaa !3
+  %i.aa = load i32, ptr %i.k, align 8, !tbaa !3
   %i.ab = icmp sgt i32 %i.aa, 0
   br i1 %i.ab, label %.preheader112, label %_ZSt8_DestroyIPN3re26SpliceES1_EvT_S3_RSaIT0_E.exit.i.i
 
@@ -389,7 +389,7 @@ _ZSt8_DestroyIPN3re26SpliceES1_EvT_S3_RSaIT0_E.exit.i.i: ; preds = %.preheader11
 
 _ZNSt6vectorIN3re26SpliceESaIS1_EE5clearEv.exit:  ; preds = %._crit_edge137, %_ZSt8_DestroyIPN3re26SpliceES1_EvT_S3_RSaIT0_E.exit.i.i
   %.065.lcssa178 = phi i32 [ %.469181, %._crit_edge137 ], [ %.065.lcssa177, %_ZSt8_DestroyIPN3re26SpliceES1_EvT_S3_RSaIT0_E.exit.i.i ]
-  store i32 %.065.lcssa178, ptr %i.k, align 4, !tbaa !3
+  store i32 %.065.lcssa178, ptr %i.k, align 8, !tbaa !3
   br label %bb.t
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -700,10 +700,10 @@ bb.x:                                             ; preds = %bb.t
   %i.fm = ptrtoint ptr %i.fk to i64
   %i.fn = sub i64 %i.fl, %i.fm
   %i.fo = icmp eq i64 %i.fn, 48
-  %6 = load i32, ptr %i.k, align 4, !tbaa !3      ; 2 uses
-  br i1 %i.fo, label %.lr.ph.i.i.i, label %bb.y
+  br i1 %i.fo, label %.lr.ph.i.i.i.preheader, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
+  %6 = load i32, ptr %i.k, align 8, !tbaa !3
   %i.fp = getelementptr inbounds i8, ptr %i.fj, i64 -48 ; 2 uses
   store ptr %i.fp, ptr %i.f, align 8, !tbaa !112
   %i.fq = getelementptr inbounds i8, ptr %i.fj, i64 -32
@@ -794,11 +794,15 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai
   %storemerge = phi i32 [ %i.gt, %bb.ai ], [ 0, %bb.ah ]
-  store i32 %storemerge, ptr %i.n, align 4, !tbaa !3
+  store i32 %storemerge, ptr %i.n, align 8, !tbaa !3
   br label %.noexc.backedge
 
-.lr.ph.i.i.i:                                     ; preds = %bb.x, %_ZSt8_DestroyIN3re25FrameEEvPT_.exit.i.i.i
-  %.05.i.i.i = phi ptr [ %i.hb, %_ZSt8_DestroyIN3re25FrameEEvPT_.exit.i.i.i ], [ %i.fk, %bb.x ] ; 3 uses
+.lr.ph.i.i.i.preheader:                           ; preds = %bb.x
+  %7 = load i32, ptr %i.k, align 4, !tbaa !3
+  br label %.lr.ph.i.i.i
+
+.lr.ph.i.i.i:                                     ; preds = %.lr.ph.i.i.i.preheader, %_ZSt8_DestroyIN3re25FrameEEvPT_.exit.i.i.i
+  %.05.i.i.i = phi ptr [ %i.hb, %_ZSt8_DestroyIN3re25FrameEEvPT_.exit.i.i.i ], [ %i.fk, %.lr.ph.i.i.i.preheader ] ; 3 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 16
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !118 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.gv, null
@@ -833,7 +837,7 @@ bb.al:                                            ; preds = %_ZSt8_DestroyIPN3re
 
 _ZNSt6vectorIN3re25FrameESaIS1_EED2Ev.exit:       ; preds = %_ZSt8_DestroyIPN3re25FrameES1_EvT_S3_RSaIT0_E.exit.i, %bb.al
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
-  ret i32 %6
+  ret i32 %7
 
 bb.am:                                            ; preds = %bb.k, %bb.r, %bb.g, %bb.af, %bb.b
   %.pn83.pn.pn = phi { ptr, i32 } [ %i.s, %bb.b ], [ %.pn83, %bb.af ], [ %i.am, %bb.g ], [ %.pn, %bb.r ], [ %i.cu, %bb.k ]

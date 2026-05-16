@@ -201,14 +201,14 @@ bb.bo:                                            ; preds = %bb.bn
 
 bb.bp:                                            ; preds = %bb.bo, %bb.bn
   %i.rd = getelementptr inbounds i8, ptr %.36321, i64 -16
-  %.val6890 = load i16, ptr %i.rd, align 4
+  %.val6890 = load i16, ptr %i.rd, align 8
   %i.re = and i16 %.val6890, 768
   %i.rf = icmp eq i16 %i.re, 256
-  %i.rg = load i16, ptr %i.z, align 4
+  %i.rg = load i16, ptr %i.z, align 8
   %i.rh = select i1 %i.rf, i16 256, i16 512
   %i.ri = and i16 %i.rg, -769
   %i.rj = or disjoint i16 %i.rh, %i.ri
-  store i16 %i.rj, ptr %i.z, align 4
+  store i16 %i.rj, ptr %i.z, align 8
   br label %bb.ajq
 
 bb.bq:                                            ; preds = %yy_reduce_print.exit
@@ -216,11 +216,11 @@ bb.bq:                                            ; preds = %yy_reduce_print.exi
   %.val6889 = load i16, ptr %i.rk, align 4
   %i.rl = and i16 %.val6889, 768
   %i.rm = icmp eq i16 %i.rl, 256
-  %i.rn = load i16, ptr %i.z, align 4
+  %i.rn = load i16, ptr %i.z, align 8
   %i.ro = select i1 %i.rm, i16 256, i16 768
   %i.rp = and i16 %i.rn, -769
   %i.rq = or disjoint i16 %i.ro, %i.rp
-  store i16 %i.rq, ptr %i.z, align 4
+  store i16 %i.rq, ptr %i.z, align 8
   br label %bb.ajq
 
 bb.br:                                            ; preds = %yy_reduce_print.exit
@@ -248,11 +248,11 @@ bb.bs:                                            ; preds = %yy_reduce_print.exi
   %.val6888 = load i16, ptr %i.sf, align 4
   %i.sg = and i16 %.val6888, 768
   %i.sh = icmp eq i16 %i.sg, 256
-  %i.si = load i16, ptr %i.z, align 4
+  %i.si = load i16, ptr %i.z, align 8
   %i.sj = select i1 %i.sh, i16 256, i16 768
   %i.sk = and i16 %i.si, -769
   %i.sl = or disjoint i16 %i.sj, %i.sk
-  store i16 %i.sl, ptr %i.z, align 4
+  store i16 %i.sl, ptr %i.z, align 8
   br label %bb.ajq
 
 bb.bt:                                            ; preds = %yy_reduce_print.exit
@@ -655,7 +655,7 @@ bb.d:                                             ; preds = %bb.c
   tail call void @rb_node_init(ptr noundef %i.g, i32 noundef range(i32 0, 115) 1) #29
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.h, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.e, i64 16, i1 false), !tbaa.struct !13
-  %i.i = load i32, ptr %i.e, align 4, !tbaa !51
+  %i.i = load i32, ptr %i.e, align 8, !tbaa !51
   %i.j = sext i32 %i.i to i64
   %i.k = load i64, ptr %i.g, align 8, !tbaa !61
   %i.l = and i64 %i.k, 32767
@@ -726,7 +726,7 @@ bb.i:                                             ; preds = %bb.h
   tail call void @rb_node_init(ptr noundef %i.al, i32 noundef range(i32 0, 115) 1) #29
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.am, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.aj, i64 16, i1 false), !tbaa.struct !13
-  %i.an = load i32, ptr %i.aj, align 4, !tbaa !51
+  %i.an = load i32, ptr %i.aj, align 8, !tbaa !51
   %i.ao = sext i32 %i.an to i64
   %i.ap = load i64, ptr %i.al, align 8, !tbaa !61
   %i.aq = and i64 %i.ap, 32767
@@ -896,10 +896,8 @@ bb.c:                                             ; preds = %.lr.ph, %parser_yye
   %i.o = trunc i64 %i.n to i32
   %i.p = lshr i32 %i.o, 8
   %i.q = and i32 %i.p, 127
-  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8
-  %i.s = load i32, ptr %i.e, align 4, !tbaa !42   ; 5 uses
-  %2 = load i32, ptr %i.r, align 8, !tbaa !51
-  %3 = icmp eq i32 %i.s, %2                       ; 4 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
+  %i.s = load i32, ptr %i.e, align 4, !tbaa !42   ; 8 uses
   switch i32 %i.q, label %bb.p [
     i32 14, label %bb.d
     i32 15, label %bb.h
@@ -907,11 +905,13 @@ bb.c:                                             ; preds = %.lr.ph, %parser_yye
   ]
 
 bb.d:                                             ; preds = %bb.c
+  %2 = load i32, ptr %i.r, align 8, !tbaa !51
+  %3 = icmp eq i32 %i.s, %2
   br i1 %3, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !55
+  %i.u = load i32, ptr %i.t, align 8, !tbaa !55
   %i.v = icmp eq i32 %i.s, %i.u
   br i1 %i.v, label %bb.f, label %bb.g
 
@@ -945,11 +945,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   br i1 %.not.i, label %parser_yyerror.exit, label %parser_yyerror.exit.sink.split
 
 bb.h:                                             ; preds = %bb.c
-  br i1 %3, label %bb.i, label %bb.k
+  %4 = load i32, ptr %i.r, align 8, !tbaa !51
+  %5 = icmp eq i32 %i.s, %4
+  br i1 %5, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.an = load i32, ptr %i.am, align 4, !tbaa !55
+  %i.an = load i32, ptr %i.am, align 8, !tbaa !55
   %i.ao = icmp eq i32 %i.s, %i.an
   br i1 %i.ao, label %bb.j, label %bb.k
 
@@ -983,11 +985,13 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   br i1 %.not.i24, label %parser_yyerror.exit, label %parser_yyerror.exit.sink.split
 
 bb.l:                                             ; preds = %bb.c
-  br i1 %3, label %bb.m, label %bb.o
+  %6 = load i32, ptr %i.r, align 8, !tbaa !51
+  %7 = icmp eq i32 %i.s, %6
+  br i1 %7, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
   %i.bf = getelementptr inbounds nuw i8, ptr %i.m, i64 16
-  %i.bg = load i32, ptr %i.bf, align 4, !tbaa !55
+  %i.bg = load i32, ptr %i.bf, align 8, !tbaa !55
   %i.bh = icmp eq i32 %i.s, %i.bg
   br i1 %i.bh, label %bb.n, label %bb.o
 
@@ -1021,7 +1025,9 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   br i1 %.not.i29, label %parser_yyerror.exit, label %parser_yyerror.exit.sink.split
 
 bb.p:                                             ; preds = %bb.c
-  br i1 %3, label %bb.q, label %bb.s
+  %8 = load i32, ptr %i.r, align 4, !tbaa !51
+  %9 = icmp eq i32 %i.s, %8
+  br i1 %9, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
   %i.by = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -1424,13 +1430,13 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 196
   %i.g = load i32, ptr %i.f, align 4, !tbaa !42   ; 2 uses
-  %i.h = load i32, ptr %i.e, align 4, !tbaa !51
+  %i.h = load i32, ptr %i.e, align 8, !tbaa !51
   %i.i = icmp eq i32 %i.g, %i.h
   br i1 %i.i, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.k = load i32, ptr %i.j, align 4, !tbaa !55
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !55
   %i.l = icmp eq i32 %i.g, %i.k
   br i1 %i.l, label %bb.e, label %bb.f
 
@@ -1833,7 +1839,7 @@ list_append.exit:                                 ; preds = %bb.a
   tail call void @rb_node_init(ptr noundef %i.l, i32 noundef range(i32 0, 115) 64) #29
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.c, i64 16, i1 false), !tbaa.struct !13
-  %i.n = load i32, ptr %i.c, align 4, !tbaa !51
+  %i.n = load i32, ptr %i.c, align 8, !tbaa !51
   %i.o = sext i32 %i.n to i64
   %i.p = load i64, ptr %i.l, align 8, !tbaa !61
   %i.q = and i64 %i.p, 32767
@@ -1857,7 +1863,7 @@ list_append.exit:                                 ; preds = %bb.a
   tail call void @rb_node_init(ptr noundef %i.aa, i32 noundef range(i32 0, 115) 43) #29
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ab, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.c, i64 16, i1 false), !tbaa.struct !13
-  %i.ac = load i32, ptr %i.c, align 4, !tbaa !51
+  %i.ac = load i32, ptr %i.c, align 8, !tbaa !51
   %i.ad = sext i32 %i.ac to i64
   %i.ae = load i64, ptr %i.aa, align 8, !tbaa !61
   %i.af = and i64 %i.ae, 32767
@@ -1949,7 +1955,7 @@ list_append.exit:                                 ; preds = %bb.c
   tail call void @rb_node_init(ptr noundef %i.ad, i32 noundef range(i32 0, 115) 43) #29
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ae, ptr noundef nonnull readonly align 4 dereferenceable(16) %i.ac, i64 16, i1 false), !tbaa.struct !13
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !51
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !51
   %i.ag = sext i32 %i.af to i64
   %i.ah = load i64, ptr %i.ad, align 8, !tbaa !61
   %i.ai = and i64 %i.ah, 32767
@@ -2352,13 +2358,13 @@ bb.h:                                             ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %.1, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 196
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !42 ; 2 uses
-  %i.af = load i32, ptr %i.ac, align 4, !tbaa !51
+  %i.af = load i32, ptr %i.ac, align 8, !tbaa !51
   %i.ag = icmp eq i32 %i.ae, %i.af
   br i1 %i.ag, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
   %i.ah = getelementptr inbounds nuw i8, ptr %.1, i64 16
-  %i.ai = load i32, ptr %i.ah, align 4, !tbaa !55
+  %i.ai = load i32, ptr %i.ah, align 8, !tbaa !55
   %i.aj = icmp eq i32 %i.ae, %i.ai
   br i1 %i.aj, label %bb.j, label %bb.k
 
