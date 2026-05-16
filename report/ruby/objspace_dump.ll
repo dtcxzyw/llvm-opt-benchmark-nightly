@@ -201,9 +201,10 @@ rb_shape_obj_too_complex_p.exit:                  ; preds = %bb.dh, %bb.dg
   %i.kq = tail call fastcc i32 @ROBJECT_FIELDS_COUNT(i64 noundef %0)
   %i.kr = zext i32 %i.kq to i64
   tail call fastcc void @dump_append_lu(ptr noundef nonnull %1, i64 noundef %i.kr)
-  %2 = load i64, ptr %i.h, align 8, !tbaa !19
-  %3 = and i64 %2, 576460752303423488
-  %.not573 = icmp eq i64 %3, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 4
+  %2 = load i32, ptr %.shift.i.i, align 4, !tbaa !19
+  %3 = and i32 %2, 134217728
+  %.not573 = icmp eq i32 %3, 0
   br i1 %.not573, label %RB_FL_TEST.exit313.thread, label %bb.di
 
 bb.di:                                            ; preds = %rb_shape_obj_too_complex_p.exit
@@ -606,9 +607,10 @@ bb.a:
   br i1 %i.d, label %rb_shape_obj_too_complex_p.exit.thread, label %rb_shape_obj_too_complex_p.exit
 
 rb_shape_obj_too_complex_p.exit:                  ; preds = %bb.a
-  %1 = load i64, ptr %.pre, align 8, !tbaa !19
-  %2 = and i64 %1, 576460752303423488
-  %.not = icmp eq i64 %2, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 4
+  %1 = load i32, ptr %.shift.i.i, align 4, !tbaa !19
+  %2 = and i32 %1, 134217728
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %rb_shape_obj_too_complex_p.exit
@@ -619,10 +621,11 @@ bb.b:                                             ; preds = %rb_shape_obj_too_co
   br label %bb.c
 
 rb_shape_obj_too_complex_p.exit.thread:           ; preds = %bb.a, %rb_shape_obj_too_complex_p.exit
-  %3 = load i64, ptr %.pre, align 8, !tbaa !19
-  %4 = lshr i64 %3, 32
-  %5 = and i64 %4, 524287
+  %.shift.i.i4 = getelementptr inbounds nuw i8, ptr %.pre, i64 4
+  %3 = load i32, ptr %.shift.i.i4, align 4, !tbaa !19
+  %4 = and i32 %3, 524287
   %i.i = load ptr, ptr @rb_shape_tree, align 8, !tbaa !89
+  %5 = zext nneg i32 %4 to i64
   %i.j = getelementptr inbounds nuw [40 x i8], ptr %i.i, i64 %5
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 28
   %i.l = load i16, ptr %i.k, align 4, !tbaa !94

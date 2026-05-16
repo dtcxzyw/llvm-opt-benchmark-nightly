@@ -201,7 +201,8 @@ bb.a:
   %i.c = load atomic volatile i64, ptr %i.b acquire, align 8 ; 3 uses
   %i.d = add i64 %i.c, 63
   %i.e = inttoptr i64 %i.d to ptr
-  %3 = load i64, ptr %i.e, align 8
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.e, i64 4
+  %3 = load i32, ptr %.shift.i, align 4
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 59176 ; 3 uses
   %i.g = load atomic i32, ptr %i.f monotonic, align 4
   %.not.i = icmp eq i32 %i.g, 0
@@ -271,7 +272,6 @@ _ZN2v88internal23UnoptimizedCompileFlags29SetFlagsForFunctionFromScriptENS0_6Tag
   %.masked32 = or disjoint i32 %.masked33, %i.s
   %.masked = or disjoint i32 %i.ah, %.masked32
   %i.aq = or disjoint i32 %.masked, %i.aj
-  %.sroa.29.0.insert.shift = and i64 %3, -4294967296
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   %i.ar = add i64 %1, 55
   %i.as = inttoptr i64 %i.ar to ptr               ; 7 uses
@@ -317,6 +317,8 @@ _ZN2v88internal23UnoptimizedCompileFlags29SetFlagsForFunctionFromScriptENS0_6Tag
   %i.bw = or i32 %.masked52, %i.br
   %i.bx = or i32 %i.bw, %i.bv
   %i.by = or i32 %i.bx, 384
+  %.sroa.29.0.insert.ext = zext i32 %3 to i64
+  %.sroa.29.0.insert.shift = shl nuw i64 %.sroa.29.0.insert.ext, 32
   %.sroa.017.0.insert.ext = zext nneg i32 %i.by to i64
   %.sroa.017.0.insert.insert = or disjoint i64 %.sroa.29.0.insert.shift, %.sroa.017.0.insert.ext
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.017.0.insert.insert, 0
@@ -379,7 +381,8 @@ bb.a:
   %3 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef", align 8 ; 4 uses
   %i.a = add i64 %1, 63
   %i.b = inttoptr i64 %i.a to ptr
-  %4 = load i64, ptr %i.b, align 8
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %4 = load i32, ptr %.shift.i, align 4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 59176 ; 3 uses
   %i.d = load atomic i32, ptr %i.c monotonic, align 4
   %.not.i = icmp eq i32 %i.d, 0
@@ -488,7 +491,8 @@ _ZNK2v88internal6Script10is_wrappedEv.exit.thread: ; preds = %_ZNK2v88internal6S
   %i.bn = or i32 %i.bm, %i.at
   %i.bo = or disjoint i32 %i.bn, %i.av
   %i.bp = or i32 %i.bo, %i.bk
-  %.sroa.17.0.insert.shift = and i64 %4, -4294967296
+  %.sroa.17.0.insert.ext = zext i32 %4 to i64
+  %.sroa.17.0.insert.shift = shl nuw i64 %.sroa.17.0.insert.ext, 32
   %.sroa.016.0.insert.ext = zext nneg i32 %i.bp to i64
   %.sroa.016.0.insert.insert = or disjoint i64 %.sroa.17.0.insert.shift, %.sroa.016.0.insert.ext
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.016.0.insert.insert, 0

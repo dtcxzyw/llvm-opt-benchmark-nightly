@@ -201,31 +201,39 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit:
 
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit: ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #37
-  %i.d = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(840) %0, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1) ; 2 uses
+  %i.d = call noundef zeroext i1 @_ZN11OpenImageIO4v3_110ImageInput6ioreadEPvmm(ptr noundef nonnull align 8 dereferenceable(840) %0, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1) ; 3 uses
   %.promoted.i = load i32, ptr %i.a, align 4
-  %i.e = call i32 @llvm.bswap.i32(i32 %.promoted.i)
-  %.1 = select i1 %i.d, i32 %i.e, i32 0
+  %i.e = call i32 @llvm.bswap.i32(i32 %.promoted.i) ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #37
+  %.1 = select i1 %i.d, i32 %i.e, i32 0
+  %sum.shift = lshr i32 %i.e, 24
+  %.sroa.6.0.extract.shift = lshr i32 %i.e, 16
+  %.sroa.6.sroa.7.0.extract.trunc = trunc nuw i32 %sum.shift to i8
+  %.sroa.6.sroa.0.0.extract.trunc = trunc i32 %.sroa.6.0.extract.shift to i8
+  %2 = insertelement <2 x i8> poison, i8 %.sroa.6.sroa.0.0.extract.trunc, i64 0
+  %3 = insertelement <2 x i8> %2, i8 %.sroa.6.sroa.7.0.extract.trunc, i64 1
+  %4 = uitofp <2 x i8> %3 to <2 x float>
+  %5 = fmul nnan <2 x float> %4, splat (float f0x3B808081)
+  %6 = insertelement <2 x i1> poison, i1 %i.d, i64 0
+  %7 = shufflevector <2 x i1> %6, <2 x i1> poison, <2 x i32> zeroinitializer
+  %8 = select <2 x i1> %7, <2 x float> %5, <2 x float> zeroinitializer
   br label %bb.a
 
 bb.a:                                             ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit
-  %.0 = phi i32 [ %.1, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ 0, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ] ; 4 uses
+  %.0 = phi i32 [ %.1, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ 0, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ] ; 2 uses
   %i.f = phi i1 [ %i.d, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ false, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ]
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 636
-  %3 = lshr i32 %.0, 24
-  %4 = lshr i32 %.0, 16
+  %9 = phi <2 x float> [ %8, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIiiEEbRT0_.exit ], [ zeroinitializer, %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIaaEEbRT0_.exit ]
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 636
   %i.g = lshr i32 %.0, 8
-  %5 = trunc nuw i32 %3 to i8
-  %i.h = trunc i32 %4 to i8
-  %6 = trunc i32 %i.g to i8
-  %i.i = trunc i32 %.0 to i8
-  %7 = insertelement <4 x i8> poison, i8 %i.i, i64 0
-  %8 = insertelement <4 x i8> %7, i8 %6, i64 1
-  %9 = insertelement <4 x i8> %8, i8 %i.h, i64 2
-  %10 = insertelement <4 x i8> %9, i8 %5, i64 3
-  %11 = uitofp <4 x i8> %10 to <4 x float>
-  %12 = fmul nnan <4 x float> %11, splat (float f0x3B808081)
-  store <4 x float> %12, ptr %2, align 4, !tbaa !15
+  %i.h = trunc i32 %.0 to i8
+  %11 = insertelement <2 x i8> poison, i8 %i.h, i64 0
+  %i.i = trunc i32 %i.g to i8
+  %12 = insertelement <2 x i8> %11, i8 %i.i, i64 1
+  %13 = uitofp <2 x i8> %12 to <2 x float>
+  %14 = fmul nnan <2 x float> %13, splat (float f0x3B808081)
+  store <2 x float> %14, ptr %10, align 4, !tbaa !15
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 644
+  store <2 x float> %9, ptr %15, align 4, !tbaa !15
   ret i1 %i.f
 }
 
@@ -628,10 +636,9 @@ _ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit23: ; preds = %_ZN11OpenI
 
 .lr.ph.i.preheader.i24:                           ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit23
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 788
-  %.promoted.i25 = load i16, ptr %i.b, align 2, !tbaa !26
-  %1 = lshr i16 %.promoted.i25, 8
-  %2 = trunc nuw i16 %1 to i8
-  store i8 %2, ptr %i.ae, align 4, !tbaa !14
+  %.promoted.shift.i = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  %.promoted3.i = load i8, ptr %.promoted.shift.i, align 1, !tbaa !26
+  store i8 %.promoted3.i, ptr %i.ae, align 4, !tbaa !14
   br label %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIsaEEbRT0_.exit
 
 _ZN11OpenImageIO4v3_18PSDInput9read_bigeIsaEEbRT0_.exit: ; preds = %_ZN11OpenImageIO4v3_18PSDInput9read_bigeIttEEbRT0_.exit23, %.lr.ph.i.preheader.i24

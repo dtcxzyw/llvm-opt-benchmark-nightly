@@ -201,19 +201,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
-  %2 = load i32, ptr %i.g, align 8, !tbaa !30     ; 4 uses
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.c, align 8, !tbaa !7
-  %5 = lshr i32 %2, 16
-  %i.h = trunc i32 %5 to i8
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 547
+  %2 = load i8, ptr %.shift, align 1, !tbaa !30
+  store i8 %2, ptr %i.c, align 8, !tbaa !7
+  %.shift40 = getelementptr inbounds nuw i8, ptr %0, i64 546
+  %3 = load i16, ptr %.shift40, align 2, !tbaa !30
+  %i.h = trunc i16 %3 to i8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1137
   store i8 %i.h, ptr %i.i, align 1, !tbaa !7
-  %i.j = lshr i32 %2, 8
+  %4 = load i32, ptr %i.g, align 8, !tbaa !30     ; 2 uses
+  %i.j = lshr i32 %4, 8
   %i.k = trunc i32 %i.j to i8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1138
   store i8 %i.k, ptr %i.l, align 2, !tbaa !7
-  %i.m = trunc i32 %2 to i8
+  %i.m = trunc i32 %4 to i8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 1139
   store i8 %i.m, ptr %i.n, align 1, !tbaa !7
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1140
@@ -616,16 +617,16 @@ define internal fastcc noundef i32 @png_inflate_claim(ptr noalias noundef %0, i3
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !130  ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8              ; 5 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  %2 = lshr i32 %i.c, 16
   %i.d = lshr i32 %i.c, 24
   %i.e = trunc nuw i32 %i.d to i8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store i8 %i.e, ptr %i.a, align 16, !tbaa !7
-  %2 = lshr i32 %i.c, 16
   %i.f = trunc i32 %2 to i8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %i.f, ptr %i.g, align 1, !tbaa !7

@@ -81,19 +81,18 @@ thread-pre-split:                                 ; preds = %bb.b, %_ZN5o3dgc16A
   br i1 %i.p, label %bb.d, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.d:                                             ; preds = %thread-pre-split
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.q, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
-  %2 = phi i32 [ %i.v, %bb.e ], [ %.pre.i, %bb.d ]
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %2 = phi i8 [ %4, %bb.e ], [ %.pre.i, %bb.d ]
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
   store ptr %i.t, ptr %i.r, align 8
-  store i8 %4, ptr %i.s, align 1
+  store i8 %2, ptr %i.s, align 1
   %i.u = load i32, ptr %i.q, align 8
   %i.v = shl i32 %i.u, 8                          ; 2 uses
   store i32 %i.v, ptr %i.q, align 8
@@ -101,6 +100,8 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.x = shl i32 %i.w, 8                          ; 2 uses
   store i32 %i.x, ptr %i.a, align 8
   %i.y = icmp ult i32 %i.x, 16777216
+  %3 = lshr i32 %i.v, 24
+  %4 = trunc nuw i32 %3 to i8
   br i1 %i.y, label %bb.e, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.e, %thread-pre-split
@@ -158,7 +159,7 @@ _ZN5o3dgc16Arithmetic_Codec19renorm_dec_intervalEv.exit: ; preds = %bb.e, %bb.c
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN5o3dgc16Arithmetic_Codec8put_bitsEjj(ptr noundef nonnull align 8 captures(none) dereferenceable(44) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.d = load i32, ptr %i.c, align 8
@@ -200,18 +201,17 @@ bb.c:                                             ; preds = %_ZN5o3dgc16Arithmet
   br i1 %i.q, label %bb.d, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.d:                                             ; preds = %bb.c
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.a, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
-  %3 = phi i32 [ %i.v, %bb.e ], [ %.pre.i, %bb.d ]
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %3 = phi i8 [ %5, %bb.e ], [ %.pre.i, %bb.d ]
   %i.s = load ptr, ptr %i.r, align 8              ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1
   store ptr %i.t, ptr %i.r, align 8
-  store i8 %5, ptr %i.s, align 1
+  store i8 %3, ptr %i.s, align 1
   %i.u = load i32, ptr %i.a, align 8
   %i.v = shl i32 %i.u, 8                          ; 2 uses
   store i32 %i.v, ptr %i.a, align 8
@@ -219,6 +219,8 @@ bb.e:                                             ; preds = %bb.e, %bb.d
   %i.x = shl i32 %i.w, 8                          ; 2 uses
   store i32 %i.x, ptr %i.c, align 8
   %i.y = icmp ult i32 %i.x, 16777216
+  %4 = lshr i32 %i.v, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.y, label %bb.e, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.e, %bb.c
@@ -321,19 +323,18 @@ bb.e:                                             ; preds = %bb.c, %_ZN5o3dgc16A
   br i1 %i.t, label %bb.f, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.u, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %bb.f
-  %3 = phi i32 [ %i.z, %bb.g ], [ %.pre.i, %bb.f ]
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %3 = phi i8 [ %5, %bb.g ], [ %.pre.i, %bb.f ]
   %i.w = load ptr, ptr %i.v, align 8              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 1
   store ptr %i.x, ptr %i.v, align 8
-  store i8 %5, ptr %i.w, align 1
+  store i8 %3, ptr %i.w, align 1
   %i.y = load i32, ptr %i.u, align 8
   %i.z = shl i32 %i.y, 8                          ; 2 uses
   store i32 %i.z, ptr %i.u, align 8
@@ -341,6 +342,8 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.ab = shl i32 %i.aa, 8                        ; 2 uses
   store i32 %i.ab, ptr %i.b, align 8
   %i.ac = icmp ult i32 %i.ab, 16777216
+  %4 = lshr i32 %i.z, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.ac, label %bb.g, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.g, %bb.e
@@ -462,19 +465,18 @@ bb.e:                                             ; preds = %thread-pre-split, %
   br i1 %i.x, label %bb.f, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.y, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %bb.f
-  %3 = phi i32 [ %i.ad, %bb.g ], [ %.pre.i, %bb.f ]
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %3 = phi i8 [ %5, %bb.g ], [ %.pre.i, %bb.f ]
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
   store ptr %i.ab, ptr %i.z, align 8
-  store i8 %5, ptr %i.aa, align 1
+  store i8 %3, ptr %i.aa, align 1
   %i.ac = load i32, ptr %i.y, align 8
   %i.ad = shl i32 %i.ac, 8                        ; 2 uses
   store i32 %i.ad, ptr %i.y, align 8
@@ -482,6 +484,8 @@ bb.g:                                             ; preds = %bb.g, %bb.f
   %i.af = shl i32 %i.ae, 8                        ; 2 uses
   store i32 %i.af, ptr %i.c, align 8
   %i.ag = icmp ult i32 %i.af, 16777216
+  %4 = lshr i32 %i.ad, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.ag, label %bb.g, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.g, %bb.e
@@ -709,7 +713,7 @@ bb.j:                                             ; preds = %_ZN5o3dgc18Adaptive
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @_ZN5o3dgc16Arithmetic_Codec6encodeEjRNS_17Static_Data_ModelE(ptr noundef nonnull align 8 captures(none) dereferenceable(44) %0, i32 noundef %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.d = load i32, ptr %i.c, align 4
@@ -783,18 +787,17 @@ bb.f:                                             ; preds = %_ZN5o3dgc16Arithmet
   br i1 %i.aj, label %bb.g, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.g:                                             ; preds = %bb.f
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.a, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g
-  %3 = phi i32 [ %i.ao, %bb.h ], [ %.pre.i, %bb.g ]
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %3 = phi i8 [ %5, %bb.h ], [ %.pre.i, %bb.g ]
   %i.al = load ptr, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
   store ptr %i.am, ptr %i.ak, align 8
-  store i8 %5, ptr %i.al, align 1
+  store i8 %3, ptr %i.al, align 1
   %i.an = load i32, ptr %i.a, align 8
   %i.ao = shl i32 %i.an, 8                        ; 2 uses
   store i32 %i.ao, ptr %i.a, align 8
@@ -802,6 +805,8 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.aq = shl i32 %i.ap, 8                        ; 2 uses
   store i32 %i.aq, ptr %i.ai, align 8
   %i.ar = icmp ult i32 %i.aq, 16777216
+  %4 = lshr i32 %i.ao, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.ar, label %bb.h, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.h, %bb.f
@@ -947,7 +952,7 @@ _ZN5o3dgc16Arithmetic_Codec19renorm_dec_intervalEv.exit: ; preds = %bb.g, %.loop
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define hidden void @_ZN5o3dgc16Arithmetic_Codec6encodeEjRNS_19Adaptive_Data_ModelE(ptr noundef nonnull align 8 captures(none) dereferenceable(44) %0, i32 noundef %1, ptr noundef nonnull align 8 captures(none) dereferenceable(52) %2) local_unnamed_addr #3 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.d = load i32, ptr %i.c, align 8
@@ -1021,18 +1026,17 @@ bb.f:                                             ; preds = %_ZN5o3dgc16Arithmet
   br i1 %i.aj, label %bb.g, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit
 
 bb.g:                                             ; preds = %bb.f
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 27
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.pre.i = load i32, ptr %i.a, align 8
+  %.pre.i = load i8, ptr %.shift.i, align 1
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.h, %bb.g
-  %3 = phi i32 [ %i.ao, %bb.h ], [ %.pre.i, %bb.g ]
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
+  %3 = phi i8 [ %5, %bb.h ], [ %.pre.i, %bb.g ]
   %i.al = load ptr, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 1
   store ptr %i.am, ptr %i.ak, align 8
-  store i8 %5, ptr %i.al, align 1
+  store i8 %3, ptr %i.al, align 1
   %i.an = load i32, ptr %i.a, align 8
   %i.ao = shl i32 %i.an, 8                        ; 2 uses
   store i32 %i.ao, ptr %i.a, align 8
@@ -1040,6 +1044,8 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.aq = shl i32 %i.ap, 8                        ; 2 uses
   store i32 %i.aq, ptr %i.ai, align 8
   %i.ar = icmp ult i32 %i.aq, 16777216
+  %4 = lshr i32 %i.ao, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.ar, label %bb.h, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.h, %bb.f
@@ -1442,7 +1448,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   store i32 0, ptr %i.a, align 8
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 5 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.d = load i32, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.f = load i32, ptr %i.e, align 8
@@ -1453,6 +1459,8 @@ bb.c:                                             ; preds = %bb.a
   store i32 %storemerge3, ptr %i.c, align 8
   store i32 %storemerge, ptr %i.e, align 8
   %i.h = icmp ugt i32 %i.d, %storemerge3
+  %1 = lshr i32 %storemerge3, 24
+  %2 = trunc nuw i32 %1 to i8
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -1476,18 +1484,17 @@ _ZN5o3dgc16Arithmetic_Codec15propagate_carryEv.exit: ; preds = %.lr.ph.i, %bb.d
   %.lcssa.i = phi i8 [ %i.k, %bb.d ], [ %i.m, %.lr.ph.i ]
   %i.o = add nuw i8 %.lcssa.i, 1
   store i8 %i.o, ptr %.0.lcssa.i, align 1
-  %.pre.i.pre = load i32, ptr %i.c, align 8
+  %.shift.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 27
+  %.pre.i.pre = load i8, ptr %.shift.i.phi.trans.insert, align 1
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN5o3dgc16Arithmetic_Codec15propagate_carryEv.exit, %bb.c
-  %.pre.i = phi i32 [ %.pre.i.pre, %_ZN5o3dgc16Arithmetic_Codec15propagate_carryEv.exit ], [ %storemerge3, %bb.c ]
+  %.pre.i = phi i8 [ %.pre.i.pre, %_ZN5o3dgc16Arithmetic_Codec15propagate_carryEv.exit ], [ %2, %bb.c ]
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %1 = phi i32 [ %i.t, %bb.f ], [ %.pre.i, %bb.e ]
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
+  %3 = phi i8 [ %5, %bb.f ], [ %.pre.i, %bb.e ]
   %i.q = load ptr, ptr %i.p, align 8              ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1
   store ptr %i.r, ptr %i.p, align 8
@@ -1499,6 +1506,8 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %i.v = shl i32 %i.u, 8                          ; 2 uses
   store i32 %i.v, ptr %i.e, align 8
   %i.w = icmp ult i32 %i.v, 16777216
+  %4 = lshr i32 %i.t, 24
+  %5 = trunc nuw i32 %4 to i8
   br i1 %i.w, label %bb.f, label %_ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit, !llvm.loop !5
 
 _ZN5o3dgc16Arithmetic_Codec19renorm_enc_intervalEv.exit: ; preds = %bb.f

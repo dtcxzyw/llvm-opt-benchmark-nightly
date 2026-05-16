@@ -201,8 +201,9 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.js, label %bb.bh, label %bb.bp
 
 bb.bh:                                            ; preds = %bb.bg
-  %6 = load i64, ptr %.0141, align 8
-  %.not190 = icmp ult i64 %6, 281474976710656
+  %.shift = getelementptr inbounds nuw i8, ptr %.0141, i64 4
+  %6 = load i32, ptr %.shift, align 4
+  %.not190 = icmp ult i32 %6, 65536
   br i1 %.not190, label %bb.bp, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
@@ -605,8 +606,9 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.jt, label %bb.bd, label %bb.bk
 
 bb.bd:                                            ; preds = %bb.bc
-  %6 = load i64, ptr %.0.i247, align 8
-  %.not193 = icmp ult i64 %6, 281474976710656
+  %.shift = getelementptr inbounds nuw i8, ptr %.0.i247, i64 4
+  %6 = load i32, ptr %.shift, align 4
+  %.not193 = icmp ult i32 %6, 65536
   br i1 %.not193, label %bb.bk, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd

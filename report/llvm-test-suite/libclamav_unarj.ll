@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.a, %arj_read_fil
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -127, 1) i32 @cli_unarj_extract_file(i32 noundef %0, ptr noundef %1, ptr noundef captures(address_is_null) %2) local_unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.arj_decode_tag, align 8     ; 28 uses
+  %3 = alloca %struct.arj_decode_tag, align 8     ; 29 uses
   %i.a = alloca [1024 x i8], align 16             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str.4) #11
@@ -290,9 +290,10 @@ bb.h:                                             ; preds = %bb.g
   br i1 %.not97.i, label %.loopexit83.thread.i, label %.lr.ph95.i
 
 .lr.ph95.i:                                       ; preds = %.preheader82.i
-  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 4112 ; 7 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 12834 ; 2 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 12814 ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 12834 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 19 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %3, i64 12814 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 4112 ; 7 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 4622 ; 6 uses
   br label %bb.i
 
@@ -317,7 +318,7 @@ bb.j:                                             ; preds = %bb.i
 .preheader.i.i.i:                                 ; preds = %bb.j
   %i.ar = load i16, ptr %i.z, align 2, !tbaa !48
   %i.as = call fastcc i32 @fill_buf(ptr noundef nonnull %3, i32 noundef 9) ; 0 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(510) %i.af, i8 0, i64 510, i1 false), !tbaa !20
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(510) %i.ah, i8 0, i64 510, i1 false), !tbaa !20
   %i.at = lshr i16 %i.ar, 7
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %i.at, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 8 uses
@@ -354,7 +355,7 @@ vector.body:                                      ; preds = %vector.body, %.preh
 
 .lr.ph71.i.i.i:                                   ; preds = %.preheader59.i.i.i
   %i.bh = zext nneg i16 %.454.i.i.i to i64
-  %scevgep.i.i.i = getelementptr i8, ptr %i.af, i64 %i.bh
+  %scevgep.i.i.i = getelementptr i8, ptr %i.ah, i64 %i.bh
   %narrow.i.i.i = sub nuw nsw i16 510, %.454.i.i.i
   %i.bi = zext nneg i16 %narrow.i.i.i to i64
   call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i.i.i, i8 0, i64 %i.bi, i1 false), !tbaa !20
@@ -362,16 +363,16 @@ vector.body:                                      ; preds = %vector.body, %.preh
 
 .preheader63.i.i.i:                               ; preds = %bb.j, %.loopexit60.i.i.i
   %.25269.i.i.i = phi i16 [ %.454.i.i.i, %.loopexit60.i.i.i ], [ 0, %bb.j ] ; 4 uses
-  %4 = load i16, ptr %i.z, align 2, !tbaa !48     ; 2 uses
-  %5 = lshr i16 %4, 8
-  %i.bj = zext nneg i16 %5 to i64
-  %i.bk = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.bj
+  %5 = load i8, ptr %i.af, align 1, !tbaa !48
+  %i.bj = zext i8 %5 to i64
+  %i.bk = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.bj
   %i.bl = load i16, ptr %i.bk, align 2, !tbaa !8  ; 3 uses
   %i.bm = icmp sgt i16 %i.bl, 18
   br i1 %i.bm, label %.preheader61.i.i.i.a, label %.loopexit62.i.i.i
 
 .preheader61.i.i.i.a:                             ; preds = %.preheader63.i.i.i
-  %i.bn = zext i16 %4 to i32
+  %6 = load i16, ptr %i.z, align 2
+  %i.bn = zext i16 %6 to i32
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.m, %.preheader61.i.i.i.a
@@ -399,7 +400,7 @@ bb.m:                                             ; preds = %bb.k
 .loopexit62.i.i.i:                                ; preds = %bb.m, %.preheader63.i.i.i
   %.2.i.i.i = phi i16 [ %i.bl, %.preheader63.i.i.i ], [ %.1.i.i.i, %bb.m ] ; 4 uses
   %i.bt = sext i16 %.2.i.i.i to i64
-  %i.bu = getelementptr inbounds i8, ptr %i.ah, i64 %i.bt
+  %i.bu = getelementptr inbounds i8, ptr %i.ag, i64 %i.bt
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !20
   %i.bw = zext i8 %i.bv to i32
   %i.bx = call fastcc i32 @fill_buf(ptr noundef nonnull %3, i32 noundef %i.bw) ; 0 uses
@@ -445,7 +446,7 @@ vector.ph61:                                      ; preds = %.lr.ph.preheader.i.
   %i.ck = add nsw i64 %n.vec, %i.cd
   %i.cl = trunc i64 %n.vec to i16
   %i.cm = sub i16 %.3.i.i.i, %i.cl
-  %invariant.gep = getelementptr i8, ptr %i.af, i64 %i.cd
+  %invariant.gep = getelementptr i8, ptr %i.ah, i64 %i.cd
   br label %vector.body62
 
 vector.body62:                                    ; preds = %vector.body62, %vector.ph61
@@ -476,7 +477,7 @@ bb.p:                                             ; preds = %.lr.ph.i.i.i
 bb.q:                                             ; preds = %.lr.ph.i.i.i
   %i.cp = add nsw i16 %.in.i.i.i, -1
   %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
-  %i.cq = getelementptr inbounds i8, ptr %i.af, i64 %indvars.iv.i.i.i
+  %i.cq = getelementptr inbounds i8, ptr %i.ah, i64 %indvars.iv.i.i.i
   store i8 0, ptr %i.cq, align 1, !tbaa !20
   %i.cr = icmp sgt i16 %.in.i.i.i, 1
   br i1 %i.cr, label %.lr.ph.i.i.i, label %.loopexit60.loopexit.i.i.i, !llvm.loop !57
@@ -494,7 +495,7 @@ bb.t:                                             ; preds = %bb.r
   %i.cu = add nsw i8 %i.ct, -2
   %i.cv = add nsw i16 %.25269.i.i.i, 1
   %i.cw = sext i16 %.25269.i.i.i to i64
-  %i.cx = getelementptr inbounds i8, ptr %i.af, i64 %i.cw
+  %i.cx = getelementptr inbounds i8, ptr %i.ah, i64 %i.cw
   store i8 %i.cu, ptr %i.cx, align 1, !tbaa !20
   br label %.loopexit60.i.i.i
 
@@ -508,7 +509,7 @@ bb.t:                                             ; preds = %bb.r
   br i1 %i.cz, label %.preheader63.i.i.i, label %.preheader59.i.i.i, !llvm.loop !58
 
 ._crit_edge.i.i.i:                                ; preds = %.lr.ph71.i.i.i, %.preheader59.i.i.i
-  call fastcc void @make_table(ptr noundef nonnull %3, i32 noundef 510, ptr noundef %i.af, i32 noundef 12, ptr noundef %i.ai, i32 noundef 4096)
+  call fastcc void @make_table(ptr noundef nonnull %3, i32 noundef 510, ptr noundef %i.ah, i32 noundef 12, ptr noundef %i.ai, i32 noundef 4096)
   br label %read_c_len.exit.i.i
 
 read_c_len.exit.i.i:                              ; preds = %vector.body, %._crit_edge.i.i.i, %bb.s, %bb.p, %bb.l
@@ -557,7 +558,7 @@ bb.w:                                             ; preds = %bb.v
 decode_c.exit.i:                                  ; preds = %bb.w, %bb.u
   %.2.i.i = phi i16 [ %i.dg, %bb.u ], [ %.1.i.i, %bb.w ] ; 5 uses
   %i.do = zext nneg i16 %.2.i.i to i64
-  %i.dp = getelementptr inbounds nuw i8, ptr %i.af, i64 %i.do
+  %i.dp = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.do
   %i.dq = load i8, ptr %i.dp, align 1, !tbaa !20
   %i.dr = zext i8 %i.dq to i32
   %i.ds = call fastcc i32 @fill_buf(ptr noundef nonnull %3, i32 noundef %i.dr) ; 0 uses
@@ -586,16 +587,16 @@ bb.z:                                             ; preds = %decode_c.exit.i
   %i.ee = add nsw i16 %.2.i.i, -253
   %i.ef = zext nneg i16 %i.ee to i32
   %i.eg = add i32 %.04993.i, %i.ef                ; 2 uses
-  %6 = load i16, ptr %i.z, align 2, !tbaa !48     ; 2 uses
-  %7 = lshr i16 %6, 8
-  %i.eh = zext nneg i16 %7 to i64
-  %i.ei = getelementptr inbounds nuw [2 x i8], ptr %i.ag, i64 %i.eh
+  %7 = load i8, ptr %i.af, align 1, !tbaa !48
+  %i.eh = zext i8 %7 to i64
+  %i.ei = getelementptr inbounds nuw [2 x i8], ptr %4, i64 %i.eh
   %i.ej = load i16, ptr %i.ei, align 2, !tbaa !8  ; 3 uses
   %i.ek = icmp ugt i16 %i.ej, 16
   br i1 %i.ek, label %.preheader.i62.i.a, label %.loopexit.i60.i
 
 .preheader.i62.i.a:                               ; preds = %bb.z
-  %i.el = zext i16 %6 to i32
+  %8 = load i16, ptr %i.z, align 2
+  %i.el = zext i16 %8 to i32
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ac, %.preheader.i62.i.a
@@ -623,7 +624,7 @@ bb.ac:                                            ; preds = %bb.aa
 .loopexit.i60.i:                                  ; preds = %bb.ac, %bb.z
   %.2.i61.i = phi i16 [ %i.ej, %bb.z ], [ %.1.i68.i, %bb.ac ] ; 3 uses
   %i.er = zext nneg i16 %.2.i61.i to i64
-  %i.es = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.er
+  %i.es = getelementptr inbounds nuw i8, ptr %i.ag, i64 %i.er
   %i.et = load i8, ptr %i.es, align 1, !tbaa !20
   %i.eu = zext i8 %i.et to i32
   %i.ev = call fastcc i32 @fill_buf(ptr noundef nonnull %3, i32 noundef %i.eu) ; 0 uses

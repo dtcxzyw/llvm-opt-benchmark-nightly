@@ -164,9 +164,10 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
 _ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit.i: ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
   %i.v = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
   %i.w = inttoptr i64 %i.v to ptr
-  %3 = load i32, ptr %i.w, align 4
-  %4 = add i32 %3, -1140850688
-  %i.x = icmp ult i32 %4, 150994944
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.w, i64 3
+  %3 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %4 = add i8 %3, -68
+  %i.x = icmp ult i8 %4, 9
   %spec.select.i = select i1 %i.x, ptr %.sroa.02.0.i5, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZN6hermes2vm6HandleINS0_8CallableEE10dyn_vmcastERKNS0_10HandleBaseE.exit
 

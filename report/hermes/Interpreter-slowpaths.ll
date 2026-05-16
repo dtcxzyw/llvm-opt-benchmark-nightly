@@ -201,9 +201,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.x = and i64 %i.u, 281474976710655
   %i.y = inttoptr i64 %i.x to ptr                 ; 2 uses
-  %4 = load i32, ptr %i.y, align 4                ; 2 uses
-  %5 = add i32 %4, -1157627904
-  %i.z = icmp ult i32 %5, 67108864
+  %.shift.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.y, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i.i.i.i.i.i, align 1 ; 2 uses
+  %5 = add i8 %4, -69
+  %i.z = icmp ult i8 %5, 4
   br i1 %i.z, label %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit, label %.critedge.thread64
 
 _ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit: ; preds = %bb.c
@@ -213,8 +214,8 @@ _ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit: ; p
   br i1 %.not, label %bb.j, label %_ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit, !prof !23
 
 .critedge.thread64:                               ; preds = %bb.c
-  %6 = add i32 %4, -1140850688
-  %i.ac = icmp ult i32 %6, 150994944
+  %6 = add i8 %4, -68
+  %i.ac = icmp ult i8 %6, 9
   br i1 %i.ac, label %_ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit, label %bb.g
 
 _ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit: ; preds = %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit, %.critedge.thread64
@@ -579,9 +580,9 @@ bb.a:
 _ZN6hermes2vm5vmisaINS0_7JSArrayEEEbNS0_11HermesValueE.exit: ; preds = %bb.a
   %i.f = and i64 %.sroa.04.0.copyload, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr
-  %5 = load i32, ptr %i.g, align 4
-  %.mask.i.i.i.i.i.i.i = and i32 %5, -16777216
-  %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i, 536870912
+  %.shift.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 3
+  %5 = load i8, ptr %.shift.i.i.i.i.i.i.i, align 1
+  %i.h = icmp eq i8 %5, 32
   br i1 %i.h, label %bb.b, label %_ZN6hermes2vm5vmisaINS0_7JSArrayEEEbNS0_11HermesValueE.exit.thread, !prof !81
 
 bb.b:                                             ; preds = %_ZN6hermes2vm5vmisaINS0_7JSArrayEEEbNS0_11HermesValueE.exit

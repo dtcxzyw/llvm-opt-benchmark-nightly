@@ -138,7 +138,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = getelementptr inbounds nuw i8, ptr %i.d, i64 60 ; 12 uses
   %i.o = getelementptr i8, ptr %i.d, i64 1096     ; 20 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 3160 ; 9 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 3168 ; 6 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 3168 ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.d, i64 3184 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 3152 ; 6 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 6 uses
@@ -541,43 +541,48 @@ vector.body:                                      ; preds = %bb.gx
   br label %bb.hi
 
 bb.gy:                                            ; preds = %bb.hb, %vector.body
-  %indvars.iv1830.i = phi i64 [ 0, %vector.body ], [ %indvars.iv.next1831.i, %bb.hb ] ; 4 uses
+  %indvars.iv1830.i = phi i64 [ 0, %vector.body ], [ %indvars.iv.next1831.i, %bb.hb ] ; 5 uses
   %i.cki = load ptr, ptr %i.p, align 8, !tbaa !41
   %i.ckj = getelementptr inbounds nuw [2 x i8], ptr %i.cki, i64 %indvars.iv1830.i ; 2 uses
   %i.ckk = load i16, ptr %i.ckj, align 2, !tbaa !42
   %i.ckl = and i16 %i.ckk, 255
   %i.ckm = zext nneg i16 %i.ckl to i64
   %i.ckn = getelementptr inbounds nuw [4 x i8], ptr %i.ak, i64 %i.ckm ; 3 uses
-  %i.cko = load i32, ptr %i.ckn, align 4, !tbaa !4 ; 3 uses
+  %i.cko = load i32, ptr %i.ckn, align 4          ; 3 uses
   %i.ckp = trunc i32 %i.cko to i16
   store i16 %i.ckp, ptr %i.ckj, align 2, !tbaa !42
   %i.ckq = and i64 %indvars.iv1830.i, 1
   %i.ckr = icmp eq i64 %i.ckq, 0
-  %1 = load ptr, ptr %i.q, align 8, !tbaa !44
-  %2 = lshr i64 %indvars.iv1830.i, 1
-  %3 = and i64 %2, 2147483647
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %3 ; 2 uses
-  %5 = load i8, ptr %4, align 1, !tbaa !34        ; 2 uses
   br i1 %i.ckr, label %bb.gz, label %bb.ha
 
 bb.gz:                                            ; preds = %bb.gy
-  %6 = and i8 %5, -16
-  %7 = lshr i32 %i.cko, 16
-  %i.cks = trunc i32 %7 to i8
-  %i.ckt = or i8 %6, %i.cks
+  %1 = lshr i32 %i.cko, 16
+  %2 = load ptr, ptr %i.q, align 8, !tbaa !44
+  %3 = lshr exact i64 %indvars.iv1830.i, 1
+  %4 = and i64 %3, 2147483647
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 %4 ; 2 uses
+  %6 = load i8, ptr %5, align 1, !tbaa !34
+  %7 = and i8 %6, -16
+  %i.cks = trunc i32 %1 to i8
+  %i.ckt = or i8 %7, %i.cks
+  store i8 %i.ckt, ptr %5, align 1, !tbaa !34
   br label %bb.hb
 
 bb.ha:                                            ; preds = %bb.gy
-  %i.cku = and i8 %5, 15
+  %8 = load ptr, ptr %i.q, align 8, !tbaa !44
+  %9 = lshr i64 %indvars.iv1830.i, 1
+  %10 = and i64 %9, 2147483647
+  %11 = getelementptr inbounds nuw i8, ptr %8, i64 %10 ; 2 uses
+  %12 = load i8, ptr %11, align 1, !tbaa !34
+  %i.cku = and i8 %12, 15
   %i.ckv = lshr i32 %i.cko, 12
   %i.ckw = trunc i32 %i.ckv to i8
   %i.ckx = and i8 %i.ckw, -16
   %i.cky = or disjoint i8 %i.cku, %i.ckx
+  store i8 %i.cky, ptr %11, align 1, !tbaa !34
   br label %bb.hb
 
 bb.hb:                                            ; preds = %bb.ha, %bb.gz
-  %.sink2093.i = phi i8 [ %i.cky, %bb.ha ], [ %i.ckt, %bb.gz ]
-  store i8 %.sink2093.i, ptr %4, align 1, !tbaa !34
   %i.ckz = load i32, ptr %i.ckn, align 4, !tbaa !4
   %i.cla = add nsw i32 %i.ckz, 1
   store i32 %i.cla, ptr %i.ckn, align 4, !tbaa !4

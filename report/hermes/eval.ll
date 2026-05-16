@@ -81,8 +81,9 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.0.0.copyload.i.i.i.i.i = load i64, ptr %i.e, align 8, !tbaa !15
   %i.l = and i64 %.sroa.0.0.copyload.i.i.i.i.i, 281474976710655
   %i.m = inttoptr i64 %i.l to ptr                 ; 5 uses
-  %9 = load i32, ptr %i.m, align 4                ; 2 uses
-  %i.n = icmp ugt i32 %9, 150994943
+  %.shift.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 3
+  %9 = load i8, ptr %.shift.i.i.i.i, align 1      ; 2 uses
+  %i.n = icmp ugt i8 %9, 8
   br i1 %i.n, label %bb.d, label %bb.e, !prof !16
 
 bb.d:                                             ; preds = %bb.c
@@ -91,10 +92,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.j
 
 bb.e:                                             ; preds = %bb.c
-  %.mask.i.i.i.i.i.i.i.i.i.i = and i32 %9, 251658240
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i.i, label %bb.h [
-    i32 134217728, label %bb.f
-    i32 67108864, label %bb.g
+  switch i8 %9, label %bb.h [
+    i8 8, label %bb.f
+    i8 4, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -126,8 +126,9 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f,
   %.sroa.0.0.copyload.i.i.i.i.i25 = load i64, ptr %i.e, align 8, !tbaa !15
   %i.ab = and i64 %.sroa.0.0.copyload.i.i.i.i.i25, 281474976710655
   %i.ac = inttoptr i64 %i.ab to ptr               ; 5 uses
-  %10 = load i32, ptr %i.ac, align 4              ; 2 uses
-  %i.ad = icmp ugt i32 %10, 150994943
+  %.shift.i.i.i.i26 = getelementptr inbounds nuw i8, ptr %i.ac, i64 3
+  %10 = load i8, ptr %.shift.i.i.i.i26, align 1   ; 2 uses
+  %i.ad = icmp ugt i8 %10, 8
   br i1 %i.ad, label %bb.k, label %bb.l, !prof !16
 
 bb.k:                                             ; preds = %bb.j
@@ -136,10 +137,9 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNK6hermes2vm10StringView3endEv.exit
 
 bb.l:                                             ; preds = %bb.j
-  %.mask.i.i.i.i.i.i.i.i.i.i26 = and i32 %10, 251658240
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i.i26, label %bb.o [
-    i32 134217728, label %bb.m
-    i32 67108864, label %bb.n
+  switch i8 %10, label %bb.o [
+    i8 8, label %bb.m
+    i8 4, label %bb.n
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -518,9 +518,10 @@ _ZNK6hermes2vm10NativeArgs6getArgEj.exit:         ; preds = %bb.a
 _ZNK6hermes2vm10NativeArgs10dyncastArgINS0_15StringPrimitiveEEENS0_6HandleIT_EEj.exit: ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
   %i.q = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.r = inttoptr i64 %i.q to ptr
-  %4 = load i32, ptr %i.r, align 4
-  %5 = add i32 %4, -50331648
-  %i.s = icmp ult i32 %5, 134217728
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.r, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %5 = add i8 %4, -3
+  %i.s = icmp ult i8 %5, 8
   %spec.select.i = select i1 %i.s, ptr %i.o, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   %i.t = call { i32, i64 } @_ZN6hermes2vm10directEvalERNS0_7RuntimeENS0_6HandleINS0_15StringPrimitiveEEERKNS_10ScopeChainEbb(ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %spec.select.i, ptr nonnull align 8 poison, i1 zeroext poison, i1 zeroext poison) ; 2 uses
   %i.u = extractvalue { i32, i64 } %i.t, 0

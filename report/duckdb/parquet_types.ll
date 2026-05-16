@@ -201,7 +201,7 @@ _ZN13duckdb_apache6thrift8protocol23TOutputRecursionTrackerC2ERNS1_9TProtocolE.e
           to label %_ZN13duckdb_apache6thrift8protocol9TProtocol16writeStructBeginEPKc.exit unwind label %bb.f, !inline_history !125 ; 2 uses
 
 _ZN13duckdb_apache6thrift8protocol9TProtocol16writeStructBeginEPKc.exit: ; preds = %_ZN13duckdb_apache6thrift8protocol23TOutputRecursionTrackerC2ERNS1_9TProtocolE.exit
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 16 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 15 uses
   %i.q = load i16, ptr %i.p, align 8              ; 2 uses
   %i.r = trunc i16 %i.q to i1
   br i1 %i.r, label %bb.c, label %bb.g
@@ -604,6 +604,8 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit173: ; preds =
 bb.ac:                                            ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit173, %bb.z
   %i.hv = phi i16 [ %.pre252.a, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit173 ], [ %i.hg, %bb.z ] ; 2 uses
   %.6 = phi i32 [ %i.hu, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit173 ], [ %.5, %bb.z ] ; 2 uses
+  %.in = lshr i16 %i.hv, 8
+  %2 = trunc nuw i16 %.in to i8
   %i.hw = and i16 %i.hv, 128
   %.not117 = icmp eq i16 %i.hw, 0
   br i1 %.not117, label %bb.af, label %bb.ad
@@ -631,15 +633,15 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit177: ; preds =
   %i.ih = add i32 %i.ia, %.6
   %i.ii = add i32 %i.ih, %i.ic
   %i.ij = add i32 %i.ii, %i.ig
-  %.pre253 = load i16, ptr %i.p, align 8
+  %.shift.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 345
+  %.pre252 = load i8, ptr %.shift.phi.trans.insert, align 1
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit177, %bb.ac
-  %2 = phi i16 [ %.pre253, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit177 ], [ %i.hv, %bb.ac ] ; 2 uses
+  %3 = phi i8 [ %.pre252, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit177 ], [ %2, %bb.ac ]
   %.7 = phi i32 [ %i.ij, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit177 ], [ %.6, %bb.ac ] ; 2 uses
-  %3 = and i16 %2, 256
-  %.not118 = icmp eq i16 %3, 0
-  br i1 %.not118, label %bb.ai, label %bb.ag
+  %4 = trunc i8 %3 to i1
+  br i1 %4, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
   %i.ik = load ptr, ptr %1, align 8, !tbaa !22
@@ -664,13 +666,12 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit181: ; preds =
   %i.iu = add i32 %i.in, %.7
   %i.iv = add i32 %i.iu, %i.ip
   %i.iw = add i32 %i.iv, %i.it
-  %.pre254 = load i16, ptr %i.p, align 8
   br label %bb.ai
 
 bb.ai:                                            ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit181, %bb.af
-  %4 = phi i16 [ %.pre254, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit181 ], [ %2, %bb.af ] ; 2 uses
   %.8 = phi i32 [ %i.iw, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit181 ], [ %.7, %bb.af ] ; 2 uses
-  %i.ix = and i16 %4, 512
+  %5 = load i16, ptr %i.p, align 8                ; 2 uses
+  %i.ix = and i16 %5, 512
   %.not119.a = icmp eq i16 %i.ix, 0
   br i1 %.not119.a, label %bb.am, label %bb.aj
 
@@ -738,7 +739,7 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit191: ; preds =
   br label %bb.am
 
 bb.am:                                            ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit191, %bb.ai
-  %i.kg = phi i16 [ %.pre255.a, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit191 ], [ %4, %bb.ai ] ; 2 uses
+  %i.kg = phi i16 [ %.pre255.a, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit191 ], [ %5, %bb.ai ] ; 2 uses
   %.9 = phi i32 [ %i.kf, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit191 ], [ %.8, %bb.ai ] ; 2 uses
   %i.kh = and i16 %i.kg, 1024
   %.not120.a = icmp eq i16 %i.kh, 0
@@ -1141,7 +1142,7 @@ bb.a:
   %18 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.200, i64 noundef 12) ; 0 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.201, i64 noundef 7) ; 0 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 16 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 344 ; 15 uses
   %i.d = load i16, ptr %i.c, align 8
   %i.e = trunc i16 %i.d to i1
   br i1 %i.e, label %bb.b, label %bb.c
@@ -1429,10 +1430,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit305: ; preds = %_Z
 .critedge218:                                     ; preds = %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit305
   %i.db = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.77, i64 noundef 2) ; 0 uses
   %i.dc = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.209, i64 noundef 8) ; 0 uses
-  %19 = load i16, ptr %i.c, align 8
-  %20 = and i16 %19, 256
-  %.not.not.not197 = icmp eq i16 %20, 0
-  br i1 %.not.not.not197, label %bb.t, label %bb.s
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 345
+  %19 = load i8, ptr %.shift, align 1
+  %20 = trunc i8 %19 to i1
+  br i1 %20, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.critedge218
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #28
@@ -1835,7 +1836,7 @@ _ZN13duckdb_apache6thrift8protocol23TOutputRecursionTrackerC2ERNS1_9TProtocolE.e
           to label %_ZN13duckdb_apache6thrift8protocol9TProtocol16writeStructBeginEPKc.exit unwind label %bb.d, !inline_history !125 ; 2 uses
 
 _ZN13duckdb_apache6thrift8protocol9TProtocol16writeStructBeginEPKc.exit: ; preds = %_ZN13duckdb_apache6thrift8protocol23TOutputRecursionTrackerC2ERNS1_9TProtocolE.exit
-  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 9 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 8 uses
   %i.q = load i16, ptr %i.p, align 8              ; 2 uses
   %i.r = trunc i16 %i.q to i1
   br i1 %i.r, label %bb.c, label %bb.e
@@ -2127,6 +2128,8 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit96: ; preds = 
 bb.q:                                             ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit96, %bb.o
   %i.fm = phi i16 [ %.pre107.a, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit96 ], [ %i.et, %bb.o ] ; 2 uses
   %.6 = phi i32 [ %i.fl, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit96 ], [ %.5, %bb.o ] ; 2 uses
+  %.in109 = lshr i16 %i.fm, 8
+  %2 = trunc nuw i16 %.in109 to i8
   %i.fn = and i16 %i.fm, 128
   %.not75 = icmp eq i16 %i.fn, 0
   br i1 %.not75, label %bb.s, label %bb.r
@@ -2158,15 +2161,15 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit99: ; preds = 
   %i.gc = add i32 %i.fr, %.6
   %i.gd = add i32 %i.gc, %i.fx
   %i.ge = add i32 %i.gd, %i.gb
-  %.pre108 = load i16, ptr %i.p, align 8
+  %.shift.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 433
+  %.pre107 = load i8, ptr %.shift.phi.trans.insert, align 1
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit99, %bb.q
-  %2 = phi i16 [ %.pre108, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit99 ], [ %i.fm, %bb.q ]
+  %3 = phi i8 [ %.pre107, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit99 ], [ %2, %bb.q ]
   %.7 = phi i32 [ %i.ge, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit99 ], [ %.6, %bb.q ] ; 2 uses
-  %3 = and i16 %2, 256
-  %.not76 = icmp eq i16 %3, 0
-  br i1 %.not76, label %bb.v, label %bb.t
+  %4 = trunc i8 %3 to i1
+  br i1 %4, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s
   %i.gf = load ptr, ptr %1, align 8, !tbaa !22
@@ -2569,7 +2572,7 @@ bb.a:
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.227, i64 noundef 14) ; 0 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.228, i64 noundef 5) ; 0 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 9 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 8 uses
   %i.d = load i16, ptr %i.c, align 8
   %i.e = trunc i16 %i.d to i1
   br i1 %i.e, label %bb.b, label %bb.c
@@ -2880,10 +2883,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184: ; preds = %_Z
 .critedge125:                                     ; preds = %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit184
   %i.dl = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.77, i64 noundef 2) ; 0 uses
   %i.dm = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.235, i64 noundef 12) ; 0 uses
-  %12 = load i16, ptr %i.c, align 8
-  %13 = and i16 %12, 256
-  %.not.not.not111 = icmp eq i16 %13, 0
-  br i1 %.not.not.not111, label %bb.t, label %bb.s
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 433
+  %12 = load i8, ptr %.shift, align 1
+  %13 = trunc i8 %12 to i1
+  br i1 %13, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.critedge125
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #28
@@ -3286,7 +3289,7 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit158: ; preds =
   %i.ft = add i32 %i.fs, %i.ex
   %i.fu = add i32 %i.ft, %i.fd
   %i.fv = add i32 %i.fu, %i.fh                    ; 2 uses
-  %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 9 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 8 uses
   %i.fx = load i16, ptr %i.fw, align 8
   %i.fy = trunc i16 %i.fx to i1
   br i1 %i.fy, label %bb.d, label %bb.f
@@ -3663,6 +3666,8 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit183: ; preds =
 bb.t:                                             ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit183, %bb.r
   %i.nd = phi i16 [ %.pre256.a, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit183 ], [ %i.mk, %bb.r ] ; 2 uses
   %.10 = phi i32 [ %i.nc, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit183 ], [ %.9, %bb.r ] ; 2 uses
+  %.in266 = lshr i16 %i.nd, 8
+  %2 = trunc nuw i16 %.in266 to i8
   %i.ne = and i16 %i.nd, 128
   %.not138 = icmp eq i16 %i.ne, 0
   br i1 %.not138, label %bb.w, label %bb.u
@@ -3690,15 +3695,15 @@ _ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit185: ; preds =
   %i.np = add i32 %i.ni, %.10
   %i.nq = add i32 %i.np, %i.nk
   %i.nr = add i32 %i.nq, %i.no
-  %.pre257 = load i16, ptr %i.fw, align 8
+  %.shift.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 537
+  %.pre256 = load i8, ptr %.shift.phi.trans.insert, align 1
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit185, %bb.t
-  %2 = phi i16 [ %.pre257, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit185 ], [ %i.nd, %bb.t ]
+  %3 = phi i8 [ %.pre256, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit185 ], [ %2, %bb.t ]
   %.11 = phi i32 [ %i.nr, %_ZN13duckdb_apache6thrift8protocol9TProtocol13writeFieldEndEv.exit185 ], [ %.10, %bb.t ] ; 2 uses
-  %3 = and i16 %2, 256
-  %.not139 = icmp eq i16 %3, 0
-  br i1 %.not139, label %bb.z, label %bb.x
+  %4 = trunc i8 %3 to i1
+  br i1 %4, label %bb.x, label %bb.z
 
 bb.x:                                             ; preds = %bb.w
   %i.ns = load ptr, ptr %1, align 8, !tbaa !22
@@ -4101,7 +4106,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit176: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   %i.bs = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.77, i64 noundef 2) ; 0 uses
   %i.bt = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.348, i64 noundef 19) ; 0 uses
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 9 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 8 uses
   %i.bv = load i16, ptr %i.bu, align 8
   %i.bw = trunc i16 %i.bv to i1
   br i1 %i.bw, label %bb.b, label %bb.c
@@ -4412,10 +4417,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219: ; preds = %_Z
 .critedge132:                                     ; preds = %bb.r, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit219
   %i.gd = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.77, i64 noundef 2) ; 0 uses
   %i.ge = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.356, i64 noundef 22) ; 0 uses
-  %19 = load i16, ptr %i.bu, align 8
-  %20 = and i16 %19, 256
-  %.not.not.not118 = icmp eq i16 %20, 0
-  br i1 %.not.not.not118, label %bb.t, label %bb.s
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 537
+  %19 = load i8, ptr %.shift, align 1
+  %20 = trunc i8 %19 to i1
+  br i1 %20, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %.critedge132
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #28

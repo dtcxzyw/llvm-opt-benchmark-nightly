@@ -201,14 +201,14 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.4.0.extract.trunc.i.i = trunc i64 %.sroa.4.0.extract.shift.i.i to i16
   %i.f = add i16 %.sroa.4.0.extract.trunc.i.i, -1 ; 3 uses
   %i.g = inttoptr i64 %0 to ptr                   ; 4 uses
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !77   ; 10 uses
+  %i.h = load i64, ptr %i.g, align 8              ; 10 uses
   %i.i = and i64 %i.h, 31
   %cond.i = icmp eq i64 %i.i, 1
+  %4 = lshr i64 %i.h, 32
+  %5 = trunc nuw i64 %4 to i32                    ; 4 uses
   br i1 %cond.i, label %bb.d, label %vm_setivar.exit.thread
 
 bb.d:                                             ; preds = %bb.c
-  %4 = lshr i64 %i.h, 32
-  %5 = trunc nuw i64 %4 to i32                    ; 4 uses
   %i.j = icmp eq i32 %.sroa.0.0.extract.trunc.i.i, %5
   br i1 %i.j, label %bb.j, label %bb.e, !prof !72
 
@@ -330,7 +330,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = inttoptr i64 %1 to ptr                   ; 5 uses
-  %i.i = load i64, ptr %i.h, align 8, !tbaa !77   ; 3 uses
+  %i.i = load i64, ptr %i.h, align 8, !tbaa !77   ; 2 uses
   %i.j = trunc i64 %i.i to i32
   %i.k = and i32 %i.j, 31
   switch i32 %i.k, label %bb.h [
@@ -405,18 +405,17 @@ bb.i:                                             ; preds = %bb.h, %RCLASS_WRITA
   br i1 %.not50.i, label %vm_getivar.exit, label %..thread_crit_edge
 
 ..thread_crit_edge:                               ; preds = %bb.i
-  %.phi.trans.insert = inttoptr i64 %.046.i to ptr ; 2 uses
-  %.pre11 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !77
+  %.phi.trans.insert = inttoptr i64 %.046.i to ptr
   br label %.thread
 
 .thread:                                          ; preds = %..thread_crit_edge, %bb.b
-  %.pre-phi = phi ptr [ %.phi.trans.insert, %..thread_crit_edge ], [ %i.h, %bb.b ]
-  %4 = phi i64 [ %.pre11, %..thread_crit_edge ], [ %i.i, %bb.b ] ; 2 uses
+  %.pre-phi = phi ptr [ %.phi.trans.insert, %..thread_crit_edge ], [ %i.h, %bb.b ] ; 3 uses
   store i64 36, ptr %i.a, align 8, !tbaa !11
-  %5 = lshr i64 %4, 32                            ; 2 uses
-  %6 = trunc nuw i64 %5 to i32                    ; 2 uses
-  %i.ab = and i32 %6, -62914561                   ; 2 uses
-  %i.ac = and i64 %4, 65536
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.pre-phi, i64 4
+  %4 = load i32, ptr %.shift.i.i, align 4, !tbaa !77 ; 2 uses
+  %i.ab = and i32 %4, -62914561                   ; 3 uses
+  %5 = load i64, ptr %.pre-phi, align 8, !tbaa !77
+  %i.ac = and i64 %5, 65536
   %.not5.i = icmp eq i64 %i.ac, 0
   %i.ad = getelementptr i8, ptr %.pre-phi, i64 16 ; 2 uses
   br i1 %.not5.i, label %rb_imemo_fields_ptr.exit, label %bb.j, !prof !72
@@ -448,7 +447,7 @@ bb.l:                                             ; preds = %bb.k
   br label %vm_getivar.exit
 
 bb.m:                                             ; preds = %rb_imemo_fields_ptr.exit
-  %i.am = and i32 %6, 134217728
+  %i.am = and i32 %4, 134217728
   %.not = icmp eq i32 %i.am, 0
   br i1 %.not, label %bb.o, label %bb.n, !prof !72
 
@@ -489,7 +488,7 @@ bb.s:                                             ; preds = %bb.r
   br label %vm_getivar.exit
 
 bb.t:                                             ; preds = %bb.o
-  %.sroa.0.0.insert.ext.i.i6 = and i64 %5, 4232052735
+  %.sroa.0.0.insert.ext.i.i6 = zext i32 %i.ab to i64
   store atomic volatile i64 %.sroa.0.0.insert.ext.i.i6, ptr %3 monotonic, align 8
   br label %vm_getivar.exit
 
@@ -892,13 +891,13 @@ bb.bb:                                            ; preds = %bb.ba, %RCLASS_WRIT
   br label %.thread
 
 .thread:                                          ; preds = %..thread_crit_edge, %bb.au
-  %.pre-phi = phi ptr [ %.pre3214, %..thread_crit_edge ], [ %i.pq, %bb.au ] ; 2 uses
+  %.pre-phi = phi ptr [ %.pre3214, %..thread_crit_edge ], [ %i.pq, %bb.au ] ; 3 uses
   store i64 36, ptr %i.l, align 8, !tbaa !11
-  %10 = load i64, ptr %.pre-phi, align 8, !tbaa !77 ; 2 uses
-  %11 = lshr i64 %10, 32                          ; 2 uses
-  %12 = trunc nuw i64 %11 to i32                  ; 2 uses
-  %13 = and i32 %12, -62914561                    ; 2 uses
-  %i.qk = and i64 %10, 65536
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.pre-phi, i64 4
+  %10 = load i32, ptr %.shift.i.i, align 4, !tbaa !77 ; 2 uses
+  %11 = and i32 %10, -62914561                    ; 3 uses
+  %12 = load i64, ptr %.pre-phi, align 8, !tbaa !77
+  %i.qk = and i64 %12, 65536
   %.not5.i2419 = icmp eq i64 %i.qk, 0
   %i.ql = getelementptr i8, ptr %.pre-phi, i64 16 ; 2 uses
   br i1 %.not5.i2419, label %rb_imemo_fields_ptr.exit, label %bb.bc, !prof !72
@@ -916,7 +915,7 @@ rb_imemo_fields_ptr.exit:                         ; preds = %.thread, %bb.bc
   store i32 %.sroa.0.0.extract.trunc.i.i, ptr %i.m, align 4, !tbaa !7
   %i.qo = add i16 %.sroa.4.0.extract.trunc.i.i, -1 ; 2 uses
   store i16 %i.qo, ptr %i.n, align 2, !tbaa !120
-  %i.qp = icmp eq i32 %13, %.sroa.0.0.extract.trunc.i.i
+  %i.qp = icmp eq i32 %11, %.sroa.0.0.extract.trunc.i.i
   br i1 %i.qp, label %bb.bd, label %bb.bf, !prof !72
 
 bb.bd:                                            ; preds = %rb_imemo_fields_ptr.exit
@@ -930,7 +929,7 @@ bb.be:                                            ; preds = %bb.bd
   br label %vm_getivar.exit
 
 bb.bf:                                            ; preds = %rb_imemo_fields_ptr.exit
-  %i.qu = and i32 %12, 134217728
+  %i.qu = and i32 %10, 134217728
   %.not2947.a = icmp eq i32 %i.qu, 0
   br i1 %.not2947.a, label %bb.bh, label %bb.bg, !prof !72
 
@@ -942,7 +941,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %vm_getivar.exit
 
 bb.bh:                                            ; preds = %bb.bf
-  %i.qw = call zeroext i1 @rb_shape_get_iv_index_with_hint(i32 noundef %13, i64 noundef %i.pf, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m) #23
+  %i.qw = call zeroext i1 @rb_shape_get_iv_index_with_hint(i32 noundef %11, i64 noundef %i.pf, ptr noundef nonnull %i.n, ptr noundef nonnull %i.m) #23
   br i1 %i.qw, label %bb.bi, label %bb.bm
 
 bb.bi:                                            ; preds = %bb.bh
@@ -971,7 +970,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %vm_getivar.exit
 
 bb.bm:                                            ; preds = %bb.bh
-  %.sroa.0.0.insert.ext.i.i2421 = and i64 %11, 4232052735
+  %.sroa.0.0.insert.ext.i.i2421 = zext i32 %11 to i64
   store atomic volatile i64 %.sroa.0.0.insert.ext.i.i2421, ptr %i.pi monotonic, align 8
   br label %vm_getivar.exit
 
@@ -1374,13 +1373,13 @@ bb.fe:                                            ; preds = %bb.fd, %RCLASS_WRIT
   br label %.thread2826
 
 .thread2826:                                      ; preds = %..thread2826_crit_edge, %bb.ex
-  %.pre-phi3216 = phi ptr [ %.pre3215, %..thread2826_crit_edge ], [ %i.aqr, %bb.ex ] ; 2 uses
+  %.pre-phi3216 = phi ptr [ %.pre3215, %..thread2826_crit_edge ], [ %i.aqr, %bb.ex ] ; 3 uses
   store i64 36, ptr %i.i, align 8, !tbaa !11
-  %14 = load i64, ptr %.pre-phi3216, align 8, !tbaa !77 ; 2 uses
-  %15 = lshr i64 %14, 32                          ; 2 uses
-  %16 = trunc nuw i64 %15 to i32                  ; 2 uses
-  %17 = and i32 %16, -62914561                    ; 2 uses
-  %i.arl = and i64 %14, 65536
+  %.shift.i.i2464 = getelementptr inbounds nuw i8, ptr %.pre-phi3216, i64 4
+  %13 = load i32, ptr %.shift.i.i2464, align 4, !tbaa !77 ; 2 uses
+  %14 = and i32 %13, -62914561                    ; 3 uses
+  %15 = load i64, ptr %.pre-phi3216, align 8, !tbaa !77
+  %i.arl = and i64 %15, 65536
   %.not5.i2465 = icmp eq i64 %i.arl, 0
   %i.arm = getelementptr i8, ptr %.pre-phi3216, i64 16 ; 2 uses
   br i1 %.not5.i2465, label %rb_imemo_fields_ptr.exit2467, label %bb.ff, !prof !72
@@ -1398,7 +1397,7 @@ rb_imemo_fields_ptr.exit2467:                     ; preds = %.thread2826, %bb.ff
   store i32 %.sroa.0.0.extract.trunc.i.i2468, ptr %i.j, align 4, !tbaa !7
   %i.arp = add i16 %.sroa.4.0.extract.trunc.i.i2470, -1 ; 2 uses
   store i16 %i.arp, ptr %i.k, align 2, !tbaa !120
-  %i.arq = icmp eq i32 %17, %.sroa.0.0.extract.trunc.i.i2468
+  %i.arq = icmp eq i32 %14, %.sroa.0.0.extract.trunc.i.i2468
   br i1 %i.arq, label %bb.fg, label %bb.fi, !prof !72
 
 bb.fg:                                            ; preds = %rb_imemo_fields_ptr.exit2467
@@ -1411,7 +1410,7 @@ bb.fh:                                            ; preds = %bb.fg
   br label %vm_getivar.exit2349
 
 bb.fi:                                            ; preds = %rb_imemo_fields_ptr.exit2467
-  %i.aru = and i32 %16, 134217728
+  %i.aru = and i32 %13, 134217728
   %.not2946.a = icmp eq i32 %i.aru, 0
   br i1 %.not2946.a, label %bb.fk, label %bb.fj, !prof !72
 
@@ -1421,7 +1420,7 @@ bb.fj:                                            ; preds = %bb.fi
   br i1 %.not53.i2348, label %.sink.split, label %vm_getivar.exit2349
 
 bb.fk:                                            ; preds = %bb.fi
-  %i.arw = call zeroext i1 @rb_shape_get_iv_index_with_hint(i32 noundef %17, i64 noundef %i.aqe, ptr noundef nonnull %i.k, ptr noundef nonnull %i.j) #23
+  %i.arw = call zeroext i1 @rb_shape_get_iv_index_with_hint(i32 noundef %14, i64 noundef %i.aqe, ptr noundef nonnull %i.k, ptr noundef nonnull %i.j) #23
   br i1 %i.arw, label %bb.fl, label %bb.fp
 
 bb.fl:                                            ; preds = %bb.fk
@@ -1449,8 +1448,8 @@ bb.fo:                                            ; preds = %bb.fn
   br label %vm_getivar.exit2349
 
 bb.fp:                                            ; preds = %bb.fk
-  %.sroa.0.0.insert.ext.i.i2475 = and i64 %15, 4232052735
-  store atomic volatile i64 %.sroa.0.0.insert.ext.i.i2475, ptr %i.aqh monotonic, align 8
+  %.sroa.0.0.insert.ext.i.i2476 = zext i32 %14 to i64
+  store atomic volatile i64 %.sroa.0.0.insert.ext.i.i2476, ptr %i.aqh monotonic, align 8
   br label %.sink.split
 
 vm_getivar.exit2349:                              ; preds = %bb.fj, %bb.fh, %bb.fo
@@ -1853,11 +1852,10 @@ RCLASS_WRITABLE_FIELDS_OBJ.exit:                  ; preds = %bb.b, %.split.i.i, 
   br i1 %.not, label %RSHAPE_DIRECT_CHILD_P.exit.thread, label %bb.e, !prof !177
 
 bb.e:                                             ; preds = %RCLASS_WRITABLE_FIELDS_OBJ.exit
-  %i.t = inttoptr i64 %i.s to ptr                 ; 4 uses
-  %5 = load i64, ptr %i.t, align 8, !tbaa !77     ; 4 uses
-  %6 = lshr i64 %5, 32                            ; 3 uses
-  %7 = trunc nuw i64 %6 to i32                    ; 3 uses
-  %i.u = icmp eq i32 %3, %7                       ; 2 uses
+  %i.t = inttoptr i64 %i.s to ptr                 ; 5 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.t, i64 4
+  %5 = load i32, ptr %.shift.i, align 4, !tbaa !77 ; 4 uses
+  %i.u = icmp eq i32 %5, %3                       ; 2 uses
   br i1 %i.u, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -1865,7 +1863,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not27, label %RSHAPE_DIRECT_CHILD_P.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = xor i32 %3, %7
+  %i.v = xor i32 %5, %3
   %i.w = and i32 %i.v, 264241152
   %i.x = icmp eq i32 %i.w, 0
   br i1 %i.x, label %RSHAPE_DIRECT_CHILD_P.exit, label %RSHAPE_DIRECT_CHILD_P.exit.thread
@@ -1876,8 +1874,8 @@ RSHAPE_DIRECT_CHILD_P.exit:                       ; preds = %bb.g
   %i.aa = zext nneg i32 %i.y to i64
   %i.ab = getelementptr [40 x i8], ptr %i.z, i64 %i.aa ; 4 uses
   %i.ac = getelementptr i8, ptr %i.ab, i64 24
-  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !106
-  %i.ae = and i32 %7, 524287
+  %i.ad = load i32, ptr %i.ac, align 8, !tbaa !106 ; 3 uses
+  %i.ae = and i32 %5, 524287
   %i.af = icmp eq i32 %i.ad, %i.ae
   br i1 %i.af, label %bb.h, label %RSHAPE_DIRECT_CHILD_P.exit.thread
 
@@ -1888,27 +1886,28 @@ bb.h:                                             ; preds = %RSHAPE_DIRECT_CHILD
   br i1 %i.ai, label %bb.i, label %RSHAPE_DIRECT_CHILD_P.exit.thread
 
 bb.i:                                             ; preds = %bb.h
-  %8 = and i64 %5, 126100789566373888
-  %.not.i.i29 = icmp eq i64 %8, 0
+  %6 = lshr i32 %5, 22
+  %7 = trunc i32 %6 to i8
+  %8 = and i8 %7, 7                               ; 2 uses
+  %.not.i.i29 = icmp eq i8 %8, 0
   br i1 %.not.i.i29, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
 
 RSHAPE_EMBEDDED_CAPACITY.exit.thread.i:           ; preds = %bb.i
-  %9 = and i64 %6, 524287
+  %9 = zext nneg i32 %i.ad to i64
   %i.aj = getelementptr [40 x i8], ptr %i.z, i64 %9
   %i.ak = getelementptr i8, ptr %i.aj, i64 30
   %i.al = load i16, ptr %i.ak, align 2, !tbaa !684
   br label %RSHAPE_CAPACITY.exit
 
 RSHAPE_EMBEDDED_CAPACITY.exit.i:                  ; preds = %bb.i
-  %10 = lshr i64 %5, 54
   %i.am = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rb_shape_tree, i64 16), align 8, !tbaa !685
-  %11 = and i64 %10, 7
-  %i.an = add nuw nsw i64 %11, 4294967295
+  %10 = zext nneg i8 %8 to i64
+  %i.an = add nuw nsw i64 %10, 4294967295
   %i.ao = and i64 %i.an, 4294967295
   %i.ap = getelementptr [2 x i8], ptr %i.am, i64 %i.ao
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !120
-  %12 = and i64 %6, 524287
-  %i.ar = getelementptr [40 x i8], ptr %i.z, i64 %12
+  %11 = zext nneg i32 %i.ad to i64
+  %i.ar = getelementptr [40 x i8], ptr %i.z, i64 %11
   %i.as = getelementptr i8, ptr %i.ar, i64 30
   %i.at = load i16, ptr %i.as, align 2, !tbaa !684
   %spec.select.i = tail call i16 @llvm.umax.i16(i16 %i.aq, i16 %i.at)
@@ -1945,7 +1944,8 @@ RSHAPE_CAPACITY.exit36:                           ; preds = %RSHAPE_EMBEDDED_CAP
   br i1 %i.bh, label %bb.j, label %RSHAPE_DIRECT_CHILD_P.exit.thread
 
 bb.j:                                             ; preds = %bb.e, %RSHAPE_CAPACITY.exit36
-  %i.bi = and i64 %5, 65536
+  %12 = load i64, ptr %i.t, align 8, !tbaa !77
+  %i.bi = and i64 %12, 65536
   %.not5.i = icmp eq i64 %i.bi, 0
   %i.bj = getelementptr i8, ptr %i.t, i64 16      ; 2 uses
   br i1 %.not5.i, label %rb_imemo_fields_ptr.exit, label %bb.k, !prof !72
@@ -1995,10 +1995,9 @@ RSHAPE_DIRECT_CHILD_P.exit.thread:                ; preds = %bb.g, %RCLASS_WRITA
 define internal fastcc noundef i64 @vm_setivar_default(i64 noundef %0, i64 noundef %1, i64 noundef %2, i32 noundef %3, i16 noundef zeroext %4) unnamed_addr #30 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 3 uses
-  %5 = load i64, ptr %i.a, align 8, !tbaa !77     ; 3 uses
-  %6 = lshr i64 %5, 32                            ; 3 uses
-  %7 = trunc nuw i64 %6 to i32                    ; 3 uses
-  %i.b = icmp eq i32 %3, %7                       ; 2 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %5 = load i32, ptr %.shift.i, align 4, !tbaa !77 ; 4 uses
+  %i.b = icmp eq i32 %5, %3                       ; 2 uses
   br i1 %i.b, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -2006,7 +2005,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %RSHAPE_DIRECT_CHILD_P.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = xor i32 %3, %7
+  %i.c = xor i32 %5, %3
   %i.d = and i32 %i.c, 264241152
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %RSHAPE_DIRECT_CHILD_P.exit, label %RSHAPE_DIRECT_CHILD_P.exit.thread
@@ -2017,8 +2016,8 @@ RSHAPE_DIRECT_CHILD_P.exit:                       ; preds = %bb.c
   %i.h = zext nneg i32 %i.f to i64
   %i.i = getelementptr [40 x i8], ptr %i.g, i64 %i.h ; 4 uses
   %i.j = getelementptr i8, ptr %i.i, i64 24
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !106
-  %i.l = and i32 %7, 524287
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !106  ; 3 uses
+  %i.l = and i32 %5, 524287
   %i.m = icmp eq i32 %i.k, %i.l
   br i1 %i.m, label %bb.d, label %RSHAPE_DIRECT_CHILD_P.exit.thread
 
@@ -2029,27 +2028,28 @@ bb.d:                                             ; preds = %RSHAPE_DIRECT_CHILD
   br i1 %i.p, label %bb.e, label %RSHAPE_DIRECT_CHILD_P.exit.thread
 
 bb.e:                                             ; preds = %bb.d
-  %8 = and i64 %5, 126100789566373888
-  %.not.i.i = icmp eq i64 %8, 0
+  %6 = lshr i32 %5, 22
+  %7 = trunc i32 %6 to i8
+  %8 = and i8 %7, 7                               ; 2 uses
+  %.not.i.i = icmp eq i8 %8, 0
   br i1 %.not.i.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
 
 RSHAPE_EMBEDDED_CAPACITY.exit.thread.i:           ; preds = %bb.e
-  %9 = and i64 %6, 524287
+  %9 = zext nneg i32 %i.k to i64
   %i.q = getelementptr [40 x i8], ptr %i.g, i64 %9
   %i.r = getelementptr i8, ptr %i.q, i64 30
   %i.s = load i16, ptr %i.r, align 2, !tbaa !684
   br label %RSHAPE_CAPACITY.exit
 
 RSHAPE_EMBEDDED_CAPACITY.exit.i:                  ; preds = %bb.e
-  %10 = lshr i64 %5, 54
   %i.t = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rb_shape_tree, i64 16), align 8, !tbaa !685
-  %11 = and i64 %10, 7
-  %i.u = add nuw nsw i64 %11, 4294967295
+  %10 = zext nneg i8 %8 to i64
+  %i.u = add nuw nsw i64 %10, 4294967295
   %i.v = and i64 %i.u, 4294967295
   %i.w = getelementptr [2 x i8], ptr %i.t, i64 %i.v
   %i.x = load i16, ptr %i.w, align 2, !tbaa !120
-  %12 = and i64 %6, 524287
-  %i.y = getelementptr [40 x i8], ptr %i.g, i64 %12
+  %11 = zext nneg i32 %i.k to i64
+  %i.y = getelementptr [40 x i8], ptr %i.g, i64 %11
   %i.z = getelementptr i8, ptr %i.y, i64 30
   %i.aa = load i16, ptr %i.z, align 2, !tbaa !684
   %spec.select.i = tail call i16 @llvm.umax.i16(i16 %i.x, i16 %i.aa)
@@ -2170,15 +2170,18 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
 
 rb_check_frozen_inline.exit:                      ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.b
   %i.j = tail call zeroext i16 @rb_ivar_set_index(i64 noundef %0, i64 noundef %1, i64 noundef %2) #23
-  %4 = load i64, ptr %i.d, align 8, !tbaa !77     ; 2 uses
-  %5 = and i64 %4, 576460752303423488
-  %.not = icmp eq i64 %5, 0
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %4 = load i32, ptr %.shift.i, align 4, !tbaa !77 ; 2 uses
+  %5 = and i32 %4, 134217728
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %bb.c, label %vm_setivar_slowpath.exit
 
 bb.c:                                             ; preds = %rb_check_frozen_inline.exit
   %i.k = add i16 %i.j, 1
-  %.sroa.4.0.insert.ext.i.i7.i.a = zext i16 %i.k to i64
-  %.sroa.0.0.insert.insert.i.i10.i = tail call i64 @llvm.fshl.i64(i64 %.sroa.4.0.insert.ext.i.i7.i.a, i64 %4, i64 32)
+  %.sroa.4.0.insert.ext.i.i7.i = zext i16 %i.k to i64
+  %.sroa.4.0.insert.shift.i.i8.i = shl nuw nsw i64 %.sroa.4.0.insert.ext.i.i7.i, 32
+  %.sroa.4.0.insert.ext.i.i7.i.a = zext i32 %4 to i64
+  %.sroa.0.0.insert.insert.i.i10.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i8.i, %.sroa.4.0.insert.ext.i.i7.i.a
   store atomic volatile i64 %.sroa.0.0.insert.insert.i.i10.i, ptr %3 monotonic, align 8
   br label %vm_setivar_slowpath.exit
 
@@ -2581,18 +2584,18 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %RB_OBJ_FROZEN.exit.
 
 bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
   tail call void @rb_str_modify(i64 noundef %2) #23
-  %.pre = load i64, ptr %i.q, align 8, !tbaa !77
+  %.pre = load i64, ptr %i.q, align 8
   br label %rb_check_frozen_inline.exit
 
 rb_check_frozen_inline.exit:                      ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.b
   %i.w = phi i64 [ %i.r, %rbimpl_RB_TYPE_P_fastpath.exit.i ], [ %.pre, %bb.b ] ; 10 uses
   %i.x = and i64 %i.w, 31
   %cond.i = icmp eq i64 %i.x, 1
+  %3 = lshr i64 %i.w, 32
+  %4 = trunc nuw i64 %3 to i32                    ; 4 uses
   br i1 %cond.i, label %bb.c, label %vm_setivar.exit.thread
 
 bb.c:                                             ; preds = %rb_check_frozen_inline.exit
-  %3 = lshr i64 %i.w, 32
-  %4 = trunc nuw i64 %3 to i32                    ; 4 uses
   %i.y = icmp eq i32 %.sroa.0.0.extract.trunc.i.i, %4
   br i1 %i.y, label %bb.i, label %bb.d, !prof !72
 
@@ -2740,7 +2743,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.t = inttoptr i64 %i.j to ptr                 ; 5 uses
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !77   ; 3 uses
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !77   ; 2 uses
   %i.v = trunc i64 %i.u to i32
   %i.w = and i32 %i.v, 31
   switch i32 %i.w, label %bb.h [
@@ -2815,18 +2818,17 @@ bb.i:                                             ; preds = %bb.h, %RCLASS_WRITA
   br i1 %.not50.i, label %vm_getivar.exit, label %..thread_crit_edge
 
 ..thread_crit_edge:                               ; preds = %bb.i
-  %.phi.trans.insert = inttoptr i64 %.046.i to ptr ; 2 uses
-  %.pre14 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !77
+  %.phi.trans.insert = inttoptr i64 %.046.i to ptr
   br label %.thread
 
 .thread:                                          ; preds = %..thread_crit_edge, %bb.b
-  %.pre-phi = phi ptr [ %.phi.trans.insert, %..thread_crit_edge ], [ %i.t, %bb.b ]
-  %3 = phi i64 [ %.pre14, %..thread_crit_edge ], [ %i.u, %bb.b ] ; 2 uses
+  %.pre-phi = phi ptr [ %.phi.trans.insert, %..thread_crit_edge ], [ %i.t, %bb.b ] ; 3 uses
   store i64 36, ptr %i.a, align 8, !tbaa !11
-  %4 = lshr i64 %3, 32                            ; 2 uses
-  %5 = trunc nuw i64 %4 to i32                    ; 2 uses
-  %i.an = and i32 %5, -62914561                   ; 2 uses
-  %i.ao = and i64 %3, 65536
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.pre-phi, i64 4
+  %3 = load i32, ptr %.shift.i.i, align 4, !tbaa !77 ; 2 uses
+  %i.an = and i32 %3, -62914561                   ; 3 uses
+  %4 = load i64, ptr %.pre-phi, align 8, !tbaa !77
+  %i.ao = and i64 %4, 65536
   %.not5.i = icmp eq i64 %i.ao, 0
   %i.ap = getelementptr i8, ptr %.pre-phi, i64 16 ; 2 uses
   br i1 %.not5.i, label %rb_imemo_fields_ptr.exit, label %bb.j, !prof !72
@@ -2859,7 +2861,7 @@ bb.l:                                             ; preds = %bb.k
   br label %vm_getivar.exit
 
 bb.m:                                             ; preds = %rb_imemo_fields_ptr.exit
-  %i.az = and i32 %5, 134217728
+  %i.az = and i32 %3, 134217728
   %.not = icmp eq i32 %i.az, 0
   br i1 %.not, label %bb.o, label %bb.n, !prof !72
 
@@ -2919,7 +2921,7 @@ bb.u:                                             ; preds = %bb.o
   br i1 %.not.i.i9, label %bb.v, label %vm_cc_attr_index_initialize.exit
 
 bb.v:                                             ; preds = %bb.u
-  %.sroa.0.0.insert.ext.i.i.i = and i64 %4, 4232052735
+  %.sroa.0.0.insert.ext.i.i.i = zext i32 %i.an to i64
   %i.bp = or i64 %i.bn, 65536
   store i64 %i.bp, ptr %i.e, align 8, !tbaa !11
   br label %vm_cc_attr_index_initialize.exit
@@ -3322,9 +3324,10 @@ bb.b:                                             ; preds = %rbimpl_RB_TYPE_P_fa
 
 rb_check_frozen_inline.exit:                      ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i, %bb.b
   %i.j = tail call zeroext i16 @rb_ivar_set_index(i64 noundef %0, i64 noundef %1, i64 noundef %2) #23
-  %4 = load i64, ptr %i.d, align 8, !tbaa !77     ; 2 uses
-  %5 = and i64 %4, 576460752303423488
-  %.not = icmp eq i64 %5, 0
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %4 = load i32, ptr %.shift.i, align 4, !tbaa !77 ; 2 uses
+  %5 = and i32 %4, 134217728
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %bb.c, label %vm_setivar_slowpath.exit
 
 bb.c:                                             ; preds = %rb_check_frozen_inline.exit
@@ -3335,8 +3338,10 @@ bb.c:                                             ; preds = %rb_check_frozen_inl
 
 bb.d:                                             ; preds = %bb.c
   %i.m = add i16 %i.j, 1
-  %.sroa.4.0.insert.ext.i.i.i.a = zext i16 %i.m to i64
-  %.sroa.0.0.insert.insert.i.i.i = tail call i64 @llvm.fshl.i64(i64 %.sroa.4.0.insert.ext.i.i.i.a, i64 %4, i64 32)
+  %.sroa.4.0.insert.ext.i.i.i = zext i16 %i.m to i64
+  %.sroa.4.0.insert.shift.i.i.i = shl nuw nsw i64 %.sroa.4.0.insert.ext.i.i.i, 32
+  %.sroa.4.0.insert.ext.i.i.i.a = zext i32 %4 to i64
+  %.sroa.0.0.insert.insert.i.i.i = or disjoint i64 %.sroa.4.0.insert.shift.i.i.i, %.sroa.4.0.insert.ext.i.i.i.a
   %i.n = or i64 %i.k, 65536
   store i64 %i.n, ptr %3, align 8, !tbaa !11
   br label %populate_cache.exit

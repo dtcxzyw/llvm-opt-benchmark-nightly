@@ -201,9 +201,10 @@ rb_ractor_shareable_p.exit:                       ; preds = %bb.d
   br i1 %i.s, label %rb_obj_set_shareable.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.i
 
 rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %rb_ractor_shareable_p.exit, %rb_ractor_shareable_p.exit.thread47
-  %i.t = load i64, ptr %i.g, align 8, !tbaa !119  ; 9 uses
+  %i.t = load i64, ptr %i.g, align 8              ; 9 uses
   %i.u = and i64 %i.t, 31
   %i.v = icmp eq i64 %i.u, 12
+  %3 = lshr i64 %i.t, 32                          ; 2 uses
   br i1 %i.v, label %bb.e, label %rb_type.exit
 
 bb.e:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
@@ -343,7 +344,6 @@ rb_type.exit:                                     ; preds = %bb.f, %rbimpl_RB_TY
   ]
 
 bb.s:                                             ; preds = %rb_type.exit
-  %3 = lshr i64 %i.t, 32                          ; 2 uses
   %i.bg = and i64 %i.t, 126100789566373888
   %.not.i.i36 = icmp eq i64 %i.bg, 0
   br i1 %.not.i.i36, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
@@ -746,7 +746,7 @@ rb_ractor_shareable_p.exit.thread:                ; preds = %rb_ractor_shareable
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef i32 @move_leave(i64 noundef %0, ptr noundef readonly captures(none) %1) #0 {
 bb.a:
-  %i.a = inttoptr i64 %0 to ptr                   ; 6 uses
+  %i.a = inttoptr i64 %0 to ptr                   ; 7 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !119
   %i.c = and i64 %i.b, -33
   %i.d = getelementptr i8, ptr %1, i64 32         ; 4 uses
@@ -774,12 +774,19 @@ ruby_nonempty_memcpy.exit:                        ; preds = %bb.a, %bb.b
   %i.p = and i64 %0, 7
   %i.q = icmp ne i64 %i.p, 0
   %i.r = or i1 %i.o, %i.q
-  %.pre = load i64, ptr %i.a, align 8, !tbaa !119 ; 2 uses
-  br i1 %i.r, label %rb_obj_gen_fields_p.exit, label %rb_type.exit.i
+  br i1 %i.r, label %ruby_nonempty_memcpy.exit.rb_obj_gen_fields_p.exit_crit_edge, label %rb_type.exit.i
+
+ruby_nonempty_memcpy.exit.rb_obj_gen_fields_p.exit_crit_edge: ; preds = %ruby_nonempty_memcpy.exit
+  %.shift.i.i.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %.pre = load i32, ptr %.shift.i.i.i.phi.trans.insert, align 4, !tbaa !119
+  br label %rb_obj_gen_fields_p.exit
 
 rb_type.exit.i:                                   ; preds = %ruby_nonempty_memcpy.exit
-  %i.s = trunc i64 %.pre to i32
+  %2 = load i64, ptr %i.a, align 8                ; 2 uses
+  %i.s = trunc i64 %2 to i32
   %i.t = and i32 %i.s, 31
+  %3 = lshr i64 %2, 32
+  %4 = trunc nuw i64 %3 to i32
   switch i32 %i.t, label %rb_obj_gen_fields_p.exit [
     i32 0, label %rb_obj_gen_fields_p.exit.thread
     i32 1, label %rb_obj_gen_fields_p.exit.thread
@@ -788,9 +795,10 @@ rb_type.exit.i:                                   ; preds = %ruby_nonempty_memcp
     i32 26, label %rb_obj_gen_fields_p.exit.thread
   ]
 
-rb_obj_gen_fields_p.exit:                         ; preds = %ruby_nonempty_memcpy.exit, %rb_type.exit.i
-  %2 = and i64 %.pre, 578712547822141440
-  %.not = icmp eq i64 %2, 0
+rb_obj_gen_fields_p.exit:                         ; preds = %ruby_nonempty_memcpy.exit.rb_obj_gen_fields_p.exit_crit_edge, %rb_type.exit.i
+  %5 = phi i32 [ %.pre, %ruby_nonempty_memcpy.exit.rb_obj_gen_fields_p.exit_crit_edge ], [ %4, %rb_type.exit.i ]
+  %6 = and i32 %5, 134742015
+  %.not = icmp eq i32 %6, 0
   br i1 %.not, label %rb_obj_gen_fields_p.exit.thread, label %bb.c, !prof !253
 
 bb.c:                                             ; preds = %rb_obj_gen_fields_p.exit
@@ -918,18 +926,25 @@ bb.k:                                             ; preds = %rb_obj_written.exit
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %rb_obj_written.exit220
-  %i.ap = phi i64 [ %i.ao, %bb.k ], [ %0, %rb_obj_written.exit220 ] ; 48 uses
+  %i.ap = phi i64 [ %i.ao, %bb.k ], [ %0, %rb_obj_written.exit220 ] ; 47 uses
   %i.aq = icmp eq i64 %i.ap, 0
-  %i.ar = and i64 %i.ap, 7                        ; 2 uses
+  %i.ar = and i64 %i.ap, 7
   %i.as = icmp ne i64 %i.ar, 0
-  %i.at = or i1 %i.aq, %i.as                      ; 2 uses
+  %i.at = or i1 %i.aq, %i.as                      ; 3 uses
   %.pre.i = inttoptr i64 %i.ap to ptr             ; 14 uses
-  %.pre = load i64, ptr %.pre.i, align 8, !tbaa !119 ; 2 uses
-  br i1 %i.at, label %rb_obj_gen_fields_p.exit, label %rb_type.exit.i
+  br i1 %i.at, label %.rb_obj_gen_fields_p.exit_crit_edge, label %rb_type.exit.i
+
+.rb_obj_gen_fields_p.exit_crit_edge:              ; preds = %bb.l
+  %.shift.i.i.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i, i64 4
+  %.pre = load i32, ptr %.shift.i.i.i.phi.trans.insert, align 4, !tbaa !119
+  br label %rb_obj_gen_fields_p.exit
 
 rb_type.exit.i:                                   ; preds = %bb.l
-  %i.au = trunc i64 %.pre to i32
+  %5 = load i64, ptr %.pre.i, align 8             ; 2 uses
+  %i.au = trunc i64 %5 to i32
   %i.av = and i32 %i.au, 31
+  %6 = lshr i64 %5, 32
+  %7 = trunc nuw i64 %6 to i32
   switch i32 %i.av, label %rb_obj_gen_fields_p.exit [
     i32 0, label %rb_obj_gen_fields_p.exit.thread
     i32 1, label %rb_obj_gen_fields_p.exit.thread
@@ -938,16 +953,18 @@ rb_type.exit.i:                                   ; preds = %bb.l
     i32 26, label %rb_obj_gen_fields_p.exit.thread
   ]
 
-rb_obj_gen_fields_p.exit:                         ; preds = %bb.l, %rb_type.exit.i
-  %5 = and i64 %.pre, 578712547822141440
-  %.not248 = icmp eq i64 %5, 0
+rb_obj_gen_fields_p.exit:                         ; preds = %.rb_obj_gen_fields_p.exit_crit_edge, %rb_type.exit.i
+  %8 = phi i32 [ %.pre, %.rb_obj_gen_fields_p.exit_crit_edge ], [ %7, %rb_type.exit.i ]
+  %9 = and i32 %8, 134742015
+  %.not248 = icmp eq i32 %9, 0
   br i1 %.not248, label %rb_obj_gen_fields_p.exit.thread, label %bb.m, !prof !253
 
 bb.m:                                             ; preds = %rb_obj_gen_fields_p.exit
+  %.shift.i.i.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 4
   %i.aw = call i64 @rb_obj_fields(i64 noundef %i.ap, i64 noundef 0) #21 ; 5 uses
-  %.pre283 = load i64, ptr %.pre.i, align 8, !tbaa !119 ; 2 uses
-  %6 = and i64 %.pre283, 576460752303423488
-  %.not249 = icmp eq i64 %6, 0
+  %.pre281 = load i32, ptr %.shift.i.i.i, align 4, !tbaa !119 ; 2 uses
+  %10 = and i32 %.pre281, 134217728
+  %.not249 = icmp eq i32 %10, 0
   %or.cond308 = select i1 %i.at, i1 true, i1 %.not249, !prof !257
   %.not.i223 = icmp eq i64 %i.aw, 0               ; 2 uses
   br i1 %or.cond308, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.n, !prof !257
@@ -977,10 +994,10 @@ rb_imemo_fields_complex_tbl.exit:                 ; preds = %bb.n, %bb.o
   br i1 %i.bf, label %.critedge209, label %rb_obj_gen_fields_p.exit.thread
 
 rb_shape_obj_too_complex_p.exit.thread:           ; preds = %bb.m
-  %7 = lshr i64 %.pre283, 32
-  %8 = and i64 %7, 524287
-  %9 = load ptr, ptr @rb_shape_tree, align 8, !tbaa !171
-  %i.bg = getelementptr [40 x i8], ptr %9, i64 %8
+  %11 = and i32 %.pre281, 524287
+  %12 = load ptr, ptr @rb_shape_tree, align 8, !tbaa !171
+  %13 = zext nneg i32 %11 to i64
+  %i.bg = getelementptr [40 x i8], ptr %12, i64 %13
   %i.bh = getelementptr i8, ptr %i.bg, i64 28
   %i.bi = load i16, ptr %i.bh, align 4, !tbaa !181 ; 2 uses
   br i1 %.not.i223, label %rb_imemo_fields_ptr.exit, label %bb.p
@@ -1037,9 +1054,10 @@ rb_obj_write.exit:                                ; preds = %bb.r, %bb.s, %bb.t
   br i1 %exitcond.not, label %rb_obj_gen_fields_p.exit.thread, label %.lr.ph, !llvm.loop !263
 
 rb_obj_gen_fields_p.exit.thread:                  ; preds = %rb_obj_write.exit, %rb_imemo_fields_ptr.exit, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_imemo_fields_complex_tbl.exit, %rb_obj_gen_fields_p.exit
-  %i.bw = load i64, ptr %.pre.i, align 8, !tbaa !119 ; 6 uses
+  %i.bw = load i64, ptr %.pre.i, align 8          ; 6 uses
   %i.bx = trunc i64 %i.bw to i32
   %i.by = and i32 %i.bx, 31
+  %14 = lshr i64 %i.bw, 32
   switch i32 %i.by, label %bb.br [
     i32 4, label %.critedge197
     i32 10, label %.critedge197
@@ -1063,13 +1081,11 @@ bb.u:                                             ; preds = %rb_obj_gen_fields_p
   br label %.critedge197
 
 bb.v:                                             ; preds = %rb_obj_gen_fields_p.exit.thread
-  %10 = icmp ne i64 %i.ap, 0
-  %i.bz = icmp eq i64 %i.ar, 0
-  %.not252 = and i1 %10, %i.bz
-  %11 = and i64 %i.bw, 576460752303423488
-  %12 = icmp ne i64 %11, 0
-  %or.cond = and i1 %.not252, %12
-  br i1 %or.cond, label %bb.w, label %rb_shape_obj_too_complex_p.exit225.thread
+  %15 = and i64 %i.bw, 576460752303423488
+  %i.bz = icmp eq i64 %15, 0
+  %or.cond306 = or i1 %i.at, %i.bz
+  %16 = getelementptr i8, ptr %.pre.i, i64 16     ; 3 uses
+  br i1 %or.cond306, label %rb_shape_obj_too_complex_p.exit225.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -1078,8 +1094,7 @@ bb.w:                                             ; preds = %bb.v
   store i64 %i.ap, ptr %i.ca, align 8, !tbaa !258
   %i.cb = getelementptr inbounds nuw i8, ptr %3, i64 16
   store ptr %1, ptr %i.cb, align 8, !tbaa !261
-  %13 = getelementptr i8, ptr %.pre.i, i64 16
-  %i.cc = load ptr, ptr %13, align 8, !tbaa !145
+  %i.cc = load ptr, ptr %16, align 8, !tbaa !145
   %i.cd = ptrtoint ptr %3 to i64
   %i.ce = call i32 @rb_st_foreach_with_replace(ptr noundef %i.cc, ptr noundef nonnull @obj_iv_hash_traverse_replace_foreach_i, ptr noundef nonnull @obj_iv_hash_traverse_replace_i, i64 noundef %i.cd) #21 ; 0 uses
   %i.cf = load i8, ptr %3, align 8, !tbaa !262, !range !77, !noundef !25
@@ -1088,7 +1103,6 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cg, label %.critedge209, label %.critedge197
 
 rb_shape_obj_too_complex_p.exit225.thread:        ; preds = %bb.v
-  %14 = lshr i64 %i.bw, 32
   %i.ch = and i64 %14, 524287
   %i.ci = load ptr, ptr @rb_shape_tree, align 8, !tbaa !171
   %i.cj = getelementptr [40 x i8], ptr %i.ci, i64 %i.ch
@@ -1096,15 +1110,14 @@ rb_shape_obj_too_complex_p.exit225.thread:        ; preds = %bb.v
   %i.cl = load i16, ptr %i.ck, align 4, !tbaa !181 ; 2 uses
   %i.cm = and i64 %i.bw, 65536
   %.not.i226 = icmp eq i64 %i.cm, 0
-  %15 = getelementptr i8, ptr %.pre.i, i64 16     ; 2 uses
   br i1 %.not.i226, label %ROBJECT_FIELDS.exit, label %bb.x, !prof !256
 
 bb.x:                                             ; preds = %rb_shape_obj_too_complex_p.exit225.thread
-  %i.cn = load ptr, ptr %15, align 8, !tbaa !145
+  %i.cn = load ptr, ptr %16, align 8, !tbaa !145
   br label %ROBJECT_FIELDS.exit
 
 ROBJECT_FIELDS.exit:                              ; preds = %rb_shape_obj_too_complex_p.exit225.thread, %bb.x
-  %.0.i227 = phi ptr [ %i.cn, %bb.x ], [ %15, %rb_shape_obj_too_complex_p.exit225.thread ]
+  %.0.i227 = phi ptr [ %i.cn, %bb.x ], [ %16, %rb_shape_obj_too_complex_p.exit225.thread ]
   %.not194264.not = icmp eq i16 %i.cl, 0
   br i1 %.not194264.not, label %.critedge197, label %.lr.ph266.preheader
 

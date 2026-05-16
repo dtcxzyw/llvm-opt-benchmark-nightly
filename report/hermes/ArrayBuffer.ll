@@ -148,9 +148,9 @@ bb.a:
 _ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.a
   %i.c = and i64 %.sroa.0.0.copyload.i, 281474976710655 ; 2 uses
   %i.d = inttoptr i64 %i.c to ptr
-  %4 = load i32, ptr %i.d, align 4
-  %.mask.i.i.i.i.i.i.i.i = and i32 %4, -16777216
-  %i.e = icmp eq i32 %.mask.i.i.i.i.i.i.i.i, 553648128
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %i.e = icmp eq i8 %4, 33
   br i1 %i.e, label %_ZNK6hermes2vm10NativeArgs11dyncastThisINS0_13JSArrayBufferEEENS0_6HandleIT_EEv.exit, label %_ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.thread.i
 
 _ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.thread.i: ; preds = %_ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.i, %bb.a
@@ -220,9 +220,9 @@ bb.a:
 _ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.a
   %i.h = and i64 %.sroa.0.0.copyload.i, 281474976710655 ; 2 uses
   %i.i = inttoptr i64 %i.h to ptr
-  %5 = load i32, ptr %i.i, align 4
-  %.mask.i.i.i.i.i.i.i.i = and i32 %5, -16777216
-  %i.j = icmp eq i32 %.mask.i.i.i.i.i.i.i.i, 553648128
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 3
+  %5 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %i.j = icmp eq i8 %5, 33
   br i1 %i.j, label %_ZNK6hermes2vm10NativeArgs11dyncastThisINS0_13JSArrayBufferEEENS0_6HandleIT_EEv.exit, label %_ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.thread.i
 
 _ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.thread.i: ; preds = %_ZN6hermes2vm5vmisaINS0_13JSArrayBufferEEEbNS0_11HermesValueE.exit.i, %bb.a
@@ -419,17 +419,18 @@ _ZNK6hermes2vm10NativeArgs6getArgEj.exit:         ; preds = %bb.a
 _ZN6hermes2vm5vmisaINS0_16JSTypedArrayBaseEEEbNS0_11HermesValueE.exit: ; preds = %_ZNK6hermes2vm10NativeArgs6getArgEj.exit
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr
-  %3 = load i32, ptr %i.g, align 4
-  %4 = add i32 %3, -587202560
-  %i.h = icmp ult i32 %4, 184549376
+  %.shift.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 3
+  %3 = load i8, ptr %.shift.i.i.i.i.i.i.i, align 1
+  %4 = add i8 %3, -35
+  %i.h = icmp ult i8 %4, 11
   br i1 %i.h, label %_ZN6hermes2vm5vmisaINS0_10JSDataViewEEEbNS0_11HermesValueE.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZN6hermes2vm5vmisaINS0_16JSTypedArrayBaseEEEbNS0_11HermesValueE.exit
   %i.i = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.j = inttoptr i64 %i.i to ptr
-  %5 = load i32, ptr %i.j, align 4
-  %.mask.i.i.i.i.i.i.i = and i32 %5, -16777216
-  %i.k = icmp eq i32 %.mask.i.i.i.i.i.i.i, 570425344
+  %.shift.i.i.i.i.i.i.i6 = getelementptr inbounds nuw i8, ptr %i.j, i64 3
+  %5 = load i8, ptr %.shift.i.i.i.i.i.i.i6, align 1
+  %i.k = icmp eq i8 %5, 34
   %i.l = zext i1 %i.k to i64
   %i.m = or disjoint i64 %i.l, -1407374883553280
   br label %_ZN6hermes2vm5vmisaINS0_10JSDataViewEEEbNS0_11HermesValueE.exit

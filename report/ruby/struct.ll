@@ -201,15 +201,16 @@ bb.c:                                             ; preds = %bb.b
   %.0..0..0..0..0..0..i = load volatile ptr, ptr %i.b, align 8, !tbaa !33
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %i.o = tail call i64 @rb_wb_protected_newobj_of(ptr noundef %.0..0..0..0..0..0..i, i64 noundef %0, i64 noundef %spec.select46, i32 noundef 0, i64 noundef %spec.select) #22 ; 3 uses
-  %i.p = inttoptr i64 %i.o to ptr                 ; 10 uses
+  %i.p = inttoptr i64 %i.o to ptr                 ; 11 uses
   %i.q = load i16, ptr %i.f, align 8, !tbaa !21
   %i.r = icmp eq i16 %i.q, 0
-  %1 = load i64, ptr %i.p, align 8, !tbaa !13     ; 3 uses
   br i1 %i.r, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
-  %2 = and i64 %1, 578712547822141440
-  %.not53 = icmp eq i64 %2, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 4
+  %1 = load i32, ptr %.shift.i.i, align 4, !tbaa !13
+  %2 = and i32 %1, 134742015
+  %.not53 = icmp eq i32 %2, 0
   br i1 %.not53, label %bb.e, label %RSTRUCT_SET_FIELDS_OBJ.exit
 
 bb.e:                                             ; preds = %bb.d
@@ -252,13 +253,14 @@ bb.j:                                             ; preds = %bb.f
   br label %RSTRUCT_SET_FIELDS_OBJ.exit
 
 bb.k:                                             ; preds = %bb.c
-  %i.ae = lshr i64 %1, 13
+  %3 = load i64, ptr %i.p, align 8, !tbaa !13     ; 2 uses
+  %i.ae = lshr i64 %3, 13
   %i.af = and i64 %i.ae, 127                      ; 2 uses
   %.not.i47 = icmp eq i64 %i.af, 0
   br i1 %.not.i47, label %bb.o, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ag = and i64 %1, 1040384
+  %i.ag = and i64 %3, 1040384
   %.not.i.i.i48 = icmp eq i64 %i.ag, 0
   br i1 %.not.i.i.i48, label %bb.n, label %bb.m
 

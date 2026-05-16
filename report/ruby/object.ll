@@ -201,25 +201,23 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = inttoptr i64 %1 to ptr                   ; 4 uses
-  %2 = load i64, ptr %i.b, align 8, !tbaa !28
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32                    ; 4 uses
-  %i.c = and i32 %4, 134217728
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %2 = load i32, ptr %.shift.i, align 4, !tbaa !28 ; 4 uses
+  %i.c = and i32 %2, 134217728
   %.not47 = icmp eq i32 %i.c, 0
   br i1 %.not47, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %i.b, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !34
-  tail call void @rb_shape_copy_complex_ivars(i64 noundef %0, i64 noundef %1, i32 noundef %4, ptr noundef %i.e) #21
+  tail call void @rb_shape_copy_complex_ivars(i64 noundef %0, i64 noundef %1, i32 noundef %2, ptr noundef %i.e) #21
   br label %bb.k
 
 bb.d:                                             ; preds = %bb.b
   %i.f = inttoptr i64 %0 to ptr                   ; 6 uses
-  %5 = load i64, ptr %i.f, align 8, !tbaa !28     ; 3 uses
-  %6 = lshr i64 %5, 32                            ; 3 uses
-  %7 = trunc nuw i64 %6 to i32
-  %i.g = tail call i32 @rb_shape_rebuild(i32 noundef %7, i32 noundef %4) #21 ; 6 uses
+  %.shift.i34 = getelementptr inbounds nuw i8, ptr %i.f, i64 4
+  %3 = load i32, ptr %.shift.i34, align 4, !tbaa !28 ; 4 uses
+  %i.g = tail call i32 @rb_shape_rebuild(i32 noundef %3, i32 noundef %2) #21 ; 6 uses
   %i.h = and i32 %i.g, 134217728
   %.not48 = icmp eq i32 %i.h, 0
   br i1 %.not48, label %bb.f, label %bb.e, !prof !35
@@ -255,29 +253,32 @@ bb.h:                                             ; preds = %ROBJECT_FIELDS.exit
 
 ROBJECT_FIELDS.exit36:                            ; preds = %ROBJECT_FIELDS.exit, %bb.h
   %.0.i35 = phi ptr [ %i.q, %bb.h ], [ %i.p, %ROBJECT_FIELDS.exit ]
-  %8 = and i64 %5, 126100789566373888
-  %.not.i.i = icmp eq i64 %8, 0
+  %4 = lshr i32 %3, 22
+  %5 = trunc i32 %4 to i8
+  %6 = and i8 %5, 7                               ; 2 uses
+  %.not.i.i = icmp eq i8 %6, 0
   br i1 %.not.i.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
 
 RSHAPE_EMBEDDED_CAPACITY.exit.thread.i:           ; preds = %ROBJECT_FIELDS.exit36
-  %9 = and i64 %6, 524287
+  %7 = and i32 %3, 524287
   %i.r = load ptr, ptr @rb_shape_tree, align 8, !tbaa !36 ; 2 uses
-  %i.s = getelementptr [40 x i8], ptr %i.r, i64 %9
+  %8 = zext nneg i32 %7 to i64
+  %i.s = getelementptr [40 x i8], ptr %i.r, i64 %8
   %i.t = getelementptr i8, ptr %i.s, i64 30
   %i.u = load i16, ptr %i.t, align 2, !tbaa !41
   br label %RSHAPE_CAPACITY.exit
 
 RSHAPE_EMBEDDED_CAPACITY.exit.i:                  ; preds = %ROBJECT_FIELDS.exit36
-  %10 = lshr i64 %5, 54
   %i.v = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rb_shape_tree, i64 16), align 8, !tbaa !43
-  %11 = and i64 %10, 7
-  %i.w = add nuw nsw i64 %11, 4294967295
+  %9 = zext nneg i8 %6 to i64
+  %i.w = add nuw nsw i64 %9, 4294967295
   %i.x = and i64 %i.w, 4294967295
   %i.y = getelementptr [2 x i8], ptr %i.v, i64 %i.x
   %i.z = load i16, ptr %i.y, align 2, !tbaa !44
-  %12 = and i64 %6, 524287
+  %10 = and i32 %3, 524287
   %i.aa = load ptr, ptr @rb_shape_tree, align 8, !tbaa !36 ; 2 uses
-  %i.ab = getelementptr [40 x i8], ptr %i.aa, i64 %12
+  %11 = zext nneg i32 %10 to i64
+  %i.ab = getelementptr [40 x i8], ptr %i.aa, i64 %11
   %i.ac = getelementptr i8, ptr %i.ab, i64 30
   %i.ad = load i16, ptr %i.ac, align 2, !tbaa !41
   %spec.select.i = tail call i16 @llvm.umax.i16(i16 %i.z, i16 %i.ad)
@@ -334,7 +335,7 @@ bb.j:                                             ; preds = %bb.i
 
 ROBJECT_FIELDS.exit46:                            ; preds = %bb.j, %bb.i, %RSHAPE_CAPACITY.exit43
   %.0 = phi ptr [ %.0.i35, %RSHAPE_CAPACITY.exit43 ], [ %i.bc, %bb.j ], [ %i.p, %bb.i ]
-  tail call void @rb_shape_copy_fields(i64 noundef %0, ptr noundef %.0, i32 noundef %i.g, ptr noundef %.0.i, i32 noundef %4) #21
+  tail call void @rb_shape_copy_fields(i64 noundef %0, ptr noundef %.0, i32 noundef %i.g, ptr noundef %.0.i, i32 noundef %2) #21
   %i.bd = load i64, ptr %i.f, align 8, !tbaa !28
   %i.be = and i64 %i.bd, 4294967295
   %i.bf = zext i32 %i.g to i64

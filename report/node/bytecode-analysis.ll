@@ -201,12 +201,13 @@ bb.d:                                             ; preds = %_ZNSt5stackIN2v88in
   %i.pv = load i64, ptr %.sroa.0.0.copyload.i515, align 8
   %i.pw = add i64 %i.pv, 7
   %i.px = inttoptr i64 %i.pw to ptr
-  %154 = load i64, ptr %i.px, align 8             ; 2 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.px, i64 4
+  %154 = load i32, ptr %.shift.i, align 4         ; 2 uses
   %i.py = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.pz = load ptr, ptr %i.py, align 8            ; 3 uses
   %i.qa = getelementptr inbounds nuw i8, ptr %i.po, i64 128 ; 2 uses
   store i8 0, ptr %i.qa, align 8
-  %i.qb = icmp sgt i64 %154, -1
+  %i.qb = icmp sgt i32 %154, -1
   br i1 %i.qb, label %bb.f, label %bb.e, !prof !13
 
 bb.e:                                             ; preds = %bb.d
@@ -214,8 +215,8 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 bb.f:                                             ; preds = %bb.d
-  %155 = lshr i64 %154, 28
-  %156 = and i64 %155, 34359738352                ; 3 uses
+  %155 = zext nneg i32 %154 to i64
+  %156 = shl nuw nsw i64 %155, 4                  ; 3 uses
   %i.qc = getelementptr inbounds nuw i8, ptr %i.pz, i64 24
   %i.qd = load i64, ptr %i.qc, align 8
   %i.qe = getelementptr inbounds nuw i8, ptr %i.pz, i64 16 ; 3 uses

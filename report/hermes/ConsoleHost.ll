@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
 _ZN6hermes2vm5vmisaINS0_14RequireContextEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.b
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr
-  %12 = load i32, ptr %i.g, align 4
-  %.mask.i.i.i.i.i.i.i.i = and i32 %12, -16777216
-  %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i, 1073741824
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 3
+  %12 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %i.h = icmp eq i8 %12, 64
   %spec.select.i = select i1 %i.h, ptr %i.d, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_14RequireContextEEENS0_6HandleIT_EEj.exit
 
@@ -485,9 +485,10 @@ bb.b:                                             ; preds = %bb.a
 _ZN6hermes2vm5vmisaINS0_8CallableEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.b
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr
-  %6 = load i32, ptr %i.g, align 4
-  %7 = add i32 %6, -1140850688
-  %i.h = icmp ult i32 %7, 150994944
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 3
+  %6 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %7 = add i8 %6, -68
+  %i.h = icmp ult i8 %7, 9
   %spec.select.i = select i1 %i.h, ptr %i.d, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_8CallableEEENS0_6HandleIT_EEj.exit
 

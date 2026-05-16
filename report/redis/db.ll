@@ -201,10 +201,9 @@ bb.e:                                             ; preds = %._crit_edge, %bb.b
   br i1 %.not41, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %5 = load i64, ptr %i.k, align 8
-  %6 = lshr i64 %5, 32
-  %7 = trunc nuw i64 %6 to i32
-  %i.w = and i32 %7, 255
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.k, i64 4
+  %5 = load i32, ptr %.shift.i, align 4
+  %i.w = and i32 %5, 255
   %i.x = call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.w)
   %i.y = shl nuw nsw i32 %i.x, 3
   %i.z = zext nneg i32 %i.y to i64
@@ -216,7 +215,7 @@ bb.f:                                             ; preds = %bb.e
   %i.af = sub nsw i64 0, %i.ae
   %i.ag = getelementptr inbounds [8 x i8], ptr %i.ac, i64 %i.af
   %i.ah = shl nuw nsw i64 %i.ae, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ab, ptr nonnull align 8 %i.ag, i64 %i.ah, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr nonnull align 8 %i.ag, i64 %i.ah, i1 false)
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f, %bb.a
@@ -619,10 +618,9 @@ bb.f:                                             ; preds = %._crit_edge, %bb.c
   br i1 %.not39, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %4 = load i64, ptr %i.i, align 8
-  %5 = lshr i64 %4, 32
-  %6 = trunc nuw i64 %5 to i32
-  %i.t = and i32 %6, 255
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.i, i64 4
+  %4 = load i32, ptr %.shift.i, align 4
+  %i.t = and i32 %4, 255
   %i.u = call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.t)
   %i.v = shl nuw nsw i32 %i.u, 3
   %i.w = zext nneg i32 %i.v to i64
@@ -634,7 +632,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ac = sub nsw i64 0, %i.ab
   %i.ad = getelementptr inbounds [8 x i8], ptr %i.z, i64 %i.ac
   %i.ae = shl nuw nsw i64 %i.ab, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.y, ptr nonnull align 8 %i.ad, i64 %i.ae, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.y, ptr nonnull align 8 %i.ad, i64 %i.ae, i1 false)
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g, %bb.b
@@ -810,7 +808,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b, %bb.a
   %i.j = phi ptr [ %i.i, %bb.b ], [ %3, %bb.a ]   ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !68
-  %i.l = tail call ptr @dictGetKey(ptr noundef %i.k) #20 ; 12 uses
+  %i.l = tail call ptr @dictGetKey(ptr noundef %i.k) #20 ; 11 uses
   %i.m = tail call i64 @getObjectLength(ptr noundef %i.l) #20 ; 4 uses
   %i.n = load i64, ptr %i.l, align 8              ; 3 uses
   %i.o = trunc i64 %i.n to i32
@@ -826,23 +824,22 @@ bb.e:                                             ; preds = %bb.d
 
 getExpire.exit:                                   ; preds = %bb.e, %bb.d
   %i.u = tail call i64 @kvobjGetExpire(ptr noundef nonnull %i.l) #20 ; 3 uses
-  %7 = load i64, ptr %i.l, align 8
-  %8 = lshr i64 %7, 32
-  %9 = trunc nuw i64 %8 to i32
+  %.shift = getelementptr inbounds nuw i8, ptr %i.l, i64 4 ; 2 uses
+  %7 = load i32, ptr %.shift, align 4
   %i.v = icmp eq i32 %6, 0                        ; 3 uses
   %i.w = icmp eq i64 %i.u, -1                     ; 2 uses
   %or.cond = select i1 %i.v, i1 true, i1 %i.w
   %spec.select.v = select i1 %or.cond, i32 254, i32 255
-  %spec.select = and i32 %spec.select.v, %9       ; 2 uses
+  %spec.select = and i32 %spec.select.v, %7       ; 2 uses
   %.not137 = icmp eq i32 %4, 0
   br i1 %.not137, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %getExpire.exit
   %i.x = and i32 %spec.select, 1
   tail call void @incrRefCount(ptr noundef nonnull %i.l) #20
-  %10 = load i64, ptr %i.l, align 8
-  %11 = and i64 %10, 1090921693184
-  %.not138 = icmp ne i64 %11, 0                   ; 2 uses
+  %8 = load i32, ptr %.shift, align 4
+  %9 = and i32 %8, 254
+  %.not138 = icmp ne i32 %9, 0                    ; 2 uses
   br i1 %.not138, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -1245,9 +1242,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   call void @incrRefCount(ptr noundef nonnull %i.j) #20
-  %4 = load i64, ptr %i.j, align 8
-  %5 = and i64 %4, 1090921693184
-  %.not45 = icmp eq i64 %5, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %4 = load i32, ptr %.shift, align 4
+  %5 = and i32 %4, 254
+  %.not45 = icmp eq i32 %5, 0
   br i1 %.not45, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -1650,6 +1648,8 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   %i.am = trunc i64 %i.al to i32
   %i.an = and i32 %i.am, 15                       ; 2 uses
   %i.ao = icmp eq i32 %i.an, 4
+  %3 = lshr i64 %i.al, 32
+  %4 = trunc nuw i64 %3 to i32
   br i1 %i.ao, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -1663,18 +1663,19 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !64
   %i.ax = tail call i32 @getKeySlot(ptr noundef %i.aw)
   %i.ay = tail call i64 @estoreRemove(ptr noundef %i.ar, i32 noundef %i.ax, ptr noundef nonnull %i.s) #20
-  %.pre = load i64, ptr %i.s, align 8
+  %.shift.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.s, i64 4
+  %.pre = load i32, ptr %.shift.phi.trans.insert, align 4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %3 = phi i64 [ %.pre, %bb.i ], [ %i.al, %bb.h ]
+  %5 = phi i32 [ %.pre, %bb.i ], [ %4, %bb.h ]
   %.049 = phi i64 [ %i.ay, %bb.i ], [ 281474976710656, %bb.h ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
   %i.az = getelementptr inbounds nuw i8, ptr %2, i64 2
   store i16 0, ptr %i.az, align 2, !tbaa !104
   store i16 0, ptr %2, align 8, !tbaa !107
-  %4 = and i64 %3, 1095216660480
-  %.not54 = icmp eq i64 %4, 0
+  %6 = and i32 %5, 255
+  %.not54 = icmp eq i32 %6, 0
   br i1 %.not54, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -2077,9 +2078,10 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i16 0, ptr %i.dp, align 2, !tbaa !104
   store i16 0, ptr %1, align 8, !tbaa !107
-  %2 = load i64, ptr %i.ct, align 8
-  %3 = and i64 %2, 1095216660480
-  %.not106 = icmp eq i64 %3, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %i.ct, i64 4
+  %2 = load i32, ptr %.shift, align 4
+  %3 = and i32 %2, 255
+  %.not106 = icmp eq i32 %3, 0
   br i1 %.not106, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj

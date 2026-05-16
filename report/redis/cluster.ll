@@ -201,9 +201,10 @@ bb.a:
   store i64 0, ptr %i.b, align 8, !tbaa !50
   %i.c = tail call ptr @sdsempty() #21
   tail call void @rioInitWithBuffer(ptr noundef %0, ptr noundef %i.c) #21
-  %5 = load i64, ptr %1, align 8
-  %6 = and i64 %5, 1090921693184
-  %.not = icmp eq i64 %6, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %5 = load i32, ptr %.shift, align 4
+  %6 = and i32 %5, 254
+  %.not = icmp eq i32 %6, 0
   br i1 %.not, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

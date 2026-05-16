@@ -56,9 +56,10 @@ bb.c:                                             ; preds = %bb.b
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.c
   %i.m = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.n = inttoptr i64 %i.m to ptr
-  %4 = load i32, ptr %i.n, align 4
-  %5 = add i32 %4, -436207616
-  %i.o = icmp ult i32 %5, 855638016
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.n, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %5 = add i8 %4, -26
+  %i.o = icmp ult i8 %5, 51
   %spec.select.i = select i1 %i.o, ptr %i.k, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_8JSObjectEEENS0_6HandleIT_EEj.exit
 
@@ -76,9 +77,10 @@ bb.d:                                             ; preds = %_ZNK6hermes2vm10Nat
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.i6: ; preds = %bb.d
   %i.r = and i64 %.sroa.0.0.copyload.i5, 281474976710655
   %i.s = inttoptr i64 %i.r to ptr
-  %6 = load i32, ptr %i.s, align 4
-  %7 = add i32 %6, -436207616
-  %i.t = icmp ult i32 %7, 855638016
+  %.shift.i.i.i.i.i.i.i.i7 = getelementptr inbounds nuw i8, ptr %i.s, i64 3
+  %6 = load i8, ptr %.shift.i.i.i.i.i.i.i.i7, align 1
+  %7 = add i8 %6, -26
+  %i.t = icmp ult i8 %7, 51
   %spec.select.i7 = select i1 %i.t, ptr %i.p, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_8JSObjectEEENS0_6HandleIT_EEj.exit8
 
@@ -161,9 +163,10 @@ _ZN6hermes2vm11TwineChar16C2EPKc.exit9:           ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b
   %i.u = inttoptr i64 %i.c to ptr
-  %6 = load i32, ptr %i.u, align 4
-  %7 = add i32 %6, -1140850688
-  %i.v = icmp ult i32 %7, 150994944
+  %.shift.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.u, i64 3
+  %6 = load i8, ptr %.shift.i.i.i.i.i.i.i, align 1
+  %7 = add i8 %6, -68
+  %i.v = icmp ult i8 %7, 9
   br i1 %i.v, label %bb.d, label %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15JSCallableProxyEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -288,9 +291,10 @@ bb.b:                                             ; preds = %bb.a
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.i: ; preds = %bb.b
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr
-  %3 = load i32, ptr %i.g, align 4
-  %4 = add i32 %3, -436207616
-  %i.h = icmp ult i32 %4, 855638016
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 3
+  %3 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1
+  %4 = add i8 %3, -26
+  %i.h = icmp ult i8 %4, 51
   %spec.select.i = select i1 %i.h, ptr %i.d, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_8JSObjectEEENS0_6HandleIT_EEj.exit
 
@@ -309,9 +313,10 @@ bb.c:                                             ; preds = %_ZNK6hermes2vm10Nat
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.i22: ; preds = %bb.c
   %i.l = and i64 %.sroa.0.0.copyload.i21, 281474976710655
   %i.m = inttoptr i64 %i.l to ptr
-  %5 = load i32, ptr %i.m, align 4
-  %6 = add i32 %5, -436207616
-  %i.n = icmp ult i32 %6, 855638016
+  %.shift.i.i.i.i.i.i.i.i23 = getelementptr inbounds nuw i8, ptr %i.m, i64 3
+  %5 = load i8, ptr %.shift.i.i.i.i.i.i.i.i23, align 1
+  %6 = add i8 %5, -26
+  %i.n = icmp ult i8 %6, 51
   %spec.select.i23 = select i1 %i.n, ptr %i.j, ptr @_ZN6hermes2vm15HandleRootOwner12nullPointer_E
   br label %_ZNK6hermes2vm10NativeArgs10dyncastArgINS0_8JSObjectEEENS0_6HandleIT_EEj.exit24
 

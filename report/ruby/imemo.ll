@@ -201,10 +201,10 @@ bb.a:
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = inttoptr i64 %0 to ptr                   ; 6 uses
-  %1 = load i64, ptr %i.d, align 8, !tbaa !21     ; 6 uses
-  %2 = lshr i64 %1, 32                            ; 3 uses
-  %3 = and i64 %1, 576460752303423488
-  %.not = icmp eq i64 %3, 0
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %1 = load i32, ptr %.shift.i, align 4, !tbaa !21 ; 7 uses
+  %2 = and i32 %1, 134217728
+  %.not = icmp eq i32 %2, 0
   %i.e = icmp eq i64 %0, 0                        ; 4 uses
   br i1 %.not, label %bb.j, label %bb.b
 
@@ -271,7 +271,8 @@ rb_imemo_fields_owner.exit:                       ; preds = %bb.d, %bb.e, %bb.f,
   %i.x = tail call ptr @rb_st_replace(ptr noundef nonnull %i.h, ptr noundef %.0.i) #15 ; 0 uses
   %i.y = load i64, ptr %i.s, align 8, !tbaa !21
   %i.z = and i64 %i.y, 4294967295
-  %4 = and i64 %1, -4294967296
+  %3 = zext i32 %1 to i64
+  %4 = shl nuw i64 %3, 32
   %i.aa = or disjoint i64 %i.z, %4
   store i64 %i.aa, ptr %i.s, align 8, !tbaa !21
   %i.ab = tail call i32 @rb_st_foreach(ptr noundef nonnull %i.h, ptr noundef nonnull @imemo_fields_complex_wb_i, i64 noundef %i.r) #15 ; 0 uses
@@ -313,29 +314,32 @@ bb.p:                                             ; preds = %bb.o
 rb_imemo_fields_owner.exit30:                     ; preds = %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p
   %.0.in.i.i27 = phi ptr [ %i.af, %bb.k ], [ @rb_cNilClass, %bb.m ], [ @rb_cTrueClass, %bb.n ], [ @rb_cFalseClass, %bb.l ], [ @rb_cInteger, %bb.o ], [ %spec.select.i.i29, %bb.p ]
   %.0.i.i28 = load i64, ptr %.0.in.i.i27, align 8, !tbaa !14 ; 2 uses
-  %5 = and i64 %1, 126100789566373888
-  %.not.i.i = icmp eq i64 %5, 0
+  %5 = lshr i32 %1, 22
+  %6 = trunc i32 %5 to i8
+  %7 = and i8 %6, 7                               ; 2 uses
+  %.not.i.i = icmp eq i8 %7, 0
   br i1 %.not.i.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
 
 RSHAPE_EMBEDDED_CAPACITY.exit.thread.i:           ; preds = %rb_imemo_fields_owner.exit30
-  %6 = and i64 %2, 524287
+  %8 = and i32 %1, 524287
   %i.aj = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
-  %i.ak = getelementptr [40 x i8], ptr %i.aj, i64 %6
+  %9 = zext nneg i32 %8 to i64
+  %i.ak = getelementptr [40 x i8], ptr %i.aj, i64 %9
   %i.al = getelementptr i8, ptr %i.ak, i64 30
   %i.am = load i16, ptr %i.al, align 2, !tbaa !28
   br label %RSHAPE_CAPACITY.exit
 
 RSHAPE_EMBEDDED_CAPACITY.exit.i:                  ; preds = %rb_imemo_fields_owner.exit30
-  %7 = lshr i64 %1, 54
   %i.an = load ptr, ptr getelementptr inbounds nuw (i8, ptr @rb_shape_tree, i64 16), align 8, !tbaa !31
-  %8 = and i64 %7, 7
-  %i.ao = add nuw nsw i64 %8, 4294967295
+  %10 = zext nneg i8 %7 to i64
+  %i.ao = add nuw nsw i64 %10, 4294967295
   %i.ap = and i64 %i.ao, 4294967295
   %i.aq = getelementptr [2 x i8], ptr %i.an, i64 %i.ap
   %i.ar = load i16, ptr %i.aq, align 2, !tbaa !32
-  %9 = and i64 %2, 524287
+  %11 = and i32 %1, 524287
   %i.as = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
-  %i.at = getelementptr [40 x i8], ptr %i.as, i64 %9
+  %12 = zext nneg i32 %11 to i64
+  %i.at = getelementptr [40 x i8], ptr %i.as, i64 %12
   %i.au = getelementptr i8, ptr %i.at, i64 30
   %i.av = load i16, ptr %i.au, align 2, !tbaa !28
   %spec.select.i = tail call i16 @llvm.umax.i16(i16 %i.ar, i16 %i.av)
@@ -382,8 +386,9 @@ imemo_fields_new.exit:                            ; preds = %bb.q, %bb.r
   %i.bk = phi i64 [ %.pre, %bb.q ], [ %i.bj, %bb.r ] ; 2 uses
   %.0.i32 = phi i64 [ %i.bc, %bb.q ], [ %i.be, %bb.r ] ; 4 uses
   %i.bl = and i64 %i.bk, 4294967295
-  %10 = and i64 %1, -576460756598390784
-  %i.bm = or disjoint i64 %i.bl, %10
+  %13 = zext i32 %1 to i64
+  %14 = shl nuw i64 %13, 32
+  %i.bm = or disjoint i64 %i.bl, %14
   store i64 %i.bm, ptr %.pre-phi, align 8, !tbaa !21
   %.not.i34 = icmp eq i64 %.0.i32, 0
   br i1 %.not.i34, label %rb_imemo_fields_ptr.exit, label %bb.s
@@ -400,9 +405,10 @@ bb.t:                                             ; preds = %bb.s
 
 rb_imemo_fields_ptr.exit:                         ; preds = %imemo_fields_new.exit, %bb.s, %bb.t
   %.0.i35 = phi ptr [ %i.bp, %bb.t ], [ null, %imemo_fields_new.exit ], [ %i.bo, %bb.s ] ; 2 uses
-  %11 = and i64 %2, 524287
+  %15 = and i32 %1, 524287
   %i.bq = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
-  %i.br = getelementptr [40 x i8], ptr %i.bq, i64 %11
+  %16 = zext nneg i32 %15 to i64
+  %i.br = getelementptr [40 x i8], ptr %i.bq, i64 %16
   %i.bs = getelementptr i8, ptr %i.br, i64 28
   %i.bt = load i16, ptr %i.bs, align 4, !tbaa !34 ; 3 uses
   br i1 %i.e, label %rb_imemo_fields_ptr.exit39, label %bb.u
@@ -483,17 +489,20 @@ bb.a:
   %i.b = and i64 %0, 7
   %i.c = icmp ne i64 %i.b, 0
   %i.d = or i1 %i.a, %i.c
-  %.pre = inttoptr i64 %0 to ptr                  ; 4 uses
+  %.pre = inttoptr i64 %0 to ptr                  ; 5 uses
   br i1 %i.d, label %rb_shape_obj_too_complex_p.exit.thread, label %rb_shape_obj_too_complex_p.exit
 
 rb_shape_obj_too_complex_p.exit:                  ; preds = %bb.a
-  %1 = load i64, ptr %.pre, align 8, !tbaa !21    ; 2 uses
-  %2 = and i64 %1, 576460752303423488
-  %.not = icmp eq i64 %2, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %.pre, i64 4
+  %1 = load i32, ptr %.shift.i.i, align 4, !tbaa !21
+  %2 = and i32 %1, 134217728
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %rb_shape_obj_too_complex_p.exit
-  %i.e = and i64 %1, 576460756598390783
+  %3 = load i64, ptr %.pre, align 8, !tbaa !21
+  %i.e = and i64 %3, 4294967295
+  %4 = or disjoint i64 %i.e, 576460752303423488
   br label %bb.c
 
 rb_shape_obj_too_complex_p.exit.thread:           ; preds = %bb.a, %rb_shape_obj_too_complex_p.exit
@@ -502,7 +511,7 @@ rb_shape_obj_too_complex_p.exit.thread:           ; preds = %bb.a, %rb_shape_obj
   br label %bb.c
 
 bb.c:                                             ; preds = %rb_shape_obj_too_complex_p.exit.thread, %bb.b
-  %storemerge = phi i64 [ %i.g, %rb_shape_obj_too_complex_p.exit.thread ], [ %i.e, %bb.b ]
+  %storemerge = phi i64 [ %i.g, %rb_shape_obj_too_complex_p.exit.thread ], [ %4, %bb.b ]
   store i64 %storemerge, ptr %.pre, align 8, !tbaa !21
   %i.h = getelementptr i8, ptr %.pre, i64 8
   store i64 0, ptr %i.h, align 8, !tbaa !14
@@ -513,10 +522,11 @@ bb.c:                                             ; preds = %rb_shape_obj_too_co
 define hidden i64 @rb_imemo_memsize(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 5 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !21   ; 6 uses
+  %i.b = load i64, ptr %i.a, align 8              ; 6 uses
   %i.c = trunc i64 %i.b to i32
   %i.d = lshr i32 %i.c, 12
   %i.e = and i32 %i.d, 15
+  %1 = lshr i64 %i.b, 32                          ; 2 uses
   switch i32 %i.e, label %bb.i [
     i32 11, label %bb.j
     i32 10, label %bb.j
@@ -559,14 +569,14 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %1 = icmp ne i64 %0, 0
+  %2 = icmp eq i64 %0, 0
   %i.o = and i64 %0, 7
-  %2 = icmp eq i64 %i.o, 0
-  %.not19 = and i1 %1, %2
+  %3 = icmp ne i64 %i.o, 0
+  %4 = or i1 %2, %3
   %i.p = and i64 %i.b, 576460752303423488
-  %3 = icmp ne i64 %i.p, 0
-  %or.cond = and i1 %.not19, %3
-  br i1 %or.cond, label %bb.h, label %rb_shape_obj_too_complex_p.exit.thread
+  %.not15 = icmp eq i64 %i.p, 0
+  %or.cond = or i1 %4, %.not15
+  br i1 %or.cond, label %rb_shape_obj_too_complex_p.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.q = getelementptr i8, ptr %i.a, i64 16
@@ -575,13 +585,12 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 rb_shape_obj_too_complex_p.exit.thread:           ; preds = %bb.g
-  %4 = lshr i64 %i.b, 32                          ; 2 uses
   %i.t = and i64 %i.b, 126100789566373888
   %.not.i.i = icmp eq i64 %i.t, 0
   br i1 %.not.i.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.thread.i, label %RSHAPE_EMBEDDED_CAPACITY.exit.i
 
 RSHAPE_EMBEDDED_CAPACITY.exit.thread.i:           ; preds = %rb_shape_obj_too_complex_p.exit.thread
-  %i.u = and i64 %4, 524287
+  %i.u = and i64 %1, 524287
   %i.v = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
   %i.w = getelementptr [40 x i8], ptr %i.v, i64 %i.u
   %i.x = getelementptr i8, ptr %i.w, i64 30
@@ -596,7 +605,7 @@ RSHAPE_EMBEDDED_CAPACITY.exit.i:                  ; preds = %rb_shape_obj_too_co
   %i.ad = and i64 %i.ac, 4294967295
   %i.ae = getelementptr [2 x i8], ptr %i.aa, i64 %i.ad
   %i.af = load i16, ptr %i.ae, align 2, !tbaa !32
-  %i.ag = and i64 %4, 524287
+  %i.ag = and i64 %1, 524287
   %i.ah = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
   %i.ai = getelementptr [40 x i8], ptr %i.ah, i64 %i.ag
   %i.aj = getelementptr i8, ptr %i.ai, i64 30
@@ -633,7 +642,7 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 5 uses
   %i.e = alloca i64, align 8                      ; 5 uses
   %i.f = alloca i64, align 8                      ; 5 uses
-  %i.g = inttoptr i64 %0 to ptr                   ; 33 uses
+  %i.g = inttoptr i64 %0 to ptr                   ; 35 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !21   ; 2 uses
   %i.i = trunc i64 %i.h to i32
   %i.j = lshr i32 %i.i, 12
@@ -1036,12 +1045,13 @@ bb.bj:                                            ; preds = %bb.bi
   %i.ei = and i64 %0, 7
   %i.ej = icmp ne i64 %i.ei, 0
   %i.ek = or i1 %i.eh, %i.ej
-  %.pre111 = load i64, ptr %i.g, align 8, !tbaa !21 ; 3 uses
   br i1 %i.ek, label %bb.bm, label %rb_shape_obj_too_complex_p.exit
 
 rb_shape_obj_too_complex_p.exit:                  ; preds = %bb.bj
-  %2 = and i64 %.pre111, 576460752303423488
-  %.not101 = icmp eq i64 %2, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %2 = load i32, ptr %.shift.i.i, align 4, !tbaa !21
+  %3 = and i32 %2, 134217728
+  %.not101 = icmp eq i32 %3, 0
   br i1 %.not101, label %.thread, label %rb_imemo_fields_complex_tbl.exit
 
 rb_imemo_fields_complex_tbl.exit:                 ; preds = %rb_shape_obj_too_complex_p.exit
@@ -1058,24 +1068,33 @@ bb.bl:                                            ; preds = %rb_imemo_fields_com
   br label %mark_and_move_method_entry.exit
 
 bb.bm:                                            ; preds = %bb.bj
-  br i1 %i.eh, label %rb_imemo_fields_ptr.exit, label %.thread
+  br i1 %i.eh, label %.rb_imemo_fields_ptr.exit_crit_edge, label %.thread
 
-.thread:                                          ; preds = %bb.bm, %rb_shape_obj_too_complex_p.exit
-  %i.en = and i64 %.pre111, 65536
+.rb_imemo_fields_ptr.exit_crit_edge:              ; preds = %bb.bm
+  %.shift.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.g, i64 4
+  %.pre = load i32, ptr %.shift.i.phi.trans.insert, align 4, !tbaa !21
+  br label %rb_imemo_fields_ptr.exit
+
+.thread:                                          ; preds = %rb_shape_obj_too_complex_p.exit, %bb.bm
+  %4 = load i64, ptr %i.g, align 8                ; 2 uses
+  %i.en = and i64 %4, 65536
   %.not5.i = icmp eq i64 %i.en, 0
   %i.eo = getelementptr i8, ptr %i.g, i64 16      ; 2 uses
+  %5 = lshr i64 %4, 32
+  %6 = trunc nuw i64 %5 to i32                    ; 2 uses
   br i1 %.not5.i, label %rb_imemo_fields_ptr.exit, label %bb.bn, !prof !33
 
 bb.bn:                                            ; preds = %.thread
   %i.ep = load ptr, ptr %i.eo, align 8, !tbaa !20
   br label %rb_imemo_fields_ptr.exit
 
-rb_imemo_fields_ptr.exit:                         ; preds = %bb.bm, %.thread, %bb.bn
-  %.0.i99 = phi ptr [ %i.ep, %bb.bn ], [ null, %bb.bm ], [ %i.eo, %.thread ]
-  %3 = lshr i64 %.pre111, 32
-  %4 = and i64 %3, 524287
-  %5 = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
-  %i.eq = getelementptr [40 x i8], ptr %5, i64 %4
+rb_imemo_fields_ptr.exit:                         ; preds = %.rb_imemo_fields_ptr.exit_crit_edge, %.thread, %bb.bn
+  %7 = phi i32 [ %6, %bb.bn ], [ %.pre, %.rb_imemo_fields_ptr.exit_crit_edge ], [ %6, %.thread ]
+  %.0.i99 = phi ptr [ %i.ep, %bb.bn ], [ null, %.rb_imemo_fields_ptr.exit_crit_edge ], [ %i.eo, %.thread ]
+  %8 = and i32 %7, 524287
+  %9 = load ptr, ptr @rb_shape_tree, align 8, !tbaa !23
+  %10 = zext nneg i32 %8 to i64
+  %i.eq = getelementptr [40 x i8], ptr %9, i64 %10
   %i.er = getelementptr i8, ptr %i.eq, i64 28
   %i.es = load i16, ptr %i.er, align 4, !tbaa !34 ; 2 uses
   %.not105 = icmp eq i16 %i.es, 0
@@ -1238,13 +1257,13 @@ bb.i:                                             ; preds = %bb.a
 
 bb.j:                                             ; preds = %bb.i
   %i.q = and i64 %0, 7
-  %1 = icmp eq i64 %i.q, 0
+  %.not4.i = icmp ne i64 %i.q, 0
   %i.r = and i64 %i.b, 576460752303423488
-  %2 = icmp ne i64 %i.r, 0
-  %or.cond.i = and i1 %1, %2
+  %.not5.i = icmp eq i64 %i.r, 0
+  %or.cond.i = or i1 %.not4.i, %.not5.i
   %i.s = getelementptr i8, ptr %i.a, i64 16
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !20   ; 2 uses
-  br i1 %or.cond.i, label %bb.k, label %rb_shape_obj_too_complex_p.exit.thread.i
+  br i1 %or.cond.i, label %rb_shape_obj_too_complex_p.exit.thread.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   tail call void @rb_st_free_table(ptr noundef %i.t) #15

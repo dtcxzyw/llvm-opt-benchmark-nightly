@@ -200,10 +200,11 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.q = and i16 %i.p, 32767
   store i16 %i.q, ptr @c, align 2, !tbaa !9
   %i.r = tail call i32 @assemble()                ; 0 uses
-  %2 = load i16, ptr @inter, align 2, !tbaa !9    ; 2 uses
-  %3 = lshr i16 %2, 8                             ; 2 uses
+  %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @inter, i64 1), align 1, !tbaa !9
+  %3 = zext i8 %2 to i16                          ; 2 uses
   store i16 %3, ptr @cfc, align 2, !tbaa !9
-  %i.s = and i16 %2, 255                          ; 2 uses
+  %4 = load i16, ptr @inter, align 2, !tbaa !9
+  %i.s = and i16 %4, 255                          ; 2 uses
   store i16 %i.s, ptr @cfd, align 2, !tbaa !9
   %i.t = load i16, ptr @c, align 2, !tbaa !9      ; 2 uses
   %i.u = trunc i16 %i.t to i8
@@ -216,8 +217,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.aa = xor <16 x i8> %i.z, %i.x
   store <16 x i8> %i.aa, ptr getelementptr inbounds nuw (i8, ptr @cle, i64 16), align 16, !tbaa !8
   store i16 32, ptr @compte, align 2, !tbaa !9
-  %i.ab = xor i16 %i.s, %i.t
-  %i.ac = xor i16 %i.ab, %3                       ; 3 uses
+  %i.ab = xor i16 %i.t, %3
+  %i.ac = xor i16 %i.ab, %i.s                     ; 3 uses
   store i16 %i.ac, ptr @c, align 2, !tbaa !9
   %i.ad = ashr i16 %i.ac, 4                       ; 2 uses
   store i16 %i.ad, ptr @d, align 2, !tbaa !9

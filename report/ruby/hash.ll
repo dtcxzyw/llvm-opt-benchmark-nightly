@@ -201,7 +201,7 @@ rb_hash_new_with_size.exit:                       ; preds = %bb.a, %bb.b
 define dso_local i64 @rb_hash_dup(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = inttoptr i64 %0 to ptr                   ; 4 uses
+  %i.b = inttoptr i64 %0 to ptr                   ; 5 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !13
   %i.d = tail call i64 @rb_obj_class(i64 noundef %0) #29
   %i.e = and i64 %i.c, 16384
@@ -257,12 +257,19 @@ hash_dup.exit:                                    ; preds = %RHASH_EMPTY_P.exit.
   %i.ae = and i64 %0, 7
   %i.af = icmp ne i64 %i.ae, 0
   %i.ag = or i1 %i.ad, %i.af
-  %.pre = load i64, ptr %i.b, align 8, !tbaa !13  ; 2 uses
-  br i1 %i.ag, label %rb_obj_gen_fields_p.exit, label %rb_type.exit.i
+  br i1 %i.ag, label %hash_dup.exit.rb_obj_gen_fields_p.exit_crit_edge, label %rb_type.exit.i
+
+hash_dup.exit.rb_obj_gen_fields_p.exit_crit_edge: ; preds = %hash_dup.exit
+  %.shift.i.i.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %.pre = load i32, ptr %.shift.i.i.i.phi.trans.insert, align 4, !tbaa !13
+  br label %rb_obj_gen_fields_p.exit
 
 rb_type.exit.i:                                   ; preds = %hash_dup.exit
-  %i.ah = trunc i64 %.pre to i32
+  %1 = load i64, ptr %i.b, align 8                ; 2 uses
+  %i.ah = trunc i64 %1 to i32
   %i.ai = and i32 %i.ah, 31
+  %2 = lshr i64 %1, 32
+  %3 = trunc nuw i64 %2 to i32
   switch i32 %i.ai, label %rb_obj_gen_fields_p.exit [
     i32 0, label %rb_obj_gen_fields_p.exit.thread
     i32 1, label %rb_obj_gen_fields_p.exit.thread
@@ -271,9 +278,10 @@ rb_type.exit.i:                                   ; preds = %hash_dup.exit
     i32 26, label %rb_obj_gen_fields_p.exit.thread
   ]
 
-rb_obj_gen_fields_p.exit:                         ; preds = %hash_dup.exit, %rb_type.exit.i
-  %1 = and i64 %.pre, 578712547822141440
-  %.not = icmp eq i64 %1, 0
+rb_obj_gen_fields_p.exit:                         ; preds = %hash_dup.exit.rb_obj_gen_fields_p.exit_crit_edge, %rb_type.exit.i
+  %4 = phi i32 [ %.pre, %hash_dup.exit.rb_obj_gen_fields_p.exit_crit_edge ], [ %3, %rb_type.exit.i ]
+  %5 = and i32 %4, 134742015
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %rb_obj_gen_fields_p.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %rb_obj_gen_fields_p.exit
@@ -676,13 +684,20 @@ bb.a:
   %i.b = and i64 %0, 7
   %i.c = icmp ne i64 %i.b, 0
   %i.d = or i1 %i.a, %i.c
-  %.pre.i = inttoptr i64 %0 to ptr                ; 2 uses
-  %.pre = load i64, ptr %.pre.i, align 8, !tbaa !13 ; 2 uses
-  br i1 %i.d, label %rb_obj_gen_fields_p.exit, label %rb_type.exit.i
+  %.pre.i = inttoptr i64 %0 to ptr                ; 3 uses
+  br i1 %i.d, label %.rb_obj_gen_fields_p.exit_crit_edge, label %rb_type.exit.i
+
+.rb_obj_gen_fields_p.exit_crit_edge:              ; preds = %bb.a
+  %.shift.i.i.i.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i, i64 4
+  %.pre = load i32, ptr %.shift.i.i.i.phi.trans.insert, align 4, !tbaa !13
+  br label %rb_obj_gen_fields_p.exit
 
 rb_type.exit.i:                                   ; preds = %bb.a
-  %i.e = trunc i64 %.pre to i32
+  %1 = load i64, ptr %.pre.i, align 8             ; 2 uses
+  %i.e = trunc i64 %1 to i32
   %i.f = and i32 %i.e, 31
+  %2 = lshr i64 %1, 32
+  %3 = trunc nuw i64 %2 to i32
   switch i32 %i.f, label %rb_obj_gen_fields_p.exit [
     i32 0, label %rb_obj_gen_fields_p.exit.thread
     i32 1, label %rb_obj_gen_fields_p.exit.thread
@@ -691,9 +706,10 @@ rb_type.exit.i:                                   ; preds = %bb.a
     i32 26, label %rb_obj_gen_fields_p.exit.thread
   ]
 
-rb_obj_gen_fields_p.exit:                         ; preds = %bb.a, %rb_type.exit.i
-  %1 = and i64 %.pre, 578712547822141440
-  %.not = icmp eq i64 %1, 0
+rb_obj_gen_fields_p.exit:                         ; preds = %.rb_obj_gen_fields_p.exit_crit_edge, %rb_type.exit.i
+  %4 = phi i32 [ %.pre, %.rb_obj_gen_fields_p.exit_crit_edge ], [ %3, %rb_type.exit.i ]
+  %5 = and i32 %4, 134742015
+  %.not = icmp eq i32 %5, 0
   br i1 %.not, label %rb_obj_gen_fields_p.exit.thread, label %bb.c
 
 rb_obj_gen_fields_p.exit.thread:                  ; preds = %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_obj_gen_fields_p.exit

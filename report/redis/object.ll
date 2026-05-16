@@ -161,10 +161,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local nonnull ptr @kvobjMetaRef(ptr noundef readonly captures(ret: address, provenance) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = load i64, ptr %0, align 8
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.a = and i32 %4, 255                          ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %2 = load i32, ptr %.shift, align 4
+  %i.a = and i32 %2, 255                          ; 2 uses
   %i.b = icmp eq i32 %1, 0
   br i1 %i.b, label %bb.e, label %bb.b, !prof !13
 
@@ -291,7 +290,7 @@ sdsReqSize.exit:                                  ; preds = %sdslen.exit.thread,
   %i.ac = add nuw nsw i64 %i.ab, 17
   %i.ad = add i64 %i.ac, %i.aa
   %i.ae = tail call noalias ptr @zmalloc(i64 noundef %i.ad) #15
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ab ; 9 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 %i.ab ; 8 uses
   %i.ag = and i32 %0, 15
   %i.ah = zext nneg i32 %i.ag to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 8
@@ -310,20 +309,21 @@ sdsReqSize.exit:                                  ; preds = %sdslen.exit.thread,
   %i.aq = getelementptr inbounds nuw i8, ptr %i.af, i64 17
   store i8 %switch.masked, ptr %i.ao, align 8, !tbaa !15
   %i.ar = tail call ptr @sdsnewplacement(ptr noundef nonnull %i.aq, i64 noundef %i.aa, i8 noundef signext %i.v, ptr noundef nonnull %1, i64 noundef %.0.i37) #13 ; 0 uses
-  %4 = load i64, ptr %i.af, align 8               ; 2 uses
-  %5 = and i64 %4, 1090921693184
-  %.not.i = icmp eq i64 %5, 0
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.af, i64 4 ; 2 uses
+  %4 = load i32, ptr %.shift.i, align 4           ; 2 uses
+  %5 = and i32 %4, 254
+  %.not.i = icmp eq i32 %5, 0
   br i1 %.not.i, label %bb.j, label %bb.i, !prof !13
 
 bb.i:                                             ; preds = %sdsReqSize.exit
   tail call void @keyMetaResetModuleValues(ptr noundef nonnull %i.af) #13
-  %.pre.i = load i64, ptr %i.af, align 8
+  %.pre.i = load i32, ptr %.shift.i, align 4
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %sdsReqSize.exit
-  %6 = phi i64 [ %.pre.i, %bb.i ], [ %4, %sdsReqSize.exit ]
-  %7 = and i64 %6, 4294967296
-  %.not4.i = icmp eq i64 %7, 0
+  %6 = phi i32 [ %.pre.i, %bb.i ], [ %4, %sdsReqSize.exit ]
+  %7 = and i32 %6, 1
+  %.not4.i = icmp eq i32 %7, 0
   br i1 %.not4.i, label %keyMetaResetValues.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -468,9 +468,10 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i64 @kvobjGetExpire(ptr noundef readonly captures(none) %0) local_unnamed_addr #6 {
 bb.a:
-  %1 = load i64, ptr %0, align 8
-  %2 = and i64 %1, 4294967296
-  %.not = icmp eq i64 %2, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = load i32, ptr %.shift, align 4
+  %2 = and i32 %1, 1
+  %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -486,9 +487,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @kvobjSetExpire(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %2 = load i64, ptr %0, align 8                  ; 2 uses
-  %3 = and i64 %2, 4294967296
-  %.not = icmp eq i64 %3, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %2 = load i32, ptr %.shift, align 4             ; 2 uses
+  %3 = and i32 %2, 1
+  %.not = icmp eq i32 %3, 0
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -501,9 +503,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = zext i8 %i.c to i64
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.d
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  %4 = lshr i64 %2, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.g = and i32 %5, 254
+  %i.g = and i32 %2, 254
   %i.h = or disjoint i32 %i.g, 1
   %i.i = tail call ptr @kvobjSet(ptr noundef nonnull %i.f, ptr noundef nonnull %0, i32 noundef %i.h)
   br label %bb.d
@@ -682,7 +682,7 @@ sdsReqSize.exit.i:                                ; preds = %sdslen.exit.i, %swi
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   store i64 0, ptr %i.a, align 8, !tbaa !18
   %i.bm = call ptr @zmalloc_usable(i64 noundef %i.bl, ptr noundef nonnull %i.a) #13
-  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bi ; 9 uses
+  %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bi ; 8 uses
   %i.bo = and i32 %2, 255
   %i.bp = zext nneg i32 %i.bo to i64
   %i.bq = shl nuw nsw i64 %i.bp, 32
@@ -704,20 +704,21 @@ sdsReqSize.exit.i:                                ; preds = %sdslen.exit.i, %swi
   %i.ca = call ptr @sdsnewplacement(ptr noundef nonnull %i.bw, i64 noundef %i.bz, i8 noundef signext 1, ptr noundef nonnull %i.e, i64 noundef %.0.i) #13
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   store ptr %i.ca, ptr %i.cb, align 8, !tbaa !20
-  %3 = load i64, ptr %i.bn, align 8               ; 2 uses
-  %4 = and i64 %3, 1090921693184
-  %.not.i.i = icmp eq i64 %4, 0
+  %.shift.i.i = getelementptr inbounds nuw i8, ptr %i.bn, i64 4 ; 2 uses
+  %3 = load i32, ptr %.shift.i.i, align 4         ; 2 uses
+  %4 = and i32 %3, 254
+  %.not.i.i = icmp eq i32 %4, 0
   br i1 %.not.i.i, label %bb.t, label %bb.s, !prof !13
 
 bb.s:                                             ; preds = %sdsReqSize.exit.i
   call void @keyMetaResetModuleValues(ptr noundef nonnull %i.bn) #13
-  %.pre.i.i = load i64, ptr %i.bn, align 8
+  %.pre.i.i = load i32, ptr %.shift.i.i, align 4
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %sdsReqSize.exit.i
-  %5 = phi i64 [ %.pre.i.i, %bb.s ], [ %3, %sdsReqSize.exit.i ]
-  %6 = and i64 %5, 4294967296
-  %.not4.i.i = icmp eq i64 %6, 0
+  %5 = phi i32 [ %.pre.i.i, %bb.s ], [ %3, %sdsReqSize.exit.i ]
+  %6 = and i32 %5, 1
+  %.not4.i.i = icmp eq i32 %6, 0
   br i1 %.not4.i.i, label %kvobjCreateEmbedString.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -791,9 +792,10 @@ bb.ad:                                            ; preds = %kvobjCreateEmbedStr
   %i.da = and i64 %i.cz, 1099511627775
   %i.db = or disjoint i64 %i.da, %i.cy
   store i64 %i.db, ptr %.1, align 8
-  %7 = load i64, ptr %1, align 8
-  %8 = and i64 %7, 1090921693184
-  %.not39 = icmp eq i64 %8, 0
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %7 = load i32, ptr %.shift, align 4
+  %8 = and i32 %7, 254
+  %.not39 = icmp eq i32 %8, 0
   br i1 %.not39, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
@@ -814,7 +816,7 @@ declare void @keyMetaTransition(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define dso_local void @decrRefCount(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 5 uses
+  %i.a = load i64, ptr %0, align 8                ; 3 uses
   %i.b = trunc i64 %i.a to i32                    ; 3 uses
   %i.c = lshr i32 %i.b, 8
   %i.d = and i32 %i.c, 8388607                    ; 2 uses
@@ -836,9 +838,11 @@ bb.c:                                             ; preds = %bb.a
   %i.i = zext nneg i32 %i.h to i64
   %i.j = shl nuw nsw i64 %i.i, 8
   %i.k = and i64 %i.a, -2147483393
-  %i.l = or i64 %i.j, %i.k
+  %i.l = or i64 %i.j, %i.k                        ; 2 uses
   store i64 %i.l, ptr %0, align 8
   %i.m = icmp eq i32 %i.h, 0
+  %1 = lshr i64 %i.l, 32
+  %2 = trunc nuw i64 %1 to i32                    ; 2 uses
   br i1 %i.m, label %bb.d, label %bb.r
 
 bb.d:                                             ; preds = %bb.c
@@ -847,16 +851,14 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %1 = lshr i64 %i.a, 32
-  %2 = trunc nuw i64 %1 to i32
   %i.o = and i32 %2, 255
   %i.p = tail call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.o)
   %i.q = shl nuw nsw i32 %i.p, 3
   %i.r = zext nneg i32 %i.q to i64
   %i.s = sub nsw i64 0, %i.r
   %i.t = getelementptr inbounds i8, ptr %0, i64 %i.s ; 2 uses
-  %3 = and i64 %i.a, 1090921693184
-  %.not22 = icmp eq i64 %3, 0
+  %3 = and i32 %2, 254
+  %.not22 = icmp eq i32 %3, 0
   br i1 %.not22, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -929,7 +931,7 @@ bb.q:                                             ; preds = %bb.h
   unreachable
 
 freeStringObject.exit:                            ; preds = %bb.j, %bb.i, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o, %bb.p, %bb.g
-  tail call void @zfree(ptr noundef %.0) #13
+  tail call void @zfree(ptr noundef nonnull %.0) #13
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.a, %freeStringObject.exit, %bb.c
@@ -1332,16 +1334,15 @@ bb.e:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @kvobjAllocSize(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %1 = load i64, ptr %0, align 8
-  %2 = lshr i64 %1, 32
-  %3 = trunc nuw i64 %2 to i32
-  %i.a = and i32 %3, 255
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %1 = load i32, ptr %.shift.i, align 4
+  %i.a = and i32 %1, 255
   %i.b = tail call range(i32 0, 9) i32 @llvm.ctpop.i32(i32 %i.a)
   %i.c = shl nuw nsw i32 %i.b, 3
   %i.d = zext nneg i32 %i.c to i64
   %i.e = sub nsw i64 0, %i.d
   %i.f = getelementptr inbounds i8, ptr %0, i64 %i.e
-  %i.g = tail call i64 @je_malloc_usable_size(ptr noundef nonnull %i.f) #13 ; 7 uses
+  %i.g = tail call i64 @je_malloc_usable_size(ptr noundef %i.f) #13 ; 7 uses
   %i.h = load i64, ptr %0, align 8
   %i.i = trunc i64 %i.h to i32
   %i.j = and i32 %i.i, 15

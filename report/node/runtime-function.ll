@@ -110,7 +110,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef range(i64 0, -4294967295) i64 @_ZN2v88internal27Runtime_FunctionGetScriptIdEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
+define hidden noundef range(i64 -9223372036854775808, 9223372032559808513) i64 @_ZN2v88internal27Runtime_FunctionGetScriptIdEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef readonly captures(none) %1, ptr noundef %2) local_unnamed_addr #0 {
 _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 560 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -170,12 +170,14 @@ _ZN2v88internal8IsScriptENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v88inte
 bb.c:                                             ; preds = %_ZN2v88internal8IsScriptENS0_6TaggedINS0_6ObjectEEE.exit
   %i.al = add i64 %i.v, 63
   %i.am = inttoptr i64 %i.al to ptr
-  %3 = load i64, ptr %i.am, align 8
-  %4 = and i64 %3, -4294967296
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.am, i64 4
+  %3 = load i32, ptr %.shift.i, align 4
+  %4 = sext i32 %3 to i64
+  %5 = shl nsw i64 %4, 32
   br label %_ZN2v88internalL37__RT_impl_Runtime_FunctionGetScriptIdENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit
 
 _ZN2v88internalL37__RT_impl_Runtime_FunctionGetScriptIdENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit: ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, %bb.c, %_ZN2v88internal8IsScriptENS0_6TaggedINS0_6ObjectEEE.exit, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
-  %.sroa.026.0 = phi i64 [ %4, %bb.c ], [ -4294967296, %_ZN2v88internal8IsScriptENS0_6TaggedINS0_6ObjectEEE.exit ], [ -4294967296, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit ], [ -4294967296, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit ]
+  %.sroa.026.0 = phi i64 [ %5, %bb.c ], [ -4294967296, %_ZN2v88internal8IsScriptENS0_6TaggedINS0_6ObjectEEE.exit ], [ -4294967296, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit ], [ -4294967296, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit ]
   store ptr %i.b, ptr %i.a, align 8
   %i.an = load i32, ptr %i.e, align 8
   %i.ao = add nsw i32 %i.an, -1

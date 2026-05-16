@@ -201,7 +201,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !3947 ; 2 uses
   %i.e = add i32 %i.d, %i.b                       ; 19 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 6 uses
   %i.h = load i32, ptr %i.g, align 4              ; 3 uses
   %i.i = and i32 %i.h, 255
   %i.j = icmp eq i32 %i.i, 1
@@ -521,10 +521,10 @@ _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i: ; pr
 
 _ZSt6fill_nISt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEicET_S6_T0_RKT1_.exit: ; preds = %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit
   %i.dj = phi ptr [ %.pre.i.i.i, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit ], [ %i.dg, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i ] ; 3 uses
-  %2 = load i32, ptr %i.g, align 4
-  %3 = and i32 %2, 16777216
-  %.not125 = icmp eq i32 %3, 0
-  %i.dk = select i1 %.not125, i8 101, i8 69       ; 2 uses
+  %.shift126 = getelementptr inbounds nuw i8, ptr %0, i64 31
+  %2 = load i8, ptr %.shift126, align 1
+  %3 = trunc i8 %2 to i1
+  %i.dk = select i1 %3, i8 69, i8 101             ; 2 uses
   %i.dl = load ptr, ptr %i.o, align 8, !tbaa !2788
   %.not.i.i.i140 = icmp eq ptr %i.dj, %i.dl
   br i1 %.not.i.i.i140, label %bb.ad, label %bb.ac
@@ -608,6 +608,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ei = urem i32 %i.e, 3                        ; 2 uses
   %i.ej = icmp eq i32 %i.ei, 0
   %spec.select = select i1 %i.ej, i32 3, i32 %i.ei
+  %.shift125 = getelementptr inbounds nuw i8, ptr %0, i64 30
   %i.ek = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 15 uses
   %i.el = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 8 uses
   br label %bb.al
@@ -619,9 +620,8 @@ bb.al:                                            ; preds = %bb.ak, %_ZSt6fill_n
   br i1 %i.em, label %bb.am, label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit158
 
 bb.am:                                            ; preds = %bb.al
-  %4 = load i32, ptr %i.g, align 4
-  %5 = lshr i32 %4, 16
-  %i.en = trunc i32 %5 to i8                      ; 2 uses
+  %4 = load i16, ptr %.shift125, align 2
+  %i.en = trunc i16 %4 to i8                      ; 2 uses
   %i.eo = load ptr, ptr %i.ek, align 8, !tbaa !2783 ; 3 uses
   %i.ep = load ptr, ptr %i.el, align 8, !tbaa !2788
   %.not.i.i150 = icmp eq ptr %i.eo, %i.ep
@@ -1024,37 +1024,37 @@ bb.cy:                                            ; preds = %bb.cx
   %i.ne = icmp ne i32 %i.nd, 0
   %i.nf = icmp samesign ugt i32 %i.e, 3
   %or.cond5 = select i1 %i.ne, i1 %i.nf, i1 false
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 10 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
-  %.pre.i273.pre.pre = load ptr, ptr %6, align 8, !tbaa !2783 ; 2 uses
   br i1 %or.cond5, label %bb.cz, label %.lr.ph.i.i287
 
 bb.cz:                                            ; preds = %bb.cy
   %i.ng = urem i32 %i.e, 3                        ; 2 uses
   %i.nh = icmp eq i32 %i.ng, 0
   %spec.select126 = select i1 %i.nh, i32 3, i32 %i.ng
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 30
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 7 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 4 uses
+  %.pre.i274.pre.pre = load ptr, ptr %5, align 8, !tbaa !2783
   br label %bb.da
 
 bb.da:                                            ; preds = %bb.cz, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285
-  %.pre.i273.pre = phi ptr [ %.pre.i273.pre.pre, %bb.cz ], [ %i.pb, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285 ] ; 4 uses
+  %.pre.i273.pre = phi ptr [ %.pre.i274.pre.pre, %bb.cz ], [ %i.pb, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285 ] ; 4 uses
   %.0101469 = phi i32 [ %spec.select126, %bb.cz ], [ 3, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285 ] ; 2 uses
   %.0104468 = phi i32 [ 0, %bb.cz ], [ %i.pd, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285 ] ; 3 uses
   %i.ni = icmp sgt i32 %.0104468, 0
   br i1 %i.ni, label %bb.db, label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270
 
 bb.db:                                            ; preds = %bb.da
-  %8 = load i32, ptr %i.g, align 4
-  %9 = lshr i32 %8, 16
-  %i.nj = trunc i32 %9 to i8                      ; 2 uses
-  %i.nk = load ptr, ptr %7, align 8, !tbaa !2788
+  %7 = load i16, ptr %.shift, align 2
+  %i.nj = trunc i16 %7 to i8                      ; 2 uses
+  %i.nk = load ptr, ptr %6, align 8, !tbaa !2788
   %.not.i.i262 = icmp eq ptr %.pre.i273.pre, %i.nk
   br i1 %.not.i.i262, label %bb.dd, label %bb.dc
 
 bb.dc:                                            ; preds = %bb.db
   store i8 %i.nj, ptr %.pre.i273.pre, align 1, !tbaa !153
-  %i.nl = load ptr, ptr %6, align 8, !tbaa !2783
+  %i.nl = load ptr, ptr %5, align 8, !tbaa !2783
   %i.nm = getelementptr inbounds nuw i8, ptr %i.nl, i64 1 ; 2 uses
-  store ptr %i.nm, ptr %6, align 8, !tbaa !2783
+  store ptr %i.nm, ptr %5, align 8, !tbaa !2783
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270
 
 bb.dd:                                            ; preds = %bb.db
@@ -1104,9 +1104,9 @@ bb.dh:                                            ; preds = %_ZNSt6vectorIcSaIcE
 
 _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i269: ; preds = %bb.dh, %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i.i267
   store ptr %i.nx, ptr %1, align 8, !tbaa !2781
-  store ptr %i.oa, ptr %6, align 8, !tbaa !2783
+  store ptr %i.oa, ptr %5, align 8, !tbaa !2783
   %i.ob = getelementptr inbounds nuw i8, ptr %i.nx, i64 %i.nv
-  store ptr %i.ob, ptr %7, align 8, !tbaa !2788
+  store ptr %i.ob, ptr %6, align 8, !tbaa !2788
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270
 
 _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270: ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJRKcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i269, %bb.dc, %bb.da
@@ -1122,15 +1122,15 @@ bb.di:                                            ; preds = %_ZNSt20back_insert_
   %i.oh = phi ptr [ %.pre.i273, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270 ], [ %i.pb, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i276 ] ; 3 uses
   %.07.i.i274 = phi ptr [ %i.oe, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit270 ], [ %i.pc, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i276 ] ; 2 uses
   %i.oi = load i8, ptr %.07.i.i274, align 1, !tbaa !153 ; 2 uses
-  %i.oj = load ptr, ptr %7, align 8, !tbaa !2788
+  %i.oj = load ptr, ptr %6, align 8, !tbaa !2788
   %.not.i.i.i.i.i275 = icmp eq ptr %i.oh, %i.oj
   br i1 %.not.i.i.i.i.i275, label %bb.dk, label %bb.dj
 
 bb.dj:                                            ; preds = %bb.di
   store i8 %i.oi, ptr %i.oh, align 1, !tbaa !153
-  %i.ok = load ptr, ptr %6, align 8, !tbaa !2783
+  %i.ok = load ptr, ptr %5, align 8, !tbaa !2783
   %i.ol = getelementptr inbounds nuw i8, ptr %i.ok, i64 1 ; 2 uses
-  store ptr %i.ol, ptr %6, align 8, !tbaa !2783
+  store ptr %i.ol, ptr %5, align 8, !tbaa !2783
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i276
 
 bb.dk:                                            ; preds = %bb.di
@@ -1180,9 +1180,9 @@ bb.do:                                            ; preds = %_ZNSt6vectorIcSaIcE
 
 _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i284: ; preds = %bb.do, %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i.i.i.i.i282
   store ptr %i.ow, ptr %1, align 8, !tbaa !2781
-  store ptr %i.oz, ptr %6, align 8, !tbaa !2783
+  store ptr %i.oz, ptr %5, align 8, !tbaa !2783
   %i.pa = getelementptr inbounds nuw i8, ptr %i.ow, i64 %i.ou
-  store ptr %i.pa, ptr %7, align 8, !tbaa !2788
+  store ptr %i.pa, ptr %6, align 8, !tbaa !2788
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i276
 
 _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i276: ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i284, %bb.dj
@@ -1199,22 +1199,25 @@ _ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vecto
 .lr.ph.i.i287:                                    ; preds = %bb.cy
   %i.pf = load ptr, ptr %0, align 8, !tbaa !3942  ; 2 uses
   %i.pg = zext nneg i32 %i.e to i64
-  %i.ph = getelementptr inbounds nuw i8, ptr %i.pf, i64 %i.pg
+  %8 = getelementptr inbounds nuw i8, ptr %i.pf, i64 %i.pg
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.ph = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %.pre.i289 = load ptr, ptr %9, align 8, !tbaa !2783
   br label %bb.dp
 
 bb.dp:                                            ; preds = %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291, %.lr.ph.i.i287
-  %i.pi = phi ptr [ %.pre.i273.pre.pre, %.lr.ph.i.i287 ], [ %i.qc, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291 ] ; 3 uses
+  %i.pi = phi ptr [ %.pre.i289, %.lr.ph.i.i287 ], [ %i.qc, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291 ] ; 3 uses
   %.07.i.i289 = phi ptr [ %i.pf, %.lr.ph.i.i287 ], [ %i.qd, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291 ] ; 2 uses
   %i.pj = load i8, ptr %.07.i.i289, align 1, !tbaa !153 ; 2 uses
-  %i.pk = load ptr, ptr %7, align 8, !tbaa !2788
+  %i.pk = load ptr, ptr %i.ph, align 8, !tbaa !2788
   %.not.i.i.i.i.i290 = icmp eq ptr %i.pi, %i.pk
   br i1 %.not.i.i.i.i.i290, label %bb.dr, label %bb.dq
 
 bb.dq:                                            ; preds = %bb.dp
   store i8 %i.pj, ptr %i.pi, align 1, !tbaa !153
-  %i.pl = load ptr, ptr %6, align 8, !tbaa !2783
+  %i.pl = load ptr, ptr %9, align 8, !tbaa !2783
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pl, i64 1 ; 2 uses
-  store ptr %i.pm, ptr %6, align 8, !tbaa !2783
+  store ptr %i.pm, ptr %9, align 8, !tbaa !2783
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291
 
 bb.dr:                                            ; preds = %bb.dp
@@ -1264,15 +1267,15 @@ bb.dv:                                            ; preds = %_ZNSt6vectorIcSaIcE
 
 _ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i299: ; preds = %bb.dv, %_ZNSt6vectorIcSaIcEE11_S_relocateEPcS2_S2_RS0_.exit16.i.i.i.i.i.i297
   store ptr %i.px, ptr %1, align 8, !tbaa !2781
-  store ptr %i.qa, ptr %6, align 8, !tbaa !2783
+  store ptr %i.qa, ptr %9, align 8, !tbaa !2783
   %i.qb = getelementptr inbounds nuw i8, ptr %i.px, i64 %i.pv
-  store ptr %i.qb, ptr %7, align 8, !tbaa !2788
+  store ptr %i.qb, ptr %i.ph, align 8, !tbaa !2788
   br label %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291
 
 _ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291: ; preds = %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i299, %bb.dq
   %i.qc = phi ptr [ %i.qa, %_ZNSt6vectorIcSaIcEE17_M_realloc_insertIJcEEEvN9__gnu_cxx17__normal_iteratorIPcS1_EEDpOT_.exit.i.i.i.i.i299 ], [ %i.pm, %bb.dq ] ; 2 uses
   %i.qd = getelementptr inbounds nuw i8, ptr %.07.i.i289, i64 1 ; 2 uses
-  %.not.i.i292 = icmp eq ptr %i.qd, %i.ph
+  %.not.i.i292 = icmp eq ptr %i.qd, %8
   br i1 %.not.i.i292, label %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit300, label %bb.dp, !llvm.loop !3578
 
 _ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit300: ; preds = %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSEOc.exit.i.i291, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEETnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_SC_SC_SG_.exit285

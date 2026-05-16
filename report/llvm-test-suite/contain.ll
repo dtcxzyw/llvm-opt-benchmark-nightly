@@ -200,11 +200,12 @@ bb.h:                                             ; preds = %bb.m, %.preheader.i
   br i1 %.not28.i, label %.critedge.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %2 = load i32, ptr %i.br, align 4, !tbaa !4
-  %3 = lshr i32 %2, 16
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.br, i64 2
+  %2 = load i16, ptr %.shift.i, align 2, !tbaa !4
+  %3 = zext i16 %2 to i32
   %i.bs = load i32, ptr %i.bo, align 4, !tbaa !4  ; 2 uses
   %i.bt = lshr i32 %i.bs, 16
-  %4 = icmp samesign ugt i32 %3, %i.bt
+  %4 = icmp samesign ult i32 %i.bt, %3
   br i1 %4, label %bb.j, label %.critedge.i
 
 bb.j:                                             ; preds = %bb.i
@@ -268,11 +269,12 @@ bb.n:                                             ; preds = %bb.s, %.preheader.i
   br i1 %.not28.i37, label %.critedge.i38, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %5 = load i32, ptr %i.cl, align 4, !tbaa !4
-  %6 = lshr i32 %5, 16
+  %.shift.i38 = getelementptr inbounds nuw i8, ptr %i.cl, i64 2
+  %5 = load i16, ptr %.shift.i38, align 2, !tbaa !4
+  %6 = zext i16 %5 to i32
   %i.cm = load i32, ptr %i.ci, align 4, !tbaa !4  ; 2 uses
   %i.cn = lshr i32 %i.cm, 16
-  %7 = icmp samesign ugt i32 %6, %i.cn
+  %7 = icmp samesign ult i32 %i.cn, %6
   br i1 %7, label %bb.p, label %.critedge.i38
 
 bb.p:                                             ; preds = %bb.o
@@ -675,11 +677,12 @@ bb.b:                                             ; preds = %.preheader, %bb.g
   br i1 %.not28, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = load i32, ptr %i.e, align 4, !tbaa !4
-  %3 = lshr i32 %2, 16
+  %.shift = getelementptr inbounds nuw i8, ptr %i.e, i64 2
+  %2 = load i16, ptr %.shift, align 2, !tbaa !4
+  %3 = zext i16 %2 to i32
   %i.f = load i32, ptr %i.b, align 4, !tbaa !4    ; 2 uses
   %i.g = lshr i32 %i.f, 16
-  %4 = icmp samesign ugt i32 %3, %i.g
+  %4 = icmp samesign ult i32 %i.g, %3
   br i1 %4, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c

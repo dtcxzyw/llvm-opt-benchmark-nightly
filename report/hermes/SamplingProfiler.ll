@@ -201,12 +201,15 @@ bb.b:                                             ; preds = %.lr.ph, %.thread61
   br i1 %i.n, label %_ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i, label %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit
 
 _ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i: ; preds = %bb.b
-  %i.o = and i64 %i.m, 281474976710655
+  %i.o = and i64 %i.m, 281474976710655            ; 3 uses
   %i.p = inttoptr i64 %i.o to ptr                 ; 3 uses
-  %4 = load i32, ptr %i.p, align 4
-  %5 = add i32 %4, -1291845632
-  %i.q = icmp ult i32 %5, -67108864
-  br i1 %i.q, label %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread, label %bb.c
+  %.shift.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.p, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i.i.i.i.i.i.i, align 1
+  %5 = add i8 %4, -77
+  %i.q = icmp ult i8 %5, -4
+  %.not9.i = icmp eq i64 %i.o, 0
+  %.not.i = or i1 %.not9.i, %i.q
+  br i1 %.not.i, label %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i
   %i.r = getelementptr inbounds nuw i8, ptr %i.p, i64 24
@@ -223,7 +226,7 @@ _ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit: ; 
   br i1 %.not, label %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit._ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread_crit_edge, label %bb.d
 
 _ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit._ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread_crit_edge: ; preds = %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit
-  %.pre72 = and i64 %i.m, 281474976710655
+  %.pre72 = and i64 %i.m, 281474976710655         ; 2 uses
   %.pre73 = inttoptr i64 %.pre72 to ptr
   br label %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread
 
@@ -270,14 +273,17 @@ bb.g:                                             ; preds = %bb.f
 
 _ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread: ; preds = %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit._ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread_crit_edge, %_ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i
   %.pre-phi74 = phi ptr [ %.pre73, %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit._ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread_crit_edge ], [ %i.p, %_ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i ] ; 3 uses
-  %6 = load i32, ptr %.pre-phi74, align 4         ; 2 uses
-  %7 = add i32 %6, -1157627904
-  %i.as = icmp ult i32 %7, 67108864
-  br i1 %i.as, label %bb.h, label %.thread61
+  %.pre-phi = phi i64 [ %.pre72, %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit._ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread_crit_edge ], [ %i.o, %_ZN6hermes2vm10dyn_vmcastINS0_10JSFunctionEEEPT_NS0_11HermesValueE.exit.i ]
+  %.shift.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %.pre-phi74, i64 3
+  %6 = load i8, ptr %.shift.i.i.i.i.i.i.i.i, align 1 ; 2 uses
+  %7 = add i8 %6, -73
+  %i.as = icmp ult i8 %7, -4
+  %.not44.not66 = icmp eq i64 %.pre-phi, 0
+  %.not44.not = or i1 %.not44.not66, %i.as
+  br i1 %.not44.not, label %.thread61, label %bb.h
 
 bb.h:                                             ; preds = %_ZNK6hermes2vm14StackFramePtrTILb1EE18getCalleeCodeBlockERNS0_7RuntimeE.exit.thread
-  %.mask.i.i.i.i.i.i.i = and i32 %6, 1325400064
-  %i.at = icmp eq i32 %.mask.i.i.i.i.i.i.i, 1207959552
+  %i.at = icmp eq i8 %6, 72
   %i.au = select i1 %i.at, i32 2, i32 1
   %i.av = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   store i32 %i.au, ptr %i.av, align 8, !tbaa !312

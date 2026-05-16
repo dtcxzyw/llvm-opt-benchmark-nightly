@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.b
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !456
   %i.t = load i64, ptr %i.m, align 8, !tbaa !460
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.t
-  %.0.copyload.i.i = load i64, ptr %i.u, align 1
-  %.sroa.4.0.extract.shift = lshr i64 %.0.copyload.i.i, 32
+  %.0.copyload.i.i.shift = getelementptr inbounds nuw i8, ptr %i.u, i64 4
+  %.0.copyload.i.i69 = load i32, ptr %.0.copyload.i.i.shift, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30
   %i.v = invoke noundef ptr @_ZNK6duckdb10shared_ptrINS_11BlockHandleELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %i.e)
@@ -405,7 +405,8 @@ bb.s:                                             ; preds = %bb.r
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !3  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.sroa.2)
   %i.cr = icmp sgt i32 %i.cq, -1
-  %i.cs = getelementptr inbounds nuw i8, ptr %i.o, i64 %.sroa.4.0.extract.shift ; 2 uses
+  %10 = zext i32 %.0.copyload.i.i69 to i64
+  %i.cs = getelementptr inbounds nuw i8, ptr %i.o, i64 %10 ; 2 uses
   br i1 %i.cr, label %bb.t, label %bb.x, !prof !64
 
 bb.t:                                             ; preds = %bb.s

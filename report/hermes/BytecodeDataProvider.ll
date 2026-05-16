@@ -201,10 +201,9 @@ bb.b:                                             ; preds = %.lr.ph
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 bb.c:                                             ; preds = %.lr.ph
-  %2 = load i64, ptr %i.d, align 1
-  %3 = lshr i64 %2, 32
-  %4 = trunc nuw i64 %3 to i32
-  %i.i = and i32 %4, 32767
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.d, i64 4
+  %2 = load i32, ptr %.shift.i, align 1
+  %i.i = and i32 %2, 32767
   br label %_ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit
 
 _ZNK6hermes3hbc21RuntimeFunctionHeader19bytecodeSizeInBytesEv.exit: ; preds = %bb.b, %bb.c
@@ -607,14 +606,16 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !161
   %i.c = zext i32 %1 to i64
-  %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.c
-  %2 = load i32, ptr %i.d, align 1                ; 5 uses
-  %3 = icmp ugt i32 %2, -16777217
+  %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.c ; 3 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %i.d, i64 3
+  %2 = load i8, ptr %.shift.i, align 1
+  %3 = icmp eq i8 %2, -1
   br i1 %3, label %bb.b, label %bb.c, !prof !53
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 312
-  %i.f = lshr i32 %2, 1
+  %4 = load i32, ptr %i.d, align 1                ; 2 uses
+  %i.f = lshr i32 %4, 1
   %i.g = and i32 %i.f, 8388607
   %i.h = zext nneg i32 %i.g to i64
   %i.i = load ptr, ptr %i.e, align 8, !tbaa !178
@@ -625,15 +626,17 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.k = lshr i32 %2, 1
+  %5 = load i32, ptr %i.d, align 1                ; 3 uses
+  %i.k = lshr i32 %5, 1
   %i.l = and i32 %i.k, 8388607
-  %i.m = lshr i32 %2, 24
+  %i.m = lshr i32 %5, 24
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink9 = phi i32 [ %5, %bb.c ], [ %4, %bb.b ]
   %.sink = phi i32 [ %i.m, %bb.c ], [ %.sroa.4.0.copyload, %bb.b ]
   %.sroa.0.0 = phi i32 [ %i.l, %bb.c ], [ %.sroa.0.0.copyload, %bb.b ]
-  %i.n = shl i32 %2, 31
+  %i.n = shl i32 %.sink9, 31
   %spec.select.i7 = or i32 %.sink, %i.n
   %.sroa.3.0.insert.ext = zext i32 %spec.select.i7 to i64
   %.sroa.3.0.insert.shift = shl nuw i64 %.sroa.3.0.insert.ext, 32

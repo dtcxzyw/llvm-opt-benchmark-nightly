@@ -140,9 +140,9 @@ _ZN6hermes2vm7Runtime10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EERKNS0_9GCPoint
   %.0.i.i.i.i.i.i = phi ptr [ %i.al, %bb.f ], [ %i.aq, %bb.g ]
   %i.ar = and i64 %.sroa.0.0.copyload.i.i.i10, 281474976710655
   %i.as = inttoptr i64 %i.ar to ptr
-  %4 = load i32, ptr %i.as, align 4
-  %5 = lshr i32 %4, 24
-  %i.at = zext nneg i32 %5 to i64
+  %.shift.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.as, i64 3
+  %4 = load i8, ptr %.shift.i.i.i.i, align 1
+  %i.at = zext i8 %4 to i64
   %i.au = getelementptr inbounds nuw [8 x i8], ptr @_ZN6hermes2vm6VTable11vtableArrayE, i64 %i.at
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !271
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 96
@@ -545,9 +545,9 @@ _ZSt20uninitialized_copy_nISt16reverse_iteratorIPN6hermes2vm17PinnedHermesValueE
   %.sroa.0.0.copyload.i.i.i47 = load i64, ptr %.0.i.i.i.i.i.i, align 8, !tbaa !7
   %i.dd = and i64 %.sroa.0.0.copyload.i.i.i47, 281474976710655
   %i.de = inttoptr i64 %i.dd to ptr
-  %5 = load i32, ptr %i.de, align 4
-  %6 = lshr i32 %5, 24
-  %i.df = zext nneg i32 %6 to i64
+  %.shift.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.de, i64 3
+  %5 = load i8, ptr %.shift.i.i.i.i, align 1
+  %i.df = zext i8 %5 to i64
   %i.dg = getelementptr inbounds nuw [8 x i8], ptr @_ZN6hermes2vm6VTable11vtableArrayE, i64 %i.df
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !271
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 104
@@ -764,9 +764,10 @@ bb.ac:                                            ; preds = %bb.ab
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit: ; preds = %bb.ac
   %i.gx = and i64 %i.gu, 281474976710655
   %i.gy = inttoptr i64 %i.gx to ptr
-  %7 = load i32, ptr %i.gy, align 4
-  %8 = add i32 %7, -436207616
-  %i.gz = icmp ult i32 %8, 855638016
+  %.shift.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.gy, i64 3
+  %6 = load i8, ptr %.shift.i.i.i.i.i.i.i, align 1
+  %7 = add i8 %6, -26
+  %i.gz = icmp ult i8 %7, 51
   br i1 %i.gz, label %bb.ae, label %_ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.thread
 
 _ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.thread: ; preds = %bb.ac, %_ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit

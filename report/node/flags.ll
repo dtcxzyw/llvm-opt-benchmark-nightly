@@ -201,9 +201,10 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.l = load ptr, ptr %i.k, align 8
   %.sroa.0.0.in.i.i = select i1 %i.j, ptr %i.l, ptr %i.i
-  %.sroa.0.0.i.i = load i16, ptr %.sroa.0.0.in.i.i, align 1
-  %1 = and i16 %.sroa.0.0.i.i, 256
-  %.not = icmp eq i16 %1, 0
+  %.sroa.0.0.i.i.shift = getelementptr inbounds nuw i8, ptr %.sroa.0.0.in.i.i, i64 1
+  %.sroa.0.0.i.i22 = load i8, ptr %.sroa.0.0.i.i.shift, align 1
+  %1 = trunc nuw i8 %.sroa.0.0.i.i22 to i1
+  %2 = xor i1 %1, true
   br label %bb.l
 
 bb.d:                                             ; preds = %bb.a
@@ -291,7 +292,7 @@ bb.k:                                             ; preds = %bb.a
   unreachable
 
 bb.l:                                             ; preds = %bb.i, %bb.j, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
-  %.1 = phi i1 [ %.not22, %bb.b ], [ %.not, %bb.c ], [ %i.s, %bb.d ], [ %i.z, %bb.e ], [ %i.ag, %bb.f ], [ %i.an, %bb.g ], [ %i.au, %bb.h ], [ %.mux, %bb.i ], [ %i.be, %bb.j ]
+  %.1 = phi i1 [ %.not22, %bb.b ], [ %2, %bb.c ], [ %i.s, %bb.d ], [ %i.z, %bb.e ], [ %i.ag, %bb.f ], [ %i.an, %bb.g ], [ %i.au, %bb.h ], [ %.mux, %bb.i ], [ %i.be, %bb.j ]
   ret i1 %.1
 }
 

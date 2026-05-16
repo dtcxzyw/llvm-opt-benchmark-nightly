@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %.preheader.i.i
   br label %rbimpl_check_typeddata.exit.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
-  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 5 uses
-  %i.u = getelementptr i8, ptr %.1.i.i, i64 40    ; 20 uses
+  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 7 uses
+  %i.u = getelementptr i8, ptr %.1.i.i, i64 40    ; 18 uses
   %i.v = load i64, ptr %i.u, align 8              ; 3 uses
   %i.w = and i64 %i.v, 61572651155456
   %.not.i = icmp eq i64 %i.w, 26388279066624
@@ -338,11 +338,13 @@ bb.p:                                             ; preds = %force_make_tm.exit
   %i.cl = or disjoint i64 %i.ck, 1
   %i.cm = tail call i64 @rb_hash_aset(i64 noundef %i.az, i64 noundef %i.ch, i64 noundef %i.cl) #18 ; 0 uses
   %i.cn = load i64, ptr @sym_sec, align 8, !tbaa !13
-  %2 = load i64, ptr %i.u, align 8
-  %3 = lshr i64 %2, 31
-  %4 = and i64 %3, 126
-  %5 = or disjoint i64 %4, 1
-  %i.co = tail call i64 @rb_hash_aset(i64 noundef %i.az, i64 noundef %i.cn, i64 noundef %5) #18 ; 0 uses
+  %.shift87 = getelementptr i8, ptr %.1.i.i, i64 44
+  %2 = load i32, ptr %.shift87, align 4
+  %3 = shl i32 %2, 1
+  %4 = and i32 %3, 126
+  %5 = or disjoint i32 %4, 1
+  %6 = zext nneg i32 %5 to i64
+  %i.co = tail call i64 @rb_hash_aset(i64 noundef %i.az, i64 noundef %i.cn, i64 noundef %6) #18 ; 0 uses
   %i.cp = load i64, ptr @sym_subsec, align 8, !tbaa !13
   %i.cq = load i64, ptr %.1.i.i, align 8, !tbaa !22 ; 7 uses
   %i.cr = trunc i64 %i.cq to i1
@@ -508,6 +510,7 @@ rb_array_len.exit:                                ; preds = %bb.ac, %bb.ad
   %i.fo = tail call i64 @rb_hash_new_with_size(i64 noundef %.0.i94) #18 ; 13 uses
   %i.fp = getelementptr i8, ptr %i.fd, i64 16     ; 2 uses
   %i.fq = getelementptr i8, ptr %i.fd, i64 32
+  %.shift = getelementptr i8, ptr %.1.i.i, i64 44
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.bl, %rb_array_len.exit
@@ -629,11 +632,12 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %i.hw, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
-  %6 = load i64, ptr %i.u, align 8
-  %7 = lshr i64 %6, 31
-  %8 = and i64 %7, 126
-  %9 = or disjoint i64 %8, 1
-  %i.hx = tail call i64 @rb_hash_aset(i64 noundef %i.fo, i64 noundef %i.ga, i64 noundef %9) #18 ; 0 uses
+  %7 = load i32, ptr %.shift, align 4
+  %8 = shl i32 %7, 1
+  %9 = and i32 %8, 126
+  %10 = or disjoint i32 %9, 1
+  %11 = zext nneg i32 %10 to i64
+  %i.hx = tail call i64 @rb_hash_aset(i64 noundef %i.fo, i64 noundef %i.ga, i64 noundef %11) #18 ; 0 uses
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
@@ -1036,8 +1040,8 @@ bb.d:                                             ; preds = %.preheader.i.i
   br label %rbimpl_check_typeddata.exit.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
-  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ]
-  %i.u = getelementptr i8, ptr %.1.i.i, i64 40    ; 2 uses
+  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 2 uses
+  %i.u = getelementptr i8, ptr %.1.i.i, i64 40
   %i.v = load i64, ptr %i.u, align 8              ; 3 uses
   %i.w = and i64 %i.v, 61572651155456
   %.not.i = icmp eq i64 %i.w, 26388279066624
@@ -1076,11 +1080,13 @@ bb.i:                                             ; preds = %bb.f
   br label %time_get_tm.exit
 
 time_get_tm.exit:                                 ; preds = %bb.i, %bb.h, %bb.g, %get_timeval.exit
-  %1 = load i64, ptr %i.u, align 8
-  %2 = lshr i64 %1, 31
-  %3 = and i64 %2, 126
-  %4 = or disjoint i64 %3, 1
-  ret i64 %4
+  %.shift = getelementptr i8, ptr %.1.i.i, i64 44
+  %1 = load i32, ptr %.shift, align 4
+  %2 = shl i32 %1, 1
+  %3 = and i32 %2, 126
+  %4 = or disjoint i32 %3, 1
+  %5 = zext nneg i32 %4 to i64
+  ret i64 %5
 }
 
 ; Function Attrs: nounwind sspstrong uwtable
@@ -1483,8 +1489,8 @@ bb.i:                                             ; preds = %.preheader.i.i
   br label %rbimpl_check_typeddata.exit.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.i, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
-  %.1.i.i = phi ptr [ %i.y, %.critedge.i.i ], [ %i.t, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.t, %bb.i ] ; 3 uses
-  %i.z = getelementptr i8, ptr %.1.i.i, i64 40    ; 12 uses
+  %.1.i.i = phi ptr [ %i.y, %.critedge.i.i ], [ %i.t, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.t, %bb.i ] ; 4 uses
+  %i.z = getelementptr i8, ptr %.1.i.i, i64 40    ; 10 uses
   %i.aa = load i64, ptr %i.z, align 8             ; 3 uses
   %i.ab = and i64 %i.aa, 61572651155456
   %.not.i = icmp eq i64 %i.ab, 26388279066624
@@ -1665,17 +1671,16 @@ bb.s:                                             ; preds = %RSTRING_PTR.exit, %
   store i8 %i.dw, ptr %i.dr, align 1, !tbaa !53
   %i.dy = getelementptr i8, ptr %.1, i64 13
   store i8 58, ptr %i.dx, align 1, !tbaa !53
-  %3 = load i64, ptr %i.z, align 8
-  %4 = lshr i64 %3, 32
-  %i.dz = trunc i64 %4 to i8
+  %.shift = getelementptr i8, ptr %.1.i.i, i64 44 ; 2 uses
+  %3 = load i32, ptr %.shift, align 4
+  %i.dz = trunc i32 %3 to i8
   %i.ea = and i8 %i.dz, 62
   %i.eb = udiv i8 %i.ea, 10
   %i.ec = or disjoint i8 %i.eb, 48
   %i.ed = getelementptr i8, ptr %.1, i64 14
   store i8 %i.ec, ptr %i.dy, align 1, !tbaa !53
-  %5 = load i64, ptr %i.z, align 8
-  %6 = lshr i64 %5, 32
-  %i.ee = trunc i64 %6 to i8
+  %4 = load i32, ptr %.shift, align 4
+  %i.ee = trunc i32 %4 to i8
   %i.ef = and i8 %i.ee, 63
   %i.eg = urem i8 %i.ef, 10
   %i.eh = or disjoint i8 %i.eg, 48
@@ -2078,10 +2083,9 @@ bb.aw:                                            ; preds = %cmp.exit109, %subv.
 
 bb.ax:                                            ; preds = %bb.aw
   %i.fc = getelementptr i8, ptr %0, i64 32        ; 2 uses
-  %3 = load i64, ptr %i.fc, align 8               ; 2 uses
-  %4 = lshr i64 %3, 32
-  %5 = trunc nuw i64 %4 to i32
-  %i.fd = and i32 %5, 63
+  %.shift = getelementptr i8, ptr %0, i64 36
+  %3 = load i32, ptr %.shift, align 4
+  %i.fd = and i32 %3, 63
   %i.fe = add i32 %i.fd, %.258                    ; 4 uses
   %i.ff = icmp slt i32 %i.fe, 0
   %i.fg = add nsw i32 %i.fe, 60
@@ -2093,10 +2097,11 @@ bb.ax:                                            ; preds = %bb.aw
   %.460 = select i1 %i.fh, i32 %i.fi, i32 %.359
   %i.fj = zext i1 %i.fh to i32
   %.252 = add i32 %.151, %i.fj
+  %4 = load i64, ptr %i.fc, align 8
   %i.fk = and i32 %.460, 63
   %i.fl = zext nneg i32 %i.fk to i64
   %i.fm = shl nuw nsw i64 %i.fl, 32
-  %i.fn = and i64 %3, -270582939649
+  %i.fn = and i64 %4, -270582939649
   %i.fo = or disjoint i64 %i.fm, %i.fn
   store i64 %i.fo, ptr %i.fc, align 8
   br label %bb.ay

@@ -201,10 +201,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.v = phi i32 [ %.pre326, %bb.h ], [ %i.c, %bb.g ] ; 18 uses
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 112
   store i32 %i.v, ptr %i.w, align 8, !tbaa !69
-  %44 = load i16, ptr %i.u, align 8               ; 3 uses
-  %45 = and i16 %44, 256
-  %.not153 = icmp eq i16 %45, 0
-  br i1 %.not153, label %bb.ap, label %bb.j
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 433
+  %44 = load i8, ptr %.shift, align 1
+  %45 = trunc i8 %44 to i1
+  br i1 %45, label %bb.j, label %bb.ap
 
 bb.j:                                             ; preds = %bb.i
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 424
@@ -420,7 +420,8 @@ bb.ao:                                            ; preds = %bb.am
   br label %bb.fc
 
 bb.ap:                                            ; preds = %bb.p, %bb.ae, %bb.m, %bb.i
-  %i.bq = and i16 %44, 16
+  %46 = load i16, ptr %i.u, align 8               ; 2 uses
+  %i.bq = and i16 %46, 16
   %.not168 = icmp eq i16 %i.bq, 0
   br i1 %.not168, label %bb.er, label %bb.aq
 
@@ -823,7 +824,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit247: ; preds = %bb
   br i1 %.0100, label %.sink.split, label %bb.fd
 
 bb.dh:                                            ; preds = %bb.as
-  %i.ew = and i16 %44, 96
+  %i.ew = and i16 %46, 96
   %or.cond208.not = icmp eq i16 %i.ew, 96
   br i1 %or.cond208.not, label %bb.dm, label %bb.di
 

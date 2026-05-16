@@ -201,7 +201,7 @@ bb.a:
   %i.e = load i32, ptr %i.d, align 4, !tbaa !1205 ; 2 uses
   %i.f = add i32 %i.e, %i.c                       ; 22 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 9 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 6 uses
   %i.i = load i32, ptr %i.h, align 4              ; 3 uses
   %i.j = and i32 %i.i, 255
   %i.k = icmp eq i32 %i.j, 1
@@ -387,10 +387,10 @@ _ZSt6fill_nIPcicET_S1_T0_RKT1_.exit:              ; preds = %_ZN10duckdb_fmt2v68
 
 bb.e:                                             ; preds = %_ZSt6fill_nIPcicET_S1_T0_RKT1_.exit, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit
   %.1106 = phi ptr [ %i.bx, %_ZSt6fill_nIPcicET_S1_T0_RKT1_.exit ], [ %.08.lcssa.i.i, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit ] ; 4 uses
-  %2 = load i32, ptr %i.h, align 4
-  %3 = and i32 %2, 16777216
-  %.not129 = icmp eq i32 %3, 0
-  %i.by = select i1 %.not129, i8 101, i8 69
+  %.shift130 = getelementptr inbounds nuw i8, ptr %0, i64 31
+  %2 = load i8, ptr %.shift130, align 1
+  %3 = trunc i8 %2 to i1
+  %i.by = select i1 %3, i8 69, i8 101
   %i.bz = getelementptr inbounds nuw i8, ptr %.1106, i64 1
   store i8 %i.by, ptr %.1106, align 1, !tbaa !18
   %i.ca = add nsw i32 %i.f, -1
@@ -455,6 +455,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cz = urem i32 %i.f, 3                        ; 2 uses
   %i.da = icmp eq i32 %i.cz, 0
   %spec.select = select i1 %i.da, i32 3, i32 %i.cz
+  %.shift129 = getelementptr inbounds nuw i8, ptr %0, i64 30
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %_ZSt6fill_nIPcicET_S1_T0_RKT1_.exit142
@@ -465,9 +466,8 @@ bb.l:                                             ; preds = %bb.k, %_ZSt6fill_nI
   br i1 %i.db, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
-  %4 = load i32, ptr %i.h, align 4
-  %5 = lshr i32 %4, 16
-  %i.dc = trunc i32 %5 to i8
+  %4 = load i16, ptr %.shift129, align 2
+  %i.dc = trunc i16 %4 to i8
   %i.dd = getelementptr inbounds nuw i8, ptr %.2230, i64 1
   store i8 %i.dc, ptr %.2230, align 1, !tbaa !18
   br label %bb.n
@@ -851,6 +851,7 @@ bb.v:                                             ; preds = %bb.u
   %i.if = urem i32 %i.f, 3                        ; 2 uses
   %i.ig = icmp eq i32 %i.if, 0
   %spec.select130 = select i1 %i.ig, i32 3, i32 %i.if
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 30
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %_ZN10duckdb_fmt2v68internal8copy_strIcPKcPcTnNSt9enable_ifIXsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit162
@@ -861,9 +862,8 @@ bb.w:                                             ; preds = %bb.v, %_ZN10duckdb_
   br i1 %i.ih, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %6 = load i32, ptr %i.h, align 4
-  %7 = lshr i32 %6, 16
-  %i.ii = trunc i32 %7 to i8
+  %5 = load i16, ptr %.shift, align 2
+  %i.ii = trunc i16 %5 to i8
   %i.ij = getelementptr inbounds nuw i8, ptr %.9231, i64 1
   store i8 %i.ii, ptr %.9231, align 1, !tbaa !18
   br label %bb.y
@@ -1266,7 +1266,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !3338 ; 4 uses
   %i.e = add i32 %i.d, %i.b                       ; 19 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 9 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 6 uses
   %i.h = load i32, ptr %i.g, align 4              ; 3 uses
   %i.i = and i32 %i.h, 255
   %i.j = icmp eq i32 %i.i, 1
@@ -1410,10 +1410,10 @@ middle.block559:                                  ; preds = %vector.body555
 
 _ZSt6fill_nIPwiwET_S1_T0_RKT1_.exit:              ; preds = %.lr.ph.i.i.i.i, %middle.block559, %_ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit
   %.1106 = phi ptr [ %.08.lcssa.i.i.i.i.i.i, %_ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit ], [ %i.at, %middle.block559 ], [ %i.at, %.lr.ph.i.i.i.i ] ; 4 uses
-  %2 = load i32, ptr %i.g, align 4
-  %3 = and i32 %2, 16777216
-  %.not129 = icmp eq i32 %3, 0
-  %i.bd = select i1 %.not129, i32 101, i32 69
+  %.shift132 = getelementptr inbounds nuw i8, ptr %0, i64 31
+  %2 = load i8, ptr %.shift132, align 1
+  %3 = trunc i8 %2 to i1
+  %i.bd = select i1 %3, i32 69, i32 101
   %i.be = getelementptr inbounds nuw i8, ptr %.1106, i64 4
   store i32 %i.bd, ptr %.1106, align 4, !tbaa !130
   %i.bf = add nsw i32 %i.e, -1
@@ -1482,6 +1482,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ci = urem i32 %i.e, 3                        ; 2 uses
   %i.cj = icmp eq i32 %i.ci, 0
   %spec.select = select i1 %i.cj, i32 3, i32 %i.ci
+  %.shift130 = getelementptr inbounds nuw i8, ptr %0, i64 30
   %i.ck = load ptr, ptr %0, align 8               ; 2 uses
   br label %bb.k
 
@@ -1493,9 +1494,10 @@ bb.k:                                             ; preds = %bb.j, %_ZSt6fill_nI
   br i1 %i.cl, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %4 = load i32, ptr %i.g, align 4
-  %i.cm = shl i32 %4, 8
-  %i.cn = ashr i32 %i.cm, 24
+  %4 = load i16, ptr %.shift130, align 2
+  %5 = zext i16 %4 to i32
+  %i.cm = shl i32 %5, 24
+  %i.cn = ashr exact i32 %i.cm, 24
   %i.co = getelementptr inbounds nuw i8, ptr %.2254, i64 4
   store i32 %i.cn, ptr %.2254, align 4, !tbaa !130
   br label %bb.m
@@ -1871,6 +1873,7 @@ bb.x:                                             ; preds = %bb.w
   %i.gt = urem i32 %i.e, 3                        ; 2 uses
   %i.gu = icmp eq i32 %i.gt, 0                    ; 2 uses
   %spec.select130 = select i1 %i.gu, i32 3, i32 %i.gt ; 3 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 30
   %i.gv = load ptr, ptr %0, align 8, !tbaa !3335  ; 4 uses
   %i.gw = load i8, ptr %i.gv, align 1, !tbaa !18
   %i.gx = sext i8 %i.gw to i32
@@ -1903,9 +1906,10 @@ _ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversi
 .peel.newph:                                      ; preds = %_ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit175.peel, %.peel.newph
   %.0103257 = phi i32 [ %i.hz, %.peel.newph ], [ %spec.select130, %_ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit175.peel ] ; 2 uses
   %.9255 = phi ptr [ %i.hy, %.peel.newph ], [ %.lcssa569.peel, %_ZN10duckdb_fmt2v68internal8copy_strIwPKcPwTnNSt9enable_ifIXntsr16needs_conversionIT0_T_EE5valueEiE4typeELi0EEET1_S7_S7_SB_.exit175.peel ] ; 2 uses
-  %5 = load i32, ptr %i.g, align 4
-  %i.hj = shl i32 %5, 8
-  %i.hk = ashr i32 %i.hj, 24
+  %6 = load i16, ptr %.shift, align 2
+  %7 = zext i16 %6 to i32
+  %i.hj = shl i32 %7, 24
+  %i.hk = ashr exact i32 %i.hj, 24
   %i.hl = getelementptr inbounds nuw i8, ptr %.9255, i64 4 ; 4 uses
   store i32 %i.hk, ptr %.9255, align 4, !tbaa !130
   %i.hm = zext nneg i32 %.0103257 to i64

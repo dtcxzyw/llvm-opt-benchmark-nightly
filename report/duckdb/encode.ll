@@ -201,7 +201,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fa = zext i32 %i.ez to i64
   %i.fb = load i8, ptr %i.cy, align 2, !tbaa !73
   %i.fc = zext i8 %i.fb to i64                    ; 6 uses
-  %i.fd = load i16, ptr %i.cz, align 8, !tbaa !74
+  %i.fd = load i16, ptr %i.cz, align 8
   store i16 %i.fd, ptr %i.dc, align 8
   store i16 0, ptr %i.cz, align 8, !tbaa !74
   store i8 0, ptr %i.cy, align 2, !tbaa !73
@@ -448,7 +448,7 @@ bb.bm:                                            ; preds = %bb.bl
   %.0110.i = phi ptr [ null, %bb.bm ], [ null, %bb.bj ], [ %i.jz, %.thread141.i ], [ %.pr.i121, %.thread.i120 ], [ %i.js, %._crit_edge.i ]
   %.0109.i = phi ptr [ null, %bb.bm ], [ null, %bb.bj ], [ %i.jz, %.thread141.i ], [ null, %.thread.i120 ], [ null, %._crit_edge.i ]
   %i.kb = getelementptr inbounds nuw i8, ptr %0, i64 1610 ; 4 uses
-  %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 5 uses
+  %i.kc = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 4 uses
   %i.kd = getelementptr inbounds nuw i8, ptr %0, i64 6920 ; 7 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 6928 ; 9 uses
   %i.kf = getelementptr inbounds nuw i8, ptr %0, i64 6944 ; 2 uses
@@ -459,6 +459,7 @@ bb.bm:                                            ; preds = %bb.bl
   %i.kj = icmp eq i32 %1, 1
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 1616 ; 2 uses
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 3 uses
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 1609
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 6872 ; 2 uses
   %.phi.trans.insert.i129.i = getelementptr inbounds nuw i8, ptr %0, i64 6864 ; 4 uses
   %i.km = getelementptr inbounds nuw i8, ptr %0, i64 2768
@@ -627,11 +628,9 @@ _ZL16GetBrotliStoragePN13duckdb_brotli24BrotliEncoderStateStructEm.exit.i: ; pre
   %i.na = load i16, ptr %i.kc, align 8, !tbaa !74
   %i.nb = trunc i16 %i.na to i8
   store i8 %i.nb, ptr %.0111.i, align 1, !tbaa !68
-  %7 = load i16, ptr %i.kc, align 8, !tbaa !74
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %7 = load i8, ptr %.shift.i, align 1, !tbaa !74
   %i.nc = getelementptr inbounds nuw i8, ptr %.0111.i, i64 1
-  store i8 %9, ptr %i.nc, align 1, !tbaa !68
+  store i8 %7, ptr %i.nc, align 1, !tbaa !68
   %i.nd = load i32, ptr %i.ik, align 4, !tbaa !39
   %i.ne = icmp eq i32 %i.nd, 0                    ; 2 uses
   %i.nf = select i1 %i.ne, i64 32768, i64 131072
@@ -1034,12 +1033,17 @@ bb.e:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.ag = load i16, ptr %i.af, align 8, !tbaa !74
   %i.ah = trunc i32 %i.ae to i16
-  %i.ai = or i16 %i.ag, %i.ah                     ; 2 uses
+  %i.ai = or i16 %i.ag, %i.ah                     ; 3 uses
   store i16 %i.ai, ptr %i.af, align 8, !tbaa !74
   %i.aj = add i8 %i.ac, 2                         ; 2 uses
   store i8 %i.aj, ptr %i.ab, align 2, !tbaa !73
+  %7 = trunc i16 %i.ai to i8
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 6944 ; 2 uses
-  store i16 %i.ai, ptr %i.ak, align 8
+  store i8 %7, ptr %i.ak, align 8, !tbaa !68
+  %8 = lshr i16 %i.ai, 8
+  %9 = trunc nuw i16 %8 to i8
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 6945
+  store i8 %9, ptr %10, align 1, !tbaa !68
   store ptr %i.ak, ptr %4, align 8, !tbaa !69
   %i.al = zext i8 %i.aj to i64
   %i.am = add nuw nsw i64 %i.al, 7
@@ -1138,15 +1142,14 @@ bb.r:                                             ; preds = %.thread
 
 _ZL16GetBrotliStoragePN13duckdb_brotli24BrotliEncoderStateStructEm.exit: ; preds = %.thread, %bb.r
   %i.bq = phi ptr [ %i.bp, %bb.r ], [ %i.bo, %.thread ] ; 6 uses
-  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 3 uses
+  %i.br = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.bs = load i16, ptr %i.br, align 8, !tbaa !74
   %i.bt = trunc i16 %i.bs to i8
   store i8 %i.bt, ptr %i.bq, align 1, !tbaa !68
-  %7 = load i16, ptr %i.br, align 8, !tbaa !74
-  %8 = lshr i16 %7, 8
-  %9 = trunc nuw i16 %8 to i8
+  %.shift255 = getelementptr inbounds nuw i8, ptr %0, i64 1609
+  %11 = load i8, ptr %.shift255, align 1, !tbaa !74
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bq, i64 1
-  store i8 %9, ptr %i.bu, align 1, !tbaa !68
+  store i8 %11, ptr %i.bu, align 1, !tbaa !68
   %i.bv = load i32, ptr %i.u, align 4, !tbaa !39
   %i.bw = and i64 %i.j, 4294967295                ; 3 uses
   %i.bx = icmp eq i32 %i.bv, 0                    ; 2 uses
@@ -1549,13 +1552,12 @@ _ZL16GetBrotliStoragePN13duckdb_brotli24BrotliEncoderStateStructEm.exit378: ; pr
   %i.auv = load i8, ptr %i.auu, align 2, !tbaa !73
   %i.auw = zext i8 %i.auv to i64
   store i64 %i.auw, ptr %i.g, align 8, !tbaa !67
-  %i.aux = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 3 uses
+  %i.aux = getelementptr inbounds nuw i8, ptr %0, i64 1608 ; 2 uses
   %i.auy = load i16, ptr %i.aux, align 8, !tbaa !74
   %i.auz = trunc i16 %i.auy to i8                 ; 3 uses
   store i8 %i.auz, ptr %i.aut, align 1, !tbaa !68
-  %10 = load i16, ptr %i.aux, align 8, !tbaa !74
-  %11 = lshr i16 %10, 8
-  %12 = trunc nuw i16 %11 to i8                   ; 3 uses
+  %.shift252 = getelementptr inbounds nuw i8, ptr %0, i64 1609
+  %12 = load i8, ptr %.shift252, align 1, !tbaa !74 ; 3 uses
   %i.ava = getelementptr inbounds nuw i8, ptr %i.aut, i64 1 ; 3 uses
   store i8 %12, ptr %i.ava, align 1, !tbaa !68
   %i.avb = load i64, ptr %i.aqa, align 8, !tbaa !86 ; 2 uses

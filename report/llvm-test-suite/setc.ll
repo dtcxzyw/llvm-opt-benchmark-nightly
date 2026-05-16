@@ -199,8 +199,9 @@ bb.a:
   %i.b = load ptr, ptr %1, align 8, !tbaa !21     ; 2 uses
   %i.c = load i32, ptr %i.a, align 4, !tbaa !4    ; 2 uses
   %i.d = lshr i32 %i.c, 16                        ; 2 uses
-  %2 = load i32, ptr %i.b, align 4, !tbaa !4
-  %3 = lshr i32 %2, 16                            ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %2 = load i16, ptr %.shift, align 2, !tbaa !4
+  %3 = zext i16 %2 to i32                         ; 2 uses
   %i.e = icmp samesign ugt i32 %i.d, %3
   br i1 %i.e, label %.thread, label %bb.b
 
@@ -243,8 +244,9 @@ bb.a:
   %i.b = load ptr, ptr %1, align 8, !tbaa !21     ; 2 uses
   %i.c = load i32, ptr %i.a, align 4, !tbaa !4    ; 2 uses
   %i.d = lshr i32 %i.c, 16                        ; 2 uses
-  %2 = load i32, ptr %i.b, align 4, !tbaa !4
-  %3 = lshr i32 %2, 16                            ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %2 = load i16, ptr %.shift, align 2, !tbaa !4
+  %3 = zext i16 %2 to i32                         ; 2 uses
   %i.e = icmp samesign ugt i32 %i.d, %3
   br i1 %i.e, label %.thread, label %bb.b
 
@@ -370,8 +372,9 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.e = load i32, ptr %0, align 4, !tbaa !4      ; 2 uses
   %i.f = lshr i32 %i.e, 16                        ; 2 uses
-  %2 = load i32, ptr %1, align 4, !tbaa !4
-  %3 = lshr i32 %2, 16                            ; 2 uses
+  %.shift = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %2 = load i16, ptr %.shift, align 2, !tbaa !4
+  %3 = zext i16 %2 to i32                         ; 2 uses
   %i.g = icmp samesign ugt i32 %i.f, %3
   br i1 %i.g, label %.thread, label %bb.e
 

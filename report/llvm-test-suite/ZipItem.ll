@@ -199,7 +199,6 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   %i.k = load i8, ptr %i.b, align 1, !tbaa !24
   switch i8 %i.k, label %bb.f [
     i8 1, label %bb.d
@@ -210,13 +209,15 @@ bb.c:                                             ; preds = %bb.b
   ]
 
 bb.d:                                             ; preds = %bb.c
-  %2 = load i32, ptr %1, align 4, !tbaa !37
-  %3 = and i32 %2, 201326592
-  %switch.selectcmp2 = icmp eq i32 %3, 134217728
+  %.shift = getelementptr inbounds nuw i8, ptr %0, i64 86
+  %1 = load i16, ptr %.shift, align 2, !tbaa !37
+  %2 = and i16 %1, 3072
+  %switch.selectcmp2 = icmp eq i16 %2, 2048
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c, %bb.c, %bb.c, %bb.c
-  %i.l = load i32, ptr %1, align 4, !tbaa !37
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 84
+  %i.l = load i32, ptr %3, align 4, !tbaa !37
   %i.m = and i32 %i.l, 16
   %i.n = icmp ne i32 %i.m, 0
   br label %bb.f
@@ -275,7 +276,6 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %bb.g, label %_ZNK8NArchive4NZip5CItem5IsDirEv.exit.thread
 
 bb.g:                                             ; preds = %bb.f
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 84 ; 2 uses
   %i.t = load i8, ptr %i.a, align 1, !tbaa !24
   switch i8 %i.t, label %_ZNK8NArchive4NZip5CItem5IsDirEv.exit.thread [
     i8 1, label %bb.h
@@ -286,14 +286,16 @@ bb.g:                                             ; preds = %bb.f
   ]
 
 bb.h:                                             ; preds = %bb.g
-  %2 = load i32, ptr %1, align 4, !tbaa !37
-  %.fr16 = freeze i32 %2
-  %3 = and i32 %.fr16, 201326592
-  %switch.selectcmp2.i = icmp eq i32 %3, 134217728
+  %.shift.i = getelementptr inbounds nuw i8, ptr %0, i64 86
+  %1 = load i16, ptr %.shift.i, align 2, !tbaa !37
+  %.fr16 = freeze i16 %1
+  %2 = and i16 %.fr16, 3072
+  %switch.selectcmp2.i = icmp eq i16 %2, 2048
   br i1 %switch.selectcmp2.i, label %_ZNK8NArchive4NZip5CItem5IsDirEv.exit.thread10, label %_ZNK8NArchive4NZip5CItem5IsDirEv.exit.thread
 
 _ZNK8NArchive4NZip5CItem5IsDirEv.exit:            ; preds = %bb.g, %bb.g, %bb.g, %bb.g
-  %i.u = load i32, ptr %1, align 4, !tbaa !37
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 84
+  %i.u = load i32, ptr %3, align 4, !tbaa !37
   %.fr14 = freeze i32 %i.u
   %i.v = and i32 %.fr14, 16
   %.not15 = icmp eq i32 %i.v, 0

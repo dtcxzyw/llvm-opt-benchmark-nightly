@@ -201,9 +201,10 @@ bb.g:                                             ; preds = %bb.a
   %.094122 = phi i32 [ %.195, %bb.k ], [ %i.bi, %.lr.ph124.preheader ] ; 4 uses
   %.096121 = phi ptr [ %i.bu, %bb.k ], [ %i.bm, %.lr.ph124.preheader ] ; 5 uses
   %.199120 = phi i32 [ %i.bv, %bb.k ], [ 0, %.lr.ph124.preheader ]
-  %1 = load i32, ptr %.096121, align 4, !tbaa !4
-  %2 = lshr i32 %1, 16                            ; 2 uses
-  %3 = icmp ult i32 %2, %.094122
+  %.shift = getelementptr inbounds nuw i8, ptr %.096121, i64 2
+  %1 = load i16, ptr %.shift, align 2, !tbaa !4
+  %2 = zext i16 %1 to i32                         ; 2 uses
+  %3 = icmp ugt i32 %.094122, %2
   br i1 %3, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %.lr.ph124
@@ -213,7 +214,7 @@ bb.h:                                             ; preds = %.lr.ph124
   br label %bb.k
 
 bb.i:                                             ; preds = %.lr.ph124
-  %i.bq = icmp eq i32 %2, %.094122
+  %i.bq = icmp eq i32 %.094122, %2
   br i1 %i.bq, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
