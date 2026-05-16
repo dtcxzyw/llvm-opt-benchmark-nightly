@@ -244,7 +244,7 @@ def compute_hotspots(collapsed: str, top_n: int = 50):
                 key=lambda x: x[1],
                 reverse=True,
             )
-            callers_map[func] = sorted_callers
+            callers_map[func] = [(c, n, p) for c, n, p in sorted_callers if p >= 0.1]
         else:
             callers_map[func] = []
 
