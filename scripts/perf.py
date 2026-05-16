@@ -205,6 +205,7 @@ def _flamegraph_from_collapsed(collapsed: str, title: str, output_path: str):
 
 def compute_hotspots(collapsed: str, top_n: int = 50):
     counts = {}
+    callers = {}  # {leaf: {caller: count}}
     for line in collapsed.splitlines():
         line = line.strip()
         if not line:
@@ -221,13 +222,33 @@ def compute_hotspots(collapsed: str, top_n: int = 50):
         if frames:
             leaf = frames[-1]
             counts[leaf] = counts.get(leaf, 0) + count
+            if len(frames) >= 2:
+                caller = frames[-2]
+                if leaf not in callers:
+                    callers[leaf] = {}
+                callers[leaf][caller] = callers[leaf].get(caller, 0) + count
 
     total = sum(counts.values())
-    return sorted(
+    sorted_hotspots = sorted(
         ((func, cnt, cnt / total * 100) for func, cnt in counts.items()),
         key=lambda x: x[1],
         reverse=True,
     )[:top_n]
+
+    callers_map = {}
+    for func, _cnt, _pct in sorted_hotspots:
+        if func in callers:
+            c_total = sum(callers[func].values())
+            sorted_callers = sorted(
+                ((c, n, n / c_total * 100) for c, n in callers[func].items()),
+                key=lambda x: x[1],
+                reverse=True,
+            )
+            callers_map[func] = sorted_callers
+        else:
+            callers_map[func] = []
+
+    return sorted_hotspots, callers_map
 
 
 def generate_combined_flamegraph(
@@ -236,7 +257,7 @@ def generate_combined_flamegraph(
 ):
     if not collapsed_sections:
         print("No collapsed data, skipping combined flamegraph")
-        return None, []
+        return None, [], {}
 
     merged = "".join(collapsed_sections)
 
@@ -244,7 +265,7 @@ def generate_combined_flamegraph(
     title = f"opt -O3 ({llvm_revision[:12]}, {len(collapsed_sections)} files)"
     svg_path = _flamegraph_from_collapsed(merged, title, combined_svg)
 
-    hotspots = compute_hotspots(merged)
+    hotspots, callers_map = compute_hotspots(merged)
     hotspots_path = os.path.join(PERF_REPORT_DIR, "hotspots.txt")
     with open(hotspots_path, "w") as f:
         f.write(f"{'cycles':>12}  {'pct':>6}  function\n")
@@ -252,23 +273,44 @@ def generate_combined_flamegraph(
         for func, cnt, pct in hotspots:
             f.write(f"{cnt:>12}  {pct:>5.1f}%  {func}\n")
 
-    return svg_path, hotspots
+    return svg_path, hotspots, callers_map
 
 
 def generate_index_html(
     llvm_revision: str,
     file_count: int,
     hotspots: list,
+    callers_map: dict,
 ):
     escaped_revision = llvm_revision[:12]
 
     rows = ""
     for i, (func, cnt, pct) in enumerate(hotspots):
+        caller_rows = ""
+        func_callers = callers_map.get(func, [])
+        if func_callers:
+            caller_body = ""
+            for caller, c_cnt, c_pct in func_callers:
+                caller_body += (
+                    f'<tr>'
+                    f'<td style="text-align:right;font-family:monospace;font-size:0.9em;color:#aaa">{c_cnt}</td>'
+                    f'<td style="text-align:right;font-size:0.9em;color:#7eb8ff">{c_pct:.1f}%</td>'
+                    f'<td style="font-size:0.9em;color:#ccc">{html_mod.escape(caller)}</td>'
+                    f'</tr>\n'
+                )
+            caller_rows = (
+                f'<details style="margin-left:1.5em"><summary>callers ({len(func_callers)})</summary>'
+                f'<table>'
+                f'<tr><th style="text-align:right">cycles</th><th style="text-align:right">pct</th><th>caller</th></tr>'
+                f'{caller_body}'
+                f'</table></details>'
+            )
+
         rows += (
             f'<tr><td style="text-align:right;color:#888">{i + 1}</td>'
             f'<td style="text-align:right;font-family:monospace">{cnt}</td>'
             f'<td style="text-align:right;color:#7eb8ff">{pct:.1f}%</td>'
-            f"<td>{html_mod.escape(func)}</td></tr>\n"
+            f"<td>{html_mod.escape(func)}{caller_rows}</td></tr>\n"
         )
 
     html = f"""<!DOCTYPE html>
@@ -418,13 +460,13 @@ def main():
     os.makedirs(PERF_REPORT_DIR)
 
     print(f"Generating combined flamegraph from {len(collapsed_sections)} profiles...")
-    combined_svg, hotspots = generate_combined_flamegraph(collapsed_sections, llvm_revision)
+    combined_svg, hotspots, callers_map = generate_combined_flamegraph(collapsed_sections, llvm_revision)
     if not combined_svg:
         print("Failed to generate combined flamegraph")
         sys.exit(1)
 
     print("Generating index.html...")
-    generate_index_html(llvm_revision, len(collapsed_sections), hotspots)
+    generate_index_html(llvm_revision, len(collapsed_sections), hotspots, callers_map)
 
     print(f"Done. Report at {PERF_REPORT_DIR}/index.html")
 
