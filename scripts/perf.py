@@ -2,6 +2,7 @@
 
 import os
 import sys
+import html as html_mod
 import argparse
 import shutil
 import resource
@@ -267,7 +268,7 @@ def generate_index_html(
             f'<tr><td style="text-align:right;color:#888">{i + 1}</td>'
             f'<td style="text-align:right">{cnt}</td>'
             f'<td style="text-align:right;color:#7eb8ff">{pct:.1f}%</td>'
-            f"<td>{func}</td></tr>\n"
+            f"<td>{html_mod.escape(func)}</td></tr>\n"
         )
 
     html = f"""<!DOCTYPE html>
@@ -280,7 +281,7 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
 h1 {{ font-size: 1.2em; margin: 0.5em 1em; }}
 p {{ margin: 0.3em 1em; color: #888; }}
 table {{ margin: 1em; border-collapse: collapse; font-size: 0.85em; }}
-td {{ padding: 2px 8px; white-space: nowrap; max-width: 40em; overflow: hidden; text-overflow: ellipsis; }}
+td {{ padding: 2px 8px; white-space: nowrap; }}
 tr:nth-child(even) {{ background: #222244; }}
 </style>
 </head>
