@@ -201,18 +201,12 @@ alloc_large.exit:                                 ; preds = %bb.ad, %bb.ae
 
 .lr.ph.i.preheader:                               ; preds = %alloc_large.exit
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fa, i64 24 ; 2 uses
-  %1 = ptrtoint ptr %i.fo to i64
-  %2 = and i64 %1, 7                              ; 2 uses
-  %.not.i117 = icmp eq i64 %2, 0
-  %3 = sub nuw nsw i64 8, %2
-  %.0.idx.i = select i1 %.not.i117, i64 0, i64 %3
-  %.0.i = getelementptr inbounds nuw i8, ptr %i.fo, i64 %.0.idx.i ; 2 uses
   %xtraiter = and i32 %i.ej, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i32 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
 .lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
-  %.045.i.prol = phi ptr [ %i.fs, %.lr.ph.i.prol ], [ %.0.i, %.lr.ph.i.preheader ] ; 2 uses
+  %.045.i.prol = phi ptr [ %i.fs, %.lr.ph.i.prol ], [ %i.fo, %.lr.ph.i.preheader ] ; 2 uses
   %.03544.i.prol = phi i32 [ %i.ft, %.lr.ph.i.prol ], [ %i.ej, %.lr.ph.i.preheader ]
   %.143.i.prol = phi i32 [ %i.fp, %.lr.ph.i.prol ], [ %.03647.i, %.lr.ph.i.preheader ] ; 2 uses
   %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
@@ -228,7 +222,7 @@ alloc_large.exit:                                 ; preds = %bb.ad, %bb.ae
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.lcssa.unr = phi i32 [ poison, %.lr.ph.i.preheader ], [ %i.fp, %.lr.ph.i.prol ]
-  %.045.i.unr = phi ptr [ %.0.i, %.lr.ph.i.preheader ], [ %i.fs, %.lr.ph.i.prol ]
+  %.045.i.unr = phi ptr [ %i.fo, %.lr.ph.i.preheader ], [ %i.fs, %.lr.ph.i.prol ]
   %.03544.i.unr = phi i32 [ %i.ej, %.lr.ph.i.preheader ], [ %i.ft, %.lr.ph.i.prol ]
   %.143.i.unr = phi i32 [ %.03647.i, %.lr.ph.i.preheader ], [ %i.fp, %.lr.ph.i.prol ]
   %i.fu = icmp ult i32 %i.ej, 4

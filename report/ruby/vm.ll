@@ -201,7 +201,7 @@ bb.o:                                             ; preds = %METHOD_ENTRY_CACHED
   br label %vm_ccs_create.exit.i.i
 
 bb.p:                                             ; preds = %METHOD_ENTRY_CACHED_SET.exit.i.i
-  %i.aw = call noalias nonnull dereferenceable(48) ptr @ruby_xmalloc(i64 noundef 48) #59, !inline_history !167 ; 6 uses
+  %i.aw = call noalias nonnull dereferenceable(48) ptr @ruby_xmalloc(i64 noundef 48) #59, !inline_history !167 ; 5 uses
   store i32 2, ptr %i.aw, align 8, !tbaa !7
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 4
   store i32 0, ptr %i.ax, align 4, !tbaa !7
@@ -220,17 +220,12 @@ bb.q:                                             ; preds = %bb.p
 METHOD_ENTRY_CACHED_SET.exit.i.i.i:               ; preds = %bb.q, %bb.p
   %i.bc = ptrtoint ptr %i.aw to i64
   %i.bd = call i32 @rb_managed_id_table_insert(i64 noundef %.030.i.i, i64 noundef %.0.i.i, i64 noundef %i.bc) #23, !inline_history !167 ; 0 uses
-  %i.be = ptrtoint ptr %i.w to i64                ; 2 uses
-  %2 = and i64 %i.be, 7
-  %.not.i38.i.i = icmp eq i64 %2, 0
-  br i1 %.not.i38.i.i, label %3, label %vm_ccs_create.exit.i.i
-
-3:                                                ; preds = %METHOD_ENTRY_CACHED_SET.exit.i.i.i
+  %i.be = ptrtoint ptr %i.w to i64
   call void @rb_gc_writebarrier(i64 noundef %.030.i.i, i64 noundef %i.be) #23, !inline_history !167
   br label %vm_ccs_create.exit.i.i
 
-vm_ccs_create.exit.i.i:                           ; preds = %3, %METHOD_ENTRY_CACHED_SET.exit.i.i.i, %bb.o
-  %.029.i.i = phi ptr [ %i.av, %bb.o ], [ %i.aw, %METHOD_ENTRY_CACHED_SET.exit.i.i.i ], [ %i.aw, %3 ] ; 5 uses
+vm_ccs_create.exit.i.i:                           ; preds = %METHOD_ENTRY_CACHED_SET.exit.i.i.i, %bb.o
+  %.029.i.i = phi ptr [ %i.av, %bb.o ], [ %i.aw, %METHOD_ENTRY_CACHED_SET.exit.i.i.i ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   %i.bf = load ptr, ptr %i.x, align 8, !tbaa !83  ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 8             ; 2 uses
@@ -633,18 +628,13 @@ bb.p:                                             ; preds = %vm_sendish.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.bo = load ptr, ptr %i.an, align 8, !tbaa !123
-  %i.bp = ptrtoint ptr %i.bl to i64               ; 3 uses
+  %i.bp = ptrtoint ptr %i.bl to i64               ; 2 uses
   store i64 %i.bp, ptr %i.bj, align 8, !tbaa !11
-  %7 = and i64 %i.bp, 7
-  %.not16 = icmp eq i64 %7, 0
-  br i1 %.not16, label %8, label %rb_obj_write.exit
-
-8:                                                ; preds = %bb.q
-  %9 = ptrtoint ptr %i.bo to i64
-  call void @rb_gc_writebarrier(i64 noundef %9, i64 noundef %i.bp) #23
+  %7 = ptrtoint ptr %i.bo to i64
+  call void @rb_gc_writebarrier(i64 noundef %7, i64 noundef %i.bp) #23
   br label %rb_obj_write.exit
 
-rb_obj_write.exit:                                ; preds = %8, %bb.q, %vm_sendish.exit, %bb.p
+rb_obj_write.exit:                                ; preds = %bb.q, %vm_sendish.exit, %bb.p
   %i.bq = icmp eq i64 %i.bi, 36
   br i1 %i.bq, label %bb.r, label %bb.s
 
@@ -1047,18 +1037,13 @@ bb.d:                                             ; preds = %stack_check.exit
 bb.e:                                             ; preds = %bb.d
   %i.r = getelementptr i8, ptr %1, i64 16
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !123
-  %i.t = ptrtoint ptr %i.o to i64                 ; 3 uses
+  %i.t = ptrtoint ptr %i.o to i64                 ; 2 uses
   store i64 %i.t, ptr %i.l, align 8, !tbaa !11
-  %6 = and i64 %i.t, 7
-  %.not16 = icmp eq i64 %6, 0
-  br i1 %.not16, label %7, label %rb_obj_write.exit
-
-7:                                                ; preds = %bb.e
-  %8 = ptrtoint ptr %i.s to i64
-  call void @rb_gc_writebarrier(i64 noundef %8, i64 noundef %i.t) #23
+  %6 = ptrtoint ptr %i.s to i64
+  call void @rb_gc_writebarrier(i64 noundef %6, i64 noundef %i.t) #23
   br label %rb_obj_write.exit
 
-rb_obj_write.exit:                                ; preds = %7, %bb.e, %stack_check.exit, %bb.d
+rb_obj_write.exit:                                ; preds = %bb.e, %stack_check.exit, %bb.d
   %i.u = icmp eq i64 %i.k, 36
   br i1 %i.u, label %bb.f, label %bb.g
 
@@ -1461,18 +1446,13 @@ bb.jy:                                            ; preds = %bb.jx
 
 bb.jz:                                            ; preds = %bb.jy
   %i.bkt = load ptr, ptr %i.bhu, align 8, !tbaa !123
-  %i.bku = ptrtoint ptr %i.bkq to i64             ; 3 uses
+  %i.bku = ptrtoint ptr %i.bkq to i64             ; 2 uses
   store i64 %i.bku, ptr %i.bko, align 8, !tbaa !11
-  %10 = and i64 %i.bku, 7
-  %.not2944 = icmp eq i64 %10, 0
-  br i1 %.not2944, label %11, label %rb_obj_write.exit
-
-11:                                               ; preds = %bb.jz
-  %12 = ptrtoint ptr %i.bkt to i64
-  call void @rb_gc_writebarrier(i64 noundef %12, i64 noundef %i.bku) #23
+  %10 = ptrtoint ptr %i.bkt to i64
+  call void @rb_gc_writebarrier(i64 noundef %10, i64 noundef %i.bku) #23
   br label %rb_obj_write.exit
 
-rb_obj_write.exit:                                ; preds = %11, %bb.jz, %bb.jy, %bb.jx
+rb_obj_write.exit:                                ; preds = %bb.jz, %bb.jy, %bb.jx
   %i.bkv = icmp eq i64 %.02267, 36
   br i1 %i.bkv, label %bb.ka, label %bb.kb
 
@@ -1875,18 +1855,13 @@ bb.ot:                                            ; preds = %bb.os
 bb.ou:                                            ; preds = %bb.ot
   %i.ceg = getelementptr i8, ptr %.02257, i64 16
   %i.ceh = load ptr, ptr %i.ceg, align 8, !tbaa !123
-  %i.cei = ptrtoint ptr %i.ced to i64             ; 3 uses
+  %i.cei = ptrtoint ptr %i.ced to i64             ; 2 uses
   store i64 %i.cei, ptr %i.ceb, align 8, !tbaa !11
-  %13 = and i64 %i.cei, 7
-  %.not2941 = icmp eq i64 %13, 0
-  br i1 %.not2941, label %14, label %rb_obj_write.exit2566
-
-14:                                               ; preds = %bb.ou
-  %15 = ptrtoint ptr %i.ceh to i64
-  call void @rb_gc_writebarrier(i64 noundef %15, i64 noundef %i.cei) #23
+  %11 = ptrtoint ptr %i.ceh to i64
+  call void @rb_gc_writebarrier(i64 noundef %11, i64 noundef %i.cei) #23
   br label %rb_obj_write.exit2566
 
-rb_obj_write.exit2566:                            ; preds = %14, %bb.ou, %bb.ot, %bb.os
+rb_obj_write.exit2566:                            ; preds = %bb.ou, %bb.ot, %bb.os
   %i.cej = icmp eq i64 %.02271, 36
   br i1 %i.cej, label %bb.ov, label %bb.ow
 
@@ -2160,7 +2135,7 @@ bb.px:                                            ; preds = %vm_base_ptr.exit
   %i.cil = getelementptr i8, ptr %.02257, i64 32
   %i.cim = load ptr, ptr %i.cil, align 8, !tbaa !15
   %i.cin = load i64, ptr %i.cim, align 8, !tbaa !11
-  %i.cio = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cio = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.cip = load i32, ptr %i.t, align 4, !tbaa !71
   %i.ciq = xor i32 %i.cip, -1
   %i.cir = and i32 %i.cio, %i.ciq
@@ -2205,7 +2180,7 @@ bb.qb:                                            ; preds = %.backedge, %bb.aic
   %i.cji = load i64, ptr %i.cjh, align 8, !tbaa !11
   %i.cjj = getelementptr i8, ptr %.6, i64 16      ; 2 uses
   store ptr %i.cjj, ptr %.02257, align 8, !tbaa !146
-  %i.cjk = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cjk = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.cjl = load i32, ptr %i.t, align 4, !tbaa !71
   %i.cjm = xor i32 %i.cjl, -1
   %i.cjn = and i32 %i.cjk, %i.cjm
@@ -2236,7 +2211,7 @@ bb.qd:                                            ; preds = %.backedge, %bb.aid
   br i1 %.not2939, label %bb.qg, label %bb.qe
 
 bb.qe:                                            ; preds = %bb.qd
-  %i.cjy = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cjy = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.cjz = load i32, ptr %i.t, align 4, !tbaa !71
   %i.cka = xor i32 %i.cjz, -1
   %i.ckb = and i32 %i.cjy, %i.cka
@@ -2276,7 +2251,7 @@ bb.qh:                                            ; preds = %.backedge, %bb.aie
   br i1 %.not2938, label %bb.qi, label %bb.qk
 
 bb.qi:                                            ; preds = %bb.qh
-  %i.cko = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cko = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.ckp = load i32, ptr %i.t, align 4, !tbaa !71
   %i.ckq = xor i32 %i.ckp, -1
   %i.ckr = and i32 %i.cko, %i.ckq
@@ -2315,7 +2290,7 @@ bb.ql:                                            ; preds = %.backedge, %bb.aif
   br i1 %i.cld, label %bb.qm, label %bb.qo
 
 bb.qm:                                            ; preds = %bb.ql
-  %i.cle = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cle = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.clf = load i32, ptr %i.t, align 4, !tbaa !71
   %i.clg = xor i32 %i.clf, -1
   %i.clh = and i32 %i.cle, %i.clg
@@ -2443,7 +2418,7 @@ vm_once_exec.exit.i:                              ; preds = %.lr.ph.i.i.i.i2596
   br label %vm_once_dispatch.exit
 
 bb.qy:                                            ; preds = %bb.qv
-  %i.cmw = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.cmw = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.cmx = load i32, ptr %i.t, align 4, !tbaa !71
   %i.cmy = xor i32 %i.cmx, -1
   %i.cmz = and i32 %i.cmw, %i.cmy
@@ -2846,7 +2821,7 @@ vm_invoke_builtin_delegate.exit2767:              ; preds = %bb.ads, %bb.adt
   %i.ekc = getelementptr i8, ptr %.02257, i64 32
   %i.ekd = load ptr, ptr %i.ekc, align 8, !tbaa !15
   %i.eke = load i64, ptr %i.ekd, align 8, !tbaa !11
-  %i.ekf = load atomic volatile i32, ptr %i.s monotonic, align 4
+  %i.ekf = load atomic volatile i32, ptr %i.s monotonic, align 8
   %i.ekg = load i32, ptr %i.t, align 4, !tbaa !71
   %i.ekh = xor i32 %i.ekg, -1
   %i.eki = and i32 %i.ekf, %i.ekh
@@ -3249,25 +3224,17 @@ bb.ae:                                            ; preds = %bb.ad
 METHOD_ENTRY_CACHED_SET.exit.i.i:                 ; preds = %bb.ae, %bb.ad
   %i.dh = ptrtoint ptr %i.db to i64
   %i.di = call i32 @rb_managed_id_table_insert(i64 noundef %i.cz, i64 noundef %1, i64 noundef %i.dh) #23 ; 0 uses
-  %i.dj = ptrtoint ptr %.135 to i64               ; 2 uses
-  %3 = and i64 %i.dj, 7
-  %.not.i21.i = icmp eq i64 %3, 0
-  br i1 %.not.i21.i, label %4, label %vm_ccs_create.exit.i
-
-4:                                                ; preds = %METHOD_ENTRY_CACHED_SET.exit.i.i
+  %i.dj = ptrtoint ptr %.135 to i64
   call void @rb_gc_writebarrier(i64 noundef %i.cz, i64 noundef %i.dj) #23
-  br label %vm_ccs_create.exit.i
-
-vm_ccs_create.exit.i:                             ; preds = %4, %METHOD_ENTRY_CACHED_SET.exit.i.i
   br i1 %.not5.i.i.i, label %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i28.i, label %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i23.i, !prof !168
 
-RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i28.i:      ; preds = %vm_ccs_create.exit.i
+RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i28.i:      ; preds = %METHOD_ENTRY_CACHED_SET.exit.i.i
   %i.dk = load i64, ptr %i.ai, align 8, !tbaa !77
   %i.dl = and i64 %i.dk, 16384
   %.not10.i29.i = icmp eq i64 %i.dl, 0
   br i1 %.not10.i29.i, label %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i23.i, label %RCLASS_EXT_WRITABLE.exit30.i, !prof !110
 
-RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i23.i: ; preds = %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i28.i, %vm_ccs_create.exit.i
+RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.thread.i23.i: ; preds = %RCLASS_PRIME_CLASSEXT_WRITABLE_P.exit.i28.i, %METHOD_ENTRY_CACHED_SET.exit.i.i
   %i.dm = call ptr @rb_current_box() #23          ; 3 uses
   %.not.i24.i = icmp eq ptr %i.dm, null
   br i1 %.not.i24.i, label %RCLASS_EXT_WRITABLE.exit30.i.sink.split, label %bb.af
@@ -3317,16 +3284,11 @@ bb.ai:                                            ; preds = %bb.ah
 METHOD_ENTRY_CACHED_SET.exit.i32.i:               ; preds = %bb.ai, %bb.ah
   %i.ec = ptrtoint ptr %i.dw to i64
   %i.ed = call i32 @rb_managed_id_table_insert(i64 noundef %.0.i61, i64 noundef %1, i64 noundef %i.ec) #23 ; 0 uses
-  %i.ee = ptrtoint ptr %.135 to i64               ; 2 uses
-  %5 = and i64 %i.ee, 7
-  %.not.i33.i = icmp eq i64 %5, 0
-  br i1 %.not.i33.i, label %6, label %cache_callable_method_entry.exit
-
-6:                                                ; preds = %METHOD_ENTRY_CACHED_SET.exit.i32.i
+  %i.ee = ptrtoint ptr %.135 to i64
   call void @rb_gc_writebarrier(i64 noundef %.0.i61, i64 noundef %i.ee) #23
   br label %cache_callable_method_entry.exit
 
-cache_callable_method_entry.exit:                 ; preds = %RCLASS_WRITE_CC_TBL.exit.i, %RCLASS_EXT_WRITABLE.exit30.i, %bb.ag, %METHOD_ENTRY_CACHED_SET.exit.i32.i, %6
+cache_callable_method_entry.exit:                 ; preds = %RCLASS_WRITE_CC_TBL.exit.i, %RCLASS_EXT_WRITABLE.exit30.i, %bb.ag, %METHOD_ENTRY_CACHED_SET.exit.i32.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #23
   br label %bb.aj
@@ -3729,7 +3691,7 @@ bb.k:                                             ; preds = %bb.o, %.lr.ph.i
   br i1 %.not4.i, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ay = load atomic volatile i32, ptr %i.at monotonic, align 4
+  %i.ay = load atomic volatile i32, ptr %i.at monotonic, align 8
   %i.az = load i32, ptr %i.au, align 4, !tbaa !71
   %i.ba = xor i32 %i.az, -1
   %i.bb = and i32 %i.ay, %i.ba
@@ -4132,7 +4094,7 @@ bb.g:                                             ; preds = %bb.k, %.lr.ph.i
   br i1 %.not4.i, label %bb.j, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ao = load atomic volatile i32, ptr %i.ai monotonic, align 4
+  %i.ao = load atomic volatile i32, ptr %i.ai monotonic, align 8
   %i.ap = load i32, ptr %i.aj, align 4, !tbaa !71
   %i.aq = xor i32 %i.ap, -1
   %i.ar = and i32 %i.ao, %i.aq
@@ -4535,7 +4497,7 @@ bb.h:                                             ; preds = %rb_vm_frame_method_
 
 bb.i:                                             ; preds = %bb.h, %rb_vm_frame_method_entry.exit
   %i.bd = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 32
-  %i.be = load atomic volatile i32, ptr %i.bd monotonic, align 4
+  %i.be = load atomic volatile i32, ptr %i.bd monotonic, align 8
   %i.bf = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 36
   %i.bg = load i32, ptr %i.bf, align 4, !tbaa !71
   %i.bh = xor i32 %i.bg, -1
@@ -4578,7 +4540,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   br i1 %.not4, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = load atomic volatile i32, ptr %i.c monotonic, align 4
+  %i.i = load atomic volatile i32, ptr %i.c monotonic, align 8
   %i.j = load i32, ptr %i.d, align 4, !tbaa !71
   %i.k = xor i32 %i.j, -1
   %i.l = and i32 %i.i, %i.k
@@ -4981,7 +4943,7 @@ vm_cfp_consistent_p.exit:                         ; preds = %bb.j
 
 bb.l:                                             ; preds = %rb_check_arity.exit, %bb.k
   %i.bp = getelementptr i8, ptr %0, i64 32
-  %i.bq = load atomic volatile i32, ptr %i.bp monotonic, align 4
+  %i.bq = load atomic volatile i32, ptr %i.bp monotonic, align 8
   %i.br = getelementptr i8, ptr %0, i64 36
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !71
   %i.bt = xor i32 %i.bs, -1
@@ -5384,7 +5346,7 @@ vm_cfp_consistent_p.exit.i.i:                     ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %rb_check_arity.exit.i.i
   %i.fw = getelementptr i8, ptr %0, i64 32
-  %i.fx = load atomic volatile i32, ptr %i.fw monotonic, align 4
+  %i.fx = load atomic volatile i32, ptr %i.fw monotonic, align 8
   %i.fy = getelementptr i8, ptr %0, i64 36
   %i.fz = load i32, ptr %i.fy, align 4, !tbaa !71
   %i.ga = xor i32 %i.fz, -1
@@ -5787,7 +5749,7 @@ bb.e:                                             ; preds = %rb_ec_hooks.exit
 
 bb.f:                                             ; preds = %rb_ec_hooks.exit, %bb.e, %.critedge
   %i.an = phi ptr [ %i.p, %rb_ec_hooks.exit ], [ %.pre492, %bb.e ], [ %i.p, %.critedge ]
-  %i.ao = load atomic volatile i32, ptr %i.l monotonic, align 4
+  %i.ao = load atomic volatile i32, ptr %i.l monotonic, align 8
   %i.ap = load i32, ptr %i.m, align 4, !tbaa !71
   %i.aq = xor i32 %i.ap, -1
   %i.ar = and i32 %i.ao, %i.aq
@@ -6190,7 +6152,7 @@ bb.bf:                                            ; preds = %.thread309
   unreachable
 
 bb.bg:                                            ; preds = %.thread309
-  %i.kg = load atomic volatile i32, ptr %i.l monotonic, align 4
+  %i.kg = load atomic volatile i32, ptr %i.l monotonic, align 8
   %i.kh = load i32, ptr %i.m, align 4, !tbaa !71
   %i.ki = xor i32 %i.kh, -1
   %i.kj = and i32 %i.kg, %i.ki

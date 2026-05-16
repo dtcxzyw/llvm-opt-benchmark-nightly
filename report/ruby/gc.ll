@@ -201,8 +201,7 @@ bb.bm:                                            ; preds = %.critedge.i.i
   br i1 %.not1965.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %.lr.ph76.i.i.i.i, %bb.cf
-  %.01866.i.i.i.i = phi ptr [ %.018.i.i.i.i, %bb.cf ], [ %.01864.i.i.i.i, %.lr.ph76.i.i.i.i ] ; 4 uses
-  %6 = ptrtoint ptr %.01866.i.i.i.i to i64        ; 5 uses
+  %.01866.i.i.i.i = phi ptr [ %.018.i.i.i.i, %bb.cf ], [ %.01864.i.i.i.i, %.lr.ph76.i.i.i.i ] ; 3 uses
   %i.hc = load i64, ptr %.01866.i.i.i.i, align 8, !tbaa !109 ; 2 uses
   %i.hd = trunc i64 %i.hc to i32
   %i.he = and i32 %i.hd, 31                       ; 2 uses
@@ -211,30 +210,7 @@ bb.bm:                                            ; preds = %.critedge.i.i
 
 bb.bn:                                            ; preds = %.lr.ph.i.i.i.i
   %i.hf = load ptr, ptr @stderr, align 8, !tbaa !128
-  %7 = and i64 %6, 7
-  %.not44.i.i.i.i = icmp eq i64 %7, 0
-  br i1 %.not44.i.i.i.i, label %rb_type.exit.i.i.i.i.i, label %8
-
-8:                                                ; preds = %bb.bn
-  %9 = call i64 @llvm.fshl.i64(i64 %6, i64 %6, i64 62) ; 3 uses
-  %10 = icmp ult i64 %9, 10
-  %switch.maskindex107 = trunc i64 %9 to i16
-  %switch.shifted108 = lshr i16 547, %switch.maskindex107
-  %switch.lobit109 = trunc i16 %switch.shifted108 to i1
-  %or.cond112 = select i1 %10, i1 %switch.lobit109, i1 false
-  br i1 %or.cond112, label %switch.lookup106.a, label %11
-
-11:                                               ; preds = %8
-  %12 = trunc i64 %6 to i1
-  br i1 %12, label %rb_type.exit.thread13.i.i.i.i.i, label %13
-
-13:                                               ; preds = %11
-  %14 = and i64 %6, 254
-  %15 = icmp eq i64 %14, 12
-  br i1 %15, label %rb_type.exit.thread11.i.i.i.i.i, label %rb_type.exit.thread.i.i.i.i.i
-
-rb_type.exit.i.i.i.i.i:                           ; preds = %bb.bn
-  switch i32 %i.he, label %16 [
+  switch i32 %i.he, label %switch.lookup106.a [
     i32 12, label %bb.ce
     i32 1, label %obj_type_name.exit.i.i.i.i
     i32 2, label %bb.bo
@@ -262,76 +238,76 @@ rb_type.exit.i.i.i.i.i:                           ; preds = %bb.bn
     i32 29, label %bb.cd
   ]
 
-bb.bo:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bo:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bp:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bp:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread.i.i.i.i.i:                    ; preds = %rb_type.exit.i.i.i.i.i, %13
+rb_type.exit.thread.i.i.i.i.i:                    ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bq:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bq:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.br:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.br:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bs:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bs:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bt:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bt:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bu:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bu:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bv:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bv:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bw:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bw:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bx:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bx:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.by:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.by:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.bz:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.bz:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread5.i.i.i.i.i:                   ; preds = %rb_type.exit.i.i.i.i.i
+rb_type.exit.thread5.i.i.i.i.i:                   ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread7.i.i.i.i.i:                   ; preds = %rb_type.exit.i.i.i.i.i
+rb_type.exit.thread7.i.i.i.i.i:                   ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread9.i.i.i.i.i:                   ; preds = %rb_type.exit.i.i.i.i.i
+rb_type.exit.thread9.i.i.i.i.i:                   ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread11.i.i.i.i.i:                  ; preds = %rb_type.exit.i.i.i.i.i, %13
+rb_type.exit.thread11.i.i.i.i.i:                  ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread13.i.i.i.i.i:                  ; preds = %rb_type.exit.i.i.i.i.i, %11
+rb_type.exit.thread13.i.i.i.i.i:                  ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-rb_type.exit.thread15.i.i.i.i.i:                  ; preds = %rb_type.exit.i.i.i.i.i
+rb_type.exit.thread15.i.i.i.i.i:                  ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.ca:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.ca:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.cb:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.cb:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.cc:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.cc:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.cd:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.cd:                                            ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-bb.ce:                                            ; preds = %rb_type.exit.i.i.i.i.i
+bb.ce:                                            ; preds = %bb.bn
   %i.hg = and i64 %i.hc, 64
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.hg, 0
   br i1 %.not.i.i.i.i.i.i.i, label %obj_type_name.exit.i.i.i.i, label %rb_objspace_data_type_name.exit.i.i.i.i.i.i
@@ -346,16 +322,11 @@ rb_objspace_data_type_name.exit.i.i.i.i.i.i:      ; preds = %bb.ce
   %spec.select.i2.i.i.i.i.i = select i1 %.not5.i.i.i.i.i.i, ptr @.str.303, ptr %i.hl
   br label %obj_type_name.exit.i.i.i.i
 
-16:                                               ; preds = %rb_type.exit.i.i.i.i.i
+switch.lookup106.a:                               ; preds = %bb.bn
   br label %obj_type_name.exit.i.i.i.i
 
-switch.lookup106.a:                               ; preds = %8
-  %switch.gep110 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.obj_type_name, i64 %9
-  %switch.load111 = load ptr, ptr %switch.gep110, align 8
-  br label %obj_type_name.exit.i.i.i.i
-
-obj_type_name.exit.i.i.i.i:                       ; preds = %switch.lookup106.a, %16, %rb_objspace_data_type_name.exit.i.i.i.i.i.i, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %rb_type.exit.thread15.i.i.i.i.i, %rb_type.exit.thread13.i.i.i.i.i, %rb_type.exit.thread11.i.i.i.i.i, %rb_type.exit.thread9.i.i.i.i.i, %rb_type.exit.thread7.i.i.i.i.i, %rb_type.exit.thread5.i.i.i.i.i, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %rb_type.exit.thread.i.i.i.i.i, %bb.bp, %bb.bo, %rb_type.exit.i.i.i.i.i
-  %.0.i3.i.i.i.i.i = phi ptr [ @.str.304, %16 ], [ %spec.select.i2.i.i.i.i.i, %rb_objspace_data_type_name.exit.i.i.i.i.i.i ], [ @.str.303, %bb.ce ], [ @.str.280, %bb.bo ], [ @.str.281, %bb.bp ], [ @.str.282, %rb_type.exit.thread.i.i.i.i.i ], [ @.str.283, %bb.bq ], [ @.str.284, %bb.br ], [ @.str.285, %bb.bs ], [ @.str.286, %bb.bt ], [ @.str.287, %bb.bu ], [ @.str.288, %bb.bv ], [ @.str.289, %bb.bw ], [ @.str.290, %bb.bx ], [ @.str.291, %bb.by ], [ @.str.292, %bb.bz ], [ @.str.293, %rb_type.exit.thread5.i.i.i.i.i ], [ @.str.294, %rb_type.exit.thread7.i.i.i.i.i ], [ @.str.295, %rb_type.exit.thread9.i.i.i.i.i ], [ @.str.296, %rb_type.exit.thread11.i.i.i.i.i ], [ @.str.297, %rb_type.exit.thread13.i.i.i.i.i ], [ @.str.298, %rb_type.exit.thread15.i.i.i.i.i ], [ @.str.299, %bb.ca ], [ @.str.300, %bb.cb ], [ @.str.301, %bb.cc ], [ @.str.302, %bb.cd ], [ @.str.279, %rb_type.exit.i.i.i.i.i ], [ %switch.load111, %switch.lookup106.a ]
+obj_type_name.exit.i.i.i.i:                       ; preds = %switch.lookup106.a, %rb_objspace_data_type_name.exit.i.i.i.i.i.i, %bb.ce, %bb.cd, %bb.cc, %bb.cb, %bb.ca, %rb_type.exit.thread15.i.i.i.i.i, %rb_type.exit.thread13.i.i.i.i.i, %rb_type.exit.thread11.i.i.i.i.i, %rb_type.exit.thread9.i.i.i.i.i, %rb_type.exit.thread7.i.i.i.i.i, %rb_type.exit.thread5.i.i.i.i.i, %bb.bz, %bb.by, %bb.bx, %bb.bw, %bb.bv, %bb.bu, %bb.bt, %bb.bs, %bb.br, %bb.bq, %rb_type.exit.thread.i.i.i.i.i, %bb.bp, %bb.bo, %bb.bn
+  %.0.i3.i.i.i.i.i = phi ptr [ @.str.304, %switch.lookup106.a ], [ %spec.select.i2.i.i.i.i.i, %rb_objspace_data_type_name.exit.i.i.i.i.i.i ], [ @.str.303, %bb.ce ], [ @.str.280, %bb.bo ], [ @.str.281, %bb.bp ], [ @.str.282, %rb_type.exit.thread.i.i.i.i.i ], [ @.str.283, %bb.bq ], [ @.str.284, %bb.br ], [ @.str.285, %bb.bs ], [ @.str.286, %bb.bt ], [ @.str.287, %bb.bu ], [ @.str.288, %bb.bv ], [ @.str.289, %bb.bw ], [ @.str.290, %bb.bx ], [ @.str.291, %bb.by ], [ @.str.292, %bb.bz ], [ @.str.293, %rb_type.exit.thread5.i.i.i.i.i ], [ @.str.294, %rb_type.exit.thread7.i.i.i.i.i ], [ @.str.295, %rb_type.exit.thread9.i.i.i.i.i ], [ @.str.296, %rb_type.exit.thread11.i.i.i.i.i ], [ @.str.297, %rb_type.exit.thread13.i.i.i.i.i ], [ @.str.298, %rb_type.exit.thread15.i.i.i.i.i ], [ @.str.299, %bb.ca ], [ @.str.300, %bb.cb ], [ @.str.301, %bb.cc ], [ @.str.302, %bb.cd ], [ @.str.279, %bb.bn ]
   %i.hm = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.hf, i32 noundef 1, ptr noundef nonnull @.str.93, ptr noundef nonnull %.0.i3.i.i.i.i.i) #47 ; 0 uses
   br label %bb.cf
 
@@ -758,7 +729,7 @@ rb_darray_resize_capa_impl.exit.i.i:              ; preds = %bb.n, %rb_darray_re
   %i.bx = getelementptr i8, ptr %i.bv, i64 8
   store i64 %i.bq, ptr %i.bx, align 8, !tbaa !292
   %i.by = ptrtoint ptr %i.bv to i64
-  store i64 %i.by, ptr %i.bh, align 1
+  store i64 %i.by, ptr %i.bh, align 8
   %.pre15.i = load i64, ptr %i.bv, align 8, !tbaa !96
   br label %rb_darray_ensure_space.exit.i
 
@@ -1161,7 +1132,7 @@ bb.f:                                             ; preds = %garbage_collect.exi
   %i.u = load i32, ptr %i.t, align 4, !tbaa !223
   %i.v = and i32 %i.u, -3
   store i32 %i.v, ptr %i.t, align 4, !tbaa !223
-  store atomic volatile i32 0, ptr %i.l seq_cst, align 4
+  store atomic volatile i32 0, ptr %i.l seq_cst, align 8
   br label %gc_finalize_deferred.exit
 
 gc_finalize_deferred.exit:                        ; preds = %garbage_collect.exit, %bb.f
@@ -1564,7 +1535,7 @@ gc_update_weak_references.exit:                   ; preds = %rb_darray_realloc_m
   %i.dv = getelementptr i8, ptr %i.cx, i64 8
   store i64 %.02854.i, ptr %i.dv, align 8, !tbaa !292
   %i.dw = ptrtoint ptr %i.cx to i64
-  store i64 %i.dw, ptr %i.ck, align 1
+  store i64 %i.dw, ptr %i.ck, align 8
   %i.dx = getelementptr i8, ptr %0, i64 2240
   %i.dy = load i64, ptr %i.dx, align 8, !tbaa !314
   %spec.select = tail call i64 @llvm.umin.i64(i64 %i.dy, i64 8) ; 2 uses
@@ -1967,7 +1938,7 @@ rb_darray_ensure_space.exit.i:                    ; preds = %bb.x, %rb_darray_re
   %i.bi = getelementptr i8, ptr %i.bg, i64 8
   store i64 %i.bb, ptr %i.bi, align 8, !tbaa !292
   %i.bj = ptrtoint ptr %i.bg to i64
-  store i64 %i.bj, ptr %i.af, align 1
+  store i64 %i.bj, ptr %i.af, align 8
   %i.bk = getelementptr i8, ptr %i.bg, i64 16
   %i.bl = getelementptr [8 x i8], ptr %i.bk, i64 %.045.lcssa79.i
   %.pre = load i64, ptr %i.bg, align 8, !tbaa !96

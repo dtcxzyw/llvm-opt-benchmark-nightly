@@ -201,7 +201,7 @@ iseq_set_optargs_table.exit:                      ; preds = %iseq_set_optargs_ta
   %i.wt = getelementptr i8, ptr %i.wq, i64 4      ; 2 uses
   %i.wu = load i32, ptr %i.wt, align 4, !tbaa !145 ; 2 uses
   %.not.i30 = icmp eq i32 %i.wu, 0                ; 2 uses
-  br i1 %.not.i30, label %._crit_edge.i33, label %.lr.ph.i31
+  br i1 %.not.i30, label %rb_iseq_translate_threaded_code.exit, label %.lr.ph.i31
 
 .lr.ph.i31:                                       ; preds = %iseq_set_optargs_table.exit, %.lr.ph.i31
   %.012.i = phi i32 [ %i.xf, %.lr.ph.i31 ], [ 0, %iseq_set_optargs_table.exit ] ; 2 uses
@@ -219,21 +219,12 @@ iseq_set_optargs_table.exit:                      ; preds = %iseq_set_optargs_ta
   store i64 %i.xe, ptr %i.ww, align 8, !tbaa !36
   %i.xf = add i32 %.012.i, %i.xb                  ; 2 uses
   %i.xg = icmp ult i32 %i.xf, %i.wu
-  br i1 %i.xg, label %.lr.ph.i31, label %._crit_edge.i33, !llvm.loop !168
+  br i1 %i.xg, label %.lr.ph.i31, label %rb_iseq_translate_threaded_code.exit, !llvm.loop !168
 
-._crit_edge.i33:                                  ; preds = %.lr.ph.i31, %iseq_set_optargs_table.exit
-  %3 = ptrtoint ptr %0 to i64
-  %4 = and i64 %3, 7
-  %5 = icmp eq i64 %4, 0
-  br i1 %5, label %6, label %rb_iseq_translate_threaded_code.exit
-
-6:                                                ; preds = %._crit_edge.i33
-  %7 = load i64, ptr %0, align 8, !tbaa !75
-  %8 = or i64 %7, 524288
-  store i64 %8, ptr %0, align 8, !tbaa !75
-  br label %rb_iseq_translate_threaded_code.exit
-
-rb_iseq_translate_threaded_code.exit:             ; preds = %._crit_edge.i33, %6
+rb_iseq_translate_threaded_code.exit:             ; preds = %.lr.ph.i31, %iseq_set_optargs_table.exit
+  %3 = load i64, ptr %0, align 8, !tbaa !75
+  %4 = or i64 %3, 524288
+  store i64 %4, ptr %0, align 8, !tbaa !75
   %i.xh = load i64, ptr @rb_yjit_live_iseq_count, align 8, !tbaa !36
   %i.xi = add i64 %i.xh, 1
   store i64 %i.xi, ptr @rb_yjit_live_iseq_count, align 8, !tbaa !36
@@ -636,7 +627,7 @@ RARRAY_LENINT.exit.i:                             ; preds = %rb_array_len.exit.i
 bb.ax:                                            ; preds = %RARRAY_LENINT.exit.i
   %i.ht = call i64 @rb_fix2int(i64 noundef %i.hr) #37
   %i.hu = trunc i64 %i.ht to i32                  ; 2 uses
-  store i32 %i.hu, ptr %i.ho, align 4, !tbaa !7
+  store i32 %i.hu, ptr %i.ho, align 8, !tbaa !7
   br label %int_param.exit.i
 
 bb.ay:                                            ; preds = %RARRAY_LENINT.exit.i
@@ -1039,7 +1030,7 @@ bb.en:                                            ; preds = %bb.em, %RARRAY_AREF
   %i.dep = getelementptr i8, ptr %i.u, i64 112    ; 2 uses
   %i.deq = getelementptr i8, ptr %i.u, i64 128
   store i32 %i.bip, ptr %i.deq, align 8, !tbaa !151
-  %i.der = ptrtoint ptr %0 to i64                 ; 10 uses
+  %i.der = ptrtoint ptr %0 to i64                 ; 9 uses
   %i.des = load ptr, ptr %i.v, align 8, !tbaa !46 ; 2 uses
   %i.det = getelementptr i8, ptr %i.des, i64 216
   store i64 4, ptr %i.det, align 8, !tbaa !36
@@ -1442,7 +1433,7 @@ ibf_load_code.exit:                               ; preds = %bb.mc, %bb.me, %bb.
   %i.gtl = getelementptr i8, ptr %i.gti, i64 4
   %i.gtm = load i32, ptr %i.gtl, align 4, !tbaa !145 ; 2 uses
   %.not.i20 = icmp eq i32 %i.gtm, 0
-  br i1 %.not.i20, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i20, label %rb_iseq_translate_threaded_code.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %ibf_load_code.exit, %.lr.ph.i
   %.012.i = phi i32 [ %i.gtx, %.lr.ph.i ], [ 0, %ibf_load_code.exit ] ; 2 uses
@@ -1460,20 +1451,12 @@ ibf_load_code.exit:                               ; preds = %bb.mc, %bb.me, %bb.
   store i64 %i.gtw, ptr %i.gto, align 8, !tbaa !36
   %i.gtx = add i32 %.012.i, %i.gtt                ; 2 uses
   %i.gty = icmp ult i32 %i.gtx, %i.gtm
-  br i1 %i.gty, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !168
+  br i1 %i.gty, label %.lr.ph.i, label %rb_iseq_translate_threaded_code.exit, !llvm.loop !168
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i, %ibf_load_code.exit
-  %1 = and i64 %i.der, 7
-  %2 = icmp eq i64 %1, 0                          ; 2 uses
-  br i1 %2, label %3, label %rb_iseq_translate_threaded_code.exit
-
-3:                                                ; preds = %._crit_edge.i
-  %4 = load i64, ptr %0, align 8, !tbaa !75
-  %5 = or i64 %4, 524288
-  store i64 %5, ptr %0, align 8, !tbaa !75
-  br label %rb_iseq_translate_threaded_code.exit
-
-rb_iseq_translate_threaded_code.exit:             ; preds = %._crit_edge.i, %3
+rb_iseq_translate_threaded_code.exit:             ; preds = %.lr.ph.i, %ibf_load_code.exit
+  %1 = load i64, ptr %0, align 8, !tbaa !75
+  %2 = or i64 %1, 524288
+  store i64 %2, ptr %0, align 8, !tbaa !75
   %i.gtz = load i64, ptr @rb_yjit_live_iseq_count, align 8, !tbaa !36
   %i.gua = add i64 %i.gtz, 1
   store i64 %i.gua, ptr @rb_yjit_live_iseq_count, align 8, !tbaa !36
@@ -1538,14 +1521,8 @@ rb_obj_write.exit:                                ; preds = %ibf_load_location_s
   %i.guu = and i64 %i.gut, -262145
   store i64 %i.guu, ptr %0, align 8, !tbaa !37
   store ptr null, ptr %i.e, align 8, !tbaa !20
-  br i1 %2, label %6, label %RB_FL_UNSET.exit
-
-6:                                                ; preds = %rb_obj_write.exit
-  %7 = and i64 %i.gut, -393217
-  store i64 %7, ptr %0, align 8, !tbaa !75
-  br label %RB_FL_UNSET.exit
-
-RB_FL_UNSET.exit:                                 ; preds = %rb_obj_write.exit, %6
+  %3 = and i64 %i.gut, -393217
+  store i64 %3, ptr %0, align 8, !tbaa !75
   call void @rb_iseq_init_trace(ptr noundef nonnull %0) #37
   store ptr %i.k, ptr %i.j, align 8, !tbaa !349
   ret void

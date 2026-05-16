@@ -201,19 +201,12 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
   %.promoted.i.i = load i64, ptr %i.c, align 8, !tbaa !82 ; 2 uses
   %.not4.i.i = icmp eq i64 %.promoted.i.i, 0
-  br i1 %.not4.i.i, label %._ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit_crit_edge, label %.lr.ph.preheader.i.i
+  %.pre = load ptr, ptr %0, align 8               ; 2 uses
+  br i1 %.not4.i.i, label %_ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit, label %.lr.ph.i.i
 
-._ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit_crit_edge: ; preds = %bb.a
-  %.pre = load ptr, ptr %0, align 8, !tbaa !79
-  br label %_ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit
-
-.lr.ph.preheader.i.i:                             ; preds = %bb.a
-  %.promoted3.i.i = load ptr, ptr %0, align 1
-  br label %.lr.ph.i.i
-
-.lr.ph.i.i:                                       ; preds = %bb.b, %.lr.ph.preheader.i.i
-  %.promoted.i2.pr.i = phi i64 [ %i.g, %bb.b ], [ %.promoted.i.i, %.lr.ph.preheader.i.i ] ; 2 uses
-  %i.d = phi ptr [ %i.f, %bb.b ], [ %.promoted3.i.i, %.lr.ph.preheader.i.i ] ; 5 uses
+.lr.ph.i.i:                                       ; preds = %bb.a, %bb.b
+  %.promoted.i2.pr.i = phi i64 [ %i.g, %bb.b ], [ %.promoted.i.i, %bb.a ] ; 2 uses
+  %i.d = phi ptr [ %i.f, %bb.b ], [ %.pre, %bb.a ] ; 5 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !7
   switch i8 %i.e, label %.lr.ph.i3.i [
     i8 32, label %bb.b
@@ -248,9 +241,9 @@ bb.c:                                             ; preds = %.lr.ph.i3.i, %.lr.p
   %.not.i4.i = icmp eq i64 %i.l, 0
   br i1 %.not.i4.i, label %_ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit, label %.lr.ph.i3.i, !llvm.loop !384
 
-_ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit: ; preds = %bb.b, %.lr.ph.i3.i, %bb.c, %._ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit_crit_edge
-  %i.m = phi i64 [ 0, %._ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit_crit_edge ], [ %i.h, %.lr.ph.i3.i ], [ 0, %bb.c ], [ 0, %bb.b ] ; 7 uses
-  %i.n = phi ptr [ %.pre, %._ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit_crit_edge ], [ %i.d, %.lr.ph.i3.i ], [ %i.d, %bb.c ], [ %i.f, %bb.b ] ; 5 uses
+_ZN11OpenImageIO4v3_17Strutil15trim_whitespaceERNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit: ; preds = %bb.b, %.lr.ph.i3.i, %bb.c, %bb.a
+  %i.m = phi i64 [ %i.h, %.lr.ph.i3.i ], [ 0, %bb.a ], [ 0, %bb.c ], [ 0, %bb.b ] ; 7 uses
+  %i.n = phi ptr [ %i.d, %.lr.ph.i3.i ], [ %.pre, %bb.a ], [ %i.d, %bb.c ], [ %i.f, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   store ptr %i.n, ptr %2, align 8, !tbaa !79

@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.ap = add nsw i32 %i.ag, -1
-  store i32 %i.ap, ptr %i.ad, align 4, !tbaa !3
+  store i32 %i.ap, ptr %i.ad, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.o:                                             ; preds = %bb.m
@@ -250,7 +250,7 @@ bb.s:                                             ; preds = %bb.q
 
 bb.t:                                             ; preds = %bb.s
   %i.bf = add nsw i32 %i.aw, -1
-  store i32 %i.bf, ptr %i.at, align 4, !tbaa !3
+  store i32 %i.bf, ptr %i.at, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i12
 
 bb.u:                                             ; preds = %bb.s
@@ -322,7 +322,7 @@ bb.ac:                                            ; preds = %bb.aa
 
 bb.ad:                                            ; preds = %bb.ac
   %i.bx = add nsw i32 %i.bo, -1
-  store i32 %i.bx, ptr %i.bl, align 4, !tbaa !3
+  store i32 %i.bx, ptr %i.bl, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i16
 
 bb.ae:                                            ; preds = %bb.ac
@@ -379,7 +379,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -429,7 +429,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.af = add nsw i32 %i.w, -1
-  store i32 %i.af, ptr %i.t, align 4, !tbaa !3
+  store i32 %i.af, ptr %i.t, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i3
 
 bb.l:                                             ; preds = %bb.j
@@ -485,7 +485,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -541,7 +541,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -944,7 +944,7 @@ bb.h:                                             ; preds = %bb.g
 _ZZNR5folly10SemiFutureINS_4UnitEE4waitEvENUlONS_17ExecutorKeepAliveINS_8ExecutorEEEOT_E_D2Ev.exit: ; preds = %bb.d, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   %i.w = invoke noalias noundef nonnull dereferenceable(120) ptr @_Znwm(i64 noundef 120) #29
-          to label %.noexc19 unwind label %bb.n   ; 10 uses
+          to label %.noexc19 unwind label %bb.n   ; 17 uses
 
 .noexc19:                                         ; preds = %_ZZNR5folly10SemiFutureINS_4UnitEE4waitEvENUlONS_17ExecutorKeepAliveINS_8ExecutorEEEOT_E_D2Ev.exit
   store ptr getelementptr inbounds nuw inrange(-16, 56) (i8, ptr @_ZTVN5folly7futures6detail12WaitExecutorE, i64 16), ptr %i.w, align 8, !tbaa !96, !noalias !222
@@ -968,7 +968,7 @@ _ZNK5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEE4copyEv.exit: ; 
   store i64 0, ptr %i.ab, align 8, !tbaa !236, !noalias !222
   %i.ac = getelementptr inbounds nuw i8, ptr %i.w, i64 112
   store i64 1, ptr %i.ac, align 8, !tbaa !236, !noalias !222
-  %i.ad = ptrtoint ptr %i.w to i64                ; 5 uses
+  %i.ad = ptrtoint ptr %i.w to i64
   %i.ae = load ptr, ptr %i.w, align 8, !tbaa !96, !noalias !238
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 40
   %i.ag = load ptr, ptr %i.af, align 8, !noalias !238
@@ -1001,9 +1001,7 @@ bb.l:                                             ; preds = %bb.k
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j, %bb.k, %bb.l
-  %8 = and i64 %i.ad, -4                          ; 2 uses
-  %9 = inttoptr i64 %8 to ptr                     ; 5 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 104
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.w, i64 104
   %i.ar = call noundef zeroext i1 @_ZNK5folly7futures6detail8CoreBase9hasResultEv(ptr noundef nonnull align 16 dereferenceable(136) %i.g) #21
   br i1 %i.ar, label %._crit_edge, label %.lr.ph61
 
@@ -1013,7 +1011,7 @@ bb.l:                                             ; preds = %bb.k
 
 .noexc26:                                         ; preds = %.lr.ph61
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
-  store ptr %9, ptr %3, align 8, !tbaa !247
+  store ptr %i.w, ptr %3, align 8, !tbaa !247
   invoke void @_ZN5folly6fibers16runInMainContextIZNS_7futures6detail12WaitExecutor5driveEvEUlvE_EENS_13invoke_detail6traitsIT_E6resultIEEOS8_(ptr noundef nonnull align 8 dereferenceable(8) %3)
           to label %_ZN5folly7futures6detail12WaitExecutor5driveEv.exit unwind label %.loopexit
 
@@ -1041,35 +1039,35 @@ bb.o:                                             ; preds = %_ZNK5folly17Executo
   %i.ax = and i64 %i.aw, -4                       ; 2 uses
   %i.ay = inttoptr i64 %i.ax to ptr               ; 2 uses
   %.not.i.i28 = icmp eq i64 %i.ax, 0
-  br i1 %.not.i.i28, label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33, label %bb.p
+  br i1 %.not.i.i28, label %bb.y, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   store i64 0, ptr %7, align 8, !tbaa !106
   %i.az = and i64 %i.aw, 3
   %.not3.i.i29 = icmp eq i64 %i.az, 0
-  br i1 %.not3.i.i29, label %bb.q, label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33
+  br i1 %.not3.i.i29, label %bb.q, label %bb.y
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = load ptr, ptr %i.ay, align 8, !tbaa !96
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ba, i64 48
   %i.bc = load ptr, ptr %i.bb, align 8
   call void %i.bc(ptr noundef nonnull align 8 dereferenceable(8) %i.ay) #21, !inline_history !246
-  br label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33
+  br label %bb.y
 
 .loopexit:                                        ; preds = %.lr.ph61, %.noexc26
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  br label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33
+  br label %bb.y
 
 .loopexit.split-lp:                               ; preds = %._crit_edge
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
-  br label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33
+  br label %bb.y
 
 ._crit_edge:                                      ; preds = %_ZN5folly7futures6detail12WaitExecutor5driveEv.exit, %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
-  store ptr %9, ptr %2, align 8, !tbaa !250
+  store ptr %i.w, ptr %2, align 8, !tbaa !250
   invoke void @_ZZN5folly7futures6detail12WaitExecutor6detachEvENKUlvE_clEv(ptr dead_on_unwind nonnull writable sret(%"class.std::deque.92") align 8 %1, ptr noundef nonnull align 8 dereferenceable(8) %2)
           to label %bb.r unwind label %.loopexit.split-lp
 
@@ -1093,12 +1091,12 @@ _ZN5folly7futures6detail10FutureBaseINS_4UnitEE6detachEv.exit: ; preds = %bb.r, 
 bb.t:                                             ; preds = %_ZN5folly7futures6detail10FutureBaseINS_4UnitEE6detachEv.exit
   %i.be = load ptr, ptr %0, align 8, !tbaa !178   ; 2 uses
   %.not.i.i.i35 = icmp eq ptr %i.be, null
-  br i1 %.not.i.i.i35, label %_ZN5folly10SemiFutureINS_4UnitEEaSEOS2_.exit, label %bb.u
+  br i1 %.not.i.i.i35, label %bb.w, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   call void @_ZN5folly7futures6detail8CoreBase9detachOneEv(ptr noundef nonnull align 16 dereferenceable(136) %i.be) #21
   store ptr null, ptr %0, align 8, !tbaa !178
-  br label %_ZN5folly10SemiFutureINS_4UnitEEaSEOS2_.exit
+  br label %bb.w
 
 bb.v:                                             ; preds = %_ZN5folly7futures6detail10FutureBaseINS_4UnitEE6detachEv.exit
   %i.bf = landingpad { ptr, i32 }
@@ -1107,56 +1105,37 @@ bb.v:                                             ; preds = %_ZN5folly7futures6d
   call void @__clang_call_terminate(ptr %i.bg) #30
   unreachable
 
-_ZN5folly10SemiFutureINS_4UnitEEaSEOS2_.exit:     ; preds = %bb.t, %bb.u
+bb.w:                                             ; preds = %bb.t, %bb.u
   store ptr %i.g, ptr %0, align 8, !tbaa !178
-  %.not.i.i36 = icmp ne i64 %8, 0
-  %10 = and i64 %i.ad, 3
-  %.not3.i.i37 = icmp eq i64 %10, 0
-  %or.cond = and i1 %.not.i.i36, %.not3.i.i37
-  br i1 %or.cond, label %bb.w, label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit38
-
-bb.w:                                             ; preds = %_ZN5folly10SemiFutureINS_4UnitEEaSEOS2_.exit
-  %i.bh = load ptr, ptr %9, align 8, !tbaa !96
+  %i.bh = load ptr, ptr %i.w, align 8, !tbaa !96
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 48
   %i.bj = load ptr, ptr %i.bi, align 8
-  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %9) #21, !inline_history !252
-  br label %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit38
-
-_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit38: ; preds = %_ZN5folly10SemiFutureINS_4UnitEEaSEOS2_.exit, %bb.w
+  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #21, !inline_history !252
   invoke void @_ZN5folly10SemiFutureINS_4UnitEE23releaseDeferredExecutorEPNS_7futures6detail4CoreIS1_EE(ptr noundef null)
           to label %_ZN5folly7PromiseINS_4UnitEED2Ev.exit unwind label %bb.x
 
-bb.x:                                             ; preds = %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit38
+bb.x:                                             ; preds = %bb.w
   %i.bk = landingpad { ptr, i32 }
           catch ptr null
   %i.bl = extractvalue { ptr, i32 } %i.bk, 0
   call void @__clang_call_terminate(ptr %i.bl) #30
   unreachable
 
-_ZN5folly7PromiseINS_4UnitEED2Ev.exit:            ; preds = %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit38
+_ZN5folly7PromiseINS_4UnitEED2Ev.exit:            ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   br label %bb.aa
 
-_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33: ; preds = %.loopexit, %.loopexit.split-lp, %bb.q, %bb.p, %bb.o
-  %.pn11 = phi { ptr, i32 } [ %i.av, %bb.p ], [ %i.av, %bb.o ], [ %i.av, %bb.q ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ] ; 2 uses
-  %11 = and i64 %i.ad, -4                         ; 2 uses
-  %.not.i.i41 = icmp ne i64 %11, 0
-  %12 = and i64 %i.ad, 3
-  %.not3.i.i42 = icmp eq i64 %12, 0
-  %or.cond53 = and i1 %.not.i.i41, %.not3.i.i42
-  br i1 %or.cond53, label %bb.y, label %bb.z
-
-bb.y:                                             ; preds = %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33
-  %13 = inttoptr i64 %11 to ptr                   ; 2 uses
-  %i.bm = load ptr, ptr %13, align 8, !tbaa !96
+bb.y:                                             ; preds = %bb.o, %bb.p, %bb.q, %.loopexit.split-lp, %.loopexit
+  %.pn11 = phi { ptr, i32 } [ %i.av, %bb.p ], [ %i.av, %bb.o ], [ %i.av, %bb.q ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+  %i.bm = load ptr, ptr %i.w, align 8, !tbaa !96
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 48
   %i.bo = load ptr, ptr %i.bn, align 8
-  call void %i.bo(ptr noundef nonnull align 8 dereferenceable(8) %13) #21, !inline_history !252
+  call void %i.bo(ptr noundef nonnull align 8 dereferenceable(8) %i.w) #21, !inline_history !252
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.m, %bb.y, %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33, %bb.n, %bb.i
-  %.pn11.pn.pn = phi { ptr, i32 } [ %i.at, %bb.m ], [ %i.y, %bb.i ], [ %i.au, %bb.n ], [ %.pn11, %_ZN5folly17ExecutorKeepAliveINS_7futures6detail12WaitExecutorEED2Ev.exit33 ], [ %.pn11, %bb.y ]
+bb.z:                                             ; preds = %bb.m, %bb.y, %bb.n, %bb.i
+  %.pn11.pn.pn = phi { ptr, i32 } [ %i.at, %bb.m ], [ %i.y, %bb.i ], [ %i.au, %bb.n ], [ %.pn11, %bb.y ]
   call void @_ZN5folly10SemiFutureINS_4UnitEED2Ev(ptr noundef nonnull align 8 dereferenceable(8) %5) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   call void @_ZN5folly7PromiseINS_4UnitEED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %4) #21
@@ -1559,7 +1538,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ae = add nsw i32 %i.v, -1
-  store i32 %i.ae, ptr %i.s, align 4, !tbaa !3
+  store i32 %i.ae, ptr %i.s, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.l
@@ -1908,7 +1887,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2311,7 +2290,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ah = add nsw i32 %i.y, -1
-  store i32 %i.ah, ptr %i.v, align 4, !tbaa !3
+  store i32 %i.ah, ptr %i.v, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.l

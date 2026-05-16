@@ -201,15 +201,9 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 262183
   %i.j = load i8, ptr %i.i, align 1, !tbaa !30
   %.not.i = icmp eq i8 %i.j, 0
-  br i1 %.not.i, label %bb.c, label %1
+  br i1 %.not.i, label %bb.c, label %bb.b
 
-1:                                                ; preds = %bb.a
-  %2 = ptrtoint ptr %0 to i64
-  %3 = and i64 %2, 7
-  %.not.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i.i, label %bb.b, label %LZ4_resetStreamHC_fast.exit
-
-bb.b:                                             ; preds = %1
+bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(262192) %0, i8 0, i64 262192, i1 false)
   br label %LZ4_resetStreamHC_fast.exit
 
@@ -227,7 +221,7 @@ bb.c:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.k, i8 0, i64 16, i1 false)
   br label %LZ4_resetStreamHC_fast.exit
 
-LZ4_resetStreamHC_fast.exit:                      ; preds = %1, %bb.b, %bb.c
+LZ4_resetStreamHC_fast.exit:                      ; preds = %bb.b, %bb.c
   %i.s = zext i32 %i.d to i64
   %i.t = sub nsw i64 0, %i.s
   %i.u = getelementptr inbounds i8, ptr %i.b, i64 %i.t

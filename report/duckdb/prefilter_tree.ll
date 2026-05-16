@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %.lr.ph110, %._crit_
   %.03494 = phi i64 [ %i.cr, %_ZN10duckdb_re211SparseArrayIiE3setEiRKi.exit65 ], [ 0, %.lr.ph95 ] ; 2 uses
   %i.bz = getelementptr inbounds nuw [4 x i8], ptr %i.bo, i64 %.03494
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !3  ; 4 uses
-  %i.cb = load i32, ptr %i.al, align 4
+  %i.cb = load i32, ptr %i.al, align 8
   %.not11.i.i57 = icmp ugt i32 %i.cb, %i.ca
   br i1 %.not11.i.i57, label %bb.i, label %_ZN10duckdb_re211SparseArrayIiE3setEiRKi.exit65
 
@@ -604,7 +604,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6ve
 
 ._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread_crit_edge.i.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i
   %.phi.trans.insert.i.i = getelementptr inbounds i8, ptr %.sroa.06.0.i.i, i64 -8
-  %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 4, !tbaa !3
+  %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i
 
 bb.e:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i
@@ -787,7 +787,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEES6_EEbT_T0_.exit.thread_crit_edge.i: ; preds = %bb.c
   %.phi.trans.insert32.i = getelementptr inbounds nuw i8, ptr %.sroa.016.025.i, i64 8
-  %.pre33.i = load i32, ptr %.phi.trans.insert32.i, align 4, !tbaa !3
+  %.pre33.i = load i32, ptr %.phi.trans.insert32.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEES6_EEbT_T0_.exit.thread.i
 
 bb.d:                                             ; preds = %bb.c
@@ -796,7 +796,7 @@ bb.d:                                             ; preds = %bb.c
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEES6_EEbT_T0_.exit.thread19_crit_edge.i: ; preds = %bb.d
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.028.i, i64 8
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !3
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEES6_EEbT_T0_.exit.thread19.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEES6_EEbT_T0_.exit.i: ; preds = %bb.d
@@ -1096,22 +1096,18 @@ bb.j:                                             ; preds = %.outer, %bb.m
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread_crit_edge.i: ; preds = %bb.j
   %.phi.trans.insert41.i = getelementptr inbounds i8, ptr %.sroa.027.0.i.ph.pn, i64 -8
-  %.pre42.i = load i32, ptr %.phi.trans.insert41.i, align 4, !tbaa !3
+  %.pre42.i = load i32, ptr %.phi.trans.insert41.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread.i
 
 bb.k:                                             ; preds = %bb.j
   %i.fx = icmp ult i64 %i.fv, %i.fu
-  %.phi.trans.insert.i25 = getelementptr inbounds nuw i8, ptr %.0.i, i64 8 ; 2 uses
-  br i1 %i.fx, label %._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34_crit_edge.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i
-
-._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34_crit_edge.i: ; preds = %bb.k
-  %.pre.i27 = load i32, ptr %.phi.trans.insert.i25, align 4, !tbaa !3
-  br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34.i
+  %.phi.trans.insert.i25 = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
+  %.pre.i27 = load i32, ptr %.phi.trans.insert.i25, align 8, !tbaa !3 ; 2 uses
+  br i1 %i.fx, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i: ; preds = %bb.k
-  %6 = load i32, ptr %.phi.trans.insert.i25, align 8, !tbaa !99 ; 2 uses
   %i.fy = load i32, ptr %i.ft, align 8, !tbaa !99 ; 2 uses
-  %i.fz = icmp slt i32 %6, %i.fy
+  %i.fz = icmp slt i32 %.pre.i27, %i.fy
   br i1 %i.fz, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i, %._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread_crit_edge.i
@@ -1202,12 +1198,11 @@ bb.l:                                             ; preds = %_ZNK9__gnu_cxx5__op
   %i.hr = icmp sgt i64 %.010.i.i.i.i.i20.i, 4
   br i1 %i.hr, label %.lr.ph.i.i.i.i.i19.i, label %_ZSt21__move_merge_adaptiveIPSt4pairImiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEES8_NS3_5__ops15_Iter_less_iterEEvT_SB_T0_SC_T1_T2_.exit, !llvm.loop !208
 
-_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i, %._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34_crit_edge.i
-  %7 = phi i32 [ %.pre.i27, %._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34_crit_edge.i ], [ %6, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i ]
+_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.thread34.i: ; preds = %bb.k, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiENS_17__normal_iteratorIS5_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i
   %i.hs = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -16 ; 2 uses
   store i64 %i.fu, ptr %i.hs, align 8, !tbaa !97
   %i.ht = getelementptr inbounds i8, ptr %.sroa.0.0.i, i64 -8
-  store i32 %7, ptr %i.ht, align 8, !tbaa !99
+  store i32 %.pre.i27, ptr %i.ht, align 8, !tbaa !99
   %i.hu = icmp eq ptr %5, %.0.i
   br i1 %i.hu, label %_ZSt21__move_merge_adaptiveIPSt4pairImiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_SaIS1_EEEES8_NS3_5__ops15_Iter_less_iterEEvT_SB_T0_SC_T1_T2_.exit, label %bb.m
 
@@ -1371,7 +1366,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6ve
 
 ._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread_crit_edge.i.i: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i
   %.phi.trans.insert.i.i = getelementptr inbounds i8, ptr %.sroa.06.0.i.i, i64 -8
-  %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 4, !tbaa !3
+  %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i
 
 bb.d:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i
@@ -1544,7 +1539,7 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6ve
 
 ._ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread_crit_edge.i.i23: ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i15
   %.phi.trans.insert.i.i24 = getelementptr inbounds i8, ptr %.sroa.06.0.i.i16, i64 -8
-  %.pre.i.i25 = load i32, ptr %.phi.trans.insert.i.i24, align 4, !tbaa !3
+  %.pre.i.i25 = load i32, ptr %.phi.trans.insert.i.i24, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops14_Val_less_iterclISt4pairImiENS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit.thread.i.i22
 
 bb.h:                                             ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread17.i15
@@ -1614,7 +1609,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt12__mo
 
 .lr.ph._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread_crit_edge.i: ; preds = %.lr.ph.i
   %.phi.trans.insert32.i = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i, i64 8
-  %.pre33.i = load i32, ptr %.phi.trans.insert32.i, align 4, !tbaa !3
+  %.pre33.i = load i32, ptr %.phi.trans.insert32.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -1623,7 +1618,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread22_crit_edge.i: ; preds = %bb.c
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.sroa.019.026.i, i64 8
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !3
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread22.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i: ; preds = %bb.c
@@ -1851,7 +1846,7 @@ _ZSt12__move_mergeIN9__gnu_cxx17__normal_iteratorIPSt4pairImiESt6vectorIS3_SaIS3
 
 .lr.ph._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread_crit_edge.i41: ; preds = %.lr.ph.i28
   %.phi.trans.insert32.i42 = getelementptr inbounds nuw i8, ptr %.sroa.015.025.i31, i64 8
-  %.pre33.i43 = load i32, ptr %.phi.trans.insert32.i42, align 4, !tbaa !3
+  %.pre33.i43 = load i32, ptr %.phi.trans.insert32.i42, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread.i37
 
 bb.e:                                             ; preds = %.lr.ph.i28
@@ -1860,7 +1855,7 @@ bb.e:                                             ; preds = %.lr.ph.i28
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread22_crit_edge.i38: ; preds = %bb.e
   %.phi.trans.insert.i39 = getelementptr inbounds nuw i8, ptr %.sroa.019.026.i30, i64 8
-  %.pre.i40 = load i32, ptr %.phi.trans.insert.i39, align 4, !tbaa !3
+  %.pre.i40 = load i32, ptr %.phi.trans.insert.i39, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread22.i33
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.i32: ; preds = %bb.e
@@ -2095,7 +2090,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZSt12__mo
 
 .lr.ph._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread_crit_edge.i: ; preds = %.lr.ph.i
   %.phi.trans.insert36.i = getelementptr inbounds nuw i8, ptr %.01630.i, i64 8
-  %.pre37.i = load i32, ptr %.phi.trans.insert36.i, align 4, !tbaa !3
+  %.pre37.i = load i32, ptr %.phi.trans.insert36.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread.i
 
 bb.c:                                             ; preds = %.lr.ph.i
@@ -2104,7 +2099,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread26_crit_edge.i: ; preds = %bb.c
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.031.i, i64 8
-  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 4, !tbaa !3
+  %.pre.i = load i32, ptr %.phi.trans.insert.i, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread26.i
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.i: ; preds = %bb.c
@@ -2343,7 +2338,7 @@ _ZSt12__move_mergeIPSt4pairImiEN9__gnu_cxx17__normal_iteratorIS2_St6vectorIS1_Sa
 
 .lr.ph._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread_crit_edge.i49: ; preds = %.lr.ph.i37
   %.phi.trans.insert36.i50 = getelementptr inbounds nuw i8, ptr %.01630.i39, i64 8
-  %.pre37.i51 = load i32, ptr %.phi.trans.insert36.i50, align 4, !tbaa !3
+  %.pre37.i51 = load i32, ptr %.phi.trans.insert36.i50, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread.i45
 
 bb.e:                                             ; preds = %.lr.ph.i37
@@ -2352,7 +2347,7 @@ bb.e:                                             ; preds = %.lr.ph.i37
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread26_crit_edge.i46: ; preds = %bb.e
   %.phi.trans.insert.i47 = getelementptr inbounds nuw i8, ptr %.031.i38, i64 8
-  %.pre.i48 = load i32, ptr %.phi.trans.insert.i47, align 4, !tbaa !3
+  %.pre.i48 = load i32, ptr %.phi.trans.insert.i47, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.thread26.i42
 
 _ZNK9__gnu_cxx5__ops15_Iter_less_iterclIPSt4pairImiES5_EEbT_T0_.exit.i41: ; preds = %bb.e
@@ -2585,9 +2580,9 @@ bb.c:                                             ; preds = %bb.b
 
 ._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread_crit_edge: ; preds = %bb.c
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.tr80, i64 8
-  %.pre = load i32, ptr %.phi.trans.insert, align 4, !tbaa !3
+  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !3
   %.phi.trans.insert87 = getelementptr inbounds nuw i8, ptr %.tr7381, i64 8
-  %.pre88 = load i32, ptr %.phi.trans.insert87, align 4, !tbaa !3
+  %.pre88 = load i32, ptr %.phi.trans.insert87, align 8, !tbaa !3
   br label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairImiESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit.thread
 
 bb.d:                                             ; preds = %bb.c

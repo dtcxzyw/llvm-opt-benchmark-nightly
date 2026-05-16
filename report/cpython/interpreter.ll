@@ -201,7 +201,7 @@ bb.nl:                                            ; preds = %bb.nk
   br i1 %i.bnr, label %.loopexit.loopexit, label %bb.nm
 
 bb.nm:                                            ; preds = %bb.nl
-  %i.bns = call ptr @PySequence_Tuple(ptr noundef nonnull %i.bnl) #8 ; 3 uses
+  %i.bns = call ptr @PySequence_Tuple(ptr noundef nonnull %i.bnl) #8 ; 4 uses
   %.4.val10246 = load ptr, ptr %i.bnp, align 8, !tbaa !65 ; 3 uses
   %i.bnt = icmp eq ptr %i.bns, null
   br i1 %i.bnt, label %.loopexit.loopexit, label %bb.nn
@@ -210,7 +210,7 @@ bb.nn:                                            ; preds = %bb.nm
   %i.bnu = getelementptr i8, ptr %i.bns, i64 6
   %i.bnv = load i16, ptr %i.bnu, align 2, !tbaa !34
   %i.bnw = and i16 %i.bnv, 1
-  %i.bnx = ptrtoint ptr %i.bns to i64             ; 2 uses
+  %i.bnx = ptrtoint ptr %i.bns to i64
   %i.bny = zext nneg i16 %i.bnw to i64
   %i.bnz = or i64 %i.bny, %i.bnx                  ; 2 uses
   %i.boa = getelementptr i8, ptr %.4.val10246, i64 -16
@@ -234,12 +234,10 @@ bb.np:                                            ; preds = %bb.no
 
 PyStackRef_CLOSE.exit10684:                       ; preds = %bb.nn, %bb.no, %bb.np
   %.4.val10245 = load ptr, ptr %i.bnp, align 8, !tbaa !65
-  %.pre13237 = and i64 %i.bnx, -2
-  %.pre13239 = inttoptr i64 %.pre13237 to ptr
   br label %bb.nq
 
 bb.nq:                                            ; preds = %PyStackRef_CLOSE.exit10684, %bb.nk
-  %.pre-phi13240 = phi ptr [ %.pre13239, %PyStackRef_CLOSE.exit10684 ], [ %i.bnl, %bb.nk ]
+  %.pre-phi13240 = phi ptr [ %i.bns, %PyStackRef_CLOSE.exit10684 ], [ %i.bnl, %bb.nk ]
   %.sroa.03309.0 = phi i64 [ %i.bnz, %PyStackRef_CLOSE.exit10684 ], [ %.sroa.03309.0.copyload, %bb.nk ] ; 3 uses
   %.89048 = phi ptr [ %.4.val10245, %PyStackRef_CLOSE.exit10684 ], [ %.4.val1003611541, %bb.nk ] ; 3 uses
   %i.bog = getelementptr i8, ptr %.89048, i64 -8
@@ -642,7 +640,7 @@ bb.aio:                                           ; preds = %bb.ain
   br i1 %i.fjh, label %.loopexit.loopexit, label %bb.aip
 
 bb.aip:                                           ; preds = %bb.aio
-  %i.fji = call ptr @PySequence_Tuple(ptr noundef nonnull %i.fiz) #8 ; 3 uses
+  %i.fji = call ptr @PySequence_Tuple(ptr noundef nonnull %i.fiz) #8 ; 4 uses
   %.4.val10092 = load ptr, ptr %i.fjd, align 8, !tbaa !65 ; 3 uses
   %i.fjj = icmp eq ptr %i.fji, null
   br i1 %i.fjj, label %.loopexit.loopexit, label %bb.aiq
@@ -651,7 +649,7 @@ bb.aiq:                                           ; preds = %bb.aip
   %i.fjk = getelementptr i8, ptr %i.fji, i64 6
   %i.fjl = load i16, ptr %i.fjk, align 2, !tbaa !34
   %i.fjm = and i16 %i.fjl, 1
-  %i.fjn = ptrtoint ptr %i.fji to i64             ; 2 uses
+  %i.fjn = ptrtoint ptr %i.fji to i64
   %i.fjo = zext nneg i16 %i.fjm to i64
   %i.fjp = or i64 %i.fjo, %i.fjn                  ; 2 uses
   %i.fjq = getelementptr i8, ptr %.4.val10092, i64 -16
@@ -675,13 +673,11 @@ bb.ais:                                           ; preds = %bb.air
 
 PyStackRef_CLOSE.exit10971:                       ; preds = %bb.aiq, %bb.air, %bb.ais
   %.4.val10091 = load ptr, ptr %i.fjd, align 8, !tbaa !65
-  %.pre13234 = and i64 %i.fjn, -2
-  %.pre13235 = inttoptr i64 %.pre13234 to ptr
   br label %bb.ait
 
 bb.ait:                                           ; preds = %._crit_edge13242, %PyStackRef_CLOSE.exit10971
   %.pre-phi13251 = phi ptr [ %.pre13250, %._crit_edge13242 ], [ %i.fjf, %PyStackRef_CLOSE.exit10971 ] ; 5 uses
-  %.pre-phi13236 = phi ptr [ %i.fiz, %._crit_edge13242 ], [ %.pre13235, %PyStackRef_CLOSE.exit10971 ] ; 3 uses
+  %.pre-phi13236 = phi ptr [ %i.fiz, %._crit_edge13242 ], [ %i.fji, %PyStackRef_CLOSE.exit10971 ] ; 3 uses
   %.sroa.01981.0 = phi i64 [ %.sroa.01981.0.copyload, %._crit_edge13242 ], [ %i.fjp, %PyStackRef_CLOSE.exit10971 ] ; 3 uses
   %.239063 = phi ptr [ %.4.val1003611541, %._crit_edge13242 ], [ %.4.val10091, %PyStackRef_CLOSE.exit10971 ] ; 3 uses
   %i.fjw = getelementptr i8, ptr %.239063, i64 -8
@@ -1084,7 +1080,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load i8, ptr %i.a, align 1, !tbaa !34    ; 2 uses
+  %i.e = load i8, ptr %i.a, align 8, !tbaa !34    ; 2 uses
   %i.f = and i8 %i.e, 63
   %i.g = zext nneg i8 %i.f to i32                 ; 2 uses
   %i.h = and i8 %i.e, 64
