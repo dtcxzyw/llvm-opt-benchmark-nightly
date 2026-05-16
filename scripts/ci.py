@@ -1083,7 +1083,6 @@ def run_opt_file(
         else:
             cmd = [OPT_BINARY, "-O3", input_path]
         if config.comptime:
-            cmd.insert(-1, "--disable-verify")
             cmd = (
                 [
                     "taskset",
@@ -1096,7 +1095,7 @@ def run_opt_file(
                     "--no-big-num",
                 ]
                 + cmd
-                + ["--disable-output"]
+                + ["--disable-verify", "--disable-output"]
             )
         else:
             cmd += ["--stats", "--stats-json"]
