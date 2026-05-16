@@ -1,18 +1,22 @@
-name: Sync with upstream LLVM
+name: Performance Profiling
 
 on:
   workflow_dispatch:
 
   schedule:
-    - cron: "0 */1 * * *"
+    - cron: "0 0 * * 0"
 
 jobs:
-  build:
+  profile:
     runs-on: [self-hosted, baseline]
 
     permissions:
-      issues: write
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
 
     steps:
       - name: Reset repository
@@ -32,17 +36,18 @@ jobs:
       - name: Set up python env
         run: uv sync
 
-      - name: Update LLVM
-        id: update
-        run: uv run scripts/ci.py update
-        env:
-          GITHUB_RUN_ID: ${{ github.run_id }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN_WRITE }}
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - name: Install inferno
+        run: cargo install inferno
 
-      - name: Upload IR diff artifacts
-        if: steps.update.outputs.SHOULD_UPLOAD_ARTIFACT == 'true'
-        uses: actions/upload-artifact@v7
+      - name: Run perf profiling
+        run: uv run scripts/perf.py
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN_READONLY }}
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v5
         with:
-          name: sync-ir-diffs-${{ github.run_id }}
-          path: ${{ steps.update.outputs.ARTIFACT_DIR }}
+          path: work/perf-report
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5

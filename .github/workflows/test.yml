@@ -19,7 +19,7 @@ jobs:
       - name: Reset repository
         run: git clean -ffdx -- report && git reset --hard HEAD
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: false
           ref: main
@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload IR diff artifacts
         if: steps.test.outputs.SHOULD_UPLOAD_ARTIFACT == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pre-commit-ir-diffs-${{ github.run_id }}
           path: ${{ steps.test.outputs.ARTIFACT_DIR }}
