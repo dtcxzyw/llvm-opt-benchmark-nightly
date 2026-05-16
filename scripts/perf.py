@@ -217,10 +217,10 @@ def compute_hotspots(collapsed: str, top_n: int = 50):
             count = int(count_part)
         except ValueError:
             continue
-        for func in stack_part.split(";"):
-            func = func.strip()
-            if func:
-                counts[func] = counts.get(func, 0) + count
+        frames = [f.strip() for f in stack_part.split(";") if f.strip()]
+        if frames:
+            leaf = frames[-1]
+            counts[leaf] = counts.get(leaf, 0) + count
 
     total = sum(counts.values())
     return sorted(
@@ -247,7 +247,7 @@ def generate_combined_flamegraph(
     hotspots = compute_hotspots(merged)
     hotspots_path = os.path.join(PERF_REPORT_DIR, "hotspots.txt")
     with open(hotspots_path, "w") as f:
-        f.write(f"{'samples':>12}  {'pct':>6}  function\n")
+        f.write(f"{'cycles':>12}  {'pct':>6}  function\n")
         f.write(f"{'─' * 12}  {'─' * 6}  {'─' * 60}\n")
         for func, cnt, pct in hotspots:
             f.write(f"{cnt:>12}  {pct:>5.1f}%  {func}\n")
@@ -289,7 +289,7 @@ tr:nth-child(even) {{ background: #222244; }}
 <h1>opt -O3 Flamegraph</h1>
 <p>LLVM <code>{escaped_revision}</code> — {file_count} files</p>
 <table>
-<thead><tr><th>#</th><th>samples</th><th>pct</th><th>function</th></tr></thead>
+<thead><tr><th>#</th><th>cycles</th><th>pct</th><th>function</th></tr></thead>
 <tbody>{rows}</tbody>
 </table>
 <object data="combined.svg" type="image/svg+xml" style="width:100%;height:calc(100vh - 20em);border:none;"></object>
