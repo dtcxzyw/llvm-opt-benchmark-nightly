@@ -100,8 +100,8 @@ def build_opt() -> bool:
             "-DCMAKE_CXX_COMPILER=clang++",
             "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
             "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-            "-DCMAKE_C_FLAGS=-fno-omit-frame-pointer -fno-inline",
-            "-DCMAKE_CXX_FLAGS=-fno-omit-frame-pointer -fno-inline",
+            "-DCMAKE_C_FLAGS=-fno-omit-frame-pointer -fno-inline-functions",
+            "-DCMAKE_CXX_FLAGS=-fno-omit-frame-pointer -fno-inline-functions",
         ]
         subprocess.check_call(cmd, cwd=PERF_BUILD_DIR)
         subprocess.check_call(
