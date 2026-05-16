@@ -160,7 +160,11 @@ def run_perf_record(
             )
 
             perf_script = subprocess.Popen(
-                ["perf", "script", "-i", perf_data],
+                [
+                    "perf", "script",
+                    "-F", "comm,pid,tid,cpu,time,event,ip,sym,dso",
+                    "-i", perf_data,
+                ],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
             )
