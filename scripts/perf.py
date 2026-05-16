@@ -266,7 +266,7 @@ def generate_index_html(
     for i, (func, cnt, pct) in enumerate(hotspots):
         rows += (
             f'<tr><td style="text-align:right;color:#888">{i + 1}</td>'
-            f'<td style="text-align:right">{cnt}</td>'
+            f'<td style="text-align:right;font-family:monospace">{cnt}</td>'
             f'<td style="text-align:right;color:#7eb8ff">{pct:.1f}%</td>'
             f"<td>{html_mod.escape(func)}</td></tr>\n"
         )
