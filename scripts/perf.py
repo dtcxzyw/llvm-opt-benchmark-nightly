@@ -99,6 +99,8 @@ def build_opt() -> bool:
             "-DCMAKE_CXX_COMPILER=clang++",
             "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
             "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+            "-DCMAKE_C_FLAGS=-fno-omit-frame-pointer",
+            "-DCMAKE_CXX_FLAGS=-fno-omit-frame-pointer",
         ]
         subprocess.check_call(cmd, cwd=PERF_BUILD_DIR)
         subprocess.check_call(
@@ -134,7 +136,7 @@ def run_perf_record(
                 "record",
                 "-g",
                 "--call-graph",
-                "dwarf",
+                "fp",
                 "-o",
                 perf_data,
                 "--",
@@ -160,11 +162,7 @@ def run_perf_record(
             )
 
             perf_script = subprocess.Popen(
-                [
-                    "perf", "script",
-                    "-F", "comm,pid,tid,time,event,ip,sym,dso",
-                    "-i", perf_data,
-                ],
+                ["perf", "script", "-i", perf_data],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
             )
