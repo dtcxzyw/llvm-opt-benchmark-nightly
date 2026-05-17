@@ -201,7 +201,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collec
   %i.de = load ptr, ptr %i.av, align 8, !alias.scope !52, !noalias !49, !noundef !4
   %i.df = icmp ne ptr %i.de, null
   %i.dg = trunc nuw i8 %.sroa.060.3.i to i1
-  %or.cond.i = select i1 %i.df, i1 %i.dg, i1 false
+  %or.cond.i = and i1 %i.df, %i.dg
   br i1 %or.cond.i, label %bb.ax, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCsgbCypRs12E4_4pyo38internal5state13SuspendAttachECs7p2uQeJxui2_9deltalake.exit5
 
 bb.ax:                                            ; preds = %bb.bd, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB1B_EECs7p2uQeJxui2_9deltalake.exit.i
@@ -604,7 +604,7 @@ bb.ac:                                            ; preds = %bb.ak, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !679
   %i.by = icmp ne i64 %i.bk, -9223372036854775808
   %i.bz = trunc nuw i8 %.sroa.050.3.i to i1
-  %or.cond.i = select i1 %i.by, i1 %i.bz, i1 false
+  %or.cond.i = and i1 %i.by, %i.bz
   br i1 %or.cond.i, label %bb.bp, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs7p2uQeJxui2_9deltalake.exit120.i
 
 bb.ad:                                            ; preds = %bb.w
@@ -1007,7 +1007,7 @@ bb.z:                                             ; preds = %bb.aq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am), !noalias !721
   %i.cg = icmp ne i64 %i.bx, 2
   %i.ch = trunc nuw i8 %.sroa.050.3.i to i1
-  %or.cond.i = select i1 %i.cg, i1 %i.ch, i1 false
+  %or.cond.i = and i1 %i.cg, %i.ch
   br i1 %or.cond.i, label %bb.bw, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtCs6Po7BT7Nknu_5alloc6string6StringB1B_EECs7p2uQeJxui2_9deltalake.exit137.i
 
 bb.aa:                                            ; preds = %bb.s

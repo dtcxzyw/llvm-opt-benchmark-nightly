@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.f
   br label %_ZN2v88internal8GCTracer50NotifyYoungSweepingCompletedAndStopCycleIfFinishedEv.exit
 
 _ZN2v88internal8GCTracer50NotifyYoungSweepingCompletedAndStopCycleIfFinishedEv.exit: ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
-  %not. = xor i1 %i.e, true
-  %1 = select i1 %not., i1 true, i1 %i.h
-  br i1 %1, label %_ZN2v88internal8GCTracer23StopFullCycleIfFinishedEv.exit, label %_ZN2v88internal8GCTracer5Event22IsYoungGenerationEventENS2_4TypeE.exit
+  %not. = xor i1 %i.h, true
+  %1 = and i1 %i.e, %not.
+  br i1 %1, label %_ZN2v88internal8GCTracer5Event22IsYoungGenerationEventENS2_4TypeE.exit, label %_ZN2v88internal8GCTracer23StopFullCycleIfFinishedEv.exit
 
 _ZN2v88internal8GCTracer5Event22IsYoungGenerationEventENS2_4TypeE.exit: ; preds = %bb.a, %_ZN2v88internal8GCTracer50NotifyYoungSweepingCompletedAndStopCycleIfFinishedEv.exit
   %i.ag = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1065), align 1, !range !5, !noundef !6

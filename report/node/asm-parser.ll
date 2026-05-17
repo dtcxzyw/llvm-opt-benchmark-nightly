@@ -201,8 +201,8 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   tail call void @_ZN2v88internal4wasm11AsmJsParser17ValidateStatementEv(ptr noundef nonnull align 8 dereferenceable(768) %0)
   %i.v = load i8, ptr %i.p, align 4, !range !9, !noundef !10
-  %or.cond.not = icmp eq i8 %i.v, 0
-  br i1 %or.cond.not, label %.preheader, label %.critedge, !llvm.loop !64
+  %1 = trunc nuw i8 %i.v to i1
+  br i1 %1, label %.critedge, label %.preheader, !llvm.loop !64
 
 .critedge.sink.split:                             ; preds = %bb.b, %bb.h, %bb.k, %bb.f, %_ZN2v88internal4wasm11AsmJsParser16CheckForUnsignedEPj.exit
   %.str.14.sink = phi ptr [ @.str.14, %_ZN2v88internal4wasm11AsmJsParser16CheckForUnsignedEPj.exit ], [ @.str.13, %bb.f ], [ @.str.2, %bb.k ], [ @.str.3, %bb.h ], [ @.str.3, %bb.b ]
