@@ -201,15 +201,15 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25
+  %2 = trunc nuw i8 %i.e to i1                    ; 2 uses
   br i1 %i.c, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %or.cond.not = icmp eq i8 %i.e, 0
+  %not. = xor i1 %2, true
   br label %bb.d
 
 .thread:                                          ; preds = %bb.a
-  %2 = trunc nuw i8 %i.e to i1
   br i1 %2, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.thread
@@ -217,7 +217,7 @@ bb.c:                                             ; preds = %.thread
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %.thread, %bb.c
-  %.0 = phi i1 [ %i.f, %bb.c ], [ %or.cond.not, %bb.b ], [ false, %.thread ]
+  %.0 = phi i1 [ %i.f, %bb.c ], [ %not., %bb.b ], [ false, %.thread ]
   ret i1 %.0
 }
 
@@ -225,28 +225,25 @@ bb.d:                                             ; preds = %bb.b, %.thread, %bb
 define noundef zeroext i1 @_ZN6duckdb15ValueOperations25DistinctGreaterThanEqualsERKNS_5ValueES3_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
-  br i1 %i.c, label %2, label %.thread.i
+  %2 = trunc nuw i8 %i.e to i1
+  %3 = or i8 %i.b, %i.e
+  %brmerge.not = icmp eq i8 %3, 0
+  %not. = xor i1 %i.c, true
+  %.mux = or i1 %not., %2
+  br i1 %brmerge.not, label %bb.b, label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
-2:                                                ; preds = %bb.a
-  %or.cond.not.i = icmp eq i8 %i.e, 0
-  br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
-
-.thread.i:                                        ; preds = %bb.a
-  %3 = trunc nuw i8 %i.e to i1
-  br i1 %3, label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit, label %bb.b
-
-bb.b:                                             ; preds = %.thread.i
+bb.b:                                             ; preds = %bb.a
   %i.f = tail call fastcc noundef zeroext i1 @_ZN6duckdb12_GLOBAL__N_125TemplatedBooleanOperationINS_11GreaterThanEEEbRKNS_5ValueES5_(ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %0), !inline_history !55
+  %4 = xor i1 %i.f, true
   br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
-_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds = %2, %.thread.i, %bb.b
-  %.0.i = phi i1 [ %i.f, %bb.b ], [ %or.cond.not.i, %2 ], [ false, %.thread.i ]
-  %4 = xor i1 %.0.i, true
-  ret i1 %4
+_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds = %bb.a, %bb.b
+  %.0.i = phi i1 [ %4, %bb.b ], [ %.mux, %bb.a ]
+  ret i1 %.0.i
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -256,15 +253,15 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25
+  %2 = trunc nuw i8 %i.e to i1                    ; 2 uses
   br i1 %i.c, label %bb.b, label %.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %or.cond.not.i = icmp eq i8 %i.e, 0
+  %not..i = xor i1 %2, true
   br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
 .thread.i:                                        ; preds = %bb.a
-  %2 = trunc nuw i8 %i.e to i1
   br i1 %2, label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit, label %bb.c
 
 bb.c:                                             ; preds = %.thread.i
@@ -272,7 +269,7 @@ bb.c:                                             ; preds = %.thread.i
   br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
 _ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds = %bb.b, %.thread.i, %bb.c
-  %.0.i = phi i1 [ %i.f, %bb.c ], [ %or.cond.not.i, %bb.b ], [ false, %.thread.i ]
+  %.0.i = phi i1 [ %i.f, %bb.c ], [ %not..i, %bb.b ], [ false, %.thread.i ]
   ret i1 %.0.i
 }
 
@@ -280,28 +277,25 @@ _ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds =
 define noundef zeroext i1 @_ZN6duckdb15ValueOperations22DistinctLessThanEqualsERKNS_5ValueES3_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.e = load i8, ptr %i.d, align 8, !tbaa !7, !range !24, !noundef !25 ; 2 uses
-  br i1 %i.c, label %2, label %.thread.i
+  %2 = trunc nuw i8 %i.e to i1
+  %3 = or i8 %i.b, %i.e
+  %brmerge.not = icmp eq i8 %3, 0
+  %not. = xor i1 %i.c, true
+  %.mux = or i1 %not., %2
+  br i1 %brmerge.not, label %bb.b, label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
-2:                                                ; preds = %bb.a
-  %or.cond.not.i = icmp eq i8 %i.e, 0
-  br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
-
-.thread.i:                                        ; preds = %bb.a
-  %3 = trunc nuw i8 %i.e to i1
-  br i1 %3, label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit, label %bb.b
-
-bb.b:                                             ; preds = %.thread.i
+bb.b:                                             ; preds = %bb.a
   %i.f = tail call fastcc noundef zeroext i1 @_ZN6duckdb12_GLOBAL__N_125TemplatedBooleanOperationINS_11GreaterThanEEEbRKNS_5ValueES5_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1), !inline_history !55
+  %4 = xor i1 %i.f, true
   br label %_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit
 
-_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds = %2, %.thread.i, %bb.b
-  %.0.i = phi i1 [ %i.f, %bb.b ], [ %or.cond.not.i, %2 ], [ false, %.thread.i ]
-  %4 = xor i1 %.0.i, true
-  ret i1 %4
+_ZN6duckdb15ValueOperations19DistinctGreaterThanERKNS_5ValueES3_.exit: ; preds = %bb.a, %bb.b
+  %.0.i = phi i1 [ %4, %bb.b ], [ %.mux, %bb.a ]
+  ret i1 %.0.i
 }
 
 ; Function Attrs: nobuiltin nounwind

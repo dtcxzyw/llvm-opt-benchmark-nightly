@@ -201,7 +201,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs8VI8w5S
   %i.fu = load i64, ptr %6, align 16, !range !989, !noundef !27
   %i.fv = icmp ne i64 %i.fu, 37
   %i.fw = trunc nuw i8 %.sroa.051.0 to i1
-  %or.cond = select i1 %i.fv, i1 %i.fw, i1 false
+  %or.cond = and i1 %i.fv, %i.fw
   br i1 %or.cond, label %bb.bv, label %.thread268
 
 bb.bv:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEECs14kWLkQVSKO_14deltalake_core.exit189, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs14kWLkQVSKO_14deltalake_core.exit202
@@ -604,10 +604,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.not62.i = icmp eq i64 %i.w, 6
-  %2 = trunc nuw i64 %i.j to i1
-  %3 = trunc nuw i64 %i.r to i1
-  %op.rdx = select i1 %.not62.i, i1 %2, i1 false
-  %op.rdx1 = select i1 %op.rdx, i1 %3, i1 false
+  %2 = and i64 %i.r, %i.j
+  %3 = icmp ne i64 %2, 0
+  %op.rdx1 = and i1 %.not62.i, %3
   br i1 %op.rdx1, label %bb.e, label %bb.d
 
 bb.c:                                             ; preds = %bb.a
