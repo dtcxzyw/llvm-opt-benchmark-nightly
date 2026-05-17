@@ -201,9 +201,9 @@ bb.t:                                             ; preds = %_ZN4llvh11SmallVect
   %i.cn = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL12GCPrintStatsE, i64 8), align 8, !tbaa !8
   %i.co = icmp slt i32 %i.cn, 1
   %i.cp = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL12GCPrintStatsE, i64 152), align 8, !range !83
-  %13 = trunc nuw i8 %i.cp to i1
-  %or.cond = select i1 %i.co, i1 true, i1 %13
-  %.043 = select i1 %or.cond, i8 1, i8 %i.cl
+  %13 = or i8 %i.cp, %i.cl
+  %14 = icmp ne i8 %13, 0
+  %.043 = select i1 %i.co, i1 true, i1 %14
   %_ZN2clL11MinHeapSizeE.val = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL11MinHeapSizeE, i64 8), align 8, !tbaa !8
   %_ZN2clL11MinHeapSizeE.val74 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL11MinHeapSizeE, i64 152), align 8
   %i.cq = icmp sgt i32 %_ZN2clL11MinHeapSizeE.val, 0
@@ -248,7 +248,8 @@ bb.t:                                             ; preds = %_ZN4llvh11SmallVect
   %i.di = icmp sgt i32 %_ZN2clL14GCSanitizeRateE.val, 0
   %i.dj = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN2clL20GCSanitizeRandomSeedE, i64 152), align 8, !tbaa !50 ; 3 uses
   %.not46.not = icmp eq i64 %i.dj, 0              ; 2 uses
-  store i8 %.043, ptr %i.l, align 8, !tbaa !188
+  %15 = zext i1 %.043 to i8
+  store i8 %15, ptr %i.l, align 8, !tbaa !188
   %i.dk = getelementptr inbounds nuw i8, ptr %3, i64 206 ; 2 uses
   store i8 1, ptr %i.dk, align 2, !tbaa !189
   br i1 %i.cq, label %bb.u, label %bb.v

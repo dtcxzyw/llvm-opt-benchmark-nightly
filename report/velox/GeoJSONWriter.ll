@@ -201,14 +201,16 @@ bb.a:
   %.idx = mul nuw nsw i64 %2, 24
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 4 uses
   %i.e = tail call noundef ptr @_ZSt9__find_ifIPKN13geos_nlohmann6detail8json_refINS0_10basic_jsonINS0_11ordered_mapESt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEEEEEN9__gnu_cxx5__ops12_Iter_negateIZNSF_C1ESt16initializer_listISG_EbNS1_7value_tEEUlRSH_E_EEET_SS_SS_T0_St26random_access_iterator_tag(ptr noundef %1, ptr noundef %i.d)
-  %i.f = icmp eq ptr %i.d, %i.e                   ; 3 uses
+  %i.f = icmp eq ptr %i.d, %i.e
+  %8 = zext i1 %i.f to i8                         ; 2 uses
   br i1 %3, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %8 = icmp ne i8 %4, 2
-  %spec.select = and i1 %8, %i.f
+  %9 = icmp eq i8 %4, 2
+  %spec.select = select i1 %9, i8 0, i8 %8        ; 2 uses
   %i.g = icmp ne i8 %4, 1
-  %.not13 = or i1 %i.g, %i.f
+  %10 = trunc nuw i8 %spec.select to i1
+  %.not13 = or i1 %i.g, %10
   br i1 %.not13, label %bb.i, label %bb.c, !prof !287
 
 bb.c:                                             ; preds = %bb.b
@@ -263,8 +265,9 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   resume { ptr, i32 } %.pn25
 
 bb.i:                                             ; preds = %bb.b, %bb.a
-  %.1 = phi i1 [ %i.f, %bb.a ], [ %spec.select, %bb.b ]
-  br i1 %.1, label %bb.j, label %bb.k
+  %.1 = phi i8 [ %8, %bb.a ], [ %spec.select, %bb.b ]
+  %11 = trunc nuw i8 %.1 to i1
+  br i1 %11, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   store i8 1, ptr %0, align 8, !tbaa !7
