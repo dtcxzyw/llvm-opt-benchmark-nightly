@@ -201,7 +201,7 @@ bb.a:
   %i.e = load i8, ptr %i.d, align 1
   %i.f = and i8 %i.e, 4
   %.not.i = icmp eq i8 %i.f, 0
-  %3 = select i1 %.not.i, i1 %i.c, i1 false
+  %3 = and i1 %.not.i, %i.c
   %.fr = freeze i1 %3                             ; 2 uses
   %not. = xor i1 %.fr, true
   %i.g = tail call noundef i64 @_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_27BlockInstrumentationReducerENS2_30LoadStoreSimplificationReducerES3_S5_EEEEEEEEEE11ComputeHashILb0ENS2_19Simd128LaneMemoryOpEEEmRKT0_b(ptr noundef nonnull align 8 dereferenceable(144) %0, ptr noundef nonnull align 4 dereferenceable(12) %1, i1 noundef zeroext %not.) ; 4 uses

@@ -201,10 +201,10 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE14NumberConstantENS0_7Float64E.exit.sink.split.i25: ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE14NumberConstantEd.exit24
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.bl = load i8, ptr %i.bk, align 8, !range !10, !noundef !11
-  %7 = trunc nuw i8 %i.bl to i1
-  %8 = uitofp nneg i8 %i.as to double
-  %9 = bitcast double %8 to i64
-  %10 = select i1 %7, i64 0, i64 %9
+  %7 = xor i8 %i.bl, -1
+  %8 = and i8 %i.as, %7
+  %9 = uitofp nneg i8 %8 to double
+  %10 = bitcast double %9 to i64
   %i.bm = getelementptr inbounds nuw i8, ptr %.pre39, i64 32
   %i.bn = tail call i32 @_ZN2v88internal8compiler10turboshaft13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerES3_EEEEEE4EmitINS2_10ConstantOpEJNSF_4KindENS0_7Float64EEEENS2_7OpIndexEDpT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.bm, i8 noundef zeroext 5, i64 %10)
   br label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE14NumberConstantEd.exit27

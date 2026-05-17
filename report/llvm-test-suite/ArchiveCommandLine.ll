@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.cf = load i8, ptr %i.ce, align 1, !range !37
   %i.cg = trunc nuw i8 %i.cf to i1
   %or.cond = select i1 %i.cd, i1 %i.cg, i1 false
-  %18 = select i1 %or.cond, i1 true, i1 %i.ca
+  %18 = or i1 %or.cond, %i.ca
   %.0146.not = or i1 %spec.select, %18            ; 2 uses
   br i1 %.0146.not, label %bb.ar, label %bb.af
 

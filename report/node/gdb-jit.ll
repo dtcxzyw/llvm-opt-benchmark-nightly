@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.f
   %i.nm = load i8, ptr %i.ng, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i352 = icmp eq i8 %i.nl, %i.nm
   %i.nn = trunc nuw i8 %i.nm to i1
-  %or.cond414.not = select i1 %.not.i352, i1 true, i1 %i.nn
+  %or.cond414.not = or i1 %.not.i352, %i.nn
   br i1 %or.cond414.not, label %_ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit353.thread, label %bb.h
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit353: ; preds = %bb.f
@@ -246,7 +246,7 @@ bb.k:                                             ; preds = %_ZN2v88internal15GD
   %i.nu = load i8, ptr %i.nt, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i349 = icmp eq i8 %.sroa.6384.0.copyload, %i.nu
   %i.nv = trunc nuw i8 %i.nu to i1
-  %or.cond416.not = select i1 %.not.i349, i1 true, i1 %i.nv
+  %or.cond416.not = or i1 %.not.i349, %i.nv
   br i1 %or.cond416.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i.i, label %.lr.ph.i.i.i330.preheader
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit350: ; preds = %_ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit353.thread
@@ -270,7 +270,7 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i330
   %i.oa = load i8, ptr %i.nz, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i346 = icmp eq i8 %.sroa.6384.0.copyload, %i.oa
   %i.ob = trunc nuw i8 %i.oa to i1
-  %or.cond418.not = select i1 %.not.i346, i1 true, i1 %i.ob
+  %or.cond418.not = or i1 %.not.i346, %i.ob
   br i1 %or.cond418.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i.i, label %.lr.ph.i.i.i330.backedge
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit347: ; preds = %.lr.ph.i.i.i330
@@ -316,7 +316,7 @@ bb.n:                                             ; preds = %.lr.ph.i10.i
   %i.oj = load i8, ptr %i.oi, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i343 = icmp eq i8 %.sroa.6392.0.copyload, %i.oj
   %i.ok = trunc nuw i8 %i.oj to i1
-  %or.cond420.not = select i1 %.not.i343, i1 true, i1 %i.ok
+  %or.cond420.not = or i1 %.not.i343, %i.ok
   br i1 %or.cond420.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i11.i, label %.lr.ph.i.i13.i.preheader
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit344: ; preds = %.lr.ph.i10.i
@@ -340,7 +340,7 @@ bb.o:                                             ; preds = %.lr.ph.i.i13.i
   %i.op = load i8, ptr %i.oo, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i340 = icmp eq i8 %.sroa.6392.0.copyload, %i.op
   %i.oq = trunc nuw i8 %i.op to i1
-  %or.cond422.not = select i1 %.not.i340, i1 true, i1 %i.oq
+  %or.cond422.not = or i1 %.not.i340, %i.oq
   br i1 %or.cond422.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i11.i, label %.lr.ph.i.i13.i.backedge
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit341: ; preds = %.lr.ph.i.i13.i
@@ -383,7 +383,7 @@ bb.q:                                             ; preds = %.lr.ph.i19.i
   %i.pb = load i8, ptr %i.ov, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i337 = icmp eq i8 %i.pa, %i.pb
   %i.pc = trunc nuw i8 %i.pb to i1
-  %or.cond424.not = select i1 %.not.i337, i1 true, i1 %i.pc
+  %or.cond424.not = or i1 %.not.i337, %i.pc
   br i1 %or.cond424.not, label %_ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit338.thread, label %bb.r
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit338: ; preds = %.lr.ph.i19.i
@@ -438,7 +438,7 @@ bb.v:                                             ; preds = %_ZN2v88internal15GD
   %i.pq = load i8, ptr %i.pp, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i334 = icmp eq i8 %.sroa.6401.0.copyload, %i.pq
   %i.pr = trunc nuw i8 %i.pq to i1
-  %or.cond426.not = select i1 %.not.i334, i1 true, i1 %i.pr
+  %or.cond426.not = or i1 %.not.i334, %i.pr
   br i1 %or.cond426.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i22.i, label %.lr.ph.i.i25.i.preheader
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit335: ; preds = %_ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit338.thread
@@ -462,7 +462,7 @@ bb.w:                                             ; preds = %.lr.ph.i.i25.i
   %i.pw = load i8, ptr %i.pv, align 4, !range !11, !noundef !12 ; 2 uses
   %.not.i332 = icmp eq i8 %.sroa.6401.0.copyload, %i.pw
   %i.px = trunc nuw i8 %i.pw to i1
-  %or.cond428.not = select i1 %.not.i332, i1 true, i1 %i.px
+  %or.cond428.not = or i1 %.not.i332, %i.px
   br i1 %or.cond428.not, label %_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN2v88internal15GDBJITInterface8LineInfo6PCInfoESt6vectorIS6_SaIS6_EEEENS0_5__ops14_Val_comp_iterIPFbRKS6_SF_EEEEvT_T0_.exit.i22.i, label %.lr.ph.i.i25.i.backedge
 
 _ZN2v88internal15GDBJITInterface16DebugLineSection13ComparePCInfoERKNS1_8LineInfo6PCInfoES6_.exit: ; preds = %.lr.ph.i.i25.i

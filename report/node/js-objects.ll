@@ -201,10 +201,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %6, ptr noundef %0, ptr nonnull %1, ptr %2, i64 noundef %3, ptr nonnull %1, i32 noundef 1)
   %i.j = call i16 @_ZN2v88internal8JSObject30CheckIfCanDefineAsConfigurableEPNS0_7IsolateEPNS0_14LookupIteratorENS0_12DirectHandleINS0_6ObjectEEENS_5MaybeINS0_11ShouldThrowEEE(ptr noundef %0, ptr noundef nonnull %6, ptr poison, i64 %5) ; 3 uses
-  %8 = trunc i16 %i.j to i1
-  %9 = icmp samesign ugt i16 %i.j, 255
-  %or.cond.i = select i1 %8, i1 %9, i1 false
-  br i1 %or.cond.i, label %bb.e, label %bb.f
+  %.sroa.6.0.extract.shift.i = lshr i16 %i.j, 8
+  %8 = and i16 %.sroa.6.0.extract.shift.i, %i.j
+  %or.cond.not.i = icmp eq i16 %8, 0
+  br i1 %or.cond.not.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.k = call i16 @_ZN2v88internal8JSObject33DefineOwnPropertyIgnoreAttributesEPNS0_14LookupIteratorENS0_12DirectHandleINS0_6ObjectEEENS0_18PropertyAttributesENS_5MaybeINS0_11ShouldThrowEEENS1_20AccessorInfoHandlingENS0_22EnforceDefineSemanticsENS0_11StoreOriginENS0_17MaybeDirectHandleIS5_EE(ptr noundef nonnull %6, ptr %4, i32 noundef 0, i64 4294967297, i32 noundef 1, i32 noundef 0, i32 noundef 1, i64 0)
@@ -607,10 +607,10 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20
   call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %6, ptr noundef %0, ptr %1, ptr %2, i64 noundef %3, ptr %1, i32 noundef 1)
   %i.b = call i16 @_ZN2v88internal8JSObject30CheckIfCanDefineAsConfigurableEPNS0_7IsolateEPNS0_14LookupIteratorENS0_12DirectHandleINS0_6ObjectEEENS_5MaybeINS0_11ShouldThrowEEE(ptr noundef %0, ptr noundef nonnull %6, ptr poison, i64 %5) ; 3 uses
-  %7 = trunc i16 %i.b to i1
-  %8 = icmp samesign ugt i16 %i.b, 255
-  %or.cond = select i1 %7, i1 %8, i1 false
-  br i1 %or.cond, label %bb.d, label %bb.e
+  %.sroa.6.0.extract.shift = lshr i16 %i.b, 8
+  %7 = and i16 %.sroa.6.0.extract.shift, %i.b
+  %or.cond.not = icmp eq i16 %7, 0
+  br i1 %or.cond.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.c = call i16 @_ZN2v88internal8JSObject33DefineOwnPropertyIgnoreAttributesEPNS0_14LookupIteratorENS0_12DirectHandleINS0_6ObjectEEENS0_18PropertyAttributesENS_5MaybeINS0_11ShouldThrowEEENS1_20AccessorInfoHandlingENS0_22EnforceDefineSemanticsENS0_11StoreOriginENS0_17MaybeDirectHandleIS5_EE(ptr noundef nonnull %6, ptr %4, i32 noundef 0, i64 4294967297, i32 noundef 1, i32 noundef 0, i32 noundef 1, i64 0)
