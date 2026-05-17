@@ -1,0 +1,423 @@
+inline.NumInlined: 1350
+inline.NumDeleted: 485
+begin_hunk_0_@_ZN2v88internal34TypedArrayPrototypeFilterAssembler37GenerateTypedArrayPrototypeFilterImplEv:bb.a
+  %i.rs = ptrtoint ptr %i.rr to i64
+  %i.rt = ptrtoint ptr %i.rq to i64
+  %i.ru = sub i64 %i.rs, %i.rt
+  call void @_ZdlPvm(ptr noundef nonnull %i.rq, i64 noundef %i.ru) #11
+  br label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTEEJNS0_5TNodeIS4_EENS8_IS5_EESA_NS8_IS6_EENS8_IS7_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit158
+
+_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTEEJNS0_5TNodeIS4_EENS8_IS5_EESA_NS8_IS6_EENS8_IS7_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit158: ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i597, %bb.bf
+  call void @llvm.lifetime.end.p0(ptr nonnull %42)
+  call void @_ZN2v88internal8compiler13CodeAssembler4GotoEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.ck) #10
+  br label %bb.bg
+
+bb.bg:                                            ; preds = %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTEEJNS0_5TNodeIS4_EENS8_IS5_EESA_NS8_IS6_EENS8_IS7_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit158, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit152
+  %i.rv = getelementptr inbounds nuw i8, ptr %86, i64 64
+  %i.rw = load i64, ptr %i.rv, align 8
+  %.not1122 = icmp eq i64 %i.rw, 0
+  br i1 %.not1122, label %bb.bk, label %bb.bh
+
+bb.bh:                                            ; preds = %bb.bg
+  call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.cc) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %2)
+  %i.rx = call noalias noundef nonnull dereferenceable(7) ptr @_Znwm(i64 noundef 7) #12 ; 6 uses
+  store ptr %i.rx, ptr %2, align 8
+  %i.ry = getelementptr inbounds nuw i8, ptr %i.rx, i64 7 ; 2 uses
+  %i.rz = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  store ptr %i.ry, ptr %i.rz, align 8
+  store <4 x i8> <i8 8, i8 5, i8 5, i8 8>, ptr %i.rx, align 1
+  %.sroa.7.0..sroa_idx.i615 = getelementptr inbounds nuw i8, ptr %i.rx, i64 4
+  store i8 5, ptr %.sroa.7.0..sroa_idx.i615, align 1
+  %.sroa.8.0..sroa_idx.i616 = getelementptr inbounds nuw i8, ptr %i.rx, i64 5
+  store i8 5, ptr %.sroa.8.0..sroa_idx.i616, align 1
+  %.sroa.9.0..sroa_idx.i617 = getelementptr inbounds nuw i8, ptr %i.rx, i64 6
+  store i8 5, ptr %.sroa.9.0..sroa_idx.i617, align 1
+  %i.sa = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store ptr %i.ry, ptr %i.sa, align 8
+  %i.sb = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %86, ptr noundef nonnull %2) #10
+  %i.sc = load ptr, ptr %2, align 8               ; 3 uses
+  %.not.i.i.i.i618 = icmp eq ptr %i.sc, null
+  br i1 %.not.i.i.i.i618, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i619, label %bb.bi
+
+bb.bi:                                            ; preds = %bb.bh
+  %i.sd = load ptr, ptr %i.rz, align 8
+  %i.se = ptrtoint ptr %i.sd to i64
+  %i.sf = ptrtoint ptr %i.sc to i64
+  %i.sg = sub i64 %i.se, %i.sf
+  call void @_ZdlPvm(ptr noundef nonnull %i.sc, i64 noundef %i.sg) #11
+  br label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i619
+
+_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i619: ; preds = %bb.bi, %bb.bh
+  %i.sh = load ptr, ptr %i.sb, align 8            ; 3 uses
+  %i.si = getelementptr inbounds nuw i8, ptr %i.sh, i64 16
+  %i.sj = load ptr, ptr %i.si, align 8
+  %i.sk = getelementptr inbounds nuw i8, ptr %i.sh, i64 32
+  %i.sl = load ptr, ptr %i.sk, align 8            ; 2 uses
+  %i.sm = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.sn = getelementptr inbounds nuw i8, ptr %41, i64 8
+  %i.so = getelementptr inbounds nuw i8, ptr %38, i64 16 ; 2 uses
+  %i.sp = load <2 x ptr>, ptr %i.sh, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.lifetime.start.p0(ptr nonnull %150) #10
+  call void @_ZN2v88internal17CodeStubAssemblerC1EPNS0_8compiler18CodeAssemblerStateE(ptr noundef nonnull align 8 dereferenceable(16) %150, ptr noundef %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %151) #10
+  %i.sq = call noundef i32 @_ZN2v88internal42ExampleBuiltinForTorqueFunctionPointerTypeEm(i64 noundef 1) #10
+  %i.sr = call ptr @_ZN2v88internal8Builtins26CallInterfaceDescriptorForENS0_7BuiltinE(i32 noundef %i.sq) #10
+  store ptr %i.sr, ptr %151, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %39), !noalias !74
+  call void @llvm.lifetime.start.p0(ptr nonnull %40), !noalias !74
+  call void @llvm.lifetime.start.p0(ptr nonnull %41), !noalias !74
+  store ptr %.sroa.01101.0, ptr %39, align 8, !noalias !74
+  store ptr null, ptr %40, align 8, !noalias !74
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10, !noalias !74
+  store ptr %.sroa.01097.0, ptr %i.a, align 8, !noalias !74
+  store ptr %i.sl, ptr %i.sm, align 8, !noalias !74
+  store ptr %i.a, ptr %41, align 8, !noalias !74
+  store i64 2, ptr %i.sn, align 8, !noalias !74
+  %i.ss = call noundef ptr @_ZN2v88internal8compiler13CodeAssembler13CallStubRImplENS0_12StubCallModeERKNS0_23CallInterfaceDescriptorENS0_5TNodeINS0_6ObjectEEES9_St16initializer_listIPNS1_4NodeEE(ptr noundef nonnull align 8 dereferenceable(8) %150, i32 noundef 2, ptr noundef nonnull align 8 dereferenceable(8) %151, ptr noundef nonnull dead_on_return %39, ptr noundef nonnull dead_on_return %40, ptr noundef nonnull byval(%"class.std::initializer_list") align 8 %41) #10, !noalias !74
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10, !noalias !74
+  call void @llvm.lifetime.end.p0(ptr nonnull %39), !noalias !74
+  call void @llvm.lifetime.end.p0(ptr nonnull %40), !noalias !74
+  call void @llvm.lifetime.end.p0(ptr nonnull %41), !noalias !74
+  call void @llvm.lifetime.end.p0(ptr nonnull %151) #10
+  call void @_ZN2v88internal8compiler13CodeAssemblerD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %150) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %150) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %38)
+  %i.st = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 7 uses
+  store ptr %i.st, ptr %38, align 8
+  %i.su = getelementptr inbounds nuw i8, ptr %i.st, i64 48 ; 2 uses
+  store ptr %i.su, ptr %i.so, align 8
+  store <2 x ptr> %i.sp, ptr %i.st, align 8
+  %.sroa.5.0..sroa_idx.i.i160 = getelementptr inbounds nuw i8, ptr %i.st, i64 16
+  store ptr %i.sj, ptr %.sroa.5.0..sroa_idx.i.i160, align 8
+  %.sroa.6.0..sroa_idx.i.i161 = getelementptr inbounds nuw i8, ptr %i.st, i64 24
+  store ptr %.sroa.01097.0, ptr %.sroa.6.0..sroa_idx.i.i161, align 8
+  %.sroa.7.0..sroa_idx.i.i162 = getelementptr inbounds nuw i8, ptr %i.st, i64 32
+  store ptr %i.sl, ptr %.sroa.7.0..sroa_idx.i.i162, align 8
+  %.sroa.8.0..sroa_idx.i.i163 = getelementptr inbounds nuw i8, ptr %i.st, i64 40
+  store ptr %i.ss, ptr %.sroa.8.0..sroa_idx.i.i163, align 8
+  %i.sv = getelementptr inbounds nuw i8, ptr %38, i64 8
+  store ptr %i.su, ptr %i.sv, align 8
+  call void @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase9AddInputsESt6vectorIPNS1_4NodeESaIS5_EE(ptr noundef nonnull align 8 dereferenceable(184) %88, ptr noundef nonnull %38) #10
+  %i.sw = load ptr, ptr %38, align 8              ; 3 uses
+  %.not.i.i.i.i.i164 = icmp eq ptr %i.sw, null
+  br i1 %.not.i.i.i.i.i164, label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_INS8_IJS9_SA_SB_EEEEEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit, label %bb.bj
+
+bb.bj:                                            ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i619
+  %i.sx = load ptr, ptr %i.so, align 8
+  %i.sy = ptrtoint ptr %i.sx to i64
+  %i.sz = ptrtoint ptr %i.sw to i64
+  %i.ta = sub i64 %i.sy, %i.sz
+  call void @_ZdlPvm(ptr noundef nonnull %i.sw, i64 noundef %i.ta) #11
+  br label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_INS8_IJS9_SA_SB_EEEEEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit
+
+_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_INS8_IJS9_SA_SB_EEEEEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit: ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i619, %bb.bj
+  call void @llvm.lifetime.end.p0(ptr nonnull %38)
+  call void @_ZN2v88internal8compiler13CodeAssembler4GotoEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.cs) #10
+  br label %bb.bk
+
+bb.bk:                                            ; preds = %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_INS8_IJS9_SA_SB_EEEEEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit, %bb.bg
+  %i.tb = getelementptr inbounds nuw i8, ptr %87, i64 64
+  %i.tc = load i64, ptr %i.tb, align 8
+  %.not1123 = icmp eq i64 %i.tc, 0
+  br i1 %.not1123, label %bb.bo, label %bb.bl
+
+bb.bl:                                            ; preds = %bb.bk
+  call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.ck) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %37)
+  %i.td = call noalias noundef nonnull dereferenceable(5) ptr @_Znwm(i64 noundef 5) #12 ; 4 uses
+  store ptr %i.td, ptr %37, align 8
+  %i.te = getelementptr inbounds nuw i8, ptr %i.td, i64 5 ; 2 uses
+  %i.tf = getelementptr inbounds nuw i8, ptr %37, i64 16 ; 2 uses
+  store ptr %i.te, ptr %i.tf, align 8
+  store <4 x i8> <i8 8, i8 5, i8 5, i8 8>, ptr %i.td, align 1
+  %.sroa.7.0..sroa_idx.i.i168 = getelementptr inbounds nuw i8, ptr %i.td, i64 4
+  store i8 5, ptr %.sroa.7.0..sroa_idx.i.i168, align 1
+  %i.tg = getelementptr inbounds nuw i8, ptr %37, i64 8
+  store ptr %i.te, ptr %i.tg, align 8
+  %i.th = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %87, ptr noundef nonnull %37) #10
+  %i.ti = load ptr, ptr %37, align 8              ; 3 uses
+  %.not.i.i.i.i.i169 = icmp eq ptr %i.ti, null
+  br i1 %.not.i.i.i.i.i169, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i170, label %bb.bm
+
+bb.bm:                                            ; preds = %bb.bl
+  %i.tj = load ptr, ptr %i.tf, align 8
+  %i.tk = ptrtoint ptr %i.tj to i64
+  %i.tl = ptrtoint ptr %i.ti to i64
+  %i.tm = sub i64 %i.tk, %i.tl
+  call void @_ZdlPvm(ptr noundef nonnull %i.ti, i64 noundef %i.tm) #11
+  br label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i170
+
+_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i170: ; preds = %bb.bm, %bb.bl
+  %i.tn = load ptr, ptr %i.th, align 8            ; 3 uses
+  %i.to = getelementptr inbounds nuw i8, ptr %i.tn, i64 16
+  %i.tp = getelementptr inbounds nuw i8, ptr %i.tn, i64 32
+  %i.tq = load ptr, ptr %i.tp, align 8
+  %i.tr = getelementptr inbounds nuw i8, ptr %36, i64 16 ; 2 uses
+  %i.ts = load <2 x ptr>, ptr %i.tn, align 8
+  %i.tt = load <2 x ptr>, ptr %i.to, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %37)
+  call void @_ZN2v88internal11Undefined_0EPNS0_8compiler18CodeAssemblerStateE(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.82") align 8 %152, ptr noundef %i.b) #10
+  %i.tu = load ptr, ptr %152, align 8, !noalias !77
+  call void @llvm.lifetime.start.p0(ptr nonnull %36)
+  %i.tv = call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #12 ; 6 uses
+  store ptr %i.tv, ptr %36, align 8
+  %i.tw = getelementptr inbounds nuw i8, ptr %i.tv, i64 48 ; 2 uses
+  store ptr %i.tw, ptr %i.tr, align 8
+  store <2 x ptr> %i.ts, ptr %i.tv, align 8
+  %.sroa.5.0..sroa_idx.i.i182 = getelementptr inbounds nuw i8, ptr %i.tv, i64 16
+  store <2 x ptr> %i.tt, ptr %.sroa.5.0..sroa_idx.i.i182, align 8
+  %.sroa.7.0..sroa_idx.i.i184 = getelementptr inbounds nuw i8, ptr %i.tv, i64 32
+  store ptr %i.tq, ptr %.sroa.7.0..sroa_idx.i.i184, align 8
+  %.sroa.8.0..sroa_idx.i.i185 = getelementptr inbounds nuw i8, ptr %i.tv, i64 40
+  store ptr %i.tu, ptr %.sroa.8.0..sroa_idx.i.i185, align 8
+  %i.tx = getelementptr inbounds nuw i8, ptr %36, i64 8
+  store ptr %i.tw, ptr %i.tx, align 8
+  call void @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase9AddInputsESt6vectorIPNS1_4NodeESaIS5_EE(ptr noundef nonnull align 8 dereferenceable(184) %88, ptr noundef nonnull %36) #10
+  %i.ty = load ptr, ptr %36, align 8              ; 3 uses
+  %.not.i.i.i.i.i186 = icmp eq ptr %i.ty, null
+  br i1 %.not.i.i.i.i.i186, label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_ISG_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit, label %bb.bn
+
+bb.bn:                                            ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i170
+  %i.tz = load ptr, ptr %i.tr, align 8
+  %i.ua = ptrtoint ptr %i.tz to i64
+  %i.ub = ptrtoint ptr %i.ty to i64
+  %i.uc = sub i64 %i.ua, %i.ub
+  call void @_ZdlPvm(ptr noundef nonnull %i.ty, i64 noundef %i.uc) #11
+  br label %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_ISG_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit
+
+_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_ISG_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit: ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i170, %bb.bn
+  call void @llvm.lifetime.end.p0(ptr nonnull %36)
+  call void @_ZN2v88internal8compiler13CodeAssembler4GotoEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.cs) #10
+  br label %bb.bo
+
+bb.bo:                                            ; preds = %_ZN2v88internal8compiler13CodeAssembler4GotoIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_12JSTypedArrayENS0_8UintPtrTENS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEJNS0_5TNodeIS4_EENSJ_IS5_EESL_NSJ_IS6_EENSJ_IS7_EENSJ_ISG_EEEEEvPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEEDpT0_.exit, %bb.bk
+  %i.ud = getelementptr inbounds nuw i8, ptr %88, i64 64
+  %i.ue = load i64, ptr %i.ud, align 8
+  %.not1124 = icmp eq i64 %i.ue, 0
+  br i1 %.not1124, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit190, label %bb.bp
+
+bb.bp:                                            ; preds = %bb.bo
+  call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.cs) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %1)
+  %i.uf = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #12 ; 5 uses
+  store ptr %i.uf, ptr %1, align 8
+  %247 = getelementptr inbounds nuw i8, ptr %i.uf, i64 6 ; 2 uses
+  %i.ug = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  store ptr %247, ptr %i.ug, align 8
+  store <4 x i8> <i8 8, i8 5, i8 5, i8 8>, ptr %i.uf, align 1
+  %.sroa.7.0..sroa_idx.i637 = getelementptr inbounds nuw i8, ptr %i.uf, i64 4
+  store i8 5, ptr %.sroa.7.0..sroa_idx.i637, align 1
+  %.sroa.8.0..sroa_idx.i638 = getelementptr inbounds nuw i8, ptr %i.uf, i64 5
+  store i8 9, ptr %.sroa.8.0..sroa_idx.i638, align 1
+  %i.uh = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr %247, ptr %i.uh, align 8
+  %i.ui = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %88, ptr noundef nonnull %1) #10
+  %i.uj = load ptr, ptr %1, align 8               ; 3 uses
+  %.not.i.i.i.i639 = icmp eq ptr %i.uj, null
+  br i1 %.not.i.i.i.i639, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640, label %bb.bq
+
+bb.bq:                                            ; preds = %bb.bp
+  %i.uk = load ptr, ptr %i.ug, align 8
+  %i.ul = ptrtoint ptr %i.uk to i64
+  %i.um = ptrtoint ptr %i.uj to i64
+  %i.un = sub i64 %i.ul, %i.um
+  call void @_ZdlPvm(ptr noundef nonnull %i.uj, i64 noundef %i.un) #11
+  br label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640
+
+_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640: ; preds = %bb.bq, %bb.bp
+  %i.uo = load ptr, ptr %i.ui, align 8            ; 6 uses
+  %i.up = getelementptr inbounds nuw i8, ptr %i.uo, i64 8
+  %i.uq = load ptr, ptr %i.uo, align 8            ; 2 uses
+  %i.ur = getelementptr inbounds nuw i8, ptr %i.uo, i64 16
+  %i.us = load ptr, ptr %i.up, align 8            ; 2 uses
+  %i.ut = getelementptr inbounds nuw i8, ptr %i.uo, i64 24
+  %i.uu = load ptr, ptr %i.ur, align 8            ; 2 uses
+  %i.uv = getelementptr inbounds nuw i8, ptr %i.uo, i64 32
+  %i.uw = load ptr, ptr %i.ut, align 8            ; 2 uses
+  %i.ux = getelementptr inbounds nuw i8, ptr %i.uo, i64 40
+  %i.uy = load ptr, ptr %i.uv, align 8            ; 3 uses
+  %i.uz = load ptr, ptr %i.ux, align 8            ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %1)
+  store ptr %i.uy, ptr %154, align 8
+  call void @_ZN2v88internal24Convert_Number_uintptr_0EPNS0_8compiler18CodeAssemblerStateENS0_5TNodeINS0_8UintPtrTEEE(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.83") align 8 %153, ptr noundef %i.b, ptr noundef nonnull dead_on_return %154) #10
+  %i.va = load ptr, ptr %153, align 8, !noalias !80
+  call void @llvm.lifetime.start.p0(ptr nonnull %156) #10
+  call void @_ZN2v88internal17CodeStubAssemblerC1EPNS0_8compiler18CodeAssemblerStateE(ptr noundef nonnull align 8 dereferenceable(16) %156, ptr noundef %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %30)
+  call void @llvm.lifetime.start.p0(ptr nonnull %31)
+  call void @llvm.lifetime.start.p0(ptr nonnull %32)
+  call void @llvm.lifetime.start.p0(ptr nonnull %33)
+  call void @llvm.lifetime.start.p0(ptr nonnull %34)
+  call void @llvm.lifetime.start.p0(ptr nonnull %35)
+  store ptr %i.m, ptr %30, align 8, !noalias !83
+  store ptr %.sroa.01064.0, ptr %31, align 8, !noalias !83
+  store ptr %.sroa.01048.0, ptr %32, align 8, !noalias !83
+  store ptr %i.uz, ptr %33, align 8, !noalias !83
+  store ptr %i.va, ptr %34, align 8, !noalias !83
+  store ptr %.sroa.01097.0, ptr %35, align 8, !noalias !83
+  call void @_ZN2v88internal17CodeStubAssembler4CallINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEJNS0_5TNodeISD_EESF_SF_EEESF_NSE_INS0_7ContextEEENSE_IT_EENS0_19ConvertReceiverModeESF_DpT0_(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.31") align 8 %155, ptr noundef nonnull align 8 dereferenceable(16) %156, ptr noundef nonnull dead_on_return %30, ptr noundef nonnull dead_on_return %31, i32 noundef 2, ptr noundef nonnull dead_on_return %32, ptr noundef nonnull dead_on_return %33, ptr noundef nonnull dead_on_return %34, ptr noundef nonnull dead_on_return %35)
+  call void @llvm.lifetime.end.p0(ptr nonnull %30)
+  call void @llvm.lifetime.end.p0(ptr nonnull %31)
+  call void @llvm.lifetime.end.p0(ptr nonnull %32)
+  call void @llvm.lifetime.end.p0(ptr nonnull %33)
+  call void @llvm.lifetime.end.p0(ptr nonnull %34)
+  call void @llvm.lifetime.end.p0(ptr nonnull %35)
+  %i.vb = load ptr, ptr %155, align 8, !noalias !86
+  call void @_ZN2v88internal8compiler13CodeAssemblerD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %156) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %156) #10
+  store ptr %i.vb, ptr %158, align 8
+  call void @_ZN2v88internal11ToBoolean_0EPNS0_8compiler18CodeAssemblerStateENS0_5TNodeINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEE(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.79") align 8 %157, ptr noundef %i.b, ptr noundef nonnull dead_on_return %158) #10
+  %i.vc = load ptr, ptr %157, align 8, !noalias !89
+  store ptr %i.vc, ptr %159, align 8
+  %i.vd = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12 ; 6 uses
+  store ptr %i.vd, ptr %160, align 8
+  %i.ve = getelementptr inbounds nuw i8, ptr %i.vd, i64 32 ; 2 uses
+  %i.vf = getelementptr inbounds nuw i8, ptr %160, i64 16 ; 2 uses
+  store ptr %i.ve, ptr %i.vf, align 8
+  store ptr %i.uq, ptr %i.vd, align 8
+  %.sroa.4842.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vd, i64 8
+  store ptr %i.us, ptr %.sroa.4842.0..sroa_idx, align 8
+  %.sroa.5843.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vd, i64 16
+  store ptr %i.uu, ptr %.sroa.5843.0..sroa_idx, align 8
+  %.sroa.6844.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vd, i64 24
+  store ptr %i.uy, ptr %.sroa.6844.0..sroa_idx, align 8
+  %i.vg = getelementptr inbounds nuw i8, ptr %160, i64 8
+  store ptr %i.ve, ptr %i.vg, align 8
+  %i.vh = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12 ; 6 uses
+  store ptr %i.vh, ptr %161, align 8
+  %i.vi = getelementptr inbounds nuw i8, ptr %i.vh, i64 32 ; 2 uses
+  %i.vj = getelementptr inbounds nuw i8, ptr %161, i64 16 ; 2 uses
+  store ptr %i.vi, ptr %i.vj, align 8
+  store ptr %i.uq, ptr %i.vh, align 8
+  %.sroa.4837.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vh, i64 8
+  store ptr %i.us, ptr %.sroa.4837.0..sroa_idx, align 8
+  %.sroa.5838.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vh, i64 16
+  store ptr %i.uu, ptr %.sroa.5838.0..sroa_idx, align 8
+  %.sroa.6839.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.vh, i64 24
+  store ptr %i.uy, ptr %.sroa.6839.0..sroa_idx, align 8
+  %i.vk = getelementptr inbounds nuw i8, ptr %161, i64 8
+  store ptr %i.vi, ptr %i.vk, align 8
+  call void @_ZN2v88internal8compiler13CodeAssembler6BranchIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_8UintPtrTEEJS4_S5_S5_S6_EEEvNS0_5TNodeINS0_5BoolTEEEPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEESt6vectorIPNS1_4NodeESaISH_EEPNSA_IJDpT0_EEESJ_(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull dead_on_return %159, ptr noundef nonnull %89, ptr noundef nonnull %160, ptr noundef nonnull %94, ptr noundef nonnull %161)
+  %i.vl = load ptr, ptr %161, align 8             ; 3 uses
+  %.not.i.i.i187 = icmp eq ptr %i.vl, null
+  br i1 %.not.i.i.i187, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188, label %bb.br
+
+bb.br:                                            ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640
+  %i.vm = load ptr, ptr %i.vj, align 8
+  %i.vn = ptrtoint ptr %i.vm to i64
+  %i.vo = ptrtoint ptr %i.vl to i64
+  %i.vp = sub i64 %i.vn, %i.vo
+  call void @_ZdlPvm(ptr noundef nonnull %i.vl, i64 noundef %i.vp) #11
+  br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188
+
+_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188: ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640, %bb.br
+  %i.vq = load ptr, ptr %160, align 8             ; 3 uses
+  %.not.i.i.i189 = icmp eq ptr %i.vq, null
+  br i1 %.not.i.i.i189, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit190, label %bb.bs
+
+bb.bs:                                            ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188
+  %i.vr = load ptr, ptr %i.vf, align 8
+  %i.vs = ptrtoint ptr %i.vr to i64
+  %i.vt = ptrtoint ptr %i.vq to i64
+  %i.vu = sub i64 %i.vs, %i.vt
+  call void @_ZdlPvm(ptr noundef nonnull %i.vq, i64 noundef %i.vu) #11
+  br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit190
+
+_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit190: ; preds = %bb.bs, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188, %bb.bo
+  %.sroa.0857.0 = phi ptr [ null, %bb.bo ], [ %i.uz, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188 ], [ %i.uz, %bb.bs ]
+  %.sroa.0862.0 = phi ptr [ null, %bb.bo ], [ %i.uw, %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit188 ], [ %i.uw, %bb.bs ]
+  %i.vv = getelementptr inbounds nuw i8, ptr %89, i64 64
+  %i.vw = load i64, ptr %i.vv, align 8
+  %.not1125 = icmp eq i64 %i.vw, 0
+  br i1 %.not1125, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit201, label %bb.bt
+
+bb.bt:                                            ; preds = %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit190
+  call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.da) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %29)
+  %i.vx = call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #12 ; 3 uses
+  store ptr %i.vx, ptr %29, align 8
+  %i.vy = getelementptr inbounds nuw i8, ptr %i.vx, i64 4 ; 2 uses
+  %i.vz = getelementptr inbounds nuw i8, ptr %29, i64 16 ; 2 uses
+  store ptr %i.vy, ptr %i.vz, align 8
+  store <4 x i8> <i8 8, i8 5, i8 5, i8 5>, ptr %i.vx, align 1
+  %i.wa = getelementptr inbounds nuw i8, ptr %29, i64 8
+  store ptr %i.vy, ptr %i.wa, align 8
+  %i.wb = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %89, ptr noundef nonnull %29) #10
+  %i.wc = load ptr, ptr %29, align 8              ; 3 uses
+  %.not.i.i.i.i.i194 = icmp eq ptr %i.wc, null
+  br i1 %.not.i.i.i.i.i194, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i195, label %bb.bu
+
+bb.bu:                                            ; preds = %bb.bt
+  %i.wd = load ptr, ptr %i.vz, align 8
+  %i.we = ptrtoint ptr %i.wd to i64
+  %i.wf = ptrtoint ptr %i.wc to i64
+  %i.wg = sub i64 %i.we, %i.wf
+  call void @_ZdlPvm(ptr noundef nonnull %i.wc, i64 noundef %i.wg) #11
+  br label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i195
+
+_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i195: ; preds = %bb.bu, %bb.bt
+  %i.wh = load ptr, ptr %i.wb, align 8            ; 4 uses
+  %i.wi = getelementptr inbounds nuw i8, ptr %i.wh, i64 8
+  %i.wj = load ptr, ptr %i.wh, align 8            ; 2 uses
+  %i.wk = getelementptr inbounds nuw i8, ptr %i.wh, i64 16
+  %i.wl = load ptr, ptr %i.wi, align 8            ; 3 uses
+  %i.wm = getelementptr inbounds nuw i8, ptr %i.wh, i64 24
+  %i.wn = load ptr, ptr %i.wk, align 8            ; 3 uses
+  %i.wo = load ptr, ptr %i.wm, align 8            ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %29)
+  call void @llvm.lifetime.start.p0(ptr nonnull %163) #10
+  call void @_ZN2v88internal17CodeStubAssemblerC1EPNS0_8compiler18CodeAssemblerStateE(ptr noundef nonnull align 8 dereferenceable(16) %163, ptr noundef %i.b) #10
+  store ptr %i.wl, ptr %164, align 8
+  store ptr %i.wn, ptr %165, align 8
+  call void @_ZN2v88internal8compiler13CodeAssembler9WordEqualENS0_5TNodeINS0_5WordTEEES5_(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::TNode.79") align 8 %162, ptr noundef nonnull align 8 dereferenceable(8) %163, ptr noundef nonnull dead_on_return %164, ptr noundef nonnull dead_on_return %165) #10
+  %i.wp = load ptr, ptr %162, align 8, !noalias !92
+  call void @_ZN2v88internal8compiler13CodeAssemblerD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %163) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %163) #10
+  store ptr %i.wp, ptr %166, align 8
+  %i.wq = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12 ; 6 uses
+  store ptr %i.wq, ptr %167, align 8
+  %i.wr = getelementptr inbounds nuw i8, ptr %i.wq, i64 32 ; 2 uses
+  %i.ws = getelementptr inbounds nuw i8, ptr %167, i64 16 ; 2 uses
+  store ptr %i.wr, ptr %i.ws, align 8
+  store ptr %i.wj, ptr %i.wq, align 8
+  %.sroa.4818.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wq, i64 8
+  store ptr %i.wl, ptr %.sroa.4818.0..sroa_idx, align 8
+  %.sroa.5819.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wq, i64 16
+  store ptr %i.wn, ptr %.sroa.5819.0..sroa_idx, align 8
+  %.sroa.6820.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wq, i64 24
+  store ptr %i.wo, ptr %.sroa.6820.0..sroa_idx, align 8
+  %i.wt = getelementptr inbounds nuw i8, ptr %167, i64 8
+  store ptr %i.wr, ptr %i.wt, align 8
+  %i.wu = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12 ; 6 uses
+  store ptr %i.wu, ptr %168, align 8
+  %i.wv = getelementptr inbounds nuw i8, ptr %i.wu, i64 32 ; 2 uses
+  %i.ww = getelementptr inbounds nuw i8, ptr %168, i64 16 ; 2 uses
+  store ptr %i.wv, ptr %i.ww, align 8
+  store ptr %i.wj, ptr %i.wu, align 8
+  %.sroa.4813.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 8
+  store ptr %i.wl, ptr %.sroa.4813.0..sroa_idx, align 8
+  %.sroa.5814.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 16
+  store ptr %i.wn, ptr %.sroa.5814.0..sroa_idx, align 8
+  %.sroa.6815.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.wu, i64 24
+  store ptr %i.wo, ptr %.sroa.6815.0..sroa_idx, align 8
+  %i.wx = getelementptr inbounds nuw i8, ptr %168, i64 8
+  store ptr %i.wv, ptr %i.wx, align 8
+  call void @_ZN2v88internal8compiler13CodeAssembler6BranchIJNS0_10FixedArrayENS0_7IntPtrTES5_NS0_8UintPtrTEEJS4_S5_S5_S6_EEEvNS0_5TNodeINS0_5BoolTEEEPNS1_31CodeAssemblerParameterizedLabelIJDpT_EEESt6vectorIPNS1_4NodeESaISH_EEPNSA_IJDpT0_EEESJ_(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull dead_on_return %166, ptr noundef nonnull %90, ptr noundef nonnull %167, ptr noundef nonnull %91, ptr noundef nonnull %168)
+  %i.wy = load ptr, ptr %168, align 8             ; 3 uses
+  %.not.i.i.i198 = icmp eq ptr %i.wy, null
+  br i1 %.not.i.i.i198, label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit199, label %bb.bv
+
+bb.bv:                                            ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i195
+  %i.wz = load ptr, ptr %i.ww, align 8
+  %i.xa = ptrtoint ptr %i.wz to i64
+  %i.xb = ptrtoint ptr %i.wy to i64
+  %i.xc = sub i64 %i.xa, %i.xb
+  call void @_ZdlPvm(ptr noundef nonnull %i.wy, i64 noundef %i.xc) #11
+  br label %_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit199
+
+_ZNSt6vectorIPN2v88internal8compiler4NodeESaIS4_EED2Ev.exit199: ; preds = %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i.i195, %bb.bv
+  %i.xd = load ptr, ptr %167, align 8             ; 3 uses
+  %.not.i.i.i200 = icmp eq ptr %i.xd, null
+end_hunk_0
