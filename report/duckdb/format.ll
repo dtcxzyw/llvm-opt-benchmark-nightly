@@ -201,12 +201,8 @@ _ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE7reserveEm.exit
   store i64 %i.ca, ptr %i.e, align 8, !tbaa !10
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !17
-  %4 = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.bz ; 3 uses
-  store <4 x i8> <i8 101, i8 114, i8 114, i8 111>, ptr %4, align 1, !tbaa !18
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  store i8 114, ptr %5, align 1, !tbaa !18
-  %i.ch = getelementptr inbounds nuw i8, ptr %4, i64 5
-  store i8 32, ptr %i.ch, align 1, !tbaa !18
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 %i.bz
+  store <6 x i8> <i8 101, i8 114, i8 114, i8 111, i8 114, i8 32>, ptr %i.ch, align 1, !tbaa !18
   %.lobit.i.i = lshr i32 %1, 31
   %i.ci = zext nneg i32 %.lobit.i.i to i64
   %i.cj = load i64, ptr %i.e, align 8, !tbaa !10  ; 2 uses

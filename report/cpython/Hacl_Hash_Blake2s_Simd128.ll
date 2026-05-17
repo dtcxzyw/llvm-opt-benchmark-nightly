@@ -201,20 +201,12 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden range(i24 0, 131072) i24 @_Py_LibHacl_Hacl_Hash_Blake2s_Simd128_info(ptr noundef readonly captures(none) %0) local_unnamed_addr #17 {
 bb.a:
-  %.sroa.0.0.copyload = load i8, ptr %0, align 8, !tbaa !10
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %.sroa.4.0.copyload = load i8, ptr %.sroa.4.0..sroa_idx, align 1, !tbaa !10
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.5.0.copyload = load i8, ptr %.sroa.5.0..sroa_idx, align 2, !tbaa !13
-  %1 = and i8 %.sroa.5.0.copyload, 1
-  %.sroa.3.0.insert.ext = zext nneg i8 %1 to i24
-  %.sroa.3.0.insert.shift = shl nuw nsw i24 %.sroa.3.0.insert.ext, 16
-  %.sroa.2.0.insert.ext = zext i8 %.sroa.4.0.copyload to i24
-  %.sroa.2.0.insert.shift = shl nuw nsw i24 %.sroa.2.0.insert.ext, 8
-  %.sroa.2.0.insert.insert = or disjoint i24 %.sroa.3.0.insert.shift, %.sroa.2.0.insert.shift
-  %.sroa.04.0.insert.ext = zext i8 %.sroa.0.0.copyload to i24
-  %.sroa.04.0.insert.insert = or disjoint i24 %.sroa.2.0.insert.insert, %.sroa.04.0.insert.ext
-  ret i24 %.sroa.04.0.insert.insert
+  %1 = load <3 x i8>, ptr %0, align 8, !tbaa !10
+  %2 = and <3 x i8> %1, <i8 -1, i8 -1, i8 1>
+  %3 = zext <3 x i8> %2 to <3 x i24>
+  %4 = shl <3 x i24> %3, <i24 0, i24 8, i24 16>
+  %5 = tail call i24 @llvm.vector.reduce.or.v3i24(<3 x i24> %4)
+  ret i24 %5
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable
@@ -542,6 +534,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i24 @llvm.vector.reduce.or.v3i24(<3 x i24>) #22
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @GifQuantizeBuffer(i32 noundef %0, i32 noundef %1, ptr noundef captures(none) %2, ptr noundef readonly captures(none) %3, ptr noundef readonly captures(none) %4, ptr noundef readonly captures(none) %5, ptr noundef writeonly captures(none) %6, ptr noundef writeonly captures(none) %7) local_unnamed_addr #0 {
 bb.a:
-  %8 = alloca [256 x %struct.NewColorMapType], align 16 ; 12 uses
+  %8 = alloca [256 x %struct.NewColorMapType], align 16 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #8
   %i.a = tail call noalias dereferenceable_or_null(786432) ptr @malloc(i64 noundef 786432) #9 ; 16 uses
   %i.b = icmp eq ptr %i.a, null
@@ -94,29 +94,35 @@ bb.a:
   br label %.preheader236
 
 .preheader236:                                    ; preds = %.preheader236, %.preheader236.preheader
-  %indvars.iv298 = phi i64 [ 0, %.preheader236.preheader ], [ %indvars.iv.next299.1, %.preheader236 ] ; 3 uses
-  %i.as = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 5 uses
+  %indvars.iv298 = phi i64 [ 0, %.preheader236.preheader ], [ %indvars.iv.next299.1, %.preheader236 ] ; 5 uses
+  %i.as = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 3 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store i32 0, ptr %i.at, align 8, !tbaa !16
   %i.au = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.au, i8 0, i64 16, i1 false)
-  %i.av = getelementptr inbounds nuw i8, ptr %i.as, i64 4
-  store i8 -1, ptr %i.av, align 4, !tbaa !7
-  store <4 x i8> <i8 0, i8 0, i8 0, i8 -1>, ptr %i.as, align 16, !tbaa !7
-  %i.aw = getelementptr inbounds nuw i8, ptr %i.as, i64 5
-  store i8 -1, ptr %i.aw, align 1, !tbaa !7
-  %i.ax = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 5 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 32
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
+  store <6 x i8> <i8 0, i8 0, i8 0, i8 -1, i8 -1, i8 -1>, ptr %i.as, align 16, !tbaa !7
+  %9 = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 3 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 40
+  store i32 0, ptr %10, align 8, !tbaa !16
+  %i.aw = getelementptr inbounds nuw i8, ptr %9, i64 48
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.aw, i8 0, i64 16, i1 false)
+  store <6 x i8> <i8 0, i8 0, i8 0, i8 -1, i8 -1, i8 -1>, ptr %i.av, align 16, !tbaa !7
+  %i.ax = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 3 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 64
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ax, i64 72
   store i32 0, ptr %i.az, align 8, !tbaa !16
-  %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 48
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.ax, i64 80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ba, i8 0, i64 16, i1 false)
-  %i.bb = getelementptr inbounds nuw i8, ptr %i.ax, i64 36
-  store i8 -1, ptr %i.bb, align 4, !tbaa !7
-  store <4 x i8> <i8 0, i8 0, i8 0, i8 -1>, ptr %i.ay, align 16, !tbaa !7
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 37
-  store i8 -1, ptr %i.bc, align 1, !tbaa !7
-  %indvars.iv.next299.1 = add nuw nsw i64 %indvars.iv298, 2 ; 2 uses
+  store <6 x i8> <i8 0, i8 0, i8 0, i8 -1, i8 -1, i8 -1>, ptr %i.ay, align 16, !tbaa !7
+  %11 = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv298 ; 3 uses
+  %i.bb = getelementptr inbounds nuw i8, ptr %11, i64 96
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 104
+  store i32 0, ptr %12, align 8, !tbaa !16
+  %i.bc = getelementptr inbounds nuw i8, ptr %11, i64 112
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bc, i8 0, i64 16, i1 false)
+  store <6 x i8> <i8 0, i8 0, i8 0, i8 -1, i8 -1, i8 -1>, ptr %i.bb, align 16, !tbaa !7
+  %indvars.iv.next299.1 = add nuw nsw i64 %indvars.iv298, 4 ; 2 uses
   %exitcond301.not.1 = icmp eq i64 %indvars.iv.next299.1, 256
   br i1 %exitcond301.not.1, label %.preheader235, label %.preheader236, !llvm.loop !18
 
@@ -344,7 +350,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
 
 bb.q:                                             ; preds = %._crit_edge.i
   %i.eb = zext i32 %.3.2.i to i64
-  %i.ec = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %i.eb ; 8 uses
+  %i.ec = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %i.eb ; 6 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 8 ; 2 uses
   %i.ee = load i32, ptr %i.ed, align 8, !tbaa !16 ; 4 uses
   %i.ef = zext i32 %i.ee to i64                   ; 3 uses
@@ -525,7 +531,7 @@ bb.r:                                             ; preds = %bb.q
   %i.hm = load i8, ptr %i.hl, align 1, !tbaa !7
   %i.hn = getelementptr inbounds nuw i8, ptr %.lcssa, i64 %i.hk
   %i.ho = load i8, ptr %i.hn, align 1, !tbaa !7
-  %i.hp = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv310 ; 8 uses
+  %i.hp = getelementptr inbounds nuw [32 x i8], ptr %8, i64 %indvars.iv310 ; 6 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 24
   store ptr %.lcssa, ptr %i.hq, align 8, !tbaa !20
   store ptr null, ptr %i.hi, align 8, !tbaa !21
@@ -539,22 +545,14 @@ bb.r:                                             ; preds = %bb.q
   store i32 %i.hu, ptr %i.hv, align 8, !tbaa !16
   store i32 %.0116170.i.lcssa, ptr %i.ed, align 8, !tbaa !16
   %i.hw = getelementptr inbounds nuw i8, ptr %i.ec, i64 3
-  %9 = getelementptr inbounds nuw i8, ptr %i.hp, i64 3
-  %10 = getelementptr inbounds nuw i8, ptr %i.ec, i64 4
-  %11 = load i8, ptr %10, align 4, !tbaa !7
-  %12 = getelementptr inbounds nuw i8, ptr %i.hp, i64 4
-  store i8 %11, ptr %12, align 4, !tbaa !7
-  %13 = load <4 x i8>, ptr %i.ec, align 16, !tbaa !7
-  store <4 x i8> %13, ptr %i.hp, align 16, !tbaa !7
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.ec, i64 5
-  %14 = load i8, ptr %i.hx, align 1, !tbaa !7
-  %15 = getelementptr inbounds nuw i8, ptr %i.hp, i64 5
-  store i8 %14, ptr %15, align 1, !tbaa !7
+  %i.hx = getelementptr inbounds nuw i8, ptr %i.hp, i64 3
+  %13 = load <6 x i8>, ptr %i.ec, align 16, !tbaa !7
+  store <6 x i8> %13, ptr %i.hp, align 16, !tbaa !7
   %i.hy = shl i8 %i.hm, 3
   %i.hz = shl i8 %i.ho, 3                         ; 2 uses
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hp, i64 %i.hk ; 2 uses
   %i.ib = load i8, ptr %i.ia, align 1, !tbaa !7
-  %i.ic = getelementptr inbounds nuw i8, ptr %9, i64 %i.hk ; 2 uses
+  %i.ic = getelementptr inbounds nuw i8, ptr %i.hx, i64 %i.hk ; 2 uses
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !7
   %i.ie = sub i8 %i.ib, %i.hz
   %i.if = add i8 %i.ie, %i.id

@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @_ZNK14btCapsuleShape21calculateLocalInertiaEfR9btVector3(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(68) %0, float noundef %1, ptr noundef nonnull writeonly align 4 captures(none) dereferenceable(16) initializes((0, 12)) %2) unnamed_addr #6 align 2 {
 bb.a:
-  %3 = alloca %class.btVector3, align 16          ; 6 uses
+  %3 = alloca %class.btVector3, align 16          ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i32, ptr %i.a, align 8, !tbaa !13   ; 2 uses
   %i.c = add nsw i32 %i.b, 2
@@ -211,7 +211,6 @@ bb.a:
   %i.g = getelementptr inbounds [4 x i8], ptr %i.e, i64 %i.f
   %i.h = load float, ptr %i.g, align 4, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.i = insertelement <4 x float> <float poison, float 0.000000e+00, float poison, float poison>, float %i.h, i64 0
   %i.j = shufflevector <4 x float> %i.i, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 1>
   store <4 x float> %i.j, ptr %3, align 16, !tbaa !19
@@ -222,28 +221,18 @@ bb.a:
   %i.o = load float, ptr %i.n, align 4, !tbaa !19
   %i.p = fadd float %i.m, %i.o
   store float %i.p, ptr %i.n, align 4, !tbaa !19
-  %5 = load float, ptr %3, align 16, !tbaa !19
-  %i.q = fmul float %1, f0x3DAAAAAA               ; 2 uses
-  %6 = load <2 x float>, ptr %4, align 4, !tbaa !19 ; 2 uses
-  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %8 = insertelement <2 x float> %7, float %5, i64 1
-  %9 = fadd <2 x float> %8, splat (float 4.000000e-02)
-  %10 = fadd <2 x float> %6, splat (float 4.000000e-02)
-  %11 = fmul <2 x float> %9, splat (float 2.000000e+00) ; 2 uses
-  %12 = fmul <2 x float> %10, splat (float 2.000000e+00) ; 2 uses
-  %13 = fmul <2 x float> %11, %11                 ; 2 uses
-  %14 = fmul <2 x float> %12, %12                 ; 2 uses
-  %15 = fadd <2 x float> %13, %14
-  %16 = insertelement <2 x float> poison, float %i.q, i64 0
-  %17 = shufflevector <2 x float> %16, <2 x float> poison, <2 x i32> zeroinitializer
-  %18 = fmul <2 x float> %17, %15
-  store <2 x float> %18, ptr %2, align 4, !tbaa !19
-  %shift = shufflevector <2 x float> %13, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = fadd <2 x float> %shift, %14
-  %19 = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %20 = fmul float %i.q, %19
-  %21 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %20, ptr %21, align 4, !tbaa !19
+  %i.q = fmul float %1, f0x3DAAAAAA
+  %4 = load <3 x float>, ptr %3, align 16, !tbaa !19
+  %5 = fadd <3 x float> %4, splat (float 4.000000e-02)
+  %6 = fmul <3 x float> %5, splat (float 2.000000e+00) ; 2 uses
+  %7 = fmul <3 x float> %6, %6                    ; 2 uses
+  %8 = insertelement <3 x float> poison, float %i.q, i64 0
+  %9 = shufflevector <3 x float> %8, <3 x float> poison, <3 x i32> zeroinitializer
+  %10 = shufflevector <3 x float> %7, <3 x float> poison, <3 x i32> <i32 1, i32 2, i32 0>
+  %11 = shufflevector <3 x float> %7, <3 x float> poison, <3 x i32> <i32 2, i32 0, i32 1>
+  %12 = fadd <3 x float> %10, %11
+  %13 = fmul <3 x float> %9, %12
+  store <3 x float> %13, ptr %2, align 4, !tbaa !19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   ret void
 }

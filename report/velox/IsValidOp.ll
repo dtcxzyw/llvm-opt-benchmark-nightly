@@ -201,7 +201,7 @@ _ZN4geos9operation5valid9IsValidOp10logInvalidEiPKNS_4geom10CoordinateE.exit.thr
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN4geos9operation5valid9IsValidOp7isValidEPKNS_4geom10LinearRingE(ptr noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.geos::geom::Coordinate", align 8 ; 7 uses
+  %2 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   %i.a = tail call noundef ptr @_ZNK4geos4geom10LineString16getCoordinatesROEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
   tail call void @_ZN4geos9operation5valid9IsValidOp22checkCoordinateInvalidEPKNS_4geom18CoordinateSequenceE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 6 uses
@@ -234,17 +234,12 @@ _ZN4geos9operation5valid9IsValidOp21checkRingTooFewPointsEPKNS_4geom10LinearRing
 bb.e:                                             ; preds = %_ZN4geos9operation5valid9IsValidOp21checkRingTooFewPointsEPKNS_4geom10LinearRingE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   call void @_ZN4geos9operation5valid23PolygonTopologyAnalyzer20findSelfIntersectionEPKNS_4geom10LinearRingE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %2, ptr noundef nonnull %1)
-  %3 = load double, ptr %2, align 8, !tbaa !30
-  %4 = fcmp uno double %3, 0.000000e+00
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load double, ptr %5, align 8
-  %7 = fcmp uno double %6, 0.000000e+00
-  %or.cond.i.i = select i1 %4, i1 %7, i1 false
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %9 = load double, ptr %8, align 8
-  %10 = fcmp uno double %9, 0.000000e+00
-  %11 = select i1 %or.cond.i.i, i1 %10, i1 false
-  br i1 %11, label %_ZN4geos9operation5valid9IsValidOp25checkSelfIntersectingRingEPKNS_4geom10LinearRingE.exit, label %bb.f
+  %3 = load <3 x double>, ptr %2, align 8
+  %.fr = freeze <3 x double> %3
+  %4 = fcmp ord <3 x double> %.fr, zeroinitializer
+  %5 = bitcast <3 x i1> %4 to i3
+  %6 = icmp eq i3 %5, 0
+  br i1 %6, label %_ZN4geos9operation5valid9IsValidOp25checkSelfIntersectingRingEPKNS_4geom10LinearRingE.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.j = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #21 ; 3 uses
@@ -647,20 +642,15 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation5valid9IsValidOp25checkSelfIntersectingRingEPKNS_4geom10LinearRingE(ptr noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr noundef %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.geos::geom::Coordinate", align 8 ; 7 uses
+  %2 = alloca %"class.geos::geom::Coordinate", align 8 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #19
   call void @_ZN4geos9operation5valid23PolygonTopologyAnalyzer20findSelfIntersectionEPKNS_4geom10LinearRingE(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %2, ptr noundef %1)
-  %3 = load double, ptr %2, align 8, !tbaa !30
-  %4 = fcmp uno double %3, 0.000000e+00
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = load double, ptr %5, align 8
-  %7 = fcmp uno double %6, 0.000000e+00
-  %or.cond.i = select i1 %4, i1 %7, i1 false
-  %8 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %9 = load double, ptr %8, align 8
-  %10 = fcmp uno double %9, 0.000000e+00
-  %11 = select i1 %or.cond.i, i1 %10, i1 false
-  br i1 %11, label %_ZN4geos9operation5valid9IsValidOp10logInvalidEiPKNS_4geom10CoordinateE.exit, label %bb.b
+  %3 = load <3 x double>, ptr %2, align 8
+  %.fr = freeze <3 x double> %3
+  %4 = fcmp ord <3 x double> %.fr, zeroinitializer
+  %5 = bitcast <3 x i1> %4 to i3
+  %6 = icmp eq i3 %5, 0
+  br i1 %6, label %_ZN4geos9operation5valid9IsValidOp10logInvalidEiPKNS_4geom10CoordinateE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.a = call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #21 ; 3 uses

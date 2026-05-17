@@ -201,7 +201,7 @@ _ZN2v88internal8compiler10turboshaft21UniformReducerAdapterINS2_21EmitProjection
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden i32 @_ZN2v88internal8compiler10turboshaft18WasmShuffleReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorES3_S6_EEEEEEEEEEEE30ReduceInputGraphSimd128ShuffleENS2_7OpIndexERKNS2_16Simd128ShuffleOpE(ptr noundef nonnull align 8 dereferenceable(424) %0, i32 %1, ptr noundef nonnull align 4 dereferenceable(21) %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.907", align 8   ; 54 uses
+  %3 = alloca %"struct.std::array.907", align 16  ; 50 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 20
   %i.b = load i8, ptr %i.a, align 4               ; 2 uses
   %.not = icmp eq i8 %i.b, 3
@@ -378,7 +378,7 @@ _ZN2v88internal8compiler10turboshaft12GraphVisitorINS2_18WasmShuffleReducerINS2_
   %.sroa.014.0.i.i56 = phi i32 [ %i.am, %_ZN2v88internal8compiler10turboshaft12GraphVisitorINS2_18WasmShuffleReducerINS2_21EmitProjectionReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJS3_S4_S7_EEEEEEEEEEEEEE13MapToNewGraphILb0ENS2_12WordWithBitsILm128EEEEENS2_1VIT0_EESO_i.exit ], [ %.sroa.02.0.copyload.i10.i.i61, %_ZNRSt8optionalIN2v88internal8compiler10turboshaft16SnapshotTableKeyINS3_7OpIndexENS3_12VariableDataEEEE5valueEv.exit.i.i60 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %i.as, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %i.as, i64 16, i1 false)
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 232
   %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 240
@@ -419,28 +419,18 @@ _ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer23DoesShuffleIntoHighH
   br i1 %.not.lcssa.i, label %.lr.ph.i69.preheader, label %.lr.ph.i74
 
 .lr.ph.i69.preheader:                             ; preds = %_ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer23DoesShuffleIntoHighHalfEPKNS2_16Simd128ShuffleOpE.exit
-  %4 = load <8 x i8>, ptr %3, align 8
-  %5 = add <8 x i8> %4, splat (i8 -8)
-  store <8 x i8> %5, ptr %3, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %.079.i.ptr.8 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %7 = load i8, ptr %.079.i.ptr.8, align 8
-  %8 = add i8 %7, -8
-  store i8 %8, ptr %6, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 9
-  %.079.i.ptr.9 = getelementptr inbounds nuw i8, ptr %3, i64 9
-  %10 = load i8, ptr %.079.i.ptr.9, align 1
-  %11 = add i8 %10, -8
-  store i8 %11, ptr %9, align 1
+  %4 = load <10 x i8>, ptr %3, align 16
+  %5 = add <10 x i8> %4, splat (i8 -8)
+  store <10 x i8> %5, ptr %3, align 16
   br label %_ZSt9transformIPhS0_ZN2v88internal8compiler10turboshaft18WasmShuffleReducerINS4_21EmitProjectionReducerINS4_18GenericReducerBaseINS4_13TSReducerBaseINS4_11StackBottomINS1_4base3tmp5list1IJNS4_12GraphVisitorES5_S8_EEEEEEEEEEEE30ReduceInputGraphSimd128ShuffleENS4_7OpIndexERKNS4_16Simd128ShuffleOpEEUlhE_ET0_T_SQ_SP_T1_.exit.thread
 
 .thread:                                          ; preds = %bb.l, %_ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer22DoesShuffleIntoLowHalfEPKNS2_16Simd128ShuffleOpE.exit
   br i1 %.not.lcssa.i, label %.lr.ph.i70.preheader, label %_ZSt9transformIPhS0_ZN2v88internal8compiler10turboshaft18WasmShuffleReducerINS4_21EmitProjectionReducerINS4_18GenericReducerBaseINS4_13TSReducerBaseINS4_11StackBottomINS1_4base3tmp5list1IJNS4_12GraphVisitorES5_S8_EEEEEEEEEEEE30ReduceInputGraphSimd128ShuffleENS4_7OpIndexERKNS4_16Simd128ShuffleOpEEUlhE_ET0_T_SQ_SP_T1_.exit
 
 .lr.ph.i70.preheader:                             ; preds = %.thread
-  %i.bf = load i8, ptr %3, align 8
+  %i.bf = load i8, ptr %3, align 16
   %i.bg = add i8 %i.bf, -8
-  store i8 %i.bg, ptr %3, align 8
+  store i8 %i.bg, ptr %3, align 16
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 1 ; 2 uses
   %i.bi = load i8, ptr %i.bh, align 1
   %i.bj = add i8 %i.bi, -8
@@ -542,7 +532,7 @@ _ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer25ShouldRewriteShuffle
 .loopexit:                                        ; preds = %bb.m, %_ZNRSt8optionalISt6bitsetILm16EEE5valueEv.exit, %_ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer25ShouldRewriteShuffleToLowEPKNS2_16Simd128ShuffleOpE.exit
   %storemerge.in = phi ptr [ %i.cs, %_ZNK2v88internal8compiler10turboshaft19WasmShuffleAnalyzer25ShouldRewriteShuffleToLowEPKNS2_16Simd128ShuffleOpE.exit ], [ %i.as, %_ZNRSt8optionalISt6bitsetILm16EEE5valueEv.exit ], [ %i.as, %bb.m ]
   %storemerge = load i64, ptr %storemerge.in, align 4
-  store i64 %storemerge, ptr %3, align 8
+  store i64 %storemerge, ptr %3, align 16
   switch i64 %i.cl, label %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_18WasmShuffleReducerENS2_13TSReducerBaseEEEEEEE14Simd128ShuffleENS2_1VINS2_12WordWithBitsILm128EEEEESH_NS2_16Simd128ShuffleOp4KindEPKh.exit [
     i64 3, label %bb.n
     i64 15, label %bb.o

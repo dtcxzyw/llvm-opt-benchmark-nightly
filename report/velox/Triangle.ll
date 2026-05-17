@@ -11,39 +11,24 @@ define noundef zeroext i1 @_ZN4geos4geom8Triangle10isIsocelesEv(ptr noundef nonn
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %1 = load double, ptr %i.a, align 8, !tbaa !7   ; 2 uses
-  %2 = load double, ptr %i.b, align 8, !tbaa !7   ; 2 uses
-  %3 = fsub double %1, %2                         ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = load double, ptr %4, align 8, !tbaa !10    ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %7 = load double, ptr %6, align 8, !tbaa !10    ; 2 uses
-  %8 = fsub double %5, %7                         ; 2 uses
-  %9 = fmul double %3, %3
-  %10 = fmul double %8, %8
-  %11 = fadd double %9, %10
-  %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %11) ; 2 uses
-  %12 = load double, ptr %0, align 8, !tbaa !7    ; 2 uses
-  %13 = fsub double %12, %2                       ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %15 = load double, ptr %14, align 8, !tbaa !10  ; 2 uses
-  %16 = fsub double %15, %7                       ; 2 uses
-  %17 = fmul double %13, %13
-  %18 = fmul double %16, %16
-  %19 = fadd double %17, %18
-  %sqrt.i12 = tail call noundef double @llvm.sqrt.f64(double %19) ; 2 uses
-  %20 = fsub double %12, %1                       ; 2 uses
-  %21 = fsub double %15, %5                       ; 2 uses
-  %22 = fmul double %20, %20
-  %23 = fmul double %21, %21
-  %24 = fadd double %22, %23
-  %sqrt.i13 = tail call noundef double @llvm.sqrt.f64(double %24) ; 2 uses
-  %25 = fcmp oeq double %sqrt.i, %sqrt.i12
-  %26 = fcmp oeq double %sqrt.i12, %sqrt.i13
-  %or.cond = or i1 %25, %26
-  %27 = fcmp oeq double %sqrt.i13, %sqrt.i
-  %or.cond11 = or i1 %27, %or.cond
-  ret i1 %or.cond11
+  %1 = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
+  %2 = load <2 x double>, ptr %i.b, align 8, !tbaa !7 ; 2 uses
+  %3 = load <2 x double>, ptr %0, align 8, !tbaa !7 ; 2 uses
+  %4 = shufflevector <2 x double> %1, <2 x double> %3, <3 x i32> <i32 2, i32 0, i32 2>
+  %5 = shufflevector <2 x double> %2, <2 x double> %1, <3 x i32> <i32 2, i32 0, i32 0>
+  %6 = fsub <3 x double> %4, %5                   ; 2 uses
+  %7 = shufflevector <2 x double> %1, <2 x double> %3, <3 x i32> <i32 3, i32 1, i32 3>
+  %8 = shufflevector <2 x double> %2, <2 x double> %1, <3 x i32> <i32 3, i32 1, i32 1>
+  %9 = fsub <3 x double> %7, %8                   ; 2 uses
+  %10 = fmul <3 x double> %6, %6
+  %11 = fmul <3 x double> %9, %9
+  %12 = fadd <3 x double> %10, %11
+  %13 = tail call <3 x double> @llvm.sqrt.v3f64(<3 x double> %12) ; 2 uses
+  %14 = shufflevector <3 x double> %13, <3 x double> poison, <3 x i32> <i32 1, i32 2, i32 0>
+  %15 = fcmp oeq <3 x double> %13, %14
+  %16 = bitcast <3 x i1> %15 to i3
+  %17 = icmp ne i3 %16, 0
+  ret i1 %17
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -57,22 +42,22 @@ define void @_ZN4geos4geom8Triangle8inCentreERNS0_10CoordinateE(ptr noundef nonn
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.c = load double, ptr %i.a, align 8, !tbaa !7 ; 3 uses
-  %i.d = load double, ptr %i.b, align 8, !tbaa !7 ; 3 uses
+  %i.c = load double, ptr %i.a, align 8, !tbaa !9 ; 3 uses
+  %i.d = load double, ptr %i.b, align 8, !tbaa !9 ; 3 uses
   %i.e = fsub double %i.c, %i.d                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.g = load double, ptr %i.f, align 8, !tbaa !10 ; 3 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !11 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.i = load double, ptr %i.h, align 8, !tbaa !10 ; 3 uses
+  %i.i = load double, ptr %i.h, align 8, !tbaa !11 ; 3 uses
   %i.j = fsub double %i.g, %i.i                   ; 2 uses
   %i.k = fmul double %i.e, %i.e
   %i.l = fmul double %i.j, %i.j
   %i.m = fadd double %i.k, %i.l
   %sqrt.i = tail call noundef double @llvm.sqrt.f64(double %i.m) ; 3 uses
-  %i.n = load double, ptr %0, align 8, !tbaa !7   ; 3 uses
+  %i.n = load double, ptr %0, align 8, !tbaa !9   ; 3 uses
   %i.o = fsub double %i.n, %i.d                   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.q = load double, ptr %i.p, align 8, !tbaa !10 ; 3 uses
+  %i.q = load double, ptr %i.p, align 8, !tbaa !11 ; 3 uses
   %i.r = fsub double %i.q, %i.i                   ; 2 uses
   %i.s = fmul double %i.o, %i.o
   %i.t = fmul double %i.r, %i.r
@@ -98,11 +83,11 @@ bb.a:
   %i.al = fmul double %i.i, %sqrt.i16
   %i.am = fadd double %i.al, %i.ak
   %i.an = fdiv double %i.am, %i.ab
-  store double %i.ah, ptr %1, align 8, !tbaa !11
+  store double %i.ah, ptr %1, align 8, !tbaa !7
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store double %i.an, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !11
+  store double %i.an, ptr %.sroa.4.0..sroa_idx, align 8, !tbaa !7
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !11
+  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !7
   ret void
 }
 
@@ -114,10 +99,10 @@ define void @_ZN4geos4geom8Triangle12circumcentreERNS0_10CoordinateE(ptr noundef
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !11 ; 4 uses
-  %i.d = load <2 x double>, ptr %0, align 8, !tbaa !11
+  %i.c = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
+  %i.d = load <2 x double>, ptr %0, align 8, !tbaa !7
   %i.e = fsub <2 x double> %i.d, %i.c             ; 5 uses
-  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !11
+  %i.f = load <2 x double>, ptr %i.b, align 8, !tbaa !7
   %i.g = fsub <2 x double> %i.f, %i.c             ; 5 uses
   %i.h = extractelement <2 x double> %i.e, i64 0
   %i.i = extractelement <2 x double> %i.g, i64 1  ; 3 uses
@@ -149,9 +134,9 @@ bb.a:
   %i.ag = fsub <2 x double> %i.c, %i.af
   %i.ah = fadd <2 x double> %i.c, %i.af
   %i.ai = shufflevector <2 x double> %i.ag, <2 x double> %i.ah, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.ai, ptr %1, align 8, !tbaa !11
+  store <2 x double> %i.ai, ptr %1, align 8, !tbaa !7
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !11
+  store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !7
   ret void
 }
 
@@ -183,9 +168,9 @@ declare void @_ZN4geos9algorithm14CGAlgorithmsDD14circumcentreDDERKNS_4geom10Coo
 define void @_ZN4geos4geom8Triangle12circumcentreERKNS0_10CoordinateES4_S4_(ptr dead_on_unwind noalias writable writeonly sret(%"class.geos::geom::Coordinate") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %3) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !11
-  %i.c = load <2 x double>, ptr %2, align 8, !tbaa !11
-  %i.d = load <2 x double>, ptr %3, align 8, !tbaa !11 ; 4 uses
+  %i.b = load <2 x double>, ptr %1, align 8, !tbaa !7
+  %i.c = load <2 x double>, ptr %2, align 8, !tbaa !7
+  %i.d = load <2 x double>, ptr %3, align 8, !tbaa !7 ; 4 uses
   %i.e = fsub <2 x double> %i.b, %i.d             ; 5 uses
   %i.f = fsub <2 x double> %i.c, %i.d             ; 5 uses
   %i.g = extractelement <2 x double> %i.e, i64 0
@@ -218,8 +203,8 @@ bb.a:
   %i.af = fsub <2 x double> %i.d, %i.ae
   %i.ag = fadd <2 x double> %i.d, %i.ae
   %i.ah = shufflevector <2 x double> %i.af, <2 x double> %i.ag, <2 x i32> <i32 0, i32 3>
-  store <2 x double> %i.ah, ptr %0, align 8, !tbaa !11
-  store double +qnan, ptr %i.a, align 8, !tbaa !11
+  store <2 x double> %i.ah, ptr %0, align 8, !tbaa !7
+  store double +qnan, ptr %i.a, align 8, !tbaa !7
   ret void
 }
 
@@ -282,6 +267,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #6
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x double> @llvm.sqrt.v3f64(<3 x double>) #6
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
@@ -302,10 +290,10 @@ attributes #7 = { nounwind }
 !4 = !{!"int", !5, i64 0}
 !5 = !{!"omnipotent char", !6, i64 0}
 !6 = !{!"Simple C++ TBAA"}
-!7 = !{!8, !9, i64 0}
-!8 = !{!"_ZTSN4geos4geom10CoordinateE", !9, i64 0, !9, i64 8, !9, i64 16}
-!9 = !{!"double", !5, i64 0}
-!10 = !{!8, !9, i64 8}
-!11 = !{!9, !9, i64 0}
-!12 = !{i64 0, i64 8, !11, i64 8, i64 8, !11, i64 16, i64 8, !11}
+!7 = !{!8, !8, i64 0}
+!8 = !{!"double", !5, i64 0}
+!9 = !{!10, !8, i64 0}
+!10 = !{!"_ZTSN4geos4geom10CoordinateE", !8, i64 0, !8, i64 8, !8, i64 16}
+!11 = !{!10, !8, i64 8}
+!12 = !{i64 0, i64 8, !7, i64 8, i64 8, !7, i64 16, i64 8, !7}
 end_hunk_0

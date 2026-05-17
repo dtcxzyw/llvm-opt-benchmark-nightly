@@ -201,16 +201,14 @@ ai_get_afamily.exit.i:                            ; preds = %get_addrinfo.exit.i
 bb.c:                                             ; preds = %ai_get_afamily.exit.i
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 36
   %i.i = load i32, ptr %i.h, align 4, !tbaa !46
-  %i.j = tail call noundef i32 @llvm.bswap.i32(i32 %i.i) ; 3 uses
-  %1 = and i32 %i.j, -16777216
-  %2 = icmp eq i32 %1, 167772160
-  %3 = and i32 %i.j, -1048576
-  %4 = icmp eq i32 %3, -1408237568
-  %or.cond = or i1 %2, %4
-  %5 = and i32 %i.j, -65536
-  %i.k = icmp eq i32 %5, -1062731776
-  %or.cond4 = or i1 %i.k, %or.cond
-  %spec.select = select i1 %or.cond4, i64 20, i64 0
+  %i.j = tail call noundef i32 @llvm.bswap.i32(i32 %i.i)
+  %1 = insertelement <3 x i32> poison, i32 %i.j, i64 0
+  %2 = shufflevector <3 x i32> %1, <3 x i32> poison, <3 x i32> zeroinitializer
+  %3 = and <3 x i32> %2, <i32 -16777216, i32 -1048576, i32 -65536>
+  %4 = icmp eq <3 x i32> %3, <i32 167772160, i32 -1408237568, i32 -1062731776>
+  %5 = bitcast <3 x i1> %4 to i3
+  %i.k = icmp eq i3 %5, 0
+  %spec.select = select i1 %i.k, i64 0, i64 20
   br label %extract_in_addr.exit.thread
 
 extract_in_addr.exit.thread:                      ; preds = %get_addrinfo.exit.i, %ai_get_afamily.exit.i, %bb.c

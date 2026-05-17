@@ -201,11 +201,11 @@ declare noundef i32 @_ZN4geos9algorithm11Orientation5indexERKNS_4geom10Coordinat
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos4geom11LineSegment13closestPointsERKS1_(ptr dead_on_unwind noalias writable writeonly sret(%"struct.std::array") align 8 captures(none) initializes((0, 48)) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(48) %2) local_unnamed_addr #3 align 2 {
 _ZNK4geos4geom11LineSegment12intersectionERKS1_.exit:
-  %3 = alloca %"class.geos::algorithm::LineIntersector", align 8 ; 11 uses
+  %3 = alloca %"class.geos::algorithm::LineIntersector", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #15, !noalias !15
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.ptr.i.i = getelementptr inbounds nuw i8, ptr %3, i64 48 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %3, i64 64
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.ptr.i.i, i8 0, i64 16, i1 false), !noalias !15
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !noalias !15
   store double +qnan, ptr %i.b, align 8, !tbaa !18, !noalias !15
@@ -219,34 +219,25 @@ _ZNK4geos4geom11LineSegment12intersectionERKS1_.exit:
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
   call void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr noundef nonnull align 8 dereferenceable(129) %3, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(48) %2, ptr noundef nonnull align 8 dereferenceable(24) %i.f), !noalias !15
   %i.g = load i64, ptr %i.a, align 8, !tbaa !25, !noalias !15
-  %.not.i = icmp eq i64 %i.g, 0                   ; 3 uses
-  %.sroa.0122.0.copyload124 = load double, ptr %.ptr.i.i, align 8
-  %.sroa.7.0..ptr.i.i.sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 56
-  %.sroa.7.0.copyload127 = load double, ptr %.sroa.7.0..ptr.i.i.sroa_idx, align 8
-  %.sroa.9.0.copyload130 = load double, ptr %i.b, align 8
-  %.sroa.9.0 = select i1 %.not.i, double +qnan, double %.sroa.9.0.copyload130 ; 3 uses
-  %.sroa.7.0 = select i1 %.not.i, double +qnan, double %.sroa.7.0.copyload127 ; 3 uses
-  %.sroa.0122.0 = select i1 %.not.i, double +qnan, double %.sroa.0122.0.copyload124 ; 3 uses
+  %.not.i = icmp eq i64 %i.g, 0
+  %4 = load <3 x double>, ptr %.ptr.i.i, align 8
+  %5 = shufflevector <3 x double> %4, <3 x double> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 0>
+  %6 = insertelement <4 x i1> poison, i1 %.not.i, i64 0
+  %7 = shufflevector <4 x i1> %6, <4 x i1> poison, <4 x i32> zeroinitializer
+  %8 = select <4 x i1> %7, <4 x double> splat (double +qnan), <4 x double> %5 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15, !noalias !15
-  %4 = fcmp uno double %.sroa.0122.0, 0.000000e+00
-  %5 = fcmp uno double %.sroa.7.0, 0.000000e+00
-  %or.cond.i = select i1 %4, i1 %5, i1 false
-  %6 = fcmp uno double %.sroa.9.0, 0.000000e+00
-  %7 = select i1 %or.cond.i, i1 %6, i1 false
-  br i1 %7, label %bb.b, label %bb.a
+  %9 = shufflevector <4 x double> %8, <4 x double> poison, <3 x i32> <i32 0, i32 1, i32 2>
+  %.fr = freeze <3 x double> %9
+  %10 = fcmp ord <3 x double> %.fr, zeroinitializer
+  %11 = bitcast <3 x i1> %10 to i3
+  %12 = icmp eq i3 %11, 0
+  br i1 %12, label %bb.b, label %bb.a
 
 bb.a:                                             ; preds = %_ZNK4geos4geom11LineSegment12intersectionERKS1_.exit
-  store double %.sroa.0122.0, ptr %0, align 8, !tbaa !8
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %.sroa.7.0, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !8
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx, align 8, !tbaa !8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store double %.sroa.0122.0, ptr %8, align 8, !tbaa !8
+  store <4 x double> %8, ptr %0, align 8, !tbaa !8
   %.sroa.7.0..sroa_idx125 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  store double %.sroa.7.0, ptr %.sroa.7.0..sroa_idx125, align 8, !tbaa !8
-  %.sroa.9.0..sroa_idx128 = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store double %.sroa.9.0, ptr %.sroa.9.0..sroa_idx128, align 8, !tbaa !8
+  %13 = shufflevector <4 x double> %8, <4 x double> poison, <2 x i32> <i32 1, i32 2>
+  store <2 x double> %13, ptr %.sroa.7.0..sroa_idx125, align 8, !tbaa !8
   br label %bb.s
 
 bb.b:                                             ; preds = %_ZNK4geos4geom11LineSegment12intersectionERKS1_.exit
@@ -626,9 +617,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store <2 x double> splat (double +qnan), ptr %0, align 8, !tbaa !8
-  store double +qnan, ptr %4, align 8, !tbaa !18
+  store <3 x double> splat (double +qnan), ptr %0, align 8, !tbaa !8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b

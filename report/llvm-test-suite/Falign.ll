@@ -201,7 +201,7 @@ bb.bb:                                            ; preds = %.lr.ph567, %.loopex
   %.0399565 = phi i32 [ 0, %.lr.ph567 ], [ %.2401, %.loopexit494 ] ; 5 uses
   %i.qq = load ptr, ptr @Falign_noudp.kouho, align 8, !tbaa !15
   %i.qr = getelementptr inbounds nuw [4 x i8], ptr %i.qq, i64 %indvars.iv725
-  %i.qs = load i32, ptr %i.qr, align 4, !tbaa !4  ; 9 uses
+  %i.qs = load i32, ptr %i.qr, align 4, !tbaa !4  ; 8 uses
   %.not441 = icmp sgt i32 %i.qs, %i.qp
   %.not442 = icmp slt i32 %i.qs, %i.f
   %or.cond451 = and i1 %.not441, %.not442
@@ -242,8 +242,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br i1 %i.rg, label %.lr.ph562.split.us, label %.lr.ph562.split.preheader
 
 .lr.ph562.split.preheader:                        ; preds = %.lr.ph562
-  %8 = insertelement <2 x i32> poison, i32 %i.qs, i64 0
-  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <2 x i32> zeroinitializer
+  %8 = insertelement <3 x i32> poison, i32 %i.qs, i64 0
+  %9 = shufflevector <3 x i32> %8, <3 x i32> poison, <3 x i32> zeroinitializer
   br label %.lr.ph562.split
 
 .lr.ph562.split.us:                               ; preds = %.lr.ph562, %.lr.ph562.split.us
@@ -289,15 +289,11 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   %indvars.iv719 = phi i64 [ %indvars.iv.next720, %.lr.ph562.split ], [ %i.qy, %.lr.ph562.split.preheader ] ; 4 uses
   %i.sh = phi i32 [ %i.sv, %.lr.ph562.split ], [ %i.rf, %.lr.ph562.split.preheader ] ; 2 uses
   %i.si = getelementptr inbounds [48 x i8], ptr %i.rh, i64 %indvars.iv719 ; 4 uses
-  %i.sj = getelementptr inbounds [48 x i8], ptr %i.ri, i64 %indvars.iv719 ; 5 uses
-  %10 = load <2 x i32>, ptr %i.si, align 8, !tbaa !4
-  %11 = sub nsw <2 x i32> %10, %9
-  store <2 x i32> %11, ptr %i.sj, align 8, !tbaa !4
-  %i.sk = getelementptr inbounds nuw i8, ptr %i.si, i64 8 ; 2 uses
-  %12 = load i32, ptr %i.sk, align 8, !tbaa !75
-  %13 = sub nsw i32 %12, %i.qs
-  %14 = getelementptr inbounds nuw i8, ptr %i.sj, i64 8
-  store i32 %13, ptr %14, align 8, !tbaa !75
+  %i.sj = getelementptr inbounds [48 x i8], ptr %i.ri, i64 %indvars.iv719 ; 4 uses
+  %i.sk = getelementptr inbounds nuw i8, ptr %i.si, i64 8
+  %10 = load <3 x i32>, ptr %i.si, align 8, !tbaa !4
+  %11 = sub nsw <3 x i32> %10, %9
+  store <3 x i32> %11, ptr %i.sj, align 8, !tbaa !4
   %i.sl = getelementptr inbounds nuw i8, ptr %i.si, i64 16
   %i.sm = load double, ptr %i.sl, align 8, !tbaa !76 ; 2 uses
   %i.sn = getelementptr inbounds nuw i8, ptr %i.sj, i64 16

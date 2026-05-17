@@ -201,7 +201,7 @@ bb.a:
   %15 = alloca %"class.std::shared_ptr.17", align 16 ; 7 uses
   %16 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 2 uses
   %17 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 2 uses
-  %18 = alloca %"class.Imath_3_1::Matrix33", align 4 ; 12 uses
+  %18 = alloca %"class.Imath_3_1::Matrix33", align 4 ; 11 uses
   %19 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 26 uses
   %20 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %21 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 3 uses
@@ -577,10 +577,8 @@ bb.af:                                            ; preds = %_ZNSt12__shared_ptr
 bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #33
   store float %.0130, ptr %18, align 4, !tbaa !77
-  %25 = getelementptr inbounds nuw i8, ptr %18, i64 4
-  store <2 x float> zeroinitializer, ptr %25, align 4, !tbaa !77
-  %i.eq = getelementptr inbounds nuw i8, ptr %18, i64 12
-  store float 0.000000e+00, ptr %i.eq, align 4, !tbaa !77
+  %i.eq = getelementptr inbounds nuw i8, ptr %18, i64 4
+  store <3 x float> zeroinitializer, ptr %i.eq, align 4, !tbaa !77
   %i.er = getelementptr inbounds nuw i8, ptr %18, i64 16
   store float %.0130, ptr %i.er, align 4, !tbaa !77
   %i.es = getelementptr inbounds nuw i8, ptr %18, i64 20

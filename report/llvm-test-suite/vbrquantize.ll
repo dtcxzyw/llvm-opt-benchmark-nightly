@@ -200,7 +200,7 @@ bb.a:
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %.preheader ] ; 4 uses
   %.02428 = phi double [ 0.000000e+00, %bb.a ], [ %.2.2, %.preheader ] ; 2 uses
   %i.g = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv ; 3 uses
-  %i.h = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv ; 2 uses
+  %i.h = getelementptr inbounds nuw [12 x i8], ptr %2, i64 %indvars.iv
   %i.i = icmp samesign ult i64 %indvars.iv, 6
   %. = select i1 %i.i, double 1.500000e+01, double 7.000000e+00
   %.0 = fdiv double %., %i.f                      ; 3 uses
@@ -218,10 +218,6 @@ bb.a:
   %i.t = tail call double @llvm.fmuladd.f64(double %i.s, double %i.f, double 7.500000e-01)
   %i.u = fadd double %i.t, 1.000000e-04
   %i.v = tail call double @llvm.floor.f64(double %i.u)
-  %3 = insertelement <2 x double> poison, double %i.n, i64 0
-  %4 = insertelement <2 x double> %3, double %i.v, i64 1
-  %5 = fptosi <2 x double> %4 to <2 x i32>
-  store <2 x i32> %5, ptr %i.h, align 4, !tbaa !4
   %i.w = fadd double %.0, %i.r                    ; 2 uses
   %i.x = fcmp ogt double %i.w, %.2
   %.2.1 = select i1 %i.x, double %i.w, double %.2 ; 2 uses
@@ -231,9 +227,11 @@ bb.a:
   %i.ab = tail call double @llvm.fmuladd.f64(double %i.aa, double %i.f, double 7.500000e-01)
   %i.ac = fadd double %i.ab, 1.000000e-04
   %i.ad = tail call double @llvm.floor.f64(double %i.ac)
-  %6 = fptosi double %i.ad to i32
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
-  store i32 %6, ptr %7, align 4, !tbaa !4
+  %3 = insertelement <3 x double> poison, double %i.n, i64 0
+  %4 = insertelement <3 x double> %3, double %i.v, i64 1
+  %5 = insertelement <3 x double> %4, double %i.ad, i64 2
+  %6 = fptosi <3 x double> %5 to <3 x i32>
+  store <3 x i32> %6, ptr %i.h, align 4, !tbaa !4
   %i.ae = fadd double %.0, %i.z                   ; 2 uses
   %i.af = fcmp ogt double %i.ae, %.2.1
   %.2.2 = select i1 %i.af, double %i.ae, double %.2.1 ; 2 uses
@@ -636,7 +634,7 @@ begin_hunk_1_@VBR_iteration_loop_new:bb.a
   store <2 x double> %i.hs, ptr %i.ar, align 16, !tbaa !8
   %i.ht = getelementptr inbounds nuw i8, ptr %i.bs, i64 68 ; 2 uses
   store i32 0, ptr %i.ht, align 4, !tbaa !14
-  %i.hu = getelementptr inbounds nuw [244 x i8], ptr %i.br, i64 %indvars.iv188 ; 12 uses
+  %i.hu = getelementptr inbounds nuw [244 x i8], ptr %i.br, i64 %indvars.iv188 ; 6 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hu, i64 88 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(288) %i.b, ptr noundef nonnull readonly align 16 dereferenceable(288) %i.q, i64 288, i1 false)
@@ -646,7 +644,7 @@ begin_hunk_1_@VBR_iteration_loop_new:bb.a
   %indvars.iv.i = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next.i, %.preheader.i ] ; 4 uses
   %.02428.i = phi double [ 0.000000e+00, %.preheader.preheader ], [ %.2.2.i, %.preheader.i ] ; 2 uses
   %i.hw = getelementptr inbounds nuw [24 x i8], ptr %i.b, i64 %indvars.iv.i ; 3 uses
-  %i.hx = getelementptr inbounds nuw [12 x i8], ptr %i.hv, i64 %indvars.iv.i ; 2 uses
+  %i.hx = getelementptr inbounds nuw [12 x i8], ptr %i.hv, i64 %indvars.iv.i
   %i.hy = icmp samesign ult i64 %indvars.iv.i, 6
   %.0.i = select i1 %i.hy, double 7.500000e+00, double 3.500000e+00 ; 3 uses
   %i.hz = load double, ptr %i.hw, align 8, !tbaa !8 ; 2 uses
@@ -663,10 +661,6 @@ begin_hunk_1_@VBR_iteration_loop_new:bb.a
   %i.ij = call double @llvm.fmuladd.f64(double %i.ii, double 2.000000e+00, double 7.500000e-01)
   %i.ik = fadd double %i.ij, 1.000000e-04
   %i.il = call double @llvm.floor.f64(double %i.ik)
-  %10 = insertelement <2 x double> poison, double %i.id, i64 0
-  %11 = insertelement <2 x double> %10, double %i.il, i64 1
-  %12 = fptosi <2 x double> %11 to <2 x i32>
-  store <2 x i32> %12, ptr %i.hx, align 4, !tbaa !4
   %i.im = fadd double %.0.i, %i.ih                ; 2 uses
   %i.in = fcmp ogt double %i.im, %.2.i
   %.2.1.i = select i1 %i.in, double %i.im, double %.2.i ; 2 uses
@@ -676,9 +670,11 @@ begin_hunk_1_@VBR_iteration_loop_new:bb.a
   %i.ir = call double @llvm.fmuladd.f64(double %i.iq, double 2.000000e+00, double 7.500000e-01)
   %i.is = fadd double %i.ir, 1.000000e-04
   %i.it = call double @llvm.floor.f64(double %i.is)
-  %13 = fptosi double %i.it to i32
-  %14 = getelementptr inbounds nuw i8, ptr %i.hx, i64 8
-  store i32 %13, ptr %14, align 4, !tbaa !4
+  %10 = insertelement <3 x double> poison, double %i.id, i64 0
+  %11 = insertelement <3 x double> %10, double %i.il, i64 1
+  %12 = insertelement <3 x double> %11, double %i.it, i64 2
+  %13 = fptosi <3 x double> %12 to <3 x i32>
+  store <3 x i32> %13, ptr %i.hx, align 4, !tbaa !4
   %i.iu = fadd double %.0.i, %i.ip                ; 2 uses
   %i.iv = fcmp ogt double %i.iu, %.2.1.i
   %.2.2.i = select i1 %i.iv, double %i.iu, double %.2.1.i ; 2 uses
@@ -706,10 +702,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.je = fsub double 7.500000e-01, %i.jd
   %i.jf = fadd double %i.je, 1.000000e-04
   %i.jg = call double @llvm.floor.f64(double %i.jf)
-  %15 = insertelement <2 x double> poison, double %i.ja, i64 0
-  %16 = insertelement <2 x double> %15, double %i.jg, i64 1
-  %17 = fptosi <2 x double> %16 to <2 x i32>
-  store <2 x i32> %17, ptr %i.hv, align 4, !tbaa !4
   %i.jh = fadd double %i.jd, 1.500000e+01         ; 2 uses
   %i.ji = fcmp ogt double %i.jh, %.2.i136.peel
   %.2.1.i137.peel = select i1 %i.ji, double %i.jh, double %.2.i136.peel ; 2 uses
@@ -717,9 +709,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.jk = fsub double 7.500000e-01, %i.jj
   %i.jl = fadd double %i.jk, 1.000000e-04
   %i.jm = call double @llvm.floor.f64(double %i.jl)
-  %18 = fptosi double %i.jm to i32
-  %19 = getelementptr inbounds nuw i8, ptr %i.hu, i64 96
-  store i32 %18, ptr %19, align 4, !tbaa !4
+  %14 = insertelement <3 x double> poison, double %i.ja, i64 0
+  %15 = insertelement <3 x double> %14, double %i.jg, i64 1
+  %16 = insertelement <3 x double> %15, double %i.jm, i64 2
+  %17 = fptosi <3 x double> %16 to <3 x i32>
+  store <3 x i32> %17, ptr %i.hv, align 4, !tbaa !4
   %i.jn = fadd double %i.jj, 1.500000e+01         ; 2 uses
   %i.jo = fcmp ogt double %i.jn, %.2.1.i137.peel
   %.2.2.i138.peel = select i1 %i.jo, double %i.jn, double %.2.1.i137.peel ; 2 uses
@@ -735,10 +729,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.jx = fsub double 7.500000e-01, %i.jw
   %i.jy = fadd double %i.jx, 1.000000e-04
   %i.jz = call double @llvm.floor.f64(double %i.jy)
-  %20 = insertelement <2 x double> poison, double %i.jt, i64 0
-  %21 = insertelement <2 x double> %20, double %i.jz, i64 1
-  %22 = fptosi <2 x double> %21 to <2 x i32>
-  store <2 x i32> %22, ptr %i.jp, align 4, !tbaa !4
   %i.ka = fadd double %i.jw, 1.500000e+01         ; 2 uses
   %i.kb = fcmp ogt double %i.ka, %.2.i136.peel200
   %.2.1.i137.peel201 = select i1 %i.kb, double %i.ka, double %.2.i136.peel200 ; 2 uses
@@ -746,9 +736,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.kd = fsub double 7.500000e-01, %i.kc
   %i.ke = fadd double %i.kd, 1.000000e-04
   %i.kf = call double @llvm.floor.f64(double %i.ke)
-  %23 = fptosi double %i.kf to i32
-  %24 = getelementptr inbounds nuw i8, ptr %i.hu, i64 108
-  store i32 %23, ptr %24, align 4, !tbaa !4
+  %18 = insertelement <3 x double> poison, double %i.jt, i64 0
+  %19 = insertelement <3 x double> %18, double %i.jz, i64 1
+  %20 = insertelement <3 x double> %19, double %i.kf, i64 2
+  %21 = fptosi <3 x double> %20 to <3 x i32>
+  store <3 x i32> %21, ptr %i.jp, align 4, !tbaa !4
   %i.kg = fadd double %i.kc, 1.500000e+01         ; 2 uses
   %i.kh = fcmp ogt double %i.kg, %.2.1.i137.peel201
   %.2.2.i138.peel202 = select i1 %i.kh, double %i.kg, double %.2.1.i137.peel201 ; 2 uses
@@ -764,10 +756,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.kq = fsub double 7.500000e-01, %i.kp
   %i.kr = fadd double %i.kq, 1.000000e-04
   %i.ks = call double @llvm.floor.f64(double %i.kr)
-  %25 = insertelement <2 x double> poison, double %i.km, i64 0
-  %26 = insertelement <2 x double> %25, double %i.ks, i64 1
-  %27 = fptosi <2 x double> %26 to <2 x i32>
-  store <2 x i32> %27, ptr %i.ki, align 4, !tbaa !4
   %i.kt = fadd double %i.kp, 1.500000e+01         ; 2 uses
   %i.ku = fcmp ogt double %i.kt, %.2.i136.peel208
   %.2.1.i137.peel209 = select i1 %i.ku, double %i.kt, double %.2.i136.peel208 ; 2 uses
@@ -775,9 +763,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.kw = fsub double 7.500000e-01, %i.kv
   %i.kx = fadd double %i.kw, 1.000000e-04
   %i.ky = call double @llvm.floor.f64(double %i.kx)
-  %28 = fptosi double %i.ky to i32
-  %29 = getelementptr inbounds nuw i8, ptr %i.hu, i64 120
-  store i32 %28, ptr %29, align 4, !tbaa !4
+  %22 = insertelement <3 x double> poison, double %i.km, i64 0
+  %23 = insertelement <3 x double> %22, double %i.ks, i64 1
+  %24 = insertelement <3 x double> %23, double %i.ky, i64 2
+  %25 = fptosi <3 x double> %24 to <3 x i32>
+  store <3 x i32> %25, ptr %i.ki, align 4, !tbaa !4
   %i.kz = fadd double %i.kv, 1.500000e+01         ; 2 uses
   %i.la = fcmp ogt double %i.kz, %.2.1.i137.peel209
   %.2.2.i138.peel210 = select i1 %i.la, double %i.kz, double %.2.1.i137.peel209 ; 2 uses
@@ -793,10 +783,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.lj = fsub double 7.500000e-01, %i.li
   %i.lk = fadd double %i.lj, 1.000000e-04
   %i.ll = call double @llvm.floor.f64(double %i.lk)
-  %30 = insertelement <2 x double> poison, double %i.lf, i64 0
-  %31 = insertelement <2 x double> %30, double %i.ll, i64 1
-  %32 = fptosi <2 x double> %31 to <2 x i32>
-  store <2 x i32> %32, ptr %i.lb, align 4, !tbaa !4
   %i.lm = fadd double %i.li, 1.500000e+01         ; 2 uses
   %i.ln = fcmp ogt double %i.lm, %.2.i136.peel216
   %.2.1.i137.peel217 = select i1 %i.ln, double %i.lm, double %.2.i136.peel216 ; 2 uses
@@ -804,9 +790,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.lp = fsub double 7.500000e-01, %i.lo
   %i.lq = fadd double %i.lp, 1.000000e-04
   %i.lr = call double @llvm.floor.f64(double %i.lq)
-  %33 = fptosi double %i.lr to i32
-  %34 = getelementptr inbounds nuw i8, ptr %i.hu, i64 132
-  store i32 %33, ptr %34, align 4, !tbaa !4
+  %26 = insertelement <3 x double> poison, double %i.lf, i64 0
+  %27 = insertelement <3 x double> %26, double %i.ll, i64 1
+  %28 = insertelement <3 x double> %27, double %i.lr, i64 2
+  %29 = fptosi <3 x double> %28 to <3 x i32>
+  store <3 x i32> %29, ptr %i.lb, align 4, !tbaa !4
   %i.ls = fadd double %i.lo, 1.500000e+01         ; 2 uses
   %i.lt = fcmp ogt double %i.ls, %.2.1.i137.peel217
   %.2.2.i138.peel218 = select i1 %i.lt, double %i.ls, double %.2.1.i137.peel217 ; 2 uses
@@ -822,10 +810,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.mc = fsub double 7.500000e-01, %i.mb
   %i.md = fadd double %i.mc, 1.000000e-04
   %i.me = call double @llvm.floor.f64(double %i.md)
-  %35 = insertelement <2 x double> poison, double %i.ly, i64 0
-  %36 = insertelement <2 x double> %35, double %i.me, i64 1
-  %37 = fptosi <2 x double> %36 to <2 x i32>
-  store <2 x i32> %37, ptr %i.lu, align 4, !tbaa !4
   %i.mf = fadd double %i.mb, 1.500000e+01         ; 2 uses
   %i.mg = fcmp ogt double %i.mf, %.2.i136.peel224
   %.2.1.i137.peel225 = select i1 %i.mg, double %i.mf, double %.2.i136.peel224 ; 2 uses
@@ -833,9 +817,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.mi = fsub double 7.500000e-01, %i.mh
   %i.mj = fadd double %i.mi, 1.000000e-04
   %i.mk = call double @llvm.floor.f64(double %i.mj)
-  %38 = fptosi double %i.mk to i32
-  %39 = getelementptr inbounds nuw i8, ptr %i.hu, i64 144
-  store i32 %38, ptr %39, align 4, !tbaa !4
+  %30 = insertelement <3 x double> poison, double %i.ly, i64 0
+  %31 = insertelement <3 x double> %30, double %i.me, i64 1
+  %32 = insertelement <3 x double> %31, double %i.mk, i64 2
+  %33 = fptosi <3 x double> %32 to <3 x i32>
+  store <3 x i32> %33, ptr %i.lu, align 4, !tbaa !4
   %i.ml = fadd double %i.mh, 1.500000e+01         ; 2 uses
   %i.mm = fcmp ogt double %i.ml, %.2.1.i137.peel225
   %.2.2.i138.peel226 = select i1 %i.mm, double %i.ml, double %.2.1.i137.peel225 ; 2 uses
@@ -851,10 +837,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.mv = fsub double 7.500000e-01, %i.mu
   %i.mw = fadd double %i.mv, 1.000000e-04
   %i.mx = call double @llvm.floor.f64(double %i.mw)
-  %40 = insertelement <2 x double> poison, double %i.mr, i64 0
-  %41 = insertelement <2 x double> %40, double %i.mx, i64 1
-  %42 = fptosi <2 x double> %41 to <2 x i32>
-  store <2 x i32> %42, ptr %i.mn, align 4, !tbaa !4
   %i.my = fadd double %i.mu, 1.500000e+01         ; 2 uses
   %i.mz = fcmp ogt double %i.my, %.2.i136.peel232
   %.2.1.i137.peel233 = select i1 %i.mz, double %i.my, double %.2.i136.peel232 ; 2 uses
@@ -862,9 +844,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.nb = fsub double 7.500000e-01, %i.na
   %i.nc = fadd double %i.nb, 1.000000e-04
   %i.nd = call double @llvm.floor.f64(double %i.nc)
-  %43 = fptosi double %i.nd to i32
-  %44 = getelementptr inbounds nuw i8, ptr %i.hu, i64 156
-  store i32 %43, ptr %44, align 4, !tbaa !4
+  %34 = insertelement <3 x double> poison, double %i.mr, i64 0
+  %35 = insertelement <3 x double> %34, double %i.mx, i64 1
+  %36 = insertelement <3 x double> %35, double %i.nd, i64 2
+  %37 = fptosi <3 x double> %36 to <3 x i32>
+  store <3 x i32> %37, ptr %i.mn, align 4, !tbaa !4
   %i.ne = fadd double %i.na, 1.500000e+01         ; 2 uses
   %i.nf = fcmp ogt double %i.ne, %.2.1.i137.peel233
   %.2.2.i138.peel234 = select i1 %i.nf, double %i.ne, double %.2.1.i137.peel233
@@ -874,7 +858,7 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %indvars.iv.i132 = phi i64 [ 6, %.preheader.i131.peel.begin ], [ %indvars.iv.next.i139, %.preheader.i131 ] ; 3 uses
   %.02428.i133 = phi double [ %.2.2.i138.peel234, %.preheader.i131.peel.begin ], [ %.2.2.i138, %.preheader.i131 ] ; 2 uses
   %i.ng = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv.i132 ; 3 uses
-  %i.nh = getelementptr inbounds nuw [12 x i8], ptr %i.hv, i64 %indvars.iv.i132 ; 2 uses
+  %i.nh = getelementptr inbounds nuw [12 x i8], ptr %i.hv, i64 %indvars.iv.i132
   %i.ni = load double, ptr %i.ng, align 8, !tbaa !8 ; 2 uses
   %i.nj = fsub double 7.500000e-01, %i.ni
   %i.nk = fadd double %i.nj, 1.000000e-04
@@ -887,10 +871,6 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.nq = fsub double 7.500000e-01, %i.np
   %i.nr = fadd double %i.nq, 1.000000e-04
   %i.ns = call double @llvm.floor.f64(double %i.nr)
-  %45 = insertelement <2 x double> poison, double %i.nl, i64 0
-  %46 = insertelement <2 x double> %45, double %i.ns, i64 1
-  %47 = fptosi <2 x double> %46 to <2 x i32>
-  store <2 x i32> %47, ptr %i.nh, align 4, !tbaa !4
   %i.nt = fadd double %i.np, 7.000000e+00         ; 2 uses
   %i.nu = fcmp ogt double %i.nt, %.2.i136
   %.2.1.i137 = select i1 %i.nu, double %i.nt, double %.2.i136 ; 2 uses
@@ -899,9 +879,11 @@ compute_scalefacs_short.exit:                     ; preds = %.preheader.i
   %i.nx = fsub double 7.500000e-01, %i.nw
   %i.ny = fadd double %i.nx, 1.000000e-04
   %i.nz = call double @llvm.floor.f64(double %i.ny)
-  %48 = fptosi double %i.nz to i32
-  %49 = getelementptr inbounds nuw i8, ptr %i.nh, i64 8
-  store i32 %48, ptr %49, align 4, !tbaa !4
+  %38 = insertelement <3 x double> poison, double %i.nl, i64 0
+  %39 = insertelement <3 x double> %38, double %i.ns, i64 1
+  %40 = insertelement <3 x double> %39, double %i.nz, i64 2
+  %41 = fptosi <3 x double> %40 to <3 x i32>
+  store <3 x i32> %41, ptr %i.nh, align 4, !tbaa !4
   %i.oa = fadd double %i.nw, 7.000000e+00         ; 2 uses
   %i.ob = fcmp ogt double %i.oa, %.2.1.i137
   %.2.2.i138 = select i1 %i.ob, double %i.oa, double %.2.1.i137 ; 2 uses

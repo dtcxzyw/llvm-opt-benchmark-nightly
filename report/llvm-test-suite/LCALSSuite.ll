@@ -201,15 +201,12 @@ bb.au:                                            ; preds = %bb.an
 
 bb.av:                                            ; preds = %._crit_edge
   %i.hw = getelementptr inbounds nuw i8, ptr %i.fh, i64 4 ; 27 uses
-  %43 = insertelement <2 x double> poison, double %3, i64 0
-  %44 = shufflevector <2 x double> %43, <2 x double> poison, <2 x i32> zeroinitializer
-  %45 = fmul <2 x double> %44, <double 4.421700e+04, double 5.001000e+03>
-  %46 = fptosi <2 x double> %45 to <2 x i32>
-  store <2 x i32> %46, ptr %i.fh, align 4, !tbaa !4
-  %47 = fmul double %3, 1.710000e+02
-  %48 = fptosi double %47 to i32
-  %49 = getelementptr inbounds nuw i8, ptr %i.fh, i64 8 ; 28 uses
-  store i32 %48, ptr %49, align 4, !tbaa !4
+  %43 = insertelement <3 x double> poison, double %3, i64 0
+  %44 = shufflevector <3 x double> %43, <3 x double> poison, <3 x i32> zeroinitializer
+  %45 = fmul <3 x double> %44, <double 4.421700e+04, double 5.001000e+03, double 1.710000e+02>
+  %46 = getelementptr inbounds nuw i8, ptr %i.fh, i64 8 ; 27 uses
+  %47 = fptosi <3 x double> %45 to <3 x i32>
+  store <3 x i32> %47, ptr %i.fh, align 4, !tbaa !4
   store double %3, ptr @_ZN7ADomain18loop_length_factorE, align 8, !tbaa !73
   %i.hx = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   %i.hy = load i32, ptr %i.hx, align 16, !tbaa !95
@@ -571,7 +568,7 @@ bb.bh:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.oa = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.ob = getelementptr inbounds nuw i8, ptr %i.ny, i64 4
   store i32 %i.oa, ptr %i.ob, align 4, !tbaa !4
-  %i.oc = load i32, ptr %49, align 4, !tbaa !4
+  %i.oc = load i32, ptr %46, align 4, !tbaa !4
   %i.od = getelementptr inbounds nuw i8, ptr %i.ny, i64 8
   store i32 %i.oc, ptr %i.od, align 4, !tbaa !4
   %i.oe = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -649,7 +646,7 @@ bb.bi:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.oy = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.oz = getelementptr inbounds nuw i8, ptr %i.ow, i64 4
   store i32 %i.oy, ptr %i.oz, align 4, !tbaa !4
-  %i.pa = load i32, ptr %49, align 4, !tbaa !4
+  %i.pa = load i32, ptr %46, align 4, !tbaa !4
   %i.pb = getelementptr inbounds nuw i8, ptr %i.ow, i64 8
   store i32 %i.pa, ptr %i.pb, align 4, !tbaa !4
   %i.pc = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1045,7 +1042,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit683: ; preds = %._
   %i.up = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.uq = getelementptr inbounds nuw i8, ptr %i.un, i64 4
   store i32 %i.up, ptr %i.uq, align 4, !tbaa !4
-  %i.ur = load i32, ptr %49, align 4, !tbaa !4
+  %i.ur = load i32, ptr %46, align 4, !tbaa !4
   %i.us = getelementptr inbounds nuw i8, ptr %i.un, i64 8
   store i32 %i.ur, ptr %i.us, align 4, !tbaa !4
   %i.ut = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1091,7 +1088,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit699: ; preds = %._
   %i.vg = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.vh = getelementptr inbounds nuw i8, ptr %i.ve, i64 4
   store i32 %i.vg, ptr %i.vh, align 4, !tbaa !4
-  %i.vi = load i32, ptr %49, align 4, !tbaa !4
+  %i.vi = load i32, ptr %46, align 4, !tbaa !4
   %i.vj = getelementptr inbounds nuw i8, ptr %i.ve, i64 8
   store i32 %i.vi, ptr %i.vj, align 4, !tbaa !4
   %i.vk = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1137,7 +1134,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit715: ; preds = %._
   %i.vx = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.vy = getelementptr inbounds nuw i8, ptr %i.vv, i64 4
   store i32 %i.vx, ptr %i.vy, align 4, !tbaa !4
-  %i.vz = load i32, ptr %49, align 4, !tbaa !4
+  %i.vz = load i32, ptr %46, align 4, !tbaa !4
   %i.wa = getelementptr inbounds nuw i8, ptr %i.vv, i64 8
   store i32 %i.vz, ptr %i.wa, align 4, !tbaa !4
   %i.wb = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1184,7 +1181,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit731: ; preds = %._
   %i.wp = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.wq = getelementptr inbounds nuw i8, ptr %i.wn, i64 4
   store i32 %i.wp, ptr %i.wq, align 4, !tbaa !4
-  %i.wr = load i32, ptr %49, align 4, !tbaa !4
+  %i.wr = load i32, ptr %46, align 4, !tbaa !4
   %i.ws = getelementptr inbounds nuw i8, ptr %i.wn, i64 8
   store i32 %i.wr, ptr %i.ws, align 4, !tbaa !4
   %i.wt = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1231,7 +1228,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit747: ; preds = %._
   %i.xh = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.xi = getelementptr inbounds nuw i8, ptr %i.xf, i64 4
   store i32 %i.xh, ptr %i.xi, align 4, !tbaa !4
-  %i.xj = load i32, ptr %49, align 4, !tbaa !4
+  %i.xj = load i32, ptr %46, align 4, !tbaa !4
   %i.xk = getelementptr inbounds nuw i8, ptr %i.xf, i64 8
   store i32 %i.xj, ptr %i.xk, align 4, !tbaa !4
   %i.xl = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1277,7 +1274,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit763: ; preds = %._
   %i.xy = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.xz = getelementptr inbounds nuw i8, ptr %i.xw, i64 4
   store i32 %i.xy, ptr %i.xz, align 4, !tbaa !4
-  %i.ya = load i32, ptr %49, align 4, !tbaa !4
+  %i.ya = load i32, ptr %46, align 4, !tbaa !4
   %i.yb = getelementptr inbounds nuw i8, ptr %i.xw, i64 8
   store i32 %i.ya, ptr %i.yb, align 4, !tbaa !4
   %i.yc = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1324,7 +1321,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit779: ; preds = %._
   %i.yq = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.yr = getelementptr inbounds nuw i8, ptr %i.yo, i64 4
   store i32 %i.yq, ptr %i.yr, align 4, !tbaa !4
-  %i.ys = load i32, ptr %49, align 4, !tbaa !4
+  %i.ys = load i32, ptr %46, align 4, !tbaa !4
   %i.yt = getelementptr inbounds nuw i8, ptr %i.yo, i64 8
   store i32 %i.ys, ptr %i.yt, align 4, !tbaa !4
   %i.yu = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1371,7 +1368,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit795: ; preds = %._
   %i.zi = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.zj = getelementptr inbounds nuw i8, ptr %i.zg, i64 4
   store i32 %i.zi, ptr %i.zj, align 4, !tbaa !4
-  %i.zk = load i32, ptr %49, align 4, !tbaa !4
+  %i.zk = load i32, ptr %46, align 4, !tbaa !4
   %i.zl = getelementptr inbounds nuw i8, ptr %i.zg, i64 8
   store i32 %i.zk, ptr %i.zl, align 4, !tbaa !4
   %i.zm = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1418,7 +1415,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit811: ; preds = %._
   %i.aaa = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aab = getelementptr inbounds nuw i8, ptr %i.zy, i64 4
   store i32 %i.aaa, ptr %i.aab, align 4, !tbaa !4
-  %i.aac = load i32, ptr %49, align 4, !tbaa !4
+  %i.aac = load i32, ptr %46, align 4, !tbaa !4
   %i.aad = getelementptr inbounds nuw i8, ptr %i.zy, i64 8
   store i32 %i.aac, ptr %i.aad, align 4, !tbaa !4
   %i.aae = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1465,7 +1462,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit827: ; preds = %._
   %i.aas = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aat = getelementptr inbounds nuw i8, ptr %i.aaq, i64 4
   store i32 %i.aas, ptr %i.aat, align 4, !tbaa !4
-  %i.aau = load i32, ptr %49, align 4, !tbaa !4
+  %i.aau = load i32, ptr %46, align 4, !tbaa !4
   %i.aav = getelementptr inbounds nuw i8, ptr %i.aaq, i64 8
   store i32 %i.aau, ptr %i.aav, align 4, !tbaa !4
   %i.aaw = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1511,7 +1508,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit843: ; preds = %._
   %i.abj = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.abk = getelementptr inbounds nuw i8, ptr %i.abh, i64 4
   store i32 %i.abj, ptr %i.abk, align 4, !tbaa !4
-  %i.abl = load i32, ptr %49, align 4, !tbaa !4
+  %i.abl = load i32, ptr %46, align 4, !tbaa !4
   %i.abm = getelementptr inbounds nuw i8, ptr %i.abh, i64 8
   store i32 %i.abl, ptr %i.abm, align 4, !tbaa !4
   %i.abn = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1558,7 +1555,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit859: ; preds = %._
   %i.acb = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.acc = getelementptr inbounds nuw i8, ptr %i.abz, i64 4
   store i32 %i.acb, ptr %i.acc, align 4, !tbaa !4
-  %i.acd = load i32, ptr %49, align 4, !tbaa !4
+  %i.acd = load i32, ptr %46, align 4, !tbaa !4
   %i.ace = getelementptr inbounds nuw i8, ptr %i.abz, i64 8
   store i32 %i.acd, ptr %i.ace, align 4, !tbaa !4
   %i.acf = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1605,7 +1602,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit875: ; preds = %._
   %i.act = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.acu = getelementptr inbounds nuw i8, ptr %i.acr, i64 4
   store i32 %i.act, ptr %i.acu, align 4, !tbaa !4
-  %i.acv = load i32, ptr %49, align 4, !tbaa !4
+  %i.acv = load i32, ptr %46, align 4, !tbaa !4
   %i.acw = getelementptr inbounds nuw i8, ptr %i.acr, i64 8
   store i32 %i.acv, ptr %i.acw, align 4, !tbaa !4
   %i.acx = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1652,7 +1649,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit891: ; preds = %._
   %i.adl = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.adm = getelementptr inbounds nuw i8, ptr %i.adj, i64 4
   store i32 %i.adl, ptr %i.adm, align 4, !tbaa !4
-  %i.adn = load i32, ptr %49, align 4, !tbaa !4
+  %i.adn = load i32, ptr %46, align 4, !tbaa !4
   %i.ado = getelementptr inbounds nuw i8, ptr %i.adj, i64 8
   store i32 %i.adn, ptr %i.ado, align 4, !tbaa !4
   %i.adp = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1699,7 +1696,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit907: ; preds = %._
   %i.aed = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aee = getelementptr inbounds nuw i8, ptr %i.aeb, i64 4
   store i32 %i.aed, ptr %i.aee, align 4, !tbaa !4
-  %i.aef = load i32, ptr %49, align 4, !tbaa !4
+  %i.aef = load i32, ptr %46, align 4, !tbaa !4
   %i.aeg = getelementptr inbounds nuw i8, ptr %i.aeb, i64 8
   store i32 %i.aef, ptr %i.aeg, align 4, !tbaa !4
   %i.aeh = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1745,7 +1742,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit923: ; preds = %._
   %i.aeu = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aev = getelementptr inbounds nuw i8, ptr %i.aes, i64 4
   store i32 %i.aeu, ptr %i.aev, align 4, !tbaa !4
-  %i.aew = load i32, ptr %49, align 4, !tbaa !4
+  %i.aew = load i32, ptr %46, align 4, !tbaa !4
   %i.aex = getelementptr inbounds nuw i8, ptr %i.aes, i64 8
   store i32 %i.aew, ptr %i.aex, align 4, !tbaa !4
   %i.aey = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1792,7 +1789,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit939: ; preds = %._
   %i.afm = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.afn = getelementptr inbounds nuw i8, ptr %i.afk, i64 4
   store i32 %i.afm, ptr %i.afn, align 4, !tbaa !4
-  %i.afo = load i32, ptr %49, align 4, !tbaa !4
+  %i.afo = load i32, ptr %46, align 4, !tbaa !4
   %i.afp = getelementptr inbounds nuw i8, ptr %i.afk, i64 8
   store i32 %i.afo, ptr %i.afp, align 4, !tbaa !4
   %i.afq = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1839,7 +1836,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit955: ; preds = %._
   %i.age = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.agf = getelementptr inbounds nuw i8, ptr %i.agc, i64 4
   store i32 %i.age, ptr %i.agf, align 4, !tbaa !4
-  %i.agg = load i32, ptr %49, align 4, !tbaa !4
+  %i.agg = load i32, ptr %46, align 4, !tbaa !4
   %i.agh = getelementptr inbounds nuw i8, ptr %i.agc, i64 8
   store i32 %i.agg, ptr %i.agh, align 4, !tbaa !4
   %i.agi = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1886,7 +1883,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit971: ; preds = %._
   %i.agw = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.agx = getelementptr inbounds nuw i8, ptr %i.agu, i64 4
   store i32 %i.agw, ptr %i.agx, align 4, !tbaa !4
-  %i.agy = load i32, ptr %49, align 4, !tbaa !4
+  %i.agy = load i32, ptr %46, align 4, !tbaa !4
   %i.agz = getelementptr inbounds nuw i8, ptr %i.agu, i64 8
   store i32 %i.agy, ptr %i.agz, align 4, !tbaa !4
   %i.aha = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1933,7 +1930,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit987: ; preds = %._
   %i.aho = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.ahp = getelementptr inbounds nuw i8, ptr %i.ahm, i64 4
   store i32 %i.aho, ptr %i.ahp, align 4, !tbaa !4
-  %i.ahq = load i32, ptr %49, align 4, !tbaa !4
+  %i.ahq = load i32, ptr %46, align 4, !tbaa !4
   %i.ahr = getelementptr inbounds nuw i8, ptr %i.ahm, i64 8
   store i32 %i.ahq, ptr %i.ahr, align 4, !tbaa !4
   %i.ahs = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -1980,7 +1977,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1003: ; preds = %.
   %i.aig = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aih = getelementptr inbounds nuw i8, ptr %i.aie, i64 4
   store i32 %i.aig, ptr %i.aih, align 4, !tbaa !4
-  %i.aii = load i32, ptr %49, align 4, !tbaa !4
+  %i.aii = load i32, ptr %46, align 4, !tbaa !4
   %i.aij = getelementptr inbounds nuw i8, ptr %i.aie, i64 8
   store i32 %i.aii, ptr %i.aij, align 4, !tbaa !4
   %i.aik = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -2027,7 +2024,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1019: ; preds = %.
   %i.aiy = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.aiz = getelementptr inbounds nuw i8, ptr %i.aiw, i64 4
   store i32 %i.aiy, ptr %i.aiz, align 4, !tbaa !4
-  %i.aja = load i32, ptr %49, align 4, !tbaa !4
+  %i.aja = load i32, ptr %46, align 4, !tbaa !4
   %i.ajb = getelementptr inbounds nuw i8, ptr %i.aiw, i64 8
   store i32 %i.aja, ptr %i.ajb, align 4, !tbaa !4
   %i.ajc = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -2074,7 +2071,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1035: ; preds = %.
   %i.ajq = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.ajr = getelementptr inbounds nuw i8, ptr %i.ajo, i64 4
   store i32 %i.ajq, ptr %i.ajr, align 4, !tbaa !4
-  %i.ajs = load i32, ptr %49, align 4, !tbaa !4
+  %i.ajs = load i32, ptr %46, align 4, !tbaa !4
   %i.ajt = getelementptr inbounds nuw i8, ptr %i.ajo, i64 8
   store i32 %i.ajs, ptr %i.ajt, align 4, !tbaa !4
   %i.aju = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -2121,7 +2118,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1051: ; preds = %.
   %i.aki = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.akj = getelementptr inbounds nuw i8, ptr %i.akg, i64 4
   store i32 %i.aki, ptr %i.akj, align 4, !tbaa !4
-  %i.akk = load i32, ptr %49, align 4, !tbaa !4
+  %i.akk = load i32, ptr %46, align 4, !tbaa !4
   %i.akl = getelementptr inbounds nuw i8, ptr %i.akg, i64 8
   store i32 %i.akk, ptr %i.akl, align 4, !tbaa !4
   %i.akm = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses
@@ -2168,7 +2165,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1067: ; preds = %.
   %i.ala = load i32, ptr %i.hw, align 4, !tbaa !4
   %i.alb = getelementptr inbounds nuw i8, ptr %i.aky, i64 4
   store i32 %i.ala, ptr %i.alb, align 4, !tbaa !4
-  %i.alc = load i32, ptr %49, align 4, !tbaa !4
+  %i.alc = load i32, ptr %46, align 4, !tbaa !4
   %i.ald = getelementptr inbounds nuw i8, ptr %i.aky, i64 8
   store i32 %i.alc, ptr %i.ald, align 4, !tbaa !4
   %i.ale = load ptr, ptr %i.ii, align 8, !tbaa !85 ; 3 uses

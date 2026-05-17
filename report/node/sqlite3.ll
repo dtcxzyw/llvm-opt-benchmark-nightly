@@ -201,14 +201,14 @@ bb.c:                                             ; preds = %bb.a
   %.1 = select i1 %.not324, i32 %., i32 %i.p
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 26
-  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 28 ; 3 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 28 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 54 ; 3 uses
   %i.u = load i16, ptr %i.t, align 2, !tbaa !4286 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 52 ; 13 uses
   %i.w = load i16, ptr %i.v, align 4, !tbaa !4270 ; 6 uses
   %i.x = load i64, ptr %i.e, align 8, !tbaa !4459 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 22 ; 15 uses
-  %i.z = load <4 x i16>, ptr %i.y, align 2, !tbaa !227 ; 6 uses
+  %i.z = load <4 x i16>, ptr %i.y, align 2, !tbaa !227 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !4265 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
@@ -380,8 +380,7 @@ estLog.exit:                                      ; preds = %whereScanInit.exit,
   %i.dw = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 3 uses
   %i.dy = extractelement <4 x i16> %i.z, i64 0    ; 2 uses
-  %5 = extractelement <4 x i16> %i.z, i64 3
-  %6 = shufflevector <4 x i16> %i.z, <4 x i16> poison, <2 x i32> <i32 1, i32 2>
+  %5 = shufflevector <4 x i16> %i.z, <4 x i16> poison, <3 x i32> <i32 1, i32 2, i32 3>
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph473, %constraintCompatibleWithOuterJoin.exit.thread
@@ -491,8 +490,7 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.fr = or i8 %i.fq, %.sink564
   store i8 %i.fr, ptr %i.db, align 8, !tbaa !4606
   store i32 %i.k, ptr %i.j, align 8, !tbaa !4272
-  store <2 x i16> %6, ptr %i.q, align 8, !tbaa !227
-  store i16 %5, ptr %i.s, align 4, !tbaa !227
+  store <3 x i16> %5, ptr %i.q, align 8, !tbaa !227
   store i16 %i.w, ptr %i.v, align 4, !tbaa !4270
   %i.fs = load i16, ptr %i.dc, align 8, !tbaa !4271
   %.not332 = icmp ult i16 %i.w, %i.fs

@@ -201,10 +201,10 @@ declare noundef ptr @_ZNK4pugi8xml_text3getEv(ptr noundef nonnull align 8 derefe
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp15IRRMeshImporter19ParseBufferVerticesEPKcS2_NS0_12VertexFormatERSt6vectorI10aiVector3tIfESaIS6_EES9_S9_S9_S9_S9_RS4_I9aiColor4tIfESaISB_EERb(ptr nonnull readnone align 8 captures(none) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %4, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %5, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %6, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %7, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %8, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %9, ptr noundef nonnull align 8 captures(none) dereferenceable(24) %10, ptr noundef nonnull writeonly align 1 captures(none) dereferenceable(1) %11) local_unnamed_addr #0 align 2 {
 bb.a:
-  %12 = alloca %class.aiVector3t, align 8         ; 23 uses
+  %12 = alloca %class.aiVector3t, align 16        ; 23 uses
   %i.a = ptrtoint ptr %2 to i64                   ; 19 uses
   %i.b = getelementptr inbounds nuw i8, ptr %12, i64 4 ; 14 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
@@ -249,8 +249,7 @@ bb.e:                                             ; preds = %bb.d
 _ZN6Assimp20SkipSpacesAndLineEndIcEEbPPKT_S3_.exit: ; preds = %bb.c, %bb.d
   %.0.lcssa.i.i = phi ptr [ %.0.i.i, %bb.c ], [ %scevgep.i.i, %bb.d ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #23
-  store <2 x float> zeroinitializer, ptr %12, align 8
-  store float 0.000000e+00, ptr %i.c, align 8
+  store <3 x float> zeroinitializer, ptr %12, align 16
   %i.v = call noundef ptr @_ZN6Assimp17fast_atoreal_moveIf17DeadlyImportErrorEEPKcS3_RT_b(ptr noundef %.0.lcssa.i.i, ptr noundef nonnull align 4 dereferenceable(4) %12, i1 noundef zeroext true) ; 3 uses
   %i.w = ptrtoint ptr %i.v to i64
   %i.x = sub i64 %i.a, %i.w
@@ -329,7 +328,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit45:       ; preds = %bb.l, %bb.m
   br i1 %.not.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit45
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ak, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ak, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.am = load ptr, ptr %i.d, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 12
   store ptr %i.an, ptr %i.d, align 8
@@ -359,7 +358,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   %i.ay = mul nuw nsw i64 %i.ax, 12
   %i.az = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ay) #26 ; 5 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ar
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ba, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ba, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i = icmp eq ptr %i.ao, %i.ak
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i, label %.lr.ph.i.i.i.i.i
 
@@ -468,7 +467,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit63:       ; preds = %bb.y, %bb.z
   br i1 %.not.i64, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit63
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bu, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bu, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.bw = load ptr, ptr %i.f, align 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 12
   store ptr %i.bx, ptr %i.f, align 8
@@ -498,7 +497,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i65: ; preds = %
   %i.ci = mul nuw nsw i64 %i.ch, 12
   %i.cj = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ci) #26 ; 5 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 %i.cb
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ck, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ck, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i68 = icmp eq ptr %i.by, %i.bu
   br i1 %.not10.i.i.i.i.i68, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i73, label %.lr.ph.i.i.i.i.i69
 
@@ -772,7 +771,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit106:      ; preds = %bb.ay, %bb.az
   br i1 %.not.i107, label %bb.bc, label %bb.bb
 
 bb.bb:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit106
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ft, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ft, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.fv = load ptr, ptr %i.j, align 8
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 12
   store ptr %i.fw, ptr %i.j, align 8
@@ -802,7 +801,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i108: ; preds = 
   %i.gh = mul nuw nsw i64 %i.gg, 12
   %i.gi = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gh) #26 ; 5 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %i.gi, i64 %i.ga
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gj, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gj, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i111 = icmp eq ptr %i.fx, %i.ft
   br i1 %.not10.i.i.i.i.i111, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i116, label %.lr.ph.i.i.i.i.i112
 
@@ -873,7 +872,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit126:      ; preds = %bb.bg, %bb.bh
   br i1 %.not.i127, label %bb.bk, label %bb.bj
 
 bb.bj:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit126
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gw, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.gw, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.gy = load ptr, ptr %i.p, align 8
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 12
   store ptr %i.gz, ptr %i.p, align 8
@@ -903,7 +902,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i128: ; preds = 
   %i.hk = mul nuw nsw i64 %i.hj, 12
   %i.hl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hk) #26 ; 5 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 %i.hd
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.hm, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.hm, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i131 = icmp eq ptr %i.ha, %i.gw
   br i1 %.not10.i.i.i.i.i131, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i136, label %.lr.ph.i.i.i.i.i132
 
@@ -1015,7 +1014,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit158:      ; preds = %bb.bu, %bb.bv
   br i1 %.not.i159, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit158
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ii, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ii, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.ik = load ptr, ptr %i.l, align 8
   %i.il = getelementptr inbounds nuw i8, ptr %i.ik, i64 12
   store ptr %i.il, ptr %i.l, align 8
@@ -1045,7 +1044,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i160: ; preds = 
   %i.iw = mul nuw nsw i64 %i.iv, 12
   %i.ix = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.iw) #26 ; 5 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %i.ix, i64 %i.ip
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.iy, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.iy, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i163 = icmp eq ptr %i.im, %i.ii
   br i1 %.not10.i.i.i.i.i163, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i168, label %.lr.ph.i.i.i.i.i164
 
@@ -1157,7 +1156,7 @@ _ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit190:      ; preds = %bb.ch, %bb.ci
   br i1 %.not.i191, label %bb.cl, label %bb.ck
 
 bb.ck:                                            ; preds = %_ZN6Assimp10SkipSpacesIcEEbPPKT_S3_.exit190
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ju, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.ju, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %i.jw = load ptr, ptr %i.n, align 8
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jw, i64 12
   store ptr %i.jx, ptr %i.n, align 8
@@ -1187,7 +1186,7 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i192: ; preds = 
   %i.ki = mul nuw nsw i64 %i.kh, 12
   %i.kj = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ki) #26 ; 5 uses
   %i.kk = getelementptr inbounds nuw i8, ptr %i.kj, i64 %i.kb
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.kk, ptr noundef nonnull align 8 dereferenceable(12) %12, i64 12, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.kk, ptr noundef nonnull align 16 dereferenceable(12) %12, i64 12, i1 false)
   %.not10.i.i.i.i.i195 = icmp eq ptr %i.jy, %i.ju
   br i1 %.not10.i.i.i.i.i195, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i200, label %.lr.ph.i.i.i.i.i196
 

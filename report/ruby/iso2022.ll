@@ -201,16 +201,14 @@ fun_so_cp5022x_encoder.exit99:                    ; preds = %bb.q, %.split78
 
 bb.r:                                             ; preds = %bb.p
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 1 ; 2 uses
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !10  ; 7 uses
-  %5 = add i8 %i.bi, 95
-  %or.cond = icmp ult i8 %5, 21
-  %6 = add i8 %i.bi, 59
-  %or.cond85 = icmp ult i8 %6, 5
-  %or.cond111 = or i1 %or.cond, %or.cond85
-  %7 = add i8 %i.bi, 49
-  %or.cond86 = icmp ult i8 %7, 17
-  %or.cond112 = or i1 %or.cond86, %or.cond111
-  br i1 %or.cond112, label %bb.s, label %bb.u
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !10  ; 5 uses
+  %5 = insertelement <3 x i8> poison, i8 %i.bi, i64 0
+  %6 = shufflevector <3 x i8> %5, <3 x i8> poison, <3 x i32> zeroinitializer
+  %7 = add <3 x i8> %6, <i8 95, i8 59, i8 49>
+  %8 = icmp ult <3 x i8> %7, <i8 21, i8 5, i8 17>
+  %9 = bitcast <3 x i1> %8 to i3
+  %.not125 = icmp eq i3 %9, 0
+  br i1 %.not125, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.bj = zext i8 %i.bi to i64

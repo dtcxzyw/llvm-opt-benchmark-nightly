@@ -201,7 +201,9 @@ bb.a:
   %i.c = sub nsw i64 %0, %i.a
   %.neg = sub i64 %i.b, %3
   %i.d = add i64 %.neg, %i.c                      ; 5 uses
-  %6 = sext i8 %1 to i16
+  %6 = insertelement <2 x i8> poison, i8 %1, i64 0
+  %7 = insertelement <2 x i8> %6, i8 %4, i64 1    ; 2 uses
+  %8 = sext <2 x i8> %7 to <2 x i16>
   %i.e = icmp slt i8 %1, 3
   %i.f = sext i1 %i.e to i64
   %i.g = add nsw i64 %i.a, %i.f                   ; 4 uses
@@ -213,20 +215,9 @@ bb.a:
   %.sext = sext i16 %i.k to i64                   ; 2 uses
   %.neg.i = mul nsw i64 %.sext, -400
   %i.l = add nsw i64 %.neg.i, %i.g                ; 2 uses
-  %7 = icmp sgt i8 %1, 2
-  %8 = select i1 %7, i16 -3, i16 9
-  %9 = add nsw i16 %8, %6
-  %10 = mul nsw i16 %9, 153
-  %.lhs.trunc.i = add nsw i16 %10, 2
-  %11 = sdiv i16 %.lhs.trunc.i, 5
-  %.sext.i = sext i16 %11 to i64
+  %9 = icmp sgt <2 x i8> %7, splat (i8 2)
   %i.m = sext i8 %2 to i64
-  %.lhs.trunc33 = trunc i64 %i.l to i16           ; 2 uses
-  %12 = sdiv i16 %.lhs.trunc33, 4
-  %.sext34 = sext i16 %12 to i64
-  %.neg17.i35 = sdiv i16 %.lhs.trunc33, -100
-  %.neg17.i.sext = sext i16 %.neg17.i35 to i64
-  %13 = sext i8 %4 to i16
+  %.lhs.trunc33 = trunc i64 %i.l to i16
   %i.n = icmp slt i8 %4, 3
   %i.o = sext i1 %i.n to i64
   %i.p = add nsw i64 %i.b, %i.o                   ; 4 uses
@@ -238,32 +229,27 @@ bb.a:
   %.sext37 = sext i16 %i.t to i64                 ; 2 uses
   %.neg.i29 = mul nsw i64 %.sext37, -400
   %i.u = add nsw i64 %.neg.i29, %i.p              ; 2 uses
-  %14 = icmp sgt i8 %4, 2
-  %15 = select i1 %14, i16 -3, i16 9
-  %16 = add nsw i16 %15, %13
-  %17 = mul nsw i16 %16, 153
-  %.lhs.trunc.i30 = add nsw i16 %17, 2
-  %.neg53 = sdiv i16 %.lhs.trunc.i30, -5
+  %10 = select <2 x i1> %9, <2 x i16> splat (i16 -3), <2 x i16> splat (i16 9)
+  %11 = add nsw <2 x i16> %10, %8
+  %12 = mul nsw <2 x i16> %11, splat (i16 153)
+  %13 = add nsw <2 x i16> %12, splat (i16 2)
   %i.v = sext i8 %5 to i64
-  %.lhs.trunc38 = trunc i64 %i.u to i16           ; 2 uses
-  %.neg54 = sdiv i16 %.lhs.trunc38, -4
-  %.neg17.i3240.neg = sdiv i16 %.lhs.trunc38, 100
-  %.neg17.i32.sext.neg = sext i16 %.neg17.i3240.neg to i64
-  %.sext.i31.neg = sext i16 %.neg53 to i64
-  %.sext39.neg = sext i16 %.neg54 to i64
+  %.lhs.trunc38 = trunc i64 %i.u to i16
+  %14 = shufflevector <2 x i16> %13, <2 x i16> poison, <6 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
+  %15 = insertelement <6 x i16> %14, i16 %.lhs.trunc33, i64 2
+  %16 = insertelement <6 x i16> %15, i16 %.lhs.trunc38, i64 4
+  %17 = shufflevector <6 x i16> %16, <6 x i16> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 2, i32 4, i32 4>
+  %18 = sdiv <6 x i16> %17, <i16 5, i16 -5, i16 4, i16 -100, i16 -4, i16 100>
   %reass.add = sub nsw i64 %i.l, %i.u
   %reass.mul = mul nsw i64 %reass.add, 365
   %reass.add51 = sub nsw i64 %.sext, %.sext37
   %reass.mul52 = mul nsw i64 %reass.add51, 146097
   %.neg48 = sub nsw i64 %i.m, %i.v
-  %.neg49 = add nsw i64 %.neg48, %.sext.i
-  %18 = add nsw i64 %.neg49, %.sext.i31.neg
-  %19 = add nsw i64 %18, %.sext34
-  %20 = add nsw i64 %19, %.neg17.i.sext
-  %21 = add nsw i64 %20, %reass.mul52
-  %i.w = add nsw i64 %21, %reass.mul
-  %i.x = add nsw i64 %i.w, %.sext39.neg
-  %i.y = add nsw i64 %i.x, %.neg17.i32.sext.neg   ; 5 uses
+  %19 = sext <6 x i16> %18 to <6 x i64>
+  %20 = tail call i64 @llvm.vector.reduce.add.v6i64(<6 x i64> %19)
+  %i.w = add i64 %20, %reass.mul52
+  %i.x = add nsw i64 %reass.mul, %.neg48
+  %i.y = add i64 %i.w, %i.x                       ; 5 uses
   %i.z = icmp sgt i64 %i.d, 0
   %i.aa = icmp slt i64 %i.y, 0
   %or.cond = select i1 %i.z, i1 %i.aa, i1 false
@@ -525,6 +511,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.add.v6i64(<6 x i64>) #16
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

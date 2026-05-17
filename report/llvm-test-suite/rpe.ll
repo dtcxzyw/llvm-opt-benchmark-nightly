@@ -201,53 +201,37 @@ begin_hunk_0_@Gsm_RPE_Encoding:bb.a
   %i.kx = getelementptr inbounds nuw i8, ptr %i.jz, i64 72
   %i.ky = load i16, ptr %i.kx, align 2, !tbaa !8  ; 4 uses
   store i16 %.2.i, ptr %3, align 2, !tbaa !8
-  %5 = insertelement <8 x i16> poison, i16 %i.ka, i64 0
-  %6 = insertelement <8 x i16> %5, i16 %i.kc, i64 1
-  %7 = insertelement <8 x i16> %6, i16 %i.ke, i64 2
-  %8 = insertelement <8 x i16> %7, i16 %i.kg, i64 3
-  %9 = insertelement <8 x i16> %8, i16 %i.ki, i64 4
-  %10 = insertelement <8 x i16> %9, i16 %i.kk, i64 5
-  %11 = insertelement <8 x i16> %10, i16 %i.km, i64 6
-  %12 = insertelement <8 x i16> %11, i16 %i.ko, i64 7 ; 3 uses
-  %13 = icmp slt <8 x i16> %12, zeroinitializer
-  %14 = tail call <8 x i16> @llvm.ssub.sat.v8i16(<8 x i16> zeroinitializer, <8 x i16> %12)
-  %15 = select <8 x i1> %13, <8 x i16> %14, <8 x i16> %12 ; 2 uses
-  %16 = insertelement <4 x i16> poison, i16 %i.kq, i64 0
-  %17 = insertelement <4 x i16> %16, i16 %i.ks, i64 1
-  %18 = insertelement <4 x i16> %17, i16 %i.ku, i64 2
-  %19 = insertelement <4 x i16> %18, i16 %i.kw, i64 3 ; 3 uses
-  %20 = icmp slt <4 x i16> %19, zeroinitializer
-  %21 = tail call <4 x i16> @llvm.ssub.sat.v4i16(<4 x i16> zeroinitializer, <4 x i16> %19)
-  %22 = select <4 x i1> %20, <4 x i16> %21, <4 x i16> %19
-  %23 = shufflevector <8 x i16> %15, <8 x i16> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = tail call <4 x i16> @llvm.smax.v4i16(<4 x i16> %23, <4 x i16> %22)
-  %25 = shufflevector <4 x i16> %24, <4 x i16> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %26 = shufflevector <8 x i16> %25, <8 x i16> %15, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 12, i32 13, i32 14, i32 15>
-  %i.kz = tail call i16 @llvm.vector.reduce.smax.v8i16(<8 x i16> %26)
+  %5 = insertelement <12 x i16> poison, i16 %i.ka, i64 0
+  %6 = insertelement <12 x i16> %5, i16 %i.kc, i64 1
+  %7 = insertelement <12 x i16> %6, i16 %i.ke, i64 2
+  %8 = insertelement <12 x i16> %7, i16 %i.kg, i64 3
+  %9 = insertelement <12 x i16> %8, i16 %i.ki, i64 4
+  %10 = insertelement <12 x i16> %9, i16 %i.kk, i64 5
+  %11 = insertelement <12 x i16> %10, i16 %i.km, i64 6
+  %12 = insertelement <12 x i16> %11, i16 %i.ko, i64 7
+  %13 = insertelement <12 x i16> %12, i16 %i.kq, i64 8
+  %14 = insertelement <12 x i16> %13, i16 %i.ks, i64 9
+  %15 = insertelement <12 x i16> %14, i16 %i.ku, i64 10
+  %16 = insertelement <12 x i16> %15, i16 %i.kw, i64 11 ; 3 uses
+  %17 = icmp slt <12 x i16> %16, zeroinitializer
+  %18 = tail call <12 x i16> @llvm.ssub.sat.v12i16(<12 x i16> zeroinitializer, <12 x i16> %16)
+  %19 = select <12 x i1> %17, <12 x i16> %18, <12 x i16> %16
+  %i.kz = tail call i16 @llvm.vector.reduce.smax.v12i16(<12 x i16> %19)
   %i.la = icmp slt i16 %i.ky, 0
   %i.lb = tail call i16 @llvm.ssub.sat.i16(i16 0, i16 %i.ky)
   %i.lc = select i1 %i.la, i16 %i.lb, i16 %i.ky
-  %.138.11.i = tail call i16 @llvm.smax.i16(i16 %i.kz, i16 %i.lc) ; 4 uses
+  %.138.11.i = tail call i16 @llvm.smax.i16(i16 %i.kz, i16 %i.lc) ; 2 uses
   %.138.12.i = tail call i16 @llvm.smax.i16(i16 %.138.11.i, i16 0)
-  %27 = insertelement <4 x i16> poison, i16 %.138.11.i, i64 0
-  %28 = shufflevector <4 x i16> %27, <4 x i16> poison, <4 x i32> zeroinitializer
-  %29 = icmp sgt <4 x i16> %28, <i16 511, i16 1023, i16 2047, i16 4095>
-  %30 = icmp sgt i16 %.138.11.i, 8191
-  %31 = zext i1 %30 to i16
-  %32 = icmp sgt i16 %.138.11.i, 16383
-  %33 = zext i1 %32 to i16
-  %34 = bitcast <4 x i1> %29 to i4
-  %35 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %34)
-  %i.ld = zext nneg i4 %35 to i16
-  %op.rdx = add nuw nsw i16 %i.ld, %31
-  %op.rdx28 = add nuw nsw i16 %op.rdx, %33        ; 2 uses
-  %36 = zext nneg i16 %.138.12.i to i32
-  %i.le = add nuw nsw i16 %op.rdx28, 5
-  %37 = zext nneg i16 %i.le to i32
-  %38 = lshr i32 %36, %37
-  %39 = trunc nuw nsw i32 %38 to i16
-  %i.lf = shl nuw nsw i16 %op.rdx28, 3
-  %i.lg = tail call signext i16 @gsm_add(i16 noundef signext %39, i16 noundef signext %i.lf) #5 ; 4 uses
+  %20 = insertelement <6 x i16> poison, i16 %.138.11.i, i64 0
+  %21 = shufflevector <6 x i16> %20, <6 x i16> poison, <6 x i32> zeroinitializer
+  %22 = icmp sgt <6 x i16> %21, <i16 511, i16 1023, i16 2047, i16 4095, i16 8191, i16 16383>
+  %23 = bitcast <6 x i1> %22 to i6
+  %24 = tail call range(i6 0, 7) i6 @llvm.ctpop.i6(i6 %23)
+  %i.ld = zext nneg i6 %24 to i16                 ; 2 uses
+  %i.le = add nuw nsw i16 %i.ld, 5
+  %25 = lshr i16 %.138.12.i, %i.le
+  %i.lf = shl nuw nsw i16 %i.ld, 3
+  %i.lg = tail call signext i16 @gsm_add(i16 noundef signext %25, i16 noundef signext %i.lf) #5 ; 4 uses
   %i.lh = icmp sgt i16 %i.lg, 15
   %i.li = lshr i16 %i.lg, 3
   %i.lj = add nsw i16 %i.li, -1
@@ -650,19 +634,13 @@ declare i16 @llvm.sadd.sat.i16(i16, i16) #3
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i4 @llvm.ctpop.i4(i4) #3
+declare i6 @llvm.ctpop.i6(i6) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <8 x i16> @llvm.ssub.sat.v8i16(<8 x i16>, <8 x i16>) #3
+declare <12 x i16> @llvm.ssub.sat.v12i16(<12 x i16>, <12 x i16>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.ssub.sat.v4i16(<4 x i16>, <4 x i16>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x i16> @llvm.smax.v4i16(<4 x i16>, <4 x i16>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.vector.reduce.smax.v8i16(<8 x i16>) #3
+declare i16 @llvm.vector.reduce.smax.v12i16(<12 x i16>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

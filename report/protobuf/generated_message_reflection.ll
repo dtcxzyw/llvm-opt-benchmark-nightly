@@ -201,7 +201,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7M
   %.pre18.i57 = phi i8 [ %.pre18.i57.pre, %bb.k ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i55 = phi ptr [ %.pre.i55.pre, %bb.k ], [ %.pre.i, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.au = phi i32 [ %.pre528, %bb.k ], [ %i.k, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i = phi ptr [ %i.ab, %bb.k ], [ %i.at, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i = phi ptr [ %i.ab, %bb.k ], [ %i.at, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i53 = icmp eq i32 %i.au, -1
   %.pre532 = and i8 %.pre18.i57, 8                ; 2 uses
   br i1 %.not.i.i53, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i67, label %bb.n
@@ -293,7 +293,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit78
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit78: ; preds = %bb.q, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i72
-  %.0.i77 = phi ptr [ %i.bl, %bb.q ], [ %i.cd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i72 ] ; 5 uses
+  %.0.i77 = phi ptr [ %i.bl, %bb.q ], [ %i.cd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i72 ] ; 4 uses
   %i.ce = load i32, ptr %.0.i, align 4, !tbaa !104 ; 2 uses
   %i.cf = load i32, ptr %.0.i77, align 4, !tbaa !104
   %i.cg = xor i32 %i.cf, %i.ce
@@ -307,16 +307,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7M
   %i.cm = getelementptr inbounds nuw i8, ptr %.0.i77, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
-  %5 = load <8 x i8>, ptr %i.cm, align 4, !tbaa !31, !alias.scope !109, !noalias !106
-  %6 = load <8 x i8>, ptr %i.cl, align 4, !tbaa !31, !alias.scope !106, !noalias !109
-  store <8 x i8> %5, ptr %i.cl, align 4, !tbaa !31, !alias.scope !106, !noalias !109
-  store <8 x i8> %6, ptr %i.cm, align 4, !tbaa !31, !alias.scope !109, !noalias !106
-  %7 = getelementptr inbounds nuw i8, ptr %.0.i77, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 12 ; 2 uses
-  %8 = load <4 x i8>, ptr %7, align 4, !tbaa !31, !alias.scope !109, !noalias !106
-  %9 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !106, !noalias !109
-  store <4 x i8> %8, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !106, !noalias !109
-  store <4 x i8> %9, ptr %7, align 4, !tbaa !31, !alias.scope !109, !noalias !106
+  %5 = load <12 x i8>, ptr %i.cm, align 4, !tbaa !31, !alias.scope !109, !noalias !106
+  %6 = load <12 x i8>, ptr %i.cl, align 4, !tbaa !31, !alias.scope !106, !noalias !109
+  store <12 x i8> %5, ptr %i.cl, align 4, !tbaa !31, !alias.scope !106, !noalias !109
+  store <12 x i8> %6, ptr %i.cm, align 4, !tbaa !31, !alias.scope !109, !noalias !106
   br label %bb.do
 
 bb.t:                                             ; preds = %bb.f
@@ -421,7 +415,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIlEEEEPT_PNS0_7M
   %.pre18.i107 = phi i8 [ %.pre18.i107.pre, %bb.x ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i105 = phi ptr [ %.pre.i105.pre, %bb.x ], [ %.pre.i81, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.dy = phi i32 [ %.pre525, %bb.x ], [ %i.co, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i102 = phi ptr [ %i.df, %bb.x ], [ %i.dx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i102 = phi ptr [ %i.df, %bb.x ], [ %i.dx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i103 = icmp eq i32 %i.dy, -1
   %.pre536 = and i8 %.pre18.i107, 8               ; 2 uses
   br i1 %.not.i.i103, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i117, label %bb.aa
@@ -513,7 +507,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIlEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit128
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIlEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit128: ; preds = %bb.ad, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i122
-  %.0.i127 = phi ptr [ %i.ep, %bb.ad ], [ %i.fh, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i122 ] ; 5 uses
+  %.0.i127 = phi ptr [ %i.ep, %bb.ad ], [ %i.fh, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIlEEEEjPKNS0_15FieldDescriptorE.exit.i122 ] ; 4 uses
   %i.fi = load i32, ptr %.0.i102, align 4, !tbaa !104 ; 2 uses
   %i.fj = load i32, ptr %.0.i127, align 4, !tbaa !104
   %i.fk = xor i32 %i.fj, %i.fi
@@ -527,16 +521,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIlEEEEPT_PNS0_7M
   %i.fq = getelementptr inbounds nuw i8, ptr %.0.i127, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !114)
-  %10 = load <8 x i8>, ptr %i.fq, align 4, !tbaa !31, !alias.scope !114, !noalias !111
-  %11 = load <8 x i8>, ptr %i.fp, align 4, !tbaa !31, !alias.scope !111, !noalias !114
-  store <8 x i8> %10, ptr %i.fp, align 4, !tbaa !31, !alias.scope !111, !noalias !114
-  store <8 x i8> %11, ptr %i.fq, align 4, !tbaa !31, !alias.scope !114, !noalias !111
-  %12 = getelementptr inbounds nuw i8, ptr %.0.i127, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i136 = getelementptr inbounds nuw i8, ptr %.0.i102, i64 12 ; 2 uses
-  %13 = load <4 x i8>, ptr %12, align 4, !tbaa !31, !alias.scope !114, !noalias !111
-  %14 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i136, align 4, !tbaa !31, !alias.scope !111, !noalias !114
-  store <4 x i8> %13, ptr %.079.i.ptr.8.i.i.i136, align 4, !tbaa !31, !alias.scope !111, !noalias !114
-  store <4 x i8> %14, ptr %12, align 4, !tbaa !31, !alias.scope !114, !noalias !111
+  %7 = load <12 x i8>, ptr %i.fq, align 4, !tbaa !31, !alias.scope !114, !noalias !111
+  %8 = load <12 x i8>, ptr %i.fp, align 4, !tbaa !31, !alias.scope !111, !noalias !114
+  store <12 x i8> %7, ptr %i.fp, align 4, !tbaa !31, !alias.scope !111, !noalias !114
+  store <12 x i8> %8, ptr %i.fq, align 4, !tbaa !31, !alias.scope !114, !noalias !111
   br label %bb.do
 
 bb.ag:                                            ; preds = %bb.f
@@ -641,7 +629,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIjEEEEPT_PNS0_7M
   %.pre18.i168 = phi i8 [ %.pre18.i168.pre, %bb.ak ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i166 = phi ptr [ %.pre.i166.pre, %bb.ak ], [ %.pre.i142, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.hc = phi i32 [ %.pre522, %bb.ak ], [ %i.fs, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i163 = phi ptr [ %i.gj, %bb.ak ], [ %i.hb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i163 = phi ptr [ %i.gj, %bb.ak ], [ %i.hb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i164 = icmp eq i32 %i.hc, -1
   %.pre540 = and i8 %.pre18.i168, 8               ; 2 uses
   br i1 %.not.i.i164, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i178, label %bb.an
@@ -733,7 +721,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIjEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit189
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIjEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit189: ; preds = %bb.aq, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i183
-  %.0.i188 = phi ptr [ %i.ht, %bb.aq ], [ %i.il, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i183 ] ; 5 uses
+  %.0.i188 = phi ptr [ %i.ht, %bb.aq ], [ %i.il, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIjEEEEjPKNS0_15FieldDescriptorE.exit.i183 ] ; 4 uses
   %i.im = load i32, ptr %.0.i163, align 4, !tbaa !104 ; 2 uses
   %i.in = load i32, ptr %.0.i188, align 4, !tbaa !104
   %i.io = xor i32 %i.in, %i.im
@@ -747,16 +735,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIjEEEEPT_PNS0_7M
   %i.iu = getelementptr inbounds nuw i8, ptr %.0.i188, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !116)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !119)
-  %15 = load <8 x i8>, ptr %i.iu, align 4, !tbaa !31, !alias.scope !119, !noalias !116
-  %16 = load <8 x i8>, ptr %i.it, align 4, !tbaa !31, !alias.scope !116, !noalias !119
-  store <8 x i8> %15, ptr %i.it, align 4, !tbaa !31, !alias.scope !116, !noalias !119
-  store <8 x i8> %16, ptr %i.iu, align 4, !tbaa !31, !alias.scope !119, !noalias !116
-  %17 = getelementptr inbounds nuw i8, ptr %.0.i188, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i197 = getelementptr inbounds nuw i8, ptr %.0.i163, i64 12 ; 2 uses
-  %18 = load <4 x i8>, ptr %17, align 4, !tbaa !31, !alias.scope !119, !noalias !116
-  %19 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i197, align 4, !tbaa !31, !alias.scope !116, !noalias !119
-  store <4 x i8> %18, ptr %.079.i.ptr.8.i.i.i197, align 4, !tbaa !31, !alias.scope !116, !noalias !119
-  store <4 x i8> %19, ptr %17, align 4, !tbaa !31, !alias.scope !119, !noalias !116
+  %9 = load <12 x i8>, ptr %i.iu, align 4, !tbaa !31, !alias.scope !119, !noalias !116
+  %10 = load <12 x i8>, ptr %i.it, align 4, !tbaa !31, !alias.scope !116, !noalias !119
+  store <12 x i8> %9, ptr %i.it, align 4, !tbaa !31, !alias.scope !116, !noalias !119
+  store <12 x i8> %10, ptr %i.iu, align 4, !tbaa !31, !alias.scope !119, !noalias !116
   br label %bb.do
 
 bb.at:                                            ; preds = %bb.f
@@ -861,7 +843,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldImEEEEPT_PNS0_7M
   %.pre18.i229 = phi i8 [ %.pre18.i229.pre, %bb.ax ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i227 = phi ptr [ %.pre.i227.pre, %bb.ax ], [ %.pre.i203, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.kg = phi i32 [ %.pre519, %bb.ax ], [ %i.iw, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i224 = phi ptr [ %i.jn, %bb.ax ], [ %i.kf, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i224 = phi ptr [ %i.jn, %bb.ax ], [ %i.kf, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i225 = icmp eq i32 %i.kg, -1
   %.pre544 = and i8 %.pre18.i229, 8               ; 2 uses
   br i1 %.not.i.i225, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i239, label %bb.ba
@@ -953,7 +935,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldImEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit250
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldImEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit250: ; preds = %bb.bd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i244
-  %.0.i249 = phi ptr [ %i.kx, %bb.bd ], [ %i.lp, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i244 ] ; 5 uses
+  %.0.i249 = phi ptr [ %i.kx, %bb.bd ], [ %i.lp, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldImEEEEjPKNS0_15FieldDescriptorE.exit.i244 ] ; 4 uses
   %i.lq = load i32, ptr %.0.i224, align 4, !tbaa !104 ; 2 uses
   %i.lr = load i32, ptr %.0.i249, align 4, !tbaa !104
   %i.ls = xor i32 %i.lr, %i.lq
@@ -967,16 +949,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldImEEEEPT_PNS0_7M
   %i.ly = getelementptr inbounds nuw i8, ptr %.0.i249, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !121)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !124)
-  %20 = load <8 x i8>, ptr %i.ly, align 4, !tbaa !31, !alias.scope !124, !noalias !121
-  %21 = load <8 x i8>, ptr %i.lx, align 4, !tbaa !31, !alias.scope !121, !noalias !124
-  store <8 x i8> %20, ptr %i.lx, align 4, !tbaa !31, !alias.scope !121, !noalias !124
-  store <8 x i8> %21, ptr %i.ly, align 4, !tbaa !31, !alias.scope !124, !noalias !121
-  %22 = getelementptr inbounds nuw i8, ptr %.0.i249, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i258 = getelementptr inbounds nuw i8, ptr %.0.i224, i64 12 ; 2 uses
-  %23 = load <4 x i8>, ptr %22, align 4, !tbaa !31, !alias.scope !124, !noalias !121
-  %24 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i258, align 4, !tbaa !31, !alias.scope !121, !noalias !124
-  store <4 x i8> %23, ptr %.079.i.ptr.8.i.i.i258, align 4, !tbaa !31, !alias.scope !121, !noalias !124
-  store <4 x i8> %24, ptr %22, align 4, !tbaa !31, !alias.scope !124, !noalias !121
+  %11 = load <12 x i8>, ptr %i.ly, align 4, !tbaa !31, !alias.scope !124, !noalias !121
+  %12 = load <12 x i8>, ptr %i.lx, align 4, !tbaa !31, !alias.scope !121, !noalias !124
+  store <12 x i8> %11, ptr %i.lx, align 4, !tbaa !31, !alias.scope !121, !noalias !124
+  store <12 x i8> %12, ptr %i.ly, align 4, !tbaa !31, !alias.scope !124, !noalias !121
   br label %bb.do
 
 bb.bg:                                            ; preds = %bb.f
@@ -1081,7 +1057,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIfEEEEPT_PNS0_7M
   %.pre18.i290 = phi i8 [ %.pre18.i290.pre, %bb.bk ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i288 = phi ptr [ %.pre.i288.pre, %bb.bk ], [ %.pre.i264, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.nk = phi i32 [ %.pre516, %bb.bk ], [ %i.ma, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i285 = phi ptr [ %i.mr, %bb.bk ], [ %i.nj, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i285 = phi ptr [ %i.mr, %bb.bk ], [ %i.nj, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i286 = icmp eq i32 %i.nk, -1
   %.pre548 = and i8 %.pre18.i290, 8               ; 2 uses
   br i1 %.not.i.i286, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i300, label %bb.bn
@@ -1173,7 +1149,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIfEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit311
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIfEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit311: ; preds = %bb.bq, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i305
-  %.0.i310 = phi ptr [ %i.ob, %bb.bq ], [ %i.ot, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i305 ] ; 5 uses
+  %.0.i310 = phi ptr [ %i.ob, %bb.bq ], [ %i.ot, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIfEEEEjPKNS0_15FieldDescriptorE.exit.i305 ] ; 4 uses
   %i.ou = load i32, ptr %.0.i285, align 4, !tbaa !104 ; 2 uses
   %i.ov = load i32, ptr %.0.i310, align 4, !tbaa !104
   %i.ow = xor i32 %i.ov, %i.ou
@@ -1187,16 +1163,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIfEEEEPT_PNS0_7M
   %i.pc = getelementptr inbounds nuw i8, ptr %.0.i310, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !126)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !129)
-  %25 = load <8 x i8>, ptr %i.pc, align 4, !tbaa !31, !alias.scope !129, !noalias !126
-  %26 = load <8 x i8>, ptr %i.pb, align 4, !tbaa !31, !alias.scope !126, !noalias !129
-  store <8 x i8> %25, ptr %i.pb, align 4, !tbaa !31, !alias.scope !126, !noalias !129
-  store <8 x i8> %26, ptr %i.pc, align 4, !tbaa !31, !alias.scope !129, !noalias !126
-  %27 = getelementptr inbounds nuw i8, ptr %.0.i310, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i319 = getelementptr inbounds nuw i8, ptr %.0.i285, i64 12 ; 2 uses
-  %28 = load <4 x i8>, ptr %27, align 4, !tbaa !31, !alias.scope !129, !noalias !126
-  %29 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i319, align 4, !tbaa !31, !alias.scope !126, !noalias !129
-  store <4 x i8> %28, ptr %.079.i.ptr.8.i.i.i319, align 4, !tbaa !31, !alias.scope !126, !noalias !129
-  store <4 x i8> %29, ptr %27, align 4, !tbaa !31, !alias.scope !129, !noalias !126
+  %13 = load <12 x i8>, ptr %i.pc, align 4, !tbaa !31, !alias.scope !129, !noalias !126
+  %14 = load <12 x i8>, ptr %i.pb, align 4, !tbaa !31, !alias.scope !126, !noalias !129
+  store <12 x i8> %13, ptr %i.pb, align 4, !tbaa !31, !alias.scope !126, !noalias !129
+  store <12 x i8> %14, ptr %i.pc, align 4, !tbaa !31, !alias.scope !129, !noalias !126
   br label %bb.do
 
 bb.bt:                                            ; preds = %bb.f
@@ -1301,7 +1271,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIdEEEEPT_PNS0_7M
   %.pre18.i351 = phi i8 [ %.pre18.i351.pre, %bb.bx ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i349 = phi ptr [ %.pre.i349.pre, %bb.bx ], [ %.pre.i325, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.qo = phi i32 [ %.pre513, %bb.bx ], [ %i.pe, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i346 = phi ptr [ %i.pv, %bb.bx ], [ %i.qn, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i346 = phi ptr [ %i.pv, %bb.bx ], [ %i.qn, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i347 = icmp eq i32 %i.qo, -1
   %.pre552 = and i8 %.pre18.i351, 8               ; 2 uses
   br i1 %.not.i.i347, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i361, label %bb.ca
@@ -1393,7 +1363,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIdEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit372
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIdEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit372: ; preds = %bb.cd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i366
-  %.0.i371 = phi ptr [ %i.rf, %bb.cd ], [ %i.rx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i366 ] ; 5 uses
+  %.0.i371 = phi ptr [ %i.rf, %bb.cd ], [ %i.rx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIdEEEEjPKNS0_15FieldDescriptorE.exit.i366 ] ; 4 uses
   %i.ry = load i32, ptr %.0.i346, align 4, !tbaa !104 ; 2 uses
   %i.rz = load i32, ptr %.0.i371, align 4, !tbaa !104
   %i.sa = xor i32 %i.rz, %i.ry
@@ -1407,16 +1377,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIdEEEEPT_PNS0_7M
   %i.sg = getelementptr inbounds nuw i8, ptr %.0.i371, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !131)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !134)
-  %30 = load <8 x i8>, ptr %i.sg, align 4, !tbaa !31, !alias.scope !134, !noalias !131
-  %31 = load <8 x i8>, ptr %i.sf, align 4, !tbaa !31, !alias.scope !131, !noalias !134
-  store <8 x i8> %30, ptr %i.sf, align 4, !tbaa !31, !alias.scope !131, !noalias !134
-  store <8 x i8> %31, ptr %i.sg, align 4, !tbaa !31, !alias.scope !134, !noalias !131
-  %32 = getelementptr inbounds nuw i8, ptr %.0.i371, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i380 = getelementptr inbounds nuw i8, ptr %.0.i346, i64 12 ; 2 uses
-  %33 = load <4 x i8>, ptr %32, align 4, !tbaa !31, !alias.scope !134, !noalias !131
-  %34 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i380, align 4, !tbaa !31, !alias.scope !131, !noalias !134
-  store <4 x i8> %33, ptr %.079.i.ptr.8.i.i.i380, align 4, !tbaa !31, !alias.scope !131, !noalias !134
-  store <4 x i8> %34, ptr %32, align 4, !tbaa !31, !alias.scope !134, !noalias !131
+  %15 = load <12 x i8>, ptr %i.sg, align 4, !tbaa !31, !alias.scope !134, !noalias !131
+  %16 = load <12 x i8>, ptr %i.sf, align 4, !tbaa !31, !alias.scope !131, !noalias !134
+  store <12 x i8> %15, ptr %i.sf, align 4, !tbaa !31, !alias.scope !131, !noalias !134
+  store <12 x i8> %16, ptr %i.sg, align 4, !tbaa !31, !alias.scope !134, !noalias !131
   br label %bb.do
 
 bb.cg:                                            ; preds = %bb.f
@@ -1521,7 +1485,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIbEEEEPT_PNS0_7M
   %.pre18.i412 = phi i8 [ %.pre18.i412.pre, %bb.ck ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i410 = phi ptr [ %.pre.i410.pre, %bb.ck ], [ %.pre.i386, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.ts = phi i32 [ %.pre510, %bb.ck ], [ %i.si, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i407 = phi ptr [ %i.sz, %bb.ck ], [ %i.tr, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i407 = phi ptr [ %i.sz, %bb.ck ], [ %i.tr, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i408 = icmp eq i32 %i.ts, -1
   %.pre556 = and i8 %.pre18.i412, 8               ; 2 uses
   br i1 %.not.i.i408, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i422, label %bb.cn
@@ -1613,7 +1577,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIbEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit433
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIbEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit433: ; preds = %bb.cq, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i427
-  %.0.i432 = phi ptr [ %i.uj, %bb.cq ], [ %i.vb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i427 ] ; 5 uses
+  %.0.i432 = phi ptr [ %i.uj, %bb.cq ], [ %i.vb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIbEEEEjPKNS0_15FieldDescriptorE.exit.i427 ] ; 4 uses
   %i.vc = load i32, ptr %.0.i407, align 4, !tbaa !104 ; 2 uses
   %i.vd = load i32, ptr %.0.i432, align 4, !tbaa !104
   %i.ve = xor i32 %i.vd, %i.vc
@@ -1627,16 +1591,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIbEEEEPT_PNS0_7M
   %i.vk = getelementptr inbounds nuw i8, ptr %.0.i432, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !136)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !139)
-  %35 = load <8 x i8>, ptr %i.vk, align 4, !tbaa !31, !alias.scope !139, !noalias !136
-  %36 = load <8 x i8>, ptr %i.vj, align 4, !tbaa !31, !alias.scope !136, !noalias !139
-  store <8 x i8> %35, ptr %i.vj, align 4, !tbaa !31, !alias.scope !136, !noalias !139
-  store <8 x i8> %36, ptr %i.vk, align 4, !tbaa !31, !alias.scope !139, !noalias !136
-  %37 = getelementptr inbounds nuw i8, ptr %.0.i432, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i441 = getelementptr inbounds nuw i8, ptr %.0.i407, i64 12 ; 2 uses
-  %38 = load <4 x i8>, ptr %37, align 4, !tbaa !31, !alias.scope !139, !noalias !136
-  %39 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i441, align 4, !tbaa !31, !alias.scope !136, !noalias !139
-  store <4 x i8> %38, ptr %.079.i.ptr.8.i.i.i441, align 4, !tbaa !31, !alias.scope !136, !noalias !139
-  store <4 x i8> %39, ptr %37, align 4, !tbaa !31, !alias.scope !139, !noalias !136
+  %17 = load <12 x i8>, ptr %i.vk, align 4, !tbaa !31, !alias.scope !139, !noalias !136
+  %18 = load <12 x i8>, ptr %i.vj, align 4, !tbaa !31, !alias.scope !136, !noalias !139
+  store <12 x i8> %17, ptr %i.vj, align 4, !tbaa !31, !alias.scope !136, !noalias !139
+  store <12 x i8> %18, ptr %i.vk, align 4, !tbaa !31, !alias.scope !139, !noalias !136
   br label %bb.do
 
 bb.ct:                                            ; preds = %bb.f
@@ -1741,7 +1699,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7M
   %.pre18.i475 = phi i8 [ %.pre18.i475.pre, %bb.cx ], [ %i.c, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i464 ]
   %.pre.i473 = phi ptr [ %.pre.i473.pre, %bb.cx ], [ %.pre.i447, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i464 ] ; 2 uses
   %i.ww = phi i32 [ %.pre, %bb.cx ], [ %i.vm, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i464 ]
-  %.0.i469 = phi ptr [ %i.wd, %bb.cx ], [ %i.wv, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i464 ] ; 4 uses
+  %.0.i469 = phi ptr [ %i.wd, %bb.cx ], [ %i.wv, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i464 ] ; 3 uses
   %.not.i.i471 = icmp eq i32 %i.ww, -1
   %.pre560 = and i8 %.pre18.i475, 8               ; 2 uses
   br i1 %.not.i.i471, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i485, label %bb.da
@@ -1833,7 +1791,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit496
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit496: ; preds = %bb.dd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i490
-  %.0.i495 = phi ptr [ %i.xn, %bb.dd ], [ %i.yf, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i490 ] ; 5 uses
+  %.0.i495 = phi ptr [ %i.xn, %bb.dd ], [ %i.yf, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIiEEEEjPKNS0_15FieldDescriptorE.exit.i490 ] ; 4 uses
   %i.yg = load i32, ptr %.0.i469, align 4, !tbaa !104 ; 2 uses
   %i.yh = load i32, ptr %.0.i495, align 4, !tbaa !104
   %i.yi = xor i32 %i.yh, %i.yg
@@ -1847,16 +1805,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIiEEEEPT_PNS0_7M
   %i.yo = getelementptr inbounds nuw i8, ptr %.0.i495, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !141)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !144)
-  %40 = load <8 x i8>, ptr %i.yo, align 4, !tbaa !31, !alias.scope !144, !noalias !141
-  %41 = load <8 x i8>, ptr %i.yn, align 4, !tbaa !31, !alias.scope !141, !noalias !144
-  store <8 x i8> %40, ptr %i.yn, align 4, !tbaa !31, !alias.scope !141, !noalias !144
-  store <8 x i8> %41, ptr %i.yo, align 4, !tbaa !31, !alias.scope !144, !noalias !141
-  %42 = getelementptr inbounds nuw i8, ptr %.0.i495, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i504 = getelementptr inbounds nuw i8, ptr %.0.i469, i64 12 ; 2 uses
-  %43 = load <4 x i8>, ptr %42, align 4, !tbaa !31, !alias.scope !144, !noalias !141
-  %44 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i504, align 4, !tbaa !31, !alias.scope !141, !noalias !144
-  store <4 x i8> %43, ptr %.079.i.ptr.8.i.i.i504, align 4, !tbaa !31, !alias.scope !141, !noalias !144
-  store <4 x i8> %44, ptr %42, align 4, !tbaa !31, !alias.scope !144, !noalias !141
+  %19 = load <12 x i8>, ptr %i.yo, align 4, !tbaa !31, !alias.scope !144, !noalias !141
+  %20 = load <12 x i8>, ptr %i.yn, align 4, !tbaa !31, !alias.scope !141, !noalias !144
+  store <12 x i8> %19, ptr %i.yn, align 4, !tbaa !31, !alias.scope !141, !noalias !144
+  store <12 x i8> %20, ptr %i.yo, align 4, !tbaa !31, !alias.scope !144, !noalias !141
   br label %bb.do
 
 bb.dg:                                            ; preds = %bb.f
@@ -2259,16 +2211,10 @@ _ZN6google8protobuf13RepeatedFieldIiE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !269)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !272)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !272, !noalias !269
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !269, !noalias !272
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !269, !noalias !272
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !272, !noalias !269
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !272, !noalias !269
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !269, !noalias !272
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !269, !noalias !272
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !272, !noalias !269
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !272, !noalias !269
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !269, !noalias !272
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !269, !noalias !272
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !272, !noalias !269
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIiE8GetArenaEv.exit13
@@ -2533,16 +2479,10 @@ _ZN6google8protobuf13RepeatedFieldIlE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !274)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !277)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !277, !noalias !274
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !274, !noalias !277
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !274, !noalias !277
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !277, !noalias !274
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !277, !noalias !274
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !274, !noalias !277
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !274, !noalias !277
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !277, !noalias !274
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !277, !noalias !274
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !274, !noalias !277
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !274, !noalias !277
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !277, !noalias !274
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIlE8GetArenaEv.exit13
@@ -2807,16 +2747,10 @@ _ZN6google8protobuf13RepeatedFieldIjE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !279)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !282)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !282, !noalias !279
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !279, !noalias !282
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !279, !noalias !282
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !282, !noalias !279
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !282, !noalias !279
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !279, !noalias !282
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !279, !noalias !282
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !282, !noalias !279
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !282, !noalias !279
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !279, !noalias !282
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !279, !noalias !282
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !282, !noalias !279
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIjE8GetArenaEv.exit13
@@ -3081,16 +3015,10 @@ _ZN6google8protobuf13RepeatedFieldImE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !284)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !287)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !287, !noalias !284
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !284, !noalias !287
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !284, !noalias !287
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !287, !noalias !284
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !287, !noalias !284
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !284, !noalias !287
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !284, !noalias !287
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !287, !noalias !284
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !287, !noalias !284
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !284, !noalias !287
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !284, !noalias !287
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !287, !noalias !284
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldImE8GetArenaEv.exit13
@@ -3355,16 +3283,10 @@ _ZN6google8protobuf13RepeatedFieldIfE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !289)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !292)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !292, !noalias !289
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !289, !noalias !292
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !289, !noalias !292
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !292, !noalias !289
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !292, !noalias !289
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !289, !noalias !292
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !289, !noalias !292
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !292, !noalias !289
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !292, !noalias !289
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !289, !noalias !292
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !289, !noalias !292
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !292, !noalias !289
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIfE8GetArenaEv.exit13
@@ -3629,16 +3551,10 @@ _ZN6google8protobuf13RepeatedFieldIdE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !294)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !297)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !297, !noalias !294
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !294, !noalias !297
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !294, !noalias !297
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !297, !noalias !294
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !297, !noalias !294
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !294, !noalias !297
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !294, !noalias !297
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !297, !noalias !294
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !297, !noalias !294
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !294, !noalias !297
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !294, !noalias !297
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !297, !noalias !294
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIdE8GetArenaEv.exit13
@@ -3903,16 +3819,10 @@ _ZN6google8protobuf13RepeatedFieldIbE8GetArenaEv.exit13.thread.thread: ; preds =
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !299)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !302)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !302, !noalias !299
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !299, !noalias !302
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !299, !noalias !302
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !302, !noalias !299
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !302, !noalias !299
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !299, !noalias !302
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !299, !noalias !302
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !302, !noalias !299
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !302, !noalias !299
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !299, !noalias !302
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !299, !noalias !302
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !302, !noalias !299
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIbE8GetArenaEv.exit13
@@ -4315,7 +4225,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBase
   %.pre18.i77 = phi i8 [ %.pre18.i77.pre, %bb.w ], [ %.pre18.i53, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i75 = phi ptr [ %.pre.i75.pre, %bb.w ], [ %.pre.i51, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.dx = phi i32 [ %.pre, %bb.w ], [ %i.cn, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i72 = phi ptr [ %i.de, %bb.w ], [ %i.dw, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i72 = phi ptr [ %i.de, %bb.w ], [ %i.dw, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i73 = icmp eq i32 %i.dx, -1
   %.pre109 = and i8 %.pre18.i77, 8                ; 2 uses
   br i1 %.not.i.i73, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i87, label %bb.z
@@ -4407,7 +4317,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPt
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit98
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit98: ; preds = %bb.ac, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92
-  %.0.i97 = phi ptr [ %i.eo, %bb.ac ], [ %i.fg, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92 ] ; 4 uses
+  %.0.i97 = phi ptr [ %i.eo, %bb.ac ], [ %i.fg, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92 ] ; 3 uses
   %i.fh = icmp eq ptr %.0.i.i, %.0.i.i21
   br i1 %i.fh, label %bb.af, label %bb.ag
 
@@ -4415,16 +4325,10 @@ bb.af:                                            ; preds = %_ZNK6google8protobu
   tail call void @llvm.experimental.noalias.scope.decl(metadata !304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !307)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !310)
-  %4 = load <8 x i8>, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !312, !noalias !307
-  %5 = load <8 x i8>, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !307, !noalias !312
-  store <8 x i8> %4, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !307, !noalias !312
-  store <8 x i8> %5, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !312, !noalias !307
-  %6 = getelementptr inbounds nuw i8, ptr %.0.i97, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %.0.i72, i64 8 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 1, !tbaa !31, !alias.scope !312, !noalias !307
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !307, !noalias !312
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !307, !noalias !312
-  store <4 x i8> %8, ptr %6, align 1, !tbaa !31, !alias.scope !312, !noalias !307
+  %4 = load <12 x i8>, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !312, !noalias !307
+  %5 = load <12 x i8>, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !307, !noalias !312
+  store <12 x i8> %4, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !307, !noalias !312
+  store <12 x i8> %5, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !312, !noalias !307
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase4SwapINS1_18GenericTypeHandlerINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEEEvPNS0_5ArenaEPS2_SD_.exit
 
 bb.ag:                                            ; preds = %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit98
@@ -4774,7 +4678,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBase
   %.pre18.i77 = phi i8 [ %.pre18.i77.pre, %bb.w ], [ %.pre18.i53, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i75 = phi ptr [ %.pre.i75.pre, %bb.w ], [ %.pre.i51, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.du = phi i32 [ %.pre105, %bb.w ], [ %i.d, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i72 = phi ptr [ %i.db, %bb.w ], [ %i.dt, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i72 = phi ptr [ %i.db, %bb.w ], [ %i.dt, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i73 = icmp eq i32 %i.du, -1
   %.pre109 = and i8 %.pre18.i77, 8                ; 2 uses
   br i1 %.not.i.i73, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i87, label %bb.z
@@ -4866,7 +4770,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPt
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit98
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit98: ; preds = %bb.ac, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92
-  %.0.i97 = phi ptr [ %i.el, %bb.ac ], [ %i.fd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92 ] ; 4 uses
+  %.0.i97 = phi ptr [ %i.el, %bb.ac ], [ %i.fd, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i92 ] ; 3 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ff = load i64, ptr %i.fe, align 8, !tbaa !36 ; 3 uses
   %i.fg = trunc i64 %i.ff to i1
@@ -4908,16 +4812,10 @@ bb.aj:                                            ; preds = %_ZNK6google8protobu
   tail call void @llvm.experimental.noalias.scope.decl(metadata !313)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !316)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !319)
-  %4 = load <8 x i8>, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !321, !noalias !316
-  %5 = load <8 x i8>, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !316, !noalias !321
-  store <8 x i8> %4, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !316, !noalias !321
-  store <8 x i8> %5, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !321, !noalias !316
-  %6 = getelementptr inbounds nuw i8, ptr %.0.i97, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %.0.i72, i64 8 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 1, !tbaa !31, !alias.scope !321, !noalias !316
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !316, !noalias !321
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !316, !noalias !321
-  store <4 x i8> %8, ptr %6, align 1, !tbaa !31, !alias.scope !321, !noalias !316
+  %4 = load <12 x i8>, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !321, !noalias !316
+  %5 = load <12 x i8>, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !316, !noalias !321
+  store <12 x i8> %4, ptr %.0.i72, align 1, !tbaa !31, !alias.scope !316, !noalias !321
+  store <12 x i8> %5, ptr %.0.i97, align 1, !tbaa !31, !alias.scope !321, !noalias !316
   br label %_ZN6google8protobuf8internal20RepeatedPtrFieldBase4SwapINS1_18GenericTypeHandlerINS0_7MessageEEEEEvPNS0_5ArenaEPS2_S8_.exit
 
 bb.ak:                                            ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit102
@@ -5320,7 +5218,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIN4absl12lts_202
   %.pre18.i25 = phi i8 [ %.pre18.i25.pre, %bb.e ], [ %.pre18.i, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i23 = phi ptr [ %.pre.i23.pre, %bb.e ], [ %.pre.i, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.ao = phi i32 [ %.pre99, %bb.e ], [ %i.e, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i = phi ptr [ %i.v, %bb.e ], [ %i.an, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 4 uses
+  %.0.i = phi ptr [ %i.v, %bb.e ], [ %i.an, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
   %.not.i.i21 = icmp eq i32 %i.ao, -1
   %.pre103 = and i8 %.pre18.i25, 8                ; 2 uses
   br i1 %.not.i.i21, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i35, label %bb.h
@@ -5412,7 +5310,7 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFi
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit46
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit46: ; preds = %bb.k, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i40
-  %.0.i45 = phi ptr [ %i.bf, %bb.k ], [ %i.bx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i40 ] ; 5 uses
+  %.0.i45 = phi ptr [ %i.bf, %bb.k ], [ %i.bx, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEjPKNS0_15FieldDescriptorE.exit.i40 ] ; 4 uses
   %i.by = load i32, ptr %.0.i, align 4, !tbaa !104 ; 2 uses
   %i.bz = load i32, ptr %.0.i45, align 4, !tbaa !104
   %i.ca = xor i32 %i.bz, %i.by
@@ -5426,16 +5324,10 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIN4absl12lts_202
   %i.cg = getelementptr inbounds nuw i8, ptr %.0.i45, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !323)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !326)
-  %4 = load <8 x i8>, ptr %i.cg, align 4, !tbaa !31, !alias.scope !326, !noalias !323
-  %5 = load <8 x i8>, ptr %i.cf, align 4, !tbaa !31, !alias.scope !323, !noalias !326
-  store <8 x i8> %4, ptr %i.cf, align 4, !tbaa !31, !alias.scope !323, !noalias !326
-  store <8 x i8> %5, ptr %i.cg, align 4, !tbaa !31, !alias.scope !326, !noalias !323
-  %6 = getelementptr inbounds nuw i8, ptr %.0.i45, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !326, !noalias !323
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !323, !noalias !326
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !323, !noalias !326
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !326, !noalias !323
+  %4 = load <12 x i8>, ptr %i.cg, align 4, !tbaa !31, !alias.scope !326, !noalias !323
+  %5 = load <12 x i8>, ptr %i.cf, align 4, !tbaa !31, !alias.scope !323, !noalias !326
+  store <12 x i8> %4, ptr %i.cf, align 4, !tbaa !31, !alias.scope !323, !noalias !326
+  store <12 x i8> %5, ptr %i.cg, align 4, !tbaa !31, !alias.scope !326, !noalias !323
   br label %bb.aa
 
 bb.n:                                             ; preds = %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit, %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit
@@ -5542,7 +5434,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBase
   %.pre18.i75 = phi i8 [ %.pre18.i75.pre, %bb.r ], [ %.pre18.i51, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i73 = phi ptr [ %.pre.i73.pre, %bb.r ], [ %.pre.i49, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.ds = phi i32 [ %.pre, %bb.r ], [ %i.ci, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i70 = phi ptr [ %i.cz, %bb.r ], [ %i.dr, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
+  %.0.i70 = phi ptr [ %i.cz, %bb.r ], [ %i.dr, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %.not.i.i71 = icmp eq i32 %i.ds, -1
   %.pre107 = and i8 %.pre18.i75, 8                ; 2 uses
   br i1 %.not.i.i71, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i85, label %bb.u
@@ -5634,20 +5526,14 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPt
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit96
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit96: ; preds = %bb.x, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i90
-  %.0.i95 = phi ptr [ %i.ej, %bb.x ], [ %i.fb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i90 ] ; 3 uses
+  %.0.i95 = phi ptr [ %i.ej, %bb.x ], [ %i.fb, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i90 ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !328)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !331)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !334)
-  %9 = load <8 x i8>, ptr %.0.i95, align 1, !tbaa !31, !alias.scope !336, !noalias !331
-  %10 = load <8 x i8>, ptr %.0.i70, align 1, !tbaa !31, !alias.scope !331, !noalias !336
-  store <8 x i8> %9, ptr %.0.i70, align 1, !tbaa !31, !alias.scope !331, !noalias !336
-  store <8 x i8> %10, ptr %.0.i95, align 1, !tbaa !31, !alias.scope !336, !noalias !331
-  %11 = getelementptr inbounds nuw i8, ptr %.0.i95, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %.0.i70, i64 8 ; 2 uses
-  %12 = load <4 x i8>, ptr %11, align 1, !tbaa !31, !alias.scope !336, !noalias !331
-  %13 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !331, !noalias !336
-  store <4 x i8> %12, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !331, !noalias !336
-  store <4 x i8> %13, ptr %11, align 1, !tbaa !31, !alias.scope !336, !noalias !331
+  %6 = load <12 x i8>, ptr %.0.i95, align 1, !tbaa !31, !alias.scope !336, !noalias !331
+  %7 = load <12 x i8>, ptr %.0.i70, align 1, !tbaa !31, !alias.scope !331, !noalias !336
+  store <12 x i8> %6, ptr %.0.i70, align 1, !tbaa !31, !alias.scope !331, !noalias !336
+  store <12 x i8> %7, ptr %.0.i95, align 1, !tbaa !31, !alias.scope !336, !noalias !331
   br label %bb.aa
 
 bb.aa:                                            ; preds = %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit96, %_ZNK6google8protobuf10Reflection10MutableRawINS0_13RepeatedFieldIN4absl12lts_202505124CordEEEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit46, %_ZNK6google8protobuf11MessageLite8GetArenaEv.exit
@@ -5959,7 +5845,7 @@ _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBase
   %.pre18.i71 = phi i8 [ %.pre18.i71.pre, %bb.s ], [ %.pre18.i47, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
   %.pre.i69 = phi ptr [ %.pre.i69.pre, %bb.s ], [ %.pre.i45, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %i.dg = phi i32 [ %.pre95, %bb.s ], [ %i.d, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ]
-  %.0.i66 = phi ptr [ %i.cn, %bb.s ], [ %i.df, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 3 uses
+  %.0.i66 = phi ptr [ %i.cn, %bb.s ], [ %i.df, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i ] ; 2 uses
   %.not.i.i67 = icmp eq i32 %i.dg, -1
   %.pre99 = and i8 %.pre18.i71, 8                 ; 2 uses
   br i1 %.not.i.i67, label %_ZNK6google8protobuf8internal16ReflectionSchema7IsSplitEPKNS0_15FieldDescriptorE.exit.thread.i81, label %bb.v
@@ -6051,20 +5937,14 @@ _ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPt
   br label %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit92
 
 _ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit92: ; preds = %bb.y, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i86
-  %.0.i91 = phi ptr [ %i.dx, %bb.y ], [ %i.ep, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i86 ] ; 3 uses
+  %.0.i91 = phi ptr [ %i.dx, %bb.y ], [ %i.ep, %_ZNK6google8protobuf8internal16ReflectionSchema14GetFieldOffsetINS1_20RepeatedPtrFieldBaseEEEjPKNS0_15FieldDescriptorE.exit.i86 ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !337)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !340)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
-  %4 = load <8 x i8>, ptr %.0.i91, align 1, !tbaa !31, !alias.scope !345, !noalias !340
-  %5 = load <8 x i8>, ptr %.0.i66, align 1, !tbaa !31, !alias.scope !340, !noalias !345
-  store <8 x i8> %4, ptr %.0.i66, align 1, !tbaa !31, !alias.scope !340, !noalias !345
-  store <8 x i8> %5, ptr %.0.i91, align 1, !tbaa !31, !alias.scope !345, !noalias !340
-  %6 = getelementptr inbounds nuw i8, ptr %.0.i91, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %.0.i66, i64 8 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 1, !tbaa !31, !alias.scope !345, !noalias !340
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !340, !noalias !345
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !340, !noalias !345
-  store <4 x i8> %8, ptr %6, align 1, !tbaa !31, !alias.scope !345, !noalias !340
+  %4 = load <12 x i8>, ptr %.0.i91, align 1, !tbaa !31, !alias.scope !345, !noalias !340
+  %5 = load <12 x i8>, ptr %.0.i66, align 1, !tbaa !31, !alias.scope !340, !noalias !345
+  store <12 x i8> %4, ptr %.0.i66, align 1, !tbaa !31, !alias.scope !340, !noalias !345
+  store <12 x i8> %5, ptr %.0.i91, align 1, !tbaa !31, !alias.scope !345, !noalias !340
   br label %bb.ab
 
 bb.ab:                                            ; preds = %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal20RepeatedPtrFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit92, %_ZNK6google8protobuf10Reflection10MutableRawINS0_8internal12MapFieldBaseEEEPT_PNS0_7MessageEPKNS0_15FieldDescriptorE.exit42
@@ -6467,16 +6347,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !815)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !818)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !818, !noalias !815
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !818, !noalias !815
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !818, !noalias !815
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !818, !noalias !815
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !818, !noalias !815
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !815, !noalias !818
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !818, !noalias !815
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -6869,16 +6743,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !868)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !871)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !871, !noalias !868
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !871, !noalias !868
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !871, !noalias !868
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !871, !noalias !868
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !871, !noalias !868
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !868, !noalias !871
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !871, !noalias !868
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -7263,16 +7131,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !885)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !888)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !888, !noalias !885
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !888, !noalias !885
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !888, !noalias !885
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !888, !noalias !885
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !888, !noalias !885
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !885, !noalias !888
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !888, !noalias !885
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -7660,16 +7522,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !902)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !905)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !905, !noalias !902
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !905, !noalias !902
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !905, !noalias !902
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !905, !noalias !902
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !905, !noalias !902
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !902, !noalias !905
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !905, !noalias !902
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -8054,16 +7910,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !919)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !922)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !922, !noalias !919
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !922, !noalias !919
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !922, !noalias !919
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !922, !noalias !919
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !922, !noalias !919
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !919, !noalias !922
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !922, !noalias !919
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -8451,16 +8301,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !936)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !939)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !939, !noalias !936
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !939, !noalias !936
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !939, !noalias !936
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !939, !noalias !936
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !939, !noalias !936
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !936, !noalias !939
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !939, !noalias !936
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -8843,16 +8687,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !953)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !956)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !956, !noalias !953
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !956, !noalias !953
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !956, !noalias !953
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !956, !noalias !953
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !956, !noalias !953
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !953, !noalias !956
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !956, !noalias !953
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -9106,16 +8944,10 @@ _ZN6google8protobuf13RepeatedFieldIN4absl12lts_202505124CordEE8GetArenaEv.exit14
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !958)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !961)
-  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !961, !noalias !958
-  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !958, !noalias !961
-  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !958, !noalias !961
-  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !961, !noalias !958
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !31, !alias.scope !961, !noalias !958
-  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !958, !noalias !961
-  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !958, !noalias !961
-  store <4 x i8> %8, ptr %6, align 4, !tbaa !31, !alias.scope !961, !noalias !958
+  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !31, !alias.scope !961, !noalias !958
+  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !31, !alias.scope !958, !noalias !961
+  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !31, !alias.scope !958, !noalias !961
+  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !31, !alias.scope !961, !noalias !958
   br label %bb.aa
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldIN4absl12lts_202505124CordEE8GetArenaEv.exit14
@@ -9518,16 +9350,10 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !963)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !966)
-  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !966, !noalias !963
-  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
-  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
-  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !966, !noalias !963
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
-  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !31, !alias.scope !966, !noalias !963
-  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
-  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
-  store <4 x i8> %6, ptr %4, align 4, !tbaa !31, !alias.scope !966, !noalias !963
+  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !31, !alias.scope !966, !noalias !963
+  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
+  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !31, !alias.scope !963, !noalias !966
+  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !31, !alias.scope !966, !noalias !963
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -9930,16 +9756,10 @@ _ZN6google8protobuf8internal20RepeatedPtrFieldBase8CopyFromINS1_18GenericTypeHan
   tail call void @llvm.experimental.noalias.scope.decl(metadata !972)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !975)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !978)
-  %5 = load <8 x i8>, ptr %4, align 8, !tbaa !31, !alias.scope !980, !noalias !975
-  %6 = load <8 x i8>, ptr %2, align 1, !tbaa !31, !alias.scope !975, !noalias !980
-  store <8 x i8> %5, ptr %2, align 1, !tbaa !31, !alias.scope !975, !noalias !980
-  store <8 x i8> %6, ptr %4, align 8, !tbaa !31, !alias.scope !980, !noalias !975
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %8 = load <4 x i8>, ptr %7, align 8, !tbaa !31, !alias.scope !980, !noalias !975
-  %9 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !975, !noalias !980
-  store <4 x i8> %8, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !975, !noalias !980
-  store <4 x i8> %9, ptr %7, align 8, !tbaa !31, !alias.scope !980, !noalias !975
+  %5 = load <12 x i8>, ptr %4, align 8, !tbaa !31, !alias.scope !980, !noalias !975
+  %6 = load <12 x i8>, ptr %2, align 1, !tbaa !31, !alias.scope !975, !noalias !980
+  store <12 x i8> %5, ptr %2, align 1, !tbaa !31, !alias.scope !975, !noalias !980
+  store <12 x i8> %6, ptr %4, align 8, !tbaa !31, !alias.scope !980, !noalias !975
   ret void
 }
 
@@ -10187,16 +10007,10 @@ _ZN6google8protobuf8internal20RepeatedPtrFieldBase8CopyFromINS1_18GenericTypeHan
   tail call void @llvm.experimental.noalias.scope.decl(metadata !983)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !986)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !989)
-  %5 = load <8 x i8>, ptr %4, align 8, !tbaa !31, !alias.scope !991, !noalias !986
-  %6 = load <8 x i8>, ptr %2, align 1, !tbaa !31, !alias.scope !986, !noalias !991
-  store <8 x i8> %5, ptr %2, align 1, !tbaa !31, !alias.scope !986, !noalias !991
-  store <8 x i8> %6, ptr %4, align 8, !tbaa !31, !alias.scope !991, !noalias !986
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %.079.i.ptr.8.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %8 = load <4 x i8>, ptr %7, align 8, !tbaa !31, !alias.scope !991, !noalias !986
-  %9 = load <4 x i8>, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !986, !noalias !991
-  store <4 x i8> %8, ptr %.079.i.ptr.8.i.i, align 1, !tbaa !31, !alias.scope !986, !noalias !991
-  store <4 x i8> %9, ptr %7, align 8, !tbaa !31, !alias.scope !991, !noalias !986
+  %5 = load <12 x i8>, ptr %4, align 8, !tbaa !31, !alias.scope !991, !noalias !986
+  %6 = load <12 x i8>, ptr %2, align 1, !tbaa !31, !alias.scope !986, !noalias !991
+  store <12 x i8> %5, ptr %2, align 1, !tbaa !31, !alias.scope !986, !noalias !991
+  store <12 x i8> %6, ptr %4, align 8, !tbaa !31, !alias.scope !991, !noalias !986
   ret void
 }
 

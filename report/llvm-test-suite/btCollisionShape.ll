@@ -131,18 +131,6 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8
   tail call void %i.c(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 4 dereferenceable(64) %1, ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %6)
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
-  %8 = load float, ptr %7, align 4, !tbaa !8      ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %10 = load float, ptr %9, align 4, !tbaa !8     ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %12 = load float, ptr %11, align 4, !tbaa !8
-  %13 = fmul float %4, %12                        ; 3 uses
-  %14 = fcmp ogt float %13, 0.000000e+00          ; 2 uses
-  %15 = fadd float %8, %13
-  %16 = fadd float %10, %13
-  %.058 = select i1 %14, float %10, float %16
-  %.055 = select i1 %14, float %15, float %8
   %i.d = load float, ptr %3, align 4, !tbaa !8    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.f = load float, ptr %i.e, align 4, !tbaa !8  ; 2 uses
@@ -155,42 +143,37 @@ bb.a:
   %i.l = load ptr, ptr %0, align 8, !tbaa !10
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.n = load ptr, ptr %i.m, align 8
-  %17 = load <2 x float>, ptr %5, align 4, !tbaa !8 ; 2 uses
-  %18 = load <2 x float>, ptr %2, align 4, !tbaa !8
-  %19 = insertelement <2 x float> poison, float %4, i64 0
-  %20 = shufflevector <2 x float> %19, <2 x float> poison, <2 x i32> zeroinitializer
-  %21 = fmul <2 x float> %20, %18                 ; 3 uses
-  %22 = fcmp ogt <2 x float> %21, zeroinitializer ; 2 uses
-  %23 = fadd <2 x float> %17, %21
-  %24 = select <2 x i1> %22, <2 x float> %17, <2 x float> %23
+  %7 = load <3 x float>, ptr %5, align 4, !tbaa !8 ; 2 uses
+  %8 = load <3 x float>, ptr %2, align 4, !tbaa !8
+  %9 = insertelement <3 x float> poison, float %4, i64 0
+  %10 = shufflevector <3 x float> %9, <3 x float> poison, <3 x i32> zeroinitializer
+  %11 = fmul <3 x float> %10, %8                  ; 4 uses
+  %12 = extractelement <3 x float> %11, i64 0
+  %13 = fcmp ogt <3 x float> %11, zeroinitializer ; 2 uses
+  %14 = fcmp ogt float %12, 0.000000e+00
+  %15 = fadd <3 x float> %7, %11
+  %16 = select <3 x i1> %13, <3 x float> %7, <3 x float> %15
   %.sroa.619.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %25 = load <2 x float>, ptr %6, align 4, !tbaa !8 ; 2 uses
-  %26 = fadd <2 x float> %25, %21
-  %27 = select <2 x i1> %22, <2 x float> %26, <2 x float> %25
-  %28 = tail call noundef float %i.n(ptr noundef nonnull align 8 dereferenceable(24) %0)
-  %29 = fmul float %sqrt.i, %28
-  %i.o = fmul float %4, %29                       ; 3 uses
-  store <2 x float> %24, ptr %5, align 4
-  store float %.058, ptr %9, align 4
+  %17 = load <3 x float>, ptr %6, align 4, !tbaa !8 ; 2 uses
+  %18 = fadd <3 x float> %17, %11
+  %19 = insertelement <3 x i1> %13, i1 %14, i64 0
+  %20 = select <3 x i1> %19, <3 x float> %18, <3 x float> %17
+  %21 = tail call noundef float %i.n(ptr noundef nonnull align 8 dereferenceable(24) %0)
+  %i.o = fmul float %sqrt.i, %21
+  %22 = fmul float %4, %i.o
+  store <3 x float> %16, ptr %5, align 4
   store float 0.000000e+00, ptr %.sroa.619.0..sroa_idx, align 4, !tbaa !12
-  store <2 x float> %27, ptr %6, align 4
-  store float %.055, ptr %7, align 4
+  store <3 x float> %20, ptr %6, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 12
   store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !12
-  %30 = load <2 x float>, ptr %5, align 4, !tbaa !8
-  %31 = insertelement <2 x float> poison, float %i.o, i64 0
-  %32 = shufflevector <2 x float> %31, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %33 = fsub <2 x float> %30, %32
-  store <2 x float> %33, ptr %5, align 4, !tbaa !8
-  %34 = load float, ptr %9, align 4, !tbaa !8
-  %35 = fsub float %34, %i.o
-  store float %35, ptr %9, align 4, !tbaa !8
-  %36 = load <2 x float>, ptr %6, align 4, !tbaa !8
-  %37 = fadd <2 x float> %32, %36
-  store <2 x float> %37, ptr %6, align 4, !tbaa !8
-  %38 = load float, ptr %7, align 4, !tbaa !8
-  %39 = fadd float %i.o, %38
-  store float %39, ptr %7, align 4, !tbaa !8
+  %23 = load <3 x float>, ptr %5, align 4, !tbaa !8
+  %24 = insertelement <3 x float> poison, float %22, i64 0
+  %25 = shufflevector <3 x float> %24, <3 x float> poison, <3 x i32> zeroinitializer ; 2 uses
+  %26 = fsub <3 x float> %23, %25
+  store <3 x float> %26, ptr %5, align 4, !tbaa !8
+  %27 = load <3 x float>, ptr %6, align 4, !tbaa !8
+  %28 = fadd <3 x float> %25, %27
+  store <3 x float> %28, ptr %6, align 4, !tbaa !8
   ret void
 }
 

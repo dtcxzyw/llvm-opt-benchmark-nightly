@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal { i64, i64 } @_ZN6duckdb12_GLOBAL__N_114StringCompressINS_10uhugeint_tEEET_RKNS_8string_tE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) #17 {
 bb.a:
-  %1 = alloca %"struct.duckdb::uhugeint_t", align 8 ; 10 uses
+  %1 = alloca %"struct.duckdb::uhugeint_t", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   %i.a = load i32, ptr %0, align 8, !tbaa !54     ; 4 uses
   %i.b = icmp ult i32 %i.a, 13
@@ -210,14 +210,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load <8 x i8>, ptr %2, align 8, !tbaa !54
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.c, align 4, !tbaa !54
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %6 = load <4 x i8>, ptr %i.d, align 4, !tbaa !54
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %7, ptr %5, align 4, !tbaa !54
+  %2 = load <12 x i8>, ptr %i.d, align 4, !tbaa !54
+  %3 = shufflevector <12 x i8> %2, <12 x i8> poison, <12 x i32> <i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <12 x i8> %3, ptr %i.c, align 4, !tbaa !54
   store i32 0, ptr %1, align 8
   br label %_ZN6duckdb12_GLOBAL__N_122StringCompressInternalINS_10uhugeint_tEEET_RKNS_8string_tE.exit
 
@@ -620,7 +615,7 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal { i64, i64 } @_ZN6duckdb12_GLOBAL__N_114StringCompressINS_9hugeint_tEEET_RKNS_8string_tE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) #17 {
 bb.a:
-  %1 = alloca %"struct.duckdb::hugeint_t", align 8 ; 10 uses
+  %1 = alloca %"struct.duckdb::hugeint_t", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   %i.a = load i32, ptr %0, align 8, !tbaa !54     ; 4 uses
   %i.b = icmp ult i32 %i.a, 13
@@ -629,14 +624,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load <8 x i8>, ptr %2, align 8, !tbaa !54
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.c, align 4, !tbaa !54
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %6 = load <4 x i8>, ptr %i.d, align 4, !tbaa !54
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %7, ptr %5, align 4, !tbaa !54
+  %2 = load <12 x i8>, ptr %i.d, align 4, !tbaa !54
+  %3 = shufflevector <12 x i8> %2, <12 x i8> poison, <12 x i32> <i32 11, i32 10, i32 9, i32 8, i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  store <12 x i8> %3, ptr %i.c, align 4, !tbaa !54
   store i32 0, ptr %1, align 8
   br label %_ZN6duckdb12_GLOBAL__N_122StringCompressInternalINS_9hugeint_tEEET_RKNS_8string_tE.exit
 

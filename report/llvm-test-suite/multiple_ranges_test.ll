@@ -158,7 +158,7 @@ bb.a:                                             ; preds = %_ZN9benchmark5State
 bb.b:                                             ; preds = %.lr.ph23, %bb.a
   %.sroa.013.022 = phi i64 [ %i.e, %.lr.ph23 ], [ %i.h, %bb.a ] ; 2 uses
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !37   ; 2 uses
-  %i.j = load ptr, ptr %i.f, align 32, !tbaa !38  ; 5 uses
+  %i.j = load ptr, ptr %i.f, align 32, !tbaa !38  ; 3 uses
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l                       ; 2 uses
@@ -186,16 +186,11 @@ bb.e:                                             ; preds = %_ZNK9benchmark5Stat
   unreachable
 
 _ZNK9benchmark5State5rangeEm.exit:                ; preds = %_ZNK9benchmark5State5rangeEm.exit11
-  %2 = load i64, ptr %i.j, align 8, !tbaa !39
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %4 = load i64, ptr %3, align 8, !tbaa !39
-  %5 = mul nsw i64 %4, %2
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 16
-  %7 = load i64, ptr %6, align 8, !tbaa !39
-  %8 = mul nsw i64 %5, %7                         ; 2 uses
+  %2 = load <3 x i64>, ptr %i.j, align 8, !tbaa !39
+  %3 = call i64 @llvm.vector.reduce.mul.v3i64(<3 x i64> %2) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   store i64 0, ptr %i.a, align 8, !tbaa !39
-  %i.o = icmp sgt i64 %8, 0
+  %i.o = icmp sgt i64 %3, 0
   br i1 %i.o, label %.lr.ph, label %_ZN9benchmark5State13StateIteratorppEv.exit
 
 _ZN9benchmark5State13StateIteratorppEv.exit:      ; preds = %.lr.ph, %_ZNK9benchmark5State5rangeEm.exit
@@ -213,7 +208,7 @@ bb.f:                                             ; preds = %_ZN9benchmark5State
   %i.q = load i64, ptr %i.a, align 8, !tbaa !39
   %i.r = add nsw i64 %i.q, 1                      ; 3 uses
   store i64 %i.r, ptr %i.a, align 8, !tbaa !39
-  %i.s = icmp slt i64 %i.r, %8
+  %i.s = icmp slt i64 %i.r, %3
   br i1 %i.s, label %.lr.ph, label %_ZN9benchmark5State13StateIteratorppEv.exit, !llvm.loop !41
 }
 
@@ -615,6 +610,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.vector.reduce.mul.v3i64(<3 x i64>) #18
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

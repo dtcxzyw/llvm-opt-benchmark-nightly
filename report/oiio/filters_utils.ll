@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define hidden range(i32 0, 4) i32 @WebPEstimateBestFilter(ptr noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x [16 x i32]], align 16        ; 25 uses
+  %i.a = alloca [4 x [16 x i32]], align 16        ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
   %i.b = add nsw i32 %2, -1
@@ -164,45 +164,27 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.cv = icmp sgt i32 %i.cu, 0
   %i.cw = zext i1 %i.cv to i32
   %i.cx = getelementptr inbounds nuw i8, ptr %i.a, i64 136
-  %4 = load i32, ptr %i.cx, align 8, !tbaa !3
-  %5 = icmp sgt i32 %4, 0
-  %6 = select i1 %5, i32 2, i32 0
-  %spec.select.2.2 = or disjoint i32 %6, %i.cw
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 140
-  %8 = load <12 x i32>, ptr %7, align 4, !tbaa !3
-  %9 = icmp sgt <12 x i32> %8, zeroinitializer
-  %10 = select <12 x i1> %9, <12 x i32> <i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>, <12 x i32> zeroinitializer
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 188
-  %12 = load i32, ptr %11, align 4, !tbaa !3
-  %13 = icmp sgt i32 %12, 0
-  %14 = select i1 %13, i32 15, i32 0
-  %i.cy = tail call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %10)
-  %op.rdx129 = add nuw nsw i32 %i.cy, %14
-  %op.rdx130 = add nuw nsw i32 %op.rdx129, %spec.select.2.2 ; 2 uses
-  %i.cz = icmp samesign ult i32 %op.rdx130, %i.cs
+  %4 = load <14 x i32>, ptr %i.cx, align 8, !tbaa !3
+  %5 = icmp sgt <14 x i32> %4, zeroinitializer
+  %6 = select <14 x i1> %5, <14 x i32> <i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, <14 x i32> zeroinitializer
+  %7 = insertelement <14 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %i.cw, i64 0
+  %8 = or disjoint <14 x i32> %6, %7
+  %i.cy = tail call i32 @llvm.vector.reduce.add.v14i32(<14 x i32> %8) ; 2 uses
+  %i.cz = icmp samesign ult i32 %i.cy, %i.cs
   %spec.select61.2 = select i1 %i.cz, i32 2, i32 %spec.select61.1
-  %i.da = tail call i32 @llvm.umin.i32(i32 %op.rdx130, i32 %i.cs)
+  %i.da = tail call i32 @llvm.umin.i32(i32 %i.cy, i32 %i.cs)
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 196
   %i.dc = load i32, ptr %i.db, align 4, !tbaa !3
   %i.dd = icmp sgt i32 %i.dc, 0
   %i.de = zext i1 %i.dd to i32
   %i.df = getelementptr inbounds nuw i8, ptr %i.a, i64 200
-  %15 = load i32, ptr %i.df, align 8, !tbaa !3
-  %16 = icmp sgt i32 %15, 0
-  %17 = select i1 %16, i32 2, i32 0
-  %spec.select.2.3 = or disjoint i32 %17, %i.de
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 204
-  %19 = load <12 x i32>, ptr %18, align 4, !tbaa !3
-  %20 = icmp sgt <12 x i32> %19, zeroinitializer
-  %21 = select <12 x i1> %20, <12 x i32> <i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>, <12 x i32> zeroinitializer
-  %22 = getelementptr inbounds nuw i8, ptr %i.a, i64 252
-  %23 = load i32, ptr %22, align 4, !tbaa !3
-  %24 = icmp sgt i32 %23, 0
-  %25 = select i1 %24, i32 15, i32 0
-  %i.dg = tail call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %21)
-  %op.rdx = add nuw nsw i32 %i.dg, %25
-  %op.rdx128 = add nuw nsw i32 %op.rdx, %spec.select.2.3
-  %i.dh = icmp samesign ult i32 %op.rdx128, %i.da
+  %9 = load <14 x i32>, ptr %i.df, align 8, !tbaa !3
+  %10 = icmp sgt <14 x i32> %9, zeroinitializer
+  %11 = select <14 x i1> %10, <14 x i32> <i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>, <14 x i32> zeroinitializer
+  %12 = insertelement <14 x i32> <i32 poison, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0>, i32 %i.de, i64 0
+  %13 = or disjoint <14 x i32> %11, %12
+  %i.dg = tail call i32 @llvm.vector.reduce.add.v14i32(<14 x i32> %13)
+  %i.dh = icmp samesign ult i32 %i.dg, %i.da
   %spec.select61.3 = select i1 %i.dh, i32 3, i32 %spec.select61.2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %spec.select61.3
@@ -225,6 +207,9 @@ declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v14i32(<14 x i32>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v12i32(<12 x i32>) #4

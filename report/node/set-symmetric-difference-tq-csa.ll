@@ -201,25 +201,21 @@ bb.dg:                                            ; preds = %bb.df, %_ZNSt6vecto
 bb.dh:                                            ; preds = %bb.dg
   call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %113, ptr noundef nonnull %i.dk) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  %i.ahf = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #8 ; 5 uses
+  %i.ahf = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #8 ; 3 uses
   store ptr %i.ahf, ptr %2, align 8
-  %379 = getelementptr inbounds nuw i8, ptr %i.ahf, i64 6 ; 2 uses
-  %i.ahg = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
-  store ptr %379, ptr %i.ahg, align 8
-  store <4 x i8> <i8 8, i8 7, i8 9, i8 9>, ptr %i.ahf, align 1
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ahf, i64 4
-  store i8 5, ptr %.sroa.7.0..sroa_idx.i, align 1
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ahf, i64 5
-  store i8 5, ptr %.sroa.8.0..sroa_idx.i, align 1
+  %i.ahg = getelementptr inbounds nuw i8, ptr %i.ahf, i64 6 ; 2 uses
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
+  store ptr %i.ahg, ptr %.sroa.7.0..sroa_idx.i, align 8
+  store <6 x i8> <i8 8, i8 7, i8 9, i8 9, i8 5, i8 5>, ptr %i.ahf, align 1
   %i.ahh = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store ptr %379, ptr %i.ahh, align 8
+  store ptr %i.ahg, ptr %i.ahh, align 8
   %i.ahi = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %139, ptr noundef nonnull %2) #7
   %i.ahj = load ptr, ptr %2, align 8              ; 3 uses
   %.not.i.i.i.i1217 = icmp eq ptr %i.ahj, null
   br i1 %.not.i.i.i.i1217, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i, label %bb.di
 
 bb.di:                                            ; preds = %bb.dh
-  %i.ahk = load ptr, ptr %i.ahg, align 8
+  %i.ahk = load ptr, ptr %.sroa.7.0..sroa_idx.i, align 8
   %i.ahl = ptrtoint ptr %i.ahk to i64
   %i.ahm = ptrtoint ptr %i.ahj to i64
   %i.ahn = sub i64 %i.ahl, %i.ahm
@@ -268,25 +264,21 @@ bb.dk:                                            ; preds = %_ZN2v88internal8com
 bb.dl:                                            ; preds = %bb.dk
   call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %113, ptr noundef nonnull %i.ds) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  %i.aib = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #8 ; 5 uses
+  %i.aib = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #8 ; 3 uses
   store ptr %i.aib, ptr %1, align 8
-  %380 = getelementptr inbounds nuw i8, ptr %i.aib, i64 6 ; 2 uses
-  %i.aic = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  store ptr %380, ptr %i.aic, align 8
-  store <4 x i8> <i8 8, i8 7, i8 9, i8 9>, ptr %i.aib, align 1
-  %.sroa.7.0..sroa_idx.i1221 = getelementptr inbounds nuw i8, ptr %i.aib, i64 4
-  store i8 5, ptr %.sroa.7.0..sroa_idx.i1221, align 1
-  %.sroa.8.0..sroa_idx.i1222 = getelementptr inbounds nuw i8, ptr %i.aib, i64 5
-  store i8 5, ptr %.sroa.8.0..sroa_idx.i1222, align 1
+  %i.aic = getelementptr inbounds nuw i8, ptr %i.aib, i64 6 ; 2 uses
+  %.sroa.7.0..sroa_idx.i1221 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  store ptr %i.aic, ptr %.sroa.7.0..sroa_idx.i1221, align 8
+  store <6 x i8> <i8 8, i8 7, i8 9, i8 9, i8 5, i8 5>, ptr %i.aib, align 1
   %i.aid = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr %380, ptr %i.aid, align 8
+  store ptr %i.aic, ptr %i.aid, align 8
   %i.aie = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %140, ptr noundef nonnull %1) #7
   %i.aif = load ptr, ptr %1, align 8              ; 3 uses
   %.not.i.i.i.i1223 = icmp eq ptr %i.aif, null
   br i1 %.not.i.i.i.i1223, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i1224, label %bb.dm
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.aig = load ptr, ptr %i.aic, align 8
+  %i.aig = load ptr, ptr %.sroa.7.0..sroa_idx.i1221, align 8
   %i.aih = ptrtoint ptr %i.aig to i64
   %i.aii = ptrtoint ptr %i.aif to i64
   %i.aij = sub i64 %i.aih, %i.aii

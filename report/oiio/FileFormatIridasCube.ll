@@ -201,9 +201,8 @@ bb.dj:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.vv = getelementptr inbounds nuw i8, ptr %i.vt, i64 52 ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(44) %i.vu, i8 0, i64 44, i1 false)
   %i.vw = getelementptr inbounds nuw i8, ptr %i.vt, i64 56 ; 2 uses
-  store <2 x float> splat (float 1.000000e+00), ptr %i.vv, align 4, !tbaa !61
-  %i.vx = getelementptr inbounds nuw i8, ptr %i.vt, i64 60 ; 3 uses
-  store float 1.000000e+00, ptr %i.vx, align 4, !tbaa !61
+  %i.vx = getelementptr inbounds nuw i8, ptr %i.vt, i64 60 ; 2 uses
+  store <3 x float> splat (float 1.000000e+00), ptr %i.vv, align 4, !tbaa !61
   %i.vy = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #26
           to label %bb.do unwind label %bb.dk     ; 7 uses
 

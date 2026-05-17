@@ -201,17 +201,12 @@ bb.k:                                             ; preds = %bb.j, %bb.h, %bb.i
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 84
   store i16 %i.ep, ptr %i.eq, align 4, !tbaa !80
   %i.er = shl nuw i32 1, %..071
-  %3 = trunc i32 %i.er to i16                     ; 4 uses
   %i.es = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
-  store i16 %3, ptr %i.es, align 4, !tbaa !77
-  %4 = add i16 %3, 1
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 110
-  store i16 %4, ptr %5, align 2, !tbaa !68
-  %6 = add i16 %3, 2                              ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i16 %6, ptr %7, align 8, !tbaa !76
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 114
-  store i16 %6, ptr %8, align 2, !tbaa !83
+  %3 = trunc i32 %i.er to i16                     ; 2 uses
+  %4 = insertelement <4 x i16> poison, i16 %3, i64 0
+  %5 = shufflevector <4 x i16> %4, <4 x i16> poison, <4 x i32> zeroinitializer
+  %6 = add <4 x i16> %5, <i16 0, i16 1, i16 2, i16 2>
+  store <4 x i16> %6, ptr %i.es, align 4, !tbaa !75
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i32 1, ptr %i.et, align 8, !tbaa !66
   %i.eu = getelementptr inbounds nuw i8, ptr %0, i64 136

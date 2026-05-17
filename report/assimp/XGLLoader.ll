@@ -201,16 +201,14 @@ _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; pred
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden ptr @_ZNSt8_Rb_treeIjSt4pairIKj10aiVector3tIfEESt10_Select1stIS4_ESt4lessIjESaIS4_EE22_M_emplace_hint_uniqueIJRKSt21piecewise_construct_tSt5tupleIJOjEESF_IJEEEEESt17_Rb_tree_iteratorIS4_ESt23_Rb_tree_const_iteratorIS4_EDpOT_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 1 dereferenceable(1) %4) local_unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #29 ; 7 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #29 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
   %i.c = load i64, ptr %3, align 8
   %i.d = inttoptr i64 %i.c to ptr
   %i.e = load i32, ptr %i.d, align 4
   store i32 %i.e, ptr %i.b, align 4
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 36
-  store <2 x float> zeroinitializer, ptr %5, align 4
-  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 44
-  store float 0.000000e+00, ptr %i.f, align 4
+  %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 36
+  store <3 x float> zeroinitializer, ptr %i.f, align 4
   %i.g = invoke { ptr, ptr } @_ZNSt8_Rb_treeIjSt4pairIKj10aiVector3tIfEESt10_Select1stIS4_ESt4lessIjESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr %1, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
           to label %bb.b unwind label %_ZNSt8_Rb_treeIjSt4pairIKj10aiVector3tIfEESt10_Select1stIS4_ESt4lessIjESaIS4_EE10_Auto_nodeD2Ev.exit ; 2 uses
 

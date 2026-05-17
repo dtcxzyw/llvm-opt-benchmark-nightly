@@ -201,17 +201,12 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %.split
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load i8, ptr %i.bm, align 8, !range !5, !noundef !6
-  %4 = trunc nuw i8 %3 to i1
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %6 = load i8, ptr %5, align 1, !range !5
-  %7 = trunc nuw i8 %6 to i1
-  %or.cond = select i1 %4, i1 true, i1 %7
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %9 = load i8, ptr %8, align 2, !range !5
-  %10 = trunc nuw i8 %9 to i1
-  %or.cond54 = select i1 %or.cond, i1 true, i1 %10
-  br i1 %or.cond54, label %bb.s, label %bb.t
+  %3 = load <3 x i8>, ptr %i.bm, align 8
+  %.fr = freeze <3 x i8> %3
+  %4 = trunc <3 x i8> %.fr to <3 x i1>
+  %5 = bitcast <3 x i1> %4 to i3
+  %.not = icmp eq i3 %5, 0
+  br i1 %.not, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   tail call void (ptr, i32, ptr, ...) @_ZN3hwy5AbortEPKciS1_z(ptr noundef nonnull @.str.15, i32 noundef 95, ptr noundef nonnull @.str.16, ptr noundef nonnull @.str.17, ptr noundef nonnull @.str.18) #11

@@ -173,21 +173,21 @@ bb.b:                                             ; preds = %bb.a
   %i.d = insertelement <2 x i16> poison, i16 %3, i64 0
   %i.e = insertelement <2 x i16> %i.d, i16 %2, i64 1
   %i.f = uitofp <2 x i16> %i.e to <2 x float>
-  %4 = fdiv <2 x float> %i.f, splat (float 6.553500e+04) ; 2 uses
-  %5 = extractelement <2 x float> %4, i64 0       ; 9 uses
   %i.g = udiv i16 %1, 10923
   %i.h = urem i16 %1, 10923
   %i.i = uitofp nneg i16 %i.h to float
   %i.j = fdiv float %i.i, 1.092300e+04            ; 2 uses
-  %i.k = extractelement <2 x float> %4, i64 1     ; 2 uses
-  %6 = fsub nnan float 1.000000e+00, %i.k
-  %7 = fmul float %5, %6                          ; 6 uses
-  %i.l = fneg float %i.k                          ; 2 uses
+  %4 = fsub nnan float 1.000000e+00, %i.j
+  %5 = fdiv <2 x float> %i.f, splat (float 6.553500e+04) ; 2 uses
+  %i.k = extractelement <2 x float> %5, i64 0     ; 9 uses
+  %6 = extractelement <2 x float> %5, i64 1       ; 2 uses
+  %7 = fsub nnan float 1.000000e+00, %6
+  %i.l = fneg float %6                            ; 2 uses
   %i.m = tail call float @llvm.fmuladd.f32(float %i.l, float %i.j, float 1.000000e+00)
-  %8 = fmul float %5, %i.m                        ; 3 uses
-  %9 = fsub nnan float 1.000000e+00, %i.j
-  %10 = tail call float @llvm.fmuladd.f32(float %i.l, float %9, float 1.000000e+00)
-  %i.n = fmul float %5, %10                       ; 3 uses
+  %8 = tail call float @llvm.fmuladd.f32(float %i.l, float %4, float 1.000000e+00)
+  %9 = fmul float %i.k, %7                        ; 6 uses
+  %10 = fmul float %i.k, %i.m                     ; 3 uses
+  %i.n = fmul float %i.k, %8                      ; 3 uses
   switch i16 %i.g, label %bb.h [
     i16 1, label %bb.c
     i16 2, label %bb.d
@@ -212,27 +212,25 @@ bb.g:                                             ; preds = %bb.b
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.b
-  %.043 = phi float [ %5, %bb.g ], [ %8, %bb.c ], [ %7, %bb.d ], [ %7, %bb.e ], [ %i.n, %bb.f ], [ %5, %bb.b ]
-  %.042 = phi float [ %7, %bb.g ], [ %5, %bb.c ], [ %5, %bb.d ], [ %8, %bb.e ], [ %7, %bb.f ], [ %i.n, %bb.b ]
-  %.0 = phi float [ %8, %bb.g ], [ %7, %bb.c ], [ %i.n, %bb.d ], [ %5, %bb.e ], [ %5, %bb.f ], [ %7, %bb.b ]
-  %11 = fmul float %.043, 6.553500e+04
-  %12 = fptoui float %11 to i16                   ; 2 uses
-  store i16 %12, ptr %0, align 2, !tbaa !8
-  %13 = fmul float %.042, 6.553500e+04
-  %14 = fptoui float %13 to i16                   ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i16 %14, ptr %15, align 2, !tbaa !11
-  %16 = fmul float %.0, 6.553500e+04
-  %17 = fptoui float %16 to i16                   ; 3 uses
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i16 %17, ptr %18, align 2, !tbaa !12
-  %19 = icmp ne i16 %12, %14
-  %i.o = icmp ne i16 %14, %17
-  %brmerge = select i1 %19, i1 true, i1 %i.o
+  %.043 = phi float [ %i.k, %bb.g ], [ %10, %bb.c ], [ %9, %bb.d ], [ %9, %bb.e ], [ %i.n, %bb.f ], [ %i.k, %bb.b ]
+  %.042 = phi float [ %9, %bb.g ], [ %i.k, %bb.c ], [ %i.k, %bb.d ], [ %10, %bb.e ], [ %9, %bb.f ], [ %i.n, %bb.b ]
+  %.0 = phi float [ %10, %bb.g ], [ %9, %bb.c ], [ %i.n, %bb.d ], [ %i.k, %bb.e ], [ %i.k, %bb.f ], [ %9, %bb.b ]
+  %11 = insertelement <3 x float> poison, float %.043, i64 0
+  %12 = insertelement <3 x float> %11, float %.042, i64 1
+  %13 = insertelement <3 x float> %12, float %.0, i64 2
+  %14 = fmul <3 x float> %13, splat (float 6.553500e+04)
+  %15 = fptoui <3 x float> %14 to <3 x i16>       ; 4 uses
+  store <3 x i16> %15, ptr %0, align 2, !tbaa !16
+  %16 = extractelement <3 x i16> %15, i64 0
+  %17 = extractelement <3 x i16> %15, i64 1       ; 2 uses
+  %18 = icmp ne i16 %16, %17
+  %19 = extractelement <3 x i16> %15, i64 2       ; 2 uses
+  %i.o = icmp ne i16 %17, %19
+  %brmerge = select i1 %18, i1 true, i1 %i.o
   br i1 %brmerge, label %gx_color_from_rgb.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %.thread50
-  %i.p = phi i16 [ %3, %.thread50 ], [ %17, %bb.h ]
+  %i.p = phi i16 [ %3, %.thread50 ], [ %19, %bb.h ]
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 6
   store i16 %i.p, ptr %i.q, align 2, !tbaa !13
   br label %gx_color_from_rgb.exit

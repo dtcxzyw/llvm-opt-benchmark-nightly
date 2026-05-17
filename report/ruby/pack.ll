@@ -201,11 +201,8 @@ RSTRING_PTR.exit1140:                             ; preds = %bb.gb, %bb.gc
   store <8 x i8> <i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48, i8 49>, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 113), align 1, !tbaa !15
   store i8 50, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 121), align 1, !tbaa !15
   store i8 51, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 122), align 2, !tbaa !15
-  store i8 59, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 55), align 1, !tbaa !15
-  store i8 60, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 56), align 8, !tbaa !15
-  store i8 61, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 57), align 1, !tbaa !15
   store i8 62, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 43), align 1, !tbaa !15
-  store <8 x i8> <i8 63, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58>, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 47), align 1, !tbaa !15
+  store <11 x i8> <i8 63, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61>, ptr getelementptr inbounds nuw (i8, ptr @pack_unpack_internal.b64_xtable, i64 47), align 1, !tbaa !15
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader1345.preheader, %RSTRING_PTR.exit1140

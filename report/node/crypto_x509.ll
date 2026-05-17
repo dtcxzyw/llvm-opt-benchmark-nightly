@@ -201,15 +201,15 @@ _ZN4node6crypto12_GLOBAL__N_111GetKeyUsageEPNS_11EnvironmentERKN7ncrypto8X509Vie
   %i.fw = getelementptr inbounds nuw i8, ptr %12, i64 120
   %i.fx = call fastcc ptr @_ZN4node6crypto12_GLOBAL__N_115GetSerialNumberEPNS_11EnvironmentERKN7ncrypto8X509ViewE(ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(8) %1)
   store ptr %i.fx, ptr %i.fw, align 8
-  %i.fy = getelementptr inbounds nuw i8, ptr %12, i64 128 ; 2 uses
+  %i.fy = getelementptr inbounds nuw i8, ptr %12, i64 128
   %i.fz = call fastcc ptr @_ZN4node6crypto12_GLOBAL__N_16GetDerEPNS_11EnvironmentERKN7ncrypto8X509ViewE(ptr noundef nonnull %0, ptr noundef nonnull align 8 dereferenceable(8) %1)
   store ptr %i.fz, ptr %i.fy, align 16
-  %i.ga = getelementptr inbounds nuw i8, ptr %12, i64 136 ; 2 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %12, i64 136
   %i.gb = load ptr, ptr %i.h, align 8
   %i.gc = ptrtoint ptr %i.gb to i64
   %i.gd = add i64 %i.gc, 648                      ; 2 uses
   store i64 %i.gd, ptr %i.ga, align 8
-  %i.ge = getelementptr inbounds nuw i8, ptr %12, i64 144 ; 2 uses
+  %i.ge = getelementptr inbounds nuw i8, ptr %12, i64 144
   store i64 %i.gd, ptr %i.ge, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25
@@ -247,23 +247,12 @@ bb.y:                                             ; preds = %_ZNSt14_Function_ba
   br label %_ZNSt14_Function_baseD2Ev.exit61.i
 
 _ZNSt14_Function_baseD2Ev.exit61.i:               ; preds = %bb.y, %_ZNSt14_Function_baseD2Ev.exit.i
-  %17 = load <16 x ptr>, ptr %12, align 16
-  %.fr = freeze <16 x ptr> %17
-  %18 = icmp eq <16 x ptr> %.fr, splat (ptr null)
-  %19 = load ptr, ptr %i.fy, align 16
-  %.fr31 = freeze ptr %19
-  %20 = icmp eq ptr %.fr31, null
-  %21 = load ptr, ptr %i.ga, align 8
-  %.fr29 = freeze ptr %21
-  %22 = icmp eq ptr %.fr29, null
-  %23 = load ptr, ptr %i.ge, align 16
-  %i.gp = icmp eq ptr %23, null
-  %24 = bitcast <16 x i1> %18 to i16
-  %25 = icmp ne i16 %24, 0
-  %op.rdx = or i1 %25, %20
-  %26 = or i1 %op.rdx, %22
-  %op.rdx28 = select i1 %26, i1 true, i1 %i.gp
-  br i1 %op.rdx28, label %_ZN2v820EscapableHandleScope11EscapeMaybeINS_6ObjectEEENS_10MaybeLocalIT_EES5_.exit.i, label %_ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i
+  %17 = load <19 x ptr>, ptr %12, align 16
+  %.fr = freeze <19 x ptr> %17
+  %18 = icmp eq <19 x ptr> %.fr, splat (ptr null)
+  %19 = bitcast <19 x i1> %18 to i19
+  %i.gp = icmp eq i19 %19, 0
+  br i1 %i.gp, label %_ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i, label %_ZN2v820EscapableHandleScope11EscapeMaybeINS_6ObjectEEENS_10MaybeLocalIT_EES5_.exit.i
 
 _ZN4node21NewDictionaryInstanceEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.i: ; preds = %_ZNSt14_Function_baseD2Ev.exit61.i
   %i.gq = load ptr, ptr %i.f, align 8

@@ -201,18 +201,12 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb12MetricsUtils19GetRootScopeMetricsEv(ptr dead_on_unwind noalias nonnull writable sret(%"class.std::unordered_set") align 8 %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt13unordered_setIN6duckdb10MetricTypeENS0_22MetricTypeHashFunctionESt8equal_toIS1_ESaIS1_EEC2ESt16initializer_listIS1_EmRKS2_RKS4_RKS5_.exit:
-  %i.a = alloca [14 x i8], align 8                ; 8 uses
+  %i.a = alloca [14 x i8], align 16               ; 5 uses
   %1 = alloca %"struct.duckdb::MetricTypeHashFunction", align 1 ; 3 uses
   %2 = alloca %"struct.std::equal_to", align 1    ; 3 uses
   %3 = alloca %"class.std::allocator.18", align 1 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
-  store <8 x i8> <i8 92, i8 93, i8 1, i8 94, i8 95, i8 11, i8 0, i8 12>, ptr %i.a, align 8, !tbaa !65
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store <4 x i8> <i8 16, i8 17, i8 91, i8 96>, ptr %4, align 8, !tbaa !65
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i8 97, ptr %5, align 4, !tbaa !65
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  store i8 98, ptr %6, align 1, !tbaa !65
+  store <14 x i8> <i8 92, i8 93, i8 1, i8 94, i8 95, i8 11, i8 0, i8 12, i8 16, i8 17, i8 91, i8 96, i8 97, i8 98>, ptr %i.a, align 16, !tbaa !65
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21

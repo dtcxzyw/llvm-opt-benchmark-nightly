@@ -201,38 +201,21 @@ check_tool.exit:                                  ; preds = %bb.b
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.m = getelementptr i8, ptr %i.d, i64 223456   ; 2 uses
-  %i.n = shl nuw i32 1, %0                        ; 4 uses
-  %i.o = load <16 x i8>, ptr %i.m, align 1, !tbaa !39 ; 5 uses
+  %i.n = shl nuw i32 1, %0                        ; 2 uses
+  %i.o = load <16 x i8>, ptr %i.m, align 1, !tbaa !39 ; 3 uses
   %i.p = extractelement <16 x i8> %i.o, i64 0
   %i.q = zext i8 %i.p to i32
   %i.r = lshr i32 %i.q, %0
   %i.s = and i32 %i.r, 1
-  %2 = shufflevector <16 x i8> %i.o, <16 x i8> poison, <12 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12>
+  %2 = shufflevector <16 x i8> %i.o, <16 x i8> poison, <15 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.t = trunc i32 %i.n to i8
-  %3 = insertelement <12 x i8> poison, i8 %i.t, i64 0
-  %4 = shufflevector <12 x i8> %3, <12 x i8> poison, <12 x i32> zeroinitializer
-  %5 = and <12 x i8> %4, %2
-  %6 = icmp eq <12 x i8> %5, zeroinitializer
-  %7 = select <12 x i1> %6, <12 x i32> zeroinitializer, <12 x i32> <i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256, i32 512, i32 1024, i32 2048, i32 4096>
-  %8 = extractelement <16 x i8> %i.o, i64 13
-  %9 = zext i8 %8 to i32
-  %10 = and i32 %i.n, %9
-  %.not.13.i = icmp eq i32 %10, 0
-  %11 = select i1 %.not.13.i, i32 0, i32 8192
-  %12 = shufflevector <16 x i8> %i.o, <16 x i8> poison, <2 x i32> <i32 14, i32 15>
-  %13 = zext <2 x i8> %12 to <2 x i32>
-  %14 = insertelement <2 x i32> poison, i32 %i.n, i64 0
-  %15 = shufflevector <2 x i32> %14, <2 x i32> poison, <2 x i32> zeroinitializer
-  %16 = and <2 x i32> %15, %13
-  %17 = icmp eq <2 x i32> %16, zeroinitializer
-  %18 = select <2 x i1> %17, <2 x i32> zeroinitializer, <2 x i32> <i32 16384, i32 32768> ; 2 uses
-  %i.u = tail call i32 @llvm.vector.reduce.or.v12i32(<12 x i32> %7)
-  %op.rdx = or disjoint i32 %i.u, %11
-  %shift = shufflevector <2 x i32> %18, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = or <2 x i32> %18, %shift
-  %op.rdx26 = extractelement <2 x i32> %foldExtExtBinop, i64 0
-  %op.rdx27 = or disjoint i32 %op.rdx, %op.rdx26
-  %op.rdx28 = or disjoint i32 %op.rdx27, %i.s
+  %3 = insertelement <15 x i8> poison, i8 %i.t, i64 0
+  %4 = shufflevector <15 x i8> %3, <15 x i8> poison, <15 x i32> zeroinitializer
+  %5 = and <15 x i8> %4, %2
+  %6 = icmp eq <15 x i8> %5, zeroinitializer
+  %7 = select <15 x i1> %6, <15 x i32> zeroinitializer, <15 x i32> <i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256, i32 512, i32 1024, i32 2048, i32 4096, i32 8192, i32 16384, i32 32768>
+  %i.u = tail call i32 @llvm.vector.reduce.or.v15i32(<15 x i32> %7)
+  %op.rdx28 = or disjoint i32 %i.u, %i.s
   %i.v = icmp eq i32 %op.rdx28, %1
   br i1 %i.v, label %instrument_all_executing_code_objects.exit, label %bb.d
 
@@ -461,11 +444,11 @@ bb.h:                                             ; preds = %bb.g, %bb.e
   %i.ao = and i32 %i.an, 1
   %i.ap = getelementptr i8, ptr %i.ad, i64 1      ; 2 uses
   %i.aq = load <8 x i8>, ptr %i.ap, align 1, !tbaa !39 ; 9 uses
-  %3 = trunc i32 %i.ak to i8
-  %4 = insertelement <8 x i8> poison, i8 %3, i64 0
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> zeroinitializer
-  %6 = and <8 x i8> %5, %i.aq
-  %i.ar = icmp eq <8 x i8> %6, zeroinitializer
+  %3 = zext <8 x i8> %i.aq to <8 x i32>
+  %4 = insertelement <8 x i32> poison, i32 %i.ak, i64 0
+  %5 = shufflevector <8 x i32> %4, <8 x i32> poison, <8 x i32> zeroinitializer
+  %6 = and <8 x i32> %5, %3
+  %i.ar = icmp eq <8 x i32> %6, zeroinitializer
   %i.as = select <8 x i1> %i.ar, <8 x i32> zeroinitializer, <8 x i32> <i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256>
   %i.at = getelementptr i8, ptr %i.ad, i64 9      ; 2 uses
   %i.au = load i8, ptr %i.at, align 1, !tbaa !39  ; 2 uses
@@ -634,7 +617,7 @@ allocate_instrumentation_data.exit.i:             ; preds = %bb.c
   br label %update_instrumentation_data.exit.thread
 
 bb.e:                                             ; preds = %bb.d, %bb.b
-  %i.q = phi ptr [ %.pre.i, %bb.d ], [ %i.g, %bb.b ] ; 42 uses
+  %i.q = phi ptr [ %.pre.i, %bb.d ], [ %i.g, %bb.b ] ; 18 uses
   %i.r = getelementptr i8, ptr %1, i64 224776
   %i.s = getelementptr i8, ptr %i.q, i64 32
   %i.t = load i64, ptr %i.s, align 8, !tbaa !169
@@ -687,15 +670,15 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %.sroa.0.7.extract.shift.i = lshr i64 %i.ca, 56
   %.sroa.0.7.extract.trunc.i = trunc nuw i64 %.sroa.0.7.extract.shift.i to i8
-  %6 = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %.sroa.0.7.extract.trunc.i)
-  %7 = icmp samesign ugt i8 %6, 1
-  %8 = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.cb)
-  %9 = icmp samesign ugt i8 %8, 1
-  %or.cond130.i = select i1 %7, i1 true, i1 %9
-  %10 = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.cc)
-  %11 = icmp samesign ugt i8 %10, 1
-  %or.cond132.i = select i1 %or.cond130.i, i1 true, i1 %11
-  br i1 %or.cond132.i, label %multiple_tools.exit.i, label %bb.m
+  %6 = insertelement <3 x i8> poison, i8 %.sroa.0.7.extract.trunc.i, i64 0
+  %7 = insertelement <3 x i8> %6, i8 %i.cb, i64 1
+  %8 = insertelement <3 x i8> %7, i8 %i.cc, i64 2
+  %.fr534 = freeze <3 x i8> %8
+  %9 = tail call range(i8 0, 9) <3 x i8> @llvm.ctpop.v3i8(<3 x i8> %.fr534)
+  %10 = icmp samesign ugt <3 x i8> %9, splat (i8 1)
+  %11 = bitcast <3 x i1> %10 to i3
+  %.not535 = icmp eq i3 %11, 0
+  br i1 %.not535, label %bb.m, label %multiple_tools.exit.i
 
 bb.m:                                             ; preds = %bb.l
   %i.ah = tail call range(i8 0, 9) i8 @llvm.ctpop.i8(i8 %i.cd)
@@ -711,21 +694,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %or.cond.i, label %bb.n, label %initialize_tools.exit.i
 
 .preheader135.i:                                  ; preds = %bb.e
-  %12 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %13 = and <8 x i8> %12, splat (i8 -2)
-  store <8 x i8> %13, ptr %i.q, align 1, !tbaa !39
-  %14 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %15 = load i8, ptr %14, align 1, !tbaa !39
-  %16 = and i8 %15, -2
-  store i8 %16, ptr %14, align 1, !tbaa !39
-  %17 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %18 = load i8, ptr %17, align 1, !tbaa !39
-  %19 = and i8 %18, -2
-  store i8 %19, ptr %17, align 1, !tbaa !39
-  %20 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %21 = load i8, ptr %20, align 1, !tbaa !39
-  %22 = and i8 %21, -2
-  store i8 %22, ptr %20, align 1, !tbaa !39
+  %12 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %13 = and <11 x i8> %12, splat (i8 -2)
+  store <11 x i8> %13, ptr %i.q, align 1, !tbaa !39
   %.pre175.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.i
 
@@ -739,21 +710,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.1.i, label %.loopexit136.1.i, label %.preheader135.1.i
 
 .preheader135.1.i:                                ; preds = %.loopexit136.i
-  %23 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %24 = and <8 x i8> %23, splat (i8 -3)
-  store <8 x i8> %24, ptr %i.q, align 1, !tbaa !39
-  %25 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %26 = load i8, ptr %25, align 1, !tbaa !39
-  %27 = and i8 %26, -3
-  store i8 %27, ptr %25, align 1, !tbaa !39
-  %28 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %29 = load i8, ptr %28, align 1, !tbaa !39
-  %30 = and i8 %29, -3
-  store i8 %30, ptr %28, align 1, !tbaa !39
-  %31 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %32 = load i8, ptr %31, align 1, !tbaa !39
-  %33 = and i8 %32, -3
-  store i8 %33, ptr %31, align 1, !tbaa !39
+  %14 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %15 = and <11 x i8> %14, splat (i8 -3)
+  store <11 x i8> %15, ptr %i.q, align 1, !tbaa !39
   %.pre176.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.1.i
 
@@ -767,21 +726,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.2.i, label %.loopexit136.2.i, label %.preheader135.2.i
 
 .preheader135.2.i:                                ; preds = %.loopexit136.1.i
-  %34 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %35 = and <8 x i8> %34, splat (i8 -5)
-  store <8 x i8> %35, ptr %i.q, align 1, !tbaa !39
-  %36 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %37 = load i8, ptr %36, align 1, !tbaa !39
-  %38 = and i8 %37, -5
-  store i8 %38, ptr %36, align 1, !tbaa !39
-  %39 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %40 = load i8, ptr %39, align 1, !tbaa !39
-  %41 = and i8 %40, -5
-  store i8 %41, ptr %39, align 1, !tbaa !39
-  %42 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %43 = load i8, ptr %42, align 1, !tbaa !39
-  %44 = and i8 %43, -5
-  store i8 %44, ptr %42, align 1, !tbaa !39
+  %16 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %17 = and <11 x i8> %16, splat (i8 -5)
+  store <11 x i8> %17, ptr %i.q, align 1, !tbaa !39
   %.pre177.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.2.i
 
@@ -795,21 +742,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.3.i, label %.loopexit136.3.i, label %.preheader135.3.i
 
 .preheader135.3.i:                                ; preds = %.loopexit136.2.i
-  %45 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %46 = and <8 x i8> %45, splat (i8 -9)
-  store <8 x i8> %46, ptr %i.q, align 1, !tbaa !39
-  %47 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %48 = load i8, ptr %47, align 1, !tbaa !39
-  %49 = and i8 %48, -9
-  store i8 %49, ptr %47, align 1, !tbaa !39
-  %50 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %51 = load i8, ptr %50, align 1, !tbaa !39
-  %52 = and i8 %51, -9
-  store i8 %52, ptr %50, align 1, !tbaa !39
-  %53 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %54 = load i8, ptr %53, align 1, !tbaa !39
-  %55 = and i8 %54, -9
-  store i8 %55, ptr %53, align 1, !tbaa !39
+  %18 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %19 = and <11 x i8> %18, splat (i8 -9)
+  store <11 x i8> %19, ptr %i.q, align 1, !tbaa !39
   %.pre178.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.3.i
 
@@ -823,21 +758,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.4.i, label %.loopexit136.4.i, label %.preheader135.4.i
 
 .preheader135.4.i:                                ; preds = %.loopexit136.3.i
-  %56 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %57 = and <8 x i8> %56, splat (i8 -17)
-  store <8 x i8> %57, ptr %i.q, align 1, !tbaa !39
-  %58 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %59 = load i8, ptr %58, align 1, !tbaa !39
-  %60 = and i8 %59, -17
-  store i8 %60, ptr %58, align 1, !tbaa !39
-  %61 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %62 = load i8, ptr %61, align 1, !tbaa !39
-  %63 = and i8 %62, -17
-  store i8 %63, ptr %61, align 1, !tbaa !39
-  %64 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %65 = load i8, ptr %64, align 1, !tbaa !39
-  %66 = and i8 %65, -17
-  store i8 %66, ptr %64, align 1, !tbaa !39
+  %20 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %21 = and <11 x i8> %20, splat (i8 -17)
+  store <11 x i8> %21, ptr %i.q, align 1, !tbaa !39
   %.pre179.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.4.i
 
@@ -851,21 +774,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.5.i, label %.loopexit136.5.i, label %.preheader135.5.i
 
 .preheader135.5.i:                                ; preds = %.loopexit136.4.i
-  %67 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %68 = and <8 x i8> %67, splat (i8 -33)
-  store <8 x i8> %68, ptr %i.q, align 1, !tbaa !39
-  %69 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %70 = load i8, ptr %69, align 1, !tbaa !39
-  %71 = and i8 %70, -33
-  store i8 %71, ptr %69, align 1, !tbaa !39
-  %72 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %73 = load i8, ptr %72, align 1, !tbaa !39
-  %74 = and i8 %73, -33
-  store i8 %74, ptr %72, align 1, !tbaa !39
-  %75 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %76 = load i8, ptr %75, align 1, !tbaa !39
-  %77 = and i8 %76, -33
-  store i8 %77, ptr %75, align 1, !tbaa !39
+  %22 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %23 = and <11 x i8> %22, splat (i8 -33)
+  store <11 x i8> %23, ptr %i.q, align 1, !tbaa !39
   %.pre180.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.5.i
 
@@ -879,21 +790,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.6.i, label %.loopexit136.6.i, label %.preheader135.6.i
 
 .preheader135.6.i:                                ; preds = %.loopexit136.5.i
-  %78 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %79 = and <8 x i8> %78, splat (i8 -65)
-  store <8 x i8> %79, ptr %i.q, align 1, !tbaa !39
-  %80 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %81 = load i8, ptr %80, align 1, !tbaa !39
-  %82 = and i8 %81, -65
-  store i8 %82, ptr %80, align 1, !tbaa !39
-  %83 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %84 = load i8, ptr %83, align 1, !tbaa !39
-  %85 = and i8 %84, -65
-  store i8 %85, ptr %83, align 1, !tbaa !39
-  %86 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %87 = load i8, ptr %86, align 1, !tbaa !39
-  %88 = and i8 %87, -65
-  store i8 %88, ptr %86, align 1, !tbaa !39
+  %24 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %25 = and <11 x i8> %24, splat (i8 -65)
+  store <11 x i8> %25, ptr %i.q, align 1, !tbaa !39
   %.pre181.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.6.i
 
@@ -907,21 +806,9 @@ multiple_tools.exit.i:                            ; preds = %.loopexit136.7.i, %
   br i1 %.not98.7.i, label %.loopexit136.7.i, label %.preheader135.7.i
 
 .preheader135.7.i:                                ; preds = %.loopexit136.6.i
-  %89 = load <8 x i8>, ptr %i.q, align 1, !tbaa !39
-  %90 = and <8 x i8> %89, splat (i8 127)
-  store <8 x i8> %90, ptr %i.q, align 1, !tbaa !39
-  %91 = getelementptr i8, ptr %i.q, i64 8         ; 2 uses
-  %92 = load i8, ptr %91, align 1, !tbaa !39
-  %93 = and i8 %92, 127
-  store i8 %93, ptr %91, align 1, !tbaa !39
-  %94 = getelementptr i8, ptr %i.q, i64 9         ; 2 uses
-  %95 = load i8, ptr %94, align 1, !tbaa !39
-  %96 = and i8 %95, 127
-  store i8 %96, ptr %94, align 1, !tbaa !39
-  %97 = getelementptr i8, ptr %i.q, i64 10        ; 2 uses
-  %98 = load i8, ptr %97, align 1, !tbaa !39
-  %99 = and i8 %98, 127
-  store i8 %99, ptr %97, align 1, !tbaa !39
+  %26 = load <11 x i8>, ptr %i.q, align 1, !tbaa !39
+  %27 = and <11 x i8> %26, splat (i8 127)
+  store <11 x i8> %27, ptr %i.q, align 1, !tbaa !39
   %.pre182.i = load ptr, ptr %i.f, align 8, !tbaa !32
   br label %.loopexit136.7.i
 
@@ -1324,11 +1211,11 @@ bb.e:                                             ; preds = %bb.c
   %i.r = and i32 %i.q, 1
   %i.s = getelementptr i8, ptr %i.l, i64 1
   %i.t = load <8 x i8>, ptr %i.s, align 1, !tbaa !39
-  %3 = trunc i32 %i.n to i8
-  %4 = insertelement <8 x i8> poison, i8 %3, i64 0
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> zeroinitializer
-  %6 = and <8 x i8> %5, %i.t
-  %i.u = icmp eq <8 x i8> %6, zeroinitializer
+  %3 = zext <8 x i8> %i.t to <8 x i32>
+  %4 = insertelement <8 x i32> poison, i32 %i.n, i64 0
+  %5 = shufflevector <8 x i32> %4, <8 x i32> poison, <8 x i32> zeroinitializer
+  %6 = and <8 x i32> %5, %3
+  %i.u = icmp eq <8 x i32> %6, zeroinitializer
   %i.v = select <8 x i1> %i.u, <8 x i32> zeroinitializer, <8 x i32> <i32 2, i32 4, i32 8, i32 16, i32 32, i32 64, i32 128, i32 256>
   %i.w = getelementptr i8, ptr %i.l, i64 9
   %i.x = load i8, ptr %i.w, align 1, !tbaa !39
@@ -1731,13 +1618,19 @@ declare i32 @llvm.smax.i32(i32, i32) #10
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v12i32(<12 x i32>) #10
+declare i32 @llvm.vector.reduce.or.v15i32(<15 x i32>) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v8i32(<8 x i32>) #10
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x i8> @llvm.ctpop.v3i8(<3 x i8>) #10
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.or.v12i32(<12 x i32>) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -201,9 +201,9 @@ bb.a:
   %i.g = alloca i32, align 4                      ; 4 uses
   %i.h = alloca i32, align 4                      ; 5 uses
   %3 = alloca %struct.aiString, align 4           ; 9 uses
-  %4 = alloca %struct.aiColor3D, align 8          ; 6 uses
-  %5 = alloca %struct.aiColor3D, align 8          ; 6 uses
-  %6 = alloca %struct.aiColor3D, align 8          ; 6 uses
+  %4 = alloca %struct.aiColor3D, align 16         ; 6 uses
+  %5 = alloca %struct.aiColor3D, align 16         ; 6 uses
+  %6 = alloca %struct.aiColor3D, align 16         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #15
   %i.i = load ptr, ptr %1, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -470,9 +470,7 @@ _Z4ReadIfET_PN6Assimp8IOStreamE.exit54:           ; preds = %_Z4ReadIfET_PN6Assi
 bb.aa:                                            ; preds = %_Z4ReadIfET_PN6Assimp8IOStreamE.exit54, %_Z4ReadIjET_PN6Assimp8IOStreamE.exit49
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
   call void @llvm.experimental.noalias.scope.decl(metadata !70)
-  store <2 x float> zeroinitializer, ptr %4, align 8, !alias.scope !70
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %7, align 8, !alias.scope !70
+  store <3 x float> zeroinitializer, ptr %4, align 16, !alias.scope !70
   %i.ce = load ptr, ptr %1, align 8, !noalias !70
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   %i.cg = load ptr, ptr %i.cf, align 8, !noalias !70
@@ -496,8 +494,9 @@ bb.ad:                                            ; preds = %bb.ab
   br label %common.resume
 
 _Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit:    ; preds = %bb.aa
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 1080
-  %i.cl = load <2 x float>, ptr %4, align 8
+  %i.cl = load <2 x float>, ptr %4, align 16
   store <2 x float> %i.cl, ptr %i.ck, align 4
   %i.cm = load float, ptr %7, align 8
   %i.cn = getelementptr inbounds nuw i8, ptr %2, i64 1088
@@ -505,9 +504,7 @@ _Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit:    ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
   call void @llvm.experimental.noalias.scope.decl(metadata !74)
-  store <2 x float> zeroinitializer, ptr %5, align 8, !alias.scope !74
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %8, align 8, !alias.scope !74
+  store <3 x float> zeroinitializer, ptr %5, align 16, !alias.scope !74
   %i.co = load ptr, ptr %1, align 8, !noalias !74
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 16
   %i.cq = load ptr, ptr %i.cp, align 8, !noalias !74
@@ -531,8 +528,9 @@ bb.ag:                                            ; preds = %bb.ae
   br label %common.resume
 
 _Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit57:  ; preds = %_Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit
+  %8 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.cu = getelementptr inbounds nuw i8, ptr %2, i64 1092
-  %i.cv = load <2 x float>, ptr %5, align 8
+  %i.cv = load <2 x float>, ptr %5, align 16
   store <2 x float> %i.cv, ptr %i.cu, align 4
   %i.cw = load float, ptr %8, align 8
   %i.cx = getelementptr inbounds nuw i8, ptr %2, i64 1100
@@ -540,9 +538,7 @@ _Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit57:  ; preds = %_Z4ReadI9aiColor3DE
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
   call void @llvm.experimental.noalias.scope.decl(metadata !77)
-  store <2 x float> zeroinitializer, ptr %6, align 8, !alias.scope !77
-  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %9, align 8, !alias.scope !77
+  store <3 x float> zeroinitializer, ptr %6, align 16, !alias.scope !77
   %i.cy = load ptr, ptr %1, align 8, !noalias !77
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 16
   %i.da = load ptr, ptr %i.cz, align 8, !noalias !77
@@ -566,8 +562,9 @@ bb.aj:                                            ; preds = %bb.ah
   br label %common.resume
 
 _Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit59:  ; preds = %_Z4ReadI9aiColor3DET_PN6Assimp8IOStreamE.exit57
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.de = getelementptr inbounds nuw i8, ptr %2, i64 1104
-  %i.df = load <2 x float>, ptr %6, align 8
+  %i.df = load <2 x float>, ptr %6, align 16
   store <2 x float> %i.df, ptr %i.de, align 4
   %i.dg = load float, ptr %9, align 8
   %i.dh = getelementptr inbounds nuw i8, ptr %2, i64 1112

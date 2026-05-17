@@ -201,14 +201,10 @@ _ZN12duckdb_miniz8mz_crc32EmPKhm.exit:            ; preds = %._crit_edge
   %i.ft = lshr i32 %i.fo, 8
   %i.fu = trunc i32 %i.ft to i8
   %i.fv = trunc i32 %i.fo to i8
-  %i.fw = load ptr, ptr %i.o, align 8, !tbaa !198 ; 26 uses
+  %i.fw = load ptr, ptr %i.o, align 8, !tbaa !198 ; 24 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.fw, ptr noundef nonnull align 16 dereferenceable(12) @__const._ZN12duckdb_miniz42tdefl_write_image_to_png_file_in_memory_exEPKviiiPmji.pnghdr, i64 12, i1 false)
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 12
-  store <4 x i8> <i8 73, i8 72, i8 68, i8 82>, ptr %.sroa.4.0..sroa_idx, align 1
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 16
-  store i8 0, ptr %.sroa.8.0..sroa_idx, align 1
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 17
-  store i8 0, ptr %.sroa.9.0..sroa_idx, align 1
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 12
+  store <6 x i8> <i8 73, i8 72, i8 68, i8 82, i8 0, i8 0>, ptr %.sroa.9.0..sroa_idx, align 1
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 18
   store i8 %i.cn, ptr %.sroa.10.0..sroa_idx, align 1
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fw, i64 19

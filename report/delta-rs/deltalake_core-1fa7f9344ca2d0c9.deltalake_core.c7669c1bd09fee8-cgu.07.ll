@@ -201,7 +201,7 @@ bb.bh:                                            ; preds = %bb.be
 
 .loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %bb.bh, %bb.be
   %i.fy = invoke fastcc noundef nonnull align 8 ptr @_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 56)
-          to label %bb.bj unwind label %bb.bi     ; 8 uses
+          to label %bb.bj unwind label %bb.bi     ; 3 uses
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %.sroa.078.0324 = phi ptr [ %i.gu, %.lr.ph.new ], [ %.sroa.078.0324.unr, %.prol.loopexit ] ; 10 uses
@@ -247,23 +247,8 @@ bb.bi:                                            ; preds = %.loopexit, %bb.bj
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata26ColumnChunkMetaDataBuilderECs14kWLkQVSKO_14deltalake_core.exit174
 
 bb.bj:                                            ; preds = %.loopexit
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 136
-  store ptr %9, ptr %i.fy, align 8
-  %.sroa.4289.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
-  store ptr %8, ptr %.sroa.4289.0..sroa_idx, align 8
-  %.sroa.5290.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
-  store ptr %7, ptr %.sroa.5290.0..sroa_idx, align 8
-  %.sroa.6291.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 24
-  store ptr %4, ptr %.sroa.6291.0..sroa_idx, align 8
-  %.sroa.7292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 32
-  store ptr %6, ptr %.sroa.7292.0..sroa_idx, align 8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 40
-  store ptr %5, ptr %.sroa.8.0..sroa_idx, align 8
+  %4 = getelementptr i8, ptr %1, <6 x i64> <i64 136, i64 144, i64 16, i64 40, i64 64, i64 88>
+  store <6 x ptr> %4, ptr %i.fy, align 8
   %.sroa.9293.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 48
   store ptr %1, ptr %.sroa.9293.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -666,7 +651,7 @@ bb.bh:                                            ; preds = %bb.be
 
 .loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %bb.bh, %bb.be
   %i.fy = invoke fastcc noundef nonnull align 8 ptr @_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 56)
-          to label %bb.bj unwind label %bb.bi     ; 8 uses
+          to label %bb.bj unwind label %bb.bi     ; 3 uses
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %.sroa.078.0324 = phi ptr [ %i.gu, %.lr.ph.new ], [ %.sroa.078.0324.unr, %.prol.loopexit ] ; 10 uses
@@ -712,23 +697,8 @@ bb.bi:                                            ; preds = %.loopexit, %bb.bj
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata26ColumnChunkMetaDataBuilderECs14kWLkQVSKO_14deltalake_core.exit174
 
 bb.bj:                                            ; preds = %.loopexit
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 136
-  store ptr %9, ptr %i.fy, align 8
-  %.sroa.4289.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
-  store ptr %8, ptr %.sroa.4289.0..sroa_idx, align 8
-  %.sroa.5290.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
-  store ptr %7, ptr %.sroa.5290.0..sroa_idx, align 8
-  %.sroa.6291.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 24
-  store ptr %4, ptr %.sroa.6291.0..sroa_idx, align 8
-  %.sroa.7292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 32
-  store ptr %6, ptr %.sroa.7292.0..sroa_idx, align 8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 40
-  store ptr %5, ptr %.sroa.8.0..sroa_idx, align 8
+  %4 = getelementptr i8, ptr %1, <6 x i64> <i64 136, i64 144, i64 16, i64 40, i64 64, i64 88>
+  store <6 x ptr> %4, ptr %i.fy, align 8
   %.sroa.9293.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 48
   store ptr %1, ptr %.sroa.9293.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -1131,7 +1101,7 @@ bb.bh:                                            ; preds = %bb.be
 
 .loopexit:                                        ; preds = %.prol.loopexit, %.lr.ph.new, %bb.bh, %bb.be
   %i.fy = invoke fastcc noundef nonnull align 8 ptr @_RNvNtCs6Po7BT7Nknu_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 56)
-          to label %bb.bj unwind label %bb.bi     ; 8 uses
+          to label %bb.bj unwind label %bb.bi     ; 3 uses
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %.sroa.078.0324 = phi ptr [ %i.gu, %.lr.ph.new ], [ %.sroa.078.0324.unr, %.prol.loopexit ] ; 10 uses
@@ -1177,23 +1147,8 @@ bb.bi:                                            ; preds = %.loopexit, %bb.bj
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs4tdlwR1I4n2_7parquet4file8metadata26ColumnChunkMetaDataBuilderECs14kWLkQVSKO_14deltalake_core.exit174
 
 bb.bj:                                            ; preds = %.loopexit
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 136
-  store ptr %9, ptr %i.fy, align 8
-  %.sroa.4289.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 8
-  store ptr %8, ptr %.sroa.4289.0..sroa_idx, align 8
-  %.sroa.5290.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
-  store ptr %7, ptr %.sroa.5290.0..sroa_idx, align 8
-  %.sroa.6291.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 24
-  store ptr %4, ptr %.sroa.6291.0..sroa_idx, align 8
-  %.sroa.7292.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 32
-  store ptr %6, ptr %.sroa.7292.0..sroa_idx, align 8
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 40
-  store ptr %5, ptr %.sroa.8.0..sroa_idx, align 8
+  %4 = getelementptr i8, ptr %1, <6 x i64> <i64 136, i64 144, i64 16, i64 40, i64 64, i64 88>
+  store <6 x ptr> %4, ptr %i.fy, align 8
   %.sroa.9293.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fy, i64 48
   store ptr %1, ptr %.sroa.9293.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
@@ -1596,8 +1551,6 @@ default.unreachable128:                           ; preds = %bb.a
   unreachable
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 44
-  %3 = load i8, ptr %2, align 4, !range !363, !alias.scope !18580, !noalias !18583, !noundef !3
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 45
   %i.j = load i8, ptr %i.i, align 1, !range !363, !alias.scope !18580, !noalias !18583, !noundef !3
   %i.k = load i64, ptr %i.h, align 8, !range !381, !alias.scope !18580, !noalias !18583, !noundef !3 ; 2 uses
@@ -1621,10 +1574,8 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i64 %.sroa.54.0.i, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %4 = load <4 x i8>, ptr %i.t, align 8, !alias.scope !18580, !noalias !18583
-  store <4 x i8> %4, ptr %.sroa.7.0..sroa_idx, align 8
-  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 44
-  store i8 %3, ptr %.sroa.11.0..sroa_idx, align 4
+  %2 = load <5 x i8>, ptr %i.t, align 8, !alias.scope !18580, !noalias !18583
+  store <5 x i8> %2, ptr %.sroa.7.0..sroa_idx, align 8
   br label %bb.ao
 
 bb.c:                                             ; preds = %bb.a

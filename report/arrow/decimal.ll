@@ -201,7 +201,7 @@ declare void @_ZNK5arrow15BasicDecimal25619GetWholeAndFractionEiPS0_S1_(ptr noun
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef double @_ZN5arrow12_GLOBAL__N_124Decimal256RealConversion14ToRealPositiveIdEET_RKNS_10Decimal256Ei(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) unnamed_addr #0 align 2 {
 bb.a:
-  %2 = alloca %"class.arrow::BasicDecimal256", align 8 ; 8 uses
+  %2 = alloca %"class.arrow::BasicDecimal256", align 8 ; 6 uses
   %3 = alloca %"class.arrow::BasicDecimal256", align 8 ; 5 uses
   %i.a = load <4 x i64>, ptr %0, align 8          ; 4 uses
   %i.b = icmp slt i32 %1, 1
@@ -259,22 +259,17 @@ bb.f:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %3, i8 0, i64 32, i1 false)
   call void @_ZNK5arrow15BasicDecimal25619GetWholeAndFractionEiPS0_S1_(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1, ptr noundef nonnull %2, ptr noundef nonnull %3)
-  %.sroa.013.0.copyload = load i64, ptr %2, align 8
-  %.sroa.414.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.sroa.414.0.copyload = load i64, ptr %.sroa.414.0..sroa_idx, align 8
-  %.sroa.515.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.sroa.515.0.copyload = load i64, ptr %.sroa.515.0..sroa_idx, align 8
-  %.sroa.616.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.sroa.616.0.copyload = load i64, ptr %.sroa.616.0..sroa_idx, align 8
-  %4 = uitofp i64 %.sroa.616.0.copyload to double
-  %5 = fmul nnan double %4, f0x4BF0000000000000
-  %6 = uitofp i64 %.sroa.515.0.copyload to double
-  %7 = fmul nnan double %6, f0x47F0000000000000
-  %i.ad = fadd double %7, %5
-  %8 = uitofp i64 %.sroa.414.0.copyload to double
-  %9 = fmul nnan double %8, f0x43F0000000000000
+  %.sroa.515.0.copyload = load i64, ptr %2, align 8
+  %.sroa.616.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %4 = load <3 x i64>, ptr %.sroa.616.0..sroa_idx, align 8
+  %5 = uitofp <3 x i64> %4 to <3 x double>
+  %6 = fmul nnan <3 x double> %5, <double f0x43F0000000000000, double f0x47F0000000000000, double f0x4BF0000000000000> ; 3 uses
+  %7 = extractelement <3 x double> %6, i64 1
+  %8 = extractelement <3 x double> %6, i64 2
+  %i.ad = fadd double %7, %8
+  %9 = extractelement <3 x double> %6, i64 0
   %i.ae = fadd double %9, %i.ad
-  %i.af = uitofp i64 %.sroa.013.0.copyload to double
+  %i.af = uitofp i64 %.sroa.515.0.copyload to double
   %i.ag = fadd double %i.ae, %i.af
   %i.ah = load <4 x i64>, ptr %3, align 8
   %i.ai = sub nsw i32 0, %1                       ; 2 uses

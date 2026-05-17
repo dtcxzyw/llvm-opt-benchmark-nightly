@@ -200,25 +200,21 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.ac = fmul nnan double %i.r, f0x41D0000000000000
   %i.ad = tail call double @llvm.floor.f64(double %i.ac)
-  %3 = fptosi double %i.ad to i32
   %i.ae = fmul nnan double %i.i, f0x41D0000000000000
   %i.af = tail call double @llvm.floor.f64(double %i.ae)
-  %4 = fptosi double %i.af to i32
   %i.ag = fmul nnan double %i.y, f0x41D0000000000000
   %i.ah = tail call double @llvm.floor.f64(double %i.ag)
-  %5 = fptosi double %i.ah to i32
-  %6 = and i32 %2, %4
-  %.not = icmp eq i32 %6, 0
-  %7 = select i1 %.not, i32 0, i32 4
-  %8 = and i32 %2, %3
-  %.not.1 = icmp eq i32 %8, 0
-  %9 = select i1 %.not.1, i32 0, i32 2
-  %.1.1 = or disjoint i32 %9, %7
-  %10 = and i32 %2, %5
-  %.not.2 = icmp ne i32 %10, 0
-  %i.ai = zext i1 %.not.2 to i32
-  %.1.2 = or disjoint i32 %.1.1, %i.ai
-  ret i32 %.1.2
+  %3 = insertelement <3 x double> poison, double %i.ah, i64 0
+  %4 = insertelement <3 x double> %3, double %i.ad, i64 1
+  %5 = insertelement <3 x double> %4, double %i.af, i64 2
+  %6 = fptosi <3 x double> %5 to <3 x i32>
+  %7 = insertelement <3 x i32> poison, i32 %2, i64 0
+  %8 = shufflevector <3 x i32> %7, <3 x i32> poison, <3 x i32> zeroinitializer
+  %9 = and <3 x i32> %8, %6
+  %10 = icmp ne <3 x i32> %9, zeroinitializer
+  %11 = bitcast <3 x i1> %10 to i3
+  %i.ai = zext i3 %11 to i32
+  ret i32 %i.ai
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)

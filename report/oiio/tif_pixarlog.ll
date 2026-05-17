@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 bb.r:                                             ; preds = %.lr.ph, %horizontalAccumulateF.exit
   %indvar = phi i64 [ 0, %.lr.ph ], [ %indvar.next, %horizontalAccumulateF.exit ] ; 2 uses
   %.0122258 = phi ptr [ %i.as, %.lr.ph ], [ %i.ahq, %horizontalAccumulateF.exit ] ; 58 uses
-  %.0123257 = phi ptr [ %1, %.lr.ph ], [ %i.aho, %horizontalAccumulateF.exit ] ; 64 uses
+  %.0123257 = phi ptr [ %1, %.lr.ph ], [ %i.aho, %horizontalAccumulateF.exit ] ; 63 uses
   %.0127256 = phi i64 [ 0, %.lr.ph ], [ %i.ahp, %horizontalAccumulateF.exit ]
   %.0123257419 = ptrtoaddr ptr %.0123257 to i64
   %i.bj = mul i64 %i.bi, %indvar
@@ -604,19 +604,14 @@ bb.ae:                                            ; preds = %bb.ad
   %i.ms = zext nneg i16 %i.mr to i64
   %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.md, i64 %i.ms
   %i.mu = load float, ptr %i.mt, align 4, !tbaa !52
-  %4 = fmul float %i.mu, 2.048000e+03             ; 2 uses
-  %5 = insertelement <2 x float> poison, float %i.mi, i64 0
-  %6 = insertelement <2 x float> %5, float %i.mo, i64 1
-  %7 = fmul <2 x float> %6, splat (float 2.048000e+03) ; 2 uses
-  %8 = fcmp olt <2 x float> %7, splat (float 3.071000e+03)
-  %9 = select <2 x i1> %8, <2 x float> %7, <2 x float> splat (float 3.071000e+03)
-  %10 = fptoui <2 x float> %9 to <2 x i16>
-  store <2 x i16> %10, ptr %.0123257, align 2, !tbaa !59
-  %11 = fcmp olt float %4, 3.071000e+03
-  %12 = select i1 %11, float %4, float 3.071000e+03
-  %13 = fptoui float %12 to i16
-  %14 = getelementptr inbounds nuw i8, ptr %.0123257, i64 4
-  store i16 %13, ptr %14, align 2, !tbaa !59
+  %4 = insertelement <3 x float> poison, float %i.mi, i64 0
+  %5 = insertelement <3 x float> %4, float %i.mo, i64 1
+  %6 = insertelement <3 x float> %5, float %i.mu, i64 2
+  %7 = fmul <3 x float> %6, splat (float 2.048000e+03) ; 2 uses
+  %8 = fcmp olt <3 x float> %7, splat (float 3.071000e+03)
+  %9 = select <3 x i1> %8, <3 x float> %7, <3 x float> splat (float 3.071000e+03)
+  %10 = fptoui <3 x float> %9 to <3 x i16>
+  store <3 x i16> %10, ptr %.0123257, align 2, !tbaa !59
   br i1 %i.bd, label %.lr.ph175.preheader.i, label %horizontalAccumulateF.exit
 
 .lr.ph175.preheader.i:                            ; preds = %bb.ae
@@ -631,7 +626,7 @@ bb.ae:                                            ; preds = %bb.ad
   %.0140172.i = phi i32 [ %i.nk, %.lr.ph175.i ], [ %i.mw, %.lr.ph175.preheader.i ]
   %.0142171.i = phi i32 [ %i.nc, %.lr.ph175.i ], [ %i.mx, %.lr.ph175.preheader.i ]
   %.0144.in170.i = phi i32 [ %.0144.i, %.lr.ph175.i ], [ %i.o, %.lr.ph175.preheader.i ] ; 2 uses
-  %.0147169.i = phi ptr [ %i.mz, %.lr.ph175.i ], [ %.0123257, %.lr.ph175.preheader.i ] ; 2 uses
+  %.0147169.i = phi ptr [ %i.mz, %.lr.ph175.i ], [ %.0123257, %.lr.ph175.preheader.i ]
   %.0144.i = add nsw i32 %.0144.in170.i, -3
   %i.my = getelementptr inbounds nuw i8, ptr %.0136174.i, i64 6 ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %.0147169.i, i64 6 ; 2 uses
@@ -658,19 +653,14 @@ bb.ae:                                            ; preds = %bb.ad
   %i.nu = zext nneg i32 %i.nt to i64
   %i.nv = getelementptr inbounds nuw [4 x i8], ptr %i.md, i64 %i.nu
   %i.nw = load float, ptr %i.nv, align 4, !tbaa !52
-  %15 = fmul float %i.nw, 2.048000e+03            ; 2 uses
-  %16 = insertelement <2 x float> poison, float %i.ng, i64 0
-  %17 = insertelement <2 x float> %16, float %i.no, i64 1
-  %18 = fmul <2 x float> %17, splat (float 2.048000e+03) ; 2 uses
-  %19 = fcmp olt <2 x float> %18, splat (float 3.071000e+03)
-  %20 = select <2 x i1> %19, <2 x float> %18, <2 x float> splat (float 3.071000e+03)
-  %21 = fptoui <2 x float> %20 to <2 x i16>
-  store <2 x i16> %21, ptr %i.mz, align 2, !tbaa !59
-  %22 = fcmp olt float %15, 3.071000e+03
-  %23 = select i1 %22, float %15, float 3.071000e+03
-  %24 = fptoui float %23 to i16
-  %25 = getelementptr inbounds nuw i8, ptr %.0147169.i, i64 10
-  store i16 %24, ptr %25, align 2, !tbaa !59
+  %11 = insertelement <3 x float> poison, float %i.ng, i64 0
+  %12 = insertelement <3 x float> %11, float %i.no, i64 1
+  %13 = insertelement <3 x float> %12, float %i.nw, i64 2
+  %14 = fmul <3 x float> %13, splat (float 2.048000e+03) ; 2 uses
+  %15 = fcmp olt <3 x float> %14, splat (float 3.071000e+03)
+  %16 = select <3 x i1> %15, <3 x float> %14, <3 x float> splat (float 3.071000e+03)
+  %17 = fptoui <3 x float> %16 to <3 x i16>
+  store <3 x i16> %17, ptr %i.mz, align 2, !tbaa !59
   %i.nx = icmp samesign ugt i32 %.0144.in170.i, 6
   br i1 %i.nx, label %.lr.ph175.i, label %horizontalAccumulateF.exit
 

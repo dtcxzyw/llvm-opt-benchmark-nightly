@@ -201,7 +201,7 @@ bb.a:
   %i.l = alloca [16 x i8], align 16               ; 6 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 5 uses
-  %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
+  %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.m = alloca i32, align 4                      ; 7 uses
   %i.n = alloca i8, align 1                       ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
@@ -522,19 +522,12 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.ct = getelementptr inbounds nuw i8, ptr %11, i64 21
   store i8 0, ptr %i.ct, align 1, !tbaa !16
   call void @llvm.experimental.noalias.scope.decl(metadata !39)
-  %20 = load <4 x i8>, ptr %i.cr, align 8, !tbaa !16, !noalias !39 ; 3 uses
-  %21 = add <4 x i8> %20, splat (i8 -65)
-  %22 = icmp ult <4 x i8> %21, splat (i8 26)
-  %23 = or disjoint <4 x i8> %20, splat (i8 32)
-  %24 = select <4 x i1> %22, <4 x i8> %23, <4 x i8> %20
-  store <4 x i8> %24, ptr %i.cr, align 8, !tbaa !16, !noalias !39
-  %25 = getelementptr inbounds nuw i8, ptr %11, i64 20 ; 2 uses
-  %26 = load i8, ptr %25, align 4, !tbaa !16, !noalias !39 ; 3 uses
-  %27 = add i8 %26, -65
-  %or.cond.i.i.i.i.4.i = icmp ult i8 %27, 26
-  %28 = or disjoint i8 %26, 32
-  %.0.i.i.i.i.4.i = select i1 %or.cond.i.i.i.i.4.i, i8 %28, i8 %26
-  store i8 %.0.i.i.i.i.4.i, ptr %25, align 4, !tbaa !16, !noalias !39
+  %20 = load <5 x i8>, ptr %i.cr, align 8, !tbaa !16, !noalias !39 ; 3 uses
+  %21 = add <5 x i8> %20, splat (i8 -65)
+  %22 = icmp ult <5 x i8> %21, splat (i8 26)
+  %23 = or disjoint <5 x i8> %20, splat (i8 32)
+  %24 = select <5 x i1> %22, <5 x i8> %23, <5 x i8> %20
+  store <5 x i8> %24, ptr %i.cr, align 8, !tbaa !16, !noalias !39
   %i.cu = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 4 uses
   store ptr %i.cu, ptr %10, align 8, !tbaa !9, !alias.scope !39
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %i.cu, ptr noundef nonnull align 8 dereferenceable(6) %i.cr, i64 6, i1 false)
@@ -937,7 +930,7 @@ bb.ee:                                            ; preds = %bb.dz
           to label %bb.ef unwind label %bb.ej
 
 bb.ef:                                            ; preds = %bb.ee
-  %i.ri = fptrunc double %i.rh to float           ; 3 uses
+  %i.ri = fptrunc double %i.rh to float           ; 2 uses
   %i.rj = load i32, ptr %.1, align 8, !tbaa !71   ; 3 uses
   %i.rk = icmp sgt i32 %i.po, 0
   br i1 %i.rk, label %.preheader.lr.ph, label %._crit_edge
@@ -950,7 +943,7 @@ bb.ef:                                            ; preds = %bb.ee
   %i.rp = getelementptr inbounds nuw i8, ptr %i.rm, i64 200
   %i.rq = getelementptr inbounds nuw i8, ptr %.1, i64 16
   %i.rr = load ptr, ptr %i.rq, align 8, !tbaa !31 ; 6 uses
-  %i.rs = load ptr, ptr %i.rp, align 8, !tbaa !136 ; 8 uses
+  %i.rs = load ptr, ptr %i.rp, align 8, !tbaa !136 ; 7 uses
   %.sroa.speculated.us.us = call i32 @llvm.smin.i32(i32 %i.rl, i32 0)
   %i.rt = sext i32 %.sroa.speculated.us.us to i64
   %i.ru = getelementptr inbounds [8 x i8], ptr %i.rr, i64 %i.rt
@@ -1036,8 +1029,8 @@ middle.block323:                                  ; preds = %vector.body317
 .preheader.preheader326:                          ; preds = %vector.scevcheck, %.preheader.preheader, %middle.block323
   %indvars.iv.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.preheader.preheader ], [ %n.vec316, %middle.block323 ]
   %.026161.ph = phi i64 [ 0, %vector.scevcheck ], [ 0, %.preheader.preheader ], [ %i.sp, %middle.block323 ]
-  %29 = insertelement <2 x float> poison, float %i.ri, i64 0
-  %30 = shufflevector <2 x float> %29, <2 x float> poison, <2 x i32> zeroinitializer
+  %25 = insertelement <3 x float> poison, float %i.ri, i64 0
+  %26 = shufflevector <3 x float> %25, <3 x float> poison, <3 x i32> zeroinitializer
   br label %.preheader
 
 .preheader.us:                                    ; preds = %.preheader.lr.ph, %.preheader.us
@@ -1078,24 +1071,20 @@ middle.block323:                                  ; preds = %vector.body317
   %indvars.iv = phi i64 [ %indvars.iv.next179, %.preheader ], [ %indvars.iv.ph, %.preheader.preheader326 ] ; 4 uses
   %.026161 = phi i64 [ %indvars.iv.next.2, %.preheader ], [ %.026161.ph, %.preheader.preheader326 ]
   %sext = shl i64 %.026161, 32
-  %i.tz = ashr exact i64 %sext, 32                ; 3 uses
+  %i.tz = ashr exact i64 %sext, 32                ; 2 uses
   %i.ua = getelementptr inbounds nuw [2 x i8], ptr %.pre192, i64 %indvars.iv
   %i.ub = load i16, ptr %i.ua, align 2, !tbaa !37
   %i.uc = getelementptr inbounds nuw [4 x i8], ptr %i.rs, i64 %i.tz
   %i.ud = getelementptr inbounds nuw [2 x i8], ptr %i.rx, i64 %indvars.iv
   %i.ue = load i16, ptr %i.ud, align 2, !tbaa !37
-  %31 = insertelement <2 x i16> poison, i16 %i.ub, i64 0
-  %32 = insertelement <2 x i16> %31, i16 %i.ue, i64 1
-  %33 = uitofp <2 x i16> %32 to <2 x float>
-  %34 = fdiv <2 x float> %33, %30
-  store <2 x float> %34, ptr %i.uc, align 4, !tbaa !137
-  %35 = getelementptr inbounds nuw [2 x i8], ptr %i.sa, i64 %indvars.iv
-  %36 = load i16, ptr %35, align 2, !tbaa !37
-  %37 = uitofp i16 %36 to float
-  %38 = fdiv float %37, %i.ri
-  %39 = getelementptr [4 x i8], ptr %i.rs, i64 %i.tz
-  %40 = getelementptr i8, ptr %39, i64 8
-  store float %38, ptr %40, align 4, !tbaa !137
+  %27 = getelementptr inbounds nuw [2 x i8], ptr %i.sa, i64 %indvars.iv
+  %28 = load i16, ptr %27, align 2, !tbaa !37
+  %29 = insertelement <3 x i16> poison, i16 %i.ub, i64 0
+  %30 = insertelement <3 x i16> %29, i16 %i.ue, i64 1
+  %31 = insertelement <3 x i16> %30, i16 %28, i64 2
+  %32 = uitofp <3 x i16> %31 to <3 x float>
+  %33 = fdiv <3 x float> %32, %26
+  store <3 x float> %33, ptr %i.uc, align 4, !tbaa !137
   %indvars.iv.next.2 = add nsw i64 %i.tz, 3
   %indvars.iv.next179 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next179, %wide.trip.count188

@@ -201,8 +201,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   br i1 %.not66, label %bb.u, label %putbyte.exit72
 
 putbyte.exit72:                                   ; preds = %bb.t
-  store <8 x i8> <i8 0, i8 0, i8 2, i8 0, i8 0, i8 0, i8 0, i8 0>, ptr @obfr, align 16, !tbaa !13
-  store <4 x i8> zeroinitializer, ptr getelementptr inbounds nuw (i8, ptr @obfr, i64 8), align 8, !tbaa !13
+  store <12 x i8> <i8 0, i8 0, i8 2, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, ptr @obfr, align 16, !tbaa !13
   %.pre = load i32, ptr @horizontal_size, align 4, !tbaa !4 ; 2 uses
   %i.bc = trunc i32 %.pre to i8
   store i8 %i.bc, ptr getelementptr inbounds nuw (i8, ptr @obfr, i64 12), align 4, !tbaa !13

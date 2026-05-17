@@ -201,18 +201,17 @@ _ZN4node13OneByteStringEPN2v87IsolateESt17basic_string_viewIcSt11char_traitsIcEE
   %i.ef = call ptr @_ZN2v87Integer15NewFromUnsignedEPNS_7IsolateEj(ptr noundef nonnull %i.c, i32 noundef %i.ee) #22 ; 2 uses
   %i.eg = ptrtoint ptr %i.ef to i64
   store i64 %i.eg, ptr %i.bl, align 8
-  %3 = load <4 x ptr>, ptr %2, align 16
-  %.fr = freeze <4 x ptr> %3
-  %4 = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %5 = load ptr, ptr %i.bk, align 16
-  %.fr218 = freeze ptr %5
-  %6 = icmp eq ptr %.fr218, null
-  %7 = icmp eq ptr %i.ef, null
-  %8 = bitcast <4 x i1> %4 to i4
-  %9 = icmp ne i4 %8, 0
-  %op.rdx = or i1 %9, %6
-  %op.rdx216 = select i1 %op.rdx, i1 true, i1 %7
-  br i1 %op.rdx216, label %.critedge, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit
+  %3 = load ptr, ptr %i.bk, align 16
+  %4 = load <4 x ptr>, ptr %2, align 16
+  %5 = insertelement <6 x ptr> poison, ptr %3, i64 4
+  %6 = insertelement <6 x ptr> %5, ptr %i.ef, i64 5
+  %7 = shufflevector <4 x ptr> %4, <4 x ptr> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison>
+  %8 = shufflevector <6 x ptr> %7, <6 x ptr> %6, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 10, i32 11>
+  %.fr = freeze <6 x ptr> %8
+  %9 = icmp eq <6 x ptr> %.fr, splat (ptr null)
+  %10 = bitcast <6 x i1> %9 to i6
+  %.not = icmp eq i6 %10, 0
+  br i1 %.not, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit, label %.critedge
 
 _ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit: ; preds = %_ZN4node13OneByteStringEPN2v87IsolateESt17basic_string_viewIcSt11char_traitsIcEENS0_13NewStringTypeE.exit
   %i.eh = call ptr @_ZN2v818DictionaryTemplate11NewInstanceENS_5LocalINS_7ContextEEENS_10MemorySpanINS_10MaybeLocalINS_5ValueEEEEE(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.077.0, ptr %i.d, ptr nonnull %2, i64 6) #22 ; 2 uses

@@ -201,8 +201,8 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #6
 ; Function Attrs: uwtable
 define dso_local void @_ZN20btMultiSapBroadphase9buildTreeERK9btVector3S2_(ptr noundef nonnull align 8 captures(none) dereferenceable(120) %0, ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %2) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %class.btVector3, align 16          ; 5 uses
-  %4 = alloca %class.btVector3, align 4           ; 5 uses
+  %3 = alloca %class.btVector3, align 16          ; 4 uses
+  %4 = alloca %class.btVector3, align 16          ; 4 uses
   %i.a = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef 248, i32 noundef 16) ; 4 uses
   invoke void @_ZN14btQuantizedBvhC1Ev(ptr noundef nonnull align 8 dereferenceable(244) %i.a)
           to label %bb.b unwind label %bb.c
@@ -219,8 +219,6 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %bb.b
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !30   ; 4 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 140 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 144 ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 152 ; 6 uses
@@ -249,43 +247,23 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN20btAli
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 80
   %i.s = load ptr, ptr %i.r, align 8
   call void %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.p, ptr noundef nonnull align 4 dereferenceable(16) %3, ptr noundef nonnull align 4 dereferenceable(16) %4)
-  %i.t = load ptr, ptr %i.b, align 8, !tbaa !30   ; 4 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.t, i64 12
-  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 40
-  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 44
-  %9 = load float, ptr %4, align 4, !tbaa !42
-  %10 = load float, ptr %7, align 4, !tbaa !42    ; 2 uses
-  %11 = load float, ptr %i.u, align 4, !tbaa !42  ; 2 uses
-  %12 = load <2 x float>, ptr %6, align 4, !tbaa !42
-  %13 = load <2 x float>, ptr %8, align 4, !tbaa !42 ; 2 uses
-  %14 = load <2 x float>, ptr %i.v, align 4, !tbaa !42 ; 2 uses
-  %15 = load <4 x float>, ptr %3, align 16
-  %16 = load <2 x float>, ptr %5, align 4, !tbaa !42
-  %17 = fsub float %9, %10
-  %18 = fmul float %11, %17
-  %19 = shufflevector <2 x float> %16, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %20 = shufflevector <4 x float> %15, <4 x float> %19, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
-  %21 = insertelement <4 x float> %20, float %18, i64 3 ; 2 uses
-  %22 = shufflevector <2 x float> %13, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
-  %23 = insertelement <4 x float> %22, float 1.000000e+00, i64 3
-  %24 = insertelement <4 x float> %23, float %10, i64 0 ; 2 uses
-  %25 = fsub <4 x float> %21, %24
-  %26 = fadd <4 x float> %21, %24
-  %27 = shufflevector <4 x float> %25, <4 x float> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %28 = shufflevector <2 x float> %14, <2 x float> poison, <4 x i32> <i32 poison, i32 0, i32 1, i32 poison>
-  %29 = insertelement <4 x float> %28, float 1.000000e+00, i64 3
-  %30 = insertelement <4 x float> %29, float %11, i64 0
-  %31 = fmul <4 x float> %27, %30
-  %32 = fptoui <4 x float> %31 to <4 x i16>       ; 2 uses
-  %33 = fsub <2 x float> %12, %13
-  %34 = fmul <2 x float> %14, %33
-  %35 = and <4 x i16> %32, <i16 -2, i16 -2, i16 -2, i16 poison>
-  %36 = or <4 x i16> %32, <i16 poison, i16 poison, i16 poison, i16 1>
-  %37 = shufflevector <4 x i16> %35, <4 x i16> %36, <4 x i32> <i32 0, i32 1, i32 2, i32 7>
-  %38 = fadd <2 x float> %34, splat (float 1.000000e+00)
-  %39 = fptoui <2 x float> %38 to <2 x i16>
-  %40 = or <2 x i16> %39, splat (i16 1)
+  %i.t = load ptr, ptr %i.b, align 8, !tbaa !30   ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 40
+  %5 = load <3 x float>, ptr %3, align 16, !tbaa !42
+  %6 = load <3 x float>, ptr %i.u, align 4, !tbaa !42 ; 2 uses
+  %7 = fsub <3 x float> %5, %6
+  %8 = load <3 x float>, ptr %i.v, align 4, !tbaa !42 ; 2 uses
+  %9 = fmul <3 x float> %7, %8
+  %10 = load <3 x float>, ptr %4, align 16, !tbaa !42
+  %11 = fsub <3 x float> %10, %6
+  %12 = fmul <3 x float> %8, %11
+  %13 = fadd <3 x float> %12, splat (float 1.000000e+00)
+  %14 = shufflevector <3 x float> %9, <3 x float> %13, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
+  %15 = fptoui <6 x float> %14 to <6 x i16>       ; 2 uses
+  %16 = and <6 x i16> %15, <i16 -2, i16 -2, i16 -2, i16 poison, i16 poison, i16 poison>
+  %17 = or <6 x i16> %15, <i16 poison, i16 poison, i16 poison, i16 1, i16 1, i16 1>
+  %18 = shufflevector <6 x i16> %16, <6 x i16> %17, <6 x i32> <i32 0, i32 1, i32 2, i32 9, i32 10, i32 11>
   %i.w = load i32, ptr %i.h, align 4, !tbaa !44   ; 7 uses
   %i.x = load i32, ptr %i.i, align 8, !tbaa !48
   %i.y = icmp eq i32 %i.w, %i.x
@@ -379,10 +357,8 @@ _ZN20btAlignedObjectArrayI18btQuantizedBvhNodeE9push_backERKS0_.exit: ; preds = 
   %i.au = phi i32 [ %.pre2.i, %_ZN20btAlignedObjectArrayI18btQuantizedBvhNodeE10deallocateEv.exit.i.i ], [ %i.w, %bb.e ], [ %i.w, %bb.d ]
   %i.av = load ptr, ptr %i.j, align 8, !tbaa !49
   %i.aw = sext i32 %i.au to i64
-  %i.ax = getelementptr inbounds [16 x i8], ptr %i.av, i64 %i.aw ; 3 uses
-  store <4 x i16> %37, ptr %i.ax, align 4
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
-  store <2 x i16> %40, ptr %.sroa.7.0..sroa_idx, align 4
+  %i.ax = getelementptr inbounds [16 x i8], ptr %i.av, i64 %i.aw ; 2 uses
+  store <6 x i16> %18, ptr %i.ax, align 4
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ax, i64 12
   %i.ay = trunc nuw nsw i64 %indvars.iv to i32
   store i32 %i.ay, ptr %.sroa.9.0..sroa_idx, align 4, !tbaa !4

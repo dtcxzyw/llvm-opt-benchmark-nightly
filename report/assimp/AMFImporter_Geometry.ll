@@ -201,9 +201,8 @@ bb.b:                                             ; preds = %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV14AMFCoordinates, i64 16), ptr %i.c, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 80 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 84
-  store <2 x float> zeroinitializer, ptr %i.n, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 88 ; 2 uses
-  store float 0.000000e+00, ptr %i.p, align 8
+  %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 88
+  store <3 x float> zeroinitializer, ptr %i.n, align 8
   tail call void @_ZN6Assimp11AMFImporter22ParseHelper_Node_EnterEP18AMFNodeElementBase(ptr noundef nonnull align 8 dereferenceable(224) %0, ptr noundef nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
   call void @_ZNK4pugi8xml_node8childrenEv(ptr dead_on_unwind nonnull writable sret(%"class.pugi::xml_object_range") align 8 %5, ptr noundef nonnull align 8 dereferenceable(8) %1)
@@ -410,7 +409,7 @@ bb.l:                                             ; preds = %bb.a
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.bl = load ptr, ptr %i.bk, align 8            ; 3 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 56
-  %i.bn = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #15 ; 12 uses
+  %i.bn = tail call noalias noundef nonnull dereferenceable(96) ptr @_Znwm(i64 noundef 96) #15 ; 11 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   store i32 2, ptr %i.bo, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
@@ -428,10 +427,8 @@ bb.l:                                             ; preds = %bb.a
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bn, i64 72
   store i64 0, ptr %i.bv, align 8
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTV14AMFCoordinates, i64 16), ptr %i.bn, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %i.bn, i64 80
-  store <2 x float> zeroinitializer, ptr %9, align 8
-  %i.bw = getelementptr inbounds nuw i8, ptr %i.bn, i64 88
-  store float 0.000000e+00, ptr %i.bw, align 8
+  %i.bw = getelementptr inbounds nuw i8, ptr %i.bn, i64 80
+  store <3 x float> zeroinitializer, ptr %i.bw, align 8
   %i.bx = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #15 ; 2 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 16
   store ptr %i.bn, ptr %i.by, align 8

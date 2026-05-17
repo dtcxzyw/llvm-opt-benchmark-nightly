@@ -115,7 +115,7 @@ bb.h:                                             ; preds = %bb.g
   br label %ZSTDMT_createSeqPool.exit.i
 
 ZSTDMT_createSeqPool.exit.i:                      ; preds = %bb.h, %bb.g
-  %i.ap = getelementptr inbounds nuw i8, ptr %.0.i47.i, i64 32 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %.0.i47.i, i64 32
   store ptr %i.ak, ptr %i.ap, align 8, !tbaa !45
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.i47.i, i64 352 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(2648) %i.aq, i8 0, i64 2648, i1 false)
@@ -131,14 +131,11 @@ ZSTDMT_createSeqPool.exit.i:                      ; preds = %bb.h, %bb.g
   %i.ba = or i32 %i.ax, %i.az
   %i.bb = getelementptr inbounds nuw i8, ptr %.0.i47.i, i64 328
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bb, i8 0, i64 24, i1 false)
-  %4 = load <4 x ptr>, ptr %.0.i47.i, align 8, !tbaa !15
-  %5 = icmp eq <4 x ptr> %4, splat (ptr null)
-  %6 = load ptr, ptr %i.ap, align 8, !tbaa !45
-  %.not42.i = icmp eq ptr %6, null
-  %7 = bitcast <4 x i1> %5 to i4
-  %i.bc = icmp ne i4 %7, 0
-  %op.rdx = or i1 %i.bc, %.not42.i
-  %i.bd = zext i1 %op.rdx to i32
+  %4 = load <5 x ptr>, ptr %.0.i47.i, align 8, !tbaa !15
+  %5 = icmp eq <5 x ptr> %4, splat (ptr null)
+  %6 = bitcast <5 x i1> %5 to i5
+  %i.bc = icmp ne i5 %6, 0
+  %i.bd = zext i1 %i.bc to i32
   %i.be = or i32 %i.ba, %i.bd
   %.not43.i = icmp eq i32 %i.be, 0
   br i1 %.not43.i, label %ZSTDMT_createCCtx_advanced_internal.exit, label %bb.i

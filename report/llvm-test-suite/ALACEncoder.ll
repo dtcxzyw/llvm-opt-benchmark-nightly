@@ -200,18 +200,16 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
   %i.at = tail call noalias ptr @calloc(i64 noundef %i.as, i64 noundef 1) #16 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 72
   store ptr %i.at, ptr %i.au, align 8, !tbaa !24
-  %2 = insertelement <4 x ptr> poison, ptr %i.u, i64 0
-  %3 = insertelement <4 x ptr> %2, ptr %i.z, i64 1
-  %4 = insertelement <4 x ptr> %3, ptr %i.ae, i64 2
-  %5 = insertelement <4 x ptr> %4, ptr %i.aj, i64 3
-  %6 = icmp eq <4 x ptr> %5, splat (ptr null)
-  %.not18 = icmp eq ptr %i.ap, null
-  %.not19 = icmp eq ptr %i.at, null
-  %7 = bitcast <4 x i1> %6 to i4
-  %8 = icmp ne i4 %7, 0
-  %op.rdx = or i1 %8, %.not18
-  %op.rdx32 = or i1 %op.rdx, %.not19
-  br i1 %op.rdx32, label %.loopexit, label %.preheader24
+  %2 = insertelement <6 x ptr> poison, ptr %i.u, i64 0
+  %3 = insertelement <6 x ptr> %2, ptr %i.z, i64 1
+  %4 = insertelement <6 x ptr> %3, ptr %i.ae, i64 2
+  %5 = insertelement <6 x ptr> %4, ptr %i.aj, i64 3
+  %6 = insertelement <6 x ptr> %5, ptr %i.ap, i64 4
+  %7 = insertelement <6 x ptr> %6, ptr %i.at, i64 5
+  %8 = icmp eq <6 x ptr> %7, splat (ptr null)
+  %9 = bitcast <6 x i1> %8 to i6
+  %.not = icmp eq i6 %9, 0
+  br i1 %.not, label %.preheader24, label %.loopexit
 
 .preheader24:                                     ; preds = %bb.b
   %i.av = load i32, ptr %i.f, align 4, !tbaa !73

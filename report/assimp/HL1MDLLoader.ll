@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit80: ; preds = %bb.
 define hidden void @_ZN6Assimp3MDL8HalfLife12HL1MDLLoader13read_texturesEv(ptr noundef nonnull align 8 dereferenceable(320) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %1 = alloca %struct.aiColor3D, align 8          ; 7 uses
+  %1 = alloca %struct.aiColor3D, align 16         ; 7 uses
   %2 = alloca %struct.aiString, align 4           ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -245,7 +245,7 @@ bb.a:
   br i1 %i.ak, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.am = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.an = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 3 uses
@@ -286,8 +286,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.m
   %i.bm = add nsw i32 %i.bl, %i.bi
   %i.bn = call noundef ptr @_ZNK6Assimp3MDL8HalfLife13HL1DataBuffer8get_dataIhEEPKT_ii(ptr noundef nonnull align 8 dereferenceable(24) %i.af, i32 noundef %i.bm, i32 noundef 768) ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
-  store <2 x float> zeroinitializer, ptr %1, align 8
-  store float 0.000000e+00, ptr %i.al, align 8
+  store <3 x float> zeroinitializer, ptr %1, align 16
   %i.bo = load ptr, ptr %0, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 72
   %i.bq = load ptr, ptr %i.bp, align 8
@@ -402,7 +401,7 @@ _ZN6Assimp3MDL8HalfLife12HL1MDLLoader12read_textureEPKNS1_11Texture_HL1EPKhS7_P9
   %i.dy = getelementptr inbounds nuw i8, ptr %i.bn, i64 765
   %i.dz = load <2 x i8>, ptr %i.dy, align 1
   %i.ea = uitofp <2 x i8> %i.dz to <2 x float>
-  store <2 x float> %i.ea, ptr %1, align 8
+  store <2 x float> %i.ea, ptr %1, align 16
   %i.eb = getelementptr inbounds nuw i8, ptr %i.bn, i64 767
   %i.ec = load i8, ptr %i.eb, align 1
   %i.ed = uitofp i8 %i.ec to float

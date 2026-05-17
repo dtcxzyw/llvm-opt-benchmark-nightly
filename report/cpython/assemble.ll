@@ -27,7 +27,7 @@ bb.a:
   %i.i = alloca ptr, align 8                      ; 7 uses
   %9 = alloca %struct._PyCodeConstructor, align 8 ; 22 uses
   %10 = alloca %struct.assembler, align 8         ; 24 uses
-  %i.j = tail call i32 @_PyInstructionSequence_ApplyLabelMap(ptr noundef %4) #5
+  %i.j = tail call i32 @_PyInstructionSequence_ApplyLabelMap(ptr noundef %4) #6
   %i.k = icmp slt i32 %i.j, 0
   br i1 %i.k, label %bb.dc, label %bb.b
 
@@ -121,22 +121,19 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
   %i.ap = getelementptr [44 x i8], ptr %i.p, i64 %indvars.iv85.i ; 3 uses
   %.val58.us.i = load i32, ptr %i.ap, align 4, !tbaa !24 ; 2 uses
   %i.aq = getelementptr i8, ptr %i.ap, i64 4      ; 2 uses
-  %.val59.us.i = load i32, ptr %i.aq, align 4, !tbaa !20 ; 3 uses
-  %11 = icmp sgt i32 %.val59.us.i, 16777215
-  %12 = zext i1 %11 to i32
-  %13 = icmp sgt i32 %.val59.us.i, 65535
-  %14 = icmp sgt i32 %.val59.us.i, 255
-  %i.ar = zext i1 %14 to i32
-  %15 = sext i32 %.val58.us.i to i64              ; 2 uses
-  %16 = getelementptr i8, ptr @_PyOpcode_Caches, i64 %15
-  %17 = load i8, ptr %16, align 1, !tbaa !29
-  %18 = zext i8 %17 to i32
-  %19 = select i1 %13, i32 2, i32 1
-  %20 = add nuw nsw i32 %19, %12
-  %21 = add nuw nsw i32 %20, %i.ar                ; 2 uses
-  %i.as = add i32 %.04867.us.i, %18
-  %i.at = add i32 %i.as, %21                      ; 5 uses
-  %i.au = getelementptr [8 x i8], ptr @_PyOpcode_opcode_metadata, i64 %15
+  %.val59.us.i = load i32, ptr %i.aq, align 4, !tbaa !20
+  %11 = sext i32 %.val58.us.i to i64              ; 2 uses
+  %12 = getelementptr i8, ptr @_PyOpcode_Caches, i64 %11
+  %13 = load i8, ptr %12, align 1, !tbaa !29
+  %i.ar = zext i8 %13 to i32
+  %14 = insertelement <3 x i32> poison, i32 %.val59.us.i, i64 0
+  %15 = shufflevector <3 x i32> %14, <3 x i32> poison, <3 x i32> zeroinitializer
+  %16 = icmp sgt <3 x i32> %15, <i32 16777215, i32 255, i32 65535>
+  %17 = select <3 x i1> %16, <3 x i32> <i32 1, i32 1, i32 2>, <3 x i32> <i32 0, i32 0, i32 1>
+  %18 = tail call i32 @llvm.vector.reduce.add.v3i32(<3 x i32> %17) ; 2 uses
+  %i.as = add i32 %.04867.us.i, %i.ar
+  %i.at = add i32 %i.as, %18                      ; 5 uses
+  %i.au = getelementptr [8 x i8], ptr @_PyOpcode_opcode_metadata, i64 %11
   %i.av = getelementptr i8, ptr %i.au, i64 4
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !25
   %i.ax = and i32 %i.aw, 8
@@ -181,7 +178,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %i.bp = select i1 %i.bm, i32 2, i32 1
   %i.bq = add nuw nsw i32 %i.bp, %i.bl
   %i.br = add nuw nsw i32 %i.bq, %i.bo
-  %.not55.us.i = icmp eq i32 %i.br, %21
+  %.not55.us.i = icmp eq i32 %i.br, %18
   %spec.select.us.i = select i1 %.not55.us.i, i32 %.04569.us.i, i32 1
   br label %bb.o
 
@@ -301,7 +298,7 @@ bb.s:                                             ; preds = %.lr.ph.i16.epil.pre
   br label %.lr.ph66.us.i
 
 resolve_jump_offsets.exit:                        ; preds = %._crit_edge.us.i, %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %10) #6
   %i.do = getelementptr i8, ptr %0, i64 88        ; 2 uses
   %i.dp = load i32, ptr %i.do, align 8, !tbaa !35
   %i.dq = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -311,19 +308,19 @@ resolve_jump_offsets.exit:                        ; preds = %._crit_edge.us.i, %
   %i.ds = getelementptr inbounds nuw i8, ptr %10, i64 32 ; 6 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %10, i64 40
   %i.du = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 6 uses
-  %i.dv = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 128) #5 ; 5 uses
+  %i.dv = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 128) #6 ; 5 uses
   store ptr %i.dv, ptr %10, align 8, !tbaa !40
   %i.dw = icmp eq ptr %i.dv, null
   br i1 %i.dw, label %Py_XDECREF.exit.i.i, label %bb.t
 
 bb.t:                                             ; preds = %resolve_jump_offsets.exit
-  %i.dx = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 32) #5 ; 2 uses
+  %i.dx = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 32) #6 ; 2 uses
   store ptr %i.dx, ptr %i.ds, align 8, !tbaa !41
   %i.dy = icmp eq ptr %i.dx, null
   br i1 %i.dy, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.dz = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 16) #5 ; 2 uses
+  %i.dz = tail call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef 16) #6 ; 2 uses
   store ptr %i.dz, ptr %i.du, align 8, !tbaa !42
   %i.ea = icmp eq ptr %i.dz, null
   br i1 %i.ea, label %bb.v, label %assemble_init.exit.preheader.i
@@ -350,7 +347,7 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.eh, label %bb.x, label %Py_XDECREF.exit.i.i
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.dv) #5
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.dv) #6
   br label %Py_XDECREF.exit.i.i
 
 Py_XDECREF.exit.i.i:                              ; preds = %bb.x, %bb.w, %bb.v, %resolve_jump_offsets.exit
@@ -370,7 +367,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.el, label %bb.aa, label %Py_XDECREF.exit17.i.i
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ei) #5
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.ei) #6
   br label %Py_XDECREF.exit17.i.i
 
 Py_XDECREF.exit17.i.i:                            ; preds = %bb.aa, %bb.z, %bb.y, %Py_XDECREF.exit.i.i
@@ -390,7 +387,7 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.ep, label %bb.ad, label %assemble_emit.exit.thread
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.em) #5
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.em) #6
   br label %assemble_emit.exit.thread
 
 bb.ae:                                            ; preds = %assemble_init.exit.i, %.lr.ph.i21
@@ -402,20 +399,17 @@ bb.ae:                                            ; preds = %assemble_init.exit.
   %.val17.i.i = load i64, ptr %i.et, align 8, !tbaa !43 ; 3 uses
   %.val.i.i = load i32, ptr %i.er, align 4, !tbaa !24 ; 2 uses
   %i.eu = getelementptr i8, ptr %i.er, i64 4      ; 2 uses
-  %.val16.i.i = load i32, ptr %i.eu, align 4, !tbaa !20 ; 4 uses
-  %22 = icmp sgt i32 %.val16.i.i, 16777215
-  %23 = zext i1 %22 to i32
-  %24 = icmp sgt i32 %.val16.i.i, 65535
-  %25 = icmp sgt i32 %.val16.i.i, 255
-  %i.ev = zext i1 %25 to i32
-  %26 = sext i32 %.val.i.i to i64
-  %27 = getelementptr i8, ptr @_PyOpcode_Caches, i64 %26
-  %28 = load i8, ptr %27, align 1, !tbaa !29      ; 2 uses
-  %29 = zext i8 %28 to i32                        ; 2 uses
-  %30 = select i1 %24, i32 2, i32 1
-  %31 = add nuw nsw i32 %30, %23
-  %32 = add nuw nsw i32 %31, %i.ev
-  %i.ew = add nuw nsw i32 %32, %29                ; 3 uses
+  %.val16.i.i = load i32, ptr %i.eu, align 4, !tbaa !20 ; 2 uses
+  %19 = sext i32 %.val.i.i to i64
+  %20 = getelementptr i8, ptr @_PyOpcode_Caches, i64 %19
+  %21 = load i8, ptr %20, align 1, !tbaa !29      ; 2 uses
+  %i.ev = zext i8 %21 to i32                      ; 2 uses
+  %22 = insertelement <3 x i32> poison, i32 %.val16.i.i, i64 0
+  %23 = shufflevector <3 x i32> %22, <3 x i32> poison, <3 x i32> zeroinitializer
+  %24 = icmp sgt <3 x i32> %23, <i32 16777215, i32 255, i32 65535>
+  %25 = select <3 x i1> %24, <3 x i32> <i32 1, i32 1, i32 2>, <3 x i32> <i32 0, i32 0, i32 1>
+  %26 = call i32 @llvm.vector.reduce.add.v3i32(<3 x i32> %25)
+  %i.ew = add nuw nsw i32 %26, %i.ev              ; 3 uses
   %i.ex = load i32, ptr %i.ee, align 8, !tbaa !45 ; 2 uses
   %i.ey = add i32 %i.ew, %i.ex                    ; 2 uses
   %i.ez = sext i32 %i.ey to i64
@@ -429,7 +423,7 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.fc = shl i64 %.val17.i.i, 1
-  %i.fd = call i32 @_PyBytes_Resize(ptr noundef nonnull %10, i64 noundef %i.fc) #5
+  %i.fd = call i32 @_PyBytes_Resize(ptr noundef nonnull %10, i64 noundef %i.fc) #6
   %i.fe = icmp slt i32 %i.fd, 0
   br i1 %i.fe, label %assemble_emit.exit.thread, label %._crit_edge.i.i
 
@@ -446,9 +440,9 @@ bb.ag:                                            ; preds = %bb.af
   br label %bb.ah
 
 bb.ah:                                            ; preds = %._crit_edge.i.i, %bb.ae
-  %.pre-phi28.i.i = phi i32 [ %.pre27.i.i, %._crit_edge.i.i ], [ %29, %bb.ae ]
+  %.pre-phi28.i.i = phi i32 [ %.pre27.i.i, %._crit_edge.i.i ], [ %i.ev, %bb.ae ]
   %.pre-phi.i.i = phi i32 [ %.pre25.i.i, %._crit_edge.i.i ], [ %i.ey, %bb.ae ]
-  %i.ff = phi i8 [ %.pre24.i.i, %._crit_edge.i.i ], [ %28, %bb.ae ] ; 2 uses
+  %i.ff = phi i8 [ %.pre24.i.i, %._crit_edge.i.i ], [ %21, %bb.ae ] ; 2 uses
   %.val19.i.i = phi i32 [ %.val19.pre.i.i, %._crit_edge.i.i ], [ %.val16.i.i, %bb.ae ] ; 4 uses
   %.val18.i.i = phi i32 [ %.val18.pre.i.i, %._crit_edge.i.i ], [ %.val.i.i, %bb.ae ]
   %i.fg = phi i32 [ %.pre20.i.i, %._crit_edge.i.i ], [ %i.ex, %bb.ae ]
@@ -788,24 +782,24 @@ assemble_exception_table.exit.i:                  ; preds = %bb.ay, %._crit_edge
   %i.kc = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.kd = load i32, ptr %i.kc, align 8, !tbaa !53
   %i.ke = sext i32 %i.kd to i64
-  %i.kf = call i32 @_PyBytes_Resize(ptr noundef nonnull %i.du, i64 noundef %i.ke) #5
+  %i.kf = call i32 @_PyBytes_Resize(ptr noundef nonnull %i.du, i64 noundef %i.ke) #6
   %i.kg = icmp slt i32 %i.kf, 0
   br i1 %i.kg, label %assemble_emit.exit.thread, label %bb.az
 
 bb.az:                                            ; preds = %assemble_exception_table.exit.i
-  %i.kh = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.du) #5
+  %i.kh = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.du) #6
   %i.ki = icmp slt i32 %i.kh, 0
   br i1 %i.ki, label %assemble_emit.exit.thread, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %i.kj = load i32, ptr %i.dt, align 8, !tbaa !54
   %i.kk = sext i32 %i.kj to i64
-  %i.kl = call i32 @_PyBytes_Resize(ptr noundef nonnull %i.ds, i64 noundef %i.kk) #5
+  %i.kl = call i32 @_PyBytes_Resize(ptr noundef nonnull %i.ds, i64 noundef %i.kk) #6
   %i.km = icmp slt i32 %i.kl, 0
   br i1 %i.km, label %assemble_emit.exit.thread, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.kn = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.ds) #5
+  %i.kn = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.ds) #6
   %i.ko = icmp slt i32 %i.kn, 0
   br i1 %i.ko, label %assemble_emit.exit.thread, label %bb.bc
 
@@ -814,37 +808,37 @@ bb.bc:                                            ; preds = %bb.bb
   %i.kq = load i32, ptr %i.kp, align 8, !tbaa !45
   %i.kr = sext i32 %i.kq to i64
   %i.ks = shl nsw i64 %i.kr, 1
-  %i.kt = call i32 @_PyBytes_Resize(ptr noundef nonnull %10, i64 noundef %i.ks) #5
+  %i.kt = call i32 @_PyBytes_Resize(ptr noundef nonnull %10, i64 noundef %i.ks) #6
   %i.ku = icmp slt i32 %i.kt, 0
   br i1 %i.ku, label %assemble_emit.exit.thread, label %assemble_emit.exit
 
 assemble_emit.exit:                               ; preds = %bb.bc
-  %i.kv = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %10) #5
+  %i.kv = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %10) #6
   %i.kw = icmp sgt i32 %i.kv, -1
   br i1 %i.kw, label %bb.bd, label %assemble_emit.exit.thread
 
 bb.bd:                                            ; preds = %assemble_emit.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
   store ptr null, ptr %i.g, align 8, !tbaa !55
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
   store ptr null, ptr %i.h, align 8, !tbaa !55
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #6
   store ptr null, ptr %i.i, align 8, !tbaa !55
   %i.kx = getelementptr i8, ptr %0, i64 24
   %i.ky = load ptr, ptr %i.kx, align 8, !tbaa !56 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
   store i64 0, ptr %i.f, align 8, !tbaa !57
   %i.kz = getelementptr i8, ptr %i.ky, i64 16
   %.val.i.i24 = load i64, ptr %i.kz, align 8, !tbaa !58
-  %i.la = call ptr @PyTuple_New(i64 noundef %.val.i.i24) #5 ; 6 uses
+  %i.la = call ptr @PyTuple_New(i64 noundef %.val.i.i24) #6 ; 6 uses
   %i.lb = icmp eq ptr %i.la, null
   br i1 %i.lb, label %.thread.i, label %.preheader.i.i25
 
 .preheader.i.i25:                                 ; preds = %bb.bd
-  %i.lc = call i32 @PyDict_Next(ptr noundef nonnull %i.ky, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #5
+  %i.lc = call i32 @PyDict_Next(ptr noundef nonnull %i.ky, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #6
   %.not13.i.i = icmp eq i32 %i.lc, 0
   br i1 %.not13.i.i, label %.loopexit60.i, label %.lr.ph.i.i26
 
@@ -854,12 +848,12 @@ bb.bd:                                            ; preds = %assemble_emit.exit
 
 bb.be:                                            ; preds = %_Py_NewRef.exit.i.i, %.lr.ph.i.i26
   %i.le = load ptr, ptr %i.e, align 8, !tbaa !55
-  %i.lf = call i64 @PyLong_AsSsize_t(ptr noundef %i.le) #5 ; 2 uses
+  %i.lf = call i64 @PyLong_AsSsize_t(ptr noundef %i.le) #6 ; 2 uses
   %i.lg = icmp eq i64 %i.lf, -1
   br i1 %i.lg, label %bb.bf, label %bb.bi
 
 bb.bf:                                            ; preds = %bb.be
-  %i.lh = call ptr @PyErr_Occurred() #5
+  %i.lh = call ptr @PyErr_Occurred() #6
   %.not12.i.i = icmp eq ptr %i.lh, null
   br i1 %.not12.i.i, label %bb.bi, label %.critedge.i.i
 
@@ -875,7 +869,7 @@ bb.bg:                                            ; preds = %.critedge.i.i
   br i1 %i.lk, label %bb.bh, label %.thread.i
 
 bb.bh:                                            ; preds = %bb.bg
-  call void @_Py_Dealloc(ptr noundef nonnull %i.la) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.la) #6
   br label %.thread.i
 
 bb.bi:                                            ; preds = %bb.bf, %bb.be
@@ -892,34 +886,34 @@ bb.bj:                                            ; preds = %bb.bi
 _Py_NewRef.exit.i.i:                              ; preds = %bb.bj, %bb.bi
   %i.lp = getelementptr [8 x i8], ptr %i.ld, i64 %i.lf
   store ptr %i.ll, ptr %i.lp, align 8, !tbaa !55
-  %i.lq = call i32 @PyDict_Next(ptr noundef nonnull %i.ky, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #5
+  %i.lq = call i32 @PyDict_Next(ptr noundef nonnull %i.ky, ptr noundef nonnull %i.f, ptr noundef nonnull %i.d, ptr noundef nonnull %i.e) #6
   %.not.i.i27 = icmp eq i32 %i.lq, 0
   br i1 %.not.i.i27, label %.loopexit60.i, label %bb.be, !llvm.loop !62
 
 .thread.i:                                        ; preds = %bb.bh, %bb.bg, %.critedge.i.i, %bb.bd
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   store ptr null, ptr %i.g, align 8, !tbaa !55
   br label %Py_XDECREF.exit.i
 
 .loopexit60.i:                                    ; preds = %_Py_NewRef.exit.i.i, %.preheader.i.i25
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
   store ptr %i.la, ptr %i.g, align 8, !tbaa !55
-  %i.lr = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.g) #5
+  %i.lr = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.g) #6
   %i.ls = icmp slt i32 %i.lr, 0
   br i1 %i.ls, label %bb.cg, label %bb.bk
 
 bb.bk:                                            ; preds = %.loopexit60.i
-  %i.lt = call ptr @PyList_AsTuple(ptr noundef %2) #5 ; 2 uses
+  %i.lt = call ptr @PyList_AsTuple(ptr noundef %2) #6 ; 2 uses
   store ptr %i.lt, ptr %i.h, align 8, !tbaa !55
   %i.lu = icmp eq ptr %i.lt, null
   br i1 %i.lu, label %bb.cg, label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk
-  %i.lv = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.h) #5
+  %i.lv = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.h) #6
   %i.lw = icmp slt i32 %i.lv, 0
   br i1 %i.lw, label %bb.cg, label %bb.bm
 
@@ -934,22 +928,22 @@ bb.bm:                                            ; preds = %bb.bl
   %i.me = load i64, ptr %i.md, align 8, !tbaa !65
   %i.mf = trunc i64 %i.me to i32
   %i.mg = sext i32 %5 to i64                      ; 2 uses
-  %i.mh = call ptr @PyTuple_New(i64 noundef %i.mg) #5 ; 6 uses
+  %i.mh = call ptr @PyTuple_New(i64 noundef %i.mg) #6 ; 6 uses
   store ptr %i.mh, ptr %i.i, align 8, !tbaa !55
   %i.mi = icmp eq ptr %i.mh, null
   br i1 %i.mi, label %bb.cg, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.mj = call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.mg) #5 ; 9 uses
+  %i.mj = call ptr @PyBytes_FromStringAndSize(ptr noundef null, i64 noundef %i.mg) #6 ; 9 uses
   %i.mk = icmp eq ptr %i.mj, null
   br i1 %i.mk, label %bb.cg, label %bb.bo
 
 bb.bo:                                            ; preds = %bb.bn
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
   store i64 0, ptr %i.c, align 8, !tbaa !57
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #6
   %i.ml = load i64, ptr %i.lx, align 8, !tbaa !63
   %i.mm = trunc i64 %i.ml to i32
   store i32 %i.mm, ptr %8, align 16, !tbaa !66
@@ -1007,18 +1001,18 @@ bb.bp:                                            ; preds = %.critedge.i36.i, %b
 
 bb.bq:                                            ; preds = %bb.bv, %.lr.ph.i38.i
   %i.np = load ptr, ptr %i.ne, align 8, !tbaa !69
-  %i.nq = call i32 @PyDict_Next(ptr noundef %i.np, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.nq = call i32 @PyDict_Next(ptr noundef %i.np, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not.i39.i = icmp eq i32 %i.nq, 0
   br i1 %.not.i39.i, label %.critedge.i36.i, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.nr = load ptr, ptr %i.b, align 8, !tbaa !55
-  %i.ns = call i32 @PyLong_AsInt(ptr noundef %i.nr) #5 ; 2 uses
+  %i.ns = call i32 @PyLong_AsInt(ptr noundef %i.nr) #6 ; 2 uses
   %i.nt = icmp eq i32 %i.ns, -1
   br i1 %i.nt, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %bb.br
-  %i.nu = call ptr @PyErr_Occurred() #5
+  %i.nu = call ptr @PyErr_Occurred() #6
   %.not69.i.i = icmp eq ptr %i.nu, null
   br i1 %.not69.i.i, label %bb.bt, label %compute_localsplus_info.exit.thread.i
 
@@ -1026,14 +1020,14 @@ bb.bt:                                            ; preds = %bb.bs, %bb.br
   %i.nv = load i8, ptr %i.no, align 4, !tbaa !68
   %i.nw = load ptr, ptr %i.nf, align 8, !tbaa !70
   %i.nx = load ptr, ptr %i.a, align 8, !tbaa !55
-  %i.ny = call i32 @PyDict_Contains(ptr noundef %i.nw, ptr noundef %i.nx) #5 ; 2 uses
+  %i.ny = call i32 @PyDict_Contains(ptr noundef %i.nw, ptr noundef %i.nx) #6 ; 2 uses
   %i.nz = icmp slt i32 %i.ny, 0
   br i1 %i.nz, label %compute_localsplus_info.exit.thread.i, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt
   %i.oa = load ptr, ptr %i.ng, align 8, !tbaa !71
   %i.ob = load ptr, ptr %i.a, align 8, !tbaa !55
-  %i.oc = call i32 @PyDict_Contains(ptr noundef %i.oa, ptr noundef %i.ob) #5 ; 2 uses
+  %i.oc = call i32 @PyDict_Contains(ptr noundef %i.oa, ptr noundef %i.ob) #6 ; 2 uses
   %i.od = icmp slt i32 %i.oc, 0
   br i1 %i.od, label %compute_localsplus_info.exit.thread.i, label %bb.bv
 
@@ -1045,7 +1039,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.oe = or i8 %spec.select77.i.i, 64
   %spec.select78.i.i = select i1 %.not71.i.i, i8 %spec.select77.i.i, i8 %i.oe
   %i.of = load ptr, ptr %i.a, align 8, !tbaa !55
-  call void @_Py_set_localsplus_info(i32 noundef %i.ns, ptr noundef %i.of, i8 noundef zeroext %spec.select78.i.i, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #5
+  call void @_Py_set_localsplus_info(i32 noundef %i.ns, ptr noundef %i.of, i8 noundef zeroext %spec.select78.i.i, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #6
   %i.og = load i64, ptr %i.c, align 8, !tbaa !57
   %i.oh = icmp slt i64 %i.og, %i.nl
   br i1 %i.oh, label %bb.bq, label %.critedge.i36.i, !llvm.loop !72
@@ -1062,7 +1056,7 @@ bb.bv:                                            ; preds = %bb.bu
   %i.ok = trunc i64 %.val.i37.i to i32            ; 2 uses
   store i64 0, ptr %i.c, align 8, !tbaa !57
   %i.ol = load ptr, ptr %i.ng, align 8, !tbaa !71
-  %i.om = call i32 @PyDict_Next(ptr noundef %i.ol, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.om = call i32 @PyDict_Next(ptr noundef %i.ol, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not7292.i.i = icmp eq i32 %i.om, 0
   br i1 %.not7292.i.i, label %._crit_edge.i.i30, label %.lr.ph95.i.i
 
@@ -1071,7 +1065,7 @@ bb.bv:                                            ; preds = %bb.bu
   %.05393.i.i = phi i32 [ %.154.i.i, %bb.cb ], [ 0, %.critedge81.i.i ] ; 2 uses
   %i.on = load ptr, ptr %i.ne, align 8, !tbaa !69
   %i.oo = load ptr, ptr %i.a, align 8, !tbaa !55
-  %i.op = call i32 @PyDict_Contains(ptr noundef %i.on, ptr noundef %i.oo) #5 ; 2 uses
+  %i.op = call i32 @PyDict_Contains(ptr noundef %i.on, ptr noundef %i.oo) #6 ; 2 uses
   %i.oq = icmp slt i32 %i.op, 0
   br i1 %i.oq, label %compute_localsplus_info.exit.thread.i, label %bb.bw
 
@@ -1085,12 +1079,12 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bw
   %i.os = load ptr, ptr %i.b, align 8, !tbaa !55
-  %i.ot = call i32 @PyLong_AsInt(ptr noundef %i.os) #5 ; 2 uses
+  %i.ot = call i32 @PyLong_AsInt(ptr noundef %i.os) #6 ; 2 uses
   %i.ou = icmp eq i32 %i.ot, -1
   br i1 %i.ou, label %bb.bz, label %bb.ca
 
 bb.bz:                                            ; preds = %bb.by
-  %i.ov = call ptr @PyErr_Occurred() #5
+  %i.ov = call ptr @PyErr_Occurred() #6
   %.not76.i.i = icmp eq ptr %i.ov, null
   br i1 %.not76.i.i, label %bb.ca, label %compute_localsplus_info.exit.thread.i
 
@@ -1098,14 +1092,14 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
   %i.ow = add i32 %.053.neg94.i.i, %i.ok
   %i.ox = add i32 %i.ow, %i.ot
   %i.oy = load ptr, ptr %i.a, align 8, !tbaa !55
-  call void @_Py_set_localsplus_info(i32 noundef %i.ox, ptr noundef %i.oy, i8 noundef zeroext 64, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #5
+  call void @_Py_set_localsplus_info(i32 noundef %i.ox, ptr noundef %i.oy, i8 noundef zeroext 64, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #6
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca, %bb.bx
   %.154.i.i = phi i32 [ %.05393.i.i, %bb.ca ], [ %i.or, %bb.bx ] ; 2 uses
   %.053.neg.i.i = sub i32 0, %.154.i.i            ; 2 uses
   %i.oz = load ptr, ptr %i.ng, align 8, !tbaa !71
-  %i.pa = call i32 @PyDict_Next(ptr noundef %i.oz, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.pa = call i32 @PyDict_Next(ptr noundef %i.oz, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not72.i.i = icmp eq i32 %i.pa, 0
   br i1 %.not72.i.i, label %._crit_edge.i.i30, label %.lr.ph95.i.i
 
@@ -1114,7 +1108,7 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bx
   store i64 0, ptr %i.c, align 8, !tbaa !57
   %i.pb = getelementptr i8, ptr %0, i64 48        ; 2 uses
   %i.pc = load ptr, ptr %i.pb, align 8, !tbaa !75
-  %i.pd = call i32 @PyDict_Next(ptr noundef %i.pc, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.pd = call i32 @PyDict_Next(ptr noundef %i.pc, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not7396.i.i = icmp eq i32 %i.pd, 0
   br i1 %.not7396.i.i, label %.loopexit.i, label %.lr.ph98.i.i
 
@@ -1124,21 +1118,21 @@ bb.cb:                                            ; preds = %bb.ca, %bb.bx
 
 bb.cc:                                            ; preds = %.critedge83.i.i, %.lr.ph98.i.i
   %i.pf = load ptr, ptr %i.b, align 8, !tbaa !55
-  %i.pg = call i32 @PyLong_AsInt(ptr noundef %i.pf) #5 ; 2 uses
+  %i.pg = call i32 @PyLong_AsInt(ptr noundef %i.pf) #6 ; 2 uses
   %i.ph = icmp eq i32 %i.pg, -1
   br i1 %i.ph, label %bb.cd, label %.critedge83.i.i
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.pi = call ptr @PyErr_Occurred() #5
+  %i.pi = call ptr @PyErr_Occurred() #6
   %.not74.i.i = icmp eq ptr %i.pi, null
   br i1 %.not74.i.i, label %.critedge83.i.i, label %..critedge80.loopexit_crit_edge100.i.i, !llvm.loop !76
 
 .critedge83.i.i:                                  ; preds = %bb.cd, %bb.cc
   %i.pj = add i32 %i.pe, %i.pg
   %i.pk = load ptr, ptr %i.a, align 8, !tbaa !55
-  call void @_Py_set_localsplus_info(i32 noundef %i.pj, ptr noundef %i.pk, i8 noundef zeroext -128, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #5
+  call void @_Py_set_localsplus_info(i32 noundef %i.pj, ptr noundef %i.pk, i8 noundef zeroext -128, ptr noundef nonnull %i.mh, ptr noundef nonnull %i.mj) #6
   %i.pl = load ptr, ptr %i.pb, align 8, !tbaa !75
-  %i.pm = call i32 @PyDict_Next(ptr noundef %i.pl, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #5
+  %i.pm = call i32 @PyDict_Next(ptr noundef %i.pl, ptr noundef nonnull %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not73.i.i = icmp eq i32 %i.pm, 0
   br i1 %.not73.i.i, label %.loopexit.i, label %bb.cc
 
@@ -1146,17 +1140,17 @@ bb.cd:                                            ; preds = %bb.cc
   br label %compute_localsplus_info.exit.thread.i, !llvm.loop !76
 
 compute_localsplus_info.exit.thread.i:            ; preds = %bb.bu, %bb.bt, %bb.bs, %bb.bz, %.lr.ph95.i.i, %..critedge80.loopexit_crit_edge100.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %bb.cg
 
 .loopexit.i:                                      ; preds = %.critedge83.i.i, %._crit_edge.i.i30
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   store ptr %7, ptr %9, align 8, !tbaa !77
   %i.pn = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.po = load ptr, ptr %0, align 8, !tbaa !79    ; 2 uses
@@ -1204,19 +1198,19 @@ compute_localsplus_info.exit.thread.i:            ; preds = %bb.bu, %bb.bt, %bb.
   %i.qm = getelementptr inbounds nuw i8, ptr %9, i64 104
   %i.qn = load ptr, ptr %i.du, align 8, !tbaa !42
   store ptr %i.qn, ptr %i.qm, align 8, !tbaa !95
-  %i.qo = call i32 @_PyCode_Validate(ptr noundef nonnull %9) #5
+  %i.qo = call i32 @_PyCode_Validate(ptr noundef nonnull %9) #6
   %i.qp = icmp slt i32 %i.qo, 0
   br i1 %i.qp, label %bb.cg, label %bb.ce
 
 bb.ce:                                            ; preds = %.loopexit.i
-  %i.qq = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.i) #5
+  %i.qq = call i32 @_PyCompile_ConstCacheMergeOne(ptr noundef %1, ptr noundef nonnull %i.i) #6
   %i.qr = icmp slt i32 %i.qq, 0
   br i1 %i.qr, label %bb.cg, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
   %i.qs = load ptr, ptr %i.i, align 8, !tbaa !55
   store ptr %i.qs, ptr %i.qf, align 8, !tbaa !89
-  %i.qt = call ptr @_PyCode_New(ptr noundef nonnull %9) #5
+  %i.qt = call ptr @_PyCode_New(ptr noundef nonnull %9) #6
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %bb.ce, %.loopexit.i, %compute_localsplus_info.exit.thread.i, %bb.bn, %bb.bm, %bb.bl, %bb.bk, %.loopexit60.i
@@ -1238,7 +1232,7 @@ bb.ci:                                            ; preds = %bb.ch
   br i1 %i.qw, label %bb.cj, label %Py_XDECREF.exit.i
 
 bb.cj:                                            ; preds = %bb.ci
-  call void @_Py_Dealloc(ptr noundef nonnull %.pr.i31) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %.pr.i31) #6
   br label %Py_XDECREF.exit.i
 
 Py_XDECREF.exit.i:                                ; preds = %bb.cj, %bb.ci, %bb.ch, %bb.cg, %.thread.i
@@ -1260,7 +1254,7 @@ bb.cl:                                            ; preds = %bb.ck
   br i1 %i.ra, label %bb.cm, label %Py_XDECREF.exit44.i
 
 bb.cm:                                            ; preds = %bb.cl
-  call void @_Py_Dealloc(ptr noundef nonnull %i.qx) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.qx) #6
   br label %Py_XDECREF.exit44.i
 
 Py_XDECREF.exit44.i:                              ; preds = %bb.cm, %bb.cl, %bb.ck, %Py_XDECREF.exit.i
@@ -1280,7 +1274,7 @@ bb.co:                                            ; preds = %bb.cn
   br i1 %i.re, label %bb.cp, label %Py_XDECREF.exit47.i
 
 bb.cp:                                            ; preds = %bb.co
-  call void @_Py_Dealloc(ptr noundef nonnull %i.rb) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.rb) #6
   br label %Py_XDECREF.exit47.i
 
 Py_XDECREF.exit47.i:                              ; preds = %bb.cp, %bb.co, %bb.cn, %Py_XDECREF.exit44.i
@@ -1299,13 +1293,13 @@ bb.cr:                                            ; preds = %bb.cq
   br i1 %i.rh, label %bb.cs, label %makecode.exit
 
 bb.cs:                                            ; preds = %bb.cr
-  call void @_Py_Dealloc(ptr noundef nonnull %.03257.i) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %.03257.i) #6
   br label %makecode.exit
 
 makecode.exit:                                    ; preds = %Py_XDECREF.exit47.i, %bb.cq, %bb.cr, %bb.cs
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %9)
   br label %assemble_emit.exit.thread
 
@@ -1327,7 +1321,7 @@ bb.cu:                                            ; preds = %bb.ct
   br i1 %i.rl, label %bb.cv, label %Py_XDECREF.exit.i35
 
 bb.cv:                                            ; preds = %bb.cu
-  call void @_Py_Dealloc(ptr noundef nonnull %i.ri) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.ri) #6
   br label %Py_XDECREF.exit.i35
 
 Py_XDECREF.exit.i35:                              ; preds = %bb.cv, %bb.cu, %bb.ct, %assemble_emit.exit.thread
@@ -1347,7 +1341,7 @@ bb.cx:                                            ; preds = %bb.cw
   br i1 %i.rp, label %bb.cy, label %Py_XDECREF.exit5.i
 
 bb.cy:                                            ; preds = %bb.cx
-  call void @_Py_Dealloc(ptr noundef nonnull %i.rm) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.rm) #6
   br label %Py_XDECREF.exit5.i
 
 Py_XDECREF.exit5.i:                               ; preds = %bb.cy, %bb.cx, %bb.cw, %Py_XDECREF.exit.i35
@@ -1367,11 +1361,11 @@ bb.da:                                            ; preds = %bb.cz
   br i1 %i.rt, label %bb.db, label %assemble_free.exit
 
 bb.db:                                            ; preds = %bb.da
-  call void @_Py_Dealloc(ptr noundef nonnull %i.rq) #5
+  call void @_Py_Dealloc(ptr noundef nonnull %i.rq) #6
   br label %assemble_free.exit
 
 assemble_free.exit:                               ; preds = %Py_XDECREF.exit5.i, %bb.cz, %bb.da, %bb.db
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %10) #6
   br label %bb.dc
 
 bb.dc:                                            ; preds = %bb.a, %assemble_free.exit
@@ -1423,7 +1417,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = shl i64 %.val, 1
-  %i.i = tail call i32 @_PyBytes_Resize(ptr noundef nonnull %i.a, i64 noundef %i.h) #5
+  %i.i = tail call i32 @_PyBytes_Resize(ptr noundef nonnull %i.a, i64 noundef %i.h) #6
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %bb.n, label %bb.c
 
@@ -1771,7 +1765,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.h = shl i64 %.val, 1
-  %i.i = tail call i32 @_PyBytes_Resize(ptr noundef nonnull %i.a, i64 noundef %i.h) #5
+  %i.i = tail call i32 @_PyBytes_Resize(ptr noundef nonnull %i.a, i64 noundef %i.h) #6
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %bb.t, label %bb.c
 
@@ -2160,12 +2154,16 @@ declare void @_Py_set_localsplus_info(i32 noundef, ptr noundef, i8 noundef zeroe
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v3i32(<3 x i32>) #5
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

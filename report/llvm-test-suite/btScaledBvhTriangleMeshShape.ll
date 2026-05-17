@@ -94,8 +94,8 @@ declare void @_ZdlPv(ptr noundef) local_unnamed_addr #3
 define dso_local void @_ZNK28btScaledBvhTriangleMeshShape19processAllTrianglesEP18btTriangleCallbackRK9btVector3S4_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %0, ptr noundef %1, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(16) %2, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(16) %3) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %class.btScaledTriangleCallback, align 8 ; 9 uses
-  %5 = alloca %class.btVector3, align 8           ; 6 uses
-  %6 = alloca %class.btVector3, align 8           ; 6 uses
+  %5 = alloca %class.btVector3, align 16          ; 5 uses
+  %6 = alloca %class.btVector3, align 16          ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV24btScaledTriangleCallback, i64 16), ptr %4, align 8, !tbaa !8
@@ -103,37 +103,29 @@ bb.a:
   store ptr %1, ptr %i.b, align 8, !tbaa !21
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, ptr noundef nonnull align 4 dereferenceable(16) %i.a, i64 16, i1 false), !tbaa.struct !10
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %7 = load float, ptr %i.d, align 4, !tbaa !25   ; 3 uses
-  %8 = fdiv float 1.000000e+00, %7                ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #13
-  %9 = load <2 x float>, ptr %i.a, align 4, !tbaa !25 ; 3 uses
-  %10 = fdiv <2 x float> splat (float 1.000000e+00), %9 ; 2 uses
-  %11 = fcmp ult <2 x float> %9, zeroinitializer
-  %12 = load <2 x float>, ptr %2, align 4         ; 2 uses
-  %13 = load <2 x float>, ptr %3, align 4         ; 2 uses
-  %14 = select <2 x i1> %11, <2 x float> %13, <2 x float> %12
-  %15 = fmul <2 x float> %10, %14
-  store <2 x float> %15, ptr %5, align 8, !tbaa !25
-  %16 = fcmp ult float %7, 0.000000e+00
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.e = load float, ptr %17, align 4             ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.f = load float, ptr %18, align 4             ; 2 uses
-  %.v27 = select i1 %16, float %i.f, float %i.e
-  %19 = fmul float %8, %.v27
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store float %19, ptr %20, align 8, !tbaa !25
-  %21 = fcmp ugt <2 x float> %9, zeroinitializer
-  %22 = select <2 x i1> %21, <2 x float> %13, <2 x float> %12
-  %23 = fmul <2 x float> %10, %22
-  store <2 x float> %23, ptr %6, align 8, !tbaa !25
-  %24 = fcmp ugt float %7, 0.000000e+00
-  %.v30 = select i1 %24, float %i.f, float %i.e
-  %25 = fmul float %8, %.v30
-  %26 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store float %25, ptr %26, align 8, !tbaa !25
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %8 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %9 = load <3 x float>, ptr %i.a, align 4, !tbaa !25 ; 3 uses
+  %10 = load float, ptr %i.d, align 8, !tbaa !25
+  %11 = fdiv <3 x float> splat (float 1.000000e+00), %9 ; 2 uses
+  %12 = fcmp ult <3 x float> %9, zeroinitializer
+  %13 = load <3 x float>, ptr %2, align 4         ; 2 uses
+  %i.e = load float, ptr %7, align 4
+  %14 = load <3 x float>, ptr %3, align 4         ; 2 uses
+  %i.f = load float, ptr %8, align 4
+  %15 = select <3 x i1> %12, <3 x float> %14, <3 x float> %13
+  %16 = fmul <3 x float> %11, %15
+  store <3 x float> %16, ptr %5, align 16, !tbaa !25
+  %17 = insertelement <3 x float> %9, float %10, i64 1
+  %18 = fcmp ugt <3 x float> %17, zeroinitializer
+  %19 = insertelement <3 x float> %14, float %i.f, i64 1
+  %20 = insertelement <3 x float> %13, float %i.e, i64 1
+  %21 = select <3 x i1> %18, <3 x float> %19, <3 x float> %20
+  %22 = fmul <3 x float> %11, %21
+  store <3 x float> %22, ptr %6, align 16, !tbaa !25
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !12   ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !8

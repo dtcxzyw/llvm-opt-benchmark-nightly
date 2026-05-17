@@ -201,70 +201,58 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.i554:                                      ; preds = %_ZN5arrow8internal12unpack_exactILi24ELb1EjEEiPKhPT1_ii.exit.i, %.lr.ph.i554
   %.032.i555 = phi i32 [ %i.dqc, %.lr.ph.i554 ], [ 0, %_ZN5arrow8internal12unpack_exactILi24ELb1EjEEiPKhPT1_ii.exit.i ]
-  %.02531.i556 = phi ptr [ %i.dqa, %.lr.ph.i554 ], [ %i.dme, %_ZN5arrow8internal12unpack_exactILi24ELb1EjEEiPKhPT1_ii.exit.i ] ; 9 uses
+  %.02531.i556 = phi ptr [ %i.dqa, %.lr.ph.i554 ], [ %i.dme, %_ZN5arrow8internal12unpack_exactILi24ELb1EjEEiPKhPT1_ii.exit.i ] ; 5 uses
   %.02630.i557 = phi ptr [ %i.dqb, %.lr.ph.i554 ], [ %i.dmg, %_ZN5arrow8internal12unpack_exactILi24ELb1EjEEiPKhPT1_ii.exit.i ] ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 4
-  %6 = load <4 x i32>, ptr %.02531.i556, align 1  ; 2 uses
-  %7 = tail call <5 x i32> @llvm.masked.load.v5i32.p0(ptr nonnull align 1 %5, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x i32> poison) ; 2 uses
-  %i.dow = shufflevector <5 x i32> %7, <5 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4> ; 2 uses
-  %8 = shufflevector <4 x i32> %6, <4 x i32> poison, <5 x i32> <i32 0, i32 poison, i32 poison, i32 3, i32 poison>
-  %9 = shufflevector <5 x i32> %7, <5 x i32> %8, <4 x i32> <i32 5, i32 0, i32 8, i32 3>
-  %i.dox = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.dow, <4 x i32> %9, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
-  %10 = shufflevector <4 x i32> %6, <4 x i32> %i.dow, <8 x i32> <i32 0, i32 2, i32 3, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
+  %5 = load <6 x i32>, ptr %.02531.i556, align 1  ; 3 uses
+  %6 = shufflevector <6 x i32> %5, <6 x i32> poison, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %i.dow = shufflevector <6 x i32> %5, <6 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
+  %i.dox = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %6, <4 x i32> %i.dow, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
+  %7 = shufflevector <6 x i32> %5, <6 x i32> poison, <8 x i32> <i32 0, i32 2, i32 3, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.doy = shufflevector <4 x i32> %i.dox, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.doz = shufflevector <8 x i32> %10, <8 x i32> %i.doy, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.doz = shufflevector <8 x i32> %7, <8 x i32> %i.doy, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.dpa = lshr <8 x i32> %i.doz, <i32 0, i32 8, i32 0, i32 8, i32 0, i32 0, i32 0, i32 0>
   %i.dpb = and <8 x i32> %i.dpa, splat (i32 16777215)
   %.inner1333 = shufflevector <8 x i32> %i.dpb, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 5, i32 1, i32 2, i32 6, i32 7, i32 3>
   store <8 x i32> %.inner1333, ptr %.02630.i557, align 1, !tbaa !15
-  %11 = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 32
-  %i.dpc = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 24
-  %i.dpd = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 28
-  %12 = load <4 x i32>, ptr %i.dpc, align 1       ; 2 uses
-  %13 = tail call <5 x i32> @llvm.masked.load.v5i32.p0(ptr nonnull align 1 %i.dpd, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x i32> poison) ; 2 uses
-  %i.dpe = shufflevector <5 x i32> %13, <5 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4> ; 2 uses
-  %14 = shufflevector <4 x i32> %12, <4 x i32> poison, <5 x i32> <i32 0, i32 poison, i32 poison, i32 3, i32 poison>
-  %15 = shufflevector <5 x i32> %13, <5 x i32> %14, <4 x i32> <i32 5, i32 0, i32 8, i32 3>
-  %i.dpf = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.dpe, <4 x i32> %15, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
-  %16 = shufflevector <4 x i32> %12, <4 x i32> %i.dpe, <8 x i32> <i32 0, i32 2, i32 3, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
+  %i.dpc = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 32
+  %i.dpd = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 24
+  %8 = load <6 x i32>, ptr %i.dpd, align 1        ; 3 uses
+  %9 = shufflevector <6 x i32> %8, <6 x i32> poison, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %i.dpe = shufflevector <6 x i32> %8, <6 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
+  %i.dpf = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %9, <4 x i32> %i.dpe, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
+  %10 = shufflevector <6 x i32> %8, <6 x i32> poison, <8 x i32> <i32 0, i32 2, i32 3, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dpg = shufflevector <4 x i32> %i.dpf, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.dph = shufflevector <8 x i32> %16, <8 x i32> %i.dpg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.dph = shufflevector <8 x i32> %10, <8 x i32> %i.dpg, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.dpi = lshr <8 x i32> %i.dph, <i32 0, i32 8, i32 0, i32 8, i32 0, i32 0, i32 0, i32 0>
   %i.dpj = and <8 x i32> %i.dpi, splat (i32 16777215)
   %.inner1334 = shufflevector <8 x i32> %i.dpj, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 5, i32 1, i32 2, i32 6, i32 7, i32 3>
-  store <8 x i32> %.inner1334, ptr %11, align 1, !tbaa !15
-  %17 = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 64
-  %i.dpk = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 48
-  %i.dpl = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 52
-  %18 = load <4 x i32>, ptr %i.dpk, align 1       ; 2 uses
-  %19 = tail call <5 x i32> @llvm.masked.load.v5i32.p0(ptr nonnull align 1 %i.dpl, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x i32> poison) ; 2 uses
-  %i.dpm = shufflevector <5 x i32> %19, <5 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4> ; 2 uses
-  %20 = shufflevector <4 x i32> %18, <4 x i32> poison, <5 x i32> <i32 0, i32 poison, i32 poison, i32 3, i32 poison>
-  %21 = shufflevector <5 x i32> %19, <5 x i32> %20, <4 x i32> <i32 5, i32 0, i32 8, i32 3>
-  %i.dpn = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.dpm, <4 x i32> %21, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
-  %22 = shufflevector <4 x i32> %18, <4 x i32> %i.dpm, <8 x i32> <i32 0, i32 2, i32 3, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
+  store <8 x i32> %.inner1334, ptr %i.dpc, align 1, !tbaa !15
+  %i.dpk = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 64
+  %i.dpl = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 48
+  %11 = load <6 x i32>, ptr %i.dpl, align 1       ; 3 uses
+  %12 = shufflevector <6 x i32> %11, <6 x i32> poison, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %i.dpm = shufflevector <6 x i32> %11, <6 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
+  %i.dpn = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %12, <4 x i32> %i.dpm, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
+  %13 = shufflevector <6 x i32> %11, <6 x i32> poison, <8 x i32> <i32 0, i32 2, i32 3, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dpo = shufflevector <4 x i32> %i.dpn, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.dpp = shufflevector <8 x i32> %22, <8 x i32> %i.dpo, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.dpp = shufflevector <8 x i32> %13, <8 x i32> %i.dpo, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.dpq = lshr <8 x i32> %i.dpp, <i32 0, i32 8, i32 0, i32 8, i32 0, i32 0, i32 0, i32 0>
   %i.dpr = and <8 x i32> %i.dpq, splat (i32 16777215)
   %.inner1335 = shufflevector <8 x i32> %i.dpr, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 5, i32 1, i32 2, i32 6, i32 7, i32 3>
-  store <8 x i32> %.inner1335, ptr %17, align 1, !tbaa !15
-  %23 = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 96
-  %i.dps = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 72
-  %i.dpt = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 76
-  %24 = load <4 x i32>, ptr %i.dps, align 1       ; 2 uses
-  %25 = tail call <5 x i32> @llvm.masked.load.v5i32.p0(ptr nonnull align 1 %i.dpt, <5 x i1> <i1 true, i1 true, i1 false, i1 true, i1 true>, <5 x i32> poison) ; 2 uses
-  %i.dpu = shufflevector <5 x i32> %25, <5 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4> ; 2 uses
-  %26 = shufflevector <4 x i32> %24, <4 x i32> poison, <5 x i32> <i32 0, i32 poison, i32 poison, i32 3, i32 poison>
-  %27 = shufflevector <5 x i32> %25, <5 x i32> %26, <4 x i32> <i32 5, i32 0, i32 8, i32 3>
-  %i.dpv = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %i.dpu, <4 x i32> %27, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
-  %28 = shufflevector <4 x i32> %24, <4 x i32> %i.dpu, <8 x i32> <i32 0, i32 2, i32 3, i32 7, i32 poison, i32 poison, i32 poison, i32 poison>
+  store <8 x i32> %.inner1335, ptr %i.dpk, align 1, !tbaa !15
+  %i.dps = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 96
+  %i.dpt = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 72
+  %14 = load <6 x i32>, ptr %i.dpt, align 1       ; 3 uses
+  %15 = shufflevector <6 x i32> %14, <6 x i32> poison, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
+  %i.dpu = shufflevector <6 x i32> %14, <6 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
+  %i.dpv = tail call <4 x i32> @llvm.fshl.v4i32(<4 x i32> %15, <4 x i32> %i.dpu, <4 x i32> <i32 8, i32 16, i32 8, i32 16>)
+  %16 = shufflevector <6 x i32> %14, <6 x i32> poison, <8 x i32> <i32 0, i32 2, i32 3, i32 5, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dpw = shufflevector <4 x i32> %i.dpv, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.dpx = shufflevector <8 x i32> %28, <8 x i32> %i.dpw, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.dpx = shufflevector <8 x i32> %16, <8 x i32> %i.dpw, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
   %i.dpy = lshr <8 x i32> %i.dpx, <i32 0, i32 8, i32 0, i32 8, i32 0, i32 0, i32 0, i32 0>
   %i.dpz = and <8 x i32> %i.dpy, splat (i32 16777215)
   %.inner1336 = shufflevector <8 x i32> %i.dpz, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 5, i32 1, i32 2, i32 6, i32 7, i32 3>
-  store <8 x i32> %.inner1336, ptr %23, align 1, !tbaa !15
+  store <8 x i32> %.inner1336, ptr %i.dps, align 1, !tbaa !15
   %i.dqa = getelementptr inbounds nuw i8, ptr %.02531.i556, i64 96 ; 2 uses
   %i.dqb = getelementptr inbounds nuw i8, ptr %.02630.i557, i64 128 ; 2 uses
   %i.dqc = add nuw nsw i32 %.032.i555, 1          ; 2 uses
@@ -667,9 +655,6 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.fshl.v4i32(<4 x i32>, <4 x i32>, <4 x i32>) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare <5 x i32> @llvm.masked.load.v5i32.p0(ptr captures(none), <5 x i1>, <5 x i32>) #8
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.fshl.v2i32(<2 x i32>, <2 x i32>, <2 x i32>) #7
 
@@ -690,7 +675,6 @@ attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="haswell" "target-features"="+avx,+avx2,+bmi,+bmi2,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+popcnt,+rdrnd,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsaveopt" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

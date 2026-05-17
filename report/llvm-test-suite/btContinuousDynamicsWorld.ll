@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: uwtable
 define dso_local void @_ZN25btContinuousDynamicsWorld19updateTemporalAabbsEf(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(372) %0, float noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
-  %2 = alloca %class.btVector3, align 8           ; 8 uses
+  %2 = alloca %class.btVector3, align 16          ; 7 uses
   %3 = alloca %class.btVector3, align 16          ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
@@ -212,13 +212,12 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %3, i64 4
   %.sroa.614.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %5 = insertelement <2 x float> poison, float %1, i64 0
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
+  %4 = insertelement <3 x float> poison, float %1, i64 0
+  %5 = shufflevector <3 x float> %4, <3 x float> poison, <3 x i32> zeroinitializer
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.a
@@ -239,7 +238,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 2 uses
   %i.p = load ptr, ptr %i.d, align 8, !tbaa !37
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !38   ; 7 uses
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !38   ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 256
   %i.t = load i32, ptr %i.s, align 8, !tbaa !40
   %i.u = icmp ne i32 %i.t, 2
@@ -256,32 +255,28 @@ bb.c:                                             ; preds = %bb.b
   %i.aa = load ptr, ptr %i.z, align 8
   call void %i.aa(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 4 dereferenceable(64) %i.x, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %3)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.r, i64 328
-  %i.ac = load float, ptr %4, align 8, !tbaa !48  ; 2 uses
-  %7 = load float, ptr %i.e, align 8, !tbaa !48   ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.r, i64 336
-  %9 = load float, ptr %8, align 8, !tbaa !48
-  %10 = fmul float %1, %9                         ; 3 uses
-  %11 = fcmp ogt float %10, 0.000000e+00          ; 2 uses
-  %i.ad = fadd float %i.ac, %10
-  %12 = fadd float %7, %10
-  %.053 = select i1 %11, float %7, float %12
-  %.050 = select i1 %11, float %i.ad, float %i.ac
+  %i.ac = load float, ptr %3, align 16, !tbaa !48 ; 2 uses
   store float 0.000000e+00, ptr %.sroa.614.0..sroa_idx, align 4, !tbaa !49
-  %13 = load <2 x float>, ptr %2, align 8, !tbaa !48 ; 2 uses
-  %i.ae = load <2 x float>, ptr %i.ab, align 8, !tbaa !48
-  %14 = fmul <2 x float> %6, %i.ae                ; 3 uses
-  %15 = fcmp ogt <2 x float> %14, zeroinitializer ; 2 uses
-  %i.af = fadd <2 x float> %13, %14
-  %16 = select <2 x i1> %15, <2 x float> %13, <2 x float> %i.af
-  store <2 x float> %16, ptr %2, align 8, !tbaa !48
-  store float %.053, ptr %i.e, align 8, !tbaa !48
-  %17 = load <2 x float>, ptr %3, align 16, !tbaa !48 ; 2 uses
-  %18 = fadd <2 x float> %17, %14
-  %19 = select <2 x i1> %15, <2 x float> %18, <2 x float> %17
-  %i.ag = insertelement <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, float %.050, i64 2
-  %i.ah = shufflevector <2 x float> %19, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %20 = shufflevector <4 x float> %i.ah, <4 x float> %i.ag, <4 x i32> <i32 0, i32 1, i32 6, i32 7>
-  %i.ai = fadd <4 x float> %20, zeroinitializer
+  %6 = load <3 x float>, ptr %2, align 16, !tbaa !48 ; 2 uses
+  %7 = load <3 x float>, ptr %i.ab, align 8, !tbaa !48
+  %8 = fmul <3 x float> %5, %7                    ; 4 uses
+  %9 = extractelement <3 x float> %8, i64 0       ; 2 uses
+  %i.ad = fadd float %i.ac, %9
+  %10 = fcmp ogt <3 x float> %8, zeroinitializer  ; 2 uses
+  %11 = fcmp ogt float %9, 0.000000e+00
+  %.050 = select i1 %11, float %i.ad, float %i.ac
+  %12 = fadd <3 x float> %6, %8
+  %13 = select <3 x i1> %10, <3 x float> %6, <3 x float> %12
+  %i.ae = load <2 x float>, ptr %i.e, align 4, !tbaa !48 ; 2 uses
+  %14 = shufflevector <3 x float> %8, <3 x float> poison, <2 x i32> <i32 1, i32 2>
+  %i.af = fadd <2 x float> %i.ae, %14
+  %15 = shufflevector <3 x i1> %10, <3 x i1> poison, <2 x i32> <i32 1, i32 2>
+  %16 = select <2 x i1> %15, <2 x float> %i.af, <2 x float> %i.ae
+  store <3 x float> %13, ptr %2, align 16, !tbaa !48
+  %i.ag = insertelement <4 x float> <float poison, float poison, float poison, float -0.000000e+00>, float %.050, i64 0
+  %i.ah = shufflevector <2 x float> %16, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %17 = shufflevector <4 x float> %i.ag, <4 x float> %i.ah, <4 x i32> <i32 0, i32 4, i32 5, i32 3>
+  %i.ai = fadd <4 x float> %17, zeroinitializer
   store <4 x float> %i.ai, ptr %3, align 16, !tbaa !49
   %i.aj = load ptr, ptr %i.f, align 8, !tbaa !35  ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.r, i64 192

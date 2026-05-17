@@ -201,20 +201,17 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %bb.r
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %3 = load i8, ptr %i.c, align 2, !tbaa !98, !range !127, !noundef !128
-  %4 = trunc nuw i8 %3 to i1
-  %5 = load i8, ptr %0, align 4, !range !127
-  %6 = trunc nuw i8 %5 to i1
-  %or.cond = select i1 %4, i1 true, i1 %6
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 3 uses
-  %7 = load i8, ptr %i.d, align 1, !range !127
-  %8 = trunc nuw i8 %7 to i1
-  %or.cond6 = select i1 %or.cond, i1 true, i1 %8
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
+  %3 = load <3 x i8>, ptr %0, align 4
+  %.fr = freeze <3 x i8> %3
+  %4 = trunc <3 x i8> %.fr to <3 x i1>
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4
   %i.g = icmp eq i32 %i.f, 3
-  %or.cond9 = select i1 %or.cond6, i1 true, i1 %i.g
+  %5 = bitcast <3 x i1> %4 to i3
+  %6 = icmp ne i3 %5, 0
+  %or.cond9 = select i1 %6, i1 true, i1 %i.g
   br i1 %or.cond9, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c

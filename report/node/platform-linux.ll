@@ -201,17 +201,12 @@ bb.d:                                             ; preds = %bb.a
 define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN2v84base12MemoryRegionEEZNS1_25GetSharedLibraryAddressesEP8_IO_FILEE3$_0E9_M_invokeERKSt9_Any_dataS4_"(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(80) %1) #13 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %2 = load i8, ptr %i.a, align 8
-  %3 = icmp eq i8 %2, 114
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 17
-  %5 = load i8, ptr %4, align 1
-  %6 = icmp eq i8 %5, 45
-  %or.cond.i.i.i = select i1 %3, i1 %6, i1 false
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 18
-  %8 = load i8, ptr %7, align 2
-  %i.b = icmp eq i8 %8, 120
-  %or.cond8.i.i.i = select i1 %or.cond.i.i.i, i1 %i.b, i1 false
-  ret i1 %or.cond8.i.i.i
+  %2 = load <3 x i8>, ptr %i.a, align 8
+  %.fr = freeze <3 x i8> %2
+  %3 = icmp ne <3 x i8> %.fr, <i8 114, i8 45, i8 120>
+  %4 = bitcast <3 x i1> %3 to i3
+  %i.b = icmp eq i3 %4, 0
+  ret i1 %i.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable

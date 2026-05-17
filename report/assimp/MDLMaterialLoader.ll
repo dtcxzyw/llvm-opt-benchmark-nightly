@@ -201,7 +201,7 @@ bb.a:
   %8 = alloca %struct.aiString, align 4           ; 7 uses
   %i.b = alloca i32, align 4                      ; 6 uses
   %9 = alloca %class.aiColor4t, align 8           ; 20 uses
-  %10 = alloca %struct.aiColor3D, align 8         ; 20 uses
+  %10 = alloca %struct.aiColor3D, align 16        ; 20 uses
   %i.c = alloca i32, align 4                      ; 6 uses
   %i.d = alloca float, align 4                    ; 5 uses
   %i.e = alloca [5 x i8], align 1                 ; 6 uses
@@ -604,11 +604,10 @@ bb.ak:                                            ; preds = %.thread, %.loopexit
 bb.al:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #20
   %i.ov = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 6 uses
-  store <2 x float> zeroinitializer, ptr %10, align 8
-  %i.ow = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %i.ow, align 8
+  %i.ow = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store <3 x float> zeroinitializer, ptr %10, align 16
   %i.ox = load float, ptr %.0107196200, align 1   ; 2 uses
-  store float %i.ox, ptr %10, align 8
+  store float %i.ox, ptr %10, align 16
   %i.oy = getelementptr inbounds nuw i8, ptr %.0107196200, i64 4
   %i.oz = load <2 x float>, ptr %i.oy, align 1    ; 2 uses
   store <2 x float> %i.oz, ptr %i.ov, align 4
@@ -618,7 +617,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.pc = fmul float %i.ox, %i.pa
-  store float %i.pc, ptr %10, align 8
+  store float %i.pc, ptr %10, align 16
   %i.pd = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.pe = load <2 x float>, ptr %i.pd, align 4
   %i.pf = fmul <2 x float> %i.oz, %i.pe
@@ -642,7 +641,7 @@ bb.ap:                                            ; preds = %bb.am, %bb.al
 bb.aq:                                            ; preds = %bb.ap
   %i.pj = getelementptr inbounds nuw i8, ptr %.0107196200, i64 32
   %i.pk = load float, ptr %i.pj, align 1          ; 2 uses
-  store float %i.pk, ptr %10, align 8
+  store float %i.pk, ptr %10, align 16
   %i.pl = getelementptr inbounds nuw i8, ptr %.0107196200, i64 36
   %i.pm = load <2 x float>, ptr %i.pl, align 1    ; 2 uses
   store <2 x float> %i.pm, ptr %i.ov, align 4
@@ -652,7 +651,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.pp = fmul float %i.pk, %i.pn
-  store float %i.pp, ptr %10, align 8
+  store float %i.pp, ptr %10, align 16
   %i.pq = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.pr = load <2 x float>, ptr %i.pq, align 4
   %i.ps = fmul <2 x float> %i.pm, %i.pr
@@ -666,7 +665,7 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
 bb.at:                                            ; preds = %bb.as
   %i.pu = getelementptr inbounds nuw i8, ptr %.0107196200, i64 16
   %i.pv = load float, ptr %i.pu, align 1          ; 2 uses
-  store float %i.pv, ptr %10, align 8
+  store float %i.pv, ptr %10, align 16
   %i.pw = getelementptr inbounds nuw i8, ptr %.0107196200, i64 20
   %i.px = load <2 x float>, ptr %i.pw, align 1    ; 2 uses
   store <2 x float> %i.px, ptr %i.ov, align 4
@@ -676,7 +675,7 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %bb.at
   %i.qa = fmul float %i.pv, %i.py
-  store float %i.qa, ptr %10, align 8
+  store float %i.qa, ptr %10, align 16
   %i.qb = getelementptr inbounds nuw i8, ptr %9, i64 4
   %i.qc = load <2 x float>, ptr %i.qb, align 4
   %i.qd = fmul <2 x float> %i.px, %i.qc
@@ -690,7 +689,7 @@ bb.av:                                            ; preds = %bb.au, %bb.at
 _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit145: ; preds = %bb.av
   %i.qf = getelementptr inbounds nuw i8, ptr %.0107196200, i64 48
   %i.qg = load <2 x float>, ptr %i.qf, align 1
-  store <2 x float> %i.qg, ptr %10, align 8
+  store <2 x float> %i.qg, ptr %10, align 16
   %i.qh = getelementptr inbounds nuw i8, ptr %.0107196200, i64 56
   %i.qi = load float, ptr %i.qh, align 1
   store float %i.qi, ptr %i.ow, align 8
@@ -700,7 +699,7 @@ _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit145: ; preds = 
 bb.aw:                                            ; preds = %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit145
   %i.qk = getelementptr inbounds nuw i8, ptr %.0107196200, i64 28
   %i.ql = load float, ptr %i.qk, align 1          ; 2 uses
-  store float %i.ql, ptr %10, align 8
+  store float %i.ql, ptr %10, align 16
   %i.qm = load float, ptr %9, align 8
   %i.qn = fcmp ord float %i.qm, 0.000000e+00
   br i1 %i.qn, label %bb.ax, label %bb.ay
@@ -709,7 +708,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.qo = getelementptr inbounds nuw i8, ptr %9, i64 12
   %i.qp = load float, ptr %i.qo, align 4
   %i.qq = fmul float %i.ql, %i.qp
-  store float %i.qq, ptr %10, align 8
+  store float %i.qq, ptr %10, align 16
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax, %bb.aw

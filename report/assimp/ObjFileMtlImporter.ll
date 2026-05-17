@@ -201,7 +201,7 @@ bb.a:
   %i.v = alloca float, align 4                    ; 5 uses
   %i.w = alloca float, align 4                    ; 5 uses
   %i.x = alloca float, align 4                    ; 5 uses
-  %1 = alloca %struct.aiColor3D, align 8          ; 6 uses
+  %1 = alloca %struct.aiColor3D, align 16         ; 6 uses
   %i.y = alloca float, align 4                    ; 5 uses
   %i.z = alloca float, align 4                    ; 5 uses
   %i.aa = alloca float, align 4                   ; 5 uses
@@ -249,7 +249,7 @@ bb.a:
   %i.bd = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 7 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.hl
@@ -652,11 +652,10 @@ bb.bl:                                            ; preds = %bb.ba
 bb.bm:                                            ; preds = %bb.bl
   %i.ml = getelementptr inbounds nuw i8, ptr %i.mk, i64 20680
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #22
-  store <2 x float> zeroinitializer, ptr %1, align 8
-  store float 0.000000e+00, ptr %i.bg, align 8
+  store <3 x float> zeroinitializer, ptr %1, align 16
   call void @_ZN6Assimp18ObjFileMtlImporter12getColorRGBAEP9aiColor3D(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %1)
   %i.mm = load float, ptr %i.bg, align 8
-  %i.mn = load <2 x float>, ptr %1, align 8
+  %i.mn = load <2 x float>, ptr %1, align 16
   store <2 x float> %i.mn, ptr %i.ml, align 4
   %i.mo = getelementptr inbounds nuw i8, ptr %i.mk, i64 20688
   store float %i.mm, ptr %i.mo, align 4
@@ -1059,14 +1058,13 @@ bb.e:                                             ; preds = %_ZN6Assimp12CopyNex
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp18ObjFileMtlImporter12getColorRGBAERNS_5MaybeI9aiColor3DEE(ptr noundef nonnull align 8 captures(none) dereferenceable(88) %0, ptr noundef nonnull writeonly align 4 captures(none) dereferenceable(13) initializes((0, 13)) %1) local_unnamed_addr #0 align 2 {
 bb.a:
-  %2 = alloca %struct.aiColor3D, align 8          ; 6 uses
+  %2 = alloca %struct.aiColor3D, align 16         ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  store <2 x float> zeroinitializer, ptr %2, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %i.a, align 8
+  %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
+  store <3 x float> zeroinitializer, ptr %2, align 16
   call void @_ZN6Assimp18ObjFileMtlImporter12getColorRGBAEP9aiColor3D(ptr noundef nonnull align 8 dereferenceable(88) %0, ptr noundef nonnull %2)
   %i.b = load float, ptr %i.a, align 8
-  %i.c = load <2 x float>, ptr %2, align 8
+  %i.c = load <2 x float>, ptr %2, align 16
   store <2 x float> %i.c, ptr %1, align 4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   store float %i.b, ptr %i.d, align 4

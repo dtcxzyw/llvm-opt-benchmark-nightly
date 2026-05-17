@@ -201,20 +201,17 @@ bb.k:                                             ; preds = %SharpYuvInit.exit
   %i.ep = uitofp nneg i32 %i.dn to double
   %i.eq = fmul double %i.eo, %i.ep
   %i.er = fptoui double %i.eq to i64
-  %16 = insertelement <4 x ptr> poison, ptr %i.ea, i64 0
-  %17 = insertelement <4 x ptr> %16, ptr %i.ej, i64 1
-  %18 = insertelement <4 x ptr> %17, ptr %i.eb, i64 2
-  %19 = insertelement <4 x ptr> %18, ptr %i.ek, i64 3
-  %20 = icmp eq <4 x ptr> %19, splat (ptr null)
-  %21 = icmp eq ptr %i.ed, null
-  %22 = icmp eq ptr %i.em, null
-  %23 = icmp eq ptr %i.dv, null
-  %24 = bitcast <4 x i1> %20 to i4
-  %25 = icmp ne i4 %24, 0
-  %op.rdx = or i1 %25, %21
-  %op.rdx259 = or i1 %22, %23
-  %op.rdx260 = or i1 %op.rdx, %op.rdx259
-  br i1 %op.rdx260, label %DoSharpArgbToYuv.exit, label %.preheader288.i
+  %16 = insertelement <7 x ptr> poison, ptr %i.ea, i64 0
+  %17 = insertelement <7 x ptr> %16, ptr %i.ej, i64 1
+  %18 = insertelement <7 x ptr> %17, ptr %i.eb, i64 2
+  %19 = insertelement <7 x ptr> %18, ptr %i.ek, i64 3
+  %20 = insertelement <7 x ptr> %19, ptr %i.ed, i64 4
+  %21 = insertelement <7 x ptr> %20, ptr %i.em, i64 5
+  %22 = insertelement <7 x ptr> %21, ptr %i.dv, i64 6
+  %23 = icmp eq <7 x ptr> %22, splat (ptr null)
+  %24 = bitcast <7 x i1> %23 to i7
+  %.not = icmp eq i7 %24, 0
+  br i1 %.not, label %.preheader288.i, label %DoSharpArgbToYuv.exit
 
 .preheader288.i:                                  ; preds = %.loopexit
   %i.es = icmp sgt i32 %14, 0

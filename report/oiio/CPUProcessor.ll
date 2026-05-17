@@ -201,8 +201,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.b = load <2 x float>, ptr %1, align 4, !tbaa !310
   store <2 x float> %i.b, ptr %i.a, align 16, !tbaa !310
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load float, ptr %i.d, align 4, !tbaa !310
   store float %i.e, ptr %i.c, align 8, !tbaa !310
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -233,10 +233,8 @@ bb.a:
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 16
   %i.w = load ptr, ptr %i.v, align 8
   call void %i.w(ptr noundef nonnull align 8 dereferenceable(8) %i.t, ptr noundef nonnull %i.a, ptr noundef nonnull %i.a, i64 noundef 1)
-  %2 = load <2 x float>, ptr %i.a, align 16, !tbaa !310
-  store <2 x float> %2, ptr %1, align 4, !tbaa !310
-  %3 = load float, ptr %i.c, align 8, !tbaa !310
-  store float %3, ptr %i.d, align 4, !tbaa !310
+  %2 = load <3 x float>, ptr %i.a, align 16, !tbaa !310
+  store <3 x float> %2, ptr %1, align 4, !tbaa !310
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   ret void
 
@@ -639,8 +637,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.c = load <2 x float>, ptr %1, align 4, !tbaa !310
   store <2 x float> %i.c, ptr %i.a, align 16, !tbaa !310
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load float, ptr %i.e, align 4, !tbaa !310
   store float %i.f, ptr %i.d, align 8, !tbaa !310
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -684,10 +682,8 @@ _ZNK16OpenColorIO_v2_512CPUProcessor4Impl8applyRGBEPf.exit: ; preds = %.lr.ph.i,
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 16
   %i.ae = load ptr, ptr %i.ad, align 8
   call void %i.ae(ptr noundef nonnull align 8 dereferenceable(8) %i.ab, ptr noundef nonnull %i.a, ptr noundef nonnull %i.a, i64 noundef 1), !inline_history !319
-  %2 = load <2 x float>, ptr %i.a, align 16, !tbaa !310
-  store <2 x float> %2, ptr %1, align 4, !tbaa !310
-  %3 = load float, ptr %i.d, align 8, !tbaa !310
-  store float %3, ptr %i.e, align 4, !tbaa !310
+  %2 = load <3 x float>, ptr %i.a, align 16, !tbaa !310
+  store <3 x float> %2, ptr %1, align 4, !tbaa !310
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   ret void
 }

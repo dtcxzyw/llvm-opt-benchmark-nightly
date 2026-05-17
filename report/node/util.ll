@@ -201,7 +201,7 @@ bb.a:
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
   %3 = alloca %"class.node::Utf8Value", align 8   ; 7 uses
-  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
+  %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 7 uses
   %i.b = alloca ptr, align 8                      ; 4 uses
   %i.c = alloca ptr, align 8                      ; 4 uses
   %i.d = tail call noundef zeroext i1 @_ZNK2v85Value7IsInt32Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #25
@@ -291,17 +291,11 @@ _ZN4node9Utf8ValueC2EPN2v87IsolateENS1_5LocalINS1_5ValueEEE.exit: ; preds = %_ZN
 
 _ZNSt7__cxx119to_stringEi.exit:                   ; preds = %_ZN4node9Utf8ValueC2EPN2v87IsolateENS1_5LocalINS1_5ValueEEE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
-  store ptr %5, ptr %4, align 8, !alias.scope !50
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 10, ptr %6, align 8, !alias.scope !50
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 26
-  store i8 0, ptr %7, align 2
-  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 25
-  store i8 55, ptr %i.al, align 1
-  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i8 52, ptr %i.am, align 8
-  store <8 x i8> <i8 50, i8 49, i8 52, i8 55, i8 52, i8 56, i8 51, i8 54>, ptr %5, align 8
+  %i.al = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 4 uses
+  store ptr %i.al, ptr %4, align 8, !alias.scope !50
+  %i.am = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i64 10, ptr %i.am, align 8, !alias.scope !50
+  store <11 x i8> <i8 50, i8 49, i8 52, i8 55, i8 52, i8 56, i8 51, i8 54, i8 52, i8 55, i8 0>, ptr %i.al, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.an = load ptr, ptr %i.ai, align 8
   store ptr %i.an, ptr %i.b, align 8
@@ -310,11 +304,11 @@ _ZNSt7__cxx119to_stringEi.exit:                   ; preds = %_ZN4node9Utf8ValueC
   %i.aq = call ptr @_ZN2v87Isolate14ThrowExceptionENS_5LocalINS_5ValueEEE(ptr noundef nonnull align 1 dereferenceable(1) %i.ao, ptr %i.ap) #25 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   %i.ar = load ptr, ptr %4, align 8               ; 2 uses
-  %i.as = icmp eq ptr %i.ar, %5
+  %i.as = icmp eq ptr %i.ar, %i.al
   br i1 %i.as, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i15: ; preds = %_ZNSt7__cxx119to_stringEi.exit
-  %i.at = load i64, ptr %5, align 8
+  %i.at = load i64, ptr %i.al, align 8
   %i.au = add i64 %i.at, 1
   call void @_ZdlPvm(ptr noundef %i.ar, i64 noundef %i.au) #28
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17

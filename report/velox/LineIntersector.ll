@@ -201,17 +201,15 @@ bb.a:
   %6 = alloca %"class.geos::geom::Envelope", align 8 ; 5 uses
   %7 = alloca %"class.geos::geom::Envelope", align 8 ; 5 uses
   tail call void @_ZN4geos9algorithm12Intersection12intersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr dead_on_unwind writable sret(%"class.geos::geom::Coordinate") align 8 %0, ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5)
-  %8 = load double, ptr %0, align 8, !tbaa !7, !alias.scope !83 ; 2 uses
-  %9 = fcmp uno double %8, 0.000000e+00
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
-  %10 = load double, ptr %i.a, align 8, !alias.scope !83 ; 2 uses
-  %11 = fcmp uno double %10, 0.000000e+00
-  %or.cond.i.i = select i1 %9, i1 %11, i1 false
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %13 = load double, ptr %12, align 8, !alias.scope !83
-  %14 = fcmp uno double %13, 0.000000e+00
-  %15 = select i1 %or.cond.i.i, i1 %14, i1 false
-  br i1 %15, label %bb.b, label %_ZNK4geos9algorithm15LineIntersector16intersectionSafeERKNS_4geom10CoordinateES5_S5_S5_.exit
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
+  %8 = load <3 x double>, ptr %0, align 8, !alias.scope !83
+  %.fr = freeze <3 x double> %8                   ; 3 uses
+  %9 = fcmp ord <3 x double> %.fr, zeroinitializer
+  %10 = bitcast <3 x i1> %9 to i3
+  %11 = icmp eq i3 %10, 0
+  %12 = extractelement <3 x double> %.fr, i64 0
+  %13 = extractelement <3 x double> %.fr, i64 1
+  br i1 %11, label %bb.b, label %_ZNK4geos9algorithm15LineIntersector16intersectionSafeERKNS_4geom10CoordinateES5_S5_S5_.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call noundef double @_ZN4geos9algorithm8Distance14pointToSegmentERKNS_4geom10CoordinateES5_S5_(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %5), !noalias !86 ; 2 uses
@@ -232,8 +230,8 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK4geos9algorithm15LineIntersector16intersectionSafeERKNS_4geom10CoordinateES5_S5_S5_.exit
 
 _ZNK4geos9algorithm15LineIntersector16intersectionSafeERKNS_4geom10CoordinateES5_S5_S5_.exit: ; preds = %bb.a, %bb.b
-  %i.i = phi double [ %10, %bb.a ], [ %.pre9, %bb.b ]
-  %i.j = phi double [ %8, %bb.a ], [ %.pre, %bb.b ]
+  %i.i = phi double [ %13, %bb.a ], [ %.pre9, %bb.b ]
+  %i.j = phi double [ %12, %bb.a ], [ %.pre, %bb.b ]
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !11

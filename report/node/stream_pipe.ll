@@ -201,11 +201,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 80
   store i32 0, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 84
-  store <4 x i8> <i8 0, i8 0, i8 1, i8 0>, ptr %i.d, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i8 0, ptr %4, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 89 ; 2 uses
-  store i8 0, ptr %5, align 1
+  store <6 x i8> <i8 0, i8 0, i8 1, i8 0, i8 0, i8 0>, ptr %i.d, align 4
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 96
   store i64 0, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
@@ -252,6 +248,7 @@ bb.e:                                             ; preds = %_ZN4node14StreamRes
   unreachable
 
 _ZN4node14StreamResource18PushStreamListenerEPNS_14StreamListenerE.exit8: ; preds = %_ZN4node14StreamResource18PushStreamListenerEPNS_14StreamListenerE.exit
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 89
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 144
@@ -263,7 +260,7 @@ _ZN4node14StreamResource18PushStreamListenerEPNS_14StreamListenerE.exit8: ; pred
   %i.v = load ptr, ptr %i.u, align 8
   %i.w = tail call noundef zeroext i1 %i.v(ptr noundef nonnull align 8 dereferenceable(32) %2) #21
   %i.x = zext i1 %i.w to i8
-  store i8 %i.x, ptr %5, align 1
+  store i8 %i.x, ptr %4, align 1
   ret void
 }
 

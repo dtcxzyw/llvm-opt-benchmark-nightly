@@ -201,14 +201,15 @@ begin_hunk_0_@_ZN9c_grammar10definitionIN5boost6spirit7scannerIPKcNS2_16scanner_
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 1296 ; 6 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %0, i64 1304 ; 4 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 1312 ; 13 uses
-  %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 1320 ; 4 uses
-  %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 5 uses
+  %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 1320 ; 3 uses
+  %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 1328 ; 4 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 1336 ; 5 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 1344 ; 4 uses
-  %i.gd = getelementptr inbounds nuw i8, ptr %0, i64 1352 ; 6 uses
-  %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 1360 ; 4 uses
-  %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 1368 ; 4 uses
-  %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 1376 ; 4 uses
+  %i.gd = getelementptr inbounds nuw i8, ptr %0, i64 1352 ; 5 uses
+  %i.ge = getelementptr inbounds nuw i8, ptr %0, i64 1360 ; 3 uses
+  %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 1368 ; 3 uses
+  %3 = getelementptr i8, ptr %0, <6 x i64> <i64 1320, i64 1328, i64 1352, i64 1360, i64 1368, i64 1376>
+  %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 1376 ; 3 uses
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 1384 ; 3 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 1392 ; 4 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 1400 ; 4 uses
@@ -611,22 +612,12 @@ bb.va:                                            ; preds = %.noexc1593
 
 bb.vb:                                            ; preds = %.noexc1593, %bb.va
   %i.bkw = invoke noalias noundef nonnull dereferenceable(56) ptr @_Znwm(i64 noundef 56) #28
-          to label %.noexc1597 unwind label %bb.aag ; 8 uses
+          to label %.noexc1597 unwind label %bb.aag ; 3 uses
 
 .noexc1597:                                       ; preds = %bb.vb
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN5boost6spirit4impl15concrete_parserINS0_11alternativeINS3_INS3_INS3_INS3_INS0_4ruleINS0_7scannerIPKcNS0_16scanner_policiesINS0_28skip_parser_iteration_policyI12skip_grammarNS0_16iteration_policyEEENS0_12match_policyENS0_13action_policyEEEEENS0_5nil_tESH_EESI_EESI_EESI_EESI_EESI_EESG_SH_EE, i64 16), ptr %i.bkw, align 8, !tbaa !33
   %i.bkx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 8
-  store ptr %i.fz, ptr %i.bkx, align 8
-  %.sroa.52103.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 16
-  store ptr %i.ga, ptr %.sroa.52103.0..sroa_idx, align 8
-  %.sroa.62104.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 24
-  store ptr %i.gd, ptr %.sroa.62104.0..sroa_idx, align 8
-  %.sroa.72105.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 32
-  store ptr %i.ge, ptr %.sroa.72105.0..sroa_idx, align 8
-  %.sroa.82106.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 40
-  store ptr %i.gf, ptr %.sroa.82106.0..sroa_idx, align 8
-  %.sroa.92107.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bkw, i64 48
-  store ptr %i.gg, ptr %.sroa.92107.0..sroa_idx, align 8
+  store <6 x ptr> %3, ptr %i.bkx, align 8
   %i.bky = load ptr, ptr %i.fy, align 8, !tbaa !123 ; 3 uses
   store ptr %i.bkw, ptr %i.fy, align 8, !tbaa !123
   %i.bkz = icmp eq ptr %i.bky, null

@@ -201,43 +201,28 @@ bb.i:                                             ; preds = %_ZStlsISt11char_tra
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_Z9printBitsPcN9Imath_3_14halfE(ptr noundef writeonly captures(none) initializes((0, 19)) %0, i16 %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = zext i16 %1 to i32                       ; 5 uses
+  %i.a = zext i16 %1 to i32                       ; 2 uses
   %.not = icmp sgt i16 %1, -1
   %i.b = select i1 %.not, i8 48, i8 49
   store i8 %i.b, ptr %0, align 1, !tbaa !10
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 32, ptr %i.c, align 1, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %2 = insertelement <4 x i32> poison, i32 %i.a, i64 0
-  %3 = shufflevector <4 x i32> %2, <4 x i32> poison, <4 x i32> zeroinitializer
-  %4 = and <4 x i32> %3, <i32 16384, i32 8192, i32 4096, i32 2048>
-  %5 = icmp eq <4 x i32> %4, zeroinitializer
-  %6 = select <4 x i1> %5, <4 x i8> splat (i8 48), <4 x i8> splat (i8 49)
-  store <4 x i8> %6, ptr %i.d, align 1, !tbaa !10
-  %7 = and i32 %i.a, 1024
-  %.not.5 = icmp eq i32 %7, 0
-  %8 = select i1 %.not.5, i8 48, i8 49
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %8, ptr %9, align 1, !tbaa !10
+  %2 = insertelement <5 x i32> poison, i32 %i.a, i64 0
+  %3 = shufflevector <5 x i32> %2, <5 x i32> poison, <5 x i32> zeroinitializer
+  %4 = and <5 x i32> %3, <i32 16384, i32 8192, i32 4096, i32 2048, i32 1024>
+  %5 = icmp eq <5 x i32> %4, zeroinitializer
+  %6 = select <5 x i1> %5, <5 x i8> splat (i8 48), <5 x i8> splat (i8 49)
+  store <5 x i8> %6, ptr %i.d, align 1, !tbaa !10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 7
   store i8 32, ptr %i.e, align 1, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %10 = insertelement <8 x i32> poison, i32 %i.a, i64 0
-  %11 = shufflevector <8 x i32> %10, <8 x i32> poison, <8 x i32> zeroinitializer
-  %12 = and <8 x i32> %11, <i32 512, i32 256, i32 128, i32 64, i32 32, i32 16, i32 8, i32 4>
-  %13 = icmp eq <8 x i32> %12, zeroinitializer
-  %14 = select <8 x i1> %13, <8 x i8> splat (i8 48), <8 x i8> splat (i8 49)
-  store <8 x i8> %14, ptr %i.f, align 1, !tbaa !10
-  %15 = and i32 %i.a, 2
-  %.not.14 = icmp eq i32 %15, 0
-  %16 = select i1 %.not.14, i8 48, i8 49
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i8 %16, ptr %17, align 1, !tbaa !10
-  %18 = and i32 %i.a, 1
-  %.not.15 = icmp eq i32 %18, 0
-  %19 = select i1 %.not.15, i8 48, i8 49
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 17
-  store i8 %19, ptr %20, align 1, !tbaa !10
+  %7 = insertelement <10 x i32> poison, i32 %i.a, i64 0
+  %8 = shufflevector <10 x i32> %7, <10 x i32> poison, <10 x i32> zeroinitializer
+  %9 = and <10 x i32> %8, <i32 512, i32 256, i32 128, i32 64, i32 32, i32 16, i32 8, i32 4, i32 2, i32 1>
+  %10 = icmp eq <10 x i32> %9, zeroinitializer
+  %11 = select <10 x i1> %10, <10 x i8> splat (i8 48), <10 x i8> splat (i8 49)
+  store <10 x i8> %11, ptr %i.f, align 1, !tbaa !10
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 18
   store i8 0, ptr %i.g, align 1, !tbaa !10
   ret void

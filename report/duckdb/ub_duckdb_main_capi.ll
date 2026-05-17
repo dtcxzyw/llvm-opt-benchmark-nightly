@@ -201,18 +201,16 @@ declare void @_ZN6duckdb11LogicalTypeC1ERKS0_(ptr noundef nonnull align 8 derefe
 ; Function Attrs: mustprogress uwtable
 define void @duckdb_aggregate_function_set_functions(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #1 {
 bb.a:
-  %6 = insertelement <4 x ptr> poison, ptr %0, i64 0
-  %7 = insertelement <4 x ptr> %6, ptr %1, i64 1
-  %8 = insertelement <4 x ptr> %7, ptr %2, i64 2
-  %9 = insertelement <4 x ptr> %8, ptr %3, i64 3
-  %10 = icmp ne ptr %4, null
-  %11 = icmp ne ptr %5, null
-  %12 = icmp eq <4 x ptr> %9, splat (ptr null)
-  %13 = bitcast <4 x i1> %12 to i4
-  %i.a = icmp eq i4 %13, 0
-  %op.rdx = and i1 %i.a, %10
-  %op.rdx31 = and i1 %op.rdx, %11
-  br i1 %op.rdx31, label %bb.b, label %bb.c
+  %6 = insertelement <6 x ptr> poison, ptr %0, i64 0
+  %7 = insertelement <6 x ptr> %6, ptr %1, i64 1
+  %8 = insertelement <6 x ptr> %7, ptr %2, i64 2
+  %9 = insertelement <6 x ptr> %8, ptr %3, i64 3
+  %10 = insertelement <6 x ptr> %9, ptr %4, i64 4
+  %11 = insertelement <6 x ptr> %10, ptr %5, i64 5
+  %12 = icmp eq <6 x ptr> %11, splat (ptr null)
+  %13 = bitcast <6 x i1> %12 to i6
+  %i.a = icmp eq i6 %13, 0
+  br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 352

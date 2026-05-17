@@ -201,11 +201,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   call void @_ZN2v813CFunctionInfoC2ERKNS_9CTypeInfoEjPS2_NS0_19Int64RepresentationE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(2) %1, i32 noundef 6, ptr noundef nonnull %i.a, i8 noundef zeroext 0) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #27
-  store <4 x i16> <i16 10, i16 10, i16 4, i16 5>, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i16 1, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 26
-  store i16 255, ptr %3, align 2
+  store <6 x i16> <i16 10, i16 10, i16 4, i16 5, i16 1, i16 255>, ptr %i.a, align 8
   ret void
 }
 
@@ -218,11 +214,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   call void @_ZN2v813CFunctionInfoC2ERKNS_9CTypeInfoEjPS2_NS0_19Int64RepresentationE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(2) %1, i32 noundef 6, ptr noundef nonnull %i.a, i8 noundef zeroext 0) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #27
-  store <4 x i16> <i16 10, i16 10, i16 11, i16 4>, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store i16 4, ptr %2, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 26
-  store i16 255, ptr %3, align 2
+  store <6 x i16> <i16 10, i16 10, i16 11, i16 4, i16 4, i16 255>, ptr %i.a, align 8
   ret void
 }
 

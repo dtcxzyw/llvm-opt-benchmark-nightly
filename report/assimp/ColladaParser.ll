@@ -201,10 +201,10 @@ define hidden void @_ZN6Assimp13ColladaParser28ExtractDataObjectFromChannelERKNS
 bb.a:
   %i.a = alloca i64, align 8                      ; 2 uses
   %i.b = alloca [4 x float], align 16             ; 9 uses
-  %4 = alloca %class.aiVector3t, align 8          ; 5 uses
-  %5 = alloca %class.aiVector3t, align 8          ; 5 uses
-  %6 = alloca %class.aiVector3t, align 8          ; 5 uses
-  %7 = alloca %class.aiVector3t, align 8          ; 5 uses
+  %4 = alloca %class.aiVector3t, align 16         ; 4 uses
+  %5 = alloca %class.aiVector3t, align 16         ; 4 uses
+  %6 = alloca %class.aiVector3t, align 16         ; 4 uses
+  %7 = alloca %class.aiVector3t, align 16         ; 4 uses
   %8 = alloca %class.aiColor4t, align 16          ; 4 uses
   %.sroa.0 = alloca float, align 4                ; 8 uses
   %.sroa.6 = alloca float, align 4                ; 7 uses
@@ -396,9 +396,7 @@ bb.o:                                             ; preds = %bb.n
   %i.cl = xor i64 %i.ca, -1
   %i.cm = add nsw i64 %i.ci, %i.cl
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
-  store <2 x float> <float 0.000000e+00, float 1.000000e+00>, ptr %4, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store float 0.000000e+00, ptr %9, align 8
+  store <3 x float> <float 0.000000e+00, float 1.000000e+00, float 0.000000e+00>, ptr %4, align 16
   %i.cn = getelementptr inbounds i8, ptr %i.bw, i64 %i.bz
   call void @_ZNSt6vectorI10aiVector3tIfESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.bt, ptr %i.cn, i64 noundef %i.cm, ptr noundef nonnull align 4 dereferenceable(12) %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #28
@@ -516,9 +514,7 @@ bb.x:                                             ; preds = %bb.w
   %i.ek = xor i64 %i.dz, -1
   %i.el = add nsw i64 %i.eh, %i.ek
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
-  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %5, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store float 0.000000e+00, ptr %10, align 8
+  store <3 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %5, align 16
   %i.em = getelementptr inbounds i8, ptr %i.dv, i64 %i.dy
   call void @_ZNSt6vectorI10aiVector3tIfESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.ds, ptr %i.em, i64 noundef %i.el, ptr noundef nonnull align 4 dereferenceable(12) %5)
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #28
@@ -636,9 +632,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.gj = xor i64 %i.fy, -1
   %i.gk = add nsw i64 %i.gg, %i.gj
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
-  store <2 x float> zeroinitializer, ptr %6, align 8
-  %11 = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store float 1.000000e+00, ptr %11, align 8
+  store <3 x float> <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00>, ptr %6, align 16
   %i.gl = getelementptr inbounds i8, ptr %i.fu, i64 %i.fx
   call void @_ZNSt6vectorI10aiVector3tIfESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.fr, ptr %i.gl, i64 noundef %i.gk, ptr noundef nonnull align 4 dereferenceable(12) %6)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28
@@ -763,9 +757,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.im = xor i64 %i.ib, -1
   %i.in = add nsw i64 %i.ij, %i.im
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
-  store <2 x float> zeroinitializer, ptr %7, align 8
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8
-  store float 0.000000e+00, ptr %12, align 8
+  store <3 x float> zeroinitializer, ptr %7, align 16
   %i.io = getelementptr inbounds i8, ptr %i.hx, i64 %i.ia
   call void @_ZNSt6vectorI10aiVector3tIfESaIS1_EE14_M_fill_insertEN9__gnu_cxx17__normal_iteratorIPS1_S3_EEmRKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.hu, ptr %i.io, i64 noundef %i.in, ptr noundef nonnull align 4 dereferenceable(12) %7)
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28

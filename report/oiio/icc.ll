@@ -201,17 +201,11 @@ bb.c:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds nuw i8, ptr %29, i64 26
   %i.r = getelementptr inbounds nuw i8, ptr %29, i64 28
   %i.s = getelementptr inbounds nuw i8, ptr %29, i64 30
-  %83 = load <4 x i16>, ptr %i.p, align 4, !tbaa !15
-  %84 = tail call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %83)
-  store <4 x i16> %84, ptr %i.p, align 4, !tbaa !15
-  %i.t = getelementptr inbounds nuw i8, ptr %29, i64 32 ; 3 uses
-  %85 = load i16, ptr %i.t, align 4, !tbaa !15
-  %86 = tail call noundef i16 @llvm.bswap.i16(i16 %85)
-  store i16 %86, ptr %i.t, align 4, !tbaa !15
-  %i.u = getelementptr inbounds nuw i8, ptr %29, i64 34 ; 3 uses
-  %87 = load i16, ptr %i.u, align 2, !tbaa !15
-  %88 = tail call noundef i16 @llvm.bswap.i16(i16 %87)
-  store i16 %88, ptr %i.u, align 2, !tbaa !15
+  %i.t = getelementptr inbounds nuw i8, ptr %29, i64 32
+  %i.u = getelementptr inbounds nuw i8, ptr %29, i64 34
+  %83 = load <6 x i16>, ptr %i.p, align 4, !tbaa !15
+  %84 = tail call <6 x i16> @llvm.bswap.v6i16(<6 x i16> %83)
+  store <6 x i16> %84, ptr %i.p, align 4, !tbaa !15
   %i.v = getelementptr inbounds nuw i8, ptr %29, i64 44 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %29, i64 48
   %i.x = getelementptr inbounds nuw i8, ptr %29, i64 52
@@ -612,6 +606,9 @@ declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <6 x i16> @llvm.bswap.v6i16(<6 x i16>) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #7

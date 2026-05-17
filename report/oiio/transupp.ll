@@ -201,7 +201,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not191195200207, label %.split.us236, label %.split
 
 .split.us236:                                     ; preds = %bb.y, %bb.ab
-  %indvars.iv252 = phi i64 [ %indvars.iv.next253, %bb.ab ], [ %i.ec, %bb.y ] ; 11 uses
+  %indvars.iv252 = phi i64 [ %indvars.iv.next253, %bb.ab ], [ %i.ec, %bb.y ] ; 9 uses
   %.3.us = phi i32 [ %i.fd, %bb.ab ], [ %i.dz, %bb.y ]
   %i.ee = icmp samesign ugt i64 %indvars.iv252, %i.ed
   br i1 %i.ee, label %.thread, label %bb.z
@@ -223,15 +223,9 @@ bb.z:                                             ; preds = %.split.us236
 bb.aa:                                            ; preds = %bb.z
   %i.ep = icmp eq i32 %i.en, 40962
   %..us = select i1 %i.ep, i32 %2, i32 %3         ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv252
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 2
-  store <4 x i8> <i8 4, i8 0, i8 1, i8 0>, ptr %5, align 1, !tbaa !20
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv252
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 6
-  store i8 0, ptr %7, align 1, !tbaa !20
   %i.eq = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv252
-  %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 7
-  store i8 0, ptr %i.er, align 1, !tbaa !20
+  %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 2
+  store <6 x i8> <i8 4, i8 0, i8 1, i8 0, i8 0, i8 0>, ptr %i.er, align 1, !tbaa !20
   %i.es = trunc i32 %..us to i8
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv252
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8

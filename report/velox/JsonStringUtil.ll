@@ -201,7 +201,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit
   %i.c = phi ptr [ %i.ej, %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit ], [ %0, %bb.a ] ; 9 uses
-  %.060 = phi ptr [ %.1, %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit ], [ %2, %bb.a ] ; 38 uses
+  %.060 = phi ptr [ %.1, %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit ], [ %2, %bb.a ] ; 34 uses
   %i.d = load i8, ptr %i.c, align 1, !tbaa !10    ; 8 uses
   %i.e = icmp sgt i8 %i.d, -1
   br i1 %i.e, label %bb.n, label %bb.b
@@ -341,12 +341,8 @@ _ZN8facebook5velox9functions28validateAndGetNextUtf8LengthEPKhS3_.exit: ; preds 
   br i1 %i.bj, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %_ZN8facebook5velox9functions28validateAndGetNextUtf8LengthEPKhS3_.exit
-  %3 = getelementptr inbounds nuw i8, ptr %.060, i64 4
-  store <4 x i8> <i8 92, i8 117, i8 70, i8 70>, ptr %.060, align 1, !tbaa !10
-  %4 = getelementptr inbounds nuw i8, ptr %.060, i64 5
-  store i8 70, ptr %3, align 1, !tbaa !10
   %i.bk = getelementptr inbounds nuw i8, ptr %.060, i64 6
-  store i8 68, ptr %4, align 1, !tbaa !10
+  store <6 x i8> <i8 92, i8 117, i8 70, i8 70, i8 70, i8 68>, ptr %.060, align 1, !tbaa !10
   br label %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit, !llvm.loop !11
 
 bb.v:                                             ; preds = %_ZN8facebook5velox9functions28validateAndGetNextUtf8LengthEPKhS3_.exit
@@ -447,12 +443,8 @@ bb.x:                                             ; preds = %bb.v
   br label %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit, !llvm.loop !11
 
 bb.y:                                             ; preds = %bb.i, %bb.j, %bb.k, %bb.l, %bb.m
-  %5 = getelementptr inbounds nuw i8, ptr %.060, i64 4
-  store <4 x i8> <i8 92, i8 117, i8 70, i8 70>, ptr %.060, align 1, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %.060, i64 5
-  store i8 70, ptr %5, align 1, !tbaa !10
   %i.eg = getelementptr inbounds nuw i8, ptr %.060, i64 6
-  store i8 68, ptr %6, align 1, !tbaa !10
+  store <6 x i8> <i8 92, i8 117, i8 70, i8 70, i8 70, i8 68>, ptr %.060, align 1, !tbaa !10
   %i.eh = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ei = getelementptr inbounds nuw i8, ptr %i.eh, i64 1
   store ptr %i.ei, ptr %i.a, align 8, !tbaa !7
@@ -743,7 +735,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %.backedge
   %.0116 = phi ptr [ %0, %.lr.ph ], [ %.0.be, %.backedge ] ; 19 uses
-  %.0103115 = phi ptr [ %2, %.lr.ph ], [ %.0103.be, %.backedge ] ; 43 uses
+  %.0103115 = phi ptr [ %2, %.lr.ph ], [ %.0103.be, %.backedge ] ; 41 uses
   %i.d = load i8, ptr %.0116, align 1, !tbaa !10  ; 3 uses
   %i.e = icmp eq i8 %i.d, 92
   br i1 %i.e, label %bb.c, label %bb.x, !prof !21
@@ -1000,12 +992,8 @@ bb.ac:                                            ; preds = %bb.z
   br i1 %i.ck, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %5 = getelementptr inbounds nuw i8, ptr %.0103115, i64 4
-  store <4 x i8> <i8 92, i8 117, i8 70, i8 70>, ptr %.0103115, align 1, !tbaa !10
-  %6 = getelementptr inbounds nuw i8, ptr %.0103115, i64 5
-  store i8 70, ptr %5, align 1, !tbaa !10
   %i.cl = getelementptr inbounds nuw i8, ptr %.0103115, i64 6
-  store i8 68, ptr %6, align 1, !tbaa !10
+  store <6 x i8> <i8 92, i8 117, i8 70, i8 70, i8 70, i8 68>, ptr %.0103115, align 1, !tbaa !10
   br label %_ZN8facebook5velox12_GLOBAL__N_114encodeUtf16HexEDiRPc.exit, !llvm.loop !22
 
 bb.ae:                                            ; preds = %bb.ac

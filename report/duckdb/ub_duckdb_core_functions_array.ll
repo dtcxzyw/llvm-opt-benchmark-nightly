@@ -201,31 +201,19 @@ bb.af:                                            ; preds = %.sink.split191, %_Z
   br label %bb.bg
 
 .loopexit:                                        ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit.i109.2, %.loopexit166
-  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.be ; 2 uses
-  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.cr ; 2 uses
+  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.q, i64 %i.be
+  %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.s, i64 %i.cr
   %.idx = mul i64 %.065167, 12
-  %13 = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx ; 2 uses
-  %14 = load float, ptr %i.ee, align 4, !tbaa !138 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %i.ee, i64 4
-  %16 = load float, ptr %i.ef, align 4, !tbaa !138 ; 2 uses
-  %i.eg = getelementptr inbounds nuw i8, ptr %i.ef, i64 4
-  %17 = load <2 x float>, ptr %15, align 4, !tbaa !138 ; 3 uses
-  %18 = load <2 x float>, ptr %i.eg, align 4, !tbaa !138 ; 3 uses
-  %19 = fneg <2 x float> %18
-  %20 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %21 = insertelement <2 x float> %20, float %14, i64 1
-  %22 = fmul <2 x float> %21, %19
-  %23 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
-  %24 = insertelement <2 x float> %23, float %16, i64 1
-  %25 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %17, <2 x float> %24, <2 x float> %22)
-  store <2 x float> %25, ptr %13, align 4, !tbaa !138
-  %26 = fneg float %16
-  %27 = extractelement <2 x float> %17, i64 0
-  %28 = fmul float %27, %26
-  %29 = extractelement <2 x float> %18, i64 0
-  %30 = call float @llvm.fmuladd.f32(float %14, float %29, float %28)
-  %31 = getelementptr inbounds nuw i8, ptr %13, i64 8
-  store float %30, ptr %31, align 4, !tbaa !138
+  %i.eg = getelementptr inbounds nuw i8, ptr %i.u, i64 %.idx
+  %13 = load <3 x float>, ptr %i.ee, align 4, !tbaa !138 ; 2 uses
+  %14 = load <3 x float>, ptr %i.ef, align 4, !tbaa !138 ; 2 uses
+  %15 = shufflevector <3 x float> %14, <3 x float> poison, <3 x i32> <i32 1, i32 2, i32 0>
+  %16 = fneg <3 x float> %14
+  %17 = shufflevector <3 x float> %13, <3 x float> poison, <3 x i32> <i32 1, i32 2, i32 0>
+  %18 = fmul <3 x float> %17, %16
+  %19 = call <3 x float> @llvm.fmuladd.v3f32(<3 x float> %13, <3 x float> %15, <3 x float> %18)
+  %20 = shufflevector <3 x float> %19, <3 x float> poison, <3 x i32> <i32 1, i32 2, i32 0>
+  store <3 x float> %20, ptr %i.eg, align 4, !tbaa !138
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.q, %.loopexit
@@ -628,7 +616,7 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 declare i64 @llvm.umin.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
+declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #15

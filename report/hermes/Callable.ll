@@ -201,7 +201,7 @@ bb.t:                                             ; preds = %_ZN6hermes2vm16Arra
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef range(i32 0, 2) i32 @_ZN6hermes2vm13BoundFunction27initializeLengthAndName_RJSENS0_6HandleINS0_8CallableEEERNS0_7RuntimeES4_j(ptr %0, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = alloca %"class.hermes::vm::SmallXString", align 8 ; 11 uses
+  %4 = alloca %"class.hermes::vm::SmallXString", align 8 ; 9 uses
   %.sroa.0.0.copyload.i.i = load i64, ptr %2, align 8, !tbaa !23
   %i.a = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
   %i.b = inttoptr i64 %i.a to ptr
@@ -315,17 +315,13 @@ _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_15StringPrimitiveEEENS0_6HandleIT
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
   %i.ba = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 5 uses
   store ptr %i.ba, ptr %4, align 8, !tbaa !296
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 12
-  store i32 32, ptr %i.bb, align 4, !tbaa !297
-  store <4 x i16> <i16 98, i16 111, i16 117, i16 110>, ptr %i.ba, align 8, !tbaa !366
-  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 24
-  store i16 100, ptr %i.bc, align 8, !tbaa !366
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 26
-  store i16 32, ptr %6, align 2, !tbaa !366
+  %i.bb = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 12
+  store i32 32, ptr %i.bc, align 4, !tbaa !297
+  store <6 x i16> <i16 98, i16 111, i16 117, i16 110, i16 100, i16 32>, ptr %i.ba, align 8, !tbaa !366
   %i.bd = extractvalue { ptr, i64 } %i.az, 0      ; 7 uses
   %i.be = extractvalue { ptr, i64 } %i.az, 1      ; 8 uses
-  store i32 6, ptr %5, align 8, !tbaa !298
+  store i32 6, ptr %i.bb, align 8, !tbaa !298
   %.sroa.7.8.extract.trunc = trunc i64 %i.be to i32 ; 3 uses
   %i.bf = icmp slt i32 %.sroa.7.8.extract.trunc, 0
   br i1 %i.bf, label %bb.o, label %bb.v
@@ -530,7 +526,7 @@ _ZNK6hermes2vm10StringView3endEv.exit:            ; preds = %_ZNK6hermes2vm10Str
 bb.ao:                                            ; preds = %_ZNK6hermes2vm10StringView3endEv.exit
   %i.ea = add i64 %.0.i.i.i, 6
   call void @_ZN4llvh15SmallVectorBase8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(80) %4, ptr noundef nonnull %i.ba, i64 noundef %i.ea, i64 noundef 2) #11
-  %.pre.i.i = load i32, ptr %5, align 8, !tbaa !298 ; 2 uses
+  %.pre.i.i = load i32, ptr %i.bb, align 8, !tbaa !298 ; 2 uses
   %.pre15.i.i = zext i32 %.pre.i.i to i64
   %.pre.pre = load ptr, ptr %4, align 8, !tbaa !296
   br label %bb.ap
@@ -632,7 +628,7 @@ _ZN6hermes2vm10StringView14const_iteratorppEv.exit.i.i.i.i.i.i.i.i.i.i.1: ; pred
 _ZN6hermes2vm12SmallXStringIDsLj32EE6appendINS0_10StringView14const_iteratorEEERS2_T_S7_.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %_ZN6hermes2vm10StringView14const_iteratorppEv.exit.i.i.i.i.i.i.i.i.i.i.1, %bb.ap
   %i.fa = trunc i64 %.0.i.i.i to i32
   %i.fb = add i32 %i.eb, %i.fa                    ; 3 uses
-  store i32 %i.fb, ptr %5, align 8, !tbaa !298
+  store i32 %i.fb, ptr %i.bb, align 8, !tbaa !298
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 9240 ; 2 uses
   %i.fd = zext i32 %i.fb to i64                   ; 2 uses
   %.not10.i.i = icmp eq i32 %i.fb, 0

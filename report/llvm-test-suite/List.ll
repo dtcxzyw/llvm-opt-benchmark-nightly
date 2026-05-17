@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.NWindows::NCOM::CPropVariant", align 8 ; 14 uses
   %6 = alloca %class.CStringBase, align 8         ; 11 uses
   %i.b = alloca i8, align 1                       ; 6 uses
-  %i.c = alloca [8 x i8], align 4                 ; 7 uses
+  %i.c = alloca [8 x i8], align 8                 ; 6 uses
   %7 = alloca %class.CStringBase, align 8         ; 10 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !28
@@ -210,11 +210,10 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %8 = getelementptr inbounds nuw i8, ptr %5, i64 2
-  %i.h = getelementptr inbounds nuw i8, ptr %6, i64 12
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.k = getelementptr inbounds nuw i8, ptr %i.c, i64 4
+  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 2
+  %i.i = getelementptr inbounds nuw i8, ptr %6, i64 12
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 5 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 5
   %i.m = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -251,7 +250,7 @@ bb.d:                                             ; preds = %bb.c
 _ZL11PrintSpacesi.exit:                           ; preds = %.lr.ph.i, %bb.d, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #17
   store i16 0, ptr %5, align 8, !tbaa !46
-  store i16 0, ptr %8, align 2, !tbaa !49
+  store i16 0, ptr %i.h, align 2, !tbaa !49
   %i.z = load i32, ptr %i.t, align 8, !tbaa !19   ; 2 uses
   %i.aa = icmp eq i32 %i.z, 3
   br i1 %i.aa, label %bb.e, label %bb.p
@@ -265,7 +264,7 @@ bb.e:                                             ; preds = %_ZL11PrintSpacesi.e
 bb.f:                                             ; preds = %bb.e
   store ptr %i.ab, ptr %6, align 8, !tbaa !22
   store i32 0, ptr %i.ab, align 4, !tbaa !14
-  store i32 4, ptr %i.h, align 4, !tbaa !23
+  store i32 4, ptr %i.i, align 4, !tbaa !23
   %i.ac = invoke noundef i32 @_ZNK4CArc11GetItemPathEjR11CStringBaseIwE(ptr noundef nonnull align 8 dereferenceable(80) %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %6)
           to label %bb.g unwind label %bb.i       ; 2 uses
 
@@ -376,8 +375,8 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y, %bb.y
   %i.bd = icmp eq i16 %i.bc, 0
-  %i.be = load i32, ptr %i.i, align 8
-  %i.bf = select i1 %i.bd, i32 0, i32 %i.be       ; 2 uses
+  %i.be = load i32, ptr %i.j, align 8
+  %i.bf = select i1 %i.bd, i32 0, i32 %i.be
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #17
   %i.bg = load ptr, ptr %1, align 8, !tbaa !50
   %i.bh = invoke noundef i32 @_Z19IsArchiveItemFolderP10IInArchivejRb(ptr noundef %i.bg, i32 noundef %2, ptr noundef nonnull align 1 dereferenceable(1) %i.b)
@@ -396,20 +395,16 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   %i.bj = load i8, ptr %i.b, align 1, !tbaa !53, !range !55, !noundef !56
   %i.bk = trunc nuw i8 %i.bj to i1
-  %9 = insertelement <4 x i32> poison, i32 %i.bf, i64 0
-  %10 = shufflevector <4 x i32> %9, <4 x i32> poison, <4 x i32> zeroinitializer
-  %11 = and <4 x i32> %10, <i32 16, i32 1, i32 2, i32 4> ; 2 uses
-  %12 = icmp ne <4 x i32> %11, zeroinitializer
-  %13 = icmp eq <4 x i32> %11, zeroinitializer
-  %14 = shufflevector <4 x i1> %12, <4 x i1> %13, <4 x i32> <i32 0, i32 5, i32 6, i32 7>
-  %15 = insertelement <4 x i1> <i1 poison, i1 false, i1 false, i1 false>, i1 %i.bk, i64 0
-  %16 = or <4 x i1> %14, %15
-  %17 = select <4 x i1> %16, <4 x i8> <i8 68, i8 46, i8 46, i8 46>, <4 x i8> <i8 46, i8 82, i8 72, i8 83>
-  store <4 x i8> %17, ptr %i.c, align 4, !tbaa !18
-  %18 = and i32 %i.bf, 32
-  %.not13.i = icmp eq i32 %18, 0
-  %19 = select i1 %.not13.i, i8 46, i8 65
-  store i8 %19, ptr %i.k, align 4, !tbaa !18
+  %8 = insertelement <5 x i32> poison, i32 %i.bf, i64 0
+  %9 = shufflevector <5 x i32> %8, <5 x i32> poison, <5 x i32> zeroinitializer
+  %10 = and <5 x i32> %9, <i32 16, i32 1, i32 2, i32 4, i32 32> ; 2 uses
+  %11 = icmp ne <5 x i32> %10, zeroinitializer
+  %12 = icmp eq <5 x i32> %10, zeroinitializer
+  %13 = shufflevector <5 x i1> %11, <5 x i1> %12, <5 x i32> <i32 0, i32 6, i32 7, i32 8, i32 9>
+  %14 = insertelement <5 x i1> <i1 poison, i1 false, i1 false, i1 false, i1 false>, i1 %i.bk, i64 0
+  %15 = or <5 x i1> %13, %14
+  %16 = select <5 x i1> %15, <5 x i8> <i8 68, i8 46, i8 46, i8 46, i8 46>, <5 x i8> <i8 46, i8 82, i8 72, i8 83, i8 65>
+  store <5 x i8> %16, ptr %i.c, align 8, !tbaa !18
   store i8 0, ptr %i.l, align 1, !tbaa !18
   %i.bl = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN13CStdOutStreamlsEPKc(ptr noundef nonnull align 8 dereferenceable(16) @g_StdOut, ptr noundef nonnull %i.c)
           to label %bb.ad unwind label %bb.ae     ; 0 uses
@@ -483,8 +478,8 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %.not.i102, label %bb.al, label %.invoke
 
 bb.al:                                            ; preds = %bb.ak
-  %.val.i = load i32, ptr %i.i, align 8, !tbaa !57
-  %.val5.i = load i32, ptr %i.j, align 4
+  %.val.i = load i32, ptr %i.j, align 8, !tbaa !57
+  %.val5.i = load i32, ptr %i.k, align 4
   %i.bt = icmp ne i32 %.val.i, 0
   %i.bu = icmp ne i32 %.val5.i, 0
   %narrow.i.not.i = select i1 %i.bt, i1 true, i1 %i.bu
@@ -496,7 +491,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
-  %i.bw = invoke i32 @FileTimeToLocalFileTime(ptr noundef nonnull %i.i, ptr noundef nonnull %4)
+  %i.bw = invoke i32 @FileTimeToLocalFileTime(ptr noundef nonnull %i.j, ptr noundef nonnull %4)
           to label %.noexc105 unwind label %.loopexit.split-lp178.loopexit
 
 .noexc105:                                        ; preds = %bb.an
@@ -538,14 +533,14 @@ bb.ap:                                            ; preds = %.thread147
   br i1 %3, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.cd = load ptr, ptr %i.i, align 8, !tbaa !18
+  %i.cd = load ptr, ptr %i.j, align 8, !tbaa !18
   %i.ce = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZN13CStdOutStreamlsEPKw(ptr noundef nonnull align 8 dereferenceable(16) @g_StdOut, ptr noundef %i.cd)
           to label %_ZL11PrintSpacesi.exit101.thread unwind label %.loopexit.split-lp178.loopexit ; 0 uses
 
 bb.ar:                                            ; preds = %bb.ap
   %i.cf = getelementptr inbounds nuw i8, ptr %i.t, i64 28
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !61
-  %i.ch = load ptr, ptr %i.i, align 8, !tbaa !18  ; 2 uses
+  %i.ch = load ptr, ptr %i.j, align 8, !tbaa !18  ; 2 uses
   %wcslen.i.i = call i64 @wcslen(ptr %i.ch)
   %i.ci = trunc i64 %wcslen.i.i to i32            ; 3 uses
   %i.cj = add nsw i32 %i.ci, 1                    ; 2 uses

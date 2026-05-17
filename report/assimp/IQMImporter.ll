@@ -201,14 +201,15 @@ bb.bv:                                            ; preds = %bb.bt
 
 bb.bw:                                            ; preds = %.lr.ph388, %bb.by
   %.0227386 = phi ptr [ %i.mw, %.lr.ph388 ], [ %i.nj, %bb.by ] ; 4 uses
-  %.0228385 = phi ptr [ %i.mn, %.lr.ph388 ], [ %i.nk, %bb.by ] ; 4 uses
-  %i.nd = load <2 x i8>, ptr %.0227386, align 1
-  %8 = uitofp <2 x i8> %i.nd to <2 x float>
-  %9 = fdiv <2 x float> %8, splat (float 2.550000e+02)
-  %10 = getelementptr inbounds nuw i8, ptr %.0227386, i64 2
-  %11 = load i8, ptr %10, align 1
-  %12 = uitofp i8 %11 to float
-  %13 = fdiv float %12, 2.550000e+02
+  %.0228385 = phi ptr [ %i.mn, %.lr.ph388 ], [ %i.nk, %bb.by ] ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %.0227386, i64 1
+  %i.nd = load <2 x i8>, ptr %8, align 1
+  %9 = load i8, ptr %.0227386, align 1
+  %10 = insertelement <3 x i8> poison, i8 %9, i64 0
+  %11 = shufflevector <2 x i8> %i.nd, <2 x i8> poison, <3 x i32> <i32 0, i32 1, i32 poison>
+  %12 = shufflevector <3 x i8> %10, <3 x i8> %11, <3 x i32> <i32 0, i32 3, i32 4>
+  %13 = uitofp <3 x i8> %12 to <3 x float>
+  %14 = fdiv <3 x float> %13, splat (float 2.550000e+02)
   br i1 %i.na, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
@@ -220,9 +221,7 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bw, %bb.bx
   %i.ni = phi float [ %i.nh, %bb.bx ], [ 1.000000e+00, %bb.bw ]
-  store <2 x float> %9, ptr %.0228385, align 4
-  %.sroa.5315.0..0228.sroa_idx = getelementptr inbounds nuw i8, ptr %.0228385, i64 8
-  store float %13, ptr %.sroa.5315.0..0228.sroa_idx, align 4
+  store <3 x float> %14, ptr %.0228385, align 4
   %.sroa.6316.0..0228.sroa_idx = getelementptr inbounds nuw i8, ptr %.0228385, i64 12
   store float %i.ni, ptr %.sroa.6316.0..0228.sroa_idx, align 4
   %i.nj = getelementptr inbounds nuw i8, ptr %.0227386, i64 %i.nb ; 2 uses

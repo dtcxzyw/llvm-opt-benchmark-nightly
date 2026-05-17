@@ -201,16 +201,14 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.g = load <4 x i8>, ptr %3, align 4, !tbaa !40
   %i.h = zext <4 x i8> %i.g to <4 x i16>
-  %4 = add nsw <4 x i16> %i.h, splat (i16 -128)
-  store <4 x i16> %4, ptr %2, align 8, !tbaa !105
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.j = load i8, ptr %i.i, align 4, !tbaa !156
   %i.k = zext i8 %i.j to i16
-  %5 = add nsw i16 %i.k, -128
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i16 %5, ptr %6, align 8, !tbaa !69
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 10
-  store i16 0, ptr %7, align 2, !tbaa !157
+  %4 = shufflevector <4 x i16> %i.h, <4 x i16> poison, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison>
+  %5 = insertelement <6 x i16> %4, i16 0, i64 5
+  %6 = insertelement <6 x i16> %5, i16 %i.k, i64 4
+  %7 = add nsw <6 x i16> %6, <i16 -128, i16 -128, i16 -128, i16 -128, i16 -128, i16 0>
+  store <6 x i16> %7, ptr %2, align 8, !tbaa !105
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d

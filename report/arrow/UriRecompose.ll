@@ -199,7 +199,7 @@ bb.a:
 ; Function Attrs: inlinehint nounwind uwtable
 define internal fastcc range(i32 0, 5) i32 @uriToStringEngineW(ptr noundef writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2, ptr noundef writeonly captures(address_is_null) %3, ptr noundef captures(address_is_null) %4) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x i32], align 16               ; 29 uses
+  %i.a = alloca [4 x i32], align 16               ; 28 uses
   %i.b = icmp eq ptr %1, null
   br i1 %i.b, label %bb.c, label %bb.b
 
@@ -413,7 +413,6 @@ bb.ac:                                            ; preds = %bb.ab, %bb.y, %.thr
   br i1 %.not512, label %bb.be, label %.preheader694
 
 .preheader694:                                    ; preds = %bb.ac
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 4 uses
   br i1 %i.c, label %.preheader694.split.us, label %.preheader694.split.preheader
 
 .preheader694.split.preheader:                    ; preds = %.preheader694
@@ -466,18 +465,16 @@ bb.ad:                                            ; preds = %.preheader694.split
   br i1 %i.bp, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %6 = urem i8 %i.bo, 100
-  %7 = udiv i8 %6, 10
   %i.cv = udiv i8 %i.bo, 100
-  %8 = insertelement <2 x i8> poison, i8 %i.cv, i64 0
-  %9 = insertelement <2 x i8> %8, i8 %7, i64 1
-  %10 = or disjoint <2 x i8> %9, splat (i8 48)
-  %11 = zext nneg <2 x i8> %10 to <2 x i32>
-  store <2 x i32> %11, ptr %i.a, align 16, !tbaa !3
-  %12 = urem i8 %i.bo, 10
-  %13 = or disjoint i8 %12, 48
-  %14 = zext nneg i8 %13 to i32
-  store i32 %14, ptr %5, align 8, !tbaa !3
+  %5 = urem i8 %i.bo, 100
+  %6 = udiv i8 %5, 10
+  %7 = urem i8 %i.bo, 10
+  %8 = insertelement <3 x i8> poison, i8 %i.cv, i64 0
+  %9 = insertelement <3 x i8> %8, i8 %6, i64 1
+  %10 = insertelement <3 x i8> %9, i8 %7, i64 2
+  %11 = or disjoint <3 x i8> %10, splat (i8 48)
+  %12 = zext nneg <3 x i8> %11 to <3 x i32>
+  store <3 x i32> %12, ptr %i.a, align 16, !tbaa !3
   br label %bb.ak
 
 bb.af:                                            ; preds = %bb.ad
@@ -569,18 +566,16 @@ bb.aq:                                            ; preds = %bb.ao
   br label %bb.as
 
 bb.ar:                                            ; preds = %bb.an
-  %15 = urem i8 %i.do, 100
-  %16 = udiv i8 %15, 10
   %i.ec = udiv i8 %i.do, 100
-  %17 = insertelement <2 x i8> poison, i8 %i.ec, i64 0
-  %18 = insertelement <2 x i8> %17, i8 %16, i64 1
-  %19 = or disjoint <2 x i8> %18, splat (i8 48)
-  %20 = zext nneg <2 x i8> %19 to <2 x i32>
-  store <2 x i32> %20, ptr %i.a, align 16, !tbaa !3
-  %21 = urem i8 %i.do, 10
-  %22 = or disjoint i8 %21, 48
-  %23 = zext nneg i8 %22 to i32
-  store i32 %23, ptr %5, align 8, !tbaa !3
+  %13 = urem i8 %i.do, 100
+  %14 = udiv i8 %13, 10
+  %15 = urem i8 %i.do, 10
+  %16 = insertelement <3 x i8> poison, i8 %i.ec, i64 0
+  %17 = insertelement <3 x i8> %16, i8 %14, i64 1
+  %18 = insertelement <3 x i8> %17, i8 %15, i64 2
+  %19 = or disjoint <3 x i8> %18, splat (i8 48)
+  %20 = zext nneg <3 x i8> %19 to <3 x i32>
+  store <3 x i32> %20, ptr %i.a, align 16, !tbaa !3
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ap, %bb.aq, %bb.ar
@@ -635,18 +630,16 @@ bb.aw:                                            ; preds = %bb.au
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.at
-  %24 = urem i8 %i.en, 100
-  %25 = udiv i8 %24, 10
   %i.fb = udiv i8 %i.en, 100
-  %26 = insertelement <2 x i8> poison, i8 %i.fb, i64 0
-  %27 = insertelement <2 x i8> %26, i8 %25, i64 1
-  %28 = or disjoint <2 x i8> %27, splat (i8 48)
-  %29 = zext nneg <2 x i8> %28 to <2 x i32>
-  store <2 x i32> %29, ptr %i.a, align 16, !tbaa !3
-  %30 = urem i8 %i.en, 10
-  %31 = or disjoint i8 %30, 48
-  %32 = zext nneg i8 %31 to i32
-  store i32 %32, ptr %5, align 8, !tbaa !3
+  %21 = urem i8 %i.en, 100
+  %22 = udiv i8 %21, 10
+  %23 = urem i8 %i.en, 10
+  %24 = insertelement <3 x i8> poison, i8 %i.fb, i64 0
+  %25 = insertelement <3 x i8> %24, i8 %22, i64 1
+  %26 = insertelement <3 x i8> %25, i8 %23, i64 2
+  %27 = or disjoint <3 x i8> %26, splat (i8 48)
+  %28 = zext nneg <3 x i8> %27 to <3 x i32>
+  store <3 x i32> %28, ptr %i.a, align 16, !tbaa !3
   br label %bb.ay
 
 bb.ay:                                            ; preds = %bb.av, %bb.aw, %bb.ax
@@ -701,18 +694,16 @@ bb.bc:                                            ; preds = %bb.ba
   br label %.thread603.loopexit712
 
 bb.bd:                                            ; preds = %bb.az
-  %33 = urem i8 %i.fm, 100
-  %34 = udiv i8 %33, 10
   %i.ga = udiv i8 %i.fm, 100
-  %35 = insertelement <2 x i8> poison, i8 %i.ga, i64 0
-  %36 = insertelement <2 x i8> %35, i8 %34, i64 1
-  %37 = or disjoint <2 x i8> %36, splat (i8 48)
-  %38 = zext nneg <2 x i8> %37 to <2 x i32>
-  store <2 x i32> %38, ptr %i.a, align 16, !tbaa !3
-  %39 = urem i8 %i.fm, 10
-  %40 = or disjoint i8 %39, 48
-  %41 = zext nneg i8 %40 to i32
-  store i32 %41, ptr %5, align 8, !tbaa !3
+  %29 = urem i8 %i.fm, 100
+  %30 = udiv i8 %29, 10
+  %31 = urem i8 %i.fm, 10
+  %32 = insertelement <3 x i8> poison, i8 %i.ga, i64 0
+  %33 = insertelement <3 x i8> %32, i8 %30, i64 1
+  %34 = insertelement <3 x i8> %33, i8 %31, i64 2
+  %35 = or disjoint <3 x i8> %34, splat (i8 48)
+  %36 = zext nneg <3 x i8> %35 to <3 x i32>
+  store <3 x i32> %36, ptr %i.a, align 16, !tbaa !3
   br label %.thread603.loopexit712
 
 .thread603.loopexit712:                           ; preds = %bb.bb, %bb.bc, %bb.bd

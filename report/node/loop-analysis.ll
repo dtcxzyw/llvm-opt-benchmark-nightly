@@ -201,20 +201,16 @@ _ZNK2v88internal8compiler4Node7InputAtEi.exit167: ; preds = %bb.bh, %bb.bi
 _ZSt5countIPKN2v88internal7BuiltinES2_ENSt15iterator_traitsIT_E15difference_typeES6_S6_RKT0_.exit: ; preds = %_ZNK2v88internal8compiler4Node7InputAtEi.exit167
   %i.nq = getelementptr inbounds nuw i8, ptr %i.nm, i64 40
   %i.nr = load i64, ptr %i.nq, align 8
-  %i.ns = trunc i64 %i.nr to i32                  ; 3 uses
-  %13 = insertelement <12 x i32> poison, i32 %i.ns, i64 0
-  %14 = shufflevector <12 x i32> %13, <12 x i32> poison, <12 x i32> zeroinitializer
-  %15 = icmp eq <12 x i32> %14, <i32 1344, i32 1328, i32 1329, i32 1330, i32 1332, i32 1327, i32 1362, i32 1363, i32 1336, i32 1338, i32 1339, i32 1341>
-  %16 = icmp eq i32 %i.ns, 1333
-  %17 = zext i1 %16 to i64
-  %18 = bitcast <12 x i1> %15 to i12
-  %19 = call range(i12 0, 13) i12 @llvm.ctpop.i12(i12 %18)
-  %20 = zext nneg i12 %19 to i64
-  %op.rdx = add nuw nsw i64 %20, %17
+  %i.ns = trunc i64 %i.nr to i32                  ; 2 uses
+  %13 = insertelement <13 x i32> poison, i32 %i.ns, i64 0
+  %14 = shufflevector <13 x i32> %13, <13 x i32> poison, <13 x i32> zeroinitializer
+  %15 = icmp eq <13 x i32> %14, <i32 1344, i32 1328, i32 1329, i32 1330, i32 1332, i32 1327, i32 1362, i32 1363, i32 1336, i32 1338, i32 1339, i32 1341, i32 1333>
+  %16 = bitcast <13 x i1> %15 to i13
+  %17 = call range(i13 0, 14) i13 @llvm.ctpop.i13(i13 %16)
   %i.nt = icmp eq i32 %i.ns, 1413
-  %21 = zext i1 %i.nt to i64
-  %22 = or i64 %op.rdx, %21
-  %i.nu = icmp eq i64 %22, 0
+  %18 = zext i1 %i.nt to i13
+  %19 = or i13 %17, %18
+  %i.nu = icmp eq i13 %19, 0
   br i1 %i.nu, label %.thread381, label %bb.bj
 
 bb.bj:                                            ; preds = %_ZSt5countIPKN2v88internal7BuiltinES2_ENSt15iterator_traitsIT_E15difference_typeES6_S6_RKT0_.exit
@@ -617,7 +613,7 @@ declare i64 @llvm.umax.i64(i64, i64) #10
 declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i12 @llvm.ctpop.i12(i12) #10
+declare i13 @llvm.ctpop.i13(i13) #10
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %bb.c
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZN11OpenImageIO4v3_112ImageBufAlgo12colorconvertENS0_4spanIfLm18446744073709551615EEEPKNS0_14ColorProcessorEb(ptr captures(none) %0, i64 %1, ptr noundef %2, i1 noundef zeroext %3) local_unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [4 x float], align 16             ; 14 uses
+  %i.a = alloca [4 x float], align 16             ; 12 uses
   %.not = icmp ne ptr %2, null                    ; 2 uses
   br i1 %.not, label %bb.b, label %bb.i
 
@@ -226,20 +226,16 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
-  %i.k = load float, ptr %i.j, align 4, !tbaa !69 ; 3 uses
+  %i.k = load float, ptr %i.j, align 4, !tbaa !69 ; 2 uses
   %i.l = fcmp ogt float %i.k, f0x00800000
   br i1 %i.l, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %4 = load <2 x float>, ptr %i.a, align 16, !tbaa !69
-  %5 = insertelement <2 x float> poison, float %i.k, i64 0
-  %6 = shufflevector <2 x float> %5, <2 x float> poison, <2 x i32> zeroinitializer
-  %7 = fdiv <2 x float> %4, %6
-  store <2 x float> %7, ptr %i.a, align 16, !tbaa !69
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %9 = load float, ptr %8, align 8, !tbaa !69
-  %10 = fdiv float %9, %i.k
-  store float %10, ptr %8, align 8, !tbaa !69
+  %4 = load <3 x float>, ptr %i.a, align 16, !tbaa !69
+  %5 = insertelement <3 x float> poison, float %i.k, i64 0
+  %6 = shufflevector <3 x float> %5, <3 x float> poison, <3 x i32> zeroinitializer
+  %7 = fdiv <3 x float> %4, %6
+  store <3 x float> %7, ptr %i.a, align 16, !tbaa !69
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -247,20 +243,16 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 32
   %i.o = load ptr, ptr %i.n, align 8
   call void %i.o(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %i.a, i32 noundef 1, i32 noundef 1, i32 noundef 4, i64 noundef 4, i64 noundef 16, i64 noundef 16)
-  %i.p = load float, ptr %i.j, align 4, !tbaa !69 ; 3 uses
+  %i.p = load float, ptr %i.j, align 4, !tbaa !69 ; 2 uses
   %i.q = fcmp ogt float %i.p, f0x00800000
   br i1 %i.q, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %11 = load <2 x float>, ptr %i.a, align 16, !tbaa !69
-  %12 = insertelement <2 x float> poison, float %i.p, i64 0
-  %13 = shufflevector <2 x float> %12, <2 x float> poison, <2 x i32> zeroinitializer
-  %14 = fmul <2 x float> %13, %11
-  store <2 x float> %14, ptr %i.a, align 16, !tbaa !69
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %16 = load float, ptr %15, align 8, !tbaa !69
-  %17 = fmul float %i.p, %16
-  store float %17, ptr %15, align 8, !tbaa !69
+  %8 = load <3 x float>, ptr %i.a, align 16, !tbaa !69
+  %9 = insertelement <3 x float> poison, float %i.p, i64 0
+  %10 = shufflevector <3 x float> %9, <3 x float> poison, <3 x i32> zeroinitializer
+  %11 = fmul <3 x float> %10, %8
+  store <3 x float> %11, ptr %i.a, align 16, !tbaa !69
   br label %bb.h
 
 .critedge:                                        ; preds = %bb.c

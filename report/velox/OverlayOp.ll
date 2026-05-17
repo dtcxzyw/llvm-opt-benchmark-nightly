@@ -201,23 +201,14 @@ _ZN4geos9geomgraph5Label4flipEv.exit:             ; preds = %bb.e, %_ZN4geos9geo
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !50
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 128
   %i.ac = load ptr, ptr %i.ab, align 8
-  %i.ad = tail call noundef nonnull align 8 dereferenceable(32) ptr %i.ac(ptr noundef nonnull align 8 dereferenceable(152) %i.b) ; 5 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
-  %4 = load <4 x i32>, ptr %3, align 8
-  %.fr = freeze <4 x i32> %4
-  %5 = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
-  %6 = load i32, ptr %5, align 8
-  %.fr19 = freeze i32 %6
-  %.not.1.1.i = icmp eq i32 %.fr19, -1
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 28
-  %7 = load i32, ptr %i.ae, align 4
-  %.not.2.1.i = icmp eq i32 %7, -1
-  %8 = icmp ne <4 x i32> %.fr, splat (i32 -1)
-  %9 = bitcast <4 x i1> %8 to i4
-  %i.af = icmp eq i4 %9, 0
-  %op.rdx = and i1 %i.af, %.not.1.1.i
-  %op.rdx18 = select i1 %op.rdx, i1 %.not.2.1.i, i1 false
-  br i1 %op.rdx18, label %bb.f, label %bb.g
+  %i.ad = tail call noundef nonnull align 8 dereferenceable(32) ptr %i.ac(ptr noundef nonnull align 8 dereferenceable(152) %i.b) ; 3 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
+  %3 = load <6 x i32>, ptr %i.ae, align 8
+  %.fr = freeze <6 x i32> %3
+  %4 = icmp ne <6 x i32> %.fr, splat (i32 -1)
+  %5 = bitcast <6 x i1> %4 to i6
+  %i.af = icmp eq i6 %5, 0
+  br i1 %i.af, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZN4geos9geomgraph5Label4flipEv.exit
   tail call void @_ZN4geos9geomgraph5Depth3addERKNS0_5LabelE(ptr noundef nonnull align 8 dereferenceable(32) %i.ad, ptr noundef nonnull align 1 dereferenceable(8) %i.c)
@@ -620,24 +611,15 @@ bb.a:
   %i.g = load ptr, ptr %i.e, align 8, !tbaa !50
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 128
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef nonnull align 8 dereferenceable(32) ptr %i.i(ptr noundef nonnull align 8 dereferenceable(152) %i.e) ; 8 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %i.j, i64 12
-  %3 = load <4 x i32>, ptr %1, align 8
-  %.fr = freeze <4 x i32> %3
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  %4 = load i32, ptr %i.k, align 8
-  %.fr49 = freeze i32 %4
-  %.not.1.1.i = icmp eq i32 %.fr49, -1
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 28
-  %5 = load i32, ptr %i.l, align 4
-  %.not.2.1.i = icmp eq i32 %5, -1
-  %6 = icmp ne <4 x i32> %.fr, splat (i32 -1)
-  %7 = bitcast <4 x i1> %6 to i4
-  %i.m = icmp eq i4 %7, 0
-  %op.rdx = and i1 %i.m, %.not.1.1.i
-  %op.rdx48 = select i1 %op.rdx, i1 %.not.2.1.i, i1 false
-  br i1 %op.rdx48, label %.loopexit, label %bb.b
+  %i.j = tail call noundef nonnull align 8 dereferenceable(32) ptr %i.i(ptr noundef nonnull align 8 dereferenceable(152) %i.e) ; 6 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 12
+  %1 = load <6 x i32>, ptr %i.k, align 8
+  %.fr = freeze <6 x i32> %1
+  %2 = icmp ne <6 x i32> %.fr, splat (i32 -1)
+  %3 = bitcast <6 x i1> %2 to i6
+  %i.m = icmp eq i6 %3, 0
+  br i1 %i.m, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   tail call void @_ZN4geos9geomgraph5Depth9normalizeEv(ptr noundef nonnull align 8 dereferenceable(32) %i.j)
@@ -668,7 +650,7 @@ _ZNK4geos9geomgraph5Label6isNullEj.exit:          ; preds = %.lr.ph.i.i
   br i1 %i.y, label %bb.d, label %_ZN4geos9geomgraph5Label6toLineEj.exit
 
 bb.d:                                             ; preds = %_ZNK4geos9geomgraph5Label6isNullEj.exit
-  %i.z = load i32, ptr %2, align 4, !tbaa !3      ; 3 uses
+  %i.z = load i32, ptr %i.l, align 4, !tbaa !3    ; 3 uses
   %i.aa = icmp eq i32 %i.z, -1
   br i1 %i.aa, label %_ZN4geos9geomgraph5Label6toLineEj.exit, label %bb.e
 

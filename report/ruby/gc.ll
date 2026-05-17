@@ -163,7 +163,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.96 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.97 = private unnamed_addr constant [91 x i8] c"page %p's has_remembered_shady should be false, but there are remembered shady objects. %s\00", align 1
 @.str.98 = private unnamed_addr constant [43 x i8] c"page %p's final_slots should be %d, but %d\00", align 1
-@gc_params = internal global %struct.ruby_gc_params_t { [5 x i64] [i64 10000, i64 0, i64 0, i64 0, i64 0], i64 4096, double 1.800000e+00, i64 0, double 2.000000e-01, double 4.000000e-01, double 6.500000e-01, double 1.000000e-02, double 2.000000e+00, i64 16777216, i64 33554432, double 1.400000e+00, i64 16777216, i64 134217728, double 1.200000e+00 }, align 32
+@gc_params = internal global %struct.ruby_gc_params_t { [5 x i64] [i64 10000, i64 0, i64 0, i64 0, i64 0], i64 4096, double 1.800000e+00, i64 0, double 2.000000e-01, double 4.000000e-01, double 6.500000e-01, double 1.000000e-02, double 2.000000e+00, i64 16777216, i64 33554432, double 1.400000e+00, i64 16777216, i64 134217728, double 1.200000e+00 }, align 64
 @.str.99 = private unnamed_addr constant [43 x i8] c"Could not preregister postponed job for GC\00", align 1
 @heap_page_alloc_use_mmap = internal unnamed_addr global i1 false, align 1
 @.str.100 = private unnamed_addr constant [54 x i8] c"FL_FINALIZE flag is set, but finalizers are not found\00", align 1
@@ -566,14 +566,12 @@ gc_update_weak_references.exit:                   ; preds = %rb_darray_realloc_m
   %i.ej = getelementptr i8, ptr %0, i64 864
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !339 ; 2 uses
   %i.el = load double, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 80), align 16, !tbaa !332
-  %i.em = load double, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 64), align 32, !tbaa !352
+  %i.em = load double, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 64), align 64, !tbaa !352
   %i.en = load i64, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 40), align 8, !tbaa !516
   %i.eo = load i16, ptr %i.b, align 4
-  %2 = load <4 x i64>, ptr @gc_params, align 32, !tbaa !59
-  %3 = load i64, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 32), align 32, !tbaa !59
-  %i.ep = tail call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %2)
-  %op.rdx = add i64 %i.ep, %3
-  %i.eq = mul i64 %op.rdx, %spec.select
+  %2 = load <5 x i64>, ptr @gc_params, align 64, !tbaa !59
+  %i.ep = tail call i64 @llvm.vector.reduce.add.v5i64(<5 x i64> %2)
+  %i.eq = mul i64 %i.ep, %spec.select
   %i.er = add i64 %i.ec, %i.ea
   %i.es = add i64 %i.er, %i.ee
   %i.et = add i64 %i.es, %i.eg
@@ -976,7 +974,7 @@ bb.a:
   %i.n = load i64, ptr %i.m, align 8, !tbaa !59
   %i.o = tail call i64 @llvm.umax.i64(i64 %i.b, i64 %i.n)
   %i.p = uitofp i64 %i.o to double
-  %i.q = load double, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 64), align 32, !tbaa !352
+  %i.q = load double, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 64), align 64, !tbaa !352
   %i.r = fmul double %i.q, %i.p
   %i.s = fptoui double %i.r to i64                ; 4 uses
   %i.t = icmp ult i64 %i.g, %i.s
@@ -1379,7 +1377,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.gy = fadd double %i.gx, 1.000000e+00
   %i.gz = fdiv double %i.gu, %i.gy
   %i.ha = fptoui double %i.gz to i64
-  %i.hb = load i64, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 128), align 32, !tbaa !169
+  %i.hb = load i64, ptr getelementptr inbounds nuw (i8, ptr @gc_params, i64 128), align 64, !tbaa !169
   %spec.store.select33.i = call i64 @llvm.umax.i64(i64 %i.hb, i64 %i.ha)
   store i64 %spec.store.select33.i, ptr %i.gs, align 8
   br label %gc_reset_malloc_info.exit
@@ -1782,7 +1780,7 @@ declare i16 @llvm.umax.i16(i16, i16) #38
 declare i64 @llvm.usub.sat.i64(i64, i64) #38
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #38
+declare i64 @llvm.vector.reduce.add.v5i64(<5 x i64>) #38
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #3

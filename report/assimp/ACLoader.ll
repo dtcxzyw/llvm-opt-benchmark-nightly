@@ -201,15 +201,13 @@ bb.gf:                                            ; preds = %switch.early.test
   br label %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
 
 bb.gg:                                            ; preds = %switch.early.test, %switch.early.test, %bb.ge
-  %i.sm = load ptr, ptr %i.eh, align 8            ; 6 uses
+  %i.sm = load ptr, ptr %i.eh, align 8            ; 5 uses
   %i.sn = load ptr, ptr %i.ei, align 8
   %.not.i325 = icmp eq ptr %i.sm, %i.sn
   br i1 %.not.i325, label %bb.gi, label %bb.gh
 
 bb.gh:                                            ; preds = %bb.gg
-  store <2 x float> zeroinitializer, ptr %i.sm, align 4
-  %4 = getelementptr inbounds nuw i8, ptr %i.sm, i64 8
-  store float 0.000000e+00, ptr %4, align 4
+  store <3 x float> zeroinitializer, ptr %i.sm, align 4
   %i.so = load ptr, ptr %i.eh, align 8            ; 2 uses
   %i.sp = getelementptr inbounds nuw i8, ptr %i.so, i64 12
   store ptr %i.sp, ptr %i.eh, align 8
@@ -238,10 +236,8 @@ _ZNKSt6vectorI10aiVector3tIfESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb
   call void @llvm.assume(i1 %.not.i.i.i327)
   %i.ta = mul nuw nsw i64 %i.sz, 12
   %i.tb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ta) #27 ; 5 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.tb, i64 %i.st ; 2 uses
-  store <2 x float> zeroinitializer, ptr %5, align 4
-  %i.tc = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store float 0.000000e+00, ptr %i.tc, align 4
+  %i.tc = getelementptr inbounds nuw i8, ptr %i.tb, i64 %i.st
+  store <3 x float> zeroinitializer, ptr %i.tc, align 4
   %.not10.i.i.i.i.i = icmp eq ptr %i.sq, %i.sm
   br i1 %.not10.i.i.i.i.i, label %_ZNSt6vectorI10aiVector3tIfESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit21.i.i, label %.lr.ph.i.i.i.i.i
 

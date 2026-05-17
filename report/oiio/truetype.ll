@@ -201,7 +201,7 @@ declare hidden ptr @FT_Get_Module_Interface(ptr noundef, ptr noundef) local_unna
 ; Function Attrs: nounwind uwtable
 define internal fastcc zeroext range(i8 0, 2) i8 @tt_check_trickyness(ptr noundef %0) unnamed_addr #2 {
 bb.a:
-  %i.a = alloca [31 x i32], align 16              ; 14 uses
+  %i.a = alloca [31 x i32], align 16              ; 9 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %tt_check_trickyness_family.exit.thread, label %bb.b
 
@@ -587,44 +587,13 @@ tt_check_trickyness_sfnt_ids.exit.thread:         ; preds = %tt_get_sfnt_checksu
   br label %tt_check_trickyness_family.exit.thread
 
 tt_check_trickyness_sfnt_ids.exit:                ; preds = %.preheader.i
-  %1 = load <16 x i32>, ptr %i.a, align 16
-  %.fr = freeze <16 x i32> %1
-  %2 = icmp ne <16 x i32> %.fr, splat (i32 3)     ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %4 = load <8 x i32>, ptr %3, align 16
-  %.fr54 = freeze <8 x i32> %4
-  %5 = icmp ne <8 x i32> %.fr54, splat (i32 3)
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  %7 = load <4 x i32>, ptr %6, align 16
-  %.fr55 = freeze <4 x i32> %7
-  %8 = icmp ne <4 x i32> %.fr55, splat (i32 3)
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  %10 = load i32, ptr %9, align 16
-  %11 = icmp ne i32 %10, 3
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 116
-  %13 = load i32, ptr %12, align 4
-  %.fr56 = freeze i32 %13
-  %14 = icmp ne i32 %.fr56, 3
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 120
-  %16 = load i32, ptr %15, align 8
-  %.fr58 = freeze i32 %16
-  %17 = icmp ne i32 %.fr58, 3
-  %18 = shufflevector <16 x i1> %2, <16 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = and <8 x i1> %18, %5                  ; 2 uses
-  %19 = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %20 = shufflevector <16 x i1> %19, <16 x i1> %2, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %21 = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %rdx.op51 = and <4 x i1> %21, %8
-  %22 = shufflevector <4 x i1> %rdx.op51, <4 x i1> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %23 = shufflevector <16 x i1> %22, <16 x i1> %20, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %24 = bitcast <16 x i1> %23 to i16
-  %i.dr = icmp eq i16 %24, -1
-  %op.rdx = select i1 %i.dr, i1 %11, i1 false
-  %25 = freeze i1 %op.rdx
-  %26 = and i1 %25, %14
-  %op.rdx53 = and i1 %26, %17
+  %1 = load <31 x i32>, ptr %i.a, align 16
+  %.fr = freeze <31 x i32> %1
+  %2 = icmp eq <31 x i32> %.fr, splat (i32 3)
+  %3 = bitcast <31 x i1> %2 to i31
+  %i.dr = icmp eq i31 %3, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #22
-  br i1 %op.rdx53, label %bb.am, label %tt_check_trickyness_family.exit.thread
+  br i1 %i.dr, label %bb.am, label %tt_check_trickyness_family.exit.thread
 
 bb.am:                                            ; preds = %tt_check_trickyness_sfnt_ids.exit.thread17, %tt_check_trickyness_sfnt_ids.exit
   br label %tt_check_trickyness_family.exit.thread

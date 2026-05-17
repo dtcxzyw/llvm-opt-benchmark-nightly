@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %_ZN4node11Environme
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 40
   %i.as = insertelement <6 x i64> poison, i64 %i.am, i64 0
   %i.at = shufflevector <6 x i64> %i.as, <6 x i64> poison, <6 x i32> zeroinitializer
   store <6 x i64> %i.at, ptr %2, align 16
@@ -604,22 +604,18 @@ bb.bp:                                            ; preds = %bb.bo
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.bp, %bb.bo
-  %7 = insertelement <4 x ptr> poison, ptr %i.is, i64 0
-  %8 = insertelement <4 x ptr> %7, ptr %i.jb, i64 1
-  %9 = insertelement <4 x ptr> %8, ptr %i.je, i64 2
-  %10 = insertelement <4 x ptr> %9, ptr %i.jh, i64 3
-  %.fr = freeze <4 x ptr> %10
-  %11 = icmp eq <4 x ptr> %.fr, splat (ptr null)
-  %12 = load ptr, ptr %i.aq, align 16
-  %.fr264 = freeze ptr %12
-  %13 = icmp eq ptr %.fr264, null
-  %14 = load ptr, ptr %i.ar, align 8
-  %i.js = icmp eq ptr %14, null
-  %15 = bitcast <4 x i1> %11 to i4
-  %16 = icmp ne i4 %15, 0
-  %op.rdx = or i1 %16, %13
-  %op.rdx262 = select i1 %op.rdx, i1 true, i1 %i.js
-  br i1 %op.rdx262, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.thread, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit
+  %7 = load <2 x ptr>, ptr %i.aq, align 16
+  %8 = insertelement <6 x ptr> poison, ptr %i.is, i64 0
+  %9 = insertelement <6 x ptr> %8, ptr %i.jb, i64 1
+  %10 = insertelement <6 x ptr> %9, ptr %i.je, i64 2
+  %11 = insertelement <6 x ptr> %10, ptr %i.jh, i64 3
+  %12 = shufflevector <2 x ptr> %7, <2 x ptr> poison, <6 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
+  %13 = shufflevector <6 x ptr> %11, <6 x ptr> %12, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 6, i32 7>
+  %.fr = freeze <6 x ptr> %13
+  %14 = icmp eq <6 x ptr> %.fr, splat (ptr null)
+  %15 = bitcast <6 x i1> %14 to i6
+  %i.js = icmp eq i6 %15, 0
+  br i1 %i.js, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit, label %_ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit.thread
 
 _ZN4node30NewDictionaryInstanceNullProtoEN2v85LocalINS0_7ContextEEENS1_INS0_18DictionaryTemplateEEENS0_10MemorySpanINS0_10MaybeLocalINS0_5ValueEEEEE.exit: ; preds = %.critedge.i
   %i.jt = load ptr, ptr %i.ii, align 8

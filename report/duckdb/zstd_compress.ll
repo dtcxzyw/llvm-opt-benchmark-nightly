@@ -201,20 +201,14 @@ _ZN11duckdb_zstd27ZSTD_CCtx_setPledgedSrcSizeEPNS_11ZSTD_CCtx_sEy.exit:
   br i1 %.not, label %bb.a, label %_ZN11duckdb_zstd17ZSTD_checkCParamsENS_26ZSTD_compressionParametersE.exit.thread
 
 bb.a:                                             ; preds = %_ZN11duckdb_zstd27ZSTD_CCtx_setPledgedSrcSizeEPNS_11ZSTD_CCtx_sEy.exit
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %.sroa.7.0.copyload = load i32, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !88
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %.sroa.6.0.copyload = load i32, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !3
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.sroa.5.0.copyload = load i32, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !3
-  %5 = add i32 %.sroa.5.0.copyload, -3
-  %narrow.i29.i = icmp ult i32 %5, 5
-  %narrow.i35.i = icmp ult i32 %.sroa.6.0.copyload, 131073
-  %or.cond.i.not43 = select i1 %narrow.i29.i, i1 %narrow.i35.i, i1 false
-  %6 = add i32 %.sroa.7.0.copyload, -1
-  %narrow.i41.i = icmp ult i32 %6, 9
-  %or.cond42 = select i1 %or.cond.i.not43, i1 %narrow.i41.i, i1 false
-  br i1 %or.cond42, label %bb.b, label %_ZN11duckdb_zstd17ZSTD_checkCParamsENS_26ZSTD_compressionParametersE.exit.thread
+  %5 = load <3 x i32>, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !220
+  %.fr45 = freeze <3 x i32> %5
+  %6 = add <3 x i32> %.fr45, <i32 -3, i32 0, i32 -1>
+  %7 = icmp ugt <3 x i32> %6, <i32 4, i32 131072, i32 8>
+  %8 = bitcast <3 x i1> %7 to i3
+  %9 = icmp eq i3 %8, 0
+  br i1 %9, label %bb.b, label %_ZN11duckdb_zstd17ZSTD_checkCParamsENS_26ZSTD_compressionParametersE.exit.thread
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 20

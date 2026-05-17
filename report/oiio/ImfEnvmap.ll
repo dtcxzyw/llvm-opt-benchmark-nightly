@@ -201,9 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.u = phi <2 x float> [ %i.t, %bb.b ], [ zeroinitializer, %bb.a ] ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %0, align 4, !tbaa !22
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store float 0.000000e+00, ptr %4, align 4, !tbaa !7
+  store <3 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %0, align 4, !tbaa !22
   %i.w = extractelement <2 x float> %i.u, i64 0   ; 5 uses
   %i.x = extractelement <2 x float> %i.u, i64 1   ; 5 uses
   switch i32 %1, label %bb.h [

@@ -201,9 +201,9 @@ bb.a:
   %6 = alloca %"class.pugi::xml_attribute", align 8 ; 5 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
-  %9 = alloca %struct.aiColor3D, align 8          ; 8 uses
-  %10 = alloca %struct.aiColor3D, align 8         ; 7 uses
-  %11 = alloca %struct.aiColor3D, align 8         ; 7 uses
+  %9 = alloca %struct.aiColor3D, align 16         ; 7 uses
+  %10 = alloca %struct.aiColor3D, align 16        ; 7 uses
+  %11 = alloca %struct.aiColor3D, align 16        ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #17
   %i.a = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
@@ -218,18 +218,14 @@ bb.a:
   store i64 0, ptr %i.d, align 8
   store i8 0, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #17
-  %13 = getelementptr inbounds nuw i8, ptr %9, i64 4
-  store <2 x float> splat (float 8.000000e-01), ptr %9, align 8
-  %i.e = getelementptr inbounds nuw i8, ptr %9, i64 8
-  store float 8.000000e-01, ptr %i.e, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %9, i64 4
+  store <3 x float> splat (float 8.000000e-01), ptr %9, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #17
-  store <2 x float> zeroinitializer, ptr %10, align 8
-  %i.f = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %i.f, align 8
+  %i.f = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store <3 x float> zeroinitializer, ptr %10, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #17
-  store <2 x float> zeroinitializer, ptr %11, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 2 uses
-  store float 0.000000e+00, ptr %i.g, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store <3 x float> zeroinitializer, ptr %11, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
   %i.h = invoke ptr @_ZNK4pugi8xml_node9attributeEPKc(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str)
           to label %.noexc unwind label %bb.p
@@ -402,18 +398,18 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit: ; preds = %b
   store float %.073, ptr %i.ay, align 8
   store float %.072, ptr %i.av, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.aj, i64 80
-  %i.ba = load float, ptr %9, align 8
+  %i.ba = load float, ptr %9, align 16
   store float %i.ba, ptr %i.az, align 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aj, i64 84
-  %i.bc = load <2 x float>, ptr %13, align 4
-  %i.bd = load <2 x float>, ptr %10, align 8
+  %i.bc = load <2 x float>, ptr %i.e, align 4
+  %i.bd = load <2 x float>, ptr %10, align 16
   %i.be = shufflevector <2 x float> %i.bc, <2 x float> %i.bd, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   store <4 x float> %i.be, ptr %i.bb, align 4
   %i.bf = load float, ptr %i.f, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %i.aj, i64 100
   store float %i.bf, ptr %i.bg, align 4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.aj, i64 108
-  %i.bi = load <2 x float>, ptr %11, align 8
+  %i.bi = load <2 x float>, ptr %11, align 16
   store <2 x float> %i.bi, ptr %i.bh, align 4
   %i.bj = load float, ptr %i.g, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.aj, i64 116

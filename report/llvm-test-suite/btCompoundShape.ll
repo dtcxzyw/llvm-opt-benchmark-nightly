@@ -201,35 +201,27 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.h = load ptr, ptr %i.g, align 8
   call void %i.h(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull align 4 dereferenceable(64) %3, ptr noundef nonnull align 4 dereferenceable(16) %4, ptr noundef nonnull align 4 dereferenceable(16) %5)
-  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %6 = load float, ptr %i.i, align 8, !tbaa !21
-  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %7 = load float, ptr %i.j, align 8, !tbaa !21
-  %8 = fsub float %6, %7
-  %9 = fmul float %8, 5.000000e-01
-  %10 = fmul float %9, 2.000000e+00               ; 2 uses
-  %i.k = fdiv float %1, 1.200000e+01              ; 2 uses
-  %11 = fmul float %10, %10
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.j = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.k = fdiv float %1, 1.200000e+01
   %i.l = load <2 x float>, ptr %5, align 8, !tbaa !21
   %i.m = load <2 x float>, ptr %4, align 8, !tbaa !21
-  %12 = fsub <2 x float> %i.l, %i.m
-  %13 = fmul <2 x float> %12, splat (float 5.000000e-01)
-  %14 = fmul <2 x float> %13, splat (float 2.000000e+00) ; 5 uses
-  %15 = insertelement <2 x float> poison, float %11, i64 0
-  %16 = shufflevector <2 x float> %15, <2 x float> poison, <2 x i32> zeroinitializer
-  %17 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %14, <2 x float> %14, <2 x float> %16)
-  %18 = insertelement <2 x float> poison, float %i.k, i64 0
-  %19 = shufflevector <2 x float> %18, <2 x float> poison, <2 x i32> zeroinitializer
-  %20 = shufflevector <2 x float> %17, <2 x float> poison, <2 x i32> <i32 1, i32 0>
-  %21 = fmul <2 x float> %19, %20
-  store <2 x float> %21, ptr %2, align 4, !tbaa !21
-  %foldExtExtBinop = fmul <2 x float> %14, %14
-  %22 = extractelement <2 x float> %foldExtExtBinop, i64 1
-  %23 = extractelement <2 x float> %14, i64 0     ; 2 uses
-  %24 = call float @llvm.fmuladd.f32(float %23, float %23, float %22)
-  %25 = fmul float %i.k, %24
-  %26 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store float %25, ptr %26, align 4, !tbaa !21
+  %6 = load <2 x float>, ptr %i.i, align 4, !tbaa !21
+  %7 = load <2 x float>, ptr %i.j, align 4, !tbaa !21
+  %8 = fsub <2 x float> %i.l, %i.m
+  %9 = shufflevector <2 x float> %8, <2 x float> poison, <3 x i32> <i32 1, i32 0, i32 0>
+  %10 = fsub <2 x float> %6, %7
+  %11 = shufflevector <2 x float> %10, <2 x float> poison, <3 x i32> <i32 1, i32 1, i32 0>
+  %12 = fmul <3 x float> %9, splat (float 5.000000e-01)
+  %13 = fmul <3 x float> %11, splat (float 5.000000e-01)
+  %14 = fmul <3 x float> %12, splat (float 2.000000e+00) ; 2 uses
+  %15 = fmul <3 x float> %13, splat (float 2.000000e+00) ; 2 uses
+  %16 = fmul <3 x float> %15, %15
+  %17 = call <3 x float> @llvm.fmuladd.v3f32(<3 x float> %14, <3 x float> %14, <3 x float> %16)
+  %18 = insertelement <3 x float> poison, float %i.k, i64 0
+  %19 = shufflevector <3 x float> %18, <3 x float> poison, <3 x i32> zeroinitializer
+  %20 = fmul <3 x float> %19, %17
+  store <3 x float> %20, ptr %2, align 4, !tbaa !21
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
@@ -323,13 +315,10 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.new
   %i.ap = fdiv float 1.000000e+00, %.0169.lcssa
   %i.aq = insertelement <4 x float> poison, float %i.ap, i64 0
   %i.ar = shufflevector <4 x float> %i.aq, <4 x float> poison, <4 x i32> zeroinitializer
-  %i.as = fmul <4 x float> %i.ao, %i.ar           ; 3 uses
+  %i.as = fmul <4 x float> %i.ao, %i.ar           ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %6 = shufflevector <4 x float> %i.as, <4 x float> poison, <2 x i32> <i32 0, i32 2>
-  store <2 x float> %6, ptr %i.at, align 4
-  %.sroa.15164.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %7 = extractelement <4 x float> %i.as, i64 1
-  store float %7, ptr %.sroa.15164.0..sroa_idx, align 4
+  %6 = shufflevector <4 x float> %i.as, <4 x float> poison, <3 x i32> <i32 0, i32 2, i32 1>
+  store <3 x float> %6, ptr %i.at, align 4
   %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 60
   store float 0.000000e+00, ptr %.sroa.21.0..sroa_idx, align 4, !tbaa !32
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
@@ -732,7 +721,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 declare float @llvm.sqrt.f32(float) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #6
+declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #6

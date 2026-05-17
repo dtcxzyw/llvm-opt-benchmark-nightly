@@ -201,13 +201,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit172: ; preds = %bb
   %i.xk = call noundef i16 @llvm.bswap.i16(i16 %i.xj)
   store i16 %i.xk, ptr %i.tx, align 4, !tbaa !76
   %i.xl = getelementptr inbounds nuw i8, ptr %0, i64 866 ; 4 uses
-  %79 = load <4 x i16>, ptr %i.xl, align 2, !tbaa !76
-  %80 = call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %79)
-  store <4 x i16> %80, ptr %i.xl, align 2, !tbaa !76
-  %81 = getelementptr inbounds nuw i8, ptr %0, i64 874 ; 4 uses
-  %82 = load i16, ptr %81, align 2, !tbaa !76
-  %83 = call noundef i16 @llvm.bswap.i16(i16 %82)
-  store i16 %83, ptr %81, align 2, !tbaa !76
+  %79 = load <5 x i16>, ptr %i.xl, align 2, !tbaa !76
+  %80 = call <5 x i16> @llvm.bswap.v5i16(<5 x i16> %79)
+  store <5 x i16> %80, ptr %i.xl, align 2, !tbaa !76
   %i.xm = getelementptr inbounds nuw i8, ptr %0, i64 944 ; 4 uses
   %i.xn = load i32, ptr %i.xm, align 8, !tbaa !3
   %i.xo = call noundef i32 @llvm.bswap.i32(i32 %i.xn)
@@ -231,12 +227,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit172: ; preds = %bb
   %i.ya = load i16, ptr %i.tx, align 4, !tbaa !76
   %i.yb = call noundef i16 @llvm.bswap.i16(i16 %i.ya)
   store i16 %i.yb, ptr %i.tx, align 4, !tbaa !76
-  %84 = load <4 x i16>, ptr %i.xl, align 2, !tbaa !76
-  %85 = call <4 x i16> @llvm.bswap.v4i16(<4 x i16> %84)
-  store <4 x i16> %85, ptr %i.xl, align 2, !tbaa !76
-  %86 = load i16, ptr %81, align 2, !tbaa !76
-  %87 = call noundef i16 @llvm.bswap.i16(i16 %86)
-  store i16 %87, ptr %81, align 2, !tbaa !76
+  %81 = load <5 x i16>, ptr %i.xl, align 2, !tbaa !76
+  %82 = call <5 x i16> @llvm.bswap.v5i16(<5 x i16> %81)
+  store <5 x i16> %82, ptr %i.xl, align 2, !tbaa !76
   %i.yc = load i32, ptr %i.xm, align 8, !tbaa !3
   %i.yd = call noundef i32 @llvm.bswap.i32(i32 %i.yc)
   store i32 %i.yd, ptr %i.xm, align 8, !tbaa !3
@@ -637,6 +630,9 @@ declare <8 x i16> @llvm.bswap.v8i16(<8 x i16>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i16> @llvm.bswap.v4i16(<4 x i16>) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <5 x i16> @llvm.bswap.v5i16(<5 x i16>) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.bswap.v4i32(<4 x i32>) #14

@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %class.aiColor4t, align 8           ; 7 uses
   %4 = alloca %class.aiColor4t, align 8           ; 7 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %6 = alloca %struct.aiColor3D, align 8          ; 13 uses
+  %6 = alloca %struct.aiColor3D, align 16         ; 13 uses
   %i.b = alloca float, align 4                    ; 9 uses
   %i.c = alloca i32, align 4                      ; 5 uses
   %i.d = load ptr, ptr %0, align 8
@@ -217,7 +217,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 4 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 4 uses
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -553,8 +553,7 @@ _ZN6Assimp12_GLOBAL__N_111ChunkWriterD2Ev.exit:   ; preds = %_ZNSt7__cxx1112basi
   store i32 %i.ei, ptr %i.ej, align 1
   store i64 %i.dw, ptr %i.g, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #21
-  store <2 x float> zeroinitializer, ptr %6, align 8
-  store float 0.000000e+00, ptr %i.m, align 8
+  store <3 x float> zeroinitializer, ptr %6, align 16
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
   %i.ek = invoke i32 @aiGetMaterialColor(ptr noundef nonnull align 8 dereferenceable(16) %i.as, ptr noundef nonnull @.str.2, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %4)
@@ -571,7 +570,7 @@ bb.w:                                             ; preds = %.noexc131
 bb.x:                                             ; preds = %.noexc131
   %i.em = load float, ptr %i.n, align 8
   %i.en = load <2 x float>, ptr %4, align 8
-  store <2 x float> %i.en, ptr %6, align 8
+  store <2 x float> %i.en, ptr %6, align 16
   store float %i.em, ptr %i.m, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   %i.eo = load i64, ptr %i.g, align 8             ; 5 uses
@@ -752,7 +751,7 @@ bb.al:                                            ; preds = %.noexc150
 bb.am:                                            ; preds = %.noexc150
   %i.gp = load float, ptr %i.o, align 8
   %i.gq = load <2 x float>, ptr %3, align 8
-  store <2 x float> %i.gq, ptr %6, align 8
+  store <2 x float> %i.gq, ptr %6, align 16
   store float %i.gp, ptr %i.m, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   %i.gr = load i64, ptr %i.g, align 8             ; 5 uses
@@ -879,7 +878,7 @@ bb.aw:                                            ; preds = %.noexc167
 bb.ax:                                            ; preds = %.noexc167
   %i.ii = load float, ptr %i.p, align 8
   %i.ij = load <2 x float>, ptr %2, align 8
-  store <2 x float> %i.ij, ptr %6, align 8
+  store <2 x float> %i.ij, ptr %6, align 16
   store float %i.ii, ptr %i.m, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #21
   %i.ik = load i64, ptr %i.g, align 8             ; 5 uses
@@ -1131,7 +1130,7 @@ bb.bs:                                            ; preds = %.noexc200
 bb.bt:                                            ; preds = %.noexc200
   %i.lw = load float, ptr %i.q, align 8
   %i.lx = load <2 x float>, ptr %1, align 8
-  store <2 x float> %i.lx, ptr %6, align 8
+  store <2 x float> %i.lx, ptr %6, align 16
   store float %i.lw, ptr %i.m, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #21
   %i.ly = load i64, ptr %i.g, align 8             ; 5 uses

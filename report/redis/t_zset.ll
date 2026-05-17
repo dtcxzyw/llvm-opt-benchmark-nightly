@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.b, %bb.i, %bb.k,
 .thread:                                          ; preds = %.thread.loopexit, %bb.a
   %.0170.lcssa = phi i32 [ 2, %bb.a ], [ %.0170.lcssa.ph, %.thread.loopexit ] ; 5 uses
   %.0153.lcssa = phi i1 [ true, %bb.a ], [ %i.aa, %.thread.loopexit ]
-  %.0.lcssa = phi i32 [ %1, %bb.a ], [ %.0.lcssa.ph, %.thread.loopexit ] ; 7 uses
+  %.0.lcssa = phi i32 [ %1, %bb.a ], [ %.0.lcssa.ph, %.thread.loopexit ] ; 5 uses
   %i.ab = trunc i32 %.0.lcssa to i1               ; 4 uses
   %i.ac = and i32 %.0.lcssa, 4
   %.not182 = icmp eq i32 %i.ac, 0
@@ -228,15 +228,14 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.ap
 
 bb.p:                                             ; preds = %bb.n
-  %2 = and i32 %.0.lcssa, 10
-  %or.cond5 = icmp eq i32 %2, 10
-  %3 = and i32 %.0.lcssa, 18
-  %or.cond7 = icmp eq i32 %3, 18
-  %or.cond195 = or i1 %or.cond5, %or.cond7
-  %4 = and i32 %.0.lcssa, 24
-  %or.cond9 = icmp eq i32 %4, 24
-  %or.cond196 = select i1 %or.cond195, i1 true, i1 %or.cond9
-  br i1 %or.cond196, label %bb.q, label %bb.r
+  %2 = insertelement <3 x i32> poison, i32 %.0.lcssa, i64 0
+  %3 = shufflevector <3 x i32> %2, <3 x i32> poison, <3 x i32> zeroinitializer
+  %.fr293 = freeze <3 x i32> %3
+  %4 = and <3 x i32> %.fr293, <i32 10, i32 18, i32 24>
+  %5 = icmp eq <3 x i32> %4, <i32 10, i32 18, i32 24>
+  %6 = bitcast <3 x i1> %5 to i3
+  %or.cond9 = icmp eq i3 %6, 0
+  br i1 %or.cond9, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   tail call void @addReplyError(ptr noundef nonnull %0, ptr noundef nonnull @.str.22) #17

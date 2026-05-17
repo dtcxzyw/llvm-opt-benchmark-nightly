@@ -201,15 +201,14 @@ bb.a:
   br i1 %i.a, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @timer_th, i64 16), align 8, !tbaa !7
-  %2 = icmp eq i32 %0, %1
-  %3 = load i32, ptr getelementptr inbounds nuw (i8, ptr @timer_th, i64 20), align 4
-  %4 = icmp eq i32 %0, %3
-  %or.cond = select i1 %2, i1 true, i1 %4
-  %5 = load i32, ptr getelementptr inbounds nuw (i8, ptr @timer_th, i64 24), align 8
-  %i.b = icmp eq i32 %0, %5
-  %or.cond8 = select i1 %or.cond, i1 true, i1 %i.b
-  br i1 %or.cond8, label %bb.c, label %bb.d
+  %1 = load <3 x i32>, ptr getelementptr inbounds nuw (i8, ptr @timer_th, i64 16), align 8
+  %2 = insertelement <3 x i32> poison, i32 %0, i64 0
+  %3 = shufflevector <3 x i32> %2, <3 x i32> poison, <3 x i32> zeroinitializer
+  %.fr = freeze <3 x i32> %1
+  %4 = icmp eq <3 x i32> %3, %.fr
+  %5 = bitcast <3 x i1> %4 to i3
+  %i.b = icmp eq i3 %5, 0
+  br i1 %i.b, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load i64, ptr @timer_th, align 8, !tbaa !140

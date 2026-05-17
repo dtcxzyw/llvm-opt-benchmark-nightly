@@ -201,18 +201,16 @@ bb.l:                                             ; preds = %_ZN2v88internal18Pr
   br label %_ZN2v88internal12_GLOBAL__N_127CanonicalNumericIndexStringEPNS0_7IsolateERKNS0_11PropertyKeyEPb.exit
 
 bb.m:                                             ; preds = %_ZN2v88internal18PropertyDescriptor20IsAccessorDescriptorEPS1_.exit
-  %i.bt = load i8, ptr %3, align 8                ; 6 uses
+  %i.bt = load i8, ptr %3, align 8                ; 4 uses
   %i.bu = and i8 %i.bt, 8
   %.not156 = icmp eq i8 %i.bu, 0                  ; 2 uses
-  %10 = and i8 %i.bt, 12
-  %or.cond150.not = icmp eq i8 %10, 8
-  %11 = and i8 %i.bt, 3
-  %or.cond151.not = icmp eq i8 %11, 2
-  %or.cond160 = or i1 %or.cond150.not, %or.cond151.not
-  %12 = and i8 %i.bt, 48
-  %or.cond153.not = icmp eq i8 %12, 32
-  %or.cond161 = or i1 %or.cond153.not, %or.cond160
-  br i1 %or.cond161, label %bb.n, label %bb.p
+  %10 = insertelement <3 x i8> poison, i8 %i.bt, i64 0
+  %11 = shufflevector <3 x i8> %10, <3 x i8> poison, <3 x i32> zeroinitializer
+  %12 = and <3 x i8> %11, <i8 12, i8 3, i8 48>
+  %13 = icmp eq <3 x i8> %12, <i8 8, i8 2, i8 32>
+  %14 = bitcast <3 x i1> %13 to i3
+  %or.cond153.not = icmp eq i3 %14, 0
+  br i1 %or.cond153.not, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bv = call noundef i32 @_ZN2v88internal14GetShouldThrowEPNS0_7IsolateENS_5MaybeINS0_11ShouldThrowEEE(ptr noundef %0, i64 %4) #16

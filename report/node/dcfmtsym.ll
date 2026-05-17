@@ -201,7 +201,7 @@ bb.a:
   %7 = alloca %"class.icu_78::UnicodeString", align 8 ; 14 uses
   %8 = alloca %"class.icu_78::Locale", align 8    ; 5 uses
   %9 = alloca %"class.icu_78::Locale", align 8    ; 5 uses
-  %10 = alloca %"struct.icu_78::(anonymous namespace)::DecFmtSymDataSink", align 8 ; 16 uses
+  %10 = alloca %"struct.icu_78::(anonymous namespace)::DecFmtSymDataSink", align 8 ; 13 uses
   %11 = alloca %"class.icu_78::CharString", align 8 ; 12 uses
   %12 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
   %13 = alloca %"class.icu_78::StringPiece", align 8 ; 3 uses
@@ -496,28 +496,11 @@ bb.n:                                             ; preds = %.critedge
 
 _ZN6icu_7810CharStringD2Ev.exit:                  ; preds = %.critedge, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #11
-  %.phi.trans.insert153 = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %.phi.trans.insert169 = getelementptr inbounds nuw i8, ptr %10, i64 40
-  %.pre170 = load i8, ptr %.phi.trans.insert169, align 8
-  %.phi.trans.insert171 = getelementptr inbounds nuw i8, ptr %10, i64 41
-  %.pre172 = load i8, ptr %.phi.trans.insert171, align 1
-  %17 = load <16 x i8>, ptr %i.fj, align 8
-  %.fr = freeze <16 x i8> %17
-  %18 = icmp eq <16 x i8> %.fr, zeroinitializer   ; 2 uses
-  %19 = load <8 x i8>, ptr %.phi.trans.insert153, align 8
-  %.fr179 = freeze <8 x i8> %19
-  %20 = icmp eq <8 x i8> %.fr179, zeroinitializer
-  %21 = icmp eq i8 %.pre170, 0
-  %22 = icmp eq i8 %.pre172, 0
-  %23 = shufflevector <16 x i1> %18, <16 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %rdx.op = or <8 x i1> %23, %20
-  %24 = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %25 = shufflevector <16 x i1> %24, <16 x i1> %18, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
-  %26 = bitcast <16 x i1> %25 to i16
-  %i.gj = icmp ne i16 %26, 0
-  %op.rdx = select i1 %i.gj, i1 true, i1 %21
-  %27 = freeze i1 %op.rdx
-  %op.rdx178 = select i1 %27, i1 true, i1 %22
+  %17 = load <26 x i8>, ptr %i.fj, align 8
+  %.fr = freeze <26 x i8> %17
+  %18 = icmp eq <26 x i8> %.fr, zeroinitializer
+  %19 = bitcast <26 x i1> %18 to i26
+  %i.gj = icmp ne i26 %19, 0
   br label %bb.q
 
 bb.o:                                             ; preds = %bb.m
@@ -535,7 +518,7 @@ _ZN6icu_7810CharStringD2Ev.exit87:                ; preds = %bb.o, %bb.p
   br label %bb.ai
 
 bb.q:                                             ; preds = %_ZN6icu_7810CharStringD2Ev.exit, %bb.j
-  %.not.i = phi i1 [ %op.rdx178, %_ZN6icu_7810CharStringD2Ev.exit ], [ true, %bb.j ]
+  %.not.i = phi i1 [ %i.gj, %_ZN6icu_7810CharStringD2Ev.exit ], [ true, %bb.j ]
   %i.gm = getelementptr inbounds nuw i8, ptr %10, i64 26
   %i.gn = getelementptr inbounds nuw i8, ptr %10, i64 33
   %i.go = getelementptr inbounds nuw i8, ptr %10, i64 42

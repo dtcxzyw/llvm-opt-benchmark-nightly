@@ -201,8 +201,6 @@ bb.a:
   %i.b = trunc i64 %i.a to i32                    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 6
   %scevgep = getelementptr i8, ptr %0, i64 7
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 2
   %i.d = icmp sgt i32 %i.b, 5
   br i1 %i.d, label %.lr.ph, label %._crit_edge45
 
@@ -217,22 +215,13 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   br i1 %i.g, label %.preheader24.preheader, label %._crit_edge45
 
 .preheader24.preheader:                           ; preds = %bb.b
-  %3 = load i8, ptr %0, align 1, !tbaa !165
-  %4 = add i8 %3, -91
-  %or.cond = icmp ult i8 %4, -26
-  %5 = load i8, ptr %1, align 1, !tbaa !165
-  %.fr49 = freeze i8 %5
-  %6 = add i8 %.fr49, -91
-  %or.cond.1 = icmp ult i8 %6, -26
-  %7 = load <4 x i8>, ptr %2, align 1, !tbaa !165
-  %.fr48 = freeze <4 x i8> %7
-  %8 = add <4 x i8> %.fr48, splat (i8 -91)
-  %9 = icmp ult <4 x i8> %8, splat (i8 -26)
-  %10 = bitcast <4 x i1> %9 to i4
-  %11 = icmp ne i4 %10, 0
-  %op.rdx = or i1 %11, %or.cond.1
-  %op.rdx47 = select i1 %op.rdx, i1 true, i1 %or.cond
-  br i1 %op.rdx47, label %._crit_edge45, label %.preheader
+  %1 = load <6 x i8>, ptr %0, align 1, !tbaa !165
+  %.fr47 = freeze <6 x i8> %1
+  %2 = add <6 x i8> %.fr47, splat (i8 -91)
+  %3 = icmp ult <6 x i8> %2, splat (i8 -26)
+  %4 = bitcast <6 x i1> %3 to i6
+  %.not = icmp eq i6 %4, 0
+  br i1 %.not, label %.preheader, label %._crit_edge45
 
 .preheader:                                       ; preds = %.preheader24.preheader
   %.not29 = icmp eq i32 %.0182843, 7
