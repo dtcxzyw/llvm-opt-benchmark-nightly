@@ -201,16 +201,23 @@ bb.n:                                             ; preds = %bb.k, %bb.l
 
 ._crit_edge154:                                   ; preds = %bb.p
   %i.aw = fmul double %.151, 5.000000e-01
-  %i.ax = sitofp i32 %.155 to double              ; 4 uses
-  %8 = uitofp nneg i64 %4 to double
-  %9 = fdiv double %i.ax, %8
-  %10 = uitofp nneg i64 %5 to double
-  %11 = fdiv double %i.ax, %10
-  %12 = fadd double %9, %11
-  %13 = fsub double %i.ax, %i.aw
-  %14 = fdiv double %13, %i.ax
-  %15 = fadd double %12, %14
-  %i.ay = fdiv double %15, 3.000000e+00           ; 4 uses
+  %8 = insertelement <2 x i64> poison, i64 %4, i64 0
+  %9 = insertelement <2 x i64> %8, i64 %5, i64 1
+  %10 = uitofp <2 x i64> %9 to <2 x double>
+  %i.ax = sitofp i32 %.155 to double              ; 2 uses
+  %11 = insertelement <2 x double> poison, double %i.ax, i64 0
+  %12 = insertelement <3 x double> <double 0.000000e+00, double 0.000000e+00, double poison>, double %i.aw, i64 2
+  %13 = shufflevector <2 x double> %11, <2 x double> poison, <3 x i32> zeroinitializer
+  %14 = fsub <3 x double> %13, %12
+  %15 = shufflevector <2 x double> %10, <2 x double> poison, <3 x i32> <i32 0, i32 1, i32 poison>
+  %16 = insertelement <3 x double> %15, double %i.ax, i64 2
+  %17 = fdiv <3 x double> %14, %16                ; 3 uses
+  %shift = shufflevector <3 x double> %17, <3 x double> poison, <3 x i32> <i32 1, i32 poison, i32 poison>
+  %foldExtExtBinop = fadd <3 x double> %17, %shift
+  %shift195 = shufflevector <3 x double> %17, <3 x double> poison, <3 x i32> <i32 2, i32 poison, i32 poison>
+  %foldExtExtBinop196 = fadd <3 x double> %foldExtExtBinop, %shift195
+  %18 = extractelement <3 x double> %foldExtExtBinop196, i64 0
+  %i.ay = fdiv double %18, 3.000000e+00           ; 4 uses
   %i.az = fcmp ogt double %i.ay, f0x3FE6666666666666
   br i1 %i.az, label %.preheader, label %bb.r
 
@@ -613,16 +620,23 @@ bb.n:                                             ; preds = %bb.k, %bb.l
 
 ._crit_edge154:                                   ; preds = %bb.p
   %i.aw = fmul double %.151, 5.000000e-01
-  %i.ax = sitofp i32 %.155 to double              ; 4 uses
-  %8 = uitofp nneg i64 %4 to double
-  %9 = fdiv double %i.ax, %8
-  %10 = uitofp nneg i64 %5 to double
-  %11 = fdiv double %i.ax, %10
-  %12 = fadd double %9, %11
-  %13 = fsub double %i.ax, %i.aw
-  %14 = fdiv double %13, %i.ax
-  %15 = fadd double %12, %14
-  %i.ay = fdiv double %15, 3.000000e+00           ; 4 uses
+  %8 = insertelement <2 x i64> poison, i64 %4, i64 0
+  %9 = insertelement <2 x i64> %8, i64 %5, i64 1
+  %10 = uitofp <2 x i64> %9 to <2 x double>
+  %i.ax = sitofp i32 %.155 to double              ; 2 uses
+  %11 = insertelement <2 x double> poison, double %i.ax, i64 0
+  %12 = insertelement <3 x double> <double 0.000000e+00, double 0.000000e+00, double poison>, double %i.aw, i64 2
+  %13 = shufflevector <2 x double> %11, <2 x double> poison, <3 x i32> zeroinitializer
+  %14 = fsub <3 x double> %13, %12
+  %15 = shufflevector <2 x double> %10, <2 x double> poison, <3 x i32> <i32 0, i32 1, i32 poison>
+  %16 = insertelement <3 x double> %15, double %i.ax, i64 2
+  %17 = fdiv <3 x double> %14, %16                ; 3 uses
+  %shift = shufflevector <3 x double> %17, <3 x double> poison, <3 x i32> <i32 1, i32 poison, i32 poison>
+  %foldExtExtBinop = fadd <3 x double> %17, %shift
+  %shift195 = shufflevector <3 x double> %17, <3 x double> poison, <3 x i32> <i32 2, i32 poison, i32 poison>
+  %foldExtExtBinop196 = fadd <3 x double> %foldExtExtBinop, %shift195
+  %18 = extractelement <3 x double> %foldExtExtBinop196, i64 0
+  %i.ay = fdiv double %18, 3.000000e+00           ; 4 uses
   %i.az = fcmp ogt double %i.ay, f0x3FE6666666666666
   br i1 %i.az, label %.preheader, label %bb.r
 

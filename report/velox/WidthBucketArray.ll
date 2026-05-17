@@ -201,15 +201,14 @@ bb.r:                                             ; preds = %_ZNK8facebook5velox
   unreachable
 
 bb.s:                                             ; preds = %_ZNK8facebook5velox13DecodedVector7valueAtIdEET_i.exit63
-  %6 = tail call double @llvm.fabs.f64(double %i.dp)
-  %7 = fcmp ueq double %6, +inf
-  %8 = tail call double @llvm.fabs.f64(double %i.do)
-  %9 = fcmp ueq double %8, +inf
-  %or.cond.not83 = or i1 %9, %7
-  %10 = tail call double @llvm.fabs.f64(double %i.ds)
-  %11 = fcmp ueq double %10, +inf
-  %or.cond76 = or i1 %or.cond.not83, %11
-  br i1 %or.cond76, label %.critedge45, label %bb.t, !prof !661
+  %6 = insertelement <3 x double> poison, double %i.do, i64 0
+  %7 = insertelement <3 x double> %6, double %i.dp, i64 1
+  %8 = insertelement <3 x double> %7, double %i.ds, i64 2
+  %9 = tail call <3 x double> @llvm.fabs.v3f64(<3 x double> %8)
+  %10 = fcmp ueq <3 x double> %9, splat (double +inf)
+  %11 = bitcast <3 x i1> %10 to i3
+  %.not = icmp eq i3 %11, 0
+  br i1 %.not, label %bb.t, label %.critedge45, !prof !661
 
 .critedge45:                                      ; preds = %bb.s
   tail call void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorEPKcEEvRKNS1_18VeloxCheckFailArgsET0_(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox9functions12_GLOBAL__N_111widthBucketIdEEldRNS0_13DecodedVectorEiiE18veloxCheckFailArgs_3, ptr noundef nonnull @.str.48) #28
@@ -611,6 +610,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x double> @llvm.fabs.v3f64(<3 x double>) #21
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -1014,7 +1016,7 @@ begin_hunk_2_@llvm.smax.i64/@llvm.fabs.v3f64
 !658 = !{!396, !21, i64 24}
 !659 = !{!"branch_weights", !"expected", i32 1717128, i32 2145766520}
 !660 = !{!"branch_weights", !"expected", i32 1073204, i32 2146410444}
-!661 = !{!"branch_weights", i32 6003000, i32 -294967296}
+!661 = !{!"branch_weights", i32 -294967296, i32 6003000}
 !662 = distinct !{!662, !62}
 !663 = !{!664, !50, i64 0}
 !664 = !{!"_ZTSZN8facebook5velox4bits10forEachBitIZNS0_4exec7EvalCtx22applyToSelectedNoThrowIZNKS0_9functions12_GLOBAL__N_124WidthBucketArrayFunctionIdE5applyERKNS0_17SelectivityVectorERSt6vectorISt10shared_ptrINS0_10BaseVectorEESaISG_EERKSE_IKNS0_4TypeEERS4_RSG_EUlT_E_ZNS4_22applyToSelectedNoThrowISS_EEvSC_SR_EUlSR_E_EEvSC_SR_T0_EUlSR_E_EEvPKmiibSR_EUlimE_", !50, i64 0, !21, i64 8, !665, i64 16}

@@ -201,7 +201,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
-  %i.al = load ptr, ptr %i.ad, align 8, !tbaa !9  ; 9 uses
+  %i.al = load ptr, ptr %i.ad, align 8, !tbaa !9  ; 7 uses
   %i.am = load ptr, ptr %i.v, align 8, !tbaa !16  ; 7 uses
   %i.an = icmp sgt i32 %i.n, 0
   br i1 %i.an, label %.lr.ph36.i, label %matrix_mult_transpose_add.exit
@@ -224,22 +224,24 @@ bb.i:                                             ; preds = %bb.h
   %i.ay = zext i32 %i.ax to i64
   %i.az = shl nuw nsw i64 %i.ay, 9
   %i.ba = add nuw nsw i64 %i.az, 512              ; 2 uses
-  %scevgep101 = getelementptr i8, ptr %i.al, i64 %i.ba ; 3 uses
+  %scevgep101 = getelementptr i8, ptr %i.al, i64 %i.ba
   %scevgep102 = getelementptr i8, ptr %i.ap, i64 %i.ba
   %scevgep103 = getelementptr i8, ptr %i.am, i64 512
-  %4 = getelementptr i8, ptr %i.ap, i64 %i.av
-  %5 = getelementptr i8, ptr %4, i64 512
-  %bound0104 = icmp ult ptr %i.al, %scevgep102
-  %bound1105 = icmp ult ptr %i.ap, %scevgep101
-  %found.conflict106 = and i1 %bound0104, %bound1105
-  %bound0107 = icmp ult ptr %i.al, %scevgep103
-  %bound1108 = icmp ult ptr %i.am, %scevgep101
-  %found.conflict109 = and i1 %bound0107, %bound1108
-  %conflict.rdx110 = or i1 %found.conflict106, %found.conflict109
-  %bound0111 = icmp ult ptr %i.al, getelementptr inbounds nuw (i8, ptr @kModRoots, i64 256)
-  %bound1112 = icmp ugt ptr %scevgep101, @kModRoots
-  %found.conflict113 = and i1 %bound0111, %bound1112
-  %conflict.rdx114 = or i1 %conflict.rdx110, %found.conflict113
+  %4 = insertelement <3 x ptr> poison, ptr %i.al, i64 0
+  %5 = shufflevector <3 x ptr> %4, <3 x ptr> poison, <3 x i32> zeroinitializer
+  %6 = insertelement <3 x ptr> <ptr poison, ptr poison, ptr getelementptr inbounds nuw (i8, ptr @kModRoots, i64 256)>, ptr %scevgep102, i64 0
+  %7 = insertelement <3 x ptr> %6, ptr %scevgep103, i64 1
+  %8 = insertelement <3 x ptr> <ptr poison, ptr poison, ptr @kModRoots>, ptr %i.ap, i64 0
+  %9 = insertelement <3 x ptr> %8, ptr %i.am, i64 1
+  %10 = insertelement <3 x ptr> poison, ptr %scevgep101, i64 0
+  %11 = shufflevector <3 x ptr> %10, <3 x ptr> poison, <3 x i32> zeroinitializer
+  %12 = getelementptr i8, ptr %i.ap, i64 %i.av
+  %13 = getelementptr i8, ptr %12, i64 512
+  %14 = icmp ult <3 x ptr> %5, %7
+  %15 = icmp ult <3 x ptr> %9, %11
+  %16 = and <3 x i1> %14, %15
+  %17 = bitcast <3 x i1> %16 to i3
+  %.not135 = icmp eq i3 %17, 0
   br label %vector.memcheck100
 
 vector.memcheck100:                               ; preds = %scalar_mult_add.exit._crit_edge.i, %.lr.ph36.i
@@ -253,8 +255,8 @@ vector.memcheck100:                               ; preds = %scalar_mult_add.exi
   %i.bd = add i64 %indvar, %i.aq
   %i.be = shl i64 %i.bd, 9
   %scevgep80 = getelementptr i8, ptr %i.ap, i64 %i.be
-  %scevgep81 = getelementptr i8, ptr %5, i64 %i.bb
-  br i1 %conflict.rdx114, label %scalar.ph115, label %vector.body117
+  %scevgep81 = getelementptr i8, ptr %13, i64 %i.bb
+  br i1 %.not135, label %vector.body117, label %scalar.ph115
 
 vector.body117:                                   ; preds = %vector.memcheck100, %vector.body117
   %index118 = phi i64 [ %index.next133, %vector.body117 ], [ 0, %vector.memcheck100 ] ; 3 uses

@@ -200,35 +200,49 @@ bb.k:                                             ; preds = %.lr.ph384, %bb.k
   %i.zl = load double, ptr @piref, align 8, !tbaa !8
   %i.zm = load double, ptr @three, align 8, !tbaa !8
   %i.zn = fdiv double %i.zl, %i.zm                ; 3 uses
-  %i.zo = fmul double %i.zn, %i.zn                ; 12 uses
+  %i.zo = fmul double %i.zn, %i.zn
   %i.zp = load double, ptr @A6, align 8, !tbaa !8
   %i.zq = load double, ptr @A5, align 8, !tbaa !8
-  %0 = tail call double @llvm.fmuladd.f64(double %i.zp, double %i.zo, double %i.zq)
-  %i.zr = load double, ptr @A4, align 8, !tbaa !8
-  %1 = tail call double @llvm.fmuladd.f64(double %0, double %i.zo, double %i.zr)
-  %i.zs = load double, ptr @A3, align 8, !tbaa !8
-  %2 = tail call double @llvm.fmuladd.f64(double %1, double %i.zo, double %i.zs)
-  %i.zt = load double, ptr @A2, align 8, !tbaa !8
-  %3 = tail call double @llvm.fmuladd.f64(double %2, double %i.zo, double %i.zt)
-  %i.zu = load double, ptr @A1, align 8, !tbaa !8
-  %4 = tail call double @llvm.fmuladd.f64(double %3, double %i.zo, double %i.zu)
-  %i.zv = load double, ptr @one, align 8, !tbaa !8 ; 3 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %4, double %i.zo, double %i.zv)
-  %6 = fmul double %i.zn, %5
-  %7 = load double, ptr @B6, align 8, !tbaa !8
-  %8 = load double, ptr @B5, align 8, !tbaa !8
-  %9 = tail call double @llvm.fmuladd.f64(double %7, double %i.zo, double %8)
-  %10 = load double, ptr @B4, align 8, !tbaa !8
-  %11 = tail call double @llvm.fmuladd.f64(double %i.zo, double %9, double %10)
-  %12 = load double, ptr @B3, align 8, !tbaa !8
-  %13 = tail call double @llvm.fmuladd.f64(double %i.zo, double %11, double %12)
-  %14 = load double, ptr @B2, align 8, !tbaa !8
-  %15 = tail call double @llvm.fmuladd.f64(double %i.zo, double %13, double %14)
-  %16 = load double, ptr @B1, align 8, !tbaa !8
-  %17 = tail call double @llvm.fmuladd.f64(double %i.zo, double %15, double %16)
-  %18 = tail call double @llvm.fmuladd.f64(double %i.zo, double %17, double %i.zv) ; 2 uses
-  %i.zw = fmul double %6, %18
-  %i.zx = fmul double %18, %i.zw
+  %0 = load double, ptr @A4, align 8, !tbaa !8
+  %1 = load double, ptr @A3, align 8, !tbaa !8
+  %i.zr = load double, ptr @A2, align 8, !tbaa !8
+  %2 = load double, ptr @A1, align 8, !tbaa !8
+  %i.zs = load double, ptr @one, align 8, !tbaa !8 ; 2 uses
+  %3 = load double, ptr @B6, align 8, !tbaa !8
+  %i.zt = load double, ptr @B5, align 8, !tbaa !8
+  %4 = load double, ptr @B4, align 8, !tbaa !8
+  %i.zu = load double, ptr @B3, align 8, !tbaa !8
+  %5 = load double, ptr @B2, align 8, !tbaa !8
+  %i.zv = load double, ptr @B1, align 8, !tbaa !8
+  %6 = insertelement <2 x double> poison, double %3, i64 0
+  %7 = insertelement <2 x double> %6, double %i.zp, i64 1
+  %8 = insertelement <2 x double> poison, double %i.zo, i64 0 ; 2 uses
+  %9 = shufflevector <2 x double> %8, <2 x double> poison, <2 x i32> zeroinitializer ; 5 uses
+  %10 = insertelement <2 x double> poison, double %i.zt, i64 0
+  %11 = insertelement <2 x double> %10, double %i.zq, i64 1
+  %12 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> %9, <2 x double> %11)
+  %13 = insertelement <2 x double> poison, double %4, i64 0
+  %14 = insertelement <2 x double> %13, double %0, i64 1
+  %15 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %12, <2 x double> %14)
+  %16 = insertelement <2 x double> poison, double %i.zu, i64 0
+  %17 = insertelement <2 x double> %16, double %1, i64 1
+  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %15, <2 x double> %17)
+  %19 = insertelement <2 x double> poison, double %5, i64 0
+  %20 = insertelement <2 x double> %19, double %i.zr, i64 1
+  %21 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %18, <2 x double> %20)
+  %22 = insertelement <2 x double> poison, double %i.zv, i64 0
+  %23 = insertelement <2 x double> %22, double %2, i64 1
+  %24 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %9, <2 x double> %21, <2 x double> %23)
+  %25 = shufflevector <2 x double> %24, <2 x double> poison, <3 x i32> <i32 0, i32 0, i32 1>
+  %26 = shufflevector <2 x double> %8, <2 x double> poison, <3 x i32> zeroinitializer
+  %27 = insertelement <3 x double> poison, double %i.zs, i64 0
+  %28 = shufflevector <3 x double> %27, <3 x double> poison, <3 x i32> zeroinitializer
+  %29 = tail call <3 x double> @llvm.fmuladd.v3f64(<3 x double> %25, <3 x double> %26, <3 x double> %28) ; 2 uses
+  %30 = extractelement <3 x double> %29, i64 2
+  %31 = fmul double %i.zn, %30
+  %32 = extractelement <3 x double> %29, i64 0    ; 2 uses
+  %i.zw = fmul double %31, %32
+  %i.zx = fmul double %32, %i.zw
   %i.zy = fdiv double %i.zk, 3.000000e+01         ; 2 uses
   store double %i.zy, ptr getelementptr inbounds nuw (i8, ptr @T, i64 200), align 8, !tbaa !8
   %i.zz = load double, ptr @two, align 8, !tbaa !8 ; 2 uses
@@ -239,7 +253,7 @@ bb.k:                                             ; preds = %.lr.ph384, %bb.k
   store double f0x3FD2AAAAAAAAAAAB, ptr @sb, align 8, !tbaa !8
   %i.aad = fadd double %i.aac, f0xBFD2AAAAAAAAAAAB ; 2 uses
   store double %i.aad, ptr @sc, align 8, !tbaa !8
-  %i.aae = fdiv double %i.zv, %i.zy               ; 2 uses
+  %i.aae = fdiv double %i.zs, %i.zy               ; 2 uses
   store double %i.aae, ptr getelementptr inbounds nuw (i8, ptr @T, i64 208), align 16, !tbaa !8
   %i.aaf = fmul double %i.aad, 1.000000e-30
   %i.aag = fmul double %i.zk, 1.000000e-30
@@ -339,6 +353,12 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <3 x double> @llvm.fmuladd.v3f64(<3 x double>, <3 x double>, <3 x double>) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
