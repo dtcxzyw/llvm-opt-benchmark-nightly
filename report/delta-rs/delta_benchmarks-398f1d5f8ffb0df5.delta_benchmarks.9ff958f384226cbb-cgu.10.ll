@@ -201,9 +201,7 @@ bb.a:
   %.sroa.5 = alloca [40 x i8], align 8            ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 72
-  %2 = load <4 x i8>, ptr %i.c, align 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %4 = load i8, ptr %3, align 4, !range !9417, !noundef !3
+  %2 = load <5 x i8>, ptr %i.c, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = load i64, ptr %1, align 8, !range !161, !noundef !3
   %.not = icmp eq i64 %i.d, -9223372036854775808
@@ -234,9 +232,7 @@ bb.f:                                             ; preds = %bb.d, %bb.h
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 77
   %i.h = load i8, ptr %i.g, align 1, !range !9417, !noundef !3
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 72
-  store <4 x i8> %2, ptr %i.i, align 8
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 76
-  store i8 %4, ptr %5, align 4
+  store <5 x i8> %2, ptr %i.i, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 %.sroa.0.0, ptr %i.j, align 8
@@ -639,7 +635,13 @@ bb.y:                                             ; preds = %bb.a
   %i.oh = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.oi = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.oj = getelementptr inbounds nuw i8, ptr %1, i64 304
-  %2 = load <4 x i8>, ptr %i.oj, align 8
+  %2 = load i8, ptr %i.oj, align 8, !range !9417, !noundef !3
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 305
+  %4 = load i8, ptr %3, align 1, !range !9417, !noundef !3
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 306
+  %6 = load i8, ptr %5, align 2, !range !9417, !noundef !3
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 307
+  %8 = load i8, ptr %7, align 1, !range !9417, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.jg)
   call void @_RNvXsa_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VecNtNtCs4lawaffTVVK_9sqlparser3ast14ObjectNamePartENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.jg, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.of)
   %i.ok = getelementptr inbounds nuw i8, ptr %1, i64 308
@@ -1042,15 +1044,11 @@ bb.bp:                                            ; preds = %bb.a
 bb.bq:                                            ; preds = %bb.a
   %i.ym = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.yn = getelementptr inbounds nuw i8, ptr %1, i64 800
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 804
-  %4 = load i8, ptr %3, align 4, !range !9417, !noundef !3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ga)
   %i.yo = getelementptr inbounds nuw i8, ptr %0, i64 800
-  %5 = load <4 x i8>, ptr %i.yn, align 8
+  %9 = load <5 x i8>, ptr %i.yn, align 8
   call fastcc void @_RNvXsxo_NtCs4lawaffTVVK_9sqlparser3astNtB6_20ShowStatementOptionsNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone(ptr noalias noundef align 8 captures(none) dereferenceable(792) %i.ga, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(792) %i.ym) #42
-  store <4 x i8> %5, ptr %i.yo, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 804
-  store i8 %4, ptr %6, align 4
+  store <5 x i8> %9, ptr %i.yo, align 8
   %i.yp = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(792) %i.yp, ptr noundef nonnull align 8 dereferenceable(792) %i.ga, i64 792, i1 false)
   store i64 68, ptr %0, align 8
@@ -1392,11 +1390,9 @@ bb.cs:                                            ; preds = %bb.a
   br label %bb.ed
 
 bb.ct:                                            ; preds = %bb.a
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 46
   %i.ado = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %.val400 = load i8, ptr %7, align 2, !range !9537, !noundef !3
   %i.adp = getelementptr inbounds nuw i8, ptr %1, i64 42
-  %8 = load <4 x i8>, ptr %i.adp, align 2
+  %10 = load <5 x i8>, ptr %i.adp, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dx)
   %i.adq = tail call fastcc noundef nonnull align 8 ptr @_RNvXsd_NtCs6Po7BT7Nknu_5alloc5boxedINtB5_3BoxNtNtCs4lawaffTVVK_9sqlparser3ast9StatementENtNtCsbvkFyIu7lgC_4core5clone5Clone5cloneCsdJxlLsGgtXr_16delta_benchmarks(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.ado) #42 ; 2 uses
   store ptr %i.adq, ptr %i.dx, align 8
@@ -1799,7 +1795,13 @@ bb.je:                                            ; preds = %bb.jb
 bb.jf:                                            ; preds = %bb.jb, %bb.jh
   %.sroa.013.0 = phi i64 [ %.sroa.013.0.copyload14, %bb.jh ], [ -9223372036854775806, %bb.jb ]
   %i.anq = getelementptr inbounds nuw i8, ptr %0, i64 304
-  store <4 x i8> %2, ptr %i.anq, align 8
+  store i8 %2, ptr %i.anq, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 305
+  store i8 %4, ptr %11, align 1
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 306
+  store i8 %6, ptr %12, align 2
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 307
+  store i8 %8, ptr %13, align 1
   %i.anr = getelementptr inbounds nuw i8, ptr %0, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.anr, ptr noundef nonnull align 8 dereferenceable(24) %i.jg, i64 24, i1 false)
   %i.ans = getelementptr inbounds nuw i8, ptr %0, i64 308
@@ -2202,10 +2204,8 @@ bb.xa:                                            ; preds = %bb.ct
 
 bb.xb:                                            ; preds = %bb.ct, %bb.xc
   %.sroa.0107.0 = phi i64 [ %.sroa.0107.0.copyload108, %bb.xc ], [ -9223372036854775808, %bb.ct ]
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 46
-  store i8 %.val400, ptr %9, align 2
   %i.bhc = getelementptr inbounds nuw i8, ptr %0, i64 42
-  store <4 x i8> %8, ptr %i.bhc, align 2
+  store <5 x i8> %10, ptr %i.bhc, align 2
   %i.bhd = getelementptr inbounds nuw i8, ptr %0, i64 32
   store ptr %i.adq, ptr %i.bhd, align 8
   %i.bhe = getelementptr inbounds nuw i8, ptr %0, i64 40
