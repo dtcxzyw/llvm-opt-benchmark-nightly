@@ -201,7 +201,7 @@ bb.a:
   tail call void @_ZN6duckdb15LogicalOperator20ResolveOperatorTypesEv(ptr noundef nonnull align 8 dereferenceable(97) %i.b)
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 2 uses
   %i.d = load i8, ptr %i.c, align 4, !tbaa !3574, !range !60, !noundef !61
-  %14 = trunc nuw i8 %i.d to i1
+  %14 = zext nneg i8 %i.d to i64
   %i.e = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_15LogicalOperatorESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %2) ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 72
@@ -210,11 +210,9 @@ bb.a:
   %i.j = ptrtoint ptr %i.h to i64
   %i.k = ptrtoint ptr %i.i to i64
   %i.l = sub i64 %i.j, %i.k
-  %i.m = sdiv exact i64 %i.l, 24
-  %.neg = xor i64 %3, -1
-  %i.n = sub i64 0, %3
-  %.p = select i1 %14, i64 %.neg, i64 %i.n
-  %15 = add i64 %i.m, %.p                         ; 3 uses
+  %i.m = sdiv exact i64 %i.l, 24                  ; 2 uses
+  %15 = add i64 %3, %14                           ; 2 uses
+  %i.n = sub i64 %i.m, %15                        ; 2 uses
   %i.o = tail call noundef ptr @_ZNK6duckdb10unique_ptrINS_15LogicalOperatorESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %2)
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load i8, ptr %i.p, align 8, !tbaa !15
@@ -238,7 +236,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZN6duckdb9make_uniqINS_21LogicalComparisonJoinEJNS_8JoinTypeEEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit: ; preds = %bb.a
   store ptr %i.t, ptr %6, align 8, !tbaa !1321, !alias.scope !3788
-  %.not = icmp eq i64 %15, 0
+  %.not = icmp eq i64 %i.m, %15
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN6duckdb9make_uniqINS_21LogicalComparisonJoinEJNS_8JoinTypeEEEENS_17TemplatedUniqueIfIT_Lb1EE25templated_unique_single_tEDpOT0_.exit
@@ -274,7 +272,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = sub i64 %i.an, %i.ao
   %i.aq = sdiv exact i64 %i.ap, 24
-  %.neg30 = sub i64 %.0123, %15
+  %.neg30 = sub i64 %.0123, %i.n
   %i.ar = add i64 %i.aq, %.neg30                  ; 4 uses
   %i.as = add i64 %.0123, %i.s
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #33
@@ -613,7 +611,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6duckdb13JoinConditionD2Ev.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #33
   %i.ed = add nuw i64 %.0123, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.ed, %15
+  %exitcond.not = icmp eq i64 %i.ed, %i.n
   br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !3794
 
 bb.y:                                             ; preds = %bb.c

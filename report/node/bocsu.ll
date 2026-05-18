@@ -177,17 +177,16 @@ bb.q:                                             ; preds = %bb.p
   %.zext106.i = trunc nuw i16 %i.cb to i8
   %.neg.i = sub i8 0, %.zext106.i
   %i.cc = udiv i16 %.lhs.trunc105.i, 253
-  %.zext110.i = trunc nuw nsw i16 %i.cc to i8     ; 2 uses
-  %.neg108.i = sub nsw i8 0, %.zext110.i
-  %.not137.i = icmp eq i16 %i.cb, 0               ; 2 uses
-  %4 = xor i8 %.zext110.i, -1
-  %.081.i = select i1 %.not137.i, i8 %.neg108.i, i8 %4
-  %.0.i = select i1 %.not137.i, i8 3, i8 %.neg.i
-  %i.cd = add nsw i8 %.081.i, 49
+  %.zext110.i = trunc nuw nsw i16 %i.cc to i8
+  %.not137.i = icmp ne i16 %i.cb, 0               ; 2 uses
+  %4 = sext i1 %.not137.i to i8
+  %.081.i = select i1 %.not137.i, i8 %.neg.i, i8 3
+  %reass.sub63 = sub nsw i8 %4, %.zext110.i
+  %i.cd = add nsw i8 %reass.sub63, 49
   %i.ce = getelementptr inbounds nuw i8, ptr %.04052, i64 1
   store i8 %i.cd, ptr %.04052, align 1
   %i.cf = getelementptr inbounds nuw i8, ptr %.04052, i64 2
-  store i8 %.0.i, ptr %i.ce, align 1
+  store i8 %.081.i, ptr %i.ce, align 1
   br label %_ZL11u_writeDiffiPh.exit
 
 bb.r:                                             ; preds = %bb.p
@@ -211,15 +210,14 @@ bb.s:                                             ; preds = %bb.r
   %.zext117.i = trunc nuw i16 %i.cm to i8
   %.neg115.i = sub i8 0, %.zext117.i
   %i.cn = udiv i16 %.neg141.i, 253
-  %.zext121.i = trunc nuw nsw i16 %i.cn to i8     ; 2 uses
-  %.neg119.i = sub nsw i8 0, %.zext121.i
-  %.not136.i = icmp eq i16 %i.cm, 0               ; 2 uses
-  %5 = xor i8 %.zext121.i, -1
-  %.283.i = select i1 %.not136.i, i8 %.neg119.i, i8 %5
-  %.2.i = select i1 %.not136.i, i8 3, i8 %.neg115.i
+  %.zext121.i = trunc nuw nsw i16 %i.cn to i8
+  %.not136.i = icmp ne i16 %i.cm, 0               ; 2 uses
+  %5 = sext i1 %.not136.i to i8
+  %.2.i = select i1 %.not136.i, i8 %.neg115.i, i8 3
   %i.co = getelementptr inbounds nuw i8, ptr %.04052, i64 1
   store i8 %.2.i, ptr %i.co, align 1
-  %i.cp = add nsw i8 %.283.i, 7
+  %reass.sub = sub i8 %5, %.zext121.i
+  %i.cp = add i8 %reass.sub, 7
   store i8 %i.cp, ptr %.04052, align 1
   %i.cq = getelementptr inbounds nuw i8, ptr %.04052, i64 3
   br label %_ZL11u_writeDiffiPh.exit

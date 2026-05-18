@@ -201,14 +201,13 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u
   %.nonneg = sub nsw i32 -64, %i.bq               ; 2 uses
   %i.cn = urem i32 %.nonneg, 243                  ; 2 uses
-  %i.co = udiv i32 %.nonneg, 243                  ; 2 uses
-  %.neg211 = sub nsw i32 0, %i.co
-  %.not212 = icmp eq i32 %i.cn, 0                 ; 2 uses
-  %2 = xor i32 %i.co, -1
-  %i.cp = sub nuw nsw i32 243, %i.cn
-  %.0149 = select i1 %.not212, i32 %.neg211, i32 %2
-  %i.cq = add nsw i32 %.0149, 80                  ; 2 uses
-  br i1 %.not212, label %.thread, label %select.unfold
+  %i.co = udiv i32 %.nonneg, 243
+  %.not212 = icmp ne i32 %i.cn, 0                 ; 2 uses
+  %2 = sub nuw nsw i32 243, %i.cn
+  %3 = sext i1 %.not212 to i32
+  %i.cp = sub nsw i32 %3, %i.co
+  %i.cq = add nsw i32 %i.cp, 80                   ; 2 uses
+  br i1 %.not212, label %select.unfold, label %.thread
 
 .thread:                                          ; preds = %bb.w
   %i.cr = trunc nuw i32 %i.cq to i8
@@ -218,7 +217,7 @@ bb.w:                                             ; preds = %bb.u
 
 select.unfold:                                    ; preds = %bb.w, %bb.v
   %.1150 = phi i32 [ %i.cm, %bb.v ], [ %i.cq, %bb.w ]
-  %.1146 = phi i32 [ %.sext, %bb.v ], [ %i.cp, %bb.w ] ; 3 uses
+  %.1146 = phi i32 [ %.sext, %bb.v ], [ %2, %bb.w ] ; 3 uses
   %i.ct = trunc nuw i32 %.1150 to i8
   %i.cu = getelementptr inbounds nuw i8, ptr %.5179, i64 1 ; 2 uses
   store i8 %i.ct, ptr %.5179, align 1
@@ -621,14 +620,13 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.u
   %.nonneg = sub nsw i32 -64, %i.bu               ; 2 uses
   %i.cs = urem i32 %.nonneg, 243                  ; 2 uses
-  %i.ct = udiv i32 %.nonneg, 243                  ; 2 uses
-  %.neg281 = sub nsw i32 0, %i.ct
-  %.not282 = icmp eq i32 %i.cs, 0                 ; 2 uses
-  %2 = xor i32 %i.ct, -1
-  %i.cu = sub nuw nsw i32 243, %i.cs
-  %.0200 = select i1 %.not282, i32 %.neg281, i32 %2
-  %i.cv = add nsw i32 %.0200, 80                  ; 2 uses
-  br i1 %.not282, label %.thread, label %select.unfold
+  %i.ct = udiv i32 %.nonneg, 243
+  %.not282 = icmp ne i32 %i.cs, 0                 ; 2 uses
+  %2 = sub nuw nsw i32 243, %i.cs
+  %3 = sext i1 %.not282 to i32
+  %i.cu = sub nsw i32 %3, %i.ct
+  %i.cv = add nsw i32 %i.cu, 80                   ; 2 uses
+  br i1 %.not282, label %select.unfold, label %.thread
 
 .thread:                                          ; preds = %bb.w
   %i.cw = trunc nuw i32 %i.cv to i8
@@ -638,7 +636,7 @@ bb.w:                                             ; preds = %bb.u
 
 select.unfold:                                    ; preds = %bb.w, %bb.v
   %.1201 = phi i32 [ %i.cr, %bb.v ], [ %i.cv, %bb.w ]
-  %.1185 = phi i32 [ %.sext, %bb.v ], [ %i.cu, %bb.w ] ; 3 uses
+  %.1185 = phi i32 [ %.sext, %bb.v ], [ %2, %bb.w ] ; 3 uses
   %i.cy = trunc nuw i32 %.1201 to i8
   %i.cz = getelementptr inbounds nuw i8, ptr %.5241, i64 1 ; 2 uses
   store i8 %i.cy, ptr %.5241, align 1
@@ -1001,13 +999,12 @@ bb.z:                                             ; preds = %bb.y
   %.lhs.trunc138 = sub nuw nsw i16 -64, %i.bw     ; 2 uses
   %i.bx = urem i16 %.lhs.trunc138, 243            ; 2 uses
   %i.by = udiv i16 %.lhs.trunc138, 243
-  %.zext143 = zext nneg i16 %i.by to i32          ; 2 uses
-  %.neg141 = sub nsw i32 0, %.zext143
-  %.not167 = icmp eq i16 %i.bx, 0                 ; 2 uses
-  %1 = xor i32 %.zext143, -1
+  %.zext143 = zext nneg i16 %i.by to i32
+  %.not167 = icmp ne i16 %i.bx, 0                 ; 2 uses
   %narrow168 = sub nuw nsw i16 243, %i.bx
-  %.0105 = select i1 %.not167, i32 %.neg141, i32 %1
-  %narrow169 = select i1 %.not167, i16 0, i16 %narrow168 ; 3 uses
+  %1 = sext i1 %.not167 to i32
+  %.0105 = sub nsw i32 %1, %.zext143
+  %narrow169 = select i1 %.not167, i16 %narrow168, i16 0 ; 3 uses
   %i.bz = icmp samesign ugt i16 %narrow169, 19
   br i1 %i.bz, label %bb.aa, label %bb.ab
 
@@ -1063,13 +1060,12 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %.neg184 = trunc nuw nsw i32 %.1106.neg to i16  ; 2 uses
   %i.cv = urem i16 %.neg184, 243                  ; 2 uses
   %i.cw = udiv i16 %.neg184, 243
-  %.zext154 = zext nneg i16 %i.cw to i32          ; 2 uses
-  %.neg152 = sub nsw i32 0, %.zext154
-  %.not164 = icmp eq i16 %i.cv, 0                 ; 2 uses
-  %2 = xor i32 %.zext154, -1
+  %.zext154 = zext nneg i16 %i.cw to i32
+  %.not164 = icmp ne i16 %i.cv, 0                 ; 2 uses
   %narrow = sub nuw nsw i16 243, %i.cv
-  %.2107 = select i1 %.not164, i32 %.neg152, i32 %2
-  %narrow165 = select i1 %.not164, i16 0, i16 %narrow ; 3 uses
+  %2 = sext i1 %.not164 to i32
+  %.2107 = sub nsw i32 %2, %.zext154
+  %narrow165 = select i1 %.not164, i16 %narrow, i16 0 ; 3 uses
   %i.cx = icmp samesign ugt i16 %narrow165, 19
   br i1 %i.cx, label %bb.ai, label %bb.aj
 
@@ -1121,13 +1117,12 @@ bb.an:                                            ; preds = %bb.al
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.dt = phi i32 [ %i.do, %bb.am ], [ %i.ds, %bb.an ]
   %i.du = urem i32 %.3108.neg, 243                ; 2 uses
-  %i.dv = udiv i32 %.3108.neg, 243                ; 2 uses
-  %.neg161 = sub nsw i32 0, %i.dv
-  %.not162 = icmp eq i32 %i.du, 0                 ; 2 uses
-  %3 = xor i32 %i.dv, -1
-  %i.dw = sub nuw nsw i32 243, %i.du
-  %.4109 = select i1 %.not162, i32 %.neg161, i32 %3 ; 3 uses
-  %.4 = select i1 %.not162, i32 0, i32 %i.dw      ; 3 uses
+  %i.dv = udiv i32 %.3108.neg, 243
+  %.not162 = icmp ne i32 %i.du, 0                 ; 2 uses
+  %3 = sub nuw nsw i32 243, %i.du
+  %4 = sext i1 %.not162 to i32
+  %i.dw = sub nsw i32 %4, %i.dv                   ; 3 uses
+  %.4 = select i1 %.not162, i32 %3, i32 0         ; 3 uses
   %i.dx = icmp samesign ugt i32 %.4, 19
   br i1 %i.dx, label %bb.ap, label %bb.aq
 
@@ -1145,15 +1140,15 @@ bb.aq:                                            ; preds = %bb.ao
 bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.ed = phi i32 [ %i.dy, %bb.ap ], [ %i.ec, %bb.aq ]
   %i.ee = shl nsw i32 %i.ed, 8
-  %i.ef = icmp sgt i32 %.4109, -224
+  %i.ef = icmp sgt i32 %i.dw, -224
   br i1 %i.ef, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
-  %i.eg = add nsw i32 %.4109, 256
+  %i.eg = add nsw i32 %i.dw, 256
   br label %bb.au
 
 bb.at:                                            ; preds = %bb.ar
-  %i.eh = sext i32 %.4109 to i64
+  %i.eh = sext i32 %i.dw to i64
   %i.ei = getelementptr i8, ptr @_ZL16bocu1TrailToByte, i64 %i.eh
   %i.ej = getelementptr i8, ptr %i.ei, i64 243
   %i.ek = load i8, ptr %i.ej, align 1

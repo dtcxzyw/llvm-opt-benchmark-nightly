@@ -201,7 +201,7 @@ bb.hc:                                            ; preds = %.loopexit810
   br label %bb.hd
 
 bb.hd:                                            ; preds = %.lr.ph1042, %bb.hf
-  %.01801040 = phi i64 [ 0, %.lr.ph1042 ], [ %.1181, %bb.hf ] ; 4 uses
+  %.01801040 = phi i64 [ 0, %.lr.ph1042 ], [ %.1181, %bb.hf ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p) #59
   %i.abf = invoke noundef i64 @_ZN6duckdb15NumericCastImplIlmLb0EE7ConvertEm(i64 noundef %i.x)
           to label %_ZN6duckdb11NumericCastIlmvEET_T0_.exit unwind label %bb.hg
@@ -230,10 +230,9 @@ bb.he:                                            ; preds = %_ZN6duckdb11Numeric
 
 bb.hf:                                            ; preds = %bb.he
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #59
-  %43 = xor i64 %.01801040, -1
-  %44 = sub nsw i64 0, %.01801040
-  %45 = icmp slt i64 %.01801040, 0
-  %.1181 = select i1 %45, i64 %44, i64 %43
+  %43 = icmp sgt i64 %.01801040, -1
+  %44 = sext i1 %43 to i64
+  %.1181 = sub i64 %44, %.01801040
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #59
   %i.abo = load i64, ptr %i.ez, align 8, !tbaa !399 ; 2 uses
   %i.abp = icmp ugt i64 %i.abo, %3

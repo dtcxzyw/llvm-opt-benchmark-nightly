@@ -132,20 +132,18 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.o
-  %.not.i = icmp ne i32 %2, 0                     ; 2 uses
-  %.neg198.i = sext i1 %.not.i to i64
+  %.not.i = icmp ne i32 %2, 0
+  %.neg198.i = sext i1 %.not.i to i64             ; 2 uses
   %spec.select.neg.i = sub i64 %.neg198.i, %1     ; 2 uses
   %i.ah = udiv i64 %spec.select.neg.i, %3
   %.neg.i = sub i64 0, %i.ah
-  %i.ai = urem i64 %spec.select.neg.i, %3         ; 2 uses
-  %.neg191.i = sub nsw i64 0, %i.ai
-  %6 = xor i64 %i.ai, -1
-  %.neg191.pn.i = select i1 %.not.i, i64 %6, i64 %.neg191.i
+  %i.ai = urem i64 %spec.select.neg.i, %3
+  %.neg191.i = sub nsw i64 %.neg198.i, %i.ai
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.p, %bb.r, %bb.q, %bb.m, %bb.j, %bb.g, %bb.d
   %.0 = phi i64 [ %i.h, %bb.d ], [ %i.n, %bb.g ], [ %i.t, %bb.j ], [ %i.z, %bb.m ], [ %.neg.i, %bb.r ], [ %i.af, %bb.q ], [ %1, %bb.p ]
-  %.sink199.i = phi i64 [ 0, %bb.d ], [ 0, %bb.g ], [ 0, %bb.j ], [ 0, %bb.m ], [ %.neg191.pn.i, %bb.r ], [ %i.ag, %bb.q ], [ 0, %bb.p ]
+  %.sink199.i = phi i64 [ 0, %bb.d ], [ 0, %bb.g ], [ 0, %bb.j ], [ 0, %bb.m ], [ %.neg191.i, %bb.r ], [ %i.ag, %bb.q ], [ 0, %bb.p ]
   %.sink.i = phi i32 [ %i.i, %bb.d ], [ %i.o, %bb.g ], [ %i.u, %bb.j ], [ %i.aa, %bb.m ], [ %2, %bb.r ], [ %2, %bb.q ], [ %2, %bb.p ]
   store i64 %.sink199.i, ptr %5, align 4
   %.sroa.463.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %5, i64 8
