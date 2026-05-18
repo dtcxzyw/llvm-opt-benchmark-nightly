@@ -201,8 +201,8 @@ define internal void @DitherCombine8x8_C(ptr noalias noundef readonly captures(n
   %i.cv = zext <8 x i8> %i.cu to <8 x i32>
   %i.cw = add nsw <8 x i32> %i.cv, splat (i32 -120)
   %i.cx = ashr <8 x i32> %i.cw, splat (i32 4)
-  %3 = zext i8 %i.ct to i32
-  %4 = zext i8 %store_forwarded to i32
+  %3 = insertelement <2 x i8> poison, i8 %store_forwarded, i64 0
+  %4 = insertelement <2 x i8> %3, i8 %i.ct, i64 1
   %i.cy = load <4 x i8>, ptr %i.cr, align 1, !tbaa !12
   %i.cz = load <2 x i8>, ptr %.01419, align 1, !tbaa !12
   %i.da = zext <2 x i8> %i.cz to <2 x i32>
@@ -210,9 +210,10 @@ define internal void @DitherCombine8x8_C(ptr noalias noundef readonly captures(n
   %i.dc = zext <4 x i8> %i.cy to <4 x i32>
   %i.dd = shufflevector <4 x i32> %i.dc, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.de = shufflevector <8 x i32> %i.db, <8 x i32> %i.dd, <8 x i32> <i32 0, i32 1, i32 8, i32 9, i32 10, i32 11, i32 poison, i32 poison>
-  %5 = insertelement <8 x i32> %i.de, i32 %4, i64 6
-  %6 = insertelement <8 x i32> %5, i32 %3, i64 7
-  %i.df = add nsw <8 x i32> %i.cx, %6
+  %5 = zext <2 x i8> %4 to <2 x i32>
+  %6 = shufflevector <2 x i32> %5, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <8 x i32> %i.de, <8 x i32> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 8, i32 9>
+  %i.df = add nsw <8 x i32> %i.cx, %7
   %i.dg = tail call <8 x i32> @llvm.smax.v8i32(<8 x i32> %i.df, <8 x i32> zeroinitializer)
   %i.dh = tail call <8 x i32> @llvm.umin.v8i32(<8 x i32> %i.dg, <8 x i32> splat (i32 255))
   %i.di = trunc nuw <8 x i32> %i.dh to <8 x i8>   ; 2 uses
