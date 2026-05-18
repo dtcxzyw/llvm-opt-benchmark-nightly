@@ -201,11 +201,10 @@ bb.a:
   %i.dp = shl nuw <2 x i16> %i.do, <i16 8, i16 3>
   %i.dq = and <2 x i16> %i.dp, <i16 -2048, i16 2016>
   %i.dr = or disjoint <2 x i16> %i.dq, %i.dm
-  %4 = lshr i8 %i.db, 3
-  %5 = lshr i8 %i.ce, 3
-  %i.ds = insertelement <2 x i8> poison, i8 %5, i64 0
-  %6 = insertelement <2 x i8> %i.ds, i8 %4, i64 1
-  %i.dt = zext nneg <2 x i8> %6 to <2 x i16>
+  %4 = insertelement <2 x i8> poison, i8 %i.ce, i64 0
+  %i.ds = insertelement <2 x i8> %4, i8 %i.db, i64 1
+  %5 = lshr <2 x i8> %i.ds, splat (i8 3)
+  %i.dt = zext nneg <2 x i8> %5 to <2 x i16>
   %i.du = or disjoint <2 x i16> %i.dr, %i.dt
   store <2 x i16> %i.du, ptr %.0168.i8, align 2, !tbaa !79
   %i.dv = getelementptr inbounds nuw i8, ptr %.0168.i8, i64 4 ; 2 uses
@@ -267,11 +266,10 @@ bb.a:
   %i.fz = shl nuw <2 x i16> %i.fy, <i16 8, i16 3>
   %i.ga = and <2 x i16> %i.fz, <i16 -2048, i16 2016>
   %i.gb = or disjoint <2 x i16> %i.ga, %i.fw
-  %7 = lshr i8 %i.fl, 3
-  %8 = lshr i8 %i.eo, 3
-  %i.gc = insertelement <2 x i8> poison, i8 %8, i64 0
-  %9 = insertelement <2 x i8> %i.gc, i8 %7, i64 1
-  %i.gd = zext nneg <2 x i8> %9 to <2 x i16>
+  %6 = insertelement <2 x i8> poison, i8 %i.eo, i64 0
+  %i.gc = insertelement <2 x i8> %6, i8 %i.fl, i64 1
+  %7 = lshr <2 x i8> %i.gc, splat (i8 3)
+  %i.gd = zext nneg <2 x i8> %7 to <2 x i16>
   %i.ge = or disjoint <2 x i16> %i.gb, %i.gd
   store <2 x i16> %i.ge, ptr %.0167.i9, align 2, !tbaa !79
   %i.gf = getelementptr inbounds nuw i8, ptr %.0167.i9, i64 4 ; 2 uses
@@ -482,11 +480,10 @@ bb.a:
   %i.cp = shl nuw <2 x i16> %i.co, <i16 8, i16 3>
   %i.cq = and <2 x i16> %i.cp, <i16 -2048, i16 2016>
   %i.cr = or disjoint <2 x i16> %i.cq, %i.cm
-  %4 = lshr i8 %i.ce, 3
-  %5 = lshr i8 %i.bp, 3
-  %i.cs = insertelement <2 x i8> poison, i8 %5, i64 0
-  %6 = insertelement <2 x i8> %i.cs, i8 %4, i64 1
-  %i.ct = zext nneg <2 x i8> %6 to <2 x i16>
+  %4 = insertelement <2 x i8> poison, i8 %i.bp, i64 0
+  %i.cs = insertelement <2 x i8> %4, i8 %i.ce, i64 1
+  %5 = lshr <2 x i8> %i.cs, splat (i8 3)
+  %i.ct = zext nneg <2 x i8> %5 to <2 x i16>
   %i.cu = or disjoint <2 x i16> %i.cr, %i.ct
   store <2 x i16> %i.cu, ptr %.0138.i8, align 2, !tbaa !79
   %i.cv = getelementptr inbounds nuw i8, ptr %.0138.i8, i64 4 ; 2 uses
@@ -533,11 +530,10 @@ bb.a:
   %i.ek = shl nuw <2 x i16> %i.ej, <i16 8, i16 3>
   %i.el = and <2 x i16> %i.ek, <i16 -2048, i16 2016>
   %i.em = or disjoint <2 x i16> %i.el, %i.eh
-  %7 = lshr i8 %i.dz, 3
-  %8 = lshr i8 %i.dk, 3
-  %i.en = insertelement <2 x i8> poison, i8 %8, i64 0
-  %9 = insertelement <2 x i8> %i.en, i8 %7, i64 1
-  %i.eo = zext nneg <2 x i8> %9 to <2 x i16>
+  %6 = insertelement <2 x i8> poison, i8 %i.dk, i64 0
+  %i.en = insertelement <2 x i8> %6, i8 %i.dz, i64 1
+  %7 = lshr <2 x i8> %i.en, splat (i8 3)
+  %i.eo = zext nneg <2 x i8> %7 to <2 x i16>
   %i.ep = or disjoint <2 x i16> %i.em, %i.eo
   store <2 x i16> %i.ep, ptr %.0137.i9, align 2, !tbaa !79
   %i.eq = getelementptr inbounds nuw i8, ptr %.0137.i9, i64 4 ; 2 uses
@@ -940,11 +936,10 @@ bb.a:
   %i.dc = shl nuw <2 x i16> %i.db, <i16 8, i16 3>
   %i.dd = and <2 x i16> %i.dc, <i16 -2048, i16 2016>
   %i.de = or disjoint <2 x i16> %i.dd, %i.cz
-  %4 = lshr i8 %i.co, 3
-  %5 = lshr i8 %i.br, 3
-  %i.df = insertelement <2 x i8> poison, i8 %5, i64 0
-  %6 = insertelement <2 x i8> %i.df, i8 %4, i64 1
-  %i.dg = zext nneg <2 x i8> %6 to <2 x i16>
+  %4 = insertelement <2 x i8> poison, i8 %i.br, i64 0
+  %i.df = insertelement <2 x i8> %4, i8 %i.co, i64 1
+  %5 = lshr <2 x i8> %i.df, splat (i8 3)
+  %i.dg = zext nneg <2 x i8> %5 to <2 x i16>
   %i.dh = or disjoint <2 x i16> %i.de, %i.dg
   store <2 x i16> %i.dh, ptr %.0101.i8, align 2, !tbaa !79
   %i.di = getelementptr inbounds nuw i8, ptr %.0101.i8, i64 4 ; 2 uses
@@ -1113,11 +1108,10 @@ bb.a:
   %i.ch = shl nuw <2 x i16> %i.cg, <i16 8, i16 3>
   %i.ci = and <2 x i16> %i.ch, <i16 -2048, i16 2016>
   %i.cj = or disjoint <2 x i16> %i.ci, %i.ce
-  %4 = lshr i8 %i.bw, 3
-  %5 = lshr i8 %i.bh, 3
-  %i.ck = insertelement <2 x i8> poison, i8 %5, i64 0
-  %6 = insertelement <2 x i8> %i.ck, i8 %4, i64 1
-  %i.cl = zext nneg <2 x i8> %6 to <2 x i16>
+  %4 = insertelement <2 x i8> poison, i8 %i.bh, i64 0
+  %i.ck = insertelement <2 x i8> %4, i8 %i.bw, i64 1
+  %5 = lshr <2 x i8> %i.ck, splat (i8 3)
+  %i.cl = zext nneg <2 x i8> %5 to <2 x i16>
   %i.cm = or disjoint <2 x i16> %i.cj, %i.cl
   store <2 x i16> %i.cm, ptr %.086.i8, align 2, !tbaa !79
   %i.cn = getelementptr inbounds nuw i8, ptr %.086.i8, i64 4 ; 2 uses
