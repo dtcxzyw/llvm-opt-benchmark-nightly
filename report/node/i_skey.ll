@@ -170,7 +170,6 @@ bb.a:
   %.masked96 = and i32 %i.dv, 65024
   %i.dw = getelementptr i8, ptr %1, i64 140
   %i.dx = getelementptr i8, ptr %1, i64 144
-  %2 = getelementptr i8, ptr %1, i64 152
   %.071.4 = getelementptr i8, ptr %1, i64 160
   %i.dy = shl nuw nsw i32 %i.ds, 9
   %.masked102 = and i32 %i.dy, 65024
@@ -258,12 +257,9 @@ bb.a:
   %i.gi = or <4 x i32> %i.gd, %i.gf               ; 2 uses
   %i.gj = extractelement <4 x i32> %i.gi, i64 0   ; 2 uses
   store i32 %i.gj, ptr %i.dw, align 4, !tbaa !5
-  %i.gk = or <4 x i32> %i.gh, %i.gg               ; 4 uses
+  %i.gk = or <4 x i32> %i.gh, %i.gg               ; 3 uses
   %i.gl = extractelement <4 x i32> %i.gk, i64 3
-  %3 = shufflevector <4 x i32> %i.gk, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  store <2 x i32> %3, ptr %i.dx, align 4, !tbaa !5
-  %4 = shufflevector <4 x i32> %i.gk, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  store <2 x i32> %4, ptr %2, align 4, !tbaa !5
+  store <4 x i32> %i.gk, ptr %i.dx, align 4, !tbaa !5
   %i.gm = lshr i32 %i.gb, 7
   %i.gn = or i32 %i.gm, %.masked102
   store i32 %i.gn, ptr %.071.4, align 4, !tbaa !5
