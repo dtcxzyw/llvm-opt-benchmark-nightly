@@ -201,27 +201,23 @@ bb.a:
   %i.b = mul nuw nsw i64 %i.a, 3996
   %i.c = shl nuw nsw i64 %wide.trip.count, 2      ; 2 uses
   %i.d = getelementptr i8, ptr %0, i64 %i.b
-  %scevgep = getelementptr i8, ptr %i.d, i64 %i.c
+  %scevgep = getelementptr i8, ptr %i.d, i64 %i.c ; 3 uses
   %i.e = add nuw nsw i64 %i.c, 3996               ; 3 uses
   %scevgep34 = getelementptr i8, ptr %1, i64 %i.e
   %scevgep35 = getelementptr i8, ptr %2, i64 %i.e
   %scevgep36 = getelementptr i8, ptr %3, i64 %i.e
-  %6 = insertelement <3 x ptr> poison, ptr %0, i64 0
-  %7 = shufflevector <3 x ptr> %6, <3 x ptr> poison, <3 x i32> zeroinitializer
-  %8 = insertelement <3 x ptr> poison, ptr %scevgep34, i64 0
-  %9 = insertelement <3 x ptr> %8, ptr %scevgep35, i64 1
-  %10 = insertelement <3 x ptr> %9, ptr %scevgep36, i64 2
-  %11 = insertelement <3 x ptr> poison, ptr %1, i64 0
-  %12 = insertelement <3 x ptr> %11, ptr %2, i64 1
-  %13 = insertelement <3 x ptr> %12, ptr %3, i64 2
-  %14 = insertelement <3 x ptr> poison, ptr %scevgep, i64 0
-  %15 = shufflevector <3 x ptr> %14, <3 x ptr> poison, <3 x i32> zeroinitializer
-  %min.iters.check.a = icmp ult i32 %4, 4
-  %16 = icmp ult <3 x ptr> %7, %10
-  %17 = icmp ult <3 x ptr> %13, %15
-  %18 = and <3 x i1> %16, %17
-  %19 = bitcast <3 x i1> %18 to i3
-  %.not46 = icmp eq i3 %19, 0
+  %min.iters.check = icmp ult i32 %4, 4
+  %bound0 = icmp ult ptr %0, %scevgep34
+  %bound1 = icmp ult ptr %1, %scevgep
+  %found.conflict = and i1 %bound0, %bound1
+  %bound037 = icmp ult ptr %0, %scevgep35
+  %bound138 = icmp ult ptr %2, %scevgep
+  %found.conflict39 = and i1 %bound037, %bound138
+  %conflict.rdx = or i1 %found.conflict, %found.conflict39
+  %min.iters.check.a = icmp ult ptr %0, %scevgep36
+  %bound141 = icmp ult ptr %3, %scevgep
+  %found.conflict42 = and i1 %min.iters.check.a, %bound141
+  %conflict.rdx43 = or i1 %conflict.rdx, %found.conflict42
   %n.vec = and i64 %wide.trip.count, 4294967292   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br label %.lr.ph.us
@@ -233,8 +229,7 @@ bb.a:
   %.02024.us = phi ptr [ %i.y, %._crit_edge.us ], [ %3, %.lr.ph.us.preheader ] ; 3 uses
   %.02123.us = phi ptr [ %i.x, %._crit_edge.us ], [ %2, %.lr.ph.us.preheader ] ; 3 uses
   fence syncscope("singlethread") acq_rel
-  %.not46.not = xor i1 %.not46, true
-  %brmerge = select i1 %min.iters.check.a, i1 true, i1 %.not46.not
+  %brmerge = select i1 %min.iters.check, i1 true, i1 %conflict.rdx43
   br i1 %brmerge, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %.lr.ph.us, %vector.body

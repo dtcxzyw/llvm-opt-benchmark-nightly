@@ -201,16 +201,14 @@ LitEnc_GetPriceMatched.exit888.i:                 ; preds = %bb.fu
   %i.bgh = zext nneg i16 %i.bgg to i64
   %i.bgi = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %i.bgh
   %i.bgj = load i32, ptr %i.bgi, align 4, !tbaa !4
-  %4 = insertelement <7 x i32> poison, i32 %i.bgb, i64 0
-  %5 = insertelement <7 x i32> %4, i32 %i.bgj, i64 1
-  %6 = insertelement <7 x i32> %5, i32 %i.bet, i64 2
-  %7 = insertelement <7 x i32> %6, i32 %i.bfa, i64 3
-  %8 = insertelement <7 x i32> %7, i32 %i.bfv, i64 4
-  %9 = insertelement <7 x i32> %8, i32 %i.bcs, i64 5
-  %10 = insertelement <7 x i32> %9, i32 %i.bcj, i64 6
-  %11 = tail call i32 @llvm.vector.reduce.add.v7i32(<7 x i32> %10)
-  %op.rdx = add i32 %11, %i.bea
-  %op.rdx630 = add i32 %op.rdx, %i.bba            ; 2 uses
+  %4 = add i32 %i.bcj, %i.bba
+  %5 = add i32 %4, %i.bcs
+  %6 = add i32 %5, %i.bea
+  %7 = add i32 %6, %i.bet
+  %8 = add i32 %7, %i.bfa
+  %9 = add i32 %8, %i.bfv
+  %op.rdx = add i32 %9, %i.bgb
+  %op.rdx630 = add i32 %op.rdx, %i.bgj            ; 2 uses
   %i.bgk = zext i32 %i.bfc to i64
   %i.bgl = getelementptr inbounds nuw [48 x i8], ptr %i.dz, i64 %i.bgk ; 8 uses
   %i.bgm = load i32, ptr %i.bgl, align 4, !tbaa !157
@@ -612,9 +610,6 @@ declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v7i32(<7 x i32>) #11
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

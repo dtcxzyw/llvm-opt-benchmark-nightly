@@ -201,45 +201,45 @@ bb.a:
   store float %i.al, ptr getelementptr inbounds nuw (i8, ptr @Bsize, i64 8), align 8, !tbaa !8
   %i.am = fmul float %i.al, 4.000000e+00
   store float %i.am, ptr getelementptr inbounds nuw (i8, ptr @Bsize, i64 4), align 4, !tbaa !8
-  %0 = insertelement <4 x float> poison, float %i.s, i64 0
-  %1 = shufflevector <4 x float> %0, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
-  %2 = fmul <4 x float> %1, <float 7.500000e+02, float 3.500000e+02, float 3.500000e+02, float 1.700000e+02>
-  %3 = insertelement <4 x float> poison, float %i.x, i64 0
-  %4 = shufflevector <4 x float> %3, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
-  %5 = fmul <4 x float> %2, %4
-  %6 = fptosi <4 x float> %5 to <4 x i32>
-  store <4 x i32> %6, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 4), align 4, !tbaa !4
-  %7 = fmul <4 x float> %1, <float 3.000000e+03, float 1.500000e+03, float 1.500000e+03, float 8.000000e+02>
-  %8 = fmul <4 x float> %7, %4
-  %9 = fptosi <4 x float> %8 to <4 x i32>
-  store <4 x i32> %9, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 4), align 4, !tbaa !4
-  %10 = fmul <4 x float> %1, <float 3.000000e+02, float 1.200000e+02, float 1.200000e+02, float 6.000000e+01>
-  %i.an = fmul <4 x float> %10, %4
-  %i.ao = fptosi <4 x float> %i.an to <4 x i32>   ; 2 uses
-  store <4 x i32> %i.ao, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 4), align 4, !tbaa !4
-  %i.ap = fmul <4 x float> %1, <float 2.200000e+03, float 1.000000e+03, float 1.000000e+03, float 5.000000e+02>
-  %i.aq = fmul <4 x float> %i.ap, %4
+  %0 = fmul float %i.s, 3.000000e+02
+  %1 = fmul float %0, %i.x
+  %2 = fptosi float %1 to i32
+  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 4), align 4, !tbaa !4
+  %3 = fmul float %i.s, 1.200000e+02
+  %4 = fmul float %3, %i.x
+  %5 = fptosi float %4 to i32                     ; 3 uses
+  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 8), align 8, !tbaa !4
+  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 12), align 4, !tbaa !4
+  %6 = insertelement <4 x float> poison, float %i.s, i64 0
+  %7 = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
+  %8 = fmul <4 x float> %7, <float 7.500000e+02, float 3.500000e+02, float 3.500000e+02, float 1.700000e+02>
+  %9 = insertelement <4 x float> poison, float %i.x, i64 0
+  %10 = shufflevector <4 x float> %9, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
+  %i.an = fmul <4 x float> %8, %10
+  %i.ao = fptosi <4 x float> %i.an to <4 x i32>
+  store <4 x i32> %i.ao, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 4), align 4, !tbaa !4
+  %i.ap = fmul <4 x float> %7, <float 3.000000e+03, float 1.500000e+03, float 1.500000e+03, float 8.000000e+02>
+  %i.aq = fmul <4 x float> %i.ap, %10
   %i.ar = fptosi <4 x float> %i.aq to <4 x i32>
-  store <4 x i32> %i.ar, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 4), align 4, !tbaa !4
-  %11 = fmul float %i.s, 8.000000e+01
-  %12 = fmul float %11, %i.x
-  %13 = fptosi float %12 to i32                   ; 2 uses
-  store i32 %13, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 20), align 4, !tbaa !4
-  %i.as = fmul float %i.s, 4.000000e+02
+  store <4 x i32> %i.ar, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 4), align 4, !tbaa !4
+  %11 = fmul <4 x float> %7, <float 2.200000e+03, float 1.000000e+03, float 1.000000e+03, float 5.000000e+02>
+  %12 = fmul <4 x float> %11, %10
+  %13 = fptosi <4 x float> %12 to <4 x i32>
+  store <4 x i32> %13, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 4), align 4, !tbaa !4
+  %i.as = fmul float %i.s, 8.000000e+01
   %i.at = fmul float %i.as, %i.x
   %i.au = fptosi float %i.at to i32               ; 2 uses
-  store i32 %i.au, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 20), align 4, !tbaa !4
-  %i.av = fmul float %i.s, 3.000000e+01
+  store i32 %i.au, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 20), align 4, !tbaa !4
+  %i.av = fmul float %i.s, 4.000000e+02
   %i.aw = fmul float %i.av, %i.x
   %i.ax = fptosi float %i.aw to i32               ; 2 uses
-  store i32 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 20), align 4, !tbaa !4
+  store i32 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 20), align 4, !tbaa !4
   %i.ay = fmul float %i.s, 2.500000e+02
   %i.az = fmul float %i.ay, %i.x
   %i.ba = fptosi float %i.az to i32               ; 2 uses
   store i32 %i.ba, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 20), align 4, !tbaa !4
-  store i32 %13, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 24), align 8, !tbaa !4
-  store i32 %i.au, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 24), align 8, !tbaa !4
-  store i32 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 24), align 8, !tbaa !4
+  store i32 %i.au, ptr getelementptr inbounds nuw (i8, ptr @Median_Pred_Thd_MB, i64 24), align 8, !tbaa !4
+  store i32 %i.ax, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 24), align 8, !tbaa !4
   store i32 %i.ba, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 24), align 8, !tbaa !4
   %i.bb = fmul float %i.s, 4.000000e+01
   %i.bc = fmul float %i.bb, %i.x
@@ -249,12 +249,11 @@ bb.a:
   %i.bf = fmul float %i.be, %i.x
   %i.bg = fptosi float %i.bf to i32
   store i32 %i.bg, ptr getelementptr inbounds nuw (i8, ptr @Big_Hexagon_Thd_MB, i64 28), align 4, !tbaa !4
-  %14 = fmul float %i.s, 1.500000e+01
-  %15 = fmul float %14, %i.x
-  %16 = fptosi float %15 to i32
-  store i32 %16, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 28), align 4, !tbaa !4
-  %17 = extractelement <4 x i32> %i.ao, i64 1
-  store i32 %17, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 28), align 4, !tbaa !4
+  %14 = fmul <4 x float> %7, <float 6.000000e+01, float 3.000000e+01, float 3.000000e+01, float 1.500000e+01>
+  %15 = fmul <4 x float> %14, %10
+  %16 = fptosi <4 x float> %15 to <4 x i32>
+  store <4 x i32> %16, ptr getelementptr inbounds nuw (i8, ptr @Multi_Ref_Thd_MB, i64 16), align 16, !tbaa !4
+  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @Threshold_DSR_MB, i64 28), align 4, !tbaa !4
   ret void
 }
 

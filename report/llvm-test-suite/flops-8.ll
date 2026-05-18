@@ -77,7 +77,7 @@ bb.a:
   %i.h = load double, ptr @B3, align 8, !tbaa !8  ; 2 uses
   %i.i = load double, ptr @B2, align 8, !tbaa !8  ; 2 uses
   %i.j = load double, ptr @B1, align 8, !tbaa !8  ; 2 uses
-  %i.k = load double, ptr @one, align 8, !tbaa !8 ; 3 uses
+  %i.k = load double, ptr @one, align 8, !tbaa !8 ; 4 uses
   %i.l = load double, ptr @A6, align 8, !tbaa !8  ; 2 uses
   %i.m = load double, ptr @A5, align 8, !tbaa !8  ; 2 uses
   %i.n = load double, ptr @A4, align 8, !tbaa !8  ; 2 uses
@@ -113,36 +113,22 @@ bb.b:                                             ; preds = %bb.a, %bb.b
 
 bb.c:                                             ; preds = %bb.b
   %i.ak = fdiv double %i.a, %i.b                  ; 3 uses
-  %i.al = fmul double %i.ak, %i.ak
-  %0 = insertelement <2 x double> poison, double %i.e, i64 0
-  %1 = insertelement <2 x double> %0, double %i.l, i64 1
-  %2 = insertelement <2 x double> poison, double %i.al, i64 0 ; 2 uses
-  %3 = shufflevector <2 x double> %2, <2 x double> poison, <2 x i32> zeroinitializer ; 5 uses
-  %4 = insertelement <2 x double> poison, double %i.f, i64 0
-  %5 = insertelement <2 x double> %4, double %i.m, i64 1
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %1, <2 x double> %3, <2 x double> %5)
-  %7 = insertelement <2 x double> poison, double %i.g, i64 0
-  %8 = insertelement <2 x double> %7, double %i.n, i64 1
-  %9 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %6, <2 x double> %8)
-  %10 = insertelement <2 x double> poison, double %i.h, i64 0
-  %11 = insertelement <2 x double> %10, double %i.o, i64 1
-  %12 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %9, <2 x double> %11)
-  %13 = insertelement <2 x double> poison, double %i.i, i64 0
-  %14 = insertelement <2 x double> %13, double %i.p, i64 1
-  %15 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %12, <2 x double> %14)
-  %16 = insertelement <2 x double> poison, double %i.j, i64 0
-  %17 = insertelement <2 x double> %16, double %i.q, i64 1
-  %18 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %3, <2 x double> %15, <2 x double> %17)
-  %19 = shufflevector <2 x double> %18, <2 x double> poison, <3 x i32> <i32 0, i32 0, i32 1>
-  %20 = shufflevector <2 x double> %2, <2 x double> poison, <3 x i32> zeroinitializer
-  %21 = insertelement <3 x double> poison, double %i.k, i64 0
-  %22 = shufflevector <3 x double> %21, <3 x double> poison, <3 x i32> zeroinitializer
-  %23 = tail call <3 x double> @llvm.fmuladd.v3f64(<3 x double> %19, <3 x double> %20, <3 x double> %22) ; 2 uses
-  %24 = extractelement <3 x double> %23, i64 2
-  %25 = fmul double %i.ak, %24
-  %26 = extractelement <3 x double> %23, i64 0    ; 2 uses
-  %i.am = fmul double %25, %26
-  %i.an = fmul double %26, %i.am
+  %i.al = fmul double %i.ak, %i.ak                ; 12 uses
+  %0 = tail call double @llvm.fmuladd.f64(double %i.l, double %i.al, double %i.m)
+  %1 = tail call double @llvm.fmuladd.f64(double %0, double %i.al, double %i.n)
+  %2 = tail call double @llvm.fmuladd.f64(double %1, double %i.al, double %i.o)
+  %3 = tail call double @llvm.fmuladd.f64(double %2, double %i.al, double %i.p)
+  %4 = tail call double @llvm.fmuladd.f64(double %3, double %i.al, double %i.q)
+  %5 = tail call double @llvm.fmuladd.f64(double %4, double %i.al, double %i.k)
+  %6 = fmul double %i.ak, %5
+  %7 = tail call double @llvm.fmuladd.f64(double %i.e, double %i.al, double %i.f)
+  %8 = tail call double @llvm.fmuladd.f64(double %i.al, double %7, double %i.g)
+  %9 = tail call double @llvm.fmuladd.f64(double %i.al, double %8, double %i.h)
+  %10 = tail call double @llvm.fmuladd.f64(double %i.al, double %9, double %i.i)
+  %11 = tail call double @llvm.fmuladd.f64(double %i.al, double %10, double %i.j)
+  %12 = tail call double @llvm.fmuladd.f64(double %i.al, double %11, double %i.k) ; 2 uses
+  %i.am = fmul double %6, %12
+  %i.an = fmul double %12, %i.am
   %i.ao = load double, ptr @two, align 8, !tbaa !8 ; 2 uses
   %i.ap = tail call double @llvm.fmuladd.f64(double %i.ao, double %i.ai, double %i.an)
   %i.aq = fmul double %i.d, %i.ap
@@ -167,12 +153,6 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind
 declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x double> @llvm.fmuladd.v3f64(<3 x double>, <3 x double>, <3 x double>) #2
 
 attributes #0 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

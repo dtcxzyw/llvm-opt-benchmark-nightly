@@ -201,51 +201,51 @@ bb.a:
   %i.p = icmp ult i64 %i.m, %i.o
   %i.q = icmp ugt i64 %i.m, %i.o
   %i.r = zext i1 %i.p to i32
+  %.248 = add nuw nsw i32 %.147, %i.r
   %spec.select54 = zext i1 %i.q to i32
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.u = load i64, ptr %i.t, align 8, !tbaa !200  ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %8 = load i64, ptr %7, align 8, !tbaa !200      ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %10 = load i64, ptr %9, align 8, !tbaa !204     ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %12 = load i64, ptr %11, align 8, !tbaa !204    ; 2 uses
-  %13 = icmp ult i64 %10, %12
-  %14 = icmp ult i64 %i.u, %8
-  %15 = load i64, ptr %i.s, align 8, !tbaa !199   ; 2 uses
-  %i.v = load i64, ptr %4, align 8, !tbaa !198    ; 2 uses
-  %16 = load i64, ptr %6, align 8, !tbaa !199     ; 2 uses
-  %17 = load i64, ptr %5, align 8, !tbaa !198     ; 2 uses
-  %18 = icmp ult i64 %15, %16
-  %19 = icmp ult i64 %i.v, %17
-  %20 = insertelement <4 x i1> poison, i1 %19, i64 0
-  %21 = insertelement <4 x i1> %20, i1 %18, i64 1
-  %22 = insertelement <4 x i1> %21, i1 %14, i64 2
-  %23 = insertelement <4 x i1> %22, i1 %13, i64 3
-  %24 = icmp ugt i64 %10, %12
-  %25 = icmp ugt i64 %i.u, %8
-  %26 = icmp ugt i64 %15, %16
-  %i.w = icmp ugt i64 %i.v, %17
-  %27 = insertelement <4 x i1> poison, i1 %i.w, i64 0
-  %28 = insertelement <4 x i1> %27, i1 %26, i64 1
-  %29 = insertelement <4 x i1> %28, i1 %25, i64 2
-  %30 = insertelement <4 x i1> %29, i1 %24, i64 3
-  %31 = bitcast <4 x i1> %23 to i4
-  %32 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %31)
-  %33 = zext nneg i4 %32 to i32
-  %op.rdx = add nuw nsw i32 %33, %i.r
-  %op.rdx61 = add nuw nsw i32 %op.rdx, %.147      ; 2 uses
-  %34 = bitcast <4 x i1> %30 to i4
-  %35 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %34)
-  %36 = zext nneg i4 %35 to i32
-  %op.rdx62 = add nuw nsw i32 %36, %spec.select54
-  %op.rdx63 = add nuw nsw i32 %op.rdx62, %.1      ; 2 uses
+  %.2 = add nuw nsw i32 %.1, %spec.select54
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %4 = load i64, ptr %i.s, align 8, !tbaa !198    ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 32
+  %i.u = load i64, ptr %i.t, align 8, !tbaa !198  ; 2 uses
+  %5 = icmp ult i64 %4, %i.u
+  %6 = icmp ugt i64 %4, %i.u
+  %7 = zext i1 %5 to i32
+  %.349 = add nuw nsw i32 %.248, %7
+  %spec.select55 = zext i1 %6 to i32
+  %.3 = add nuw nsw i32 %.2, %spec.select55
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %9 = load i64, ptr %8, align 8, !tbaa !199      ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.v = load i64, ptr %10, align 8, !tbaa !199   ; 2 uses
+  %11 = icmp ult i64 %9, %i.v
+  %12 = icmp ugt i64 %9, %i.v
+  %13 = zext i1 %11 to i32
+  %.450 = add nuw nsw i32 %.349, %13
+  %spec.select56 = zext i1 %12 to i32
+  %.4 = add nuw nsw i32 %.3, %spec.select56
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %15 = load i64, ptr %14, align 8, !tbaa !200    ; 2 uses
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %17 = load i64, ptr %16, align 8, !tbaa !200    ; 2 uses
+  %18 = icmp ult i64 %15, %17
+  %i.w = icmp ugt i64 %15, %17
+  %19 = zext i1 %18 to i32
+  %.551 = add nuw nsw i32 %.450, %19
+  %spec.select57 = zext i1 %i.w to i32
+  %.5 = add nuw nsw i32 %.4, %spec.select57
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 80
+  %21 = load i64, ptr %20, align 8, !tbaa !204    ; 2 uses
+  %22 = getelementptr inbounds nuw i8, ptr %1, i64 80
+  %23 = load i64, ptr %22, align 8, !tbaa !204    ; 2 uses
+  %24 = icmp ult i64 %21, %23
+  %25 = icmp ugt i64 %21, %23
+  %26 = zext i1 %24 to i32
+  %.652 = add nuw nsw i32 %.551, %26              ; 2 uses
+  %spec.select58 = zext i1 %25 to i32
+  %op.rdx63 = add nuw nsw i32 %.5, %spec.select58 ; 2 uses
   %i.x = icmp ne i32 %op.rdx63, 0                 ; 2 uses
-  %i.y = icmp ne i32 %op.rdx61, 0                 ; 2 uses
+  %i.y = icmp ne i32 %.652, 0                     ; 2 uses
   %i.z = select i1 %i.x, i1 %i.y, i1 false
   br i1 %i.z, label %bb.b, label %bb.e, !prof !42
 
@@ -254,7 +254,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #33, !noalias !208
   store i32 %op.rdx63, ptr %2, align 16, !tbaa !33, !noalias !208
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store i32 %op.rdx61, ptr %i.aa, align 16, !tbaa !33, !noalias !208
+  store i32 %.652, ptr %i.aa, align 16, !tbaa !33, !noalias !208
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr nonnull @.str.18, i64 21, i64 34, ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #33, !noalias !208
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZNK8facebook5velox6memory16MemoryArbitrator5StatsssERKS3_E18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr nonnull @.str.18) #41
@@ -656,9 +656,6 @@ declare i64 @llvm.smax.i64(i64, i64) #38
 
 ; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
 declare i32 @memcmp(ptr captures(none), ptr captures(none), i64) #39
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i4 @llvm.ctpop.i4(i4) #38
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
