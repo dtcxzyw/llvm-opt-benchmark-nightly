@@ -111,7 +111,7 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN7NCrypto5NSha17CHmac326SetKeyEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [16 x i32], align 16              ; 20 uses
+  %i.a = alloca [16 x i32], align 16              ; 21 uses
   %3 = alloca %"class.NCrypto::NSha1::CContext", align 8 ; 6 uses
   %i.b = alloca [20 x i8], align 16               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
@@ -245,9 +245,13 @@ bb.b:                                             ; preds = %bb.a
   %i.bt = xor <4 x i32> %i.bs, splat (i32 909522486)
   store <4 x i32> %i.bt, ptr %i.bq, align 4, !tbaa !4
   %i.bu = getelementptr inbounds nuw i8, ptr %i.a, i64 52 ; 2 uses
-  %4 = load <2 x i32>, ptr %i.bu, align 4, !tbaa !4
-  %5 = xor <2 x i32> %4, splat (i32 909522486)
-  store <2 x i32> %5, ptr %i.bu, align 4, !tbaa !4
+  %4 = load i32, ptr %i.bu, align 4, !tbaa !4
+  %5 = xor i32 %4, 909522486
+  store i32 %5, ptr %i.bu, align 4, !tbaa !4
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 56 ; 2 uses
+  %7 = load i32, ptr %6, align 8, !tbaa !4
+  %8 = xor i32 %7, 909522486
+  store i32 %8, ptr %6, align 8, !tbaa !4
   %i.bv = getelementptr inbounds nuw i8, ptr %i.a, i64 60 ; 2 uses
   %i.bw = load i32, ptr %i.bv, align 4, !tbaa !4
   %i.bx = xor i32 %i.bw, 909522486
