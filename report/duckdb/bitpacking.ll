@@ -201,10 +201,10 @@ bb.a:
   %i.ap = trunc <4 x i64> %i.ao to <4 x i32>
   %i.aq = shl <4 x i32> %i.ap, splat (i32 16)
   %i.ar = and <4 x i32> %i.aq, splat (i32 16711680)
-  %2 = trunc i64 %i.c to i32
-  %3 = insertelement <4 x i32> poison, i32 %2, i64 0
-  %4 = trunc i64 %i.i to i32
-  %5 = insertelement <4 x i32> %3, i32 %4, i64 1
+  %2 = insertelement <2 x i64> poison, i64 %i.c, i64 0
+  %3 = insertelement <2 x i64> %2, i64 %i.i, i64 1
+  %4 = trunc <2 x i64> %3 to <2 x i32>
+  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
   %i.as = trunc i64 %i.o to i32
   %i.at = insertelement <4 x i32> %5, i32 %i.as, i64 2
   %i.au = trunc i64 %i.u to i32
