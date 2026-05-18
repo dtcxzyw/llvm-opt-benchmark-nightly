@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.y, ptr %i.aa, align 8, !tbaa !98
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #22
   %i.ab = invoke noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #25
-          to label %bb.n unwind label %_ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i ; 3 uses
+          to label %bb.n unwind label %_ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i ; 5 uses
 
 _ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i:           ; preds = %bb.m
   %i.ac = landingpad { ptr, i32 }
@@ -211,9 +211,13 @@ _ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i:           ; preds = %bb.m
 bb.n:                                             ; preds = %bb.m
   store ptr %i.ab, ptr %14, align 8, !tbaa !842
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 6 ; 2 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 3 uses
-  store ptr %i.ad, ptr %i.ae, align 8, !tbaa !844
-  store <6 x i8> <i8 0, i8 0, i8 2, i8 2, i8 1, i8 1>, ptr %i.ab, align 1
+  %69 = getelementptr inbounds nuw i8, ptr %14, i64 16 ; 3 uses
+  store ptr %i.ad, ptr %69, align 8, !tbaa !844
+  store <4 x i8> <i8 0, i8 0, i8 2, i8 2>, ptr %i.ab, align 1
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
+  store i8 1, ptr %i.ae, align 1
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 5
+  store i8 1, ptr %.sroa.9.0..sroa_idx, align 1
   %i.af = getelementptr inbounds nuw i8, ptr %14, i64 8
   store ptr %i.ad, ptr %i.af, align 8, !tbaa !845
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #22
@@ -616,7 +620,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i557, label %_ZNSt6vectorIaSaIaEED2Ev.exit, label %bb.ue
 
 bb.ue:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
-  %i.bim = load ptr, ptr %i.ae, align 8, !tbaa !844
+  %i.bim = load ptr, ptr %69, align 8, !tbaa !844
   %i.bin = ptrtoint ptr %i.bim to i64
   %i.bio = ptrtoint ptr %i.bil to i64
   %i.bip = sub i64 %i.bin, %i.bio
@@ -1019,7 +1023,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit608:                 ; preds = %bb.wo, %bb.wn, %bb.
   br i1 %.not.i.i.i609, label %.body, label %bb.wp
 
 bb.wp:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit608
-  %i.bpe = load ptr, ptr %i.ae, align 8, !tbaa !844
+  %i.bpe = load ptr, ptr %69, align 8, !tbaa !844
   %i.bpf = ptrtoint ptr %i.bpe to i64
   %i.bpg = ptrtoint ptr %i.bpd to i64
   %i.bph = sub i64 %i.bpf, %i.bpg
@@ -1422,7 +1426,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.u, ptr %i.w, align 8, !tbaa !98
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #22
   %i.x = invoke noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #25
-          to label %bb.n unwind label %_ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i ; 3 uses
+          to label %bb.n unwind label %_ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i ; 5 uses
 
 _ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i:           ; preds = %bb.m
   %i.y = landingpad { ptr, i32 }
@@ -1432,9 +1436,13 @@ _ZNSt12_Vector_baseIaSaIaEED2Ev.exit.i:           ; preds = %bb.m
 bb.n:                                             ; preds = %bb.m
   store ptr %i.x, ptr %13, align 8, !tbaa !842
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 6 ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
-  store ptr %i.z, ptr %i.aa, align 8, !tbaa !844
-  store <6 x i8> <i8 0, i8 0, i8 2, i8 2, i8 1, i8 1>, ptr %i.x, align 1
+  %37 = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 3 uses
+  store ptr %i.z, ptr %37, align 8, !tbaa !844
+  store <4 x i8> <i8 0, i8 0, i8 2, i8 2>, ptr %i.x, align 1
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.x, i64 4
+  store i8 1, ptr %i.aa, align 1
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.x, i64 5
+  store i8 1, ptr %.sroa.9.0..sroa_idx, align 1
   %i.ab = getelementptr inbounds nuw i8, ptr %13, i64 8
   store ptr %i.z, ptr %i.ab, align 8, !tbaa !845
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #22
@@ -1837,7 +1845,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %_ZNSt12__shared_ptr
   br i1 %.not.i.i.i234, label %_ZNSt6vectorIaSaIaEED2Ev.exit, label %bb.he
 
 bb.he:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit
-  %i.yd = load ptr, ptr %i.aa, align 8, !tbaa !844
+  %i.yd = load ptr, ptr %37, align 8, !tbaa !844
   %i.ye = ptrtoint ptr %i.yd to i64
   %i.yf = ptrtoint ptr %i.yc to i64
   %i.yg = sub i64 %i.ye, %i.yf
@@ -2240,7 +2248,7 @@ _ZNSt6vectorIiSaIiEED2Ev.exit294:                 ; preds = %bb.kh, %bb.kg, %bb.
   br i1 %.not.i.i.i295, label %.body, label %bb.ki
 
 bb.ki:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit294
-  %i.agi = load ptr, ptr %i.aa, align 8, !tbaa !844
+  %i.agi = load ptr, ptr %37, align 8, !tbaa !844
   %i.agj = ptrtoint ptr %i.agi to i64
   %i.agk = ptrtoint ptr %i.agh to i64
   %i.agl = sub i64 %i.agj, %i.agk

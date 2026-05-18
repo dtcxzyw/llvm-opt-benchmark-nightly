@@ -37,7 +37,7 @@ target triple = "x86_64-pc-linux-gnu"
 @.str.8 = private unnamed_addr constant [19 x i8] c"announce-hostnames\00", align 1
 @preMonitorCfgName = dso_local local_unnamed_addr global [9 x ptr] [ptr @.str, ptr @.str.1, ptr @.str.2, ptr @.str.3, ptr @.str.4, ptr @.str.5, ptr @.str.6, ptr @.str.7, ptr @.str.8], align 16
 @server = external local_unnamed_addr global %struct.redisServer, align 8
-@sentinel = dso_local global %struct.sentinelState zeroinitializer, align 64
+@sentinel = dso_local global %struct.sentinelState zeroinitializer, align 32
 @.str.9 = private unnamed_addr constant [61 x i8] c"Sentinel needs config file on disk to save state. Exiting...\00", align 1
 @.str.10 = private unnamed_addr constant [56 x i8] c"Sentinel config file %s is not writable: %s. Exiting...\00", align 1
 @.str.11 = private unnamed_addr constant [18 x i8] c"Sentinel ID is %s\00", align 1
@@ -440,11 +440,18 @@ declare ptr @__errno_location() local_unnamed_addr #7
 define dso_local void @sentinelIsRunning() local_unnamed_addr #0 {
 bb.a:
   %0 = alloca %struct.dictIterator, align 8       ; 6 uses
-  %1 = load <40 x i8>, ptr @sentinel, align 64
-  %.fr = freeze <40 x i8> %1
-  %2 = icmp ne <40 x i8> %.fr, zeroinitializer
-  %3 = bitcast <40 x i1> %2 to i40
-  %i.a = icmp eq i40 %3, 0
+  %1 = load <32 x i8>, ptr @sentinel, align 32
+  %.fr = freeze <32 x i8> %1
+  %2 = icmp eq <32 x i8> %.fr, zeroinitializer    ; 2 uses
+  %3 = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 32), align 32
+  %.fr45 = freeze <8 x i8> %3
+  %4 = icmp eq <8 x i8> %.fr45, zeroinitializer
+  %5 = shufflevector <32 x i1> %2, <32 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %rdx.op = and <8 x i1> %5, %4
+  %6 = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %7 = shufflevector <32 x i1> %6, <32 x i1> %2, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 40, i32 41, i32 42, i32 43, i32 44, i32 45, i32 46, i32 47, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55, i32 56, i32 57, i32 58, i32 59, i32 60, i32 61, i32 62, i32 63>
+  %8 = bitcast <32 x i1> %7 to i32
+  %i.a = icmp eq i32 %8, -1
   br i1 %i.a, label %bb.b, label %sentinelFlushConfig.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -847,7 +854,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %.not240, label %bb.ai, label %sentinelCheckCreateInstanceErrors.exit.thread
 
 bb.ai:                                            ; preds = %bb.ah
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(40) @sentinel, ptr noundef nonnull align 1 dereferenceable(40) %i.ed, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 32 dereferenceable(40) @sentinel, ptr noundef nonnull align 1 dereferenceable(40) %i.ed, i64 40, i1 false)
   br label %.critedge
 
 bb.aj:                                            ; preds = %bb.ag
@@ -1079,7 +1086,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.hr = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !95
   %i.ht = tail call i32 @yesnotoi(ptr noundef %i.hs) #26 ; 2 uses
-  store i32 %i.ht, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 64, !tbaa !84
+  store i32 %i.ht, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %i.hu = icmp eq i32 %i.ht, -1
   br i1 %i.hu, label %sentinelCheckCreateInstanceErrors.exit.thread, label %.critedge
 
@@ -1199,11 +1206,11 @@ bb.a:
   %i.b = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.a, ptr noundef nonnull @.str.95, ptr noundef nonnull @sentinel) #26
   %i.c = tail call i32 @rewriteConfigRewriteLine(ptr noundef %0, ptr noundef nonnull @.str.96, ptr noundef %i.b, i32 noundef 1) #26 ; 0 uses
   %i.d = tail call ptr @sdsempty() #26
-  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 64, !tbaa !84
+  %i.e = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %.not = icmp eq i32 %i.e, 0
   %i.f = select i1 %.not, ptr @.str.99, ptr @.str.98
   %i.g = tail call ptr (ptr, ptr, ...) @sdscatprintf(ptr noundef %i.d, ptr noundef nonnull @.str.97, ptr noundef nonnull %i.f) #26
-  %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 64, !tbaa !84
+  %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %i.i = icmp ne i32 %i.h, 1
   %i.j = zext i1 %i.i to i32
   %i.k = tail call i32 @rewriteConfigRewriteLine(ptr noundef %0, ptr noundef nonnull @.str.100, ptr noundef %i.g, i32 noundef %i.j) #26 ; 0 uses
@@ -1606,7 +1613,7 @@ bb.cx:                                            ; preds = %bb.cw, %bb.cv
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx, %._crit_edge
-  %i.no = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  %i.no = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   %.not198 = icmp eq i32 %i.no, 0
   br i1 %.not198, label %bb.cz, label %bb.eg
 
@@ -2009,7 +2016,7 @@ bb.u:                                             ; preds = %bb.t
   %i.bg = load i64, ptr %i.d, align 8, !tbaa !182
   %i.bh = trunc i64 %i.bg to i32
   %i.bi = call ptr @getSentinelRedisInstanceByAddrAndRunID(ptr noundef %i.ba, ptr noundef %i.bf, i32 noundef %i.bh, ptr noundef null) ; 4 uses
-  %i.bj = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  %i.bj = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   %i.bk = icmp eq i32 %i.bj, 0
   %i.bl = icmp ne ptr %i.bi, null                 ; 2 uses
   %or.cond = select i1 %i.bk, i1 %i.bl, i1 false
@@ -2412,7 +2419,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !273
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !274 ; 4 uses
-  %i.cj = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 64, !tbaa !84
+  %i.cj = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %.not233 = icmp eq i32 %i.cj, 0
   br i1 %.not233, label %bb.m, label %bb.l
 
@@ -2463,7 +2470,7 @@ bb.t:                                             ; preds = %bb.s
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !273
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   %i.cw = load ptr, ptr %i.cv, align 8, !tbaa !274 ; 4 uses
-  %i.cx = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 64, !tbaa !84
+  %i.cx = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 128), align 32, !tbaa !84
   %.not228 = icmp eq i32 %i.cx, 0
   br i1 %.not228, label %bb.v, label %bb.u
 
@@ -2866,7 +2873,7 @@ sdslen.exit.thread:                               ; preds = %bb.g, %bb.m, %sdsle
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 32
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !182
   %i.ay = add i64 %i.ax, %i.av
-  %i.az = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75 ; 2 uses
+  %i.az = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75 ; 2 uses
   %.not45 = icmp eq i32 %i.az, 0
   br i1 %.not45, label %bb.o, label %bb.n
 
@@ -3269,7 +3276,7 @@ bb.a:
   %i.b = alloca [26 x i8], align 16               ; 5 uses
   tail call void @sentinelReconnectInstance(ptr noundef %0)
   tail call void @sentinelSendPeriodicCommands(ptr noundef %0)
-  %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  %i.c = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -3282,7 +3289,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.l, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  store i32 0, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   tail call void (i32, ptr, ptr, ptr, ...) @sentinelEvent(i32 noundef 3, ptr noundef nonnull @.str.444, ptr noundef null, ptr noundef nonnull @.str.445)
   br label %bb.d
 
@@ -3447,7 +3454,7 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   %i.g = tail call i64 @mstime() #26
   store i64 %i.g, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 80), align 16, !tbaa !76
   %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 68), align 4, !tbaa !77
@@ -3475,7 +3482,7 @@ bb.a:
   br i1 %or.cond.i, label %bb.b, label %sentinelCheckTiltCondition.exit
 
 bb.b:                                             ; preds = %bb.a
-  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 64, !tbaa !75
+  store i32 1, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 64), align 32, !tbaa !75
   %i.g = tail call i64 @mstime() #26
   store i64 %i.g, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 80), align 16, !tbaa !76
   %i.h = load i32, ptr getelementptr inbounds nuw (i8, ptr @sentinel, i64 68), align 4, !tbaa !77

@@ -201,36 +201,56 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %3 = load <3 x float>, ptr %2, align 4, !tbaa !42
-  %4 = load <3 x float>, ptr %i.f, align 4, !tbaa !42
-  %5 = fadd <3 x float> %3, %4                    ; 2 uses
+  %3 = load <2 x float>, ptr %2, align 4, !tbaa !42
+  %4 = load <2 x float>, ptr %i.f, align 4, !tbaa !42
+  %5 = fadd <2 x float> %3, %4                    ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %7 = load float, ptr %6, align 4, !tbaa !42
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %9 = load float, ptr %8, align 4, !tbaa !42
+  %10 = fadd float %7, %9                         ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %bb.d
-  %i.g = phi ptr [ %i.t, %bb.d ], [ %i.d, %.preheader ] ; 2 uses
+  %i.g = phi ptr [ %i.t, %bb.d ], [ %i.d, %.preheader ] ; 4 uses
   %.045 = phi ptr [ %i.r, %bb.d ], [ %1, %.preheader ]
   %i.h = getelementptr inbounds nuw i8, ptr %.045, i64 40 ; 2 uses
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !25   ; 2 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %6 = load <3 x float>, ptr %i.i, align 4, !tbaa !42
-  %7 = load <3 x float>, ptr %i.j, align 4, !tbaa !42
-  %8 = fadd <3 x float> %6, %7
-  %9 = fsub <3 x float> %5, %8
-  %10 = tail call <3 x float> @llvm.fabs.v3f32(<3 x float> %9) ; 3 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %11 = load <3 x float>, ptr %i.g, align 4, !tbaa !42
-  %12 = load <3 x float>, ptr %i.k, align 4, !tbaa !42
-  %13 = fadd <3 x float> %11, %12
-  %14 = fsub <3 x float> %5, %13
-  %15 = tail call <3 x float> @llvm.fabs.v3f32(<3 x float> %14) ; 3 uses
-  %16 = shufflevector <3 x float> %10, <3 x float> %15, <2 x i32> <i32 0, i32 3>
-  %17 = shufflevector <3 x float> %10, <3 x float> %15, <2 x i32> <i32 1, i32 4>
-  %i.l = fadd <2 x float> %16, %17
-  %18 = shufflevector <3 x float> %10, <3 x float> %15, <2 x i32> <i32 2, i32 5>
-  %i.m = fadd <2 x float> %i.l, %18               ; 2 uses
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !25   ; 4 uses
+  %11 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  %12 = getelementptr inbounds nuw i8, ptr %i.i, i64 8
+  %13 = load float, ptr %12, align 4, !tbaa !42
+  %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 24
+  %14 = load float, ptr %i.j, align 4, !tbaa !42
+  %15 = fadd float %13, %14
+  %16 = fsub float %10, %15
+  %17 = load <2 x float>, ptr %i.i, align 4, !tbaa !42
+  %18 = load <2 x float>, ptr %11, align 4, !tbaa !42
+  %19 = fadd <2 x float> %17, %18
+  %20 = fsub <2 x float> %5, %19
+  %21 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %20) ; 2 uses
+  %shift = shufflevector <2 x float> %21, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = fadd <2 x float> %21, %shift
+  %22 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %23 = tail call noundef float @llvm.fabs.f32(float %16)
+  %24 = fadd float %22, %23
+  %25 = getelementptr inbounds nuw i8, ptr %i.g, i64 16
+  %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 8
+  %26 = load float, ptr %i.k, align 4, !tbaa !42
+  %27 = getelementptr inbounds nuw i8, ptr %i.g, i64 24
+  %28 = load float, ptr %27, align 4, !tbaa !42
+  %29 = fadd float %26, %28
+  %30 = fsub float %10, %29
+  %31 = load <2 x float>, ptr %i.g, align 4, !tbaa !42
+  %32 = load <2 x float>, ptr %25, align 4, !tbaa !42
+  %i.l = fadd <2 x float> %31, %32
+  %33 = fsub <2 x float> %5, %i.l
+  %34 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %33) ; 2 uses
+  %shift56 = shufflevector <2 x float> %34, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
+  %i.m = fadd <2 x float> %34, %shift56
   %i.n = extractelement <2 x float> %i.m, i64 0
-  %19 = extractelement <2 x float> %i.m, i64 1
-  %i.o = fcmp uge float %i.n, %19
+  %35 = tail call noundef float @llvm.fabs.f32(float %30)
+  %36 = fadd float %i.n, %35
+  %i.o = fcmp uge float %24, %36
   %i.p = zext i1 %i.o to i64
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.p
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !25   ; 3 uses
@@ -633,7 +653,7 @@ declare i32 @llvm.smax.i32(i32, i32) #10
 declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x float> @llvm.fabs.v3f32(<3 x float>) #10
+declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #15

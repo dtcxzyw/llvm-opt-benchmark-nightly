@@ -201,28 +201,55 @@ bb.e:                                             ; preds = %_ZN14arrow_vendored
   br label %.lr.ph57
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv71 = phi i64 [ %i.ag, %.lr.ph.preheader ], [ %indvars.iv.next72, %.lr.ph ] ; 2 uses
+  %indvars.iv71 = phi i64 [ %i.ag, %.lr.ph.preheader ], [ %indvars.iv.next72, %.lr.ph ] ; 5 uses
   %indvars.iv69 = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next70, %.lr.ph ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv69
+  %3 = load i32, ptr %i.ak, align 4, !tbaa !3     ; 7 uses
+  %4 = and i32 %3, 15                             ; 2 uses
+  %5 = icmp samesign ult i32 %4, 10
+  %6 = trunc nuw nsw i32 %4 to i8                 ; 2 uses
+  %7 = or disjoint i8 %6, 48
+  %8 = add nuw nsw i8 %6, 55
+  %.0.i = select i1 %5, i8 %7, i8 %8
+  %9 = getelementptr inbounds i8, ptr %1, i64 %indvars.iv71
+  store i8 %.0.i, ptr %9, align 1, !tbaa !19
+  %10 = lshr i32 %3, 4
+  %11 = and i32 %10, 15                           ; 2 uses
+  %12 = icmp samesign ult i32 %11, 10
+  %13 = trunc nuw nsw i32 %11 to i8               ; 2 uses
+  %14 = or disjoint i8 %13, 48
+  %15 = add nuw nsw i8 %13, 55
+  %.0.i.1 = select i1 %12, i8 %14, i8 %15
   %i.al = getelementptr i8, ptr %1, i64 %indvars.iv71
-  %i.am = getelementptr i8, ptr %i.al, i64 -6
-  %3 = load i32, ptr %i.ak, align 4, !tbaa !3     ; 4 uses
-  %i.an = lshr i32 %3, 4
-  %i.ao = lshr i32 %3, 8
-  %4 = insertelement <4 x i32> poison, i32 %3, i64 0
-  %5 = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> zeroinitializer
-  %6 = lshr <4 x i32> %5, <i32 24, i32 20, i32 16, i32 12>
-  %7 = shufflevector <4 x i32> %6, <4 x i32> poison, <7 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison>
-  %8 = insertelement <7 x i32> %7, i32 %i.ao, i64 4
-  %9 = insertelement <7 x i32> %8, i32 %i.an, i64 5
-  %10 = insertelement <7 x i32> %9, i32 %3, i64 6
-  %11 = and <7 x i32> %10, splat (i32 15)         ; 2 uses
-  %12 = icmp samesign ult <7 x i32> %11, splat (i32 10)
-  %13 = trunc nuw nsw <7 x i32> %11 to <7 x i8>   ; 2 uses
-  %14 = or disjoint <7 x i8> %13, splat (i8 48)
-  %15 = add nuw nsw <7 x i8> %13, splat (i8 55)
-  %16 = select <7 x i1> %12, <7 x i8> %14, <7 x i8> %15
-  store <7 x i8> %16, ptr %i.am, align 1, !tbaa !19
+  %i.am = getelementptr i8, ptr %i.al, i64 -1
+  store i8 %.0.i.1, ptr %i.am, align 1, !tbaa !19
+  %i.an = lshr i32 %3, 8
+  %16 = and i32 %i.an, 15                         ; 2 uses
+  %17 = icmp samesign ult i32 %16, 10
+  %18 = trunc nuw nsw i32 %16 to i8               ; 2 uses
+  %19 = or disjoint i8 %18, 48
+  %20 = add nuw nsw i8 %18, 55
+  %.0.i.2 = select i1 %17, i8 %19, i8 %20
+  %21 = getelementptr i8, ptr %1, i64 %indvars.iv71
+  %22 = getelementptr i8, ptr %21, i64 -2
+  store i8 %.0.i.2, ptr %22, align 1, !tbaa !19
+  %23 = getelementptr i8, ptr %1, i64 %indvars.iv71
+  %24 = getelementptr i8, ptr %23, i64 -6
+  %i.ao = lshr i32 %3, 12
+  %25 = lshr i32 %3, 16
+  %26 = lshr i32 %3, 20
+  %27 = lshr i32 %3, 24
+  %28 = insertelement <4 x i32> poison, i32 %27, i64 0
+  %29 = insertelement <4 x i32> %28, i32 %26, i64 1
+  %30 = insertelement <4 x i32> %29, i32 %25, i64 2
+  %31 = insertelement <4 x i32> %30, i32 %i.ao, i64 3
+  %32 = and <4 x i32> %31, splat (i32 15)         ; 2 uses
+  %33 = icmp samesign ult <4 x i32> %32, splat (i32 10)
+  %34 = trunc nuw nsw <4 x i32> %32 to <4 x i8>   ; 2 uses
+  %35 = or disjoint <4 x i8> %34, splat (i8 48)
+  %36 = add nuw nsw <4 x i8> %34, splat (i8 55)
+  %37 = select <4 x i1> %33, <4 x i8> %35, <4 x i8> %36
+  store <4 x i8> %37, ptr %24, align 1, !tbaa !19
   %indvars.iv.next72 = add nsw i64 %indvars.iv71, -7 ; 2 uses
   %indvars.iv.next70 = add nuw nsw i64 %indvars.iv69, 1 ; 2 uses
   %i.ap = load i16, ptr %0, align 4, !tbaa !7

@@ -201,7 +201,8 @@ bb.h:                                             ; preds = %bb.g
 .lr.ph:                                           ; preds = %.preheader, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit
   %.036 = phi i64 [ %i.u, %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit ], [ 0, %.preheader ] ; 3 uses
   %.idx = mul i64 %.036, 12
-  %i.l = getelementptr i8, ptr %1, i64 %.idx
+  %4 = getelementptr i8, ptr %1, i64 %.idx        ; 2 uses
+  %i.l = getelementptr i8, ptr %4, i64 8
   %i.m = shl i64 %.036, 2
   %i.n = getelementptr inbounds nuw i8, ptr %.024, i64 %i.m ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 3
@@ -212,22 +213,23 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %.lr.ph
   %i.q = zext i8 %i.p to i64
   %i.r = getelementptr inbounds nuw [4 x i8], ptr @_ZN11OpenImageIO4v3_1L14exponent_tableE, i64 %i.q
-  %i.s = load float, ptr %i.r, align 4, !tbaa !82
-  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 1
-  %i.t = load <2 x i8>, ptr %4, align 1, !tbaa !16
-  %5 = load i8, ptr %i.n, align 1, !tbaa !16
-  %6 = insertelement <3 x i8> poison, i8 %5, i64 0
-  %7 = shufflevector <2 x i8> %i.t, <2 x i8> poison, <3 x i32> <i32 0, i32 1, i32 poison>
-  %8 = shufflevector <3 x i8> %6, <3 x i8> %7, <3 x i32> <i32 0, i32 3, i32 4>
-  %9 = uitofp <3 x i8> %8 to <3 x float>
-  %10 = insertelement <3 x float> poison, float %i.s, i64 0
-  %11 = shufflevector <3 x float> %10, <3 x float> poison, <3 x i32> zeroinitializer
-  %12 = fmul <3 x float> %11, %9
+  %i.s = load float, ptr %i.r, align 4, !tbaa !82 ; 2 uses
+  %i.t = load <2 x i8>, ptr %i.n, align 1, !tbaa !16
+  %5 = uitofp <2 x i8> %i.t to <2 x float>
+  %6 = insertelement <2 x float> poison, float %i.s, i64 0
+  %7 = shufflevector <2 x float> %6, <2 x float> poison, <2 x i32> zeroinitializer
+  %8 = fmul <2 x float> %7, %5
+  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 2
+  %10 = load i8, ptr %9, align 1, !tbaa !16
+  %11 = uitofp i8 %10 to float
+  %12 = fmul float %i.s, %11
   br label %_ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit
 
 _ZN11OpenImageIO4v3_110rgbe2floatERfS1_S1_Ph.exit: ; preds = %.lr.ph, %bb.i
-  %13 = phi <3 x float> [ %12, %bb.i ], [ zeroinitializer, %.lr.ph ]
-  store <3 x float> %13, ptr %i.l, align 4, !tbaa !82
+  %.sink39 = phi float [ %12, %bb.i ], [ 0.000000e+00, %.lr.ph ]
+  %13 = phi <2 x float> [ %8, %bb.i ], [ zeroinitializer, %.lr.ph ]
+  store float %.sink39, ptr %i.l, align 4, !tbaa !82
+  store <2 x float> %13, ptr %4, align 4, !tbaa !82
   %i.u = add nuw i64 %.036, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.u, %3
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !87

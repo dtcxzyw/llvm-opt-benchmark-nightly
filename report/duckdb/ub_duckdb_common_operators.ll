@@ -201,14 +201,20 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN6duckdb16DateToStringCast6LengthEPiRmRb.exit
 
 _ZN6duckdb16DateToStringCast6LengthEPiRmRb.exit:  ; preds = %bb.d, %bb.e
-  %i.k = phi i32 [ %i.j, %bb.e ], [ %i.h, %bb.d ]
+  %i.k = phi i32 [ %i.j, %bb.e ], [ %i.h, %bb.d ] ; 4 uses
   %.0.i.i = phi i64 [ 11, %bb.e ], [ 6, %bb.d ]
-  %3 = insertelement <4 x i32> poison, i32 %i.k, i64 0
-  %4 = shufflevector <4 x i32> %3, <4 x i32> poison, <4 x i32> zeroinitializer
-  %5 = icmp sgt <4 x i32> %4, <i32 99999, i32 999999, i32 9999999, i32 9999>
-  %6 = select <4 x i1> %5, <4 x i64> <i64 1, i64 1, i64 1, i64 5>, <4 x i64> <i64 0, i64 0, i64 0, i64 4>
-  %7 = call i64 @llvm.vector.reduce.add.v4i64(<4 x i64> %6) ; 2 uses
-  %i.l = add nuw nsw i64 %7, %.0.i.i
+  %3 = icmp sgt i32 %i.k, 9999
+  %4 = select i1 %3, i64 5, i64 4
+  %5 = icmp sgt i32 %i.k, 99999
+  %6 = zext i1 %5 to i64
+  %7 = add nuw nsw i64 %4, %6
+  %8 = icmp sgt i32 %i.k, 999999
+  %9 = zext i1 %8 to i64
+  %10 = add nuw nsw i64 %7, %9
+  %11 = icmp sgt i32 %i.k, 9999999
+  %12 = zext i1 %11 to i64
+  %13 = add nuw nsw i64 %10, %12                  ; 2 uses
+  %i.l = add nuw nsw i64 %13, %.0.i.i
   %i.m = call { i64, ptr } @_ZN6duckdb12StringVector11EmptyStringERNS_6VectorEm(ptr noundef nonnull align 8 dereferenceable(104) %1, i64 noundef %i.l) ; 2 uses
   %i.n = extractvalue { i64, ptr } %i.m, 0        ; 2 uses
   store i64 %i.n, ptr %2, align 8
@@ -222,7 +228,7 @@ _ZN6duckdb16DateToStringCast6LengthEPiRmRb.exit:  ; preds = %bb.d, %bb.e
   %i.u = load i32, ptr %i.a, align 4, !tbaa !3
   %i.v = load i32, ptr %i.f, align 4, !tbaa !3
   %i.w = load i32, ptr %i.g, align 4, !tbaa !3
-  call void @_ZN6duckdb16DateToStringCast6FormatEPciiimb(ptr noundef %i.t, i32 noundef %i.u, i32 noundef %i.v, i32 noundef %i.w, i64 noundef %7, i1 noundef zeroext %i.i)
+  call void @_ZN6duckdb16DateToStringCast6FormatEPciiimb(ptr noundef %i.t, i32 noundef %i.u, i32 noundef %i.v, i32 noundef %i.w, i64 noundef %13, i1 noundef zeroext %i.i)
   %i.x = load i32, ptr %2, align 8, !tbaa !23     ; 2 uses
   %i.y = icmp ult i32 %i.x, 13
   br i1 %i.y, label %bb.f, label %bb.g
@@ -623,9 +629,6 @@ declare i8 @llvm.usub.sat.i8(i8, i8) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.abs.i16(i16, i1 immarg) #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.vector.reduce.or.v4i8(<4 x i8>) #21

@@ -201,16 +201,19 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit85: ; preds = %bb.
 
 bb.ap:                                            ; preds = %bb.ah, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 28
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %24 = load <3 x i32>, ptr %i.ec, align 8
-  %.fr = freeze <3 x i32> %24
-  %25 = icmp ne <3 x i32> %.fr, zeroinitializer
-  %26 = bitcast <3 x i1> %25 to i3
-  %i.ee = icmp eq i3 %26, 0
+  %23 = load i32, ptr %i.ec, align 8, !tbaa !79
+  %.not44 = icmp eq i32 %23, 0
+  %i.ed = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 2 uses
+  %24 = load i32, ptr %i.ed, align 4
+  %.not45 = icmp eq i32 %24, 0
+  %or.cond72 = select i1 %.not44, i1 %.not45, i1 false
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %26 = load i32, ptr %25, align 8
+  %i.ee = icmp eq i32 %26, 0
+  %or.cond74 = select i1 %or.cond72, i1 %i.ee, i1 false
   %i.ef = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.eg = load i32, ptr %i.ef, align 4, !tbaa !53 ; 4 uses
-  br i1 %i.ee, label %bb.aq, label %thread-pre-split
+  br i1 %or.cond74, label %bb.aq, label %thread-pre-split
 
 bb.aq:                                            ; preds = %bb.ap
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -305,7 +308,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90: ; preds = %bb.
   br i1 %i.fh, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit90
-  %i.fi = load i32, ptr %23, align 8, !tbaa !81
+  %i.fi = load i32, ptr %25, align 8, !tbaa !81
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #39, !noalias !241
   store i32 %i.fe, ptr %7, align 16, !tbaa !62, !alias.scope !244, !noalias !241
   %i.fj = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -708,8 +711,12 @@ bb.ab:                                            ; preds = %bb.aa
 
 _ZN11OpenImageIO4v3_14pugi4impl19xml_buffered_writer5writeEcccccc.exit: ; preds = %bb.aa, %bb.ab
   %.0.i55 = phi i64 [ 0, %bb.ab ], [ %i.eg, %bb.aa ] ; 2 uses
-  %i.el = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i55
-  store <6 x i8> <i8 38, i8 113, i8 117, i8 111, i8 116, i8 59>, ptr %i.el, align 1, !tbaa !62
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i55 ; 3 uses
+  store <4 x i8> <i8 38, i8 113, i8 117, i8 111>, ptr %4, align 1, !tbaa !62
+  %5 = getelementptr i8, ptr %4, i64 4
+  store i8 116, ptr %5, align 1, !tbaa !62
+  %i.el = getelementptr i8, ptr %4, i64 5
+  store i8 59, ptr %i.el, align 1, !tbaa !62
   %i.em = add nuw nsw i64 %.0.i55, 6
   br label %.sink.split
 
@@ -727,8 +734,12 @@ bb.ae:                                            ; preds = %bb.ad
 
 _ZN11OpenImageIO4v3_14pugi4impl19xml_buffered_writer5writeEcccccc.exit57: ; preds = %bb.ad, %bb.ae
   %.0.i56 = phi i64 [ 0, %bb.ae ], [ %i.en, %bb.ad ] ; 2 uses
-  %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i56
-  store <6 x i8> <i8 38, i8 97, i8 112, i8 111, i8 115, i8 59>, ptr %i.ep, align 1, !tbaa !62
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i56 ; 3 uses
+  store <4 x i8> <i8 38, i8 97, i8 112, i8 111>, ptr %6, align 1, !tbaa !62
+  %7 = getelementptr i8, ptr %6, i64 4
+  store i8 115, ptr %7, align 1, !tbaa !62
+  %i.ep = getelementptr i8, ptr %6, i64 5
+  store i8 59, ptr %i.ep, align 1, !tbaa !62
   %i.eq = add nuw nsw i64 %.0.i56, 6
   br label %.sink.split
 

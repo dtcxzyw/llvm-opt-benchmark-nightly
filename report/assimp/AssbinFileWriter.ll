@@ -201,14 +201,16 @@ bb.j:                                             ; preds = %bb.c, %bb.b, %bb.a,
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr hidden noundef i64 @_ZN6Assimp11WriteBoundsI10aiVector3tIfEEEmPNS_8IOStreamEPKT_j(ptr noundef %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #16 comdat {
 bb.a:
-  %3 = alloca %class.aiVector3t, align 16         ; 7 uses
-  %4 = alloca %class.aiVector3t, align 16         ; 7 uses
+  %3 = alloca %class.aiVector3t, align 8          ; 7 uses
+  %4 = alloca %class.aiVector3t, align 8          ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #20
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  store <3 x float> splat (float -1.000000e+10), ptr %4, align 16
-  store <3 x float> splat (float 1.000000e+10), ptr %3, align 16
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  store <2 x float> splat (float -1.000000e+10), ptr %4, align 8
+  store float -1.000000e+10, ptr %i.b, align 8
+  store <2 x float> splat (float 1.000000e+10), ptr %3, align 8
+  store float 1.000000e+10, ptr %i.a, align 8
   %.not.i = icmp eq i32 %2, 0
   br i1 %.not.i, label %_ZN6Assimp11ArrayBoundsI10aiVector3tIfEEEvPKT_jRS3_S6_.exit, label %.lr.ph.preheader.i
 
@@ -239,8 +241,8 @@ bb.a:
   br i1 %exitcond.not.i, label %_ZN6Assimp11ArrayBoundsI10aiVector3tIfEEEvPKT_jRS3_S6_.exit.loopexit, label %.lr.ph.i, !llvm.loop !48
 
 _ZN6Assimp11ArrayBoundsI10aiVector3tIfEEEvPKT_jRS3_S6_.exit.loopexit: ; preds = %.lr.ph.i
-  store <2 x float> %i.n, ptr %3, align 16
-  store <2 x float> %i.p, ptr %4, align 16
+  store <2 x float> %i.n, ptr %3, align 8
+  store <2 x float> %i.p, ptr %4, align 8
   store float %i.k, ptr %i.a, align 8
   store float %i.r, ptr %i.b, align 8
   br label %_ZN6Assimp11ArrayBoundsI10aiVector3tIfEEEvPKT_jRS3_S6_.exit
@@ -643,10 +645,12 @@ bb.a:
   store double 1.000000e+10, ptr %3, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
-  %.sroa.54.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  store <3 x float> splat (float -1.000000e+10), ptr %i.d, align 8
-  %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
-  store <3 x float> splat (float 1.000000e+10), ptr %i.c, align 8
+  store <2 x float> splat (float -1.000000e+10), ptr %i.d, align 8
+  %.sroa.54.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  store float -1.000000e+10, ptr %.sroa.54.0..sroa_idx.i.i.i, align 8
+  store <2 x float> splat (float 1.000000e+10), ptr %i.c, align 8
+  %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  store float 1.000000e+10, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8
   %.not.i = icmp eq i32 %2, 0
   br i1 %.not.i, label %_ZN6Assimp11ArrayBoundsI11aiVectorKeyEEvPKT_jRS2_S5_.exit, label %.lr.ph.i
 

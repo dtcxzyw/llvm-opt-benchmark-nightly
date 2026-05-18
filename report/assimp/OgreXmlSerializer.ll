@@ -201,14 +201,15 @@ bb.as:                                            ; preds = %bb.ar
           to label %bb.at unwind label %bb.az     ; 5 uses
 
 bb.at:                                            ; preds = %bb.as
-  %17 = insertelement <3 x float> poison, float %i.df, i64 0
-  %18 = insertelement <3 x float> %17, float %i.dg, i64 1
-  %19 = insertelement <3 x float> %18, float %i.dh, i64 2
-  %20 = call <3 x float> @llvm.fabs.v3f32(<3 x float> %19)
-  %21 = fcmp ugt <3 x float> %20, splat (float f0x358637BD)
-  %22 = bitcast <3 x i1> %21 to i3
-  %23 = icmp eq i3 %22, 0
-  br i1 %23, label %bb.au, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
+  %17 = call noundef float @llvm.fabs.f32(float %i.df)
+  %18 = fcmp ole float %17, f0x358637BD
+  %19 = call float @llvm.fabs.f32(float %i.dg)
+  %20 = fcmp ole float %19, f0x358637BD
+  %or.cond.not148 = and i1 %18, %20
+  %21 = call float @llvm.fabs.f32(float %i.dh)
+  %22 = fcmp ole float %21, f0x358637BD
+  %or.cond146 = and i1 %or.cond.not148, %22
+  br i1 %or.cond146, label %bb.au, label %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
 
 bb.au:                                            ; preds = %bb.at
   %.sroa.0123.0.vec.insert126 = insertelement <2 x float> %.sroa.0123.4.vec.insert, float 1.000000e+00, i64 0 ; 2 uses
@@ -611,6 +612,9 @@ bb.l:                                             ; preds = %bb.h
   unreachable
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.fabs.f32(float) #10
+
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6Assimp6Logger13formatMessageIJERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEES7_NS_9Formatter15basic_formatterIcS5_S6_EEOT0_DpOT_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(32) %3) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
@@ -1012,9 +1016,6 @@ declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <3 x float> @llvm.fabs.v3f32(<3 x float>) #10
 
 attributes #0 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

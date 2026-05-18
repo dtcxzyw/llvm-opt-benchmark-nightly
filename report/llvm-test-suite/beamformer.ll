@@ -201,7 +201,9 @@ bb.a:
   br i1 %i.a, label %.thread15, label %bb.b
 
 .thread15:                                        ; preds = %bb.a
-  store <3 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %1, align 4, !tbaa !21
+  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %1, align 4, !tbaa !21
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float 0.000000e+00, ptr %2, align 4, !tbaa !21
   br label %.thread17
 
 bb.b:                                             ; preds = %bb.a
@@ -225,7 +227,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.thread20
 
 .thread17:                                        ; preds = %.thread14, %.thread15
-  store <3 x float> zeroinitializer, ptr %i.b, align 4, !tbaa !21
+  store <2 x float> zeroinitializer, ptr %i.b, align 4, !tbaa !21
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  store float 0.000000e+00, ptr %3, align 4, !tbaa !21
   br label %.thread20
 
 bb.d:                                             ; preds = %bb.c
@@ -628,7 +632,9 @@ bb.a:
   br i1 %i.a, label %.thread15, label %bb.b
 
 .thread15:                                        ; preds = %bb.a
-  store <3 x float> <float 1.000000e+00, float 0.000000e+00, float 0.000000e+00>, ptr %1, align 4, !tbaa !21
+  store <2 x float> <float 1.000000e+00, float 0.000000e+00>, ptr %1, align 4, !tbaa !21
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float 0.000000e+00, ptr %2, align 4, !tbaa !21
   br label %.thread17
 
 bb.b:                                             ; preds = %bb.a
@@ -652,7 +658,9 @@ bb.c:                                             ; preds = %bb.b
   br label %.thread20
 
 .thread17:                                        ; preds = %.thread14, %.thread15
-  store <3 x float> zeroinitializer, ptr %i.b, align 4, !tbaa !21
+  store <2 x float> zeroinitializer, ptr %i.b, align 4, !tbaa !21
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  store float 0.000000e+00, ptr %3, align 4, !tbaa !21
   br label %.thread20
 
 bb.d:                                             ; preds = %bb.c

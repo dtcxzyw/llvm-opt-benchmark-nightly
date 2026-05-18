@@ -201,7 +201,7 @@ bb.a:
   %11 = alloca %"class.v8::internal::compiler::turboshaft::OpIndex", align 4 ; 2 uses
   %12 = alloca %"class.v8::internal::compiler::turboshaft::Label.594", align 8 ; 15 uses
   %13 = alloca %"struct.v8::internal::compiler::turboshaft::GenericAssemblerOpInterface<v8::internal::compiler::turboshaft::Assembler<v8::base::tmp::list1<v8::internal::compiler::turboshaft::SelectLoweringReducer, v8::internal::compiler::turboshaft::DataViewLoweringReducer, v8::internal::compiler::turboshaft::VariableReducer, v8::internal::compiler::turboshaft::TSReducerBase>>>::ControlFlowHelper_IfState", align 8 ; 5 uses
-  %14 = alloca [6 x %"class.v8::internal::MachineType"], align 16 ; 5 uses
+  %14 = alloca [6 x %"class.v8::internal::MachineType"], align 8 ; 7 uses
   %15 = alloca %"class.v8::internal::Signature.1034", align 8 ; 7 uses
   %16 = alloca [6 x %"class.v8::internal::compiler::turboshaft::OpIndex"], align 4 ; 9 uses
   %17 = alloca %"class.v8::internal::compiler::turboshaft::ScopedVar.1385", align 8 ; 9 uses
@@ -296,6 +296,8 @@ _ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS
 
 bb.e:                                             ; preds = %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface21IsSimd128ZeroConstantENS0_8compiler10turboshaft7OpIndexE.exit, %_ZN2v88internal8compiler10turboshaft5LabelIJEEC2INS2_11TSAssemblerIJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerEEEEEEPT_NS_14SourceLocationE.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #22
+  %21 = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %22 = getelementptr inbounds nuw i8, ptr %14, i64 10
   %i.aw = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %15, i64 16
   %i.ay = getelementptr inbounds nuw i8, ptr %16, i64 4
@@ -354,7 +356,9 @@ _ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9Assemb
 bb.i:                                             ; preds = %_ZN2v88internal8compiler10turboshaft30TurboshaftAssemblerOpInterfaceINS2_9AssemblerINS_4base3tmp5list1IJNS2_21SelectLoweringReducerENS2_23DataViewLoweringReducerENS2_15VariableReducerENS2_13TSReducerBaseEEEEEEE14Uint32LessThanENS2_8ConstOrVINS2_12WordWithBitsILm32EEEjEESI_.exit
   %i.bt = call i32 @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface16StoreInStackSlotENS0_8compiler10turboshaft7OpIndexENS1_9ValueTypeE(ptr noundef nonnull align 8 dereferenceable(288) %0, i32 %3, i32 %.sroa.0.0.copyload.i) ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #22
-  store <6 x i16> <i16 2568, i16 772, i16 772, i16 772, i16 772, i16 5>, ptr %14, align 16
+  store <4 x i16> <i16 2568, i16 772, i16 772, i16 772>, ptr %14, align 8
+  store i16 772, ptr %21, align 8
+  store i16 5, ptr %22, align 2
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #22
   store i64 0, ptr %15, align 8
   store i64 6, ptr %i.aw, align 8
@@ -757,7 +761,7 @@ bb.p:                                             ; preds = %.critedge, %_ZN2v88
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface10MemoryFillEPNS1_15WasmFullDecoderINS1_7Decoder15NoValidationTagES2_LNS1_12DecodingModeE0EEERKNS1_20MemoryIndexImmediateERKNS2_5ValueESE_SE_(ptr noundef nonnull align 8 dereferenceable(288) %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(8) %4, ptr noundef nonnull align 4 dereferenceable(8) %5) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %6 = alloca %"class.v8::internal::FixedSizeSignature.1464", align 8 ; 7 uses
+  %6 = alloca %"class.v8::internal::FixedSizeSignature.1464", align 8 ; 9 uses
   %7 = alloca [5 x %"class.v8::internal::compiler::turboshaft::OpIndex"], align 4 ; 13 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -852,13 +856,17 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f, %bb.e, %_ZN2v88internal4wasm32TurboshaftGraphBuildingInterface31MemoryAddressToUintPtrOrOOBTrapENS1_11AddressTypeENS0_8compiler10turboshaft1VINS5_13UntaggedUnionIJNS5_12WordWithBitsILm32EEENS8_ILm64EEEEEEEE.exit38
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
-  %.ptr6.i.i39.a = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
+  %.ptr6.i.i39 = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   store i64 1, ptr %6, align 8, !alias.scope !1834
-  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store i64 5, ptr %i.as, align 8, !alias.scope !1834
-  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 16
-  store ptr %.ptr6.i.i39.a, ptr %i.at, align 8, !alias.scope !1834
-  store <6 x i16> <i16 516, i16 5, i16 772, i16 1285, i16 770, i16 1285>, ptr %.ptr6.i.i39.a, align 8, !alias.scope !1834
+  %.ptr6.i.i39.a = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store i64 5, ptr %.ptr6.i.i39.a, align 8, !alias.scope !1834
+  %i.as = getelementptr inbounds nuw i8, ptr %6, i64 16
+  store ptr %.ptr6.i.i39, ptr %i.as, align 8, !alias.scope !1834
+  store <4 x i16> <i16 516, i16 5, i16 772, i16 1285>, ptr %.ptr6.i.i39, align 8, !alias.scope !1834
+  %i.at = getelementptr inbounds nuw i8, ptr %6, i64 32
+  store i16 770, ptr %i.at, align 8, !alias.scope !1834
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %6, i64 34
+  store i16 1285, ptr %.sroa.7.0..sroa_idx.i, align 2, !alias.scope !1834
   %i.au = call i64 @_ZN2v88internal17ExternalReference16wasm_memory_fillEv() #22
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses

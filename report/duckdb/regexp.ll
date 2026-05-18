@@ -201,12 +201,14 @@ _ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE5clearEv.exit: ; p
   br label %.lr.ph158
 
 ._crit_edge159:                                   ; preds = %bb.w, %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE5clearEv.exit
-  %1 = load <3 x i32>, ptr %0, align 8, !tbaa !3  ; 2 uses
-  %2 = and <3 x i32> %1, <i32 67108863, i32 67108863, i32 poison>
-  %3 = sub nsw <3 x i32> <i32 poison, i32 poison, i32 1114112>, %1
-  %4 = shufflevector <3 x i32> %2, <3 x i32> %3, <3 x i32> <i32 0, i32 1, i32 5>
-  %5 = xor <3 x i32> %4, <i32 67108863, i32 67108863, i32 0>
-  store <3 x i32> %5, ptr %0, align 8, !tbaa !3
+  %1 = load <2 x i32>, ptr %0, align 8, !tbaa !3
+  %2 = and <2 x i32> %1, splat (i32 67108863)
+  %3 = xor <2 x i32> %2, splat (i32 67108863)
+  store <2 x i32> %3, ptr %0, align 8, !tbaa !3
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %5 = load i32, ptr %4, align 8, !tbaa !128
+  %6 = sub nsw i32 1114112, %5
+  store i32 %6, ptr %4, align 8, !tbaa !128
   %.not.i.i.i = icmp eq ptr %.sroa.098.1, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN10duckdb_re29RuneRangeESaIS1_EED2Ev.exit, label %bb.r
 

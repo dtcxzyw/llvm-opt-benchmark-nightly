@@ -201,12 +201,15 @@ bb.aq:                                            ; preds = %bb.ap, %.lr.ph691
 
 ._crit_edge692:                                   ; preds = %bb.aq, %.preheader
   %i.mb = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.mc = load <4 x i32>, ptr %i.b, align 16, !tbaa !4 ; 3 uses
+  %i.mc = load <4 x i32>, ptr %i.b, align 16, !tbaa !4 ; 5 uses
   %i.md = add nsw <4 x i32> %i.mc, splat (i32 1)
   store <4 x i32> %i.md, ptr %i.mb, align 8, !tbaa !4
-  %5 = shufflevector <4 x i32> %i.mc, <4 x i32> poison, <3 x i32> <i32 0, i32 1, i32 2>
-  %6 = tail call i32 @llvm.vector.reduce.smax.v3i32(<3 x i32> %5)
-  %i.me = add nsw i32 %6, 1                       ; 2 uses
+  %5 = extractelement <4 x i32> %i.mc, i64 0
+  %6 = extractelement <4 x i32> %i.mc, i64 1
+  %7 = tail call i32 @llvm.smax.i32(i32 %5, i32 %6)
+  %8 = extractelement <4 x i32> %i.mc, i64 2
+  %9 = tail call i32 @llvm.smax.i32(i32 %7, i32 %8)
+  %i.me = add nsw i32 %9, 1                       ; 2 uses
   %.not501 = icmp eq i32 %i.me, 0
   %i.mf = sext i32 %3 to i64                      ; 2 uses
   %i.mg = getelementptr inbounds [56 x i8], ptr @shortLimit, i64 %i.mf
@@ -609,6 +612,9 @@ declare double @exp2(double) local_unnamed_addr
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #8
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
@@ -620,9 +626,6 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #3
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.smax.v3i32(<3 x i32>) #3
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

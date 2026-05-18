@@ -201,21 +201,25 @@ bb.bo:                                            ; preds = %_ZN2v88internal8com
 bb.bp:                                            ; preds = %bb.bo
   call void @_ZN2v88internal8compiler13CodeAssembler4BindEPNS1_18CodeAssemblerLabelE(ptr noundef nonnull align 8 dereferenceable(8) %65, ptr noundef nonnull %i.cs) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  %i.uf = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #12 ; 3 uses
+  %i.uf = call noalias noundef nonnull dereferenceable(6) ptr @_Znwm(i64 noundef 6) #12 ; 5 uses
   store ptr %i.uf, ptr %1, align 8
-  %i.ug = getelementptr inbounds nuw i8, ptr %i.uf, i64 6 ; 2 uses
-  %i.uh = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  store ptr %i.ug, ptr %i.uh, align 8
-  store <6 x i8> <i8 8, i8 5, i8 5, i8 8, i8 5, i8 9>, ptr %i.uf, align 1
+  %247 = getelementptr inbounds nuw i8, ptr %i.uf, i64 6 ; 2 uses
+  %i.ug = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  store ptr %247, ptr %i.ug, align 8
+  store <4 x i8> <i8 8, i8 5, i8 5, i8 8>, ptr %i.uf, align 1
+  %i.uh = getelementptr inbounds nuw i8, ptr %i.uf, i64 4
+  store i8 5, ptr %i.uh, align 1
+  %.sroa.8.0..sroa_idx.i638 = getelementptr inbounds nuw i8, ptr %i.uf, i64 5
+  store i8 9, ptr %.sroa.8.0..sroa_idx.i638, align 1
   %i.ui = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr %i.ug, ptr %i.ui, align 8
+  store ptr %247, ptr %i.ui, align 8
   %i.uj = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %88, ptr noundef nonnull %1) #10
   %i.uk = load ptr, ptr %1, align 8               ; 3 uses
   %.not.i.i.i.i639 = icmp eq ptr %i.uk, null
   br i1 %.not.i.i.i.i639, label %_ZNSt6vectorIN2v88internal21MachineRepresentationESaIS2_EED2Ev.exit.i640, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.ul = load ptr, ptr %i.uh, align 8
+  %i.ul = load ptr, ptr %i.ug, align 8
   %i.um = ptrtoint ptr %i.ul to i64
   %i.un = ptrtoint ptr %i.uk to i64
   %i.uo = sub i64 %i.um, %i.un

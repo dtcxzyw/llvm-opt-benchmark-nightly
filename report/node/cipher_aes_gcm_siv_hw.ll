@@ -159,14 +159,14 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 4 uses
   %4 = alloca %union.anon.0, align 16             ; 7 uses
   %i.e = alloca [2 x i64], align 16               ; 5 uses
-  %i.f = alloca [16 x i8], align 16               ; 11 uses
+  %i.f = alloca [16 x i8], align 16               ; 12 uses
   %i.g = alloca [2 x i64], align 16               ; 5 uses
   %i.h = alloca i32, align 4                      ; 4 uses
   %i.i = alloca [16 x i8], align 16               ; 8 uses
   %i.j = alloca i32, align 4                      ; 4 uses
   %5 = alloca %union.anon.0, align 16             ; 7 uses
   %i.k = alloca [2 x i64], align 16               ; 5 uses
-  %i.l = alloca [16 x i8], align 16               ; 11 uses
+  %i.l = alloca [16 x i8], align 16               ; 12 uses
   %i.m = alloca [16 x i8], align 16               ; 5 uses
   %i.n = alloca i32, align 4                      ; 4 uses
   %i.o = icmp eq ptr %2, null
@@ -318,10 +318,16 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %bb.s, %bb.r
   call void @ossl_polyval_ghash_hash(ptr noundef nonnull %i.bl, ptr noundef nonnull %i.l, ptr noundef nonnull %i.k, i64 noundef 16) #6
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %6 = load <12 x i8>, ptr %i.by, align 1, !tbaa !20
-  %7 = load <12 x i8>, ptr %i.l, align 16, !tbaa !20
-  %8 = xor <12 x i8> %7, %6
-  store <12 x i8> %8, ptr %i.l, align 16, !tbaa !20
+  %6 = load <8 x i8>, ptr %i.by, align 1, !tbaa !20
+  %7 = load <8 x i8>, ptr %i.l, align 16, !tbaa !20
+  %8 = xor <8 x i8> %7, %6
+  store <8 x i8> %8, ptr %i.l, align 16, !tbaa !20
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %10 = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
+  %11 = load <4 x i8>, ptr %9, align 1, !tbaa !20
+  %12 = load <4 x i8>, ptr %10, align 8, !tbaa !20
+  %13 = xor <4 x i8> %12, %11
+  store <4 x i8> %13, ptr %10, align 8, !tbaa !20
   %i.bz = getelementptr inbounds nuw i8, ptr %i.l, i64 15 ; 2 uses
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !20
   %i.cb = and i8 %i.ca, 127
@@ -703,10 +709,16 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa, %bb.z
   call void @ossl_polyval_ghash_hash(ptr noundef nonnull %i.gj, ptr noundef nonnull %i.f, ptr noundef nonnull %i.e, i64 noundef 16) #6
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %9 = load <12 x i8>, ptr %i.gw, align 1, !tbaa !20
-  %10 = load <12 x i8>, ptr %i.f, align 16, !tbaa !20
-  %11 = xor <12 x i8> %10, %9
-  store <12 x i8> %11, ptr %i.f, align 16, !tbaa !20
+  %14 = load <8 x i8>, ptr %i.gw, align 1, !tbaa !20
+  %15 = load <8 x i8>, ptr %i.f, align 16, !tbaa !20
+  %16 = xor <8 x i8> %15, %14
+  store <8 x i8> %16, ptr %i.f, align 16, !tbaa !20
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %18 = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
+  %19 = load <4 x i8>, ptr %17, align 1, !tbaa !20
+  %20 = load <4 x i8>, ptr %18, align 8, !tbaa !20
+  %21 = xor <4 x i8> %20, %19
+  store <4 x i8> %21, ptr %18, align 8, !tbaa !20
   %i.gx = getelementptr inbounds nuw i8, ptr %i.f, i64 15 ; 2 uses
   %i.gy = load i8, ptr %i.gx, align 1, !tbaa !20
   %i.gz = and i8 %i.gy, 127

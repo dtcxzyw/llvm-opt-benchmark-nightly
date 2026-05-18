@@ -201,33 +201,53 @@ _ZN4geos4geom18IntersectionMatrix10setAtLeastENS0_8LocationES2_i.exit: ; preds =
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK4geos4geom18IntersectionMatrix10isDisjointEv(ptr noundef nonnull readonly align 4 captures(none) dereferenceable(36) %0) local_unnamed_addr #10 align 2 {
 bb.a:
-  %1 = load <4 x i32>, ptr %0, align 4
-  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <3 x i32> <i32 0, i32 1, i32 3>
-  %.fr = freeze <3 x i32> %2
-  %3 = icmp ne <3 x i32> %.fr, splat (i32 -1)
-  %4 = bitcast <3 x i1> %3 to i3
-  %5 = icmp eq i3 %4, 0
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %1 = load i32, ptr %0, align 4, !tbaa !3
+  %2 = icmp eq i32 %1, -1
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %4 = load i32, ptr %3, align 4
+  %5 = icmp eq i32 %4, -1
+  %or.cond = select i1 %2, i1 %5, i1 false
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4
   %i.c = icmp eq i32 %i.b, -1
-  %i.d = select i1 %5, i1 %i.c, i1 false
-  ret i1 %i.d
+  %i.d = select i1 %or.cond, i1 %i.c, i1 false
+  br i1 %i.d, label %6, label %10
+
+6:                                                ; preds = %bb.a
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %8 = load i32, ptr %7, align 4, !tbaa !3
+  %9 = icmp eq i32 %8, -1
+  br label %10
+
+10:                                               ; preds = %6, %bb.a
+  %11 = phi i1 [ false, %bb.a ], [ %9, %6 ]
+  ret i1 %11
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK4geos4geom18IntersectionMatrix12isIntersectsEv(ptr noundef nonnull readonly align 4 captures(none) dereferenceable(36) %0) local_unnamed_addr #10 align 2 {
 _ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit.a:
-  %1 = load <4 x i32>, ptr %0, align 4
-  %2 = shufflevector <4 x i32> %1, <4 x i32> poison, <3 x i32> <i32 0, i32 1, i32 3>
-  %.fr = freeze <3 x i32> %2
-  %3 = icmp ne <3 x i32> %.fr, splat (i32 -1)
-  %4 = bitcast <3 x i1> %3 to i3
-  %5 = icmp eq i3 %4, 0
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %1 = load i32, ptr %0, align 4, !tbaa !3
+  %2 = icmp eq i32 %1, -1
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %4 = load i32, ptr %3, align 4
+  %5 = icmp eq i32 %4, -1
+  %or.cond.i = select i1 %2, i1 %5, i1 false
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4
-  %6 = icmp ne i32 %i.b, -1
-  %i.c = select i1 %5, i1 %6, i1 true
-  ret i1 %i.c
+  %6 = icmp eq i32 %i.b, -1
+  %i.c = select i1 %or.cond.i, i1 %6, i1 false
+  br i1 %i.c, label %7, label %_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit
+
+7:                                                ; preds = %_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit.a
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %9 = load i32, ptr %8, align 4, !tbaa !3
+  %10 = icmp ne i32 %9, -1
+  br label %_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit
+
+_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit: ; preds = %_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit.a, %7
+  %11 = phi i1 [ true, %_ZNK4geos4geom18IntersectionMatrix10isDisjointEv.exit.a ], [ %10, %7 ]
+  ret i1 %11
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -431,14 +451,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i, label %bb.c, label %_ZN4geos4geom18IntersectionMatrix7matchesEic.exit
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %4 = load i32, ptr %3, align 4, !tbaa !3
+  %5 = icmp eq i32 %4, -1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load <6 x i32>, ptr %i.d, align 4
-  %4 = shufflevector <6 x i32> %3, <6 x i32> poison, <3 x i32> <i32 0, i32 4, i32 5>
-  %.fr = freeze <3 x i32> %4
-  %5 = icmp ne <3 x i32> %.fr, splat (i32 -1)
-  %6 = bitcast <3 x i1> %5 to i3
-  %i.e = icmp eq i3 %6, 0
-  br i1 %i.e, label %bb.d, label %_ZN4geos4geom18IntersectionMatrix7matchesEic.exit
+  %6 = load i32, ptr %i.d, align 4
+  %7 = icmp eq i32 %6, -1
+  %or.cond = select i1 %5, i1 %7, i1 false
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 28
+  %9 = load i32, ptr %8, align 4
+  %i.e = icmp eq i32 %9, -1
+  %or.cond8 = select i1 %or.cond, i1 %i.e, i1 false
+  br i1 %or.cond8, label %bb.d, label %_ZN4geos4geom18IntersectionMatrix7matchesEic.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20

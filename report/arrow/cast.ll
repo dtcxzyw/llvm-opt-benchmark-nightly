@@ -201,24 +201,43 @@ bb.a:
 define noundef zeroext i1 @_ZNK5arrow7compute11CastOptions7is_safeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(46) %0) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %1 = load <6 x i8>, ptr %i.a, align 8
-  %.fr = freeze <6 x i8> %1
-  %2 = trunc <6 x i8> %.fr to <6 x i1>
-  %3 = bitcast <6 x i1> %2 to i6
-  %.not = icmp eq i6 %3, 0
-  ret i1 %.not
+  %1 = load <4 x i8>, ptr %i.a, align 8
+  %.fr = freeze <4 x i8> %1
+  %2 = trunc <4 x i8> %.fr to <4 x i1>
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %4 = load i8, ptr %3, align 4, !range !77
+  %.fr14 = freeze i8 %4
+  %5 = trunc i8 %.fr14 to i1
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 45
+  %7 = load i8, ptr %6, align 1, !range !77
+  %8 = trunc nuw i8 %7 to i1
+  %9 = bitcast <4 x i1> %2 to i4
+  %10 = icmp ne i4 %9, 0
+  %op.rdx = or i1 %10, %5
+  %op.rdx12 = select i1 %op.rdx, i1 true, i1 %8
+  %11 = xor i1 %op.rdx12, true
+  ret i1 %11
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK5arrow7compute11CastOptions9is_unsafeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(46) %0) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %1 = load <6 x i8>, ptr %i.a, align 8
-  %.fr = freeze <6 x i8> %1
-  %2 = trunc <6 x i8> %.fr to <6 x i1>
-  %3 = bitcast <6 x i1> %2 to i6
-  %i.b = icmp eq i6 %3, -1
-  ret i1 %i.b
+  %1 = load <4 x i8>, ptr %i.a, align 8
+  %.fr = freeze <4 x i8> %1
+  %2 = trunc <4 x i8> %.fr to <4 x i1>
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 44
+  %4 = load i8, ptr %3, align 4, !range !77
+  %.fr14 = freeze i8 %4
+  %5 = trunc i8 %.fr14 to i1
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 45
+  %7 = load i8, ptr %6, align 1, !range !77
+  %8 = trunc nuw i8 %7 to i1
+  %9 = bitcast <4 x i1> %2 to i4
+  %i.b = icmp eq i4 %9, -1
+  %op.rdx = and i1 %i.b, %5
+  %op.rdx12 = select i1 %op.rdx, i1 %8, i1 false
+  ret i1 %op.rdx12
 }
 
 ; Function Attrs: mustprogress uwtable

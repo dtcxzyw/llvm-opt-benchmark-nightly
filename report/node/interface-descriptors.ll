@@ -201,9 +201,13 @@ bb.aw:                                            ; preds = %bb.av
   unreachable
 
 _ZN2v88internal29StaticCallInterfaceDescriptorINS0_35LoadWithReceiverAndVectorDescriptorEE10InitializeEPNS0_27CallInterfaceDescriptorDataE.exit: ; preds = %_ZN2v88internal29StaticCallInterfaceDescriptorINS0_17JSEntryDescriptorEE10InitializeEPNS0_27CallInterfaceDescriptorDataE.exit, %bb.av
-  %.sink.i.i.i.i22 = phi ptr [ %i.dj, %_ZN2v88internal29StaticCallInterfaceDescriptorINS0_17JSEntryDescriptorEE10InitializeEPNS0_27CallInterfaceDescriptorDataE.exit ], [ %i.dl, %bb.av ] ; 2 uses
+  %.sink.i.i.i.i22 = phi ptr [ %i.dj, %_ZN2v88internal29StaticCallInterfaceDescriptorINS0_17JSEntryDescriptorEE10InitializeEPNS0_27CallInterfaceDescriptorDataE.exit ], [ %i.dl, %bb.av ] ; 4 uses
   store ptr %.sink.i.i.i.i22, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15CallDescriptors21call_descriptor_data_E, i64 7432), align 8
-  store <6 x i16> splat (i16 2569), ptr %.sink.i.i.i.i22, align 1
+  store <4 x i16> splat (i16 2569), ptr %.sink.i.i.i.i22, align 1
+  %0 = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i22, i64 8
+  store i16 2569, ptr %0, align 1
+  %1 = getelementptr inbounds nuw i8, ptr %.sink.i.i.i.i22, i64 10
+  store i16 2569, ptr %1, align 1
   store i64 71776119061217280, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15CallDescriptors21call_descriptor_data_E, i64 7456), align 16
   store i8 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15CallDescriptors21call_descriptor_data_E, i64 7464), align 8
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal15CallDescriptors21call_descriptor_data_E, i64 7468), align 4

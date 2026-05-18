@@ -201,7 +201,7 @@ bb.a:
   %7 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 6 uses
   %i.g = alloca [41 x i8], align 16               ; 7 uses
   %i.h = alloca i16, align 2                      ; 5 uses
-  %8 = alloca %union.anon.23, align 16            ; 36 uses
+  %8 = alloca %union.anon.23, align 8             ; 36 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 22 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -310,7 +310,7 @@ bb.h:                                             ; preds = %bb.g
   ]
 
 bb.i:                                             ; preds = %._crit_edge.i.i.i.i
-  %i.ai = load i8, ptr %8, align 16, !tbaa !16, !noalias !101
+  %i.ai = load i8, ptr %8, align 8, !tbaa !16, !noalias !101
   store i8 %i.ai, ptr %i.ah, align 1, !tbaa !16
   br label %_ZN11OpenImageIO4v3_17Strutil11safe_stringB5cxx11EPKcm.exit
 
@@ -532,24 +532,30 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.cp, label %bb.aj, label %.critedge82
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.cq = getelementptr inbounds nuw i8, ptr %8, i64 2 ; 5 uses
-  %i.cr = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 3 uses
-  %26 = load <6 x i16>, ptr %8, align 16
-  %.fr = freeze <6 x i16> %26
-  %27 = icmp ne <6 x i16> %.fr, zeroinitializer
-  %28 = bitcast <6 x i1> %27 to i6
-  %.not191 = icmp eq i6 %28, 0
-  br i1 %.not191, label %bb.ap, label %bb.ak
+  %26 = getelementptr inbounds nuw i8, ptr %8, i64 2 ; 5 uses
+  %27 = getelementptr inbounds nuw i8, ptr %8, i64 4 ; 3 uses
+  %28 = load <4 x i16>, ptr %8, align 8
+  %.fr = freeze <4 x i16> %28
+  %i.cq = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
+  %29 = load i16, ptr %i.cq, align 8
+  %.fr193 = freeze i16 %29
+  %30 = icmp ne i16 %.fr193, 0
+  %i.cr = getelementptr inbounds nuw i8, ptr %8, i64 10 ; 2 uses
+  %31 = load i16, ptr %i.cr, align 2
+  %32 = icmp ne i16 %31, 0
+  %.fr.scalar = bitcast <4 x i16> %.fr to i64
+  %33 = icmp ne i64 %.fr.scalar, 0
+  %op.rdx = or i1 %33, %30
+  %op.rdx191 = select i1 %op.rdx, i1 true, i1 %32
+  br i1 %op.rdx191, label %bb.ak, label %bb.ap
 
 bb.ak:                                            ; preds = %bb.aj
-  %29 = getelementptr inbounds nuw i8, ptr %8, i64 10
-  %30 = getelementptr inbounds nuw i8, ptr %8, i64 8
   %i.cs = getelementptr inbounds nuw i8, ptr %8, i64 6
   store ptr @.str.21, ptr %15, align 8, !tbaa !61
   %i.ct = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i64 8, ptr %i.ct, align 8, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #30
-  invoke void @_ZN11OpenImageIO4v3_17Strutil3fmt6formatIA36_cJRtS5_S5_S5_S5_S5_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %17, ptr noundef nonnull align 1 dereferenceable(36) @.str.22, ptr noundef nonnull align 2 dereferenceable(2) %i.cr, ptr noundef nonnull align 2 dereferenceable(2) %8, ptr noundef nonnull align 2 dereferenceable(2) %i.cq, ptr noundef nonnull align 2 dereferenceable(2) %i.cs, ptr noundef nonnull align 2 dereferenceable(2) %30, ptr noundef nonnull align 2 dereferenceable(2) %29)
+  invoke void @_ZN11OpenImageIO4v3_17Strutil3fmt6formatIA36_cJRtS5_S5_S5_S5_S5_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %17, ptr noundef nonnull align 1 dereferenceable(36) @.str.22, ptr noundef nonnull align 2 dereferenceable(2) %27, ptr noundef nonnull align 2 dereferenceable(2) %8, ptr noundef nonnull align 2 dereferenceable(2) %26, ptr noundef nonnull align 2 dereferenceable(2) %i.cs, ptr noundef nonnull align 2 dereferenceable(2) %i.cq, ptr noundef nonnull align 2 dereferenceable(2) %i.cr)
           to label %bb.al unwind label %bb.an
 
 bb.al:                                            ; preds = %bb.ak
@@ -621,12 +627,12 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.dn, label %bb.at, label %.critedge82
 
 bb.at:                                            ; preds = %bb.as
-  %i.do = load i16, ptr %8, align 16, !tbaa !16
+  %i.do = load i16, ptr %8, align 8, !tbaa !16
   %i.dp = icmp ne i16 %i.do, 0
-  %i.dq = load i16, ptr %i.cq, align 2
+  %i.dq = load i16, ptr %26, align 2
   %i.dr = icmp ne i16 %i.dq, 0
   %or.cond18 = select i1 %i.dp, i1 true, i1 %i.dr
-  %i.ds = load i16, ptr %i.cr, align 4
+  %i.ds = load i16, ptr %27, align 4
   %i.dt = icmp ne i16 %i.ds, 0
   %or.cond21 = select i1 %or.cond18, i1 true, i1 %i.dt
   br i1 %or.cond21, label %bb.au, label %bb.az
@@ -636,7 +642,7 @@ bb.au:                                            ; preds = %bb.at
   %i.du = getelementptr inbounds nuw i8, ptr %19, i64 8
   store i64 13, ptr %i.du, align 8, !tbaa !63
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #30
-  invoke void @_ZN11OpenImageIO4v3_17Strutil3fmt6formatIA15_cJRtS5_S5_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %21, ptr noundef nonnull align 1 dereferenceable(15) @.str.25, ptr noundef nonnull align 2 dereferenceable(2) %8, ptr noundef nonnull align 2 dereferenceable(2) %i.cq, ptr noundef nonnull align 2 dereferenceable(2) %i.cr)
+  invoke void @_ZN11OpenImageIO4v3_17Strutil3fmt6formatIA15_cJRtS5_S5_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_DpOT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %21, ptr noundef nonnull align 1 dereferenceable(15) @.str.25, ptr noundef nonnull align 2 dereferenceable(2) %8, ptr noundef nonnull align 2 dereferenceable(2) %26, ptr noundef nonnull align 2 dereferenceable(2) %27)
           to label %bb.av unwind label %bb.ax
 
 bb.av:                                            ; preds = %bb.au
@@ -719,7 +725,7 @@ bb.bd:                                            ; preds = %bb.cm, %bb.ce, %bb.
   br label %bb.cz
 
 bb.be:                                            ; preds = %_ZN11OpenImageIO4v3_18TGAInput4readERc.exit
-  %i.eq = load i8, ptr %8, align 16, !tbaa !16
+  %i.eq = load i8, ptr %8, align 8, !tbaa !16
   %.not66 = icmp eq i8 %i.eq, 0
   br i1 %.not66, label %bb.br, label %bb.bf
 
@@ -869,13 +875,13 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %i.ge, label %bb.bv, label %.critedge84
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.gf = load i16, ptr %i.cq, align 2, !tbaa !16 ; 2 uses
+  %i.gf = load i16, ptr %26, align 2, !tbaa !16   ; 2 uses
   %.not73 = icmp eq i16 %i.gf, 0
   br i1 %.not73, label %bb.bx, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.gh = load i16, ptr %8, align 16, !tbaa !16
+  %i.gh = load i16, ptr %8, align 8, !tbaa !16
   %i.gi = uitofp i16 %i.gh to float
   %i.gj = uitofp i16 %i.gf to float
   %i.gk = fdiv float %i.gi, %i.gj
@@ -901,12 +907,12 @@ bb.by:                                            ; preds = %bb.bx
   br i1 %i.gm, label %bb.bz, label %.critedge84
 
 bb.bz:                                            ; preds = %bb.by
-  %i.gn = load i16, ptr %i.cq, align 2, !tbaa !16 ; 2 uses
+  %i.gn = load i16, ptr %26, align 2, !tbaa !16   ; 2 uses
   %.not74 = icmp eq i16 %i.gn, 0
   br i1 %.not74, label %bb.cc, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
-  %i.go = load i16, ptr %8, align 16, !tbaa !16
+  %i.go = load i16, ptr %8, align 8, !tbaa !16
   %i.gp = uitofp i16 %i.go to float
   %i.gq = uitofp i16 %i.gn to float
   %i.gr = fdiv float %i.gp, %i.gq
@@ -927,7 +933,7 @@ _ZN11OpenImageIO4v3_18TGAInput4readERj.exit:      ; preds = %bb.cc
   br i1 %i.gu, label %bb.cd, label %.critedge84
 
 bb.cd:                                            ; preds = %_ZN11OpenImageIO4v3_18TGAInput4readERj.exit
-  %i.gv = load i32, ptr %8, align 16, !tbaa !16
+  %i.gv = load i32, ptr %8, align 8, !tbaa !16
   %i.gw = zext i32 %i.gv to i64
   %i.gx = getelementptr inbounds nuw i8, ptr %0, i64 288
   store i64 %i.gw, ptr %i.gx, align 8, !tbaa !114
@@ -938,7 +944,7 @@ _ZN11OpenImageIO4v3_18TGAInput4readERj.exit124:   ; preds = %bb.cd
   br i1 %i.gy, label %bb.ce, label %.critedge84
 
 bb.ce:                                            ; preds = %_ZN11OpenImageIO4v3_18TGAInput4readERj.exit124
-  %i.gz = load i32, ptr %8, align 16, !tbaa !16
+  %i.gz = load i32, ptr %8, align 8, !tbaa !16
   %i.ha = zext i32 %i.gz to i64
   %i.hb = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
   store i64 %i.ha, ptr %i.hb, align 8, !tbaa !115
@@ -956,7 +962,7 @@ bb.cg:                                            ; preds = %bb.cf
   br i1 %i.hd, label %bb.ch, label %.critedge84
 
 bb.ch:                                            ; preds = %bb.cg
-  %i.he = load i8, ptr %8, align 16, !tbaa !16    ; 4 uses
+  %i.he = load i8, ptr %8, align 8, !tbaa !16     ; 4 uses
   %i.hf = icmp ugt i8 %i.he, 4
   br i1 %i.hf, label %bb.ci, label %bb.cl
 

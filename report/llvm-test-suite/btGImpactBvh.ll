@@ -140,10 +140,11 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define dso_local noundef i32 @_ZN9btBvhTree30_sort_and_calc_splitting_indexER18GIM_BVH_DATA_ARRAYiii(ptr nonnull readnone align 8 captures(none) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(25) %1, i32 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #2 align 2 {
 bb.a:
   %.sroa.0.i = alloca %class.btAABB, align 8      ; 5 uses
-  %5 = alloca %class.btVector3, align 16          ; 5 uses
+  %5 = alloca %class.btVector3, align 8           ; 6 uses
   %6 = alloca %class.btVector3, align 8           ; 5 uses
   %i.a = sub nsw i32 %3, %2                       ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.b = icmp slt i32 %2, %3                      ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 12
   store i32 0, ptr %i.c, align 4
@@ -160,54 +161,81 @@ bb.a:
   br i1 %lcmp.mod.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
 
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph
-  %i.h = getelementptr inbounds [36 x i8], ptr %i.e, i64 %i.f ; 2 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %7 = load <3 x float>, ptr %i.i, align 4, !tbaa !14
-  %8 = load <3 x float>, ptr %i.h, align 4, !tbaa !14
-  %9 = fadd <3 x float> %7, %8
-  %10 = fmul <3 x float> %9, splat (float 5.000000e-01)
-  %11 = fadd <3 x float> %10, zeroinitializer     ; 2 uses
+  %i.h = getelementptr inbounds [36 x i8], ptr %i.e, i64 %i.f ; 4 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %9 = getelementptr inbounds nuw i8, ptr %i.h, i64 24
+  %10 = load float, ptr %9, align 4, !tbaa !14
+  %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %11 = load float, ptr %i.i, align 4, !tbaa !14
+  %12 = fadd float %10, %11
+  %13 = load <2 x float>, ptr %8, align 4, !tbaa !14
+  %14 = load <2 x float>, ptr %i.h, align 4, !tbaa !14
+  %15 = fadd <2 x float> %13, %14
+  %16 = fmul <2 x float> %15, splat (float 5.000000e-01)
+  %17 = fmul float %12, 5.000000e-01
+  %18 = fadd <2 x float> %16, zeroinitializer     ; 2 uses
+  %19 = fadd float %17, 0.000000e+00              ; 2 uses
   %indvars.iv.next.prol = add nsw i64 %i.f, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph
-  %.lcssa.unr = phi <3 x float> [ poison, %.lr.ph ], [ %11, %.prol.loopexit.unr-lcssa ]
+  %.lcssa101.unr = phi <2 x float> [ poison, %.lr.ph ], [ %18, %.prol.loopexit.unr-lcssa ]
+  %.lcssa.unr = phi float [ poison, %.lr.ph ], [ %19, %.prol.loopexit.unr-lcssa ]
   %indvars.iv.unr = phi i64 [ %i.f, %.lr.ph ], [ %indvars.iv.next.prol, %.prol.loopexit.unr-lcssa ]
-  %.unr = phi <3 x float> [ zeroinitializer, %.lr.ph ], [ %11, %.prol.loopexit.unr-lcssa ]
+  %.0.586368.unr = phi float [ 0.000000e+00, %.lr.ph ], [ %19, %.prol.loopexit.unr-lcssa ]
+  %.unr = phi <2 x float> [ zeroinitializer, %.lr.ph ], [ %18, %.prol.loopexit.unr-lcssa ]
   %i.j = add nsw i64 %wide.trip.count, -1
   %i.k = icmp eq i64 %i.j, %i.f
   br i1 %i.k, label %._crit_edge, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.prol.loopexit, %.lr.ph.new
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph.new ], [ %indvars.iv.unr, %.prol.loopexit ] ; 3 uses
-  %12 = phi <3 x float> [ %22, %.lr.ph.new ], [ %.unr, %.prol.loopexit ]
-  %i.l = getelementptr inbounds [36 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 16
-  %13 = load <3 x float>, ptr %i.m, align 4, !tbaa !14
-  %14 = load <3 x float>, ptr %i.l, align 4, !tbaa !14
-  %15 = fadd <3 x float> %13, %14
-  %16 = fmul <3 x float> %15, splat (float 5.000000e-01)
-  %17 = fadd <3 x float> %12, %16
-  %i.n = getelementptr [36 x i8], ptr %i.e, i64 %indvars.iv ; 2 uses
-  %i.o = getelementptr i8, ptr %i.n, i64 36
-  %i.p = getelementptr i8, ptr %i.n, i64 52
-  %18 = load <3 x float>, ptr %i.p, align 4, !tbaa !14
-  %19 = load <3 x float>, ptr %i.o, align 4, !tbaa !14
-  %20 = fadd <3 x float> %18, %19
-  %21 = fmul <3 x float> %20, splat (float 5.000000e-01)
-  %22 = fadd <3 x float> %17, %21                 ; 2 uses
+  %.0.586368 = phi float [ %44, %.lr.ph.new ], [ %.0.586368.unr, %.prol.loopexit ]
+  %20 = phi <2 x float> [ %43, %.lr.ph.new ], [ %.unr, %.prol.loopexit ]
+  %i.l = getelementptr inbounds [36 x i8], ptr %i.e, i64 %indvars.iv ; 4 uses
+  %21 = getelementptr inbounds nuw i8, ptr %i.l, i64 16
+  %22 = getelementptr inbounds nuw i8, ptr %i.l, i64 24
+  %23 = load float, ptr %22, align 4, !tbaa !14
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
+  %24 = load float, ptr %i.m, align 4, !tbaa !14
+  %25 = fadd float %23, %24
+  %26 = load <2 x float>, ptr %21, align 4, !tbaa !14
+  %27 = load <2 x float>, ptr %i.l, align 4, !tbaa !14
+  %28 = fadd <2 x float> %26, %27
+  %29 = fmul <2 x float> %28, splat (float 5.000000e-01)
+  %30 = fmul float %25, 5.000000e-01
+  %31 = fadd <2 x float> %20, %29
+  %32 = fadd float %.0.586368, %30
+  %i.n = getelementptr [36 x i8], ptr %i.e, i64 %indvars.iv ; 4 uses
+  %33 = getelementptr i8, ptr %i.n, i64 36
+  %34 = getelementptr i8, ptr %i.n, i64 52
+  %i.o = getelementptr i8, ptr %i.n, i64 60
+  %35 = load float, ptr %i.o, align 4, !tbaa !14
+  %i.p = getelementptr i8, ptr %i.n, i64 44
+  %36 = load float, ptr %i.p, align 4, !tbaa !14
+  %37 = fadd float %35, %36
+  %38 = load <2 x float>, ptr %34, align 4, !tbaa !14
+  %39 = load <2 x float>, ptr %33, align 4, !tbaa !14
+  %40 = fadd <2 x float> %38, %39
+  %41 = fmul <2 x float> %40, splat (float 5.000000e-01)
+  %42 = fmul float %37, 5.000000e-01
+  %43 = fadd <2 x float> %31, %41                 ; 2 uses
+  %44 = fadd float %32, %42                       ; 2 uses
   %indvars.iv.next.1 = add nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next.1, %wide.trip.count
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.new
 
 ._crit_edge:                                      ; preds = %.prol.loopexit, %.lr.ph.new, %bb.a
-  %23 = phi <3 x float> [ zeroinitializer, %bb.a ], [ %.lcssa.unr, %.prol.loopexit ], [ %22, %.lr.ph.new ]
+  %.0.5863.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.lcssa.unr, %.prol.loopexit ], [ %44, %.lr.ph.new ]
+  %45 = phi <2 x float> [ zeroinitializer, %bb.a ], [ %.lcssa101.unr, %.prol.loopexit ], [ %43, %.lr.ph.new ]
   %i.q = sitofp i32 %i.a to float
-  %i.r = fdiv nnan float 1.000000e+00, %i.q
-  %24 = insertelement <3 x float> poison, float %i.r, i64 0
-  %25 = shufflevector <3 x float> %24, <3 x float> poison, <3 x i32> zeroinitializer
-  %26 = fmul <3 x float> %25, %23
-  store <3 x float> %26, ptr %5, align 16, !tbaa !14
+  %i.r = fdiv float 1.000000e+00, %i.q            ; 2 uses
+  %46 = insertelement <2 x float> poison, float %i.r, i64 0
+  %47 = shufflevector <2 x float> %46, <2 x float> poison, <2 x i32> zeroinitializer
+  %48 = fmul <2 x float> %47, %45
+  store <2 x float> %48, ptr %5, align 8, !tbaa !14
+  %49 = fmul float %i.r, %.0.5863.lcssa
+  store float %49, ptr %7, align 8, !tbaa !14
   %i.s = sext i32 %4 to i64                       ; 2 uses
   %i.t = getelementptr inbounds [4 x i8], ptr %5, i64 %i.s
   %i.u = load float, ptr %i.t, align 4, !tbaa !14

@@ -201,7 +201,7 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.i = alloca i32, align 4                      ; 4 uses
   %i.j = alloca i32, align 4                      ; 5 uses
-  %7 = alloca %struct.aiColor3D, align 16         ; 8 uses
+  %7 = alloca %struct.aiColor3D, align 8          ; 9 uses
   %i.k = alloca i32, align 4                      ; 4 uses
   %8 = alloca %struct.aiString, align 4           ; 6 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -604,10 +604,13 @@ bb.bh:                                            ; preds = %.thread275
   store i32 2, ptr %i.j, align 4
   %i.gv = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.gu, ptr noundef nonnull %i.j, i32 noundef 4, ptr noundef nonnull @.str.22, i32 noundef 0, i32 noundef 0, i32 noundef 4) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
-  store <3 x float> splat (float 1.000000e+00), ptr %7, align 16
+  %10 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  store <2 x float> splat (float 1.000000e+00), ptr %7, align 8
+  store float 1.000000e+00, ptr %10, align 8
   %i.gw = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.gu, ptr noundef nonnull %7, i32 noundef 12, ptr noundef nonnull @.str.18, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   %i.gx = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.gu, ptr noundef nonnull %7, i32 noundef 12, ptr noundef nonnull @.str.19, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
-  store <3 x float> splat (float 1.000000e+00), ptr %7, align 16
+  store <2 x float> splat (float 1.000000e+00), ptr %7, align 8
+  store float 1.000000e+00, ptr %10, align 8
   %i.gy = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.gu, ptr noundef nonnull %7, i32 noundef 12, ptr noundef nonnull @.str.20, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   br i1 %3, label %bb.bk, label %bb.bi
 

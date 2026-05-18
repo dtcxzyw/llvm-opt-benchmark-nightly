@@ -80,6 +80,8 @@ bb.a:
   %i.f = sub i64 %i.d, %i.e
   %i.g = ashr exact i64 %i.f, 3
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
   br label %bb.b
 
@@ -116,12 +118,15 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.f
   %.012.i = phi i64 [ %i.ao, %bb.f ], [ 0, %bb.c ] ; 4 uses
-  %4 = load <3 x double>, ptr %i.h, align 8
-  %.fr = freeze <3 x double> %4
-  %5 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %6 = bitcast <3 x i1> %5 to i3
-  %7 = icmp eq i3 %6, 0
-  br i1 %7, label %bb.e, label %bb.d
+  %6 = load double, ptr %i.h, align 8, !tbaa !36
+  %7 = fcmp uno double %6, 0.000000e+00
+  %8 = load double, ptr %4, align 8
+  %9 = fcmp uno double %8, 0.000000e+00
+  %or.cond.i.i = select i1 %7, i1 %9, i1 false
+  %10 = load double, ptr %5, align 8
+  %11 = fcmp uno double %10, 0.000000e+00
+  %12 = select i1 %or.cond.i.i, i1 %11, i1 false
+  br i1 %12, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i
   %i.ac = load ptr, ptr %i.w, align 8, !tbaa !33
@@ -348,6 +353,8 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 32
   br label %bb.b
 
@@ -356,12 +363,15 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
   %.012 = phi i64 [ 0, %.lr.ph ], [ %i.z, %bb.e ] ; 4 uses
-  %2 = load <3 x double>, ptr %i.l, align 8
-  %.fr = freeze <3 x double> %2
-  %3 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %4 = bitcast <3 x i1> %3 to i3
-  %5 = icmp eq i3 %4, 0
-  br i1 %5, label %bb.d, label %bb.c
+  %4 = load double, ptr %i.l, align 8, !tbaa !36
+  %5 = fcmp uno double %4, 0.000000e+00
+  %6 = load double, ptr %2, align 8
+  %7 = fcmp uno double %6, 0.000000e+00
+  %or.cond.i = select i1 %5, i1 %7, i1 false
+  %8 = load double, ptr %3, align 8
+  %9 = fcmp uno double %8, 0.000000e+00
+  %10 = select i1 %or.cond.i, i1 %9, i1 false
+  br i1 %10, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.f, align 8, !tbaa !33
@@ -678,17 +688,22 @@ bb.g:                                             ; preds = %_ZN4geos9operation6
   br i1 %.not.i13, label %_ZN4geos9operation6buffer19RightmostEdgeFinder25getRightmostSideOfSegmentEPNS_9geomgraph12DirectedEdgeEi.exit12, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.g
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 32
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.k, %.lr.ph.i
   %.012.i = phi i64 [ 0, %.lr.ph.i ], [ %i.ce, %bb.k ] ; 4 uses
-  %3 = load <3 x double>, ptr %i.bg, align 8
-  %.fr = freeze <3 x double> %3
-  %4 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %5 = bitcast <3 x i1> %4 to i3
-  %6 = icmp eq i3 %5, 0
-  br i1 %6, label %bb.j, label %bb.i
+  %5 = load double, ptr %i.bg, align 8, !tbaa !36
+  %6 = fcmp uno double %5, 0.000000e+00
+  %7 = load double, ptr %3, align 8
+  %8 = fcmp uno double %7, 0.000000e+00
+  %or.cond.i.i = select i1 %6, i1 %8, i1 false
+  %9 = load double, ptr %4, align 8
+  %10 = fcmp uno double %9, 0.000000e+00
+  %11 = select i1 %or.cond.i.i, i1 %10, i1 false
+  br i1 %11, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bs = load ptr, ptr %i.bl, align 8, !tbaa !33

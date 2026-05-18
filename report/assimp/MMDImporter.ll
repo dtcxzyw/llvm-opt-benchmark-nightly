@@ -201,9 +201,9 @@ declare void @_ZN6aiNodeC1ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE
 define hidden noundef nonnull ptr @_ZN6Assimp11MMDImporter14CreateMaterialEPKN3pmx11PmxMaterialEPKNS1_8PmxModelE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %3 = alloca %struct.aiString, align 4           ; 5 uses
-  %4 = alloca %struct.aiColor3D, align 16         ; 4 uses
-  %5 = alloca %struct.aiColor3D, align 16         ; 4 uses
-  %6 = alloca %struct.aiColor3D, align 16         ; 4 uses
+  %4 = alloca %struct.aiColor3D, align 8          ; 5 uses
+  %5 = alloca %struct.aiColor3D, align 8          ; 5 uses
+  %6 = alloca %struct.aiColor3D, align 8          ; 5 uses
   %i.a = alloca float, align 4                    ; 4 uses
   %i.b = alloca float, align 4                    ; 4 uses
   %7 = alloca %struct.aiString, align 4           ; 5 uses
@@ -232,18 +232,30 @@ bb.b:                                             ; preds = %bb.a
   %i.n = call noundef i32 @_ZN10aiMaterial11AddPropertyEPK8aiStringPKcjj(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull %3, ptr noundef nonnull @.str.6, i32 noundef 0, i32 noundef 0) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %8 = load <3 x float>, ptr %i.o, align 8
-  store <3 x float> %8, ptr %4, align 16
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 72
+  %9 = load float, ptr %8, align 8
+  %10 = load <2 x float>, ptr %i.o, align 8
+  store <2 x float> %10, ptr %4, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store float %9, ptr %11, align 8
   %i.p = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull %4, i32 noundef 12, ptr noundef nonnull @.str.7, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 80
-  %9 = load <3 x float>, ptr %i.q, align 8
-  store <3 x float> %9, ptr %5, align 16
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %13 = load float, ptr %12, align 8
+  %14 = load <2 x float>, ptr %i.q, align 8
+  store <2 x float> %14, ptr %5, align 8
+  %15 = getelementptr inbounds nuw i8, ptr %5, i64 8
+  store float %13, ptr %15, align 8
   %i.r = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull %5, i32 noundef 12, ptr noundef nonnull @.str.8, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %10 = load <3 x float>, ptr %i.s, align 8
-  store <3 x float> %10, ptr %6, align 16
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 104
+  %17 = load float, ptr %16, align 8
+  %18 = load <2 x float>, ptr %i.s, align 8
+  store <2 x float> %18, ptr %6, align 8
+  %19 = getelementptr inbounds nuw i8, ptr %6, i64 8
+  store float %17, ptr %19, align 8
   %i.t = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.d, ptr noundef nonnull %6, i32 noundef 12, ptr noundef nonnull @.str.9, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 76

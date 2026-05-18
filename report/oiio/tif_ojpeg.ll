@@ -201,7 +201,7 @@ declare void @TIFFWarningExtR(ptr noundef, ptr noundef, ptr noundef, ...) local_
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @OJPEGReadHeaderInfoSec(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 8 uses
+  %i.a = alloca [16 x i8], align 16               ; 11 uses
   %i.b = alloca i8, align 1                       ; 18 uses
   %i.c = alloca i16, align 2                      ; 7 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 1072 ; 7 uses
@@ -604,6 +604,9 @@ bb.ff:                                            ; preds = %._crit_edge235
   %i.ui = getelementptr inbounds nuw i8, ptr %i.ty, i64 408
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ty, i64 500 ; 2 uses
   %i.uk = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
   %i.ul = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   br label %bb.fg
 
@@ -663,12 +666,21 @@ bb.fl:                                            ; preds = %.lr.ph.i137
   br i1 %.not84.i131, label %.preheader.preheader.i, label %OJPEGReadHeaderInfoSecTablesDcTable.exit.thread
 
 .preheader.preheader.i:                           ; preds = %._crit_edge.i130
-  %1 = load <15 x i8>, ptr %i.a, align 16, !tbaa !101
-  %2 = zext <15 x i8> %1 to <15 x i32>
-  %i.ve = call i32 @llvm.vector.reduce.add.v15i32(<15 x i32> %2)
+  %4 = load <12 x i8>, ptr %i.a, align 16, !tbaa !101
+  %5 = load i8, ptr %1, align 4, !tbaa !101
+  %6 = zext i8 %5 to i32
+  %7 = load i8, ptr %2, align 1, !tbaa !101
+  %8 = zext i8 %7 to i32
+  %9 = load i8, ptr %3, align 2, !tbaa !101
+  %10 = zext i8 %9 to i32
+  %11 = zext <12 x i8> %4 to <12 x i32>
+  %i.ve = call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %11)
+  %op.rdx = add nuw nsw i32 %i.ve, %6
+  %op.rdx574 = add nuw nsw i32 %8, %10
+  %op.rdx575 = add nuw nsw i32 %op.rdx, %op.rdx574
   %i.vf = load i8, ptr %i.ul, align 1, !tbaa !101
   %i.vg = zext i8 %i.vf to i32
-  %i.vh = add nuw nsw i32 %i.ve, %i.vg            ; 4 uses
+  %i.vh = add nuw nsw i32 %op.rdx575, %i.vg       ; 4 uses
   %i.vi = add nuw nsw i32 %i.vh, 25               ; 2 uses
   %i.vj = zext nneg i32 %i.vi to i64
   %i.vk = call ptr @_TIFFmallocExt(ptr noundef nonnull %0, i64 noundef %i.vj) #13 ; 12 uses
@@ -1071,7 +1083,7 @@ OJPEGReadSkip.exit:                               ; preds = %bb.p, %bb.n, %bb.j,
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 0, 2) i32 @OJPEGReadHeaderInfoSecTablesAcTable(ptr noundef %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [16 x i8], align 16               ; 7 uses
+  %i.a = alloca [16 x i8], align 16               ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1072
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !68   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
@@ -1099,6 +1111,9 @@ bb.c:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 440
   %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 500 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 13
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 14
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 15
   br label %bb.d
 
@@ -1156,12 +1171,21 @@ bb.i:                                             ; preds = %.lr.ph
   br i1 %.not88, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %._crit_edge
-  %1 = load <15 x i8>, ptr %i.a, align 16, !tbaa !101
-  %2 = zext <15 x i8> %1 to <15 x i32>
-  %i.an = call i32 @llvm.vector.reduce.add.v15i32(<15 x i32> %2)
+  %4 = load <12 x i8>, ptr %i.a, align 16, !tbaa !101
+  %5 = load i8, ptr %1, align 4, !tbaa !101
+  %6 = zext i8 %5 to i32
+  %7 = load i8, ptr %2, align 1, !tbaa !101
+  %8 = zext i8 %7 to i32
+  %9 = load i8, ptr %3, align 2, !tbaa !101
+  %10 = zext i8 %9 to i32
+  %11 = zext <12 x i8> %4 to <12 x i32>
+  %i.an = call i32 @llvm.vector.reduce.add.v12i32(<12 x i32> %11)
+  %op.rdx = add nuw nsw i32 %i.an, %6
+  %op.rdx113 = add nuw nsw i32 %8, %10
+  %op.rdx114 = add nuw nsw i32 %op.rdx, %op.rdx113
   %i.ao = load i8, ptr %i.p, align 1, !tbaa !101
   %i.ap = zext i8 %i.ao to i32
-  %i.aq = add nuw nsw i32 %i.an, %i.ap            ; 4 uses
+  %i.aq = add nuw nsw i32 %op.rdx114, %i.ap       ; 4 uses
   %i.ar = add nuw nsw i32 %i.aq, 25               ; 2 uses
   %i.as = zext nneg i32 %i.ar to i64
   %i.at = call ptr @_TIFFmallocExt(ptr noundef nonnull %0, i64 noundef %i.as) #13 ; 12 uses
@@ -1564,7 +1588,7 @@ declare i16 @llvm.umin.i16(i16, i16) #11
 declare void @llvm.assume(i1 noundef) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v15i32(<15 x i32>) #11
+declare i32 @llvm.vector.reduce.add.v12i32(<12 x i32>) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

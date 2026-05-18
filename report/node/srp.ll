@@ -201,7 +201,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.dp = getelementptr inbounds nuw i8, ptr %i.c, i64 8 ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 3 uses
   %i.dr = getelementptr inbounds nuw i8, ptr %i.c, i64 40 ; 3 uses
-  %i.ds = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 2 uses
+  %i.ds = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
   %i.dt = getelementptr inbounds nuw i8, ptr %i.c, i64 32 ; 2 uses
   br label %bb.bh
 
@@ -323,17 +323,20 @@ bb.bx:                                            ; preds = %.thread341
   store ptr %i.fj, ptr %i.c, align 16, !tbaa !9
   %i.fk = call ptr @CRYPTO_strdup(ptr noundef nonnull %i.fe, ptr noundef nonnull @.str.72, i32 noundef 475) #6 ; 2 uses
   store ptr %i.fk, ptr %i.dt, align 16, !tbaa !9
+  %2 = load ptr, ptr %i.ds, align 8, !tbaa !9
   %i.fl = load <2 x ptr>, ptr %i.c, align 16
-  %2 = load <2 x ptr>, ptr %i.dq, align 16
-  %3 = shufflevector <2 x ptr> %2, <2 x ptr> poison, <5 x i32> <i32 1, i32 poison, i32 poison, i32 poison, i32 0>
-  %4 = insertelement <5 x ptr> %3, ptr %i.fk, i64 1
-  %5 = shufflevector <2 x ptr> %i.fl, <2 x ptr> poison, <5 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison>
-  %6 = shufflevector <5 x ptr> %4, <5 x ptr> %5, <5 x i32> <i32 0, i32 1, i32 5, i32 6, i32 4>
-  %.fr = freeze <5 x ptr> %6
-  %7 = icmp eq <5 x ptr> %.fr, splat (ptr null)
-  %8 = bitcast <5 x i1> %7 to i5
-  %.not665 = icmp eq i5 %8, 0
-  br i1 %.not665, label %bb.by, label %bb.cb
+  %3 = insertelement <4 x ptr> poison, ptr %2, i64 0
+  %4 = insertelement <4 x ptr> %3, ptr %i.fk, i64 1
+  %5 = shufflevector <2 x ptr> %i.fl, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %6 = shufflevector <4 x ptr> %4, <4 x ptr> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %.fr = freeze <4 x ptr> %6
+  %7 = icmp eq <4 x ptr> %.fr, splat (ptr null)
+  %8 = load ptr, ptr %i.dq, align 16
+  %9 = icmp eq ptr %8, null
+  %10 = bitcast <4 x i1> %7 to i4
+  %11 = icmp ne i4 %10, 0
+  %op.rdx = select i1 %11, i1 true, i1 %9
+  br i1 %op.rdx, label %bb.cb, label %bb.by
 
 bb.by:                                            ; preds = %bb.bx
   br i1 %.not323, label %bb.ca, label %bb.bz

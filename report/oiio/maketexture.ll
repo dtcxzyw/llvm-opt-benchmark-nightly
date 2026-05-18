@@ -201,7 +201,7 @@ begin_hunk_0_@_ZN11OpenImageIO4v3_1L17make_texture_implENS0_12ImageBufAlgo15Make
   %210 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 6 uses
   %211 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %212 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 23 uses
-  %213 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 16 ; 73 uses
+  %213 = alloca %"class.OpenImageIO::v3_1::ImageSpec", align 8 ; 73 uses
   %214 = alloca %"struct.OpenImageIO::v3_1::ROI", align 4 ; 18 uses
   %215 = alloca %"struct.OpenImageIO::v3_1::ROI", align 4 ; 13 uses
   %216 = alloca %"struct.OpenImageIO::v3_1::ROI", align 4 ; 13 uses
@@ -604,14 +604,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1472: ; preds = %b
 
 bb.yx:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1475, %_ZN11OpenImageIO4v3_1neERKNS0_3ROIES3_.exit1463
   %i.cjy = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1475 ], [ false, %_ZN11OpenImageIO4v3_1neERKNS0_3ROIES3_.exit1463 ] ; 3 uses
-  %i.cjz = getelementptr inbounds nuw i8, ptr %213, i64 4 ; 2 uses
-  %408 = getelementptr inbounds nuw i8, ptr %213, i64 8 ; 2 uses
-  %409 = load <3 x i32>, ptr %213, align 16
-  %.fr = freeze <3 x i32> %409
-  %410 = icmp slt <3 x i32> %.fr, zeroinitializer
-  %411 = bitcast <3 x i1> %410 to i3
-  %.not3346 = icmp eq i3 %411, 0
-  br i1 %.not3346, label %bb.zi, label %bb.yy
+  %408 = load i32, ptr %213, align 8, !tbaa !205
+  %409 = icmp slt i32 %408, 0
+  %i.cjz = getelementptr inbounds nuw i8, ptr %213, i64 4 ; 3 uses
+  %410 = load i32, ptr %i.cjz, align 4
+  %411 = icmp slt i32 %410, 0
+  %or.cond19 = select i1 %409, i1 true, i1 %411
+  %412 = getelementptr inbounds nuw i8, ptr %213, i64 8 ; 3 uses
+  %413 = load i32, ptr %412, align 8
+  %414 = icmp slt i32 %413, 0
+  %or.cond22 = select i1 %or.cond19, i1 true, i1 %414
+  br i1 %or.cond22, label %bb.yy, label %bb.zi
 
 bb.yy:                                            ; preds = %bb.yx
   %i.cka = load ptr, ptr %102, align 8, !tbaa !113 ; 3 uses
@@ -633,7 +636,7 @@ bb.za:                                            ; preds = %bb.yz
   br i1 %.not688, label %bb.zb, label %bb.zi
 
 bb.zb:                                            ; preds = %bb.za
-  %i.ckg = load i32, ptr %213, align 16, !tbaa !205 ; 2 uses
+  %i.ckg = load i32, ptr %213, align 8, !tbaa !205 ; 2 uses
   %i.ckh = icmp slt i32 %i.ckg, 0
   br i1 %i.ckh, label %bb.zc, label %bb.ze
 
@@ -642,7 +645,7 @@ bb.zc:                                            ; preds = %bb.zb
   %i.ckj = load i32, ptr %i.cki, align 8, !tbaa !208
   %i.ckk = sub nsw i32 %i.ckj, %i.ckg
   store i32 %i.ckk, ptr %i.cki, align 8, !tbaa !208
-  store i32 0, ptr %213, align 16, !tbaa !205
+  store i32 0, ptr %213, align 8, !tbaa !205
   br label %bb.ze
 
 bb.zd:                                            ; preds = %bb.zm, %bb.zk, %bb.zj, %bb.zi, %bb.yz
@@ -664,16 +667,16 @@ bb.zf:                                            ; preds = %bb.ze
   br label %bb.zg
 
 bb.zg:                                            ; preds = %bb.zf, %bb.ze
-  %i.ckr = load i32, ptr %408, align 8, !tbaa !207 ; 2 uses
+  %i.ckr = load i32, ptr %412, align 8, !tbaa !207 ; 2 uses
   %i.cks = icmp slt i32 %i.ckr, 0
   br i1 %i.cks, label %bb.zh, label %bb.zi
 
 bb.zh:                                            ; preds = %bb.zg
   %i.ckt = getelementptr inbounds nuw i8, ptr %213, i64 32 ; 2 uses
-  %i.cku = load i32, ptr %i.ckt, align 16, !tbaa !210
+  %i.cku = load i32, ptr %i.ckt, align 8, !tbaa !210
   %i.ckv = sub nsw i32 %i.cku, %i.ckr
-  store i32 %i.ckv, ptr %i.ckt, align 16, !tbaa !210
-  store i32 0, ptr %408, align 8, !tbaa !207
+  store i32 %i.ckv, ptr %i.ckt, align 8, !tbaa !210
+  store i32 0, ptr %412, align 8, !tbaa !207
   br label %bb.zi
 
 bb.zi:                                            ; preds = %bb.zg, %bb.zh, %bb.yx, %bb.za, %bb.yy
@@ -681,7 +684,7 @@ bb.zi:                                            ; preds = %bb.zg, %bb.zh, %bb.
   %i.ckx = load <2 x i32>, ptr %i.bi, align 8, !tbaa !3 ; 2 uses
   %i.cky = icmp eq <2 x i32> %i.ckx, zeroinitializer
   %i.ckz = select <2 x i1> %i.cky, <2 x i32> splat (i32 64), <2 x i32> %i.ckx
-  store <2 x i32> %i.ckz, ptr %i.ckw, align 16, !tbaa !3
+  store <2 x i32> %i.ckz, ptr %i.ckw, align 8, !tbaa !3
   %i.cla = load i32, ptr %i.bn, align 8, !tbaa !61
   %i.clb = call i32 @llvm.umax.i32(i32 %i.cla, i32 1)
   %i.clc = getelementptr inbounds nuw i8, ptr %213, i64 56
@@ -1084,7 +1087,7 @@ _ZN11OpenImageIO4v3_15ceil2Ei.exit:               ; preds = %bb.agt, %bb.agu
   %.0.i1611 = phi i32 [ %i.deb, %bb.agu ], [ 0, %bb.agt ] ; 3 uses
   store i32 %.0.i1611, ptr %.phi.trans.insert2667, align 4, !tbaa !151
   %i.dec = getelementptr inbounds nuw i8, ptr %213, i64 16 ; 2 uses
-  %i.ded = load i32, ptr %i.dec, align 16, !tbaa !153 ; 2 uses
+  %i.ded = load i32, ptr %i.dec, align 8, !tbaa !153 ; 2 uses
   %i.dee = icmp slt i32 %i.ded, 0
   br i1 %i.dee, label %_ZN11OpenImageIO4v3_15ceil2Ei.exit1613, label %bb.agv
 
@@ -1105,7 +1108,7 @@ bb.agv:                                           ; preds = %_ZN11OpenImageIO4v3
 
 _ZN11OpenImageIO4v3_15ceil2Ei.exit1613:           ; preds = %_ZN11OpenImageIO4v3_15ceil2Ei.exit, %bb.agv
   %.0.i1612 = phi i32 [ %i.deq, %bb.agv ], [ 0, %_ZN11OpenImageIO4v3_15ceil2Ei.exit ] ; 2 uses
-  store i32 %.0.i1612, ptr %i.dec, align 16, !tbaa !153
+  store i32 %.0.i1612, ptr %i.dec, align 8, !tbaa !153
   %i.der = getelementptr inbounds nuw i8, ptr %213, i64 36
   store i32 %.0.i1611, ptr %i.der, align 4, !tbaa !152
   %i.des = getelementptr inbounds nuw i8, ptr %213, i64 40
@@ -1122,7 +1125,7 @@ _ZN11OpenImageIO4v3_15ceil2Ei.exit1613:           ; preds = %_ZN11OpenImageIO4v3
 
 bb.agw:                                           ; preds = %._crit_edge2666
   %i.dex = getelementptr inbounds nuw i8, ptr %213, i64 16
-  %i.dey = load i32, ptr %i.dex, align 16, !tbaa !153
+  %i.dey = load i32, ptr %i.dex, align 8, !tbaa !153
   %i.dez = getelementptr inbounds nuw i8, ptr %212, i64 16
   %i.dfa = load i32, ptr %i.dez, align 8, !tbaa !153
   %.not732 = icmp eq i32 %i.dey, %i.dfa
@@ -1491,7 +1494,7 @@ bb.aim:                                           ; preds = %.thread2456, %_ZNKS
 bb.ain:                                           ; preds = %bb.aim
   %i.diw = getelementptr inbounds nuw i8, ptr %213, i64 64 ; 2 uses
   %i.dix = getelementptr inbounds nuw i8, ptr %i.div, i64 64
-  %i.diy = load i8, ptr %i.diw, align 16, !tbaa !121
+  %i.diy = load i8, ptr %i.diw, align 8, !tbaa !121
   %i.diz = load i8, ptr %i.dix, align 8, !tbaa !121
   %i.dja = icmp eq i8 %i.diy, %i.diz
   br i1 %i.dja, label %bb.aio, label %_ZNK11OpenImageIO4v3_18TypeDesceqERKS1_.exit.thread
@@ -1894,7 +1897,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit1897: ; preds = %_
   %i.eoz = getelementptr inbounds nuw i8, ptr %213, i64 136 ; 2 uses
   %i.epa = load ptr, ptr %i.eoz, align 8, !tbaa !160 ; 3 uses
   %i.epb = getelementptr inbounds nuw i8, ptr %213, i64 144
-  %i.epc = load ptr, ptr %i.epb, align 16, !tbaa !161 ; 2 uses
+  %i.epc = load ptr, ptr %i.epb, align 8, !tbaa !161 ; 2 uses
   %.not4.i.i.i.i1898 = icmp eq ptr %i.epa, %i.epc
   br i1 %.not4.i.i.i.i1898, label %_ZSt8_DestroyIPN11OpenImageIO4v3_110ParamValueES2_EvT_S4_RSaIT0_E.exit.i.i1904, label %.lr.ph.i.i.i.i1899
 
@@ -1925,7 +1928,7 @@ bb.aso:                                           ; preds = %_ZSt8_DestroyIPN11O
 
 _ZNSt6vectorIN11OpenImageIO4v3_110ParamValueESaIS2_EED2Ev.exit.i1906: ; preds = %bb.aso, %_ZSt8_DestroyIPN11OpenImageIO4v3_110ParamValueES2_EvT_S4_RSaIT0_E.exit.i.i1904
   %i.epk = getelementptr inbounds nuw i8, ptr %213, i64 96 ; 2 uses
-  %i.epl = load ptr, ptr %i.epk, align 16, !tbaa !165 ; 3 uses
+  %i.epl = load ptr, ptr %i.epk, align 8, !tbaa !165 ; 3 uses
   %i.epm = getelementptr inbounds nuw i8, ptr %213, i64 104
   %i.epn = load ptr, ptr %i.epm, align 8, !tbaa !166 ; 2 uses
   %.not4.i.i.i1.i1907 = icmp eq ptr %i.epl, %i.epn
@@ -1950,7 +1953,7 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
   br i1 %.not.i.i.i4.i1912, label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i1913, label %.lr.ph.i.i.i2.i1908, !llvm.loop !167
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i1913: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i1911
-  %.pr.i5.i1914 = load ptr, ptr %i.epk, align 16, !tbaa !165
+  %.pr.i5.i1914 = load ptr, ptr %i.epk, align 8, !tbaa !165
   br label %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1915
 
 _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1915: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exitthread-pre-split.i.i1913, %_ZNSt6vectorIN11OpenImageIO4v3_110ParamValueESaIS2_EED2Ev.exit.i1906
@@ -1960,7 +1963,7 @@ _ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSa
 
 bb.asp:                                           ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_EvT_S7_RSaIT0_E.exit.i.i1915
   %i.epv = getelementptr inbounds nuw i8, ptr %213, i64 112
-  %i.epw = load ptr, ptr %i.epv, align 16, !tbaa !168
+  %i.epw = load ptr, ptr %i.epv, align 8, !tbaa !168
   %i.epx = ptrtoint ptr %i.epw to i64
   %i.epy = ptrtoint ptr %i.epu to i64
   %i.epz = sub i64 %i.epx, %i.epy

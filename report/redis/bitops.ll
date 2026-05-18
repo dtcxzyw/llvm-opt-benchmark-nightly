@@ -201,22 +201,51 @@ middle.block:                                     ; preds = %vector.body
 .lr.ph118:                                        ; preds = %.lr.ph118.preheader168, %.lr.ph118
   %.2117 = phi i64 [ %i.fy, %.lr.ph118 ], [ %.2117.ph, %.lr.ph118.preheader168 ] ; 2 uses
   %.186116 = phi i64 [ %i.gd, %.lr.ph118 ], [ %.186116.ph, %.lr.ph118.preheader168 ]
-  %.093115 = phi ptr [ %i.fx, %.lr.ph118 ], [ %.093115.ph, %.lr.ph118.preheader168 ] ; 2 uses
+  %.093115 = phi ptr [ %i.fx, %.lr.ph118 ], [ %.093115.ph, %.lr.ph118.preheader168 ] ; 4 uses
+  %2 = getelementptr inbounds nuw i8, ptr %.093115, i64 16
+  %3 = getelementptr inbounds nuw i8, ptr %.093115, i64 20
+  %4 = load i32, ptr %2, align 4, !tbaa !9        ; 2 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %.093115, i64 28 ; 2 uses
   %i.fy = add nsw i64 %.2117, -28                 ; 2 uses
-  %2 = load <7 x i32>, ptr %.093115, align 4, !tbaa !9 ; 2 uses
-  %3 = lshr <7 x i32> %2, splat (i32 1)
-  %4 = and <7 x i32> %3, splat (i32 1431655765)
-  %5 = sub <7 x i32> %2, %4                       ; 2 uses
-  %6 = and <7 x i32> %5, splat (i32 858993459)
-  %7 = lshr <7 x i32> %5, splat (i32 2)
-  %8 = and <7 x i32> %7, splat (i32 858993459)
-  %9 = add nuw nsw <7 x i32> %8, %6               ; 2 uses
-  %10 = lshr <7 x i32> %9, splat (i32 4)
-  %11 = add nuw nsw <7 x i32> %10, %9
-  %12 = and <7 x i32> %11, splat (i32 252645135)
-  %i.fz = tail call i32 @llvm.vector.reduce.add.v7i32(<7 x i32> %12)
-  %i.ga = mul i32 %i.fz, 16843009
+  %5 = lshr i32 %4, 1
+  %6 = and i32 %5, 1431655765
+  %7 = sub i32 %4, %6                             ; 2 uses
+  %8 = and i32 %7, 858993459
+  %9 = lshr i32 %7, 2
+  %10 = and i32 %9, 858993459
+  %11 = add nuw nsw i32 %10, %8                   ; 2 uses
+  %12 = load <4 x i32>, ptr %.093115, align 4, !tbaa !9 ; 2 uses
+  %13 = lshr <4 x i32> %12, splat (i32 1)
+  %14 = and <4 x i32> %13, splat (i32 1431655765)
+  %15 = sub <4 x i32> %12, %14                    ; 2 uses
+  %16 = and <4 x i32> %15, splat (i32 858993459)
+  %17 = lshr <4 x i32> %15, splat (i32 2)
+  %18 = and <4 x i32> %17, splat (i32 858993459)
+  %19 = add nuw nsw <4 x i32> %18, %16            ; 2 uses
+  %20 = lshr <4 x i32> %19, splat (i32 4)
+  %21 = add nuw nsw <4 x i32> %20, %19
+  %22 = and <4 x i32> %21, splat (i32 252645135)
+  %23 = lshr i32 %11, 4
+  %24 = add nuw nsw i32 %23, %11
+  %25 = and i32 %24, 252645135
+  %26 = load <2 x i32>, ptr %3, align 4, !tbaa !9 ; 2 uses
+  %27 = lshr <2 x i32> %26, splat (i32 1)
+  %28 = and <2 x i32> %27, splat (i32 1431655765)
+  %29 = sub <2 x i32> %26, %28                    ; 2 uses
+  %30 = and <2 x i32> %29, splat (i32 858993459)
+  %31 = lshr <2 x i32> %29, splat (i32 2)
+  %32 = and <2 x i32> %31, splat (i32 858993459)
+  %33 = add nuw nsw <2 x i32> %32, %30            ; 2 uses
+  %34 = lshr <2 x i32> %33, splat (i32 4)
+  %35 = add nuw nsw <2 x i32> %34, %33
+  %36 = and <2 x i32> %35, splat (i32 252645135)  ; 2 uses
+  %i.fz = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %22)
+  %op.rdx = add nuw nsw i32 %i.fz, %25
+  %shift = shufflevector <2 x i32> %36, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = add <2 x i32> %36, %shift
+  %op.rdx168 = extractelement <2 x i32> %foldExtExtBinop, i64 0
+  %op.rdx169 = add nuw i32 %op.rdx, %op.rdx168
+  %i.ga = mul i32 %op.rdx169, 16843009
   %i.gb = lshr i32 %i.ga, 24
   %i.gc = zext nneg i32 %i.gb to i64
   %i.gd = add nuw nsw i64 %.186116, %i.gc         ; 2 uses
@@ -619,7 +648,7 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #3
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v7i32(<7 x i32>) #3
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i64> @llvm.ctpop.v4i64(<4 x i64>) #3

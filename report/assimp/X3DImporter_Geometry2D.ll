@@ -201,11 +201,13 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit72, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.cl = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #18
-          to label %bb.x unwind label %bb.z       ; 2 uses
+          to label %bb.x unwind label %bb.z       ; 3 uses
 
 bb.x:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 16
-  store <3 x float> zeroinitializer, ptr %i.cm, align 4
+  store <2 x float> zeroinitializer, ptr %i.cm, align 4
+  %18 = getelementptr inbounds nuw i8, ptr %i.cl, i64 24
+  store float 0.000000e+00, ptr %18, align 4
   call void @_ZNSt8__detail15_List_node_base7_M_hookEPS0_(ptr noundef nonnull align 8 dereferenceable(16) %i.cl, ptr noundef nonnull align 8 dereferenceable(24) %i.be) #17
   %i.cn = load i64, ptr %i.bg, align 8
   %i.co = add i64 %i.cn, 1

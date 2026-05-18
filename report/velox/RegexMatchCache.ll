@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %_ZN5boost13re_detai
   br label %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE5flagsEv.exit
 
 _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE5flagsEv.exit: ; preds = %_ZN5boost13re_detail_50012perl_matcherIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISC_EEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE24estimate_max_state_countEPSt26random_access_iterator_tag.exit, %bb.q
-  %i.ak = phi i32 [ %i.aj, %bb.q ], [ 0, %_ZN5boost13re_detail_50012perl_matcherIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISC_EEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE24estimate_max_state_countEPSt26random_access_iterator_tag.exit ] ; 2 uses
+  %i.ak = phi i32 [ %i.aj, %bb.q ], [ 0, %_ZN5boost13re_detail_50012perl_matcherIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEESaINS_9sub_matchISC_EEENS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE24estimate_max_state_countEPSt26random_access_iterator_tag.exit ] ; 4 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.am = lshr i32 %i.ak, 20
   %i.an = trunc i32 %i.am to i8
@@ -212,14 +212,15 @@ _ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE5flagsEv
   br i1 %.not, label %.sink.split, label %bb.r
 
 .sink.split:                                      ; preds = %_ZNK5boost11basic_regexIcNS_12regex_traitsIcNS_16cpp_regex_traitsIcEEEEE5flagsEv.exit
-  %4 = insertelement <3 x i32> poison, i32 %i.ak, i64 0
-  %5 = shufflevector <3 x i32> %4, <3 x i32> poison, <3 x i32> zeroinitializer
-  %.fr36 = freeze <3 x i32> %5
-  %6 = and <3 x i32> %.fr36, <i32 515, i32 4099, i32 3>
-  %7 = icmp eq <3 x i32> %6, <i32 0, i32 4097, i32 2>
-  %8 = bitcast <3 x i1> %7 to i3
-  %.not37 = icmp eq i3 %8, 0
-  %.sink33 = select i1 %.not37, i32 131072, i32 65536
+  %4 = and i32 %i.ak, 515
+  %5 = icmp eq i32 %4, 0
+  %6 = and i32 %i.ak, 4099
+  %7 = icmp eq i32 %6, 4097
+  %or.cond = or i1 %5, %7
+  %8 = and i32 %i.ak, 3
+  %.not37 = icmp eq i32 %8, 2
+  %9 = select i1 %or.cond, i1 true, i1 %.not37
+  %.sink33 = select i1 %9, i32 65536, i32 131072
   %i.aq = or disjoint i32 %2, %.sink33            ; 2 uses
   store i32 %i.aq, ptr %i.f, align 8, !tbaa !20999
   br label %bb.r

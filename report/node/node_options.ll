@@ -201,7 +201,11 @@ define linkonce_odr dso_local void @_ZN4node18EnvironmentOptionsC2Ev(ptr noundef
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 222
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(54) %i.w, i8 0, i64 54, i1 false)
-  store <6 x i8> <i8 1, i8 0, i8 1, i8 0, i8 0, i8 0>, ptr %i.x, align 2
+  store <4 x i8> <i8 1, i8 0, i8 1, i8 0>, ptr %i.x, align 2
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 226
+  store i8 0, ptr %1, align 2
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 227
+  store i8 0, ptr %2, align 1
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 232
   store i64 0, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 240

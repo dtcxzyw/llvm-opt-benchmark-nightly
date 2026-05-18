@@ -201,16 +201,20 @@ declare noundef i32 @snprintf(ptr noalias noundef writeonly captures(none), i64 
 ; Function Attrs: nofree nounwind uwtable
 define dso_local void @fpconv_init() local_unnamed_addr #8 {
 bb.a:
-  %i.a = alloca [8 x i8], align 4                 ; 5 uses
+  %i.a = alloca [8 x i8], align 1                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.b = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 8, ptr noundef nonnull @.str.3, double noundef 5.000000e-01) #11 ; 0 uses
-  %0 = load <4 x i8>, ptr %i.a, align 4
-  %1 = shufflevector <4 x i8> %0, <4 x i8> poison, <3 x i32> <i32 0, i32 2, i32 3>
-  %.fr = freeze <3 x i8> %1
-  %2 = icmp ne <3 x i8> %.fr, <i8 48, i8 53, i8 0>
-  %3 = bitcast <3 x i1> %2 to i3
-  %.not = icmp eq i3 %3, 0
-  br i1 %.not, label %fpconv_update_locale.exit, label %bb.b
+  %0 = load i8, ptr %i.a, align 1, !tbaa !8
+  %1 = icmp ne i8 %0, 48
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %3 = load i8, ptr %2, align 1
+  %4 = icmp ne i8 %3, 53
+  %or.cond.i = select i1 %1, i1 true, i1 %4
+  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %6 = load i8, ptr %5, align 1
+  %7 = icmp ne i8 %6, 0
+  %or.cond7.i = select i1 %or.cond.i, i1 true, i1 %7
+  br i1 %or.cond7.i, label %bb.b, label %fpconv_update_locale.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr @stderr, align 8, !tbaa !14

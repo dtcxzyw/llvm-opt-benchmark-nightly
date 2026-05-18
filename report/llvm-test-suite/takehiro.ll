@@ -201,10 +201,14 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.preheader
   %indvars.iv235 = phi i64 [ %i.du, %.preheader.lr.ph ], [ %indvars.iv.next236, %.preheader ] ; 2 uses
-  %i.dv = getelementptr inbounds nuw [12 x i8], ptr %i.o, i64 %indvars.iv235 ; 2 uses
-  %6 = load <3 x i32>, ptr %i.dv, align 4, !tbaa !4
-  %7 = sdiv <3 x i32> %6, splat (i32 2)
-  store <3 x i32> %7, ptr %i.dv, align 4, !tbaa !4
+  %i.dv = getelementptr inbounds nuw [12 x i8], ptr %i.o, i64 %indvars.iv235 ; 3 uses
+  %6 = load <2 x i32>, ptr %i.dv, align 4, !tbaa !4
+  %7 = sdiv <2 x i32> %6, splat (i32 2)
+  store <2 x i32> %7, ptr %i.dv, align 4, !tbaa !4
+  %8 = getelementptr inbounds nuw i8, ptr %i.dv, i64 8 ; 2 uses
+  %9 = load i32, ptr %8, align 4, !tbaa !4
+  %10 = sdiv i32 %9, 2
+  store i32 %10, ptr %8, align 4, !tbaa !4
   %indvars.iv.next236 = add nuw nsw i64 %indvars.iv235, 1 ; 2 uses
   %i.dw = and i64 %indvars.iv.next236, 4294967295
   %exitcond239.not = icmp eq i64 %i.dw, 12

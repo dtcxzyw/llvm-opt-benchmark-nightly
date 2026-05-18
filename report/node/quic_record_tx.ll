@@ -201,7 +201,7 @@ bb.bs:                                            ; preds = %.peel.next.i.i.i
 
 bb.bt:                                            ; preds = %bb.bq
   %gepdiff.i.i = sub nsw i64 %i.ie, %i.hn
-  %i.it = load i64, ptr %i.dd, align 8, !tbaa !79 ; 7 uses
+  %i.it = load i64, ptr %i.dd, align 8, !tbaa !79 ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -242,24 +242,25 @@ bb.bx:                                            ; preds = %bb.bw
   %i.ji = lshr i64 %i.it, 24
   %i.jj = lshr i64 %i.it, 32
   %i.jk = lshr i64 %i.it, 40
-  %4 = insertelement <2 x i64> poison, i64 %i.it, i64 0
-  %5 = shufflevector <2 x i64> %4, <2 x i64> poison, <2 x i32> zeroinitializer
-  %6 = lshr <2 x i64> %5, <i64 56, i64 48>
-  %i.jl = trunc i64 %i.it to i8
-  %i.jm = trunc i64 %i.jg to i8
-  %i.jn = trunc i64 %i.jh to i8
-  %i.jo = trunc i64 %i.ji to i8
-  %i.jp = trunc i64 %i.jj to i8
-  %i.jq = trunc i64 %i.jk to i8
-  %7 = trunc <2 x i64> %6 to <2 x i8>
+  %4 = lshr i64 %i.it, 48
+  %5 = lshr i64 %i.it, 56
+  %6 = trunc i64 %i.it to i8
+  %i.jl = trunc i64 %i.jg to i8
+  %i.jm = trunc i64 %i.jh to i8
+  %i.jn = trunc i64 %i.ji to i8
+  %i.jo = trunc i64 %i.jj to i8
+  %i.jp = trunc i64 %i.jk to i8
+  %i.jq = trunc i64 %4 to i8
+  %7 = trunc nuw i64 %5 to i8
   %i.jr = load <8 x i8>, ptr %gep.7.i.i.i, align 1, !tbaa !90
-  %8 = shufflevector <2 x i8> %7, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %i.js = insertelement <8 x i8> %8, i8 %i.jq, i64 2
-  %i.jt = insertelement <8 x i8> %i.js, i8 %i.jp, i64 3
-  %i.ju = insertelement <8 x i8> %i.jt, i8 %i.jo, i64 4
-  %i.jv = insertelement <8 x i8> %i.ju, i8 %i.jn, i64 5
-  %i.jw = insertelement <8 x i8> %i.jv, i8 %i.jm, i64 6
-  %i.jx = insertelement <8 x i8> %i.jw, i8 %i.jl, i64 7
+  %8 = insertelement <8 x i8> poison, i8 %7, i64 0
+  %9 = insertelement <8 x i8> %8, i8 %i.jq, i64 1
+  %i.js = insertelement <8 x i8> %9, i8 %i.jp, i64 2
+  %i.jt = insertelement <8 x i8> %i.js, i8 %i.jo, i64 3
+  %i.ju = insertelement <8 x i8> %i.jt, i8 %i.jn, i64 4
+  %i.jv = insertelement <8 x i8> %i.ju, i8 %i.jm, i64 5
+  %i.jw = insertelement <8 x i8> %i.jv, i8 %i.jl, i64 6
+  %i.jx = insertelement <8 x i8> %i.jw, i8 %6, i64 7
   %i.jy = xor <8 x i8> %i.jr, %i.jx
   store <8 x i8> %i.jy, ptr %gep.7.i.i.i, align 1, !tbaa !90
   %i.jz = call i32 @EVP_CipherInit_ex(ptr noundef nonnull %i.jb, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 1) #10

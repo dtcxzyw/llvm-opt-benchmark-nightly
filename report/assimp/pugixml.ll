@@ -201,8 +201,12 @@ bb.w:                                             ; preds = %bb.v
 
 _ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writer5writeEcccccc.exit.i: ; preds = %bb.w, %bb.v
   %.0.i55.i = phi i64 [ 0, %bb.w ], [ %i.cc, %bb.v ] ; 2 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i55.i
-  store <6 x i8> <i8 38, i8 113, i8 117, i8 111, i8 116, i8 59>, ptr %i.ch, align 1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i55.i ; 3 uses
+  store <4 x i8> <i8 38, i8 113, i8 117, i8 111>, ptr %4, align 1
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  store i8 116, ptr %5, align 1
+  %i.ch = getelementptr inbounds nuw i8, ptr %4, i64 5
+  store i8 59, ptr %i.ch, align 1
   %i.ci = add nuw nsw i64 %.0.i55.i, 6
   br label %.sink.split
 
@@ -220,8 +224,12 @@ bb.z:                                             ; preds = %bb.y
 
 _ZN4pugi4impl12_GLOBAL__N_119xml_buffered_writer5writeEcccccc.exit57.i: ; preds = %bb.z, %bb.y
   %.0.i56.i = phi i64 [ 0, %bb.z ], [ %i.cj, %bb.y ] ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i56.i
-  store <6 x i8> <i8 38, i8 97, i8 112, i8 111, i8 115, i8 59>, ptr %i.cl, align 1
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 %.0.i56.i ; 3 uses
+  store <4 x i8> <i8 38, i8 97, i8 112, i8 111>, ptr %6, align 1
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4
+  store i8 115, ptr %7, align 1
+  %i.cl = getelementptr inbounds nuw i8, ptr %6, i64 5
+  store i8 59, ptr %i.cl, align 1
   %i.cm = add nuw nsw i64 %.0.i56.i, 6
   br label %.sink.split
 

@@ -201,8 +201,10 @@ bb.ei:                                            ; preds = %.lr.ph, %bb.eu
 bb.ej:                                            ; preds = %bb.ei
   %i.sj = zext i32 %.0106370 to i64
   %i.sk = load ptr, ptr %0, align 8
-  %i.sl = getelementptr inbounds nuw [12 x i8], ptr %i.sk, i64 %i.sj
-  store <3 x float> zeroinitializer, ptr %i.sl, align 4
+  %i.sl = getelementptr inbounds nuw [12 x i8], ptr %i.sk, i64 %i.sj ; 2 uses
+  store <2 x float> zeroinitializer, ptr %i.sl, align 4
+  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.sl, i64 8
+  store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 4
   br label %bb.eu
 
 bb.ek:                                            ; preds = %bb.ei

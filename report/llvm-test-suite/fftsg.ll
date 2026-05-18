@@ -200,7 +200,7 @@ bb.a:
   %.0688690 = phi double [ 1.000000e+00, %.lr.ph.preheader ], [ %i.aw, %.lr.ph ]
   %indvars.iv.next704 = add nuw nsw i64 %indvars.iv703, 4 ; 2 uses
   %i.av = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv.next704
-  %i.aw = load double, ptr %i.av, align 8, !tbaa !8 ; 4 uses
+  %i.aw = load double, ptr %i.av, align 8, !tbaa !8 ; 6 uses
   %i.ax = fadd double %.0688690, %i.aw
   %i.ay = fmul double %i.ap, %i.ax                ; 4 uses
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv703 ; 3 uses
@@ -284,7 +284,7 @@ bb.a:
   %i.dt = shufflevector <2 x double> %i.ds, <2 x double> %i.dn, <2 x i32> <i32 1, i32 2>
   %i.du = fmul <2 x double> %i.dr, %i.dt
   %i.dv = insertelement <2 x double> poison, double %i.aw, i64 0
-  %i.dw = shufflevector <2 x double> %i.dv, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.dw = shufflevector <2 x double> %i.dv, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dx = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dw, <2 x double> %i.dp, <2 x double> %i.du)
   store <2 x double> %i.dx, ptr %i.bs, align 8, !tbaa !8
   store double %i.de, ptr %gep, align 8, !tbaa !8
@@ -327,21 +327,24 @@ bb.a:
   %i.fc = fsub <4 x double> %i.et, %i.eu
   %i.fd = shufflevector <4 x double> %i.fc, <4 x double> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
   %i.fe = fsub <4 x double> %i.fb, %i.fd          ; 5 uses
-  %i.ff = fadd <4 x double> %i.fb, %i.fd          ; 4 uses
-  %i.fg = shufflevector <4 x double> %i.fe, <4 x double> %i.ff, <4 x i32> <i32 0, i32 5, i32 2, i32 7> ; 2 uses
-  %i.fh = extractelement <4 x double> %i.ff, i64 3
+  %i.ff = fadd <4 x double> %i.fb, %i.fd          ; 5 uses
+  %i.fg = shufflevector <4 x double> %i.fe, <4 x double> %i.ff, <4 x i32> <i32 0, i32 5, i32 2, i32 7>
+  %3 = extractelement <4 x double> %i.ff, i64 3
+  %4 = fneg double %3
+  %i.fh = extractelement <4 x double> %i.ff, i64 1
   %i.fi = fneg double %i.fh
   %i.fj = extractelement <4 x double> %i.fe, i64 2
   %i.fk = fmul double %i.ay, %i.fj
-  %i.fl = fmul double %i.ay, %i.fi
-  %3 = fneg <4 x double> %i.fg
-  %4 = shufflevector <4 x double> %3, <4 x double> %i.fe, <2 x i32> <i32 1, i32 4>
-  %5 = fmul <2 x double> %i.dw, %4
+  %i.fl = fmul double %i.ay, %4
+  %5 = extractelement <4 x double> %i.fe, i64 0
+  %6 = fmul double %i.aw, %5
+  %7 = fmul double %i.aw, %i.fi
   %i.fm = insertelement <4 x double> poison, double %i.bb, i64 0
   %i.fn = insertelement <4 x double> %i.fm, double %i.bd, i64 2
   %i.fo = shufflevector <4 x double> %i.fn, <4 x double> poison, <4 x i32> <i32 0, i32 0, i32 2, i32 2>
-  %6 = shufflevector <2 x double> %5, <2 x double> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %i.fp = insertelement <4 x double> %6, double %i.fl, i64 2
+  %8 = insertelement <4 x double> poison, double %7, i64 0
+  %9 = insertelement <4 x double> %8, double %6, i64 1
+  %i.fp = insertelement <4 x double> %9, double %i.fl, i64 2
   %i.fq = insertelement <4 x double> %i.fp, double %i.fk, i64 3
   %i.fr = tail call <4 x double> @llvm.fmuladd.v4f64(<4 x double> %i.fo, <4 x double> %i.fg, <4 x double> %i.fq)
   store <4 x double> %i.fr, ptr %i.em, align 8, !tbaa !8

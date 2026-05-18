@@ -201,7 +201,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit678: ; preds = %bb.fi, %_ZN6Assi
 
 .lr.ph1162:                                       ; preds = %.preheader999, %bb.hc
   %.04471161 = phi i32 [ %i.ws, %bb.hc ], [ 0, %.preheader999 ]
-  %i.sc = load ptr, ptr %i.dv, align 8            ; 7 uses
+  %i.sc = load ptr, ptr %i.dv, align 8            ; 8 uses
   %i.sd = load ptr, ptr %i.dw, align 8
   %.not.i679 = icmp eq ptr %i.sc, %i.sd
   br i1 %.not.i679, label %bb.fm, label %bb.fl
@@ -209,7 +209,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE6IncPtrEl.exit678: ; preds = %bb.fi, %_ZN6Assi
 bb.fl:                                            ; preds = %.lr.ph1162
   %i.se = getelementptr inbounds nuw i8, ptr %i.sc, i64 1040
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1072) %i.sc, i8 0, i64 1040, i1 false)
-  store <3 x float> splat (float 6.000000e-01), ptr %i.se, align 4
+  store <2 x float> splat (float 6.000000e-01), ptr %i.se, align 4
+  %10 = getelementptr inbounds nuw i8, ptr %i.sc, i64 1048
+  store float 6.000000e-01, ptr %10, align 4
   %i.sf = getelementptr inbounds nuw i8, ptr %i.sc, i64 1052
   %i.sg = getelementptr inbounds nuw i8, ptr %i.sc, i64 1068
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.sf, i8 0, i64 16, i1 false)
@@ -612,7 +614,7 @@ bb.kz:                                            ; preds = %bb.ky
           to label %bb.la unwind label %bb.bj
 
 bb.la:                                            ; preds = %bb.kz
-  %i.aip = load ptr, ptr %i.ail, align 8          ; 7 uses
+  %i.aip = load ptr, ptr %i.ail, align 8          ; 8 uses
   %i.aiq = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.air = load ptr, ptr %i.aiq, align 8
   %.not.i845 = icmp eq ptr %i.aip, %i.air
@@ -621,7 +623,9 @@ bb.la:                                            ; preds = %bb.kz
 bb.lb:                                            ; preds = %bb.la
   %i.ais = getelementptr inbounds nuw i8, ptr %i.aip, i64 1040
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1072) %i.aip, i8 0, i64 1040, i1 false)
-  store <3 x float> splat (float 6.000000e-01), ptr %i.ais, align 4
+  store <2 x float> splat (float 6.000000e-01), ptr %i.ais, align 4
+  %11 = getelementptr inbounds nuw i8, ptr %i.aip, i64 1048
+  store float 6.000000e-01, ptr %11, align 4
   %i.ait = getelementptr inbounds nuw i8, ptr %i.aip, i64 1052
   %i.aiu = getelementptr inbounds nuw i8, ptr %i.aip, i64 1068
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.ait, i8 0, i64 16, i1 false)
@@ -1024,10 +1028,12 @@ _ZNKSt6vectorIN6Assimp11Q3DImporter8MaterialESaIS2_EE12_M_check_lenEmPKc.exit: ;
   tail call void @llvm.assume(i1 %.not.i)
   %i.o = mul nuw nsw i64 %i.l, 1072
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #28 ; 5 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 4 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 5 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 1040
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1072) %i.q, i8 0, i64 1040, i1 false)
-  store <3 x float> splat (float 6.000000e-01), ptr %i.r, align 4
+  store <2 x float> splat (float 6.000000e-01), ptr %i.r, align 4
+  %2 = getelementptr inbounds nuw i8, ptr %i.q, i64 1048
+  store float 6.000000e-01, ptr %2, align 4
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 1052
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 1068
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)

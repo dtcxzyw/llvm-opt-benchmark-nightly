@@ -201,7 +201,7 @@ opj_dwt_max_resolution.exit.i12:                  ; preds = %opj_dwt_max_resolut
   %i.hr = getelementptr inbounds nuw i8, ptr %i.hg, i64 17179869180 ; 2 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.hg, i64 16 ; 9 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hg, i64 20 ; 4 uses
-  %i.hu = getelementptr inbounds nuw i8, ptr %i.hg, i64 24 ; 3 uses
+  %i.hu = getelementptr inbounds nuw i8, ptr %i.hg, i64 24 ; 5 uses
   %i.hv = getelementptr inbounds nuw i8, ptr %i.hg, i64 28 ; 5 uses
   br label %bb.x
 
@@ -508,7 +508,7 @@ bb.ab:                                            ; preds = %bb.aa, %opj_dwt_get
   %.in311.ph.1.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 4
   %i.qe = getelementptr inbounds nuw i8, ptr %i.qd, i64 4 ; 2 uses
   %.in311.ph.2.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 8
-  %i.qf = getelementptr inbounds nuw i8, ptr %i.qd, i64 8 ; 2 uses
+  %i.qf = getelementptr inbounds nuw i8, ptr %i.qd, i64 8 ; 4 uses
   %.in311.ph.3.i.i = getelementptr inbounds nuw i8, ptr %.in311.ph.i.i, i64 12
   %i.qg = getelementptr inbounds nuw i8, ptr %i.qd, i64 12 ; 2 uses
   %i.qh = add nuw nsw i32 %i.lb, 1                ; 2 uses
@@ -911,15 +911,22 @@ bb.bm:                                            ; preds = %.preheader350.i.i
   br i1 %i.py, label %.thread360.i, label %.thread.1.i.i
 
 .thread360.i:                                     ; preds = %bb.bm
-  %i.xh = load <2 x i32>, ptr %i.ht, align 4, !tbaa !3
-  %5 = shufflevector <2 x i32> %i.xh, <2 x i32> poison, <3 x i32> <i32 poison, i32 0, i32 1>
-  %6 = insertelement <3 x i32> %5, i32 %i.xg, i64 0
-  %7 = shl <3 x i32> %6, splat (i32 1)
-  %8 = add <3 x i32> %7, splat (i32 2)
-  %9 = ashr <3 x i32> %8, splat (i32 2)
-  %10 = load <3 x i32>, ptr %i.qd, align 4, !tbaa !3
-  %11 = sub nsw <3 x i32> %10, %9
-  store <3 x i32> %11, ptr %i.qd, align 4, !tbaa !3
+  %5 = load i32, ptr %i.ht, align 4, !tbaa !3
+  %6 = insertelement <2 x i32> poison, i32 %i.xg, i64 0
+  %7 = insertelement <2 x i32> %6, i32 %5, i64 1
+  %8 = shl <2 x i32> %7, splat (i32 1)
+  %9 = add <2 x i32> %8, splat (i32 2)
+  %10 = ashr <2 x i32> %9, splat (i32 2)
+  %i.xh = load <2 x i32>, ptr %i.qd, align 4, !tbaa !3
+  %11 = sub nsw <2 x i32> %i.xh, %10
+  store <2 x i32> %11, ptr %i.qd, align 4, !tbaa !3
+  %12 = load i32, ptr %i.hu, align 4, !tbaa !3
+  %reass.add389.i = shl i32 %12, 1
+  %13 = add i32 %reass.add389.i, 2
+  %14 = ashr i32 %13, 2
+  %15 = load i32, ptr %i.qf, align 4, !tbaa !3
+  %16 = sub nsw i32 %15, %14
+  store i32 %16, ptr %i.qf, align 4, !tbaa !3
   %i.xi = load i32, ptr %i.hv, align 4, !tbaa !3  ; 2 uses
   br label %bb.bn
 
@@ -1134,16 +1141,24 @@ bb.bn:                                            ; preds = %.thread.1.i.i, %.th
   br label %.split384.us.i.i
 
 .preheader345.split.us.split.us.preheader.i.i:    ; preds = %.preheader345.split.us.i.i
-  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.abj ; 2 uses
-  %i.acj = load <2 x i32>, ptr %i.ht, align 4, !tbaa !3
-  %12 = shufflevector <2 x i32> %i.acj, <2 x i32> poison, <3 x i32> <i32 poison, i32 0, i32 1>
-  %13 = insertelement <3 x i32> %12, i32 %i.abk, i64 0
-  %14 = shl <3 x i32> %13, splat (i32 1)
-  %15 = add <3 x i32> %14, splat (i32 2)
-  %16 = ashr <3 x i32> %15, splat (i32 2)
-  %17 = load <3 x i32>, ptr %i.aci, align 4, !tbaa !3
-  %18 = sub nsw <3 x i32> %17, %16
-  store <3 x i32> %18, ptr %i.aci, align 4, !tbaa !3
+  %i.aci = getelementptr inbounds nuw [4 x i8], ptr %i.hg, i64 %i.abj ; 3 uses
+  %17 = load i32, ptr %i.ht, align 4, !tbaa !3
+  %18 = insertelement <2 x i32> poison, i32 %i.abk, i64 0
+  %19 = insertelement <2 x i32> %18, i32 %17, i64 1
+  %20 = shl <2 x i32> %19, splat (i32 1)
+  %21 = add <2 x i32> %20, splat (i32 2)
+  %22 = ashr <2 x i32> %21, splat (i32 2)
+  %i.acj = load <2 x i32>, ptr %i.aci, align 4, !tbaa !3
+  %23 = sub nsw <2 x i32> %i.acj, %22
+  store <2 x i32> %23, ptr %i.aci, align 4, !tbaa !3
+  %24 = load i32, ptr %i.hu, align 4, !tbaa !3
+  %reass.add516.i.i = shl i32 %24, 1
+  %25 = add i32 %reass.add516.i.i, 2
+  %26 = ashr i32 %25, 2
+  %27 = getelementptr inbounds nuw i8, ptr %i.aci, i64 8 ; 2 uses
+  %28 = load i32, ptr %27, align 4, !tbaa !3
+  %29 = sub nsw i32 %28, %26
+  store i32 %29, ptr %27, align 4, !tbaa !3
   %i.ack = load i32, ptr %i.hv, align 4, !tbaa !3
   %reass.add517.i.i = shl i32 %i.ack, 1
   %i.acl = add i32 %reass.add517.i.i, 2

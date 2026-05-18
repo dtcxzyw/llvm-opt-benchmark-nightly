@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 .lr.ph78.i:                                       ; preds = %bb.m, %.lr.ph78.preheader.i
   %indvars.iv108.i = phi i64 [ %i.j, %.lr.ph78.preheader.i ], [ %indvars.iv.next109.i, %bb.m ] ; 3 uses
   %indvars.iv.next109.i = add nsw i64 %indvars.iv108.i, -1 ; 5 uses
-  %i.k = getelementptr inbounds nuw [16 x i8], ptr @pgm, i64 %indvars.iv.next109.i ; 5 uses
+  %i.k = getelementptr inbounds nuw [16 x i8], ptr @pgm, i64 %indvars.iv.next109.i ; 6 uses
   %i.l = load i32, ptr %i.k, align 16, !tbaa !8   ; 3 uses
   %i.m = sext i32 %i.l to i64
   %i.n = getelementptr inbounds [56 x i8], ptr @isa, i64 %i.m ; 2 uses
@@ -287,8 +287,11 @@ bb.l:                                             ; preds = %.thread.i
 
 bb.m:                                             ; preds = %.thread.i
   store i32 0, ptr %i.k, align 16, !tbaa !8
-  %0 = load <3 x i32>, ptr getelementptr inbounds nuw (i8, ptr @isa, i64 16), align 16, !tbaa !4
-  store <3 x i32> %0, ptr %i.s, align 4, !tbaa !4
+  %0 = load <2 x i32>, ptr getelementptr inbounds nuw (i8, ptr @isa, i64 16), align 16, !tbaa !4
+  store <2 x i32> %0, ptr %i.s, align 4, !tbaa !4
+  %1 = load i32, ptr getelementptr inbounds nuw (i8, ptr @isa, i64 24), align 8, !tbaa !4
+  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
+  store i32 %1, ptr %2, align 4, !tbaa !4
   tail call void @fix_operands(i32 noundef %i.ah)
   %i.ar = icmp sgt i64 %indvars.iv108.i, 1
   br i1 %i.ar, label %.lr.ph78.i, label %increment.exit.thread, !llvm.loop !28

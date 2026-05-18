@@ -201,10 +201,15 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 19 uses
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 20 ; 60 uses
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 22 uses
-  %5 = insertelement <42 x i32> poison, i32 %1, i64 0
-  %6 = shufflevector <42 x i32> %5, <42 x i32> poison, <42 x i32> zeroinitializer ; 2 uses
-  %7 = icmp eq <42 x i32> %6, <i32 50, i32 55, i32 464, i32 463, i32 80, i32 82, i32 238, i32 239, i32 244, i32 247, i32 313, i32 316, i32 317, i32 318, i32 325, i32 326, i32 329, i32 87, i32 253, i32 249, i32 250, i32 91, i32 352, i32 336, i32 355, i32 353, i32 356, i32 354, i32 278, i32 128, i32 132, i32 172, i32 177, i32 178, i32 183, i32 186, i32 93, i32 206, i32 214, i32 215, i32 407, i32 413>
-  %i.f = bitcast <42 x i1> %7 to i42
+  %5 = insertelement <32 x i32> poison, i32 %1, i64 0
+  %6 = shufflevector <32 x i32> %5, <32 x i32> poison, <32 x i32> zeroinitializer ; 2 uses
+  %7 = icmp eq <32 x i32> %6, <i32 50, i32 55, i32 464, i32 463, i32 80, i32 82, i32 238, i32 239, i32 244, i32 247, i32 313, i32 316, i32 317, i32 318, i32 325, i32 326, i32 329, i32 87, i32 253, i32 249, i32 250, i32 91, i32 352, i32 336, i32 355, i32 353, i32 356, i32 354, i32 278, i32 128, i32 132, i32 172>
+  %8 = insertelement <10 x i32> poison, i32 %1, i64 0
+  %9 = shufflevector <10 x i32> %8, <10 x i32> poison, <10 x i32> zeroinitializer ; 2 uses
+  %10 = icmp eq <10 x i32> %9, <i32 177, i32 178, i32 183, i32 186, i32 93, i32 206, i32 214, i32 215, i32 407, i32 413>
+  %11 = shufflevector <10 x i1> %10, <10 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %rdx.op88 = shufflevector <32 x i1> %7, <32 x i1> %11, <42 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41>
+  %i.f = bitcast <42 x i1> %rdx.op88 to i42
   %i.g = call range(i42 0, 43) i42 @llvm.ctpop.i42(i42 %i.f)
   %i.h = icmp eq i32 %1, 475
   %i.i = zext i1 %i.h to i42
@@ -227,8 +232,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.l, label %bb.al, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.c
-  %8 = icmp eq <42 x i32> %6, <i32 50, i32 55, i32 464, i32 463, i32 80, i32 82, i32 238, i32 239, i32 244, i32 247, i32 313, i32 316, i32 317, i32 318, i32 325, i32 326, i32 329, i32 87, i32 253, i32 249, i32 250, i32 91, i32 352, i32 336, i32 355, i32 353, i32 356, i32 354, i32 278, i32 128, i32 132, i32 172, i32 177, i32 178, i32 183, i32 186, i32 93, i32 206, i32 214, i32 215, i32 407, i32 413>
-  %i.m = bitcast <42 x i1> %8 to i42
+  %12 = icmp eq <32 x i32> %6, <i32 50, i32 55, i32 464, i32 463, i32 80, i32 82, i32 238, i32 239, i32 244, i32 247, i32 313, i32 316, i32 317, i32 318, i32 325, i32 326, i32 329, i32 87, i32 253, i32 249, i32 250, i32 91, i32 352, i32 336, i32 355, i32 353, i32 356, i32 354, i32 278, i32 128, i32 132, i32 172>
+  %13 = icmp eq <10 x i32> %9, <i32 177, i32 178, i32 183, i32 186, i32 93, i32 206, i32 214, i32 215, i32 407, i32 413>
+  %14 = shufflevector <10 x i1> %13, <10 x i1> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %rdx.op = shufflevector <32 x i1> %12, <32 x i1> %14, <42 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 40, i32 41>
+  %i.m = bitcast <42 x i1> %rdx.op to i42
   %i.n = call range(i42 0, 43) i42 @llvm.ctpop.i42(i42 %i.m)
   %i.o = icmp eq i32 %1, 475
   %i.p = zext i1 %i.o to i42

@@ -201,11 +201,13 @@ declare i32 @__gxx_personality_v0(...)
 define hidden void @_ZN6Assimp19FindAABBTransformedEPK6aiMeshR10aiVector3tIfES5_RK12aiMatrix4x4tIfE(ptr noundef readonly captures(none) %0, ptr noundef nonnull align 4 captures(none) dereferenceable(12) initializes((0, 12)) %1, ptr noundef nonnull align 4 captures(none) dereferenceable(12) initializes((0, 12)) %2, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(64) %3) local_unnamed_addr #3 {
 bb.a:
   %.sroa.438.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.sroa.539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  store <3 x float> splat (float f0x51BA43B7), ptr %1, align 4
+  store <2 x float> splat (float f0x51BA43B7), ptr %1, align 4
+  %.sroa.539.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
+  store float f0x51BA43B7, ptr %.sroa.539.0..sroa_idx, align 4
   %.sroa.4.0..sroa_idx36 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  store <3 x float> splat (float f0xD1BA43B7), ptr %2, align 4
+  store <2 x float> splat (float f0xD1BA43B7), ptr %2, align 4
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
+  store float f0xD1BA43B7, ptr %.sroa.5.0..sroa_idx, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4
   %.not = icmp eq i32 %i.b, 0
@@ -305,10 +307,12 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.d = load i32, ptr %i.c, align 4              ; 2 uses
-  %.sroa.54.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
-  store <3 x float> splat (float -1.000000e+10), ptr %3, align 4
-  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
-  store <3 x float> splat (float 1.000000e+10), ptr %2, align 4
+  store <2 x float> splat (float -1.000000e+10), ptr %3, align 4
+  %.sroa.54.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  store float -1.000000e+10, ptr %.sroa.54.0..sroa_idx.i.i, align 4
+  store <2 x float> splat (float 1.000000e+10), ptr %2, align 4
+  %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
+  store float 1.000000e+10, ptr %.sroa.5.0..sroa_idx.i.i, align 4
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %._ZN6Assimp11ArrayBoundsI10aiVector3tIfEEEvPKT_jRS3_S6_.exit_crit_edge, label %.lr.ph.preheader.i
 

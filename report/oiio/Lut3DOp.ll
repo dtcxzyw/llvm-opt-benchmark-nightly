@@ -105,7 +105,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.b
   %i.d = sitofp i32 %1 to float
   %i.e = fadd float %i.d, -1.000000e+00
-  %i.f = fdiv float 1.000000e+00, %i.e            ; 2 uses
+  %i.f = fdiv float 1.000000e+00, %i.e            ; 6 uses
   switch i32 %3, label %bb.g [
     i32 0, label %.preheader
     i32 1, label %.preheader65
@@ -120,8 +120,6 @@ bb.f:                                             ; preds = %bb.b
 .lr.ph.preheader:                                 ; preds = %.preheader65
   %i.j = zext nneg i32 %2 to i64
   %wide.trip.count = zext nneg i32 %i.h to i64
-  %4 = insertelement <3 x float> poison, float %i.f, i64 0
-  %5 = shufflevector <3 x float> %4, <3 x float> poison, <3 x i32> zeroinitializer
   br label %.lr.ph
 
 .preheader:                                       ; preds = %bb.f
@@ -133,28 +131,29 @@ bb.f:                                             ; preds = %bb.b
 .lr.ph69.preheader:                               ; preds = %.preheader
   %i.n = zext nneg i32 %2 to i64
   %wide.trip.count75 = zext nneg i32 %i.l to i64
-  %6 = insertelement <3 x float> poison, float %i.f, i64 0
-  %7 = shufflevector <3 x float> %6, <3 x float> poison, <3 x i32> zeroinitializer
   br label %.lr.ph69
 
 .lr.ph69:                                         ; preds = %.lr.ph69.preheader, %.lr.ph69
   %indvars.iv72 = phi i64 [ 0, %.lr.ph69.preheader ], [ %indvars.iv.next73, %.lr.ph69 ] ; 3 uses
   %i.o = trunc nuw nsw i64 %indvars.iv72 to i32   ; 2 uses
+  %4 = srem i32 %i.o, %1
+  %5 = uitofp nneg i32 %4 to float
+  %6 = fmul float %i.f, %5
   %i.p = mul nuw nsw i64 %indvars.iv72, %i.n
-  %i.q = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.p
-  %8 = sdiv i32 %i.o, %1                          ; 2 uses
-  %i.r = sdiv i32 %8, %1
+  %i.q = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.p ; 3 uses
+  store float %6, ptr %i.q, align 4, !tbaa !7
+  %i.r = sdiv i32 %i.o, %1                        ; 2 uses
   %i.s = srem i32 %i.r, %1
-  %9 = srem i32 %8, %1
-  %10 = srem i32 %i.o, %1
-  %11 = sitofp i32 %i.s to float
-  %12 = sitofp i32 %9 to float
-  %13 = uitofp nneg i32 %10 to float
-  %14 = insertelement <3 x float> poison, float %13, i64 0
-  %15 = insertelement <3 x float> %14, float %12, i64 1
-  %16 = insertelement <3 x float> %15, float %11, i64 2
-  %17 = fmul <3 x float> %7, %16
-  store <3 x float> %17, ptr %i.q, align 4, !tbaa !7
+  %7 = sitofp i32 %i.s to float
+  %8 = fmul float %i.f, %7
+  %9 = getelementptr inbounds nuw i8, ptr %i.q, i64 4
+  store float %8, ptr %9, align 4, !tbaa !7
+  %10 = sdiv i32 %i.r, %1
+  %11 = srem i32 %10, %1
+  %12 = sitofp i32 %11 to float
+  %13 = fmul float %i.f, %12
+  %14 = getelementptr inbounds nuw i8, ptr %i.q, i64 8
+  store float %13, ptr %14, align 4, !tbaa !7
   %indvars.iv.next73 = add nuw nsw i64 %indvars.iv72, 1 ; 2 uses
   %exitcond76.not = icmp eq i64 %indvars.iv.next73, %wide.trip.count75
   br i1 %exitcond76.not, label %.loopexit, label %.lr.ph69, !llvm.loop !9
@@ -164,19 +163,22 @@ bb.f:                                             ; preds = %bb.b
   %i.t = trunc nuw nsw i64 %indvars.iv to i32     ; 2 uses
   %i.u = sdiv i32 %i.t, %1                        ; 2 uses
   %i.v = sdiv i32 %i.u, %1
+  %15 = srem i32 %i.v, %1
+  %16 = sitofp i32 %15 to float
+  %17 = fmul float %i.f, %16
   %i.w = mul nuw nsw i64 %indvars.iv, %i.j
-  %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w
-  %18 = srem i32 %i.t, %1
+  %i.x = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.w ; 3 uses
+  store float %17, ptr %i.x, align 4, !tbaa !7
   %i.y = srem i32 %i.u, %1
-  %19 = srem i32 %i.v, %1
-  %20 = uitofp nneg i32 %18 to float
-  %21 = sitofp i32 %i.y to float
-  %22 = sitofp i32 %19 to float
-  %23 = insertelement <3 x float> poison, float %22, i64 0
-  %24 = insertelement <3 x float> %23, float %21, i64 1
-  %25 = insertelement <3 x float> %24, float %20, i64 2
-  %26 = fmul <3 x float> %5, %25
-  store <3 x float> %26, ptr %i.x, align 4, !tbaa !7
+  %18 = sitofp i32 %i.y to float
+  %19 = fmul float %i.f, %18
+  %20 = getelementptr inbounds nuw i8, ptr %i.x, i64 4
+  store float %19, ptr %20, align 4, !tbaa !7
+  %21 = srem i32 %i.t, %1
+  %22 = uitofp nneg i32 %21 to float
+  %23 = fmul float %i.f, %22
+  %24 = getelementptr inbounds nuw i8, ptr %i.x, i64 8
+  store float %23, ptr %24, align 4, !tbaa !7
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !11

@@ -199,7 +199,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o,
 
 .lr.ph.split.split.split.us.split.us:             ; preds = %.lr.ph.split.split.split.us, %bb.y
   %.06078.us91.us = phi i32 [ %.1.us96.us, %bb.y ], [ 0, %.lr.ph.split.split.split.us ]
-  %.06177.us92.us = phi ptr [ %.4.us95.us, %bb.y ], [ %2, %.lr.ph.split.split.split.us ] ; 16 uses
+  %.06177.us92.us = phi ptr [ %.4.us95.us, %bb.y ], [ %2, %.lr.ph.split.split.split.us ] ; 20 uses
   %.06376.us93.us = phi ptr [ %i.bg, %bb.y ], [ %0, %.lr.ph.split.split.split.us ] ; 2 uses
   %i.ar = load i8, ptr %.06376.us93.us, align 1, !tbaa !7 ; 3 uses
   switch i8 %i.ar, label %bb.x [
@@ -276,7 +276,11 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %bb.o,
   ]
 
 bb.s:                                             ; preds = %.lr.ph.split.split.split.us.split.us
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us92.us, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us92.us, align 1, !tbaa !7
+  %5 = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 4
+  store i8 48, ptr %5, align 1, !tbaa !7
+  %6 = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 5
+  store i8 65, ptr %6, align 1, !tbaa !7
   %i.as = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 6
   br label %bb.y
 
@@ -285,7 +289,11 @@ bb.t:                                             ; preds = %.lr.ph.split.split.
   br i1 %.not70.us94.us, label %bb.u, label %bb.y
 
 bb.u:                                             ; preds = %bb.t
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us92.us, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us92.us, align 1, !tbaa !7
+  %7 = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 4
+  store i8 48, ptr %7, align 1, !tbaa !7
+  %8 = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 5
+  store i8 65, ptr %8, align 1, !tbaa !7
   %i.at = getelementptr inbounds nuw i8, ptr %.06177.us92.us, i64 6
   br label %bb.y
 
@@ -325,7 +333,7 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v,
 
 .lr.ph.split.split.split.us.split:                ; preds = %.lr.ph.split.split.split.us, %bb.af
   %.06078.us91 = phi i32 [ %.1.us96, %bb.af ], [ 0, %.lr.ph.split.split.split.us ]
-  %.06177.us92 = phi ptr [ %.4.us95, %bb.af ], [ %2, %.lr.ph.split.split.split.us ] ; 16 uses
+  %.06177.us92 = phi ptr [ %.4.us95, %bb.af ], [ %2, %.lr.ph.split.split.split.us ] ; 20 uses
   %.06376.us93 = phi ptr [ %i.bw, %bb.af ], [ %0, %.lr.ph.split.split.split.us ] ; 2 uses
   %i.bh = load i8, ptr %.06376.us93, align 1, !tbaa !7 ; 3 uses
   switch i8 %i.bh, label %bb.ae [
@@ -402,7 +410,11 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v,
   ]
 
 bb.z:                                             ; preds = %.lr.ph.split.split.split.us.split
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us92, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us92, align 1, !tbaa !7
+  %9 = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 4
+  store i8 48, ptr %9, align 1, !tbaa !7
+  %10 = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 5
+  store i8 65, ptr %10, align 1, !tbaa !7
   %i.bi = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 6
   br label %bb.af
 
@@ -411,7 +423,11 @@ bb.aa:                                            ; preds = %.lr.ph.split.split.
   br i1 %.not70.us94, label %bb.ab, label %bb.af
 
 bb.ab:                                            ; preds = %bb.aa
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us92, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us92, align 1, !tbaa !7
+  %11 = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 4
+  store i8 48, ptr %11, align 1, !tbaa !7
+  %12 = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 5
+  store i8 65, ptr %12, align 1, !tbaa !7
   %i.bj = getelementptr inbounds nuw i8, ptr %.06177.us92, i64 6
   br label %bb.af
 
@@ -455,7 +471,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
 
 .lr.ph.split.split.split.split.us:                ; preds = %.lr.ph.split.split.split, %bb.am
   %.06078.us103 = phi i32 [ %.1.us108, %bb.am ], [ 0, %.lr.ph.split.split.split ]
-  %.06177.us104 = phi ptr [ %.4.us107, %bb.am ], [ %2, %.lr.ph.split.split.split ] ; 14 uses
+  %.06177.us104 = phi ptr [ %.4.us107, %bb.am ], [ %2, %.lr.ph.split.split.split ] ; 18 uses
   %.06376.us105 = phi ptr [ %i.ck, %bb.am ], [ %0, %.lr.ph.split.split.split ] ; 2 uses
   %i.bx = load i8, ptr %.06376.us105, align 1, !tbaa !7 ; 3 uses
   switch i8 %i.bx, label %bb.al [
@@ -532,7 +548,11 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.
   ]
 
 bb.ag:                                            ; preds = %.lr.ph.split.split.split.split.us
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us104, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us104, align 1, !tbaa !7
+  %13 = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 4
+  store i8 48, ptr %13, align 1, !tbaa !7
+  %14 = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 5
+  store i8 65, ptr %14, align 1, !tbaa !7
   %i.by = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 6
   br label %bb.am
 
@@ -541,7 +561,11 @@ bb.ah:                                            ; preds = %.lr.ph.split.split.
   br i1 %.not70.us106, label %bb.ai, label %bb.am
 
 bb.ai:                                            ; preds = %bb.ah
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177.us104, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177.us104, align 1, !tbaa !7
+  %15 = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 4
+  store i8 48, ptr %15, align 1, !tbaa !7
+  %16 = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 5
+  store i8 65, ptr %16, align 1, !tbaa !7
   %i.bz = getelementptr inbounds nuw i8, ptr %.06177.us104, i64 6
   br label %bb.am
 
@@ -577,7 +601,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
 
 .lr.ph.split.split.split.split:                   ; preds = %.lr.ph.split.split.split, %bb.at
   %.06078 = phi i32 [ %.1, %bb.at ], [ 0, %.lr.ph.split.split.split ]
-  %.06177 = phi ptr [ %.4, %bb.at ], [ %2, %.lr.ph.split.split.split ] ; 14 uses
+  %.06177 = phi ptr [ %.4, %bb.at ], [ %2, %.lr.ph.split.split.split ] ; 18 uses
   %.06376 = phi ptr [ %i.cy, %bb.at ], [ %0, %.lr.ph.split.split.split ] ; 2 uses
   %i.cl = load i8, ptr %.06376, align 1, !tbaa !7 ; 3 uses
   switch i8 %i.cl, label %bb.as [
@@ -668,12 +692,20 @@ bb.ap:                                            ; preds = %.lr.ph.split.split.
   br i1 %.not70, label %bb.aq, label %bb.at
 
 bb.aq:                                            ; preds = %bb.ap
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177, align 1, !tbaa !7
+  %17 = getelementptr inbounds nuw i8, ptr %.06177, i64 4
+  store i8 48, ptr %17, align 1, !tbaa !7
+  %18 = getelementptr inbounds nuw i8, ptr %.06177, i64 5
+  store i8 65, ptr %18, align 1, !tbaa !7
   %i.co = getelementptr inbounds nuw i8, ptr %.06177, i64 6
   br label %bb.at
 
 bb.ar:                                            ; preds = %.lr.ph.split.split.split.split
-  store <6 x i8> <i8 37, i8 48, i8 68, i8 37, i8 48, i8 65>, ptr %.06177, align 1, !tbaa !7
+  store <4 x i8> <i8 37, i8 48, i8 68, i8 37>, ptr %.06177, align 1, !tbaa !7
+  %19 = getelementptr inbounds nuw i8, ptr %.06177, i64 4
+  store i8 48, ptr %19, align 1, !tbaa !7
+  %20 = getelementptr inbounds nuw i8, ptr %.06177, i64 5
+  store i8 65, ptr %20, align 1, !tbaa !7
   %i.cp = getelementptr inbounds nuw i8, ptr %.06177, i64 6
   br label %bb.at
 

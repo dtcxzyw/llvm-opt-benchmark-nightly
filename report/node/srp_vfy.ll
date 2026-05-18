@@ -201,18 +201,20 @@ bb.a:
   %i.a = alloca [2500 x i8], align 16             ; 4 uses
   %i.b = tail call ptr @BN_CTX_new_ex(ptr noundef %6) #6 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %8 = insertelement <7 x ptr> poison, ptr %0, i64 0
-  %9 = insertelement <7 x ptr> %8, ptr %1, i64 1
-  %10 = insertelement <7 x ptr> %9, ptr %3, i64 2
-  %11 = insertelement <7 x ptr> %10, ptr %4, i64 3
-  %12 = insertelement <7 x ptr> %11, ptr %5, i64 4
-  %13 = insertelement <7 x ptr> %12, ptr %2, i64 5
-  %14 = insertelement <7 x ptr> %13, ptr %i.b, i64 6
-  %.fr = freeze <7 x ptr> %14
-  %15 = icmp eq <7 x ptr> %.fr, splat (ptr null)  ; 2 uses
-  %16 = bitcast <7 x i1> %15 to i7
-  %.not72 = icmp eq i7 %16, 0
-  br i1 %.not72, label %bb.b, label %bb.j
+  %8 = insertelement <4 x ptr> poison, ptr %0, i64 0
+  %9 = insertelement <4 x ptr> %8, ptr %1, i64 1
+  %10 = insertelement <4 x ptr> %9, ptr %3, i64 2
+  %11 = insertelement <4 x ptr> %10, ptr %4, i64 3
+  %12 = icmp eq <4 x ptr> %11, splat (ptr null)
+  %13 = icmp eq ptr %2, null                      ; 2 uses
+  %14 = icmp eq ptr %5, null
+  %15 = icmp eq ptr %i.b, null
+  %16 = bitcast <4 x i1> %12 to i4
+  %17 = icmp ne i4 %16, 0
+  %op.rdx = or i1 %17, %14
+  %18 = or i1 %op.rdx, %13
+  %op.rdx73 = select i1 %18, i1 true, i1 %15
+  br i1 %op.rdx73, label %bb.j, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %2, align 8, !tbaa !38     ; 2 uses
@@ -255,8 +257,7 @@ bb.i:                                             ; preds = %bb.g
   br label %.thread
 
 bb.j:                                             ; preds = %bb.a
-  %17 = extractelement <7 x i1> %15, i64 5
-  br i1 %17, label %bb.l, label %.thread
+  br i1 %13, label %bb.l, label %.thread
 
 .thread:                                          ; preds = %bb.h, %bb.i, %bb.c, %bb.d, %bb.e, %bb.f, %bb.j
   %.065 = phi i32 [ 0, %bb.j ], [ 0, %bb.h ], [ 1, %bb.i ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.d ], [ 0, %bb.c ] ; 2 uses

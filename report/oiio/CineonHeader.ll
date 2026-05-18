@@ -201,9 +201,13 @@ bb.b:                                             ; preds = %bb.a
   %i.bo = shufflevector <8 x i8> %i.bn, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
   store <8 x i8> %i.bo, ptr %i.bm, align 4, !tbaa !33
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 972 ; 2 uses
-  %1 = load <12 x i8>, ptr %i.bp, align 4, !tbaa !33
-  %2 = shufflevector <12 x i8> %1, <12 x i8> poison, <12 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4, i32 11, i32 10, i32 9, i32 8>
-  store <12 x i8> %2, ptr %i.bp, align 4, !tbaa !33
+  %1 = load <8 x i8>, ptr %i.bp, align 4, !tbaa !33
+  %2 = shufflevector <8 x i8> %1, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>
+  store <8 x i8> %2, ptr %i.bp, align 4, !tbaa !33
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 980 ; 2 uses
+  %4 = load <4 x i8>, ptr %3, align 4, !tbaa !33
+  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  store <4 x i8> %5, ptr %3, align 4, !tbaa !33
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 1028 ; 2 uses
   %i.br = load <8 x i8>, ptr %i.bq, align 4, !tbaa !33
   %i.bs = shufflevector <8 x i8> %i.br, <8 x i8> poison, <8 x i32> <i32 3, i32 2, i32 1, i32 0, i32 7, i32 6, i32 5, i32 4>

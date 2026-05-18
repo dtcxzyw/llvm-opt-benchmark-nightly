@@ -199,7 +199,7 @@ bb.i:                                             ; preds = %bb.g
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader489, %.lr.ph
-  %.2142 = phi ptr [ %i.ue, %.lr.ph ], [ %i.qk, %.lr.ph.preheader489 ] ; 3 uses
+  %.2142 = phi ptr [ %i.ue, %.lr.ph ], [ %i.qk, %.lr.ph.preheader489 ] ; 4 uses
   %.2118140 = phi i64 [ %i.ut, %.lr.ph ], [ %i.tm, %.lr.ph.preheader489 ]
   %.1125139 = phi ptr [ %i.uc, %.lr.ph ], [ %i.qf, %.lr.ph.preheader489 ] ; 2 uses
   %i.ty = phi <8 x i8> [ %i.uq, %.lr.ph ], [ %i.tx, %.lr.ph.preheader489 ]
@@ -208,13 +208,16 @@ bb.i:                                             ; preds = %bb.g
   %i.ub = phi <2 x i8> [ %i.uv, %.lr.ph ], [ %i.tp, %.lr.ph.preheader489 ]
   %i.uc = getelementptr inbounds i8, ptr %.1125139, i64 -16 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 1 dereferenceable(16) %i.uc, i64 16, i1 false)
-  %.sroa.38.0..sroa_idx.a = getelementptr inbounds i8, ptr %.1125139, i64 -8
-  %i.ud = getelementptr inbounds nuw i8, ptr %.2142, i64 10
+  %.sroa.38.0..sroa_idx = getelementptr inbounds i8, ptr %.1125139, i64 -8
+  %.sroa.38.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %.2142, i64 10
+  %i.ud = getelementptr inbounds nuw i8, ptr %.2142, i64 14
   %i.ue = getelementptr inbounds i8, ptr %.2142, i64 -16 ; 5 uses
   %i.uf = load <8 x i8>, ptr %i.uc, align 1
-  %7 = load <6 x i8>, ptr %i.ud, align 1, !tbaa !14
+  %7 = load <4 x i8>, ptr %.sroa.38.0..sroa_idx.a, align 1, !tbaa !14
+  %8 = load <2 x i8>, ptr %i.ud, align 1, !tbaa !14
   %i.ug = load <16 x i8>, ptr %i.a, align 16, !tbaa !14
-  %i.uh = shufflevector <6 x i8> %7, <6 x i8> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
+  %9 = shufflevector <2 x i8> %8, <2 x i8> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
+  %i.uh = shufflevector <4 x i8> %7, <4 x i8> %9, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5>
   %i.ui = shufflevector <2 x i8> %i.ub, <2 x i8> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.uj = shufflevector <16 x i8> %i.uh, <16 x i8> %i.ui, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 16, i32 17, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
   %i.uk = shufflevector <8 x i8> %i.ty, <8 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
@@ -222,7 +225,7 @@ bb.i:                                             ; preds = %bb.g
   %i.um = xor <16 x i8> %i.ug, %i.ul
   store <16 x i8> %i.um, ptr %i.a, align 16, !tbaa !14
   %i.un = getelementptr inbounds i8, ptr %.2142, i64 -8 ; 2 uses
-  %i.uo = load <8 x i8>, ptr %.sroa.38.0..sroa_idx.a, align 1
+  %i.uo = load <8 x i8>, ptr %.sroa.38.0..sroa_idx, align 1
   call void @AES_decrypt(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ue, ptr noundef nonnull %3) #5
   %i.up = load <8 x i8>, ptr %i.ue, align 1, !tbaa !14
   %i.uq = xor <8 x i8> %i.up, %i.tz               ; 2 uses

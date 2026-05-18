@@ -201,29 +201,35 @@ arcons.exit:                                      ; preds = %.lr.ph.i
   %i.y = tail call ptr @cintern(ptr noundef nonnull @.str.204) #24
   %i.z = tail call ptr @flocons(double noundef f0x400921FB54442D18) #24
   %i.aa = tail call ptr @setvar(ptr noundef %i.y, ptr noundef %i.z, ptr noundef null) #24 ; 0 uses
-  %i.ab = tail call noalias dereferenceable_or_null(256) ptr @malloc(i64 noundef 256) #27 ; 13 uses
+  %i.ab = tail call noalias dereferenceable_or_null(256) ptr @malloc(i64 noundef 256) #27 ; 16 uses
   store ptr %i.ab, ptr @base64_decode_table, align 8, !tbaa !24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(256) %i.ab, i8 -1, i64 256, i1 false)
-  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 65
-  store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %i.ac, align 1, !tbaa !19
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 81
-  store <8 x i8> <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23>, ptr %i.ad, align 1, !tbaa !19
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 89
-  store i8 24, ptr %i.ae, align 1, !tbaa !19
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 90
-  store i8 25, ptr %i.af, align 1, !tbaa !19
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 97
-  store <16 x i8> <i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41>, ptr %i.ag, align 1, !tbaa !19
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 113
-  store <8 x i8> <i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48, i8 49>, ptr %i.ah, align 1, !tbaa !19
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 121
-  store i8 50, ptr %i.ai, align 1, !tbaa !19
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 122
-  store i8 51, ptr %i.aj, align 1, !tbaa !19
+  %0 = getelementptr inbounds nuw i8, ptr %i.ab, i64 65
+  store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %0, align 1, !tbaa !19
+  %1 = getelementptr inbounds nuw i8, ptr %i.ab, i64 81
+  store <8 x i8> <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23>, ptr %1, align 1, !tbaa !19
+  %2 = getelementptr inbounds nuw i8, ptr %i.ab, i64 89
+  store i8 24, ptr %2, align 1, !tbaa !19
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 90
+  store i8 25, ptr %i.ac, align 1, !tbaa !19
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.ab, i64 97
+  store <16 x i8> <i8 26, i8 27, i8 28, i8 29, i8 30, i8 31, i8 32, i8 33, i8 34, i8 35, i8 36, i8 37, i8 38, i8 39, i8 40, i8 41>, ptr %i.ad, align 1, !tbaa !19
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 113
+  store <8 x i8> <i8 42, i8 43, i8 44, i8 45, i8 46, i8 47, i8 48, i8 49>, ptr %i.ae, align 1, !tbaa !19
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 121
+  store i8 50, ptr %i.af, align 1, !tbaa !19
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 122
+  store i8 51, ptr %i.ag, align 1, !tbaa !19
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ab, i64 55
+  store i8 59, ptr %i.ah, align 1, !tbaa !19
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ab, i64 56
+  store i8 60, ptr %i.ai, align 1, !tbaa !19
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ab, i64 57
+  store i8 61, ptr %i.aj, align 1, !tbaa !19
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ab, i64 43
   store i8 62, ptr %i.ak, align 1, !tbaa !19
   %i.al = getelementptr inbounds nuw i8, ptr %i.ab, i64 47
-  store <11 x i8> <i8 63, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58, i8 59, i8 60, i8 61>, ptr %i.al, align 1, !tbaa !19
+  store <8 x i8> <i8 63, i8 52, i8 53, i8 54, i8 55, i8 56, i8 57, i8 58>, ptr %i.al, align 1, !tbaa !19
   %i.am = getelementptr inbounds nuw i8, ptr %i.ab, i64 61
   store i8 64, ptr %i.am, align 1, !tbaa !19
   tail call void @init_subr_1(ptr noundef nonnull @.str.205, ptr noundef nonnull @hexstr) #24

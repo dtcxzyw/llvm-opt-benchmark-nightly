@@ -201,23 +201,26 @@ define hidden void @_ZN6Assimp11X3DImporter18startReadTransformERN4pugi8xml_node
 bb.a:
   %2 = alloca %"class.pugi::xml_attribute", align 8 ; 5 uses
   %3 = alloca %"class.pugi::xml_attribute", align 8 ; 5 uses
-  %4 = alloca %class.aiVector3t, align 16         ; 8 uses
-  %5 = alloca %class.aiVector3t, align 16         ; 8 uses
-  %6 = alloca %class.aiVector3t, align 16         ; 7 uses
+  %4 = alloca %class.aiVector3t, align 8          ; 8 uses
+  %5 = alloca %class.aiVector3t, align 8          ; 8 uses
+  %6 = alloca %class.aiVector3t, align 8          ; 7 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %9 = alloca %"class.std::vector", align 8       ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store <3 x float> zeroinitializer, ptr %4, align 16
+  store <2 x float> zeroinitializer, ptr %4, align 8
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  store float 0.000000e+00, ptr %i.b, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #19
   %i.c = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store <3 x float> splat (float 1.000000e+00), ptr %5, align 16
+  store <2 x float> splat (float 1.000000e+00), ptr %5, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  store float 1.000000e+00, ptr %i.d, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #19
-  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store <3 x float> zeroinitializer, ptr %6, align 16
+  store <2 x float> zeroinitializer, ptr %6, align 8
+  %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  store float 0.000000e+00, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #19
   %i.f = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
   store ptr %i.f, ptr %7, align 8
@@ -449,7 +452,7 @@ bb.ac:                                            ; preds = %bb.ab
           to label %bb.ad unwind label %bb.m
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
-  %i.bk = load float, ptr %4, align 16            ; 4 uses
+  %i.bk = load float, ptr %4, align 8             ; 4 uses
   %i.bl = load float, ptr %i.a, align 4           ; 3 uses
   %i.bm = load float, ptr %i.b, align 8           ; 4 uses
   %i.bn = fmul float %i.bl, 0.000000e+00          ; 2 uses
@@ -510,7 +513,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.dq = call float @llvm.fmuladd.f32(float %i.dj, float %i.db, float %i.dl) ; 4 uses
   %i.dr = fmul float %i.db, %i.cy
   %i.ds = call float @llvm.fmuladd.f32(float %i.dr, float %i.db, float %i.cw)
-  %i.dt = load float, ptr %5, align 16
+  %i.dt = load float, ptr %5, align 8
   %i.du = load float, ptr %i.c, align 4
   %i.dv = load float, ptr %i.d, align 8
   %i.dw = fneg float %.sroa.11.0                  ; 2 uses
@@ -588,7 +591,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.gn = insertelement <2 x float> poison, float %i.bo, i64 0
   %i.go = insertelement <2 x float> %i.gn, float %i.bp, i64 1
   %i.gp = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gm, <2 x float> zeroinitializer, <2 x float> %i.go)
-  %i.gq = load <2 x float>, ptr %6, align 16      ; 4 uses
+  %i.gq = load <2 x float>, ptr %6, align 8       ; 4 uses
   %i.gr = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gq, <2 x float> zeroinitializer, <2 x float> zeroinitializer) ; 6 uses
   %i.gs = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.gq, <2 x float> zeroinitializer, <2 x float> <float 0.000000e+00, float 1.000000e+00>) ; 4 uses
   %i.gt = shufflevector <2 x float> %i.gr, <2 x float> poison, <2 x i32> <i32 1, i32 0>

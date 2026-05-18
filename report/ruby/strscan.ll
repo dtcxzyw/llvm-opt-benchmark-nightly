@@ -201,15 +201,16 @@ bb.i:                                             ; preds = %bb.h
   %i.ap = or disjoint i64 %i.ah, 2                ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ap
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !33
-  %i.as = sext i8 %i.ar to i32
-  %1 = insertelement <3 x i32> poison, i32 %i.as, i64 0
-  %2 = shufflevector <3 x i32> %1, <3 x i32> poison, <3 x i32> zeroinitializer
-  %.fr72 = freeze <3 x i32> %2
-  %3 = add <3 x i32> %.fr72, <i32 -58, i32 -71, i32 -103>
-  %4 = icmp ugt <3 x i32> %3, <i32 -11, i32 -7, i32 -7>
-  %5 = bitcast <3 x i1> %4 to i3
-  %6 = icmp eq i3 %5, 0
-  %spec.select = select i1 %6, i64 %i.ah, i64 %i.ap
+  %i.as = sext i8 %i.ar to i32                    ; 3 uses
+  %1 = add nsw i32 %i.as, -58
+  %2 = icmp ult i32 %1, -10
+  %3 = add nsw i32 %i.as, -71
+  %or.cond.i44 = icmp ult i32 %3, -6
+  %or.cond6.i.not53 = select i1 %2, i1 %or.cond.i44, i1 false
+  %4 = add nsw i32 %i.as, -103
+  %5 = icmp ult i32 %4, -6
+  %narrow.i.not = select i1 %or.cond6.i.not53, i1 %5, i1 false
+  %spec.select = select i1 %narrow.i.not, i64 %i.ah, i64 %i.ap
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f

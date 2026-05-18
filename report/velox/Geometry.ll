@@ -201,19 +201,24 @@ bb.a:
   %i.e = load ptr, ptr %0, align 8, !tbaa !15
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.g(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %.0710)
-  %1 = load <3 x double>, ptr %i.h, align 8
-  %.fr = freeze <3 x double> %1
-  %2 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %3 = bitcast <3 x i1> %2 to i3
-  %4 = icmp eq i3 %3, 0                           ; 2 uses
+  %i.h = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.g(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %.0710) ; 3 uses
+  %1 = load double, ptr %i.h, align 8, !tbaa !40
+  %2 = fcmp uno double %1, 0.000000e+00
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %4 = load double, ptr %3, align 8
+  %5 = fcmp uno double %4, 0.000000e+00
+  %or.cond.i = select i1 %2, i1 %5, i1 false
+  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
+  %7 = load double, ptr %6, align 8
+  %8 = fcmp uno double %7, 0.000000e+00
+  %9 = select i1 %or.cond.i, i1 %8, i1 false      ; 2 uses
   %i.i = add nuw i64 %.0710, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %i.d
-  %or.cond = select i1 %4, i1 true, i1 %exitcond.not
-  br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !40
+  %or.cond = select i1 %9, i1 true, i1 %exitcond.not
+  br i1 %or.cond, label %.critedge, label %.lr.ph, !llvm.loop !42
 
 .critedge:                                        ; preds = %.lr.ph, %bb.a
-  %.not.lcssa = phi i1 [ false, %bb.a ], [ %4, %.lr.ph ]
+  %.not.lcssa = phi i1 [ false, %bb.a ], [ %9, %.lr.ph ]
   ret i1 %.not.lcssa
 }
 
@@ -233,7 +238,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 16, i1 false)
-  store double +qnan, ptr %i.a, align 8, !tbaa !42
+  store double +qnan, ptr %i.a, align 8, !tbaa !44
   %i.b = load ptr, ptr %1, align 8, !tbaa !15
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 400
   %i.d = load ptr, ptr %i.c, align 8
@@ -253,7 +258,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.m = call noundef ptr @_ZNK4geos4geom15GeometryFactory11createPointERKNS0_10CoordinateE(ptr noundef nonnull align 8 dereferenceable(45) %i.g, ptr noundef nonnull align 8 dereferenceable(24) %2)
-  store ptr %i.m, ptr %0, align 8, !tbaa !44
+  store ptr %i.m, ptr %0, align 8, !tbaa !45
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -282,14 +287,14 @@ bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !20
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 3 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !46
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !47
   %i.j = icmp eq i32 %i.i, 1
   br i1 %i.j, label %_ZNK4geos4geom14PrecisionModel11makePreciseERNS0_10CoordinateE.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = load double, ptr %1, align 8, !tbaa !47
+  %i.k = load double, ptr %1, align 8, !tbaa !40
   %i.l = tail call noundef double @_ZNK4geos4geom14PrecisionModel11makePreciseEd(ptr noundef nonnull align 8 dereferenceable(16) %i.h, double noundef %i.k)
-  store double %i.l, ptr %1, align 8, !tbaa !47
+  store double %i.l, ptr %1, align 8, !tbaa !40
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.n = load double, ptr %i.m, align 8, !tbaa !48
   %i.o = tail call noundef double @_ZNK4geos4geom14PrecisionModel11makePreciseEd(ptr noundef nonnull align 8 dereferenceable(16) %i.h, double noundef %i.n)
@@ -322,7 +327,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #27
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 16, i1 false)
-  store double +qnan, ptr %i.a, align 8, !tbaa !42
+  store double +qnan, ptr %i.a, align 8, !tbaa !44
   %i.b = load ptr, ptr %1, align 8, !tbaa !15
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   %i.d = load ptr, ptr %i.c, align 8
@@ -402,7 +407,7 @@ bb.h:                                             ; preds = %.critedge14, %.crit
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !20
   %i.af = call noundef ptr @_ZNK4geos4geom15GeometryFactory28createPointFromInternalCoordEPKNS0_10CoordinateEPKNS0_8GeometryE(ptr noundef nonnull align 8 dereferenceable(45) %i.ae, ptr noundef nonnull %2, ptr noundef nonnull %1)
-  store ptr %i.af, ptr %0, align 8, !tbaa !44
+  store ptr %i.af, ptr %0, align 8, !tbaa !45
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.c, %bb.g, %bb.e, %bb.h
@@ -805,8 +810,8 @@ bb.b:                                             ; preds = %_ZNK4geos4geom10Coo
 bb.c:                                             ; preds = %.lr.ph
   %i.x = getelementptr inbounds nuw [24 x i8], ptr %i.c, i64 %.01641 ; 2 uses
   %i.y = getelementptr inbounds nuw [24 x i8], ptr %i.u, i64 %.01641 ; 2 uses
-  %i.z = load double, ptr %i.x, align 8, !tbaa !47 ; 2 uses
-  %i.aa = load double, ptr %i.y, align 8, !tbaa !47 ; 2 uses
+  %i.z = load double, ptr %i.x, align 8, !tbaa !40 ; 2 uses
+  %i.aa = load double, ptr %i.y, align 8, !tbaa !40 ; 2 uses
   %i.ab = fcmp olt double %i.z, %i.aa
   br i1 %i.ab, label %.critedge.thread, label %bb.d
 
@@ -1028,8 +1033,8 @@ bb.a:
 define noundef zeroext i1 @_ZNK4geos4geom8Geometry5equalERKNS0_10CoordinateES4_d(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(40) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2, double noundef %3) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = fcmp oeq double %3, 0.000000e+00
-  %i.b = load double, ptr %1, align 8, !tbaa !47  ; 2 uses
-  %i.c = load double, ptr %2, align 8, !tbaa !47  ; 2 uses
+  %i.b = load double, ptr %1, align 8, !tbaa !40  ; 2 uses
+  %i.c = load double, ptr %2, align 8, !tbaa !40  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load double, ptr %i.d, align 8           ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1375,7 +1380,7 @@ bb.a:
   br i1 %.not28.i, label %._crit_edge.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.c = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !47 ; 3 uses
+  %i.c = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !40 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.pre.i.pre.pre, i64 8
   br label %.backedge
 
@@ -1383,7 +1388,7 @@ bb.a:
   %.02229.i = phi ptr [ %.02227.i, %.lr.ph.i ], [ %.02229.i.be, %.backedge.backedge ] ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.02229.i, i64 32
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !167  ; 3 uses
-  %i.g = load double, ptr %i.f, align 8, !tbaa !47 ; 3 uses
+  %i.g = load double, ptr %i.f, align 8, !tbaa !40 ; 3 uses
   %i.h = fcmp olt double %i.c, %i.g
   br i1 %i.h, label %bb.d, label %bb.b
 
@@ -1425,8 +1430,8 @@ bb.e:                                             ; preds = %._crit_edge.thread.
   %i.s = tail call noundef ptr @_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base(ptr noundef nonnull %.021.lcssa37.i) #30 ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.s, i64 32
   %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !167 ; 2 uses
-  %.pre28 = load double, ptr %.pre, align 8, !tbaa !47
-  %.pre29 = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !47
+  %.pre28 = load double, ptr %.pre, align 8, !tbaa !40
+  %.pre29 = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !40
   br label %._crit_edge.i.thread
 
 ._crit_edge.i.thread:                             ; preds = %.thread, %bb.e
@@ -1458,8 +1463,8 @@ bb.h:                                             ; preds = %._crit_edge.i.threa
 bb.i:                                             ; preds = %bb.h
   %i.ae = getelementptr inbounds nuw i8, ptr %.sroa.4.0.i.ph, i64 32
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !167 ; 2 uses
-  %i.ag = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !47 ; 2 uses
-  %i.ah = load double, ptr %i.af, align 8, !tbaa !47 ; 2 uses
+  %i.ag = load double, ptr %.pre.i.pre.pre, align 8, !tbaa !40 ; 2 uses
+  %i.ah = load double, ptr %i.af, align 8, !tbaa !40 ; 2 uses
   %i.ai = fcmp olt double %i.ag, %i.ah
   br i1 %i.ai, label %_ZNSt8_Rb_treeIPKN4geos4geom10CoordinateES4_St9_IdentityIS4_ENS1_18CoordinateLessThenESaIS4_EE10_M_insert_IRKS4_NS9_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_EPSt18_Rb_tree_node_baseSH_OT_RT0_.exit, label %bb.j
 
@@ -1832,15 +1837,15 @@ attributes #30 = { nounwind willreturn memory(read) }
 !37 = !{!21, !4, i64 16}
 !38 = !{i64 0, i64 8, !39, i64 8, i64 8, !39, i64 16, i64 8, !39, i64 24, i64 8, !39}
 !39 = !{!34, !34, i64 0}
-!40 = distinct !{!40, !41}
-!41 = !{!"llvm.loop.mustprogress"}
-!42 = !{!43, !34, i64 16}
-!43 = !{!"_ZTSN4geos4geom10CoordinateE", !34, i64 0, !34, i64 8, !34, i64 16}
-!44 = !{!45, !45, i64 0}
-!45 = !{!"p1 _ZTSN4geos4geom5PointE", !10, i64 0}
-!46 = !{!32, !33, i64 0}
-!47 = !{!43, !34, i64 0}
-!48 = !{!43, !34, i64 8}
+!40 = !{!41, !34, i64 0}
+!41 = !{!"_ZTSN4geos4geom10CoordinateE", !34, i64 0, !34, i64 8, !34, i64 16}
+!42 = distinct !{!42, !43}
+!43 = !{!"llvm.loop.mustprogress"}
+!44 = !{!41, !34, i64 16}
+!45 = !{!46, !46, i64 0}
+!46 = !{!"p1 _ZTSN4geos4geom5PointE", !10, i64 0}
+!47 = !{!32, !33, i64 0}
+!48 = !{!41, !34, i64 8}
 !49 = !{!50, !51, i64 0}
 !50 = !{!"_ZTSN4geos9operation5valid9IsValidOpE", !51, i64 0, !36, i64 8, !52, i64 16}
 !51 = !{!"p1 _ZTSN4geos4geom8GeometryE", !10, i64 0}
@@ -1902,14 +1907,14 @@ attributes #30 = { nounwind willreturn memory(read) }
 !107 = !{!108}
 !108 = distinct !{!108, !109, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !109 = distinct !{!109, !"_ZNK4geos4geom8Geometry5cloneEv"}
-!110 = distinct !{!110, !41}
+!110 = distinct !{!110, !43}
 !111 = !{!112}
 !112 = distinct !{!112, !113, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !113 = distinct !{!113, !"_ZNK4geos4geom8Geometry5cloneEv"}
 !114 = !{!115}
 !115 = distinct !{!115, !116, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !116 = distinct !{!116, !"_ZNK4geos4geom8Geometry5cloneEv"}
-!117 = distinct !{!117, !41}
+!117 = distinct !{!117, !43}
 !118 = !{!119}
 !119 = distinct !{!119, !120, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !120 = distinct !{!120, !"_ZNK4geos4geom8Geometry5cloneEv"}
@@ -1925,14 +1930,14 @@ attributes #30 = { nounwind willreturn memory(read) }
 !130 = !{!131}
 !131 = distinct !{!131, !132, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !132 = distinct !{!132, !"_ZNK4geos4geom8Geometry5cloneEv"}
-!133 = distinct !{!133, !41}
+!133 = distinct !{!133, !43}
 !134 = !{!135}
 !135 = distinct !{!135, !136, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !136 = distinct !{!136, !"_ZNK4geos4geom8Geometry5cloneEv"}
 !137 = !{!138}
 !138 = distinct !{!138, !139, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !139 = distinct !{!139, !"_ZNK4geos4geom8Geometry5cloneEv"}
-!140 = distinct !{!140, !41}
+!140 = distinct !{!140, !43}
 !141 = !{!142}
 !142 = distinct !{!142, !143, !"_ZNK4geos4geom8Geometry5cloneEv: argument 0"}
 !143 = distinct !{!143, !"_ZNK4geos4geom8Geometry5cloneEv"}
@@ -1944,13 +1949,13 @@ attributes #30 = { nounwind willreturn memory(read) }
 !149 = !{!"_ZTSNSt12_Vector_baseIN4geos4geom10CoordinateESaIS2_EE17_Vector_impl_dataE", !150, i64 0, !150, i64 8, !150, i64 16}
 !150 = !{!"p1 _ZTSN4geos4geom10CoordinateE", !10, i64 0}
 !151 = !{!149, !150, i64 0}
-!152 = distinct !{!152, !41}
-!153 = distinct !{!153, !41}
+!152 = distinct !{!152, !43}
+!153 = distinct !{!153, !43}
 !154 = !{!155, !156, i64 8}
 !155 = !{!"_ZTSNSt12_Vector_baseISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_EE17_Vector_impl_dataE", !156, i64 0, !156, i64 8, !156, i64 16}
 !156 = !{!"p1 _ZTSSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EE", !10, i64 0}
 !157 = !{!155, !156, i64 0}
-!158 = distinct !{!158, !41}
+!158 = distinct !{!158, !43}
 !159 = distinct !{null, null}
 !160 = !{!161, !36, i64 8}
 !161 = !{!"_ZTSN4geos9operation5valid10IsSimpleOpE", !51, i64 0, !36, i64 8, !36, i64 9, !36, i64 10, !162, i64 16, !36, i64 40}
@@ -1973,10 +1978,10 @@ attributes #30 = { nounwind willreturn memory(read) }
 !178 = !{!78, !79, i64 8}
 !179 = !{!78, !79, i64 16}
 !180 = !{!87, !87, i64 0}
-!181 = distinct !{!181, !41}
+!181 = distinct !{!181, !43}
 !182 = !{!85, !87, i64 24}
 !183 = !{!85, !87, i64 16}
-!184 = distinct !{!184, !41}
+!184 = distinct !{!184, !43}
 !185 = !{!186}
 !186 = distinct !{!186, !187, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_: argument 0"}
 !187 = distinct !{!187, !"_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_PKS5_"}

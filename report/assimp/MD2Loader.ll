@@ -201,9 +201,9 @@ define hidden void @_ZN6Assimp11MD2Importer14InternReadFileERKNSt7__cxx1112basic
   %i.a = alloca i64, align 8                      ; 5 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %i.b = alloca i32, align 4                      ; 6 uses
-  %5 = alloca %struct.aiColor3D, align 16         ; 8 uses
+  %5 = alloca %struct.aiColor3D, align 8          ; 9 uses
   %6 = alloca %struct.aiString, align 4           ; 7 uses
-  %7 = alloca %struct.aiColor3D, align 16         ; 8 uses
+  %7 = alloca %struct.aiColor3D, align 8          ; 9 uses
   %8 = alloca %struct.aiString, align 4           ; 8 uses
   %9 = alloca %struct.aiString, align 4           ; 7 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -572,7 +572,9 @@ bb.z:                                             ; preds = %bb.y
   %i.eq = zext i32 %i.ep to i64
   %i.er = getelementptr inbounds nuw i8, ptr %i.ej, i64 %i.eq ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #16
-  store <3 x float> splat (float 1.000000e+00), ptr %5, align 16
+  %11 = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
+  store <2 x float> splat (float 1.000000e+00), ptr %5, align 8
+  store float 1.000000e+00, ptr %11, align 8
   %i.es = invoke noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull %5, i32 noundef 12, ptr noundef nonnull @.str.25, i32 noundef 0, i32 noundef 0, i32 noundef 1)
           to label %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit unwind label %bb.aj ; 0 uses
 
@@ -581,7 +583,8 @@ _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit: ; preds = %bb
           to label %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit180 unwind label %bb.aj ; 0 uses
 
 _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit180: ; preds = %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit
-  store <3 x float> splat (float 5.000000e-02), ptr %5, align 16
+  store <2 x float> splat (float 5.000000e-02), ptr %5, align 8
+  store float 5.000000e-02, ptr %11, align 8
   %i.eu = invoke noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull %5, i32 noundef 12, ptr noundef nonnull @.str.27, i32 noundef 0, i32 noundef 0, i32 noundef 1)
           to label %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit182 unwind label %bb.aj ; 0 uses
 
@@ -692,7 +695,9 @@ bb.aq:                                            ; preds = %bb.ak, %bb.an, %bb.
 
 bb.ar:                                            ; preds = %bb.y, %_ZN10aiMaterial11AddPropertyIiEE8aiReturnPKT_jPKcjj.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #16
-  store <3 x float> splat (float 6.000000e-01), ptr %7, align 16
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
+  store <2 x float> splat (float 6.000000e-01), ptr %7, align 8
+  store float 6.000000e-01, ptr %12, align 8
   %i.ft = invoke noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull %7, i32 noundef 12, ptr noundef nonnull @.str.25, i32 noundef 0, i32 noundef 0, i32 noundef 1)
           to label %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit184 unwind label %bb.au ; 0 uses
 
@@ -701,7 +706,8 @@ _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit184: ; preds = 
           to label %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit186 unwind label %bb.au ; 0 uses
 
 _ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit186: ; preds = %_ZN10aiMaterial11AddPropertyI9aiColor3DEE8aiReturnPKT_jPKcjj.exit184
-  store <3 x float> splat (float 5.000000e-02), ptr %7, align 16
+  store <2 x float> splat (float 5.000000e-02), ptr %7, align 8
+  store float 5.000000e-02, ptr %12, align 8
   %i.fv = invoke noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.eh, ptr noundef nonnull %7, i32 noundef 12, ptr noundef nonnull @.str.27, i32 noundef 0, i32 noundef 0, i32 noundef 1)
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit195 unwind label %bb.au ; 0 uses
 

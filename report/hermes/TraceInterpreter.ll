@@ -201,7 +201,7 @@ bb.aw:                                            ; preds = %.lr.ph.i
   br i1 %i.fi, label %bb.ax, label %_ZNSt6vectorISt5arrayIhLm20EESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit.i
 
 bb.ax:                                            ; preds = %bb.aw
-  %i.fj = load ptr, ptr %.sroa.010.054.i, align 8, !tbaa !110
+  %i.fj = load ptr, ptr %.sroa.010.054.i, align 8, !tbaa !110 ; 2 uses
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 48 ; 5 uses
   %i.fl = load ptr, ptr %i.cl, align 8, !tbaa !76 ; 2 uses
   %.not10.i.i.i.i = icmp eq ptr %i.fl, null
@@ -231,11 +231,19 @@ _ZNKSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESa
   br i1 %i.fs, label %_ZNKSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEE5countERSB_.exit.thread.i, label %_ZNSt6vectorISt5arrayIhLm20EESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit.i
 
 _ZNKSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEE5countERSB_.exit.thread.i: ; preds = %_ZNKSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEE5countERSB_.exit.i, %_ZNKSt8_Rb_treeISt5arrayIhLm20EESt4pairIKS1_St10shared_ptrIKN8facebook3jsi6BufferEEESt10_Select1stISA_ESt4lessIS1_ESaISA_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISA_EPKSt18_Rb_tree_node_baseRS3_.exit.i.i.i, %bb.ax
-  %14 = load <20 x i8>, ptr %i.fk, align 1
-  %.fr = freeze <20 x i8> %14
-  %15 = icmp ne <20 x i8> %.fr, zeroinitializer
-  %16 = bitcast <20 x i1> %15 to i20
-  %i.ft = icmp eq i20 %16, 0
+  %.sroa.17.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.fj, i64 64
+  %14 = load <16 x i8>, ptr %i.fk, align 1
+  %.fr = freeze <16 x i8> %14
+  %15 = icmp eq <16 x i8> %.fr, zeroinitializer   ; 2 uses
+  %16 = load <4 x i8>, ptr %.sroa.17.0..sroa_idx.i, align 1
+  %.fr312 = freeze <4 x i8> %16
+  %17 = icmp eq <4 x i8> %.fr312, zeroinitializer
+  %18 = shufflevector <16 x i1> %15, <16 x i1> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %rdx.op = and <4 x i1> %18, %17
+  %19 = shufflevector <4 x i1> %rdx.op, <4 x i1> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %20 = shufflevector <16 x i1> %19, <16 x i1> %15, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %21 = bitcast <16 x i1> %20 to i16
+  %i.ft = icmp eq i16 %21, -1
   br i1 %i.ft, label %_ZNSt6vectorISt5arrayIhLm20EESaIS1_EE12emplace_backIJRKS1_EEERS1_DpOT_.exit.i, label %bb.ay
 
 bb.ay:                                            ; preds = %_ZNKSt3mapISt5arrayIhLm20EESt10shared_ptrIKN8facebook3jsi6BufferEESt4lessIS1_ESaISt4pairIKS1_S7_EEE5countERSB_.exit.thread.i

@@ -201,16 +201,17 @@ vector.ph12583:                                   ; preds = %.lr.ph6302
 
 vector.body12586:                                 ; preds = %vector.body12586, %vector.ph12583
   %index12587 = phi i64 [ 0, %vector.ph12583 ], [ %index.next12589, %vector.body12586 ] ; 2 uses
-  %i.hbc = sub i64 %i.haz, %index12587            ; 3 uses
+  %i.hbc = sub i64 %i.haz, %index12587            ; 4 uses
   %i.hbd = add nsw i64 %i.hbc, -1                 ; 2 uses
   %i.hbe = add i64 %i.hbc, -2
   %i.hbf = insertelement <2 x i64> poison, i64 %i.hbd, i64 0
   %i.hbg = insertelement <2 x i64> %i.hbf, i64 %i.hbe, i64 1
-  %20 = insertelement <2 x i64> poison, i64 %i.hbc, i64 0
-  %21 = shufflevector <2 x i64> %20, <2 x i64> poison, <2 x i32> zeroinitializer
-  %22 = add <2 x i64> %21, <i64 -3, i64 -4>
+  %20 = add i64 %i.hbc, -3
+  %21 = add i64 %i.hbc, -4
+  %22 = insertelement <2 x i64> poison, i64 %20, i64 0
+  %23 = insertelement <2 x i64> %22, i64 %21, i64 1
   %i.hbh = getelementptr [56 x i8], ptr %invariant.gep8625, <2 x i64> %i.hbg
-  %i.hbi = getelementptr [56 x i8], ptr %invariant.gep8625, <2 x i64> %22
+  %i.hbi = getelementptr [56 x i8], ptr %invariant.gep8625, <2 x i64> %23
   %i.hbj = getelementptr inbounds nuw [8 x i8], ptr %i.hay, i64 %i.hbd ; 2 uses
   %i.hbk = getelementptr inbounds i8, ptr %i.hbj, i64 -8
   %i.hbl = getelementptr inbounds i8, ptr %i.hbj, i64 -24
@@ -613,16 +614,17 @@ vector.ph12619:                                   ; preds = %.lr.ph
 
 vector.body12622:                                 ; preds = %vector.body12622, %vector.ph12619
   %index12623 = phi i64 [ 0, %vector.ph12619 ], [ %index.next12626, %vector.body12622 ] ; 2 uses
-  %i.iml = sub i64 %i.imi, %index12623            ; 3 uses
+  %i.iml = sub i64 %i.imi, %index12623            ; 4 uses
   %i.imm = add nsw i64 %i.iml, -1                 ; 2 uses
   %i.imn = add i64 %i.iml, -2
   %i.imo = insertelement <2 x i64> poison, i64 %i.imm, i64 0
   %i.imp = insertelement <2 x i64> %i.imo, i64 %i.imn, i64 1
-  %23 = insertelement <2 x i64> poison, i64 %i.iml, i64 0
-  %24 = shufflevector <2 x i64> %23, <2 x i64> poison, <2 x i32> zeroinitializer
-  %25 = add <2 x i64> %24, <i64 -3, i64 -4>
+  %24 = add i64 %i.iml, -3
+  %25 = add i64 %i.iml, -4
+  %26 = insertelement <2 x i64> poison, i64 %24, i64 0
+  %27 = insertelement <2 x i64> %26, i64 %25, i64 1
   %i.imq = getelementptr [56 x i8], ptr %invariant.gep, <2 x i64> %i.imp
-  %i.imr = getelementptr [56 x i8], ptr %invariant.gep, <2 x i64> %25
+  %i.imr = getelementptr [56 x i8], ptr %invariant.gep, <2 x i64> %27
   %i.ims = getelementptr inbounds nuw [8 x i8], ptr %i.imh, i64 %i.imm ; 2 uses
   %i.imt = getelementptr inbounds i8, ptr %i.ims, i64 -8
   %i.imu = getelementptr inbounds i8, ptr %i.ims, i64 -24
@@ -1025,14 +1027,14 @@ bb.c:                                             ; preds = %bb.a
   %.1 = select i1 %.not324, i32 %., i32 %i.p
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 7 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 26
-  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 28 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 28 ; 3 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 54 ; 3 uses
   %i.u = load i16, ptr %i.t, align 2, !tbaa !4286 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.e, i64 52 ; 13 uses
   %i.w = load i16, ptr %i.v, align 4, !tbaa !4270 ; 6 uses
   %i.x = load i64, ptr %i.e, align 8, !tbaa !4459 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.e, i64 22 ; 15 uses
-  %i.z = load <4 x i16>, ptr %i.y, align 2, !tbaa !227 ; 5 uses
+  %i.z = load <4 x i16>, ptr %i.y, align 2, !tbaa !227 ; 6 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !4265 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 28 ; 3 uses
@@ -1204,7 +1206,8 @@ estLog.exit:                                      ; preds = %whereScanInit.exit,
   %i.dw = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 3 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %i.b, i64 128 ; 3 uses
   %i.dy = extractelement <4 x i16> %i.z, i64 0    ; 2 uses
-  %5 = shufflevector <4 x i16> %i.z, <4 x i16> poison, <3 x i32> <i32 1, i32 2, i32 3>
+  %5 = extractelement <4 x i16> %i.z, i64 3
+  %6 = shufflevector <4 x i16> %i.z, <4 x i16> poison, <2 x i32> <i32 1, i32 2>
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph473, %constraintCompatibleWithOuterJoin.exit.thread
@@ -1314,7 +1317,8 @@ bb.t:                                             ; preds = %bb.r, %bb.s
   %i.fr = or i8 %i.fq, %.sink564
   store i8 %i.fr, ptr %i.db, align 8, !tbaa !4606
   store i32 %i.k, ptr %i.j, align 8, !tbaa !4272
-  store <3 x i16> %5, ptr %i.q, align 8, !tbaa !227
+  store <2 x i16> %6, ptr %i.q, align 8, !tbaa !227
+  store i16 %5, ptr %i.s, align 4, !tbaa !227
   store i16 %i.w, ptr %i.v, align 4, !tbaa !4270
   %i.fs = load i16, ptr %i.dc, align 8, !tbaa !4271
   %.not332 = icmp ult i16 %i.w, %i.fs

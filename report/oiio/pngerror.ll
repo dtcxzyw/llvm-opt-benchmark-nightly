@@ -200,7 +200,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define void @png_safe_error(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !64   ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !64   ; 7 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.e, label %bb.b
 
@@ -251,7 +251,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 .lr.ph.i17:                                       ; preds = %bb.c, %png_safecat.exit
-  store <14 x i8> <i8 98, i8 97, i8 100, i8 32, i8 108, i8 111, i8 110, i8 103, i8 106, i8 109, i8 112, i8 58, i8 32, i8 0>, ptr %i.c, align 1, !tbaa !26
+  store <8 x i8> <i8 98, i8 97, i8 100, i8 32, i8 108, i8 111, i8 110, i8 103>, ptr %i.c, align 1, !tbaa !26
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 44
+  store <4 x i8> <i8 106, i8 109, i8 112, i8 58>, ptr %2, align 1, !tbaa !26
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
+  store i8 32, ptr %3, align 1, !tbaa !26
+  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 49
+  store i8 0, ptr %4, align 1, !tbaa !26
   br i1 %.not18.i, label %png_safecat.exit28, label %.preheader.i23
 
 .preheader.i23:                                   ; preds = %.lr.ph.i17

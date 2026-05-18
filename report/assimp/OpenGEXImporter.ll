@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %8 = alloca %struct.aiColor3D, align 16         ; 10 uses
+  %8 = alloca %struct.aiColor3D, align 8          ; 10 uses
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %.critedge, label %._crit_edge.i.i
 
@@ -268,8 +268,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit29: ; preds = %bb.
 bb.f:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #32
   %i.r = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
-  store <3 x float> zeroinitializer, ptr %8, align 16
+  store <2 x float> zeroinitializer, ptr %8, align 8
+  %i.s = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 3 uses
+  store float 0.000000e+00, ptr %i.s, align 8
   %i.t = load i64, ptr %i.l, align 8
   %i.u = icmp eq i64 %i.t, 3
   %i.v = getelementptr i8, ptr %i.l, i64 8
@@ -287,7 +288,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  store float %i.w, ptr %8, align 16
+  store float %i.w, ptr %8, align 8
   store float %i.y, ptr %i.r, align 4
   store float %i.aa, ptr %i.s, align 8
   %i.ad = load ptr, ptr %i.e, align 8             ; 5 uses
@@ -492,7 +493,7 @@ _ZN6Assimp7OpenGEXL12getColorTypeEPN10ODDLParser4TextE.exit: ; preds = %_ZNSt7__
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 632
   %i.cp = load ptr, ptr %i.co, align 8            ; 2 uses
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 1080
-  %i.cr = load <2 x float>, ptr %8, align 16
+  %i.cr = load <2 x float>, ptr %8, align 8
   store <2 x float> %i.cr, ptr %i.cq, align 4
   %i.cs = load float, ptr %i.s, align 8
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cp, i64 1088

@@ -201,30 +201,48 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
-  %2 = load <12 x i8>, ptr %i.j, align 8, !tbaa !11, !alias.scope !64, !noalias !59
-  %3 = load <12 x i8>, ptr %i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
-  store <12 x i8> %2, ptr %i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
-  store <12 x i8> %3, ptr %i.j, align 8, !tbaa !11, !alias.scope !64, !noalias !59
+  %2 = load <8 x i8>, ptr %i.j, align 8, !tbaa !11, !alias.scope !64, !noalias !59
+  %3 = load <8 x i8>, ptr %i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
+  store <8 x i8> %2, ptr %i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
+  store <8 x i8> %3, ptr %i.j, align 8, !tbaa !11, !alias.scope !64, !noalias !59
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %5 = load <4 x i8>, ptr %4, align 8, !tbaa !11, !alias.scope !64, !noalias !59
+  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
+  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !11, !alias.scope !59, !noalias !64
+  store <4 x i8> %6, ptr %4, align 8, !tbaa !11, !alias.scope !64, !noalias !59
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !65)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !68)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !71)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !74)
-  %4 = load <12 x i8>, ptr %i.l, align 8, !tbaa !11, !alias.scope !76, !noalias !71
-  %5 = load <12 x i8>, ptr %i.k, align 8, !tbaa !11, !alias.scope !71, !noalias !76
-  store <12 x i8> %4, ptr %i.k, align 8, !tbaa !11, !alias.scope !71, !noalias !76
-  store <12 x i8> %5, ptr %i.l, align 8, !tbaa !11, !alias.scope !76, !noalias !71
+  %7 = load <8 x i8>, ptr %i.l, align 8, !tbaa !11, !alias.scope !76, !noalias !71
+  %8 = load <8 x i8>, ptr %i.k, align 8, !tbaa !11, !alias.scope !71, !noalias !76
+  store <8 x i8> %7, ptr %i.k, align 8, !tbaa !11, !alias.scope !71, !noalias !76
+  store <8 x i8> %8, ptr %i.l, align 8, !tbaa !11, !alias.scope !76, !noalias !71
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
+  %.079.i.ptr.8.i.i.i20 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
+  %10 = load <4 x i8>, ptr %9, align 8, !tbaa !11, !alias.scope !76, !noalias !71
+  %11 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i20, align 8, !tbaa !11, !alias.scope !71, !noalias !76
+  store <4 x i8> %10, ptr %.079.i.ptr.8.i.i.i20, align 8, !tbaa !11, !alias.scope !71, !noalias !76
+  store <4 x i8> %11, ptr %9, align 8, !tbaa !11, !alias.scope !76, !noalias !71
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !77)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
-  %6 = load <12 x i8>, ptr %i.n, align 8, !tbaa !11, !alias.scope !88, !noalias !83
-  %7 = load <12 x i8>, ptr %i.m, align 8, !tbaa !11, !alias.scope !83, !noalias !88
-  store <12 x i8> %6, ptr %i.m, align 8, !tbaa !11, !alias.scope !83, !noalias !88
-  store <12 x i8> %7, ptr %i.n, align 8, !tbaa !11, !alias.scope !88, !noalias !83
+  %12 = load <8 x i8>, ptr %i.n, align 8, !tbaa !11, !alias.scope !88, !noalias !83
+  %13 = load <8 x i8>, ptr %i.m, align 8, !tbaa !11, !alias.scope !83, !noalias !88
+  store <8 x i8> %12, ptr %i.m, align 8, !tbaa !11, !alias.scope !83, !noalias !88
+  store <8 x i8> %13, ptr %i.n, align 8, !tbaa !11, !alias.scope !88, !noalias !83
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
+  %.079.i.ptr.8.i.i.i31 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %15 = load <4 x i8>, ptr %14, align 8, !tbaa !11, !alias.scope !88, !noalias !83
+  %16 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i31, align 8, !tbaa !11, !alias.scope !83, !noalias !88
+  store <4 x i8> %15, ptr %.079.i.ptr.8.i.i.i31, align 8, !tbaa !11, !alias.scope !83, !noalias !88
+  store <4 x i8> %16, ptr %14, align 8, !tbaa !11, !alias.scope !88, !noalias !83
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.q = load <2 x ptr>, ptr %i.p, align 8, !tbaa !43
@@ -241,10 +259,16 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit:
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !89)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !92)
-  %8 = load <12 x i8>, ptr %i.w, align 8, !tbaa !11, !alias.scope !92, !noalias !89
-  %9 = load <12 x i8>, ptr %i.v, align 8, !tbaa !11, !alias.scope !89, !noalias !92
-  store <12 x i8> %8, ptr %i.v, align 8, !tbaa !11, !alias.scope !89, !noalias !92
-  store <12 x i8> %9, ptr %i.w, align 8, !tbaa !11, !alias.scope !92, !noalias !89
+  %17 = load <8 x i8>, ptr %i.w, align 8, !tbaa !11, !alias.scope !92, !noalias !89
+  %18 = load <8 x i8>, ptr %i.v, align 8, !tbaa !11, !alias.scope !89, !noalias !92
+  store <8 x i8> %17, ptr %i.v, align 8, !tbaa !11, !alias.scope !89, !noalias !92
+  store <8 x i8> %18, ptr %i.w, align 8, !tbaa !11, !alias.scope !92, !noalias !89
+  %19 = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
+  %.079.i.ptr.8.i = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
+  %20 = load <4 x i8>, ptr %19, align 8, !tbaa !11, !alias.scope !92, !noalias !89
+  %21 = load <4 x i8>, ptr %.079.i.ptr.8.i, align 8, !tbaa !11, !alias.scope !89, !noalias !92
+  store <4 x i8> %20, ptr %.079.i.ptr.8.i, align 8, !tbaa !11, !alias.scope !89, !noalias !92
+  store <4 x i8> %21, ptr %19, align 8, !tbaa !11, !alias.scope !92, !noalias !89
   ret void
 }
 
@@ -647,10 +671,16 @@ _ZNK6google8protobuf11MessageLite8GetArenaEv.exit:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !100)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !103)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
-  %2 = load <12 x i8>, ptr %i.j, align 8, !tbaa !11, !alias.scope !108, !noalias !103
-  %3 = load <12 x i8>, ptr %i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
-  store <12 x i8> %2, ptr %i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
-  store <12 x i8> %3, ptr %i.j, align 8, !tbaa !11, !alias.scope !108, !noalias !103
+  %2 = load <8 x i8>, ptr %i.j, align 8, !tbaa !11, !alias.scope !108, !noalias !103
+  %3 = load <8 x i8>, ptr %i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
+  store <8 x i8> %2, ptr %i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
+  store <8 x i8> %3, ptr %i.j, align 8, !tbaa !11, !alias.scope !108, !noalias !103
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
+  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %5 = load <4 x i8>, ptr %4, align 8, !tbaa !11, !alias.scope !108, !noalias !103
+  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
+  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 8, !tbaa !11, !alias.scope !103, !noalias !108
+  store <4 x i8> %6, ptr %4, align 8, !tbaa !11, !alias.scope !108, !noalias !103
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.m = load <2 x ptr>, ptr %i.l, align 8, !tbaa !43

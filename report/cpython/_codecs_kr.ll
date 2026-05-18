@@ -201,7 +201,7 @@ declare ptr @PyCapsule_GetPointer(ptr noundef, ptr noundef) local_unnamed_addr #
 ; Function Attrs: nounwind uwtable
 define internal range(i32 -1, 1) i32 @_cjk_exec(ptr noundef %0) #0 {
 bb.a:
-  %i.a = alloca [256 x i8], align 16              ; 6 uses
+  %i.a = alloca [256 x i8], align 16              ; 8 uses
   %i.b = tail call ptr @PyModule_GetState(ptr noundef %0) #8 ; 15 uses
   store i32 3, ptr %i.b, align 8, !tbaa !40
   %i.c = tail call ptr @PyMem_Calloc(i64 noundef 3, i64 noundef 24) #8 ; 11 uses
@@ -348,6 +348,8 @@ add_codecs.exit.i:                                ; preds = %add_codecs.exit.i.l
   br i1 %.not21.i, label %.lr.ph.i, label %register_maps.exit
 
 .lr.ph.i:                                         ; preds = %add_codecs.exit.i
+  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 6
   br label %bb.g
 
@@ -364,7 +366,9 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i
   %i.aq = getelementptr [24 x i8], ptr %i.ap, i64 %indvars.iv.i ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.a, i8 0, i64 256, i1 false)
-  store <6 x i8> <i8 95, i8 95, i8 109, i8 97, i8 112, i8 95>, ptr %i.a, align 16
+  store <4 x i8> <i8 95, i8 95, i8 109, i8 97>, ptr %i.a, align 16
+  store i8 112, ptr %1, align 4
+  store i8 95, ptr %2, align 1
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !52
   %i.as = call ptr @strcpy(ptr noundef nonnull dereferenceable(1) %i.am, ptr noundef nonnull dereferenceable(1) %i.ar) #8 ; 0 uses
   %i.at = call ptr @PyCapsule_New(ptr noundef nonnull %i.aq, ptr noundef nonnull @.str.10, ptr noundef null) #8

@@ -201,14 +201,30 @@ bb.f:                                             ; preds = %.preheader, %bb.i
 
 bb.g:                                             ; preds = %bb.f
   %i.cd = getelementptr inbounds nuw i8, ptr %.0.ptr60, i64 16
-  %i.ce = load ptr, ptr %i.cd, align 8
-  %2 = insertelement <27 x ptr> poison, ptr %i.ce, i64 0
-  %3 = shufflevector <27 x ptr> %2, <27 x ptr> poison, <27 x i32> zeroinitializer
-  %4 = icmp eq <27 x ptr> %3, <ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1590), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1568), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1963), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1000), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 976), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 984), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1008), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 359), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 409), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 315), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 69), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1102), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1755), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1120), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1122), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1129), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1130), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1131), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1132), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1164), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1272), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1271), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1967), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 517), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1964)>
-  %5 = freeze <27 x i1> %4
-  %6 = bitcast <27 x i1> %5 to i27
-  %.not64 = icmp eq i27 %6, 0
-  br i1 %.not64, label %bb.h, label %bb.i
+  %i.ce = load ptr, ptr %i.cd, align 8            ; 5 uses
+  %2 = insertelement <16 x ptr> poison, ptr %i.ce, i64 0
+  %3 = shufflevector <16 x ptr> %2, <16 x ptr> poison, <16 x i32> zeroinitializer
+  %4 = icmp eq <16 x ptr> %3, <ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1590), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1568), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1963), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1000), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 976), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 984), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1008), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 359), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 409), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 315), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 68), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 69), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1102), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1112), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1755), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1120)>
+  %5 = insertelement <8 x ptr> poison, ptr %i.ce, i64 0
+  %6 = shufflevector <8 x ptr> %5, <8 x ptr> poison, <8 x i32> zeroinitializer
+  %7 = icmp eq <8 x ptr> %6, <ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1122), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1129), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1130), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1131), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1132), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1164), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1272), ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1271)>
+  %8 = icmp eq ptr %i.ce, getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1967)
+  %9 = icmp eq ptr %i.ce, getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 517)
+  %.not64 = icmp eq ptr %i.ce, getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1964)
+  %10 = freeze <16 x i1> %4                       ; 2 uses
+  %11 = freeze <8 x i1> %7
+  %12 = shufflevector <16 x i1> %10, <16 x i1> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %rdx.op = or <8 x i1> %12, %11
+  %13 = shufflevector <8 x i1> %rdx.op, <8 x i1> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <16 x i1> %13, <16 x i1> %10, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
+  %15 = bitcast <16 x i1> %14 to i16
+  %16 = icmp ne i16 %15, 0
+  %op.rdx = select i1 %16, i1 true, i1 %8
+  %17 = freeze i1 %9
+  %18 = freeze i1 %op.rdx
+  %19 = or i1 %18, %17
+  %op.rdx65 = select i1 %19, i1 true, i1 %.not64
+  br i1 %op.rdx65, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.cf = call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internallsERSoRKNS0_4FlagE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(56) %.0.ptr60) ; 0 uses

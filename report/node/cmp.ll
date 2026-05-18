@@ -201,22 +201,25 @@ bb.hs:                                            ; preds = %bb.hp
   %i.nb = load ptr, ptr @opt_tls_key, align 8
   %i.nc = load ptr, ptr @opt_tls_keypass, align 8
   %i.nd = load ptr, ptr @opt_tls_extra, align 8
-  %2 = load ptr, ptr @opt_tls_trusted, align 8
-  %3 = load ptr, ptr @opt_tls_host, align 8
-  %4 = insertelement <6 x ptr> poison, ptr %i.na, i64 0
-  %5 = insertelement <6 x ptr> %4, ptr %i.nb, i64 1
-  %6 = insertelement <6 x ptr> %5, ptr %i.nc, i64 2
-  %7 = insertelement <6 x ptr> %6, ptr %i.nd, i64 3
-  %8 = insertelement <6 x ptr> %7, ptr %2, i64 4
-  %9 = insertelement <6 x ptr> %8, ptr %3, i64 5
-  %.fr = freeze <6 x ptr> %9
-  %10 = icmp ne <6 x ptr> %.fr, splat (ptr null)
-  %11 = bitcast <6 x i1> %10 to i6
-  %i.ne = icmp eq i6 %11, 0
+  %2 = insertelement <4 x ptr> poison, ptr %i.na, i64 0
+  %3 = insertelement <4 x ptr> %2, ptr %i.nb, i64 1
+  %4 = insertelement <4 x ptr> %3, ptr %i.nc, i64 2
+  %5 = insertelement <4 x ptr> %4, ptr %i.nd, i64 3
+  %.fr = freeze <4 x ptr> %5
+  %6 = load ptr, ptr @opt_tls_trusted, align 8
+  %.fr427 = freeze ptr %6
+  %7 = icmp eq ptr %.fr427, null
+  %8 = load ptr, ptr @opt_tls_host, align 8
+  %9 = icmp eq ptr %8, null
+  %10 = icmp ne <4 x ptr> %.fr, splat (ptr null)
+  %11 = bitcast <4 x i1> %10 to i4
+  %i.ne = icmp eq i4 %11, 0
+  %op.rdx = and i1 %i.ne, %7
+  %op.rdx425 = select i1 %op.rdx, i1 %9, i1 false
   %i.nf = load i32, ptr @opt_tls_used, align 4, !tbaa !5 ; 2 uses
   %i.ng = load i32, ptr @opt_verbosity, align 4
   %i.nh = icmp slt i32 %i.ng, 4                   ; 2 uses
-  br i1 %i.ne, label %bb.ht, label %bb.hv
+  br i1 %op.rdx425, label %bb.ht, label %bb.hv
 
 bb.ht:                                            ; preds = %bb.hs
   %i.ni = icmp eq i32 %i.nf, 0
@@ -619,7 +622,7 @@ bb.a:
   %i.e = alloca i32, align 4                      ; 5 uses
   %i.f = alloca [200 x i8], align 16              ; 6 uses
   %i.g = alloca [200 x i8], align 16              ; 5 uses
-  %i.h = alloca [100 x i8], align 16              ; 8 uses
+  %i.h = alloca [100 x i8], align 16              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store ptr null, ptr %i.a, align 8, !tbaa !9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
@@ -1010,7 +1013,11 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.au
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(100) %i.h, i8 0, i64 100, i1 false)
-  store <6 x i8> <i8 105, i8 100, i8 45, i8 105, i8 116, i8 45>, ptr %i.h, align 16
+  store <4 x i8> <i8 105, i8 100, i8 45, i8 105>, ptr %i.h, align 16
+  %2 = getelementptr inbounds nuw i8, ptr %i.h, i64 4
+  store i8 116, ptr %2, align 4
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 5
+  store i8 45, ptr %3, align 1
   %i.ej = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.h) #12
   %i.ek = sub i64 99, %i.ej
   %i.el = call ptr @strncat(ptr noundef nonnull dereferenceable(1) %i.h, ptr noundef nonnull %i.dx, i64 noundef %i.ek) #11 ; 0 uses

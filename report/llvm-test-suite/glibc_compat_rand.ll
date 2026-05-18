@@ -159,8 +159,10 @@ define dso_local void @glibc_compat_srand(i32 noundef %0) local_unnamed_addr #1 
   %i.cl = urem i64 %i.ck, 2147483647
   %i.cm = trunc nuw nsw i64 %i.cl to i32
   store i32 %i.cm, ptr getelementptr inbounds nuw (i8, ptr @table, i64 120), align 8, !tbaa !4
-  %1 = load <3 x i32>, ptr @table, align 16, !tbaa !4
-  store <3 x i32> %1, ptr getelementptr inbounds nuw (i8, ptr @table, i64 124), align 4, !tbaa !4
+  %1 = load <2 x i32>, ptr @table, align 16, !tbaa !4
+  store <2 x i32> %1, ptr getelementptr inbounds nuw (i8, ptr @table, i64 124), align 4, !tbaa !4
+  %2 = load i32, ptr getelementptr inbounds nuw (i8, ptr @table, i64 8), align 8, !tbaa !4
+  store i32 %2, ptr getelementptr inbounds nuw (i8, ptr @table, i64 132), align 4, !tbaa !4
   br label %.preheader
 
 bb.a:                                             ; preds = %.preheader

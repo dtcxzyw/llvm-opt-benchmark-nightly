@@ -201,10 +201,16 @@ _ZN6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8GetArenaEv.exit13.thread
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !49)
-  %4 = load <12 x i8>, ptr %i.al, align 4, !tbaa !19, !alias.scope !49, !noalias !46
-  %5 = load <12 x i8>, ptr %i.ak, align 4, !tbaa !19, !alias.scope !46, !noalias !49
-  store <12 x i8> %4, ptr %i.ak, align 4, !tbaa !19, !alias.scope !46, !noalias !49
-  store <12 x i8> %5, ptr %i.al, align 4, !tbaa !19, !alias.scope !49, !noalias !46
+  %4 = load <8 x i8>, ptr %i.al, align 4, !tbaa !19, !alias.scope !49, !noalias !46
+  %5 = load <8 x i8>, ptr %i.ak, align 4, !tbaa !19, !alias.scope !46, !noalias !49
+  store <8 x i8> %4, ptr %i.ak, align 4, !tbaa !19, !alias.scope !46, !noalias !49
+  store <8 x i8> %5, ptr %i.al, align 4, !tbaa !19, !alias.scope !49, !noalias !46
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
+  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %7 = load <4 x i8>, ptr %6, align 4, !tbaa !19, !alias.scope !49, !noalias !46
+  %8 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !19, !alias.scope !46, !noalias !49
+  store <4 x i8> %7, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !19, !alias.scope !46, !noalias !49
+  store <4 x i8> %8, ptr %6, align 4, !tbaa !19, !alias.scope !49, !noalias !46
   br label %bb.o
 
 bb.i:                                             ; preds = %_ZN6google8protobuf13RepeatedFieldINS0_12UnknownFieldEE8GetArenaEv.exit13
@@ -607,10 +613,16 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !113)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !116)
-  %2 = load <12 x i8>, ptr %i.j, align 4, !tbaa !19, !alias.scope !116, !noalias !113
-  %3 = load <12 x i8>, ptr %i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
-  store <12 x i8> %2, ptr %i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
-  store <12 x i8> %3, ptr %i.j, align 4, !tbaa !19, !alias.scope !116, !noalias !113
+  %2 = load <8 x i8>, ptr %i.j, align 4, !tbaa !19, !alias.scope !116, !noalias !113
+  %3 = load <8 x i8>, ptr %i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
+  store <8 x i8> %2, ptr %i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
+  store <8 x i8> %3, ptr %i.j, align 4, !tbaa !19, !alias.scope !116, !noalias !113
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
+  %.079.i.ptr.8.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %5 = load <4 x i8>, ptr %4, align 4, !tbaa !19, !alias.scope !116, !noalias !113
+  %6 = load <4 x i8>, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
+  store <4 x i8> %5, ptr %.079.i.ptr.8.i.i.i, align 4, !tbaa !19, !alias.scope !113, !noalias !116
+  store <4 x i8> %6, ptr %4, align 4, !tbaa !19, !alias.scope !116, !noalias !113
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

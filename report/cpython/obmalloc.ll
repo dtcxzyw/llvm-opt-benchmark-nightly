@@ -201,11 +201,15 @@ mi_option_get.exit7:                              ; preds = %bb.f, %bb.g
 define internal fastcc void @mi_option_init(ptr noundef captures(none) %0) unnamed_addr #2 {
 .lr.ph.i:
   %i.a = alloca [65 x i8], align 16               ; 8 uses
-  %i.b = alloca [65 x i8], align 16               ; 17 uses
+  %i.b = alloca [65 x i8], align 16               ; 19 uses
   %i.c = alloca ptr, align 8                      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #56
-  store <10 x i8> <i8 109, i8 105, i8 109, i8 97, i8 108, i8 108, i8 111, i8 99, i8 95, i8 0>, ptr %i.b, align 16, !tbaa !60
+  %1 = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
+  store <8 x i8> <i8 109, i8 105, i8 109, i8 97, i8 108, i8 108, i8 111, i8 99>, ptr %i.b, align 16, !tbaa !60
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 9 ; 2 uses
+  store i8 95, ptr %1, align 8, !tbaa !60
+  store i8 0, ptr %2, align 1, !tbaa !60
   %i.d = getelementptr i8, ptr %0, i64 16         ; 4 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !240  ; 3 uses
   %i.f = icmp eq ptr %i.e, null
@@ -259,7 +263,9 @@ bb.a:                                             ; preds = %_mi_strlcat.exit
   br i1 %.not, label %bb.t, label %.lr.ph.i60.preheader
 
 .lr.ph.i60.preheader:                             ; preds = %bb.a
-  store <10 x i8> <i8 109, i8 105, i8 109, i8 97, i8 108, i8 108, i8 111, i8 99, i8 95, i8 0>, ptr %i.b, align 16, !tbaa !60
+  store <8 x i8> <i8 109, i8 105, i8 109, i8 97, i8 108, i8 108, i8 111, i8 99>, ptr %i.b, align 16, !tbaa !60
+  store i8 95, ptr %1, align 8, !tbaa !60
+  store i8 0, ptr %2, align 1, !tbaa !60
   br label %.lr.ph.i60
 
 .lr.ph.i60:                                       ; preds = %.lr.ph.i60.preheader, %.lr.ph.i60

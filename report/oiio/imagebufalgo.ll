@@ -201,7 +201,7 @@ bb.a:
   %10 = alloca %"class.OpenImageIO::v3_1::ImageBuf::Iterator", align 8 ; 18 uses
   %11 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
   %12 = alloca %"class.OpenImageIO::v3_1::basic_string_view", align 8 ; 3 uses
-  %i.c = alloca [9 x float], align 16             ; 9 uses
+  %i.c = alloca [9 x float], align 16             ; 10 uses
   %13 = alloca %"struct.OpenImageIO::v3_1::ROI", align 8 ; 2 uses
   %14 = alloca %"class.OpenImageIO::v3_1::ImageBuf::Iterator", align 8 ; 18 uses
   %15 = alloca %"class.OpenImageIO::v3_1::ImageBuf::Iterator", align 8 ; 16 uses
@@ -604,7 +604,9 @@ bb.bd:                                            ; preds = %bb.bc
   %i.jt = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   store float 1.000000e+00, ptr %i.jt, align 4
   %i.ju = getelementptr inbounds nuw i8, ptr %i.c, i64 12
-  store <3 x float> <float 1.000000e+00, float -4.000000e+00, float 1.000000e+00>, ptr %i.ju, align 4
+  store <2 x float> <float 1.000000e+00, float -4.000000e+00>, ptr %i.ju, align 4
+  %17 = getelementptr inbounds nuw i8, ptr %i.c, i64 20
+  store float 1.000000e+00, ptr %17, align 4
   %i.jv = getelementptr inbounds nuw i8, ptr %i.c, i64 28
   store float 1.000000e+00, ptr %i.jv, align 4
   invoke void @_ZNK11OpenImageIO4v3_18ImageBuf3roiEv(ptr dead_on_unwind nonnull writable sret(%"struct.OpenImageIO::v3_1::ROI") align 4 %13, ptr noundef nonnull align 8 dereferenceable(16) %0)

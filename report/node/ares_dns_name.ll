@@ -201,21 +201,22 @@ bb.ad:                                            ; preds = %bb.ac
   %i.bt = zext nneg i8 %.fr81.i.i to i32
   %i.bu = mul i32 %.0.fr.i.i, 10
   %i.bv = add i32 %i.bu, -48
-  %i.bw = add i32 %i.bv, %i.bt                    ; 3 uses
+  %i.bw = add i32 %i.bv, %i.bt                    ; 5 uses
   %i.bx = icmp ugt i32 %i.bw, 255
   br i1 %i.bx, label %ares_parse_dns_name_escape.exit.thread.i, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %4 = insertelement <3 x i32> poison, i32 %i.bw, i64 0
-  %5 = shufflevector <3 x i32> %4, <3 x i32> poison, <3 x i32> zeroinitializer
-  %.fr204 = freeze <3 x i32> %5
-  %6 = add nsw <3 x i32> %.fr204, <i32 -97, i32 -65, i32 -48>
-  %7 = icmp ult <3 x i32> %6, <i32 26, i32 26, i32 10>
-  %8 = bitcast <3 x i1> %7 to i3
-  %9 = icmp ne i3 %8, 0
-  %op.rdx = select i1 %.not60.i.i, i1 true, i1 %9
+  %4 = add nsw i32 %i.bw, -97
+  %or.cond63.i.i = icmp ult i32 %4, 26
+  %or.cond73.i.i = select i1 %.not60.i.i, i1 true, i1 %or.cond63.i.i
+  %5 = add nsw i32 %i.bw, -65
+  %or.cond64.i.i = icmp ult i32 %5, 26
+  %or.cond74.i.i = select i1 %or.cond73.i.i, i1 true, i1 %or.cond64.i.i
+  %6 = add nsw i32 %i.bw, -48
+  %or.cond65.i.i = icmp ult i32 %6, 10
+  %or.cond75.i.i = or i1 %or.cond65.i.i, %or.cond74.i.i
   %.pre.i.i = trunc nuw i32 %i.bw to i8           ; 7 uses
-  br i1 %op.rdx, label %ares_parse_dns_name_escape.exit.i, label %switch.early.test.i.i
+  br i1 %or.cond75.i.i, label %ares_parse_dns_name_escape.exit.i, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.ae
   switch i8 %.pre.i.i, label %ares_parse_dns_name_escape.exit.thread.i [

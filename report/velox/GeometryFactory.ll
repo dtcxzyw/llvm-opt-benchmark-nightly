@@ -201,13 +201,18 @@ declare noundef ptr @_ZNK4geos4geom8Geometry17getPrecisionModelEv(ptr noundef no
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull ptr @_ZNK4geos4geom15GeometryFactory11createPointERKNS0_10CoordinateE(ptr noundef nonnull align 8 dereferenceable(45) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = load <3 x double>, ptr %1, align 8
-  %.fr = freeze <3 x double> %2
-  %3 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %4 = bitcast <3 x i1> %3 to i3
-  %5 = icmp eq i3 %4, 0
+  %2 = load double, ptr %1, align 8, !tbaa !27
+  %3 = fcmp uno double %2, 0.000000e+00
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %5 = load double, ptr %4, align 8
+  %6 = fcmp uno double %5, 0.000000e+00
+  %or.cond.i = select i1 %3, i1 %6, i1 false
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16
+  %8 = load double, ptr %7, align 8
+  %9 = fcmp uno double %8, 0.000000e+00
+  %10 = select i1 %or.cond.i, i1 %9, i1 false
   %i.a = tail call noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #18 ; 4 uses
-  br i1 %5, label %bb.b, label %bb.d
+  br i1 %10, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_ZN4geos4geom5PointC1EPNS0_18CoordinateSequenceEPKNS0_15GeometryFactoryE(ptr noundef nonnull align 8 dereferenceable(82) %i.a, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(45) %0)
@@ -610,17 +615,22 @@ _ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_E
   %.017 = phi i64 [ %i.ab, %_ZNSt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS2_EE5resetEPS2_.exit ], [ 0, %.lr.ph.preheader ] ; 3 uses
   %i.r = load ptr, ptr %3, align 8, !tbaa !96
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.017 ; 2 uses
-  %i.t = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %.017 ; 2 uses
-  %4 = load <3 x double>, ptr %i.t, align 8
+  %i.t = getelementptr inbounds nuw [24 x i8], ptr %i.q, i64 %.017 ; 4 uses
+  %4 = load double, ptr %i.t, align 8, !tbaa !27
+  %5 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %6 = load double, ptr %5, align 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %8 = load double, ptr %7, align 8
   %i.u = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #18
           to label %.noexc15 unwind label %bb.f   ; 4 uses
 
 .noexc15:                                         ; preds = %.lr.ph
-  %.fr = freeze <3 x double> %4
-  %5 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %6 = bitcast <3 x i1> %5 to i3
-  %7 = icmp eq i3 %6, 0
-  br i1 %7, label %bb.b, label %bb.d
+  %9 = fcmp uno double %4, 0.000000e+00
+  %10 = fcmp uno double %6, 0.000000e+00
+  %or.cond.i.i = select i1 %9, i1 %10, i1 false
+  %11 = fcmp uno double %8, 0.000000e+00
+  %12 = select i1 %or.cond.i.i, i1 %11, i1 false
+  br i1 %12, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.noexc15
   invoke void @_ZN4geos4geom5PointC1EPNS0_18CoordinateSequenceEPKNS0_15GeometryFactoryE(ptr noundef nonnull align 8 dereferenceable(82) %i.u, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(45) %1)
@@ -995,19 +1005,24 @@ _ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_E
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = invoke noundef nonnull align 8 dereferenceable(24) ptr %i.r(ptr noundef nonnull align 8 dereferenceable(8) %1, i64 noundef %.018)
-          to label %bb.b unwind label %bb.g       ; 2 uses
+          to label %bb.b unwind label %bb.g       ; 4 uses
 
 bb.b:                                             ; preds = %.lr.ph
-  %3 = load <3 x double>, ptr %i.s, align 8
+  %3 = load double, ptr %i.s, align 8, !tbaa !27
+  %4 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
+  %5 = load double, ptr %4, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
+  %7 = load double, ptr %6, align 8
   %i.t = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #18
           to label %.noexc16 unwind label %bb.g   ; 4 uses
 
 .noexc16:                                         ; preds = %bb.b
-  %.fr = freeze <3 x double> %3
-  %4 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %5 = bitcast <3 x i1> %4 to i3
-  %6 = icmp eq i3 %5, 0
-  br i1 %6, label %bb.c, label %bb.e
+  %8 = fcmp uno double %3, 0.000000e+00
+  %9 = fcmp uno double %5, 0.000000e+00
+  %or.cond.i.i = select i1 %8, i1 %9, i1 false
+  %10 = fcmp uno double %7, 0.000000e+00
+  %11 = select i1 %or.cond.i.i, i1 %10, i1 false
+  br i1 %11, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %.noexc16
   invoke void @_ZN4geos4geom5PointC1EPNS0_18CoordinateSequenceEPKNS0_15GeometryFactoryE(ptr noundef nonnull align 8 dereferenceable(82) %i.t, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(45) %0)
@@ -1169,17 +1184,22 @@ _ZNSt6vectorISt10unique_ptrIN4geos4geom8GeometryESt14default_deleteIS3_EESaIS6_E
   %i.q = load ptr, ptr %2, align 8, !tbaa !96
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %.018 ; 2 uses
   %i.s = load ptr, ptr %1, align 8, !tbaa !135
-  %i.t = getelementptr inbounds nuw [24 x i8], ptr %i.s, i64 %.018 ; 2 uses
-  %3 = load <3 x double>, ptr %i.t, align 8
+  %i.t = getelementptr inbounds nuw [24 x i8], ptr %i.s, i64 %.018 ; 4 uses
+  %3 = load double, ptr %i.t, align 8, !tbaa !27
+  %4 = getelementptr inbounds nuw i8, ptr %i.t, i64 8
+  %5 = load double, ptr %4, align 8
+  %6 = getelementptr inbounds nuw i8, ptr %i.t, i64 16
+  %7 = load double, ptr %6, align 8
   %i.u = invoke noalias noundef nonnull dereferenceable(88) ptr @_Znwm(i64 noundef 88) #18
           to label %.noexc16 unwind label %bb.f   ; 4 uses
 
 .noexc16:                                         ; preds = %.lr.ph
-  %.fr = freeze <3 x double> %3
-  %4 = fcmp ord <3 x double> %.fr, zeroinitializer
-  %5 = bitcast <3 x i1> %4 to i3
-  %6 = icmp eq i3 %5, 0
-  br i1 %6, label %bb.b, label %bb.d
+  %8 = fcmp uno double %3, 0.000000e+00
+  %9 = fcmp uno double %5, 0.000000e+00
+  %or.cond.i.i = select i1 %8, i1 %9, i1 false
+  %10 = fcmp uno double %7, 0.000000e+00
+  %11 = select i1 %or.cond.i.i, i1 %10, i1 false
+  br i1 %11, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %.noexc16
   invoke void @_ZN4geos4geom5PointC1EPNS0_18CoordinateSequenceEPKNS0_15GeometryFactoryE(ptr noundef nonnull align 8 dereferenceable(82) %i.u, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(45) %0)

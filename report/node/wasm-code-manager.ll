@@ -201,9 +201,12 @@ bb.a:
 define hidden noundef range(i64 -2147483536, 2147483760) i64 @_ZNK2v88internal4wasm8WasmCode32EstimateCurrentMemoryConsumptionEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(112) %0) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %1 = load <5 x i32>, ptr %i.a, align 4
-  %i.b = tail call i32 @llvm.vector.reduce.add.v5i32(<5 x i32> %1)
-  %i.c = sext i32 %i.b to i64
+  %1 = load i32, ptr %i.a, align 4
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 40
+  %3 = load <4 x i32>, ptr %2, align 8
+  %i.b = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %3)
+  %op.rdx = add i32 %i.b, %1
+  %i.c = sext i32 %op.rdx to i64
   %i.d = add nsw i64 %i.c, 112
   ret i64 %i.d
 }
@@ -606,11 +609,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit: ; preds 
   %.247 = phi i64 [ %i.bs, %.lr.ph ], [ %i.aw, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit ]
   %.sroa.037.046 = phi ptr [ %i.bt, %.lr.ph ], [ %i.ay, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %.sroa.037.046, i64 40
-  %i.bn = load ptr, ptr %i.bm, align 8
-  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 36
-  %2 = load <5 x i32>, ptr %i.bo, align 4
-  %i.bp = call i32 @llvm.vector.reduce.add.v5i32(<5 x i32> %2)
-  %i.bq = sext i32 %i.bp to i64
+  %i.bn = load ptr, ptr %i.bm, align 8            ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.bn, i64 36
+  %3 = load i32, ptr %2, align 4
+  %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 40
+  %4 = load <4 x i32>, ptr %i.bo, align 8
+  %i.bp = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %4)
+  %op.rdx66 = add i32 %i.bp, %3
+  %i.bq = sext i32 %op.rdx66 to i64
   %i.br = add i64 %.247, 112
   %i.bs = add i64 %i.br, %i.bq                    ; 2 uses
   %i.bt = call noundef ptr @_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base(ptr noundef %.sroa.037.046) #30 ; 2 uses
@@ -643,11 +649,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE8capacityEv.exit: ; preds 
 .lr.ph51:                                         ; preds = %._crit_edge, %.lr.ph51
   %.349 = phi i64 [ %i.cs, %.lr.ph51 ], [ %i.bi, %._crit_edge ]
   %.sroa.033.048 = phi ptr [ %i.ct, %.lr.ph51 ], [ %i.be, %._crit_edge ] ; 2 uses
-  %i.cn = load ptr, ptr %.sroa.033.048, align 8
-  %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 36
-  %3 = load <5 x i32>, ptr %i.co, align 4
-  %i.cp = call i32 @llvm.vector.reduce.add.v5i32(<5 x i32> %3)
-  %i.cq = sext i32 %i.cp to i64
+  %i.cn = load ptr, ptr %.sroa.033.048, align 8   ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.cn, i64 36
+  %6 = load i32, ptr %5, align 4
+  %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 40
+  %7 = load <4 x i32>, ptr %i.co, align 8
+  %i.cp = call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %7)
+  %op.rdx = add i32 %i.cp, %6
+  %i.cq = sext i32 %op.rdx to i64
   %i.cr = add i64 %.349, 112
   %i.cs = add i64 %i.cr, %i.cq                    ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %.sroa.033.048, i64 8 ; 2 uses
@@ -1050,7 +1059,7 @@ declare i32 @llvm.smin.i32(i32, i32) #29
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #29
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.add.v5i32(<5 x i32>) #29
+declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #29
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

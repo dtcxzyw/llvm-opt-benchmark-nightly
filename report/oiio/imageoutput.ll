@@ -201,7 +201,7 @@ bb.al:                                            ; preds = %bb.aj, %bb.ai
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.fl = load i32, ptr %i.fk, align 8, !tbaa !126
   %.not27 = icmp eq i32 %i.fl, 0
-  %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
   %i.fn = load i32, ptr %i.fm, align 4
   %.not28 = icmp eq i32 %i.fn, 0
   %or.cond44 = select i1 %.not27, i1 %.not28, i1 false
@@ -230,34 +230,40 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.bb
 
 bb.ao:                                            ; preds = %bb.am
-  %16 = load <3 x i32>, ptr %i.fk, align 8
-  %.fr = freeze <3 x i32> %16
-  %17 = icmp slt <3 x i32> %.fr, splat (i32 1)
-  %18 = bitcast <3 x i1> %17 to i3
-  %.not80 = icmp eq i3 %18, 0
-  br i1 %.not80, label %bb.aq, label %bb.ap
+  %16 = load i32, ptr %i.fk, align 8, !tbaa !126
+  %17 = icmp slt i32 %16, 1
+  %18 = load i32, ptr %i.fm, align 4
+  %19 = icmp slt i32 %18, 1
+  %or.cond47 = select i1 %17, i1 true, i1 %19
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %21 = load i32, ptr %20, align 8
+  %22 = icmp slt i32 %21, 1
+  %or.cond50 = select i1 %or.cond47, i1 true, i1 %22
+  br i1 %or.cond50, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #2
   %i.fx = load ptr, ptr %0, align 8, !tbaa !40
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 16
   %i.fz = load ptr, ptr %i.fy, align 8
   %i.ga = call noundef ptr %i.fz(ptr noundef nonnull align 8 dereferenceable(184) %0)
   store ptr %i.ga, ptr %i.o, align 8, !tbaa !227
-  call void @_ZNK11OpenImageIO4v3_111ImageOutput8errorfmtIJPKciiiEEEvS4_DpRKT_(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull @.str.43, ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull align 4 dereferenceable(4) %i.fk, ptr noundef nonnull align 4 dereferenceable(4) %i.fm, ptr noundef nonnull align 4 dereferenceable(4) %19)
+  call void @_ZNK11OpenImageIO4v3_111ImageOutput8errorfmtIJPKciiiEEEvS4_DpRKT_(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull @.str.43, ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull align 4 dereferenceable(4) %i.fk, ptr noundef nonnull align 4 dereferenceable(4) %i.fm, ptr noundef nonnull align 4 dereferenceable(4) %20)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #2
   br label %bb.bb
 
 bb.aq:                                            ; preds = %bb.ao, %bb.al
-  %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %21 = load <3 x i32>, ptr %i.ak, align 8
-  %.fr81 = freeze <3 x i32> %21
-  %22 = icmp ne <3 x i32> %.fr81, zeroinitializer
-  %23 = bitcast <3 x i1> %22 to i3
-  %i.gc = icmp eq i3 %23, 0
-  br i1 %i.gc, label %bb.ay, label %bb.ar
+  %23 = load i32, ptr %i.ak, align 8, !tbaa !131
+  %.not30 = icmp eq i32 %23, 0
+  %i.gb = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 3 uses
+  %24 = load i32, ptr %i.gb, align 4
+  %.not31 = icmp eq i32 %24, 0
+  %or.cond52 = select i1 %.not30, i1 %.not31, i1 false
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %26 = load i32, ptr %25, align 8
+  %i.gc = icmp eq i32 %26, 0
+  %or.cond54 = select i1 %or.cond52, i1 %i.gc, i1 false
+  br i1 %or.cond54, label %bb.ay, label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq
   store ptr @.str.44, ptr %12, align 8, !tbaa !75
@@ -287,12 +293,15 @@ bb.at:                                            ; preds = %bb.as
   br label %bb.bb
 
 bb.au:                                            ; preds = %bb.ar
-  %24 = load <3 x i32>, ptr %i.ak, align 8
-  %.fr82 = freeze <3 x i32> %24
-  %25 = icmp slt <3 x i32> %.fr82, zeroinitializer
-  %26 = bitcast <3 x i1> %25 to i3
-  %.not83 = icmp eq i3 %26, 0
-  br i1 %.not83, label %bb.ay, label %bb.av
+  %.pre = load i32, ptr %i.ak, align 8, !tbaa !131
+  %.pre62 = load i32, ptr %i.gb, align 4
+  %.pre63 = load i32, ptr %25, align 8
+  %27 = icmp slt i32 %.pre, 0
+  %28 = icmp slt i32 %.pre62, 0
+  %29 = select i1 %27, i1 true, i1 %28
+  %30 = icmp slt i32 %.pre63, 0
+  %31 = select i1 %29, i1 true, i1 %30
+  br i1 %31, label %bb.av, label %bb.ay
 
 bb.av:                                            ; preds = %bb.au
   store ptr @.str.46, ptr %13, align 8, !tbaa !75
@@ -324,7 +333,7 @@ bb.ax:                                            ; preds = %bb.aw
 .sink.split:                                      ; preds = %bb.aw, %bb.as
   store i32 0, ptr %i.ak, align 8, !tbaa !131
   store i32 0, ptr %i.gb, align 4, !tbaa !132
-  store i32 0, ptr %20, align 8, !tbaa !133
+  store i32 0, ptr %25, align 8, !tbaa !133
   br label %bb.ay
 
 bb.ay:                                            ; preds = %.sink.split, %bb.au, %bb.aq, %bb.av

@@ -201,8 +201,8 @@ bb.ai:                                            ; preds = %.noexc115, %_ZSt6fi
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.is, i8 0, i64 %i.ik, i1 false), !tbaa !97
   %i.iu = getelementptr inbounds nuw i8, ptr %i.is, i64 %i.ik
   store ptr %i.iu, ptr %i.gu, align 8, !tbaa !167
-  %i.iv = load ptr, ptr %2, align 8               ; 4 uses
-  %i.iw = load ptr, ptr %4, align 8               ; 5 uses
+  %i.iv = load ptr, ptr %2, align 8               ; 7 uses
+  %i.iw = load ptr, ptr %4, align 8               ; 8 uses
   br i1 %.not, label %.critedge.us.preheader, label %.lr.ph180.split
 
 .critedge.us.preheader:                           ; preds = %.lr.ph180
@@ -218,26 +218,41 @@ vector.ph311:                                     ; preds = %.critedge.us.prehea
   br label %vector.body314
 
 vector.body314:                                   ; preds = %vector.body314, %vector.ph311
-  %index315 = phi i64 [ 0, %vector.ph311 ], [ %index.next316, %vector.body314 ] ; 4 uses
-  %i.iz = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %index315
-  %14 = load <4 x ptr>, ptr %i.iz, align 8, !tbaa !210 ; 5 uses
-  %i.ja = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %index315 ; 2 uses
-  %15 = load <4 x i64>, ptr %i.ja, align 8, !tbaa !97 ; 5 uses
-  %16 = extractelement <4 x i64> %15, i64 0
-  %17 = extractelement <4 x ptr> %14, i64 0
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %16
-  %19 = extractelement <4 x i64> %15, i64 1
-  %20 = extractelement <4 x ptr> %14, i64 1
-  %21 = getelementptr inbounds nuw i8, ptr %20, i64 %19
-  %22 = extractelement <4 x i64> %15, i64 2
-  %23 = extractelement <4 x ptr> %14, i64 2
-  %i.jb = getelementptr inbounds nuw i8, ptr %23, i64 %22
-  %24 = extractelement <4 x i64> %15, i64 3
-  %25 = extractelement <4 x ptr> %14, i64 3
-  %i.jc = getelementptr inbounds nuw i8, ptr %25, i64 %24
-  %i.jd = getelementptr inbounds nuw i8, ptr %18, i64 4
-  %i.je = getelementptr inbounds nuw i8, ptr %21, i64 4
-  %i.jf = getelementptr inbounds nuw i8, ptr %i.jb, i64 4
+  %index315 = phi i64 [ 0, %vector.ph311 ], [ %index.next316, %vector.body314 ] ; 7 uses
+  %14 = or disjoint i64 %index315, 1              ; 2 uses
+  %15 = or disjoint i64 %index315, 2              ; 2 uses
+  %16 = or disjoint i64 %index315, 3              ; 2 uses
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %index315
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %14
+  %19 = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %15
+  %20 = getelementptr inbounds nuw [8 x i8], ptr %i.iv, i64 %16
+  %21 = load ptr, ptr %17, align 8, !tbaa !210    ; 2 uses
+  %22 = load ptr, ptr %18, align 8, !tbaa !210    ; 2 uses
+  %23 = load ptr, ptr %19, align 8, !tbaa !210    ; 2 uses
+  %24 = load ptr, ptr %20, align 8, !tbaa !210    ; 2 uses
+  %25 = insertelement <4 x ptr> poison, ptr %21, i64 0
+  %26 = insertelement <4 x ptr> %25, ptr %22, i64 1
+  %27 = insertelement <4 x ptr> %26, ptr %23, i64 2
+  %28 = insertelement <4 x ptr> %27, ptr %24, i64 3
+  %i.iz = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %index315 ; 2 uses
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %14
+  %i.ja = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %15
+  %30 = getelementptr inbounds nuw [8 x i8], ptr %i.iw, i64 %16
+  %31 = load i64, ptr %i.iz, align 8, !tbaa !97   ; 2 uses
+  %32 = load i64, ptr %29, align 8, !tbaa !97     ; 2 uses
+  %33 = load i64, ptr %i.ja, align 8, !tbaa !97   ; 2 uses
+  %34 = load i64, ptr %30, align 8, !tbaa !97     ; 2 uses
+  %35 = insertelement <4 x i64> poison, i64 %31, i64 0
+  %36 = insertelement <4 x i64> %35, i64 %32, i64 1
+  %37 = insertelement <4 x i64> %36, i64 %33, i64 2
+  %38 = insertelement <4 x i64> %37, i64 %34, i64 3
+  %i.jb = getelementptr inbounds nuw i8, ptr %21, i64 %31
+  %39 = getelementptr inbounds nuw i8, ptr %22, i64 %32
+  %40 = getelementptr inbounds nuw i8, ptr %23, i64 %33
+  %i.jc = getelementptr inbounds nuw i8, ptr %24, i64 %34
+  %i.jd = getelementptr inbounds nuw i8, ptr %i.jb, i64 4
+  %i.je = getelementptr inbounds nuw i8, ptr %39, i64 4
+  %i.jf = getelementptr inbounds nuw i8, ptr %40, i64 4
   %i.jg = getelementptr inbounds nuw i8, ptr %i.jc, i64 4
   %i.jh = load i32, ptr %i.jd, align 4, !tbaa !3
   %i.ji = load i32, ptr %i.je, align 4, !tbaa !3
@@ -248,11 +263,11 @@ vector.body314:                                   ; preds = %vector.body314, %ve
   %i.jn = insertelement <4 x i32> %i.jm, i32 %i.jj, i64 2
   %i.jo = insertelement <4 x i32> %i.jn, i32 %i.jk, i64 3
   %i.jp = sext <4 x i32> %i.jo to <4 x i64>
-  %i.jq = getelementptr inbounds i8, <4 x ptr> %14, <4 x i64> %i.jp
+  %i.jq = getelementptr inbounds i8, <4 x ptr> %28, <4 x i64> %i.jp
   %i.jr = getelementptr inbounds nuw [8 x i8], ptr %i.il, i64 %index315
   store <4 x ptr> %i.jq, ptr %i.jr, align 8, !tbaa !210
-  %i.js = add <4 x i64> %15, splat (i64 8)
-  store <4 x i64> %i.js, ptr %i.ja, align 8, !tbaa !97
+  %i.js = add <4 x i64> %38, splat (i64 8)
+  store <4 x i64> %i.js, ptr %i.iz, align 8, !tbaa !97
   %index.next316 = add nuw i64 %index315, 4       ; 2 uses
   %i.jt = icmp eq i64 %index.next316, %n.vec313
   br i1 %i.jt, label %middle.block317, label %vector.body314, !llvm.loop !221

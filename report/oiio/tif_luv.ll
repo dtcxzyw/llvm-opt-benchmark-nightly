@@ -201,7 +201,9 @@ LogL10toY.exit:                                   ; preds = %bb.a
   br i1 %i.h, label %bb.b, label %LogL10toY.exit.thread
 
 LogL10toY.exit.thread:                            ; preds = %bb.a, %LogL10toY.exit
-  store <3 x float> zeroinitializer, ptr %1, align 4, !tbaa !7
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float 0.000000e+00, ptr %2, align 4, !tbaa !7
+  store <2 x float> zeroinitializer, ptr %1, align 4, !tbaa !7
   br label %bb.f
 
 bb.b:                                             ; preds = %LogL10toY.exit
@@ -387,7 +389,9 @@ LogL16toY.exit:                                   ; preds = %bb.a
   br i1 %i.j, label %bb.b, label %LogL16toY.exit.thread
 
 LogL16toY.exit.thread:                            ; preds = %bb.a, %LogL16toY.exit
-  store <3 x float> zeroinitializer, ptr %1, align 4, !tbaa !7
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float 0.000000e+00, ptr %2, align 4, !tbaa !7
+  store <2 x float> zeroinitializer, ptr %1, align 4, !tbaa !7
   br label %bb.c
 
 bb.b:                                             ; preds = %LogL16toY.exit
@@ -790,7 +794,7 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %LogLuv32toXYZ.exit
-  %.09 = phi ptr [ %i.as, %LogLuv32toXYZ.exit ], [ %1, %.lr.ph.preheader ] ; 4 uses
+  %.09 = phi ptr [ %i.as, %LogLuv32toXYZ.exit ], [ %1, %.lr.ph.preheader ] ; 5 uses
   %.058 = phi ptr [ %i.e, %LogLuv32toXYZ.exit ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
   %.067 = phi i64 [ %i.d, %LogLuv32toXYZ.exit ], [ %2, %.lr.ph.preheader ] ; 2 uses
   %i.d = add nsw i64 %.067, -1
@@ -814,7 +818,9 @@ LogL16toY.exit.i:                                 ; preds = %.lr.ph
   br i1 %i.p, label %bb.b, label %LogL16toY.exit.thread.i
 
 LogL16toY.exit.thread.i:                          ; preds = %LogL16toY.exit.i, %.lr.ph
-  store <3 x float> zeroinitializer, ptr %.09, align 4, !tbaa !7
+  %3 = getelementptr inbounds nuw i8, ptr %.09, i64 8
+  store float 0.000000e+00, ptr %3, align 4, !tbaa !7
+  store <2 x float> zeroinitializer, ptr %.09, align 4, !tbaa !7
   br label %LogLuv32toXYZ.exit
 
 bb.b:                                             ; preds = %LogL16toY.exit.i

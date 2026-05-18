@@ -200,9 +200,15 @@ vec.epilog.middle.block295:                       ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not.i85.7, label %.preheader.i76, label %.lr.ph27.i81, !llvm.loop !36
 
 .lr.ph27.i88:                                     ; preds = %.preheader.i76, %bb.k
-  %i.gn = tail call ptr (i32, ...) @mallocate(i32 noundef 18) #12 ; 4 uses
+  %i.gn = tail call ptr (i32, ...) @mallocate(i32 noundef 18) #12 ; 7 uses
+  %0 = getelementptr inbounds nuw i8, ptr %i.gn, i64 8
+  store <8 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 97>, ptr %i.gn, align 1, !tbaa !8
+  %1 = getelementptr inbounds nuw i8, ptr %i.gn, i64 9
+  store i8 99, ptr %0, align 1, !tbaa !8
+  %2 = getelementptr inbounds nuw i8, ptr %i.gn, i64 10
+  store i8 116, ptr %1, align 1, !tbaa !8
   %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 11
-  store <11 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 97, i8 99, i8 116, i8 46>, ptr %i.gn, align 1, !tbaa !8
+  store i8 46, ptr %2, align 1, !tbaa !8
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gn, i64 17
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.go, i8 88, i64 6, i1 false)
   store i8 0, ptr %i.gp, align 1, !tbaa !8
@@ -210,9 +216,13 @@ vec.epilog.middle.block295:                       ; preds = %vec.epilog.vector.b
   store ptr %i.gq, ptr @actfile, align 8, !tbaa !19
   %i.gr = load ptr, ptr @stdout, align 8, !tbaa !27
   store ptr %i.gr, ptr @faction, align 8, !tbaa !27
-  %i.gs = tail call ptr (i32, ...) @mallocate(i32 noundef 20) #12 ; 4 uses
+  %i.gs = tail call ptr (i32, ...) @mallocate(i32 noundef 20) #12 ; 6 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.gs, i64 8
+  store <8 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 97>, ptr %i.gs, align 1, !tbaa !8
+  %4 = getelementptr inbounds nuw i8, ptr %i.gs, i64 12
+  store <4 x i8> <i8 116, i8 116, i8 114, i8 115>, ptr %3, align 1, !tbaa !8
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 13
-  store <13 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 97, i8 116, i8 116, i8 114, i8 115, i8 46>, ptr %i.gs, align 1, !tbaa !8
+  store i8 46, ptr %4, align 1, !tbaa !8
   %i.gu = getelementptr inbounds nuw i8, ptr %i.gs, i64 19
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.gt, i8 88, i64 6, i1 false)
   store i8 0, ptr %i.gu, align 1, !tbaa !8
@@ -220,9 +230,15 @@ vec.epilog.middle.block295:                       ; preds = %vec.epilog.vector.b
   store ptr %i.gv, ptr @tmpattrsfile, align 8, !tbaa !19
   %i.gw = load ptr, ptr @stdout, align 8, !tbaa !27
   store ptr %i.gw, ptr @fattrs, align 8, !tbaa !27
-  %i.gx = tail call ptr (i32, ...) @mallocate(i32 noundef 18) #12 ; 4 uses
+  %i.gx = tail call ptr (i32, ...) @mallocate(i32 noundef 18) #12 ; 7 uses
+  %5 = getelementptr inbounds nuw i8, ptr %i.gx, i64 8
+  store <8 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 116>, ptr %i.gx, align 1, !tbaa !8
+  %6 = getelementptr inbounds nuw i8, ptr %i.gx, i64 9
+  store i8 97, ptr %5, align 1, !tbaa !8
+  %7 = getelementptr inbounds nuw i8, ptr %i.gx, i64 10
+  store i8 98, ptr %6, align 1, !tbaa !8
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 11
-  store <11 x i8> <i8 47, i8 116, i8 109, i8 112, i8 47, i8 98, i8 46, i8 116, i8 97, i8 98, i8 46>, ptr %i.gx, align 1, !tbaa !8
+  store i8 46, ptr %7, align 1, !tbaa !8
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gx, i64 17
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.gy, i8 88, i64 6, i1 false)
   store i8 0, ptr %i.gz, align 1, !tbaa !8

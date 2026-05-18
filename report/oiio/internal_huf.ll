@@ -201,7 +201,7 @@ bb.a:
   %i.a = alloca [59 x i64], align 16              ; 11 uses
   %i.b = alloca [59 x i64], align 16              ; 7 uses
   %i.c = alloca [59 x i64], align 16              ; 26 uses
-  %i.d = alloca [59 x i64], align 16              ; 17 uses
+  %i.d = alloca [59 x i64], align 16              ; 23 uses
   %i.e = alloca [59 x i64], align 16              ; 6 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -295,10 +295,33 @@ bb.i:                                             ; preds = %bb.h
 .critedge.preheader.i:                            ; preds = %.critedge.preheader.loopexit.i, %bb.i
   %i.am = phi i32 [ %op.rdx290, %.critedge.preheader.loopexit.i ], [ 0, %bb.i ]
   %i.an = getelementptr inbounds nuw i8, ptr %i.d, i64 408
-  %7 = load <7 x i64>, ptr %i.an, align 8, !tbaa !9
-  %8 = tail call i64 @llvm.vector.reduce.add.v7i64(<7 x i64> %7)
-  %i.ao = trunc i64 %8 to i32
-  %op.rdx291 = add i32 %i.am, %i.ao               ; 4 uses
+  %7 = load i64, ptr %i.an, align 8, !tbaa !9
+  %8 = trunc i64 %7 to i32
+  %9 = add i32 %i.am, %8
+  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 416
+  %11 = load i64, ptr %10, align 16, !tbaa !9
+  %12 = trunc i64 %11 to i32
+  %13 = add i32 %9, %12
+  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 424
+  %15 = load i64, ptr %14, align 8, !tbaa !9
+  %16 = trunc i64 %15 to i32
+  %17 = add i32 %13, %16
+  %18 = getelementptr inbounds nuw i8, ptr %i.d, i64 432
+  %19 = load i64, ptr %18, align 16, !tbaa !9
+  %20 = trunc i64 %19 to i32
+  %21 = add i32 %17, %20
+  %22 = getelementptr inbounds nuw i8, ptr %i.d, i64 440
+  %23 = load i64, ptr %22, align 8, !tbaa !9
+  %24 = trunc i64 %23 to i32
+  %25 = add i32 %21, %24
+  %26 = getelementptr inbounds nuw i8, ptr %i.d, i64 448
+  %27 = load i64, ptr %26, align 16, !tbaa !9
+  %28 = trunc i64 %27 to i32
+  %29 = add i32 %25, %28
+  %30 = getelementptr inbounds nuw i8, ptr %i.d, i64 456
+  %31 = load i64, ptr %30, align 8, !tbaa !9
+  %i.ao = trunc i64 %31 to i32
+  %op.rdx291 = add i32 %29, %i.ao                 ; 4 uses
   store i32 %op.rdx291, ptr %i.w, align 4, !tbaa !76
   %i.ap = icmp ugt i32 %op.rdx291, 65537
   br i1 %i.ap, label %bb.z, label %bb.aa
@@ -700,9 +723,6 @@ declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v32i32(<32 x i32>) #6
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v7i64(<7 x i64>) #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

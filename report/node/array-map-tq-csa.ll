@@ -201,7 +201,7 @@ _ZN2v88internal8compiler31CodeAssemblerParameterizedLabelIJNS0_3SmiENS0_7JSArray
 define linkonce_odr hidden void @_ZN2v88internal8compiler31CodeAssemblerParameterizedLabelIJNS0_3SmiENS0_7JSArrayENS0_5BoolTES5_S5_S5_S3_S3_S3_NS0_6Int32TES5_S5_EE10CreatePhisEPNS0_5TNodeIS3_EEPNS8_IS4_EEPNS8_IS5_EESE_SE_SE_SA_SA_SA_PNS8_IS6_EESE_SE_(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr noundef %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %13 = alloca %"class.std::vector.156", align 8  ; 5 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #12 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #12 ; 8 uses
   store ptr %i.a, ptr %13, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 12 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %13, i64 16 ; 2 uses
@@ -209,10 +209,14 @@ bb.a:
   store i8 7, ptr %i.a, align 1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 8, ptr %.sroa.4.0..sroa_idx, align 1
-  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i32 67372036, ptr %.sroa.5.0..sroa_idx.a, align 1
-  store <6 x i8> <i8 7, i8 7, i8 7, i8 4, i8 4, i8 4>, ptr %.sroa.9.0..sroa_idx, align 1
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 2
+  %.sroa.5.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.a, i64 6
+  store i32 67372036, ptr %.sroa.5.0..sroa_idx, align 1
+  store <4 x i8> <i8 7, i8 7, i8 7, i8 4>, ptr %.sroa.5.0..sroa_idx.a, align 1
+  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 4, ptr %.sroa.9.0..sroa_idx, align 1
+  %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 4, ptr %.sroa.14.0..sroa_idx, align 1
   %i.d = getelementptr inbounds nuw i8, ptr %13, i64 8
   store ptr %i.b, ptr %i.d, align 8
   %i.e = call noundef nonnull align 8 dereferenceable(24) ptr @_ZN2v88internal8compiler35CodeAssemblerParameterizedLabelBase10CreatePhisESt6vectorINS0_21MachineRepresentationESaIS4_EE(ptr noundef nonnull align 8 dereferenceable(184) %0, ptr noundef nonnull %13) #10

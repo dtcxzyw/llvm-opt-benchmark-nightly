@@ -58,8 +58,8 @@ declare i32 @sigaction(i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr
 define internal void @_ZN6google12_GLOBAL__N_120FailureSignalHandlerEiP9siginfo_tPv(i32 noundef %0, ptr noundef readonly captures(none) %1, ptr readnone captures(none) %2) #4 {
 bb.a:
   %3 = alloca %struct.sigaction, align 8          ; 6 uses
-  %i.a = alloca [256 x i8], align 16              ; 29 uses
-  %i.b = alloca [256 x i8], align 16              ; 9 uses
+  %i.a = alloca [256 x i8], align 16              ; 32 uses
+  %i.b = alloca [256 x i8], align 16              ; 13 uses
   %4 = alloca %struct.sigaction, align 8          ; 6 uses
   %i.c = alloca i64, align 8                      ; 5 uses
   %i.d = alloca [32 x ptr], align 16              ; 4 uses
@@ -107,7 +107,15 @@ bb.e:                                             ; preds = %bb.a
   %i.q = call i64 @time(ptr noundef null) #11     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   %.0.lcssa.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 15 ; 3 uses
-  store <15 x i8> <i8 42, i8 42, i8 42, i8 32, i8 65, i8 98, i8 111, i8 114, i8 116, i8 101, i8 100, i8 32, i8 97, i8 116, i8 32>, ptr %i.b, align 16, !tbaa !7
+  store <8 x i8> <i8 42, i8 42, i8 42, i8 32, i8 65, i8 98, i8 111, i8 114>, ptr %i.b, align 16, !tbaa !7
+  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  store <4 x i8> <i8 116, i8 101, i8 100, i8 32>, ptr %5, align 8, !tbaa !7
+  %6 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
+  store i8 97, ptr %6, align 4, !tbaa !7
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 13
+  store i8 116, ptr %7, align 1, !tbaa !7
+  %.0.lcssa.i.sroa.gep65.i = getelementptr inbounds nuw i8, ptr %i.b, i64 14
+  store i8 32, ptr %.0.lcssa.i.sroa.gep65.i, align 2, !tbaa !7
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.g
@@ -133,9 +141,15 @@ split.i.i:                                        ; preds = %bb.g
   br i1 %.not193.i, label %.thread179.i, label %.lr.ph.i.i.preheader.i.i
 
 .thread179.i:                                     ; preds = %split.i.i
-  %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 %.pre19.i.i
-  %.ptr48100.i.a = getelementptr inbounds nuw i8, ptr %i.x, i64 15 ; 2 uses
-  store <11 x i8> <i8 32, i8 40, i8 117, i8 110, i8 105, i8 120, i8 32, i8 116, i8 105, i8 109, i8 101>, ptr %.ptr48100.i.a, align 1, !tbaa !7
+  %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 %.pre19.i.i ; 4 uses
+  %.ptr48100.i = getelementptr inbounds nuw i8, ptr %i.x, i64 15 ; 2 uses
+  store <8 x i8> <i8 32, i8 40, i8 117, i8 110, i8 105, i8 120, i8 32, i8 116>, ptr %.ptr48100.i, align 1, !tbaa !7
+  %8 = getelementptr inbounds nuw i8, ptr %i.x, i64 23
+  store i8 105, ptr %8, align 1, !tbaa !7
+  %9 = getelementptr inbounds nuw i8, ptr %i.x, i64 24
+  store i8 109, ptr %9, align 1, !tbaa !7
+  %.ptr48100.i.a = getelementptr inbounds nuw i8, ptr %i.x, i64 25
+  store i8 101, ptr %.ptr48100.i.a, align 1, !tbaa !7
   br label %bb.s
 
 .lr.ph.i.i.preheader.i.i:                         ; preds = %bb.f, %split.i.i
@@ -229,7 +243,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %.thread179.i
   %.add103110117125132140147155162170177185.i = phi i64 [ 16, %.thread179.i ], [ %.add.i, %bb.r ]
-  %.ptr48104109118124133139148154163169178184.i = phi ptr [ %.ptr48100.i.a, %.thread179.i ], [ %.ptr48.i, %bb.r ]
+  %.ptr48104109118124133139148154163169178184.i = phi ptr [ %.ptr48100.i, %.thread179.i ], [ %.ptr48.i, %bb.r ]
   %i.at = getelementptr inbounds nuw i8, ptr %.ptr48104109118124133139148154163169178184.i, i64 11
   store i8 41, ptr %i.at, align 1, !tbaa !7
   br label %_ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit6.i
@@ -632,7 +646,13 @@ _ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit15.loopexit.i: 
 
 _ZN6google12_GLOBAL__N_116MinimalFormatter12AppendStringEPKc.exit20.i: ; preds = %_ZN6google12_GLOBAL__N_112DumpTimeInfoEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  store <11 x i8> <i8 42, i8 42, i8 42, i8 32, i8 83, i8 105, i8 103, i8 110, i8 97, i8 108, i8 32>, ptr %i.a, align 16, !tbaa !7
+  store <8 x i8> <i8 42, i8 42, i8 42, i8 32, i8 83, i8 105, i8 103, i8 110>, ptr %i.a, align 16, !tbaa !7
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i8 97, ptr %10, align 8, !tbaa !7
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
+  store i8 108, ptr %11, align 1, !tbaa !7
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
+  store i8 32, ptr %12, align 2, !tbaa !7
   %.ptr174.i = getelementptr inbounds nuw i8, ptr %i.a, i64 11 ; 3 uses
   %i.ep = sext i32 %0 to i64
   br label %bb.br

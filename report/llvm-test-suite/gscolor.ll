@@ -200,15 +200,21 @@ declare void @gx_color_from_hsb(ptr noundef, i16 noundef zeroext, i16 noundef ze
 ; Function Attrs: nounwind uwtable
 define dso_local noundef i32 @gs_currenthsbcolor(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) initializes((0, 12)) %1) local_unnamed_addr #3 {
 bb.a:
-  %i.a = alloca [3 x i16], align 8                ; 4 uses
+  %i.a = alloca [3 x i16], align 4                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 304
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !8
   call void @gx_color_to_hsb(ptr noundef %i.c, ptr noundef nonnull %i.a) #11
-  %2 = load <3 x i16>, ptr %i.a, align 8, !tbaa !26
-  %3 = uitofp <3 x i16> %2 to <3 x float>
-  %4 = fdiv <3 x float> %3, splat (float 6.553500e+04)
-  store <3 x float> %4, ptr %1, align 4, !tbaa !31
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %3 = load i16, ptr %2, align 4, !tbaa !26
+  %4 = load <2 x i16>, ptr %i.a, align 4, !tbaa !26
+  %5 = uitofp <2 x i16> %4 to <2 x float>
+  %6 = fdiv <2 x float> %5, splat (float 6.553500e+04)
+  store <2 x float> %6, ptr %1, align 4, !tbaa !31
+  %7 = uitofp i16 %3 to float
+  %8 = fdiv float %7, 6.553500e+04
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float %8, ptr %9, align 4, !tbaa !31
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 0
 }
@@ -218,12 +224,15 @@ declare void @gx_color_to_hsb(ptr noundef, ptr noundef) local_unnamed_addr #4
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @tri_return(i16 noundef zeroext %0, i16 noundef zeroext %1, i16 noundef zeroext %2, ptr noundef writeonly captures(none) initializes((0, 12)) %3) local_unnamed_addr #2 {
 bb.a:
-  %4 = insertelement <3 x i16> poison, i16 %0, i64 0
-  %5 = insertelement <3 x i16> %4, i16 %1, i64 1
-  %6 = insertelement <3 x i16> %5, i16 %2, i64 2
-  %7 = uitofp <3 x i16> %6 to <3 x float>
-  %8 = fdiv <3 x float> %7, splat (float 6.553500e+04)
-  store <3 x float> %8, ptr %3, align 4, !tbaa !31
+  %4 = insertelement <2 x i16> poison, i16 %0, i64 0
+  %5 = insertelement <2 x i16> %4, i16 %1, i64 1
+  %6 = uitofp <2 x i16> %5 to <2 x float>
+  %7 = fdiv <2 x float> %6, splat (float 6.553500e+04)
+  store <2 x float> %7, ptr %3, align 4, !tbaa !31
+  %8 = uitofp i16 %2 to float
+  %9 = fdiv float %8, 6.553500e+04
+  %10 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store float %9, ptr %10, align 4, !tbaa !31
   ret void
 }
 
@@ -302,21 +311,33 @@ declare void @gx_color_from_rgb(ptr noundef) local_unnamed_addr #4
 define dso_local noundef i32 @gs_currentrgbcolor(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) initializes((0, 12)) %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 304
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !8
-  %2 = load <3 x i16>, ptr %i.b, align 2, !tbaa !26
-  %3 = uitofp <3 x i16> %2 to <3 x float>
-  %4 = fdiv <3 x float> %3, splat (float 6.553500e+04)
-  store <3 x float> %4, ptr %1, align 4, !tbaa !31
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
+  %3 = load i16, ptr %2, align 2, !tbaa !37
+  %4 = load <2 x i16>, ptr %i.b, align 2, !tbaa !26
+  %5 = uitofp <2 x i16> %4 to <2 x float>
+  %6 = fdiv <2 x float> %5, splat (float 6.553500e+04)
+  store <2 x float> %6, ptr %1, align 4, !tbaa !31
+  %7 = uitofp i16 %3 to float
+  %8 = fdiv float %7, 6.553500e+04
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float %8, ptr %9, align 4, !tbaa !31
   ret i32 0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local noundef i32 @gs_colorrgb(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) initializes((0, 12)) %1) local_unnamed_addr #7 {
 bb.a:
-  %2 = load <3 x i16>, ptr %0, align 2, !tbaa !26
-  %3 = uitofp <3 x i16> %2 to <3 x float>
-  %4 = fdiv <3 x float> %3, splat (float 6.553500e+04)
-  store <3 x float> %4, ptr %1, align 4, !tbaa !31
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %3 = load i16, ptr %2, align 2, !tbaa !37
+  %4 = load <2 x i16>, ptr %0, align 2, !tbaa !26
+  %5 = uitofp <2 x i16> %4 to <2 x float>
+  %6 = fdiv <2 x float> %5, splat (float 6.553500e+04)
+  store <2 x float> %6, ptr %1, align 4, !tbaa !31
+  %7 = uitofp i16 %3 to float
+  %8 = fdiv float %7, 6.553500e+04
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store float %8, ptr %9, align 4, !tbaa !31
   ret i32 0
 }
 

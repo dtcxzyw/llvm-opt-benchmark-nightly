@@ -201,15 +201,25 @@ _ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit: ; preds = %bb
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !25
   %i.h = invoke noundef ptr %i.g(i32 noundef 5, ptr noundef null, ptr noundef null, ptr noundef null)
-          to label %bb.c unwind label %bb.j, !inline_history !46
+          to label %bb.c unwind label %bb.j, !inline_history !46 ; 6 uses
 
 bb.c:                                             ; preds = %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit
-  %12 = insertelement <13 x ptr> poison, ptr %i.h, i64 0
-  %13 = shufflevector <13 x ptr> %12, <13 x ptr> poison, <13 x i32> zeroinitializer
-  %14 = icmp eq <13 x ptr> %13, <ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIbE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIsE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagItE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIiE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIjE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIlE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagImE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIxE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIyE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIdE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIfE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEE9kDummyVarE>
-  %15 = bitcast <13 x i1> %14 to i13
-  %.not60 = icmp eq i13 %15, 0
-  br i1 %.not60, label %bb.d, label %bb.v
+  %12 = insertelement <8 x ptr> poison, ptr %i.h, i64 0
+  %13 = shufflevector <8 x ptr> %12, <8 x ptr> poison, <8 x i32> zeroinitializer
+  %14 = icmp eq <8 x ptr> %13, <ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIbE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIsE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagItE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIiE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIjE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIlE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagImE9kDummyVarE, ptr @_ZN4absl12lts_2025051213base_internal11FastTypeTagIxE9kDummyVarE>
+  %15 = icmp eq ptr %i.h, @_ZN4absl12lts_2025051213base_internal11FastTypeTagIyE9kDummyVarE
+  %16 = icmp eq ptr %i.h, @_ZN4absl12lts_2025051213base_internal11FastTypeTagIdE9kDummyVarE
+  %17 = icmp eq ptr %i.h, @_ZN4absl12lts_2025051213base_internal11FastTypeTagIfE9kDummyVarE
+  %18 = icmp eq ptr %i.h, @_ZN4absl12lts_2025051213base_internal11FastTypeTagINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE9kDummyVarE
+  %.not60 = icmp eq ptr %i.h, @_ZN4absl12lts_2025051213base_internal11FastTypeTagISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS9_EEE9kDummyVarE
+  %19 = bitcast <8 x i1> %14 to i8
+  %20 = icmp ne i8 %19, 0
+  %op.rdx = or i1 %20, %15
+  %op.rdx60 = or i1 %16, %17
+  %op.rdx61 = or i1 %18, %.not60
+  %op.rdx62 = or i1 %op.rdx, %op.rdx60
+  %op.rdx63 = or i1 %op.rdx62, %op.rdx61
+  br i1 %op.rdx63, label %bb.v, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
