@@ -1,0 +1,207 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index f1d47abe79365..2ef57437c1de8 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -7582,31 +7582,35 @@ static bool reduceSwitchRange(SwitchInst *SI, IRBuilder<> &Builder,
+   if (isSwitchDense(Values))
+     return false;
+ 
+-  // First, transform the values such that they start at zero and ascend.
++  auto TryBase = [&](int64_t CandidateBase, unsigned &CandidateShift) {
++    SmallVector<int64_t, 4> ReducedValues;
++    ReducedValues.reserve(Values.size());
++    uint64_t ReducedBits = 0;
++    for (int64_t V : Values) {
++      uint64_t Reduced = (uint64_t)V - (uint64_t)CandidateBase;
++      ReducedBits |= Reduced;
++      ReducedValues.push_back((int64_t)Reduced);
++    }
++
++    CandidateShift = llvm::countr_zero(ReducedBits);
++    if (CandidateShift >= 64)
++      return false;
++    if (CandidateShift > 0)
++      for (auto &V : ReducedValues)
++        V = (int64_t)((uint64_t)V >> CandidateShift);
++
++    return isSwitchDense(ReducedValues);
++  };
++
++  // Choose the base to subtract from the switch condition. The default is the
++  // local minimum, but prefer Base=0 when the case values are still dense
++  // after shifting out their common low zero bits without subtracting a base.
++  // This avoids creating an unnecessary `(condition - local_min)` expression.
+   int64_t Base = Values[0];
+-  for (auto &V : Values)
+-    V -= (uint64_t)(Base);
+-
+-  // Now we have signed numbers that have been shifted so that, given enough
+-  // precision, there are no negative values. Since the rest of the transform
+-  // is bitwise only, we switch now to an unsigned representation.
+-
+-  // This transform can be done speculatively because it is so cheap - it
+-  // results in a single rotate operation being inserted.
+-
+-  // countTrailingZeros(0) returns 64. As Values is guaranteed to have more than
+-  // one element and LLVM disallows duplicate cases, Shift is guaranteed to be
+-  // less than 64.
+-  unsigned Shift = 64;
+-  for (auto &V : Values)
+-    Shift = std::min(Shift, (unsigned)llvm::countr_zero((uint64_t)V));
+-  assert(Shift < 64);
+-  if (Shift > 0)
+-    for (auto &V : Values)
+-      V = (int64_t)((uint64_t)V >> Shift);
+-
+-  if (!isSwitchDense(Values))
+-    // Transform didn't create a dense switch.
++  unsigned Shift = 0;
++  if (Base >= 0 && TryBase(0, Shift))
++    Base = 0;
++  else if (!TryBase(Base, Shift))
+     return false;
+ 
+   // The obvious transform is to shift the switch condition right and emit a
+@@ -7621,8 +7625,9 @@ static bool reduceSwitchRange(SwitchInst *SI, IRBuilder<> &Builder,
+ 
+   auto *Ty = cast<IntegerType>(SI->getCondition()->getType());
+   Builder.SetInsertPoint(SI);
+-  Value *Sub =
+-      Builder.CreateSub(SI->getCondition(), ConstantInt::getSigned(Ty, Base));
++  Value *Sub = SI->getCondition();
++  if (Base != 0)
++    Sub = Builder.CreateSub(Sub, ConstantInt::getSigned(Ty, Base));
+   Value *Rot = Builder.CreateIntrinsic(
+       Ty, Intrinsic::fshl,
+       {Sub, Sub, ConstantInt::get(Ty, Ty->getBitWidth() - Shift)});
+diff --git a/llvm/test/Transforms/SimplifyCFG/rangereduce.ll b/llvm/test/Transforms/SimplifyCFG/rangereduce.ll
+index 5444a730bab1c..5358e6ec68ddb 100644
+--- a/llvm/test/Transforms/SimplifyCFG/rangereduce.ll
++++ b/llvm/test/Transforms/SimplifyCFG/rangereduce.ll
+@@ -286,12 +286,12 @@ three:
+ 
+ define i32 @test9(i32 %a) {
+ ; CHECK-LABEL: @test9(
+-; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[A:%.*]], 6
+-; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.fshl.i32(i32 [[TMP1]], i32 [[TMP1]], i32 31)
+-; CHECK-NEXT:    [[TMP3:%.*]] = icmp ult i32 [[TMP2]], 8
++; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.fshl.i32(i32 [[TMP1:%.*]], i32 [[TMP1]], i32 31)
++; CHECK-NEXT:    [[SWITCH_TABLEIDX:%.*]] = sub i32 [[TMP2]], 3
++; CHECK-NEXT:    [[TMP3:%.*]] = icmp ult i32 [[SWITCH_TABLEIDX]], 8
+ ; CHECK-NEXT:    br i1 [[TMP3]], label [[SWITCH_LOOKUP:%.*]], label [[COMMON_RET:%.*]]
+ ; CHECK:       switch.lookup:
+-; CHECK-NEXT:    [[TMP4:%.*]] = zext nneg i32 [[TMP2]] to i64
++; CHECK-NEXT:    [[TMP4:%.*]] = zext nneg i32 [[SWITCH_TABLEIDX]] to i64
+ ; CHECK-NEXT:    [[SWITCH_GEP:%.*]] = getelementptr inbounds [8 x i32], ptr @switch.table.test9, i64 0, i64 [[TMP4]]
+ ; CHECK-NEXT:    [[SWITCH_LOAD:%.*]] = load i32, ptr [[SWITCH_GEP]], align 4
+ ; CHECK-NEXT:    br label [[COMMON_RET]]
+@@ -317,6 +317,109 @@ three:
+   ret i32 99783
+ }
+ 
++; Base=0 is profitable here: shifting out the common low zero bits produces a
++; dense range without subtracting the local minimum first.
++define void @test10(i32 %a) {
++; CHECK-LABEL: @test10(
++; CHECK-NEXT:    [[TMP1:%.*]] = call i32 @llvm.fshl.i32(i32 [[A:%.*]], i32 [[A]], i32 27)
++; CHECK-NEXT:    switch i32 [[TMP1]], label [[COMMON_RET:%.*]] [
++; CHECK-NEXT:      i32 1, label [[ONE:%.*]]
++; CHECK-NEXT:      i32 2, label [[TWO:%.*]]
++; CHECK-NEXT:      i32 3, label [[THREE:%.*]]
++; CHECK-NEXT:      i32 4, label [[FOUR:%.*]]
++; CHECK-NEXT:    ]
++; CHECK:       common.ret:
++; CHECK-NEXT:    ret void
++; CHECK:       one:
++; CHECK-NEXT:    call void @side_effect(i32 32)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       two:
++; CHECK-NEXT:    call void @side_effect(i32 64)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       three:
++; CHECK-NEXT:    call void @side_effect(i32 96)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       four:
++; CHECK-NEXT:    call void @side_effect(i32 128)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++;
++  switch i32 %a, label %def [
++  i32 32, label %one
++  i32 64, label %two
++  i32 96, label %three
++  i32 128, label %four
++  ]
++
++def:
++  ret void
++
++one:
++  call void @side_effect(i32 32)
++  ret void
++two:
++  call void @side_effect(i32 64)
++  ret void
++three:
++  call void @side_effect(i32 96)
++  ret void
++four:
++  call void @side_effect(i32 128)
++  ret void
++}
++
++; Base=0 is not dense after shifting, so this should still subtract the local
++; minimum before reducing the range.
++define void @test11(i32 %a) {
++; CHECK-LABEL: @test11(
++; CHECK-NEXT:    [[TMP1:%.*]] = sub i32 [[A:%.*]], 40
++; CHECK-NEXT:    [[TMP2:%.*]] = call i32 @llvm.fshl.i32(i32 [[TMP1]], i32 [[TMP1]], i32 27)
++; CHECK-NEXT:    switch i32 [[TMP2]], label [[COMMON_RET:%.*]] [
++; CHECK-NEXT:      i32 0, label [[ONE:%.*]]
++; CHECK-NEXT:      i32 1, label [[TWO:%.*]]
++; CHECK-NEXT:      i32 2, label [[THREE:%.*]]
++; CHECK-NEXT:      i32 3, label [[FOUR:%.*]]
++; CHECK-NEXT:    ]
++; CHECK:       common.ret:
++; CHECK-NEXT:    ret void
++; CHECK:       one:
++; CHECK-NEXT:    call void @side_effect(i32 40)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       two:
++; CHECK-NEXT:    call void @side_effect(i32 72)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       three:
++; CHECK-NEXT:    call void @side_effect(i32 104)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++; CHECK:       four:
++; CHECK-NEXT:    call void @side_effect(i32 136)
++; CHECK-NEXT:    br label [[COMMON_RET]]
++;
++  switch i32 %a, label %def [
++  i32 40, label %one
++  i32 72, label %two
++  i32 104, label %three
++  i32 136, label %four
++  ]
++
++def:
++  ret void
++
++one:
++  call void @side_effect(i32 40)
++  ret void
++two:
++  call void @side_effect(i32 72)
++  ret void
++three:
++  call void @side_effect(i32 104)
++  ret void
++four:
++  call void @side_effect(i32 136)
++  ret void
++}
++
++declare void @side_effect(i32)
++
+ !0 = !{!"function_entry_count", i32 100}
+ !1 = !{!"branch_weights", i32 5, i32 7, i32 11, i32 13, i32 17}
+ ;.
