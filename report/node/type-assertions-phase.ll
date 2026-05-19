@@ -201,15 +201,16 @@ _ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeERKNS2_
   %.sroa.0.0.extract.trunc = trunc i64 %.sroa.03.0.i31 to i32 ; 3 uses
   %.sroa.5.0.extract.shift = lshr i64 %.sroa.03.0.i31, 32
   %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32 ; 3 uses
-  %6 = icmp ule i32 %.sroa.046.0.extract.trunc, %.sroa.548.0.extract.trunc
-  %7 = icmp ule i32 %.sroa.0.0.extract.trunc, %.sroa.5.0.extract.trunc
-  %.neg55 = zext i1 %6 to i32
-  %.neg51.a = sub i32 %.sroa.548.0.extract.trunc, %.sroa.046.0.extract.trunc
-  %i.dy = add i32 %.neg51.a, %.neg55
+  %6 = icmp ugt i32 %.sroa.046.0.extract.trunc, %.sroa.548.0.extract.trunc
+  %.neg = zext i1 %6 to i32
+  %7 = icmp ugt i32 %.sroa.0.0.extract.trunc, %.sroa.5.0.extract.trunc
   %8 = sext i1 %7 to i32
-  %i.dz = sub i32 %.sroa.0.0.extract.trunc, %.sroa.5.0.extract.trunc
-  %i.ea = add i32 %i.dz, %8
-  %9 = icmp ult i32 %i.dy, %i.ea
+  %.neg51.a = sub i32 %.sroa.5.0.extract.trunc, %.sroa.0.0.extract.trunc
+  %i.dy = add i32 %.neg51.a, %8
+  %.p.i.i.neg = add i32 %.sroa.046.0.extract.trunc, -2
+  %i.dz = sub i32 %.p.i.i.neg, %.sroa.548.0.extract.trunc
+  %i.ea = add i32 %i.dz, %.neg
+  %9 = icmp ugt i32 %i.ea, %i.dy
   br i1 %9, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm32EE9MakeRangeERKNS2_8WordTypeILm32EEE.exit42
@@ -612,15 +613,16 @@ bb.n:                                             ; preds = %_ZN2v88internal8com
 _ZN2v88internal8compiler10turboshaft18WordOperationTyperILm64EE9MakeRangeERKNS2_8WordTypeILm64EEE.exit38: ; preds = %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm64EE9MakeRangeERKNS2_8WordTypeILm64EEE.exit, %bb.n, %.preheader.i.i23, %._crit_edge.loopexit.i.i33
   %.pn12.i24 = phi i64 [ %.pre.i.i35, %._crit_edge.loopexit.i.i33 ], [ %i.db, %bb.n ], [ %i.da, %.preheader.i.i23 ], [ %i.s, %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm64EE9MakeRangeERKNS2_8WordTypeILm64EEE.exit ] ; 3 uses
   %.pn10.i25 = phi i64 [ %.pre29.i.i37, %._crit_edge.loopexit.i.i33 ], [ %i.da, %bb.n ], [ %i.db, %.preheader.i.i23 ], [ %i.p, %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm64EE9MakeRangeERKNS2_8WordTypeILm64EEE.exit ] ; 3 uses
-  %6 = icmp ule i64 %.pn12.i, %.pn10.i
-  %7 = icmp ule i64 %.pn12.i24, %.pn10.i25
-  %.neg52 = zext i1 %6 to i64
-  %.neg48.a = sub i64 %.pn10.i, %.pn12.i
-  %i.du = add i64 %.neg48.a, %.neg52
+  %6 = icmp ugt i64 %.pn12.i, %.pn10.i
+  %.neg = zext i1 %6 to i64
+  %7 = icmp ugt i64 %.pn12.i24, %.pn10.i25
   %8 = sext i1 %7 to i64
-  %i.dv = sub i64 %.pn12.i24, %.pn10.i25
-  %i.dw = add i64 %i.dv, %8
-  %9 = icmp ult i64 %i.du, %i.dw
+  %.neg48.a = sub i64 %.pn10.i25, %.pn12.i24
+  %i.du = add i64 %.neg48.a, %8
+  %.p.i.i.neg = add i64 %.pn12.i, -2
+  %i.dv = sub i64 %.p.i.i.neg, %.pn10.i
+  %i.dw = add i64 %i.dv, %.neg
+  %9 = icmp ugt i64 %i.dw, %i.du
   br i1 %9, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN2v88internal8compiler10turboshaft18WordOperationTyperILm64EE9MakeRangeERKNS2_8WordTypeILm64EEE.exit38
