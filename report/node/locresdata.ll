@@ -201,11 +201,11 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.n = load i16, ptr %i.j, align 2
-  %i.o = zext i16 %i.n to i32
-  %4 = add nsw i32 %i.o, -98                      ; 2 uses
-  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 31) ; 3 uses
-  %i.p = icmp ult i32 %5, 10
-  %switch.maskindex = trunc i32 %5 to i16
+  %i.o = zext i16 %i.n to i32                     ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %i.o, i32 %i.o, i32 31)
+  %switch.tableidx = add i32 %4, -49              ; 3 uses
+  %i.p = icmp ult i32 %switch.tableidx, 10
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 801, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond21 = select i1 %i.p, i1 %switch.lobit, i1 false
@@ -216,7 +216,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 switch.lookup:                                    ; preds = %bb.f
-  %i.q = zext nneg i32 %5 to i64
+  %i.q = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [4 x i8], ptr @switch.table._ZN12_GLOBAL__N_126_uloc_getOrientationHelperEPKcS1_R10UErrorCode, i64 %i.q
   %switch.load = load i32, ptr %switch.gep, align 4
   br label %bb.h

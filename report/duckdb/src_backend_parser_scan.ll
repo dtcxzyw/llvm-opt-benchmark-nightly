@@ -201,11 +201,11 @@ _ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit: ; preds = %bb.bv,
   %i.sw = load ptr, ptr %i.aw, align 8, !tbaa !32
   %i.sx = getelementptr inbounds nuw i8, ptr %i.sw, i64 1
   %i.sy = load i8, ptr %i.sx, align 1, !tbaa !34  ; 4 uses
-  %i.sz = zext i8 %i.sy to i32
-  %3 = add nsw i32 %i.sz, -98                     ; 2 uses
-  %4 = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 31) ; 3 uses
-  %i.ta = icmp ult i32 %4, 10
-  %switch.maskindex = trunc i32 %4 to i16
+  %i.sz = zext i8 %i.sy to i32                    ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %i.sz, i32 %i.sz, i32 31)
+  %switch.tableidx = add i32 %3, -49              ; 3 uses
+  %i.ta = icmp ult i32 %switch.tableidx, 10
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 837, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond = select i1 %i.ta, i1 %switch.lobit, i1 false
@@ -222,7 +222,7 @@ bb.cd:                                            ; preds = %bb.cc
   br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit
 
 switch.lookup:                                    ; preds = %_ZN17duckdb_libpgqueryL27check_string_escape_warningEhPv.exit
-  %i.td = zext nneg i32 %4 to i64
+  %i.td = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table._ZN17duckdb_libpgquery10core_yylexEPNS_12core_YYSTYPEEPiPv, i64 %i.td
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %_ZN17duckdb_libpgqueryL20unescape_single_charEhPv.exit

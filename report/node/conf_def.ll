@@ -201,7 +201,7 @@ is_keytype.exit214:                               ; preds = %is_keytype.exit208
 bb.h:                                             ; preds = %is_keytype.exit214
   %i.bi = getelementptr inbounds nuw i8, ptr %.0138, i64 1
   %i.bj = getelementptr inbounds nuw i8, ptr %.0138, i64 2
-  %i.bk = load i8, ptr %i.bi, align 1, !tbaa !26  ; 5 uses
+  %i.bk = load i8, ptr %i.bi, align 1, !tbaa !26  ; 6 uses
   %i.bl = icmp slt i8 %i.bk, 0
   br i1 %i.bl, label %is_keytype.exit217.thread, label %is_keytype.exit217
 
@@ -214,19 +214,19 @@ is_keytype.exit217:                               ; preds = %bb.h
   br i1 %.not187, label %is_keytype.exit217.thread, label %bb.x
 
 is_keytype.exit217.thread:                        ; preds = %bb.h, %is_keytype.exit217
-  %4 = add i8 %i.bk, -98                          ; 2 uses
-  %5 = tail call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 7) ; 3 uses
-  %i.bq = icmp ult i8 %5, 10
+  %4 = tail call i8 @llvm.fshl.i8(i8 %i.bk, i8 %i.bk, i8 7)
+  %switch.tableidx = add i8 %4, -49               ; 3 uses
+  %i.bq = icmp ult i8 %switch.tableidx, 10
   br i1 %i.bq, label %switch.hole_check, label %bb.i
 
 switch.hole_check:                                ; preds = %is_keytype.exit217.thread
-  %switch.maskindex = zext nneg i8 %5 to i16
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
   %switch.shifted = lshr i16 833, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   br i1 %switch.lobit, label %switch.lookup, label %bb.i
 
 switch.lookup:                                    ; preds = %switch.hole_check
-  %i.br = zext nneg i8 %5 to i64
+  %i.br = zext nneg i8 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.str_copy, i64 %i.br
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.i

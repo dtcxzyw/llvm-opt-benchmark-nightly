@@ -200,18 +200,18 @@ bb.z:                                             ; preds = %.preheader147
   br i1 %i.gq, label %bb.ac, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.gr = sext i8 %i.gp to i32
-  %0 = add nsw i32 %i.gr, -92                     ; 2 uses
-  %1 = call i32 @llvm.fshl.i32(i32 %0, i32 %0, i32 31) ; 3 uses
-  %i.gs = icmp ult i32 %1, 13
-  %switch.maskindex = trunc i32 %1 to i16
+  %i.gr = sext i8 %i.gp to i32                    ; 2 uses
+  %0 = call i32 @llvm.fshl.i32(i32 %i.gr, i32 %i.gr, i32 31)
+  %switch.tableidx = add i32 %0, -46              ; 3 uses
+  %i.gs = icmp ult i32 %switch.tableidx, 13
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 6697, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond198 = select i1 %i.gs, i1 %switch.lobit, i1 false
   br i1 %or.cond198, label %switch.lookup, label %bb.ab
 
 switch.lookup:                                    ; preds = %bb.aa
-  %i.gt = zext nneg i32 %1 to i64
+  %i.gt = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.execute, i64 %i.gt
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %.sink.split

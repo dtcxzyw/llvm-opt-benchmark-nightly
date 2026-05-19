@@ -201,9 +201,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define noundef zeroext i1 @_ZN6duckdb26TemporaryBufferSizeIsValidENS_19TemporaryBufferSizeE(i64 noundef %0) local_unnamed_addr #7 {
 bb.a:
-  %1 = add i64 %0, -32768                         ; 2 uses
-  %2 = tail call i64 @llvm.fshl.i64(i64 %1, i64 %1, i64 49)
-  %switch = icmp ult i64 %2, 8
+  %1 = tail call i64 @llvm.fshl.i64(i64 %0, i64 %0, i64 49)
+  %.off = add i64 %1, -1
+  %switch = icmp ult i64 %.off, 8
   ret i1 %switch
 }
 

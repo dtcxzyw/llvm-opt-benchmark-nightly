@@ -201,18 +201,18 @@ skip_signature.exit:                              ; preds = %bb.d
   br i1 %.not15, label %skip_signature.exit.thread, label %bb.f
 
 skip_signature.exit.thread:                       ; preds = %.preheader, %bb.e, %bb.b, %bb.c, %bb.a, %skip_signature.exit
-  %i.n = and i32 %2, -65
-  %3 = add i32 %i.n, -4                           ; 2 uses
-  %4 = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 30) ; 3 uses
-  %i.o = icmp ult i32 %4, 10
-  %switch.maskindex = trunc i32 %4 to i16
+  %i.n = and i32 %2, -65                          ; 2 uses
+  %3 = tail call i32 @llvm.fshl.i32(i32 %i.n, i32 %i.n, i32 30)
+  %switch.tableidx = add i32 %3, -1               ; 3 uses
+  %i.o = icmp ult i32 %switch.tableidx, 10
+  %switch.maskindex = trunc i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 819, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond = select i1 %i.o, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %signature_from_flags.exit
 
 switch.lookup:                                    ; preds = %skip_signature.exit.thread
-  %i.p = zext nneg i32 %4 to i64
+  %i.p = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._PyType_GetTextSignatureFromInternalDoc, i64 %i.p
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.q = tail call ptr @PyUnicode_FromString(ptr noundef nonnull %switch.load) #24

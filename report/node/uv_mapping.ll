@@ -200,14 +200,14 @@ define hidden zeroext range(i8 0, 8) i8 @uvwasi__stat_to_filetype(ptr noundef re
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !13
-  %i.c = and i64 %i.b, 61440
-  %i.d = add nsw i64 %i.c, -4096                  ; 2 uses
-  %i.e = icmp ult i64 %i.d, 49152
+  %1 = lshr i64 %i.b, 12
+  %i.c = and i64 %1, 15
+  %i.d = add nsw i64 %i.c, -1                     ; 2 uses
+  %i.e = icmp ult i64 %i.d, 12
   br i1 %i.e, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %1 = lshr exact i64 %i.d, 12
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %1
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %i.d
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %bb.b
 
@@ -241,14 +241,14 @@ bb.a:
   store i64 %i.i, ptr %i.j, align 8, !tbaa !23
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.l = load i64, ptr %i.k, align 8, !tbaa !13
-  %i.m = and i64 %i.l, 61440
-  %i.n = add nsw i64 %i.m, -4096                  ; 2 uses
-  %i.o = icmp ult i64 %i.n, 49152
+  %2 = lshr i64 %i.l, 12
+  %i.m = and i64 %2, 15
+  %i.n = add nsw i64 %i.m, -1                     ; 2 uses
+  %i.o = icmp ult i64 %i.n, 12
   br i1 %i.o, label %switch.lookup, label %uvwasi__stat_to_filetype.exit
 
 switch.lookup:                                    ; preds = %bb.a
-  %2 = lshr exact i64 %i.n, 12
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %2
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %i.n
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %uvwasi__stat_to_filetype.exit
 
@@ -312,14 +312,14 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 120
   %i.e = load i64, ptr %i.d, align 8, !tbaa !13
-  %i.f = and i64 %i.e, 61440
-  %i.g = add nsw i64 %i.f, -4096                  ; 2 uses
-  %i.h = icmp ult i64 %i.g, 49152
+  %3 = lshr i64 %i.e, 12
+  %i.f = and i64 %3, 15
+  %i.g = add nsw i64 %i.f, -1                     ; 2 uses
+  %i.h = icmp ult i64 %i.g, 12
   br i1 %i.h, label %switch.lookup, label %uvwasi__stat_to_filetype.exit
 
 switch.lookup:                                    ; preds = %bb.e
-  %3 = lshr exact i64 %i.g, 12
-  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %3
+  %switch.gep = getelementptr inbounds nuw i8, ptr @switch.table.uvwasi__get_filetype_by_fd, i64 %i.g
   %switch.load = load i8, ptr %switch.gep, align 1
   br label %uvwasi__stat_to_filetype.exit
 

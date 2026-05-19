@@ -201,10 +201,10 @@ bb.kg:                                            ; preds = %bb.ke, %bb.kf
   br label %bb.kh
 
 bb.kh:                                            ; preds = %.sink.split, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.kg, %bb.jw
-  %i.bkj = load i8, ptr %i.t, align 8, !tbaa !8   ; 2 uses
-  %14 = add i8 %i.bkj, -24                        ; 2 uses
-  %15 = call i8 @llvm.fshl.i8(i8 %14, i8 %14, i8 7) ; 2 uses
-  %i.bkk = icmp ult i8 %15, 9
+  %i.bkj = load i8, ptr %i.t, align 8, !tbaa !8   ; 3 uses
+  %14 = call i8 @llvm.fshl.i8(i8 %i.bkj, i8 %i.bkj, i8 7)
+  %switch.tableidx = add i8 %14, -12              ; 2 uses
+  %i.bkk = icmp ult i8 %switch.tableidx, 9
   br i1 %i.bkk, label %switch.hole_check, label %bb.ki
 
 bb.ki:                                            ; preds = %switch.hole_check, %bb.kh
@@ -213,7 +213,7 @@ bb.ki:                                            ; preds = %switch.hole_check, 
   br label %switch.lookup
 
 switch.hole_check:                                ; preds = %bb.kh
-  %switch.maskindex = zext nneg i8 %15 to i16
+  %switch.maskindex = zext nneg i8 %switch.tableidx to i16
   %switch.shifted = lshr i16 451, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   br i1 %switch.lobit, label %switch.lookup, label %bb.ki

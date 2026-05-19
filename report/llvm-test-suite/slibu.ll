@@ -201,18 +201,18 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.10 = phi ptr [ %i.ag, %bb.v ], [ %.9, %bb.u ] ; 2 uses
-  %1 = and i32 %0, 61440
-  %2 = add nsw i32 %1, -4096                      ; 2 uses
-  %3 = lshr exact i32 %2, 12                      ; 2 uses
-  %i.ah = icmp ult i32 %2, 49152
-  %switch.maskindex = trunc i32 %3 to i16
+  %1 = lshr i32 %0, 12
+  %2 = and i32 %1, 15
+  %switch.tableidx = add nsw i32 %2, -1           ; 3 uses
+  %i.ah = icmp ult i32 %switch.tableidx, 12
+  %switch.maskindex = trunc nsw i32 %switch.tableidx to i16
   %switch.shifted = lshr i16 2731, %switch.maskindex
   %switch.lobit = trunc i16 %switch.shifted to i1
   %or.cond = select i1 %i.ah, i1 %switch.lobit, i1 false
   br i1 %or.cond, label %switch.lookup, label %.thread59
 
 switch.lookup:                                    ; preds = %bb.w
-  %i.ai = zext nneg i32 %3 to i64
+  %i.ai = zext nneg i32 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.decode_st_moden, i64 %i.ai
   %switch.load = load ptr, ptr %switch.gep, align 8
   %i.aj = tail call ptr @cintern(ptr noundef nonnull %switch.load) #27

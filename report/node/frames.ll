@@ -201,13 +201,13 @@ _ZNK2v88internal4wasm13ValueTypeBase22machine_representationEv.exit55.thread: ; 
   br i1 %i.bd, label %.preheader, label %bb.e
 
 .preheader:                                       ; preds = %_ZNK2v88internal4wasm13ValueTypeBase22machine_representationEv.exit55.thread
-  %i.be = add i32 %.sroa.057.0.extract.trunc, -2  ; 2 uses
-  %i.bf = icmp ult i32 %i.be, 18
+  %3 = lshr exact i32 %.sroa.057.0.extract.trunc, 1
+  %i.be = add nsw i32 %3, -1                      ; 2 uses
+  %i.bf = icmp ult i32 %i.be, 9
   br i1 %i.bf, label %switch.lookup, label %.loopexit
 
 switch.lookup:                                    ; preds = %.preheader
-  %3 = lshr exact i32 %i.be, 1
-  %i.bg = zext nneg i32 %3 to i64
+  %i.bg = zext nneg i32 %i.be to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK2v88internal10TypedFrame37IterateParamsOfGenericWasmToJSWrapperEPNS0_11RootVisitorE, i64 %i.bg
   %switch.load = load i64, ptr %switch.gep, align 8
   br label %.loopexit

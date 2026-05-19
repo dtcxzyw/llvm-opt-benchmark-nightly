@@ -201,10 +201,10 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not83, label %.critedge93, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bc = load i32, ptr %i.a, align 4, !tbaa !5   ; 2 uses
-  %2 = add i32 %i.bc, -8                          ; 2 uses
-  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 29)
-  %switch = icmp ult i32 %3, 4
+  %i.bc = load i32, ptr %i.a, align 4, !tbaa !5   ; 3 uses
+  %2 = call i32 @llvm.fshl.i32(i32 %i.bc, i32 %i.bc, i32 29)
+  %.off = add i32 %2, -1
+  %switch = icmp ult i32 %.off, 4
   br i1 %switch, label %bb.v, label %.critedge93
 
 bb.v:                                             ; preds = %bb.u
