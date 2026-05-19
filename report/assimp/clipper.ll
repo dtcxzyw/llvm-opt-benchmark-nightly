@@ -201,17 +201,16 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.q = phi i64 [ %i.p, %bb.b ], [ %i.l, %bb.a ] ; 2 uses
+  %i.q = phi i64 [ %i.p, %bb.b ], [ %i.l, %bb.a ]
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = icmp eq i64 %i.n, 0
-  %i.r = sub nsw i64 0, %i.q
-  %4 = xor i64 %i.q, -1
-  %i.s = sub i64 0, %i.n
-  %.sink.i = select i1 %3, i64 %i.r, i64 %4
-  store i64 %i.s, ptr %0, align 8
-  store i64 %.sink.i, ptr %i.j, align 8
+  %3 = icmp ne i64 %i.n, 0
+  %i.r = sub i64 0, %i.n
+  %4 = sext i1 %3 to i64
+  %i.s = sub nsw i64 %4, %i.q
+  store i64 %i.r, ptr %0, align 8
+  store i64 %i.s, ptr %i.j, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -614,42 +613,35 @@ bb.a:
   %i.h = load i64, ptr %i.g, align 8
   %i.i = load i64, ptr %1, align 8
   %i.j = sub nsw i64 %i.h, %i.i                   ; 3 uses
-  br i1 %2, label %3, label %bb.b
+  br i1 %2, label %_ZN10ClipperLib9Int128MulExx.exit, label %bb.b
 
-3:                                                ; preds = %bb.a
+_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %bb.a
   %.not.unshifted.i = xor i64 %i.j, %i.f
-  %.not.i = icmp sgt i64 %.not.unshifted.i, -1
+  %.not.i = icmp sgt i64 %.not.unshifted.i, -1    ; 2 uses
   %spec.select.i = tail call i64 @llvm.abs.i64(i64 %i.f, i1 true) ; 2 uses
-  %4 = lshr i64 %spec.select.i, 32                ; 2 uses
-  %5 = and i64 %spec.select.i, 4294967295         ; 2 uses
+  %3 = lshr i64 %spec.select.i, 32                ; 2 uses
+  %4 = and i64 %spec.select.i, 4294967295         ; 2 uses
   %.024.i = tail call i64 @llvm.abs.i64(i64 %i.j, i1 true) ; 2 uses
-  %6 = lshr i64 %.024.i, 32                       ; 2 uses
-  %7 = and i64 %.024.i, 4294967295                ; 2 uses
-  %8 = mul nuw nsw i64 %6, %4
-  %9 = mul nuw i64 %7, %5                         ; 2 uses
-  %10 = mul nuw nsw i64 %7, %4
-  %11 = mul nuw nsw i64 %6, %5
-  %12 = add nuw i64 %10, %11                      ; 2 uses
-  %13 = lshr i64 %12, 32
-  %14 = add nuw nsw i64 %13, %8
-  %15 = shl i64 %12, 32
-  %16 = add i64 %15, %9                           ; 4 uses
-  %17 = icmp ult i64 %16, %9
-  %18 = zext i1 %17 to i64
-  %spec.select = add nuw nsw i64 %14, %18         ; 3 uses
-  br i1 %.not.i, label %_ZN10ClipperLib9Int128MulExx.exit, label %19
-
-19:                                               ; preds = %3
-  %20 = icmp eq i64 %16, 0
-  %21 = sub nsw i64 0, %spec.select
-  %22 = xor i64 %spec.select, -1
-  %23 = sub i64 0, %16
-  %.sink.i.i = select i1 %20, i64 %21, i64 %22
-  br label %_ZN10ClipperLib9Int128MulExx.exit
-
-_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %3, %19
-  %.sroa.524.1 = phi i64 [ %spec.select, %3 ], [ %.sink.i.i, %19 ]
-  %.sroa.023.0 = phi i64 [ %16, %3 ], [ %23, %19 ]
+  %5 = lshr i64 %.024.i, 32                       ; 2 uses
+  %6 = and i64 %.024.i, 4294967295                ; 2 uses
+  %7 = mul nuw nsw i64 %5, %3
+  %8 = mul nuw i64 %6, %4                         ; 2 uses
+  %9 = mul nuw nsw i64 %6, %3
+  %10 = mul nuw nsw i64 %5, %4
+  %11 = add nuw i64 %9, %10                       ; 2 uses
+  %12 = lshr i64 %11, 32
+  %13 = add nuw nsw i64 %12, %7
+  %14 = shl i64 %11, 32
+  %15 = add i64 %14, %8                           ; 4 uses
+  %16 = icmp ult i64 %15, %8
+  %17 = zext i1 %16 to i64
+  %spec.select = add nuw nsw i64 %13, %17         ; 2 uses
+  %18 = icmp ne i64 %15, 0
+  %19 = sub i64 0, %15
+  %20 = sext i1 %18 to i64
+  %.sink.i.i = sub nsw i64 %20, %spec.select
+  %.sroa.524.1 = select i1 %.not.i, i64 %spec.select, i64 %.sink.i.i
+  %.sroa.023.0 = select i1 %.not.i, i64 %15, i64 %19
   %i.k = load i64, ptr %i.a, align 8
   %i.l = load i64, ptr %0, align 8
   %i.m = sub nsw i64 %i.k, %i.l                   ; 2 uses
@@ -659,7 +651,7 @@ _ZN10ClipperLib9Int128MulExx.exit:                ; preds = %3, %19
   %i.q = load i64, ptr %i.p, align 8
   %i.r = sub nsw i64 %i.o, %i.q                   ; 2 uses
   %.not.unshifted.i17 = xor i64 %i.r, %i.m
-  %.not.i18 = icmp sgt i64 %.not.unshifted.i17, -1
+  %.not.i18 = icmp sgt i64 %.not.unshifted.i17, -1 ; 2 uses
   %spec.select.i19 = tail call i64 @llvm.abs.i64(i64 %i.m, i1 true) ; 2 uses
   %i.s = lshr i64 %spec.select.i19, 32            ; 2 uses
   %i.t = and i64 %spec.select.i19, 4294967295     ; 2 uses
@@ -677,23 +669,16 @@ _ZN10ClipperLib9Int128MulExx.exit:                ; preds = %3, %19
   %i.ae = add i64 %i.ad, %i.x                     ; 4 uses
   %i.af = icmp ult i64 %i.ae, %i.x
   %i.ag = zext i1 %i.af to i64
-  %spec.select26 = add nuw nsw i64 %i.ac, %i.ag   ; 3 uses
-  br i1 %.not.i18, label %_ZN10ClipperLib9Int128MulExx.exit22, label %24
-
-24:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit
-  %25 = icmp eq i64 %i.ae, 0
-  %26 = sub nsw i64 0, %spec.select26
-  %27 = xor i64 %spec.select26, -1
-  %28 = sub i64 0, %i.ae
-  %.sink.i.i21 = select i1 %25, i64 %26, i64 %27
-  br label %_ZN10ClipperLib9Int128MulExx.exit22
-
-_ZN10ClipperLib9Int128MulExx.exit22:              ; preds = %_ZN10ClipperLib9Int128MulExx.exit, %24
-  %.sroa.5.1 = phi i64 [ %spec.select26, %_ZN10ClipperLib9Int128MulExx.exit ], [ %.sink.i.i21, %24 ]
-  %.sroa.0.0 = phi i64 [ %i.ae, %_ZN10ClipperLib9Int128MulExx.exit ], [ %28, %24 ]
-  %29 = icmp eq i64 %.sroa.524.1, %.sroa.5.1
-  %30 = icmp eq i64 %.sroa.023.0, %.sroa.0.0
-  %31 = select i1 %29, i1 %30, i1 false
+  %spec.select26 = add nuw nsw i64 %i.ac, %i.ag   ; 2 uses
+  %21 = icmp ne i64 %i.ae, 0
+  %22 = sub i64 0, %i.ae
+  %23 = sext i1 %21 to i64
+  %.sink.i.i21 = sub nsw i64 %23, %spec.select26
+  %.sroa.5.1 = select i1 %.not.i18, i64 %spec.select26, i64 %.sink.i.i21
+  %.sroa.0.0 = select i1 %.not.i18, i64 %i.ae, i64 %22
+  %24 = icmp eq i64 %.sroa.524.1, %.sroa.5.1
+  %25 = icmp eq i64 %.sroa.023.0, %.sroa.0.0
+  %26 = select i1 %24, i1 %25, i1 false
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -710,8 +695,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ar = icmp eq i64 %i.ah, %i.aq
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit22
-  %.0 = phi i1 [ %31, %_ZN10ClipperLib9Int128MulExx.exit22 ], [ %i.ar, %bb.b ]
+bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit
+  %.0 = phi i1 [ %26, %_ZN10ClipperLib9Int128MulExx.exit ], [ %i.ar, %bb.b ]
   ret i1 %.0
 }
 
@@ -720,46 +705,39 @@ define hidden noundef zeroext i1 @_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S
 bb.a:
   %i.a = sub nsw i64 %1, %3                       ; 3 uses
   %i.b = sub nsw i64 %2, %4                       ; 3 uses
-  br i1 %6, label %7, label %bb.b
+  br i1 %6, label %_ZN10ClipperLib9Int128MulExx.exit, label %bb.b
 
-7:                                                ; preds = %bb.a
+_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %bb.a
   %.not.unshifted.i = xor i64 %i.b, %i.a
-  %.not.i = icmp sgt i64 %.not.unshifted.i, -1
+  %.not.i = icmp sgt i64 %.not.unshifted.i, -1    ; 2 uses
   %spec.select.i = tail call i64 @llvm.abs.i64(i64 %i.a, i1 true) ; 2 uses
-  %8 = lshr i64 %spec.select.i, 32                ; 2 uses
-  %9 = and i64 %spec.select.i, 4294967295         ; 2 uses
+  %7 = lshr i64 %spec.select.i, 32                ; 2 uses
+  %8 = and i64 %spec.select.i, 4294967295         ; 2 uses
   %.024.i = tail call i64 @llvm.abs.i64(i64 %i.b, i1 true) ; 2 uses
-  %10 = lshr i64 %.024.i, 32                      ; 2 uses
-  %11 = and i64 %.024.i, 4294967295               ; 2 uses
-  %12 = mul nuw nsw i64 %10, %8
-  %13 = mul nuw i64 %11, %9                       ; 2 uses
-  %14 = mul nuw nsw i64 %11, %8
-  %15 = mul nuw nsw i64 %10, %9
-  %16 = add nuw i64 %14, %15                      ; 2 uses
-  %17 = lshr i64 %16, 32
-  %18 = add nuw nsw i64 %17, %12
-  %19 = shl i64 %16, 32
-  %20 = add i64 %19, %13                          ; 4 uses
-  %21 = icmp ult i64 %20, %13
-  %22 = zext i1 %21 to i64
-  %spec.select = add nuw nsw i64 %18, %22         ; 3 uses
-  br i1 %.not.i, label %_ZN10ClipperLib9Int128MulExx.exit, label %23
-
-23:                                               ; preds = %7
-  %24 = icmp eq i64 %20, 0
-  %25 = sub nsw i64 0, %spec.select
-  %26 = xor i64 %spec.select, -1
-  %27 = sub i64 0, %20
-  %.sink.i.i = select i1 %24, i64 %25, i64 %26
-  br label %_ZN10ClipperLib9Int128MulExx.exit
-
-_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %7, %23
-  %.sroa.521.1 = phi i64 [ %spec.select, %7 ], [ %.sink.i.i, %23 ]
-  %.sroa.020.0 = phi i64 [ %20, %7 ], [ %27, %23 ]
+  %9 = lshr i64 %.024.i, 32                       ; 2 uses
+  %10 = and i64 %.024.i, 4294967295               ; 2 uses
+  %11 = mul nuw nsw i64 %9, %7
+  %12 = mul nuw i64 %10, %8                       ; 2 uses
+  %13 = mul nuw nsw i64 %10, %7
+  %14 = mul nuw nsw i64 %9, %8
+  %15 = add nuw i64 %13, %14                      ; 2 uses
+  %16 = lshr i64 %15, 32
+  %17 = add nuw nsw i64 %16, %11
+  %18 = shl i64 %15, 32
+  %19 = add i64 %18, %12                          ; 4 uses
+  %20 = icmp ult i64 %19, %12
+  %21 = zext i1 %20 to i64
+  %spec.select = add nuw nsw i64 %17, %21         ; 2 uses
+  %22 = icmp ne i64 %19, 0
+  %23 = sub i64 0, %19
+  %24 = sext i1 %22 to i64
+  %.sink.i.i = sub nsw i64 %24, %spec.select
+  %.sroa.521.1 = select i1 %.not.i, i64 %spec.select, i64 %.sink.i.i
+  %.sroa.020.0 = select i1 %.not.i, i64 %19, i64 %23
   %i.c = sub nsw i64 %0, %2                       ; 2 uses
   %i.d = sub nsw i64 %3, %5                       ; 2 uses
   %.not.unshifted.i14 = xor i64 %i.d, %i.c
-  %.not.i15 = icmp sgt i64 %.not.unshifted.i14, -1
+  %.not.i15 = icmp sgt i64 %.not.unshifted.i14, -1 ; 2 uses
   %spec.select.i16 = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true) ; 2 uses
   %i.e = lshr i64 %spec.select.i16, 32            ; 2 uses
   %i.f = and i64 %spec.select.i16, 4294967295     ; 2 uses
@@ -777,23 +755,16 @@ _ZN10ClipperLib9Int128MulExx.exit:                ; preds = %7, %23
   %i.q = add i64 %i.p, %i.j                       ; 4 uses
   %i.r = icmp ult i64 %i.q, %i.j
   %i.s = zext i1 %i.r to i64
-  %spec.select23 = add nuw nsw i64 %i.o, %i.s     ; 3 uses
-  br i1 %.not.i15, label %_ZN10ClipperLib9Int128MulExx.exit19, label %28
-
-28:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit
-  %29 = icmp eq i64 %i.q, 0
-  %30 = sub nsw i64 0, %spec.select23
-  %31 = xor i64 %spec.select23, -1
-  %32 = sub i64 0, %i.q
-  %.sink.i.i18 = select i1 %29, i64 %30, i64 %31
-  br label %_ZN10ClipperLib9Int128MulExx.exit19
-
-_ZN10ClipperLib9Int128MulExx.exit19:              ; preds = %_ZN10ClipperLib9Int128MulExx.exit, %28
-  %.sroa.5.1 = phi i64 [ %spec.select23, %_ZN10ClipperLib9Int128MulExx.exit ], [ %.sink.i.i18, %28 ]
-  %.sroa.0.0 = phi i64 [ %i.q, %_ZN10ClipperLib9Int128MulExx.exit ], [ %32, %28 ]
-  %33 = icmp eq i64 %.sroa.521.1, %.sroa.5.1
-  %34 = icmp eq i64 %.sroa.020.0, %.sroa.0.0
-  %35 = select i1 %33, i1 %34, i1 false
+  %spec.select23 = add nuw nsw i64 %i.o, %i.s     ; 2 uses
+  %25 = icmp ne i64 %i.q, 0
+  %26 = sub i64 0, %i.q
+  %27 = sext i1 %25 to i64
+  %.sink.i.i18 = sub nsw i64 %27, %spec.select23
+  %.sroa.5.1 = select i1 %.not.i15, i64 %spec.select23, i64 %.sink.i.i18
+  %.sroa.0.0 = select i1 %.not.i15, i64 %i.q, i64 %26
+  %28 = icmp eq i64 %.sroa.521.1, %.sroa.5.1
+  %29 = icmp eq i64 %.sroa.020.0, %.sroa.0.0
+  %30 = select i1 %28, i1 %29, i1 false
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -804,8 +775,8 @@ bb.b:                                             ; preds = %bb.a
   %i.x = icmp eq i64 %i.t, %i.w
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit19
-  %.0 = phi i1 [ %35, %_ZN10ClipperLib9Int128MulExx.exit19 ], [ %i.x, %bb.b ]
+bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit
+  %.0 = phi i1 [ %30, %_ZN10ClipperLib9Int128MulExx.exit ], [ %i.x, %bb.b ]
   ret i1 %.0
 }
 
@@ -815,48 +786,41 @@ bb.a:
   %i.a = sub nsw i64 %1, %3                       ; 3 uses
   %i.b = load i64, ptr %6, align 8
   %i.c = sub nsw i64 %4, %i.b                     ; 3 uses
-  br i1 %7, label %8, label %bb.b
+  br i1 %7, label %_ZN10ClipperLib9Int128MulExx.exit, label %bb.b
 
-8:                                                ; preds = %bb.a
+_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %bb.a
   %.not.unshifted.i = xor i64 %i.c, %i.a
-  %.not.i = icmp sgt i64 %.not.unshifted.i, -1
+  %.not.i = icmp sgt i64 %.not.unshifted.i, -1    ; 2 uses
   %spec.select.i = tail call i64 @llvm.abs.i64(i64 %i.a, i1 true) ; 2 uses
-  %9 = lshr i64 %spec.select.i, 32                ; 2 uses
-  %10 = and i64 %spec.select.i, 4294967295        ; 2 uses
+  %8 = lshr i64 %spec.select.i, 32                ; 2 uses
+  %9 = and i64 %spec.select.i, 4294967295         ; 2 uses
   %.024.i = tail call i64 @llvm.abs.i64(i64 %i.c, i1 true) ; 2 uses
-  %11 = lshr i64 %.024.i, 32                      ; 2 uses
-  %12 = and i64 %.024.i, 4294967295               ; 2 uses
-  %13 = mul nuw nsw i64 %11, %9
-  %14 = mul nuw i64 %12, %10                      ; 2 uses
-  %15 = mul nuw nsw i64 %12, %9
-  %16 = mul nuw nsw i64 %11, %10
-  %17 = add nuw i64 %15, %16                      ; 2 uses
-  %18 = lshr i64 %17, 32
-  %19 = add nuw nsw i64 %18, %13
-  %20 = shl i64 %17, 32
-  %21 = add i64 %20, %14                          ; 4 uses
-  %22 = icmp ult i64 %21, %14
-  %23 = zext i1 %22 to i64
-  %spec.select = add nuw nsw i64 %19, %23         ; 3 uses
-  br i1 %.not.i, label %_ZN10ClipperLib9Int128MulExx.exit, label %24
-
-24:                                               ; preds = %8
-  %25 = icmp eq i64 %21, 0
-  %26 = sub nsw i64 0, %spec.select
-  %27 = xor i64 %spec.select, -1
-  %28 = sub i64 0, %21
-  %.sink.i.i = select i1 %25, i64 %26, i64 %27
-  br label %_ZN10ClipperLib9Int128MulExx.exit
-
-_ZN10ClipperLib9Int128MulExx.exit:                ; preds = %8, %24
-  %.sroa.518.1 = phi i64 [ %spec.select, %8 ], [ %.sink.i.i, %24 ]
-  %.sroa.017.0 = phi i64 [ %21, %8 ], [ %28, %24 ]
+  %10 = lshr i64 %.024.i, 32                      ; 2 uses
+  %11 = and i64 %.024.i, 4294967295               ; 2 uses
+  %12 = mul nuw nsw i64 %10, %8
+  %13 = mul nuw i64 %11, %9                       ; 2 uses
+  %14 = mul nuw nsw i64 %11, %8
+  %15 = mul nuw nsw i64 %10, %9
+  %16 = add nuw i64 %14, %15                      ; 2 uses
+  %17 = lshr i64 %16, 32
+  %18 = add nuw nsw i64 %17, %12
+  %19 = shl i64 %16, 32
+  %20 = add i64 %19, %13                          ; 4 uses
+  %21 = icmp ult i64 %20, %13
+  %22 = zext i1 %21 to i64
+  %spec.select = add nuw nsw i64 %18, %22         ; 2 uses
+  %23 = icmp ne i64 %20, 0
+  %24 = sub i64 0, %20
+  %25 = sext i1 %23 to i64
+  %.sink.i.i = sub nsw i64 %25, %spec.select
+  %.sroa.518.1 = select i1 %.not.i, i64 %spec.select, i64 %.sink.i.i
+  %.sroa.017.0 = select i1 %.not.i, i64 %20, i64 %24
   %i.d = sub nsw i64 %0, %2                       ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.f = load i64, ptr %i.e, align 8
   %i.g = sub nsw i64 %5, %i.f                     ; 2 uses
   %.not.unshifted.i11 = xor i64 %i.g, %i.d
-  %.not.i12 = icmp sgt i64 %.not.unshifted.i11, -1
+  %.not.i12 = icmp sgt i64 %.not.unshifted.i11, -1 ; 2 uses
   %spec.select.i13 = tail call i64 @llvm.abs.i64(i64 %i.d, i1 true) ; 2 uses
   %i.h = lshr i64 %spec.select.i13, 32            ; 2 uses
   %i.i = and i64 %spec.select.i13, 4294967295     ; 2 uses
@@ -874,23 +838,16 @@ _ZN10ClipperLib9Int128MulExx.exit:                ; preds = %8, %24
   %i.t = add i64 %i.s, %i.m                       ; 4 uses
   %i.u = icmp ult i64 %i.t, %i.m
   %i.v = zext i1 %i.u to i64
-  %spec.select20 = add nuw nsw i64 %i.r, %i.v     ; 3 uses
-  br i1 %.not.i12, label %_ZN10ClipperLib9Int128MulExx.exit16, label %29
-
-29:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit
-  %30 = icmp eq i64 %i.t, 0
-  %31 = sub nsw i64 0, %spec.select20
-  %32 = xor i64 %spec.select20, -1
-  %33 = sub i64 0, %i.t
-  %.sink.i.i15 = select i1 %30, i64 %31, i64 %32
-  br label %_ZN10ClipperLib9Int128MulExx.exit16
-
-_ZN10ClipperLib9Int128MulExx.exit16:              ; preds = %_ZN10ClipperLib9Int128MulExx.exit, %29
-  %.sroa.5.1 = phi i64 [ %spec.select20, %_ZN10ClipperLib9Int128MulExx.exit ], [ %.sink.i.i15, %29 ]
-  %.sroa.0.0 = phi i64 [ %i.t, %_ZN10ClipperLib9Int128MulExx.exit ], [ %33, %29 ]
-  %34 = icmp eq i64 %.sroa.518.1, %.sroa.5.1
-  %35 = icmp eq i64 %.sroa.017.0, %.sroa.0.0
-  %36 = select i1 %34, i1 %35, i1 false
+  %spec.select20 = add nuw nsw i64 %i.r, %i.v     ; 2 uses
+  %26 = icmp ne i64 %i.t, 0
+  %27 = sub i64 0, %i.t
+  %28 = sext i1 %26 to i64
+  %.sink.i.i15 = sub nsw i64 %28, %spec.select20
+  %.sroa.5.1 = select i1 %.not.i12, i64 %spec.select20, i64 %.sink.i.i15
+  %.sroa.0.0 = select i1 %.not.i12, i64 %i.t, i64 %27
+  %29 = icmp eq i64 %.sroa.518.1, %.sroa.5.1
+  %30 = icmp eq i64 %.sroa.017.0, %.sroa.0.0
+  %31 = select i1 %29, i1 %30, i1 false
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -903,8 +860,8 @@ bb.b:                                             ; preds = %bb.a
   %i.ac = icmp eq i64 %i.w, %i.ab
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit16
-  %.0 = phi i1 [ %36, %_ZN10ClipperLib9Int128MulExx.exit16 ], [ %i.ac, %bb.b ]
+bb.c:                                             ; preds = %bb.b, %_ZN10ClipperLib9Int128MulExx.exit
+  %.0 = phi i1 [ %31, %_ZN10ClipperLib9Int128MulExx.exit ], [ %i.ac, %bb.b ]
   ret i1 %.0
 }
 
@@ -1307,46 +1264,39 @@ bb.ag:                                            ; preds = %bb.af
   %i.eu = trunc nuw i8 %i.et to i1
   %i.ev = sub nsw i64 %.sroa.220.0.copyload, %.sroa.218.0.copyload ; 3 uses
   %i.ew = sub nsw i64 %.sroa.015.0.copyload, %.sroa.0173.0.copyload ; 3 uses
-  br i1 %i.eu, label %2, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
+  br i1 %i.eu, label %_ZN10ClipperLib9Int128MulExx.exit.i, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
 
-2:                                                ; preds = %bb.ag
+_ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %bb.ag
   %.not.unshifted.i.i = xor i64 %i.ew, %i.ev
-  %.not.i.i129 = icmp sgt i64 %.not.unshifted.i.i, -1
+  %.not.i.i129 = icmp sgt i64 %.not.unshifted.i.i, -1 ; 2 uses
   %spec.select.i.i = call i64 @llvm.abs.i64(i64 %i.ev, i1 true) ; 2 uses
-  %3 = lshr i64 %spec.select.i.i, 32              ; 2 uses
-  %4 = and i64 %spec.select.i.i, 4294967295       ; 2 uses
+  %2 = lshr i64 %spec.select.i.i, 32              ; 2 uses
+  %3 = and i64 %spec.select.i.i, 4294967295       ; 2 uses
   %.024.i.i = call i64 @llvm.abs.i64(i64 %i.ew, i1 true) ; 2 uses
-  %5 = lshr i64 %.024.i.i, 32                     ; 2 uses
-  %6 = and i64 %.024.i.i, 4294967295              ; 2 uses
-  %7 = mul nuw nsw i64 %5, %3
-  %8 = mul nuw i64 %6, %4                         ; 2 uses
-  %9 = mul nuw nsw i64 %6, %3
-  %10 = mul nuw nsw i64 %5, %4
-  %11 = add nuw i64 %9, %10                       ; 2 uses
-  %12 = lshr i64 %11, 32
-  %13 = add nuw nsw i64 %12, %7
-  %14 = shl i64 %11, 32
-  %15 = add i64 %14, %8                           ; 4 uses
-  %16 = icmp ult i64 %15, %8
-  %17 = zext i1 %16 to i64
-  %spec.select.i130 = add nuw nsw i64 %13, %17    ; 3 uses
-  br i1 %.not.i.i129, label %_ZN10ClipperLib9Int128MulExx.exit.i, label %18
-
-18:                                               ; preds = %2
-  %19 = icmp eq i64 %15, 0
-  %20 = sub nsw i64 0, %spec.select.i130
-  %21 = xor i64 %spec.select.i130, -1
-  %22 = sub i64 0, %15
-  %.sink.i.i.i = select i1 %19, i64 %20, i64 %21
-  br label %_ZN10ClipperLib9Int128MulExx.exit.i
-
-_ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %18, %2
-  %.sroa.518.1.i = phi i64 [ %spec.select.i130, %2 ], [ %.sink.i.i.i, %18 ]
-  %.sroa.017.0.i = phi i64 [ %15, %2 ], [ %22, %18 ]
+  %4 = lshr i64 %.024.i.i, 32                     ; 2 uses
+  %5 = and i64 %.024.i.i, 4294967295              ; 2 uses
+  %6 = mul nuw nsw i64 %4, %2
+  %7 = mul nuw i64 %5, %3                         ; 2 uses
+  %8 = mul nuw nsw i64 %5, %2
+  %9 = mul nuw nsw i64 %4, %3
+  %10 = add nuw i64 %8, %9                        ; 2 uses
+  %11 = lshr i64 %10, 32
+  %12 = add nuw nsw i64 %11, %6
+  %13 = shl i64 %10, 32
+  %14 = add i64 %13, %7                           ; 4 uses
+  %15 = icmp ult i64 %14, %7
+  %16 = zext i1 %15 to i64
+  %spec.select.i130 = add nuw nsw i64 %12, %16    ; 2 uses
+  %17 = icmp ne i64 %14, 0
+  %18 = sub i64 0, %14
+  %19 = sext i1 %17 to i64
+  %.sink.i.i.i = sub nsw i64 %19, %spec.select.i130
+  %.sroa.518.1.i = select i1 %.not.i.i129, i64 %spec.select.i130, i64 %.sink.i.i.i
+  %.sroa.017.0.i = select i1 %.not.i.i129, i64 %14, i64 %18
   %i.ex = sub nsw i64 %.sroa.019.0.copyload, %.sroa.017.0.copyload ; 2 uses
   %i.ey = sub nsw i64 %.sroa.216.0.copyload, %.sroa.2174.0.copyload ; 2 uses
   %.not.unshifted.i11.i = xor i64 %i.ey, %i.ex
-  %.not.i12.i = icmp sgt i64 %.not.unshifted.i11.i, -1
+  %.not.i12.i = icmp sgt i64 %.not.unshifted.i11.i, -1 ; 2 uses
   %spec.select.i13.i = call i64 @llvm.abs.i64(i64 %i.ex, i1 true) ; 2 uses
   %i.ez = lshr i64 %spec.select.i13.i, 32         ; 2 uses
   %i.fa = and i64 %spec.select.i13.i, 4294967295  ; 2 uses
@@ -1364,24 +1314,17 @@ _ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %18, %2
   %i.fl = add i64 %i.fk, %i.fe                    ; 4 uses
   %i.fm = icmp ult i64 %i.fl, %i.fe
   %i.fn = zext i1 %i.fm to i64
-  %spec.select20.i = add nuw nsw i64 %i.fj, %i.fn ; 3 uses
-  br i1 %.not.i12.i, label %_ZN10ClipperLib9Int128MulExx.exit16.i, label %23
-
-23:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i
-  %24 = icmp eq i64 %i.fl, 0
-  %25 = sub nsw i64 0, %spec.select20.i
-  %26 = xor i64 %spec.select20.i, -1
-  %27 = sub i64 0, %i.fl
-  %.sink.i.i15.i = select i1 %24, i64 %25, i64 %26
-  br label %_ZN10ClipperLib9Int128MulExx.exit16.i
-
-_ZN10ClipperLib9Int128MulExx.exit16.i:            ; preds = %23, %_ZN10ClipperLib9Int128MulExx.exit.i
-  %.sroa.5.1.i = phi i64 [ %spec.select20.i, %_ZN10ClipperLib9Int128MulExx.exit.i ], [ %.sink.i.i15.i, %23 ]
-  %.sroa.0.0.i = phi i64 [ %i.fl, %_ZN10ClipperLib9Int128MulExx.exit.i ], [ %27, %23 ]
-  %28 = icmp eq i64 %.sroa.518.1.i, %.sroa.5.1.i
-  %29 = icmp eq i64 %.sroa.017.0.i, %.sroa.0.0.i
-  %30 = select i1 %28, i1 %29, i1 false
-  br i1 %30, label %bb.ah, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139
+  %spec.select20.i = add nuw nsw i64 %i.fj, %i.fn ; 2 uses
+  %20 = icmp ne i64 %i.fl, 0
+  %21 = sub i64 0, %i.fl
+  %22 = sext i1 %20 to i64
+  %.sink.i.i15.i = sub nsw i64 %22, %spec.select20.i
+  %.sroa.5.1.i = select i1 %.not.i12.i, i64 %spec.select20.i, i64 %.sink.i.i15.i
+  %.sroa.0.0.i = select i1 %.not.i12.i, i64 %i.fl, i64 %21
+  %23 = icmp eq i64 %.sroa.518.1.i, %.sroa.5.1.i
+  %24 = icmp eq i64 %.sroa.017.0.i, %.sroa.0.0.i
+  %25 = select i1 %23, i1 %24, i1 false
+  br i1 %25, label %bb.ah, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139
 
 _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit: ; preds = %bb.ag
   %i.fo = mul nsw i64 %i.ew, %i.ev
@@ -1391,7 +1334,7 @@ _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit: ; preds = %bb.ag
   %i.fs = icmp eq i64 %i.fo, %i.fr
   br i1 %i.fs, label %bb.ah, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139
 
-bb.ah:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit16.i, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
+bb.ah:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
   %i.ft = getelementptr inbounds nuw i8, ptr %i.y, i64 64
   %i.fu = load i32, ptr %i.ft, align 8
   %.not119 = icmp eq i32 %i.fu, 0
@@ -1472,7 +1415,7 @@ _ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_c
   store ptr %i.gv, ptr %i.s, align 8
   br label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139
 
-_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139: ; preds = %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i138, %bb.ak, %_ZN10ClipperLib9Int128MulExx.exit16.i, %bb.ai, %bb.ah, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit, %bb.af, %bb.ae, %bb.ad, %.loopexit188
+_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit139: ; preds = %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i138, %bb.ak, %_ZN10ClipperLib9Int128MulExx.exit.i, %bb.ai, %bb.ah, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit, %bb.af, %bb.ae, %bb.ad, %.loopexit188
   %i.gw = getelementptr inbounds nuw i8, ptr %i.y, i64 104 ; 2 uses
   %i.gx = load ptr, ptr %i.gw, align 8
   %.not121 = icmp eq ptr %i.gx, %i.aa
@@ -1518,46 +1461,39 @@ bb.ar:                                            ; preds = %bb.aq
   %i.hq = trunc nuw i8 %i.hp to i1
   %i.hr = sub nsw i64 %.sroa.211.0.copyload, %.sroa.29.0.copyload ; 3 uses
   %i.hs = sub nsw i64 %.sroa.06.0.copyload, %.sroa.0.0.copyload169 ; 3 uses
-  br i1 %i.hq, label %31, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159
+  br i1 %i.hq, label %_ZN10ClipperLib9Int128MulExx.exit.i147, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159
 
-31:                                               ; preds = %bb.ar
-  %.not.unshifted.i.i141 = xor i64 %i.hs, %i.hr
-  %.not.i.i142 = icmp sgt i64 %.not.unshifted.i.i141, -1
-  %spec.select.i.i143 = call i64 @llvm.abs.i64(i64 %i.hr, i1 true) ; 2 uses
-  %32 = lshr i64 %spec.select.i.i143, 32          ; 2 uses
-  %33 = and i64 %spec.select.i.i143, 4294967295   ; 2 uses
-  %.024.i.i144 = call i64 @llvm.abs.i64(i64 %i.hs, i1 true) ; 2 uses
-  %34 = lshr i64 %.024.i.i144, 32                 ; 2 uses
-  %35 = and i64 %.024.i.i144, 4294967295          ; 2 uses
-  %36 = mul nuw nsw i64 %34, %32
-  %37 = mul nuw i64 %35, %33                      ; 2 uses
-  %38 = mul nuw nsw i64 %35, %32
-  %39 = mul nuw nsw i64 %34, %33
-  %40 = add nuw i64 %38, %39                      ; 2 uses
-  %41 = lshr i64 %40, 32
-  %42 = add nuw nsw i64 %41, %36
-  %43 = shl i64 %40, 32
-  %44 = add i64 %43, %37                          ; 4 uses
-  %45 = icmp ult i64 %44, %37
-  %46 = zext i1 %45 to i64
-  %spec.select.i145 = add nuw nsw i64 %42, %46    ; 3 uses
-  br i1 %.not.i.i142, label %_ZN10ClipperLib9Int128MulExx.exit.i147, label %47
-
-47:                                               ; preds = %31
-  %48 = icmp eq i64 %44, 0
-  %49 = sub nsw i64 0, %spec.select.i145
-  %50 = xor i64 %spec.select.i145, -1
-  %51 = sub i64 0, %44
-  %.sink.i.i.i146 = select i1 %48, i64 %49, i64 %50
-  br label %_ZN10ClipperLib9Int128MulExx.exit.i147
-
-_ZN10ClipperLib9Int128MulExx.exit.i147:           ; preds = %47, %31
-  %.sroa.518.1.i148 = phi i64 [ %spec.select.i145, %31 ], [ %.sink.i.i.i146, %47 ]
-  %.sroa.017.0.i149 = phi i64 [ %44, %31 ], [ %51, %47 ]
+_ZN10ClipperLib9Int128MulExx.exit.i147:           ; preds = %bb.ar
+  %.not.unshifted.i.i142 = xor i64 %i.hs, %i.hr
+  %.not.i.i143 = icmp sgt i64 %.not.unshifted.i.i142, -1 ; 2 uses
+  %spec.select.i.i144 = call i64 @llvm.abs.i64(i64 %i.hr, i1 true) ; 2 uses
+  %26 = lshr i64 %spec.select.i.i144, 32          ; 2 uses
+  %27 = and i64 %spec.select.i.i144, 4294967295   ; 2 uses
+  %.024.i.i145 = call i64 @llvm.abs.i64(i64 %i.hs, i1 true) ; 2 uses
+  %28 = lshr i64 %.024.i.i145, 32                 ; 2 uses
+  %29 = and i64 %.024.i.i145, 4294967295          ; 2 uses
+  %30 = mul nuw nsw i64 %28, %26
+  %31 = mul nuw i64 %29, %27                      ; 2 uses
+  %32 = mul nuw nsw i64 %29, %26
+  %33 = mul nuw nsw i64 %28, %27
+  %34 = add nuw i64 %32, %33                      ; 2 uses
+  %35 = lshr i64 %34, 32
+  %36 = add nuw nsw i64 %35, %30
+  %37 = shl i64 %34, 32
+  %38 = add i64 %37, %31                          ; 4 uses
+  %39 = icmp ult i64 %38, %31
+  %40 = zext i1 %39 to i64
+  %spec.select.i146 = add nuw nsw i64 %36, %40    ; 2 uses
+  %41 = icmp ne i64 %38, 0
+  %42 = sub i64 0, %38
+  %43 = sext i1 %41 to i64
+  %.sink.i.i.i147 = sub nsw i64 %43, %spec.select.i146
+  %.sroa.518.1.i148 = select i1 %.not.i.i143, i64 %spec.select.i146, i64 %.sink.i.i.i147
+  %.sroa.017.0.i149 = select i1 %.not.i.i143, i64 %38, i64 %42
   %i.ht = sub nsw i64 %.sroa.010.0.copyload, %.sroa.08.0.copyload ; 2 uses
   %i.hu = sub nsw i64 %.sroa.27.0.copyload, %.sroa.2.0.copyload171 ; 2 uses
   %.not.unshifted.i11.i150 = xor i64 %i.hu, %i.ht
-  %.not.i12.i151 = icmp sgt i64 %.not.unshifted.i11.i150, -1
+  %.not.i12.i151 = icmp sgt i64 %.not.unshifted.i11.i150, -1 ; 2 uses
   %spec.select.i13.i152 = call i64 @llvm.abs.i64(i64 %i.ht, i1 true) ; 2 uses
   %i.hv = lshr i64 %spec.select.i13.i152, 32      ; 2 uses
   %i.hw = and i64 %spec.select.i13.i152, 4294967295 ; 2 uses
@@ -1575,24 +1511,17 @@ _ZN10ClipperLib9Int128MulExx.exit.i147:           ; preds = %47, %31
   %i.ih = add i64 %i.ig, %i.ia                    ; 4 uses
   %i.ii = icmp ult i64 %i.ih, %i.ia
   %i.ij = zext i1 %i.ii to i64
-  %spec.select20.i154 = add nuw nsw i64 %i.if, %i.ij ; 3 uses
-  br i1 %.not.i12.i151, label %_ZN10ClipperLib9Int128MulExx.exit16.i156, label %52
-
-52:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i147
-  %53 = icmp eq i64 %i.ih, 0
-  %54 = sub nsw i64 0, %spec.select20.i154
-  %55 = xor i64 %spec.select20.i154, -1
-  %56 = sub i64 0, %i.ih
-  %.sink.i.i15.i155 = select i1 %53, i64 %54, i64 %55
-  br label %_ZN10ClipperLib9Int128MulExx.exit16.i156
-
-_ZN10ClipperLib9Int128MulExx.exit16.i156:         ; preds = %52, %_ZN10ClipperLib9Int128MulExx.exit.i147
-  %.sroa.5.1.i157 = phi i64 [ %spec.select20.i154, %_ZN10ClipperLib9Int128MulExx.exit.i147 ], [ %.sink.i.i15.i155, %52 ]
-  %.sroa.0.0.i158 = phi i64 [ %i.ih, %_ZN10ClipperLib9Int128MulExx.exit.i147 ], [ %56, %52 ]
-  %57 = icmp eq i64 %.sroa.518.1.i148, %.sroa.5.1.i157
-  %58 = icmp eq i64 %.sroa.017.0.i149, %.sroa.0.0.i158
-  %59 = select i1 %57, i1 %58, i1 false
-  br i1 %59, label %bb.as, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168
+  %spec.select20.i154 = add nuw nsw i64 %i.if, %i.ij ; 2 uses
+  %44 = icmp ne i64 %i.ih, 0
+  %45 = sub i64 0, %i.ih
+  %46 = sext i1 %44 to i64
+  %.sink.i.i15.i155 = sub nsw i64 %46, %spec.select20.i154
+  %.sroa.5.1.i156 = select i1 %.not.i12.i151, i64 %spec.select20.i154, i64 %.sink.i.i15.i155
+  %.sroa.0.0.i157 = select i1 %.not.i12.i151, i64 %i.ih, i64 %45
+  %47 = icmp eq i64 %.sroa.518.1.i148, %.sroa.5.1.i156
+  %48 = icmp eq i64 %.sroa.017.0.i149, %.sroa.0.0.i157
+  %49 = select i1 %47, i1 %48, i1 false
+  br i1 %49, label %bb.as, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168
 
 _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159: ; preds = %bb.ar
   %i.ik = mul nsw i64 %i.hs, %i.hr
@@ -1602,7 +1531,7 @@ _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159: ; preds = %bb.ar
   %i.io = icmp eq i64 %i.ik, %i.in
   br i1 %i.io, label %bb.as, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168
 
-bb.as:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit16.i156, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159
+bb.as:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i147, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159
   %i.ip = getelementptr inbounds nuw i8, ptr %i.aa, i64 64
   %i.iq = load i32, ptr %i.ip, align 8
   %.not122 = icmp eq i32 %i.iq, 0
@@ -1683,7 +1612,7 @@ _ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_c
   store ptr %i.jr, ptr %i.s, align 8
   br label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168
 
-_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168: ; preds = %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i167, %bb.av, %_ZN10ClipperLib9Int128MulExx.exit16.i156, %bb.at, %bb.as, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159, %bb.aq, %bb.ap
+_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit168: ; preds = %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i167, %bb.av, %_ZN10ClipperLib9Int128MulExx.exit.i147, %bb.at, %bb.as, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit159, %bb.aq, %bb.ap
   %i.js = load ptr, ptr %i.gw, align 8            ; 3 uses
   %.not124 = icmp eq ptr %i.js, null
   %.not125190 = icmp eq ptr %i.js, %i.aa
@@ -2086,46 +2015,39 @@ bb.as:                                            ; preds = %bb.ar
   %i.hh = trunc nuw i8 %i.hg to i1
   %i.hi = sub nsw i64 %.sroa.220.0.copyload, %.sroa.218.0.copyload ; 3 uses
   %i.hj = sub nsw i64 %i.gj, %.sroa.0139.0.copyload ; 3 uses
-  br i1 %i.hh, label %3, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
+  br i1 %i.hh, label %_ZN10ClipperLib9Int128MulExx.exit.i, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
 
-3:                                                ; preds = %bb.as
+_ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %bb.as
   %.not.unshifted.i.i = xor i64 %i.hj, %i.hi
-  %.not.i.i96 = icmp sgt i64 %.not.unshifted.i.i, -1
+  %.not.i.i96 = icmp sgt i64 %.not.unshifted.i.i, -1 ; 2 uses
   %spec.select.i.i = tail call i64 @llvm.abs.i64(i64 %i.hi, i1 true) ; 2 uses
-  %4 = lshr i64 %spec.select.i.i, 32              ; 2 uses
-  %5 = and i64 %spec.select.i.i, 4294967295       ; 2 uses
+  %3 = lshr i64 %spec.select.i.i, 32              ; 2 uses
+  %4 = and i64 %spec.select.i.i, 4294967295       ; 2 uses
   %.024.i.i = tail call i64 @llvm.abs.i64(i64 %i.hj, i1 true) ; 2 uses
-  %6 = lshr i64 %.024.i.i, 32                     ; 2 uses
-  %7 = and i64 %.024.i.i, 4294967295              ; 2 uses
-  %8 = mul nuw nsw i64 %6, %4
-  %9 = mul nuw i64 %7, %5                         ; 2 uses
-  %10 = mul nuw nsw i64 %7, %4
-  %11 = mul nuw nsw i64 %6, %5
-  %12 = add nuw i64 %10, %11                      ; 2 uses
-  %13 = lshr i64 %12, 32
-  %14 = add nuw nsw i64 %13, %8
-  %15 = shl i64 %12, 32
-  %16 = add i64 %15, %9                           ; 4 uses
-  %17 = icmp ult i64 %16, %9
-  %18 = zext i1 %17 to i64
-  %spec.select.i = add nuw nsw i64 %14, %18       ; 3 uses
-  br i1 %.not.i.i96, label %_ZN10ClipperLib9Int128MulExx.exit.i, label %19
-
-19:                                               ; preds = %3
-  %20 = icmp eq i64 %16, 0
-  %21 = sub nsw i64 0, %spec.select.i
-  %22 = xor i64 %spec.select.i, -1
-  %23 = sub i64 0, %16
-  %.sink.i.i.i = select i1 %20, i64 %21, i64 %22
-  br label %_ZN10ClipperLib9Int128MulExx.exit.i
-
-_ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %19, %3
-  %.sroa.518.1.i = phi i64 [ %spec.select.i, %3 ], [ %.sink.i.i.i, %19 ]
-  %.sroa.017.0.i = phi i64 [ %16, %3 ], [ %23, %19 ]
+  %5 = lshr i64 %.024.i.i, 32                     ; 2 uses
+  %6 = and i64 %.024.i.i, 4294967295              ; 2 uses
+  %7 = mul nuw nsw i64 %5, %3
+  %8 = mul nuw i64 %6, %4                         ; 2 uses
+  %9 = mul nuw nsw i64 %6, %3
+  %10 = mul nuw nsw i64 %5, %4
+  %11 = add nuw i64 %9, %10                       ; 2 uses
+  %12 = lshr i64 %11, 32
+  %13 = add nuw nsw i64 %12, %7
+  %14 = shl i64 %11, 32
+  %15 = add i64 %14, %8                           ; 4 uses
+  %16 = icmp ult i64 %15, %8
+  %17 = zext i1 %16 to i64
+  %spec.select.i = add nuw nsw i64 %13, %17       ; 2 uses
+  %18 = icmp ne i64 %15, 0
+  %19 = sub i64 0, %15
+  %20 = sext i1 %18 to i64
+  %.sink.i.i.i = sub nsw i64 %20, %spec.select.i
+  %.sroa.518.1.i = select i1 %.not.i.i96, i64 %spec.select.i, i64 %.sink.i.i.i
+  %.sroa.017.0.i = select i1 %.not.i.i96, i64 %15, i64 %19
   %i.hk = sub nsw i64 %.sroa.019.0.copyload, %.sroa.017.0.copyload ; 2 uses
   %i.hl = sub nsw i64 %i.gn, %i.gw                ; 2 uses
   %.not.unshifted.i11.i = xor i64 %i.hl, %i.hk
-  %.not.i12.i = icmp sgt i64 %.not.unshifted.i11.i, -1
+  %.not.i12.i = icmp sgt i64 %.not.unshifted.i11.i, -1 ; 2 uses
   %spec.select.i13.i = tail call i64 @llvm.abs.i64(i64 %i.hk, i1 true) ; 2 uses
   %i.hm = lshr i64 %spec.select.i13.i, 32         ; 2 uses
   %i.hn = and i64 %spec.select.i13.i, 4294967295  ; 2 uses
@@ -2143,24 +2065,17 @@ _ZN10ClipperLib9Int128MulExx.exit.i:              ; preds = %19, %3
   %i.hy = add i64 %i.hx, %i.hr                    ; 4 uses
   %i.hz = icmp ult i64 %i.hy, %i.hr
   %i.ia = zext i1 %i.hz to i64
-  %spec.select20.i = add nuw nsw i64 %i.hw, %i.ia ; 3 uses
-  br i1 %.not.i12.i, label %_ZN10ClipperLib9Int128MulExx.exit16.i, label %24
-
-24:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i
-  %25 = icmp eq i64 %i.hy, 0
-  %26 = sub nsw i64 0, %spec.select20.i
-  %27 = xor i64 %spec.select20.i, -1
-  %28 = sub i64 0, %i.hy
-  %.sink.i.i15.i = select i1 %25, i64 %26, i64 %27
-  br label %_ZN10ClipperLib9Int128MulExx.exit16.i
-
-_ZN10ClipperLib9Int128MulExx.exit16.i:            ; preds = %24, %_ZN10ClipperLib9Int128MulExx.exit.i
-  %.sroa.5.1.i = phi i64 [ %spec.select20.i, %_ZN10ClipperLib9Int128MulExx.exit.i ], [ %.sink.i.i15.i, %24 ]
-  %.sroa.0.0.i = phi i64 [ %i.hy, %_ZN10ClipperLib9Int128MulExx.exit.i ], [ %28, %24 ]
-  %29 = icmp eq i64 %.sroa.518.1.i, %.sroa.5.1.i
-  %30 = icmp eq i64 %.sroa.017.0.i, %.sroa.0.0.i
-  %31 = select i1 %29, i1 %30, i1 false
-  br i1 %31, label %bb.at, label %bb.bb
+  %spec.select20.i = add nuw nsw i64 %i.hw, %i.ia ; 2 uses
+  %21 = icmp ne i64 %i.hy, 0
+  %22 = sub i64 0, %i.hy
+  %23 = sext i1 %21 to i64
+  %.sink.i.i15.i = sub nsw i64 %23, %spec.select20.i
+  %.sroa.5.1.i = select i1 %.not.i12.i, i64 %spec.select20.i, i64 %.sink.i.i15.i
+  %.sroa.0.0.i = select i1 %.not.i12.i, i64 %i.hy, i64 %22
+  %24 = icmp eq i64 %.sroa.518.1.i, %.sroa.5.1.i
+  %25 = icmp eq i64 %.sroa.017.0.i, %.sroa.0.0.i
+  %26 = select i1 %24, i1 %25, i1 false
+  br i1 %26, label %bb.at, label %bb.bb
 
 _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit: ; preds = %bb.as
   %i.ib = mul nsw i64 %i.hj, %i.hi
@@ -2170,7 +2085,7 @@ _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit: ; preds = %bb.as
   %i.if = icmp eq i64 %i.ib, %i.ie
   br i1 %i.if, label %bb.at, label %bb.bb
 
-bb.at:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit16.i, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
+bb.at:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit
   %i.ig = getelementptr inbounds nuw i8, ptr %i.gd, i64 64
   %i.ih = load i32, ptr %i.ig, align 8
   %.not79 = icmp eq i32 %i.ih, 0
@@ -2251,7 +2166,7 @@ _ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_c
   store ptr %i.ji, ptr %i.fo, align 8
   br label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105
 
-bb.bb:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit16.i, %bb.au, %bb.at, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an
+bb.bb:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i, %bb.au, %bb.at, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit, %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.an
   %.not81 = icmp eq ptr %i.gh, null
   br i1 %.not81, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105, label %bb.bc
 
@@ -2304,46 +2219,39 @@ bb.bg:                                            ; preds = %bb.bf
   %i.ki = trunc nuw i8 %i.kh to i1
   %i.kj = sub nsw i64 %.sroa.211.0.copyload, %.sroa.29.0.copyload ; 3 uses
   %i.kk = sub nsw i64 %i.jk, %.sroa.0.0.copyload135 ; 3 uses
-  br i1 %i.ki, label %32, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125
+  br i1 %i.ki, label %_ZN10ClipperLib9Int128MulExx.exit.i113, label %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125
 
-32:                                               ; preds = %bb.bg
-  %.not.unshifted.i.i107 = xor i64 %i.kk, %i.kj
-  %.not.i.i108 = icmp sgt i64 %.not.unshifted.i.i107, -1
-  %spec.select.i.i109 = tail call i64 @llvm.abs.i64(i64 %i.kj, i1 true) ; 2 uses
-  %33 = lshr i64 %spec.select.i.i109, 32          ; 2 uses
-  %34 = and i64 %spec.select.i.i109, 4294967295   ; 2 uses
-  %.024.i.i110 = tail call i64 @llvm.abs.i64(i64 %i.kk, i1 true) ; 2 uses
-  %35 = lshr i64 %.024.i.i110, 32                 ; 2 uses
-  %36 = and i64 %.024.i.i110, 4294967295          ; 2 uses
-  %37 = mul nuw nsw i64 %35, %33
-  %38 = mul nuw i64 %36, %34                      ; 2 uses
-  %39 = mul nuw nsw i64 %36, %33
-  %40 = mul nuw nsw i64 %35, %34
-  %41 = add nuw i64 %39, %40                      ; 2 uses
-  %42 = lshr i64 %41, 32
-  %43 = add nuw nsw i64 %42, %37
-  %44 = shl i64 %41, 32
-  %45 = add i64 %44, %38                          ; 4 uses
-  %46 = icmp ult i64 %45, %38
-  %47 = zext i1 %46 to i64
-  %spec.select.i111 = add nuw nsw i64 %43, %47    ; 3 uses
-  br i1 %.not.i.i108, label %_ZN10ClipperLib9Int128MulExx.exit.i113, label %48
-
-48:                                               ; preds = %32
-  %49 = icmp eq i64 %45, 0
-  %50 = sub nsw i64 0, %spec.select.i111
-  %51 = xor i64 %spec.select.i111, -1
-  %52 = sub i64 0, %45
-  %.sink.i.i.i112 = select i1 %49, i64 %50, i64 %51
-  br label %_ZN10ClipperLib9Int128MulExx.exit.i113
-
-_ZN10ClipperLib9Int128MulExx.exit.i113:           ; preds = %48, %32
-  %.sroa.518.1.i114 = phi i64 [ %spec.select.i111, %32 ], [ %.sink.i.i.i112, %48 ]
-  %.sroa.017.0.i115 = phi i64 [ %45, %32 ], [ %52, %48 ]
+_ZN10ClipperLib9Int128MulExx.exit.i113:           ; preds = %bb.bg
+  %.not.unshifted.i.i108 = xor i64 %i.kk, %i.kj
+  %.not.i.i109 = icmp sgt i64 %.not.unshifted.i.i108, -1 ; 2 uses
+  %spec.select.i.i110 = tail call i64 @llvm.abs.i64(i64 %i.kj, i1 true) ; 2 uses
+  %27 = lshr i64 %spec.select.i.i110, 32          ; 2 uses
+  %28 = and i64 %spec.select.i.i110, 4294967295   ; 2 uses
+  %.024.i.i111 = tail call i64 @llvm.abs.i64(i64 %i.kk, i1 true) ; 2 uses
+  %29 = lshr i64 %.024.i.i111, 32                 ; 2 uses
+  %30 = and i64 %.024.i.i111, 4294967295          ; 2 uses
+  %31 = mul nuw nsw i64 %29, %27
+  %32 = mul nuw i64 %30, %28                      ; 2 uses
+  %33 = mul nuw nsw i64 %30, %27
+  %34 = mul nuw nsw i64 %29, %28
+  %35 = add nuw i64 %33, %34                      ; 2 uses
+  %36 = lshr i64 %35, 32
+  %37 = add nuw nsw i64 %36, %31
+  %38 = shl i64 %35, 32
+  %39 = add i64 %38, %32                          ; 4 uses
+  %40 = icmp ult i64 %39, %32
+  %41 = zext i1 %40 to i64
+  %spec.select.i112 = add nuw nsw i64 %37, %41    ; 2 uses
+  %42 = icmp ne i64 %39, 0
+  %43 = sub i64 0, %39
+  %44 = sext i1 %42 to i64
+  %.sink.i.i.i113 = sub nsw i64 %44, %spec.select.i112
+  %.sroa.518.1.i114 = select i1 %.not.i.i109, i64 %spec.select.i112, i64 %.sink.i.i.i113
+  %.sroa.017.0.i115 = select i1 %.not.i.i109, i64 %39, i64 %43
   %i.kl = sub nsw i64 %.sroa.010.0.copyload, %.sroa.08.0.copyload ; 2 uses
   %i.km = sub nsw i64 %i.jo, %i.jx                ; 2 uses
   %.not.unshifted.i11.i116 = xor i64 %i.km, %i.kl
-  %.not.i12.i117 = icmp sgt i64 %.not.unshifted.i11.i116, -1
+  %.not.i12.i117 = icmp sgt i64 %.not.unshifted.i11.i116, -1 ; 2 uses
   %spec.select.i13.i118 = tail call i64 @llvm.abs.i64(i64 %i.kl, i1 true) ; 2 uses
   %i.kn = lshr i64 %spec.select.i13.i118, 32      ; 2 uses
   %i.ko = and i64 %spec.select.i13.i118, 4294967295 ; 2 uses
@@ -2361,24 +2269,17 @@ _ZN10ClipperLib9Int128MulExx.exit.i113:           ; preds = %48, %32
   %i.kz = add i64 %i.ky, %i.ks                    ; 4 uses
   %i.la = icmp ult i64 %i.kz, %i.ks
   %i.lb = zext i1 %i.la to i64
-  %spec.select20.i120 = add nuw nsw i64 %i.kx, %i.lb ; 3 uses
-  br i1 %.not.i12.i117, label %_ZN10ClipperLib9Int128MulExx.exit16.i122, label %53
-
-53:                                               ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i113
-  %54 = icmp eq i64 %i.kz, 0
-  %55 = sub nsw i64 0, %spec.select20.i120
-  %56 = xor i64 %spec.select20.i120, -1
-  %57 = sub i64 0, %i.kz
-  %.sink.i.i15.i121 = select i1 %54, i64 %55, i64 %56
-  br label %_ZN10ClipperLib9Int128MulExx.exit16.i122
-
-_ZN10ClipperLib9Int128MulExx.exit16.i122:         ; preds = %53, %_ZN10ClipperLib9Int128MulExx.exit.i113
-  %.sroa.5.1.i123 = phi i64 [ %spec.select20.i120, %_ZN10ClipperLib9Int128MulExx.exit.i113 ], [ %.sink.i.i15.i121, %53 ]
-  %.sroa.0.0.i124 = phi i64 [ %i.kz, %_ZN10ClipperLib9Int128MulExx.exit.i113 ], [ %57, %53 ]
-  %58 = icmp eq i64 %.sroa.518.1.i114, %.sroa.5.1.i123
-  %59 = icmp eq i64 %.sroa.017.0.i115, %.sroa.0.0.i124
-  %60 = select i1 %58, i1 %59, i1 false
-  br i1 %60, label %bb.bh, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105
+  %spec.select20.i120 = add nuw nsw i64 %i.kx, %i.lb ; 2 uses
+  %45 = icmp ne i64 %i.kz, 0
+  %46 = sub i64 0, %i.kz
+  %47 = sext i1 %45 to i64
+  %.sink.i.i15.i121 = sub nsw i64 %47, %spec.select20.i120
+  %.sroa.5.1.i122 = select i1 %.not.i12.i117, i64 %spec.select20.i120, i64 %.sink.i.i15.i121
+  %.sroa.0.0.i123 = select i1 %.not.i12.i117, i64 %i.kz, i64 %46
+  %48 = icmp eq i64 %.sroa.518.1.i114, %.sroa.5.1.i122
+  %49 = icmp eq i64 %.sroa.017.0.i115, %.sroa.0.0.i123
+  %50 = select i1 %48, i1 %49, i1 false
+  br i1 %50, label %bb.bh, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105
 
 _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125: ; preds = %bb.bg
   %i.lc = mul nsw i64 %i.kk, %i.kj
@@ -2388,7 +2289,7 @@ _ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125: ; preds = %bb.bg
   %i.lg = icmp eq i64 %i.lc, %i.lf
   br i1 %i.lg, label %bb.bh, label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105
 
-bb.bh:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit16.i122, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125
+bb.bh:                                            ; preds = %_ZN10ClipperLib9Int128MulExx.exit.i113, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125
   %i.lh = getelementptr inbounds nuw i8, ptr %i.gd, i64 64
   %i.li = load i32, ptr %i.lh, align 8
   %.not82 = icmp eq i32 %i.li, 0
@@ -2469,8 +2370,8 @@ _ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_c
   store ptr %i.mj, ptr %i.fo, align 8
   br label %_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105
 
-_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105: ; preds = %bb.ak, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i133, %bb.bk, %_ZN10ClipperLib9Int128MulExx.exit16.i122, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i104, %bb.aw, %bb.bi, %bb.bh, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %_ZN10ClipperLib14IsIntermediateEPNS_5TEdgeEx.exit94
-  %i.mk = phi ptr [ %storemerge156, %bb.ak ], [ %i.gd, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i133 ], [ %i.gd, %bb.bk ], [ %i.gd, %_ZN10ClipperLib9Int128MulExx.exit16.i122 ], [ %i.gd, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i104 ], [ %i.gd, %bb.aw ], [ %i.gd, %bb.bi ], [ %i.gd, %bb.bh ], [ %i.gd, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125 ], [ %i.gd, %bb.bf ], [ %i.gd, %bb.be ], [ %i.gd, %bb.bd ], [ %i.gd, %bb.bc ], [ %i.gd, %bb.bb ], [ %storemerge156, %_ZN10ClipperLib14IsIntermediateEPNS_5TEdgeEx.exit94 ]
+_ZN10ClipperLib7Clipper7AddJoinEPNS_5OutPtES2_NS_8IntPointE.exit105: ; preds = %bb.ak, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i133, %bb.bk, %_ZN10ClipperLib9Int128MulExx.exit.i113, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i104, %bb.aw, %bb.bi, %bb.bh, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125, %bb.bf, %bb.be, %bb.bd, %bb.bc, %bb.bb, %_ZN10ClipperLib14IsIntermediateEPNS_5TEdgeEx.exit94
+  %i.mk = phi ptr [ %storemerge156, %bb.ak ], [ %i.gd, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i133 ], [ %i.gd, %bb.bk ], [ %i.gd, %_ZN10ClipperLib9Int128MulExx.exit.i113 ], [ %i.gd, %_ZNSt6vectorIPN10ClipperLib4JoinESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i104 ], [ %i.gd, %bb.aw ], [ %i.gd, %bb.bi ], [ %i.gd, %bb.bh ], [ %i.gd, %_ZN10ClipperLib11SlopesEqualENS_8IntPointES0_S0_S0_b.exit125 ], [ %i.gd, %bb.bf ], [ %i.gd, %bb.be ], [ %i.gd, %bb.bd ], [ %i.gd, %bb.bc ], [ %i.gd, %bb.bb ], [ %storemerge156, %_ZN10ClipperLib14IsIntermediateEPNS_5TEdgeEx.exit94 ]
   %storemerge.in = getelementptr inbounds nuw i8, ptr %i.mk, i64 104
   %storemerge = load ptr, ptr %storemerge.in, align 8 ; 3 uses
   store ptr %storemerge, ptr %i.a, align 8
