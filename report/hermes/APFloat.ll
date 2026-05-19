@@ -201,15 +201,14 @@ bb.a:
   br i1 %2, label %bb.b, label %bb.bb
 
 bb.b:                                             ; preds = %bb.a
-  %9 = add i32 %1, -16                            ; 2 uses
-  %i.a = tail call i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 28)
+  %i.a = tail call i32 @llvm.fshl.i32(i32 %1, i32 %1, i32 28)
   %i.b = icmp ult i32 %1, 65                      ; 5 uses
   switch i32 %i.a, label %bb.ba [
-    i32 0, label %bb.c
-    i32 1, label %bb.n
-    i32 3, label %bb.y
-    i32 4, label %bb.aj
-    i32 7, label %bb.aw
+    i32 1, label %bb.c
+    i32 2, label %bb.n
+    i32 4, label %bb.y
+    i32 5, label %bb.aj
+    i32 8, label %bb.aw
   ]
 
 bb.c:                                             ; preds = %bb.b

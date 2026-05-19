@@ -201,7 +201,7 @@ bb.w:                                             ; preds = %_ZNKSt7__cxx1112bas
 .preheader:                                       ; preds = %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88, %bb.ad
   %.063 = phi double [ %.164, %bb.ad ], [ %2, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88 ] ; 9 uses
   %.061 = phi double [ %.162, %bb.ad ], [ 0.000000e+00, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88 ] ; 2 uses
-  %.060 = phi i32 [ %.0.i8996, %bb.ad ], [ %.018.i, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88 ] ; 9 uses
+  %.060 = phi i32 [ %.0.i8996, %bb.ad ], [ %.018.i, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88 ] ; 10 uses
   %.058 = phi double [ %.159, %bb.ad ], [ %1, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit88 ] ; 9 uses
   %i.ar = and i32 %.060, %.018.i87
   %.not68 = icmp eq i32 %i.ar, 0
@@ -241,17 +241,16 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
   ret double %i.bf
 
 bb.ac:                                            ; preds = %bb.aa, %.preheader
-  %7 = add nsw i32 %.060, -4                      ; 2 uses
-  %i.bg = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
+  %i.bg = tail call i32 @llvm.fshl.i32(i32 %.060, i32 %.060, i32 30)
   switch i32 %i.bg, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
-    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
-    i32 0, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
+    i32 9, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
+    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread106
+    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
     i32 2, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
-    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread113
-    i32 5, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 11, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
-    i32 7, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
+    i32 6, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 4, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 12, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
+    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread98
   ]
 
 _ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit: ; preds = %bb.ac
@@ -654,7 +653,7 @@ _ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59: ; preds = %_ZNK4
 _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74: ; preds = %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74.backedge, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59
   %.042 = phi double [ %4, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59 ], [ %.143, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74.backedge ] ; 7 uses
   %.041 = phi double [ %3, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59 ], [ %.1, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74.backedge ] ; 7 uses
-  %.0 = phi i32 [ %.018.i58, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59 ], [ %.0.i6091, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74.backedge ] ; 9 uses
+  %.0 = phi i32 [ %.018.i58, %_ZNK4geos9operation12intersection9Rectangle8positionEdd.exit59 ], [ %.0.i6091, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74.backedge ] ; 10 uses
   %i.al = and i32 %.0, %.018.i
   %.not = icmp eq i32 %i.al, 0
   br i1 %.not, label %bb.ab, label %bb.r
@@ -768,17 +767,16 @@ _ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu
   br label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit
 
 bb.ab:                                            ; preds = %bb.u, %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EE9push_backEOS2_.exit74
-  %7 = add nsw i32 %.0, -4                        ; 2 uses
-  %i.bu = tail call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
+  %i.bu = tail call i32 @llvm.fshl.i32(i32 %.0, i32 %.0, i32 30)
   switch i32 %i.bu, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit [
-    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
-    i32 0, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
+    i32 9, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
+    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread100
+    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
     i32 2, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
-    i32 1, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread107
-    i32 5, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 3, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
-    i32 11, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
-    i32 7, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
+    i32 6, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 4, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread.thread.thread
+    i32 12, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
+    i32 8, label %_ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit.thread92
   ]
 
 _ZN4geos9operation12intersection9Rectangle8nextEdgeENS2_8PositionE.exit: ; preds = %bb.ab

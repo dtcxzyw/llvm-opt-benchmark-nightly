@@ -201,14 +201,14 @@ bb.b:                                             ; preds = %rb_get_path.exit
 bb.c:                                             ; preds = %rb_get_path.exit
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !28
-  %i.ac = and i32 %i.ab, 61440
-  %i.ad = add nsw i32 %i.ac, -4096                ; 2 uses
-  %i.ae = icmp ult i32 %i.ad, 49152
+  %4 = lshr i32 %i.ab, 12
+  %i.ac = and i32 %4, 15
+  %i.ad = add nsw i32 %i.ac, -1                   ; 2 uses
+  %i.ae = icmp ult i32 %i.ad, 12
   br i1 %i.ae, label %switch.lookup, label %rb_file_ftype.exit
 
 switch.lookup:                                    ; preds = %bb.c
-  %4 = lshr exact i32 %i.ad, 12
-  %i.af = zext nneg i32 %4 to i64
+  %i.af = zext nneg i32 %i.ad to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_stat_ftype, i64 %i.af
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %rb_file_ftype.exit
@@ -611,14 +611,13 @@ bb.e:                                             ; preds = %rbimpl_check_typedd
 get_stat.exit:                                    ; preds = %rbimpl_check_typeddata.exit.i
   %i.y = getelementptr i8, ptr %.1.i.i, i64 28
   %i.z = load i16, ptr %i.y, align 4, !tbaa !199
-  %1 = zext i16 %i.z to i32
-  %2 = add nsw i32 %1, -4096                      ; 2 uses
-  %i.aa = icmp ult i32 %2, 49152
+  %1 = lshr i16 %i.z, 12
+  %switch.tableidx = add nsw i16 %1, -1           ; 2 uses
+  %i.aa = icmp ult i16 %switch.tableidx, 12
   br i1 %i.aa, label %switch.lookup, label %rb_file_ftype.exit
 
 switch.lookup:                                    ; preds = %get_stat.exit
-  %3 = lshr i32 %2, 12
-  %i.ab = zext nneg i32 %3 to i64
+  %i.ab = zext nneg i16 %switch.tableidx to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.rb_stat_ftype, i64 %i.ab
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %rb_file_ftype.exit

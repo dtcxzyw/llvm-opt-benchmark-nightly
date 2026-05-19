@@ -137,14 +137,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 4 uses
-  %9 = add i16 %i.d, -16                          ; 2 uses
-  %i.e = tail call i16 @llvm.fshl.i16(i16 %9, i16 %9, i16 14)
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 5 uses
+  %i.e = tail call i16 @llvm.fshl.i16(i16 %i.d, i16 %i.d, i16 14)
   switch i16 %i.e, label %.loopexit294 [
-    i16 0, label %bb.b
-    i16 1, label %bb.b
-    i16 2, label %bb.b
     i16 4, label %bb.b
+    i16 5, label %bb.b
+    i16 6, label %bb.b
+    i16 8, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
@@ -185,14 +184,13 @@ bb.c:                                             ; preds = %bb.b, %bb.j
   %.0253297 = phi i32 [ 0, %bb.b ], [ %i.bh, %bb.j ] ; 6 uses
   %.0258296 = phi i32 [ -2147483648, %bb.b ], [ %spec.select, %bb.j ] ; 2 uses
   %i.ag = load i16, ptr %i.c, align 8, !tbaa !10
-  %i.ah = sext i16 %i.ag to i32
-  %10 = add nsw i32 %i.ah, -16                    ; 2 uses
-  %i.ai = call i32 @llvm.fshl.i32(i32 %10, i32 %10, i32 30)
+  %i.ah = sext i16 %i.ag to i32                   ; 2 uses
+  %i.ai = call i32 @llvm.fshl.i32(i32 %i.ah, i32 %i.ah, i32 30)
   switch i32 %i.ai, label %bb.h [
-    i32 0, label %bb.d
-    i32 1, label %bb.e
-    i32 2, label %bb.f
-    i32 4, label %bb.g
+    i32 4, label %bb.d
+    i32 5, label %bb.e
+    i32 6, label %bb.f
+    i32 8, label %bb.g
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -261,14 +259,13 @@ bb.k:                                             ; preds = %bb.j
   %sext = shl i32 %spec.select289, 16
   %i.bj = ashr exact i32 %sext, 16                ; 5 uses
   %i.bk = load i16, ptr %i.c, align 8, !tbaa !10
-  %i.bl = sext i16 %i.bk to i32
-  %11 = add nsw i32 %i.bl, -16                    ; 2 uses
-  %i.bm = call i32 @llvm.fshl.i32(i32 %11, i32 %11, i32 30)
+  %i.bl = sext i16 %i.bk to i32                   ; 2 uses
+  %i.bm = call i32 @llvm.fshl.i32(i32 %i.bl, i32 %i.bl, i32 30)
   switch i32 %i.bm, label %bb.p [
-    i32 0, label %bb.l
-    i32 1, label %bb.m
-    i32 2, label %bb.n
-    i32 4, label %bb.o
+    i32 4, label %bb.l
+    i32 5, label %bb.m
+    i32 6, label %bb.n
+    i32 8, label %bb.o
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -591,14 +588,13 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i16, ptr %i.d, align 8, !tbaa !10
-  %i.f = sext i16 %i.e to i32
-  %5 = add nsw i32 %i.f, -16                      ; 2 uses
-  %i.g = tail call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 30)
+  %i.f = sext i16 %i.e to i32                     ; 2 uses
+  %i.g = tail call i32 @llvm.fshl.i32(i32 %i.f, i32 %i.f, i32 30)
   switch i32 %i.g, label %.loopexit [
-    i32 0, label %.preheader
-    i32 1, label %bb.d
-    i32 2, label %bb.e
-    i32 4, label %.preheader53
+    i32 4, label %.preheader
+    i32 5, label %bb.d
+    i32 6, label %bb.e
+    i32 8, label %.preheader53
   ]
 
 .preheader53:                                     ; preds = %bb.c
@@ -716,14 +712,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 4 uses
-  %8 = add i16 %i.d, -16                          ; 2 uses
-  %i.e = tail call i16 @llvm.fshl.i16(i16 %8, i16 %8, i16 14)
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 5 uses
+  %i.e = tail call i16 @llvm.fshl.i16(i16 %i.d, i16 %i.d, i16 14)
   switch i16 %i.e, label %bb.n [
-    i16 0, label %bb.b
-    i16 1, label %bb.b
-    i16 2, label %bb.b
     i16 4, label %bb.b
+    i16 5, label %bb.b
+    i16 6, label %bb.b
+    i16 8, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
@@ -734,20 +729,19 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.j = icmp sgt i16 %i.d, 23                    ; 3 uses
   %.140 = zext i1 %i.j to i32
   %.0128 = select i1 %i.i, i32 2, i32 %.140       ; 5 uses
-  %i.k = sext i16 %i.d to i32                     ; 2 uses
+  %i.k = sext i16 %i.d to i32                     ; 3 uses
   %i.l = shl nuw nsw i32 %.0128, 3                ; 3 uses
   %i.m = sub nsw i32 %i.k, %i.l
   %i.n = add nsw i32 %i.m, 1                      ; 4 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8284
   %i.p = load i32, ptr %i.o, align 4, !tbaa !27
   %.not138 = icmp eq i32 %5, %i.p                 ; 3 uses
-  %9 = add nsw i32 %i.k, -16                      ; 2 uses
-  %i.q = tail call i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 30)
+  %i.q = tail call i32 @llvm.fshl.i32(i32 %i.k, i32 %i.k, i32 30)
   switch i32 %i.q, label %bb.g [
-    i32 0, label %bb.c
-    i32 1, label %bb.d
-    i32 2, label %bb.e
-    i32 4, label %bb.f
+    i32 4, label %bb.c
+    i32 5, label %bb.d
+    i32 6, label %bb.e
+    i32 8, label %bb.f
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -980,14 +974,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 4 uses
-  %9 = add i16 %i.d, -16                          ; 2 uses
-  %i.e = tail call i16 @llvm.fshl.i16(i16 %9, i16 %9, i16 14)
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !10   ; 5 uses
+  %i.e = tail call i16 @llvm.fshl.i16(i16 %i.d, i16 %i.d, i16 14)
   switch i16 %i.e, label %.loopexit [
-    i16 0, label %bb.b
-    i16 1, label %bb.b
-    i16 2, label %bb.b
     i16 4, label %bb.b
+    i16 5, label %bb.b
+    i16 6, label %bb.b
+    i16 8, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
@@ -1001,18 +994,17 @@ bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.k = shl nuw nsw i32 %.0192, 3                ; 10 uses
   %notmask = shl nsw i32 -1, %i.k
   %i.l = xor i32 %notmask, -1                     ; 6 uses
-  %i.m = sext i16 %i.d to i32                     ; 2 uses
+  %i.m = sext i16 %i.d to i32                     ; 3 uses
   %i.n = sub nsw i32 %i.m, %i.k                   ; 20 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8284
   %i.p = load i32, ptr %i.o, align 4, !tbaa !27
   %.not199 = icmp eq i32 %5, %i.p                 ; 5 uses
-  %10 = add nsw i32 %i.m, -16                     ; 2 uses
-  %i.q = tail call i32 @llvm.fshl.i32(i32 %10, i32 %10, i32 30)
+  %i.q = tail call i32 @llvm.fshl.i32(i32 %i.m, i32 %i.m, i32 30)
   switch i32 %i.q, label %.loopexit220 [
-    i32 0, label %.preheader219
-    i32 1, label %bb.c
-    i32 2, label %bb.d
-    i32 4, label %.preheader222
+    i32 4, label %.preheader219
+    i32 5, label %bb.c
+    i32 6, label %bb.d
+    i32 8, label %.preheader222
   ]
 
 .preheader222:                                    ; preds = %bb.b
@@ -1415,14 +1407,13 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.hw = load i16, ptr %i.c, align 8, !tbaa !10
-  %i.hx = sext i16 %i.hw to i32
-  %11 = add nsw i32 %i.hx, -16                    ; 2 uses
-  %i.hy = call i32 @llvm.fshl.i32(i32 %11, i32 %11, i32 30)
+  %i.hx = sext i16 %i.hw to i32                   ; 2 uses
+  %i.hy = call i32 @llvm.fshl.i32(i32 %i.hx, i32 %i.hx, i32 30)
   switch i32 %i.hy, label %.loopexit [
-    i32 0, label %.preheader
-    i32 1, label %bb.p
-    i32 2, label %bb.q
-    i32 4, label %.preheader215
+    i32 4, label %.preheader
+    i32 5, label %bb.p
+    i32 6, label %bb.q
+    i32 8, label %.preheader215
   ]
 
 .preheader215:                                    ; preds = %bb.o

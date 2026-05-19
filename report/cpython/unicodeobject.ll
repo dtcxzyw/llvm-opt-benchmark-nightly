@@ -201,16 +201,15 @@ bb.ah:                                            ; preds = %.lr.ph491.i
   br i1 %.not395.i, label %.loopexit.i, label %.lr.ph491.i, !llvm.loop !350
 
 .loopexit.i:                                      ; preds = %bb.ah, %bb.af, %bb.ae, %bb.ad, %.loopexit477.i
-  %i.em = phi i8 [ %.pre500.i, %bb.ad ], [ %i.cu, %.loopexit477.i ], [ %i.cx, %bb.ae ], [ %i.ds, %bb.af ], [ %i.eh, %bb.ah ] ; 2 uses
+  %i.em = phi i8 [ %.pre500.i, %bb.ad ], [ %i.cu, %.loopexit477.i ], [ %i.cx, %bb.ae ], [ %i.ds, %bb.af ], [ %i.eh, %bb.ah ] ; 3 uses
   %.1317.i = phi i64 [ %spec.store.select.i, %bb.ad ], [ -1, %.loopexit477.i ], [ -1, %bb.ae ], [ %i.dq, %bb.af ], [ %i.ef, %bb.ah ] ; 13 uses
   %.4305.i = phi ptr [ %i.dl, %bb.ad ], [ %.2303.i, %.loopexit477.i ], [ %i.cw, %bb.ae ], [ %i.dr, %bb.af ], [ %i.eg, %bb.ah ] ; 3 uses
-  %4 = add i8 %i.em, -106                         ; 2 uses
-  %i.en = call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 7)
+  %i.en = call i8 @llvm.fshl.i8(i8 %i.em, i8 %i.em, i8 7)
   switch i8 %i.en, label %bb.al [
-    i8 1, label %bb.ai
-    i8 8, label %thread-pre-split459.i
-    i8 5, label %bb.aj
-    i8 0, label %bb.ak
+    i8 54, label %bb.ai
+    i8 61, label %thread-pre-split459.i
+    i8 58, label %bb.aj
+    i8 53, label %bb.ak
   ]
 
 bb.ai:                                            ; preds = %.loopexit.i

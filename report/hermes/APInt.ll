@@ -201,13 +201,12 @@ bb.a:
   %.028 = getelementptr inbounds nuw i8, ptr %0, i64 %.028.idx
   %i.d = sext i1 %or.cond to i64
   %.027 = add i64 %1, %i.d                        ; 8 uses
-  %4 = add i8 %2, -2                              ; 2 uses
-  %i.e = tail call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 7)
+  %i.e = tail call i8 @llvm.fshl.i8(i8 %2, i8 %2, i8 7)
   switch i8 %i.e, label %bb.g [
-    i8 0, label %bb.b
-    i8 3, label %bb.c
-    i8 7, label %bb.d
-    i8 4, label %bb.e
+    i8 1, label %bb.b
+    i8 4, label %bb.c
+    i8 8, label %bb.d
+    i8 5, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -610,14 +609,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph
 define hidden void @_ZNK4llvh5APInt8byteSwapEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.llvh::APInt") align 8 captures(none) initializes((0, 12)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(12) %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 12 uses
-  %2 = add i32 %i.b, -16                          ; 2 uses
-  %i.c = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 28)
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !7    ; 13 uses
+  %i.c = tail call i32 @llvm.fshl.i32(i32 %i.b, i32 %i.b, i32 28)
   switch i32 %i.c, label %bb.g [
-    i32 0, label %bb.b
-    i32 1, label %bb.c
-    i32 2, label %bb.d
-    i32 3, label %bb.f
+    i32 1, label %bb.b
+    i32 2, label %bb.c
+    i32 3, label %bb.d
+    i32 4, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1020,10 +1018,10 @@ bb.a:
   br i1 %4, label %switch.lookup, label %bb.b
 
 switch.lookup:                                    ; preds = %bb.a
-  %6 = add i32 %2, -2                             ; 2 uses
-  %7 = tail call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 31)
-  %8 = zext nneg i32 %7 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvh5APInt8toStringERNS_15SmallVectorImplIcEEjbb, i64 %8
+  %6 = tail call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 31)
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr [8 x i8], ptr @switch.table._ZNK4llvh5APInt8toStringERNS_15SmallVectorImplIcEEjbb, i64 %7
+  %switch.gep = getelementptr i8, ptr %8, i64 -8
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %bb.b
 

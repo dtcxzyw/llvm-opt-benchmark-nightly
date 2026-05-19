@@ -201,14 +201,13 @@ bb.k:                                             ; preds = %bb.j
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.in.i = select i1 %.not.i, ptr %i.z, ptr %i.y
   %i.aa = load i32, ptr %.in.i, align 4, !tbaa !3 ; 8 uses
-  %2 = zext i16 %i.b to i32
-  %3 = add nsw i32 %2, -1024
-  %4 = lshr i32 %3, 8
-  switch i32 %4, label %opj_j2k_get_imf_max_NL.exit [
-    i32 0, label %bb.t
-    i32 5, label %bb.q
-    i32 4, label %bb.n
-    i32 3, label %bb.l
+  %2 = lshr i16 %i.b, 8
+  %trunc.i = trunc nuw i16 %2 to i8
+  switch i8 %trunc.i, label %opj_j2k_get_imf_max_NL.exit [
+    i8 4, label %bb.t
+    i8 9, label %bb.q
+    i8 8, label %bb.n
+    i8 7, label %bb.l
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -611,16 +610,15 @@ bb.aj:                                            ; preds = %.thread320, %bb.ai
 
 ._crit_edge:                                      ; preds = %bb.aj, %bb.q, %bb.u, %bb.x, %.preheader322
   %.7.lcssa = phi i32 [ %.6, %.preheader322 ], [ %.4, %bb.q ], [ %.11.peel347, %bb.x ], [ %.11.peel, %bb.u ], [ %.11, %bb.aj ] ; 3 uses
-  %3 = zext i16 %i.d to i32
-  %4 = add nsw i32 %3, -1024
-  %5 = lshr i32 %4, 8                             ; 2 uses
-  switch i32 %5, label %.loopexit [
-    i32 0, label %bb.ak
-    i32 3, label %bb.ak
-    i32 1, label %bb.am
-    i32 4, label %bb.am
-    i32 2, label %bb.ao
-    i32 5, label %bb.ao
+  %3 = lshr i16 %i.d, 8
+  %trunc = trunc nuw i16 %3 to i8                 ; 2 uses
+  switch i8 %trunc, label %.loopexit [
+    i8 4, label %bb.ak
+    i8 7, label %bb.ak
+    i8 5, label %bb.am
+    i8 8, label %bb.am
+    i8 6, label %bb.ao
+    i8 9, label %bb.ao
   ]
 
 bb.ak:                                            ; preds = %._crit_edge, %._crit_edge
@@ -766,13 +764,13 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd, %bb.bc
   %.19 = phi i32 [ 0, %bb.bd ], [ %.18, %bb.bc ]  ; 12 uses
-  switch i32 %5, label %default.unreachable [
-    i32 0, label %bb.bf
-    i32 1, label %bb.bg
-    i32 2, label %bb.bh
-    i32 3, label %bb.bi
-    i32 4, label %bb.bl
-    i32 5, label %bb.bq
+  switch i8 %trunc, label %default.unreachable [
+    i8 4, label %bb.bf
+    i8 5, label %bb.bg
+    i8 6, label %bb.bh
+    i8 7, label %bb.bi
+    i8 8, label %bb.bl
+    i8 9, label %bb.bq
   ]
 
 bb.bf:                                            ; preds = %bb.be

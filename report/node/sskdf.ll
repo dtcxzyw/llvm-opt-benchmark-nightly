@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.o, %bb.m
   %i.ah = phi ptr [ %i.ad, %bb.o ], [ %i.x, %bb.m ]
   %i.ai = load ptr, ptr %i.m, align 8, !tbaa !18  ; 6 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !25 ; 5 uses
+  %i.ak = load i64, ptr %i.aj, align 8, !tbaa !25 ; 6 uses
   %i.al = load ptr, ptr %i.h, align 8, !tbaa !23
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.an = load i64, ptr %i.am, align 8, !tbaa !24 ; 2 uses
@@ -249,14 +249,13 @@ bb.u:                                             ; preds = %bb.s
   br i1 %i.az, label %bb.v, label %switch.early.test.i.i
 
 switch.early.test.i.i:                            ; preds = %bb.u
-  %7 = add i64 %i.ak, -20                         ; 2 uses
-  %i.ba = call i64 @llvm.fshl.i64(i64 %7, i64 %7, i64 62)
+  %i.ba = call i64 @llvm.fshl.i64(i64 %i.ak, i64 %i.ak, i64 62)
   switch i64 %i.ba, label %kmac_init.exit.thread.i [
-    i64 11, label %bb.v
+    i64 16, label %bb.v
+    i64 12, label %bb.v
+    i64 8, label %bb.v
     i64 7, label %bb.v
-    i64 3, label %bb.v
-    i64 2, label %bb.v
-    i64 0, label %bb.v
+    i64 5, label %bb.v
   ]
 
 bb.v:                                             ; preds = %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %switch.early.test.i.i, %bb.u, %bb.t

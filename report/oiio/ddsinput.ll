@@ -201,7 +201,7 @@ switch.lookup:                                    ; preds = %bb.q
 
 bb.r:                                             ; preds = %bb.q, %switch.lookup
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
-  %i.eq = load i32, ptr %i.ep, align 8, !tbaa !105 ; 3 uses
+  %i.eq = load i32, ptr %i.ep, align 8, !tbaa !105 ; 4 uses
   %.not45 = icmp eq i32 %i.eq, 0
   br i1 %.not45, label %bb.v, label %bb.s
 
@@ -213,9 +213,8 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not46, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %19 = add i32 %i.eq, -8                         ; 2 uses
-  %i.eu = call i32 @llvm.fshl.i32(i32 %19, i32 %19, i32 29)
-  %switch = icmp ult i32 %i.eu, 4
+  %i.eu = call i32 @llvm.fshl.i32(i32 %i.eq, i32 %i.eq, i32 29)
+  %switch = icmp ult i32 %i.eu, 5
   br i1 %switch, label %.thread109, label %bb.u
 
 bb.u:                                             ; preds = %bb.t

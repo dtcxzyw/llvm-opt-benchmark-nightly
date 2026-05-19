@@ -201,14 +201,13 @@ bb.s:                                             ; preds = %bb.r
   %.shrunk504 = phi i8 [ 0, %.thread ], [ 0, %bb.r ], [ %i.aj, %bb.s ], [ %i.aj, %.lr.ph449 ]
   %i.cu = zext nneg i8 %.shrunk504 to i32         ; 2 uses
   %i.cv = load i8, ptr %i.k, align 1, !tbaa !35
-  %i.cw = zext i8 %i.cv to i32
-  %8 = add nsw i32 %i.cw, -16                     ; 2 uses
-  %i.cx = call i32 @llvm.fshl.i32(i32 %8, i32 %8, i32 30)
+  %i.cw = zext i8 %i.cv to i32                    ; 2 uses
+  %i.cx = call i32 @llvm.fshl.i32(i32 %i.cw, i32 %i.cw, i32 30)
   switch i32 %i.cx, label %.loopexit419 [
-    i32 0, label %bb.t
-    i32 1, label %bb.u
-    i32 2, label %bb.v
-    i32 4, label %bb.y
+    i32 4, label %bb.t
+    i32 5, label %bb.u
+    i32 6, label %bb.v
+    i32 8, label %bb.y
   ]
 
 bb.t:                                             ; preds = %.loopexit420
@@ -611,14 +610,13 @@ bb.as:                                            ; preds = %bb.ar
   %.0352405 = phi i8 [ 0, %.thread400 ], [ %i.gm, %bb.ar ], [ %i.gm, %bb.as ], [ %i.gm, %.lr.ph438 ] ; 4 uses
   %i.kc = zext nneg i8 %.shrunk to i32            ; 2 uses
   %i.kd = load i8, ptr %i.k, align 1, !tbaa !35
-  %i.ke = zext i8 %i.kd to i32
-  %9 = add nsw i32 %i.ke, -16                     ; 2 uses
-  %i.kf = call i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 30)
+  %i.ke = zext i8 %i.kd to i32                    ; 2 uses
+  %i.kf = call i32 @llvm.fshl.i32(i32 %i.ke, i32 %i.ke, i32 30)
   switch i32 %i.kf, label %bb.ax [
-    i32 0, label %bb.at
-    i32 1, label %bb.au
-    i32 2, label %bb.av
-    i32 4, label %bb.aw
+    i32 4, label %bb.at
+    i32 5, label %bb.au
+    i32 6, label %bb.av
+    i32 8, label %bb.aw
   ]
 
 bb.at:                                            ; preds = %.loopexit423

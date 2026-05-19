@@ -201,16 +201,15 @@ bb.ai:                                            ; preds = %bb.an, %bb.ah
   %.038.i = phi i64 [ 0, %bb.ah ], [ %.139.i, %bb.an ] ; 7 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %.046.i, i64 8 ; 5 uses
   %i.ec = load i64, ptr %.046.i, align 8, !tbaa !32 ; 7 uses
-  %4 = and i64 %i.ec, 4160749568
-  %5 = add nsw i64 %4, -268435456
-  %6 = lshr exact i64 %5, 27
-  switch i64 %6, label %.loopexit.i102 [
-    i64 0, label %bb.aj
-    i64 7, label %bb.an
-    i64 11, label %bb.an
-    i64 12, label %bb.an
-    i64 9, label %.preheader
-    i64 13, label %.preheader
+  %4 = lshr i64 %i.ec, 27
+  %5 = and i64 %4, 31
+  switch i64 %5, label %.loopexit.i102 [
+    i64 2, label %bb.aj
+    i64 9, label %bb.an
+    i64 13, label %bb.an
+    i64 14, label %bb.an
+    i64 11, label %.preheader
+    i64 15, label %.preheader
   ]
 
 .preheader:                                       ; preds = %bb.ai, %bb.ai

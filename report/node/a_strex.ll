@@ -73,14 +73,13 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %.not.i, label %do_indent.exit, label %bb.b
 
 .loopexit149:                                     ; preds = %bb.b, %bb.a
-  %5 = and i64 %4, 983040
-  %6 = add nsw i64 %5, -65536
-  %7 = lshr exact i64 %6, 16
-  switch i64 %7, label %do_indent.exit [
-    i64 3, label %bb.f
-    i64 0, label %bb.c
-    i64 1, label %bb.d
-    i64 2, label %bb.e
+  %5 = lshr i64 %4, 16
+  %6 = and i64 %5, 15
+  switch i64 %6, label %do_indent.exit [
+    i64 4, label %bb.f
+    i64 1, label %bb.c
+    i64 2, label %bb.d
+    i64 3, label %bb.e
   ]
 
 bb.c:                                             ; preds = %.loopexit149

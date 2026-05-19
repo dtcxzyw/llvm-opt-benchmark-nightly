@@ -201,15 +201,13 @@ _ZN2v88internal8Counters17regexp_backtracksEv.exit1131: ; preds = %bb.cb, %_ZN2v
   %i.mv = load ptr, ptr %i.i, align 8             ; 5 uses
   %i.mw = load ptr, ptr %16, align 8              ; 5 uses
   %i.mx = load i32, ptr %i.n, align 4
-  %i.my = sext i32 %i.mx to i64
-  %18 = shl nsw i64 %i.my, 2                      ; 2 uses
-  %19 = add nsw i64 %18, -4
-  %20 = lshr exact i64 %19, 2
-  switch i64 %20, label %bb.ci [
-    i64 3, label %bb.ch
-    i64 1, label %bb.cf
-    i64 2, label %bb.cg
-    i64 0, label %bb.ce
+  %i.my = sext i32 %i.mx to i64                   ; 2 uses
+  %18 = and i64 %i.my, 4611686018427387903
+  switch i64 %18, label %bb.ci [
+    i64 4, label %bb.ch
+    i64 2, label %bb.cf
+    i64 3, label %bb.cg
+    i64 1, label %bb.ce
   ]
 
 bb.ce:                                            ; preds = %_ZN2v88internal8Counters17regexp_backtracksEv.exit1131
@@ -231,7 +229,8 @@ bb.ch:                                            ; preds = %_ZN2v88internal8Cou
   br label %_ZN2v88internal12_GLOBAL__N_123MaybeThrowStackOverflowEPNS0_7IsolateENS0_6RegExp10CallOriginE.exit
 
 bb.ci:                                            ; preds = %_ZN2v88internal8Counters17regexp_backtracksEv.exit1131
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mv, ptr align 1 %i.mw, i64 %18, i1 false)
+  %19 = shl nsw i64 %i.my, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mv, ptr align 1 %i.mw, i64 %19, i1 false)
   br label %_ZN2v88internal12_GLOBAL__N_123MaybeThrowStackOverflowEPNS0_7IsolateENS0_6RegExp10CallOriginE.exit
 
 bb.cj:                                            ; preds = %.backedge
@@ -634,15 +633,13 @@ _ZN2v88internal8Counters17regexp_backtracksEv.exit1131: ; preds = %bb.cb, %_ZN2v
   %i.mv = load ptr, ptr %i.i, align 8             ; 5 uses
   %i.mw = load ptr, ptr %16, align 8              ; 5 uses
   %i.mx = load i32, ptr %i.n, align 4
-  %i.my = sext i32 %i.mx to i64
-  %18 = shl nsw i64 %i.my, 2                      ; 2 uses
-  %19 = add nsw i64 %18, -4
-  %20 = lshr exact i64 %19, 2
-  switch i64 %20, label %bb.ci [
-    i64 3, label %bb.ch
-    i64 1, label %bb.cf
-    i64 2, label %bb.cg
-    i64 0, label %bb.ce
+  %i.my = sext i32 %i.mx to i64                   ; 2 uses
+  %18 = and i64 %i.my, 4611686018427387903
+  switch i64 %18, label %bb.ci [
+    i64 4, label %bb.ch
+    i64 2, label %bb.cf
+    i64 3, label %bb.cg
+    i64 1, label %bb.ce
   ]
 
 bb.ce:                                            ; preds = %_ZN2v88internal8Counters17regexp_backtracksEv.exit1131
@@ -664,7 +661,8 @@ bb.ch:                                            ; preds = %_ZN2v88internal8Cou
   br label %_ZN2v88internal12_GLOBAL__N_123MaybeThrowStackOverflowEPNS0_7IsolateENS0_6RegExp10CallOriginE.exit
 
 bb.ci:                                            ; preds = %_ZN2v88internal8Counters17regexp_backtracksEv.exit1131
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mv, ptr align 1 %i.mw, i64 %18, i1 false)
+  %19 = shl nsw i64 %i.my, 2
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.mv, ptr align 1 %i.mw, i64 %19, i1 false)
   br label %_ZN2v88internal12_GLOBAL__N_123MaybeThrowStackOverflowEPNS0_7IsolateENS0_6RegExp10CallOriginE.exit
 
 bb.cj:                                            ; preds = %.backedge

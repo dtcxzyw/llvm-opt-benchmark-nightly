@@ -201,23 +201,22 @@ bb.a:
   %7 = alloca %"class.frozen::map.44", align 8    ; 6 uses
   %i.g = alloca i32, align 4                      ; 5 uses
   %8 = alloca %"class.frozen::map.40", align 8    ; 6 uses
-  %9 = add i32 %0, -134217728
-  %i.h = lshr i32 %9, 27
+  %i.h = lshr i32 %0, 27
   switch i32 %i.h, label %_ZN4LIEF3ELF9to_stringILj134217728EEEPKcNS0_10Relocation4TYPEE.exit [
-    i32 0, label %bb.b
-    i32 1, label %bb.i
-    i32 2, label %bb.l
-    i32 3, label %bb.r
-    i32 4, label %bb.u
-    i32 5, label %bb.aa
-    i32 6, label %bb.ac
-    i32 7, label %bb.af
-    i32 8, label %bb.an
-    i32 9, label %bb.ap
-    i32 10, label %bb.ar
-    i32 11, label %bb.au
-    i32 12, label %bb.bc
-    i32 13, label %bb.bg
+    i32 1, label %bb.b
+    i32 2, label %bb.i
+    i32 3, label %bb.l
+    i32 4, label %bb.r
+    i32 5, label %bb.u
+    i32 6, label %bb.aa
+    i32 7, label %bb.ac
+    i32 8, label %bb.af
+    i32 9, label %bb.an
+    i32 10, label %bb.ap
+    i32 11, label %bb.ar
+    i32 12, label %bb.au
+    i32 13, label %bb.bc
+    i32 14, label %bb.bg
   ]
 
 bb.b:                                             ; preds = %bb.a

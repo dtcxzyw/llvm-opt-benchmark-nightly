@@ -201,12 +201,10 @@ bb.n:                                             ; preds = %bb.l
   br label %.thread
 
 bb.o:                                             ; preds = %bb.a
-  %3 = zext i8 %2 to i32
-  %4 = add nsw i32 %3, -192                       ; 2 uses
-  %5 = lshr i32 %4, 3                             ; 2 uses
-  %i.k = icmp ult i32 %4, 64
-  %switch.maskindex38 = trunc i32 %5 to i8
-  %switch.shifted39 = lshr i8 -93, %switch.maskindex38
+  %3 = lshr i8 %2, 3
+  %switch.tableidx35 = add nsw i8 %3, -24         ; 3 uses
+  %i.k = icmp ult i8 %switch.tableidx35, 8
+  %switch.shifted39 = lshr i8 -93, %switch.tableidx35
   %switch.lobit40 = trunc i8 %switch.shifted39 to i1
   %or.cond = select i1 %i.k, i1 %switch.lobit40, i1 false
   br i1 %or.cond, label %switch.lookup37, label %bb.p
@@ -254,12 +252,10 @@ bb.v:                                             ; preds = %bb.a
   br i1 %i.s, label %.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %6 = zext i8 %2 to i32
-  %7 = add nsw i32 %6, -192                       ; 2 uses
-  %8 = lshr i32 %7, 3                             ; 2 uses
-  %i.t = icmp ult i32 %7, 64
-  %switch.maskindex46 = trunc i32 %8 to i8
-  %switch.shifted47 = lshr i8 -93, %switch.maskindex46
+  %4 = lshr i8 %2, 3
+  %switch.tableidx43 = add nsw i8 %4, -24         ; 3 uses
+  %i.t = icmp ult i8 %switch.tableidx43, 8
+  %switch.shifted47 = lshr i8 -93, %switch.tableidx43
   %switch.lobit48 = trunc i8 %switch.shifted47 to i1
   %or.cond51 = select i1 %i.t, i1 %switch.lobit48, i1 false
   br i1 %or.cond51, label %switch.lookup45, label %bb.x
@@ -292,13 +288,13 @@ bb.ab:                                            ; preds = %bb.y
   br i1 %i.z, label %.thread31, label %.thread
 
 switch.lookup37:                                  ; preds = %bb.o
-  %i.aa = zext nneg i32 %5 to i64
+  %i.aa = zext nneg i8 %switch.tableidx35 to i64
   %switch.gep41 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6disasm15DisassemblerX6422RegisterFPUInstructionEih.3, i64 %i.aa
   %switch.load42 = load ptr, ptr %switch.gep41, align 8
   br label %.thread31
 
 switch.lookup45:                                  ; preds = %bb.w
-  %i.ab = zext nneg i32 %8 to i64
+  %i.ab = zext nneg i8 %switch.tableidx43 to i64
   %switch.gep49 = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6disasm15DisassemblerX6422RegisterFPUInstructionEih.4, i64 %i.ab
   %switch.load50 = load ptr, ptr %switch.gep49, align 8
   br label %.thread31

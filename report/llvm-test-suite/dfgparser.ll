@@ -201,13 +201,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   br i1 %.not36, label %bb.q, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %3 = add nsw i32 %0, -284                       ; 2 uses
-  %i.h = tail call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 31)
+  %i.h = tail call i32 @llvm.fshl.i32(i32 %0, i32 %0, i32 31)
   switch i32 %i.h, label %bb.n [
-    i32 0, label %bb.h
-    i32 7, label %bb.j
-    i32 8, label %bb.l
-    i32 5, label %bb.l
+    i32 142, label %bb.h
+    i32 149, label %bb.j
+    i32 150, label %bb.l
+    i32 147, label %bb.l
   ]
 
 bb.h:                                             ; preds = %bb.g
