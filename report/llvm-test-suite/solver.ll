@@ -200,7 +200,7 @@ interpolateTable.exit:                            ; preds = %.lr.ph340, %bb.e
   %.0309.in = getelementptr inbounds nuw i8, ptr %0, i64 %.0309.in.v
   %.0309 = load ptr, ptr %.0309.in, align 8, !tbaa !10 ; 11 uses
   %.0309642 = ptrtoaddr ptr %.0309 to i64         ; 6 uses
-  %wide.trip.count392 = zext i32 %.sroa.7246.0.copyload to i64 ; 15 uses
+  %wide.trip.count392 = zext i32 %.sroa.7246.0.copyload to i64 ; 13 uses
   %min.iters.check656 = icmp ult i32 %.sroa.7246.0.copyload, 4
   br i1 %min.iters.check656, label %.lr.ph345.preheader836, label %vector.memcheck636
 
@@ -603,7 +603,7 @@ middle.block799:                                  ; preds = %vector.body792
   br i1 %exitcond418.not.1, label %.lr.ph357.preheader, label %.lr.ph355, !llvm.loop !81
 
 .lr.ph359.preheader:                              ; preds = %.lr.ph357.prol.loopexit, %.lr.ph357, %middle.block799
-  %wide.trip.count427 = zext nneg i32 %.sroa.7246.0.copyload to i64
+  %wide.trip.count427 = zext i32 %.sroa.7246.0.copyload to i64 ; 3 uses
   %min.iters.check811 = icmp ult i32 %.sroa.7246.0.copyload, 12
   br i1 %min.iters.check811, label %.lr.ph359.preheader829, label %vector.memcheck802
 
@@ -663,7 +663,7 @@ middle.block826:                                  ; preds = %vector.body815
 
 .lr.ph359.preheader829:                           ; preds = %vector.memcheck802, %.lr.ph359.preheader, %middle.block826
   %indvars.iv424.ph = phi i64 [ 0, %vector.memcheck802 ], [ 0, %.lr.ph359.preheader ], [ %n.vec814, %middle.block826 ] ; 8 uses
-  %xtraiter859 = and i64 %wide.trip.count392, 1
+  %xtraiter859 = and i64 %wide.trip.count427, 1
   %lcmp.mod860.not = icmp eq i64 %xtraiter859, 0
   br i1 %lcmp.mod860.not, label %.lr.ph359.prol.loopexit, label %.lr.ph359.prol
 
@@ -686,7 +686,7 @@ middle.block826:                                  ; preds = %vector.body815
 
 .lr.ph359.prol.loopexit:                          ; preds = %.lr.ph359.prol, %.lr.ph359.preheader829
   %indvars.iv424.unr = phi i64 [ %indvars.iv424.ph, %.lr.ph359.preheader829 ], [ %indvars.iv.next425.prol, %.lr.ph359.prol ]
-  %i.zi = add nsw i64 %wide.trip.count392, -1
+  %i.zi = add nsw i64 %wide.trip.count427, -1
   %i.zj = icmp eq i64 %indvars.iv424.ph, %i.zi
   br i1 %i.zj, label %._crit_edge360, label %.lr.ph359
 
