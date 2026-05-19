@@ -201,7 +201,7 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.
 
 .lr.ph78.i:                                       ; preds = %.preheader.i149, %bb.ap
   %.177.i = phi ptr [ %i.ij, %bb.ap ], [ %i.hp, %.preheader.i149 ] ; 2 uses
-  %.376.i = phi ptr [ %.5.i, %bb.ap ], [ %.1216278, %.preheader.i149 ] ; 8 uses
+  %.376.i = phi ptr [ %.5.i, %bb.ap ], [ %.1216278, %.preheader.i149 ] ; 7 uses
   %i.ij = getelementptr i8, ptr %.177.i, i64 4    ; 3 uses
   %i.ik = load i32, ptr %.177.i, align 4, !tbaa !7 ; 9 uses
   %i.il = icmp ult i32 %i.ik, 55296
@@ -226,21 +226,17 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.it = lshr i32 %i.ik, 10
-  %3 = add nuw nsw i32 %i.it, 55232               ; 2 uses
-  %i.iu = and i32 %i.ik, 1023                     ; 2 uses
-  %4 = shl nuw nsw i32 %3, 8
-  %5 = lshr i32 %3, 8
-  %6 = and i32 %5, 255
-  %7 = or disjoint i32 %6, %4
-  %8 = trunc i32 %7 to i16
-  store i16 %8, ptr %.376.i, align 2, !tbaa !208
-  %9 = shl nuw nsw i32 %i.iu, 8
-  %10 = lshr i32 %i.iu, 8
-  %11 = or disjoint i32 %10, %9
-  %12 = trunc i32 %11 to i16
-  %13 = or disjoint i16 %12, 220
-  %14 = getelementptr i8, ptr %.376.i, i64 2
-  store i16 %13, ptr %14, align 2, !tbaa !208
+  %i.iu = and i32 %i.ik, 1023
+  %3 = add nuw nsw i32 %i.it, 55232
+  %4 = insertelement <2 x i32> poison, i32 %3, i64 0
+  %5 = insertelement <2 x i32> %4, i32 %i.iu, i64 1 ; 2 uses
+  %6 = shl nuw nsw <2 x i32> %5, splat (i32 8)
+  %7 = lshr <2 x i32> %5, splat (i32 8)
+  %8 = and <2 x i32> %7, <i32 255, i32 -1>
+  %9 = or disjoint <2 x i32> %8, %6
+  %10 = trunc <2 x i32> %9 to <2 x i16>
+  %11 = or <2 x i16> %10, <i16 0, i16 220>
+  store <2 x i16> %11, ptr %.376.i, align 2, !tbaa !208
   %i.iv = getelementptr i8, ptr %.376.i, i64 4
   br label %bb.ap
 

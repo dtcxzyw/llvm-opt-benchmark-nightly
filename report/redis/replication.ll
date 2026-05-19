@@ -201,7 +201,6 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br label %bb.b
 
@@ -302,15 +301,14 @@ bb.l:                                             ; preds = %bb.j, %bb.k
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.b
   %i.at = getelementptr inbounds nuw i8, ptr %i.p, i64 8
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !106 ; 2 uses
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !106
   tail call void @zfree(ptr noundef nonnull %i.p) #19
-  %3 = load i64, ptr %2, align 8, !tbaa !334
-  %4 = sub i64 %3, %i.au
-  store i64 %4, ptr %2, align 8, !tbaa !334
-  %5 = load i64, ptr %i.l, align 8, !tbaa !335
-  %reass.sub = sub i64 %5, %i.au
-  %6 = add i64 %reass.sub, -40
-  store i64 %6, ptr %i.l, align 8, !tbaa !335
+  %2 = load <2 x i64>, ptr %i.l, align 8, !tbaa !106
+  %3 = insertelement <2 x i64> poison, i64 %i.au, i64 0
+  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <2 x i32> zeroinitializer
+  %5 = sub <2 x i64> %2, %4
+  %6 = add <2 x i64> %5, <i64 -40, i64 0>
+  store <2 x i64> %6, ptr %i.l, align 8, !tbaa !106
   %i.av = load ptr, ptr %0, align 8, !tbaa !294   ; 2 uses
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !104 ; 2 uses
   %.not = icmp eq ptr %i.aw, null

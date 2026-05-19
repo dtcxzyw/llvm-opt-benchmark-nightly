@@ -102,41 +102,31 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.g,
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define internal fastcc i64 @interleave64(i32 noundef %0, i32 noundef %1) unnamed_addr #2 {
 bb.a:
-  %2 = zext i32 %0 to i64                         ; 2 uses
-  %3 = zext i32 %1 to i64                         ; 2 uses
-  %4 = shl nuw nsw i64 %2, 16
-  %5 = or i64 %4, %2
-  %6 = and i64 %5, 281470681808895                ; 2 uses
-  %7 = shl nuw nsw i64 %3, 16
-  %8 = or i64 %7, %3
-  %9 = and i64 %8, 281470681808895                ; 2 uses
-  %10 = shl nuw nsw i64 %6, 8
-  %11 = or i64 %10, %6
-  %12 = and i64 %11, 71777214294589695            ; 2 uses
-  %13 = shl nuw nsw i64 %9, 8
-  %14 = or i64 %13, %9
-  %15 = and i64 %14, 71777214294589695            ; 2 uses
-  %16 = shl nuw nsw i64 %12, 4
-  %17 = or i64 %16, %12
-  %18 = and i64 %17, 1085102592571150095          ; 2 uses
-  %19 = shl nuw nsw i64 %15, 4
-  %20 = or i64 %19, %15
-  %21 = and i64 %20, 1085102592571150095          ; 2 uses
-  %22 = shl nuw nsw i64 %18, 2
-  %23 = or i64 %22, %18
-  %24 = and i64 %23, 3689348814741910323          ; 2 uses
-  %25 = shl nuw nsw i64 %21, 2
-  %26 = or i64 %25, %21
-  %27 = and i64 %26, 3689348814741910323          ; 2 uses
-  %i.a = shl nuw nsw i64 %24, 1
-  %28 = or i64 %i.a, %24
-  %29 = and i64 %28, 6148914691236517205
-  %30 = shl nuw i64 %27, 2
-  %31 = shl nuw nsw i64 %27, 1
-  %32 = or i64 %30, %31
-  %33 = and i64 %32, -6148914691236517206
-  %34 = or disjoint i64 %33, %29
-  ret i64 %34
+  %2 = insertelement <2 x i32> poison, i32 %1, i64 0
+  %3 = insertelement <2 x i32> %2, i32 %0, i64 1
+  %4 = zext <2 x i32> %3 to <2 x i64>             ; 2 uses
+  %5 = shl nuw nsw <2 x i64> %4, splat (i64 16)
+  %6 = or <2 x i64> %5, %4
+  %7 = and <2 x i64> %6, splat (i64 281470681808895) ; 2 uses
+  %8 = shl nuw nsw <2 x i64> %7, splat (i64 8)
+  %9 = or <2 x i64> %8, %7
+  %10 = and <2 x i64> %9, splat (i64 71777214294589695) ; 2 uses
+  %11 = shl nuw nsw <2 x i64> %10, splat (i64 4)
+  %12 = or <2 x i64> %11, %10
+  %13 = and <2 x i64> %12, splat (i64 1085102592571150095) ; 2 uses
+  %14 = shl nuw nsw <2 x i64> %13, splat (i64 2)
+  %15 = or <2 x i64> %14, %13
+  %16 = and <2 x i64> %15, splat (i64 3689348814741910323) ; 3 uses
+  %17 = shl nuw <2 x i64> %16, <i64 2, i64 1>
+  %18 = extractelement <2 x i64> %16, i64 0
+  %i.a = shl nuw nsw i64 %18, 1
+  %19 = insertelement <2 x i64> %16, i64 %i.a, i64 0
+  %20 = or <2 x i64> %17, %19
+  %21 = and <2 x i64> %20, <i64 -6148914691236517206, i64 6148914691236517205> ; 2 uses
+  %shift = shufflevector <2 x i64> %21, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %foldExtExtBinop = or disjoint <2 x i64> %21, %shift
+  %22 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  ret i64 %22
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
