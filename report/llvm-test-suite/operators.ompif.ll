@@ -199,7 +199,7 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %i.aw = fmul double %i.av, %i.av
   %i.ax = fdiv double 1.000000e+00, %i.aw
   %i.ay = icmp sgt i32 %i.x, 0
-  %i.az = fmul double %3, %i.ax                   ; 4 uses
+  %i.az = fmul double %3, %i.ax                   ; 3 uses
   %i.ba = icmp sgt i32 %i.y, 0
   %or.cond = select i1 %i.ay, i1 %i.ba, i1 false
   br i1 %or.cond, label %.preheader148.us.us.preheader, label %._crit_edge
@@ -208,6 +208,8 @@ bb.b:                                             ; preds = %.lr.ph, %._crit_edg
   %wide.trip.count = zext nneg i32 %i.y to i64
   %i.bb = insertelement <4 x double> poison, double %i.az, i64 0
   %i.bc = shufflevector <4 x double> %i.bb, <4 x double> poison, <4 x i32> zeroinitializer
+  %4 = insertelement <2 x double> poison, double %i.az, i64 0
+  %5 = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
   br label %.preheader148.us.us
 
 .preheader148.us.us:                              ; preds = %.preheader148.us.us.preheader, %._crit_edge153.split.us.us.us
@@ -253,16 +255,18 @@ bb.c:                                             ; preds = %bb.c, %.preheader.u
   %i.ce = fadd double %i.cc, %i.cd
   %i.cf = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %i.bi
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !44 ; 2 uses
-  %4 = fmul double %i.az, %i.cg
-  %5 = tail call double @llvm.fabs.f64(double %4)
-  %6 = fadd double %i.ce, %5
-  %7 = add nsw i32 %i.bh, %i.q
-  %8 = sext i32 %7 to i64
-  %9 = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %8
-  %10 = load double, ptr %9, align 8, !tbaa !44   ; 2 uses
-  %11 = fmul double %i.az, %10
-  %12 = tail call double @llvm.fabs.f64(double %11)
-  %i.ch = fadd double %6, %12
+  %6 = add nsw i32 %i.bh, %i.q
+  %7 = sext i32 %6 to i64
+  %8 = getelementptr inbounds [8 x i8], ptr %i.aq, i64 %7
+  %9 = load double, ptr %8, align 8, !tbaa !44    ; 2 uses
+  %10 = insertelement <2 x double> poison, double %i.cg, i64 0
+  %11 = insertelement <2 x double> %10, double %9, i64 1
+  %12 = fmul <2 x double> %5, %11
+  %13 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %12) ; 2 uses
+  %14 = extractelement <2 x double> %13, i64 0
+  %15 = fadd double %i.ce, %14
+  %16 = extractelement <2 x double> %13, i64 1
+  %i.ch = fadd double %15, %16
   %i.ci = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %i.bi
   %i.cj = load double, ptr %i.ci, align 8, !tbaa !44
   %i.ck = extractelement <2 x double> %i.br, i64 0
@@ -271,7 +275,7 @@ bb.c:                                             ; preds = %bb.c, %.preheader.u
   %i.cn = fsub double %i.cm, %i.bm
   %i.co = fsub double %i.cn, %i.bq
   %i.cp = fsub double %i.co, %i.cg
-  %i.cq = fsub double %i.cp, %10
+  %i.cq = fsub double %i.cp, %9
   %i.cr = fneg double %i.cq
   %i.cs = fmul double %i.az, %i.cr
   %i.ct = tail call double @llvm.fmuladd.f64(double %2, double %i.cj, double %i.cs) ; 3 uses
@@ -672,6 +676,9 @@ declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x double> @llvm.fabs.v4f64(<4 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x double> @llvm.fabs.v2f64(<2 x double>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
