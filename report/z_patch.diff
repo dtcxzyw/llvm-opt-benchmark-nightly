@@ -1,0 +1,338 @@
+diff --git a/llvm/include/llvm/Transforms/IPO/Attributor.h b/llvm/include/llvm/Transforms/IPO/Attributor.h
+index f342a8381b8af..7e9d91fa55d62 100644
+--- a/llvm/include/llvm/Transforms/IPO/Attributor.h
++++ b/llvm/include/llvm/Transforms/IPO/Attributor.h
+@@ -142,6 +142,7 @@
+ 
+ #include <limits>
+ #include <map>
++#include <memory>
+ #include <optional>
+ 
+ namespace llvm {
+@@ -2521,6 +2522,10 @@ struct Attributor {
+   /// from a live entry point. The functions are added to ToBeDeletedFunctions.
+   void identifyDeadInternalFunctions();
+ 
++  /// Return all uses of \p Fn after looking through pointer cast constant
++  /// expressions.
++  ArrayRef<const Use *> getPotentialCallSiteUses(const Function &Fn);
++
+   /// Run `::update` on \p AA and track the dependences queried while doing so.
+   /// Also adjust the state if we know further updates are not necessary.
+   LLVM_ABI ChangeStatus updateAA(AbstractAttribute &AA);
+@@ -2588,6 +2593,11 @@ struct Attributor {
+   /// A set to remember the functions we already assume to be live and visited.
+   DenseSet<const Function *> VisitedFunctions;
+ 
++  /// Cached function uses after looking through pointer cast constant
++  /// expressions. Only used before the Attributor starts changing the IR.
++  DenseMap<const Function *, std::unique_ptr<SmallVector<const Use *, 8>>>
++      PotentialCallSiteUsesMap;
++
+   /// Uses we replace with a new value after manifest is done. We will remove
+   /// then trivially dead instructions as well.
+   SmallMapVector<Use *, Value *, 32> ToBeChangedUses;
+diff --git a/llvm/lib/Transforms/IPO/Attributor.cpp b/llvm/lib/Transforms/IPO/Attributor.cpp
+index c74647557f4d1..960e10484275d 100644
+--- a/llvm/lib/Transforms/IPO/Attributor.cpp
++++ b/llvm/lib/Transforms/IPO/Attributor.cpp
+@@ -1958,6 +1958,40 @@ bool Attributor::checkForAllCallSites(function_ref<bool(AbstractCallSite)> Pred,
+                               &QueryingAA, UsedAssumedInformation);
+ }
+ 
++ArrayRef<const Use *> Attributor::getPotentialCallSiteUses(const Function &Fn) {
++  std::unique_ptr<SmallVector<const Use *, 8>> &PotentialUsesPtr =
++      PotentialCallSiteUsesMap[&Fn];
++  if (PotentialUsesPtr)
++    return *PotentialUsesPtr;
++
++  PotentialUsesPtr = std::make_unique<SmallVector<const Use *, 8>>();
++  SmallVectorImpl<const Use *> &PotentialUses = *PotentialUsesPtr;
++
++  SmallVector<const Use *, 8> Worklist;
++  SmallPtrSet<const Use *, 8> Seen;
++  auto AddUse = [&](const Use &U) {
++    if (Seen.insert(&U).second)
++      Worklist.push_back(&U);
++  };
++
++  for (const Use &U : Fn.uses())
++    AddUse(U);
++
++  for (unsigned UIdx = 0; UIdx < Worklist.size(); ++UIdx) {
++    const Use &U = *Worklist[UIdx];
++    if (ConstantExpr *CE = dyn_cast<ConstantExpr>(U.getUser())) {
++      if (CE->isCast() && CE->getType()->isPointerTy()) {
++        for (const Use &CEU : CE->uses())
++          AddUse(CEU);
++        continue;
++      }
++    }
++    PotentialUses.push_back(&U);
++  }
++
++  return PotentialUses;
++}
++
+ bool Attributor::checkForAllCallSites(function_ref<bool(AbstractCallSite)> Pred,
+                                       const Function &Fn,
+                                       bool RequireAllCallSites,
+@@ -1976,9 +2010,16 @@ bool Attributor::checkForAllCallSites(function_ref<bool(AbstractCallSite)> Pred,
+     if (!CB(*this, QueryingAA))
+       return false;
+ 
+-  SmallVector<const Use *, 8> Uses(make_pointer_range(Fn.uses()));
+-  for (unsigned u = 0; u < Uses.size(); ++u) {
+-    const Use &U = *Uses[u];
++  SmallVector<const Use *, 8> Uses;
++  ArrayRef<const Use *> PotentialUses;
++  if (Phase == AttributorPhase::SEEDING || Phase == AttributorPhase::UPDATE)
++    PotentialUses = getPotentialCallSiteUses(Fn);
++  else {
++    append_range(Uses, make_pointer_range(Fn.uses()));
++    PotentialUses = Uses;
++  }
++  for (unsigned u = 0; u < PotentialUses.size(); ++u) {
++    const Use &U = *PotentialUses[u];
+     DEBUG_WITH_TYPE(VERBOSE_DEBUG_TYPE, {
+       if (auto *Fn = dyn_cast<Function>(U))
+         dbgs() << "[Attributor] Check use: " << Fn->getName() << " in "
+@@ -2000,8 +2041,12 @@ bool Attributor::checkForAllCallSites(function_ref<bool(AbstractCallSite)> Pred,
+           dbgs() << "[Attributor] Use, is constant cast expression, add "
+                  << CE->getNumUses() << " uses of that expression instead!\n";
+         });
++        assert((Phase != AttributorPhase::SEEDING &&
++                Phase != AttributorPhase::UPDATE) &&
++               "Constant expression uses should be expanded in the cache");
+         for (const Use &CEU : CE->uses())
+           Uses.push_back(&CEU);
++        PotentialUses = Uses;
+         continue;
+       }
+     }
+diff --git a/llvm/lib/Transforms/IPO/OpenMPOpt.cpp b/llvm/lib/Transforms/IPO/OpenMPOpt.cpp
+index 31e9d41ca3410..93506c681c510 100644
+--- a/llvm/lib/Transforms/IPO/OpenMPOpt.cpp
++++ b/llvm/lib/Transforms/IPO/OpenMPOpt.cpp
+@@ -29,6 +29,7 @@
+ #include "llvm/ADT/StringExtras.h"
+ #include "llvm/ADT/StringRef.h"
+ #include "llvm/Analysis/CallGraph.h"
++#include "llvm/Analysis/MemoryBuiltins.h"
+ #include "llvm/Analysis/MemoryLocation.h"
+ #include "llvm/Analysis/OptimizationRemarkEmitter.h"
+ #include "llvm/Analysis/ValueTracking.h"
+@@ -446,6 +447,9 @@ struct OMPInformationCache : public InformationCache {
+                   InternalControlVar::ICV___last>
+       ICVs;
+ 
++  /// Functions for which OpenMP-specific AAs have already been registered.
++  DenseSet<const Function *> RegisteredFunctionAAs;
++
+   /// Helper to initialize all internal control variable information for those
+   /// defined in OMPKinds.def.
+   void initializeInternalControlVars() {
+@@ -3461,10 +3465,13 @@ struct AAHeapToSharedFunction : public AAHeapToShared {
+            bool &) -> std::optional<Value *> { return nullptr; };
+ 
+     Function *F = getAnchorScope();
+-    for (User *U : RFI.Declaration->users())
+-      if (CallBase *CB = dyn_cast<CallBase>(U)) {
+-        if (CB->getFunction() != F)
+-          continue;
++    const OMPInformationCache::RuntimeFunctionInfo::UseVector *Uses =
++        RFI.getUseVector(*F);
++    if (!Uses)
++      return;
++
++    for (Use *U : *Uses)
++      if (CallBase *CB = dyn_cast<CallBase>(U->getUser())) {
+         MallocCalls.insert(CB);
+         A.registerSimplificationCallback(IRPosition::callsite_returned(*CB),
+                                          SCB);
+@@ -5585,13 +5592,21 @@ void OpenMPOpt::registerAAs(bool IsModulePass) {
+ }
+ 
+ void OpenMPOpt::registerAAsForFunction(Attributor &A, const Function &F) {
+-  if (!DisableOpenMPOptDeglobalization)
+-    A.getOrCreateAAFor<AAHeapToShared>(IRPosition::function(F));
+-  A.getOrCreateAAFor<AAExecutionDomain>(IRPosition::function(F));
+-  if (!DisableOpenMPOptDeglobalization)
+-    A.getOrCreateAAFor<AAHeapToStack>(IRPosition::function(F));
++  auto &OMPInfoCache = static_cast<OMPInformationCache &>(A.getInfoCache());
++  if (!OMPInfoCache.RegisteredFunctionAAs.insert(&F).second)
++    return;
++
++  IRPosition FPos = IRPosition::function(F);
++  A.getOrCreateAAFor<AAExecutionDomain>(FPos);
+   if (F.hasFnAttribute(Attribute::Convergent))
+-    A.getOrCreateAAFor<AANonConvergent>(IRPosition::function(F));
++    A.getOrCreateAAFor<AANonConvergent>(FPos);
++
++  const bool FunctionUsesSharedAlloc =
++      !DisableOpenMPOptDeglobalization &&
++      OMPInfoCache.RFIs[OMPRTL___kmpc_alloc_shared].getUseVector(
++          const_cast<Function &>(F));
++  bool HasHeapToStackCandidate = false;
++  const TargetLibraryInfo *TLI = nullptr;
+ 
+   for (auto &I : instructions(F)) {
+     if (auto *LI = dyn_cast<LoadInst>(&I)) {
+@@ -5603,6 +5618,12 @@ void OpenMPOpt::registerAAsForFunction(Attributor &A, const Function &F) {
+       continue;
+     }
+     if (auto *CI = dyn_cast<CallBase>(&I)) {
++      if (!DisableOpenMPOptDeglobalization && !HasHeapToStackCandidate) {
++        if (!TLI)
++          TLI = A.getInfoCache().getTargetLibraryInfoForFunction(F);
++        HasHeapToStackCandidate =
++            isRemovableAlloc(CI, TLI) || getFreedOperand(CI, TLI);
++      }
+       if (CI->isIndirectCall())
+         A.getOrCreateAAFor<AAIndirectCallInfo>(
+             IRPosition::callsite_function(*CI));
+@@ -5625,6 +5646,11 @@ void OpenMPOpt::registerAAsForFunction(Attributor &A, const Function &F) {
+       }
+     }
+   }
++
++  if (FunctionUsesSharedAlloc)
++    A.getOrCreateAAFor<AAHeapToShared>(FPos);
++  if (!DisableOpenMPOptDeglobalization && HasHeapToStackCandidate)
++    A.getOrCreateAAFor<AAHeapToStack>(FPos);
+ }
+ 
+ const char AAICVTracker::ID = 0;
+diff --git a/llvm/test/Transforms/Attributor/reduced/openmp_opt_constant_type_crash.ll b/llvm/test/Transforms/Attributor/reduced/openmp_opt_constant_type_crash.ll
+index f54fb45793df2..5cf2ac9e768c8 100644
+--- a/llvm/test/Transforms/Attributor/reduced/openmp_opt_constant_type_crash.ll
++++ b/llvm/test/Transforms/Attributor/reduced/openmp_opt_constant_type_crash.ll
+@@ -70,13 +70,12 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+-; CHECK: Function Attrs: norecurse
+-; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl11ViewMappingIvJNS_10ViewTraitsIPPdJNS_11LayoutRightENS_18ScratchMemorySpaceINS_12Experimental12OpenMPTargetEEENS_12MemoryTraitsILj1EEEEEENS0_5ALL_tEiEE6assignINS2_IS3_JNS_12LayoutStrideENS_6DeviceIS8_S9_EESB_EEEEEvRNS1_IT_JvEEERKNS1_ISC_JvEEESD_i.internalized
+-; CHECK-SAME: () #[[ATTR0:[0-9]+]] {
++; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl11ViewMappingIvJNS_10ViewTraitsIPPdJNS_11LayoutRightENS_18ScratchMemorySpaceINS_12Experimental12OpenMPTargetEEENS_12MemoryTraitsILj1EEEEEENS0_5ALL_tEiEE6assignINS2_IS3_JNS_12LayoutStrideENS_6DeviceIS8_S9_EESB_EEEEEvRNS1_IT_JvEEERKNS1_ISC_JvEEESD_i.internalized() {
+ ; CHECK-NEXT:  entry:
+ ; CHECK-NEXT:    [[EXTENTS11:%.*]] = alloca [0 x [0 x %"struct.Kokkos::Impl::SubviewExtents.448"]], i32 0, align 8, addrspace(5)
+ ; CHECK-NEXT:    [[EXTENTS_ASCAST:%.*]] = addrspacecast ptr addrspace(5) [[EXTENTS11]] to ptr
+ ; CHECK-NEXT:    call void @_ZN6Kokkos4Impl14SubviewExtentsILj2ELj1EEC2IJLm0ELm0EEJNS0_5ALL_tEiEEERKNS0_13ViewDimensionIJXspT_EEEEDpT0_.internalized(ptr [[EXTENTS_ASCAST]])
++; CHECK-NEXT:    call void @_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvEC2INS2_IJLm0ELm0EEEENS_11LayoutRightEEERKNS1_IT_T0_vEERKNS0_14SubviewExtentsIXsrS9_4rankELj1EEE.internalized(ptr [[EXTENTS_ASCAST]])
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+@@ -89,11 +88,10 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+-; CHECK: Function Attrs: norecurse nosync nounwind memory(argmem: write)
+ ; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl14SubviewExtentsILj2ELj1EEC2IJLm0ELm0EEJNS0_5ALL_tEiEEERKNS0_13ViewDimensionIJXspT_EEEEDpT0_.internalized
+-; CHECK-SAME: (ptr [[THIS:%.*]]) #[[ATTR1:[0-9]+]] {
++; CHECK-SAME: (ptr [[THIS:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[CALL:%.*]] = call i1 @_ZN6Kokkos4Impl14SubviewExtentsILj2ELj1EE3setIJLm0ELm0EEJiEEEbjjRKNS0_13ViewDimensionIJXspT_EEEENS0_5ALL_tEDpT0_.internalized(ptr writeonly [[THIS]])
++; CHECK-NEXT:    [[CALL:%.*]] = call i1 @_ZN6Kokkos4Impl14SubviewExtentsILj2ELj1EE3setIJLm0ELm0EEJiEEEbjjRKNS0_13ViewDimensionIJXspT_EEEENS0_5ALL_tEDpT0_.internalized(ptr [[THIS]])
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+@@ -104,6 +102,14 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
++; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvEC2INS2_IJLm0ELm0EEEENS_11LayoutRightEEERKNS1_IT_T0_vEERKNS0_14SubviewExtentsIXsrS9_4rankELj1EEE.internalized
++; CHECK-SAME: (ptr [[SUB:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CALL191:%.*]] = call i32 @_ZNK6Kokkos4Impl14SubviewExtentsILj2ELj1EE11range_indexIiEEjT_.internalized(ptr [[SUB]])
++; CHECK-NEXT:    [[CALL201:%.*]] = call i64 @_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvE6strideINS2_IJLm0ELm0EEEENS_11LayoutRightEEEmjRKNS1_IT_T0_vEE.internalized(i32 [[CALL191]])
++; CHECK-NEXT:    ret void
++;
++;
+ ; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvEC2INS2_IJLm0ELm0EEEENS_11LayoutRightEEERKNS1_IT_T0_vEERKNS0_14SubviewExtentsIXsrS9_4rankELj1EEE
+ ; CHECK-SAME: (ptr [[SUB:%.*]]) {
+ ; CHECK-NEXT:  entry:
+@@ -112,11 +118,10 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret void
+ ;
+ ;
+-; CHECK: Function Attrs: norecurse nosync nounwind memory(argmem: write)
+ ; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl14SubviewExtentsILj2ELj1EE3setIJLm0ELm0EEJiEEEbjjRKNS0_13ViewDimensionIJXspT_EEEENS0_5ALL_tEDpT0_.internalized
+-; CHECK-SAME: (ptr writeonly captures(none) [[THIS:%.*]]) #[[ATTR1]] {
++; CHECK-SAME: (ptr [[THIS:%.*]]) {
+ ; CHECK-NEXT:  entry:
+-; CHECK-NEXT:    [[TMP0:%.*]] = addrspacecast ptr [[THIS]] to ptr addrspace(5)
++; CHECK-NEXT:    store i64 0, ptr [[THIS]], align 8
+ ; CHECK-NEXT:    ret i1 false
+ ;
+ ;
+@@ -127,6 +132,13 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret i1 false
+ ;
+ ;
++; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvE6strideINS2_IJLm0ELm0EEEENS_11LayoutRightEEEmjRKNS1_IT_T0_vEE.internalized
++; CHECK-SAME: (i32 [[R:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    store i32 [[R]], ptr null, align 4294967296
++; CHECK-NEXT:    ret i64 0
++;
++;
+ ; CHECK-LABEL: define {{[^@]+}}@_ZN6Kokkos4Impl10ViewOffsetINS0_13ViewDimensionIJLm0EEEENS_12LayoutStrideEvE6strideINS2_IJLm0ELm0EEEENS_11LayoutRightEEEmjRKNS1_IT_T0_vEE
+ ; CHECK-SAME: (i32 [[R:%.*]]) {
+ ; CHECK-NEXT:  entry:
+@@ -134,6 +146,19 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret i64 0
+ ;
+ ;
++; CHECK-LABEL: define {{[^@]+}}@_ZNK6Kokkos4Impl14SubviewExtentsILj2ELj1EE11range_indexIiEEjT_.internalized
++; CHECK-SAME: (ptr [[THIS:%.*]]) {
++; CHECK-NEXT:  entry:
++; CHECK-NEXT:    [[CMP:%.*]] = icmp eq i32 1, 0
++; CHECK-NEXT:    br i1 [[CMP]], label [[COND_TRUE:%.*]], label [[COND_END:%.*]]
++; CHECK:       cond.true:
++; CHECK-NEXT:    [[TMP0:%.*]] = load i32, ptr [[THIS]], align 4
++; CHECK-NEXT:    br label [[COND_END]]
++; CHECK:       cond.end:
++; CHECK-NEXT:    [[COND:%.*]] = phi i32 [ [[TMP0]], [[COND_TRUE]] ], [ 1, [[ENTRY:%.*]] ]
++; CHECK-NEXT:    ret i32 [[COND]]
++;
++;
+ ; CHECK-LABEL: define {{[^@]+}}@_ZNK6Kokkos4Impl14SubviewExtentsILj2ELj1EE11range_indexIiEEjT_
+ ; CHECK-SAME: (ptr [[THIS:%.*]]) {
+ ; CHECK-NEXT:  entry:
+@@ -147,10 +172,6 @@ cond.end:                                         ; preds = %cond.true, %entry
+ ; CHECK-NEXT:    ret i32 [[COND]]
+ ;
+ ;.
+-; CHECK: attributes #[[ATTR0]] = { norecurse }
+-; CHECK: attributes #[[ATTR1]] = { norecurse nosync nounwind memory(argmem: write) }
+-; CHECK: attributes #[[ATTR2:[0-9]+]] = { nosync nounwind memory(write) }
+-;.
+ ; CHECK: [[META0:![0-9]+]] = !{i32 7, !"openmp", i32 50}
+ ; CHECK: [[META1:![0-9]+]] = !{i32 7, !"openmp-device", i32 50}
+ ;.
+diff --git a/llvm/test/Transforms/OpenMP/single_threaded_execution.ll b/llvm/test/Transforms/OpenMP/single_threaded_execution.ll
+index 70b9ce41c1a43..8b71a132e8541 100644
+--- a/llvm/test/Transforms/OpenMP/single_threaded_execution.ll
++++ b/llvm/test/Transforms/OpenMP/single_threaded_execution.ll
+@@ -16,6 +16,9 @@
+ ; CHECK: [openmp-opt] Basic block @kernel if.then is executed by a single thread.
+ ; CHECK-NOT: [openmp-opt] Basic block @kernel if.else is executed by a single thread.
+ ; CHECK-NOT: [openmp-opt] Basic block @kernel if.end is executed by a single thread.
++; CHECK-NOT: [openmp-opt] Basic block @nvptx entry is executed by a single thread.
++; CHECK: [openmp-opt] Basic block @nvptx if.then is executed by a single thread.
++; CHECK-NOT: [openmp-opt] Basic block @nvptx if.end is executed by a single thread.
+ define ptx_kernel void @kernel(ptr %dyn) "kernel" {
+   %call = call i32 @__kmpc_target_init(ptr @kernel_kernel_environment, ptr %dyn)
+   %cmp = icmp eq i32 %call, -1
+@@ -46,9 +49,6 @@ entry:
+ ; REMARKS: remark: single_threaded_execution.c:1:0: Could not internalize function. Some optimizations may not be possible.
+ ; REMARKS-NOT: remark: single_threaded_execution.c:1:0: Could not internalize function. Some optimizations may not be possible.
+ 
+-; CHECK-NOT: [openmp-opt] Basic block @nvptx entry is executed by a single thread.
+-; CHECK-DAG: [openmp-opt] Basic block @nvptx if.then is executed by a single thread.
+-; CHECK-NOT: [openmp-opt] Basic block @nvptx if.end is executed by a single thread.
+ ; Function Attrs: noinline
+ define void @nvptx() {
+ entry:
