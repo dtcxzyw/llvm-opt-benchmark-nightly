@@ -201,10 +201,10 @@ bb.a:
   %i.j = load i64, ptr %i.i, align 8, !tbaa !30
   %i.k = icmp ult i64 %i.a, %i.j
   %.neg.i.i = sext i1 %i.k to i32
-  %i.l = add nsw i32 %.neg.i.i, %i.g              ; 7 uses
-  %3 = sub nsw i32 3, %i.l
-  %4 = icmp slt i32 %i.l, 3                       ; 2 uses
-  %.sroa.speculated = select i1 %4, i32 %3, i32 0 ; 3 uses
+  %i.l = add nsw i32 %.neg.i.i, %i.g              ; 8 uses
+  %3 = icmp slt i32 %i.l, 3
+  %4 = tail call i32 @llvm.smin.i32(i32 %i.l, i32 3)
+  %.sroa.speculated = sub nsw i32 3, %4           ; 2 uses
   %i.m = icmp slt i32 %2, 0
   br i1 %i.m, label %bb.b, label %bb.f
 
@@ -234,7 +234,7 @@ _ZN3fmt3v1114basic_appenderIcEaSEc.exit:          ; preds = %bb.b, %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.v
   store i8 46, ptr %i.x, align 1, !tbaa !18
   %.sroa.016.0.copyload = load ptr, ptr %0, align 8, !tbaa !3356 ; 7 uses
-  br i1 %4, label %.lr.ph.i, label %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit
+  br i1 %3, label %.lr.ph.i, label %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit
 
 .lr.ph.i:                                         ; preds = %_ZN3fmt3v1114basic_appenderIcEaSEc.exit
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.016.0.copyload, i64 8 ; 3 uses
@@ -305,7 +305,7 @@ _ZN3fmt3v1114basic_appenderIcEaSEc.exit70:        ; preds = %bb.g, %bb.h
   %i.aw = tail call i32 @llvm.umin.i32(i32 %.sroa.speculated, i32 %2) ; 2 uses
   %i.ax = sub nsw i32 %2, %i.aw                   ; 5 uses
   %.sroa.07.0.copyload = load ptr, ptr %0, align 8, !tbaa !3356 ; 9 uses
-  %.not97 = icmp eq i32 %.sroa.speculated, 0
+  %.not97 = icmp sgt i32 %i.l, 2
   br i1 %.not97, label %_ZN3fmt3v116detail6fill_nINS0_14basic_appenderIcEEicEET_S5_T0_RKT1_.exit78, label %.lr.ph.i71
 
 .lr.ph.i71:                                       ; preds = %_ZN3fmt3v1114basic_appenderIcEaSEc.exit70
@@ -706,6 +706,9 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #15
