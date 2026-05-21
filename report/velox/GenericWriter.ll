@@ -201,7 +201,7 @@ _ZN8facebook5velox4exec11ArrayWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEE7reser
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec11ArrayWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEE7reserveEi.exit
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
-  %i.ad = getelementptr i8, ptr %i.y, <2 x i64> <i64 8, i64 56>
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.y, <2 x i64> <i64 8, i64 56>
   %i.ae = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -604,7 +604,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEES5_E6resiz
   br i1 %i.av, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEES5_E6resizeEi.exit
-  %i.aw = getelementptr i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
+  %i.aw = getelementptr inbounds nuw i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
@@ -924,7 +924,7 @@ _ZN8facebook5velox4exec9MapWriterIbNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIbNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.au = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.av = getelementptr i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
+  %i.av = getelementptr inbounds nuw i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1327,7 +1327,7 @@ _ZN8facebook5velox4exec9MapWriterIiNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIiNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -1730,7 +1730,7 @@ _ZN8facebook5velox4exec9MapWriterIaNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIaNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -2133,7 +2133,7 @@ _ZN8facebook5velox4exec9MapWriterIsNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIsNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -2536,7 +2536,7 @@ _ZN8facebook5velox4exec9MapWriterIlNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIlNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -2939,7 +2939,7 @@ _ZN8facebook5velox4exec9MapWriterInNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterInNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -3342,7 +3342,7 @@ _ZN8facebook5velox4exec9MapWriterIfNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIfNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -3745,7 +3745,7 @@ _ZN8facebook5velox4exec9MapWriterIdNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeE
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterIdNS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -4148,7 +4148,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7VarcharENS0_7GenericINS0_7AnyTypeELb0ELb0
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.az = getelementptr i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -4551,7 +4551,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9VarbinaryENS0_7GenericINS0_7AnyTypeELb0EL
   %i.aw = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ax = getelementptr inbounds nuw i8, ptr %3, i64 4 ; 2 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.az = getelementptr i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ar, <2 x i64> <i64 8, i64 56>
   %i.ba = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -4954,7 +4954,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_7AnyTypeELb0EL
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_9TimestampENS0_7GenericINS0_7AnyTypeELb0ELb0EEEE6resizeEi.exit
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.ao = getelementptr i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, <2 x i64> <i64 8, i64 56>
   %i.ap = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -5357,7 +5357,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEbE6resizeE
   br i1 %i.au, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEbE6resizeEi.exit
-  %i.av = getelementptr i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
+  %i.av = getelementptr inbounds nuw i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -5760,7 +5760,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEiE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEiE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -6163,7 +6163,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEaE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEaE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -6566,7 +6566,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEsE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEsE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -6969,7 +6969,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEElE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEElE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -7372,7 +7372,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEnE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEnE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -7775,7 +7775,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEfE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEfE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -8178,7 +8178,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEdE6resizeE
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEEdE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -8581,7 +8581,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_7Varch
   br i1 %i.au, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_7VarcharEE6resizeEi.exit
-  %i.av = getelementptr i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
+  %i.av = getelementptr inbounds nuw i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -8984,7 +8984,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_9Varbi
   br i1 %i.au, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_9VarbinaryEE6resizeEi.exit
-  %i.av = getelementptr i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
+  %i.av = getelementptr inbounds nuw i8, ptr %i.aq, <2 x i64> <i64 8, i64 56>
   %i.aw = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
@@ -9387,7 +9387,7 @@ _ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_9Times
   br i1 %i.am, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN8facebook5velox4exec9MapWriterINS0_7GenericINS0_7AnyTypeELb0ELb0EEENS0_9TimestampEE6resizeEi.exit
-  %i.an = getelementptr i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
+  %i.an = getelementptr inbounds nuw i8, ptr %i.ai, <2 x i64> <i64 8, i64 56>
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses

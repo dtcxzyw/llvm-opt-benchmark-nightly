@@ -201,7 +201,7 @@ bb.fk:                                            ; preds = %_RINvNtCsbvkFyIu7lg
   store ptr %i.vk, ptr %i.vm, align 8
   %.sroa.7382.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.vn = load <2 x ptr>, ptr %i.vl, align 8
-  %i.vo = getelementptr i8, <2 x ptr> %i.vn, i64 16
+  %i.vo = getelementptr inbounds nuw i8, <2 x ptr> %i.vn, i64 16
   store <2 x ptr> %i.vo, ptr %.sroa.7382.0..sroa_idx, align 8
   %.sroa.9384.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 192
   store i64 %i.ve, ptr %.sroa.9384.0..sroa_idx, align 8
@@ -464,7 +464,7 @@ bb.go:                                            ; preds = %bb.fk
   store ptr %i.xr, ptr %i.xu, align 8
   %.sroa.7395.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.xv = load <2 x ptr>, ptr %i.xs, align 8
-  %i.xw = getelementptr i8, <2 x ptr> %i.xv, i64 16
+  %i.xw = getelementptr inbounds nuw i8, <2 x ptr> %i.xv, i64 16
   store <2 x ptr> %i.xw, ptr %.sroa.7395.0..sroa_idx, align 8
   %.sroa.9397.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 192
   store ptr %i.xt, ptr %.sroa.9397.0..sroa_idx, align 8
@@ -867,7 +867,7 @@ bb.yl:                                            ; preds = %bb.yi
   store ptr %i.bpo, ptr %.sroa.8456.0..sroa_idx, align 8
   %.sroa.9457.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 848
   %i.cff = load <2 x ptr>, ptr %i.cfb, align 8
-  %i.cfg = getelementptr i8, <2 x ptr> %i.cff, i64 16
+  %i.cfg = getelementptr inbounds nuw i8, <2 x ptr> %i.cff, i64 16
   store <2 x ptr> %i.cfg, ptr %.sroa.9457.0..sroa_idx, align 8
   %.sroa.11459.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 864
   store ptr %i.cfe, ptr %.sroa.11459.0..sroa_idx, align 8
@@ -1270,7 +1270,7 @@ _RNvMsd_NtNtCs95DO3lnzZ3L_4moka6future10base_cacheINtB5_5InnerNtNtCs6Po7BT7Nknu_
   store ptr %i.cev, ptr %.sroa.9477.0..sroa_idx, align 8
   %.sroa.10478.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 352
   %i.czu = load <2 x ptr>, ptr %i.czr, align 8
-  %i.czv = getelementptr i8, <2 x ptr> %i.czu, i64 16
+  %i.czv = getelementptr inbounds nuw i8, <2 x ptr> %i.czu, i64 16
   store <2 x ptr> %i.czv, ptr %.sroa.10478.0..sroa_idx, align 8
   %.sroa.12480.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 368
   store ptr %i.cew, ptr %.sroa.12480.0..sroa_idx, align 8

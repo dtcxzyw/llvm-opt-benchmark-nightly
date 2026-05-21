@@ -201,7 +201,7 @@ bb.a:
   %i.t = insertelement <4 x i16> <i16 0, i16 poison, i16 poison, i16 poison>, i16 %i.q, i64 1
   %i.u = insertelement <4 x i16> %i.t, i16 %i.o, i64 2
   %i.v = insertelement <4 x i16> %i.u, i16 %i.m, i64 3
-  %i.w = or <4 x i16> %i.s, %i.v
+  %i.w = or disjoint <4 x i16> %i.s, %i.v
   store <4 x i16> %i.w, ptr %1, align 2, !tbaa !7
   %i.x = load i16, ptr %i.f, align 2, !tbaa !7, !noalias !1076 ; 3 uses
   %i.y = load i16, ptr %i.e, align 2, !tbaa !7, !noalias !1079 ; 2 uses
@@ -398,7 +398,7 @@ bb.a:
   %i.v = insertelement <8 x i16> %i.u, i16 %i.g, i64 5
   %i.w = insertelement <8 x i16> %i.v, i16 %i.e, i64 6
   %i.x = insertelement <8 x i16> %i.w, i16 %i.c, i64 7
-  %i.y = or <8 x i16> %i.q, %i.x
+  %i.y = or disjoint <8 x i16> %i.q, %i.x
   store <8 x i16> %i.y, ptr %1, align 2, !tbaa !7
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1189)
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -801,7 +801,7 @@ bb.a:
   %i.bj = insertelement <8 x i16> %i.bi, i16 %i.y, i64 6
   %i.bk = insertelement <8 x i16> %i.bj, i16 %i.w, i64 7
   %i.bl = shl <8 x i16> %i.bk, <i16 0, i16 11, i16 13, i16 15, i16 0, i16 10, i16 12, i16 14>
-  %i.bm = or <8 x i16> %i.be, %i.bl
+  %i.bm = or disjoint <8 x i16> %i.be, %i.bl
   %i.bn = or disjoint <8 x i16> %i.at, %i.bm
   store <8 x i16> %i.bn, ptr %1, align 2, !tbaa !7, !alias.scope !9113, !noalias !9112
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 16

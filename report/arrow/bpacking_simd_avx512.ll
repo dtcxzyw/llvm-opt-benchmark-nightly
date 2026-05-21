@@ -201,7 +201,7 @@ _ZN5arrow8internal12unpack_exactILi14ELb1EtEEiPKhPT1_ii.exit.i.i: ; preds = %bb.
   %i.avc = shufflevector <16 x i32> %i.ava, <16 x i32> %i.avb, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 16, i32 17, i32 12, i32 13, i32 14, i32 15>
   %i.avd = shufflevector <16 x i32> %i.avc, <16 x i32> %i.auy, <16 x i32> <i32 0, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15, i32 30, i32 31>
   %i.ave = lshr <16 x i32> %i.avd, <i32 0, i32 14, i32 0, i32 10, i32 0, i32 6, i32 0, i32 2, i32 16, i32 0, i32 12, i32 0, i32 8, i32 0, i32 4, i32 18>
-  %i.avf = getelementptr i8, ptr %.02531.i340.i, <8 x i64> <i64 28, i64 28, i64 32, i64 36, i64 40, i64 40, i64 44, i64 48>
+  %i.avf = getelementptr inbounds nuw i8, ptr %.02531.i340.i, <8 x i64> <i64 28, i64 28, i64 32, i64 36, i64 40, i64 40, i64 44, i64 48>
   %i.avg = getelementptr inbounds nuw i8, ptr %.02531.i340.i, i64 40
   %i.avh = tail call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 1 %i.avf, <8 x i1> splat (i1 true), <8 x i32> poison) ; 4 uses
   %i.avi = shufflevector <8 x i32> %i.avh, <8 x i32> poison, <2 x i32> <i32 2, i32 3>
@@ -604,7 +604,7 @@ _ZN5arrow8internal12unpack_exactILi14ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ad
   %i.axk = bitcast <16 x i32> %i.axj to <8 x i64>
   %i.axl = and <8 x i64> %i.axk, splat (i64 70364449226751)
   store <8 x i64> %i.axl, ptr %.02630.i405, align 1, !tbaa !15
-  %i.axm = getelementptr i8, ptr %.02531.i404, <8 x i64> <i64 28, i64 28, i64 32, i64 36, i64 40, i64 40, i64 44, i64 48>
+  %i.axm = getelementptr inbounds nuw i8, ptr %.02531.i404, <8 x i64> <i64 28, i64 28, i64 32, i64 36, i64 40, i64 40, i64 44, i64 48>
   %i.axn = getelementptr inbounds nuw i8, ptr %.02531.i404, i64 40
   %i.axo = tail call <8 x i32> @llvm.masked.gather.v8i32.v8p0(<8 x ptr> align 1 %i.axm, <8 x i1> splat (i1 true), <8 x i32> poison) ; 4 uses
   %i.axp = shufflevector <8 x i32> %i.axo, <8 x i32> poison, <2 x i32> <i32 2, i32 3>
@@ -995,7 +995,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bgr = bitcast <16 x i32> %.sroa.0109.60.vec.insert.i.i448 to <8 x i64>
   %i.bgs = and <8 x i64> %i.bgr, splat (i64 281470681808895)
   store <8 x i64> %i.bgs, ptr %.02630.i447, align 1, !tbaa !15
-  %i.bgt = getelementptr i8, ptr %.02531.i446, <16 x i64> <i64 32, i64 32, i64 36, i64 36, i64 40, i64 40, i64 44, i64 44, i64 48, i64 48, i64 52, i64 52, i64 56, i64 56, i64 60, i64 60>
+  %i.bgt = getelementptr inbounds nuw i8, ptr %.02531.i446, <16 x i64> <i64 32, i64 32, i64 36, i64 36, i64 40, i64 40, i64 44, i64 44, i64 48, i64 48, i64 52, i64 52, i64 56, i64 56, i64 60, i64 60>
   %i.bgu = tail call <16 x i32> @llvm.masked.gather.v16i32.v16p0(<16 x ptr> align 1 %i.bgt, <16 x i1> splat (i1 true), <16 x i32> poison)
   %i.bgv = lshr <16 x i32> %i.bgu, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
   %i.bgw = getelementptr inbounds nuw i8, ptr %.02630.i447, i64 64
@@ -1398,43 +1398,43 @@ _ZN5arrow8internal12unpack_exactILi32ELb0EmEEiPKhPT1_ii.exit: ; preds = %.lr.ph.
   %.sroa.0353.56.vec.insert.i = insertelement <8 x i64> %i.az, i64 %i.ba, i64 7
   %i.bb = and <8 x i64> %.sroa.0353.56.vec.insert.i, splat (i64 4294967295)
   store <8 x i64> %i.bb, ptr %.02630, align 1, !tbaa !15
-  %i.bc = getelementptr i8, ptr %.02531, <8 x i64> <i64 32, i64 32, i64 40, i64 40, i64 48, i64 48, i64 56, i64 56>
+  %i.bc = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 32, i64 32, i64 40, i64 40, i64 48, i64 48, i64 56, i64 56>
   %i.bd = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.bc, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.be = lshr <8 x i64> %i.bd, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.bf = getelementptr inbounds nuw i8, ptr %.02630, i64 64
   %i.bg = and <8 x i64> %i.be, splat (i64 4294967295)
   store <8 x i64> %i.bg, ptr %i.bf, align 1, !tbaa !15
-  %i.bh = getelementptr i8, ptr %.02531, <8 x i64> <i64 64, i64 64, i64 72, i64 72, i64 80, i64 80, i64 88, i64 88>
+  %i.bh = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 64, i64 64, i64 72, i64 72, i64 80, i64 80, i64 88, i64 88>
   %i.bi = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.bh, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.bj = lshr <8 x i64> %i.bi, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.bk = getelementptr inbounds nuw i8, ptr %.02630, i64 128
   %i.bl = and <8 x i64> %i.bj, splat (i64 4294967295)
   store <8 x i64> %i.bl, ptr %i.bk, align 1, !tbaa !15
-  %i.bm = getelementptr i8, ptr %.02531, <8 x i64> <i64 96, i64 96, i64 104, i64 104, i64 112, i64 112, i64 120, i64 120>
+  %i.bm = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 96, i64 96, i64 104, i64 104, i64 112, i64 112, i64 120, i64 120>
   %i.bn = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.bm, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.bo = lshr <8 x i64> %i.bn, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.bp = getelementptr inbounds nuw i8, ptr %.02630, i64 192
   %i.bq = and <8 x i64> %i.bo, splat (i64 4294967295)
   store <8 x i64> %i.bq, ptr %i.bp, align 1, !tbaa !15
-  %i.br = getelementptr i8, ptr %.02531, <8 x i64> <i64 128, i64 128, i64 136, i64 136, i64 144, i64 144, i64 152, i64 152>
+  %i.br = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 128, i64 128, i64 136, i64 136, i64 144, i64 144, i64 152, i64 152>
   %i.bs = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.br, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.bt = lshr <8 x i64> %i.bs, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.bu = getelementptr inbounds nuw i8, ptr %.02630, i64 256
   %i.bv = and <8 x i64> %i.bt, splat (i64 4294967295)
   store <8 x i64> %i.bv, ptr %i.bu, align 1, !tbaa !15
-  %i.bw = getelementptr i8, ptr %.02531, <8 x i64> <i64 160, i64 160, i64 168, i64 168, i64 176, i64 176, i64 184, i64 184>
+  %i.bw = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 160, i64 160, i64 168, i64 168, i64 176, i64 176, i64 184, i64 184>
   %i.bx = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.bw, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.by = lshr <8 x i64> %i.bx, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.bz = getelementptr inbounds nuw i8, ptr %.02630, i64 320
   %i.ca = and <8 x i64> %i.by, splat (i64 4294967295)
   store <8 x i64> %i.ca, ptr %i.bz, align 1, !tbaa !15
-  %i.cb = getelementptr i8, ptr %.02531, <8 x i64> <i64 192, i64 192, i64 200, i64 200, i64 208, i64 208, i64 216, i64 216>
+  %i.cb = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 192, i64 192, i64 200, i64 200, i64 208, i64 208, i64 216, i64 216>
   %i.cc = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.cb, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.cd = lshr <8 x i64> %i.cc, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.ce = getelementptr inbounds nuw i8, ptr %.02630, i64 384
   %i.cf = and <8 x i64> %i.cd, splat (i64 4294967295)
   store <8 x i64> %i.cf, ptr %i.ce, align 1, !tbaa !15
-  %i.cg = getelementptr i8, ptr %.02531, <8 x i64> <i64 224, i64 224, i64 232, i64 232, i64 240, i64 240, i64 248, i64 248>
+  %i.cg = getelementptr inbounds nuw i8, ptr %.02531, <8 x i64> <i64 224, i64 224, i64 232, i64 232, i64 240, i64 240, i64 248, i64 248>
   %i.ch = tail call <8 x i64> @llvm.masked.gather.v8i64.v8p0(<8 x ptr> align 1 %i.cg, <8 x i1> splat (i1 true), <8 x i64> poison)
   %i.ci = lshr <8 x i64> %i.ch, <i64 0, i64 32, i64 0, i64 32, i64 0, i64 32, i64 0, i64 32>
   %i.cj = getelementptr inbounds nuw i8, ptr %.02630, i64 448

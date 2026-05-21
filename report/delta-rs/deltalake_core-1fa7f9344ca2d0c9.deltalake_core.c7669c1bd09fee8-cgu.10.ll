@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCINvNtB1s_5utils18find_exprs_in_exprNCINvB5b_17find_window_exprsINtNtNtNtB2y_4iter8adapters10filter_map9FilterMapINtNtNtB2y_5slice4iter4IterNtNtB1s_11select_expr10SelectExprENCINvMs0_NtCs8Hz2sPNgbCO_10datafusion9dataframeNtB84_9DataFrame6selectB1o_BR_Es_0EE0E0E000ECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -387,7 +387,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCINvNtB1s_5utils18find_exprs_in_exprNCINvB5b_17find_window_exprsINtNtNtNtB2y_4iter8adapters5chain5ChainINtNtNtB2y_5slice4iter4IterB1o_EINtB2w_4IterB1o_EEE0E0E000ECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -573,7 +573,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCINvNtB1s_5utils18find_exprs_in_exprNCINvB5b_20find_aggregate_exprsINtNtNtNtB2y_4iter8adapters3map3MapINtNtNtB2y_5slice4iter4IterB2g_ENCNvMNtCsjHlmExTLNuX_14datafusion_sql6selectINtNtB7o_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE14select_to_plans2_0EE0E0E000EB8v_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -759,7 +759,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCINvNtB1s_5utils18find_exprs_in_exprNCINvB5b_20find_aggregate_exprsINtNtNtNtB2y_4iter8adapters5chain5ChainIB6d_INtNtNtB2y_5slice4iter4IterB1o_EINtB2w_4IterB1o_EEB7q_EE0E0E000ECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -945,7 +945,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCINvNtB1s_5utils18find_exprs_in_exprNCINvB5b_20find_aggregate_exprsRSB1o_E0E0E000ECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(16) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1131,7 +1131,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCNvMNtCsjHlmExTLNuX_14datafusion_sql6selectINtNtB5d_7planner8SqlToRelNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion4expr20DeltaContextProviderE27try_process_group_by_unnest0E000EB6k_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(8) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1317,7 +1317,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvNvNtB6_8TreeNode5apply10apply_implB1o_NCNvNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider32expr_is_exact_predicate_for_cols0E000EB5e_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 8 dereferenceable(24) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1503,7 +1503,7 @@ bb.k:                                             ; preds = %bb.a
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = load ptr, ptr %i.ag, align 8, !nonnull !16, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.ai = getelementptr i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, <4 x i64> <i64 176, i64 200, i64 224, i64 248>
   store <4 x ptr> %i.ai, ptr %i.b, align 8
   call void @_RINvXsb_NtCsjhHCjzi9uUI_17datafusion_common9tree_nodeTRINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEBQ_RIBS_NtB1q_4SortERINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtBW_5boxed3BoxB1o_EEEINtB6_20TreeNodeRefContainerB1o_E18apply_ref_elementsNCNCNCINvYB1o_NtB6_8TreeNode5visitNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion10find_files23FindFilesExprPropertiesE000EB4Z_(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias noundef nonnull align 16 dereferenceable(128) %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

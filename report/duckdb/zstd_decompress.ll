@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 29992
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 30176
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 26684
-  %i.r = getelementptr i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
+  %i.r = getelementptr inbounds nuw i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 30232
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 29944 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %9, i64 8
@@ -604,7 +604,7 @@ _ZN11duckdb_zstdL19ZSTD_checkOutBufferEPKNS_11ZSTD_DCtx_sEPKNS_16ZSTD_outBuffer_
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 29992 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 30176
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 26684
-  %i.bi = getelementptr i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
+  %i.bi = getelementptr inbounds nuw i8, ptr %0, <4 x i64> <i64 32, i64 6192, i64 4136, i64 10296>
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 95944
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 29936 ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 30264

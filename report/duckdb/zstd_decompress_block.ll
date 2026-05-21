@@ -201,7 +201,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.di = add nsw i64 %.0210, -65536
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.dh, ptr align 1 %i.dg, i64 %i.di, i1 false)
   %i.dj = load <2 x ptr>, ptr %i.df, align 8, !tbaa !46
-  %i.dk = getelementptr i8, <2 x ptr> %i.dj, <2 x i64> <i64 65504, i64 -32>
+  %i.dk = getelementptr inbounds i8, <2 x ptr> %i.dj, <2 x i64> <i64 65504, i64 -32>
   store <2 x ptr> %i.dk, ptr %i.df, align 8, !tbaa !46
   br label %bb.ag
 

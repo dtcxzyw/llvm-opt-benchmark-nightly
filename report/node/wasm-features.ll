@@ -27,7 +27,7 @@ module asm ".globl _ZSt21ios_base_library_initv"
 define hidden range(i32 0, 262144) i32 @_ZN2v88internal4wasm19WasmEnabledFeatures9FromFlagsEv() local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load <8 x i8>, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 832), align 64
-  %i.b = shl <8 x i8> %i.a, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
+  %i.b = shl nuw <8 x i8> %i.a, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7>
   %i.c = tail call i8 @llvm.vector.reduce.or.v8i8(<8 x i8> %i.b)
   %.sroa.0.7 = zext i8 %i.c to i32
   %i.d = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 840), align 8, !range !5, !noundef !6

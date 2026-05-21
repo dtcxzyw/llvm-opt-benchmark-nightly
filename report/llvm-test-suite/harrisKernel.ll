@@ -199,7 +199,7 @@ scalar.ph590:                                     ; preds = %scalar.ph590.prehea
   %i.jb = shufflevector <8 x float> %i.iz, <8 x float> %i.ja, <8 x i32> <i32 0, i32 1, i32 2, i32 poison, i32 12, i32 13, i32 poison, i32 15>
   %i.jc = insertelement <8 x float> %i.jb, float %i.iw, i64 3
   %i.jd = insertelement <8 x float> %i.jc, float %i.iy, i64 6
-  %i.je = fmul <8 x float> %i.jd, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 2.000000e+00>
+  %i.je = fmul reassoc nsz arcp contract afn <8 x float> %i.jd, <float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 1.000000e+00, float 2.000000e+00>
   %i.jf = tail call fast float @llvm.vector.reduce.fadd.v8f32(float 0.000000e+00, <8 x float> %i.je)
   %i.jg = getelementptr inbounds nuw [4 x i8], ptr %i.ht, i64 %indvars.iv416
   store float %i.jf, ptr %i.jg, align 4, !tbaa !8

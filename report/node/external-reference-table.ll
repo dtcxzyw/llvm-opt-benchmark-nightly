@@ -201,7 +201,7 @@ _ZN2v88internal22ExternalReferenceTable12AddStubCacheEPNS0_7IsolateEPi.exit: ; p
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 10976
   store i64 %i.j, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 10984
-  %i.m = getelementptr i8, ptr %i.e, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
+  %i.m = getelementptr inbounds nuw i8, ptr %i.e, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
   %i.n = ptrtoint <4 x ptr> %i.m to <4 x i64>
   store <4 x i64> %i.n, ptr %i.l, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 49168
@@ -212,7 +212,7 @@ _ZN2v88internal22ExternalReferenceTable12AddStubCacheEPNS0_7IsolateEPi.exit: ; p
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 11024
   store i64 %i.r, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 11032
-  %i.u = getelementptr i8, ptr %i.g, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
+  %i.u = getelementptr inbounds nuw i8, ptr %i.g, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
   %i.v = ptrtoint <4 x ptr> %i.u to <4 x i64>
   store <4 x i64> %i.v, ptr %i.t, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.g, i64 49168
@@ -223,7 +223,7 @@ _ZN2v88internal22ExternalReferenceTable12AddStubCacheEPNS0_7IsolateEPi.exit: ; p
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 11072
   store i64 %i.z, ptr %i.aa, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 11080
-  %i.ac = getelementptr i8, ptr %i.i, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.i, <4 x i64> <i64 8, i64 16, i64 49152, i64 49160>
   %i.ad = ptrtoint <4 x ptr> %i.ac to <4 x i64>
   store <4 x i64> %i.ad, ptr %i.ab, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.i, i64 49168

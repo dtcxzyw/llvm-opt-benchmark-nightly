@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.p
   %i.dl = insertelement <4 x float> %i.dk, float %i.dg, i64 2
   %i.dm = insertelement <4 x float> %i.dl, float %i.di, i64 3
   %i.dn = fptosi <4 x float> %i.dm to <4 x i32>
-  %i.do = add <4 x i32> %i.dn, <i32 0, i32 1, i32 0, i32 1>
+  %i.do = add nsw <4 x i32> %i.dn, <i32 0, i32 1, i32 0, i32 1>
   store <4 x i32> %i.do, ptr %27, align 16, !tbaa !3, !alias.scope !74
   %i.dp = getelementptr inbounds nuw i8, ptr %27, i64 16
   %i.dq = load <4 x i32>, ptr %.sroa.7305.0..sroa_idx, align 8

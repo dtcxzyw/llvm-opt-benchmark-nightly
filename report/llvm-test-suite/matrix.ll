@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.j = insertelement <4 x i32> poison, i32 %.01418.us.i, i64 0
   %i.k = shufflevector <4 x i32> %i.j, <4 x i32> poison, <4 x i32> zeroinitializer ; 7 uses
   %i.l = add nuw nsw <4 x i32> %i.k, <i32 4, i32 5, i32 6, i32 7>
-  %i.m = add nuw <4 x i32> %i.k, <i32 0, i32 1, i32 2, i32 3>
+  %i.m = add nuw nsw <4 x i32> %i.k, <i32 0, i32 1, i32 2, i32 3>
   store <4 x i32> %i.m, ptr %i.h, align 4, !tbaa !4
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %i.o = add nuw nsw <4 x i32> %i.k, <i32 8, i32 9, i32 10, i32 11>
@@ -244,7 +244,7 @@ _Z8mkmatrixii.exit:                               ; preds = %.lr.ph.us.i
   %i.ag = insertelement <4 x i32> poison, i32 %.01418.us.i17, i64 0
   %i.ah = shufflevector <4 x i32> %i.ag, <4 x i32> poison, <4 x i32> zeroinitializer ; 7 uses
   %i.ai = add nuw nsw <4 x i32> %i.ah, <i32 4, i32 5, i32 6, i32 7>
-  %i.aj = add nuw <4 x i32> %i.ah, <i32 0, i32 1, i32 2, i32 3>
+  %i.aj = add nuw nsw <4 x i32> %i.ah, <i32 0, i32 1, i32 2, i32 3>
   store <4 x i32> %i.aj, ptr %i.ae, align 4, !tbaa !4
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 16
   %i.al = add nuw nsw <4 x i32> %i.ah, <i32 8, i32 9, i32 10, i32 11>
@@ -287,7 +287,7 @@ _Z8mkmatrixii.exit25:                             ; preds = %.lr.ph.us.i15
   %i.bd = insertelement <4 x i32> poison, i32 %.01418.us.i28, i64 0
   %i.be = shufflevector <4 x i32> %i.bd, <4 x i32> poison, <4 x i32> zeroinitializer ; 7 uses
   %i.bf = add nuw nsw <4 x i32> %i.be, <i32 4, i32 5, i32 6, i32 7>
-  %i.bg = add nuw <4 x i32> %i.be, <i32 0, i32 1, i32 2, i32 3>
+  %i.bg = add nuw nsw <4 x i32> %i.be, <i32 0, i32 1, i32 2, i32 3>
   store <4 x i32> %i.bg, ptr %i.bb, align 4, !tbaa !4
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bi = add nuw nsw <4 x i32> %i.be, <i32 8, i32 9, i32 10, i32 11>

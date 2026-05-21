@@ -201,7 +201,7 @@ bb.a:
   %i.al = xor <4 x i32> %i.aj, splat (i32 -1)
   %i.am = lshr <4 x i32> %i.al, splat (i32 24)
   %i.an = select <4 x i1> %i.ak, <4 x i32> %i.aj, <4 x i32> %i.am
-  %i.ao = shl <4 x i32> %i.an, <i32 0, i32 8, i32 16, i32 24>
+  %i.ao = shl nuw <4 x i32> %i.an, <i32 0, i32 8, i32 16, i32 24>
   %i.ap = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.ao)
   ret i32 %i.ap
 }
@@ -604,7 +604,7 @@ bb.a:
   %i.aj = xor <4 x i32> %i.ah, splat (i32 -1)
   %i.ak = lshr <4 x i32> %i.aj, splat (i32 24)
   %i.al = select <4 x i1> %i.ai, <4 x i32> %i.ah, <4 x i32> %i.ak
-  %i.am = shl <4 x i32> %i.al, <i32 0, i32 8, i32 16, i32 24>
+  %i.am = shl nuw <4 x i32> %i.al, <i32 0, i32 8, i32 16, i32 24>
   %i.an = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.am) ; 2 uses
   %i.ao = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !3  ; 2 uses

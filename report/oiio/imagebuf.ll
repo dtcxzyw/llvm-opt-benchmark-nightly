@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -604,7 +604,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.am = insertelement <2 x float> %i.al, float %i.ab, i64 1
   %i.an = shufflevector <2 x float> %i.am, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ao = fptosi <4 x float> %i.an to <4 x i32>   ; 3 uses
-  %i.ap = add <4 x i32> %i.ao, <i32 0, i32 2, i32 0, i32 2>
+  %i.ap = add nsw <4 x i32> %i.ao, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.ap, ptr %i.ai, align 4, !tbaa !3
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.aq, align 4, !tbaa !504
@@ -946,7 +946,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -1349,7 +1349,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -1752,7 +1752,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.am = insertelement <2 x float> %i.al, float %i.ab, i64 1
   %i.an = shufflevector <2 x float> %i.am, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ao = fptosi <4 x float> %i.an to <4 x i32>   ; 3 uses
-  %i.ap = add <4 x i32> %i.ao, <i32 0, i32 2, i32 0, i32 2>
+  %i.ap = add nsw <4 x i32> %i.ao, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.ap, ptr %i.ai, align 4, !tbaa !3
   %i.aq = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.aq, align 4, !tbaa !504
@@ -2094,7 +2094,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -2497,7 +2497,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -2900,7 +2900,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
@@ -3303,7 +3303,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.ai = insertelement <2 x float> %i.ah, float %i.x, i64 1
   %i.aj = shufflevector <2 x float> %i.ai, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.ak = fptosi <4 x float> %i.aj to <4 x i32>   ; 3 uses
-  %i.al = add <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
+  %i.al = add nsw <4 x i32> %i.ak, <i32 0, i32 2, i32 0, i32 2>
   store <4 x i32> %i.al, ptr %i.ae, align 4, !tbaa !3
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 52 ; 2 uses
   store i32 0, ptr %i.am, align 4, !tbaa !504
