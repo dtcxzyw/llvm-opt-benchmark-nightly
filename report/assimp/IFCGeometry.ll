@@ -201,13 +201,13 @@ bb.a:
   %.sroa.668.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.n = load <2 x double>, ptr %i.m, align 8     ; 3 uses
   %i.o = load <2 x double>, ptr %.sroa.668.0..sroa_idx, align 8 ; 3 uses
-  %i.p = add nsw i64 %i.k, -2                     ; 2 uses
+  %i.p = add nsw i64 %i.k, -2                     ; 3 uses
   %i.q = icmp eq i64 %i.p, 0
   br i1 %i.q, label %._crit_edge89.thread, label %.lr.ph88
 
-.lr.ph88:                                         ; preds = %bb.a, %._crit_edge.a
-  %.02386 = phi i64 [ %i.r, %._crit_edge.a ], [ 0, %bb.a ] ; 3 uses
-  %i.r = add nuw i64 %.02386, 1                   ; 4 uses
+.lr.ph88:                                         ; preds = %bb.a, %.lr.ph88.backedge
+  %.02386 = phi i64 [ %i.r, %.lr.ph88.backedge ], [ 0, %bb.a ] ; 3 uses
+  %i.r = add nuw i64 %.02386, 1                   ; 5 uses
   %i.s = icmp ult i64 %i.r, %i.l
   br i1 %i.s, label %.lr.ph, label %._crit_edge.a
 
@@ -225,7 +225,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c
   %i.ab = add i64 %.073, 1                        ; 2 uses
   %exitcond.not = icmp eq i64 %i.ab, %i.l
-  br i1 %exitcond.not, label %._crit_edge.a, label %bb.c, !llvm.loop !116
+  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !116
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %.073 = phi i64 [ %i.r, %.lr.ph ], [ %i.ab, %bb.b ] ; 2 uses
@@ -253,11 +253,18 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   %i.aw = fcmp ogt double %i.av, f0x3E45798EE0000000
   br i1 %i.aw, label %._crit_edge89.thread124, label %bb.b
 
-._crit_edge.a:                                    ; preds = %bb.b, %.lr.ph88
-  %.not = icmp ult i64 %i.r, %i.p
-  br i1 %.not, label %.lr.ph88, label %._crit_edge89.thread, !llvm.loop !120
+._crit_edge:                                      ; preds = %bb.b
+  %.not139 = icmp ult i64 %i.r, %i.p
+  br i1 %.not139, label %.lr.ph88.backedge, label %._crit_edge89.thread
 
-._crit_edge89.thread:                             ; preds = %._crit_edge.a, %bb.a
+.lr.ph88.backedge:                                ; preds = %._crit_edge, %._crit_edge.a
+  br label %.lr.ph88, !llvm.loop !120
+
+._crit_edge.a:                                    ; preds = %.lr.ph88
+  %.not = icmp ult i64 %i.r, %i.p
+  br i1 %.not, label %.lr.ph88.backedge, label %._crit_edge89.thread
+
+._crit_edge89.thread:                             ; preds = %._crit_edge, %._crit_edge.a, %bb.a
   store i8 0, ptr %2, align 1
   br label %bb.d
 

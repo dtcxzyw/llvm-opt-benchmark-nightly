@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.t = load ptr, ptr %i.s, align 8
   %i.u = tail call noundef i32 %i.t(ptr noundef nonnull align 8 dereferenceable(24) %.016.i), !inline_history !53
   %i.v = icmp eq i32 %i.u, 165
-  br i1 %i.v, label %.lr.ph.i, label %._crit_edge.i
+  br i1 %i.v, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !54
 
 .lr.ph.i:                                         ; preds = %bb.c, %bb.d
   %.01622.i = phi ptr [ %.016.i, %bb.d ], [ %.01621.i, %bb.c ] ; 2 uses
@@ -348,4 +348,6 @@ attributes #2 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "
 !51 = !{!48, !50, i64 16}
 !52 = !{!50, !50, i64 0}
 !53 = distinct !{null}
+!54 = distinct !{!54, !55}
+!55 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

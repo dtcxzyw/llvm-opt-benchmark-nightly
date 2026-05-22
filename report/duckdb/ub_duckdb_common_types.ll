@@ -201,6 +201,13 @@ _ZN13duckdb_yyjsonL25unsafe_yyjson_equals_strnEPvPKcm.exit198: ; preds = %.lr.ph
   %.not.i159.not = icmp eq i64 %i.ca, 0
   br i1 %.not.i159.not, label %.thread298, label %.lr.ph356, !llvm.loop !3176
 
+18:                                               ; preds = %_ZN13duckdb_yyjsonL25unsafe_yyjson_equals_strnEPvPKcm.exit198
+  %19 = getelementptr inbounds nuw i8, ptr %.011.i158355, i64 16 ; 2 uses
+  %20 = load i64, ptr %19, align 8, !tbaa !3174   ; 2 uses
+  %21 = and i64 %20, 7
+  %22 = icmp eq i64 %21, 7
+  br i1 %22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228._crit_edge, label %.thread298
+
 bb.v:                                             ; preds = %._crit_edge.i.i222
   %i.cw = landingpad { ptr, i32 }
           cleanup
@@ -215,13 +222,6 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i22
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit231: ; preds = %bb.v, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i229
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #48
   br label %bb.bj
-
-18:                                               ; preds = %_ZN13duckdb_yyjsonL25unsafe_yyjson_equals_strnEPvPKcm.exit198
-  %19 = getelementptr inbounds nuw i8, ptr %.011.i158355, i64 16 ; 2 uses
-  %20 = load i64, ptr %19, align 8, !tbaa !3174   ; 2 uses
-  %21 = and i64 %20, 7
-  %22 = icmp eq i64 %21, 7
-  br i1 %22, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228._crit_edge, label %.thread298
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228._crit_edge: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228, %18
   %i.cz = phi i64 [ %20, %18 ], [ %i.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit228 ] ; 7 uses
@@ -625,12 +625,12 @@ bb.x:                                             ; preds = %bb.w
   %i.dc = sub nsw i64 %i.an, %i.db
   br label %bb.y
 
-bb.y:                                             ; preds = %.outer._crit_edge, %.thread, %.split284.us
-  %i.dd = phi i64 [ %i.u, %.thread ], [ %i.am, %.outer._crit_edge ], [ %i.am, %.split284.us ]
-  %.1211.i = phi i64 [ 0, %.thread ], [ %i.db, %.outer._crit_edge ], [ 0, %.split284.us ] ; 3 uses
-  %.1201.i = phi i64 [ %i.v, %.thread ], [ %i.dc, %.outer._crit_edge ], [ %i.an, %.split284.us ] ; 3 uses
-  %.4182.i = phi i64 [ %.us-phi286, %.thread ], [ %.2180.i.lcssa, %.outer._crit_edge ], [ %.us-phi, %.split284.us ] ; 3 uses
-  %.8.i = phi ptr [ %.us-phi287, %.thread ], [ %.4.i.lcssa, %.outer._crit_edge ], [ %.us-phi285, %.split284.us ] ; 7 uses
+bb.y:                                             ; preds = %.thread, %.outer._crit_edge, %.split284.us
+  %i.dd = phi i64 [ %i.am, %.outer._crit_edge ], [ %i.am, %.split284.us ], [ %i.u, %.thread ]
+  %.1211.i = phi i64 [ %i.db, %.outer._crit_edge ], [ 0, %.split284.us ], [ 0, %.thread ] ; 3 uses
+  %.1201.i = phi i64 [ %i.dc, %.outer._crit_edge ], [ %i.an, %.split284.us ], [ %i.v, %.thread ] ; 3 uses
+  %.4182.i = phi i64 [ %.2180.i.lcssa, %.outer._crit_edge ], [ %.us-phi, %.split284.us ], [ %.us-phi286, %.thread ] ; 3 uses
+  %.8.i = phi ptr [ %.4.i.lcssa, %.outer._crit_edge ], [ %.us-phi285, %.split284.us ], [ %.us-phi287, %.thread ] ; 7 uses
   %i.de = icmp eq i64 %.1201.i, 0
   br i1 %i.de, label %_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread, label %bb.z
 
@@ -882,7 +882,7 @@ bb.az:                                            ; preds = %bb.ay, %bb.aw, %bb.
   %i.gl = add nsw i64 %i.gk, %.0.i.lcssa
   br label %.thread424
 
-_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread: ; preds = %bb.j, %bb.k, %bb.g, %bb.w, %bb.x, %bb.t, %bb.ak, %bb.aj, %bb.ai, %bb.as, %bb.ar, %bb.aq, %bb.ax, %bb.ay, %bb.am, %bb.al, %bb.y, %bb.d, %bb.c
+_ZN17duckdb_fast_float19parse_number_stringEPKcS1_cNS_12chars_formatEb.exit.thread: ; preds = %bb.j, %bb.k, %bb.g, %bb.x, %bb.w, %bb.t, %bb.ak, %bb.aj, %bb.ai, %bb.as, %bb.ar, %bb.aq, %bb.ax, %bb.ay, %bb.d, %bb.al, %bb.am, %bb.y, %bb.c
   %i.gm = tail call { ptr, i32 } @_ZN17duckdb_fast_float6detail12parse_infnanIdEENS_17from_chars_resultEPKcS4_RT_(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull align 8 dereferenceable(8) %2) #48 ; 2 uses
   %i.gn = extractvalue { ptr, i32 } %i.gm, 0
   %i.go = extractvalue { ptr, i32 } %i.gm, 1
@@ -946,9 +946,9 @@ bb.bh:                                            ; preds = %bb.bg
   %i.hf = trunc nuw nsw i64 %i.he to i32
   %i.hg = shl i64 %.sroa.7.0.ph432452, %i.he
   %i.hh = trunc nsw i64 %.sroa.093.0.ph433450 to i32 ; 2 uses
-  %i.hi = shl nsw i32 %i.hh, 1
+  %i.hi = shl nsw i32 %i.hh, 1                    ; 2 uses
   %i.hj = sext i32 %i.hi to i64
-  %i.hk = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hj ; 2 uses
+  %i.hk = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %i.hj
   %i.hl = getelementptr i8, ptr %i.hk, i64 5472
   %i.hm = load i64, ptr %i.hl, align 16, !tbaa !108
   %i.hn = zext i64 %i.hg to i128                  ; 2 uses
@@ -962,7 +962,9 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %i.hu, label %.noexc73, label %_ZN17duckdb_fast_float29compute_product_approximationILi55EEENS_8value128Elm.exit
 
 .noexc73:                                         ; preds = %.noexc
-  %i.hv = getelementptr i8, ptr %i.hk, i64 5480
+  %6 = sext i32 %i.hi to i64
+  %7 = getelementptr [8 x i8], ptr @_ZN17duckdb_fast_float15powers_templateIvE17power_of_five_128E, i64 %6
+  %i.hv = getelementptr i8, ptr %7, i64 5480
   %i.hw = load i64, ptr %i.hv, align 8, !tbaa !108
   %i.hx = zext i64 %i.hw to i128
   %i.hy = mul nuw i128 %i.hx, %i.hn
@@ -1365,7 +1367,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit62: ; preds = %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #48
   br label %bb.ah
 
-bb.ag:                                            ; preds = %bb.k, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i.i.i.i.i.i, %bb.w, %bb.u
+bb.ag:                                            ; preds = %bb.u, %bb.w, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i.i.i.i.i.i, %bb.k
   %.169 = phi ptr [ %i.bf, %bb.u ], [ %i.bq, %bb.w ], [ %i.t, %bb.k ], [ %i.t, %_ZNSt20back_insert_iteratorIN6duckdb6vectorIcLb1ESaIcEEEEaSERKc.exit.i.i.i.i.i.i.i.i ]
   %i.cd = getelementptr inbounds nuw i8, ptr %.169, i64 1 ; 2 uses
   %.not = icmp eq ptr %i.cd, %i.a

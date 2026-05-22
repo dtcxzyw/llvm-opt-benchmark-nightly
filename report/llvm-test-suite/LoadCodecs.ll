@@ -1,4 +1,4 @@
-inline.NumInlined: 137
+inline.NumInlined: 138
 inline.NumDeleted: 56
 begin_hunk_0_@_ZNK7CCodecs24FindFormatForArchiveNameERK11CStringBaseIwE:bb.a
 
@@ -201,24 +201,25 @@ bb.b:                                             ; preds = %.lr.ph
 ; Function Attrs: mustprogress uwtable
 define dso_local noundef zeroext i1 @_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwER13CRecordVectorIiE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %class.CStringBase, align 8         ; 8 uses
+  %3 = alloca %class.CStringBase, align 8         ; 10 uses
   tail call void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %2)
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
-  br label %bb.b
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %4 = load i32, ptr %i.a, align 8, !tbaa !24     ; 2 uses
+  %5 = icmp slt i32 %4, 1
+  br i1 %5, label %bb.o, label %bb.b
 
-bb.b:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit31.a, %bb.a
-  %.021 = phi i32 [ 0, %bb.a ], [ %.122, %_ZN11CStringBaseIwED2Ev.exit31.a ] ; 5 uses
-  %8 = load i32, ptr %i.a, align 8, !tbaa !24     ; 2 uses
-  %.not38.not.not.not.not = icmp sge i32 %.021, %8 ; 2 uses
-  br i1 %.not38.not.not.not.not, label %bb.o, label %bb.c
+bb.b:                                             ; preds = %bb.a
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 3 uses
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %_ZN11CStringBaseIwED2Ev.exit31
+  %10 = phi i32 [ %4, %bb.b ], [ %14, %_ZN11CStringBaseIwED2Ev.exit31 ]
+  %.02144 = phi i32 [ 0, %bb.b ], [ %i.ar, %_ZN11CStringBaseIwED2Ev.exit31 ] ; 3 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !16     ; 2 uses
-  %i.c = zext nneg i32 %.021 to i64
+  %i.c = zext nneg i32 %.02144 to i64
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.c ; 3 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !19   ; 2 uses
   %i.f = icmp eq i32 %i.e, 46
@@ -250,24 +251,24 @@ _ZNK11CStringBaseIwE4FindEwi.exit.thread:         ; preds = %.lr.ph.i, %_ZNK11CS
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZNK11CStringBaseIwE4FindEwi.exit.thread, %_ZNK11CStringBaseIwE4FindEwi.exit
-  %.025 = phi i32 [ %8, %_ZNK11CStringBaseIwE4FindEwi.exit.thread ], [ %i.p, %_ZNK11CStringBaseIwE4FindEwi.exit ] ; 2 uses
+  %.025 = phi i32 [ %10, %_ZNK11CStringBaseIwE4FindEwi.exit.thread ], [ %i.p, %_ZNK11CStringBaseIwE4FindEwi.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
-  %i.r = sub nsw i32 %.025, %.021
-  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %3, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %.021, i32 noundef %i.r)
-  %i.s = load i32, ptr %5, align 4, !tbaa !25
+  %i.r = sub nsw i32 %.025, %.02144
+  call void @_ZNK11CStringBaseIwE3MidEii(ptr dead_on_unwind nonnull writable sret(%class.CStringBase) align 8 %3, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %.02144, i32 noundef %i.r)
+  %i.s = load i32, ptr %7, align 4, !tbaa !25
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph.i28, label %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread
 
 .lr.ph.i28:                                       ; preds = %bb.e, %bb.f
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.f ], [ 0, %bb.e ] ; 3 uses
-  %i.u = load ptr, ptr %4, align 8, !tbaa !27
+  %i.u = load ptr, ptr %6, align 8, !tbaa !27
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv.i
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !28
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 24
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !16
   %i.z = load ptr, ptr %3, align 8, !tbaa !16
   %i.aa = invoke noundef i32 @_Z21MyStringCompareNoCasePKwS0_(ptr noundef %i.y, ptr noundef %i.z)
-          to label %.noexc unwind label %.loopexit.a
+          to label %.noexc unwind label %.loopexit
 
 .noexc:                                           ; preds = %.lr.ph.i28
   %i.ab = icmp eq i32 %i.aa, 0
@@ -275,7 +276,7 @@ bb.e:                                             ; preds = %_ZNK11CStringBaseIw
 
 bb.f:                                             ; preds = %.noexc
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.ac = load i32, ptr %5, align 4, !tbaa !25
+  %i.ac = load i32, ptr %7, align 4, !tbaa !25
   %i.ad = sext i32 %i.ac to i64
   %i.ae = icmp slt i64 %indvars.iv.next.i, %i.ad
   br i1 %i.ae, label %.lr.ph.i28, label %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread, !llvm.loop !63
@@ -287,7 +288,7 @@ _ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit: ; preds = %.noex
 _ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread: ; preds = %bb.f, %bb.e
   %i.ag = load ptr, ptr %3, align 8, !tbaa !16
   %i.ah = invoke noundef i32 @_Z15MyStringComparePKwS0_(ptr noundef %i.ag, ptr noundef nonnull @.str)
-          to label %bb.g unwind label %.loopexit.split-lp.a
+          to label %bb.g unwind label %.loopexit.a
 
 bb.g:                                             ; preds = %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread
   %.not = icmp eq i32 %i.ah, 0
@@ -297,18 +298,23 @@ bb.h:                                             ; preds = %bb.g
   invoke void @_ZN17CBaseRecordVector5ClearEv(ptr noundef nonnull align 8 dereferenceable(32) %2)
           to label %bb.m unwind label %.loopexit.split-lp.a
 
-.loopexit.a:                                      ; preds = %.lr.ph.i28
+.loopexit:                                        ; preds = %.lr.ph.i28
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.i
+
+.loopexit.a:                                      ; preds = %bb.k, %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread
   %lpad.loopexit.a = landingpad { ptr, i32 }
           cleanup
   br label %bb.i
 
-.loopexit.split-lp.a:                             ; preds = %bb.h, %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit.thread, %bb.k
+.loopexit.split-lp.a:                             ; preds = %bb.h
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.i
 
-bb.i:                                             ; preds = %.loopexit.split-lp.a, %.loopexit.a
-  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit.a, %.loopexit.a ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
+bb.i:                                             ; preds = %.loopexit.a, %.loopexit.split-lp.a, %.loopexit
+  %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.a, %.loopexit.a ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.a ]
   %i.ai = load ptr, ptr %3, align 8, !tbaa !16    ; 2 uses
   %i.aj = icmp eq ptr %i.ai, null
   br i1 %i.aj, label %_ZN11CStringBaseIwED2Ev.exit, label %bb.j
@@ -324,23 +330,33 @@ _ZN11CStringBaseIwED2Ev.exit:                     ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit, %bb.g
   %i.ak = phi i32 [ -1, %bb.g ], [ %i.af, %_ZNK7CCodecs24FindFormatForArchiveTypeERK11CStringBaseIwE.exit ]
   invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %2)
-          to label %bb.l unwind label %.loopexit.split-lp.a
+          to label %bb.l unwind label %.loopexit.a
 
 bb.l:                                             ; preds = %bb.k
-  %i.al = load ptr, ptr %6, align 8, !tbaa !27
-  %i.am = load i32, ptr %7, align 4, !tbaa !25
+  %i.al = load ptr, ptr %8, align 8, !tbaa !27
+  %i.am = load i32, ptr %9, align 4, !tbaa !25
   %i.an = sext i32 %i.am to i64
   %i.ao = getelementptr inbounds [4 x i8], ptr %i.al, i64 %i.an
   store i32 %i.ak, ptr %i.ao, align 4, !tbaa !4
-  %i.ap = load i32, ptr %7, align 4, !tbaa !25
+  %i.ap = load i32, ptr %9, align 4, !tbaa !25
   %i.aq = add nsw i32 %i.ap, 1
-  store i32 %i.aq, ptr %7, align 4, !tbaa !25
-  %i.ar = add nuw nsw i32 %.025, 1
-  br label %bb.m
+  store i32 %i.aq, ptr %9, align 4, !tbaa !25
+  %i.ar = add nuw nsw i32 %.025, 1                ; 2 uses
+  %11 = load ptr, ptr %3, align 8, !tbaa !16      ; 2 uses
+  %12 = icmp eq ptr %11, null
+  br i1 %12, label %_ZN11CStringBaseIwED2Ev.exit31, label %13
 
-bb.m:                                             ; preds = %bb.h, %bb.l
-  %cond = phi i1 [ true, %bb.l ], [ false, %bb.h ]
-  %.122 = phi i32 [ %i.ar, %bb.l ], [ %.021, %bb.h ]
+13:                                               ; preds = %bb.l
+  call void @_ZdaPv(ptr noundef nonnull %11) #18
+  br label %_ZN11CStringBaseIwED2Ev.exit31
+
+_ZN11CStringBaseIwED2Ev.exit31:                   ; preds = %bb.l, %13
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
+  %14 = load i32, ptr %i.a, align 8, !tbaa !24    ; 2 uses
+  %.not45 = icmp slt i32 %i.ar, %14
+  br i1 %.not45, label %bb.c, label %bb.o, !llvm.loop !65
+
+bb.m:                                             ; preds = %bb.h
   %i.as = load ptr, ptr %3, align 8, !tbaa !16    ; 2 uses
   %i.at = icmp eq ptr %i.as, null
   br i1 %i.at, label %_ZN11CStringBaseIwED2Ev.exit31.a, label %bb.n
@@ -351,10 +367,11 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN11CStringBaseIwED2Ev.exit31.a:                 ; preds = %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
-  br i1 %cond, label %bb.b, label %bb.o, !llvm.loop !65
+  br label %bb.o
 
-bb.o:                                             ; preds = %bb.b, %_ZN11CStringBaseIwED2Ev.exit31.a
-  ret i1 %.not38.not.not.not.not
+bb.o:                                             ; preds = %_ZN11CStringBaseIwED2Ev.exit31, %bb.a, %_ZN11CStringBaseIwED2Ev.exit31.a
+  %15 = phi i1 [ false, %_ZN11CStringBaseIwED2Ev.exit31.a ], [ true, %bb.a ], [ true, %_ZN11CStringBaseIwED2Ev.exit31 ]
+  ret i1 %15
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -201,11 +201,11 @@ bb.a:
   %11 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
   %12 = alloca %"class.icu_78::Locale", align 8   ; 5 uses
   %13 = alloca %"class.icu_78::StringPiece", align 8 ; 5 uses
-  %14 = alloca %"class.icu_78::Locale", align 8   ; 8 uses
+  %14 = alloca %"class.icu_78::Locale", align 8   ; 10 uses
   %15 = alloca %"class.icu_78::LocaleBuilder", align 8 ; 5 uses
   %16 = alloca %"class.icu_78::StringPiece", align 8 ; 8 uses
   %17 = alloca %"class.icu_78::StringPiece", align 8 ; 8 uses
-  %18 = alloca %"class.icu_78::LocalPointer.45", align 8 ; 9 uses
+  %18 = alloca %"class.icu_78::LocalPointer.45", align 8 ; 11 uses
   %19 = alloca %"class.icu_78::UniqueCharStrings", align 8 ; 21 uses
   %20 = alloca %"class.icu_78::CharString", align 8 ; 10 uses
   %21 = alloca %"class.icu_78::UVector", align 8  ; 10 uses
@@ -608,7 +608,7 @@ bb.du:                                            ; preds = %bb.dt
   %i.pb = load ptr, ptr %i.lr, align 8
   %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 24
   %i.pd = load ptr, ptr %i.pc, align 8
-  %i.pe = call noundef ptr @uhash_get_78(ptr noundef %i.pd, ptr noundef nonnull %i.oz) #22 ; 7 uses
+  %i.pe = call noundef ptr @uhash_get_78(ptr noundef %i.pd, ptr noundef nonnull %i.oz) #22 ; 6 uses
   %i.pf = icmp eq ptr %i.pe, null
   br i1 %i.pf, label %thread-pre-split, label %bb.dv
 
@@ -738,25 +738,27 @@ bb.ej:                                            ; preds = %bb.ei
   call void @_ZN6icu_787UVector12adoptElementEPvR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %21, ptr noundef nonnull %i.qr, ptr noundef nonnull align 4 dereferenceable(4) %3) #22, !inline_history !34
   %i.qt = load i32, ptr %3, align 4
   %i.qu = icmp slt i32 %i.qt, 1
-  br label %bb.ek
-
-bb.ek:                                            ; preds = %bb.ej, %bb.ei
-  %.031.i = phi ptr [ %i.pe, %bb.ei ], [ %i.qs, %bb.ej ]
-  %cond.i = phi i1 [ false, %bb.ei ], [ %i.qu, %bb.ej ]
   call void @_ZN6icu_7812LocalPointerINS_10CharStringEED2Ev(ptr noundef nonnull align 8 dereferenceable(8) %18) #22, !inline_history !34
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
   call void @_ZN6icu_786LocaleD2Ev(ptr noundef nonnull align 8 dereferenceable(40) %14) #22, !inline_history !34
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
-  br i1 %cond.i, label %_ZN6icu_7812_GLOBAL__N_113AliasReplacer16replaceTerritoryERNS_7UVectorER10UErrorCode.exit, label %thread-pre-split
+  br i1 %i.qu, label %_ZN6icu_7812_GLOBAL__N_113AliasReplacer16replaceTerritoryERNS_7UVectorER10UErrorCode.exit, label %thread-pre-split
 
-_ZN6icu_7812_GLOBAL__N_113AliasReplacer16replaceTerritoryERNS_7UVectorER10UErrorCode.exit: ; preds = %bb.dv, %bb.ek
-  %.132.i = phi ptr [ %.031.i, %bb.ek ], [ %i.pe, %bb.dv ]
+bb.ek:                                            ; preds = %bb.ei
+  call void @_ZN6icu_7812LocalPointerINS_10CharStringEED2Ev(ptr noundef nonnull align 8 dereferenceable(8) %18) #22, !inline_history !34
+  call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
+  call void @_ZN6icu_786LocaleD2Ev(ptr noundef nonnull align 8 dereferenceable(40) %14) #22, !inline_history !34
+  call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
+  br label %thread-pre-split
+
+_ZN6icu_7812_GLOBAL__N_113AliasReplacer16replaceTerritoryERNS_7UVectorER10UErrorCode.exit: ; preds = %bb.dv, %bb.ej
+  %.132.i = phi ptr [ %i.qs, %bb.ej ], [ %i.pe, %bb.dv ]
   store ptr %.132.i, ptr %i.mj, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %16)
   call void @llvm.lifetime.end.p0(ptr nonnull %17)
   br label %_ZN6icu_7812_GLOBAL__N_113AliasReplacer14replaceVariantER10UErrorCode.exit
 
-thread-pre-split:                                 ; preds = %bb.ek, %bb.du
+thread-pre-split:                                 ; preds = %bb.ek, %bb.ej, %bb.du
   %.val.pr.pr = load i32, ptr %3, align 4         ; 2 uses
   %i.qv = icmp slt i32 %.val.pr.pr, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %16)
@@ -1159,7 +1161,7 @@ bb.r:                                             ; preds = %bb.q
   store i8 0, ptr %i.bd, align 1
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.q, %bb.r
+bb.s:                                             ; preds = %bb.r, %bb.q
   %i.be = load i32, ptr %i.az, align 8
   call void @_ZN6icu_787UVector15insertElementAtEPviR10UErrorCode(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr noundef nonnull %.064, i32 noundef %i.be, ptr noundef nonnull align 4 dereferenceable(4) %2) #22
   %i.bf = load i32, ptr %2, align 4
@@ -1278,7 +1280,7 @@ _ZN6icu_786LocaleD2Ev.exit91:                     ; preds = %.critedge, %bb.ae, 
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   br label %bb.ag
 
-.critedge88:                                      ; preds = %bb.s, %.thread9, %bb.o
+.critedge88:                                      ; preds = %bb.s, %bb.o, %.thread9
   call void @_ZN6icu_787UVectorD1Ev(ptr noundef nonnull align 8 dereferenceable(40) %7) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   br label %bb.ag

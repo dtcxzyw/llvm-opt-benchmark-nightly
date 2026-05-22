@@ -1,4 +1,4 @@
-inline.NumInlined: 460
+inline.NumInlined: 461
 inline.NumDeleted: 124
 begin_hunk_0_@_ZN8NArchive3N7z10CInArchive20FindAndReadSignatureEP9IInStreamPKy:bb.a
   br i1 %.not15.5.i, label %bb.h, label %_ZN8NArchive3N7zL14TestSignature2EPKh.exit.thread
@@ -201,14 +201,14 @@ _ZN8NArchive3N7zL13TestSignatureEPKh.exit.thread: ; preds = %bb.s, %bb.t, %bb.u,
   %i.ct = icmp ult i32 %i.cs, %i.bg
   br i1 %i.ct, label %.preheader, label %._crit_edge, !llvm.loop !82
 
-._crit_edge:                                      ; preds = %_ZN8NArchive3N7zL13TestSignatureEPKh.exit.thread, %bb.r
+._crit_edge:                                      ; preds = %bb.r, %_ZN8NArchive3N7zL13TestSignatureEPKh.exit.thread
   %i.cu = add i64 %.064, %i.bh
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ao, i64 %i.bh
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.ao, ptr noundef nonnull align 1 dereferenceable(32) %i.cv, i64 32, i1 false)
   br label %bb.j, !llvm.loop !83
 
 _ZN7CBufferIhED2Ev.exit:                          ; preds = %bb.k, %bb.o, %bb.z, %.thread
-  %.6 = phi i32 [ %i.cr, %bb.z ], [ %i.bb, %.thread ], [ 1, %bb.o ], [ 1, %bb.k ]
+  %.6 = phi i32 [ 1, %bb.o ], [ %i.bb, %.thread ], [ %i.cr, %bb.z ], [ 1, %bb.k ]
   call void @_ZdaPv(ptr noundef nonnull %i.ao) #19, !inline_history !84
   br label %_ZN8NArchive3N7zL14TestSignature2EPKh.exit.thread88
 
@@ -611,13 +611,6 @@ bb.c:                                             ; preds = %bb.b
   %scevgep = getelementptr inbounds nuw i8, ptr %0, i64 96
   br label %bb.f
 
-15:                                               ; preds = %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %16 = load i32, ptr %i.q, align 4, !tbaa !8
-  %17 = sext i32 %16 to i64
-  %.not80 = icmp slt i64 %indvars.iv.next, %17
-  br i1 %.not80, label %bb.f, label %._crit_edge, !llvm.loop !133
-
 bb.d:                                             ; preds = %bb.a
   %i.aa = landingpad { ptr, i32 }
           cleanup
@@ -628,10 +621,10 @@ bb.e:                                             ; preds = %bb.b
           cleanup
   br label %bb.ad
 
-bb.f:                                             ; preds = %.lr.ph116, %15
-  %indvars.iv = phi i64 [ 0, %.lr.ph116 ], [ %indvars.iv.next, %15 ] ; 2 uses
-  %.059115 = phi i32 [ 0, %.lr.ph116 ], [ %.261, %15 ] ; 14 uses
-  %.062114 = phi i64 [ %i.t, %.lr.ph116 ], [ %.264, %15 ] ; 7 uses
+bb.f:                                             ; preds = %.lr.ph116, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90
+  %indvars.iv = phi i64 [ 0, %.lr.ph116 ], [ %indvars.iv.next, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90 ] ; 2 uses
+  %.059115 = phi i32 [ 0, %.lr.ph116 ], [ %.160.lcssa, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90 ] ; 13 uses
+  %.062114 = phi i64 [ %i.t, %.lr.ph116 ], [ %.163.lcssa, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90 ] ; 6 uses
   %i.ac = load ptr, ptr %i.u, align 8, !tbaa !15
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !28 ; 8 uses
@@ -781,24 +774,24 @@ bb.p:                                             ; preds = %bb.o, %.thread
 _ZN7CBufferIhE11SetCapacityEm.exit:               ; preds = %bb.p, %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit, %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit.thread
   %.1.i98 = phi i64 [ 0, %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit.thread ], [ %i.bn, %_ZNK8NArchive3N7z7CFolder13GetUnpackSizeEv.exit ], [ %.1.i97101, %bb.p ] ; 2 uses
   %i.cc = invoke noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #18
-          to label %bb.q unwind label %bb.s       ; 11 uses
+          to label %bb.q unwind label %bb.s       ; 13 uses
 
 bb.q:                                             ; preds = %_ZN7CBufferIhE11SetCapacityEm.exit
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
-  store i32 0, ptr %i.cd, align 4, !tbaa !134
+  store i32 0, ptr %i.cd, align 4, !tbaa !133
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTV19CBufPtrSeqOutStream, i64 16), ptr %i.cc, align 8, !tbaa !13
   %i.ce = invoke noundef i32 %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.cc)
-          to label %_ZN9CMyComPtrI20ISequentialOutStreamEC2EPS0_.exit unwind label %bb.t, !inline_history !136 ; 0 uses
+          to label %_ZN9CMyComPtrI20ISequentialOutStreamEC2EPS0_.exit unwind label %bb.t, !inline_history !135 ; 0 uses
 
 _ZN9CMyComPtrI20ISequentialOutStreamEC2EPS0_.exit: ; preds = %bb.q
   %i.cf = getelementptr inbounds nuw i8, ptr %i.aq, i64 16 ; 2 uses
   %i.cg = load ptr, ptr %i.cf, align 8, !tbaa !56
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
-  store ptr %i.cg, ptr %i.ch, align 8, !tbaa !137
+  store ptr %i.cg, ptr %i.ch, align 8, !tbaa !136
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
-  store i64 0, ptr %i.ci, align 8, !tbaa !141
+  store i64 0, ptr %i.ci, align 8, !tbaa !140
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
-  store i64 %.1.i98, ptr %i.cj, align 8, !tbaa !142
+  store i64 %.1.i98, ptr %i.cj, align 8, !tbaa !141
   %i.ck = load ptr, ptr %0, align 8, !tbaa !86
   %i.cl = load ptr, ptr %i.y, align 8, !tbaa !15
   %i.cm = sext i32 %.059115 to i64
@@ -807,8 +800,8 @@ _ZN9CMyComPtrI20ISequentialOutStreamEC2EPS0_.exit: ; preds = %bb.q
           to label %bb.r unwind label %.loopexit103 ; 2 uses
 
 bb.r:                                             ; preds = %_ZN9CMyComPtrI20ISequentialOutStreamEC2EPS0_.exit
-  %.not = icmp eq i32 %i.co, 0                    ; 2 uses
-  br i1 %.not, label %bb.w, label %.loopexit
+  %.not = icmp eq i32 %i.co, 0
+  br i1 %.not, label %bb.w, label %.critedge
 
 bb.s:                                             ; preds = %_ZN7CBufferIhE11SetCapacityEm.exit
   %i.cp = landingpad { ptr, i32 }
@@ -920,22 +913,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.dw = sext i32 %i.dv to i64
   %i.dx = getelementptr inbounds [8 x i8], ptr %i.dh, i64 %i.dw ; 2 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 16
-  %wide.load = load <2 x i64>, ptr %i.dx, align 8, !tbaa !60, !alias.scope !143 ; 2 uses
-  %wide.load154 = load <2 x i64>, ptr %i.dy, align 8, !tbaa !60, !alias.scope !143 ; 2 uses
+  %wide.load = load <2 x i64>, ptr %i.dx, align 8, !tbaa !60, !alias.scope !142 ; 2 uses
+  %wide.load154 = load <2 x i64>, ptr %i.dy, align 8, !tbaa !60, !alias.scope !142 ; 2 uses
   %i.dz = add <2 x i64> %wide.load, %vec.phi152   ; 2 uses
   %i.ea = add <2 x i64> %wide.load154, %vec.phi153 ; 2 uses
   %i.eb = add <2 x i64> %vec.phi, %wide.load      ; 2 uses
   %i.ec = add <2 x i64> %vec.phi151, %wide.load154 ; 2 uses
   %index.next = add nuw i32 %index, 4             ; 2 uses
   %i.ed = icmp eq i32 %index.next, %n.vec
-  br i1 %i.ed, label %middle.block, label %vector.body, !llvm.loop !146
+  br i1 %i.ed, label %middle.block, label %vector.body, !llvm.loop !145
 
 middle.block:                                     ; preds = %vector.body
   %bin.rdx = add <2 x i64> %i.ec, %i.eb
   %i.ee = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
   %bin.rdx155 = add <2 x i64> %i.ea, %i.dz
   %i.ef = call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx155) ; 2 uses
-  store i64 %i.ee, ptr %i.z, align 8, !tbaa !85, !alias.scope !147, !noalias !143
+  store i64 %i.ee, ptr %i.z, align 8, !tbaa !85, !alias.scope !146, !noalias !142
   %cmp.n = icmp eq i32 %i.df, %n.vec
   br i1 %cmp.n, label %.loopexit, label %scalar.ph.preheader
 
@@ -966,7 +959,7 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   store i64 %i.er, ptr %i.z, align 8, !tbaa !85
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
-  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !149
+  br i1 %prol.iter.cmp.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol, !llvm.loop !148
 
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.lcssa162.unr = phi i64 [ poison, %scalar.ph.preheader ], [ %i.eq, %scalar.ph.prol ]
@@ -1009,11 +1002,11 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.fr = add i64 %i.fl, %i.fp                    ; 2 uses
   store i64 %i.fr, ptr %i.z, align 8, !tbaa !85
   %exitcond.not.3 = icmp eq i32 %i.fm, %i.di
-  br i1 %exitcond.not.3, label %.loopexit, label %scalar.ph, !llvm.loop !150
+  br i1 %exitcond.not.3, label %.loopexit, label %scalar.ph, !llvm.loop !149
 
-.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.aa, %bb.r
-  %.264 = phi i64 [ %.062114, %bb.r ], [ %.062114, %bb.aa ], [ %i.ef, %middle.block ], [ %.lcssa162.unr, %scalar.ph.prol.loopexit ], [ %i.fq, %scalar.ph ]
-  %.261 = phi i32 [ %.059115, %bb.r ], [ %.059115, %bb.aa ], [ %i.di, %middle.block ], [ %i.di, %scalar.ph ], [ %i.di, %scalar.ph.prol.loopexit ]
+.loopexit:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block, %bb.aa
+  %.163.lcssa = phi i64 [ %.062114, %bb.aa ], [ %i.ef, %middle.block ], [ %.lcssa162.unr, %scalar.ph.prol.loopexit ], [ %i.fq, %scalar.ph ]
+  %.160.lcssa = phi i32 [ %.059115, %bb.aa ], [ %i.di, %middle.block ], [ %i.di, %scalar.ph ], [ %i.di, %scalar.ph.prol.loopexit ]
   %i.fs = load ptr, ptr %i.cc, align 8, !tbaa !13
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 16
   %i.fu = load ptr, ptr %i.ft, align 8
@@ -1028,15 +1021,33 @@ bb.ab:                                            ; preds = %.loopexit
   unreachable
 
 _ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90: ; preds = %.loopexit
-  br i1 %.not, label %15, label %._crit_edge
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %15 = load i32, ptr %i.q, align 4, !tbaa !8
+  %16 = sext i32 %15 to i64
+  %.not80 = icmp slt i64 %indvars.iv.next, %16
+  br i1 %.not80, label %bb.f, label %._crit_edge, !llvm.loop !150
 
 _ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit:   ; preds = %bb.t, %bb.u, %bb.k, %bb.s, %bb.j, %_ZN7CBufferIhED2Ev.exit83
   %.pn.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %i.bg, %_ZN7CBufferIhED2Ev.exit83 ], [ %lpad.phi, %bb.u ], [ %i.bh, %bb.j ], [ %i.bi, %bb.k ], [ %i.cp, %bb.s ], [ %i.cq, %bb.t ]
   call void @_ZN8NArchive3N7z8CDecoderD2Ev(ptr noundef nonnull align 8 dead_on_return(232) dereferenceable(232) %14) #17
   br label %bb.ad
 
-._crit_edge:                                      ; preds = %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90, %15, %bb.c
-  %spec.select = phi i32 [ 0, %bb.c ], [ 0, %15 ], [ %i.co, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90 ]
+.critedge:                                        ; preds = %bb.r
+  %17 = load ptr, ptr %i.cc, align 8, !tbaa !13
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 16
+  %19 = load ptr, ptr %18, align 8
+  %20 = invoke noundef i32 %19(ptr noundef nonnull align 8 dereferenceable(8) %i.cc)
+          to label %._crit_edge unwind label %21  ; 0 uses
+
+21:                                               ; preds = %.critedge
+  %22 = landingpad { ptr, i32 }
+          catch ptr null
+  %23 = extractvalue { ptr, i32 } %22, 0
+  call void @__clang_call_terminate(ptr %23) #20
+  unreachable
+
+._crit_edge:                                      ; preds = %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90, %bb.c, %.critedge
+  %spec.select = phi i32 [ %i.co, %.critedge ], [ 0, %bb.c ], [ 0, %_ZN9CMyComPtrI20ISequentialOutStreamED2Ev.exit90 ]
   call void @_ZN8NArchive3N7z8CDecoderD2Ev(ptr noundef nonnull align 8 dead_on_return(232) dereferenceable(232) %14) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #17
   call void @_ZN17CBaseRecordVectorD2Ev(ptr noundef nonnull align 8 dereferenceable(32) %13) #17
@@ -1439,24 +1450,24 @@ attributes #21 = { noreturn }
 !130 = distinct !{!130, !19}
 !131 = distinct !{!131, !19}
 !132 = distinct !{!132, !19}
-!133 = distinct !{!133, !19}
-!134 = !{!135, !5, i64 0}
-!135 = !{!"_ZTS13CMyUnknownImp", !5, i64 0}
-!136 = distinct !{null}
-!137 = !{!138, !33, i64 16}
-!138 = !{!"_ZTS19CBufPtrSeqOutStream", !139, i64 0, !135, i64 8, !33, i64 16, !11, i64 24, !11, i64 32}
-!139 = !{!"_ZTS20ISequentialOutStream", !140, i64 0}
-!140 = !{!"_ZTS8IUnknown"}
-!141 = !{!138, !11, i64 32}
-!142 = !{!138, !11, i64 24}
-!143 = !{!144}
-!144 = distinct !{!144, !145}
-!145 = distinct !{!145, !"LVerDomain"}
-!146 = distinct !{!146, !19, !70, !71}
-!147 = !{!148}
-!148 = distinct !{!148, !145}
-!149 = distinct !{!149, !73}
-!150 = distinct !{!150, !19, !70}
+!133 = !{!134, !5, i64 0}
+!134 = !{!"_ZTS13CMyUnknownImp", !5, i64 0}
+!135 = distinct !{null}
+!136 = !{!137, !33, i64 16}
+!137 = !{!"_ZTS19CBufPtrSeqOutStream", !138, i64 0, !134, i64 8, !33, i64 16, !11, i64 24, !11, i64 32}
+!138 = !{!"_ZTS20ISequentialOutStream", !139, i64 0}
+!139 = !{!"_ZTS8IUnknown"}
+!140 = !{!137, !11, i64 32}
+!141 = !{!137, !11, i64 24}
+!142 = !{!143}
+!143 = distinct !{!143, !144}
+!144 = distinct !{!144, !"LVerDomain"}
+!145 = distinct !{!145, !19, !70, !71}
+!146 = !{!147}
+!147 = distinct !{!147, !144}
+!148 = distinct !{!148, !73}
+!149 = distinct !{!149, !19, !70}
+!150 = distinct !{!150, !19}
 !151 = !{ptr @_ZN13CObjectVectorIN8NArchive3N7z7CFolderEED2Ev}
 !152 = !{ptr @_ZN13CObjectVectorI9CMyComPtrI8IUnknownEED2Ev}
 !153 = !{!154, !155, i64 0}

@@ -201,22 +201,26 @@ md_type_to_string.exit50:                         ; preds = %md_type_to_string.e
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.q = load i32, ptr %i.p, align 4, !tbaa !46
   %i.r = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.j, i64 noundef %i.h, ptr noundef nonnull @.str.15, ptr noundef nonnull %.not45, ptr noundef nonnull %.not46, i32 noundef %i.q) #12 ; 2 uses
-  %6 = icmp sgt i32 %i.r, -1
-  %7 = zext nneg i32 %i.r to i64                  ; 2 uses
-  %.not47 = icmp ugt i64 %i.h, %7
-  %.not52 = select i1 %6, i1 %.not47, i1 false    ; 2 uses
-  %spec.select = select i1 %.not52, i64 %7, i64 0
-  %.038 = sub nuw i64 %i.h, %spec.select
-  br i1 %.not52, label %bb.h, label %bb.i
+  %6 = icmp slt i32 %i.r, 0
+  br i1 %6, label %bb.i, label %7
 
-bb.h:                                             ; preds = %md_type_to_string.exit50, %bb.f
-  %.139 = phi i64 [ %.038, %md_type_to_string.exit50 ], [ %i.h, %bb.f ]
+7:                                                ; preds = %md_type_to_string.exit50
+  %8 = zext nneg i32 %i.r to i64                  ; 2 uses
+  %.not47 = icmp ugt i64 %i.h, %8
+  br i1 %.not47, label %9, label %bb.i
+
+9:                                                ; preds = %7
+  %10 = sub nuw i64 %i.h, %8
+  br label %bb.h
+
+bb.h:                                             ; preds = %9, %bb.f
+  %.139 = phi i64 [ %10, %9 ], [ %i.h, %bb.f ]
   %i.s = sub i64 %1, %.139
   %i.t = trunc i64 %i.s to i32
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.d, %bb.e, %md_type_to_string.exit50, %bb.h
-  %.1 = phi i32 [ -10624, %md_type_to_string.exit50 ], [ %i.t, %bb.h ], [ -10624, %bb.e ], [ -10624, %bb.d ]
+bb.i:                                             ; preds = %7, %md_type_to_string.exit50, %bb.d, %bb.e, %bb.h
+  %.1 = phi i32 [ -10624, %bb.d ], [ %i.t, %bb.h ], [ -10624, %bb.e ], [ -10624, %md_type_to_string.exit50 ], [ -10624, %7 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.1
 }

@@ -201,7 +201,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %exitcond.not, label %do_indent.exit, label %bb.g, !llvm.loop !13
 
 do_indent.exit:                                   ; preds = %.lr.ph.i, %bb.i, %bb.k, %bb.x, %bb.y, %bb.w, %bb.t, %.lr.ph.i123, %.lr.ph.i129, %bb.f, %.loopexit149
-  %.3 = phi i32 [ -1, %.lr.ph.i123 ], [ -1, %bb.t ], [ %spec.store.select, %bb.f ], [ -1, %.loopexit149 ], [ -1, %.lr.ph.i129 ], [ -1, %bb.w ], [ %i.ay, %bb.y ], [ -1, %bb.k ], [ -1, %bb.i ], [ -1, %bb.x ], [ -1, %.lr.ph.i ]
+  %.3 = phi i32 [ %spec.store.select, %bb.f ], [ -1, %bb.t ], [ -1, %.lr.ph.i123 ], [ -1, %.loopexit149 ], [ -1, %.lr.ph.i129 ], [ -1, %bb.w ], [ %i.ay, %bb.y ], [ -1, %bb.k ], [ -1, %bb.i ], [ -1, %bb.x ], [ -1, %.lr.ph.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.3
 }
@@ -313,13 +313,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = tail call i32 %0(ptr noundef %1, ptr noundef nonnull @.str.10, i32 noundef 1) #8, !callees !11
-  %.not71 = icmp ne i32 %i.n, 0                   ; 2 uses
-  %5 = zext i1 %.not71 to i32
-  %spec.select88 = add nsw i32 %5, %i.l
-  br i1 %.not71, label %bb.d, label %.thread
+  %.not71 = icmp eq i32 %i.n, 0
+  br i1 %.not71, label %.thread, label %5
 
-bb.d:                                             ; preds = %bb.c, %bb.a
-  %.162 = phi i32 [ %spec.select88, %bb.c ], [ 0, %bb.a ] ; 4 uses
+5:                                                ; preds = %bb.c
+  %6 = add nsw i32 %i.l, 1
+  br label %bb.d
+
+bb.d:                                             ; preds = %5, %bb.a
+  %.162 = phi i32 [ %6, %5 ], [ 0, %bb.a ]        ; 4 uses
   %i.o = and i64 %2, 128
   %.not72 = icmp eq i64 %i.o, 0
   br i1 %.not72, label %bb.e, label %.thread96
@@ -529,8 +531,8 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x, %bb.w
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %do_dump.exit, %bb.x, %bb.v, %bb.u, %bb.s, %.thread102, %bb.c, %bb.y
-  %.1 = phi i32 [ -1, %bb.c ], [ -1, %bb.x ], [ %spec.select90, %do_dump.exit ], [ -1, %bb.u ], [ %spec.select87, %bb.y ], [ -1, %bb.v ], [ %spec.select87, %bb.s ], [ -1, %.thread102 ], [ -1, %bb.b ]
+.thread:                                          ; preds = %do_dump.exit, %bb.c, %bb.b, %bb.x, %bb.v, %bb.u, %bb.s, %.thread102, %bb.y
+  %.1 = phi i32 [ -1, %bb.x ], [ -1, %bb.c ], [ %spec.select90, %do_dump.exit ], [ -1, %bb.u ], [ %spec.select87, %bb.y ], [ -1, %bb.v ], [ %spec.select87, %bb.s ], [ -1, %.thread102 ], [ -1, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #8
   ret i32 %.1
 }
@@ -846,7 +848,7 @@ bb.s:                                             ; preds = %bb.r, %bb.p, %bb.o,
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
   %i.cj = call i32 @UTF8_putc(ptr noundef nonnull %i.b, i32 noundef 6, i64 noundef %i.ch) #8 ; 3 uses
   %i.ck = icmp slt i32 %i.cj, 0
-  br i1 %i.ck, label %.thread, label %.preheader
+  br i1 %i.ck, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.s
   %.not98 = icmp eq i32 %i.cj, 0
@@ -865,7 +867,7 @@ bb.t:                                             ; preds = %.lr.ph, %bb.u
   %i.co = zext i8 %i.cn to i64
   %i.cp = call fastcc i32 @do_esc_char(i64 noundef %i.co, i16 noundef zeroext %i.cl, ptr noundef %4, ptr noundef %5, ptr noundef %6) ; 2 uses
   %i.cq = icmp slt i32 %i.cp, 0
-  br i1 %i.cq, label %.thread, label %bb.u
+  br i1 %i.cq, label %.critedge, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.cr = add nsw i32 %i.cp, %.16381              ; 2 uses
@@ -873,18 +875,18 @@ bb.u:                                             ; preds = %bb.t
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.t, !llvm.loop !32
 
-.thread:                                          ; preds = %bb.s, %bb.t
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  br label %.loopexit
-
 ._crit_edge:                                      ; preds = %bb.u, %.preheader
   %.163.lcssa = phi i32 [ %.06284, %.preheader ], [ %i.cr, %bb.u ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   %.not72 = icmp eq ptr %.158, %i.d
   br i1 %.not72, label %.loopexit, label %.lr.ph88.split.split, !llvm.loop !31
 
-.loopexit:                                        ; preds = %bb.q, %._crit_edge, %bb.g, %bb.l, %bb.m, %bb.f, %.lr.ph88, %.thread, %bb.e, %bb.c
-  %.3 = phi i32 [ -1, %bb.e ], [ -1, %.thread ], [ -1, %bb.c ], [ 0, %bb.f ], [ -1, %.lr.ph88 ], [ -1, %bb.l ], [ -1, %bb.g ], [ %i.ax, %bb.m ], [ -1, %bb.q ], [ %.163.lcssa, %._crit_edge ]
+.critedge:                                        ; preds = %bb.s, %bb.t
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.q, %._crit_edge, %bb.g, %bb.l, %bb.m, %bb.f, %.lr.ph88, %.critedge, %bb.e, %bb.c
+  %.3 = phi i32 [ -1, %bb.e ], [ -1, %.critedge ], [ -1, %bb.c ], [ 0, %bb.f ], [ -1, %.lr.ph88 ], [ -1, %bb.l ], [ -1, %bb.g ], [ %i.ax, %bb.m ], [ -1, %bb.q ], [ %.163.lcssa, %._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %.3
 }

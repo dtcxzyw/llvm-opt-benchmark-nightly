@@ -1,4 +1,4 @@
-inline.NumInlined: 798
+inline.NumInlined: 800
 inline.NumDeleted: 249
 begin_hunk_0_@os_sched_setscheduler:bb.a
   %or.cond = icmp eq i64 %2, 3
@@ -201,11 +201,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = tail call ptr @PyOS_setsig(i32 noundef 17, ptr noundef null) #19 ; 2 uses
   %i.d = tail call i32 @grantpt(i32 noundef range(i32 0, -2147483648) %i.a) #19
   %i.e = icmp eq i32 %i.d, -1
-  br i1 %i.e, label %bb.c, label %2
-
-2:                                                ; preds = %bb.b
-  %3 = tail call ptr @PyOS_setsig(i32 noundef 17, ptr noundef %i.c) #19 ; 0 uses
-  br label %os_grantpt_impl.exit
+  br i1 %i.e, label %bb.c, label %.critedge.i
 
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call ptr @__errno_location() #21    ; 2 uses
@@ -216,8 +212,12 @@ bb.c:                                             ; preds = %bb.b
   %i.j = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.i) #19
   br label %os_grantpt_impl.exit
 
-os_grantpt_impl.exit:                             ; preds = %bb.c, %2, %bb.a
-  %.0 = phi ptr [ null, %bb.a ], [ %i.j, %bb.c ], [ @_Py_NoneStruct, %2 ]
+.critedge.i:                                      ; preds = %bb.b
+  %2 = tail call ptr @PyOS_setsig(i32 noundef 17, ptr noundef %i.c) #19 ; 0 uses
+  br label %os_grantpt_impl.exit
+
+os_grantpt_impl.exit:                             ; preds = %.critedge.i, %bb.c, %bb.a
+  %.0 = phi ptr [ null, %bb.a ], [ %i.j, %bb.c ], [ @_Py_NoneStruct, %.critedge.i ]
   ret ptr %.0
 }
 
@@ -620,7 +620,7 @@ os_pread_impl.exit:                               ; preds = %.critedge.i, %.loop
 define internal ptr @os_preadv(ptr readnone captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca ptr, align 8                      ; 5 uses
+  %i.b = alloca ptr, align 8                      ; 6 uses
   %i.c = add i64 %2, -3
   %or.cond = icmp ult i64 %i.c, 2
   br i1 %or.cond, label %bb.c, label %bb.b
@@ -678,44 +678,47 @@ bb.i:                                             ; preds = %bb.g, %bb.h, %bb.f
 bb.j:                                             ; preds = %bb.i
   %i.v = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !108
   tail call void @PyErr_SetString(ptr noundef %i.v, ptr noundef nonnull @.str.351) #19
-  br label %os_preadv_impl.exit.thread
+  br label %bb.q
 
 bb.k:                                             ; preds = %bb.i
-  %i.w = tail call i64 @PySequence_Size(ptr noundef %i.j) #19 ; 4 uses
+  %i.w = tail call i64 @PySequence_Size(ptr noundef %i.j) #19 ; 5 uses
   %i.x = icmp slt i64 %i.w, 0
-  br i1 %i.x, label %os_preadv_impl.exit.thread, label %bb.l
+  br i1 %i.x, label %bb.q, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.y = call fastcc i32 @iov_setup(ptr noundef %i.a, ptr noundef %i.b, ptr noundef %i.j, i64 noundef %i.w, i32 noundef 1)
   %i.z = icmp slt i32 %i.y, 0
-  br i1 %i.z, label %os_preadv_impl.exit.thread, label %.preheader.i
+  br i1 %i.z, label %bb.q, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.l
-  %i.aa = load ptr, ptr %i.a, align 8             ; 2 uses
-  %i.ab = trunc i64 %i.w to i32                   ; 2 uses
+  %i.aa = load ptr, ptr %i.a, align 8             ; 3 uses
+  %i.ab = trunc i64 %i.w to i32                   ; 3 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.o, %.preheader.i
   %i.ac = tail call ptr @PyEval_SaveThread() #19
-  %i.ad = tail call i64 @preadv64v2(i32 noundef %i.f, ptr noundef %i.aa, i32 noundef %i.ab, i64 noundef %i.m, i32 noundef %.017) #19 ; 3 uses
+  %i.ad = tail call i64 @preadv64v2(i32 noundef %i.f, ptr noundef %i.aa, i32 noundef %i.ab, i64 noundef %i.m, i32 noundef %.017) #19 ; 2 uses
   tail call void @PyEval_RestoreThread(ptr noundef %i.ac) #19
-  %3 = icmp sgt i64 %i.ad, -1
-  %.pre.i = tail call ptr @__errno_location() #21 ; 3 uses
-  br i1 %3, label %.critedge.i, label %bb.n
+  %3 = icmp slt i64 %i.ad, 0
+  br i1 %3, label %bb.n, label %.critedge22.i
 
 bb.n:                                             ; preds = %bb.m
-  %i.ae = load i32, ptr %.pre.i, align 4, !tbaa !7
-  %i.af = icmp eq i32 %i.ae, 4
+  %4 = tail call ptr @__errno_location() #21      ; 3 uses
+  %i.ae = load i32, ptr %4, align 4, !tbaa !7     ; 2 uses
+  %i.af = icmp eq i32 %i.ae, 4                    ; 2 uses
   br i1 %i.af, label %bb.o, label %.critedge.i
 
 bb.o:                                             ; preds = %bb.n
   %i.ag = tail call i32 @PyErr_CheckSignals() #19
   %.not20.i = icmp eq i32 %i.ag, 0
-  br i1 %.not20.i, label %bb.m, label %.critedge.i, !llvm.loop !189
+  br i1 %.not20.i, label %bb.m, label %..critedge_crit_edge.i, !llvm.loop !189
 
-.critedge.i:                                      ; preds = %bb.o, %bb.n, %bb.m
-  %.117.not.i = phi i1 [ true, %bb.m ], [ false, %bb.n ], [ true, %bb.o ]
-  %4 = load i32, ptr %.pre.i, align 4, !tbaa !7
+..critedge_crit_edge.i:                           ; preds = %bb.o
+  %.pre.i = load i32, ptr %4, align 4, !tbaa !7
+  br label %.critedge.i, !llvm.loop !189
+
+.critedge.i:                                      ; preds = %bb.n, %..critedge_crit_edge.i
+  %5 = phi i32 [ %.pre.i, %..critedge_crit_edge.i ], [ %i.ae, %bb.n ]
   %i.ah = load ptr, ptr %i.b, align 8, !tbaa !190 ; 2 uses
   tail call void @PyMem_Free(ptr noundef %i.aa) #19
   %i.ai = icmp sgt i32 %i.ab, 0
@@ -735,31 +738,46 @@ bb.o:                                             ; preds = %bb.n
 
 iov_cleanup.exit.i:                               ; preds = %.lr.ph.i.i, %.critedge.i
   tail call void @PyMem_Free(ptr noundef %i.ah) #19
-  br i1 %.117.not.i, label %os_preadv_impl.exit, label %bb.p
+  br i1 %i.af, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %iov_cleanup.exit.i
-  store i32 %4, ptr %.pre.i, align 4, !tbaa !7
+  store i32 %5, ptr %4, align 4, !tbaa !7
   %i.ak = load ptr, ptr @PyExc_OSError, align 8, !tbaa !108
   %i.al = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.ak) #19 ; 0 uses
-  br label %os_preadv_impl.exit.thread
-
-os_preadv_impl.exit.thread:                       ; preds = %bb.j, %bb.k, %bb.l, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   br label %bb.q
 
-os_preadv_impl.exit:                              ; preds = %iov_cleanup.exit.i
+.critedge22.i:                                    ; preds = %bb.m
+  %6 = load ptr, ptr %i.b, align 8, !tbaa !190    ; 2 uses
+  tail call void @PyMem_Free(ptr noundef %i.aa) #19
+  %7 = icmp sgt i32 %i.ab, 0
+  br i1 %7, label %.lr.ph.preheader.i23.i, label %os_preadv_impl.exit
+
+.lr.ph.preheader.i23.i:                           ; preds = %.critedge22.i
+  %wide.trip.count.i24.i = and i64 %i.w, 2147483647
+  br label %os_preadv_impl.exit.thread
+
+os_preadv_impl.exit.thread:                       ; preds = %os_preadv_impl.exit.thread, %.lr.ph.preheader.i23.i
+  %indvars.iv.i26.i = phi i64 [ 0, %.lr.ph.preheader.i23.i ], [ %indvars.iv.next.i27.i, %os_preadv_impl.exit.thread ] ; 2 uses
+  %8 = getelementptr [80 x i8], ptr %6, i64 %indvars.iv.i26.i
+  tail call void @PyBuffer_Release(ptr noundef %8) #19
+  %indvars.iv.next.i27.i = add nuw nsw i64 %indvars.iv.i26.i, 1 ; 2 uses
+  %exitcond.not.i28.i = icmp eq i64 %indvars.iv.next.i27.i, %wide.trip.count.i24.i
+  br i1 %exitcond.not.i28.i, label %os_preadv_impl.exit, label %os_preadv_impl.exit.thread, !llvm.loop !191
+
+os_preadv_impl.exit:                              ; preds = %os_preadv_impl.exit.thread, %.critedge22.i
+  tail call void @PyMem_Free(ptr noundef %6) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  %5 = icmp slt i64 %i.ad, 0
-  br i1 %5, label %bb.q, label %bb.r
+  br label %bb.r
 
-bb.q:                                             ; preds = %os_preadv_impl.exit.thread, %os_preadv_impl.exit
+bb.q:                                             ; preds = %bb.j, %bb.k, %bb.l, %iov_cleanup.exit.i, %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.am = tail call ptr @PyErr_Occurred() #19
   %.not22 = icmp eq ptr %i.am, null
   br i1 %.not22, label %bb.r, label %bb.s
 
-bb.r:                                             ; preds = %bb.q, %os_preadv_impl.exit
+bb.r:                                             ; preds = %os_preadv_impl.exit, %bb.q
   %.1.i25 = phi i64 [ -1, %bb.q ], [ %i.ad, %os_preadv_impl.exit ]
   %i.an = tail call ptr @PyLong_FromSsize_t(i64 noundef %.1.i25) #19
   br label %bb.s
@@ -1162,7 +1180,7 @@ bb.t:                                             ; preds = %bb.s
   br label %Py_DECREF.exit39
 
 Py_DECREF.exit39:                                 ; preds = %Py_DECREF.exit31, %bb.s, %bb.t, %bb.a
-  %.321 = phi i64 [ %1, %bb.a ], [ %i.s, %bb.t ], [ %i.s, %Py_DECREF.exit31 ], [ %i.s, %bb.s ]
+  %.321 = phi i64 [ %1, %bb.a ], [ %i.s, %bb.t ], [ %i.s, %bb.s ], [ %i.s, %Py_DECREF.exit31 ]
   %i.z = icmp sgt i64 %.321, 1
   br i1 %i.z, label %bb.u, label %Py_DECREF.exit39.thread
 
@@ -1172,8 +1190,8 @@ bb.u:                                             ; preds = %Py_DECREF.exit39
   %i.ac = tail call i32 (ptr, i64, ptr, ...) @PyErr_WarnFormat(ptr noundef %i.aa, i64 noundef 1, ptr noundef nonnull @.str.312, i32 noundef %i.ab, ptr noundef %0) #19
   br label %Py_DECREF.exit39.thread
 
-Py_DECREF.exit39.thread:                          ; preds = %bb.l, %Py_DECREF.exit37, %bb.f, %bb.e, %bb.m, %bb.g, %bb.c, %Py_DECREF.exit39, %bb.u
-  %.3 = phi i32 [ %i.ac, %bb.u ], [ 0, %Py_DECREF.exit39 ], [ 0, %bb.c ], [ 0, %bb.g ], [ 0, %bb.m ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %Py_DECREF.exit37 ], [ 0, %bb.l ]
+Py_DECREF.exit39.thread:                          ; preds = %Py_DECREF.exit37, %bb.l, %bb.m, %bb.g, %bb.f, %bb.e, %bb.c, %Py_DECREF.exit39, %bb.u
+  %.3 = phi i32 [ %i.ac, %bb.u ], [ 0, %Py_DECREF.exit39 ], [ 0, %bb.g ], [ 0, %bb.c ], [ 0, %bb.e ], [ 0, %bb.f ], [ 0, %bb.m ], [ 0, %bb.l ], [ 0, %Py_DECREF.exit37 ]
   ret i32 %.3
 }
 
@@ -1576,7 +1594,7 @@ declare void @PyBuffer_Release(ptr noundef) local_unnamed_addr #2
 define internal fastcc range(i64 -1, -9223372036854775808) i64 @os_readv_impl(i32 noundef %0, ptr noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = alloca ptr, align 8                      ; 4 uses
+  %i.b = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   %i.c = tail call i32 @PySequence_Check(ptr noundef %1) #19
@@ -1589,7 +1607,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = tail call i64 @PySequence_Size(ptr noundef %1) #19 ; 4 uses
+  %i.e = tail call i64 @PySequence_Size(ptr noundef %1) #19 ; 5 uses
   %i.f = icmp slt i64 %i.e, 0
   br i1 %i.f, label %bb.i, label %bb.d
 
@@ -1599,31 +1617,34 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.h, label %bb.i, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
-  %i.i = load ptr, ptr %i.a, align 8              ; 2 uses
-  %i.j = trunc i64 %i.e to i32                    ; 2 uses
+  %i.i = load ptr, ptr %i.a, align 8              ; 3 uses
+  %i.j = trunc i64 %i.e to i32                    ; 3 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader, %bb.g
   %i.k = tail call ptr @PyEval_SaveThread() #19
   %i.l = tail call i64 @readv(i32 noundef %0, ptr noundef %i.i, i32 noundef %i.j) #19 ; 2 uses
   tail call void @PyEval_RestoreThread(ptr noundef %i.k) #19
-  %2 = icmp sgt i64 %i.l, -1
-  %.pre = tail call ptr @__errno_location() #21   ; 3 uses
-  br i1 %2, label %.critedge, label %bb.f
+  %2 = icmp slt i64 %i.l, 0
+  br i1 %2, label %bb.f, label %.critedge20
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = load i32, ptr %.pre, align 4, !tbaa !7
-  %i.n = icmp eq i32 %i.m, 4
+  %3 = tail call ptr @__errno_location() #21      ; 3 uses
+  %i.m = load i32, ptr %3, align 4, !tbaa !7      ; 2 uses
+  %i.n = icmp eq i32 %i.m, 4                      ; 2 uses
   br i1 %i.n, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
   %i.o = tail call i32 @PyErr_CheckSignals() #19
   %.not18 = icmp eq i32 %i.o, 0
-  br i1 %.not18, label %bb.e, label %.critedge, !llvm.loop !278
+  br i1 %.not18, label %bb.e, label %..critedge_crit_edge, !llvm.loop !278
 
-.critedge:                                        ; preds = %bb.f, %bb.g, %bb.e
-  %.115.not = phi i1 [ true, %bb.e ], [ true, %bb.g ], [ false, %bb.f ]
-  %3 = load i32, ptr %.pre, align 4, !tbaa !7
+..critedge_crit_edge:                             ; preds = %bb.g
+  %.pre = load i32, ptr %3, align 4, !tbaa !7
+  br label %.critedge, !llvm.loop !278
+
+.critedge:                                        ; preds = %bb.f, %..critedge_crit_edge
+  %4 = phi i32 [ %.pre, %..critedge_crit_edge ], [ %i.m, %bb.f ]
   %i.p = load ptr, ptr %i.b, align 8, !tbaa !190  ; 2 uses
   tail call void @PyMem_Free(ptr noundef %i.i) #19
   %i.q = icmp sgt i32 %i.j, 0
@@ -1643,17 +1664,38 @@ bb.g:                                             ; preds = %bb.f
 
 iov_cleanup.exit:                                 ; preds = %.lr.ph.i, %.critedge
   tail call void @PyMem_Free(ptr noundef %i.p) #19
-  %.mux = tail call i64 @llvm.smax.i64(i64 %i.l, i64 -1)
-  br i1 %.115.not, label %bb.i, label %bb.h
+  br i1 %i.n, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %iov_cleanup.exit
-  store i32 %3, ptr %.pre, align 4, !tbaa !7
+  store i32 %4, ptr %3, align 4, !tbaa !7
   %i.s = load ptr, ptr @PyExc_OSError, align 8, !tbaa !108
   %i.t = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.s) #19 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %iov_cleanup.exit, %bb.h, %bb.d, %bb.c, %bb.b
-  %.1 = phi i64 [ -1, %bb.b ], [ -1, %bb.c ], [ -1, %bb.d ], [ %.mux, %iov_cleanup.exit ], [ -1, %bb.h ]
+.critedge20:                                      ; preds = %bb.e
+  %5 = load ptr, ptr %i.b, align 8, !tbaa !190    ; 2 uses
+  tail call void @PyMem_Free(ptr noundef %i.i) #19
+  %6 = icmp sgt i32 %i.j, 0
+  br i1 %6, label %.lr.ph.preheader.i21, label %iov_cleanup.exit27
+
+.lr.ph.preheader.i21:                             ; preds = %.critedge20
+  %wide.trip.count.i22 = and i64 %i.e, 2147483647
+  br label %.lr.ph.i23
+
+.lr.ph.i23:                                       ; preds = %.lr.ph.i23, %.lr.ph.preheader.i21
+  %indvars.iv.i24 = phi i64 [ 0, %.lr.ph.preheader.i21 ], [ %indvars.iv.next.i25, %.lr.ph.i23 ] ; 2 uses
+  %7 = getelementptr [80 x i8], ptr %5, i64 %indvars.iv.i24
+  tail call void @PyBuffer_Release(ptr noundef %7) #19
+  %indvars.iv.next.i25 = add nuw nsw i64 %indvars.iv.i24, 1 ; 2 uses
+  %exitcond.not.i26 = icmp eq i64 %indvars.iv.next.i25, %wide.trip.count.i22
+  br i1 %exitcond.not.i26, label %iov_cleanup.exit27, label %.lr.ph.i23, !llvm.loop !191
+
+iov_cleanup.exit27:                               ; preds = %.lr.ph.i23, %.critedge20
+  tail call void @PyMem_Free(ptr noundef %5) #19
+  br label %bb.i
+
+bb.i:                                             ; preds = %bb.h, %iov_cleanup.exit, %iov_cleanup.exit27, %bb.d, %bb.c, %bb.b
+  %.1 = phi i64 [ -1, %bb.b ], [ -1, %bb.c ], [ -1, %bb.d ], [ -1, %iov_cleanup.exit ], [ -1, %bb.h ], [ %i.l, %iov_cleanup.exit27 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   ret i64 %.1
@@ -2055,9 +2097,6 @@ define internal noundef i32 @probe_ptsname_r() #18 {
 bb.a:
   ret i32 1
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

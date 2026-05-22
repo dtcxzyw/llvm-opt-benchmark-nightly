@@ -1,4 +1,4 @@
-inline.NumInlined: 976
+inline.NumInlined: 977
 inline.NumDeleted: 447
 begin_hunk_0_@_ZN5arrow2io22CompressedOutputStream5AbortEv:bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !96, !noalias !103 ; 2 uses
@@ -201,15 +201,19 @@ define linkonce_odr hidden void @_ZN5arrow2io22CompressedOutputStream4Impl5Write
 bb.a:
   %4 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %5 = alloca %"class.arrow::Status", align 8     ; 4 uses
-  %6 = alloca %"class.arrow::Result.97", align 8  ; 12 uses
+  %6 = alloca %"class.arrow::Result.97", align 8  ; 15 uses
   %7 = alloca %"class.arrow::Result.97", align 8  ; 13 uses
   %8 = alloca %"class.arrow::Status", align 8     ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
   %i.b = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #25 ; 2 uses
   %.not.i.i = icmp eq i32 %i.b, 0
-  br i1 %.not.i.i, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a, label %bb.b
+  br i1 %.not.i.i, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader, label %bb.b
 
-_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a: ; preds = %bb.a
+_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader: ; preds = %bb.a
+  %9 = icmp sgt i64 %3, 0
+  br i1 %9, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a, label %bb.ac
+
+_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a: ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 5 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 7 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
@@ -219,19 +223,15 @@ _ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a: ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 8
   %.sroa.2.0..sroa_idx.i.i74 = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
-  br label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
+  br label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_system_errori(i32 noundef %i.b) #29
   unreachable
 
-_ZNSt10lock_guardISt5mutexEC2ERS0_.exit:          ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97
-  %.041 = phi ptr [ %.243, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97 ], [ %2, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a ] ; 6 uses
-  %.040 = phi i64 [ %.2, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97 ], [ %3, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a ] ; 7 uses
-  %9 = icmp sgt i64 %.040, 0
-  br i1 %9, label %bb.c, label %bb.ac
-
-bb.c:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
+bb.c:                                             ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97
+  %.040110 = phi i64 [ %3, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a ], [ %i.ca, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97 ] ; 3 uses
+  %.041109 = phi ptr [ %2, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader.a ], [ %i.bz, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97 ] ; 3 uses
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !129  ; 4 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   %i.l = load i64, ptr %i.k, align 8, !tbaa !130
@@ -253,7 +253,7 @@ bb.c:                                             ; preds = %_ZNSt10lock_guardIS
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !7
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8
-  invoke void %i.ac(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.97") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %i.z, i64 noundef %.040, ptr noundef %.041, i64 noundef %i.n, ptr noundef %i.y)
+  invoke void %i.ac(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.97") align 8 %6, ptr noundef nonnull align 8 dereferenceable(8) %i.z, i64 noundef %.040110, ptr noundef %.041109, i64 noundef %i.n, ptr noundef %i.y)
           to label %bb.d unwind label %bb.f
 
 bb.d:                                             ; preds = %bb.c
@@ -263,7 +263,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   invoke void @_ZN5arrow6StatusC2ERKS0_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %6)
-          to label %.critedge unwind label %bb.g
+          to label %.critedge71 unwind label %bb.g
 
 bb.f:                                             ; preds = %bb.c
   %i.af = landingpad { ptr, i32 }
@@ -312,7 +312,7 @@ _ZN5arrow6StatusD2Ev.exit.i:                      ; preds = %bb.i
 
 _ZN5arrow6StatusD2Ev.exit:                        ; preds = %.noexc
   store ptr %i.aw, ptr %0, align 8, !tbaa !42, !alias.scope !148
-  br label %.critedge
+  br label %.critedge71
 
 bb.j:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit.i
   %i.ay = landingpad { ptr, i32 }
@@ -340,7 +340,7 @@ _ZN5arrow6StatusD2Ev.exit72:                      ; preds = %.noexc
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !7
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 16
   %i.bp = load ptr, ptr %i.bo, align 8
-  invoke void %i.bp(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.97") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) %i.bm, i64 noundef %.040, ptr noundef %.041, i64 noundef %i.bb, ptr noundef %i.bl)
+  invoke void %i.bp(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Result.97") align 8 %7, ptr noundef nonnull align 8 dereferenceable(8) %i.bm, i64 noundef %.040110, ptr noundef %.041109, i64 noundef %i.bb, ptr noundef %i.bl)
           to label %bb.k unwind label %bb.m
 
 bb.k:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit72
@@ -375,7 +375,7 @@ bb.p:                                             ; preds = %bb.o
 
 _ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread: ; preds = %bb.o, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %.critedge
+  br label %.critedge71
 
 _ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit._crit_edge: ; preds = %bb.k
   %.sroa.0.0.copyload.i.i73 = load i64, ptr %i.h, align 8, !tbaa !86
@@ -397,8 +397,8 @@ _ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit82: ; preds = %b
 bb.r:                                             ; preds = %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit._crit_edge, %bb.i, %bb.h
   %i.by = phi i64 [ %i.bx, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit._crit_edge ], [ %i.ai, %bb.i ], [ %i.ai, %bb.h ] ; 3 uses
   %.sroa.010.1 = phi i64 [ %.sroa.0.0.copyload.i.i73, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit._crit_edge ], [ 0, %bb.i ], [ %.sroa.0.0.copyload.i.i, %bb.h ] ; 4 uses
-  %i.bz = getelementptr inbounds i8, ptr %.041, i64 %.sroa.010.1 ; 3 uses
-  %i.ca = sub nsw i64 %.040, %.sroa.010.1         ; 3 uses
+  %i.bz = getelementptr inbounds i8, ptr %.041109, i64 %.sroa.010.1
+  %i.ca = sub nsw i64 %.040110, %.sroa.010.1      ; 2 uses
   %i.cb = load i64, ptr %i.i, align 8, !tbaa !154
   %i.cc = add nsw i64 %i.cb, %.sroa.010.1
   store i64 %i.cc, ptr %i.i, align 8, !tbaa !154
@@ -439,7 +439,7 @@ bb.t:                                             ; preds = %.noexc84
 
 _ZN5arrow6StatusD2Ev.exit87:                      ; preds = %.noexc84
   store ptr %i.cs, ptr %0, align 8, !tbaa !42, !alias.scope !161
-  br label %.critedge
+  br label %.critedge71
 
 bb.u:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit.i83
   %i.cu = landingpad { ptr, i32 }
@@ -472,7 +472,7 @@ _ZN5arrow6StatusD2Ev.exit92:                      ; preds = %bb.w
   store ptr %i.dd, ptr %0, align 8, !tbaa !42, !alias.scope !170
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   %i.de = icmp eq ptr %i.dd, null
-  br label %.critedge
+  br i1 %i.de, label %.critedge, label %.critedge71
 
 bb.x:                                             ; preds = %bb.w
   %i.df = landingpad { ptr, i32 }
@@ -480,10 +480,7 @@ bb.x:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   br label %bb.z
 
-.critedge:                                        ; preds = %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread, %_ZN5arrow6StatusD2Ev.exit92, %_ZN5arrow6StatusD2Ev.exit87, %_ZN5arrow6StatusD2Ev.exit, %bb.v, %bb.e
-  %.5 = phi i1 [ false, %bb.e ], [ %i.de, %_ZN5arrow6StatusD2Ev.exit92 ], [ false, %_ZN5arrow6StatusD2Ev.exit87 ], [ false, %_ZN5arrow6StatusD2Ev.exit ], [ false, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread ], [ true, %bb.v ]
-  %.243 = phi ptr [ %.041, %bb.e ], [ %i.bz, %_ZN5arrow6StatusD2Ev.exit92 ], [ %i.bz, %_ZN5arrow6StatusD2Ev.exit87 ], [ %.041, %_ZN5arrow6StatusD2Ev.exit ], [ %.041, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread ], [ %i.bz, %bb.v ]
-  %.2 = phi i64 [ %.040, %bb.e ], [ %i.ca, %_ZN5arrow6StatusD2Ev.exit92 ], [ %i.ca, %_ZN5arrow6StatusD2Ev.exit87 ], [ %.040, %_ZN5arrow6StatusD2Ev.exit ], [ %.040, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread ], [ %i.ca, %bb.v ]
+.critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit92, %bb.v
   %i.dg = load ptr, ptr %6, align 8, !tbaa !42
   %.not.i.i95 = icmp eq ptr %i.dg, null
   br i1 %.not.i.i95, label %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97, label %bb.y, !prof !45
@@ -494,7 +491,8 @@ bb.y:                                             ; preds = %.critedge
 
 _ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97: ; preds = %.critedge, %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  br i1 %.5, label %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit, label %.loopexit, !llvm.loop !173
+  %10 = icmp sgt i64 %i.ca, 0
+  br i1 %10, label %bb.c, label %bb.ac, !llvm.loop !173
 
 bb.z:                                             ; preds = %bb.j, %bb.u, %bb.x, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit82, %bb.m, %bb.g
   %.pn64 = phi { ptr, i32 } [ %i.ag, %bb.g ], [ %i.df, %bb.x ], [ %i.cu, %bb.u ], [ %i.bs, %bb.m ], [ %i.ay, %bb.j ], [ %i.bt, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit82 ]
@@ -515,11 +513,24 @@ bb.ab:                                            ; preds = %_ZN5arrow6ResultINS
   %i.di = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #25 ; 0 uses
   resume { ptr, i32 } %.pn64.pn
 
-bb.ac:                                            ; preds = %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit
+bb.ac:                                            ; preds = %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97, %_ZNSt10lock_guardISt5mutexEC2ERS0_.exit.preheader
   store ptr null, ptr %0, align 8, !tbaa !42, !alias.scope !175
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit97, %bb.ac
+.critedge71:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit92, %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit.thread, %_ZN5arrow6StatusD2Ev.exit87, %_ZN5arrow6StatusD2Ev.exit, %bb.e
+  %11 = load ptr, ptr %6, align 8, !tbaa !42
+  %.not.i.i102 = icmp eq ptr %11, null
+  br i1 %.not.i.i102, label %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit104, label %12, !prof !45
+
+12:                                               ; preds = %.critedge71
+  call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(24) %6)
+  br label %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit104
+
+_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit104: ; preds = %.critedge71, %12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %_ZN5arrow6ResultINS_4util10Compressor14CompressResultEED2Ev.exit104, %bb.ac
   %i.dj = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #25 ; 0 uses
   ret void
 }

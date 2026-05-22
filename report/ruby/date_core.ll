@@ -201,9 +201,7 @@ bb.c:                                             ; preds = %bb.d
 .thread:                                          ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #19
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #19
-  br label %bb.m
+  br label %.critedge
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.08.i = phi i32 [ 0, %bb.b ], [ %i.q, %bb.c ]  ; 2 uses
@@ -268,17 +266,20 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
   %i.au = load i32, ptr %i.j, align 4, !tbaa !6
-  %5 = add i32 %i.u, 2
-  %6 = sub i32 %5, %i.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #19
   %.not21 = icmp eq i32 %0, %i.ar
+  br i1 %.not21, label %5, label %.critedge
+
+5:                                                ; preds = %bb.h
+  %6 = add i32 %i.u, 2
+  %7 = sub i32 %6, %i.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #19
-  br i1 %.not21, label %bb.i, label %bb.m
+  br label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.a
-  %.118 = phi i32 [ %6, %bb.h ], [ %1, %bb.a ]    ; 2 uses
+bb.i:                                             ; preds = %5, %bb.a
+  %.118 = phi i32 [ %7, %5 ], [ %1, %bb.a ]       ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #19
@@ -366,8 +367,13 @@ c_jd_to_ordinal.exit38:                           ; preds = %bb.l
   %spec.select25 = zext i1 %or.cond to i32
   br label %bb.m
 
-bb.m:                                             ; preds = %.thread, %c_jd_to_ordinal.exit38, %bb.h
-  %.1 = phi i32 [ 0, %bb.h ], [ %spec.select25, %c_jd_to_ordinal.exit38 ], [ 0, %.thread ]
+.critedge:                                        ; preds = %.thread, %bb.h
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #19
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #19
+  br label %bb.m
+
+bb.m:                                             ; preds = %c_jd_to_ordinal.exit38, %.critedge
+  %.1 = phi i32 [ 0, %.critedge ], [ %spec.select25, %c_jd_to_ordinal.exit38 ]
   ret i32 %.1
 }
 

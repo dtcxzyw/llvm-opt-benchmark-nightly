@@ -1,4 +1,4 @@
-inline.NumInlined: 1396
+inline.NumInlined: 1399
 inline.NumDeleted: 321
 begin_hunk_0_@thgroup_add:bb.a
   br i1 %.not3.i10, label %RB_OBJ_FROZEN.exit12, label %RB_OBJ_FROZEN.exit12.thread
@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br label %.thread
 
 .thread:                                          ; preds = %.preheader, %bb.f, %bb.h, %bb.c, %rbimpl_RB_TYPE_P_fastpath.exit55.thread, %bb.i, %rbimpl_RB_TYPE_P_fastpath.exit, %bb.a
-  %.1 = phi ptr [ %.037, %rbimpl_RB_TYPE_P_fastpath.exit55.thread ], [ null, %rbimpl_RB_TYPE_P_fastpath.exit ], [ null, %bb.h ], [ null, %bb.c ], [ null, %bb.a ], [ %.037, %bb.i ], [ null, %bb.f ], [ null, %.preheader ]
+  %.1 = phi ptr [ %.037, %bb.i ], [ null, %rbimpl_RB_TYPE_P_fastpath.exit ], [ null, %bb.h ], [ null, %bb.c ], [ %.037, %rbimpl_RB_TYPE_P_fastpath.exit55.thread ], [ null, %bb.a ], [ null, %bb.f ], [ null, %.preheader ]
   ret ptr %.1
 }
 
@@ -604,7 +604,7 @@ bb.d:                                             ; preds = %.preheader.i.i
   br label %rbimpl_check_typeddata.exit.i
 
 rbimpl_check_typeddata.exit.i:                    ; preds = %bb.d, %.critedge.i.i, %RTYPEDDATA_GET_DATA.exit.i.i
-  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 11 uses
+  %.1.i.i = phi ptr [ %i.t, %.critedge.i.i ], [ %i.o, %RTYPEDDATA_GET_DATA.exit.i.i ], [ %i.o, %bb.d ] ; 16 uses
   %i.u = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !145
   %i.v = getelementptr i8, ptr %i.u, i64 496
   %i.w = load i64, ptr %i.v, align 8, !tbaa !203  ; 2 uses
@@ -624,28 +624,45 @@ bb.e:                                             ; preds = %rbimpl_check_typedd
 
 queue_ptr.exit:                                   ; preds = %rbimpl_check_typeddata.exit.i, %bb.e
   %i.ac = icmp slt i32 %0, 0
-  br i1 %i.ac, label %bb.f, label %.preheader.split.split.a
+  br i1 %i.ac, label %.preheader.split.split.a, label %.preheader.split.split
 
-.preheader.split.split.a:                         ; preds = %queue_ptr.exit
-  %.not.not = icmp eq i32 %0, 0                   ; 2 uses
-  br i1 %.not.not, label %rb_scan_args_set.exit, label %.split.us
+.preheader.split.split:                           ; preds = %queue_ptr.exit
+  switch i32 %0, label %.preheader.split.split.a [
+    i32 0, label %rb_scan_args_set.exit
+    i32 1, label %.split.us
+  ]
 
-.split.us:                                        ; preds = %.preheader.split.split.a
-  %i.ad = icmp eq i32 %0, 1
-  br i1 %i.ad, label %bb.g, label %bb.f
-
-bb.f:                                             ; preds = %.split.us, %queue_ptr.exit
+.preheader.split.split.a:                         ; preds = %.preheader.split.split, %queue_ptr.exit
   tail call void @rb_error_arity(i32 noundef %0, i32 noundef 0, i32 noundef 1) #41
   unreachable
 
-bb.g:                                             ; preds = %.split.us
+.split.us:                                        ; preds = %.preheader.split.split
   %3 = load i64, ptr %1, align 8, !tbaa !144
   %4 = tail call i64 @rb_to_array(i64 noundef %3) #17
-  br label %rb_scan_args_set.exit
+  %5 = getelementptr i8, ptr %.1.i.i, i64 24      ; 2 uses
+  %6 = tail call i64 @rb_ary_hidden_new(i64 noundef 1) #17 ; 5 uses
+  store i64 %6, ptr %5, align 8, !tbaa !144
+  %i.ad = icmp eq i64 %6, 0
+  %7 = and i64 %6, 7
+  %8 = icmp ne i64 %7, 0
+  %9 = or i1 %i.ad, %8
+  br i1 %9, label %bb.g, label %bb.f
 
-rb_scan_args_set.exit:                            ; preds = %.preheader.split.split.a, %bb.g
-  %.sink = phi i64 [ %4, %bb.g ], [ 4, %.preheader.split.split.a ]
-  %i.ae = getelementptr i8, ptr %.1.i.i, i64 24   ; 2 uses
+bb.f:                                             ; preds = %.split.us
+  tail call void @rb_gc_writebarrier(i64 noundef %2, i64 noundef %6) #17
+  %.pre = load i64, ptr %5, align 1, !tbaa !209
+  br label %bb.g
+
+bb.g:                                             ; preds = %.split.us, %bb.f
+  %10 = phi i64 [ %6, %.split.us ], [ %.pre, %bb.f ]
+  %11 = getelementptr i8, ptr %.1.i.i, i64 8
+  store ptr %.1.i.i, ptr %11, align 8, !tbaa !59
+  store ptr %.1.i.i, ptr %.1.i.i, align 8, !tbaa !58
+  %12 = tail call i64 @rb_ary_concat(i64 noundef %10, i64 noundef %4) #17 ; 0 uses
+  br label %bb.i
+
+rb_scan_args_set.exit:                            ; preds = %.preheader.split.split
+  %i.ae = getelementptr i8, ptr %.1.i.i, i64 24
   %i.af = tail call i64 @rb_ary_hidden_new(i64 noundef 1) #17 ; 4 uses
   store i64 %i.af, ptr %i.ae, align 8, !tbaa !144
   %i.ag = icmp eq i64 %i.af, 0
@@ -662,14 +679,9 @@ rb_obj_write.exit:                                ; preds = %rb_scan_args_set.ex
   %i.ak = getelementptr i8, ptr %.1.i.i, i64 8
   store ptr %.1.i.i, ptr %i.ak, align 8, !tbaa !59
   store ptr %.1.i.i, ptr %.1.i.i, align 8, !tbaa !58
-  br i1 %.not.not, label %bb.i, label %5
-
-5:                                                ; preds = %rb_obj_write.exit
-  %6 = load i64, ptr %i.ae, align 1, !tbaa !209
-  %7 = tail call i64 @rb_ary_concat(i64 noundef %6, i64 noundef %.sink) #17 ; 0 uses
   br label %bb.i
 
-bb.i:                                             ; preds = %5, %rb_obj_write.exit
+bb.i:                                             ; preds = %rb_obj_write.exit, %bb.g
   ret i64 %2
 }
 

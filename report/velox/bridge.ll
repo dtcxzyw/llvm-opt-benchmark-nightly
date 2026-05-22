@@ -201,28 +201,29 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %.not44.i = icmp eq i64 %i.am, 0
-  br i1 %.not44.i, label %bb.w, label %bb.u
+  br i1 %.not44.i, label %bb.w, label %5
 
-bb.u:                                             ; preds = %bb.t
-  %i.ap = icmp ugt i8 %i.ao, 25
-  br i1 %i.ap, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, label %bb.v, !prof !169
+5:                                                ; preds = %bb.t
+  %6 = icmp ugt i8 %i.ao, 25
+  br i1 %6, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, label %bb.u, !prof !169
+
+bb.u:                                             ; preds = %5
+  %7 = load i8, ptr %i.aj, align 1, !tbaa !14
+  %8 = add i8 %7, -48                             ; 2 uses
+  %.not45.i = icmp ne i64 %i.am, 1
+  %i.ap = icmp ugt i8 %8, 9
+  %or.cond.i30 = or i1 %.not45.i, %i.ap
+  br i1 %or.cond.i30, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, label %bb.v, !prof !2622
 
 bb.v:                                             ; preds = %bb.u
-  %5 = load i8, ptr %i.aj, align 1, !tbaa !14
-  %6 = add i8 %5, -48                             ; 2 uses
-  %i.aq = mul nuw i8 %i.ao, 10                    ; 4 uses
-  %i.ar = add i8 %6, %i.aq                        ; 2 uses
-  %.not45.i = icmp eq i64 %i.am, 1
-  %i.as = icmp ult i8 %6, 10
-  %or.cond.not.i = and i1 %.not45.i, %i.as        ; 2 uses
-  %7 = icmp uge i8 %i.ar, %i.aq
+  %i.aq = mul nuw i8 %i.ao, 10                    ; 3 uses
+  %i.ar = add i8 %8, %i.aq                        ; 2 uses
+  %i.as = icmp ult i8 %i.ar, %i.aq
   %.46.i = tail call i8 @llvm.umax.i8(i8 %i.ar, i8 %i.aq)
-  %.237.i = select i1 %or.cond.not.i, i8 %.46.i, i8 %i.aq, !prof !2815
-  %cond2.i = select i1 %or.cond.not.i, i1 %7, i1 false, !prof !2815
-  br i1 %cond2.i, label %bb.w, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, !prof !2620
+  br i1 %i.as, label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit, label %bb.w, !prof !2815
 
 bb.w:                                             ; preds = %bb.v, %bb.t, %bb.r
-  %.132.ph = phi i8 [ %i.ah, %bb.r ], [ %i.ao, %bb.t ], [ %.237.i, %bb.v ] ; 4 uses
+  %.132.ph = phi i8 [ %i.ah, %bb.r ], [ %i.ao, %bb.t ], [ %.46.i, %bb.v ] ; 4 uses
   br i1 %i.ab, label %bb.x, label %bb.y
 
 .thread38:                                        ; preds = %bb.q
@@ -246,8 +247,8 @@ _ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.sink.split: ; preds = %bb.i, %bb.n
   store i8 %storemerge.sink, ptr %4, align 1, !tbaa !14
   br label %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit
 
-_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit:    ; preds = %bb.g, %bb.k, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.sink.split, %bb.d, %bb.v, %bb.u, %bb.s, %.critedge, %bb.y, %bb.x, %bb.o, %bb.a
-  %.022 = phi i1 [ false, %bb.o ], [ false, %bb.d ], [ false, %bb.a ], [ false, %bb.v ], [ false, %bb.y ], [ true, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.sink.split ], [ false, %bb.x ], [ false, %.critedge ], [ false, %bb.s ], [ false, %bb.u ], [ false, %bb.k ], [ false, %bb.g ]
+_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit:    ; preds = %bb.g, %bb.k, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.sink.split, %5, %bb.s, %bb.v, %bb.u, %.critedge, %bb.d, %bb.y, %bb.x, %bb.o, %bb.a
+  %.022 = phi i1 [ false, %bb.o ], [ false, %bb.s ], [ false, %bb.a ], [ false, %bb.y ], [ false, %5 ], [ true, %_ZN5arrow8internal13ParseUnsignedEPKcmPh.exit.sink.split ], [ false, %bb.x ], [ false, %bb.d ], [ false, %.critedge ], [ false, %bb.u ], [ false, %bb.v ], [ false, %bb.k ], [ false, %bb.g ]
   ret i1 %.022
 }
 
@@ -650,7 +651,7 @@ bb.a:
   %i.b = load ptr, ptr %1, align 8, !tbaa !644    ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !432  ; 2 uses
   %i.d = icmp sgt i64 %i.c, 0
-  br i1 %i.d, label %_ZN5arrow6StatusD2Ev.exit, label %bb.b
+  br i1 %i.d, label %_ZN5arrow6StatusD2Ev.exit, label %.critedge
 
 _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -670,24 +671,24 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.a
   store ptr %i.n, ptr %0, align 8, !tbaa !53, !alias.scope !3595
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.o = icmp eq ptr %i.n, null
-  br i1 %i.o, label %.critedge.thread, label %.critedge
+  br i1 %i.o, label %.critedge.thread, label %bb.b
 
 .critedge.thread:                                 ; preds = %_ZN5arrow6StatusD2Ev.exit
   %i.p = load i32, ptr %i.a, align 4, !tbaa !3
   %i.q = sext i32 %i.p to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
-  br label %bb.b
+  br label %.critedge
 
-.critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
-  br label %bb.c
-
-bb.b:                                             ; preds = %.critedge.thread, %bb.a
+.critedge:                                        ; preds = %.critedge.thread, %bb.a
   %.111 = phi i64 [ %i.q, %.critedge.thread ], [ 0, %bb.a ]
   call fastcc void @_ZN5arrow12_GLOBAL__N_113ArrayImporter12ImportBufferEilb(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(113) %1, i32 noundef 2, i64 noundef %.111, i1 noundef zeroext false)
   br label %bb.c
 
-bb.c:                                             ; preds = %.critedge, %bb.b
+bb.b:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.b, %.critedge
   ret void
 }
 
@@ -1063,7 +1064,7 @@ bb.c:                                             ; preds = %.noexc6, %.noexc5, 
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN5arrow12_GLOBAL__N_113ArrayImporter24ImportStringValuesBufferIlEENS_6StatusEiil(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(113) %1) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 4 uses
+  %i.a = alloca i64, align 8                      ; 5 uses
   %2 = alloca %"class.arrow::Status", align 8     ; 4 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !644    ; 2 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !432  ; 2 uses
@@ -1088,16 +1089,23 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.a
   store ptr %i.n, ptr %0, align 8, !tbaa !53, !alias.scope !3637
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #31
   %i.o = icmp eq ptr %i.n, null
+  br i1 %i.o, label %_ZN5arrow6StatusD2Ev.exit14, label %.critedge
+
+_ZN5arrow6StatusD2Ev.exit14:                      ; preds = %_ZN5arrow6StatusD2Ev.exit
   %3 = load i64, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
-  br i1 %i.o, label %bb.b, label %bb.c
+  br label %bb.b
 
-bb.b:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit, %bb.a
-  %.111 = phi i64 [ %3, %_ZN5arrow6StatusD2Ev.exit ], [ 0, %bb.a ]
+bb.b:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit14, %bb.a
+  %.111 = phi i64 [ %3, %_ZN5arrow6StatusD2Ev.exit14 ], [ 0, %bb.a ]
   call fastcc void @_ZN5arrow12_GLOBAL__N_113ArrayImporter12ImportBufferEilb(ptr dead_on_unwind noalias writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(113) %1, i32 noundef 2, i64 noundef %.111, i1 noundef zeroext false)
   br label %bb.c
 
-bb.c:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit, %bb.b
+.critedge:                                        ; preds = %_ZN5arrow6StatusD2Ev.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
+  br label %bb.c
+
+bb.c:                                             ; preds = %.critedge, %bb.b
   ret void
 }
 
@@ -1500,7 +1508,7 @@ begin_hunk_2_@bcmp
 !2812 = distinct !{ptr @_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EED2Ev, null, null, null, ptr @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !2813 = distinct !{null, null, ptr @_ZNSt6vectorISt10shared_ptrIN5arrow5FieldEESaIS3_EED2Ev, null, null, null, ptr @_ZNSt12__shared_ptrIN5arrow5FieldELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !2814 = distinct !{!2814, !113}
-!2815 = !{!"branch_weights", i32 4000000, i32 4001}
+!2815 = !{!"branch_weights", i32 1073205, i32 2146410443}
 !2816 = !{!"branch_weights", !"expected", i32 2182155, i32 2145301493}
 !2817 = !{!2818}
 !2818 = distinct !{!2818, !2819, !"_ZN5arrow4util13StringBuilderIJRA111_KcRA2_S2_RPS2_S6_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEDpOT_: argument 0"}

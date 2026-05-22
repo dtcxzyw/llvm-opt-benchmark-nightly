@@ -201,10 +201,10 @@ declare ptr @ossl_pkcs7_ctx_get0_propq(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc ptr @pkcs7_get1_data(ptr noundef readonly captures(none) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 5 uses
-  %i.b = alloca i64, align 8                      ; 4 uses
-  %i.c = alloca i32, align 4                      ; 4 uses
-  %i.d = alloca i32, align 4                      ; 3 uses
+  %i.a = alloca ptr, align 8                      ; 6 uses
+  %i.b = alloca i64, align 8                      ; 5 uses
+  %i.c = alloca i32, align 4                      ; 5 uses
+  %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !9
   %i.g = tail call i32 @OBJ_obj2nid(ptr noundef %i.f) #4
@@ -298,7 +298,7 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #4
   %i.ai = tail call ptr @ASN1_OCTET_STRING_new() #4 ; 4 uses
   %.not34 = icmp eq ptr %i.ai, null
-  br i1 %.not34, label %bb.r, label %bb.o
+  br i1 %.not34, label %.critedge, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.aj = load ptr, ptr %i.y, align 8, !tbaa !17
@@ -325,16 +325,23 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   call void @ASN1_OCTET_STRING_free(ptr noundef nonnull %i.ai) #4
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.p, %bb.q, %bb.n
-  %spec.select = phi ptr [ null, %bb.n ], [ null, %bb.q ], [ %i.ai, %bb.p ]
+bb.r:                                             ; preds = %bb.p, %bb.q
+  %.123 = phi ptr [ %i.ai, %bb.p ], [ null, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %PKCS7_get_octet_string.exit.thread, %bb.j, %bb.k, %bb.l, %bb.m, %bb.g, %bb.h, %bb.i
-  %.1 = phi ptr [ %spec.select, %bb.r ], [ null, %bb.g ], [ %i.r, %bb.i ], [ %i.r, %bb.h ], [ null, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ null, %PKCS7_get_octet_string.exit.thread ]
+.critedge:                                        ; preds = %bb.n
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  br label %bb.s
+
+bb.s:                                             ; preds = %bb.r, %PKCS7_get_octet_string.exit.thread, %bb.j, %bb.k, %bb.l, %bb.m, %.critedge, %bb.g, %bb.h, %bb.i
+  %.1 = phi ptr [ %.123, %bb.r ], [ null, %.critedge ], [ %i.r, %bb.i ], [ %i.r, %bb.h ], [ null, %bb.g ], [ null, %bb.m ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.j ], [ null, %PKCS7_get_octet_string.exit.thread ]
   ret ptr %.1
 }
 

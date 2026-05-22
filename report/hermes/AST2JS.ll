@@ -201,7 +201,11 @@ bb.b:                                             ; preds = %bb.a
   %i.j = zext i8 %i.i to i32                      ; 2 uses
   %i.k = and i32 %i.j, 192
   %.not77 = icmp eq i32 %i.k, 128
-  br i1 %.not77, label %bb.c, label %.thread122.sink.split134, !prof !117
+  br i1 %.not77, label %bb.c, label %7, !prof !117
+
+7:                                                ; preds = %bb.b
+  store ptr %i.h, ptr %0, align 8, !tbaa !89
+  br label %.thread
 
 bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.c, i64 2
@@ -211,7 +215,10 @@ bb.c:                                             ; preds = %bb.b
   %i.o = and i32 %i.j, 63
   %i.p = or disjoint i32 %i.o, %i.n
   %i.q = icmp samesign ult i32 %i.n, 128
-  br i1 %i.q, label %.thread122, label %.thread126, !prof !221
+  br i1 %i.q, label %.thread, label %.thread126, !prof !221
+
+.thread:                                          ; preds = %bb.g, %7, %bb.c
+  br label %.thread126
 
 bb.d:                                             ; preds = %bb.a
   %i.r = and i32 %i.e, 240
@@ -222,13 +229,21 @@ bb.e:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 1 ; 2 uses
   %i.u = load i8, ptr %i.t, align 1, !tbaa !22    ; 2 uses
   %.not75 = icmp slt i8 %i.u, -64
-  br i1 %.not75, label %bb.f, label %.thread122.sink.split134, !prof !117
+  br i1 %.not75, label %bb.f, label %8, !prof !117
+
+8:                                                ; preds = %bb.e
+  store ptr %i.t, ptr %0, align 8, !tbaa !89
+  br label %.thread126
 
 bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 2 ; 2 uses
   %i.w = load i8, ptr %i.v, align 1, !tbaa !22    ; 2 uses
   %.not76 = icmp slt i8 %i.w, -64
-  br i1 %.not76, label %bb.g, label %.thread122.sink.split134, !prof !117
+  br i1 %.not76, label %bb.g, label %9, !prof !117
+
+9:                                                ; preds = %bb.f
+  store ptr %i.v, ptr %0, align 8, !tbaa !89
+  br label %.thread126
 
 bb.g:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %i.c, i64 3
@@ -243,15 +258,7 @@ bb.g:                                             ; preds = %bb.f
   %i.af = zext nneg i8 %i.ae to i32
   %i.ag = or disjoint i32 %i.ad, %i.af
   %i.ah = icmp samesign ult i32 %i.ad, 2048
-  br i1 %i.ah, label %.thread122, label %.thread126, !prof !221
-
-.thread122.sink.split134:                         ; preds = %bb.e, %bb.f, %bb.b
-  %.sink135 = phi ptr [ %i.h, %bb.b ], [ %i.t, %bb.e ], [ %i.v, %bb.f ]
-  store ptr %.sink135, ptr %0, align 8, !tbaa !89
-  br label %.thread122
-
-.thread122:                                       ; preds = %.thread122.sink.split134, %bb.c, %bb.g
-  br label %.thread126
+  br i1 %i.ah, label %.thread, label %.thread126, !prof !221
 
 bb.h:                                             ; preds = %bb.d
   %i.ai = and i32 %i.e, 248
@@ -364,8 +371,8 @@ bb.r:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   br label %.thread126
 
-.thread126:                                       ; preds = %bb.o, %bb.q, %bb.n, %bb.l, %bb.j, %bb.c, %bb.g, %bb.p, %.thread122, %bb.r
-  %.6 = phi i32 [ 65533, %bb.r ], [ 65533, %bb.o ], [ 65533, %.thread122 ], [ %i.bd, %bb.p ], [ %i.ag, %bb.g ], [ %i.p, %bb.c ], [ 65533, %bb.j ], [ 65533, %bb.l ], [ 65533, %bb.n ], [ 65533, %bb.q ]
+.thread126:                                       ; preds = %bb.o, %.thread, %bb.c, %bb.j, %bb.l, %bb.n, %bb.q, %8, %9, %bb.g, %bb.p, %bb.r
+  %.6 = phi i32 [ 65533, %bb.r ], [ 65533, %bb.l ], [ 65533, %bb.j ], [ 65533, %8 ], [ %i.ag, %bb.g ], [ %i.bd, %bb.p ], [ 65533, %bb.o ], [ 65533, %9 ], [ 65533, %bb.q ], [ %i.p, %bb.c ], [ 65533, %bb.n ], [ 65533, %.thread ]
   ret i32 %.6
 }
 

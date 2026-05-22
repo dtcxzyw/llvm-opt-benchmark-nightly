@@ -201,45 +201,48 @@ bb.d:                                             ; preds = %._crit_edge.thread,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZNK10duckdb_re29CharClass8ContainsEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(20) %0, i32 noundef %1) local_unnamed_addr #11 align 2 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !73
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %4 = load i32, ptr %3, align 8, !tbaa !72
-  br label %.outer
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = load i32, ptr %i.a, align 8, !tbaa !72     ; 2 uses
+  %3 = icmp sgt i32 %2, 0
+  br i1 %3, label %.outer, label %bb.e
 
-.outer:                                           ; preds = %bb.d, %bb.a
-  %.019.ph = phi ptr [ %9, %bb.d ], [ %2, %bb.a ] ; 2 uses
-  %.016.ph = phi i32 [ %10, %bb.d ], [ %4, %bb.a ]
-  br label %5
+.outer:                                           ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = load ptr, ptr %4, align 8, !tbaa !73
+  br label %bb.b
 
-5:                                                ; preds = %.outer, %bb.c
-  %.016 = phi i32 [ %i.b, %bb.c ], [ %.016.ph, %.outer ] ; 3 uses
-  %6 = icmp sgt i32 %.016, 0                      ; 2 uses
-  br i1 %6, label %bb.b, label %bb.e
-
-bb.b:                                             ; preds = %5
-  %i.b = lshr i32 %.016, 1                        ; 3 uses
+bb.b:                                             ; preds = %.outer, %bb.d
+  %.01624 = phi i32 [ %.218, %bb.d ], [ %2, %.outer ] ; 2 uses
+  %.01923 = phi ptr [ %.221, %bb.d ], [ %5, %.outer ] ; 3 uses
+  %i.b = lshr i32 %.01624, 1                      ; 3 uses
   %i.c = zext nneg i32 %i.b to i64
-  %i.d = getelementptr inbounds nuw [8 x i8], ptr %.019.ph, i64 %i.c ; 2 uses
+  %i.d = getelementptr inbounds nuw [8 x i8], ptr %.01923, i64 %i.c ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !137
   %i.g = icmp slt i32 %i.f, %1
-  br i1 %i.g, label %bb.d, label %bb.c
+  br i1 %i.g, label %6, label %bb.c
+
+6:                                                ; preds = %bb.b
+  %7 = add nuw nsw i32 %i.b, 1                    ; 2 uses
+  %8 = zext nneg i32 %7 to i64
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %.01923, i64 %8
+  %10 = sub nsw i32 %.01624, %7
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.h = load i32, ptr %i.d, align 4, !tbaa !140
   %i.i = icmp slt i32 %1, %i.h
-  br i1 %i.i, label %5, label %bb.e, !llvm.loop !164
+  br i1 %i.i, label %bb.d, label %bb.e
 
-bb.d:                                             ; preds = %bb.b
-  %7 = add nuw nsw i32 %i.b, 1                    ; 2 uses
-  %8 = zext nneg i32 %7 to i64
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %.019.ph, i64 %8
-  %10 = sub nsw i32 %.016, %7
-  br label %.outer, !llvm.loop !164
+bb.d:                                             ; preds = %bb.c, %6
+  %.221 = phi ptr [ %9, %6 ], [ %.01923, %bb.c ]
+  %.218 = phi i32 [ %10, %6 ], [ %i.b, %bb.c ]    ; 2 uses
+  %11 = icmp sgt i32 %.218, 0
+  br i1 %11, label %bb.b, label %bb.e, !llvm.loop !164
 
-bb.e:                                             ; preds = %bb.c, %5
-  ret i1 %6
+bb.e:                                             ; preds = %bb.d, %bb.c, %bb.a
+  %.lcssa = phi i1 [ false, %bb.a ], [ true, %bb.c ], [ false, %bb.d ]
+  ret i1 %.lcssa
 }
 
 ; Function Attrs: mustprogress uwtable

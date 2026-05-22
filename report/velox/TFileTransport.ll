@@ -1,4 +1,4 @@
-inline.NumInlined: 729
+inline.NumInlined: 730
 inline.NumDeleted: 337
 begin_hunk_0_@_ZN6apache6thrift9transport14TFileTransport16swapEventBuffersEPKNSt6chrono10time_pointINS3_3_V212steady_clockENS3_8durationIlSt5ratioILl1ELl1000000000EEEEEE:bb.a
   %i.u = load ptr, ptr %i.e, align 8, !tbaa !101  ; 2 uses
@@ -201,15 +201,15 @@ bb.q:                                             ; preds = %bb.e, %_ZN6apache6t
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 6 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.j, i64 24
-  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 10 uses
+  %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 12 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 216 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 84
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 200
   br label %.backedge141
 
-.backedge141:                                     ; preds = %.backedge141.backedge, %bb.q
-  %.060 = phi i32 [ 0, %bb.q ], [ %.060.be, %.backedge141.backedge ] ; 2 uses
-  %.2 = phi i8 [ %.1, %bb.q ], [ %.2.be, %.backedge141.backedge ] ; 3 uses
+.backedge141:                                     ; preds = %.backedge146.backedge, %bb.q
+  %.060 = phi i32 [ 0, %bb.q ], [ %.060.be, %.backedge146.backedge ] ; 2 uses
+  %.2 = phi i8 [ %.1, %bb.q ], [ %.2.be, %.backedge146.backedge ] ; 3 uses
   %i.bq = load atomic i8, ptr %i.az seq_cst, align 8, !range !54, !noundef !55
   %i.br = trunc nuw i8 %i.bq to i1
   br i1 %i.br, label %bb.r, label %bb.x
@@ -579,7 +579,7 @@ bb.av:                                            ; preds = %.sink.split, %bb.x
   %.1070 = phi i32 [ %.060, %bb.x ], [ %.161, %.sink.split ] ; 5 uses
   %.11 = phi i8 [ %.2, %bb.x ], [ %.3, %.sink.split ]
   %i.gx = trunc nuw i8 %.11 to i1
-  br i1 %i.gx, label %.backedge141.backedge, label %bb.aw
+  br i1 %i.gx, label %.backedge146.backedge, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.gy = load ptr, ptr %i.bm, align 8, !tbaa !7
@@ -587,27 +587,22 @@ bb.aw:                                            ; preds = %bb.av
   %i.ha = load ptr, ptr %i.gz, align 8
   call void %i.ha(ptr noundef nonnull align 8 dereferenceable(24) %i.bm), !inline_history !150
   %i.hb = load atomic i8, ptr %i.bn seq_cst, align 8, !range !54, !noundef !55
-  %i.hc = trunc nuw i8 %i.hb to i1                ; 2 uses
-  br i1 %i.hc, label %bb.ax, label %2
+  %i.hc = trunc nuw i8 %i.hb to i1                ; 3 uses
+  br i1 %i.hc, label %bb.ax, label %bb.ay
 
 bb.ax:                                            ; preds = %bb.aw
   %i.hd = load ptr, ptr %i.ba, align 8, !tbaa !101
   %i.he = getelementptr inbounds nuw i8, ptr %i.hd, i64 4
   %i.hf = load i32, ptr %i.he, align 4, !tbaa !151
   %i.hg = icmp eq i32 %i.hf, 0
-  br i1 %i.hg, label %2, label %bb.ay, !llvm.loop !172
+  br i1 %i.hg, label %bb.ay, label %.critedge, !llvm.loop !172
 
-2:                                                ; preds = %bb.ax, %bb.aw
-  br label %bb.ay
-
-bb.ay:                                            ; preds = %2, %bb.ax
-  %cond = phi i1 [ true, %2 ], [ false, %bb.ax ]
-  %.156 = phi i1 [ %i.hc, %2 ], [ false, %bb.ax ] ; 2 uses
+bb.ay:                                            ; preds = %bb.aw, %bb.ax
   %i.hh = load ptr, ptr %i.bm, align 8, !tbaa !7
   %i.hi = getelementptr inbounds nuw i8, ptr %i.hh, i64 40
   %i.hj = load ptr, ptr %i.hi, align 8
   invoke void %i.hj(ptr noundef nonnull align 8 dereferenceable(24) %i.bm)
-          to label %_ZN6apache6thrift11concurrency5GuardD2Ev.exit unwind label %bb.az
+          to label %bb.ba unwind label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
   %i.hk = landingpad { ptr, i32 }
@@ -616,25 +611,22 @@ bb.az:                                            ; preds = %bb.ay
   call void @__clang_call_terminate(ptr %i.hl) #35
   unreachable
 
-_ZN6apache6thrift11concurrency5GuardD2Ev.exit:    ; preds = %bb.ay
-  br i1 %cond, label %bb.ba, label %.backedge141.backedge
-
-.backedge141.backedge:                            ; preds = %_ZN6apache6thrift11concurrency5GuardD2Ev.exit, %bb.bb, %bb.bd, %bb.be, %bb.bg, %bb.av
-  %.060.be = phi i32 [ %.1070, %bb.av ], [ %.1070, %_ZN6apache6thrift11concurrency5GuardD2Ev.exit ], [ %.1070, %bb.bb ], [ 0, %bb.be ], [ 0, %bb.bd ], [ 0, %bb.bg ]
-  %.2.be = phi i8 [ 1, %bb.av ], [ 0, %_ZN6apache6thrift11concurrency5GuardD2Ev.exit ], [ 0, %bb.bb ], [ 0, %bb.be ], [ 0, %bb.bd ], [ 0, %bb.bg ]
-  br label %.backedge141, !llvm.loop !172
-
-bb.ba:                                            ; preds = %_ZN6apache6thrift11concurrency5GuardD2Ev.exit
+bb.ba:                                            ; preds = %bb.ay
   %i.hm = load i32, ptr %i.bo, align 4
   %i.hn = icmp ugt i32 %.1070, %i.hm
-  %or.cond = select i1 %.156, i1 true, i1 %i.hn
+  %or.cond = select i1 %i.hc, i1 true, i1 %i.hn
   br i1 %or.cond, label %bb.be, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ho = call i64 @_ZNSt6chrono3_V212steady_clock3nowEv() #30
   %.sroa.0.0.copyload.i.i.i = load i64, ptr %1, align 8, !tbaa !49
   %i.hp = icmp slt i64 %.sroa.0.0.copyload.i.i.i, %i.ho
-  br i1 %i.hp, label %bb.bc, label %.backedge141.backedge
+  br i1 %i.hp, label %bb.bc, label %.backedge146.backedge
+
+.backedge146.backedge:                            ; preds = %bb.bb, %bb.bd, %bb.be, %bb.bg, %.critedge, %bb.av
+  %.060.be = phi i32 [ %.1070, %bb.av ], [ 0, %bb.bg ], [ %.1070, %bb.bb ], [ 0, %bb.be ], [ 0, %bb.bd ], [ %.1070, %.critedge ]
+  %.2.be = phi i8 [ 1, %bb.av ], [ 0, %bb.bg ], [ 0, %bb.bb ], [ 0, %bb.be ], [ 0, %bb.bd ], [ 0, %.critedge ]
+  br label %.backedge141, !llvm.loop !172
 
 bb.bc:                                            ; preds = %bb.bb
   %.not91 = icmp eq i32 %.1070, 0
@@ -647,7 +639,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.ht = mul nuw nsw i64 %i.hs, 1000
   %i.hu = add nsw i64 %i.ht, %i.hq
   store i64 %i.hu, ptr %1, align 8, !tbaa !49
-  br label %.backedge141.backedge
+  br label %.backedge146.backedge
 
 bb.be:                                            ; preds = %bb.ba, %bb.bc
   %i.hv = load i32, ptr %i.k, align 8, !tbaa !51
@@ -658,7 +650,7 @@ bb.be:                                            ; preds = %bb.ba, %bb.bc
   %i.ia = mul nuw nsw i64 %i.hz, 1000
   %i.ib = add nsw i64 %i.ia, %i.hx
   store i64 %i.ib, ptr %1, align 8, !tbaa !49
-  br i1 %.156, label %bb.bf, label %.backedge141.backedge
+  br i1 %i.hc, label %bb.bf, label %.backedge146.backedge
 
 bb.bf:                                            ; preds = %bb.be
   %i.ic = load ptr, ptr %i.bm, align 8, !tbaa !7
@@ -674,7 +666,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 40
   %i.ih = load ptr, ptr %i.ig, align 8
   invoke void %i.ih(ptr noundef nonnull align 8 dereferenceable(24) %i.bm)
-          to label %.backedge141.backedge unwind label %bb.bh
+          to label %.backedge146.backedge unwind label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
   %i.ii = landingpad { ptr, i32 }
@@ -690,9 +682,23 @@ bb.bi:                                            ; preds = %bb.bf
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 40
   %i.in = load ptr, ptr %i.im, align 8
   invoke void %i.in(ptr noundef nonnull align 8 dereferenceable(24) %i.bm)
-          to label %_ZN6apache6thrift11concurrency5GuardD2Ev.exit105 unwind label %bb.bj
+          to label %_ZN6apache6thrift11concurrency5GuardD2Ev.exit105 unwind label %2
 
-bb.bj:                                            ; preds = %bb.bi
+2:                                                ; preds = %bb.bi
+  %3 = landingpad { ptr, i32 }
+          catch ptr null
+  %4 = extractvalue { ptr, i32 } %3, 0
+  call void @__clang_call_terminate(ptr %4) #35
+  unreachable
+
+.critedge:                                        ; preds = %bb.ax
+  %5 = load ptr, ptr %i.bm, align 8, !tbaa !7
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %7 = load ptr, ptr %6, align 8
+  invoke void %7(ptr noundef nonnull align 8 dereferenceable(24) %i.bm)
+          to label %.backedge146.backedge unwind label %bb.bj
+
+bb.bj:                                            ; preds = %.critedge
   %i.io = landingpad { ptr, i32 }
           catch ptr null
   %i.ip = extractvalue { ptr, i32 } %i.io, 0
