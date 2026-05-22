@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.r
 
 .lr.ph61:                                         ; preds = %.preheader, %.loopexit
-  %storemerge60 = phi i64 [ %i.bf, %.loopexit ], [ 0, %.preheader ] ; 15 uses
+  %storemerge60 = phi i64 [ %i.bf, %.loopexit ], [ 0, %.preheader ] ; 13 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 %storemerge60
   %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
   %i.f = zext i8 %i.e to i32                      ; 3 uses
@@ -269,16 +269,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.ab = sub i64 %2, %storemerge60
   %i.ac = icmp ult i64 %i.ab, 3
-  br i1 %i.ac, label %_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit, label %.preheader.i37
-
-.preheader.i37:                                   ; preds = %bb.j
-  %3 = add nuw i64 %storemerge60, 1               ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 %3
-  %5 = load i8, ptr %4, align 1, !tbaa !10
-  %.not.i38 = icmp slt i8 %5, -64
-  %6 = add i64 %storemerge60, 2
-  %spec.select56 = select i1 %.not.i38, i64 %6, i64 %3
-  br label %_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit
+  br i1 %i.ac, label %_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit, label %bb.m
 
 bb.k:                                             ; preds = %bb.i
   %i.ad = and i32 %i.f, 248
@@ -297,17 +288,19 @@ bb.l:                                             ; preds = %bb.k
   %.not.i41 = icmp slt i8 %i.aj, -64
   br i1 %.not.i41, label %bb.m, label %_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit
 
-bb.m:                                             ; preds = %.preheader.i40
-  %i.ak = add i64 %storemerge60, 2                ; 2 uses
+bb.m:                                             ; preds = %.preheader.i40, %bb.j
+  %.sink71 = phi i64 [ 1, %bb.j ], [ 2, %.preheader.i40 ]
+  %.sink69 = phi i64 [ 2, %bb.j ], [ 3, %.preheader.i40 ]
+  %i.ak = add i64 %storemerge60, %.sink71         ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 %i.ak
   %i.am = load i8, ptr %i.al, align 1, !tbaa !10
   %.not.1.i44 = icmp slt i8 %i.am, -64
-  %i.an = add i64 %storemerge60, 3
+  %i.an = add i64 %storemerge60, %.sink69
   %spec.select57 = select i1 %.not.1.i44, i64 %i.an, i64 %i.ak
   br label %_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit
 
-_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit: ; preds = %bb.m, %.preheader.i37, %bb.h, %bb.l, %.preheader.i40, %bb.j
-  %.053 = phi i64 [ %spec.select56, %.preheader.i37 ], [ %spec.select57, %bb.m ], [ %spec.select, %bb.h ], [ %storemerge60, %bb.l ], [ %i.ah, %.preheader.i40 ], [ %storemerge60, %bb.j ] ; 4 uses
+_ZN6duckdbL17UTF8ExtraByteLoopILi1ELi1920EEENS_11UnicodeTypeEiiRmPKcmPNS_20UnicodeInvalidReasonEPm.exit: ; preds = %bb.m, %bb.h, %bb.l, %.preheader.i40, %bb.j
+  %.053 = phi i64 [ %i.ah, %.preheader.i40 ], [ %storemerge60, %bb.j ], [ %spec.select, %bb.h ], [ %storemerge60, %bb.l ], [ %spec.select57, %bb.m ] ; 4 uses
   %sext = shl i64 %storemerge60, 32
   %i.ao = ashr exact i64 %sext, 32                ; 2 uses
   %.not58 = icmp ugt i64 %i.ao, %.053

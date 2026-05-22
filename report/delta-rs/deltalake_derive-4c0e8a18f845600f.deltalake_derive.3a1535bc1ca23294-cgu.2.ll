@@ -201,10 +201,10 @@ bb.a:
   %i.k = alloca [80 x i8], align 8                ; 7 uses
   %i.l = alloca [48 x i8], align 8                ; 2 uses
   %i.m = alloca [24 x i8], align 8                ; 4 uses
-  %i.n = alloca [24 x i8], align 8                ; 5 uses
+  %i.n = alloca [24 x i8], align 8                ; 4 uses
   %i.o = alloca [24 x i8], align 8                ; 2 uses
   %i.p = alloca [24 x i8], align 8                ; 4 uses
-  %i.q = alloca [24 x i8], align 8                ; 5 uses
+  %i.q = alloca [24 x i8], align 8                ; 4 uses
   %i.r = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %2, ptr %i.r, align 8
   %i.s = load ptr, ptr %2, align 8
@@ -234,7 +234,7 @@ bb.d:                                             ; preds = %bb.k, %bb.g, %bb.e
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.q) #6
           to label %bb.az unwind label %bb.aj
 
-bb.e:                                             ; preds = %bb.ay, %3, %bb.c
+bb.e:                                             ; preds = %bb.ay, %bb.c
   %i.y = landingpad { ptr, i32 }
           cleanup
   br label %bb.d
@@ -437,17 +437,13 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %bb.aq
   %i.ba = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECsl1mHGn7pXMx_12convert_case(ptr nonnull align 8 %i.ba)
-          to label %3 unwind label %bb.l
+          to label %bb.ay unwind label %bb.l
 
-3:                                                ; preds = %bb.as
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentEBI_(ptr nonnull align 8 %i.n)
-          to label %bb.at unwind label %bb.e
-
-bb.at:                                            ; preds = %3
+bb.at:                                            ; preds = %bb.ay
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.q)
   br label %bb.au
 
-bb.au:                                            ; preds = %4, %bb.at, %bb.b
+bb.au:                                            ; preds = %bb.at, %bb.b
   ret void
 
 bb.av:                                            ; preds = %bb.ag
@@ -465,13 +461,9 @@ bb.ax:                                            ; preds = %bb.aw
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.ao) #6
           to label %bb.k unwind label %bb.aj
 
-bb.ay:                                            ; preds = %bb.q
+bb.ay:                                            ; preds = %bb.q, %bb.as
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro25IdentEBI_(ptr nonnull align 8 %i.n)
-          to label %4 unwind label %bb.e
-
-4:                                                ; preds = %bb.ay
-  call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.q)
-  br label %bb.au
+          to label %bb.at unwind label %bb.e
 
 bb.az:                                            ; preds = %bb.d
   resume { ptr, i32 } %.pn12
@@ -492,7 +484,7 @@ bb.a:
   %i.j = alloca [1 x i8], align 1                 ; 2 uses
   %i.k = alloca [32 x i8], align 8                ; 4 uses
   %i.l = alloca [80 x i8], align 8                ; 4 uses
-  %i.m = alloca [80 x i8], align 8                ; 6 uses
+  %i.m = alloca [80 x i8], align 8                ; 5 uses
   %i.n = alloca [8 x i8], align 8                 ; 2 uses
   %i.o = alloca [8 x i8], align 8                 ; 2 uses
   %i.p = load ptr, ptr %2, align 8
@@ -539,7 +531,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.i, %bb.d
   store i64 -9223372036854775806, ptr %0, align 8
-  br label %3
+  br label %bb.z
 
 bb.g:                                             ; preds = %bb.n, %bb.h
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.n ], [ %i.af, %bb.h ]
@@ -569,7 +561,7 @@ bb.l:                                             ; preds = %bb.k
   store i64 -9223372036854775807, ptr %0, align 8
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.24.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(24) %i.aj, i64 24, i1 false)
-  br label %3
+  br label %bb.z
 
 bb.m:                                             ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.k, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false)
@@ -659,11 +651,11 @@ bb.y:                                             ; preds = %bb.w
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsbjGuDcEILED_11proc_macro211TokenStreamECsBGNUbrdbJ0_5quote(ptr nonnull align 8 %i.k)
           to label %bb.z unwind label %bb.h
 
-bb.z:                                             ; preds = %bb.y
+bb.z:                                             ; preds = %bb.y, %bb.f, %bb.l
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs4ZaLwAtrTbk_16deltalake_derive15FieldAttributesEBI_(ptr nonnull align 8 %i.m)
   br label %bb.aa
 
-bb.aa:                                            ; preds = %3, %bb.z, %bb.c
+bb.aa:                                            ; preds = %bb.z, %bb.c
   ret void
 
 bb.ab:                                            ; preds = %bb.x
@@ -681,10 +673,6 @@ bb.ad:                                            ; preds = %bb.ab, %bb.t, %bb.n
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #7
   unreachable
-
-3:                                                ; preds = %bb.l, %bb.f
-  call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCs4ZaLwAtrTbk_16deltalake_derive15FieldAttributesEBI_(ptr nonnull align 8 %i.m)
-  br label %bb.aa
 
 bb.ae:                                            ; preds = %bb.g
   resume { ptr, i32 } %.pn.pn.pn
@@ -1088,7 +1076,7 @@ bb.a:
   %i.ci = alloca [32 x i8], align 8               ; 2 uses
   %i.cj = alloca [24 x i8], align 8               ; 4 uses
   %i.ck = alloca [240 x i8], align 8              ; 4 uses
-  %i.cl = alloca [240 x i8], align 8              ; 7 uses
+  %i.cl = alloca [240 x i8], align 8              ; 6 uses
   call void @_RINvCs7nQiqFc7Txl_3syn5parseNtNtB2_6derive11DeriveInputECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([240 x i8]) align 8 %i.ck, i32 %0)
   %i.cm = load i64, ptr %i.ck, align 8
   %i.cn = icmp eq i64 %i.cm, 5
@@ -1149,7 +1137,7 @@ bb.k:                                             ; preds = %bb.j
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecRNtNtCs7nQiqFc7Txl_3syn4data5FieldEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ch) #6
           to label %bb.h unwind label %bb.kq
 
-bb.l:                                             ; preds = %.invoke39, %bb.n, %.noexc14, %.noexc13, %.noexc, %bb.m, %bb.ku, %bb.ks, %bb.km, %bb.er, %bb.k
+bb.l:                                             ; preds = %.sink.split.i, %bb.n, %.noexc14, %.noexc13, %.noexc, %bb.m, %bb.ku, %bb.ks, %bb.km, %bb.er, %bb.k
   %i.db = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -1269,7 +1257,7 @@ bb.r:                                             ; preds = %_RNvCs4ZaLwAtrTbk_1
 bb.s:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ai, ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 24, i1 false), !noalias !6
   invoke void @_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtCs7nQiqFc7Txl_3syn5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1q_EE13from_residualB1u_(ptr nonnull sret([32 x i8]) align 8 %i.cf, ptr nonnull align 8 %i.ai, ptr nonnull align 8 @83)
-          to label %.invoke39 unwind label %bb.q
+          to label %.sink.split.i unwind label %bb.q
 
 bb.t:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.br, ptr noundef nonnull align 8 dereferenceable(24) %i.dw, i64 24, i1 false), !noalias !6
@@ -1672,7 +1660,11 @@ bb.en:                                            ; preds = %bb.em
 bb.eo:                                            ; preds = %bb.en
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.cf, ptr noundef nonnull align 8 dereferenceable(32) %i.bo, i64 32, i1 false)
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsbjGuDcEILED_11proc_macro211TokenStreamEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.br)
-          to label %.invoke39 unwind label %bb.q, !noalias !6
+          to label %.sink.split.i unwind label %bb.q, !noalias !6
+
+.sink.split.i:                                    ; preds = %bb.eo, %bb.s
+  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsbjGuDcEILED_11proc_macro211TokenStreamEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.bu)
+          to label %bb.eq unwind label %bb.l
 
 bb.ep:                                            ; preds = %bb.ej, %bb.ds, %bb.de, %bb.cv, %bb.cr, %bb.ck, %bb.bz, %bb.bu, %bb.au, %bb.ap, %bb.ab, %bb.x, %bb.u, %bb.p
   %i.es = landingpad { ptr, i32 }
@@ -1680,11 +1672,7 @@ bb.ep:                                            ; preds = %bb.ej, %bb.ds, %bb.
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #7
   unreachable
 
-.invoke39:                                        ; preds = %bb.s, %bb.eo
-  invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtCsbjGuDcEILED_11proc_macro211TokenStreamEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.bu)
-          to label %bb.eq unwind label %bb.l
-
-bb.eq:                                            ; preds = %.invoke39, %bb.n
+bb.eq:                                            ; preds = %bb.n, %.sink.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aj)
@@ -2087,12 +2075,13 @@ bb.kn:                                            ; preds = %bb.km
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecRNtNtCs7nQiqFc7Txl_3syn4data5FieldEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ch)
           to label %bb.ko unwind label %bb.i
 
-bb.ko:                                            ; preds = %bb.kn
+bb.ko:                                            ; preds = %bb.kn, %bb.kt
+  %.sroa.0.0.ph = phi i32 [ %.sroa.0.1, %bb.kt ], [ %i.gr, %bb.kn ]
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs7nQiqFc7Txl_3syn6derive11DeriveInputECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.cl)
   br label %bb.kp
 
-bb.kp:                                            ; preds = %bb.ky, %1, %bb.ko
-  %.sroa.0.0 = phi i32 [ %i.gz, %bb.ky ], [ %.sroa.0.1, %1 ], [ %i.gr, %bb.ko ]
+bb.kp:                                            ; preds = %bb.ko, %bb.ky
+  %.sroa.0.0 = phi i32 [ %i.gz, %bb.ky ], [ %.sroa.0.0.ph, %bb.ko ]
   ret i32 %.sroa.0.0
 
 bb.kq:                                            ; preds = %bb.kw, %bb.kg, %bb.kd, %.body33, %.body29, %.body, %bb.h
@@ -2112,15 +2101,11 @@ bb.ks:                                            ; preds = %bb.kr
 bb.kt:                                            ; preds = %bb.ku, %bb.ks
   %.sroa.0.1 = phi i32 [ %i.gt, %bb.ks ], [ %i.gu, %bb.ku ]
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecRNtNtCs7nQiqFc7Txl_3syn4data5FieldEECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ch)
-          to label %1 unwind label %bb.i
+          to label %bb.ko unwind label %bb.i
 
 bb.ku:                                            ; preds = %bb.er
   %i.gu = invoke i32 @_RNvXs1_NtCsbvkFyIu7lgC_4core7convertNtCsbjGuDcEILED_11proc_macro211TokenStreamINtB5_4IntoNtCsjJ0p09o2jmV_10proc_macro11TokenStreamE4intoCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.ce, ptr nonnull align 8 @46)
           to label %bb.kt unwind label %bb.l
-
-1:                                                ; preds = %bb.kt
-  call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs7nQiqFc7Txl_3syn6derive11DeriveInputECs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.cl)
-  br label %bb.kp
 
 .invoke:                                          ; preds = %bb.e, %bb.g
   %.sink40 = phi { ptr, ptr } [ %i.cw, %bb.g ], [ %i.ct, %bb.e ] ; 2 uses
@@ -2155,8 +2140,8 @@ bb.ky:                                            ; preds = %bb.kx
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RNvCs4ZaLwAtrTbk_16deltalake_derive24extract_field_attributes(ptr noalias nonnull align 8 %0, ptr align 8 %1, i64 %2) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [24 x i8], align 8                ; 2 uses
-  %i.b = alloca [24 x i8], align 8                ; 2 uses
+  %i.a = alloca [24 x i8], align 8
+  %i.b = alloca [24 x i8], align 8
   %.sroa.06 = alloca [72 x i8], align 8           ; 4 uses
   %i.c = alloca [24 x i8], align 8                ; 2 uses
   %i.d = alloca [24 x i8], align 8                ; 3 uses
@@ -2326,15 +2311,13 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.av = load i64, ptr %i.w, align 8
   %.not12 = icmp eq i64 %i.av, -9223372036854775808
-  br i1 %.not12, label %bb.x, label %3
+  br i1 %.not12, label %bb.x, label %.invoke
 
-3:                                                ; preds = %bb.w
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.w, i64 24, i1 false)
-  br label %.invoke
-
-.invoke:                                          ; preds = %bb.aq, %3
-  %i.aw = phi ptr [ %i.a, %3 ], [ %i.b, %bb.aq ]
-  %i.ax = phi ptr [ @94, %3 ], [ @92, %bb.aq ]
+.invoke:                                          ; preds = %bb.w, %bb.aq
+  %.sink172 = phi ptr [ %i.bu, %bb.aq ], [ %i.w, %bb.w ]
+  %i.aw = phi ptr [ %i.b, %bb.aq ], [ %i.a, %bb.w ] ; 2 uses
+  %i.ax = phi ptr [ @92, %bb.aq ], [ @94, %bb.w ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %.sink172, i64 24, i1 false)
   invoke void @_RNvXsq_NtCsbvkFyIu7lgC_4core6resultINtB5_6ResultNtCs4ZaLwAtrTbk_16deltalake_derive15FieldAttributesNtNtCs7nQiqFc7Txl_3syn5error5ErrorEINtNtNtB7_3ops9try_trait12FromResidualIBy_NtNtB7_7convert10InfallibleB1z_EE13from_residualBM_(ptr nonnull sret([80 x i8]) align 8 %0, ptr nonnull align 8 %i.aw, ptr nonnull align 8 %i.ax)
           to label %bb.ca unwind label %.loopexit.split-lp57
 
@@ -2431,7 +2414,6 @@ bb.ap:                                            ; preds = %bb.ao
 
 bb.aq:                                            ; preds = %bb.ap
   %i.bu = getelementptr inbounds nuw i8, ptr %i.s, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.bu, i64 24, i1 false)
   br label %.invoke
 
 bb.ar:                                            ; preds = %bb.ap

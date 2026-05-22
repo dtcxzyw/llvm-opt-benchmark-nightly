@@ -38,7 +38,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define void @_ZN4absl12lts_2025051219str_format_internal11FILERawSink5WriteESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 captures(none) dereferenceable(24) %0, i64 %1, ptr readonly captures(none) %2) local_unnamed_addr #2 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = icmp eq i64 %1, 0
   br i1 %i.b, label %.critedge, label %.lr.ph
 
@@ -47,8 +47,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit
-  %.sroa.5.025 = phi ptr [ %2, %.lr.ph ], [ %.sroa.5.118, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit ] ; 6 uses
-  %.sroa.09.024 = phi i64 [ %1, %.lr.ph ], [ %.sroa.09.116, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit ] ; 6 uses
+  %.sroa.5.025 = phi ptr [ %2, %.lr.ph ], [ %.sroa.5.118, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit ] ; 5 uses
+  %.sroa.09.024 = phi i64 [ %1, %.lr.ph ], [ %.sroa.09.116, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit ] ; 5 uses
   %i.d = load i32, ptr %i.a, align 8, !tbaa !15
   %.not = icmp eq i32 %i.d, 0
   br i1 %.not, label %bb.c, label %.critedge
@@ -72,14 +72,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.m = load i32, ptr %i.e, align 4, !tbaa !3    ; 2 uses
-  switch i32 %i.m, label %3 [
+  switch i32 %i.m, label %bb.g [
     i32 4, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit
     i32 0, label %bb.f
   ]
-
-3:                                                ; preds = %bb.e
-  store i32 %i.m, ptr %i.a, align 8, !tbaa !15
-  br label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   %i.n = load ptr, ptr %0, align 8, !tbaa !18
@@ -87,13 +83,14 @@ bb.f:                                             ; preds = %bb.e
   %.not8 = icmp eq i32 %i.o, 0
   br i1 %.not8, label %.thread, label %bb.g, !llvm.loop !20
 
-bb.g:                                             ; preds = %bb.f
-  store i32 9, ptr %i.a, align 8, !tbaa !15
+bb.g:                                             ; preds = %bb.f, %bb.e
+  %.sink = phi i32 [ %i.m, %bb.e ], [ 9, %bb.f ]
+  store i32 %.sink, ptr %i.a, align 8, !tbaa !15
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.d, %3, %bb.g
-  %.sroa.09.1.ph = phi i64 [ %i.l, %bb.d ], [ %.sroa.09.024, %bb.g ], [ %.sroa.09.024, %3 ] ; 2 uses
-  %.sroa.5.1.ph = phi ptr [ %i.k, %bb.d ], [ %.sroa.5.025, %bb.g ], [ %.sroa.5.025, %3 ] ; 2 uses
+bb.h:                                             ; preds = %bb.g, %bb.d
+  %.sroa.09.1.ph = phi i64 [ %i.l, %bb.d ], [ %.sroa.09.024, %bb.g ] ; 2 uses
+  %.sroa.5.1.ph = phi ptr [ %i.k, %bb.d ], [ %.sroa.5.025, %bb.g ] ; 2 uses
   %.pr = load i32, ptr %i.e, align 4, !tbaa !3
   %.not.i = icmp eq i32 %.pr, 0
   br i1 %.not.i, label %.thread, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_115ClearErrnoGuardD2Ev.exit

@@ -201,7 +201,7 @@ define hidden { i64, i8 } @_ZN6hermes6parser10JSONParser10parseValueEv(ptr nound
 bb.a:
   %1 = alloca %"class.llvh::Twine", align 8       ; 6 uses
   %2 = alloca %"class.llvh::Twine", align 8       ; 6 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 8 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.c = load i32, ptr %i.b, align 8, !tbaa !181
   switch i32 %i.c, label %bb.l [
@@ -210,7 +210,7 @@ bb.a:
     i32 111, label %bb.e
     i32 49, label %bb.h
     i32 55, label %bb.i
-    i32 14, label %3
+    i32 14, label %.sink.split
     i32 15, label %bb.j
     i32 16, label %bb.k
   ]
@@ -280,17 +280,11 @@ bb.i:                                             ; preds = %bb.a
   %i.ah = extractvalue { i64, i8 } %i.af, 1
   br label %bb.m
 
-3:                                                ; preds = %bb.a
-  %4 = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.a, i32 noundef 0) #17 ; 0 uses
-  br label %bb.m
-
 bb.j:                                             ; preds = %bb.a
-  %5 = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.a, i32 noundef 0) #17 ; 0 uses
-  br label %bb.m
+  br label %.sink.split
 
 bb.k:                                             ; preds = %bb.a
-  %6 = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.a, i32 noundef 0) #17 ; 0 uses
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #17
@@ -309,9 +303,14 @@ bb.l:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #17
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %3, %bb.i, %bb.h, %bb.g, %bb.d, %bb.b
-  %.sroa.0.0 = phi i64 [ undef, %bb.l ], [ %i.i, %bb.b ], [ %i.z, %bb.g ], [ undef, %bb.d ], [ %i.ac, %bb.h ], [ %i.ag, %bb.i ], [ ptrtoint (ptr @_ZN6hermes6parser11JSONBoolean5true_E to i64), %3 ], [ ptrtoint (ptr @_ZN6hermes6parser11JSONBoolean6false_E to i64), %bb.j ], [ ptrtoint (ptr @_ZN6hermes6parser8JSONNull9instance_E to i64), %bb.k ]
-  %.sroa.8.0 = phi i8 [ 0, %bb.l ], [ 1, %bb.b ], [ 1, %bb.g ], [ 0, %bb.d ], [ %i.ad, %bb.h ], [ %i.ah, %bb.i ], [ 1, %3 ], [ 1, %bb.j ], [ 1, %bb.k ]
+.sink.split:                                      ; preds = %bb.a, %bb.j, %bb.k
+  %.sroa.0.0.ph = phi i64 [ ptrtoint (ptr @_ZN6hermes6parser8JSONNull9instance_E to i64), %bb.k ], [ ptrtoint (ptr @_ZN6hermes6parser11JSONBoolean6false_E to i64), %bb.j ], [ ptrtoint (ptr @_ZN6hermes6parser11JSONBoolean5true_E to i64), %bb.a ]
+  %3 = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.a, i32 noundef 0) #17 ; 0 uses
+  br label %bb.m
+
+bb.m:                                             ; preds = %.sink.split, %bb.l, %bb.i, %bb.h, %bb.g, %bb.d, %bb.b
+  %.sroa.0.0 = phi i64 [ undef, %bb.l ], [ %i.i, %bb.b ], [ %i.z, %bb.g ], [ undef, %bb.d ], [ %i.ac, %bb.h ], [ %i.ag, %bb.i ], [ %.sroa.0.0.ph, %.sink.split ]
+  %.sroa.8.0 = phi i8 [ 0, %bb.l ], [ 1, %bb.b ], [ 1, %bb.g ], [ 0, %bb.d ], [ %i.ad, %bb.h ], [ %i.ah, %bb.i ], [ 1, %.sink.split ]
   %.fca.0.insert = insertvalue { i64, i8 } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, i8 } %.fca.0.insert, i8 %.sroa.8.0, 1
   ret { i64, i8 } %.fca.1.insert

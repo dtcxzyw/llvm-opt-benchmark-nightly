@@ -201,7 +201,7 @@ PyMutex_LockFlags.exit:                           ; preds = %_PyOnceFlag_CallOnc
 
 ._crit_edge:                                      ; preds = %.lr.ph, %PyMutex_LockFlags.exit
   %.039.lcssa = phi i64 [ 0, %PyMutex_LockFlags.exit ], [ %i.ah, %.lr.ph ] ; 3 uses
-  %i.o = tail call ptr @PyTuple_New(i64 noundef %.039.lcssa) #4 ; 8 uses
+  %i.o = tail call ptr @PyTuple_New(i64 noundef %.039.lcssa) #4 ; 7 uses
   %i.p = icmp eq ptr %i.o, null
   br i1 %i.p, label %bb.d, label %.preheader64
 
@@ -382,11 +382,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bw = add nsw i32 %i.bv, -1                   ; 2 uses
   store i32 %i.bw, ptr %i.o, align 8, !tbaa !36
   %i.bx = icmp eq i32 %i.bw, 0
-  br i1 %i.bx, label %3, label %Py_XDECREF.exit
-
-3:                                                ; preds = %bb.m
-  call void @_Py_Dealloc(ptr noundef nonnull %i.o) #4
-  br label %Py_XDECREF.exit
+  br i1 %i.bx, label %bb.q, label %Py_XDECREF.exit
 
 .critedge:                                        ; preds = %bb.g, %bb.h, %.lr.ph78, %maybe_set_opcode_trace.exit.thread58, %maybe_set_opcode_trace.exit
   %i.by = getelementptr i8, ptr %.03677, i64 8
@@ -419,12 +415,13 @@ bb.p:                                             ; preds = %bb.o
   %i.ce = icmp eq i32 %i.cd, 0
   br i1 %i.ce, label %bb.q, label %Py_XDECREF.exit
 
-bb.q:                                             ; preds = %bb.p
+bb.q:                                             ; preds = %bb.p, %bb.m
+  %.4.ph = phi i32 [ -1, %bb.m ], [ %i.cb, %bb.p ]
   call void @_Py_Dealloc(ptr noundef nonnull %i.o) #4
   br label %Py_XDECREF.exit
 
-Py_XDECREF.exit:                                  ; preds = %bb.q, %bb.p, %bb.o, %3, %bb.m, %bb.l, %_PyMutex_Unlock.exit, %_PyOnceFlag_CallOnce.exit, %bb.a
-  %.4 = phi i32 [ -1, %_PyOnceFlag_CallOnce.exit ], [ -1, %bb.a ], [ -1, %_PyMutex_Unlock.exit ], [ -1, %3 ], [ -1, %bb.l ], [ -1, %bb.m ], [ %i.cb, %bb.o ], [ %i.cb, %bb.p ], [ %i.cb, %bb.q ]
+Py_XDECREF.exit:                                  ; preds = %bb.q, %bb.p, %bb.o, %bb.m, %bb.l, %_PyMutex_Unlock.exit, %_PyOnceFlag_CallOnce.exit, %bb.a
+  %.4 = phi i32 [ -1, %_PyOnceFlag_CallOnce.exit ], [ -1, %bb.a ], [ -1, %_PyMutex_Unlock.exit ], [ %i.cb, %bb.p ], [ -1, %bb.l ], [ -1, %bb.m ], [ %i.cb, %bb.o ], [ %.4.ph, %bb.q ]
   ret i32 %.4
 }
 

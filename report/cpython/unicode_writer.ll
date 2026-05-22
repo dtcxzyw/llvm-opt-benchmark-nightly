@@ -201,30 +201,26 @@ bb.c:                                             ; preds = %bb.a
   %i.f = icmp slt i64 %2, 0
   %i.g = icmp sgt i64 %2, %3
   %or.cond = or i1 %i.f, %i.g
-  br i1 %or.cond, label %4, label %bb.d
-
-4:                                                ; preds = %bb.c
-  %5 = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !16
-  %6 = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %5, ptr noundef nonnull @.str.3) #9 ; 0 uses
-  br label %bb.g
+  br i1 %or.cond, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr i8, ptr %1, i64 16
   %.val = load i64, ptr %i.h, align 8, !tbaa !32
   %i.i = icmp sgt i64 %3, %.val
-  br i1 %i.i, label %bb.e, label %bb.f
+  br i1 %i.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %7 = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !16
-  %8 = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %7, ptr noundef nonnull @.str.4) #9 ; 0 uses
+  %4 = tail call i32 @_PyUnicodeWriter_WriteSubstring(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2, i64 noundef %3)
   br label %bb.g
 
-bb.f:                                             ; preds = %bb.d
-  %9 = tail call i32 @_PyUnicodeWriter_WriteSubstring(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2, i64 noundef %3)
+bb.f:                                             ; preds = %bb.d, %bb.c
+  %.str.4.sink = phi ptr [ @.str.3, %bb.c ], [ @.str.4, %bb.d ]
+  %5 = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !16
+  %6 = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %5, ptr noundef nonnull %.str.4.sink) #9 ; 0 uses
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %4, %bb.b
-  %.0 = phi i32 [ -1, %4 ], [ -1, %bb.e ], [ %9, %bb.f ], [ -1, %bb.b ]
+bb.g:                                             ; preds = %bb.f, %bb.e, %bb.b
+  %.0 = phi i32 [ %4, %bb.e ], [ -1, %bb.b ], [ -1, %bb.f ]
   ret i32 %.0
 }
 

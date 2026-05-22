@@ -201,11 +201,7 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327:
   %i.e = getelementptr inbounds nuw i8, ptr %6, i64 4
   store i32 0, ptr %i.e, align 4
   %i.f = icmp eq i32 %1, 1                        ; 5 uses
-  br i1 %i.f, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit320.thread, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313
-
-_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit320.thread: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327
-  tail call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 4031053824, ptr nonnull inttoptr (i64 2 to ptr), i8 %.sroa.088.0.copyload.sroa.speculated, i32 noundef 8) #8
-  br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit242.4
+  br i1 %i.f, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit242.4, label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313
 
 _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327
   %.sroa.091.0.copyload = select i1 %i.c, i8 9, i8 5 ; 3 uses
@@ -253,10 +249,12 @@ _ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313: ; preds = %_ZN2v88internal7Op
   %.sroa.3.0.insert.insert = or disjoint i64 %.sroa.3.0.insert.shift, %.sroa.2.0.insert.shift
   %.sroa.2.0.insert.insert = or disjoint i64 %.sroa.3.0.insert.insert, 268435456
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 10, i64 %.sroa.2.0.insert.insert, ptr nonnull inttoptr (i64 2 to ptr), i32 noundef 8) #8
-  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 3628400640, ptr nonnull inttoptr (i64 2 to ptr), i8 10, i32 noundef 8) #8
   br label %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit242.4
 
-_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit242.4: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit320.thread, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313
+_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit242.4: ; preds = %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313
+  %.sroa.088.0.copyload.sroa.speculated.sink = phi i8 [ 10, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313 ], [ %.sroa.088.0.copyload.sroa.speculated, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327 ]
+  %.sink = phi i64 [ 3628400640, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit313 ], [ 4031053824, %_ZN2v88internal7OperandC2ENS0_8RegisterEi.exit327 ]
+  call void @_ZN2v88internal9Assembler8emit_movENS0_7OperandENS0_8RegisterEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i64 %.sink, ptr nonnull inttoptr (i64 2 to ptr), i8 %.sroa.088.0.copyload.sroa.speculated.sink, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler8emit_movENS0_8RegisterENS0_7OperandEi(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 0, i64 273088512, ptr nonnull inttoptr (i64 2 to ptr), i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler5shiftENS0_8RegisterENS0_9ImmediateEii(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 0, i64 3, i32 noundef 4, i32 noundef 8) #8
   call void @_ZN2v88internal9Assembler13arithmetic_opEhNS0_8RegisterES2_i(ptr noundef nonnull align 8 dereferenceable(408) %0, i8 noundef zeroext 43, i8 4, i8 0, i32 noundef 8) #8

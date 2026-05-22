@@ -201,11 +201,7 @@ bb.f:                                             ; preds = %bb.e
   %.val59 = load i64, ptr %i.r, align 8, !tbaa !38
   %i.s = and i64 %.val59, 268435456
   %.not50 = icmp eq i64 %i.s, 0
-  br i1 %.not50, label %3, label %bb.g
-
-3:                                                ; preds = %bb.f
-  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.23, ptr noundef nonnull @.str.24, ptr noundef nonnull %i.p) #5
-  br label %interpolation_new_impl.exit
+  br i1 %.not50, label %interpolation_new_impl.exit.sink.split, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.t = add i64 %i.f, -2                         ; 2 uses
@@ -277,11 +273,7 @@ bb.m:                                             ; preds = %_conversion_convert
   %.val58 = load i64, ptr %i.ak, align 8, !tbaa !38
   %i.al = and i64 %.val58, 268435456
   %.not54 = icmp eq i64 %i.al, 0
-  br i1 %.not54, label %4, label %bb.n
-
-4:                                                ; preds = %bb.m
-  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.22, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.24, ptr noundef nonnull %i.ai) #5
-  br label %interpolation_new_impl.exit
+  br i1 %.not54, label %interpolation_new_impl.exit.sink.split, label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %_conversion_converter.exit.thread67, %bb.g, %.thread
   %.162 = phi ptr [ @_Py_NoneStruct, %.thread ], [ @_Py_NoneStruct, %bb.g ], [ %i.v, %_conversion_converter.exit.thread67 ], [ %.061, %bb.m ] ; 3 uses
@@ -343,8 +335,14 @@ _Py_NewRef.exit16.i:                              ; preds = %bb.s, %_Py_NewRef.e
   call void @PyObject_GC_Track(ptr noundef nonnull %i.am) #5
   br label %interpolation_new_impl.exit
 
-interpolation_new_impl.exit:                      ; preds = %_Py_NewRef.exit16.i, %bb.n, %_conversion_converter.exit.thread72, %_conversion_converter.exit.thread, %bb.d, %4, %3
-  %.038 = phi ptr [ null, %_conversion_converter.exit.thread ], [ null, %4 ], [ null, %_conversion_converter.exit.thread72 ], [ null, %3 ], [ null, %bb.d ], [ null, %bb.n ], [ %i.am, %_Py_NewRef.exit16.i ]
+interpolation_new_impl.exit.sink.split:           ; preds = %bb.m, %bb.f
+  %.sink = phi ptr [ %i.p, %bb.f ], [ %i.ai, %bb.m ]
+  %.str.25.sink = phi ptr [ @.str.23, %bb.f ], [ @.str.25, %bb.m ]
+  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.22, ptr noundef nonnull %.str.25.sink, ptr noundef nonnull @.str.24, ptr noundef nonnull %.sink) #5
+  br label %interpolation_new_impl.exit
+
+interpolation_new_impl.exit:                      ; preds = %interpolation_new_impl.exit.sink.split, %_Py_NewRef.exit16.i, %bb.n, %_conversion_converter.exit.thread72, %_conversion_converter.exit.thread, %bb.d
+  %.038 = phi ptr [ null, %_conversion_converter.exit.thread ], [ null, %bb.n ], [ null, %_conversion_converter.exit.thread72 ], [ %i.am, %_Py_NewRef.exit16.i ], [ null, %bb.d ], [ null, %interpolation_new_impl.exit.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   ret ptr %.038
 }

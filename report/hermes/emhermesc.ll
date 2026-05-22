@@ -201,7 +201,7 @@ bb.a:
   %15 = alloca %"class.llvh::raw_svector_ostream", align 8 ; 9 uses
   %16 = alloca %"class.hermes::hbc::BytecodeSerializer", align 8 ; 17 uses
   %17 = alloca %"struct.std::array", align 1      ; 4 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #19, !noalias !19 ; 20 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #19, !noalias !19 ; 18 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 4 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, i8 0, i64 16, i1 false), !noalias !19
   store ptr %i.b, ptr %i.a, align 8, !tbaa !22, !noalias !19
@@ -218,11 +218,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %i.h
   %i.j = load i8, ptr %i.i, align 1, !tbaa !16
   %.not = icmp eq i8 %i.j, 0
-  br i1 %.not, label %bb.b, label %18
-
-18:                                               ; preds = %bb.a
-  %19 = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str, i64 noundef 36) #17 ; 0 uses
-  br label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit
+  br i1 %.not, label %bb.b, label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit.sink.split
 
 bb.b:                                             ; preds = %bb.a
   %.not17 = icmp eq ptr %3, null
@@ -238,11 +234,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 %i.l
   %i.n = load i8, ptr %i.m, align 1, !tbaa !16
   %.not19 = icmp eq i8 %i.n, 0
-  br i1 %.not19, label %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EEaSEOS4_.exit, label %20
-
-20:                                               ; preds = %bb.d
-  %21 = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.1, i64 noundef 39) #17 ; 0 uses
-  br label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit
+  br i1 %.not19, label %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EEaSEOS4_.exit, label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit.sink.split
 
 _ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EEaSEOS4_.exit: ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #17
@@ -621,8 +613,14 @@ _ZNKSt14default_deleteI13CompileResultEclEPS0_.exit.i: ; preds = %_ZN4llvh11Smal
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.049.0, i64 noundef 48) #18
   br label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit
 
-_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit: ; preds = %18, %20, %_ZNSt4pairISt10unique_ptrIN6hermes3hbc17BCProviderFromSrcESt14default_deleteIS3_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit, %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EED2Ev.exit33, %_ZNKSt14default_deleteI13CompileResultEclEPS0_.exit.i
-  %.274 = phi ptr [ %i.a, %_ZNKSt14default_deleteI13CompileResultEclEPS0_.exit.i ], [ %i.a, %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EED2Ev.exit33 ], [ %.sroa.049.1, %_ZNSt4pairISt10unique_ptrIN6hermes3hbc17BCProviderFromSrcESt14default_deleteIS3_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit ], [ %i.a, %20 ], [ %i.a, %18 ]
+_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit.sink.split: ; preds = %bb.d, %bb.a
+  %.sink = phi i64 [ 36, %bb.a ], [ 39, %bb.d ]
+  %.str.sink = phi ptr [ @.str, %bb.a ], [ @.str.1, %bb.d ]
+  %18 = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 noundef 0, i64 noundef 0, ptr noundef nonnull %.str.sink, i64 noundef %.sink) #17 ; 0 uses
+  br label %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit
+
+_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit: ; preds = %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit.sink.split, %_ZNSt4pairISt10unique_ptrIN6hermes3hbc17BCProviderFromSrcESt14default_deleteIS3_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit, %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EED2Ev.exit33, %_ZNKSt14default_deleteI13CompileResultEclEPS0_.exit.i
+  %.274 = phi ptr [ %i.a, %_ZNKSt14default_deleteI13CompileResultEclEPS0_.exit.i ], [ %i.a, %_ZNSt10unique_ptrIN6hermes9SourceMapESt14default_deleteIS1_EED2Ev.exit33 ], [ %.sroa.049.1, %_ZNSt4pairISt10unique_ptrIN6hermes3hbc17BCProviderFromSrcESt14default_deleteIS3_EENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEED2Ev.exit ], [ %i.a, %_ZNSt10unique_ptrI13CompileResultSt14default_deleteIS0_EED2Ev.exit.sink.split ]
   ret ptr %.274
 }
 

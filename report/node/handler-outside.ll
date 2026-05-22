@@ -66,7 +66,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::trap_handler::MetadataLock", align 1 ; 4 uses
   %i.a = shl i64 %2, 2                            ; 2 uses
   %i.b = add i64 %i.a, 24
-  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #13 ; 8 uses
+  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #13 ; 7 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %_ZN2v88internal12trap_handler17CreateHandlerDataEmmmPKNS1_24ProtectedInstructionDataE.exit, label %bb.b
 
@@ -130,11 +130,7 @@ bb.g:                                             ; preds = %_ZN2v88internal12tr
   %i.s = call i64 @llvm.umin.i64(i64 %i.r, i64 2147483647)
   %spec.store.select = select i1 %.not, i64 1024, i64 %i.s ; 8 uses
   %.not30 = icmp eq i64 %spec.store.select, %i.o
-  br i1 %.not30, label %.thread, label %bb.h
-
-.thread:                                          ; preds = %bb.g
-  call void @free(ptr noundef nonnull %i.c) #15
-  br label %bb.n
+  br i1 %.not30, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.t = load ptr, ptr @_ZN2v88internal12trap_handler12gCodeObjectsE, align 8
@@ -224,12 +220,12 @@ bb.l:                                             ; preds = %bb.k
   %i.be = trunc nuw nsw i64 %i.o to i32
   br label %bb.n
 
-bb.m:                                             ; preds = %bb.k
+bb.m:                                             ; preds = %bb.k, %bb.g
   call void @free(ptr noundef nonnull %i.c) #15
   br label %bb.n
 
-bb.n:                                             ; preds = %.thread, %bb.m, %bb.l
-  %.1 = phi i32 [ %i.be, %bb.l ], [ -1, %bb.m ], [ -1, %.thread ]
+bb.n:                                             ; preds = %bb.m, %bb.l
+  %.1 = phi i32 [ %i.be, %bb.l ], [ -1, %bb.m ]
   call void @_ZN2v88internal12trap_handler12MetadataLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.o

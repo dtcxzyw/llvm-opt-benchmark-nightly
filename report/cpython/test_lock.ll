@@ -201,20 +201,12 @@ bb.a:
   %i.k = tail call ptr @PyMem_Calloc(i64 noundef %6, i64 noundef 216) #6 ; 2 uses
   store ptr %i.k, ptr %i.j, align 8, !tbaa !46
   %i.l = icmp eq ptr %i.k, null
-  br i1 %i.l, label %9, label %bb.b
-
-9:                                                ; preds = %bb.a
-  %10 = tail call ptr @PyErr_NoMemory() #6        ; 0 uses
-  br label %.loopexit
+  br i1 %i.l, label %.loopexit.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.m = tail call ptr @PyMem_Calloc(i64 noundef %0, i64 noundef 40) #6 ; 10 uses
   %i.n = icmp eq ptr %i.m, null
-  br i1 %i.n, label %11, label %bb.c
-
-11:                                               ; preds = %bb.b
-  %12 = tail call ptr @PyErr_NoMemory() #6        ; 0 uses
-  br label %.loopexit
+  br i1 %i.n, label %.loopexit.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.o = tail call ptr @PyList_New(i64 noundef %0) #6 ; 10 uses
@@ -348,10 +340,14 @@ bb.n:                                             ; preds = %._crit_edge17
   %i.bi = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.22, double noundef %i.bh, ptr noundef nonnull %i.o, i64 noundef %i.bf) #6
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.g, %._crit_edge13.thread, %._crit_edge13, %bb.d, %bb.c, %bb.n, %11, %9
-  %.062 = phi ptr [ null, %9 ], [ null, %11 ], [ %i.m, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %._crit_edge13 ], [ %i.m, %bb.n ], [ %i.m, %._crit_edge13.thread ], [ %i.m, %bb.g ]
-  %.055 = phi ptr [ null, %9 ], [ null, %11 ], [ null, %bb.c ], [ null, %bb.d ], [ null, %._crit_edge13 ], [ %i.bi, %bb.n ], [ null, %._crit_edge13.thread ], [ null, %bb.g ]
-  %.054 = phi ptr [ null, %9 ], [ null, %11 ], [ null, %bb.c ], [ %i.o, %bb.d ], [ %i.o, %._crit_edge13 ], [ %i.o, %bb.n ], [ %i.o, %._crit_edge13.thread ], [ %i.o, %bb.g ] ; 4 uses
+.loopexit.sink.split:                             ; preds = %bb.b, %bb.a
+  %9 = tail call ptr @PyErr_NoMemory() #6         ; 0 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.g, %.loopexit.sink.split, %._crit_edge13.thread, %._crit_edge13, %bb.d, %bb.c, %bb.n
+  %.062 = phi ptr [ %i.m, %._crit_edge13.thread ], [ null, %.loopexit.sink.split ], [ %i.m, %bb.c ], [ %i.m, %bb.d ], [ %i.m, %._crit_edge13 ], [ %i.m, %bb.n ], [ %i.m, %bb.g ]
+  %.055 = phi ptr [ null, %._crit_edge13.thread ], [ null, %.loopexit.sink.split ], [ null, %bb.c ], [ null, %bb.d ], [ null, %._crit_edge13 ], [ %i.bi, %bb.n ], [ null, %bb.g ]
+  %.054 = phi ptr [ %i.o, %._crit_edge13.thread ], [ null, %.loopexit.sink.split ], [ null, %bb.c ], [ %i.o, %bb.d ], [ %i.o, %._crit_edge13 ], [ %i.o, %bb.n ], [ %i.o, %bb.g ] ; 4 uses
   %i.bj = load ptr, ptr %i.j, align 8, !tbaa !46
   call void @PyMem_Free(ptr noundef %i.bj) #6
   call void @PyMem_Free(ptr noundef %.062) #6

@@ -201,30 +201,18 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i32 @rb_sym_global_symbol_table_foreach_weak_reference_i(ptr noundef %0, ptr noundef readonly captures(none) %1) #0 {
-  %3 = load i64, ptr %0, align 8, !tbaa !18       ; 2 uses
-  %4 = trunc i64 %3 to i1
-  br i1 %4, label %bb.a, label %7
-
-bb.a:                                             ; preds = %2
-  %i.a = and i64 %3, -2
+bb.a:
+  %2 = load i64, ptr %0, align 8, !tbaa !18       ; 2 uses
+  %3 = trunc i64 %2 to i1
+  %i.a = and i64 %2, -2
   %i.b = inttoptr i64 %i.a to ptr
-  %5 = load ptr, ptr %1, align 8, !tbaa !50
-  %6 = getelementptr i8, ptr %i.b, i64 8
+  %4 = getelementptr i8, ptr %i.b, i64 8
+  %.sink = select i1 %3, ptr %4, ptr %0
+  %.sink11 = load ptr, ptr %1, align 8, !tbaa !50
   %i.c = getelementptr i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !52
-  %i.e = tail call i32 %5(ptr noundef %6, ptr noundef %i.d) #20
-  br label %12
-
-7:                                                ; preds = %2
-  %8 = load ptr, ptr %1, align 8, !tbaa !50
-  %9 = getelementptr i8, ptr %1, i64 8
-  %10 = load ptr, ptr %9, align 8, !tbaa !52
-  %11 = tail call i32 %8(ptr noundef nonnull %0, ptr noundef %10) #20
-  br label %12
-
-12:                                               ; preds = %7, %bb.a
-  %.0 = phi i32 [ %i.e, %bb.a ], [ %11, %7 ]
-  ret i32 %.0
+  %i.e = tail call i32 %.sink11(ptr noundef %.sink, ptr noundef %i.d) #20
+  ret i32 %i.e
 }
 
 ; Function Attrs: nounwind sspstrong uwtable

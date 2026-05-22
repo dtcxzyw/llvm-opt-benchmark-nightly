@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(88) %0)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCseo6ZV82fEK1_3url3UrlECsa5Qem16B4JI_15deltalake_azure.exit unwind label %bb.c
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
@@ -218,10 +218,6 @@ bb.d:                                             ; preds = %bb.c
 common.resume:                                    ; preds = %bb.j, %bb.s, %bb.v, %.body8.i, %.body11.i, %.body.i, %bb.ab, %bb.c
   %common.resume.op = phi { ptr, i32 } [ %i.b, %bb.c ], [ %eh.lpad-body12.i, %.body11.i ], [ %i.n, %bb.j ], [ %i.v, %bb.s ], [ %i.y, %bb.v ], [ %eh.lpad-body.i, %.body.i ], [ %eh.lpad-body9.i, %.body8.i ], [ %i.ak, %bb.ab ]
   resume { ptr, i32 } %common.resume.op
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCseo6ZV82fEK1_3url3UrlECsa5Qem16B4JI_15deltalake_azure.exit: ; preds = %bb.b
-  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(88) %0)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit
 
 bb.e:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -263,7 +259,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechE
 bb.i:                                             ; preds = %bb.e
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.m)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit5.i unwind label %bb.j
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i unwind label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.n = landingpad { ptr, i32 }
@@ -276,10 +272,6 @@ bb.k:                                             ; preds = %bb.j
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit5.i: ; preds = %bb.i
-  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.m)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit
 
 bb.l:                                             ; preds = %bb.e
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(72) %i.d)
@@ -325,7 +317,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtNtCs2pqxYH9ZEk8_3std3ffi6os_str
 bb.r:                                             ; preds = %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.u)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsa5Qem16B4JI_15deltalake_azure.exit15.i unwind label %bb.s
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i unwind label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.v = landingpad { ptr, i32 }
@@ -339,14 +331,10 @@ bb.t:                                             ; preds = %bb.s
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsa5Qem16B4JI_15deltalake_azure.exit15.i: ; preds = %bb.r
-  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.u)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit
-
 bb.u:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
   invoke void @_RNvXso_NtCs6Po7BT7Nknu_5alloc3vecINtB5_3VechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.x)
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit18.i unwind label %bb.v
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i unwind label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.y = landingpad { ptr, i32 }
@@ -359,10 +347,6 @@ bb.w:                                             ; preds = %bb.v
           filter [0 x ptr] zeroinitializer        ; 0 uses
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit18.i: ; preds = %bb.u
-  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.x)
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit
 
 bb.x:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECsa5Qem16B4JI_15deltalake_azure.exit.i7.i
   %i.aa = landingpad { ptr, i32 }
@@ -432,11 +416,12 @@ bb.ac:                                            ; preds = %bb.ab
   tail call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit.i
-  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.aj)
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i: ; preds = %bb.i, %bb.r, %bb.u, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit.i, %bb.b
+  %.sink.i.sink = phi ptr [ %0, %bb.b ], [ %i.aj, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit.i ], [ %i.u, %bb.r ], [ %i.m, %bb.i ], [ %i.x, %bb.u ]
+  tail call void @_RNvXs1_NtCs6Po7BT7Nknu_5alloc7raw_vecINtB5_6RawVechENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(24) %.sink.i.sink)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsa5Qem16B4JI_15deltalake_azure.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit10.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit18.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsa5Qem16B4JI_15deltalake_azure.exit15.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit5.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCseo6ZV82fEK1_3url3UrlECsa5Qem16B4JI_15deltalake_azure.exit
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store4path5ErrorECsa5Qem16B4JI_15deltalake_azure.exit: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit21.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs2pqxYH9ZEk8_3std4path7PathBufECsa5Qem16B4JI_15deltalake_azure.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsa5Qem16B4JI_15deltalake_azure.exit10.i
   ret void
 }
 
@@ -839,7 +824,7 @@ bb.a:
   %i.k = alloca [88 x i8], align 8                ; 9 uses
   %i.l = alloca [1312 x i8], align 8              ; 4 uses
   %i.m = alloca [72 x i8], align 8                ; 7 uses
-  %i.n = alloca [8 x i8], align 8                 ; 9 uses
+  %i.n = alloca [8 x i8], align 8                 ; 8 uses
   %i.o = alloca [24 x i8], align 8                ; 4 uses
   %i.p = alloca [1312 x i8], align 8              ; 5 uses
   %i.q = alloca [1312 x i8], align 8              ; 4 uses
@@ -849,7 +834,7 @@ bb.a:
   %i.u = alloca [48 x i8], align 8                ; 4 uses
   %i.v = alloca [120 x i8], align 8               ; 11 uses
   %i.w = alloca [72 x i8], align 8                ; 11 uses
-  %i.x = alloca [48 x i8], align 8                ; 12 uses
+  %i.x = alloca [48 x i8], align 8                ; 10 uses
   %i.y = alloca [1312 x i8], align 8              ; 5 uses
   %i.z = alloca [24 x i8], align 8                ; 4 uses
   %i.aa = alloca [1312 x i8], align 8             ; 5 uses
@@ -1113,7 +1098,7 @@ bb.x:                                             ; preds = %bb.w
   store i64 %i.bd, ptr %.sroa.4146.0..sroa_idx, align 8
   %.sroa.5147.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.bf, ptr %.sroa.5147.0..sroa_idx, align 16
-  br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store5azure14MicrosoftAzureECsa5Qem16B4JI_15deltalake_azure.exit
+  br label %.sink.split
 
 bb.y:                                             ; preds = %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
@@ -1249,12 +1234,15 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collec
   store ptr @29, ptr %.sroa.452.0..sroa_idx, align 16
   store i64 -9223372036854775711, ptr %0, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.x, %bb.aq, %bb.ap, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsa5Qem16B4JI_15deltalake_azure.exit212
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.x)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %bb.an
 
-bb.an:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store5azure14MicrosoftAzureECsa5Qem16B4JI_15deltalake_azure.exit, %bb.az, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std11collections4hash3map7HashMapNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEECsa5Qem16B4JI_15deltalake_azure.exit212
+bb.an:                                            ; preds = %.sink.split, %bb.az
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
   ret void
 
@@ -1273,12 +1261,12 @@ bb.ap:                                            ; preds = %bb.ar, %bb.ao
   %i.by = load ptr, ptr %i.n, align 8, !alias.scope !314, !nonnull !4, !noundef !4
   %i.bz = atomicrmw sub ptr %i.by, i64 1 release, align 8, !noalias !314
   %i.ca = icmp eq i64 %i.bz, 1
-  br i1 %i.ca, label %bb.aq, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store5azure14MicrosoftAzureECsa5Qem16B4JI_15deltalake_azure.exit
+  br i1 %i.ca, label %bb.aq, label %.sink.split
 
 bb.aq:                                            ; preds = %bb.ap
   fence acquire
   invoke void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcNtNtNtCsjyY8HP3IvQ6_12object_store5azure6client11AzureClientE9drop_slowBM_(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.n) #19
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store5azure14MicrosoftAzureECsa5Qem16B4JI_15deltalake_azure.exit unwind label %.loopexit.split-lp
+          to label %.sink.split unwind label %.loopexit.split-lp
 
 bb.ar:                                            ; preds = %bb.ab
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.bi, ptr noundef nonnull align 8 dereferenceable(88) %i.k, i64 88, i1 false)
@@ -1292,12 +1280,6 @@ bb.ar:                                            ; preds = %bb.ab
   %.sroa.4179.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr @31, ptr %.sroa.4179.0..sroa_idx, align 16
   br label %bb.ap
-
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjyY8HP3IvQ6_12object_store5azure14MicrosoftAzureECsa5Qem16B4JI_15deltalake_azure.exit: ; preds = %bb.ap, %bb.aq, %bb.x
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
-  call void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsjyY8HP3IvQ6_12object_store5azure7builder14AzureConfigKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsa5Qem16B4JI_15deltalake_azure(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.x)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
-  br label %bb.an
 
 .thread230:                                       ; preds = %bb.ad, %bb.z
   %eh.lpad-body204 = phi { ptr, i32 } [ %i.bg, %bb.z ], [ %i.bk, %bb.ad ] ; 2 uses

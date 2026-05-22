@@ -201,11 +201,7 @@ bb.a:
   %i.g = select i1 %i.c, i64 %i.f, i64 -1         ; 2 uses
   %i.h = icmp ult i64 %i.g, 16385
   %i.i = and i1 %i.c, %i.h
-  br i1 %i.i, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  %3 = tail call i32 @mprotect(ptr noundef nonnull %0, i64 noundef %i.g, i32 noundef 3) #10 ; 0 uses
-  br label %bb.f
+  br i1 %i.i, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   br i1 %i.a, label %bb.c, label %bb.d
@@ -217,11 +213,13 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.b, label %bb.e, label %bb.f
 
-bb.e:                                             ; preds = %bb.d
-  %i.k = tail call i32 @mprotect(ptr noundef nonnull %1, i64 noundef 4096, i32 noundef 3) #10 ; 0 uses
+bb.e:                                             ; preds = %bb.d, %bb.a
+  %.sink17 = phi i64 [ %i.g, %bb.a ], [ 4096, %bb.d ]
+  %.sink = phi ptr [ %0, %bb.a ], [ %1, %bb.d ]
+  %i.k = tail call i32 @mprotect(ptr noundef nonnull %.sink, i64 noundef %.sink17, i32 noundef 3) #10 ; 0 uses
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.d, %bb.e, %2
+bb.f:                                             ; preds = %bb.e, %bb.d
   ret void
 }
 

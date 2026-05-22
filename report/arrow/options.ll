@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.a, %bb.d
   store i8 0, ptr %i.n, align 1, !tbaa !9
   %i.o = load i8, ptr %i.b, align 16, !tbaa !9
   %i.p = icmp eq i8 %i.o, 0
-  br i1 %i.p, label %1, label %bb.f
+  br i1 %i.p, label %.sink.split.sink.split, label %bb.f
 
 .lr.ph:                                           ; preds = %bb.e, %.lr.ph
   %.03342 = phi i64 [ %i.u, %.lr.ph ], [ 0, %bb.e ] ; 3 uses
@@ -217,24 +217,12 @@ bb.e:                                             ; preds = %bb.a, %bb.d
 bb.f:                                             ; preds = %._crit_edge
   %i.v = call ptr @strstr(ptr noundef nonnull dereferenceable(1) @.str.67, ptr noundef nonnull dereferenceable(1) %i.b) #16
   %.not37 = icmp eq ptr %i.v, null
-  br i1 %.not37, label %bb.g, label %1
-
-1:                                                ; preds = %bb.f, %._crit_edge
-  store i64 1, ptr %0, align 8, !tbaa !16
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 2, ptr %2, align 8, !tbaa !10
-  br label %bb.z
+  br i1 %.not37, label %bb.g, label %.sink.split.sink.split
 
 bb.g:                                             ; preds = %bb.f
   %i.w = call ptr @strstr(ptr noundef nonnull dereferenceable(1) @.str.68, ptr noundef nonnull dereferenceable(1) %i.b) #16
   %.not38 = icmp eq ptr %i.w, null
-  br i1 %.not38, label %bb.h, label %3
-
-3:                                                ; preds = %bb.g
-  store i64 0, ptr %0, align 8, !tbaa !16
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 2, ptr %4, align 8, !tbaa !10
-  br label %bb.z
+  br i1 %.not38, label %bb.h, label %.sink.split.sink.split
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
@@ -389,12 +377,18 @@ bb.x:                                             ; preds = %bb.b, %bb.c
   %i.bn = call zeroext i1 @_mi_preloading() #15
   br i1 %i.bn, label %bb.z, label %bb.y
 
-bb.y:                                             ; preds = %bb.x
+.sink.split.sink.split:                           ; preds = %bb.g, %._crit_edge, %bb.f
+  %.sink48 = phi i64 [ 1, %._crit_edge ], [ 1, %bb.f ], [ 0, %bb.g ]
+  store i64 %.sink48, ptr %0, align 8, !tbaa !16
+  br label %bb.y
+
+bb.y:                                             ; preds = %.sink.split.sink.split, %bb.x
+  %.sink = phi i32 [ 1, %bb.x ], [ 2, %.sink.split.sink.split ]
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i32 1, ptr %i.bo, align 8, !tbaa !10
+  store i32 %.sink, ptr %i.bo, align 8, !tbaa !10
   br label %bb.z
 
-bb.z:                                             ; preds = %1, %mi_option_set.exit, %3, %bb.x, %bb.y
+bb.z:                                             ; preds = %bb.y, %mi_option_set.exit, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   ret void

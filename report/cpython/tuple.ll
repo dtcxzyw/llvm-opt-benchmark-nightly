@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.j = call i64 @PyTuple_Size(ptr noundef nonnull %i.h) #4 ; 3 uses
-  %i.k = call ptr @PyTuple_New(i64 noundef %i.j) #4 ; 10 uses
+  %i.k = call ptr @PyTuple_New(i64 noundef %i.j) #4 ; 9 uses
   %.not18 = icmp eq ptr %i.k, null
   br i1 %.not18, label %Py_DECREF.exit21, label %.preheader
 
@@ -245,11 +245,7 @@ bb.j:                                             ; preds = %bb.i
   %i.u = add nsw i32 %i.t, -1                     ; 2 uses
   store i32 %i.u, ptr %i.k, align 8, !tbaa !18
   %i.v = icmp eq i32 %i.u, 0
-  br i1 %i.v, label %2, label %Py_DECREF.exit21
-
-2:                                                ; preds = %bb.j
-  call void @_Py_Dealloc(ptr noundef nonnull %i.k) #4
-  br label %Py_DECREF.exit21
+  br i1 %i.v, label %Py_DECREF.exit21.sink.split, label %Py_DECREF.exit21
 
 .critedge:                                        ; preds = %bb.f, %.preheader
   %i.w = load i64, ptr %i.c, align 8, !tbaa !16
@@ -281,11 +277,7 @@ bb.n:                                             ; preds = %bb.m
   %i.ae = add nsw i32 %i.ad, -1                   ; 2 uses
   store i32 %i.ae, ptr %i.k, align 8, !tbaa !18
   %i.af = icmp eq i32 %i.ae, 0
-  br i1 %i.af, label %3, label %Py_DECREF.exit21
-
-3:                                                ; preds = %bb.n
-  call void @_Py_Dealloc(ptr noundef nonnull %i.k) #4
-  br label %Py_DECREF.exit21
+  br i1 %i.af, label %Py_DECREF.exit21.sink.split, label %Py_DECREF.exit21
 
 bb.o:                                             ; preds = %bb.d
   %i.ag = icmp eq ptr %i.h, @_Py_NoneStruct
@@ -331,8 +323,12 @@ bb.v:                                             ; preds = %bb.u
   store i32 %i.ar, ptr %i.ao, align 8, !tbaa !18
   br label %Py_DECREF.exit21
 
-Py_DECREF.exit21:                                 ; preds = %bb.v, %bb.u, %bb.t, %3, %bb.n, %bb.m, %2, %bb.j, %bb.i, %_Py_XNewRef.exit26, %bb.e, %_Py_XNewRef.exit24, %bb.a
-  %.2 = phi ptr [ null, %bb.a ], [ %i.k, %_Py_XNewRef.exit24 ], [ null, %3 ], [ null, %2 ], [ null, %bb.e ], [ null, %_Py_XNewRef.exit26 ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.t ], [ %i.ao, %bb.u ], [ %i.ao, %bb.v ]
+Py_DECREF.exit21.sink.split:                      ; preds = %bb.n, %bb.j
+  call void @_Py_Dealloc(ptr noundef nonnull %i.k) #4
+  br label %Py_DECREF.exit21
+
+Py_DECREF.exit21:                                 ; preds = %Py_DECREF.exit21.sink.split, %bb.v, %bb.u, %bb.t, %bb.n, %bb.m, %bb.j, %bb.i, %_Py_XNewRef.exit26, %bb.e, %_Py_XNewRef.exit24, %bb.a
+  %.2 = phi ptr [ null, %bb.a ], [ %i.k, %_Py_XNewRef.exit24 ], [ %i.ao, %bb.u ], [ %i.ao, %bb.v ], [ null, %bb.e ], [ null, %_Py_XNewRef.exit26 ], [ null, %bb.i ], [ null, %bb.j ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.t ], [ null, %Py_DECREF.exit21.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4

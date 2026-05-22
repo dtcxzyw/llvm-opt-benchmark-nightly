@@ -196,7 +196,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE5eraseEmm.exit.i: ; preds =
 
 .lr.ph99:                                         ; preds = %.lr.ph99.preheader, %bb.x
   %.098 = phi i64 [ %i.bk, %bb.x ], [ 0, %.lr.ph99.preheader ] ; 4 uses
-  %.04297 = phi ptr [ %.143, %bb.x ], [ %i.as, %.lr.ph99.preheader ] ; 8 uses
+  %.04297 = phi ptr [ %.143, %bb.x ], [ %i.as, %.lr.ph99.preheader ] ; 6 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 %.098
   %i.au = load i8, ptr %i.at, align 1, !tbaa !7   ; 2 uses
   %i.av = icmp eq i8 %i.au, 36
@@ -239,21 +239,18 @@ _ZSt4copyIPKcPcET0_T_S4_S3_.exit:                 ; preds = %bb.s, %bb.t, %bb.u
 
 bb.v:                                             ; preds = %bb.q
   %i.bi = icmp eq i8 %i.ay, 36
-  br i1 %i.bi, label %9, label %bb.x
+  br i1 %i.bi, label %bb.w, label %bb.x
 
-9:                                                ; preds = %bb.v
-  %10 = getelementptr inbounds nuw i8, ptr %.04297, i64 1
-  store i8 36, ptr %.04297, align 1, !tbaa !7
-  br label %bb.x
-
-bb.w:                                             ; preds = %.lr.ph99
+bb.w:                                             ; preds = %.lr.ph99, %bb.v
+  %.sink = phi i8 [ 36, %bb.v ], [ %i.au, %.lr.ph99 ]
+  %.1.ph = phi i64 [ %i.aw, %bb.v ], [ %.098, %.lr.ph99 ]
   %i.bj = getelementptr inbounds nuw i8, ptr %.04297, i64 1
-  store i8 %i.au, ptr %.04297, align 1, !tbaa !7
+  store i8 %.sink, ptr %.04297, align 1, !tbaa !7
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.w, %bb.v, %9, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit
-  %.143 = phi ptr [ %i.bh, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit ], [ %10, %9 ], [ %.04297, %bb.v ], [ %i.bj, %bb.w ]
-  %.1 = phi i64 [ %i.aw, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit ], [ %i.aw, %9 ], [ %.098, %bb.v ], [ %.098, %bb.w ]
+bb.x:                                             ; preds = %bb.w, %bb.v, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit
+  %.143 = phi ptr [ %i.bh, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit ], [ %.04297, %bb.v ], [ %i.bj, %bb.w ]
+  %.1 = phi i64 [ %i.aw, %_ZSt4copyIPKcPcET0_T_S4_S3_.exit ], [ %.098, %bb.v ], [ %.1.ph, %bb.w ]
   %i.bk = add i64 %.1, 1                          ; 2 uses
   %i.bl = icmp ult i64 %i.bk, %1
   br i1 %i.bl, label %.lr.ph99, label %.thread88, !llvm.loop !24

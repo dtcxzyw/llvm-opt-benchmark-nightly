@@ -53,11 +53,7 @@ bb.d:                                             ; preds = %bb.b
   %i.v = getelementptr i8, ptr %0, i64 24
   store ptr %i.u, ptr %i.v, align 8, !tbaa !24
   %i.w = icmp eq ptr %i.u, null
-  br i1 %i.w, label %3, label %bb.e
-
-3:                                                ; preds = %bb.d
-  tail call void @free(ptr noundef nonnull %0) #26
-  br label %bb.i
+  br i1 %i.w, label %.sink.split, label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.x = phi ptr [ %i.u, %bb.d ], [ null, %bb.c ] ; 3 uses
@@ -70,8 +66,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   tail call void @free(ptr noundef %i.x) #26
-  tail call void @free(ptr noundef nonnull %0) #26
-  br label %bb.i
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr i8, ptr %0, i64 16
@@ -93,8 +88,12 @@ make_tab_empty.exit:                              ; preds = %bb.g, %bb.h
   store i32 0, ptr %i.ah, align 4, !tbaa !28
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.a, %make_tab_empty.exit, %bb.f, %3
-  %.0 = phi ptr [ null, %3 ], [ null, %bb.f ], [ %0, %make_tab_empty.exit ], [ null, %bb.a ]
+.sink.split:                                      ; preds = %bb.d, %bb.f
+  tail call void @free(ptr noundef nonnull %0) #26
+  br label %bb.i
+
+bb.i:                                             ; preds = %.sink.split, %bb.a, %make_tab_empty.exit
+  %.0 = phi ptr [ %0, %make_tab_empty.exit ], [ null, %bb.a ], [ null, %.sink.split ]
   ret ptr %.0
 }
 

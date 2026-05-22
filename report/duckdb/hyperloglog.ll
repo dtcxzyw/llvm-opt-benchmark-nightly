@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.b
 
 _ZN10duckdb_hllL6sdslenEPc.exit:                  ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
   %.0.i = phi i64 [ %i.v, %bb.g ], [ %i.k, %bb.c ], [ %i.n, %bb.d ], [ %i.q, %bb.e ], [ %i.t, %bb.f ] ; 2 uses
-  %i.w = getelementptr i8, ptr %i.d, i64 %.0.i    ; 6 uses
+  %i.w = getelementptr i8, ptr %i.d, i64 %.0.i    ; 5 uses
   %i.x = icmp sgt i64 %.0.i, 17
   br i1 %i.x, label %.lr.ph, label %_ZN10duckdb_hllL11hllDenseSetEPhlh.exit
 
@@ -255,7 +255,7 @@ bb.l:                                             ; preds = %bb.k
   %i.al = phi i8 [ %.pre, %._crit_edge..thread228_crit_edge ], [ %i.y, %bb.k ] ; 2 uses
   %.0175271 = phi i64 [ %i.ai, %._crit_edge..thread228_crit_edge ], [ %.0175273, %bb.k ] ; 6 uses
   %.0172269 = phi ptr [ %.0167275, %._crit_edge..thread228_crit_edge ], [ %.0172274, %bb.k ] ; 2 uses
-  %.0167266 = phi ptr [ %i.aj, %._crit_edge..thread228_crit_edge ], [ %.0167275, %bb.k ] ; 4 uses
+  %.0167266 = phi ptr [ %i.aj, %._crit_edge..thread228_crit_edge ], [ %.0167275, %bb.k ] ; 3 uses
   %i.am = and i32 %.pre-phi, 192                  ; 2 uses
   %i.an = icmp eq i32 %i.am, 64                   ; 2 uses
   %.v = select i1 %i.an, i64 2, i64 1
@@ -278,25 +278,11 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.ar = and i32 %.pre-phi, 3
   %i.as = icmp eq i32 %i.ar, 0
-  br i1 %i.as, label %3, label %bb.q
-
-3:                                                ; preds = %bb.o
-  %4 = shl nuw i8 %2, 2
-  %5 = add nuw i8 %4, 124
-  %6 = or i8 %5, -128
-  store i8 %6, ptr %.0167266, align 1, !tbaa !11
-  br label %bb.am
+  br i1 %i.as, label %.sink.split, label %bb.q
 
 bb.p:                                             ; preds = %.thread228
   %i.at = icmp eq i8 %i.al, 0
-  br i1 %i.at, label %7, label %.thread244
-
-7:                                                ; preds = %bb.p
-  %8 = shl nuw i8 %2, 2
-  %9 = add nuw i8 %8, 124
-  %10 = or i8 %9, -128
-  store i8 %10, ptr %.0167266, align 1, !tbaa !11
-  br label %bb.am
+  br i1 %i.at, label %.sink.split, label %.thread244
 
 .thread244:                                       ; preds = %bb.p, %bb.m
   %i.au = trunc i64 %.0175271 to i32
@@ -512,8 +498,15 @@ bb.al:                                            ; preds = %bb.ak
   %i.ev = getelementptr inbounds i8, ptr %i.w, i64 %i.eo
   br label %bb.am
 
-bb.am:                                            ; preds = %._crit_edge302, %7, %3
-  %.0166 = phi ptr [ %i.w, %3 ], [ %i.w, %7 ], [ %i.ev, %._crit_edge302 ] ; 2 uses
+.sink.split:                                      ; preds = %bb.p, %bb.o
+  %3 = shl nuw i8 %2, 2
+  %4 = add nuw i8 %3, 124
+  %5 = or i8 %4, -128
+  store i8 %5, ptr %.0167266, align 1, !tbaa !11
+  br label %bb.am
+
+bb.am:                                            ; preds = %.sink.split, %._crit_edge302
+  %.0166 = phi ptr [ %i.ev, %._crit_edge302 ], [ %i.w, %.sink.split ] ; 2 uses
   %.not217 = icmp eq ptr %.0172269, null
   %i.ew = select i1 %.not217, ptr %i.e, ptr %.0172269 ; 2 uses
   %i.ex = icmp ult ptr %i.ew, %.0166

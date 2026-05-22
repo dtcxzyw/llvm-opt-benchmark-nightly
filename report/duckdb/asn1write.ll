@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 1, i64 noundef 64) #11 ; 10 uses
+  %i.d = tail call noalias dereferenceable_or_null(64) ptr @calloc(i64 noundef 1, i64 noundef 64) #11 ; 9 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %.critedge, label %bb.c
 
@@ -212,11 +212,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   store ptr %i.g, ptr %i.h, align 8, !tbaa !26
   %i.i = icmp eq ptr %i.g, null
-  br i1 %i.i, label %5, label %bb.d
-
-5:                                                ; preds = %bb.c
-  tail call void @free(ptr noundef nonnull %i.d) #12
-  br label %.critedge
+  br i1 %i.i, label %.critedge.sink.split, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.g, ptr align 1 %1, i64 %2, i1 false)
@@ -234,8 +230,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void @free(ptr noundef nonnull %i.g) #12
-  tail call void @free(ptr noundef nonnull %i.d) #12
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.g:                                             ; preds = %bb.e, %bb.d
   %i.n = load ptr, ptr %0, align 8, !tbaa !20
@@ -288,8 +283,12 @@ bb.m:                                             ; preds = %bb.l
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ab, ptr nonnull align 1 %3, i64 %4, i1 false)
   br label %.critedge
 
-.critedge:                                        ; preds = %.thread, %bb.j, %bb.l, %bb.m, %bb.b, %bb.f, %5
-  %.1 = phi ptr [ null, %bb.j ], [ null, %5 ], [ null, %bb.f ], [ %.047, %bb.l ], [ null, %bb.b ], [ %.047, %bb.m ], [ %i.b, %.thread ]
+.critedge.sink.split:                             ; preds = %bb.c, %bb.f
+  tail call void @free(ptr noundef nonnull %i.d) #12
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.sink.split, %.thread, %bb.j, %bb.l, %bb.m, %bb.b
+  %.1 = phi ptr [ null, %bb.j ], [ %.047, %bb.m ], [ %i.b, %.thread ], [ %.047, %bb.l ], [ null, %bb.b ], [ null, %.critedge.sink.split ]
   ret ptr %.1
 }
 

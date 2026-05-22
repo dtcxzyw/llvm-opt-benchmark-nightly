@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i: ; preds = %bb.b
   %i.q = load i64, ptr %i.p, align 8, !tbaa !61
   %i.r = trunc i64 %i.q to i1
-  br i1 %i.r, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i, label %53
+  br i1 %i.r, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i, label %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.i.i"
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i, %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 40
@@ -212,11 +212,7 @@ _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i: ; preds = %_Z
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.i.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i
   %i.u = load i64, ptr %i.t, align 8, !tbaa !61
   %i.v = trunc i64 %i.u to i1
-  br i1 %i.v, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.thread.i.i.i, label %53
-
-53:                                               ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.i.i.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i
-  tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext true)
-  br label %"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit"
+  br i1 %i.v, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.thread.i.i.i, label %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.i.i"
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.thread.i.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.i.i.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i.i.i
   %.sroa.01.0.copyload.i.i.i = load i64, ptr %i.j, align 8
@@ -314,12 +310,7 @@ bb.h:                                             ; preds = %bb.g
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i36.i.i: ; preds = %bb.h
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !61
   %i.bh = trunc i64 %i.bg to i1
-  br i1 %i.bh, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i37.i.i, label %54
-
-54:                                               ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i36.i.i
-  tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
-  tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext true)
-  br label %"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit"
+  br i1 %i.bh, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i37.i.i, label %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.sink.split.i.i"
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i37.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i36.i.i, %bb.h
   tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 0)
@@ -722,12 +713,7 @@ bb.am:                                            ; preds = %bb.al
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i39.i.i: ; preds = %bb.am
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !61
   %i.hj = trunc i64 %i.hi to i1
-  br i1 %i.hj, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i40.i.i, label %55
-
-55:                                               ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i39.i.i
-  tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
-  tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext true)
-  br label %"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit"
+  br i1 %i.hj, label %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i40.i.i, label %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.sink.split.i.i"
 
 _ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.thread.i40.i.i: ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i39.i.i, %bb.am
   tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 0)
@@ -1130,7 +1116,15 @@ bb.eu:                                            ; preds = %.loopexit.split-lp.
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
   br label %"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit"
 
-"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit": ; preds = %.loopexit91.i.i.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit86.i.i.i.i", %.loopexit82.i.i56.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit77.i.i95.i.i", %.loopexit82.i.i.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit77.i.i.i.i", %53, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i", %54, %.preheader.i.i.i.i, %bb.t, %55, %.preheader.i.i84.i.i, %bb.ay, %.preheader.i.i114.i.i, %bb.cd, %"_ZN6duckdb14BinaryExecutor14ExecuteGenericINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_mT4_.exit.i.i"
+"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.sink.split.i.i": ; preds = %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i39.i.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i36.i.i
+  tail call void @_ZN6duckdb6Vector13SetVectorTypeENS_10VectorTypeE(ptr noundef nonnull align 8 dereferenceable(104) %2, i8 noundef zeroext 2)
+  br label %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.i.i"
+
+"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.i.i": ; preds = %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.sink.split.i.i", %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit15.i.i.i, %_ZN6duckdb14ConstantVector6IsNullERKNS_6VectorE.exit.i.i.i
+  tail call void @_ZN6duckdb14ConstantVector7SetNullERNS_6VectorEb(ptr noundef nonnull align 8 dereferenceable(104) %2, i1 noundef zeroext true)
+  br label %"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit"
+
+"_ZN6duckdb14BinaryExecutor7ExecuteINS_8string_tES2_bZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS8_S8_S8_mT2_.exit": ; preds = %.loopexit91.i.i.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit86.i.i.i.i", %.loopexit82.i.i56.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit77.i.i95.i.i", %.loopexit82.i.i.i.i, %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit77.i.i.i.i", %"_ZN6duckdb19BinaryLambdaWrapper9OperationIZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0bNS_8string_tES9_bEET3_T_T1_T2_RNS_12ValidityMaskEm.exit.i.i.i", %.preheader.i.i.i.i, %bb.t, %.preheader.i.i84.i.i, %bb.ay, %.preheader.i.i114.i.i, %bb.cd, %"_ZN6duckdb14BinaryExecutor14ExecuteGenericINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_mT4_.exit.i.i", %"_ZN6duckdb14BinaryExecutor15ExecuteConstantINS_8string_tES2_bNS_19BinaryLambdaWrapperEbZNS_L24IntersectsExtentFunctionERNS_9DataChunkERNS_15ExpressionStateERNS_6VectorEE3$_0EEvS9_S9_S9_T4_.exit.sink.split.i.i"
   ret void
 }
 

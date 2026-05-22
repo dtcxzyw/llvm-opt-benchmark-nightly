@@ -201,11 +201,7 @@ bb.a:                                             ; preds = %._crit_edge
   %i.r = icmp ult i64 %2, %i.q
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.p ; 2 uses
-  br i1 %i.r, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.t, ptr align 1 %1, i64 %2, i1 false)
-  br label %bb.f
+  br i1 %i.r, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.t, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.q, i1 false)
@@ -230,10 +226,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.128 = phi i64 [ %i.aa, %bb.d ], [ %.027, %bb.c ]
   %.1 = phi ptr [ %i.z, %bb.d ], [ %.0, %bb.c ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ab, ptr align 1 %.1, i64 %.128, i1 false)
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %3
+bb.f:                                             ; preds = %bb.a, %bb.e
+  %.128.sink = phi i64 [ %.128, %bb.e ], [ %2, %bb.a ]
+  %.1.sink = phi ptr [ %.1, %bb.e ], [ %1, %bb.a ]
+  %.sink = phi ptr [ %i.ab, %bb.e ], [ %i.t, %bb.a ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink, ptr align 1 %.1.sink, i64 %.128.sink, i1 false)
   ret void
 }
 
@@ -268,11 +267,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = icmp ult i64 %2, %i.p
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.o ; 2 uses
-  br i1 %i.q, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr align 1 %1, i64 %2, i1 false)
-  br label %_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit
+  br i1 %i.q, label %_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.p, i1 false)
@@ -297,10 +292,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.128.i = phi i64 [ %i.z, %bb.e ], [ %.027.i, %bb.d ]
   %.1.i = phi ptr [ %i.y, %bb.e ], [ %.0.i, %bb.d ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr align 1 %.1.i, i64 %.128.i, i1 false)
   br label %_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit
 
-_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit:        ; preds = %3, %bb.f
+_ZN4llvh3MD56updateENS_8ArrayRefIhEE.exit:        ; preds = %bb.b, %bb.f
+  %.128.sink.i = phi i64 [ %.128.i, %bb.f ], [ %2, %bb.b ]
+  %.1.sink.i = phi ptr [ %.1.i, %bb.f ], [ %1, %bb.b ]
+  %.sink.i = phi ptr [ %i.aa, %bb.f ], [ %i.s, %bb.b ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink.i, ptr align 1 %.1.sink.i, i64 %.128.sink.i, i1 false)
   ret void
 }
 

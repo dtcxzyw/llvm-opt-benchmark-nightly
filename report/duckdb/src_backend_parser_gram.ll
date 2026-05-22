@@ -201,21 +201,12 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define internal fastcc noundef ptr @_ZN17duckdb_libpgqueryL10makeAConstEPNS_7PGValueEi(ptr noundef readonly captures(none) %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %0, align 8, !tbaa !660
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  switch i32 %i.a, label %bb.c [
-    i32 219, label %2
+  %i.a = load i32, ptr %0, align 8, !tbaa !660    ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  switch i32 %i.a, label %2 [
+    i32 219, label %bb.c
     i32 218, label %bb.b
   ]
-
-2:                                                ; preds = %bb.a
-  %3 = load ptr, ptr %i.b, align 8, !tbaa !9
-  %4 = tail call noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef 32, i32 noundef 358) ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 219, ptr %5, align 8, !tbaa !151
-  %6 = getelementptr inbounds nuw i8, ptr %4, i64 16
-  store ptr %3, ptr %6, align 8, !tbaa !9
-  br label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %i.b, align 8, !tbaa !9
@@ -228,17 +219,21 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.f, ptr %i.g, align 8, !tbaa !9
   br label %bb.d
 
-bb.c:                                             ; preds = %bb.a
+2:                                                ; preds = %bb.a
+  br label %bb.c
+
+bb.c:                                             ; preds = %bb.a, %2
+  %.sink10 = phi i32 [ 220, %2 ], [ %i.a, %bb.a ]
   %i.h = load ptr, ptr %i.b, align 8, !tbaa !9
   %i.i = tail call noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef 32, i32 noundef 358) ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
-  store i32 220, ptr %i.j, align 8, !tbaa !151
+  store i32 %.sink10, ptr %i.j, align 8, !tbaa !151
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   store ptr %i.h, ptr %i.k, align 8, !tbaa !9
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %bb.b, %2
-  %.sink7 = phi ptr [ %i.i, %bb.c ], [ %i.d, %bb.b ], [ %4, %2 ] ; 2 uses
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink7 = phi ptr [ %i.d, %bb.b ], [ %i.i, %bb.c ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.sink7, i64 24
   store i32 %1, ptr %i.l, align 8, !tbaa !154
   ret ptr %.sink7

@@ -201,7 +201,7 @@ upb_EpsCopyInputStream_HasErrorHandler.exit.i19:  ; preds = %bb.j
   %i.aq = extractvalue { ptr, i64 } %i.ap, 1
   %i.ar = extractvalue { ptr, i64 } %i.ap, 0      ; 2 uses
   %.not.i16 = icmp eq ptr %i.ar, null
-  br i1 %.not.i16, label %4, label %upb_WireReader_ReadSize.exit.i.thread
+  br i1 %.not.i16, label %bb.n, label %upb_WireReader_ReadSize.exit.i.thread
 
 upb_WireReader_ReadSize.exit.i.thread:            ; preds = %bb.k, %upb_EpsCopyInputStream_HasErrorHandler.exit.i19
   %.0.i.i44 = phi ptr [ %i.ar, %upb_EpsCopyInputStream_HasErrorHandler.exit.i19 ], [ %i.ao, %bb.k ] ; 2 uses
@@ -215,11 +215,7 @@ upb_WireReader_ReadSize.exit.i.thread:            ; preds = %bb.k, %upb_EpsCopyI
   %.neg.i = sub i64 %i.au, %i.at
   %i.av = add i64 %.neg.i, %.val21.i
   %.not54 = icmp slt i64 %i.av, %i.as
-  br i1 %.not54, label %4, label %bb.l
-
-4:                                                ; preds = %upb_WireReader_ReadSize.exit.i.thread, %upb_EpsCopyInputStream_HasErrorHandler.exit.i19
-  %5 = tail call ptr @upb_EpsCopyInputStream_ReturnError_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %3) #3, !inline_history !17
-  br label %_upb_WireReader_SkipValue.exit
+  br i1 %.not54, label %bb.n, label %bb.l
 
 bb.l:                                             ; preds = %upb_WireReader_ReadSize.exit.i.thread
   %i.aw = getelementptr inbounds i8, ptr %.0.i.i44, i64 %i.as
@@ -229,12 +225,12 @@ bb.m:                                             ; preds = %bb.e
   %i.ax = tail call ptr @_upb_WireReader_SkipGroup_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %.0.i39, i32 noundef %.02538, i32 noundef range(i32 0, 2147483647) %i.a, ptr noundef nonnull %3), !inline_history !17
   br label %_upb_WireReader_SkipValue.exit
 
-bb.n:                                             ; preds = %bb.e
-  %i.ay = tail call ptr @upb_EpsCopyInputStream_ReturnError_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %3) #3, !inline_history !17
+bb.n:                                             ; preds = %bb.e, %upb_EpsCopyInputStream_HasErrorHandler.exit.i19, %upb_WireReader_ReadSize.exit.i.thread
+  %i.ay = tail call ptr @upb_EpsCopyInputStream_ReturnError_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %3) #3
   br label %_upb_WireReader_SkipValue.exit
 
-_upb_WireReader_SkipValue.exit:                   ; preds = %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i, %4, %bb.l, %bb.m, %bb.n
-  %.1.i = phi ptr [ %i.ay, %bb.n ], [ %i.ax, %bb.m ], [ %5, %4 ], [ %i.ai, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i ], [ %i.aw, %bb.l ] ; 2 uses
+_upb_WireReader_SkipValue.exit:                   ; preds = %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i, %bb.n, %bb.l, %bb.m
+  %.1.i = phi ptr [ %i.ai, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i ], [ %i.ax, %bb.m ], [ %i.aw, %bb.l ], [ %i.ay, %bb.n ] ; 2 uses
   %.not14 = icmp eq ptr %.1.i, null
   br i1 %.not14, label %.thread48.sink.split, label %_upb_WireReader_SkipValue.exit.thread.backedge
 

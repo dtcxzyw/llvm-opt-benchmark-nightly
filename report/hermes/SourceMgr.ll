@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %_ZN4llvh11raw_ostre
 _ZN4llvh11raw_ostreamlsEPKc.exit103:              ; preds = %bb.i, %bb.h, %bb.d, %bb.c
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !25 ; 2 uses
+  %i.aj = load i64, ptr %i.ai, align 8, !tbaa !25 ; 3 uses
   switch i64 %i.aj, label %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge [
     i64 0, label %_ZN4llvh11raw_ostreamlsEPKc.exit114
     i64 1, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
@@ -226,11 +226,7 @@ bb.j:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.ar = ptrtoint ptr %i.ap to i64
   %i.as = sub i64 %i.aq, %i.ar
   %i.at = icmp ult i64 %i.as, 7
-  br i1 %i.at, label %8, label %bb.k
-
-8:                                                ; preds = %bb.j
-  %9 = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %2, ptr noundef nonnull @.str.6, i64 noundef 7) #19 ; 0 uses
-  br label %_ZN4llvh11raw_ostreamlsEPKc.exit107
+  br i1 %i.at, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ap, ptr noundef nonnull align 1 dereferenceable(7) @.str.6, i64 7, i1 false)
@@ -239,12 +235,13 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.av, ptr %i.ao, align 8, !tbaa !124
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit107
 
-_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %10 = phi ptr [ %.pre205, %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge ], [ %i.ak, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
-  %i.aw = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %2, ptr noundef %10, i64 noundef %i.aj) #19 ; 0 uses
+_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit, %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge, %bb.j
+  %.sink = phi i64 [ 7, %bb.j ], [ %i.aj, %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge ], [ %i.aj, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
+  %.str.6.sink = phi ptr [ @.str.6, %bb.j ], [ %.pre205, %_ZN4llvh11raw_ostreamlsEPKc.exit103._ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread_crit_edge ], [ %i.ak, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ]
+  %i.aw = tail call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostream5writeEPKcm(ptr noundef nonnull align 8 dereferenceable(36) %2, ptr noundef %.str.6.sink, i64 noundef %.sink) #19 ; 0 uses
   br label %_ZN4llvh11raw_ostreamlsEPKc.exit107
 
-_ZN4llvh11raw_ostreamlsEPKc.exit107:              ; preds = %bb.k, %8, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+_ZN4llvh11raw_ostreamlsEPKc.exit107:              ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %bb.k
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !144
   %.not89 = icmp eq i32 %i.ay, -1

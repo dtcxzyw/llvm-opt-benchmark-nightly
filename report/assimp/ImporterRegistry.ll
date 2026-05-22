@@ -201,7 +201,6 @@ _ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit221: ; preds = 
   %i.ro = landingpad { ptr, i32 }
           cleanup
   tail call void @_ZN6Assimp12BaseImporterD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(112) %i.rl) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.rl, i64 noundef 112) #12
   br label %bb.ky
 
 bb.dy:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit221
@@ -604,197 +603,168 @@ _ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit429: ; preds = 
 bb.js:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit
   %i.anm = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.am, i64 noundef 136) #12
   br label %bb.ky
 
 bb.jt:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit69
   %i.ann = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cc, i64 noundef 168) #12
   br label %bb.ky
 
 bb.ju:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit77
   %i.ano = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.cx, i64 noundef 296) #12
   br label %bb.ky
 
 bb.jv:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit85
   %i.anp = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ds, i64 noundef 104) #12
   br label %bb.ky
 
 bb.jw:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit93
   %i.anq = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.en, i64 noundef 96) #12
   br label %bb.ky
 
 bb.jx:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit101
   %i.anr = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.fi, i64 noundef 160) #12
   br label %bb.ky
 
 bb.jy:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit109
   %i.ans = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.gd, i64 noundef 104) #12
   br label %bb.ky
 
 bb.jz:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit117
   %i.ant = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.gy, i64 noundef 160) #12
   br label %bb.ky
 
 bb.ka:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit125
   %i.anu = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ht, i64 noundef 232) #12
   br label %bb.ky
 
 bb.kb:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit133
   %i.anv = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.io, i64 noundef 104) #12
   br label %bb.ky
 
 bb.kc:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit141
   %i.anw = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.jj, i64 noundef 144) #12
   br label %bb.ky
 
 bb.kd:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit149
   %i.anx = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ke, i64 noundef 112) #12
   br label %bb.ky
 
 bb.ke:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit157
   %i.any = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.kz, i64 noundef 240) #12
   br label %bb.ky
 
 bb.kf:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit205
   %i.anz = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.pv, i64 noundef 120) #12
   br label %bb.ky
 
 bb.kg:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit213
   %i.aoa = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.qq, i64 noundef 184) #12
   br label %bb.ky
 
 bb.kh:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit229
   %i.aob = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.sk, i64 noundef 192) #12
   br label %bb.ky
 
 bb.ki:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit237
   %i.aoc = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.tf, i64 noundef 72) #12
   br label %bb.ky
 
 bb.kj:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit253
   %i.aod = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ux, i64 noundef 384) #12
   br label %bb.ky
 
 bb.kk:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit261
   %i.aoe = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.vs, i64 noundef 80) #12
   br label %bb.ky
 
 bb.kl:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit269
   %i.aof = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.wn, i64 noundef 80) #12
   br label %bb.ky
 
 bb.km:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit277
   %i.aog = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.xi, i64 noundef 80) #12
   br label %bb.ky
 
 bb.kn:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit285
   %i.aoh = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.yd, i64 noundef 120) #12
   br label %bb.ky
 
 bb.ko:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit301
   %i.aoi = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aab, i64 noundef 776) #12
   br label %bb.ky
 
 bb.kp:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit309
   %i.aoj = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aaw, i64 noundef 80) #12
   br label %bb.ky
 
 bb.kq:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit325
   %i.aok = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.acm, i64 noundef 80) #12
   br label %bb.ky
 
 bb.kr:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit333
   %i.aol = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.adh, i64 noundef 160) #12
   br label %bb.ky
 
 bb.ks:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit357
   %i.aom = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.afx, i64 noundef 88) #12
   br label %bb.ky
 
 bb.kt:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit381
   %i.aon = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aiq, i64 noundef 128) #12
   br label %bb.ky
 
 bb.ku:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit389
   %i.aoo = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ajl, i64 noundef 160) #12
   br label %bb.ky
 
 bb.kv:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit405
   %i.aop = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.alb, i64 noundef 120) #12
   br label %bb.ky
 
 bb.kw:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit413
   %i.aoq = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.alw, i64 noundef 128) #12
   br label %bb.ky
 
 bb.kx:                                            ; preds = %_ZNSt6vectorIPN6Assimp12BaseImporterESaIS2_EE9push_backEOS2_.exit421
   %i.aor = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.amr, i64 noundef 80) #12
   br label %bb.ky
 
 bb.ky:                                            ; preds = %bb.kx, %bb.kw, %bb.kv, %bb.ku, %bb.kt, %bb.ks, %bb.kr, %bb.kq, %bb.kp, %bb.ko, %bb.kn, %bb.km, %bb.kl, %bb.kk, %bb.kj, %bb.ki, %bb.kh, %.body, %bb.kg, %bb.kf, %bb.ke, %bb.kd, %bb.kc, %bb.kb, %bb.ka, %bb.jz, %bb.jy, %bb.jx, %bb.jw, %bb.jv, %bb.ju, %bb.jt, %bb.js
-  %.pn = phi { ptr, i32 } [ %i.aor, %bb.kx ], [ %i.aoq, %bb.kw ], [ %i.aop, %bb.kv ], [ %i.aoo, %bb.ku ], [ %i.aon, %bb.kt ], [ %i.ann, %bb.jt ], [ %i.aom, %bb.ks ], [ %i.anm, %bb.js ], [ %i.aol, %bb.kr ], [ %i.aok, %bb.kq ], [ %i.aoj, %bb.kp ], [ %i.aoi, %bb.ko ], [ %i.aoh, %bb.kn ], [ %i.aog, %bb.km ], [ %i.aof, %bb.kl ], [ %i.aoe, %bb.kk ], [ %i.aod, %bb.kj ], [ %i.aoc, %bb.ki ], [ %i.aob, %bb.kh ], [ %i.ro, %.body ], [ %i.aoa, %bb.kg ], [ %i.anz, %bb.kf ], [ %i.any, %bb.ke ], [ %i.anx, %bb.kd ], [ %i.anw, %bb.kc ], [ %i.anv, %bb.kb ], [ %i.anu, %bb.ka ], [ %i.ant, %bb.jz ], [ %i.ans, %bb.jy ], [ %i.anr, %bb.jx ], [ %i.anq, %bb.jw ], [ %i.anp, %bb.jv ], [ %i.ano, %bb.ju ]
+  %.sink718 = phi i64 [ 80, %bb.kx ], [ 128, %bb.kw ], [ 120, %bb.kv ], [ 160, %bb.ku ], [ 128, %bb.kt ], [ 88, %bb.ks ], [ 160, %bb.kr ], [ 80, %bb.kq ], [ 80, %bb.kp ], [ 776, %bb.ko ], [ 120, %bb.kn ], [ 80, %bb.km ], [ 80, %bb.kl ], [ 80, %bb.kk ], [ 384, %bb.kj ], [ 72, %bb.ki ], [ 192, %bb.kh ], [ 112, %.body ], [ 184, %bb.kg ], [ 120, %bb.kf ], [ 240, %bb.ke ], [ 112, %bb.kd ], [ 144, %bb.kc ], [ 104, %bb.kb ], [ 232, %bb.ka ], [ 160, %bb.jz ], [ 104, %bb.jy ], [ 160, %bb.jx ], [ 96, %bb.jw ], [ 104, %bb.jv ], [ 296, %bb.ju ], [ 168, %bb.jt ], [ 136, %bb.js ]
+  %.sink = phi ptr [ %i.amr, %bb.kx ], [ %i.alw, %bb.kw ], [ %i.alb, %bb.kv ], [ %i.ajl, %bb.ku ], [ %i.aiq, %bb.kt ], [ %i.afx, %bb.ks ], [ %i.adh, %bb.kr ], [ %i.acm, %bb.kq ], [ %i.aaw, %bb.kp ], [ %i.aab, %bb.ko ], [ %i.yd, %bb.kn ], [ %i.xi, %bb.km ], [ %i.wn, %bb.kl ], [ %i.vs, %bb.kk ], [ %i.ux, %bb.kj ], [ %i.tf, %bb.ki ], [ %i.sk, %bb.kh ], [ %i.rl, %.body ], [ %i.qq, %bb.kg ], [ %i.pv, %bb.kf ], [ %i.kz, %bb.ke ], [ %i.ke, %bb.kd ], [ %i.jj, %bb.kc ], [ %i.io, %bb.kb ], [ %i.ht, %bb.ka ], [ %i.gy, %bb.jz ], [ %i.gd, %bb.jy ], [ %i.fi, %bb.jx ], [ %i.en, %bb.jw ], [ %i.ds, %bb.jv ], [ %i.cx, %bb.ju ], [ %i.cc, %bb.jt ], [ %i.am, %bb.js ]
+  %.pn = phi { ptr, i32 } [ %i.aor, %bb.kx ], [ %i.aoq, %bb.kw ], [ %i.aop, %bb.kv ], [ %i.aoo, %bb.ku ], [ %i.aon, %bb.kt ], [ %i.aom, %bb.ks ], [ %i.aol, %bb.kr ], [ %i.aok, %bb.kq ], [ %i.aoj, %bb.kp ], [ %i.aoi, %bb.ko ], [ %i.aoh, %bb.kn ], [ %i.aog, %bb.km ], [ %i.aof, %bb.kl ], [ %i.aoe, %bb.kk ], [ %i.aod, %bb.kj ], [ %i.aoc, %bb.ki ], [ %i.aob, %bb.kh ], [ %i.ro, %.body ], [ %i.aoa, %bb.kg ], [ %i.anz, %bb.kf ], [ %i.any, %bb.ke ], [ %i.anx, %bb.kd ], [ %i.anw, %bb.kc ], [ %i.anv, %bb.kb ], [ %i.anu, %bb.ka ], [ %i.ant, %bb.jz ], [ %i.ans, %bb.jy ], [ %i.anr, %bb.jx ], [ %i.anq, %bb.jw ], [ %i.anp, %bb.jv ], [ %i.ano, %bb.ju ], [ %i.ann, %bb.jt ], [ %i.anm, %bb.js ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef %.sink718) #12
   resume { ptr, i32 } %.pn
 }
 

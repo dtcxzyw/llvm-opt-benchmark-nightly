@@ -201,7 +201,6 @@ bb.d:                                             ; preds = %bb.c
   %.ph = phi i64 [ 0, %bb.b ], [ 5, %bb.c ], [ 0, %bb.d ]
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 %.ph ; 2 uses
   %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.i) #6
-  %2 = add i64 %i.j, 1
   br label %bb.e
 
 .thread58.thread.i:                               ; preds = %bb.d
@@ -210,8 +209,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = icmp eq i32 %i.k, 0
   %i.m = select i1 %i.l, i64 8, i64 7
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 %i.m ; 3 uses
-  %i.o = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.n) #6
-  %3 = add i64 %i.o, 1                            ; 2 uses
+  %i.o = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %i.n) #6 ; 2 uses
   br i1 %.not, label %bb.e, label %.thread.i
 
 .thread.i:                                        ; preds = %.thread58.thread.i
@@ -219,21 +217,19 @@ bb.d:                                             ; preds = %bb.c
   store i8 92, ptr %1, align 1, !tbaa !7
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 92, ptr %i.q, align 1, !tbaa !7
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.p, ptr nonnull readonly align 1 %i.n, i64 %3, i1 false)
-  br label %.preheader.preheader.i
+  br label %bb.e
 
-bb.e:                                             ; preds = %.thread58.thread.i, %.thread58.thread.i.thread
-  %.ph5 = phi i64 [ %2, %.thread58.thread.i.thread ], [ %3, %.thread58.thread.i ]
-  %.ph6 = phi ptr [ %i.i, %.thread58.thread.i.thread ], [ %i.n, %.thread58.thread.i ]
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %1, ptr nonnull readonly align 1 %.ph6, i64 %.ph5, i1 false)
-  br label %.preheader.preheader.i
-
-.preheader.preheader.i:                           ; preds = %bb.e, %.thread.i
-  %4 = tail call ptr @uriUnescapeInPlaceExA(ptr noundef nonnull %1, i32 noundef 0, i32 noundef 3) #5 ; 0 uses
+bb.e:                                             ; preds = %.thread58.thread.i.thread, %.thread58.thread.i, %.thread.i
+  %.ph5.sink.in = phi i64 [ %i.o, %.thread.i ], [ %i.j, %.thread58.thread.i.thread ], [ %i.o, %.thread58.thread.i ]
+  %.ph6.sink = phi ptr [ %i.n, %.thread.i ], [ %i.i, %.thread58.thread.i.thread ], [ %i.n, %.thread58.thread.i ]
+  %.sink = phi ptr [ %i.p, %.thread.i ], [ %1, %.thread58.thread.i.thread ], [ %1, %.thread58.thread.i ]
+  %.ph5.sink = add i64 %.ph5.sink.in, 1
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink, ptr nonnull readonly align 1 %.ph6.sink, i64 %.ph5.sink, i1 false)
+  %2 = tail call ptr @uriUnescapeInPlaceExA(ptr noundef nonnull %1, i32 noundef 0, i32 noundef 3) #5 ; 0 uses
   br label %.preheader.i
 
-.preheader.i:                                     ; preds = %bb.g, %.preheader.preheader.i
-  %.0.i = phi ptr [ %i.s, %bb.g ], [ %1, %.preheader.preheader.i ] ; 3 uses
+.preheader.i:                                     ; preds = %bb.g, %bb.e
+  %.0.i = phi ptr [ %i.s, %bb.g ], [ %1, %bb.e ]  ; 3 uses
   %i.r = load i8, ptr %.0.i, align 1, !tbaa !7
   switch i8 %i.r, label %bb.g [
     i8 0, label %uriUriStringToFilenameA.exit

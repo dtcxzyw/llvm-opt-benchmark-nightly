@@ -201,7 +201,7 @@ bb.a:
   %27 = alloca %"class.arrow::Status", align 8    ; 5 uses
   %28 = alloca %"class.arrow::Result.49", align 8 ; 12 uses
   %29 = alloca %"class.arrow::internal::(anonymous namespace)::SparseCSFTensorConverter", align 16 ; 18 uses
-  %30 = alloca %"class.arrow::Status", align 8    ; 22 uses
+  %30 = alloca %"class.arrow::Status", align 8    ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #20
   %i.b = getelementptr inbounds nuw i8, ptr %29, i64 32
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(56) %29, i8 0, i64 32, i1 false)
@@ -604,15 +604,11 @@ _ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %bb.ba
   %i.gl = load ptr, ptr %9, align 8, !tbaa !26, !noalias !92 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20, !noalias !92
   %i.gm = icmp eq ptr %i.gl, null
-  br i1 %i.gm, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i.i, label %_ZN5arrow6StatusD2Ev.exit263.i
+  br i1 %i.gm, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i.i, label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.sink.split.i
 
 _ZN5arrow6StatusD2Ev.exit._crit_edge.i.i:         ; preds = %.noexc261.i
   %.pre.i.i = load i64, ptr %i.ge, align 8, !tbaa !83, !noalias !88
   br label %_ZN5arrow6StatusD2Ev.exit267.i
-
-_ZN5arrow6StatusD2Ev.exit263.i:                   ; preds = %.noexc261.i
-  store ptr %i.gl, ptr %30, align 8, !tbaa !26, !alias.scope !23
-  br label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i
 
 bb.bb:                                            ; preds = %bb.bd, %bb.az
   %i.gn = landingpad { ptr, i32 }
@@ -665,15 +661,11 @@ _ZN5arrow6StatusD2Ev.exit.i268.i:                 ; preds = %bb.be
   %i.hh = load ptr, ptr %8, align 8, !tbaa !26, !noalias !97 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20, !noalias !97
   %i.hi = icmp eq ptr %i.hh, null
-  br i1 %i.hi, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i270.i, label %_ZN5arrow6StatusD2Ev.exit275.i
+  br i1 %i.hi, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i270.i, label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.sink.split.i
 
 _ZN5arrow6StatusD2Ev.exit._crit_edge.i270.i:      ; preds = %.noexc272.i
   %.pre.i271.i = load i64, ptr %i.ha, align 8, !tbaa !83, !noalias !94
   br label %_ZN5arrow6StatusD2Ev.exit279.i
-
-_ZN5arrow6StatusD2Ev.exit275.i:                   ; preds = %.noexc272.i
-  store ptr %i.hh, ptr %30, align 8, !tbaa !26, !alias.scope !23
-  br label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i
 
 bb.bf:                                            ; preds = %_ZN5arrow6StatusD2Ev.exit.i268.i
   %i.hj = landingpad { ptr, i32 }
@@ -792,7 +784,7 @@ _ZN5arrow6StatusD2Ev.exit.i280.i:                 ; preds = %bb.bi
   %i.jm = load ptr, ptr %7, align 8, !tbaa !26, !noalias !104 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #20, !noalias !104
   %i.jn = icmp eq ptr %i.jm, null
-  br i1 %i.jn, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i282.i, label %.critedge221.i
+  br i1 %i.jn, label %_ZN5arrow6StatusD2Ev.exit._crit_edge.i282.i, label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.sink.split.i
 
 _ZN5arrow6StatusD2Ev.exit._crit_edge.i282.i:      ; preds = %.noexc284.i
   %.pre.i283.i = load i64, ptr %i.jf, align 8, !tbaa !83, !noalias !101
@@ -820,10 +812,6 @@ _ZN5arrow6StatusD2Ev.exit291.i:                   ; preds = %_ZN5arrow6StatusD2E
   store ptr null, ptr %30, align 8, !tbaa !26, !alias.scope !23
   %exitcond576.not.i = icmp eq i64 %i.ja, %i.cq
   br i1 %exitcond576.not.i, label %.critedge222.i, label %bb.bh, !llvm.loop !105
-
-.critedge221.i:                                   ; preds = %.noexc284.i
-  store ptr %i.jm, ptr %30, align 8, !tbaa !26, !alias.scope !23
-  br label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i
 
 .critedge222.i:                                   ; preds = %_ZN5arrow6StatusD2Ev.exit291.i, %.critedge219.preheader.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #20, !noalias !23
@@ -1227,7 +1215,12 @@ bb.dw:                                            ; preds = %bb.dv, %bb.ce
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #20, !noalias !23
   br label %bb.eo
 
-_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i: ; preds = %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit359.i, %.critedge221.i, %_ZN5arrow6StatusD2Ev.exit275.i, %_ZN5arrow6StatusD2Ev.exit263.i, %bb.ab
+_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.sink.split.i: ; preds = %.noexc272.i, %.noexc261.i, %.noexc284.i
+  %.lcssa.sink.i = phi ptr [ %i.jm, %.noexc284.i ], [ %i.gl, %.noexc261.i ], [ %i.hh, %.noexc272.i ]
+  store ptr %.lcssa.sink.i, ptr %30, align 8, !tbaa !26, !alias.scope !23
+  br label %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i
+
+_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.i: ; preds = %_ZN5arrow6Status14NotImplementedIJRA19_KcEEES0_DpOT_.exit.sink.split.i, %_ZNSt6vectorISt10shared_ptrIN5arrow6BufferEESaIS3_EED2Ev.exit359.i, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20, !noalias !23
   %i.ri = load ptr, ptr %21, align 8, !tbaa !80, !noalias !23 ; 3 uses
   %i.rj = getelementptr inbounds nuw i8, ptr %21, i64 8

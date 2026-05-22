@@ -201,12 +201,22 @@ bb.a:
     i8 3, label %bb.b
   ]
 
-common.ret:                                       ; preds = %4, %bb.i, %1, %bb.d, %bb.a
+common.ret.sink.split:                            ; preds = %bb.i, %bb.d
+  %.val4.sink = phi ptr [ %.val2, %bb.d ], [ %.val4, %bb.i ]
+  %.val3.sink14 = phi ptr [ %.val, %bb.d ], [ %.val3, %bb.i ] ; 2 uses
+  %.sink = phi i64 [ %i.g, %bb.d ], [ %i.s, %bb.i ]
+  %1 = getelementptr inbounds nuw i8, ptr %.val4.sink, i64 16
+  %2 = load i64, ptr %1, align 8, !range !5, !invariant.load !3
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3.sink14) ]
+  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.sink14, i64 noundef range(i64 1, -9223372036854775808) %.sink, i64 noundef range(i64 1, 536870913) %2) #15
+  br label %common.ret
+
+common.ret:                                       ; preds = %common.ret.sink.split, %bb.i, %bb.d, %bb.a
   ret void
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.val = load ptr, ptr %i.c, align 8             ; 5 uses
+  %.val = load ptr, ptr %i.c, align 8             ; 4 uses
   %i.d = getelementptr i8, ptr %0, i64 48
   %.val2 = load ptr, ptr %i.d, align 8, !nonnull !3, !align !47, !noundef !3 ; 5 uses
   %i.e = load ptr, ptr %.val2, align 8, !invariant.load !3 ; 2 uses
@@ -222,14 +232,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %.val2, i64 8
   %i.g = load i64, ptr %i.f, align 8, !range !4, !invariant.load !3 ; 2 uses
   %i.h = icmp eq i64 %i.g, 0
-  br i1 %i.h, label %common.ret, label %1
-
-1:                                                ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %.val2, i64 16
-  %3 = load i64, ptr %2, align 8, !range !5, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
-  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, -9223372036854775808) %i.g, i64 noundef range(i64 1, 536870913) %3) #15
-  br label %common.ret
+  br i1 %i.h, label %common.ret, label %common.ret.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.i = landingpad { ptr, i32 }
@@ -239,19 +242,23 @@ bb.e:                                             ; preds = %bb.c
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %common.resume, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.m = getelementptr inbounds nuw i8, ptr %.val2, i64 16
+bb.f:                                             ; preds = %bb.e, %bb.j
+  %.val4.sink20 = phi ptr [ %.val4, %bb.j ], [ %.val2, %bb.e ]
+  %.sink17 = phi i64 [ %i.w, %bb.j ], [ %i.k, %bb.e ]
+  %.val3.sink16 = phi ptr [ %.val3, %bb.j ], [ %.val, %bb.e ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.u, %bb.j ], [ %i.i, %bb.e ]
+  %i.m = getelementptr inbounds nuw i8, ptr %.val4.sink20, i64 16
   %i.n = load i64, ptr %i.m, align 8, !range !5, !invariant.load !3
-  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val, i64 noundef range(i64 1, -9223372036854775808) %i.k, i64 noundef range(i64 1, 536870913) %i.n) #15
+  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3.sink16, i64 noundef range(i64 1, -9223372036854775808) %.sink17, i64 noundef range(i64 1, 536870913) %i.n) #15
   br label %common.resume
 
-common.resume:                                    ; preds = %bb.j, %7, %bb.e, %bb.f
-  %common.resume.op = phi { ptr, i32 } [ %i.i, %bb.e ], [ %i.i, %bb.f ], [ %i.u, %7 ], [ %i.u, %bb.j ]
+common.resume:                                    ; preds = %bb.f, %bb.j, %bb.e
+  %common.resume.op = phi { ptr, i32 } [ %i.i, %bb.e ], [ %i.u, %bb.j ], [ %common.resume.op.ph, %bb.f ]
   resume { ptr, i32 } %common.resume.op
 
 bb.g:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %.val3 = load ptr, ptr %i.o, align 8            ; 5 uses
+  %.val3 = load ptr, ptr %i.o, align 8            ; 4 uses
   %i.p = getelementptr i8, ptr %0, i64 48
   %.val4 = load ptr, ptr %i.p, align 8, !nonnull !3, !align !47, !noundef !3 ; 5 uses
   %i.q = load ptr, ptr %.val4, align 8, !invariant.load !3 ; 2 uses
@@ -267,14 +274,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %.val4, i64 8
   %i.s = load i64, ptr %i.r, align 8, !range !4, !invariant.load !3 ; 2 uses
   %i.t = icmp eq i64 %i.s, 0
-  br i1 %i.t, label %common.ret, label %4
-
-4:                                                ; preds = %bb.i
-  %5 = getelementptr inbounds nuw i8, ptr %.val4, i64 16
-  %6 = load i64, ptr %5, align 8, !range !5, !invariant.load !3
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val3) ]
-  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3, i64 noundef range(i64 1, -9223372036854775808) %i.s, i64 noundef range(i64 1, 536870913) %6) #15
-  br label %common.ret
+  br i1 %i.t, label %common.ret, label %common.ret.sink.split
 
 bb.j:                                             ; preds = %bb.h
   %i.u = landingpad { ptr, i32 }
@@ -282,13 +282,7 @@ bb.j:                                             ; preds = %bb.h
   %i.v = getelementptr inbounds nuw i8, ptr %.val4, i64 8
   %i.w = load i64, ptr %i.v, align 8, !range !4, !invariant.load !3 ; 2 uses
   %i.x = icmp eq i64 %i.w, 0
-  br i1 %i.x, label %common.resume, label %7
-
-7:                                                ; preds = %bb.j
-  %8 = getelementptr inbounds nuw i8, ptr %.val4, i64 16
-  %9 = load i64, ptr %8, align 8, !range !5, !invariant.load !3
-  tail call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val3, i64 noundef range(i64 1, -9223372036854775808) %i.w, i64 noundef range(i64 1, 536870913) %9) #15
-  br label %common.resume
+  br i1 %i.x, label %common.resume, label %bb.f
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -691,15 +685,19 @@ bb.k:                                             ; preds = %bb.i
   %i.x = icmp eq i64 %i.w, -9223372036854775789
   br i1 %i.x, label %bb.l, label %bb.m
 
-common.ret:                                       ; preds = %bb.ab, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs7JU2D1aBbVY_15deltalake_mount.exit23, %bb.l
-  %.sink = phi i8 [ 4, %bb.ab ], [ 1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs7JU2D1aBbVY_15deltalake_mount.exit23 ], [ 3, %bb.l ]
+common.ret.sink.split:                            ; preds = %bb.l, %bb.ab
+  %.sink.ph = phi i8 [ 3, %bb.l ], [ 4, %bb.ab ]
+  store i64 -9223372036854775789, ptr %0, align 8
+  br label %common.ret
+
+common.ret:                                       ; preds = %common.ret.sink.split, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs7JU2D1aBbVY_15deltalake_mount.exit23
+  %.sink = phi i8 [ 1, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs7JU2D1aBbVY_15deltalake_mount.exit23 ], [ %.sink.ph, %common.ret.sink.split ]
   store i8 %.sink, ptr %i.e, align 8
   ret void
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  store i64 -9223372036854775789, ptr %0, align 8
-  br label %common.ret
+  br label %common.ret.sink.split
 
 bb.m:                                             ; preds = %bb.k
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -736,13 +734,7 @@ bb.q:                                             ; preds = %bb.n
   %i.ag = getelementptr inbounds nuw i8, ptr %.val13, i64 8
   %i.ah = load i64, ptr %i.ag, align 8, !range !4, !invariant.load !3 ; 2 uses
   %i.ai = icmp eq i64 %i.ah, 0
-  br i1 %i.ai, label %.body17, label %3
-
-3:                                                ; preds = %bb.q
-  %4 = getelementptr inbounds nuw i8, ptr %.val13, i64 16
-  %5 = load i64, ptr %4, align 8, !range !5, !invariant.load !3
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val12, i64 noundef range(i64 1, -9223372036854775808) %i.ah, i64 noundef range(i64 1, 536870913) %5) #15
-  br label %.body17
+  br i1 %i.ai, label %.body17, label %.body17.sink.split
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB4_6marker4SendEL_EEECs7JU2D1aBbVY_15deltalake_mount.exit: ; preds = %bb.p, %bb.o
   %.not.i = icmp eq i64 %i.w, -9223372036854775790
@@ -807,8 +799,18 @@ bb.x:                                             ; preds = %bb.j, %bb.z
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #16
   unreachable
 
-.body17:                                          ; preds = %bb.j, %bb.d, %bb.q, %3, %6, %bb.ag, %bb.t, %bb.z
-  %.pn4.pn = phi { ptr, i32 } [ %i.bg, %6 ], [ %i.ar, %bb.t ], [ %i.av, %bb.z ], [ %i.bg, %bb.ag ], [ %i.p, %bb.d ], [ %i.u, %bb.j ], [ %i.af, %bb.q ], [ %i.af, %3 ]
+.body17.sink.split:                               ; preds = %bb.q, %bb.ag
+  %.val13.sink = phi ptr [ %.val9, %bb.ag ], [ %.val13, %bb.q ]
+  %.sink44 = phi i64 [ %i.bi, %bb.ag ], [ %i.ah, %bb.q ]
+  %.val12.sink = phi ptr [ %.val8, %bb.ag ], [ %.val12, %bb.q ]
+  %.pn4.pn.ph = phi { ptr, i32 } [ %i.bg, %bb.ag ], [ %i.af, %bb.q ]
+  %3 = getelementptr inbounds nuw i8, ptr %.val13.sink, i64 16
+  %4 = load i64, ptr %3, align 8, !range !5, !invariant.load !3
+  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val12.sink, i64 noundef range(i64 1, -9223372036854775808) %.sink44, i64 noundef range(i64 1, 536870913) %4) #15
+  br label %.body17
+
+.body17:                                          ; preds = %.body17.sink.split, %bb.j, %bb.d, %bb.q, %bb.ag, %bb.t, %bb.z
+  %.pn4.pn = phi { ptr, i32 } [ %i.af, %bb.q ], [ %i.ar, %bb.t ], [ %i.av, %bb.z ], [ %i.bg, %bb.ag ], [ %i.p, %bb.d ], [ %i.u, %bb.j ], [ %.pn4.pn.ph, %.body17.sink.split ]
   store i8 2, ptr %i.e, align 8
   resume { ptr, i32 } %.pn4.pn
 
@@ -835,8 +837,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  store i64 -9223372036854775789, ptr %0, align 8
-  br label %common.ret
+  br label %common.ret.sink.split
 
 bb.ac:                                            ; preds = %bb.aa
   %.sroa.330.0..sroa_idx31 = getelementptr inbounds nuw i8, ptr %i.c, i64 8
@@ -873,13 +874,7 @@ bb.ag:                                            ; preds = %bb.ad
   %i.bh = getelementptr inbounds nuw i8, ptr %.val9, i64 8
   %i.bi = load i64, ptr %i.bh, align 8, !range !4, !invariant.load !3 ; 2 uses
   %i.bj = icmp eq i64 %i.bi, 0
-  br i1 %i.bj, label %.body17, label %6
-
-6:                                                ; preds = %bb.ag
-  %7 = getelementptr inbounds nuw i8, ptr %.val9, i64 16
-  %8 = load i64, ptr %7, align 8, !range !5, !invariant.load !3
-  call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8, i64 noundef range(i64 1, -9223372036854775808) %i.bi, i64 noundef range(i64 1, 536870913) %8) #15
-  br label %.body17
+  br i1 %i.bj, label %.body17, label %.body17.sink.split
 }
 
 ; Function Attrs: nonlazybind uwtable

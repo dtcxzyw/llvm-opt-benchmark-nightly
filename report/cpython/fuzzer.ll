@@ -201,7 +201,7 @@ bb.dd:                                            ; preds = %bb.dc
   br i1 %i.iy, label %fuzz_csv_reader.exit, label %bb.de
 
 bb.de:                                            ; preds = %bb.dd
-  %i.iz = tail call ptr @PyUnicode_FromString(ptr noundef %0) #8 ; 8 uses
+  %i.iz = tail call ptr @PyUnicode_FromString(ptr noundef %0) #8 ; 7 uses
   %i.ja = icmp eq ptr %i.iz, null
   br i1 %i.ja, label %bb.df, label %bb.dg
 
@@ -223,11 +223,7 @@ bb.di:                                            ; preds = %bb.dh
   %i.je = add nsw i32 %i.jd, -1                   ; 2 uses
   store i32 %i.je, ptr %i.iz, align 8, !tbaa !26
   %i.jf = icmp eq i32 %i.je, 0
-  br i1 %i.jf, label %3, label %fuzz_csv_reader.exit
-
-3:                                                ; preds = %bb.di
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.iz) #8
-  br label %fuzz_csv_reader.exit
+  br i1 %i.jf, label %bb.ds, label %fuzz_csv_reader.exit
 
 bb.dj:                                            ; preds = %bb.dg
   %i.jg = load ptr, ptr @csv_module, align 8, !tbaa !24
@@ -300,11 +296,11 @@ bb.dr:                                            ; preds = %Py_XDECREF.exit.i10
   %i.jv = icmp eq i32 %i.ju, 0
   br i1 %i.jv, label %bb.ds, label %fuzz_csv_reader.exit
 
-bb.ds:                                            ; preds = %bb.dr
+bb.ds:                                            ; preds = %bb.dr, %bb.di
   tail call void @_Py_Dealloc(ptr noundef nonnull %i.iz) #8
   br label %fuzz_csv_reader.exit
 
-fuzz_csv_reader.exit:                             ; preds = %bb.dc, %bb.dd, %bb.df, %bb.dh, %bb.di, %3, %Py_XDECREF.exit.i106, %bb.dr, %bb.ds
+fuzz_csv_reader.exit:                             ; preds = %bb.dc, %bb.dd, %bb.df, %bb.dh, %bb.di, %Py_XDECREF.exit.i106, %bb.dr, %bb.ds
   %i.jw = tail call ptr @PyErr_Occurred() #8
   %.not.i59 = icmp eq ptr %i.jw, null
   br i1 %.not.i59, label %_run_fuzz.exit60, label %bb.dt

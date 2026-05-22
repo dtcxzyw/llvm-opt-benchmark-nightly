@@ -201,25 +201,25 @@ bb.a:
 define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFvPN6hermes2vm7HadesGCERNS1_12RootAcceptorEEZNS0_18ConsoleHostContextC1ERNS1_7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation"(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #15 align 2 {
 bb.a:
   switch i32 %2, label %"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit" [
-    i32 1, label %bb.b
-    i32 0, label %bb.c
-    i32 2, label %bb.d
+    i32 1, label %bb.d
+    i32 0, label %bb.b
+    i32 2, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
-  store ptr %1, ptr %0, align 8, !tbaa !158
-  br label %"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit"
+  br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !516
-  br label %"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit"
-
-bb.d:                                             ; preds = %bb.a
   %.val = load i64, ptr %1, align 8
   store i64 %.val, ptr %0, align 8, !tbaa !31
   br label %"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit"
 
-"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit": ; preds = %bb.a, %bb.d, %bb.c, %bb.b
+bb.d:                                             ; preds = %bb.a, %bb.b
+  %.sink = phi ptr [ null, %bb.b ], [ %1, %bb.a ]
+  store ptr %.sink, ptr %0, align 8, !tbaa !158
+  br label %"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit"
+
+"_ZNSt14_Function_base13_Base_managerIZN6hermes18ConsoleHostContextC1ERNS1_2vm7RuntimeEE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit": ; preds = %bb.d, %bb.a, %bb.c
   ret i1 false
 }
 
@@ -622,6 +622,4 @@ begin_hunk_1_@llvm.umin.i64
 !513 = !{!514, !32, i64 0}
 !514 = !{!"_ZTSZN6hermes18ConsoleHostContextC1ERNS_2vm7RuntimeEE3$_0", !32, i64 0}
 !515 = distinct !{null, null, null, null}
-!516 = !{!517, !517, i64 0}
-!517 = !{!"p1 _ZTSSt9type_info", !10, i64 0}
 end_hunk_1

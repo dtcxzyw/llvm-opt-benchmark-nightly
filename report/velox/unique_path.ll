@@ -63,7 +63,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.h
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %.024 = phi i32 [ %i.c, %bb.b ], [ %i.a, %bb.a ] ; 3 uses
+  %.024 = phi i32 [ %i.c, %bb.b ], [ %i.a, %bb.a ] ; 2 uses
   %.not = icmp eq i64 %1, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
@@ -79,11 +79,7 @@ bb.e:                                             ; preds = %.lr.ph
   %i.j = tail call ptr @__errno_location() #11
   %i.k = load i32, ptr %i.j, align 4, !tbaa !3    ; 2 uses
   %i.l = icmp eq i32 %i.k, 4
-  br i1 %i.l, label %bb.g, label %.thread, !llvm.loop !8
-
-.thread:                                          ; preds = %bb.e
-  %2 = tail call noundef i32 @close(i32 noundef %.024) ; 0 uses
-  br label %bb.h
+  br i1 %i.l, label %bb.g, label %._crit_edge, !llvm.loop !8
 
 bb.f:                                             ; preds = %.lr.ph
   %i.m = add i64 %i.h, %.02034
@@ -96,12 +92,13 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   %i.o = icmp ult i64 %.121, %1
   br i1 %i.o, label %.lr.ph, label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.g, %bb.d
+._crit_edge:                                      ; preds = %bb.g, %bb.e, %bb.d
+  %.4.ph = phi i32 [ 0, %bb.d ], [ %i.k, %bb.e ], [ 0, %bb.g ]
   %i.p = tail call noundef i32 @close(i32 noundef %.024) ; 0 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %.thread, %._crit_edge, %bb.c
-  %.4 = phi i32 [ %i.f, %bb.c ], [ %i.k, %.thread ], [ 0, %._crit_edge ]
+bb.h:                                             ; preds = %._crit_edge, %bb.c
+  %.4 = phi i32 [ %i.f, %bb.c ], [ %.4.ph, %._crit_edge ]
   ret i32 %.4
 }
 

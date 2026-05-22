@@ -201,11 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.r = shl nuw nsw i64 %i.q, 3
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #14 ; 3 uses
   %i.t = icmp eq ptr %i.s, null
-  br i1 %i.t, label %2, label %.sink.split
-
-2:                                                ; preds = %bb.d
-  tail call void @_ZN4llvh22report_bad_alloc_errorEPKcb(ptr noundef nonnull @.str, i1 noundef zeroext true) #13
-  br label %.sink.split
+  br i1 %i.t, label %bb.e, label %.sink.split
 
 .thread11:                                        ; preds = %.thread9
   %i.u = zext i32 %i.p to i64
@@ -214,12 +210,13 @@ bb.d:                                             ; preds = %bb.c
   %i.x = icmp eq ptr %i.w, null
   br i1 %i.x, label %bb.e, label %.sink.split
 
-bb.e:                                             ; preds = %.thread11
+bb.e:                                             ; preds = %.thread11, %bb.d
+  %.sink.ph = phi ptr [ %i.s, %bb.d ], [ %i.w, %.thread11 ]
   tail call void @_ZN4llvh22report_bad_alloc_errorEPKcb(ptr noundef nonnull @.str, i1 noundef zeroext true) #13
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.e, %.thread11, %2, %bb.d, %.thread8, %bb.b
-  %.sink = phi ptr [ %i.s, %2 ], [ %i.c, %bb.b ], [ %.pre, %.thread8 ], [ %i.s, %bb.d ], [ %i.w, %.thread11 ], [ %i.w, %bb.e ] ; 2 uses
+.sink.split:                                      ; preds = %bb.e, %.thread11, %bb.d, %.thread8, %bb.b
+  %.sink = phi ptr [ %i.w, %.thread11 ], [ %i.c, %bb.b ], [ %.pre, %.thread8 ], [ %i.s, %bb.d ], [ %.sink.ph, %bb.e ] ; 2 uses
   store ptr %.sink, ptr %i.a, align 8, !tbaa !7
   br label %bb.f
 

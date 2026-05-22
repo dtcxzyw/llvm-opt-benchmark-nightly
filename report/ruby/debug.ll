@@ -201,11 +201,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.a
   %i.e = tail call i32 @strncmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(5) @.str.5, i64 noundef 4) #8
   %i.f = icmp eq i32 %i.e, 0
-  br i1 %i.f, label %3, label %.thread
-
-3:                                                ; preds = %bb.d
-  store i32 1, ptr @ruby_enable_coredump, align 4, !tbaa !7
-  br label %.thread
+  br i1 %i.f, label %.thread.sink.split, label %.thread
 
 sub_0:                                            ; preds = %bb.a
   %i.g = load i8, ptr %0, align 1
@@ -216,11 +212,7 @@ sub_0:                                            ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.i = load i8, ptr %i.h, align 1
   %i.j = icmp eq i8 %i.i, 105
-  br i1 %i.j, label %4, label %.thread
-
-4:                                                ; preds = %.tail
-  store i32 1, ptr @ruby_on_ci, align 4, !tbaa !7
-  br label %.thread
+  br i1 %i.j, label %.thread.sink.split, label %.thread
 
 bb.e:                                             ; preds = %bb.a
   %i.k = icmp ugt i32 %1, 5
@@ -238,7 +230,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.p = icmp eq i32 %1, 6
-  br i1 %i.p, label %.thread47, label %.thread46
+  br i1 %i.p, label %.thread.sink.split, label %.thread46
 
 .thread46:                                        ; preds = %.thread45, %bb.g
   %i.q = getelementptr i8, ptr %0, i64 6
@@ -250,11 +242,7 @@ bb.h:                                             ; preds = %.thread46
   %i.t = getelementptr i8, ptr %0, i64 7          ; 2 uses
   %i.u = add i32 %1, -7                           ; 4 uses
   %.not = icmp eq i32 %i.u, 0
-  br i1 %.not, label %.thread47, label %.preheader
-
-.thread47:                                        ; preds = %bb.g, %bb.h
-  store i32 1, ptr @ruby_rgengc_debug, align 4, !tbaa !7
-  br label %.thread
+  br i1 %.not, label %.thread.sink.split, label %.preheader
 
 .preheader:                                       ; preds = %bb.h
   %i.v = sext i32 %i.u to i64
@@ -293,8 +281,13 @@ bb.l:                                             ; preds = %bb.k
   %i.aj = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.ai, i32 noundef 1, ptr noundef nonnull @.str.8, i32 noundef %.236, ptr noundef %.2) #7 ; 0 uses
   br label %.thread
 
-.thread:                                          ; preds = %sub_0, %bb.j, %.tail, %bb.d, %.thread45, %bb.e, %bb.f, %.thread46, %.thread47, %bb.l, %bb.k, %4, %3, %bb.c
-  %.032 = phi i32 [ 1, %bb.c ], [ 1, %3 ], [ 1, %4 ], [ 1, %.thread47 ], [ 1, %bb.k ], [ 1, %bb.l ], [ 0, %.thread46 ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %.tail ], [ 0, %.thread45 ], [ 0, %bb.d ], [ 1, %bb.j ], [ 0, %sub_0 ]
+.thread.sink.split:                               ; preds = %bb.h, %bb.g, %.tail, %bb.d
+  %ruby_rgengc_debug.sink = phi ptr [ @ruby_on_ci, %.tail ], [ @ruby_enable_coredump, %bb.d ], [ @ruby_rgengc_debug, %bb.g ], [ @ruby_rgengc_debug, %bb.h ]
+  store i32 1, ptr %ruby_rgengc_debug.sink, align 4, !tbaa !7
+  br label %.thread
+
+.thread:                                          ; preds = %.thread.sink.split, %sub_0, %bb.j, %.tail, %bb.d, %.thread45, %bb.e, %bb.f, %.thread46, %bb.l, %bb.k, %bb.c
+  %.032 = phi i32 [ 1, %bb.c ], [ 0, %bb.d ], [ 1, %bb.j ], [ 0, %sub_0 ], [ 1, %bb.k ], [ 1, %bb.l ], [ 0, %.thread46 ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %.tail ], [ 0, %.thread45 ], [ 1, %.thread.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.032

@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br label %Py_DECREF.exit18
 
 bb.c:                                             ; preds = %bb.a
-  %i.d = tail call ptr @PyDict_New() #4           ; 9 uses
+  %i.d = tail call ptr @PyDict_New() #4           ; 8 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %Py_DECREF.exit18, label %bb.d
 
@@ -219,11 +219,7 @@ bb.f:                                             ; preds = %bb.e
   %i.i = add nsw i32 %i.h, -1                     ; 2 uses
   store i32 %i.i, ptr %i.d, align 8, !tbaa !13
   %i.j = icmp eq i32 %i.i, 0
-  br i1 %i.j, label %2, label %Py_DECREF.exit18
-
-2:                                                ; preds = %bb.f
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.d) #4
-  br label %Py_DECREF.exit18
+  br i1 %i.j, label %bb.k, label %Py_DECREF.exit18
 
 bb.g:                                             ; preds = %bb.d
   %i.k = tail call i32 @PyDict_SetItemString(ptr noundef nonnull %i.d, ptr noundef nonnull @.str.44, ptr noundef nonnull %i.f) #4 ; 0 uses
@@ -253,12 +249,13 @@ bb.j:                                             ; preds = %Py_DECREF.exit16
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %bb.k, label %Py_DECREF.exit18
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %bb.j, %bb.f
+  %.0.ph = phi ptr [ null, %bb.f ], [ %i.o, %bb.j ]
   tail call void @_Py_Dealloc(ptr noundef nonnull %i.d) #4
   br label %Py_DECREF.exit18
 
-Py_DECREF.exit18:                                 ; preds = %bb.k, %bb.j, %Py_DECREF.exit16, %2, %bb.f, %bb.e, %bb.c, %bb.b
-  %.0 = phi ptr [ null, %bb.b ], [ null, %2 ], [ null, %bb.c ], [ null, %bb.e ], [ null, %bb.f ], [ %i.o, %Py_DECREF.exit16 ], [ %i.o, %bb.j ], [ %i.o, %bb.k ]
+Py_DECREF.exit18:                                 ; preds = %bb.k, %bb.j, %Py_DECREF.exit16, %bb.f, %bb.e, %bb.c, %bb.b
+  %.0 = phi ptr [ null, %bb.b ], [ %i.o, %bb.j ], [ null, %bb.c ], [ null, %bb.e ], [ null, %bb.f ], [ %i.o, %Py_DECREF.exit16 ], [ %.0.ph, %bb.k ]
   ret ptr %.0
 }
 

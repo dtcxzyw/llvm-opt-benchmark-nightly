@@ -201,7 +201,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 %i.f ; 9 uses
   %storemerge.i = tail call i64 @llvm.usub.sat.i64(i64 %8, i64 %i.f)
   %.0.i = select i1 %.not.i, ptr null, ptr %i.g   ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 4 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %1 ; 2 uses
   %i.i = icmp ult i64 %storemerge.i, 7944
   br i1 %i.i, label %.thread, label %bb.b
 
@@ -317,18 +317,14 @@ bb.u:                                             ; preds = %bb.t, %bb.r
   %i.ap = phi i32 [ 0, %bb.t ], [ %i.al, %bb.r ]
   %.not172 = icmp eq i32 %i.ap, 0
   %or.cond238 = or i1 %or.cond.not241, %.not172
-  br i1 %or.cond238, label %.thread198, label %.thread234
+  br i1 %or.cond238, label %.thread198, label %bb.aa
 
 .thread233:                                       ; preds = %bb.s
-  br i1 %or.cond.not241, label %.thread198, label %.thread234
-
-.thread234:                                       ; preds = %bb.u, %.thread233
-  %12 = call fastcc noundef i64 @_ZN11duckdb_zstdL27HUF_compressCTable_internalEPhS0_S0_PKvmNS_15HUF_nbStreams_eEPKmi(ptr noundef %0, ptr noundef %0, ptr noundef nonnull %i.h, ptr noundef %2, i64 noundef %3, i32 noundef %6, ptr noundef %9, i32 noundef %11)
-  br label %.thread
+  br i1 %or.cond.not241, label %.thread198, label %bb.aa
 
 .thread198:                                       ; preds = %.thread233, %bb.q, %bb.u
   %i.aq = load i32, ptr %i.a, align 4, !tbaa !3
-  %i.ar = getelementptr inbounds nuw i8, ptr %.0.i, i64 1024 ; 5 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %.0.i, i64 1024 ; 6 uses
   %i.as = call noundef i32 @_ZN11duckdb_zstd19HUF_optimalTableLogEjmjPvmPmPKji(i32 noundef %spec.store.select, i64 noundef %3, i32 noundef %i.aq, ptr noundef nonnull %i.ae, i64 noundef 4864, ptr noundef nonnull %i.ar, ptr noundef nonnull %i.g, i32 noundef %11)
   %i.at = load i32, ptr %i.a, align 4, !tbaa !3
   %i.au = call noundef i64 @_ZN11duckdb_zstd20HUF_buildCTable_wkspEPmPKjjjPvm(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.g, i32 noundef %i.at, i32 noundef %i.as, ptr noundef nonnull %i.ae, i64 noundef 4864) ; 3 uses
@@ -354,7 +350,7 @@ bb.y:                                             ; preds = %bb.x
   %i.bb = load i32, ptr %i.a, align 4, !tbaa !3   ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
   %.not10.i = icmp slt i32 %i.bb, 0
-  br i1 %.not10.i, label %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread, label %.lr.ph.preheader.i
+  br i1 %.not10.i, label %bb.aa, label %.lr.ph.preheader.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.y
   %i.bd = add nuw i32 %i.bb, 1
@@ -485,11 +481,7 @@ _ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194: ; preds = %.lr.ph.
   %i.da = add nuw nsw i64 %i.ay, 12
   %.not177 = icmp samesign ult i64 %i.da, %3
   %or.cond182 = and i1 %.not177, %.not176
-  br i1 %or.cond182, label %.thread206.thread, label %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread
-
-_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread: ; preds = %bb.y, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194
-  %13 = call fastcc noundef i64 @_ZN11duckdb_zstdL27HUF_compressCTable_internalEPhS0_S0_PKvmNS_15HUF_nbStreams_eEPKmi(ptr noundef %0, ptr noundef %0, ptr noundef nonnull %i.h, ptr noundef %2, i64 noundef %3, i32 noundef %6, ptr noundef %9, i32 noundef %11)
-  br label %.thread
+  br i1 %or.cond182, label %.thread206.thread, label %bb.aa
 
 .thread206:                                       ; preds = %bb.x
   %.pre = add nuw nsw i64 %i.ay, 12
@@ -506,7 +498,7 @@ _ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread: ; preds = %
   br label %.thread211
 
 .thread211:                                       ; preds = %.thread209, %.thread206.thread
-  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %i.ay
+  %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 %i.ay ; 2 uses
   %.not179 = icmp eq ptr %9, null
   br i1 %.not179, label %bb.aa, label %bb.z
 
@@ -514,12 +506,14 @@ bb.z:                                             ; preds = %.thread211
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(2056) %9, ptr noundef nonnull align 8 dereferenceable(2056) %i.ar, i64 2056, i1 false)
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %.thread211
-  %i.de = call fastcc noundef i64 @_ZN11duckdb_zstdL27HUF_compressCTable_internalEPhS0_S0_PKvmNS_15HUF_nbStreams_eEPKmi(ptr noundef %0, ptr noundef %i.dd, ptr noundef nonnull %i.h, ptr noundef %2, i64 noundef %3, i32 noundef %6, ptr noundef nonnull %i.ar, i32 noundef %11)
+bb.aa:                                            ; preds = %.thread211, %bb.z, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194, %bb.y, %.thread233, %bb.u
+  %.sink239 = phi ptr [ %9, %.thread233 ], [ %9, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194 ], [ %9, %bb.u ], [ %9, %bb.y ], [ %i.ar, %bb.z ], [ %i.ar, %.thread211 ]
+  %.sink = phi ptr [ %0, %.thread233 ], [ %0, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194 ], [ %0, %bb.u ], [ %0, %bb.y ], [ %i.dd, %bb.z ], [ %i.dd, %.thread211 ]
+  %i.de = call fastcc noundef i64 @_ZN11duckdb_zstdL27HUF_compressCTable_internalEPhS0_S0_PKvmNS_15HUF_nbStreams_eEPKmi(ptr noundef %0, ptr noundef %.sink, ptr noundef nonnull %i.h, ptr noundef %2, i64 noundef %3, i32 noundef %6, ptr noundef %.sink239, i32 noundef %11)
   br label %.thread
 
-.thread:                                          ; preds = %.thread209, %.thread206, %bb.v, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread, %bb.o, %bb.m, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.l, %.thread198, %bb.p, %bb.aa, %.thread234, %bb.j
-  %.9 = phi i64 [ -66, %bb.a ], [ -46, %bb.e ], [ -72, %bb.c ], [ -44, %bb.d ], [ %i.s, %bb.j ], [ %12, %.thread234 ], [ %i.de, %bb.aa ], [ %i.af, %bb.m ], [ %i.au, %.thread198 ], [ 0, %bb.p ], [ 0, %bb.l ], [ 0, %bb.b ], [ 1, %bb.o ], [ 0, %.thread209 ], [ 0, %.thread206 ], [ %i.ay, %bb.v ], [ %13, %_ZN11duckdb_zstd26HUF_estimateCompressedSizeEPKmPKjj.exit194.thread ]
+.thread:                                          ; preds = %bb.aa, %.thread209, %.thread206, %bb.v, %bb.o, %bb.m, %bb.e, %bb.d, %bb.c, %bb.b, %bb.a, %bb.l, %.thread198, %bb.p, %bb.j
+  %.9 = phi i64 [ -66, %bb.a ], [ -46, %bb.e ], [ -72, %bb.c ], [ -44, %bb.d ], [ %i.s, %bb.j ], [ 0, %.thread206 ], [ %i.ay, %bb.v ], [ %i.af, %bb.m ], [ %i.au, %.thread198 ], [ 0, %bb.p ], [ 0, %bb.l ], [ 0, %bb.b ], [ 1, %bb.o ], [ 0, %.thread209 ], [ %i.de, %bb.aa ]
   ret i64 %.9
 }
 

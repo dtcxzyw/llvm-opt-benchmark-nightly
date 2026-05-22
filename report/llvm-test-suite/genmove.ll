@@ -188,19 +188,13 @@ bb.p:                                             ; preds = %bb.o
   %i.bg = ashr exact i32 %sext, 24
   %putchar = call i32 @putchar(i32 %i.bg)         ; 0 uses
   %i.bh = load i32, ptr %0, align 4, !tbaa !4     ; 2 uses
-  %i.bi = sub nsw i32 19, %i.bh                   ; 2 uses
+  %i.bi = sub nsw i32 19, %i.bh
   %i.bj = icmp sgt i32 %i.bh, 9
-  br i1 %i.bj, label %2, label %4
-
-2:                                                ; preds = %.loopexit
-  %3 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, i32 noundef %i.bi) ; 0 uses
+  %.str.3..str.4 = select i1 %i.bj, ptr @.str.3, ptr @.str.4
+  %2 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) %.str.3..str.4, i32 noundef %i.bi) ; 0 uses
   br label %bb.q
 
-4:                                                ; preds = %.loopexit
-  %5 = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.4, i32 noundef %i.bi) ; 0 uses
-  br label %bb.q
-
-bb.q:                                             ; preds = %2, %4, %.critedge
+bb.q:                                             ; preds = %.loopexit, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5

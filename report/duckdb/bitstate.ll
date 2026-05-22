@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br label %.outer
 
 .outer:                                           ; preds = %.outer.backedge, %.outer.preheader
-  %.190.ph = phi ptr [ %.190.ph.ph, %.outer.preheader ], [ %.190.ph.be, %.outer.backedge ] ; 18 uses
+  %.190.ph = phi ptr [ %.190.ph.ph, %.outer.preheader ], [ %.190.ph.be, %.outer.backedge ] ; 16 uses
   %.080.ph = phi i32 [ %i.au, %.outer.preheader ], [ %.080.ph.be, %.outer.backedge ]
   %.176.ph = phi i1 [ %.075184, %.outer.preheader ], [ %.176, %.outer.backedge ]
   %.not = icmp eq ptr %.190.ph, %i.e              ; 2 uses
@@ -210,7 +210,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.outer, %bb.af
-  %indvars.iv232 = phi i64 [ %i.bs, %.outer ], [ %indvars.iv.next233, %bb.af ] ; 6 uses
+  %indvars.iv232 = phi i64 [ %i.bs, %.outer ], [ %indvars.iv.next233, %bb.af ] ; 5 uses
   %.176 = phi i1 [ %.176.ph, %.outer ], [ %.277, %bb.af ] ; 7 uses
   %i.bt = load ptr, ptr %0, align 8, !tbaa !7
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 120
@@ -409,27 +409,21 @@ bb.t:                                             ; preds = %bb.f
 bb.u:                                             ; preds = %bb.t
   %i.ex = and i32 %.pre234, 8
   %.not101 = icmp eq i32 %i.ex, 0
-  br i1 %.not101, label %4, label %bb.x
-
-4:                                                ; preds = %bb.u
-  %5 = trunc nsw i64 %indvars.iv232 to i32
-  %6 = add nsw i32 %5, 1
-  tail call void @_ZN10duckdb_re28BitState4PushEiPKc(ptr noundef nonnull align 8 dereferenceable(116) %0, i32 noundef %6, ptr noundef %.190.ph)
-  br label %bb.x
+  br i1 %.not101, label %bb.w, label %bb.x
 
 bb.v:                                             ; preds = %bb.f
   %i.ey = and i32 %i.bx, 8
   %.not99 = icmp eq i32 %i.ey, 0
   br i1 %.not99, label %bb.w, label %bb.x
 
-bb.w:                                             ; preds = %bb.v
+bb.w:                                             ; preds = %bb.v, %bb.u
   %i.ez = trunc nsw i64 %indvars.iv232 to i32
   %i.fa = add nsw i32 %i.ez, 1
   tail call void @_ZN10duckdb_re28BitState4PushEiPKc(ptr noundef nonnull align 8 dereferenceable(116) %0, i32 noundef %i.fa, ptr noundef %.190.ph)
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.v, %bb.w, %bb.u, %4, %bb.r, %bb.s, %.thread
-  %.392 = phi ptr [ %i.ea, %.thread ], [ %.190.ph, %bb.u ], [ %.190.ph, %bb.r ], [ %.190.ph, %bb.s ], [ %.190.ph, %4 ], [ %.190.ph, %bb.w ], [ %.190.ph, %bb.v ] ; 2 uses
+bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.r, %bb.s, %.thread
+  %.392 = phi ptr [ %i.ea, %.thread ], [ %.190.ph, %bb.u ], [ %.190.ph, %bb.r ], [ %.190.ph, %bb.s ], [ %.190.ph, %bb.v ], [ %.190.ph, %bb.w ] ; 2 uses
   %.282.in = load i32, ptr %i.bw, align 4, !tbaa !89
   %.282 = lshr i32 %.282.in, 4                    ; 2 uses
   %i.fb = load ptr, ptr %0, align 8, !tbaa !7

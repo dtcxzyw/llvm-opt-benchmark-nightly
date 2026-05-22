@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b
   switch i64 %i.c, label %bb.h [
     i64 0, label %bb.e
-    i64 1, label %bb.f
-    i64 2, label %bb.g
+    i64 1, label %bb.g
+    i64 2, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -211,16 +211,15 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.d
-  %1 = tail call i32 @usleep(i32 noundef 1000) #5 ; 0 uses
-  %2 = tail call i32 @usleep(i32 noundef 1000) #5 ; 0 uses
-  br label %bb.h
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.d
-  %i.k = tail call i32 @usleep(i32 noundef 6000) #5 ; 0 uses
+bb.g:                                             ; preds = %bb.d, %bb.f
+  %.sink = phi i32 [ 6000, %bb.f ], [ 1000, %bb.d ]
+  %i.k = tail call i32 @usleep(i32 noundef %.sink) #5 ; 0 uses
   %i.l = tail call i32 @usleep(i32 noundef 1000) #5 ; 0 uses
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.d, %bb.f, %bb.g, %bb.e
+bb.h:                                             ; preds = %bb.g, %bb.d, %bb.e
   tail call void @PyGILState_Release(i32 noundef %i.a) #5
   %i.m = getelementptr i8, ptr %0, i64 24
   %i.n = atomicrmw add ptr %i.m, i64 -1 seq_cst, align 8

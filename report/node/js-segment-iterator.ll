@@ -201,13 +201,12 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 104
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = call noundef i32 %i.w(ptr noundef nonnull align 8 dereferenceable(128) %i.p) #10 ; 3 uses
-  %i.y = icmp eq i32 %i.x, -1
+  %i.y = icmp eq i32 %i.x, -1                     ; 2 uses
   br i1 %i.y, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 648
-  %4 = call ptr @_ZN2v88internal7Factory19NewJSIteratorResultENS0_12DirectHandleINS0_6ObjectEEEb(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %i.z, i1 noundef zeroext true) #10
-  br label %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
+  br label %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread
 
 bb.f:                                             ; preds = %bb.d
   %i.aa = load i64, ptr %1, align 8               ; 2 uses
@@ -421,13 +420,13 @@ _ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; p
   %.not = icmp eq ptr %i.ec, null
   br i1 %.not, label %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread
 
-_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread: ; preds = %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
-  %.sroa.0112.0 = phi ptr [ %i.cq, %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %i.ec, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ]
-  %i.ed = call ptr @_ZN2v88internal7Factory19NewJSIteratorResultENS0_12DirectHandleINS0_6ObjectEEEb(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %.sroa.0112.0, i1 noundef zeroext false) #10
+_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread: ; preds = %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %bb.e
+  %.sroa.0112.0.sink = phi ptr [ %i.z, %bb.e ], [ %i.ec, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ %i.cq, %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ]
+  %i.ed = call ptr @_ZN2v88internal7Factory19NewJSIteratorResultENS0_12DirectHandleINS0_6ObjectEEEb(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr nonnull %.sroa.0112.0.sink, i1 noundef zeroext %i.y) #10
   br label %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
-_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %bb.c, %bb.e
-  %.sroa.0120.2 = phi ptr [ %4, %bb.e ], [ null, %bb.c ], [ %i.ed, %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread ], [ null, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ]
+_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %bb.c
+  %.sroa.0120.2 = phi ptr [ null, %_ZN2v88internal6HandleINS0_6StringEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ null, %bb.c ], [ %i.ed, %_ZNK2v88internal11MaybeHandleINS0_19JSSegmentDataObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread ]
   ret ptr %.sroa.0120.2
 }
 

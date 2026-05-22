@@ -201,29 +201,26 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !range !432, !noundef !4
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %3, label %bb.b
+  br i1 %i.c, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvXs1_NtNtNtCs8CRAYtH5WmW_12futures_util6stream6stream3mapINtB5_3MapINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs7cL0Iqqqcdm_12futures_core6stream6Streamp4ItemINtNtB1a_6result6ResultNtNtCsjyY8HP3IvQ6_12object_store4path4PathNtB3s_5ErrorENtNtB1a_6marker4SendEL_EENCNvYNtCs9JG0qWP2oqR_24hdfs_native_object_store15HdfsObjectStoreNtB3s_11ObjectStore13delete_stream0EB2b_9poll_nextCs6KaIMXx2hZw_14deltalake_hdfs(ptr noalias noundef nonnull sret([136 x i8]) align 8 captures(none) dereferenceable(136) %0, ptr noalias noundef nonnull align 8 dereferenceable(24) %1, ptr noalias noundef nonnull align 8 dereferenceable(32) %2)
-  %i.d = load i64, ptr %0, align 8, !range !433, !noundef !4
-  switch i64 %i.d, label %bb.d [
-    i64 2, label %bb.c
+  %i.d = load i64, ptr %0, align 8, !range !433, !noundef !4 ; 2 uses
+  switch i64 %i.d, label %bb.c [
+    i64 2, label %bb.d
     i64 1, label %bb.e
   ]
 
-3:                                                ; preds = %bb.a
-  store i64 0, ptr %0, align 8
-  br label %bb.e
-
 bb.c:                                             ; preds = %bb.b
-  store i64 2, ptr %0, align 8
-  br label %bb.e
-
-bb.d:                                             ; preds = %bb.b
   store i8 1, ptr %i.a, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.b, %3, %bb.c, %bb.d
+bb.d:                                             ; preds = %bb.b, %bb.a
+  %.sink = phi i64 [ 0, %bb.a ], [ %i.d, %bb.b ]
+  store i64 %.sink, ptr %0, align 8
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %bb.b, %bb.c
   ret void
 }
 

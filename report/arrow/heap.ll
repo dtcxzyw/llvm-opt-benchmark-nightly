@@ -201,20 +201,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !45
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %2, label %bb.c
-
-2:                                                ; preds = %bb.b
-  tail call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.3) #9
-  br label %bb.h
+  br i1 %i.e, label %.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr %0, align 8, !tbaa !29
   %.not = icmp eq ptr %i.f, null
-  br i1 %.not, label %bb.d, label %3
-
-3:                                                ; preds = %bb.c
-  tail call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull @.str.4) #9
-  br label %bb.h
+  br i1 %.not, label %bb.d, label %.sink.split
 
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call ptr @_mi_arena_from_id(ptr noundef %1) #9 ; 2 uses
@@ -380,8 +372,13 @@ mi_heap_get_default.exit:                         ; preds = %bb.f, %bb.g
   store ptr %0, ptr %i.cc, align 8, !tbaa !53
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.e, %mi_heap_get_default.exit, %bb.a, %3, %2
-  %.1 = phi i1 [ false, %bb.a ], [ false, %2 ], [ false, %3 ], [ false, %bb.e ], [ true, %mi_heap_get_default.exit ]
+.sink.split:                                      ; preds = %bb.c, %bb.b
+  %.str.4.sink = phi ptr [ @.str.3, %bb.b ], [ @.str.4, %bb.c ]
+  tail call void (ptr, ...) @_mi_warning_message(ptr noundef nonnull %.str.4.sink) #9
+  br label %bb.h
+
+bb.h:                                             ; preds = %.sink.split, %bb.e, %mi_heap_get_default.exit, %bb.a
+  %.1 = phi i1 [ false, %bb.a ], [ false, %bb.e ], [ true, %mi_heap_get_default.exit ], [ false, %.sink.split ]
   ret i1 %.1
 }
 

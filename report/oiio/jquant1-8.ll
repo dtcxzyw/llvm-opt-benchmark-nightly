@@ -201,15 +201,9 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.l = load i32, ptr %i.k, align 8, !tbaa !53
   %i.m = icmp eq i32 %i.l, 3
-  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
-  br i1 %i.m, label %2, label %3
-
-2:                                                ; preds = %bb.b
-  store ptr @color_quantize3, ptr %i.n, align 8, !tbaa !86
-  br label %create_odither_tables.exit
-
-3:                                                ; preds = %bb.b
-  store ptr @color_quantize, ptr %i.n, align 8, !tbaa !86
+  %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 8
+  %color_quantize3.color_quantize = select i1 %i.m, ptr @color_quantize3, ptr @color_quantize
+  store ptr %color_quantize3.color_quantize, ptr %i.n, align 8, !tbaa !86
   br label %create_odither_tables.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -553,7 +547,7 @@ bb.m:                                             ; preds = %bb.a
   tail call void %i.hw(ptr noundef nonnull %0) #8
   br label %create_odither_tables.exit
 
-create_odither_tables.exit:                       ; preds = %.lr.ph, %make_odither_array.exit.i, %bb.k, %alloc_fs_workspace.exit, %bb.f, %bb.e, %2, %3, %bb.m
+create_odither_tables.exit:                       ; preds = %.lr.ph, %make_odither_array.exit.i, %bb.b, %bb.k, %alloc_fs_workspace.exit, %bb.f, %bb.e, %bb.m
   ret void
 }
 

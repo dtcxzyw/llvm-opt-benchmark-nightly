@@ -201,11 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %i.j = add nsw i32 %i.i, -1                     ; 2 uses
   store i32 %i.j, ptr %i.c, align 8, !tbaa !11
   %i.k = icmp eq i32 %i.j, 0
-  br i1 %i.k, label %3, label %Py_DECREF.exit23
-
-3:                                                ; preds = %bb.i
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #8
-  br label %Py_DECREF.exit23
+  br i1 %i.k, label %bb.q, label %Py_DECREF.exit23
 
 bb.j:                                             ; preds = %bb.g
   %i.l = tail call ptr @PyObject_CallOneArg(ptr noundef nonnull %i.c, ptr noundef nonnull %.014) #8 ; 4 uses
@@ -253,12 +249,14 @@ bb.p:                                             ; preds = %bb.o
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %bb.q, label %Py_DECREF.exit23
 
-bb.q:                                             ; preds = %bb.p
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.l) #8
+bb.q:                                             ; preds = %bb.p, %bb.i
+  %.sink = phi ptr [ %i.c, %bb.i ], [ %i.l, %bb.p ]
+  %.0.ph = phi i32 [ -1, %bb.i ], [ 0, %bb.p ]
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.sink) #8
   br label %Py_DECREF.exit23
 
-Py_DECREF.exit23:                                 ; preds = %bb.q, %bb.p, %bb.o, %3, %bb.i, %bb.h, %Py_DECREF.exit19, %bb.c, %bb.b
-  %.0 = phi i32 [ -1, %bb.b ], [ -1, %3 ], [ -1, %Py_DECREF.exit19 ], [ -1, %bb.c ], [ -1, %bb.h ], [ -1, %bb.i ], [ 0, %bb.o ], [ 0, %bb.p ], [ 0, %bb.q ]
+Py_DECREF.exit23:                                 ; preds = %bb.q, %bb.p, %bb.o, %bb.i, %bb.h, %Py_DECREF.exit19, %bb.c, %bb.b
+  %.0 = phi i32 [ -1, %bb.b ], [ 0, %bb.p ], [ -1, %Py_DECREF.exit19 ], [ -1, %bb.c ], [ -1, %bb.h ], [ -1, %bb.i ], [ 0, %bb.o ], [ %.0.ph, %bb.q ]
   ret i32 %.0
 }
 

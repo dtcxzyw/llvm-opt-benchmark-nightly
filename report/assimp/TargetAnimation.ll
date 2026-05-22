@@ -201,7 +201,7 @@ _ZNKSt6vectorI11aiVectorKeySaIS0_EE2atEm.exit:    ; preds = %bb.b
   %i.r = load double, ptr %i.q, align 8           ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.t = load ptr, ptr %i.s, align 8              ; 7 uses
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 3 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 60 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.t, i64 8 ; 6 uses
   %i.w = load ptr, ptr %i.v, align 8
   %i.x = load ptr, ptr %i.t, align 8              ; 2 uses
@@ -211,7 +211,7 @@ _ZNKSt6vectorI11aiVectorKeySaIS0_EE2atEm.exit:    ; preds = %bb.b
   %i.ab = sdiv exact i64 %i.aa, 24                ; 3 uses
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = add i32 %i.ac, -1
-  %i.ae = load i32, ptr %i.u, align 4             ; 13 uses
+  %i.ae = load i32, ptr %i.u, align 4             ; 12 uses
   %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.ad, i32 %i.ae)
   %i.af = zext i32 %.sroa.speculated to i64       ; 3 uses
   %.not.i.i36 = icmp ugt i64 %i.ab, %i.af
@@ -295,12 +295,7 @@ bb.i:                                             ; preds = %bb.h, %_ZNKSt6vecto
   %i.bu = add i32 %i.ae, -1
   %i.bv = zext i32 %i.bu to i64
   %.not32 = icmp eq i64 %i.bt, %i.bv
-  br i1 %.not32, label %bb.y, label %1
-
-1:                                                ; preds = %bb.i
-  %2 = add i32 %i.ae, 1                           ; 2 uses
-  store i32 %2, ptr %i.u, align 4
-  br label %bb.y
+  br i1 %.not32, label %bb.y, label %bb.x
 
 bb.j:                                             ; preds = %_ZNKSt6vectorI11aiVectorKeySaIS0_EE2atEm.exit37
   %i.bw = fcmp olt double %i.r, %i.ah
@@ -474,15 +469,16 @@ bb.w:                                             ; preds = %_ZNKSt6vectorI11aiV
   %.not28 = icmp eq i64 %i.fi, %i.fk
   br i1 %.not28, label %bb.y, label %bb.x
 
-bb.x:                                             ; preds = %bb.w
+bb.x:                                             ; preds = %bb.w, %bb.i
+  %.ph87 = phi i32 [ %i.bn, %bb.i ], [ %i.o, %bb.w ]
   %i.fl = add i32 %i.ae, 1                        ; 2 uses
   store i32 %i.fl, ptr %i.u, align 4
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.q, %bb.p, %bb.x, %bb.w, %bb.i, %1
-  %3 = phi i32 [ %i.ae, %bb.q ], [ %i.ae, %bb.p ], [ %i.fl, %bb.x ], [ %i.ae, %bb.w ], [ %i.ae, %bb.i ], [ %2, %1 ]
-  %4 = phi i32 [ %i.dr, %bb.q ], [ %i.o, %bb.p ], [ %i.o, %bb.x ], [ %i.o, %bb.w ], [ %i.bn, %bb.i ], [ %i.bn, %1 ]
-  %i.fm = zext i32 %4 to i64
+bb.y:                                             ; preds = %bb.x, %bb.q, %bb.p, %bb.w, %bb.i
+  %1 = phi i32 [ %i.ae, %bb.q ], [ %i.ae, %bb.p ], [ %i.ae, %bb.i ], [ %i.ae, %bb.w ], [ %i.fl, %bb.x ]
+  %2 = phi i32 [ %i.dr, %bb.q ], [ %i.o, %bb.p ], [ %i.bn, %bb.i ], [ %i.o, %bb.w ], [ %.ph87, %bb.x ]
+  %i.fm = zext i32 %2 to i64
   %i.fn = load ptr, ptr %i.f, align 8
   %i.fo = load ptr, ptr %i.d, align 8
   %i.fp = ptrtoint ptr %i.fn to i64
@@ -494,7 +490,7 @@ bb.y:                                             ; preds = %bb.q, %bb.p, %bb.x,
   br i1 %.not33, label %bb.ab, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.fu = zext i32 %3 to i64
+  %i.fu = zext i32 %1 to i64
   %i.fv = load ptr, ptr %i.v, align 8
   %i.fw = load ptr, ptr %i.t, align 8
   %i.fx = ptrtoint ptr %i.fv to i64

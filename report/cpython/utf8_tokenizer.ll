@@ -7,7 +7,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden ptr @_PyTokenizer_FromUTF8(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @_PyTokenizer_tok_new() #5 ; 16 uses
+  %i.a = tail call ptr @_PyTokenizer_tok_new() #5 ; 15 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.e, label %bb.b
 
@@ -16,11 +16,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr i8, ptr %i.a, i64 2832
   store ptr %i.c, ptr %i.d, align 8, !tbaa !11
   %i.e = icmp eq ptr %i.c, null
-  br i1 %i.e, label %3, label %bb.c
-
-3:                                                ; preds = %bb.b
-  tail call void @_PyTokenizer_Free(ptr noundef nonnull %i.a) #5
-  br label %bb.e
+  br i1 %i.e, label %.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %i.a, i64 2752
@@ -33,11 +29,7 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.a, i64 2760
   store ptr %i.i, ptr %i.j, align 8, !tbaa !20
   %.not = icmp eq ptr %i.i, null
-  br i1 %.not, label %4, label %bb.d
-
-4:                                                ; preds = %bb.c
-  tail call void @_PyTokenizer_Free(ptr noundef nonnull %i.a) #5
-  br label %bb.e
+  br i1 %.not, label %.sink.split, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr i8, ptr %i.a, i64 16
@@ -51,8 +43,12 @@ bb.d:                                             ; preds = %bb.c
   store ptr @tok_underflow_string, ptr %i.n, align 8, !tbaa !25
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %bb.d, %4, %3
-  %.0 = phi ptr [ null, %4 ], [ null, %3 ], [ %i.a, %bb.d ], [ null, %bb.a ]
+.sink.split:                                      ; preds = %bb.c, %bb.b
+  tail call void @_PyTokenizer_Free(ptr noundef nonnull %i.a) #5
+  br label %bb.e
+
+bb.e:                                             ; preds = %.sink.split, %bb.a, %bb.d
+  %.0 = phi ptr [ %i.a, %bb.d ], [ null, %bb.a ], [ null, %.sink.split ]
   ret ptr %.0
 }
 

@@ -17,7 +17,7 @@ bb.a:
   %i.g = trunc nuw nsw i64 %i.f to i32
   %i.h = and i32 %i.g, 2047
   %i.i = add nsw i32 %i.h, -1075
-  %.0.i98 = select i1 %i.d, i32 -1074, i32 %i.i   ; 13 uses
+  %.0.i98 = select i1 %i.d, i32 -1074, i32 %i.i   ; 12 uses
   %i.j = icmp slt i32 %.0.i98, 21
   %i.k = icmp slt i32 %1, 21
   %or.cond.not = and i1 %i.k, %i.j                ; 2 uses
@@ -278,8 +278,7 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit: ;
   %i.fw = load i32, ptr %4, align 4, !tbaa !3
   %i.fx = add nsw i32 %i.fw, 7                    ; 2 uses
   store i32 %i.fx, ptr %4, align 4, !tbaa !3
-  store i32 %i.fx, ptr %5, align 4, !tbaa !3
-  br label %bb.q
+  br label %.sink.split
 
 bb.g:                                             ; preds = %bb.b
   %i.fy = icmp sgt i32 %.0.i98, -1
@@ -290,8 +289,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ga = shl nuw i64 %.0.i, %i.fz
   tail call fastcc void @_ZN14arrow_vendored17double_conversionL12FillDigits64EmNS0_6VectorIcEEPi(i64 noundef %i.ga, ptr %2, ptr noundef nonnull %4)
   %i.gb = load i32, ptr %4, align 4, !tbaa !3
-  store i32 %i.gb, ptr %5, align 4, !tbaa !3
-  br label %bb.q
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.g
   %i.gc = icmp samesign ugt i32 %.0.i98, -53
@@ -302,14 +300,14 @@ bb.j:                                             ; preds = %bb.i
   %i.ge = zext nneg i32 %i.gd to i64              ; 2 uses
   %i.gf = lshr i64 %.0.i, %i.ge                   ; 5 uses
   %i.gg = shl i64 %i.gf, %i.ge
-  %i.gh = sub i64 %.0.i, %i.gg
+  %i.gh = sub i64 %.0.i, %i.gg                    ; 2 uses
   %i.gi = icmp samesign ugt i64 %i.gf, 4294967295
   br i1 %i.gi, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   tail call fastcc void @_ZN14arrow_vendored17double_conversionL12FillDigits64EmNS0_6VectorIcEEPi(i64 noundef %i.gf, ptr %2, ptr noundef nonnull %4)
   %.pre152 = load i32, ptr %4, align 4, !tbaa !3
-  br label %bb.m
+  br label %bb.p
 
 bb.l:                                             ; preds = %bb.j
   %.not27.i99 = icmp eq i64 %i.gf, 0
@@ -345,7 +343,7 @@ bb.l:                                             ; preds = %bb.j
   %i.gu = add nsw i32 %i.gt, %.022.lcssa.i105     ; 2 uses
   %.02030.i106 = add nsw i32 %i.gu, -1            ; 2 uses
   %i.gv = icmp slt i32 %i.gt, %.02030.i106
-  br i1 %i.gv, label %.lr.ph34.preheader.i108, label %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit117
+  br i1 %i.gv, label %.lr.ph34.preheader.i108, label %bb.m
 
 .lr.ph34.preheader.i108:                          ; preds = %._crit_edge.i104
   %i.gw = sext i32 %.02030.i106 to i64
@@ -369,18 +367,12 @@ bb.l:                                             ; preds = %bb.j
 ._crit_edge35.loopexit.i114:                      ; preds = %.lr.ph34.i109
   %.pre.i115 = load i32, ptr %4, align 4, !tbaa !3
   %.pre41.i116 = add nsw i32 %.pre.i115, %.022.lcssa.i105
-  br label %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit117
-
-_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit117: ; preds = %._crit_edge.i104, %._crit_edge35.loopexit.i114
-  %.pre-phi.i107 = phi i32 [ %.pre41.i116, %._crit_edge35.loopexit.i114 ], [ %i.gu, %._crit_edge.i104 ] ; 2 uses
-  store i32 %.pre-phi.i107, ptr %4, align 4, !tbaa !3
   br label %bb.m
 
-bb.m:                                             ; preds = %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit117, %bb.k
-  %i.hd = phi i32 [ %.pre-phi.i107, %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit117 ], [ %.pre152, %bb.k ]
-  store i32 %i.hd, ptr %5, align 4, !tbaa !3
-  tail call fastcc void @_ZN14arrow_vendored17double_conversionL15FillFractionalsEmiiNS0_6VectorIcEEPiS3_(i64 noundef %i.gh, i32 noundef %.0.i98, i32 noundef %1, ptr %2, ptr noundef nonnull %4, ptr noundef nonnull %5)
-  br label %bb.q
+bb.m:                                             ; preds = %._crit_edge.i104, %._crit_edge35.loopexit.i114
+  %i.hd = phi i32 [ %.pre41.i116, %._crit_edge35.loopexit.i114 ], [ %i.gu, %._crit_edge.i104 ] ; 2 uses
+  store i32 %i.hd, ptr %4, align 4, !tbaa !3
+  br label %bb.p
 
 bb.n:                                             ; preds = %bb.i
   %i.he = icmp samesign ult i32 %.0.i98, -128
@@ -390,15 +382,21 @@ bb.o:                                             ; preds = %bb.n
   store i8 0, ptr %2, align 1, !tbaa !7
   store i32 0, ptr %4, align 4, !tbaa !3
   %i.hf = sub nsw i32 0, %1
-  store i32 %i.hf, ptr %5, align 4, !tbaa !3
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit, %bb.o, %bb.h
+  %.sink = phi i32 [ %i.gb, %bb.h ], [ %i.hf, %bb.o ], [ %i.fx, %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit ]
+  store i32 %.sink, ptr %5, align 4, !tbaa !3
   br label %bb.q
 
-bb.p:                                             ; preds = %bb.n
-  store i32 0, ptr %5, align 4, !tbaa !3
-  tail call fastcc void @_ZN14arrow_vendored17double_conversionL15FillFractionalsEmiiNS0_6VectorIcEEPiS3_(i64 noundef %.0.i, i32 noundef %.0.i98, i32 noundef %1, ptr %2, ptr noundef nonnull %4, ptr noundef nonnull %5)
+bb.p:                                             ; preds = %bb.n, %bb.k, %bb.m
+  %.sink168 = phi i32 [ %.pre152, %bb.k ], [ %i.hd, %bb.m ], [ 0, %bb.n ]
+  %.0.i.sink = phi i64 [ %i.gh, %bb.k ], [ %i.gh, %bb.m ], [ %.0.i, %bb.n ]
+  store i32 %.sink168, ptr %5, align 4, !tbaa !3
+  tail call fastcc void @_ZN14arrow_vendored17double_conversionL15FillFractionalsEmiiNS0_6VectorIcEEPiS3_(i64 noundef %.0.i.sink, i32 noundef %.0.i98, i32 noundef %1, ptr %2, ptr noundef nonnull %4, ptr noundef nonnull %5)
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.h, %bb.o, %bb.p, %bb.m, %_ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit
+bb.q:                                             ; preds = %bb.p, %.sink.split
   %.pr.i = load i32, ptr %4, align 4, !tbaa !3    ; 5 uses
   %i.hg = icmp sgt i32 %.pr.i, 0
   br i1 %i.hg, label %.lr.ph.preheader.i, label %_ZN14arrow_vendored17double_conversionL9TrimZerosENS0_6VectorIcEEPiS3_.exit

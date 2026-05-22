@@ -201,7 +201,6 @@ resume.entry:
   %.reload.addr233 = getelementptr inbounds nuw i8, ptr %0, i64 336 ; 2 uses
   %.reload.addr236 = getelementptr inbounds nuw i8, ptr %0, i64 344
   %.reload.addr240 = getelementptr inbounds nuw i8, ptr %0, i64 360
-  %.reload.addr242 = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
   %index.addr = getelementptr inbounds nuw i8, ptr %0, i64 408
   %index = load i3, ptr %index.addr, align 8
   switch i3 %index, label %unreachable [
@@ -225,11 +224,7 @@ bb.a:                                             ; preds = %AfterCoroSuspend123
 _ZN5folly4coro8co_errorD2Ev.exit28:               ; preds = %bb.a, %AfterCoroSuspend123
   %i.b = load ptr, ptr %.reload.addr231, align 8, !tbaa !212
   %.not.i.i29 = icmp eq ptr %i.b, null
-  br i1 %.not.i.i29, label %.loopexit, label %1
-
-1:                                                ; preds = %_ZN5folly4coro8co_errorD2Ev.exit28
-  tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr231) #22
-  br label %.loopexit
+  br i1 %.not.i.i29, label %.loopexit, label %bb.l
 
 _ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7Awaiter12await_resumeEv.exit: ; preds = %resume.entry
   %.reload.addr232 = getelementptr inbounds nuw i8, ptr %0, i64 320
@@ -362,15 +357,17 @@ _ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from.: ; preds = %
   br label %.loopexit
 
 AfterCoroSuspend135:                              ; preds = %resume.entry
+  %.reload.addr242 = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 2 uses
   %i.ai = load ptr, ptr %.reload.addr242, align 8, !tbaa !212
   %.not.i.i.i57 = icmp eq ptr %i.ai, null
   br i1 %.not.i.i.i57, label %.loopexit, label %bb.l
 
-bb.l:                                             ; preds = %AfterCoroSuspend135
-  tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr242) #22
+bb.l:                                             ; preds = %AfterCoroSuspend135, %_ZN5folly4coro8co_errorD2Ev.exit28
+  %.reload.addr242.sink = phi ptr [ %.reload.addr231, %_ZN5folly4coro8co_errorD2Ev.exit28 ], [ %.reload.addr242, %AfterCoroSuspend135 ]
+  tail call void @_ZNSt15__exception_ptr13exception_ptr10_M_releaseEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr242.sink) #22
   br label %.loopexit
 
-.loopexit:                                        ; preds = %resume.entry, %AfterCoroSuspend135, %bb.l, %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from., %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, %bb.d, %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i, %_ZN5folly4coro8co_errorD2Ev.exit28, %1, %resume.entry
+.loopexit:                                        ; preds = %bb.l, %resume.entry, %AfterCoroSuspend135, %_ZNSt4pairIbSt6vectorIN5folly4coro4TaskIvEESaIS4_EEED2Ev.exit.from., %_ZN5folly4coro4TaskISt4pairIbSt6vectorINS1_IvEESaIS4_EEEE7AwaiterD2Ev.exit32, %bb.d, %_ZSt8_DestroyIPN5folly4coro4TaskIvEES3_EvT_S5_RSaIT0_E.exit.i.i, %_ZN5folly4coro8co_errorD2Ev.exit28, %resume.entry
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ak = load i8, ptr %i.aj, align 8, !tbaa !69, !range !28, !noundef !29
   %i.al = trunc nuw i8 %i.ak to i1

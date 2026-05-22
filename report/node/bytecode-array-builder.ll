@@ -201,23 +201,21 @@ define hidden noundef nonnull align 8 dereferenceable(8) ptr @_ZN2v88internal11i
 bb.a:
   %i.a = load i32, ptr %1, align 4
   switch i32 %i.a, label %bb.c [
-    i32 1, label %2
+    i32 1, label %bb.d
     i32 0, label %bb.b
   ]
 
-2:                                                ; preds = %bb.a
-  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.1, i64 noundef 14) #11 ; 0 uses
-  br label %bb.d
-
 bb.b:                                             ; preds = %bb.a
-  %4 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.2, i64 noundef 16) #11 ; 0 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #12
   unreachable
 
-bb.d:                                             ; preds = %bb.b, %2
+bb.d:                                             ; preds = %bb.a, %bb.b
+  %.sink = phi i64 [ 16, %bb.b ], [ 14, %bb.a ]
+  %.str.2.sink = phi ptr [ @.str.2, %bb.b ], [ @.str.1, %bb.a ]
+  %2 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull %.str.2.sink, i64 noundef %.sink) #11 ; 0 uses
   ret ptr %0
 }
 

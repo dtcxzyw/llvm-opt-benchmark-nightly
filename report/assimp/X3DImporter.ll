@@ -201,8 +201,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99: ; preds = %_ZN
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ej) #27
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99, %bb.o
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.as, %bb.o ], [ %.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99 ], [ %.pn.pn.pn.pn.ph, %.body.sink.split ] ; 2 uses
+.body:                                            ; preds = %bb.o, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99, %.body.sink.split
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn.pn.ph, %.body.sink.split ], [ %i.as, %bb.o ], [ %.pn.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit99 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
@@ -605,8 +605,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179: ; preds = %_Z
   call void @_ZdlPvm(ptr noundef %.sink298, i64 noundef %i.la) #27
   br label %.body129
 
-.body129:                                         ; preds = %.body129.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179, %bb.ar
-  %.pn47.pn.pn.pn = phi { ptr, i32 } [ %i.hl, %bb.ar ], [ %.pn47.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179 ], [ %.pn47.pn.pn.pn.ph, %.body129.sink.split ]
+.body129:                                         ; preds = %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179, %.body129.sink.split
+  %.pn47.pn.pn.pn = phi { ptr, i32 } [ %.pn47.pn.pn.pn.ph, %.body129.sink.split ], [ %i.hl, %bb.ar ], [ %.pn47.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit179 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25
@@ -1009,8 +1009,8 @@ bb.g:                                             ; preds = %_ZN6Assimp6Logger13
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.at) #27
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.g, %bb.d
-  %.pn = phi { ptr, i32 } [ %i.s, %bb.d ], [ %i.ap, %bb.g ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.d, %bb.g, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.s, %bb.d ], [ %i.ap, %bb.g ]
   call void @_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %3) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   br label %common.resume
@@ -1231,8 +1231,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #27
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #25
   resume { ptr, i32 } %.pn
@@ -1635,7 +1635,7 @@ define linkonce_odr hidden ptr @_ZNK4pugi8xml_node9find_nodeIN6Assimp27find_node
 bb.a:
   %2 = alloca %"class.pugi::xml_node", align 8    ; 6 uses
   %3 = alloca %"class.pugi::xml_node", align 8    ; 4 uses
-  %4 = alloca %"class.pugi::xml_node", align 8    ; 16 uses
+  %4 = alloca %"class.pugi::xml_node", align 8    ; 15 uses
   %5 = alloca %"class.pugi::xml_node", align 8    ; 4 uses
   %6 = alloca %"class.pugi::xml_node", align 8    ; 4 uses
   %7 = alloca %"class.pugi::xml_node", align 8    ; 8 uses
@@ -1715,7 +1715,7 @@ bb.h:                                             ; preds = %bb.f
   %i.r = call noundef ptr @_ZNK4pugi8xml_nodecvPFvPPPS0_EEv(ptr noundef nonnull align 8 dereferenceable(8) %6)
   %.not10 = icmp eq ptr %i.r, null
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  br i1 %.not10, label %.preheader, label %8
+  br i1 %.not10, label %.preheader, label %bb.j
 
 .preheader:                                       ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
@@ -1723,10 +1723,6 @@ bb.h:                                             ; preds = %bb.f
   store ptr %i.s, ptr %7, align 8
   %i.t = call noundef zeroext i1 @_ZNK4pugi8xml_nodentEv(ptr noundef nonnull align 8 dereferenceable(8) %7)
   br i1 %i.t, label %.lr.ph, label %.loopexit
-
-8:                                                ; preds = %bb.h
-  %9 = call ptr @_ZNK4pugi8xml_node12next_siblingEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
-  br label %.loopexit.thread.sink.split
 
 .lr.ph:                                           ; preds = %.preheader, %bb.i
   %i.u = load ptr, ptr %4, align 8                ; 2 uses
@@ -1751,12 +1747,12 @@ bb.i:                                             ; preds = %.lr.ph
   %i.z = icmp eq ptr %.pre, %.pre19
   br i1 %i.z, label %.loopexit.thread, label %bb.j
 
-bb.j:                                             ; preds = %.loopexit
+bb.j:                                             ; preds = %.loopexit, %bb.h
   %i.aa = call ptr @_ZNK4pugi8xml_node12next_siblingEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
   br label %.loopexit.thread.sink.split
 
-.loopexit.thread.sink.split:                      ; preds = %bb.g, %bb.j, %8
-  %.sink = phi ptr [ %9, %8 ], [ %i.aa, %bb.j ], [ %i.p, %bb.g ] ; 2 uses
+.loopexit.thread.sink.split:                      ; preds = %bb.j, %bb.g
+  %.sink = phi ptr [ %i.p, %bb.g ], [ %i.aa, %bb.j ] ; 2 uses
   store ptr %.sink, ptr %4, align 8
   br label %.loopexit.thread
 

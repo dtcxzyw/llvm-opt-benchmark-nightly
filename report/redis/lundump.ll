@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %LoadCode.exit
 bb.o:                                             ; preds = %.lr.ph59, %bb.w
   %indvars.iv66 = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next67, %bb.w ] ; 2 uses
   %i.dy = load ptr, ptr %i.cy, align 8, !tbaa !49
-  %i.dz = getelementptr inbounds nuw [16 x i8], ptr %i.dy, i64 %indvars.iv66 ; 7 uses
+  %i.dz = getelementptr inbounds nuw [16 x i8], ptr %i.dy, i64 %indvars.iv66 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ea = load ptr, ptr %i.aq, align 8, !tbaa !17
   %i.eb = call i64 @luaZ_read(ptr noundef %i.ea, ptr noundef nonnull %i.a, i64 noundef 1) #6
@@ -220,16 +220,11 @@ LoadChar.exit55:                                  ; preds = %bb.o, %bb.p
   %i.eg = load i8, ptr %i.a, align 1, !tbaa !8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   switch i8 %i.eg, label %bb.v [
-    i8 0, label %2
+    i8 0, label %.sink.split
     i8 1, label %bb.q
     i8 3, label %bb.s
     i8 4, label %bb.u
   ]
-
-2:                                                ; preds = %LoadChar.exit55
-  %3 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  store i32 0, ptr %3, align 8, !tbaa !31
-  br label %bb.w
 
 bb.q:                                             ; preds = %LoadChar.exit55
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
@@ -252,9 +247,7 @@ LoadChar.exit52:                                  ; preds = %bb.q, %bb.r
   %i.eo = icmp ne i8 %i.en, 0
   %i.ep = zext i1 %i.eo to i32
   store i32 %i.ep, ptr %i.dz, align 8, !tbaa !8
-  %4 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  store i32 1, ptr %4, align 8, !tbaa !31
-  br label %bb.w
+  br label %.sink.split
 
 bb.s:                                             ; preds = %LoadChar.exit55
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
@@ -275,16 +268,12 @@ LoadNumber.exit:                                  ; preds = %bb.s, %bb.t
   %i.ew = load double, ptr %i.c, align 8, !tbaa !55
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
   store double %i.ew, ptr %i.dz, align 8, !tbaa !8
-  %5 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  store i32 3, ptr %5, align 8, !tbaa !31
-  br label %bb.w
+  br label %.sink.split
 
 bb.u:                                             ; preds = %LoadChar.exit55
   %i.ex = call fastcc ptr @LoadString(ptr noundef nonnull %0), !inline_history !48
   store ptr %i.ex, ptr %i.dz, align 8, !tbaa !8
-  %6 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
-  store i32 4, ptr %6, align 8, !tbaa !31
-  br label %bb.w
+  br label %.sink.split
 
 bb.v:                                             ; preds = %LoadChar.exit55
   %i.ey = load ptr, ptr %0, align 8, !tbaa !16
@@ -294,7 +283,13 @@ bb.v:                                             ; preds = %LoadChar.exit55
   call void @luaD_throw(ptr noundef %i.fb, i32 noundef 3) #6
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %bb.u, %LoadNumber.exit, %LoadChar.exit52, %2
+.sink.split:                                      ; preds = %LoadChar.exit55, %LoadChar.exit52, %LoadNumber.exit, %bb.u
+  %.sink = phi i32 [ 4, %bb.u ], [ 3, %LoadNumber.exit ], [ 1, %LoadChar.exit52 ], [ 0, %LoadChar.exit55 ]
+  %2 = getelementptr inbounds nuw i8, ptr %i.dz, i64 8
+  store i32 %.sink, ptr %2, align 8, !tbaa !31
+  br label %bb.w
+
+bb.w:                                             ; preds = %.sink.split, %bb.v
   %indvars.iv.next67 = add nuw nsw i64 %indvars.iv66, 1 ; 2 uses
   %exitcond70.not = icmp eq i64 %indvars.iv.next67, %wide.trip.count69
   br i1 %exitcond70.not, label %._crit_edge, label %bb.o, !llvm.loop !57

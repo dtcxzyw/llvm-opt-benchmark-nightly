@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.cl, label %bb.ae, label %_ZZN5arrow8internal12_GLOBAL__N_117ThreadedTaskGroup10AppendRealENS0_6FnOnceIFNS_6StatusEvEEEENUlvE_clEv.exit
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cm = getelementptr inbounds nuw i8, ptr %.val.i, i64 56 ; 4 uses
+  %i.cm = getelementptr inbounds nuw i8, ptr %.val.i, i64 56 ; 3 uses
   %i.cn = call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.cm) #22 ; 2 uses
   %.not.i.i.i.i.i = icmp eq i32 %i.cn, 0
   br i1 %.not.i.i.i.i.i, label %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i, label %bb.af
@@ -225,13 +225,13 @@ bb.ag:                                            ; preds = %_ZNSt11unique_lockI
   %i.cv = load atomic i8, ptr %i.cu seq_cst, align 1
   %.not.i21.i = icmp eq i8 %i.cv, 0
   %i.cw = getelementptr inbounds nuw i8, ptr %.val.i, i64 144
-  br i1 %.not.i21.i, label %bb.ah, label %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16.i.i
+  br i1 %.not.i21.i, label %bb.ah, label %_ZN5arrow6StatusD2Ev.exit.i.i
 
 bb.ah:                                            ; preds = %bb.ag
   %i.cx = getelementptr inbounds nuw i8, ptr %.val.i, i64 53 ; 2 uses
   %i.cy = load atomic i8, ptr %i.cx seq_cst, align 1, !range !70, !noundef !71
   %i.cz = trunc nuw i8 %i.cy to i1
-  br i1 %i.cz, label %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16.i.i, label %bb.ai
+  br i1 %i.cz, label %_ZN5arrow6StatusD2Ev.exit.i.i, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
   store atomic i8 1, ptr %i.cx seq_cst, align 1
@@ -347,15 +347,11 @@ bb.at:                                            ; preds = %bb.as
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %1)
   br label %common.resume.i
 
-_ZNSt11unique_lockISt5mutexE6unlockEv.exit16.i.i: ; preds = %bb.ah, %bb.ag
-  %5 = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.cm) #22 ; 0 uses
-  br label %_ZZN5arrow8internal12_GLOBAL__N_117ThreadedTaskGroup10AppendRealENS0_6FnOnceIFNS_6StatusEvEEEENUlvE_clEv.exit
-
-_ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i
+_ZN5arrow6StatusD2Ev.exit.i.i:                    ; preds = %bb.ah, %bb.ag, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i
   %i.ej = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.cm) #22 ; 0 uses
   br label %_ZZN5arrow8internal12_GLOBAL__N_117ThreadedTaskGroup10AppendRealENS0_6FnOnceIFNS_6StatusEvEEEENUlvE_clEv.exit
 
-_ZZN5arrow8internal12_GLOBAL__N_117ThreadedTaskGroup10AppendRealENS0_6FnOnceIFNS_6StatusEvEEEENUlvE_clEv.exit: ; preds = %bb.ad, %bb.aq, %bb.ar, %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16.i.i, %_ZN5arrow6StatusD2Ev.exit.i.i
+_ZZN5arrow8internal12_GLOBAL__N_117ThreadedTaskGroup10AppendRealENS0_6FnOnceIFNS_6StatusEvEEEENUlvE_clEv.exit: ; preds = %bb.ad, %bb.aq, %bb.ar, %_ZN5arrow6StatusD2Ev.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   ret void
 }

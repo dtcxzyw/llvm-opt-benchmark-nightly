@@ -201,11 +201,7 @@ bb.a:
   %4 = alloca %"class.std::allocator", align 1    ; 5 uses
   store i64 %1, ptr %i.i, align 8
   %i.j = icmp eq ptr %0, null
-  br i1 %i.j, label %5, label %bb.b
-
-5:                                                ; preds = %bb.a
-  store ptr null, ptr %2, align 8
-  br label %bb.aj
+  br i1 %i.j, label %.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = and i64 %1, 3
@@ -259,11 +255,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f
 
 bb.g:                                             ; preds = %bb.b
   %i.t = icmp ult i64 %1, 4
-  br i1 %i.t, label %6, label %bb.h
-
-6:                                                ; preds = %bb.g
-  store ptr null, ptr %2, align 8
-  br label %bb.aj
+  br i1 %i.t, label %.sink.split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr i8, ptr %0, i64 %1         ; 2 uses
@@ -575,8 +567,12 @@ bb.ai:                                            ; preds = %bb.ah
   store i8 %i.dy, ptr %i.ea, align 1
   br label %bb.aj
 
-bb.aj:                                            ; preds = %bb.ah, %bb.ai, %6, %5
-  %.0 = phi i64 [ 0, %5 ], [ 0, %6 ], [ %i.ad, %bb.ai ], [ %i.ad, %bb.ah ]
+.sink.split:                                      ; preds = %bb.g, %bb.a
+  store ptr null, ptr %2, align 8
+  br label %bb.aj
+
+bb.aj:                                            ; preds = %.sink.split, %bb.ah, %bb.ai
+  %.0 = phi i64 [ %i.ad, %bb.ai ], [ %i.ad, %bb.ah ], [ 0, %.sink.split ]
   ret i64 %.0
 
 bb.ak:                                            ; preds = %bb.e
@@ -956,8 +952,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #14
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #15
   resume { ptr, i32 } %.pn

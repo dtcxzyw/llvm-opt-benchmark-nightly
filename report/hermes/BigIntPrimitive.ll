@@ -201,11 +201,7 @@ bb.e:                                             ; preds = %bb.a
   %i.v = load i32, ptr %i.u, align 4, !tbaa !3, !noalias !58
   %i.w = call noundef i32 @_ZN6hermes6bigint17asUintNResultSizeEmNS0_18ImmutableBigIntRefERj(i64 noundef %1, ptr nonnull %i.t, i32 %i.v, ptr noundef nonnull align 4 dereferenceable(4) %i.b) #8 ; 2 uses
   %.not = icmp eq i32 %i.w, 0
-  br i1 %.not, label %bb.f, label %4, !prof !44
-
-4:                                                ; preds = %bb.e
-  %5 = call noundef i32 @_ZN6hermes2vm15BigIntPrimitive12raiseOnErrorERNS0_7RuntimeENS_6bigint15OperationStatusE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 noundef %i.w)
-  br label %_ZN6hermes2vm15BigIntPrimitive7unaryOpIZNS0_L16makeTruncAdapterITnDaXadL_ZNS_6bigint7asUintNENS4_16MutableBigIntRefEmNS4_18ImmutableBigIntRefEEEEEDamEUlS5_S6_E_EENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeET_NS0_6HandleIS1_EEm.exit
+  br i1 %.not, label %bb.f, label %bb.l, !prof !44
 
 bb.f:                                             ; preds = %bb.e
   %i.x = load i32, ptr %i.b, align 4, !tbaa !3    ; 3 uses
@@ -263,20 +259,21 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !3, !noalias !61
   %i.ax = call noundef i32 @_ZN6hermes6bigint7asUintNENS0_16MutableBigIntRefEmNS0_18ImmutableBigIntRefE(ptr nonnull %i.ar, ptr nonnull %i.ap, i64 noundef range(i64 1, 0) %1, ptr nonnull %i.au, i32 %i.aw) #8 ; 2 uses
   %.not.i = icmp eq i32 %i.ax, 0
-  br i1 %.not.i, label %bb.l, label %bb.k, !prof !44
+  br i1 %.not.i, label %bb.k, label %bb.l, !prof !44
 
 bb.k:                                             ; preds = %bb.j
-  %6 = call noundef i32 @_ZN6hermes2vm15BigIntPrimitive12raiseOnErrorERNS0_7RuntimeENS_6bigint15OperationStatusE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 noundef %i.ax)
+  %4 = ptrtoint ptr %i.ao to i64
+  %5 = or i64 %4, -562949953421312
   br label %_ZN6hermes2vm15BigIntPrimitive7unaryOpIZNS0_L16makeTruncAdapterITnDaXadL_ZNS_6bigint7asUintNENS4_16MutableBigIntRefEmNS4_18ImmutableBigIntRefEEEEEDamEUlS5_S6_E_EENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeET_NS0_6HandleIS1_EEm.exit
 
-bb.l:                                             ; preds = %bb.j
-  %7 = ptrtoint ptr %i.ao to i64
-  %8 = or i64 %7, -562949953421312
+bb.l:                                             ; preds = %bb.j, %bb.e
+  %.sink = phi i32 [ %i.w, %bb.e ], [ %i.ax, %bb.j ]
+  %6 = call noundef i32 @_ZN6hermes2vm15BigIntPrimitive12raiseOnErrorERNS0_7RuntimeENS_6bigint15OperationStatusE(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 noundef %.sink)
   br label %_ZN6hermes2vm15BigIntPrimitive7unaryOpIZNS0_L16makeTruncAdapterITnDaXadL_ZNS_6bigint7asUintNENS4_16MutableBigIntRefEmNS4_18ImmutableBigIntRefEEEEEDamEUlS5_S6_E_EENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeET_NS0_6HandleIS1_EEm.exit
 
-_ZN6hermes2vm15BigIntPrimitive7unaryOpIZNS0_L16makeTruncAdapterITnDaXadL_ZNS_6bigint7asUintNENS4_16MutableBigIntRefEmNS4_18ImmutableBigIntRefEEEEEDamEUlS5_S6_E_EENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeET_NS0_6HandleIS1_EEm.exit: ; preds = %bb.l, %bb.k, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i, %4
-  %.sroa.012.0 = phi i32 [ %5, %4 ], [ %6, %bb.k ], [ 1, %bb.l ], [ 0, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i ]
-  %.sroa.413.0 = phi i64 [ undef, %4 ], [ undef, %bb.k ], [ %8, %bb.l ], [ undef, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i ]
+_ZN6hermes2vm15BigIntPrimitive7unaryOpIZNS0_L16makeTruncAdapterITnDaXadL_ZNS_6bigint7asUintNENS4_16MutableBigIntRefEmNS4_18ImmutableBigIntRefEEEEEDamEUlS5_S6_E_EENS0_10CallResultINS0_11HermesValueELNS0_6detail20CallResultSpecializeE2EEERNS0_7RuntimeET_NS0_6HandleIS1_EEm.exit: ; preds = %bb.l, %bb.k, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i
+  %.sroa.012.0 = phi i32 [ 1, %bb.k ], [ 0, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i ], [ %6, %bb.l ]
+  %.sroa.413.0 = phi i64 [ %5, %bb.k ], [ undef, %_ZN6hermes2vm15BigIntPrimitive32createUninitializedWithNumDigitsERNS0_7RuntimeEj.exit.thread.i ], [ undef, %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   br label %bb.m
 

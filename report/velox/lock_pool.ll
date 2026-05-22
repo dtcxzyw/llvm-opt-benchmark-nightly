@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 
 bb.e:                                             ; preds = %bb.d
   %.not = icmp eq ptr %1, null
-  br i1 %.not, label %2, label %bb.f, !prof !18
+  br i1 %.not, label %bb.g, label %bb.f, !prof !18
 
 bb.f:                                             ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %.pre.i, i64 16 ; 3 uses
@@ -227,14 +227,12 @@ bb.f:                                             ; preds = %bb.e
   %i.z = getelementptr inbounds nuw i8, ptr %i.m, i64 %.idx34
   %i.aa = sub i64 %0, %i.y
   %i.ab = shl i64 %i.aa, 3
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.z, i8 0, i64 %i.ab, i1 false)
   br label %bb.g
 
-2:                                                ; preds = %bb.e
-  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.pre.i, i8 0, i64 %i.h, i1 false)
-  br label %bb.g
-
-bb.g:                                             ; preds = %2, %bb.f
+bb.g:                                             ; preds = %bb.e, %bb.f
+  %.sink = phi i64 [ %i.ab, %bb.f ], [ %i.h, %bb.e ]
+  %.pre.i.sink = phi ptr [ %i.z, %bb.f ], [ %.pre.i, %bb.e ]
+  call void @llvm.memset.p0.i64(ptr nonnull align 1 %.pre.i.sink, i8 0, i64 %.sink, i1 false)
   %i.ac = getelementptr inbounds nuw i8, ptr %.pre.i, i64 8
   store i64 %0, ptr %i.ac, align 8, !tbaa !23
   br label %bb.h

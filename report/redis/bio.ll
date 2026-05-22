@@ -200,9 +200,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
   %i.bb = getelementptr inbounds nuw i8, ptr %i.z, i64 4
-  %2 = load i32, ptr %i.bb, align 4, !tbaa !67
-  %3 = call i32 @close(i32 noundef %2) #12        ; 0 uses
-  br label %bb.af
+  br label %.sink.split
 
 bb.r:                                             ; preds = %bb.h
   %i.bc = icmp eq i32 %i.ab, 3
@@ -274,12 +272,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.y, %bb.z, %bb.x
-  br i1 %i.bc, label %4, label %bb.af
-
-4:                                                ; preds = %bb.aa
-  %5 = load i32, ptr %i.bd, align 4, !tbaa !67
-  %6 = call i32 @close(i32 noundef %5) #12        ; 0 uses
-  br label %bb.af
+  br i1 %i.bc, label %.sink.split, label %bb.af
 
 bb.ab:                                            ; preds = %bb.r
   %i.cc = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -319,7 +312,13 @@ bb.ae:                                            ; preds = %bb.ac
   call void @abort() #15
   unreachable
 
-bb.af:                                            ; preds = %4, %bb.aa, %bb.ad, %bb.ab, %bb.q
+.sink.split:                                      ; preds = %bb.aa, %bb.q
+  %.sink.in = phi ptr [ %i.bb, %bb.q ], [ %i.bd, %bb.aa ]
+  %.sink = load i32, ptr %.sink.in, align 4, !tbaa !67
+  %2 = call i32 @close(i32 noundef %.sink) #12    ; 0 uses
+  br label %bb.af
+
+bb.af:                                            ; preds = %.sink.split, %bb.aa, %bb.ad, %bb.ab
   call void @zfree(ptr noundef nonnull %i.z) #12
   %i.cv = call i32 @pthread_mutex_lock(ptr noundef nonnull %i.h) #12 ; 0 uses
   %i.cw = load ptr, ptr %i.q, align 8, !tbaa !13

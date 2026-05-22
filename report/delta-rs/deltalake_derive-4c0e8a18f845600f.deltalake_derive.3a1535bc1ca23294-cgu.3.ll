@@ -201,14 +201,18 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
   call void @_RNvXs_NtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB4_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamEINtNtB6_9try_trait12FromResidualIBK_B12_NtNtB8_7convert10InfallibleEE13from_residualCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.a, ptr nonnull align 8 %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   store i64 -9223372036854775806, ptr %0, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.h
+.sink.split:                                      ; preds = %bb.h, %bb.d
+  %.sink = phi ptr [ %i.a, %bb.d ], [ %i.d, %bb.h ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
   ret void
 
 bb.g:                                             ; preds = %bb.b
@@ -222,8 +226,7 @@ bb.h:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.l, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @_RNvXNtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB2_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamENtNtB4_9try_trait3Try11from_outputCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.d)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -262,14 +265,18 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
   call void @_RNvXs_NtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB4_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamEINtNtB6_9try_trait12FromResidualIBK_B12_NtNtB8_7convert10InfallibleEE13from_residualCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.a, ptr nonnull align 8 %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   store i64 -9223372036854775806, ptr %0, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.h
+.sink.split:                                      ; preds = %bb.h, %bb.d
+  %.sink = phi ptr [ %i.a, %bb.d ], [ %i.d, %bb.h ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
   ret void
 
 bb.g:                                             ; preds = %bb.b
@@ -283,8 +290,7 @@ bb.h:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.l, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @_RNvXNtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB2_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamENtNtB4_9try_trait3Try11from_outputCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.d)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
@@ -323,14 +329,18 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %i.c, i64 32, i1 false)
   call void @_RNvXs_NtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB4_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamEINtNtB6_9try_trait12FromResidualIBK_B12_NtNtB8_7convert10InfallibleEE13from_residualCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.a, ptr nonnull align 8 %i.b)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.a, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   store i64 -9223372036854775806, ptr %0, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.h
+.sink.split:                                      ; preds = %bb.h, %bb.d
+  %.sink = phi ptr [ %i.a, %bb.d ], [ %i.d, %bb.h ]
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %.sink, i64 32, i1 false)
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
   ret void
 
 bb.g:                                             ; preds = %bb.b
@@ -344,8 +354,7 @@ bb.h:                                             ; preds = %bb.b
   %i.r = load ptr, ptr %i.l, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
   call void @_RNvXNtNtCsbvkFyIu7lgC_4core3ops12control_flowINtB2_11ControlFlowNtCsbjGuDcEILED_11proc_macro211TokenStreamENtNtB4_9try_trait3Try11from_outputCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull sret([32 x i8]) align 8 %i.d)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.d, i64 32, i1 false)
-  br label %bb.f
+  br label %.sink.split
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -748,7 +757,7 @@ bb.a:
   %i.l = alloca [16 x i8], align 8                ; 5 uses
   %i.m = alloca [24 x i8], align 8                ; 7 uses
   %i.n = alloca [104 x i8], align 8               ; 17 uses
-  %i.o = alloca [24 x i8], align 8                ; 5 uses
+  %i.o = alloca [24 x i8], align 8                ; 2 uses
   %i.p = icmp eq i64 %1, 0
   br i1 %i.p, label %bb.c, label %bb.b
 
@@ -757,7 +766,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.e, %bb.a, %bb.av, %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit, %bb.g, %bb.au
-  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ %i.x, %bb.g ], [ %i.fu, %bb.au ], [ %11, %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit ], [ %i.fv, %bb.av ], [ false, %bb.e ]
+  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ %i.x, %bb.g ], [ %i.fu, %bb.au ], [ %9, %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit ], [ %i.fv, %bb.av ], [ false, %bb.e ]
   ret i1 %.sroa.0.0
 
 bb.d:                                             ; preds = %bb.b
@@ -781,11 +790,10 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containsCs4ZaLwAtrTbk_16deltalake_derive.exit, %bb.f
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr nonnull sret([104 x i8]) align 8 %i.n, ptr %2, i64 %3, ptr %0, i64 %1)
-  call void @llvm.experimental.noalias.scope.decl(metadata !27)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.y = load i64, ptr %i.n, align 8, !noalias !27
   %i.z = trunc nuw i64 %i.y to i1
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 6 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 5 uses
   br i1 %i.z, label %bb.i, label %.preheader.i
 
 .preheader.i:                                     ; preds = %bb.h
@@ -794,8 +802,8 @@ bb.h:                                             ; preds = %_RNvNtNtCsbvkFyIu7l
   %i.ad = getelementptr inbounds nuw i8, ptr %i.n, i64 72 ; 3 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.n, i64 80 ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 4 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.n, i64 40 ; 3 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.n, i64 56
   %i.ak = getelementptr inbounds nuw i8, ptr %i.n, i64 88
@@ -807,14 +815,17 @@ bb.i:                                             ; preds = %bb.h
   %i.an = load i64, ptr %i.am, align 8, !noalias !27
   %i.ao = icmp eq i64 %i.an, -1
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 72
-  %i.aq = load ptr, ptr %i.ap, align 8, !noalias !27 ; 2 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !noalias !27
   %i.ar = getelementptr inbounds nuw i8, ptr %i.n, i64 80
-  %i.as = load i64, ptr %i.ar, align 8, !noalias !27 ; 2 uses
+  %i.as = load i64, ptr %i.ar, align 8, !noalias !27
   %i.at = getelementptr inbounds nuw i8, ptr %i.n, i64 88
-  %i.au = load ptr, ptr %i.at, align 8, !noalias !27 ; 2 uses
+  %i.au = load ptr, ptr %i.at, align 8, !noalias !27
   %i.av = getelementptr inbounds nuw i8, ptr %i.n, i64 96
-  %i.aw = load i64, ptr %i.av, align 8, !noalias !27 ; 2 uses
-  br i1 %i.ao, label %9, label %bb.ad
+  %4 = load i64, ptr %i.av, align 8, !noalias !27
+  call void @_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbjGuDcEILED_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.o, ptr nonnull align 8 %i.aa, ptr %i.aq, i64 %i.as, ptr %i.au, i64 %4, i1 zeroext %i.ao) #15
+  %i.aw = load i64, ptr %i.o, align 8
+  %5 = icmp eq i64 %i.aw, 1
+  br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 bb.j:                                             ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i, %.preheader.i
   call void @llvm.experimental.noalias.scope.decl(metadata !30)
@@ -840,7 +851,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bg = and i8 %i.be, 1
   %i.bh = xor i8 %i.bg, 1
   store i8 %i.bh, ptr %i.ac, align 8, !noalias !33
-  %i.bi = load i64, ptr %i.aa, align 8, !noalias !33 ; 5 uses
+  %i.bi = load i64, ptr %i.aa, align 8, !noalias !33 ; 7 uses
   %i.bj = load ptr, ptr %i.ad, align 8, !noalias !33 ; 2 uses
   %i.bk = load i64, ptr %i.ae, align 8, !noalias !33 ; 3 uses
   %i.bl = call { ptr, i64 } @_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs4ZaLwAtrTbk_16deltalake_derive(i64 %i.bi, ptr %i.bj, i64 %i.bk) #15, !noalias !33 ; 2 uses
@@ -864,44 +875,45 @@ bb.o:                                             ; preds = %bb.m
   unreachable
 
 bb.p:                                             ; preds = %bb.n
-  br i1 %i.bf, label %bb.s, label %bb.t
+  br i1 %i.bf, label %bb.w, label %bb.s
 
 bb.q:                                             ; preds = %bb.n
-  br i1 %i.bf, label %bb.s, label %bb.r
+  br i1 %i.bf, label %bb.w, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   store i8 1, ptr %i.ab, align 2, !noalias !33
   br label %.sink.split.i.i
 
-bb.s:                                             ; preds = %bb.q, %bb.p
-  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !30, !noalias !27
-  store i64 %i.bi, ptr %i.ah, align 8, !alias.scope !30, !noalias !27
-  br label %.sink.split.i.i
+bb.s:                                             ; preds = %bb.p
+  %6 = icmp ult i32 %i.br, 128
+  br i1 %6, label %bb.v, label %bb.t
 
-bb.t:                                             ; preds = %bb.p
-  %i.bt = icmp ult i32 %i.br, 128
-  br i1 %i.bt, label %bb.w, label %bb.u
+bb.t:                                             ; preds = %bb.s
+  %i.bt = icmp ult i32 %i.br, 2048
+  br i1 %i.bt, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.bu = icmp ult i32 %i.br, 2048
-  br i1 %i.bu, label %bb.w, label %bb.v
+  %i.bu = icmp ult i32 %i.br, 65536
+  %..i.i = select i1 %i.bu, i64 3, i64 4
+  br label %bb.v
 
-bb.v:                                             ; preds = %bb.u
-  %4 = icmp ult i32 %i.br, 65536
-  %..i.i = select i1 %4, i64 3, i64 4
+bb.v:                                             ; preds = %bb.u, %bb.t, %bb.s
+  %.sroa.01.0.i.i = phi i64 [ 2, %bb.t ], [ %..i.i, %bb.u ], [ 1, %bb.s ]
+  %7 = load i64, ptr %i.aa, align 8, !noalias !33
+  %8 = add i64 %7, %.sroa.01.0.i.i                ; 2 uses
+  store i64 %8, ptr %i.aa, align 8, !noalias !33
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
-  %.sroa.01.0.i.i = phi i64 [ 2, %bb.u ], [ %..i.i, %bb.v ], [ 1, %bb.t ]
-  %5 = load i64, ptr %i.aa, align 8, !noalias !33
-  %6 = add i64 %5, %.sroa.01.0.i.i                ; 2 uses
-  store i64 %6, ptr %i.aa, align 8, !noalias !33
-  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !30, !noalias !27
-  store i64 %6, ptr %i.ah, align 8, !alias.scope !30, !noalias !27
+bb.w:                                             ; preds = %._crit_edge.i.i, %bb.v, %bb.q, %bb.p
+  %.sink.i = phi i64 [ %i.cc, %._crit_edge.i.i ], [ %i.bi, %bb.v ], [ %i.bi, %bb.q ], [ %i.bi, %bb.p ]
+  %.sroa.02.0.lcssa.i.sink.i = phi i64 [ %.sroa.02.0.lcssa.i.i, %._crit_edge.i.i ], [ %8, %bb.v ], [ %i.bi, %bb.q ], [ %i.bi, %bb.p ]
+  %.sink.i.ph.i = phi i64 [ 1, %._crit_edge.i.i ], [ 1, %bb.v ], [ 0, %bb.q ], [ 0, %bb.p ]
+  store i64 %.sink.i, ptr %i.ag, align 8, !alias.scope !30, !noalias !27
+  store i64 %.sroa.02.0.lcssa.i.sink.i, ptr %i.ah, align 8, !alias.scope !30, !noalias !27
   br label %.sink.split.i.i
 
-.sink.split.i.i:                                  ; preds = %._crit_edge.i.i, %bb.w, %bb.s, %bb.r, %bb.l, %bb.k
-  %.sink.i.i = phi i64 [ 2, %bb.r ], [ 0, %bb.s ], [ 1, %bb.w ], [ 1, %._crit_edge.i.i ], [ 2, %bb.k ], [ 2, %bb.l ] ; 2 uses
+.sink.split.i.i:                                  ; preds = %bb.w, %bb.r, %bb.l, %bb.k
+  %.sink.i.i = phi i64 [ 2, %bb.r ], [ 2, %bb.l ], [ 2, %bb.k ], [ %.sink.i.ph.i, %bb.w ] ; 2 uses
   store i64 %.sink.i.i, ptr %i.m, align 8, !alias.scope !30, !noalias !27
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
 
@@ -934,9 +946,7 @@ bb.y:                                             ; preds = %bb.x
   %i.ch = load i64, ptr %i.ai, align 8, !noalias !33
   %i.ci = call i64 @_RNvYjNtNtCsbvkFyIu7lgC_4core3cmp3Ord3maxCsbjGuDcEILED_11proc_macro2(i64 %.sroa.02.0.lcssa.i.i, i64 %i.ch) #15, !noalias !27
   store i64 %i.ci, ptr %i.ai, align 8, !noalias !33
-  store i64 %i.cc, ptr %i.ag, align 8, !alias.scope !30, !noalias !27
-  store i64 %.sroa.02.0.lcssa.i.i, ptr %i.ah, align 8, !alias.scope !30, !noalias !27
-  br label %.sink.split.i.i
+  br label %bb.w
 
 bb.z:                                             ; preds = %.lr.ph.i.i
   %i.cj = icmp eq i64 %.sroa.02.015.i.i, %i.cf
@@ -957,34 +967,20 @@ _RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next
   %i.cp = phi i64 [ %.sink.i.i, %.sink.split.i.i ], [ %i.ca, %bb.x ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !27
   switch i64 %i.cp, label %bb.ac [
-    i64 0, label %7
+    i64 0, label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
     i64 1, label %bb.j
-    i64 2, label %8
+    i64 2, label %bb.ad
   ]
 
 bb.ac:                                            ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
   unreachable
 
-7:                                                ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
-  store i64 1, ptr %i.o, align 8, !alias.scope !27
+bb.ad:                                            ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
 
-8:                                                ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
-  store i64 0, ptr %i.o, align 8, !alias.scope !27
-  br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
-
-9:                                                ; preds = %bb.i
-  call void @_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbjGuDcEILED_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.o, ptr nonnull align 8 %i.aa, ptr %i.aq, i64 %i.as, ptr %i.au, i64 %i.aw, i1 zeroext true) #15
-  br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
-
-bb.ad:                                            ; preds = %bb.i
-  call void @_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbjGuDcEILED_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.o, ptr nonnull align 8 %i.aa, ptr %i.aq, i64 %i.as, ptr %i.au, i64 %i.aw, i1 zeroext false) #15
-  br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
-
-_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit: ; preds = %7, %8, %9, %bb.ad
+_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit: ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i, %bb.ad, %bb.i
+  %9 = phi i1 [ %5, %bb.i ], [ false, %bb.ad ], [ true, %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
-  %10 = load i64, ptr %i.o, align 8
-  %11 = icmp eq i64 %10, 1
   br label %bb.c
 
 bb.ae:                                            ; preds = %bb.f

@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.d, %_PyRawMutex_
   %.014.in.i = phi ptr [ %i.f, %_PyRawMutex_Lock.exit ], [ %.014.i, %bb.d ]
   %.014.i = load ptr, ptr %.014.in.i, align 8, !tbaa !25 ; 8 uses
   %.not.i = icmp eq ptr %.014.i, %i.f
-  br i1 %.not.i, label %dequeue.exit.thread, label %bb.d
+  br i1 %.not.i, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr i8, ptr %.014.i, i64 -40
@@ -225,22 +225,20 @@ dequeue.exit:                                     ; preds = %bb.d
   %i.q = getelementptr i8, ptr %.014.i, i64 16
   store i8 1, ptr %i.q, align 8, !tbaa !31
   %.not = icmp eq ptr %i.i, null
-  br i1 %.not, label %dequeue.exit.thread, label %bb.e
+  br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %dequeue.exit
   %i.r = icmp ne i64 %i.p, 0
   %i.s = zext i1 %i.r to i32
   %i.t = load ptr, ptr %i.i, align 8, !tbaa !13
-  tail call void %1(ptr noundef %2, ptr noundef %i.t, i32 noundef %i.s) #9
   br label %bb.f
 
-dequeue.exit.thread:                              ; preds = %bb.c, %dequeue.exit
-  tail call void %1(ptr noundef %2, ptr noundef null, i32 noundef 0) #9
-  br label %bb.f
-
-bb.f:                                             ; preds = %dequeue.exit.thread, %bb.e
-  %.not19 = phi i1 [ true, %dequeue.exit.thread ], [ false, %bb.e ]
-  %.2.i17 = phi ptr [ null, %dequeue.exit.thread ], [ %i.i, %bb.e ]
+bb.f:                                             ; preds = %bb.c, %dequeue.exit, %bb.e
+  %.sink24 = phi i32 [ %i.s, %bb.e ], [ 0, %dequeue.exit ], [ 0, %bb.c ]
+  %.sink = phi ptr [ %i.t, %bb.e ], [ null, %dequeue.exit ], [ null, %bb.c ]
+  %.not19 = phi i1 [ false, %bb.e ], [ true, %dequeue.exit ], [ true, %bb.c ]
+  %.2.i17 = phi ptr [ %i.i, %bb.e ], [ null, %dequeue.exit ], [ null, %bb.c ]
+  tail call void %1(ptr noundef %2, ptr noundef %.sink, i32 noundef %.sink24) #9
   %i.u = cmpxchg ptr %i.c, i64 1, i64 0 seq_cst seq_cst, align 8
   %i.v = extractvalue { i64, i1 } %i.u, 1
   br i1 %i.v, label %_PyRawMutex_Unlock.exit, label %bb.g

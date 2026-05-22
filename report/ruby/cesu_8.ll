@@ -201,8 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = trunc nuw nsw i32 %0 to i8
-  store i8 %i.b, ptr %1, align 1, !tbaa !10
-  br label %bb.l
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.c = icmp ult i32 %0, 2048
@@ -266,17 +265,12 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   switch i32 %0, label %bb.l [
-    i32 -2, label %3
+    i32 -2, label %.sink.split
     i32 -1, label %bb.j
   ]
 
-3:                                                ; preds = %bb.i
-  store i8 -2, ptr %1, align 1, !tbaa !10
-  br label %bb.l
-
 bb.j:                                             ; preds = %bb.i
-  store i8 -1, ptr %1, align 1, !tbaa !10
-  br label %bb.l
+  br label %.sink.split
 
 bb.k:                                             ; preds = %bb.f, %bb.h, %bb.d
   %.034 = phi i32 [ %0, %bb.d ], [ %0, %bb.f ], [ %i.u, %bb.h ]
@@ -292,8 +286,13 @@ bb.k:                                             ; preds = %bb.f, %bb.h, %bb.d
   %i.ar = trunc i64 %i.aq to i32
   br label %bb.l
 
-bb.l:                                             ; preds = %3, %bb.j, %bb.k, %bb.i, %bb.b
-  %.1 = phi i32 [ 1, %bb.b ], [ %i.ar, %bb.k ], [ 1, %3 ], [ 1, %bb.j ], [ -401, %bb.i ]
+.sink.split:                                      ; preds = %bb.i, %bb.b, %bb.j
+  %.sink = phi i8 [ %i.b, %bb.b ], [ -1, %bb.j ], [ -2, %bb.i ]
+  store i8 %.sink, ptr %1, align 1, !tbaa !10
+  br label %bb.l
+
+bb.l:                                             ; preds = %.sink.split, %bb.k, %bb.i
+  %.1 = phi i32 [ -401, %bb.i ], [ %i.ar, %bb.k ], [ 1, %.sink.split ]
   ret i32 %.1
 }
 

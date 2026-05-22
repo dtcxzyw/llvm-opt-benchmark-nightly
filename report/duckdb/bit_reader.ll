@@ -136,17 +136,10 @@ _ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread:
   store ptr %i.as, ptr %i.f, align 8, !tbaa !14
   %i.at = add i64 %i.j, -28
   %i.au = icmp ult i64 %i.at, -29
-  br i1 %i.au, label %3, label %6
-
-3:                                                ; preds = %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread
-  %4 = getelementptr i8, ptr %i.as, i64 -27
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %4, ptr %5, align 8, !tbaa !18
-  br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
-
-6:                                                ; preds = %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.e, ptr %7, align 8, !tbaa !18
+  %3 = getelementptr i8, ptr %i.as, i64 -27
+  %.sink = select i1 %i.au, ptr %3, ptr %i.e
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store ptr %.sink, ptr %4, align 8, !tbaa !18
   br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
 
 ._crit_edge34:                                    ; preds = %_ZN13duckdb_brotliL14BrotliPullByteEPNS_15BrotliBitReaderE.exit.i, %._crit_edge
@@ -164,8 +157,8 @@ _ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread:
   store i64 %i.bc, ptr %2, align 8, !tbaa !19
   br label %_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit
 
-_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit: ; preds = %6, %3, %._crit_edge34
-  %.0 = phi i32 [ 1, %._crit_edge34 ], [ 0, %3 ], [ 0, %6 ]
+_ZN13duckdb_brotliL23BrotliBitReaderSetInputEPNS_15BrotliBitReaderEPKhm.exit: ; preds = %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread, %._crit_edge34
+  %.0 = phi i32 [ 1, %._crit_edge34 ], [ 0, %_ZN13duckdb_brotliL18BrotliSafeReadBitsEPNS_15BrotliBitReaderEmPm.exit11.thread ]
   ret i32 %.0
 }
 

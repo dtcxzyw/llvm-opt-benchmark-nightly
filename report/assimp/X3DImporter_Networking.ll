@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.o
   %i.av = load ptr, ptr %i.ar, align 8, !noalias !3
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aq, i64 24
   %i.ax = load i64, ptr %i.aw, align 8, !noalias !3 ; 3 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 8 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 7 uses
   store ptr %i.ay, ptr %8, align 8, !alias.scope !6
   %i.az = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 8 uses
   store i64 0, ptr %i.az, align 8, !alias.scope !6
@@ -242,13 +242,7 @@ bb.r:                                             ; preds = %_ZNKSt7__cxx1112bas
           cleanup                                 ; 2 uses
   %i.bk = load ptr, ptr %8, align 8, !alias.scope !6 ; 2 uses
   %i.bl = icmp eq ptr %i.bk, %i.ay
-  br i1 %i.bl, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %bb.r
-  %11 = load i64, ptr %i.ay, align 8, !alias.scope !6
-  %12 = add i64 %11, 1
-  call void @_ZdlPvm(ptr noundef %i.bk, i64 noundef %12) #20
-  br label %.body
+  br i1 %i.bl, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75
 
 _ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i, %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exit.backedge
   %.232.sink = phi i64 [ %.232.sink.be, %_ZStplIcSt11char_traitsIcESaIcEENSt7__cxx1112basic_stringIT_T0_T1_EERKS8_SA_.exit.backedge ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i10.i.i ]
@@ -484,14 +478,16 @@ bb.an:                                            ; preds = %.loopexit, %.loopex
   %i.dw = icmp eq ptr %i.dv, %i.ay
   br i1 %i.dw, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75: ; preds = %bb.an
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75: ; preds = %bb.an, %bb.r
+  %.sink = phi ptr [ %i.bk, %bb.r ], [ %i.dv, %bb.an ]
+  %.pn40.pn.ph = phi { ptr, i32 } [ %i.bj, %bb.r ], [ %.pn40, %bb.an ]
   %i.dx = load i64, ptr %i.ay, align 8
   %i.dy = add i64 %i.dx, 1
-  call void @_ZdlPvm(ptr noundef %i.dv, i64 noundef %i.dy) #20
+  call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.dy) #20
   br label %.body
 
-.body:                                            ; preds = %bb.an, %bb.r, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75, %bb.t, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
-  %.pn40.pn = phi { ptr, i32 } [ %.pn40, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75 ], [ %i.bs, %bb.t ], [ %i.bj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %i.bj, %bb.r ], [ %.pn40, %bb.an ]
+.body:                                            ; preds = %bb.r, %bb.an, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75, %bb.t
+  %.pn40.pn = phi { ptr, i32 } [ %.pn40.pn.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i75 ], [ %i.bs, %bb.t ], [ %i.bj, %bb.r ], [ %.pn40, %bb.an ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #19
   br label %bb.au
 
@@ -894,8 +890,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i11
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.av) #20
   br label %.sink.split
 
-.sink.split:                                      ; preds = %.sink.split.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %bb.c
-  %.pn.pn17.ph = phi { ptr, i32 } [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ], [ %i.p, %bb.c ], [ %.pn.pn17.ph.ph, %.sink.split.sink.split ]
+.sink.split:                                      ; preds = %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread, %.sink.split.sink.split
+  %.pn.pn17.ph = phi { ptr, i32 } [ %.pn.pn17.ph.ph, %.sink.split.sink.split ], [ %i.p, %bb.c ], [ %i.ap, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   br label %bb.i
@@ -1222,8 +1218,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i36
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.cn) #20
   br label %.sink.split
 
-.sink.split:                                      ; preds = %.sink.split.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35.thread, %bb.c
-  %.pn.pn.pn.pn42.ph = phi { ptr, i32 } [ %i.ch, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35.thread ], [ %i.p, %bb.c ], [ %.pn.pn.pn.pn42.ph.ph, %.sink.split.sink.split ]
+.sink.split:                                      ; preds = %bb.c, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35.thread, %.sink.split.sink.split
+  %.pn.pn.pn.pn42.ph = phi { ptr, i32 } [ %.pn.pn.pn.pn42.ph.ph, %.sink.split.sink.split ], [ %i.p, %bb.c ], [ %i.ch, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit35.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #19
@@ -1496,8 +1492,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #20
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #19
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #19
   resume { ptr, i32 } %.pn

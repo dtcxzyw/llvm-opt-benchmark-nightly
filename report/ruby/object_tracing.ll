@@ -201,7 +201,7 @@ declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly ca
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @object_allocations_reporter_i(i64 noundef %0, i64 noundef %1, i64 noundef %2) #0 {
 bb.a:
-  %i.a = inttoptr i64 %2 to ptr                   ; 6 uses
+  %i.a = inttoptr i64 %2 to ptr                   ; 5 uses
   %i.b = inttoptr i64 %1 to ptr                   ; 7 uses
   %i.c = inttoptr i64 %0 to ptr
   %i.d = load i32, ptr %i.b, align 8, !tbaa !38
@@ -214,20 +214,18 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !31   ; 2 uses
   %.not21 = icmp eq ptr %i.k, null
-  br i1 %.not21, label %bb.b, label %3
-
-3:                                                ; preds = %bb.a
-  %4 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull @.str.17, ptr noundef nonnull %i.k) #12 ; 0 uses
-  br label %bb.c
+  br i1 %.not21, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.m = load i64, ptr %i.l, align 8, !tbaa !40
   %i.n = inttoptr i64 %i.m to ptr
-  %5 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull @.str.18, ptr noundef %i.n) #12 ; 0 uses
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %3
+bb.c:                                             ; preds = %bb.a, %bb.b
+  %.sink = phi ptr [ %i.n, %bb.b ], [ %i.k, %bb.a ]
+  %.str.18.sink = phi ptr [ @.str.18, %bb.b ], [ @.str.17, %bb.a ]
+  %3 = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull %.str.18.sink, ptr noundef %.sink) #12 ; 0 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !27   ; 2 uses
   %.not22 = icmp eq ptr %i.p, null

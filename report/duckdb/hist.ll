@@ -201,11 +201,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.d = load i32, ptr %1, align 4, !tbaa !3
   %i.e = icmp ult i32 %i.d, 255
-  br i1 %i.e, label %6, label %bb.d
-
-6:                                                ; preds = %bb.c
-  %7 = tail call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, i64 noundef %3, i32 noundef 1, ptr noundef %4)
-  br label %_ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit
+  br i1 %i.e, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store i32 255, ptr %1, align 4, !tbaa !3
@@ -293,12 +289,13 @@ _ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i: ; preds = %scalar
   %i.ac = zext i32 %spec.select.i.i.lcssa to i64
   br label %_ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit
 
-bb.h:                                             ; preds = %bb.d
-  %i.ad = tail call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly %2, i64 noundef %3, i32 noundef 0, ptr noundef %4)
+bb.h:                                             ; preds = %bb.d, %bb.c
+  %.sink = phi i32 [ 1, %bb.c ], [ 0, %bb.d ]
+  %i.ad = tail call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef %2, i64 noundef %3, i32 noundef %.sink, ptr noundef %4)
   br label %_ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit
 
-_ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit: ; preds = %bb.h, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i, %bb.f, %bb.b, %bb.a, %6
-  %.0 = phi i64 [ -66, %bb.b ], [ -1, %bb.a ], [ %7, %6 ], [ 0, %bb.f ], [ %i.ad, %bb.h ], [ %i.ac, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i ]
+_ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit: ; preds = %bb.h, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i, %bb.f, %bb.b, %bb.a
+  %.0 = phi i64 [ -66, %bb.b ], [ -1, %bb.a ], [ %i.ac, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i ], [ 0, %bb.f ], [ %i.ad, %bb.h ]
   ret i64 %.0
 }
 
@@ -408,15 +405,11 @@ _ZN11duckdb_zstd19HIST_countFast_wkspEPjS0_PKvmPvm.exit: ; preds = %bb.c, %_ZN11
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef range(i64 -48, 4294967296) i64 @_ZN11duckdb_zstd10HIST_countEPjS0_PKvm(ptr noundef captures(none) %0, ptr noundef captures(none) %1, ptr noundef readonly captures(address) %2, i64 noundef %3) local_unnamed_addr #1 {
 bb.a:
-  %i.a = alloca [1024 x i32], align 16            ; 4 uses
+  %i.a = alloca [1024 x i32], align 16            ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = load i32, ptr %1, align 4, !tbaa !3
   %i.c = icmp ult i32 %i.b, 255
-  br i1 %i.c, label %4, label %bb.b
-
-4:                                                ; preds = %bb.a
-  %5 = call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly %2, i64 noundef %3, i32 noundef 1, ptr noundef nonnull %i.a)
-  br label %_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm.exit
+  br i1 %i.c, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   store i32 255, ptr %1, align 4, !tbaa !3
@@ -504,12 +497,13 @@ _ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i.i: ; preds = %scal
   %i.aa = zext i32 %spec.select.i.i.i.lcssa to i64
   br label %_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm.exit
 
-bb.f:                                             ; preds = %bb.b
-  %i.ab = call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly %2, i64 noundef %3, i32 noundef 0, ptr noundef nonnull %i.a)
+bb.f:                                             ; preds = %bb.b, %bb.a
+  %.sink.i = phi i32 [ 1, %bb.a ], [ 0, %bb.b ]
+  %i.ab = call fastcc noundef i64 @_ZN11duckdb_zstdL24HIST_count_parallel_wkspEPjS0_PKvmNS_17HIST_checkInput_eES0_(ptr noundef %0, ptr noundef nonnull %1, ptr noundef readonly %2, i64 noundef %3, i32 noundef %.sink.i, ptr noundef nonnull %i.a)
   br label %_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm.exit
 
-_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm.exit: ; preds = %4, %bb.d, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i.i, %bb.f
-  %.0.i = phi i64 [ %i.aa, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i.i ], [ %i.ab, %bb.f ], [ %5, %4 ], [ 0, %bb.d ]
+_ZN11duckdb_zstd15HIST_count_wkspEPjS0_PKvmPvm.exit: ; preds = %bb.d, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i.i, %bb.f
+  %.0.i = phi i64 [ %i.ab, %bb.f ], [ 0, %bb.d ], [ %i.aa, %_ZN11duckdb_zstd17HIST_count_simpleEPjS0_PKvm.exit.loopexit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i64 %.0.i
 }

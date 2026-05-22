@@ -201,17 +201,7 @@ bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %1, i8 0, i64 24, i1 false)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !352)
   %i.h = icmp eq ptr %i.a, %i.d
-  br i1 %i.h, label %7, label %bb.b
-
-7:                                                ; preds = %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !81, !alias.scope !352
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.a, ptr %8, align 8, !tbaa !348, !alias.scope !352
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.d, ptr %9, align 8, !tbaa !350, !alias.scope !352
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  store ptr %i.g, ptr %10, align 8, !tbaa !351, !alias.scope !352
-  br label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit
+  br i1 %i.h, label %_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.i = ptrtoint ptr %i.d to i64                 ; 2 uses
@@ -614,15 +604,8 @@ _ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE6resizeEm.exit.i: ; preds = %_ZSt8_Des
   br i1 %i.df, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE6resizeEm.exit.i
-  store ptr null, ptr %0, align 8, !tbaa !81, !alias.scope !352
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %i.de, ptr %11, align 8, !tbaa !348, !alias.scope !352
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %i.dd, ptr %12, align 8, !tbaa !350, !alias.scope !352
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.dg = load ptr, ptr %i.e, align 8, !tbaa !351, !noalias !352
-  store ptr %i.dg, ptr %13, align 8, !tbaa !351, !alias.scope !352
-  br label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit
+  br label %_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit.thread
 
 bb.ag:                                            ; preds = %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE6resizeEm.exit.i
   %.not53.i = icmp ult ptr %i.de, %i.dd
@@ -827,6 +810,19 @@ bb.aw:                                            ; preds = %bb.av
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.015.039.i, i64 noundef %i.fg) #36, !noalias !352
   br label %.body
 
+_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit.thread: ; preds = %bb.a, %bb.af
+  %7 = phi ptr [ %i.g, %bb.a ], [ %i.dg, %bb.af ]
+  %.sink128.i = phi ptr [ %i.a, %bb.a ], [ %i.de, %bb.af ]
+  %.sink.i = phi ptr [ %i.d, %bb.a ], [ %i.dd, %bb.af ]
+  store ptr null, ptr %0, align 8, !tbaa !81, !alias.scope !352
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store ptr %.sink128.i, ptr %8, align 8, !tbaa !348, !alias.scope !352
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %.sink.i, ptr %9, align 8, !tbaa !350, !alias.scope !352
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  store ptr %7, ptr %10, align 8, !tbaa !351, !alias.scope !352
+  br label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit
+
 _ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit: ; preds = %bb.ag, %._crit_edge.i, %bb.ap, %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i46.i
   %.sroa.21.4.i = phi ptr [ %.sroa.21.2.i, %._crit_edge.i ], [ %i.fc, %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i46.i ], [ %.sroa.21.2.i, %bb.ap ], [ null, %bb.ag ]
   %.sroa.12.4.i = phi ptr [ %.sroa.12.2.i, %._crit_edge.i ], [ %i.fb, %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i46.i ], [ %i.en, %bb.ap ], [ null, %bb.ag ]
@@ -850,7 +846,7 @@ bb.ax:                                            ; preds = %_ZN5arrow2io8intern
   call void @_ZdlPvm(ptr noundef nonnull %.pr, i64 noundef %i.fn) #36
   br label %_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit
 
-_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit: ; preds = %7, %bb.af, %_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit, %bb.ax
+_ZNSt6vectorIN5arrow2io9ReadRangeESaIS2_EED2Ev.exit: ; preds = %_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit.thread, %_ZN5arrow2io8internal12_GLOBAL__N_117ReadRangeCombiner8CoalesceESt6vectorINS0_9ReadRangeESaIS5_EE.exit, %bb.ax
   ret void
 
 bb.ay:                                            ; preds = %bb.ad

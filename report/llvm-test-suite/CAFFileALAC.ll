@@ -199,7 +199,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
@@ -245,16 +245,10 @@ bb.e:                                             ; preds = %bb.c
   %i.ag = load i32, ptr %i.k, align 4, !tbaa !10  ; 3 uses
   %i.ah = and i32 %i.ag, 2
   %.not = icmp eq i32 %i.ah, 0
-  br i1 %.not, label %4, label %2
-
-2:                                                ; preds = %bb.e
+  %2 = or disjoint i32 %i.ag, 2
   %3 = and i32 %i.ag, -4
-  store i32 %3, ptr %i.k, align 4, !tbaa !10
-  br label %bb.g
-
-4:                                                ; preds = %bb.e
-  %5 = or disjoint i32 %i.ag, 2
-  store i32 %5, ptr %i.k, align 4, !tbaa !10
+  %.sink = select i1 %.not, i32 %2, i32 %3
+  store i32 %.sink, ptr %i.k, align 4, !tbaa !10
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.b
@@ -265,7 +259,7 @@ bb.f:                                             ; preds = %bb.b
   %i.am = tail call i32 @fseek(ptr noundef %0, i64 noundef %i.al, i32 noundef 1) ; 0 uses
   br label %bb.b, !llvm.loop !39
 
-bb.g:                                             ; preds = %bb.d, %4, %2
+bb.g:                                             ; preds = %bb.e, %bb.d
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 20
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 20

@@ -201,11 +201,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.bg = add nsw i32 %i.bf, -1                   ; 2 uses
   store i32 %i.bg, ptr %.0377077.i, align 8, !tbaa !16
   %i.bh = icmp eq i32 %i.bg, 0
-  br i1 %i.bh, label %2, label %_tokenizer_error.exit.thread
-
-2:                                                ; preds = %bb.ac
-  call void @_Py_Dealloc(ptr noundef nonnull %.0377077.i) #6
-  br label %_tokenizer_error.exit.thread
+  br i1 %i.bh, label %_tokenizer_error.exit.thread.sink.split, label %_tokenizer_error.exit.thread
 
 bb.ad:                                            ; preds = %bb.a
   %i.bi = getelementptr i8, ptr %0, i64 24        ; 3 uses
@@ -567,11 +563,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.fx = add nsw i32 %i.fw, -1                   ; 2 uses
   store i32 %i.fx, ptr %.079, align 8, !tbaa !16
   %i.fy = icmp eq i32 %i.fx, 0
-  br i1 %i.fy, label %3, label %_tokenizer_error.exit.thread
-
-3:                                                ; preds = %bb.bz
-  call void @_Py_Dealloc(ptr noundef nonnull %.079) #6
-  br label %_tokenizer_error.exit.thread
+  br i1 %i.fy, label %_tokenizer_error.exit.thread.sink.split, label %_tokenizer_error.exit.thread
 
 .thread127:                                       ; preds = %bb.bn, %bb.bt, %bb.bo, %bb.bx, %_get_col_offsets.exit
   %.1123 = phi i64 [ %.2124, %_get_col_offsets.exit ], [ %.0122, %bb.bx ], [ %.0122, %bb.bo ], [ %.0122, %bb.bt ], [ %.0122, %bb.bn ]
@@ -583,7 +575,12 @@ bb.bz:                                            ; preds = %bb.by
   %i.fz = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.16, i32 noundef %.185, ptr noundef nonnull %.3, i64 noundef %.177, i64 noundef %.1123, i64 noundef %.1, i64 noundef %.2120, ptr noundef nonnull %.079) #6
   br label %_tokenizer_error.exit
 
-_tokenizer_error.exit.thread:                     ; preds = %bb.b, %2, %bb.c, %bb.e, %bb.g, %bb.h, %bb.i, %bb.n, %Py_XDECREF.exit60.i, %bb.ab, %bb.ac, %bb.by, %bb.bz, %3
+_tokenizer_error.exit.thread.sink.split:          ; preds = %bb.bz, %bb.ac
+  %.0377077.i.sink = phi ptr [ %.0377077.i, %bb.ac ], [ %.079, %bb.bz ]
+  call void @_Py_Dealloc(ptr noundef nonnull %.0377077.i.sink) #6
+  br label %_tokenizer_error.exit.thread
+
+_tokenizer_error.exit.thread:                     ; preds = %_tokenizer_error.exit.thread.sink.split, %bb.b, %bb.c, %bb.e, %bb.g, %bb.h, %bb.i, %bb.n, %Py_XDECREF.exit60.i, %bb.ab, %bb.ac, %bb.by, %bb.bz
   call void @_PyToken_Free(ptr noundef nonnull %1) #6
   br label %bb.cb
 

@@ -201,22 +201,21 @@ bb.i:                                             ; preds = %bb.h, %bb.e
 define dso_local noundef zeroext i1 @_ZN6google8protobuf8compiler19IsKnownFeatureProtoESt17basic_string_viewIcSt11char_traitsIcEE(i64 %0, ptr readonly captures(none) %1) local_unnamed_addr #2 personality ptr @__gxx_personality_v0 {
 bb.a:
   switch i64 %0, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit [
-    i64 34, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
-    i64 35, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5
+    i64 34, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5
+    i64 35, label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
   ]
 
 _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i:   ; preds = %bb.a
-  %bcmp.i = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(34) %1, ptr noundef nonnull dereferenceable(34) @.str.3, i64 34)
-  %2 = icmp eq i32 %bcmp.i, 0
-  br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
+  br label %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5
 
-_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5:  ; preds = %bb.a
-  %bcmp.i6 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(35) %1, ptr noundef nonnull dereferenceable(35) @.str.4, i64 35)
+_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5:  ; preds = %bb.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i
+  %.str.3.sink = phi ptr [ @.str.4, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ], [ @.str.3, %bb.a ]
+  %bcmp.i6 = tail call i32 @bcmp(ptr noundef nonnull dereferenceable(34) %1, ptr noundef nonnull dereferenceable(34) %.str.3.sink, i64 %0)
   %i.a = icmp eq i32 %bcmp.i6, 0
   br label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5, %bb.a
-  %.0 = phi i1 [ %2, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ], [ %i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5 ], [ false, %bb.a ]
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ENSt15__type_identityIS5_E4typeE.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5, %bb.a
+  %.0 = phi i1 [ false, %bb.a ], [ %i.a, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i5 ]
   ret i1 %.0
 }
 

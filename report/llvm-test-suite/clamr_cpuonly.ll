@@ -201,19 +201,16 @@ bb.j:                                             ; preds = %bb.a
 bb.k:                                             ; preds = %bb.b
   %i.aq = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 12) #21
   br label %bb.ai
 
 bb.l:                                             ; preds = %bb.d
   %i.ar = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef 2288) #21
   br label %bb.ai
 
 bb.m:                                             ; preds = %bb.e
   %i.as = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.w, i64 noundef 368) #21
   br label %bb.ai
 
 bb.n:                                             ; preds = %bb.c
@@ -283,13 +280,11 @@ _ZNSt6vectorIiSaIiEE6resizeEm.exit42:             ; preds = %bb.q, %bb.r, %bb.s,
 bb.t:                                             ; preds = %bb.n
   %i.bv = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.at, i64 noundef 2288) #21
   br label %bb.ai
 
 bb.u:                                             ; preds = %bb.o
   %i.bw = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.bb, i64 noundef 368) #21
   br label %bb.ai
 
 bb.v:                                             ; preds = %_ZNSt6vectorIiSaIiEE6resizeEm.exit42, %_ZNSt6vectorIiSaIiEE6resizeEm.exit
@@ -453,7 +448,10 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   ret i32 0
 
 bb.ai:                                            ; preds = %bb.l, %bb.m, %bb.t, %bb.u, %bb.k
-  %.pn.pn = phi { ptr, i32 } [ %i.aq, %bb.k ], [ %i.as, %bb.m ], [ %i.ar, %bb.l ], [ %i.bw, %bb.u ], [ %i.bv, %bb.t ]
+  %.sink60 = phi i64 [ 2288, %bb.l ], [ 368, %bb.m ], [ 2288, %bb.t ], [ 368, %bb.u ], [ 12, %bb.k ]
+  %.sink = phi ptr [ %i.n, %bb.l ], [ %i.w, %bb.m ], [ %i.at, %bb.t ], [ %i.bb, %bb.u ], [ %i.b, %bb.k ]
+  %.pn.pn = phi { ptr, i32 } [ %i.ar, %bb.l ], [ %i.as, %bb.m ], [ %i.bv, %bb.t ], [ %i.bw, %bb.u ], [ %i.aq, %bb.k ]
+  call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef %.sink60) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   br label %bb.aj
 

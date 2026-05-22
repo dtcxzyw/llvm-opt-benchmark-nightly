@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %rb_scan_args_set.ex
 define internal noundef i64 @bsock_setsockopt(i32 noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
-  %i.b = alloca i32, align 4                      ; 8 uses
+  %i.b = alloca i32, align 4                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   %i.c = icmp eq i32 %0, 1
@@ -292,7 +292,7 @@ rb_scan_args_set.exit:                            ; preds = %bb.d, %rbimpl_inter
 bb.f:                                             ; preds = %rb_scan_args_set.exit
   %i.ah = tail call i64 @llvm.fshl.i64(i64 %i.t, i64 %i.t, i64 62)
   switch i64 %i.ah, label %bb.g [
-    i64 0, label %rb_type.exit.thread40
+    i64 0, label %.sink.split
     i64 1, label %rb_type.exit.thread
     i64 5, label %rb_type.exit.thread42
     i64 9, label %rb_type.exit.thread
@@ -309,23 +309,17 @@ rb_type.exit:                                     ; preds = %rb_scan_args_set.ex
   %i.am = and i32 %i.al, 31
   switch i32 %i.am, label %rb_type.exit.thread [
     i32 21, label %rb_type.exit.thread38
-    i32 19, label %rb_type.exit.thread40
+    i32 19, label %.sink.split
     i32 18, label %rb_type.exit.thread42
   ]
 
 rb_type.exit.thread38:                            ; preds = %bb.g, %rb_type.exit
   %i.an = tail call i64 @rb_fix2int(i64 noundef %i.t) #10
   %i.ao = trunc i64 %i.an to i32
-  store i32 %i.ao, ptr %i.b, align 4, !tbaa !6
-  br label %bb.j
-
-rb_type.exit.thread40:                            ; preds = %bb.f, %rb_type.exit
-  store i32 0, ptr %i.b, align 4, !tbaa !6
-  br label %bb.j
+  br label %.sink.split
 
 rb_type.exit.thread42:                            ; preds = %bb.f, %rb_type.exit
-  store i32 1, ptr %i.b, align 4, !tbaa !6
-  br label %bb.j
+  br label %.sink.split
 
 rb_type.exit.thread:                              ; preds = %bb.g, %bb.f, %bb.f, %rb_type.exit
   %i.ap = call i64 @rb_string_value(ptr noundef nonnull %i.a) #10 ; 0 uses
@@ -357,9 +351,14 @@ RSTRING_LENINT.exit:                              ; preds = %RSTRING_PTR.exit
   %i.ba = trunc nsw i64 %i.ay to i32
   br label %bb.j
 
-bb.j:                                             ; preds = %rb_type.exit.thread38, %rb_type.exit.thread40, %rb_type.exit.thread42, %RSTRING_LENINT.exit
-  %.020 = phi i32 [ %i.ba, %RSTRING_LENINT.exit ], [ 4, %rb_type.exit.thread42 ], [ 4, %rb_type.exit.thread40 ], [ 4, %rb_type.exit.thread38 ]
-  %.0 = phi ptr [ %i.aw, %RSTRING_LENINT.exit ], [ %i.b, %rb_type.exit.thread42 ], [ %i.b, %rb_type.exit.thread40 ], [ %i.b, %rb_type.exit.thread38 ]
+.sink.split:                                      ; preds = %rb_type.exit, %bb.f, %rb_type.exit.thread42, %rb_type.exit.thread38
+  %.sink = phi i32 [ %i.ao, %rb_type.exit.thread38 ], [ 1, %rb_type.exit.thread42 ], [ 0, %bb.f ], [ 0, %rb_type.exit ]
+  store i32 %.sink, ptr %i.b, align 4, !tbaa !6
+  br label %bb.j
+
+bb.j:                                             ; preds = %.sink.split, %RSTRING_LENINT.exit
+  %.020 = phi i32 [ %i.ba, %RSTRING_LENINT.exit ], [ 4, %.sink.split ]
+  %.0 = phi ptr [ %i.aw, %RSTRING_LENINT.exit ], [ %i.b, %.sink.split ]
   call void @rb_io_check_closed(ptr noundef %i.z) #10
   %i.bb = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !25

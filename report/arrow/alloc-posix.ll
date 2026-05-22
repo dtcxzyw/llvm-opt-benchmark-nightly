@@ -163,30 +163,26 @@ declare ptr @__errno_location() local_unnamed_addr #2
 define hidden range(i32 0, 23) i32 @mi_reallocarr(ptr noundef captures(address_is_null) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
-  br i1 %i.a, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  %4 = tail call ptr @__errno_location() #8
-  store i32 22, ptr %4, align 4, !tbaa !3
-  br label %bb.d
+  br i1 %i.a, label %mi_reallocarray.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %0, align 8, !tbaa !7
   %i.c = tail call ptr @mi_reallocn(ptr noundef %i.b, i64 noundef %1, i64 noundef %2) #7 ; 2 uses
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %bb.c, label %mi_reallocarray.exit
+  br i1 %i.d, label %mi_reallocarray.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = tail call ptr @__errno_location() #8
-  store i32 12, ptr %5, align 4, !tbaa !3
-  br label %bb.d
-
-mi_reallocarray.exit:                             ; preds = %bb.b
   store ptr %i.c, ptr %0, align 8, !tbaa !7
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %mi_reallocarray.exit, %3
-  %.1 = phi i32 [ 22, %3 ], [ 12, %bb.c ], [ 0, %mi_reallocarray.exit ]
+mi_reallocarray.exit:                             ; preds = %bb.b, %bb.a
+  %.sink = phi i32 [ 22, %bb.a ], [ 12, %bb.b ]   ; 2 uses
+  %3 = tail call ptr @__errno_location() #8
+  store i32 %.sink, ptr %3, align 4, !tbaa !3
+  br label %bb.d
+
+bb.d:                                             ; preds = %mi_reallocarray.exit, %bb.c
+  %.1 = phi i32 [ 0, %bb.c ], [ %.sink, %mi_reallocarray.exit ]
   ret i32 %.1
 }
 

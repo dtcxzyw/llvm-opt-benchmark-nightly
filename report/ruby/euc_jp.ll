@@ -201,7 +201,7 @@ bb.o:                                             ; preds = %bb.m
 
 mbc_enc_len.exit:                                 ; preds = %.thread42, %bb.j, %bb.l, %bb.n, %bb.o
   %.016.i3638 = phi i32 [ %.016.i3644, %.thread42 ], [ %.016.i3639, %bb.j ], [ %.016.i3639, %bb.l ], [ %.016.i3639, %bb.n ], [ %.016.i3639, %bb.o ] ; 16 uses
-  %.0.i = phi i32 [ %i.av, %.thread42 ], [ %i.az, %bb.j ], [ %i.bj, %bb.l ], [ %i.bn, %bb.n ], [ %i.bu, %bb.o ] ; 2 uses
+  %.0.i = phi i32 [ %i.av, %.thread42 ], [ %i.az, %bb.j ], [ %i.bj, %bb.l ], [ %i.bn, %bb.n ], [ %i.bu, %bb.o ]
   %i.bv = add i32 %.016.i3638, -41921
   %i.bw = icmp ult i32 %i.bv, 26
   br i1 %i.bw, label %bb.p, label %bb.q
@@ -253,30 +253,23 @@ get_upper_case.exit:                              ; preds = %bb.s, %bb.u, %.thre
   %.0.i3246 = phi i32 [ %spec.select.i, %bb.s ], [ %spec.select.i, %bb.u ], [ %.0.i324750, %.thread48 ] ; 2 uses
   %.0.i34 = phi i32 [ %i.cg, %bb.s ], [ %i.cj, %bb.u ], [ %spec.select.i33, %.thread48 ] ; 2 uses
   %.not = icmp eq i32 %.016.i3638, %.0.i3246
-  br i1 %.not, label %bb.v, label %5
-
-5:                                                ; preds = %get_upper_case.exit
-  store i32 %.0.i, ptr %3, align 4, !tbaa !16
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i32 1, ptr %6, align 4, !tbaa !18
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %.0.i3246, ptr %7, align 4, !tbaa !6
-  br label %bb.x
+  br i1 %.not, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %get_upper_case.exit
   %.not31 = icmp eq i32 %.016.i3638, %.0.i34
   br i1 %.not31, label %bb.x, label %bb.w
 
-bb.w:                                             ; preds = %bb.v
+bb.w:                                             ; preds = %bb.v, %get_upper_case.exit
+  %.0.i34.sink = phi i32 [ %.0.i3246, %get_upper_case.exit ], [ %.0.i34, %bb.v ]
   store i32 %.0.i, ptr %3, align 4, !tbaa !16
   %i.cn = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 1, ptr %i.cn, align 4, !tbaa !18
   %i.co = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store i32 %.0.i34, ptr %i.co, align 4, !tbaa !6
+  store i32 %.0.i34.sink, ptr %i.co, align 4, !tbaa !6
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.v, %bb.w, %5, %bb.h
-  %.0 = phi i32 [ %i.at, %bb.h ], [ 1, %5 ], [ 1, %bb.w ], [ 0, %bb.v ]
+bb.x:                                             ; preds = %bb.w, %bb.v, %bb.h
+  %.0 = phi i32 [ %i.at, %bb.h ], [ 0, %bb.v ], [ 1, %bb.w ]
   ret i32 %.0
 }
 

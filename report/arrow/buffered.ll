@@ -201,13 +201,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.z = icmp slt i64 %i.v, 0
   %.0 = select i1 %i.z, i64 %i.t, i64 %.sroa.speculated ; 4 uses
   %i.aa = icmp eq i64 %.0, 0
-  br i1 %i.aa, label %8, label %bb.h
-
-8:                                                ; preds = %bb.g
-  store ptr null, ptr %0, align 8, !tbaa !55
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.i, ptr %9, align 8, !tbaa !117
-  br label %bb.p
+  br i1 %i.aa, label %.sink.split, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -315,12 +309,16 @@ _ZN5arrow6StatusD2Ev.exit29:                      ; preds = %_ZN5arrow6StatusD2E
   %i.bp = sub nsw i64 %i.bo, %.sroa.speculated38
   store i64 %i.bp, ptr %i.g, align 8, !tbaa !164
   %i.bq = add nsw i64 %.sroa.speculated38, %i.i
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.g, %_ZN5arrow6StatusD2Ev.exit29
+  %.sink = phi i64 [ %i.bq, %_ZN5arrow6StatusD2Ev.exit29 ], [ %i.i, %bb.g ]
   store ptr null, ptr %0, align 8, !tbaa !55
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.bq, ptr %10, align 8, !tbaa !117
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sink, ptr %8, align 8, !tbaa !117
   br label %bb.p
 
-bb.p:                                             ; preds = %8, %_ZN5arrow6ResultIlED2Ev.exit21, %_ZN5arrow6StatusD2Ev.exit29, %_ZN5arrow6StatusD2Ev.exit25, %_ZN5arrow6StatusD2Ev.exit
+bb.p:                                             ; preds = %.sink.split, %_ZN5arrow6ResultIlED2Ev.exit21, %_ZN5arrow6StatusD2Ev.exit25, %_ZN5arrow6StatusD2Ev.exit
   ret void
 }
 

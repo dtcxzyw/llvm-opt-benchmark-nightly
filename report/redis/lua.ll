@@ -201,21 +201,13 @@ bb.b:                                             ; preds = %bb.a
   tail call void @lua_getfield(ptr noundef %0, i32 noundef -10002, ptr noundef nonnull @.str.6) #9
   %i.b = tail call i32 @lua_type(ptr noundef %0, i32 noundef -1) #9
   %i.c = icmp eq i32 %i.b, 5
-  br i1 %i.c, label %bb.c, label %1
-
-1:                                                ; preds = %bb.b
-  tail call void @lua_settop(ptr noundef %0, i32 noundef -2) #9
-  br label %bb.e
+  br i1 %i.c, label %bb.c, label %.sink.split
 
 bb.c:                                             ; preds = %bb.b
   tail call void @lua_getfield(ptr noundef %0, i32 noundef -1, ptr noundef nonnull @.str.7) #9
   %i.d = tail call i32 @lua_type(ptr noundef %0, i32 noundef -1) #9
   %i.e = icmp eq i32 %i.d, 6
-  br i1 %i.e, label %bb.d, label %2
-
-2:                                                ; preds = %bb.c
-  tail call void @lua_settop(ptr noundef %0, i32 noundef -3) #9
-  br label %bb.e
+  br i1 %i.e, label %bb.d, label %.sink.split
 
 bb.d:                                             ; preds = %bb.c
   tail call void @lua_pushvalue(ptr noundef %0, i32 noundef 1) #9
@@ -223,7 +215,12 @@ bb.d:                                             ; preds = %bb.c
   tail call void @lua_call(ptr noundef %0, i32 noundef 2, i32 noundef 1) #9
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %bb.d, %2, %1
+.sink.split:                                      ; preds = %bb.c, %bb.b
+  %.sink = phi i32 [ -2, %bb.b ], [ -3, %bb.c ]
+  tail call void @lua_settop(ptr noundef %0, i32 noundef %.sink) #9
+  br label %bb.e
+
+bb.e:                                             ; preds = %.sink.split, %bb.a, %bb.d
   ret i32 1
 }
 

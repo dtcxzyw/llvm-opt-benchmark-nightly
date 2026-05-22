@@ -201,35 +201,31 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.e = add nsw i32 %.087111, %.090110
-  %i.f = sdiv i32 %i.e, 2                         ; 5 uses
+  %i.f = sdiv i32 %i.e, 2                         ; 4 uses
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef 1, i32 noundef %i.f) #3
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef 1, i32 noundef %.090110) #3
   %i.g = tail call fastcc i32 @sort_comp(ptr noundef %0, i32 noundef -2, i32 noundef -1)
   %.not97 = icmp eq i32 %i.g, 0
-  br i1 %.not97, label %bb.f, label %3
-
-3:                                                ; preds = %bb.e
-  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %i.f) #3
-  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %.090110) #3
-  br label %bb.i
+  br i1 %.not97, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
   tail call void @lua_settop(ptr noundef %0, i32 noundef -2) #3
   tail call void @lua_rawgeti(ptr noundef %0, i32 noundef 1, i32 noundef %.087111) #3
   %i.h = tail call fastcc i32 @sort_comp(ptr noundef %0, i32 noundef -1, i32 noundef -2)
   %.not98 = icmp eq i32 %i.h, 0
-  br i1 %.not98, label %bb.h, label %bb.g
+  br i1 %.not98, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %i.f) #3
-  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %.087111) #3
-  br label %bb.i
-
-bb.h:                                             ; preds = %bb.f
   tail call void @lua_settop(ptr noundef %0, i32 noundef -3) #3
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %3
+bb.h:                                             ; preds = %bb.f, %bb.e
+  %.087111.sink = phi i32 [ %.090110, %bb.e ], [ %.087111, %bb.f ]
+  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %i.f) #3
+  tail call void @lua_rawseti(ptr noundef %0, i32 noundef 1, i32 noundef %.087111.sink) #3
+  br label %bb.i
+
+bb.i:                                             ; preds = %bb.h, %bb.g
   %i.i = icmp eq i32 %i.c, 2
   br i1 %i.i, label %.thread, label %bb.j
 

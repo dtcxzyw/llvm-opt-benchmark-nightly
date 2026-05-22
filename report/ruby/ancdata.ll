@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %rbimpl_intern_const
 
 ancillary_type.exit:                              ; preds = %bb.f, %bb.g
   %.0.i.i101 = phi i64 [ %i.w, %bb.f ], [ %i.x, %bb.g ] ; 6 uses
-  %i.y = trunc i64 %.0.i.i101 to i32              ; 11 uses
+  %i.y = trunc i64 %.0.i.i101 to i32              ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #10
   %.pr.i.i104 = load i64, ptr @ancillary_data.rbimpl_id, align 8, !tbaa !10 ; 2 uses
   %.not4.i.i105 = icmp eq i64 %.pr.i.i104, 0
@@ -221,7 +221,7 @@ ancillary_data.exit:                              ; preds = %.lr.ph.i.i108, %anc
   %i.ac = load i64, ptr %i.g, align 8, !tbaa !10  ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #10
   %i.ad = call ptr @rb_obj_classname(i64 noundef %0) #10
-  %i.ae = call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.35, ptr noundef %i.ad) #10 ; 30 uses
+  %i.ae = call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.35, ptr noundef %i.ad) #10 ; 29 uses
   %i.af = call i64 @rsock_intern_family_noprefix(i32 noundef %i.m) #10 ; 2 uses
   %.not = icmp eq i64 %i.af, 0
   br i1 %.not, label %bb.i, label %bb.h
@@ -257,7 +257,7 @@ bb.m:                                             ; preds = %bb.k
 bb.n:                                             ; preds = %bb.j
   %i.ap = and i32 %i.m, -9
   %or.cond = icmp eq i32 %i.ap, 2
-  br i1 %or.cond, label %bb.o, label %bb.ag
+  br i1 %or.cond, label %bb.o, label %RB_SYMBOL_P.exit.thread131
 
 bb.o:                                             ; preds = %bb.n
   %i.aq = call i64 @rsock_intern_iplevel(i32 noundef %i.s) #10 ; 2 uses
@@ -358,30 +358,29 @@ bb.af:                                            ; preds = %ip_cmsg_type_to_sym
   %i.bp = and i64 %.0.i, 7
   %i.bq = icmp ne i64 %i.bp, 0
   %i.br = or i1 %i.bo, %i.bq
-  br i1 %i.br, label %RB_SYMBOL_P.exit.thread131, label %RB_SYMBOL_P.exit
+  br i1 %i.br, label %bb.ag, label %RB_SYMBOL_P.exit
 
 RB_SYMBOL_P.exit:                                 ; preds = %bb.af
   %i.bs = inttoptr i64 %.0.i to ptr
   %i.bt = load i64, ptr %i.bs, align 8, !tbaa !17
   %i.bu = and i64 %i.bt, 31
   %i.bv = icmp eq i64 %i.bu, 20
-  br i1 %i.bv, label %RB_SYMBOL_P.exit.thread, label %RB_SYMBOL_P.exit.thread131
+  br i1 %i.bv, label %RB_SYMBOL_P.exit.thread, label %bb.ag
 
 RB_SYMBOL_P.exit.thread:                          ; preds = %ip_cmsg_type_to_sym.exit, %RB_SYMBOL_P.exit
   %i.bw = call i64 @rb_sym2str(i64 noundef %.0.i) #10
   %i.bx = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %i.ae, ptr noundef nonnull @.str.41, i64 noundef %i.bw) #10 ; 0 uses
   br label %bb.ah
 
-RB_SYMBOL_P.exit.thread131:                       ; preds = %bb.af, %RB_SYMBOL_P.exit
-  %i.by = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %i.ae, ptr noundef nonnull @.str.39, i32 noundef %i.y) #10 ; 0 uses
-  br label %bb.ah
+RB_SYMBOL_P.exit.thread131:                       ; preds = %bb.n
+  %i.by = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %i.ae, ptr noundef nonnull @.str.40, i32 noundef %i.s) #10 ; 0 uses
+  br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.n
-  %6 = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %i.ae, ptr noundef nonnull @.str.40, i32 noundef %i.s) #10 ; 0 uses
+bb.ag:                                            ; preds = %RB_SYMBOL_P.exit, %bb.af, %RB_SYMBOL_P.exit.thread131
   %i.bz = call i64 (i64, ptr, ...) @rb_str_catf(i64 noundef %i.ae, ptr noundef nonnull @.str.39, i32 noundef %i.y) #10 ; 0 uses
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.ag, %RB_SYMBOL_P.exit.thread131, %RB_SYMBOL_P.exit.thread
+bb.ah:                                            ; preds = %bb.ag, %RB_SYMBOL_P.exit.thread
   switch i32 %i.m, label %bb.bt [
     i32 10, label %bb.av
     i32 2, label %bb.av

@@ -201,17 +201,11 @@ bb.e:                                             ; preds = %bb.a
   store i32 80, ptr %1, align 4, !tbaa !4
   %i.g = load i32, ptr @dorp, align 4, !tbaa !4
   %i.h = icmp eq i32 %i.g, 100
-  br i1 %i.h, label %3, label %4
-
-3:                                                ; preds = %bb.e
-  store i32 100, ptr %2, align 4, !tbaa !4
+  %. = select i1 %i.h, i32 100, i32 20
+  store i32 %., ptr %2, align 4, !tbaa !4
   br label %bb.f
 
-4:                                                ; preds = %bb.e
-  store i32 20, ptr %2, align 4, !tbaa !4
-  br label %bb.f
-
-bb.f:                                             ; preds = %3, %4, %bb.d
+bb.f:                                             ; preds = %bb.e, %bb.d
   ret void
 }
 

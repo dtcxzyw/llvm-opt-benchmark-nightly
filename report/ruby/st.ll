@@ -201,7 +201,7 @@ bb.a:
 define dso_local void @rb_hash_bulk_insert_into_st_table(i64 noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = sdiv i64 %0, 2
-  %i.b = tail call ptr @rb_hash_tbl_raw(i64 noundef %2, ptr noundef nonnull @.str, i32 noundef 2320) #25 ; 16 uses
+  %i.b = tail call ptr @rb_hash_tbl_raw(i64 noundef %2, ptr noundef nonnull @.str, i32 noundef 2320) #25 ; 15 uses
   %i.c = getelementptr i8, ptr %i.b, i64 40
   %i.d = load i64, ptr %i.c, align 8, !tbaa !33
   %i.e = add i64 %i.d, %i.a                       ; 2 uses
@@ -265,11 +265,7 @@ st_expand_table.exit:                             ; preds = %bb.a, %rbimpl_size_
   %i.ai = getelementptr i8, ptr %i.b, i64 16
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !28
   %.not = icmp eq i64 %i.aj, 0
-  br i1 %.not, label %bb.d, label %3, !prof !79
-
-3:                                                ; preds = %st_expand_table.exit
-  tail call fastcc void @st_insert_generic(ptr noundef nonnull %i.b, i64 noundef %0, ptr noundef %1, i64 noundef %2)
-  br label %st_insert_linear.exit
+  br i1 %.not, label %bb.d, label %bb.k, !prof !79
 
 bb.d:                                             ; preds = %st_expand_table.exit
   %i.ak = icmp slt i64 %0, 3
@@ -346,11 +342,11 @@ rb_obj_written.exit12.i:                          ; preds = %bb.j, %rb_obj_writt
   %i.bq = icmp slt i64 %i.be, %0
   br i1 %i.bq, label %.preheader, label %st_insert_linear.exit, !llvm.loop !82
 
-bb.k:                                             ; preds = %bb.f
+bb.k:                                             ; preds = %bb.f, %st_expand_table.exit
   tail call fastcc void @st_insert_generic(ptr noundef nonnull %i.b, i64 noundef %0, ptr noundef %1, i64 noundef %2)
   br label %st_insert_linear.exit
 
-st_insert_linear.exit:                            ; preds = %rb_obj_written.exit12.i, %bb.e, %bb.k, %3
+st_insert_linear.exit:                            ; preds = %rb_obj_written.exit12.i, %bb.k, %bb.e
   ret void
 }
 

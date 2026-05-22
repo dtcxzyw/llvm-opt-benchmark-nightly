@@ -199,31 +199,28 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %bb.b
   %i.c = phi i32 [ %i.g, %bb.b ], [ %i.a, %bb.a ]
-  %.025 = phi ptr [ %phi.call, %bb.b ], [ %0, %bb.a ] ; 2 uses
+  %.025 = phi ptr [ %5, %bb.b ], [ %0, %bb.a ]    ; 2 uses
   %.01824 = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ] ; 4 uses
   %i.d = sub nsw i32 %i.c, %.01824
-  %. = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %2) ; 2 uses
+  %. = tail call i32 @llvm.smin.i32(i32 %i.d, i32 %2)
   %.not = icmp eq i32 %.01824, 0
-  br i1 %.not, label %.split, label %.split20
-
-.split:                                           ; preds = %.lr.ph
-  %5 = tail call ptr @sparklineRenderRange(ptr noundef %.025, ptr noundef nonnull %1, i32 noundef %3, i32 noundef 0, i32 noundef %., i32 noundef %4)
-  br label %bb.b
+  br i1 %.not, label %bb.b, label %.split20
 
 .split20:                                         ; preds = %.lr.ph
   %i.e = tail call ptr @sdscatlen(ptr noundef %.025, ptr noundef nonnull @.str, i64 noundef 1) #9
-  %6 = tail call ptr @sparklineRenderRange(ptr noundef %i.e, ptr noundef nonnull %1, i32 noundef %3, i32 noundef %.01824, i32 noundef %., i32 noundef %4)
   br label %bb.b
 
-bb.b:                                             ; preds = %.split, %.split20
-  %phi.call = phi ptr [ %5, %.split ], [ %6, %.split20 ] ; 2 uses
+bb.b:                                             ; preds = %.lr.ph, %.split20
+  %.sink = phi i32 [ %.01824, %.split20 ], [ 0, %.lr.ph ]
+  %phi.call = phi ptr [ %i.e, %.split20 ], [ %.025, %.lr.ph ]
+  %5 = tail call ptr @sparklineRenderRange(ptr noundef %phi.call, ptr noundef nonnull %1, i32 noundef %3, i32 noundef %.sink, i32 noundef %., i32 noundef %4) ; 2 uses
   %i.f = add nsw i32 %.01824, %2                  ; 2 uses
   %i.g = load i32, ptr %1, align 8, !tbaa !14     ; 2 uses
   %i.h = icmp slt i32 %i.f, %i.g
   br i1 %i.h, label %.lr.ph, label %._crit_edge, !llvm.loop !31
 
 ._crit_edge:                                      ; preds = %bb.b, %bb.a
-  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %phi.call, %bb.b ]
+  %.0.lcssa = phi ptr [ %0, %bb.a ], [ %5, %bb.b ]
   ret ptr %.0.lcssa
 }
 

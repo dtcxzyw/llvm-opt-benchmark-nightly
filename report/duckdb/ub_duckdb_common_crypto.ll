@@ -52,11 +52,7 @@ bb.a:                                             ; preds = %._crit_edge46
   %i.t = sub nuw nsw i32 64, %i.p
   %i.u = zext nneg i32 %i.t to i64                ; 4 uses
   %.not35 = icmp ult i64 %2, %i.u
-  br i1 %.not35, label %.thread, label %bb.b
-
-.thread:                                          ; preds = %bb.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr align 1 %1, i64 %2, i1 false)
-  br label %bb.d
+  br i1 %.not35, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull align 1 dereferenceable(1) %1, i64 %i.u, i1 false)
@@ -89,10 +85,13 @@ _ZN6duckdbL11ByteReverseEPhj.exit39:              ; preds = %.lr.ph, %_ZN6duckdb
   %.230.lcssa = phi i64 [ %.129, %bb.c ], [ %i.aa, %_ZN6duckdbL11ByteReverseEPhj.exit39 ]
   %.2.lcssa = phi ptr [ %.1, %bb.c ], [ %i.z, %_ZN6duckdbL11ByteReverseEPhj.exit39 ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ac, ptr align 1 %.2.lcssa, i64 %.230.lcssa, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %.thread, %._crit_edge
+bb.d:                                             ; preds = %bb.a, %._crit_edge
+  %.sink53 = phi i64 [ %.230.lcssa, %._crit_edge ], [ %2, %bb.a ]
+  %.sink52 = phi ptr [ %.2.lcssa, %._crit_edge ], [ %1, %bb.a ]
+  %.sink = phi ptr [ %i.ac, %._crit_edge ], [ %i.s, %bb.a ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink, ptr align 1 %.sink52, i64 %.sink53, i1 false)
   ret void
 }
 
@@ -495,11 +494,7 @@ bb.b:                                             ; preds = %bb.a
   %i.t = sub nuw nsw i32 64, %i.p
   %i.u = zext nneg i32 %i.t to i64                ; 4 uses
   %.not35.i = icmp ult i64 %i.a, %i.u
-  br i1 %.not35.i, label %.thread.i, label %bb.c
-
-.thread.i:                                        ; preds = %bb.b
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.s, ptr nonnull readonly align 1 %1, i64 %i.a, i1 false)
-  br label %_ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit
+  br i1 %.not35.i, label %_ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.s, ptr noundef nonnull readonly align 1 dereferenceable(1) %1, i64 %i.u, i1 false)
@@ -532,10 +527,13 @@ _ZN6duckdbL11ByteReverseEPhj.exit39.i:            ; preds = %_ZN6duckdbL11ByteRe
   %.230.lcssa.i = phi i64 [ %.129.i, %bb.d ], [ %i.aa, %_ZN6duckdbL11ByteReverseEPhj.exit39.i ]
   %.2.lcssa.i = phi ptr [ %.1.i, %bb.d ], [ %i.z, %_ZN6duckdbL11ByteReverseEPhj.exit39.i ]
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 24
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ac, ptr nonnull align 1 %.2.lcssa.i, i64 %.230.lcssa.i, i1 false)
   br label %_ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit
 
-_ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit:       ; preds = %.thread.i, %._crit_edge.i
+_ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit:       ; preds = %bb.b, %._crit_edge.i
+  %.sink53.i = phi i64 [ %.230.lcssa.i, %._crit_edge.i ], [ %i.a, %bb.b ]
+  %.sink52.i = phi ptr [ %.2.lcssa.i, %._crit_edge.i ], [ %1, %bb.b ]
+  %.sink.i = phi ptr [ %i.ac, %._crit_edge.i ], [ %i.s, %bb.b ]
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink.i, ptr nonnull align 1 %.sink52.i, i64 %.sink53.i, i1 false)
   ret void
 }
 

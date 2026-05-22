@@ -201,7 +201,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.j = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 64) #28
   br label %bb.aj
 
 bb.f:                                             ; preds = %bb.c
@@ -211,7 +210,6 @@ bb.f:                                             ; preds = %bb.c
 bb.g:                                             ; preds = %bb.f
   %i.k = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 64) #28
   br label %bb.aj
 
 bb.h:                                             ; preds = %bb.b
@@ -257,7 +255,6 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ai = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef 72) #28
   br label %bb.aj
 
 bb.m:                                             ; preds = %bb.j
@@ -267,7 +264,6 @@ bb.m:                                             ; preds = %bb.j
 bb.n:                                             ; preds = %bb.m
   %i.aj = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ah, i64 noundef 72) #28
   br label %bb.aj
 
 _ZN6google8protobuf8compiler6csharp13IsWrapperTypeEPKNS0_15FieldDescriptorE.exit.thread: ; preds = %bb.i, %bb.h, %_ZN6google8protobuf8compiler6csharp13IsWrapperTypeEPKNS0_15FieldDescriptorE.exit
@@ -285,7 +281,6 @@ bb.o:                                             ; preds = %_ZN6google8protobuf
 bb.p:                                             ; preds = %bb.o
   %i.ao = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 64) #28
   br label %bb.aj
 
 bb.q:                                             ; preds = %_ZN6google8protobuf8compiler6csharp13IsWrapperTypeEPKNS0_15FieldDescriptorE.exit.thread
@@ -295,7 +290,6 @@ bb.q:                                             ; preds = %_ZN6google8protobuf
 bb.r:                                             ; preds = %bb.q
   %i.ap = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.an, i64 noundef 64) #28
   br label %bb.aj
 
 bb.s:                                             ; preds = %bb.a
@@ -309,7 +303,6 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.t
   %i.ar = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aq, i64 noundef 64) #28
   br label %bb.aj
 
 bb.v:                                             ; preds = %bb.s
@@ -327,7 +320,6 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.aw = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef 72) #28
   br label %bb.aj
 
 bb.y:                                             ; preds = %bb.v
@@ -337,7 +329,6 @@ bb.y:                                             ; preds = %bb.v
 bb.z:                                             ; preds = %bb.y
   %i.ax = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.av, i64 noundef 72) #28
   br label %bb.aj
 
 bb.aa:                                            ; preds = %bb.a
@@ -351,7 +342,6 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.az = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ay, i64 noundef 64) #28
   br label %bb.aj
 
 bb.ad:                                            ; preds = %bb.aa
@@ -369,7 +359,6 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.be = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bd, i64 noundef 72) #28
   br label %bb.aj
 
 bb.ag:                                            ; preds = %bb.ad
@@ -379,7 +368,6 @@ bb.ag:                                            ; preds = %bb.ad
 bb.ah:                                            ; preds = %bb.ag
   %i.bf = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.bd, i64 noundef 72) #28
   br label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ag, %bb.ae, %bb.ab, %bb.y, %bb.w, %bb.t, %bb.q, %bb.o, %bb.m, %bb.k, %bb.f, %bb.d
@@ -387,7 +375,10 @@ bb.ai:                                            ; preds = %bb.ag, %bb.ae, %bb.
   ret ptr %.049
 
 bb.aj:                                            ; preds = %bb.ah, %bb.af, %bb.ac, %bb.z, %bb.x, %bb.u, %bb.r, %bb.p, %bb.n, %bb.l, %bb.g, %bb.e
-  %.pn = phi { ptr, i32 } [ %i.az, %bb.ac ], [ %i.be, %bb.af ], [ %i.bf, %bb.ah ], [ %i.j, %bb.e ], [ %i.k, %bb.g ], [ %i.ai, %bb.l ], [ %i.aj, %bb.n ], [ %i.ao, %bb.p ], [ %i.ap, %bb.r ], [ %i.ar, %bb.u ], [ %i.aw, %bb.x ], [ %i.ax, %bb.z ]
+  %.sink80 = phi i64 [ 72, %bb.ah ], [ 72, %bb.af ], [ 64, %bb.ac ], [ 72, %bb.z ], [ 72, %bb.x ], [ 64, %bb.u ], [ 64, %bb.r ], [ 64, %bb.p ], [ 72, %bb.n ], [ 72, %bb.l ], [ 64, %bb.g ], [ 64, %bb.e ]
+  %.sink = phi ptr [ %i.bd, %bb.ah ], [ %i.bd, %bb.af ], [ %i.ay, %bb.ac ], [ %i.av, %bb.z ], [ %i.av, %bb.x ], [ %i.aq, %bb.u ], [ %i.an, %bb.r ], [ %i.an, %bb.p ], [ %i.ah, %bb.n ], [ %i.ah, %bb.l ], [ %i.i, %bb.g ], [ %i.i, %bb.e ]
+  %.pn = phi { ptr, i32 } [ %i.bf, %bb.ah ], [ %i.be, %bb.af ], [ %i.az, %bb.ac ], [ %i.ax, %bb.z ], [ %i.aw, %bb.x ], [ %i.ar, %bb.u ], [ %i.ap, %bb.r ], [ %i.ao, %bb.p ], [ %i.aj, %bb.n ], [ %i.ai, %bb.l ], [ %i.k, %bb.g ], [ %i.j, %bb.e ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef %.sink80) #28
   resume { ptr, i32 } %.pn
 }
 

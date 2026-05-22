@@ -201,16 +201,12 @@ bb.f:                                             ; preds = %.preheader.i
 rbimpl_check_typeddata.exit:                      ; preds = %bb.f, %RTYPEDDATA_GET_DATA.exit.i, %.critedge.i
   %.1.i13 = phi ptr [ %i.y, %.critedge.i ], [ %i.t, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.t, %bb.f ] ; 2 uses
   %.not11 = icmp eq ptr %.1.i13, null
-  br i1 %.not11, label %bb.g, label %3
+  br i1 %.not11, label %bb.g, label %bb.p
 
 bb.g:                                             ; preds = %rbimpl_check_typeddata.exit
   %i.z = load i64, ptr @rb_eRuntimeError, align 8, !tbaa !10
   tail call void (i64, ptr, ...) @ossl_raise(i64 noundef %i.z, ptr noundef nonnull @.str.70) #6
   unreachable
-
-3:                                                ; preds = %rbimpl_check_typeddata.exit
-  %4 = tail call i32 @OCSP_request_add1_nonce(ptr noundef nonnull %.1.i13, ptr noundef null, i32 noundef -1) #5
-  br label %bb.p
 
 bb.h:                                             ; preds = %rb_scan_args_set.exit
   %i.aa = call i64 @rb_string_value(ptr noundef nonnull %i.a) #5 ; 0 uses
@@ -297,12 +293,14 @@ bb.o:                                             ; preds = %RSTRING_PTR.exit
 
 RSTRING_LENINT.exit:                              ; preds = %RSTRING_PTR.exit
   %i.bg = trunc nsw i64 %i.be to i32
-  %5 = call i32 @OCSP_request_add1_nonce(ptr noundef nonnull %.1.i18, ptr noundef %i.bc, i32 noundef %i.bg) #5
   br label %bb.p
 
-bb.p:                                             ; preds = %RSTRING_LENINT.exit, %3
-  %.0 = phi i32 [ %4, %3 ], [ %5, %RSTRING_LENINT.exit ]
-  %.not12 = icmp eq i32 %.0, 0
+bb.p:                                             ; preds = %rbimpl_check_typeddata.exit, %RSTRING_LENINT.exit
+  %.0 = phi i32 [ %i.bg, %RSTRING_LENINT.exit ], [ -1, %rbimpl_check_typeddata.exit ]
+  %.sink = phi ptr [ %i.bc, %RSTRING_LENINT.exit ], [ null, %rbimpl_check_typeddata.exit ]
+  %.1.i18.sink = phi ptr [ %.1.i18, %RSTRING_LENINT.exit ], [ %.1.i13, %rbimpl_check_typeddata.exit ]
+  %3 = call i32 @OCSP_request_add1_nonce(ptr noundef nonnull %.1.i18.sink, ptr noundef %.sink, i32 noundef %.0) #5
+  %.not12 = icmp eq i32 %3, 0
   br i1 %.not12, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
@@ -705,16 +703,12 @@ bb.f:                                             ; preds = %.preheader.i
 rbimpl_check_typeddata.exit:                      ; preds = %bb.f, %RTYPEDDATA_GET_DATA.exit.i, %.critedge.i
   %.1.i13 = phi ptr [ %i.y, %.critedge.i ], [ %i.t, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.t, %bb.f ] ; 2 uses
   %.not11 = icmp eq ptr %.1.i13, null
-  br i1 %.not11, label %bb.g, label %3
+  br i1 %.not11, label %bb.g, label %bb.p
 
 bb.g:                                             ; preds = %rbimpl_check_typeddata.exit
   %i.z = load i64, ptr @rb_eRuntimeError, align 8, !tbaa !10
   tail call void (i64, ptr, ...) @ossl_raise(i64 noundef %i.z, ptr noundef nonnull @.str.75) #6
   unreachable
-
-3:                                                ; preds = %rbimpl_check_typeddata.exit
-  %4 = tail call i32 @OCSP_basic_add1_nonce(ptr noundef nonnull %.1.i13, ptr noundef null, i32 noundef -1) #5
-  br label %bb.p
 
 bb.h:                                             ; preds = %rb_scan_args_set.exit
   %i.aa = call i64 @rb_string_value(ptr noundef nonnull %i.a) #5 ; 0 uses
@@ -801,12 +795,14 @@ bb.o:                                             ; preds = %RSTRING_PTR.exit
 
 RSTRING_LENINT.exit:                              ; preds = %RSTRING_PTR.exit
   %i.bg = trunc nsw i64 %i.be to i32
-  %5 = call i32 @OCSP_basic_add1_nonce(ptr noundef nonnull %.1.i18, ptr noundef %i.bc, i32 noundef %i.bg) #5
   br label %bb.p
 
-bb.p:                                             ; preds = %RSTRING_LENINT.exit, %3
-  %.0 = phi i32 [ %4, %3 ], [ %5, %RSTRING_LENINT.exit ]
-  %.not12 = icmp eq i32 %.0, 0
+bb.p:                                             ; preds = %rbimpl_check_typeddata.exit, %RSTRING_LENINT.exit
+  %.0 = phi i32 [ %i.bg, %RSTRING_LENINT.exit ], [ -1, %rbimpl_check_typeddata.exit ]
+  %.sink = phi ptr [ %i.bc, %RSTRING_LENINT.exit ], [ null, %rbimpl_check_typeddata.exit ]
+  %.1.i18.sink = phi ptr [ %.1.i18, %RSTRING_LENINT.exit ], [ %.1.i13, %rbimpl_check_typeddata.exit ]
+  %3 = call i32 @OCSP_basic_add1_nonce(ptr noundef nonnull %.1.i18.sink, ptr noundef %.sink, i32 noundef %.0) #5
+  %.not12 = icmp eq i32 %3, 0
   br i1 %.not12, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p

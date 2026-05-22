@@ -201,7 +201,7 @@ define internal fastcc void @_ZN5arrow3ipc12_GLOBAL__N_118DictionaryResolver10Vi
 bb.a:
   %5 = alloca %"class.std::vector", align 8       ; 8 uses
   %6 = alloca %"class.arrow::ipc::internal::FieldPosition", align 8 ; 5 uses
-  %7 = alloca %"class.arrow::Result", align 8     ; 20 uses
+  %7 = alloca %"class.arrow::Result", align 8     ; 16 uses
   %8 = alloca %"class.arrow::Result.72", align 8  ; 17 uses
   %9 = alloca %"class.arrow::Status", align 8     ; 5 uses
   store ptr %2, ptr %6, align 8
@@ -574,42 +574,26 @@ bb.am:                                            ; preds = %_ZN5arrow6ResultIlE
 .critedge:                                        ; preds = %bb.k
   %i.di = load ptr, ptr %7, align 8, !tbaa !74    ; 2 uses
   %.not.i.i60 = icmp eq ptr %i.di, null
-  br i1 %.not.i.i60, label %_ZN5arrow6ResultIlED2Ev.exit61, label %bb.an, !prof !88
+  br i1 %.not.i.i60, label %_ZN5arrow6ResultIlED2Ev.exit74, label %bb.an, !prof !88
 
 bb.an:                                            ; preds = %.critedge
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 1
   %i.dk = load i8, ptr %i.dj, align 1, !tbaa !89, !range !99, !noundef !100
   %i.dl = trunc nuw i8 %i.dk to i1
-  br i1 %i.dl, label %_ZN5arrow6ResultIlED2Ev.exit61, label %10
-
-10:                                               ; preds = %bb.an
-  call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(16) %7) #25
-  br label %_ZN5arrow6ResultIlED2Ev.exit61
-
-_ZN5arrow6ResultIlED2Ev.exit61:                   ; preds = %.critedge, %bb.an, %10
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %bb.az
+  br i1 %i.dl, label %_ZN5arrow6ResultIlED2Ev.exit74, label %bb.ay
 
 .critedge42:                                      ; preds = %bb.n
   call void @_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
   %i.dm = load ptr, ptr %7, align 8, !tbaa !74    ; 2 uses
   %.not.i.i62 = icmp eq ptr %i.dm, null
-  br i1 %.not.i.i62, label %_ZN5arrow6ResultIlED2Ev.exit63, label %bb.ao, !prof !88
+  br i1 %.not.i.i62, label %_ZN5arrow6ResultIlED2Ev.exit74, label %bb.ao, !prof !88
 
 bb.ao:                                            ; preds = %.critedge42
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 1
   %i.do = load i8, ptr %i.dn, align 1, !tbaa !89, !range !99, !noundef !100
   %i.dp = trunc nuw i8 %i.do to i1
-  br i1 %i.dp, label %_ZN5arrow6ResultIlED2Ev.exit63, label %11
-
-11:                                               ; preds = %bb.ao
-  call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(16) %7) #25
-  br label %_ZN5arrow6ResultIlED2Ev.exit63
-
-_ZN5arrow6ResultIlED2Ev.exit63:                   ; preds = %.critedge42, %bb.ao, %11
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  br label %bb.az
+  br i1 %i.dp, label %_ZN5arrow6ResultIlED2Ev.exit74, label %bb.ay
 
 .critedge44:                                      ; preds = %_ZN5arrow6StatusD2Ev.exit
   br i1 %i.cd, label %bb.ap, label %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEE7DestroyEv.exit.thread.i64, !prof !88
@@ -691,15 +675,15 @@ bb.ax:                                            ; preds = %_ZN5arrow6ResultISt
   %i.en = trunc nuw i8 %i.em to i1
   br i1 %i.en, label %_ZN5arrow6ResultIlED2Ev.exit74, label %bb.ay
 
-bb.ay:                                            ; preds = %bb.ax
+bb.ay:                                            ; preds = %bb.ax, %bb.ao, %bb.an
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(16) %7) #25
   br label %_ZN5arrow6ResultIlED2Ev.exit74
 
-_ZN5arrow6ResultIlED2Ev.exit74:                   ; preds = %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit72, %bb.ax, %bb.ay
+_ZN5arrow6ResultIlED2Ev.exit74:                   ; preds = %bb.ay, %bb.ax, %_ZN5arrow6ResultISt10shared_ptrINS_9ArrayDataEEED2Ev.exit72, %bb.ao, %.critedge42, %bb.an, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   br label %bb.az
 
-bb.az:                                            ; preds = %_ZN5arrow6ResultIlED2Ev.exit74, %_ZN5arrow6ResultIlED2Ev.exit63, %_ZN5arrow6ResultIlED2Ev.exit61, %bb.am
+bb.az:                                            ; preds = %_ZN5arrow6ResultIlED2Ev.exit74, %bb.am
   ret void
 }
 

@@ -41,12 +41,7 @@ bb.a:                                             ; preds = %._crit_edge52
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.p ; 2 uses
   %i.r = sub nuw nsw i32 64, %i.n                 ; 3 uses
   %.not45 = icmp ult i32 %2, %i.r
-  br i1 %.not45, label %.thread, label %bb.b
-
-.thread:                                          ; preds = %bb.a
-  %3 = zext nneg i32 %2 to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.q, ptr align 1 %1, i64 %3, i1 false)
-  br label %bb.e
+  br i1 %.not45, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.s = zext nneg i32 %i.r to i64                ; 2 uses
@@ -80,11 +75,14 @@ bb.d:                                             ; preds = %.lr.ph, %bb.d
   %.240.lcssa = phi i32 [ %.139, %bb.c ], [ %i.y, %bb.d ]
   %.2.lcssa = phi ptr [ %.1, %bb.c ], [ %i.x, %bb.d ]
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %4 = zext nneg i32 %.240.lcssa to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr align 1 %.2.lcssa, i64 %4, i1 false)
   br label %bb.e
 
-bb.e:                                             ; preds = %.thread, %._crit_edge
+bb.e:                                             ; preds = %bb.a, %._crit_edge
+  %.sink60 = phi i32 [ %.240.lcssa, %._crit_edge ], [ %2, %bb.a ]
+  %.sink58 = phi ptr [ %.2.lcssa, %._crit_edge ], [ %1, %bb.a ]
+  %.sink = phi ptr [ %i.aa, %._crit_edge ], [ %i.q, %bb.a ]
+  %3 = zext nneg i32 %.sink60 to i64
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sink, ptr align 1 %.sink58, i64 %3, i1 false)
   ret void
 }
 

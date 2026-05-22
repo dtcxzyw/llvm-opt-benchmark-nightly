@@ -179,19 +179,16 @@ bb.f:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
   call void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header15getMaxImageSizeERiS1_(ptr noundef nonnull align 4 dereferenceable(4) %i.c, ptr noundef nonnull align 4 dereferenceable(4) %i.d)
   %or.cond.i5 = or i1 %1, %2
-  br i1 %or.cond.i5, label %bb.g, label %12
+  br i1 %or.cond.i5, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   call void @_ZN27OpenImageIO_v3_1_Imf__3_3_521CompositeDeepScanLine21setMaximumSampleCountEl(i64 noundef 1048576)
   call void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header15setMaxImageSizeEii(i32 noundef 2048, i32 noundef 2048)
-  call void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14setMaxTileSizeEii(i32 noundef 512, i32 noundef 512)
   br label %bb.h
 
-12:                                               ; preds = %bb.f
-  call void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14setMaxTileSizeEii(i32 noundef 16384, i32 noundef 16384)
-  br label %bb.h
-
-bb.h:                                             ; preds = %12, %bb.g
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.sink37.i = phi i32 [ 512, %bb.g ], [ 16384, %bb.f ] ; 2 uses
+  call void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14setMaxTileSizeEii(i32 noundef %.sink37.i, i32 noundef %.sink37.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 6 uses
   store ptr %i.p, ptr %4, align 8, !tbaa !14
@@ -594,8 +591,8 @@ bb.g:                                             ; preds = %.noexc13
   invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header15setMaxImageSizeEii(i32 noundef 2048, i32 noundef 2048)
           to label %.invoke unwind label %bb.el
 
-.invoke:                                          ; preds = %.noexc13, %.noexc14
-  %i.x = phi i32 [ 512, %.noexc14 ], [ 16384, %.noexc13 ] ; 2 uses
+.invoke:                                          ; preds = %.noexc14, %.noexc13
+  %i.x = phi i32 [ 16384, %.noexc13 ], [ 512, %.noexc14 ] ; 2 uses
   invoke void @_ZN27OpenImageIO_v3_1_Imf__3_3_56Header14setMaxTileSizeEii(i32 noundef %i.x, i32 noundef %i.x)
           to label %.noexc16 unwind label %bb.el
 

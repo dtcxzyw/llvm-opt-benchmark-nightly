@@ -201,7 +201,6 @@ bb.m:                                             ; preds = %bb.k
   %i.cq = zext nneg i8 %i.cp to i32
   %i.cr = and i8 %.sroa.0215.0361, 15
   %i.cs = zext nneg i8 %i.cr to i32
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef %i.cq, i32 noundef %i.cs, i32 noundef %.0174, i32 noundef %.0173234237) #7
   br label %.thread287
 
 bb.n:                                             ; preds = %bb.h
@@ -238,7 +237,6 @@ bb.q:                                             ; preds = %bb.p
   %i.dm = add i32 %i.dh, %i.dl
   %i.dn = sub i32 %.0156362, %i.dm                ; 2 uses
   %i.do = add nsw i32 %i.dn, %i.dl
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef 3, i32 noundef 1, i32 noundef %i.dn, i32 noundef %i.do) #7
   br label %.thread287
 
 .thread238:                                       ; preds = %bb.o, %bb.p, %bb.n
@@ -307,7 +305,6 @@ bb.u:                                             ; preds = %.lr.ph370, %.lr.ph3
   %reass.sub = sub i32 %.0166.lcssa.ph, %i.dq
   %i.ef = add i32 %reass.sub, 1
   %i.eg = sub nsw i32 %.4160, %i.dq
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef 2, i32 noundef 0, i32 noundef %i.ef, i32 noundef %i.eg) #7
   br label %.thread287
 
 bb.v:                                             ; preds = %bb.t, %bb.t, %bb.s, %bb.r, %.thread238
@@ -377,7 +374,6 @@ bb.aa:                                            ; preds = %.lr.ph375
   %reass.sub379 = sub i32 %.0155.lcssa.ph, %i.ei
   %i.ff = add i32 %reass.sub379, 1
   %i.fg = sub nsw i32 %.4160, %i.ei
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef %i.az, i32 noundef %i.bb, i32 noundef %i.ff, i32 noundef %i.fg) #7
   br label %.thread287
 
 bb.ab:                                            ; preds = %bb.z, %bb.y, %bb.x, %bb.w, %bb.v
@@ -441,7 +437,6 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gg = load i32, ptr %i.aj, align 8
   %i.gh = sub nsw i32 %.4160, %i.gg               ; 2 uses
   %i.gi = add nsw i32 %i.gh, %i.fv
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef %i.fr, i32 noundef %i.ft, i32 noundef %i.gh, i32 noundef %i.gi) #7
   br label %.thread287
 
 bb.aj:                                            ; preds = %bb.ah
@@ -456,7 +451,6 @@ bb.al:                                            ; preds = %bb.ak
   %i.gk = load i32, ptr %i.aj, align 8
   %i.gl = sub nsw i32 %.4160, %i.gk               ; 2 uses
   %i.gm = add nsw i32 %i.gl, %i.fv
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef 3, i32 noundef 1, i32 noundef %i.gl, i32 noundef %i.gm) #7
   br label %.thread287
 
 bb.am:                                            ; preds = %bb.ak
@@ -517,11 +511,15 @@ bb.ap:                                            ; preds = %bb.ag
   %i.hd = phi i32 [ %.pre434, %.thread291.loopexit ], [ %.pre435.pre, %._crit_edge ]
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.hf = load i32, ptr %i.he, align 8
-  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef %i.hd, i32 noundef %i.hf, i32 noundef %i.hc, i32 noundef %i.hc) #7
   br label %.thread287
 
 .thread287:                                       ; preds = %bb.al, %bb.ai, %bb.q, %.thread235, %.critedge, %.critedge11, %.thread291
-  %cond290 = phi i1 [ false, %.thread291 ], [ true, %bb.q ], [ true, %.critedge11 ], [ true, %.critedge ], [ true, %.thread235 ], [ true, %bb.ai ], [ true, %bb.al ]
+  %.sink504 = phi i32 [ %i.gm, %bb.al ], [ %i.gi, %bb.ai ], [ %i.do, %bb.q ], [ %.0173234237, %.thread235 ], [ %i.eg, %.critedge ], [ %i.fg, %.critedge11 ], [ %i.hc, %.thread291 ]
+  %.sink503 = phi i32 [ %i.gl, %bb.al ], [ %i.gh, %bb.ai ], [ %i.dn, %bb.q ], [ %.0174, %.thread235 ], [ %i.ef, %.critedge ], [ %i.ff, %.critedge11 ], [ %i.hc, %.thread291 ]
+  %.sink502 = phi i32 [ 1, %bb.al ], [ %i.ft, %bb.ai ], [ 1, %bb.q ], [ %i.cs, %.thread235 ], [ 0, %.critedge ], [ %i.bb, %.critedge11 ], [ %i.hf, %.thread291 ]
+  %.sink = phi i32 [ 3, %bb.al ], [ %i.fr, %bb.ai ], [ 3, %bb.q ], [ %i.cq, %.thread235 ], [ 2, %.critedge ], [ %i.az, %.critedge11 ], [ %i.hd, %.thread291 ]
+  %cond290 = phi i1 [ true, %bb.al ], [ true, %bb.ai ], [ true, %bb.q ], [ true, %.thread235 ], [ true, %.critedge ], [ true, %.critedge11 ], [ false, %.thread291 ]
+  tail call void @_ZN6icu_7824ConstrainedFieldPosition8setStateEiiii(ptr noundef nonnull align 8 dereferenceable(25) %1, i32 noundef %.sink, i32 noundef %.sink502, i32 noundef %.sink503, i32 noundef %.sink504) #7
   ret i1 %cond290
 }
 

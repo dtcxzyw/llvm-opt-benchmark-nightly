@@ -16,11 +16,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !7    ; 3 uses
   %i.d = icmp eq ptr %i.a, %i.c
-  br i1 %i.d, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  br label %bb.i
+  br i1 %i.d, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = ptrtoint ptr %i.c to i64
@@ -85,11 +81,11 @@ bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.07.1, i64 24, i1 false), !tbaa.struct !16
   br label %bb.i
 
-bb.h:                                             ; preds = %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.g, %bb.h, %3
+bb.i:                                             ; preds = %bb.h, %bb.g
   ret void
 }
 

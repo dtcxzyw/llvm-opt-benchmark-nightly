@@ -199,14 +199,10 @@ bb.a:
   %i.d = fdiv double %i.c, f0x41DFFFFFFFC00000    ; 3 uses
   %i.e = tail call i32 @lua_gettop(ptr noundef %0) #8
   switch i32 %i.e, label %bb.h [
-    i32 0, label %1
+    i32 0, label %.sink.split
     i32 1, label %bb.b
     i32 2, label %bb.e
   ]
-
-1:                                                ; preds = %bb.a
-  tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.d) #8
-  br label %bb.i
 
 bb.b:                                             ; preds = %bb.a
   %i.f = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 1) #8
@@ -223,8 +219,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.k = fmul double %i.d, %i.j
   %i.l = tail call double @llvm.floor.f64(double %i.k)
   %i.m = fadd double %i.l, 1.000000e+00
-  tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.m) #8
-  br label %bb.i
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.a
   %i.n = tail call i64 @luaL_checkinteger(ptr noundef %0, i32 noundef 1) #8
@@ -246,15 +241,19 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.v = tail call double @llvm.floor.f64(double %i.u)
   %i.w = sitofp i32 %i.o to double
   %i.x = fadd double %i.v, %i.w
-  tail call void @lua_pushnumber(ptr noundef %0, double noundef %i.x) #8
-  br label %bb.i
+  br label %.sink.split
 
 bb.h:                                             ; preds = %bb.a
   %i.y = tail call i32 (ptr, ptr, ...) @luaL_error(ptr noundef %0, ptr noundef nonnull @.str.33) #8
   br label %bb.i
 
-bb.i:                                             ; preds = %1, %bb.d, %bb.g, %bb.h
-  %.0 = phi i32 [ %i.y, %bb.h ], [ 1, %bb.g ], [ 1, %bb.d ], [ 1, %1 ]
+.sink.split:                                      ; preds = %bb.a, %bb.g, %bb.d
+  %.sink = phi double [ %i.x, %bb.g ], [ %i.m, %bb.d ], [ %i.d, %bb.a ]
+  tail call void @lua_pushnumber(ptr noundef %0, double noundef %.sink) #8
+  br label %bb.i
+
+bb.i:                                             ; preds = %.sink.split, %bb.h
+  %.0 = phi i32 [ %i.y, %bb.h ], [ 1, %.sink.split ]
   ret i32 %.0
 }
 

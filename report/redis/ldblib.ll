@@ -201,23 +201,18 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.036 = phi i32 [ %i.g, %bb.c ], [ %i.i, %bb.d ] ; 2 uses
   %i.j = tail call i32 @lua_gettop(ptr noundef %0) #7
   %i.k = icmp eq i32 %i.j, %.0
-  br i1 %i.k, label %2, label %bb.f
-
-2:                                                ; preds = %bb.e
-  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull @.str.42, i64 noundef 0) #7
-  br label %bb.g
+  br i1 %i.k, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.l = add nuw nsw i32 %.0, 1
   %i.m = tail call i32 @lua_isstring(ptr noundef %0, i32 noundef %i.l) #7
   %.not40 = icmp eq i32 %i.m, 0
-  br i1 %.not40, label %bb.u, label %3
+  br i1 %.not40, label %bb.u, label %bb.g
 
-3:                                                ; preds = %bb.f
-  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull @.str.17, i64 noundef 1) #7
-  br label %bb.g
-
-bb.g:                                             ; preds = %3, %2
+bb.g:                                             ; preds = %bb.f, %bb.e
+  %.sink = phi i64 [ 0, %bb.e ], [ 1, %bb.f ]
+  %.str.17.sink = phi ptr [ @.str.42, %bb.e ], [ @.str.17, %bb.f ]
+  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull %.str.17.sink, i64 noundef %.sink) #7
   tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull @.str.43, i64 noundef 16) #7
   %i.n = call i32 @lua_getstack(ptr noundef %.0.i, i32 noundef %.036, ptr noundef nonnull %1) #7
   %.not415153 = icmp eq i32 %i.n, 0

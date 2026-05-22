@@ -201,11 +201,7 @@ bb.l:                                             ; preds = %.noexc14
           cleanup                                 ; 2 uses
   %i.av = load ptr, ptr %3, align 8, !tbaa !30, !alias.scope !60 ; 2 uses
   %i.aw = icmp eq ptr %i.av, null
-  br i1 %i.aw, label %.body15, label %4
-
-4:                                                ; preds = %bb.l
-  call void @_ZdaPv(ptr noundef nonnull %i.av) #17
-  br label %.body15
+  br i1 %i.aw, label %.body15, label %bb.u
 
 _ZN8NWindows6NError16MyFormatMessageWEj.exit:     ; preds = %.noexc14
   %i.ax = load ptr, ptr %3, align 8, !tbaa !30
@@ -262,12 +258,14 @@ bb.t:                                             ; preds = %_ZN8NWindows6NError
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %.body15, label %bb.u
 
-bb.u:                                             ; preds = %bb.t
-  call void @_ZdaPv(ptr noundef nonnull %i.bh) #17
+bb.u:                                             ; preds = %bb.t, %bb.l
+  %.sink = phi ptr [ %i.av, %bb.l ], [ %i.bh, %bb.t ]
+  %.pn9.ph = phi { ptr, i32 } [ %i.au, %bb.l ], [ %i.bg, %bb.t ]
+  call void @_ZdaPv(ptr noundef nonnull %.sink) #17
   br label %.body15
 
-.body15:                                          ; preds = %bb.u, %bb.t, %bb.s, %4, %bb.l
-  %.pn9 = phi { ptr, i32 } [ %i.au, %bb.l ], [ %i.bf, %bb.s ], [ %i.au, %4 ], [ %i.bg, %bb.t ], [ %i.bg, %bb.u ]
+.body15:                                          ; preds = %bb.u, %bb.t, %bb.s, %bb.l
+  %.pn9 = phi { ptr, i32 } [ %i.au, %bb.l ], [ %i.bf, %bb.s ], [ %i.bg, %bb.t ], [ %.pn9.ph, %bb.u ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
   br label %_ZN11CStringBaseIwED2Ev.exit18
 

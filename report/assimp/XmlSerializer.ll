@@ -201,7 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.p,
   call void @llvm.experimental.noalias.scope.decl(metadata !40)
   store i32 3, ptr %15, align 8, !alias.scope !40
   %i.bl = invoke noalias noundef nonnull dereferenceable(12) ptr @_Znam(i64 noundef 12) #28
-          to label %.noexc73 unwind label %bb.ao  ; 5 uses
+          to label %.noexc73 unwind label %bb.ao  ; 8 uses
 
 .noexc73:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   store ptr %i.bl, ptr %i.j, align 8, !alias.scope !40
@@ -307,29 +307,24 @@ bb.z:                                             ; preds = %bb.q, %.noexc73
   %i.cj = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26, !noalias !40
-  br label %.thread.i
+  br label %bb.bz
 
 bb.aa:                                            ; preds = %bb.s, %bb.r
   %i.ck = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26, !noalias !40
-  br label %.thread.i
+  br label %bb.bz
 
 bb.ab:                                            ; preds = %bb.u, %bb.t
   %i.cl = landingpad { ptr, i32 }
           cleanup
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26, !noalias !40
-  br label %.thread.i
+  br label %bb.bz
 
 .thread32.i:                                      ; preds = %bb.y, %.noexc24.i, %.noexc21.i, %bb.x, %.noexc19.i, %.noexc17.i, %bb.w, %.noexc.i72, %bb.v
   %lpad.thr_comm.i = landingpad { ptr, i32 }
           cleanup
-  br label %.thread.i
-
-.thread.i:                                        ; preds = %.thread32.i, %bb.ab, %bb.aa, %bb.z
-  %.pn29.i = phi { ptr, i32 } [ %lpad.thr_comm.i, %.thread32.i ], [ %i.cj, %bb.z ], [ %i.ck, %bb.aa ], [ %i.cl, %bb.ab ]
-  call void @_ZdaPv(ptr noundef nonnull %i.bl) #25, !noalias !40
-  br label %.body
+  br label %bb.bz
 
 bb.ac:                                            ; preds = %.noexc25.i, %bb.y
   %.sroa.15.0 = phi i32 [ -1, %.noexc25.i ], [ %i.ci, %bb.y ] ; 7 uses
@@ -732,12 +727,14 @@ bb.by:                                            ; preds = %bb.ap, %bb.bm, %_ZN
   %i.jt = icmp eq ptr %i.js, null
   br i1 %i.jt, label %.body, label %bb.bz
 
-bb.bz:                                            ; preds = %bb.by
-  call void @_ZdaPv(ptr noundef nonnull %i.js) #25
+bb.bz:                                            ; preds = %bb.by, %bb.z, %bb.aa, %bb.ab, %.thread32.i
+  %.sink = phi ptr [ %i.bl, %bb.ab ], [ %i.bl, %.thread32.i ], [ %i.bl, %bb.z ], [ %i.bl, %bb.aa ], [ %i.js, %bb.by ]
+  %.pn51.pn.ph = phi { ptr, i32 } [ %i.cl, %bb.ab ], [ %lpad.thr_comm.i, %.thread32.i ], [ %i.cj, %bb.z ], [ %i.ck, %bb.aa ], [ %.pn51, %bb.by ]
+  call void @_ZdaPv(ptr noundef nonnull %.sink) #25
   br label %.body
 
-.body:                                            ; preds = %bb.bz, %bb.by, %bb.ao, %.thread.i
-  %.pn51.pn = phi { ptr, i32 } [ %.pn29.i, %.thread.i ], [ %i.eb, %bb.ao ], [ %.pn51, %bb.by ], [ %.pn51, %bb.bz ]
+.body:                                            ; preds = %bb.bz, %bb.by, %bb.ao
+  %.pn51.pn = phi { ptr, i32 } [ %.pn51, %bb.by ], [ %i.eb, %bb.ao ], [ %.pn51.pn.ph, %bb.bz ]
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #26
   br label %bb.ca
 

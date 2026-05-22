@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN4absl12lts_20250512L23PortableSleepForSecondsEi.exit: ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
-  %6 = call ptr @signal(i32 noundef %0, ptr noundef null) #14 ; 0 uses
-  br label %_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit
+  br label %bb.af
 
 _ZNSt13__atomic_baseIiE23compare_exchange_strongERiiSt12memory_orderS2_.exit.thread: ; preds = %bb.a, %bb.b
   %i.o = tail call noundef i32 @sched_getcpu() #14 ; 3 uses
@@ -421,11 +420,7 @@ bb.ad:                                            ; preds = %bb.ac
 .critedge.6.i:                                    ; preds = %.critedge.5.i
   %i.bq = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 1008), align 16, !tbaa !7
   %.not13.6.i = icmp eq i32 %i.bq, %0
-  br i1 %.not13.6.i, label %bb.ae, label %7
-
-7:                                                ; preds = %.critedge.6.i
-  %8 = call ptr @signal(i32 noundef %0, ptr noundef null) #14 ; 0 uses
-  br label %_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit
+  br i1 %.not13.6.i, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %.critedge.6.i, %.critedge.5.i, %.critedge.4.i, %.critedge.3.i, %.critedge.2.i, %.critedge.1.i, %bb.ad
   %.0.ptr17.lcssa.i = phi ptr [ @_ZN4absl12lts_20250512L19failure_signal_dataE, %bb.ad ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 168), %.critedge.1.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 336), %.critedge.2.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 504), %.critedge.3.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 672), %.critedge.4.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 840), %.critedge.5.i ], [ getelementptr inbounds nuw (i8, ptr @_ZN4absl12lts_20250512L19failure_signal_dataE, i64 1008), %.critedge.6.i ]
@@ -433,11 +428,11 @@ bb.ae:                                            ; preds = %.critedge.6.i, %.cr
   %i.bs = call i32 @sigaction(i32 noundef %0, ptr noundef nonnull %i.br, ptr noundef null) #14 ; 0 uses
   br label %_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit
 
-bb.af:                                            ; preds = %bb.ac
+bb.af:                                            ; preds = %bb.ac, %.critedge.6.i, %_ZN4absl12lts_20250512L23PortableSleepForSecondsEi.exit
   %i.bt = call ptr @signal(i32 noundef %0, ptr noundef null) #14 ; 0 uses
   br label %_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit
 
-_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit: ; preds = %bb.ae, %7, %bb.af, %_ZN4absl12lts_20250512L23PortableSleepForSecondsEi.exit
+_ZN4absl12lts_20250512L22RaiseToPreviousHandlerEi.exit: ; preds = %bb.af, %bb.ae
   %i.bu = call i32 @raise(i32 noundef %0) #14     ; 0 uses
   ret void
 }

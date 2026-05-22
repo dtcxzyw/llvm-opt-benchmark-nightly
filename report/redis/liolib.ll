@@ -201,18 +201,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 
 bb.e:                                             ; preds = %bb.c
   %i.e = load ptr, ptr %i.a, align 8, !tbaa !8
-  %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %1, label %2
-
-1:                                                ; preds = %bb.e
-  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull @.str.43, i64 noundef 11) #9
+  %i.f = icmp eq ptr %i.e, null                   ; 2 uses
+  %. = select i1 %i.f, i64 11, i64 4
+  %.str.43..str.44 = select i1 %i.f, ptr @.str.43, ptr @.str.44
+  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull %.str.43..str.44, i64 noundef %.) #9
   br label %bb.f
 
-2:                                                ; preds = %bb.e
-  tail call void @lua_pushlstring(ptr noundef %0, ptr noundef nonnull @.str.44, i64 noundef 4) #9
-  br label %bb.f
-
-bb.f:                                             ; preds = %1, %2, %bb.d
+bb.f:                                             ; preds = %bb.e, %bb.d
   ret i32 1
 }
 

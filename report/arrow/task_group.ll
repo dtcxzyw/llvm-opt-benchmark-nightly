@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %_ZNSt11unique_lockISt5mutexED2Ev.exit18
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.e = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #24 ; 2 uses
   %.not.i.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i.i, label %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, label %bb.c
@@ -225,13 +225,13 @@ bb.d:                                             ; preds = %_ZNSt11unique_lockI
   %i.m = load atomic i8, ptr %i.l seq_cst, align 1
   %.not = icmp eq i8 %i.m, 0
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144
-  br i1 %.not, label %bb.e, label %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16
+  br i1 %.not, label %bb.e, label %_ZN5arrow6StatusD2Ev.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 53 ; 2 uses
   %i.p = load atomic i8, ptr %i.o seq_cst, align 1, !range !70, !noundef !71
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16, label %_ZN5arrow6StatusC2ERKS0_.exit
+  br i1 %i.q, label %_ZN5arrow6StatusD2Ev.exit, label %_ZN5arrow6StatusC2ERKS0_.exit
 
 _ZN5arrow6StatusC2ERKS0_.exit:                    ; preds = %bb.e
   store atomic i8 1, ptr %i.o seq_cst, align 1
@@ -273,18 +273,14 @@ bb.k:                                             ; preds = %bb.j
   call void @_ZN5arrow6Status11DeleteStateEv(ptr noundef nonnull align 8 dereferenceable(8) %1) #24
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit
 
-_ZNSt11unique_lockISt5mutexE6unlockEv.exit16:     ; preds = %bb.d, %bb.e
-  %2 = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #24 ; 0 uses
-  br label %_ZNSt11unique_lockISt5mutexED2Ev.exit18
-
 _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %bb.k, %bb.j, %bb.i
   resume { ptr, i32 } %i.w
 
-_ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
+_ZN5arrow6StatusD2Ev.exit:                        ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %bb.e, %bb.d
   %i.ab = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.d) #24 ; 0 uses
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit18
 
-_ZNSt11unique_lockISt5mutexED2Ev.exit18:          ; preds = %bb.h, %bb.g, %bb.f, %_ZNSt11unique_lockISt5mutexE6unlockEv.exit16, %_ZN5arrow6StatusD2Ev.exit, %bb.a
+_ZNSt11unique_lockISt5mutexED2Ev.exit18:          ; preds = %_ZN5arrow6StatusD2Ev.exit, %bb.h, %bb.g, %bb.f, %bb.a
   ret void
 }
 

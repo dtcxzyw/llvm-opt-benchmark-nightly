@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define range(i32 0, 2) i32 @jpeg_finish_decompress(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !44   ; 3 uses
   %.off = add i32 %i.b, -205
   %switch = icmp ult i32 %.off, 2
@@ -235,18 +235,13 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !76
   tail call void %i.p(ptr noundef nonnull %0) #3
-  store i32 210, ptr %i.a, align 4, !tbaa !44
-  br label %bb.h
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.a, %bb.b
   switch i32 %i.b, label %bb.g [
-    i32 207, label %1
+    i32 207, label %.sink.split
     i32 210, label %bb.h
   ]
-
-1:                                                ; preds = %bb.f
-  store i32 210, ptr %i.a, align 4, !tbaa !44
-  br label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.q = load ptr, ptr %0, align 8, !tbaa !32     ; 2 uses
@@ -259,7 +254,11 @@ bb.g:                                             ; preds = %bb.f
   tail call void %i.u(ptr noundef nonnull %0) #3
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.f, %1, %bb.g, %bb.e
+.sink.split:                                      ; preds = %bb.f, %bb.e
+  store i32 210, ptr %i.a, align 4, !tbaa !44
+  br label %bb.h
+
+bb.h:                                             ; preds = %.sink.split, %bb.f, %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 600
   br label %bb.i
 

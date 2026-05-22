@@ -201,11 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %.val72 = load i64, ptr %i.t, align 8, !tbaa !27
   %i.u = and i64 %.val72, 268435456
   %.not60 = icmp eq i64 %i.u, 0
-  br i1 %.not60, label %4, label %bb.j
-
-4:                                                ; preds = %.thread
-  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.43, ptr noundef nonnull @.str.44, ptr noundef nonnull %i.r) #8
-  br label %bb.v
+  br i1 %.not60, label %.sink.split, label %bb.j
 
 bb.j:                                             ; preds = %.thread
   %i.v = call ptr @PyUnicode_AsUTF8AndSize(ptr noundef nonnull %i.r, ptr noundef nonnull %i.b) #8 ; 3 uses
@@ -240,11 +236,7 @@ bb.o:                                             ; preds = %bb.n
   %.val71 = load i64, ptr %i.ad, align 8, !tbaa !27
   %i.ae = and i64 %.val71, 268435456
   %.not64 = icmp eq i64 %i.ae, 0
-  br i1 %.not64, label %5, label %bb.p
-
-5:                                                ; preds = %bb.o
-  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.44, ptr noundef nonnull %i.ab) #8
-  br label %bb.v
+  br i1 %.not64, label %.sink.split, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #8
@@ -295,8 +287,14 @@ bb.u:                                             ; preds = %bb.s, %.thread77, %
   %i.ap = call ptr @PyErr_NewExceptionWithDoc(ptr noundef nonnull %i.v, ptr noundef %.144, ptr noundef %.1, ptr noundef %.041) #8
   br label %bb.v
 
-bb.v:                                             ; preds = %.thread74, %4, %bb.l, %5, %bb.u, %bb.i, %bb.j
-  %.048 = phi ptr [ null, %bb.j ], [ null, %bb.l ], [ %i.ap, %bb.u ], [ null, %.thread74 ], [ null, %5 ], [ null, %4 ], [ null, %bb.i ]
+.sink.split:                                      ; preds = %bb.o, %.thread
+  %.sink = phi ptr [ %i.r, %.thread ], [ %i.ab, %bb.o ]
+  %.str.43.sink = phi ptr [ @.str.43, %.thread ], [ @.str.46, %bb.o ]
+  call void @_PyArg_BadArgument(ptr noundef nonnull @.str.9, ptr noundef nonnull %.str.43.sink, ptr noundef nonnull @.str.44, ptr noundef nonnull %.sink) #8
+  br label %bb.v
+
+bb.v:                                             ; preds = %.sink.split, %.thread74, %bb.l, %bb.u, %bb.i, %bb.j
+  %.048 = phi ptr [ null, %bb.j ], [ null, %bb.l ], [ %i.ap, %bb.u ], [ null, %.thread74 ], [ null, %bb.i ], [ null, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret ptr %.048
 }

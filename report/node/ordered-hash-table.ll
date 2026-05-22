@@ -201,11 +201,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
-  br i1 %.not.i.i.i.i, label %_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit, label %3, !prof !8
-
-3:                                                ; preds = %bb.f
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %0, i64 %i.j, i64 %2) #13
-  br label %_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit
+  br i1 %.not.i.i.i.i, label %_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit, label %bb.l, !prof !8
 
 bb.g:                                             ; preds = %bb.a
   %i.u = trunc i64 %1 to i32
@@ -250,11 +246,13 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
   br i1 %.not.i.i.i.i.i.i, label %_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit, label %bb.l, !prof !8
 
-bb.l:                                             ; preds = %bb.k
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.ag, i64 %i.ah, i64 %2) #13
+bb.l:                                             ; preds = %bb.k, %bb.f
+  %.sink29 = phi i64 [ %i.j, %bb.f ], [ %i.ah, %bb.k ]
+  %.sink = phi i64 [ %0, %bb.f ], [ %i.ag, %bb.k ]
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %.sink, i64 %.sink29, i64 %2) #13
   br label %_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit
 
-_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.l, %bb.k, %bb.g, %3, %bb.f, %bb.b
+_ZN2v88internal26SmallOrderedNameDictionary10ValueAtPutENS0_13InternalIndexENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %bb.l, %bb.k, %bb.g, %bb.f, %bb.b
   ret void
 }
 

@@ -150,9 +150,9 @@ bb.a:
   %i.b = load i64, ptr @je_max_background_threads, align 8, !tbaa !21
   %i.c = urem i64 %i.a, %i.b                      ; 2 uses
   %i.d = load ptr, ptr @je_background_thread_info, align 8, !tbaa !22
-  %i.e = getelementptr inbounds nuw [208 x i8], ptr %i.d, i64 %i.c ; 15 uses
+  %i.e = getelementptr inbounds nuw [208 x i8], ptr %i.d, i64 %i.c ; 16 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 56 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 120 ; 5 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 120 ; 6 uses
   %i.h = tail call i32 @pthread_mutex_trylock(ptr noundef nonnull %i.g) #12
   %.not.i = icmp eq i32 %i.h, 0
   br i1 %.not.i, label %bb.b, label %atomic_store_b.exit.i
@@ -184,13 +184,13 @@ bb.c:                                             ; preds = %bb.b
 malloc_mutex_lock.exit:                           ; preds = %bb.b, %bb.c
   %i.r = load atomic i8, ptr @je_background_thread_enabled_state monotonic, align 1, !range !24, !noundef !25
   %i.s = trunc nuw i8 %i.r to i1
-  br i1 %i.s, label %bb.d, label %.critedge
+  br i1 %i.s, label %bb.d, label %.sink.split
 
 bb.d:                                             ; preds = %malloc_mutex_lock.exit
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 168 ; 3 uses
   %i.u = load i32, ptr %i.t, align 8, !tbaa !26
   %i.v = icmp eq i32 %i.u, 0
-  br i1 %i.v, label %bb.e, label %.critedge
+  br i1 %i.v, label %bb.e, label %.sink.split
 
 bb.e:                                             ; preds = %bb.d
   store i32 1, ptr %i.t, align 8, !tbaa !26
@@ -210,12 +210,6 @@ bb.e:                                             ; preds = %bb.d
   %i.ad = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.g) #12 ; 0 uses
   %.not = icmp eq i32 %1, 0
   br i1 %.not, label %bb.i, label %bb.f
-
-.critedge:                                        ; preds = %malloc_mutex_lock.exit, %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 160
-  store atomic i8 0, ptr %4 monotonic, align 1
-  %5 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.g) #12 ; 0 uses
-  br label %bb.r
 
 bb.f:                                             ; preds = %bb.e
   %i.ae = load ptr, ptr @je_background_thread_info, align 8, !tbaa !22 ; 8 uses
@@ -251,11 +245,8 @@ bb.h:                                             ; preds = %bb.g
 
 malloc_mutex_lock.exit37:                         ; preds = %bb.g, %bb.h
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
-  %6 = tail call i32 @pthread_cond_signal(ptr noundef nonnull %i.ar) #12 ; 0 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.ae, i64 160
-  store atomic i8 0, ptr %7 monotonic, align 1
-  %i.as = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.af) #12 ; 0 uses
-  br label %bb.r
+  %i.as = tail call i32 @pthread_cond_signal(ptr noundef nonnull %i.ar) #12 ; 0 uses
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.e
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 832
@@ -351,8 +342,16 @@ malloc_mutex_lock.exit43:                         ; preds = %bb.p, %bb.q
   %i.bt = call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.g) #12 ; 0 uses
   br label %bb.r
 
-bb.r:                                             ; preds = %malloc_mutex_lock.exit43, %post_reentrancy.exit, %.critedge, %malloc_mutex_lock.exit37
-  %.1 = phi i1 [ false, %malloc_mutex_lock.exit37 ], [ true, %malloc_mutex_lock.exit43 ], [ false, %.critedge ], [ false, %post_reentrancy.exit ]
+.sink.split:                                      ; preds = %bb.d, %malloc_mutex_lock.exit, %malloc_mutex_lock.exit37
+  %.sink49 = phi ptr [ %i.ae, %malloc_mutex_lock.exit37 ], [ %i.e, %malloc_mutex_lock.exit ], [ %i.e, %bb.d ]
+  %.sink = phi ptr [ %i.af, %malloc_mutex_lock.exit37 ], [ %i.g, %malloc_mutex_lock.exit ], [ %i.g, %bb.d ]
+  %4 = getelementptr inbounds nuw i8, ptr %.sink49, i64 160
+  store atomic i8 0, ptr %4 monotonic, align 1
+  %5 = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %.sink) #12 ; 0 uses
+  br label %bb.r
+
+bb.r:                                             ; preds = %.sink.split, %malloc_mutex_lock.exit43, %post_reentrancy.exit
+  %.1 = phi i1 [ false, %post_reentrancy.exit ], [ true, %malloc_mutex_lock.exit43 ], [ false, %.sink.split ]
   ret i1 %.1
 }
 

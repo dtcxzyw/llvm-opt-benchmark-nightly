@@ -201,7 +201,7 @@ bb.a:
   %5 = alloca %"class.llvh::SMRange", align 16    ; 2 uses
   %6 = alloca %"class.llvh::SMRange", align 16    ; 2 uses
   %7 = alloca %"class.hermes::irgen::FunctionContext", align 8 ; 4 uses
-  %i.a = tail call noundef ptr @_ZN6hermes6ESTree17getBlockStatementEPNS0_16FunctionLikeNodeE(ptr noundef %3) #15 ; 7 uses
+  %i.a = tail call noundef ptr @_ZN6hermes6ESTree17getBlockStatementEPNS0_16FunctionLikeNodeE(ptr noundef %3) #15 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !123  ; 6 uses
@@ -343,10 +343,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   call void @_ZN6hermes9IRBuilder17setInsertionBlockEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(40) %i.bk, ptr noundef %i.bn) #15
-  call void @_ZN6hermes5irgen11ESTreeIRGen20emitFunctionPreambleEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef %i.bn)
-  call void @_ZN6hermes5irgen11ESTreeIRGen29initCaptureStateInES5FunctionEv(ptr noundef nonnull align 8 dereferenceable(200) %0)
-  call void @_ZN6hermes5irgen11ESTreeIRGen24emitTopLevelDeclarationsEPNS_6ESTree16FunctionLikeNodeEPNS2_4NodeENS1_16DoEmitParametersE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull %3, ptr noundef %i.a, i32 noundef 2)
-  br label %bb.m
+  br label %bb.l
 
 bb.k:                                             ; preds = %bb.i
   %i.bv = call noundef ptr @_ZN6hermes9IRBuilder16createBasicBlockEPNS_8FunctionE(ptr noundef nonnull align 8 dereferenceable(40) %i.bk, ptr noundef nonnull %i.bd) #15 ; 2 uses
@@ -365,13 +362,14 @@ bb.k:                                             ; preds = %bb.i
   %i.cd = call noundef ptr @_ZN6hermes5irgen11ESTreeIRGen18genResumeGeneratorENS1_10GenFinallyEPNS_14AllocStackInstEPNS_10BasicBlockES4_(ptr noundef nonnull align 8 dereferenceable(200) %0, i32 noundef 0, ptr noundef %i.bz, ptr noundef %i.cc, ptr noundef null) #15 ; 0 uses
   br label %bb.m
 
-bb.l:                                             ; preds = %bb.h
-  call void @_ZN6hermes5irgen11ESTreeIRGen20emitFunctionPreambleEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef %i.bl)
+bb.l:                                             ; preds = %bb.h, %bb.j
+  %.sink = phi ptr [ %i.bn, %bb.j ], [ %i.bl, %bb.h ]
+  call void @_ZN6hermes5irgen11ESTreeIRGen20emitFunctionPreambleEPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef %.sink)
   call void @_ZN6hermes5irgen11ESTreeIRGen29initCaptureStateInES5FunctionEv(ptr noundef nonnull align 8 dereferenceable(200) %0)
   call void @_ZN6hermes5irgen11ESTreeIRGen24emitTopLevelDeclarationsEPNS_6ESTree16FunctionLikeNodeEPNS2_4NodeENS1_16DoEmitParametersE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef nonnull %3, ptr noundef %i.a, i32 noundef 2)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.j, %bb.k, %bb.l
+bb.m:                                             ; preds = %bb.l, %bb.k
   call void @_ZN6hermes5irgen11ESTreeIRGen15genFunctionBodyEPNS_6ESTree4NodeE(ptr noundef nonnull align 8 dereferenceable(200) %0, ptr noundef %i.a) #15
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.cf = call noundef ptr @_ZN6hermes9IRBuilder19getLiteralUndefinedEv(ptr noundef nonnull align 8 dereferenceable(40) %i.ce) #15 ; 2 uses

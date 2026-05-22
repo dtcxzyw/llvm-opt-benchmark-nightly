@@ -201,7 +201,7 @@ bb.a:
 define internal void @finish_pass_master(ptr noundef %0) #2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 496
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 4 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !7    ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !125
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -220,14 +220,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.j = load i32, ptr %i.i, align 8, !tbaa !94
   %.not12 = icmp eq i32 %i.j, 0
-  br i1 %.not12, label %1, label %bb.g
-
-1:                                                ; preds = %bb.b
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !97
-  %4 = add nsw i32 %3, 1
-  store i32 %4, ptr %2, align 4, !tbaa !97
-  br label %bb.g
+  br i1 %.not12, label %bb.f, label %bb.g
 
 bb.c:                                             ; preds = %bb.a
   store i32 2, ptr %i.g, align 8, !tbaa !96
@@ -243,14 +236,14 @@ bb.e:                                             ; preds = %bb.d
   store i32 1, ptr %i.g, align 8, !tbaa !96
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
+bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 52 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4, !tbaa !97
   %i.o = add nsw i32 %i.n, 1
   store i32 %i.o, ptr %i.m, align 4, !tbaa !97
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.b, %1, %bb.f, %bb.c, %bb.a
+bb.g:                                             ; preds = %bb.f, %bb.b, %bb.c, %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 44 ; 2 uses
   %i.q = load i32, ptr %i.p, align 4, !tbaa !98
   %i.r = add nsw i32 %i.q, 1

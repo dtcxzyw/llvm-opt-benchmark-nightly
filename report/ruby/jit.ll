@@ -201,7 +201,7 @@ declare i64 @sysconf(i32 noundef) local_unnamed_addr #10
 declare void @rb_bug(ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nounwind sspstrong uwtable
-define hidden ptr @rb_jit_reserve_addr_space(i32 noundef %0) #1 {
+define hidden noundef ptr @rb_jit_reserve_addr_space(i32 noundef %0) #1 {
 bb.a:
   %i.a = tail call i64 @sysconf(i32 noundef 30) #14
   %i.b = trunc i64 %i.a to i32                    ; 2 uses
@@ -211,32 +211,24 @@ bb.a:
   %narrow.i = select i1 %i.d, i32 0, i32 %i.e
   %.0.idx.i = zext i32 %narrow.i to i64
   %.0.i = getelementptr i8, ptr @rb_jit_reserve_addr_space, i64 %.0.idx.i
-  %i.f = zext i32 %0 to i64                       ; 4 uses
+  %i.f = zext i32 %0 to i64                       ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.0 = phi ptr [ %.0.i, %bb.a ], [ %i.h, %bb.c ] ; 2 uses
-  %i.g = tail call ptr @mmap(ptr noundef %.0, i64 noundef %i.f, i32 noundef 0, i32 noundef 1048610, i32 noundef -1, i64 noundef 0) #14 ; 3 uses
+  %i.g = tail call ptr @mmap(ptr noundef %.0, i64 noundef %i.f, i32 noundef 0, i32 noundef 1048610, i32 noundef -1, i64 noundef 0) #14 ; 2 uses
   %.not = icmp eq ptr %i.g, inttoptr (i64 -1 to ptr)
-  br i1 %.not, label %bb.c, label %1
+  br i1 %.not, label %bb.c, label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr i8, ptr %.0, i64 -4194304  ; 2 uses
   %i.i = icmp ult ptr %i.h, getelementptr (i8, ptr @rb_jit_reserve_addr_space, i64 2147483647)
   br i1 %i.i, label %bb.b, label %bb.d, !llvm.loop !118
 
-1:                                                ; preds = %bb.b
-  tail call void @ruby_annotate_mmap(ptr noundef %i.g, i64 noundef %i.f, ptr noundef nonnull @.str.9) #14
-  br label %bb.h
-
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call ptr @mmap(ptr noundef null, i64 noundef %i.f, i32 noundef 0, i32 noundef 34, i32 noundef -1, i64 noundef 0) #14 ; 3 uses
+  %i.j = tail call ptr @mmap(ptr noundef null, i64 noundef %i.f, i32 noundef 0, i32 noundef 34, i32 noundef -1, i64 noundef 0) #14 ; 2 uses
   %.not19 = icmp eq ptr %i.j, inttoptr (i64 -1 to ptr)
-  br i1 %.not19, label %bb.e, label %2
-
-2:                                                ; preds = %bb.d
-  tail call void @ruby_annotate_mmap(ptr noundef %i.j, i64 noundef %i.f, ptr noundef nonnull @.str.10) #14
-  br label %bb.h
+  br i1 %.not19, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
   tail call void @perror(ptr noundef nonnull @.str.11) #19
@@ -253,8 +245,10 @@ bb.g:                                             ; preds = %bb.e
   tail call void (ptr, ...) @rb_bug(ptr noundef nonnull @.str.12) #18
   unreachable
 
-bb.h:                                             ; preds = %2, %1
-  %.014.ph = phi ptr [ %i.g, %1 ], [ %i.j, %2 ]
+bb.h:                                             ; preds = %bb.b, %bb.d
+  %.str.10.sink = phi ptr [ @.str.10, %bb.d ], [ @.str.9, %bb.b ]
+  %.014.ph = phi ptr [ %i.j, %bb.d ], [ %i.g, %bb.b ] ; 2 uses
+  tail call void @ruby_annotate_mmap(ptr noundef %.014.ph, i64 noundef %i.f, ptr noundef nonnull %.str.10.sink) #14
   ret ptr %.014.ph
 }
 

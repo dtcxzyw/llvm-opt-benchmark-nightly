@@ -201,24 +201,15 @@ _ZN4absl12lts_20250512leENS0_8DurationES1_.exit:  ; preds = %bb.f
   %.not.i.i = icmp eq i64 %.sroa.011.0.copyload.i, 0
   %i.p = icmp slt i64 %.sroa.011.0.copyload.i, 1
   %i.q = icmp eq i32 %.sroa.212.0.copyload.i, 0
-  %i.r = select i1 %.not.i.i, i1 %i.q, i1 %i.p
-  br i1 %i.r, label %4, label %6
-
-4:                                                ; preds = %_ZN4absl12lts_20250512leENS0_8DurationES1_.exit
-  %5 = call { i64, i64 } @_ZN4absl12lts_2025051210ToTimespecENS0_8DurationE(i64 0, i32 4) #9
-  br label %8
-
-6:                                                ; preds = %_ZN4absl12lts_20250512leENS0_8DurationES1_.exit
-  %7 = call { i64, i64 } @_ZN4absl12lts_2025051210ToTimespecENS0_8DurationE(i64 %.sroa.011.0.copyload.i, i32 %.sroa.212.0.copyload.i) #9
-  br label %8
-
-8:                                                ; preds = %6, %4
-  %.pn58 = phi { i64, i64 } [ %5, %4 ], [ %7, %6 ]
+  %i.r = select i1 %.not.i.i, i1 %i.q, i1 %i.p    ; 2 uses
+  %..sroa.212.0.copyload.i = select i1 %i.r, i32 4, i32 %.sroa.212.0.copyload.i
+  %..sroa.011.0.copyload.i = select i1 %i.r, i64 0, i64 %.sroa.011.0.copyload.i
+  %4 = call { i64, i64 } @_ZN4absl12lts_2025051210ToTimespecENS0_8DurationE(i64 %..sroa.011.0.copyload.i, i32 %..sroa.212.0.copyload.i) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   br label %bb.h
 
-bb.h:                                             ; preds = %8, %bb.b
-  %.pn58.pn = phi { i64, i64 } [ %.pn58, %8 ], [ %i.b, %bb.b ]
+bb.h:                                             ; preds = %_ZN4absl12lts_20250512leENS0_8DurationES1_.exit, %bb.b
+  %.pn58.pn = phi { i64, i64 } [ %4, %_ZN4absl12lts_20250512leENS0_8DurationES1_.exit ], [ %i.b, %bb.b ]
   ret { i64, i64 } %.pn58.pn
 }
 

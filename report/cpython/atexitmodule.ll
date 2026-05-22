@@ -201,24 +201,14 @@ bb.a:
   %i.a = getelementptr i8, ptr %1, i64 16         ; 2 uses
   %.val27 = load i64, ptr %i.a, align 8, !tbaa !33
   %i.b = icmp eq i64 %.val27, 0
-  br i1 %i.b, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  %4 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !28
-  tail call void @PyErr_SetString(ptr noundef %4, ptr noundef nonnull @.str.11) #7
-  br label %Py_DECREF.exit22
+  br i1 %i.b, label %Py_DECREF.exit22.sink.split, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %1, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 6 uses
   %i.e = tail call i32 @PyCallable_Check(ptr noundef %i.d) #7
   %.not = icmp eq i32 %i.e, 0
-  br i1 %.not, label %5, label %bb.c
-
-5:                                                ; preds = %bb.b
-  %6 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !28
-  tail call void @PyErr_SetString(ptr noundef %6, ptr noundef nonnull @.str.12) #7
-  br label %Py_DECREF.exit22
+  br i1 %.not, label %Py_DECREF.exit22.sink.split, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.val = load i64, ptr %i.a, align 8, !tbaa !33
@@ -295,8 +285,14 @@ bb.n:                                             ; preds = %Py_DECREF.exit
   store i32 %i.aa, ptr %i.d, align 8, !tbaa !29
   br label %Py_DECREF.exit22
 
-Py_DECREF.exit22:                                 ; preds = %bb.n, %Py_DECREF.exit, %bb.j, %bb.i, %bb.h, %5, %Py_DECREF.exit24, %bb.c, %3
-  %.4 = phi ptr [ null, %3 ], [ null, %5 ], [ null, %bb.c ], [ null, %Py_DECREF.exit24 ], [ null, %bb.j ], [ null, %bb.h ], [ null, %bb.i ], [ %i.d, %Py_DECREF.exit ], [ %i.d, %bb.n ]
+Py_DECREF.exit22.sink.split:                      ; preds = %bb.b, %bb.a
+  %.str.12.sink = phi ptr [ @.str.11, %bb.a ], [ @.str.12, %bb.b ]
+  %3 = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !28
+  tail call void @PyErr_SetString(ptr noundef %3, ptr noundef nonnull %.str.12.sink) #7
+  br label %Py_DECREF.exit22
+
+Py_DECREF.exit22:                                 ; preds = %Py_DECREF.exit22.sink.split, %bb.n, %Py_DECREF.exit, %bb.j, %bb.i, %bb.h, %Py_DECREF.exit24, %bb.c
+  %.4 = phi ptr [ %i.d, %Py_DECREF.exit ], [ %i.d, %bb.n ], [ null, %bb.c ], [ null, %Py_DECREF.exit24 ], [ null, %bb.j ], [ null, %bb.h ], [ null, %bb.i ], [ null, %Py_DECREF.exit22.sink.split ]
   ret ptr %.4
 }
 

@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.ba = load ptr, ptr %3, align 8, !tbaa !31
   %i.bb = icmp eq i32 %1, 0                       ; 3 uses
   %i.bc = select i1 %i.bb, i32 0, i32 65
-  %i.bd = call i32 (ptr, i32, ...) @open(ptr noundef %i.ba, i32 noundef %i.bc, i32 noundef 438) #23 ; 4 uses
+  %i.bd = call i32 (ptr, i32, ...) @open(ptr noundef %i.ba, i32 noundef %i.bc, i32 noundef 438) #23 ; 3 uses
   %i.be = icmp eq i32 %i.bd, -1
   br i1 %i.be, label %bb.n, label %bb.u
 
@@ -372,7 +372,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit28: ; preds = %_ZN
 
 bb.u:                                             ; preds = %bb.m
   %i.dl = call i32 @dup2(i32 noundef %i.bd, i32 noundef %1) #23
-  %i.dm = icmp eq i32 %i.dl, -1
+  %i.dm = icmp eq i32 %i.dl, -1                   ; 2 uses
   br i1 %i.dm, label %._crit_edge.i.i, label %bb.v
 
 ._crit_edge.i.i:                                  ; preds = %bb.u
@@ -397,15 +397,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31: ; preds = %._crit_edge.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i29
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #23
-  %9 = call i32 @close(i32 noundef %i.bd) #23     ; 0 uses
-  br label %bb.w
+  br label %bb.v
 
-bb.v:                                             ; preds = %bb.u
+bb.v:                                             ; preds = %bb.u, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31
   %i.du = call i32 @close(i32 noundef %i.bd) #23  ; 0 uses
   br label %bb.w
 
-bb.w:                                             ; preds = %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit28
-  %.0 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit28 ], [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31 ], [ false, %bb.v ]
+bb.w:                                             ; preds = %bb.v, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit28
+  %.0 = phi i1 [ true, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit28 ], [ %i.dm, %bb.v ]
   %i.dv = load ptr, ptr %3, align 8, !tbaa !31    ; 2 uses
   %i.dw = icmp eq ptr %i.dv, %i.e
   br i1 %i.dw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit34, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i32

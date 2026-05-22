@@ -179,7 +179,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f, %bb.g
   %.016 = phi ptr [ %2, %bb.g ], [ null, %bb.f ]
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !16
-  %i.t = call noalias ptr @fopen64(ptr noundef %i.s, ptr noundef nonnull @.str.5) ; 5 uses
+  %i.t = call noalias ptr @fopen64(ptr noundef %i.s, ptr noundef nonnull @.str.5) ; 4 uses
   %i.u = icmp eq ptr %i.t, null
   br i1 %i.u, label %bb.i, label %bb.j
 
@@ -213,21 +213,17 @@ bb.l:                                             ; preds = %bb.k
   call void @PyErr_SetString(ptr noundef %i.aj, ptr noundef nonnull @.str.6) #4
   %i.ak = load i32, ptr %i.ae, align 8, !tbaa !18 ; 2 uses
   %.not.i = icmp sgt i32 %i.ak, -1
-  br i1 %.not.i, label %bb.m, label %Py_DECREF.exit
+  br i1 %.not.i, label %bb.m, label %bb.v
 
 bb.m:                                             ; preds = %bb.l
   %i.al = add nsw i32 %i.ak, -1                   ; 2 uses
   store i32 %i.al, ptr %i.ae, align 8, !tbaa !18
   %i.am = icmp eq i32 %i.al, 0
-  br i1 %i.am, label %bb.n, label %Py_DECREF.exit
+  br i1 %i.am, label %bb.n, label %bb.v
 
 bb.n:                                             ; preds = %bb.m
   call void @_Py_Dealloc(ptr noundef nonnull %i.ae) #4
-  br label %Py_DECREF.exit
-
-Py_DECREF.exit:                                   ; preds = %bb.l, %bb.m, %bb.n
-  %3 = call i32 @fclose(ptr noundef nonnull %i.t) ; 0 uses
-  br label %Py_XDECREF.exit
+  br label %bb.v
 
 thread-pre-split:                                 ; preds = %bb.k
   %.pr = load i32, ptr %i.f, align 4, !tbaa !6
@@ -269,12 +265,13 @@ bb.u:                                             ; preds = %bb.p
   %i.at = icmp eq i32 %.pre, 0
   br i1 %i.at, label %bb.v, label %Py_XDECREF.exit
 
-bb.v:                                             ; preds = %bb.u
+bb.v:                                             ; preds = %bb.u, %bb.n, %bb.m, %bb.l
+  %.1.ph = phi ptr [ null, %bb.n ], [ null, %bb.l ], [ null, %bb.m ], [ %i.ae, %bb.u ]
   %i.au = call i32 @fclose(ptr noundef nonnull %i.t) ; 0 uses
   br label %Py_XDECREF.exit
 
-Py_XDECREF.exit:                                  ; preds = %bb.o, %bb.t, %bb.s, %bb.r, %bb.q, %Py_DECREF.exit, %bb.v, %bb.u, %bb.a, %bb.i
-  %.1 = phi ptr [ null, %bb.i ], [ null, %bb.a ], [ null, %Py_DECREF.exit ], [ %i.ae, %bb.u ], [ %i.ae, %bb.v ], [ null, %bb.q ], [ null, %bb.r ], [ null, %bb.s ], [ null, %bb.t ], [ %i.ae, %bb.o ]
+Py_XDECREF.exit:                                  ; preds = %bb.v, %bb.o, %bb.t, %bb.s, %bb.r, %bb.q, %bb.u, %bb.a, %bb.i
+  %.1 = phi ptr [ null, %bb.i ], [ null, %bb.a ], [ null, %bb.t ], [ %i.ae, %bb.u ], [ %i.ae, %bb.o ], [ null, %bb.q ], [ null, %bb.r ], [ null, %bb.s ], [ %.1.ph, %bb.v ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #4

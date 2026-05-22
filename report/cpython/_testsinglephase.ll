@@ -86,7 +86,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.c = tail call ptr @PyModule_Create2(ptr noundef %0, i32 noundef 1013) #5 ; 9 uses
+  %i.c = tail call ptr @PyModule_Create2(ptr noundef %0, i32 noundef 1013) #5 ; 8 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %Py_DECREF.exit21, label %bb.d
 
@@ -168,11 +168,7 @@ bb.o:                                             ; preds = %bb.n
   %i.t = add nsw i32 %i.s, -1                     ; 2 uses
   store i32 %i.t, ptr %i.c, align 8, !tbaa !18
   %i.u = icmp eq i32 %i.t, 0
-  br i1 %i.u, label %1, label %Py_DECREF.exit21
-
-1:                                                ; preds = %bb.o
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #5
-  br label %Py_DECREF.exit21
+  br i1 %i.u, label %Py_DECREF.exit21.sink.split, label %Py_DECREF.exit21
 
 bb.p:                                             ; preds = %clear_state.exit
   %i.v = tail call fastcc i32 @init_module(ptr noundef %i.c, ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @global_state, i64 8))
@@ -188,11 +184,7 @@ bb.r:                                             ; preds = %bb.q
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
   store i32 %i.y, ptr %i.c, align 8, !tbaa !18
   %i.z = icmp eq i32 %i.y, 0
-  br i1 %i.z, label %2, label %Py_DECREF.exit21
-
-2:                                                ; preds = %bb.r
-  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #5
-  br label %Py_DECREF.exit21
+  br i1 %i.z, label %Py_DECREF.exit21.sink.split, label %Py_DECREF.exit21
 
 bb.s:                                             ; preds = %bb.p
   %i.aa = load i32, ptr @global_state, align 8, !tbaa !10
@@ -200,8 +192,12 @@ bb.s:                                             ; preds = %bb.p
   store i32 %i.ab, ptr @global_state, align 8, !tbaa !10
   br label %Py_DECREF.exit21
 
-Py_DECREF.exit21:                                 ; preds = %2, %bb.r, %bb.q, %1, %bb.o, %bb.n, %bb.s, %bb.c
-  %.1 = phi ptr [ null, %bb.c ], [ %i.c, %bb.s ], [ null, %1 ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.q ], [ null, %bb.r ], [ null, %2 ]
+Py_DECREF.exit21.sink.split:                      ; preds = %bb.r, %bb.o
+  tail call void @_Py_Dealloc(ptr noundef nonnull %i.c) #5
+  br label %Py_DECREF.exit21
+
+Py_DECREF.exit21:                                 ; preds = %Py_DECREF.exit21.sink.split, %bb.r, %bb.q, %bb.o, %bb.n, %bb.s, %bb.c
+  %.1 = phi ptr [ null, %bb.c ], [ %i.c, %bb.s ], [ null, %bb.r ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.q ], [ null, %Py_DECREF.exit21.sink.split ]
   ret ptr %.1
 }
 

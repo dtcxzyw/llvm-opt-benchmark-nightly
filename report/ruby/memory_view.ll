@@ -201,15 +201,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.h = shl nsw i64 %i.e, 1
   %i.i = or disjoint i64 %i.h, 1
-  br label %rb_ll2num_inline.exit
+  br label %bb.j
 
 bb.f:                                             ; preds = %bb.d
   %i.j = call i64 @rb_ll2inum(i64 noundef %i.e) #9
-  br label %rb_ll2num_inline.exit
-
-rb_ll2num_inline.exit:                            ; preds = %bb.e, %bb.f
-  %.0.i = phi i64 [ %i.i, %bb.e ], [ %i.j, %bb.f ]
-  %2 = call i64 @rb_assoc_new(i64 noundef %.0.i, i64 noundef 4) #9
   br label %bb.j
 
 bb.g:                                             ; preds = %bb.c
@@ -229,13 +224,14 @@ rb_ll2num_inline.exit6:                           ; preds = %bb.h, %bb.i
   %i.n = phi ptr [ %i.f, %bb.h ], [ %.pre, %bb.i ]
   %.0.i5 = phi i64 [ %i.l, %bb.h ], [ %i.m, %bb.i ]
   %i.o = call i64 @rb_str_new_cstr(ptr noundef %i.n) #9
-  %3 = call i64 @rb_assoc_new(i64 noundef %.0.i5, i64 noundef %i.o) #9
   br label %bb.j
 
-bb.j:                                             ; preds = %rb_ll2num_inline.exit6, %rb_ll2num_inline.exit
-  %.0 = phi i64 [ %3, %rb_ll2num_inline.exit6 ], [ %2, %rb_ll2num_inline.exit ]
+bb.j:                                             ; preds = %bb.f, %bb.e, %rb_ll2num_inline.exit6
+  %.sink = phi i64 [ %i.o, %rb_ll2num_inline.exit6 ], [ 4, %bb.e ], [ 4, %bb.f ]
+  %.0.i5.sink = phi i64 [ %.0.i5, %rb_ll2num_inline.exit6 ], [ %i.i, %bb.e ], [ %i.j, %bb.f ]
+  %2 = call i64 @rb_assoc_new(i64 noundef %.0.i5.sink, i64 noundef %.sink) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  ret i64 %.0
+  ret i64 %2
 }
 
 ; Function Attrs: nounwind uwtable

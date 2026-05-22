@@ -27,18 +27,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.q, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call ptr @messageCreate() #6        ; 8 uses
+  %i.f = tail call ptr @messageCreate() #6        ; 7 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %bb.q, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.h = tail call ptr @mmap(ptr noundef null, i64 noundef %i.d, i32 noundef 1, i32 noundef 2, i32 noundef %1, i64 noundef 0) #6 ; 5 uses
   %i.i = icmp eq ptr %i.h, inttoptr (i64 -1 to ptr)
-  br i1 %i.i, label %3, label %bb.e
-
-3:                                                ; preds = %bb.d
-  tail call void @messageDestroy(ptr noundef nonnull %i.f) #6
-  br label %bb.q
+  br i1 %i.i, label %bb.p, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void (ptr, ...) @cli_dbgmsg(ptr noundef nonnull @.str) #6
@@ -147,13 +143,13 @@ bb.o:                                             ; preds = %bb.m
   tail call void (ptr, ...) @cli_errmsg(ptr noundef nonnull @.str.4, ptr noundef %0) #6
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.o, %bb.n
-  %. = phi i32 [ -123, %bb.o ], [ 0, %bb.n ]
+bb.p:                                             ; preds = %bb.n, %bb.o, %bb.d
+  %.0.ph = phi i32 [ -114, %bb.d ], [ -123, %bb.o ], [ 0, %bb.n ]
   tail call void @messageDestroy(ptr noundef nonnull %i.f) #6
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.c, %bb.b, %bb.a, %bb.l, %3
-  %.0 = phi i32 [ -114, %bb.c ], [ -115, %bb.a ], [ 0, %bb.b ], [ -114, %3 ], [ -124, %bb.l ], [ %., %bb.p ]
+bb.q:                                             ; preds = %bb.p, %bb.c, %bb.b, %bb.a, %bb.l
+  %.0 = phi i32 [ -114, %bb.c ], [ -115, %bb.a ], [ 0, %bb.b ], [ -124, %bb.l ], [ %.0.ph, %bb.p ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   ret i32 %.0
 }

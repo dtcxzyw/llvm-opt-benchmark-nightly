@@ -201,14 +201,14 @@ bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !60
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 72
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef i32 %i.c(ptr noundef nonnull align 8 dereferenceable(72) %1) ; 3 uses
+  %i.d = tail call noundef i32 %i.c(ptr noundef nonnull align 8 dereferenceable(72) %1)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.f = load i32, ptr %i.e, align 8, !tbaa !99
   switch i32 %i.f, label %bb.g [
-    i32 3, label %6
-    i32 5, label %6
-    i32 7, label %6
-    i32 9, label %6
+    i32 3, label %.sink.split
+    i32 5, label %.sink.split
+    i32 7, label %.sink.split
+    i32 9, label %.sink.split
     i32 2, label %bb.b
     i32 4, label %bb.b
     i32 6, label %bb.b
@@ -219,32 +219,11 @@ bb.a:
     i32 1, label %bb.d
   ]
 
-6:                                                ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !7
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.9.0.insert.ext = shl i32 %i.d, 8
-  %.sroa.9.0.insert.shift = and i32 %.sroa.9.0.insert.ext, 65280
-  %.sroa.9.0.insert.insert = or disjoint i32 %.sroa.9.0.insert.shift, 65536
-  store i32 %.sroa.9.0.insert.insert, ptr %7, align 8
-  br label %bb.m
-
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a, %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !7
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.9.0.insert.ext18 = shl i32 %i.d, 8
-  %.sroa.9.0.insert.shift19 = and i32 %.sroa.9.0.insert.ext18, 65280
-  %.sroa.0.0.insert.insert12 = or disjoint i32 %.sroa.9.0.insert.shift19, 65537
-  store i32 %.sroa.0.0.insert.insert12, ptr %8, align 8
-  br label %bb.m
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a
-  store ptr null, ptr %0, align 8, !tbaa !7
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.9.0.insert.ext23 = shl i32 %i.d, 8
-  %.sroa.9.0.insert.shift24 = and i32 %.sroa.9.0.insert.ext23, 65280
-  %.sroa.0.0.insert.insert16 = or disjoint i32 %.sroa.9.0.insert.shift24, 65538
-  store i32 %.sroa.0.0.insert.insert16, ptr %9, align 8
-  br label %bb.m
+  br label %.sink.split
 
 bb.d:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
@@ -370,7 +349,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8: ; preds = %.bod
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   resume { ptr, i32 } %eh.lpad-body
 
-bb.m:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZN5arrow6StatusD2Ev.exit, %bb.c, %bb.b, %6
+.sink.split:                                      ; preds = %bb.a, %bb.a, %bb.a, %bb.a, %bb.b, %bb.c
+  %.sink46 = phi i32 [ 65538, %bb.c ], [ 65537, %bb.b ], [ 65536, %bb.a ], [ 65536, %bb.a ], [ 65536, %bb.a ], [ 65536, %bb.a ]
+  store ptr null, ptr %0, align 8, !tbaa !7
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.9.0.insert.ext23 = shl i32 %i.d, 8
+  %.sroa.9.0.insert.shift24 = and i32 %.sroa.9.0.insert.ext23, 65280
+  %.sroa.0.0.insert.insert16 = or disjoint i32 %.sroa.9.0.insert.shift24, %.sink46
+  store i32 %.sroa.0.0.insert.insert16, ptr %6, align 8
+  br label %bb.m
+
+bb.m:                                             ; preds = %.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZN5arrow6StatusD2Ev.exit
   ret void
 }
 

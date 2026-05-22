@@ -201,12 +201,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  br i1 %i.d, label %bb.n, label %2
-
-2:                                                ; preds = %bb.b
-  store ptr %i.c, ptr %0, align 8, !tbaa !63
-  store ptr null, ptr %1, align 8, !tbaa !63
-  br label %bb.n
+  br i1 %i.d, label %bb.n, label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.d, label %bb.e
@@ -301,11 +296,15 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPSt10
   %i.ag = load ptr, ptr %0, align 8, !tbaa !63
   tail call void @_ZdlPvm(ptr noundef %i.ag, i64 noundef 48) #26
   %i.ah = load ptr, ptr %1, align 8, !tbaa !63
-  store ptr %i.ah, ptr %0, align 8, !tbaa !63
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.b, %bb.m
+  %.sink = phi ptr [ %i.ah, %bb.m ], [ %i.c, %bb.b ]
+  store ptr %.sink, ptr %0, align 8, !tbaa !63
   store ptr null, ptr %1, align 8, !tbaa !63
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.d, %bb.m, %bb.b, %2
+bb.n:                                             ; preds = %.sink.split, %bb.d, %bb.b
   ret ptr %0
 }
 

@@ -141,11 +141,7 @@ bb.a:
   %i.a = tail call ptr @sdsempty() #5             ; 3 uses
   %i.b = and i32 %0, 10236
   %i.c = icmp eq i32 %i.b, 10236
-  br i1 %i.c, label %1, label %bb.b
-
-1:                                                ; preds = %bb.a
-  %2 = tail call ptr @sdscatlen(ptr noundef %i.a, ptr noundef nonnull @.str, i64 noundef 1) #5
-  br label %bb.ab
+  br i1 %i.c, label %bb.aa, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = and i32 %0, 4
@@ -272,12 +268,14 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   %.not45 = icmp eq i32 %i.ab, 0
   br i1 %.not45, label %bb.ab, label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z
-  %i.ac = tail call ptr @sdscatlen(ptr noundef %.11, ptr noundef nonnull @.str.13, i64 noundef 1) #5
+bb.aa:                                            ; preds = %bb.z, %bb.a
+  %.str.13.sink = phi ptr [ @.str, %bb.a ], [ @.str.13, %bb.z ]
+  %.11.sink = phi ptr [ %i.a, %bb.a ], [ %.11, %bb.z ]
+  %i.ac = tail call ptr @sdscatlen(ptr noundef %.11.sink, ptr noundef nonnull %.str.13.sink, i64 noundef 1) #5
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.z, %bb.aa, %1
-  %.12 = phi ptr [ %2, %1 ], [ %i.ac, %bb.aa ], [ %.11, %bb.z ] ; 2 uses
+bb.ab:                                            ; preds = %bb.aa, %bb.z
+  %.12 = phi ptr [ %.11, %bb.z ], [ %i.ac, %bb.aa ] ; 2 uses
   %i.ad = and i32 %0, 1
   %.not46 = icmp eq i32 %i.ad, 0
   br i1 %.not46, label %bb.ad, label %bb.ac

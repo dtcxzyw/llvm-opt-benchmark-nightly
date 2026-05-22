@@ -154,11 +154,7 @@ bb.a:
   store i32 %i.c, ptr %i.a, align 4
   %i.d = icmp ult i32 %i.c, 2
   %i.e = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv() ; 2 uses
-  br i1 %i.d, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  tail call void @_ZN6Assimp6Logger5debugEPKc(ptr noundef nonnull align 8 dereferenceable(12) %i.e, ptr noundef nonnull @.str.2)
-  br label %bb.ac
+  br i1 %i.d, label %bb.ab, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6Assimp6Logger5debugEPKc(ptr noundef nonnull align 8 dereferenceable(12) %i.e, ptr noundef nonnull @.str.3)
@@ -511,11 +507,13 @@ bb.aa:                                            ; preds = %_ZSt4copyIN9__gnu_c
   call void @_ZN6Assimp6Logger5debugIJRA47_KcRKjRA18_S2_RjEEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(12) %i.em, ptr noundef nonnull align 1 dereferenceable(47) @.str.5, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 1 dereferenceable(18) @.str.6, ptr noundef nonnull align 4 dereferenceable(4) %i.b)
   br label %bb.ac
 
-bb.ab:                                            ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit
-  tail call void @_ZN6Assimp6Logger5debugEPKc(ptr noundef nonnull align 8 dereferenceable(12) %i.em, ptr noundef nonnull @.str.7)
+bb.ab:                                            ; preds = %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit, %bb.a
+  %.str.7.sink = phi ptr [ @.str.2, %bb.a ], [ @.str.7, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit ]
+  %.sink = phi ptr [ %i.e, %bb.a ], [ %i.em, %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPP6aiMeshSt6vectorIS3_SaIS3_EEEES4_ET0_T_SA_S9_.exit ]
+  tail call void @_ZN6Assimp6Logger5debugEPKc(ptr noundef nonnull align 8 dereferenceable(12) %.sink, ptr noundef nonnull %.str.7.sink)
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.aa, %bb.ab, %2
+bb.ac:                                            ; preds = %bb.ab, %bb.aa
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #18
   ret void
 }
@@ -918,8 +916,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #20
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #18
   resume { ptr, i32 } %.pn
