@@ -201,11 +201,11 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN2v88internal12_GLOBAL__N_110CompareNumIfEEbT_S3_.exit
 
 bb.e:                                             ; preds = %bb.c
-  %2 = extractelement <2 x float> %i.s, i64 0
-  %3 = fcmp ord float %2, 0.000000e+00
-  %4 = extractelement <2 x float> %i.s, i64 1
-  %5 = fcmp uno float %4, 0.000000e+00
-  %or.cond19.i = and i1 %3, %5
+  %2 = fcmp ord <2 x float> %i.s, zeroinitializer
+  %3 = fcmp uno <2 x float> %i.s, zeroinitializer
+  %4 = shufflevector <2 x i1> %2, <2 x i1> %3, <2 x i32> <i32 0, i32 3>
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond19.i = icmp eq i2 %5, -1
   br label %_ZN2v88internal12_GLOBAL__N_110CompareNumIfEEbT_S3_.exit
 
 _ZN2v88internal12_GLOBAL__N_110CompareNumIfEEbT_S3_.exit: ; preds = %bb.d, %bb.a, %bb.b, %bb.e
