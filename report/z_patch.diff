@@ -1,0 +1,372 @@
+diff --git a/llvm/lib/CodeGen/CodeGenPrepare.cpp b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+index 74a0502d8cb7c..0dc613d2f1e95 100644
+--- a/llvm/lib/CodeGen/CodeGenPrepare.cpp
++++ b/llvm/lib/CodeGen/CodeGenPrepare.cpp
+@@ -135,6 +135,8 @@ STATISTIC(NumRetsDup, "Number of return instructions duplicated");
+ STATISTIC(NumDbgValueMoved, "Number of debug value instructions moved");
+ STATISTIC(NumSelectsExpanded, "Number of selects turned into branches");
+ STATISTIC(NumStoreExtractExposed, "Number of store(extractelement) exposed");
++STATISTIC(NumMaskedByteStores,
++          "Number of masked stores narrowed to byte stores");
+ 
+ static cl::opt<bool> DisableBranchOpts(
+     "disable-cgp-branch-opts", cl::Hidden, cl::init(false),
+@@ -144,6 +146,10 @@ static cl::opt<bool>
+     DisableGCOpts("disable-cgp-gc-opts", cl::Hidden, cl::init(false),
+                   cl::desc("Disable GC optimizations in CodeGenPrepare"));
+ 
++static cl::opt<bool> LogMaskedByteStores(
++    "cgp-log-masked-byte-stores", cl::Hidden, cl::init(false),
++    cl::desc("Log masked byte store narrowing performed by CodeGenPrepare"));
++
+ static cl::opt<bool>
+     DisableSelectToBranch("disable-cgp-select2branch", cl::Hidden,
+                           cl::init(false),
+@@ -8661,6 +8667,114 @@ static bool splitMergedValStore(StoreInst &SI, const DataLayout &DL,
+   return true;
+ }
+ 
++static bool matchConstAnd(Value *V, Value *&X, const APInt *&C) {
++  return V->hasOneUse() && match(V, m_c_And(m_Value(X), m_APInt(C)));
++}
++
++static bool hasMemoryOpBetween(Instruction *From, Instruction *To) {
++  if (From->getParent() != To->getParent())
++    return true;
++
++  for (auto It = std::next(From->getIterator()), End = To->getIterator();
++       It != End; ++It)
++    if (It->mayReadOrWriteMemory() || It->mayThrow())
++      return true;
++  return false;
++}
++
++static bool matchByteInsertValue(Value *V, const APInt &Mask,
++                                 const DataLayout &DL, Value *&ByteValue,
++                                 uint64_t &ByteOffset) {
++  unsigned MaskIdx, MaskLen;
++  if (!Mask.isShiftedMask(MaskIdx, MaskLen) || MaskLen != 8 ||
++      MaskIdx % 8 != 0)
++    return false;
++
++  unsigned BitWidth = Mask.getBitWidth();
++  if (BitWidth <= 8 || BitWidth % 8 != 0)
++    return false;
++
++  ByteOffset =
++      DL.isLittleEndian() ? MaskIdx / 8 : (BitWidth - MaskIdx - MaskLen) / 8;
++
++  if (MaskIdx == 0) {
++    ByteValue = V;
++    return true;
++  }
++
++  const APInt *ShiftC;
++  if (!match(V, m_OneUse(m_Shl(m_Value(ByteValue), m_APInt(ShiftC)))) ||
++      ShiftC->uge(BitWidth) || ShiftC->getZExtValue() != MaskIdx)
++    return false;
++
++  auto *Shift = dyn_cast<Instruction>(V);
++  return !Shift || !Shift->hasPoisonGeneratingFlags();
++}
++
++static bool narrowMaskedByteStore(StoreInst &SI, const DataLayout &DL,
++                                  const TargetLowering &TLI) {
++  if (!SI.isSimple() || !SI.getValueOperand()->hasOneUse())
++    return false;
++
++  Type *StoreTy = SI.getValueOperand()->getType();
++  if (!StoreTy->isIntegerTy() || !DL.typeSizeEqualsStoreSize(StoreTy))
++    return false;
++
++  Value *Op0, *Op1, *X0, *X1;
++  const APInt *C0, *C1;
++  if (!match(SI.getValueOperand(), m_c_Or(m_Value(Op0), m_Value(Op1))) ||
++      !matchConstAnd(Op0, X0, C0) || !matchConstAnd(Op1, X1, C1))
++    return false;
++
++  auto TryNarrow = [&](Value *LoadVal, const APInt &LoadMask, Value *InsertVal,
++                       const APInt &InsertMask) -> bool {
++    auto *LI = dyn_cast<LoadInst>(LoadVal);
++    if (!LI || !LI->isSimple() || LI->getType() != StoreTy ||
++        LI->getPointerOperand() != SI.getPointerOperand() ||
++        hasMemoryOpBetween(LI, &SI) || LoadMask != ~InsertMask)
++      return false;
++
++    Value *ByteValue;
++    uint64_t ByteOffset;
++    if (!matchByteInsertValue(InsertVal, InsertMask, DL, ByteValue, ByteOffset))
++      return false;
++
++    Type *ByteTy = Type::getInt8Ty(SI.getContext());
++    EVT ByteVT = TLI.getValueType(DL, ByteTy);
++    Align ByteAlign = commonAlignment(SI.getAlign(), ByteOffset);
++    if (!TLI.allowsMemoryAccess(SI.getContext(), DL, ByteVT,
++                                SI.getPointerAddressSpace(), ByteAlign))
++      return false;
++
++    IRBuilder<> Builder(&SI);
++    Value *Addr = SI.getPointerOperand();
++    if (ByteOffset)
++      Addr = Builder.CreatePtrAdd(Addr, Builder.getInt64(ByteOffset));
++    Value *Trunc = Builder.CreateTruncOrBitCast(ByteValue, ByteTy);
++    StoreInst *NewSI = Builder.CreateAlignedStore(Trunc, Addr, ByteAlign);
++    NewSI->setDebugLoc(SI.getDebugLoc());
++
++    if (LogMaskedByteStores) {
++      errs() << "CGP-MASKED-BYTE-STORE function=";
++      SI.getFunction()->printAsOperand(errs(), /*PrintType=*/false);
++      errs() << " store-bits=" << StoreTy->getIntegerBitWidth()
++             << " byte-offset=" << ByteOffset << " store-align="
++             << SI.getAlign().value() << " byte-align=" << ByteAlign.value()
++             << " ir=";
++      SI.print(errs());
++      errs() << "\n";
++    }
++
++    Value *OldVal = SI.getValueOperand();
++    SI.eraseFromParent();
++    RecursivelyDeleteTriviallyDeadInstructions(OldVal);
++    ++NumMaskedByteStores;
++    return true;
++  };
++
++  return TryNarrow(X0, *C0, X1, *C1) || TryNarrow(X1, *C1, X0, *C0);
++}
++
+ // Return true if the GEP has two operands, the first operand is of a sequential
+ // type, and the second operand is a constant.
+ static bool GEPSequentialConstIndexed(GetElementPtrInst *GEP) {
+@@ -8983,6 +9097,8 @@ bool CodeGenPrepare::optimizeInst(Instruction *I, ModifyDT &ModifiedDT) {
+   }
+ 
+   if (StoreInst *SI = dyn_cast<StoreInst>(I)) {
++    if (narrowMaskedByteStore(*SI, *DL, *TLI))
++      return true;
+     if (splitMergedValStore(*SI, *DL, *TLI))
+       return true;
+     SI->setMetadata(LLVMContext::MD_invariant_group, nullptr);
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index f1d47abe79365..3d86171c8ff6c 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -2440,6 +2440,8 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+   if (UnconditionalPreds.size() < 2)
+     return false;
+ 
++  bool NeedSplit = HaveNonUnconditionalPredecessors;
++
+   // We take a two-step approach to tail sinking. First we scan from the end of
+   // each block upwards in lockstep. If the n'th instruction from the end of each
+   // block can be sunk, those instructions are added to ValuesToSink and we
+@@ -2447,33 +2449,125 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+   // (because they're not identical in each instruction) we add these to
+   // PHIOperands.
+   // We prepopulate PHIOperands with the phis that already exist in BB.
+-  DenseMap<const Use *, SmallVector<Value *, 4>> PHIOperands;
+-  for (PHINode &PN : BB->phis()) {
+-    SmallDenseMap<BasicBlock *, const Use *, 4> IncomingVals;
+-    for (const Use &U : PN.incoming_values())
+-      IncomingVals.insert({PN.getIncomingBlock(U), &U});
+-    auto &Ops = PHIOperands[IncomingVals[UnconditionalPreds[0]]];
+-    for (BasicBlock *Pred : UnconditionalPreds)
+-      Ops.push_back(*IncomingVals[Pred]);
+-  }
++  auto PopulatePHIOperands =
++      [&](ArrayRef<BasicBlock *> Preds,
++          DenseMap<const Use *, SmallVector<Value *, 4>> &PHIOperands) {
++        for (PHINode &PN : BB->phis()) {
++          SmallDenseMap<BasicBlock *, const Use *, 4> IncomingVals;
++          for (const Use &U : PN.incoming_values())
++            IncomingVals.insert({PN.getIncomingBlock(U), &U});
++          const Use *FirstIncoming = IncomingVals.lookup(Preds.front());
++          if (!FirstIncoming)
++            return false;
++          auto &Ops = PHIOperands[FirstIncoming];
++          for (BasicBlock *Pred : Preds) {
++            const Use *Incoming = IncomingVals.lookup(Pred);
++            if (!Incoming)
++              return false;
++            Ops.push_back(*Incoming);
++          }
++        }
++        return true;
++      };
++
++  auto AnalyzePreds =
++      [&](ArrayRef<BasicBlock *> Preds,
++          DenseMap<const Use *, SmallVector<Value *, 4>> &PHIOperands,
++          SmallPtrSet<Value *, 4> &InstructionsToSink, int &ScanIdx) {
++        PHIOperands.clear();
++        InstructionsToSink.clear();
++        ScanIdx = 0;
++
++        if (!PopulatePHIOperands(Preds, PHIOperands))
++          return false;
++
++        LockstepReverseIterator<true> LRI(Preds);
++        while (LRI.isValid() && canSinkInstructions(*LRI, PHIOperands)) {
++          LLVM_DEBUG(dbgs() << "SINK: instruction can be sunk: " << *(*LRI)[0]
++                            << "\n");
++          InstructionsToSink.insert_range(*LRI);
++          ++ScanIdx;
++          --LRI;
++        }
++
++        return ScanIdx != 0;
++      };
++
++  auto LastNonTerminator = [](BasicBlock *Pred) -> Instruction * {
++    return Pred->getTerminator()->getPrevNode();
++  };
++
++  auto CanBeInSameSinkSubset = [](Instruction *I, Instruction *I0) {
++    if (!I->isSameOperationAs(I0, Instruction::CompareUsingIntersectedAttrs))
++      return false;
++
++    const auto *CB0 = dyn_cast<CallBase>(I0);
++    if (!CB0)
++      return true;
++
++    const auto *CB = cast<CallBase>(I);
++    if (CB0->isIndirectCall() || CB->isIndirectCall())
++      return CB0->isIndirectCall() == CB->isIndirectCall();
++
++    return CB0->getCalledOperand() == CB->getCalledOperand();
++  };
+ 
++  DenseMap<const Use *, SmallVector<Value *, 4>> PHIOperands;
+   int ScanIdx = 0;
+   SmallPtrSet<Value*,4> InstructionsToSink;
+-  LockstepReverseIterator<true> LRI(UnconditionalPreds);
+-  while (LRI.isValid() &&
+-         canSinkInstructions(*LRI, PHIOperands)) {
+-    LLVM_DEBUG(dbgs() << "SINK: instruction can be sunk: " << *(*LRI)[0]
+-                      << "\n");
+-    InstructionsToSink.insert_range(*LRI);
+-    ++ScanIdx;
+-    --LRI;
+-  }
++  bool UsedSinkSubset = false;
++  SmallVector<BasicBlock *, 4> SinkSubsetPreds;
+ 
+-  // If no instructions can be sunk, early-return.
+-  if (ScanIdx == 0)
+-    return false;
++  if (!AnalyzePreds(UnconditionalPreds, PHIOperands, InstructionsToSink,
++                    ScanIdx)) {
++    SmallVector<BasicBlock *, 4> BestSubset;
++    int BestScanIdx = 0;
++
++    for (BasicBlock *AnchorPred : UnconditionalPreds) {
++      Instruction *AnchorI = LastNonTerminator(AnchorPred);
++      if (!AnchorI)
++        continue;
++
++      SmallVector<BasicBlock *, 4> CandidatePreds;
++      for (BasicBlock *Pred : UnconditionalPreds) {
++        Instruction *I = LastNonTerminator(Pred);
++        if (I && CanBeInSameSinkSubset(I, AnchorI))
++          CandidatePreds.push_back(Pred);
++      }
++
++      if (CandidatePreds.size() < 2 ||
++          CandidatePreds.size() < BestSubset.size())
++        continue;
++
++      DenseMap<const Use *, SmallVector<Value *, 4>> CandidatePHIOperands;
++      SmallPtrSet<Value *, 4> CandidateInstructionsToSink;
++      int CandidateScanIdx = 0;
++      if (!AnalyzePreds(CandidatePreds, CandidatePHIOperands,
++                        CandidateInstructionsToSink, CandidateScanIdx))
++        continue;
++
++      if (CandidatePreds.size() > BestSubset.size() ||
++          (CandidatePreds.size() == BestSubset.size() &&
++           CandidateScanIdx > BestScanIdx)) {
++        BestSubset = CandidatePreds;
++        BestScanIdx = CandidateScanIdx;
++      }
++    }
++
++    if (BestSubset.empty())
++      return false;
++
++    UnconditionalPreds = std::move(BestSubset);
++    NeedSplit = true;
++    UsedSinkSubset = true;
++    SinkSubsetPreds = UnconditionalPreds;
++    if (!AnalyzePreds(UnconditionalPreds, PHIOperands, InstructionsToSink,
++                      ScanIdx))
++      return false;
++  }
+ 
+   bool followedByDeoptOrUnreachable = IsBlockFollowedByDeoptOrUnreachable(BB);
++  LockstepReverseIterator<true> LRI(UnconditionalPreds);
+ 
+   if (!followedByDeoptOrUnreachable) {
+     // Check whether this is the pointer operand of a load/store.
+@@ -2510,7 +2604,12 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+         }
+       }
+       LLVM_DEBUG(dbgs() << "SINK: #phi insts: " << NumPHIInsts << "\n");
+-      return NumPHIInsts <= 1;
++      unsigned MaxNumPHIInsts = 1;
++      Instruction *I = (*LRI)[0];
++      if (const auto *CB = dyn_cast<CallBase>(I);
++          CB && !isSafeToSpeculativelyExecute(I))
++        MaxNumPHIInsts = std::max<unsigned>(MaxNumPHIInsts, CB->arg_size());
++      return NumPHIInsts <= MaxNumPHIInsts;
+     };
+ 
+     // We've determined that we are going to sink last ScanIdx instructions,
+@@ -2581,12 +2680,13 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+ 
+   bool Changed = false;
+ 
+-  if (HaveNonUnconditionalPredecessors) {
++  if (NeedSplit) {
+     if (!followedByDeoptOrUnreachable) {
+-      // It is always legal to sink common instructions from unconditional
+-      // predecessors. However, if not all predecessors are unconditional,
+-      // this transformation might be pessimizing. So as a rule of thumb,
+-      // don't do it unless we'd sink at least one non-speculatable instruction.
++      // It is always legal to sink common instructions from selected
++      // unconditional predecessors. However, if not all predecessors
++      // participate, this transformation might be pessimizing. So as a rule of
++      // thumb, don't do it unless we'd sink at least one non-speculatable
++      // instruction.
+       // See https://bugs.llvm.org/show_bug.cgi?id=30244
+       LRI.reset();
+       int Idx = 0;
+@@ -2604,7 +2704,6 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+     }
+ 
+     LLVM_DEBUG(dbgs() << "SINK: Splitting edge\n");
+-    // We have a conditional edge and we're going to sink some instructions.
+     // Insert a new block postdominating all blocks we're going to sink from.
+     if (!SplitBlockPredecessors(BB, UnconditionalPreds, ".sink.split", DTU))
+       // Edges couldn't be split.
+@@ -2638,8 +2737,21 @@ static bool sinkCommonCodeFromPredecessors(BasicBlock *BB,
+     NumSinkCommonInstrs++;
+     Changed = true;
+   }
+-  if (SinkIdx != 0)
++  if (SinkIdx != 0) {
+     ++NumSinkCommonCode;
++    LLVM_DEBUG(if (UsedSinkSubset) {
++      dbgs() << "SINK: subset common sink in ";
++      BB->getParent()->printAsOperand(dbgs(), false);
++      dbgs() << " to ";
++      BB->printAsOperand(dbgs(), false);
++      dbgs() << " from";
++      for (BasicBlock *Pred : SinkSubsetPreds) {
++        dbgs() << " ";
++        Pred->printAsOperand(dbgs(), false);
++      }
++      dbgs() << "\n";
++    });
++  }
+   return Changed;
+ }
+ 
