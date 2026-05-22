@@ -201,11 +201,7 @@ _ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i:       ; preds = %bb.i
   %.pre51.i = load i64, ptr %i.al, align 8, !tbaa !121
   store i64 %.pre51.i, ptr %i.ac, align 8, !tbaa !121
   store i64 0, ptr %i.al, align 8, !tbaa !121
-  store i8 0, ptr %.pre52.i, align 1, !tbaa !70
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge
-
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge: ; preds = %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i, %bb.k
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit, !llvm.loop !232
+  br label %.sink.split.i
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i:       ; preds = %bb.h
   %i.ax = add nuw nsw i64 %i.u, 1
@@ -214,8 +210,7 @@ _ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i:       ; preds = %bb.h
   %.pre.i = load i64, ptr %i.ac, align 8, !tbaa !121
   store i64 %.pre.i, ptr %i.al, align 8, !tbaa !121
   store i64 0, ptr %i.ac, align 8, !tbaa !121
-  store i8 0, ptr %.pre50.i, align 1, !tbaa !70
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge
+  br label %.sink.split.i
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit45.i:       ; preds = %bb.f
   %i.ay = load i64, ptr %i.ar, align 8, !tbaa !70
@@ -258,6 +253,14 @@ bb.k:                                             ; preds = %bb.j, %_ZNSt11char_
   %i.bi = load i64, ptr %i.al, align 8, !tbaa !121
   store i64 %i.bi, ptr %i.ac, align 8, !tbaa !121
   store i64 %i.bh, ptr %i.al, align 8, !tbaa !121
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge: ; preds = %bb.k, %.sink.split.i
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit, !llvm.loop !232
+
+.sink.split.i:                                    ; preds = %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i
+  %.pre50.sink.i = phi ptr [ %.pre50.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i ], [ %.pre52.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i ]
+  store i8 0, ptr %.pre50.sink.i, align 1, !tbaa !70
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit.backedge
 
 _ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorIS7_SaIS7_EEEENS0_5__ops15_Iter_less_iterEET_SF_SF_T0_.exit: ; preds = %bb.d
@@ -662,8 +665,7 @@ _ZNSt11char_traitsIcE4copyEPcPKcm.exit43:         ; preds = %bb.f
   %.pre51 = load i64, ptr %i.l, align 8, !tbaa !121
   store i64 %.pre51, ptr %i.f, align 8, !tbaa !121
   store i64 0, ptr %i.l, align 8, !tbaa !121
-  store i8 0, ptr %.pre52, align 1, !tbaa !70
-  br label %bb.i
+  br label %.sink.split
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit44:         ; preds = %bb.e
   %i.r = add nuw nsw i64 %i.g, 1
@@ -672,8 +674,7 @@ _ZNSt11char_traitsIcE4copyEPcPKcm.exit44:         ; preds = %bb.e
   %.pre = load i64, ptr %i.f, align 8, !tbaa !121
   store i64 %.pre, ptr %i.l, align 8, !tbaa !121
   store i64 0, ptr %i.f, align 8, !tbaa !121
-  store i8 0, ptr %.pre50, align 1, !tbaa !70
-  br label %bb.i
+  br label %.sink.split
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit45:         ; preds = %bb.c
   %i.s = load i64, ptr %i.j, align 8, !tbaa !70
@@ -722,7 +723,12 @@ bb.h:                                             ; preds = %bb.f, %_ZNSt11char_
   store i64 %i.ae, ptr %i.af, align 8, !tbaa !121
   br label %bb.i
 
-bb.i:                                             ; preds = %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43, %bb.a, %bb.h
+.sink.split:                                      ; preds = %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44
+  %.pre50.sink = phi ptr [ %.pre50, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44 ], [ %.pre52, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43 ]
+  store i8 0, ptr %.pre50.sink, align 1, !tbaa !70
+  br label %bb.i
+
+bb.i:                                             ; preds = %.sink.split, %bb.a, %bb.h
   ret void
 }
 

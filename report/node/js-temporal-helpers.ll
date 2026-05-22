@@ -201,8 +201,7 @@ bb.n:                                             ; preds = %bb.l
 
 _ZN2v88internal8temporal12_GLOBAL__N_132IterateDurationRecordFieldsTableEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPFNS_5MaybeIbEES4_S7_NS5_INS0_6StringEEEPdEPNS1_14DurationRecordE.exit.thread: ; preds = %_ZN2v88internal6Object8ToNumberIS1_NS0_12DirectHandleEQsr3stdE16is_convertible_vIT0_IT_ENS3_IS5_EEEEENS4_INS0_5UnionIJNS0_3SmiENS0_10HeapNumberEEEEE9MaybeTypeEPNS0_7IsolateES6_.exit.i.i.i, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.i.i, %_ZN2v88internal7Factory24NewStringFromStaticCharsILm21EEENS0_6HandleINS0_6StringEEERAT__KcNS0_14AllocationTypeE.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #9
-  store i8 0, ptr %0, align 8
-  br label %bb.r
+  br label %.sink.split
 
 "_ZZN2v88internal8temporal16ToDurationRecordEPNS0_7IsolateENS0_12DirectHandleINS0_6ObjectEEERKNS1_14DurationRecordEEN3$_08__invokeES3_NS4_INS0_10JSReceiverEEENS4_INS0_6StringEEEPd.exit": ; preds = %bb.h
   %.0.add.i = add nuw nsw i64 %.0.idx39.i, 16     ; 2 uses
@@ -240,8 +239,7 @@ _ZN2v88internal7Factory24NewStringFromStaticCharsILm61EEENS0_6HandleINS0_6String
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   %i.ff = load i64, ptr %i.fe, align 8
   %i.fg = call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %1, i64 %i.ff, ptr noundef null) #9 ; 0 uses
-  store i8 0, ptr %0, align 8
-  br label %bb.r
+  br label %.sink.split
 
 bb.q:                                             ; preds = %_ZN2v88internal8temporal12_GLOBAL__N_132IterateDurationRecordFieldsTableEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPFNS_5MaybeIbEES4_S7_NS5_INS0_6StringEEEPdEPNS1_14DurationRecordE.exit.thread59, %_ZN2v88internal8temporal12_GLOBAL__N_132IterateDurationRecordFieldsTableEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPFNS_5MaybeIbEES4_S7_NS5_INS0_6StringEEEPdEPNS1_14DurationRecordE.exit
   store i8 1, ptr %0, align 8, !alias.scope !14
@@ -249,7 +247,11 @@ bb.q:                                             ; preds = %_ZN2v88internal8tem
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.fh, ptr noundef nonnull align 8 dereferenceable(80) %9, i64 80, i1 false)
   br label %bb.r
 
-bb.r:                                             ; preds = %bb.q, %_ZN2v88internal7Factory24NewStringFromStaticCharsILm61EEENS0_6HandleINS0_6StringEEERAT__KcNS0_14AllocationTypeE.exit, %_ZN2v88internal8temporal12_GLOBAL__N_132IterateDurationRecordFieldsTableEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPFNS_5MaybeIbEES4_S7_NS5_INS0_6StringEEEPdEPNS1_14DurationRecordE.exit.thread
+.sink.split:                                      ; preds = %_ZN2v88internal8temporal12_GLOBAL__N_132IterateDurationRecordFieldsTableEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPFNS_5MaybeIbEES4_S7_NS5_INS0_6StringEEEPdEPNS1_14DurationRecordE.exit.thread, %_ZN2v88internal7Factory24NewStringFromStaticCharsILm61EEENS0_6HandleINS0_6StringEEERAT__KcNS0_14AllocationTypeE.exit
+  store i8 0, ptr %0, align 8
+  br label %bb.r
+
+bb.r:                                             ; preds = %.sink.split, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #9
   br label %bb.s
 

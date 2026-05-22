@@ -201,8 +201,7 @@ bb.bz:                                            ; preds = %bb.bx
 bb.ca:                                            ; preds = %bb.bz, %bb.by
   %storemerge89 = phi i32 [ %i.id, %bb.bz ], [ %i.hx, %bb.by ]
   store i32 %storemerge89, ptr %i.gv, align 4, !tbaa !26
-  tail call fastcc void @compress_block(ptr noundef nonnull %0, ptr noundef nonnull @static_ltree, ptr noundef nonnull @static_dtree)
-  br label %bb.cr
+  br label %.sink.split
 
 bb.cb:                                            ; preds = %bb.bw
   %i.ie = add i32 %3, 4                           ; 3 uses
@@ -464,10 +463,15 @@ send_all_trees.exit:                              ; preds = %bb.cq
   tail call fastcc void @send_tree(ptr noundef nonnull %0, ptr noundef nonnull %i.om, i32 noundef %i.jm)
   %i.on = getelementptr inbounds nuw i8, ptr %0, i64 2504 ; 2 uses
   tail call fastcc void @send_tree(ptr noundef nonnull %0, ptr noundef nonnull %i.on, i32 noundef %i.jo)
-  tail call fastcc void @compress_block(ptr noundef nonnull %0, ptr noundef nonnull %i.om, ptr noundef nonnull %i.on)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %send_all_trees.exit, %bb.ca
+  %static_dtree.sink = phi ptr [ @static_dtree, %bb.ca ], [ %i.on, %send_all_trees.exit ]
+  %static_ltree.sink = phi ptr [ @static_ltree, %bb.ca ], [ %i.om, %send_all_trees.exit ]
+  tail call fastcc void @compress_block(ptr noundef nonnull %0, ptr noundef nonnull %static_ltree.sink, ptr noundef nonnull %static_dtree.sink)
   br label %bb.cr
 
-bb.cr:                                            ; preds = %bb.ca, %send_all_trees.exit, %bb.bv
+bb.cr:                                            ; preds = %.sink.split, %bb.bv
   %i.oo = getelementptr inbounds nuw i8, ptr %0, i64 212 ; 2 uses
   br label %bb.cs
 

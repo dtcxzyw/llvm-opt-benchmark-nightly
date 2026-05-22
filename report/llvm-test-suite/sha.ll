@@ -200,16 +200,17 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.m, i8 0, i64 %i.o, i1 false)
   tail call fastcc void @byte_reverse(ptr noundef nonnull %i.g)
   tail call fastcc void @sha_transform(ptr noundef nonnull %0)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.g, i8 0, i64 56, i1 false)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.p = sub nuw nsw i32 55, %i.f
   %i.q = zext nneg i32 %i.p to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.m, i8 0, i64 %i.q, i1 false)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink20 = phi i64 [ %i.q, %bb.c ], [ 56, %bb.b ]
+  %.sink = phi ptr [ %i.m, %bb.c ], [ %i.g, %bb.b ]
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %.sink, i8 0, i64 %.sink20, i1 false)
   tail call fastcc void @byte_reverse(ptr noundef nonnull %i.g)
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 84
   store i32 %i.d, ptr %i.r, align 4, !tbaa !4
@@ -320,16 +321,17 @@ bb.c:                                             ; preds = %._crit_edge
   tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.au, i8 0, i64 %i.aw, i1 false)
   tail call fastcc void @byte_reverse(ptr noundef nonnull %i.aq)
   tail call fastcc void @sha_transform(ptr noundef nonnull %0)
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(56) %i.aq, i8 0, i64 56, i1 false)
   br label %sha_final.exit
 
 bb.d:                                             ; preds = %._crit_edge
   %i.ax = sub nuw nsw i32 55, %i.ap
   %i.ay = zext nneg i32 %i.ax to i64
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %i.au, i8 0, i64 %i.ay, i1 false)
   br label %sha_final.exit
 
 sha_final.exit:                                   ; preds = %bb.c, %bb.d
+  %.sink20.i = phi i64 [ %i.ay, %bb.d ], [ 56, %bb.c ]
+  %.sink.i = phi ptr [ %i.au, %bb.d ], [ %i.aq, %bb.c ]
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %.sink.i, i8 0, i64 %.sink20.i, i1 false)
   tail call fastcc void @byte_reverse(ptr noundef nonnull %i.aq)
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 84
   store i32 %i.an, ptr %i.az, align 4, !tbaa !4

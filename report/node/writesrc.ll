@@ -201,7 +201,6 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.h = load i32, ptr %i.g, align 4
   %i.i = add nsw i32 %i.h, %i.f
-  tail call void @usrc_writeArray(ptr noundef %0, ptr noundef %1, ptr noundef %i.d, i32 noundef 16, i32 noundef %i.i, ptr noundef nonnull @.str.12, ptr noundef %4)
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -209,10 +208,14 @@ bb.c:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.a, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %3, i64 28
   %i.l = load i32, ptr %i.k, align 4
-  tail call void @usrc_writeArray(ptr noundef %0, ptr noundef %2, ptr noundef %i.j, i32 noundef 32, i32 noundef %i.l, ptr noundef nonnull @.str.12, ptr noundef %4)
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
+  %.sink19 = phi i32 [ %i.l, %bb.c ], [ %i.i, %bb.b ]
+  %.sink18 = phi i32 [ 32, %bb.c ], [ 16, %bb.b ]
+  %.sink17 = phi ptr [ %i.j, %bb.c ], [ %i.d, %bb.b ]
+  %.sink = phi ptr [ %2, %bb.c ], [ %1, %bb.b ]
+  tail call void @usrc_writeArray(ptr noundef %0, ptr noundef %.sink, ptr noundef %.sink17, i32 noundef %.sink18, i32 noundef %.sink19, ptr noundef nonnull @.str.12, ptr noundef %4)
   ret void
 }
 

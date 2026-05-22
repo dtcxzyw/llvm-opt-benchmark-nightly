@@ -57,7 +57,7 @@ bb.c:                                             ; preds = %upb_Arena_Malloc.ex
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.a
-  %i.u = phi ptr [ %.0.i35, %bb.c ], [ %i.f, %bb.a ] ; 6 uses
+  %i.u = phi ptr [ %.0.i35, %bb.c ], [ %i.f, %bb.a ] ; 5 uses
   %i.v = phi i64 [ %i.s, %bb.c ], [ %i.b, %bb.a ]
   %sext = shl i64 %i.i, 32
   %i.w = ashr exact i64 %sext, 32                 ; 2 uses
@@ -93,8 +93,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.al = getelementptr inbounds nuw i8, ptr %.val14.i.i, i64 %i.ae
-  store ptr %i.al, ptr %1, align 8, !tbaa !15
-  br label %upb_Arena_Realloc.exit.thread
+  br label %.thread.sink.split.i
 
 .critedge.i:                                      ; preds = %bb.e
   %.val.i32 = load ptr, ptr %1, align 8, !tbaa !15 ; 2 uses
@@ -109,8 +108,7 @@ upb_Arena_ShrinkLast.exit.i:                      ; preds = %.critedge.i
   %i.ar = and i64 %i.aq, -8
   %.neg.i.i = sub i64 %i.ar, %i.an
   %i.as = getelementptr inbounds i8, ptr %.val.i32, i64 %.neg.i.i
-  store ptr %i.as, ptr %1, align 8, !tbaa !15
-  br label %upb_Arena_Realloc.exit.thread
+  br label %.thread.sink.split.i
 
 upb_Arena_TryExtend.exit.thread.i:                ; preds = %bb.g, %bb.f
   %i.at = getelementptr i8, ptr %1, i64 8
@@ -143,8 +141,13 @@ bb.k:                                             ; preds = %upb_Arena_Malloc.ex
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.0.i43.i, ptr nonnull readonly align 1 %i.u, i64 %i.bc, i1 false)
   br label %upb_Arena_Realloc.exit.thread
 
-upb_Arena_Realloc.exit.thread:                    ; preds = %bb.k, %bb.h, %.critedge.i, %upb_Arena_ShrinkLast.exit.i
-  %.034.i.ph = phi ptr [ %i.u, %upb_Arena_ShrinkLast.exit.i ], [ %i.u, %.critedge.i ], [ %i.u, %bb.h ], [ %.0.i43.i, %bb.k ] ; 2 uses
+.thread.sink.split.i:                             ; preds = %upb_Arena_ShrinkLast.exit.i, %bb.h
+  %.sink.i = phi ptr [ %i.as, %upb_Arena_ShrinkLast.exit.i ], [ %i.al, %bb.h ]
+  store ptr %.sink.i, ptr %1, align 8, !tbaa !15
+  br label %upb_Arena_Realloc.exit.thread
+
+upb_Arena_Realloc.exit.thread:                    ; preds = %bb.k, %.critedge.i, %.thread.sink.split.i
+  %.034.i.ph = phi ptr [ %i.u, %.thread.sink.split.i ], [ %i.u, %.critedge.i ], [ %.0.i43.i, %bb.k ] ; 2 uses
   store ptr %.034.i.ph, ptr %i.e, align 8, !tbaa !14
   br label %bb.l
 

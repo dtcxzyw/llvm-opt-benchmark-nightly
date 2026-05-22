@@ -201,8 +201,7 @@ bb.an:                                            ; preds = %_ZN2v88internal8com
 
 bb.ao:                                            ; preds = %_ZN2v88internal8compiler4Node9GetUsePtrEi.exit.i, %bb.an
   store ptr %i.fj, ptr %i.hz, align 8
-  call void @_ZN2v88internal8compiler4Node9AppendUseEPNS2_3UseE(ptr noundef nonnull align 8 dereferenceable(32) %i.fj, ptr noundef nonnull %i.ic) #7
-  br label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit
+  br label %bb.as
 
 .lr.ph400:                                        ; preds = %.lr.ph400.preheader, %.lr.ph400
   %indvars.iv454 = phi i64 [ 1, %.lr.ph400.preheader ], [ %indvars.iv.next455, %.lr.ph400 ] ; 4 uses
@@ -263,11 +262,13 @@ bb.ar:                                            ; preds = %bb.aq, %_ZN2v88inte
   store ptr %i.eu, ptr %i.iv, align 8
   br i1 %.not15.i238, label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit, label %bb.as
 
-bb.as:                                            ; preds = %bb.ar
-  call void @_ZN2v88internal8compiler4Node9AppendUseEPNS2_3UseE(ptr noundef nonnull align 8 dereferenceable(32) %i.eu, ptr noundef nonnull %i.ja) #7
+bb.as:                                            ; preds = %bb.ar, %bb.ao
+  %.sink527 = phi ptr [ %i.ic, %bb.ao ], [ %i.ja, %bb.ar ]
+  %.sink526 = phi ptr [ %i.fj, %bb.ao ], [ %i.eu, %bb.ar ]
+  call void @_ZN2v88internal8compiler4Node9AppendUseEPNS2_3UseE(ptr noundef nonnull align 8 dereferenceable(32) %.sink526, ptr noundef nonnull %.sink527) #7
   br label %_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit
 
-_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit: ; preds = %bb.as, %bb.ar, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i234, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i239, %bb.ao, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i, %.loopexit381
+_ZN2v88internal8compiler4Node12ReplaceInputEiPS2_.exit: ; preds = %bb.as, %bb.ar, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i234, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i239, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.thread.i, %_ZN2v88internal8compiler4Node11GetInputPtrEi.exit.i, %.loopexit381
   %.not.i242 = icmp eq ptr %.sroa.6.0404, null
   br i1 %.not.i242, label %.loopexit386, label %bb.ac
 

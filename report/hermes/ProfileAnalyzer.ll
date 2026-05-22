@@ -201,7 +201,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
   %i.f = getelementptr i8, ptr %0, i64 88         ; 3 uses
-  %i.g = getelementptr i8, ptr %0, i64 8          ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.h = icmp eq i64 %2, 0
   br i1 %i.h, label %._crit_edge, label %.lr.ph70
 
@@ -604,13 +604,15 @@ bb.af:                                            ; preds = %bb.ad
   br label %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a"
 
 "_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a": ; preds = %bb.af, %bb.ae, %bb.ac, %bb.aa, %bb.z, %bb.x
-  %.sink = phi ptr [ %i.fp, %bb.af ], [ %i.fr, %bb.ae ], [ %i.f, %bb.ac ], [ %i.f, %bb.aa ], [ %i.fr, %bb.z ], [ %i.fp, %bb.x ]
-  tail call void @_ZSt4swapIN6hermes25FunctionRuntimeStatisticsEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_(ptr noundef nonnull align 8 dereferenceable(72) %i.g, ptr noundef nonnull align 8 dereferenceable(72) %.sink) #21
+  %.sink = phi ptr [ %i.fr, %bb.z ], [ %i.f, %bb.aa ], [ %i.fp, %bb.x ], [ %i.fr, %bb.ae ], [ %i.fp, %bb.af ], [ %i.f, %bb.ac ]
   br label %bb.ag
 
-bb.ag:                                            ; preds = %bb.aj, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a"
-  %.sroa.012.0.i.i = phi ptr [ %i.e, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ], [ %i.gi, %bb.aj ]
-  %.sroa.0.0.i.i = phi ptr [ %storemerge2769, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ], [ %.sroa.0.1.i.i, %bb.aj ]
+bb.ag:                                            ; preds = %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a", %bb.aj
+  %.sink26.i = phi ptr [ %i.gn, %bb.aj ], [ %.sink, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ]
+  %.sink.i = phi ptr [ %i.gj, %bb.aj ], [ %i.g, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ]
+  %.sroa.012.0.i.i = phi ptr [ %i.gi, %bb.aj ], [ %i.e, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ]
+  %.sroa.0.0.i.i = phi ptr [ %.sroa.0.1.i.i, %bb.aj ], [ %storemerge2769, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEEvT_SG_SG_SG_T0_.exit.i.a" ]
+  tail call void @_ZSt4swapIN6hermes25FunctionRuntimeStatisticsEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_(ptr noundef nonnull align 8 dereferenceable(72) %.sink.i, ptr noundef nonnull align 8 dereferenceable(72) %.sink26.i) #21
   %.val1.i.i13.i = load i64, ptr %i.g, align 8, !tbaa !363 ; 2 uses
   br label %bb.ah
 
@@ -644,7 +646,6 @@ bb.aj:                                            ; preds = %bb.ai
   %i.gp = load i32, ptr %.sroa.0.1.i.i, align 4, !tbaa !4
   store i32 %i.gp, ptr %.sroa.012.1.i.i, align 4, !tbaa !4
   store i32 %i.go, ptr %.sroa.0.1.i.i, align 4, !tbaa !4
-  tail call void @_ZSt4swapIN6hermes25FunctionRuntimeStatisticsEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_(ptr noundef nonnull align 8 dereferenceable(72) %i.gj, ptr noundef nonnull align 8 dereferenceable(72) %i.gn) #21
   br label %bb.ag, !llvm.loop !775
 
 "_ZSt27__unguarded_partition_pivotIN9__gnu_cxx17__normal_iteratorIPSt4pairIjN6hermes25FunctionRuntimeStatisticsEESt6vectorIS5_SaIS5_EEEENS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer17dumpFunctionStatsEvE3$_1EEET_SG_SG_T0_.exit": ; preds = %bb.ai

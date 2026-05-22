@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZNSt6vect
   %i.n = phi ptr [ null, %.lr.ph ], [ %i.ax, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 5 uses
   %i.o = phi ptr [ null, %.lr.ph ], [ %i.ay, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.016.028 = phi ptr [ %i.i, %.lr.ph ], [ %i.ba, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 2 uses
-  %i.p = phi ptr [ null, %.lr.ph ], [ %i.az, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 13 uses
+  %i.p = phi ptr [ null, %.lr.ph ], [ %i.az, %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit ] ; 12 uses
   %i.q = invoke noundef nonnull align 8 dereferenceable(216) ptr @_ZNK6duckdb10ColumnList9GetColumnERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(105) %2, ptr noundef nonnull align 8 dereferenceable(32) %.sroa.016.028)
           to label %bb.e unwind label %bb.k
 
@@ -337,22 +337,25 @@ _ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZN
 bb.k:                                             ; preds = %bb.d
   %i.bb = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.p, ptr %0, align 8
-  br label %bb.l
+  br label %.sink.split
 
 .loopexit22:                                      ; preds = %bb.e, %_ZNKSt6vectorIN6duckdb12LogicalIndexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
-  store ptr %i.p, ptr %0, align 8
-  br label %bb.l
+  br label %.sink.split
 
 .loopexit.split-lp:                               ; preds = %bb.i
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %bb.l
 
-bb.l:                                             ; preds = %.loopexit22, %.loopexit.split-lp, %bb.k
-  %.pn = phi { ptr, i32 } [ %i.bb, %bb.k ], [ %lpad.loopexit, %.loopexit22 ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+.sink.split:                                      ; preds = %bb.k, %.loopexit22
+  %.pn.ph = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit22 ], [ %i.bb, %bb.k ]
+  store ptr %i.p, ptr %0, align 8
+  br label %bb.l
+
+bb.l:                                             ; preds = %.sink.split, %.loopexit.split-lp
+  %.pn = phi { ptr, i32 } [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %.pn.ph, %.sink.split ]
   %.not.i.i.i = icmp eq ptr %i.p, null
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN6duckdb12LogicalIndexESaIS1_EED2Ev.exit, label %bb.m
 
@@ -616,8 +619,8 @@ bb.k:                                             ; preds = %.loopexit.split-lp6
   call void @_ZdlPv(ptr noundef %.sink) #23
   br label %.body24
 
-.body24:                                          ; preds = %.body24.sink.split, %bb.k, %bb.i
-  %.pn13 = phi { ptr, i32 } [ %lpad.phi, %bb.i ], [ %lpad.phi72, %bb.k ], [ %.pn13.ph, %.body24.sink.split ]
+.body24:                                          ; preds = %bb.i, %bb.k, %.body24.sink.split
+  %.pn13 = phi { ptr, i32 } [ %.pn13.ph, %.body24.sink.split ], [ %lpad.phi, %bb.i ], [ %lpad.phi72, %bb.k ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   br label %bb.t
 
@@ -797,8 +800,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55: ; preds = %bb.
   call void @_ZdlPv(ptr noundef %.sink107) #23
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55, %bb.f
-  %.pn.pn = phi { ptr, i32 } [ %i.al, %bb.f ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55 ], [ %.pn.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.f, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55, %.body.sink.split
+  %.pn.pn = phi { ptr, i32 } [ %.pn.pn.ph, %.body.sink.split ], [ %i.al, %bb.f ], [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit55 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #21
   br label %bb.t

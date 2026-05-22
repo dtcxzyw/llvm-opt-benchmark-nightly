@@ -201,8 +201,7 @@ _ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit43:      ; preds = %bb.f
   %.pre51 = load i64, ptr %i.l, align 8, !tbaa !13
   store i64 %.pre51, ptr %i.f, align 8, !tbaa !13
   store i64 0, ptr %i.l, align 8, !tbaa !13
-  store i16 0, ptr %.pre52, align 2, !tbaa !24
-  br label %bb.i
+  br label %.sink.split
 
 _ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit44:      ; preds = %bb.e
   %i.v = shl nuw nsw i64 %i.g, 1
@@ -212,8 +211,7 @@ _ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit44:      ; preds = %bb.e
   %.pre = load i64, ptr %i.f, align 8, !tbaa !13
   store i64 %.pre, ptr %i.l, align 8, !tbaa !13
   store i64 0, ptr %i.f, align 8, !tbaa !13
-  store i16 0, ptr %.pre50, align 2, !tbaa !24
-  br label %bb.i
+  br label %.sink.split
 
 _ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit45:      ; preds = %bb.c
   %i.x = load i64, ptr %i.j, align 8, !tbaa !19
@@ -264,7 +262,12 @@ bb.h:                                             ; preds = %bb.f, %_ZNSt11char_
   store i64 %i.al, ptr %i.am, align 8, !tbaa !13
   br label %bb.i
 
-bb.i:                                             ; preds = %bb.a, %bb.h, %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit44, %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit43
+.sink.split:                                      ; preds = %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit43, %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit44
+  %.pre50.sink = phi ptr [ %.pre50, %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit44 ], [ %.pre52, %_ZNSt11char_traitsIDsE4copyEPDsPKDsm.exit43 ]
+  store i16 0, ptr %.pre50.sink, align 2, !tbaa !24
+  br label %bb.i
+
+bb.i:                                             ; preds = %.sink.split, %bb.a, %bb.h
   ret void
 }
 

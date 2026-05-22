@@ -201,9 +201,7 @@ bb.g:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 632
   %i.w = load i64, ptr %i.v, align 8, !tbaa !42
   %i.x = tail call i32 @replicationCountAcksByOffset(i64 noundef %i.w) #5
-  %1 = sext i32 %i.x to i64
-  tail call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %1) #5
-  br label %updateStatsOnUnblock.exit
+  br label %updateStatsOnUnblock.exit.sink.split
 
 bb.h:                                             ; preds = %bb.a
   tail call void @addReplyArrayLen(ptr noundef nonnull %0, i64 noundef 2) #5
@@ -215,9 +213,7 @@ bb.h:                                             ; preds = %bb.a
   tail call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %i.ac) #5
   %i.ad = load i64, ptr %i.z, align 8, !tbaa !42
   %i.ae = tail call i32 @replicationCountAOFAcksByOffset(i64 noundef %i.ad) #5
-  %2 = sext i32 %i.ae to i64
-  tail call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %2) #5
-  br label %updateStatsOnUnblock.exit
+  br label %updateStatsOnUnblock.exit.sink.split
 
 bb.i:                                             ; preds = %bb.a
   tail call void @moduleBlockedClientTimedOut(ptr noundef nonnull %0) #5
@@ -228,7 +224,13 @@ bb.j:                                             ; preds = %bb.a
   tail call void @abort() #6
   unreachable
 
-updateStatsOnUnblock.exit:                        ; preds = %bb.f, %bb.e, %bb.h, %bb.i, %bb.g, %bb.b
+updateStatsOnUnblock.exit.sink.split:             ; preds = %bb.g, %bb.h
+  %.sink18 = phi i32 [ %i.ae, %bb.h ], [ %i.x, %bb.g ]
+  %1 = sext i32 %.sink18 to i64
+  tail call void @addReplyLongLong(ptr noundef nonnull %0, i64 noundef %1) #5
+  br label %updateStatsOnUnblock.exit
+
+updateStatsOnUnblock.exit:                        ; preds = %updateStatsOnUnblock.exit.sink.split, %bb.f, %bb.e, %bb.i, %bb.b
   ret void
 }
 

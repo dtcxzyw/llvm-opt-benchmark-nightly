@@ -201,17 +201,18 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.a
   %i.ay = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 64) #16
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
   %i.az = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.al, i64 noundef 24) #16
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
+  %.sink9 = phi i64 [ 24, %bb.e ], [ 64, %bb.d ]
+  %.sink = phi ptr [ %i.al, %bb.e ], [ %i.a, %bb.d ]
   %.pn = phi { ptr, i32 } [ %i.az, %bb.e ], [ %i.ay, %bb.d ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef %.sink9) #16
   resume { ptr, i32 } %.pn
 }
 

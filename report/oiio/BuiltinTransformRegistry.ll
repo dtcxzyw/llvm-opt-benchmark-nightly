@@ -201,8 +201,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.x = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.w) #23
-  br label %common.resume
+  br label %common.resume.sink.split
 
 bb.k:                                             ; preds = %_ZNSt12__shared_ptrIKN16OpenColorIO_v2_524BuiltinTransformRegistryELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
@@ -294,15 +293,20 @@ bb.v:                                             ; preds = %bb.u
   tail call void @__cxa_throw(ptr nonnull %i.bb, ptr nonnull @_ZTIN16OpenColorIO_v2_59ExceptionE, ptr nonnull @_ZN16OpenColorIO_v2_59ExceptionD1Ev) #24
   unreachable
 
-common.resume:                                    ; preds = %bb.j, %.body, %bb.w
-  %common.resume.op = phi { ptr, i32 } [ %i.bc, %bb.w ], [ %i.x, %bb.j ], [ %.pn.pn, %.body ]
+common.resume.sink.split:                         ; preds = %bb.w, %bb.j
+  %.sink = phi ptr [ %i.w, %bb.j ], [ %i.bb, %bb.w ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.x, %bb.j ], [ %i.bc, %bb.w ]
+  tail call void @__cxa_free_exception(ptr nonnull %.sink) #23
+  br label %common.resume
+
+common.resume:                                    ; preds = %common.resume.sink.split, %.body
+  %common.resume.op = phi { ptr, i32 } [ %.pn.pn, %.body ], [ %common.resume.op.ph, %common.resume.sink.split ]
   resume { ptr, i32 } %common.resume.op
 
 bb.w:                                             ; preds = %bb.u
   %i.bc = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.bb) #23
-  br label %common.resume
+  br label %common.resume.sink.split
 
 bb.x:                                             ; preds = %bb.t
   %i.bd = getelementptr inbounds nuw [96 x i8], ptr %i.aw, i64 %1 ; 3 uses

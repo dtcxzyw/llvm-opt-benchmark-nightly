@@ -61,8 +61,7 @@ bb.a:
 _ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit.thread: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   %i.j = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.3) #4 ; 0 uses
-  store ptr null, ptr %0, align 8
-  br label %bb.e
+  br label %.sink.split
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -110,10 +109,13 @@ _ZNSt10unique_ptrIN4LIEF2PE15CHPEMetadataX86ESt14default_deleteIS2_EED2Ev.exit: 
 bb.d:                                             ; preds = %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit
   %i.w = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.3) #4 ; 0 uses
   %i.x = call noundef ptr @_ZN4LIEF2PE9to_stringENS0_6Header13MACHINE_TYPESE(i32 noundef %i.t) #4 ; 0 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit.thread, %bb.d
   store ptr null, ptr %0, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt10unique_ptrIN4LIEF2PE17CHPEMetadataARM64ESt14default_deleteIS2_EED2Ev.exit, %_ZNSt10unique_ptrIN4LIEF2PE15CHPEMetadataX86ESt14default_deleteIS2_EED2Ev.exit, %bb.d, %_ZNK4LIEF12BinaryStream4readIjEENS_6resultIT_EEv.exit.thread
+bb.e:                                             ; preds = %.sink.split, %_ZNSt10unique_ptrIN4LIEF2PE17CHPEMetadataARM64ESt14default_deleteIS2_EED2Ev.exit, %_ZNSt10unique_ptrIN4LIEF2PE15CHPEMetadataX86ESt14default_deleteIS2_EED2Ev.exit
   ret void
 }
 

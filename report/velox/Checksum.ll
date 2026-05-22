@@ -201,15 +201,17 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 %.1.i
-  %3 = tail call noundef i32 @_ZN5folly6detail6crc_swILj79764919EEEjPKhmj(ptr noundef %i.ah, i64 noundef %.130.i, i32 noundef %.119.i)
+  br label %bb.l
+
+bb.l:                                             ; preds = %_ZN5folly6detail18crc32_hw_supportedEv.exit, %bb.k
+  %.119.i.sink = phi i32 [ %.119.i, %bb.k ], [ %2, %_ZN5folly6detail18crc32_hw_supportedEv.exit ]
+  %.130.i.sink = phi i64 [ %.130.i, %bb.k ], [ %1, %_ZN5folly6detail18crc32_hw_supportedEv.exit ]
+  %.sink = phi ptr [ %i.ah, %bb.k ], [ %0, %_ZN5folly6detail18crc32_hw_supportedEv.exit ]
+  %i.ai = tail call noundef i32 @_ZN5folly6detail6crc_swILj79764919EEEjPKhmj(ptr noundef %.sink, i64 noundef %.130.i.sink, i32 noundef %.119.i.sink)
   br label %_ZN5folly6detail8crc32_hwEPKhmj.exit
 
-bb.l:                                             ; preds = %_ZN5folly6detail18crc32_hw_supportedEv.exit
-  %i.ai = tail call noundef i32 @_ZN5folly6detail6crc_swILj79764919EEEjPKhmj(ptr noundef %0, i64 noundef %1, i32 noundef %2)
-  br label %_ZN5folly6detail8crc32_hwEPKhmj.exit
-
-_ZN5folly6detail8crc32_hwEPKhmj.exit:             ; preds = %bb.k, %bb.j, %bb.l
-  %.0 = phi i32 [ %i.ai, %bb.l ], [ %3, %bb.k ], [ %.119.i, %bb.j ]
+_ZN5folly6detail8crc32_hwEPKhmj.exit:             ; preds = %bb.l, %bb.j
+  %.0 = phi i32 [ %.119.i, %bb.j ], [ %i.ai, %bb.l ]
   ret i32 %.0
 }
 

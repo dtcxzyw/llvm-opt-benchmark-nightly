@@ -201,7 +201,7 @@ _ZN11duckdb_zstdL24ZSTD_matchState_dictModeEPKNS_17ZSTD_matchState_tE.exit: ; pr
   br i1 %i.n, label %bb.d, label %.preheader
 
 .preheader:                                       ; preds = %_ZN11duckdb_zstdL24ZSTD_matchState_dictModeEPKNS_17ZSTD_matchState_tE.exit
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.q = load i64, ptr %i.o, align 8, !tbaa !70   ; 2 uses
   %i.r = load i64, ptr %i.p, align 8, !tbaa !37   ; 2 uses
@@ -304,16 +304,15 @@ bb.g:                                             ; preds = %.lr.ph, %bb.af
 
 bb.h:                                             ; preds = %bb.g
   %i.be = add nuw i64 %i.ax, 1
-  store i64 %i.be, ptr %i.o, align 8, !tbaa !70
-  br label %_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit
+  br label %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i
 
 bb.i:                                             ; preds = %bb.g
   %.not22.i = icmp ugt i32 %i.ba, %.sroa.010.sroa.4.0.extract.trunc.i ; 2 uses
   %i.bf = sub i32 %i.ba, %.sroa.010.sroa.4.0.extract.trunc.i ; 2 uses
   %i.bg = icmp uge i32 %i.bf, %i.b
-  %.sroa.8.0.i = select i1 %.not22.i, i32 %i.bf, i32 %.sroa.8.0.copyload.i ; 5 uses
+  %.sroa.8.0.i = select i1 %.not22.i, i32 %i.bf, i32 %.sroa.8.0.copyload.i ; 6 uses
   %i.bh = and i1 %.not22.i, %i.bg
-  %.sroa.010.sroa.0.0.i = select i1 %i.bh, i64 %.sroa.010.0.copyload.i, i64 0 ; 5 uses
+  %.sroa.010.sroa.0.0.i = select i1 %i.bh, i64 %.sroa.010.0.copyload.i, i64 0 ; 6 uses
   %.not53.i.i = icmp eq i32 %i.ba, 0
   %exitcond.not.i.i199 = icmp eq i64 %i.ax, %i.aw
   %or.cond223 = or i1 %.not53.i.i, %exitcond.not.i.i199
@@ -356,20 +355,16 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.bx, label %bb.n, label %_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.by = add nuw i64 %i.bj, 1                    ; 2 uses
+  %i.by = add nuw i64 %i.bj, 1                    ; 3 uses
   %i.bz = icmp ult i64 %i.by, %i.aw
-  br i1 %i.bz, label %bb.o, label %7
+  br i1 %i.bz, label %bb.o, label %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i
 
 bb.o:                                             ; preds = %bb.n
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bk, i64 16 ; 2 uses
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !63
   %i.cc = add i32 %i.cb, %i.bw
   store i32 %i.cc, ptr %i.ca, align 4, !tbaa !63
-  br label %7
-
-7:                                                ; preds = %bb.o, %bb.n
-  store i64 %i.by, ptr %i.o, align 8, !tbaa !70
-  br label %_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit
+  br label %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i
 
 bb.p:                                             ; preds = %bb.l
   %i.cd = sub nuw nsw i64 %i.bq, %i.bt            ; 2 uses
@@ -381,9 +376,16 @@ bb.p:                                             ; preds = %bb.l
   %or.cond224 = or i1 %.not.i.i, %exitcond.not.i.i
   br i1 %or.cond224, label %_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit, label %bb.j
 
-_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit: ; preds = %bb.p, %bb.h, %bb.i, %bb.k, %bb.m, %7
-  %.sroa.8.1.i = phi i32 [ %.sroa.8.0.copyload.i, %bb.h ], [ %.sroa.8.0.i, %bb.i ], [ %.sroa.8.0.i, %7 ], [ %.sroa.8.0.i, %bb.k ], [ %.sroa.8.0.i, %bb.m ], [ %.sroa.8.0.i, %bb.p ]
-  %.sroa.010.sroa.0.1.i = phi i64 [ %.sroa.010.0.copyload.i, %bb.h ], [ %.sroa.010.sroa.0.0.i, %bb.i ], [ %.sroa.010.sroa.0.0.i, %7 ], [ %.sroa.010.sroa.0.0.i, %bb.k ], [ %.sroa.010.sroa.0.0.i, %bb.m ], [ %.sroa.010.sroa.0.0.i, %bb.p ]
+_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i: ; preds = %bb.o, %bb.n, %bb.h
+  %.sink.i = phi i64 [ %i.be, %bb.h ], [ %i.by, %bb.o ], [ %i.by, %bb.n ]
+  %.sroa.8.1.ph.i = phi i32 [ %.sroa.8.0.copyload.i, %bb.h ], [ %.sroa.8.0.i, %bb.o ], [ %.sroa.8.0.i, %bb.n ]
+  %.sroa.010.sroa.0.1.ph.i = phi i64 [ %.sroa.010.0.copyload.i, %bb.h ], [ %.sroa.010.sroa.0.0.i, %bb.o ], [ %.sroa.010.sroa.0.0.i, %bb.n ]
+  store i64 %.sink.i, ptr %i.o, align 8, !tbaa !70
+  br label %_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit
+
+_ZN11duckdb_zstdL18maybeSplitSequenceEPNS_13rawSeqStore_tEjj.exit: ; preds = %bb.p, %bb.i, %bb.k, %bb.m, %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i
+  %.sroa.8.1.i = phi i32 [ %.sroa.8.0.i, %bb.m ], [ %.sroa.8.0.i, %bb.i ], [ %.sroa.8.1.ph.i, %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i ], [ %.sroa.8.0.i, %bb.k ], [ %.sroa.8.0.i, %bb.p ]
+  %.sroa.010.sroa.0.1.i = phi i64 [ %.sroa.010.sroa.0.0.i, %bb.m ], [ %.sroa.010.sroa.0.0.i, %bb.i ], [ %.sroa.010.sroa.0.1.ph.i, %_ZN11duckdb_zstd22ZSTD_ldm_skipSequencesEPNS_13rawSeqStore_tEmj.exit.sink.split.i ], [ %.sroa.010.sroa.0.0.i, %bb.k ], [ %.sroa.010.sroa.0.0.i, %bb.p ]
   %.sroa.06.0.extract.trunc = trunc i64 %.sroa.010.sroa.0.1.i to i32 ; 3 uses
   %i.cf = icmp eq i32 %.sroa.06.0.extract.trunc, 0
   br i1 %i.cf, label %.thread, label %bb.q

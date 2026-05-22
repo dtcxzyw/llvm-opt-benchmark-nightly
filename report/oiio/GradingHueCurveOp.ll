@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.a) #16
-  br label %bb.ar
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %0, align 8, !tbaa !19
@@ -223,8 +222,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.h = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.g) #16
-  br label %bb.ar
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #16
@@ -503,8 +501,14 @@ bb.aq:                                            ; preds = %bb.p, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #16
   br label %bb.ar
 
-bb.ar:                                            ; preds = %bb.aq, %bb.h, %bb.d
-  %.pn7 = phi { ptr, i32 } [ %i.b, %bb.d ], [ %.pn, %bb.aq ], [ %i.h, %bb.h ]
+.sink.split:                                      ; preds = %bb.d, %bb.h
+  %.sink = phi ptr [ %i.g, %bb.h ], [ %i.a, %bb.d ]
+  %.pn7.ph = phi { ptr, i32 } [ %i.h, %bb.h ], [ %i.b, %bb.d ]
+  tail call void @__cxa_free_exception(ptr nonnull %.sink) #16
+  br label %bb.ar
+
+bb.ar:                                            ; preds = %.sink.split, %bb.aq
+  %.pn7 = phi { ptr, i32 } [ %.pn, %bb.aq ], [ %.pn7.ph, %.sink.split ]
   resume { ptr, i32 } %.pn7
 
 bb.as:                                            ; preds = %bb.n

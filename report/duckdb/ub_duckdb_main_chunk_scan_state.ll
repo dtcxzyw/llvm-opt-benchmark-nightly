@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.d
   %i.l = call noundef nonnull align 8 dereferenceable(128) ptr @_ZN6duckdb9ErrorDataaSEOS0_(ptr noundef nonnull align 8 dereferenceable(128) %2, ptr noundef nonnull align 8 dereferenceable(128) %7) #18 ; 0 uses
   call void @_ZN6duckdb9ErrorDataD2Ev(ptr noundef nonnull align 8 dead_on_return(128) dereferenceable(128) %7) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
-  call void @__cxa_end_catch()
-  br label %bb.l
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
@@ -231,8 +230,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  call void @__cxa_end_catch()
-  br label %bb.l
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.f
   %i.q = landingpad { ptr, i32 }
@@ -266,8 +264,12 @@ bb.k:                                             ; preds = %bb.d
   invoke void @__cxa_end_catch()
           to label %bb.m unwind label %bb.n
 
-bb.l:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.e, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit
-  %.0 = phi i1 [ %i.e, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ], [ false, %bb.e ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ]
+.sink.split:                                      ; preds = %bb.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  call void @__cxa_end_catch()
+  br label %bb.l
+
+bb.l:                                             ; preds = %.sink.split, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit
+  %.0 = phi i1 [ %i.e, %_ZNSt10unique_ptrIN6duckdb9DataChunkESt14default_deleteIS1_EED2Ev.exit ], [ false, %.sink.split ]
   ret i1 %.0
 
 bb.m:                                             ; preds = %bb.k, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit18

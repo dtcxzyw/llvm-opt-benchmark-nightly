@@ -201,7 +201,7 @@ define void @_ZN6duckdb17ConstantOrNullFun11GetFunctionEv(ptr dead_on_unwind noa
   %i.a = alloca i64, align 8                      ; 5 uses
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %2 = alloca %"class.duckdb::vector", align 8    ; 8 uses
-  %3 = alloca [2 x %"struct.duckdb::LogicalType"], align 8 ; 11 uses
+  %3 = alloca [2 x %"struct.duckdb::LogicalType"], align 8 ; 10 uses
   %4 = alloca %"struct.duckdb::LogicalType", align 8 ; 4 uses
   %5 = alloca %"class.std::function", align 8     ; 9 uses
   %6 = alloca %"struct.duckdb::LogicalType", align 8 ; 4 uses
@@ -404,8 +404,7 @@ _ZN6duckdb10shared_ptrINS_13ExtraTypeInfoELb1EEaSEOS2_.exit.i.i: ; preds = %_ZNS
 .loopexit.loopexit31:                             ; preds = %bb.a
   %i.ax = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #20
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.l:                                             ; preds = %_ZSt10_ConstructIN6duckdb11LogicalTypeEJRKS1_EEvPT_DpOT0_.exit.i.i.i.i.i.1
   %i.ay = landingpad { ptr, i32 }
@@ -452,11 +451,15 @@ bb.p:                                             ; preds = %_ZNSt14_Function_ba
   %.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn, %bb.p ], [ %i.y, %.body24.thread ], [ %i.v, %.body24 ]
   %i.bf = getelementptr inbounds nuw i8, ptr %3, i64 24
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %i.bf) #20
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %.body, %.loopexit.loopexit31
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.ax, %.loopexit.loopexit31 ], [ %.pn.pn.pn, %.body ]
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %3) #20
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit31, %.body, %.thread
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %.body ], [ %i.h, %.thread ], [ %i.ax, %.loopexit.loopexit31 ] ; 2 uses
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.thread
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %i.h, %.thread ], [ %.pn.pn.pn.pn.ph, %.loopexit.sink.split ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.bg = load ptr, ptr %1, align 8, !tbaa !22    ; 2 uses
   %i.bh = icmp eq ptr %i.bg, %i.b

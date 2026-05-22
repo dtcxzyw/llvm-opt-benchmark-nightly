@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.a, %bb.e, %bb.f
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define hidden void @_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7JU2D1aBbVY_15deltalake_mount(ptr dead_on_unwind noalias noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 16)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs7JU2D1aBbVY_15deltalake_mount(ptr dead_on_unwind noalias noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) initializes((0, 8)) %0, i64 noundef %1, i1 noundef zeroext %2, i64 noundef range(i64 1, -9223372036854775807) %3, i64 noundef %4) unnamed_addr #3 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %4, i64 %1) ; 2 uses
   %i.b = extractvalue { i64, i1 } %i.a, 0         ; 5 uses
@@ -209,39 +209,46 @@ bb.a:
   %i.d = sub nuw i64 -9223372036854775808, %3
   %.not = icmp ugt i64 %i.b, %i.d
   %or.cond = select i1 %i.c, i1 true, i1 %.not, !prof !149
-  br i1 %or.cond, label %bb.c, label %bb.b, !prof !149
+  br i1 %or.cond, label %bb.e, label %bb.b, !prof !149
 
 bb.b:                                             ; preds = %bb.a
   %i.e = icmp eq i64 %i.b, 0
-  br i1 %i.e, label %bb.d, label %bb.e
+  br i1 %i.e, label %bb.c, label %6
 
-bb.c:                                             ; preds = %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %5, align 8
-  br label %bb.f
+bb.c:                                             ; preds = %bb.b
+  %5 = inttoptr i64 %3 to ptr
+  br label %bb.d
 
-bb.d:                                             ; preds = %bb.b
-  %6 = inttoptr i64 %3 to ptr
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.f, align 8
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %6, ptr %i.g, align 8
-  br label %bb.f
-
-bb.e:                                             ; preds = %bb.b
+6:                                                ; preds = %bb.b
   tail call void @_RNvCs8mYq7K4qqSA_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #20
   br i1 %2, label %bb.g, label %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit
 
-bb.f:                                             ; preds = %bb.c, %bb.i, %bb.j, %bb.d
-  %.sink = phi i64 [ 1, %bb.c ], [ 1, %bb.i ], [ 0, %bb.j ], [ 0, %bb.d ]
+bb.d:                                             ; preds = %bb.c, %bb.j
+  %.sink12 = phi i64 [ %1, %bb.j ], [ 0, %bb.c ]
+  %.pn10.sink = phi ptr [ %.pn10, %bb.j ], [ %5, %bb.c ]
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sink12, ptr %i.f, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %.pn10.sink, ptr %i.g, align 8
+  br label %bb.f
+
+bb.e:                                             ; preds = %bb.a, %bb.i
+  %.sink17 = phi i64 [ 16, %bb.i ], [ 8, %bb.a ]
+  %.sink15 = phi i64 [ %i.b, %bb.i ], [ 0, %bb.a ]
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 %.sink17
+  store i64 %.sink15, ptr %7, align 8
+  br label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %bb.d
+  %.sink = phi i64 [ 0, %bb.d ], [ 1, %bb.e ]
   store i64 %.sink, ptr %0, align 8
   ret void
 
-bb.g:                                             ; preds = %bb.e
+bb.g:                                             ; preds = %6
   %i.h = tail call noundef ptr @_RNvCs8mYq7K4qqSA_7___rustc19___rust_alloc_zeroed(i64 noundef range(i64 1, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #20
   br label %bb.h
 
-_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit: ; preds = %bb.e
+_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit: ; preds = %6
   %i.i = tail call noundef ptr @_RNvCs8mYq7K4qqSA_7___rustc12___rust_alloc(i64 noundef range(i64 0, -9223372036854775808) %i.b, i64 noundef range(i64 1, -9223372036854775807) %3) #20
   br label %bb.h
 
@@ -253,18 +260,12 @@ bb.h:                                             ; preds = %bb.g, %_RNvXs_NtCs6
 bb.i:                                             ; preds = %bb.h
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %3, ptr %i.k, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.b, ptr %7, align 8
-  br label %bb.f
+  br label %bb.e
 
 bb.j:                                             ; preds = %bb.h
   %i.l = icmp sgt i64 %1, -1
   tail call void @llvm.assume(i1 %i.l)
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %1, ptr %8, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %.pn10, ptr %9, align 8
-  br label %bb.f
+  br label %bb.d
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable

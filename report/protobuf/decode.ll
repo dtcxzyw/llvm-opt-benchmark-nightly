@@ -77,7 +77,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define hidden ptr @_upb_Decoder_DecodeMessage(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %.sroa.0.i = alloca i64, align 8                ; 9 uses
+  %.sroa.0.i = alloca i64, align 8                ; 8 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %4 = alloca %struct.upb_MapEntry, align 8       ; 9 uses
   %i.c = alloca ptr, align 8                      ; 5 uses
@@ -480,23 +480,26 @@ upb_Arena_Malloc.exit.i.i99:                      ; preds = %bb.da
 .thread19.i.i:                                    ; preds = %upb_Arena_Malloc.exit.i.i99
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.vb, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.t, i64 16, i1 false), !tbaa.struct !65
   %i.vc = ptrtoint ptr %i.vb to i64
-  store i64 %i.vc, ptr %.sroa.0.i, align 8, !tbaa !32
-  br label %bb.dd
+  br label %.thread.sink.split.i.i
 
 bb.db:                                            ; preds = %bb.da
   %i.vd = getelementptr inbounds nuw i8, ptr %.val.i.i.i97, i64 16
   store ptr %i.vd, ptr %i.p, align 8, !tbaa !46
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i97) ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.val.i.i.i97, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.t, i64 16, i1 false), !tbaa.struct !65
-  store i64 %i.uy, ptr %.sroa.0.i, align 8, !tbaa !32
-  br label %bb.dd
+  br label %.thread.sink.split.i.i
 
 bb.dc:                                            ; preds = %.loopexit
   %i.ve = sext i8 %i.uv to i64
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.i, ptr nonnull readonly align 8 %i.t, i64 range(i64 -128, 128) %i.ve, i1 false)
   br label %bb.dd
 
-bb.dd:                                            ; preds = %bb.dc, %bb.db, %.thread19.i.i
+.thread.sink.split.i.i:                           ; preds = %bb.db, %.thread19.i.i
+  %.sink.i.i = phi i64 [ %i.vc, %.thread19.i.i ], [ %i.uy, %bb.db ]
+  store i64 %.sink.i.i, ptr %.sroa.0.i, align 8, !tbaa !32
+  br label %bb.dd
+
+bb.dd:                                            ; preds = %.thread.sink.split.i.i, %bb.dc
   %i.vf = getelementptr inbounds nuw i8, ptr %.0.i48, i64 3
   %i.vg = load i8, ptr %i.vf, align 1, !tbaa !66, !range !67, !noundef !68
   %i.vh = trunc nuw i8 %i.vg to i1

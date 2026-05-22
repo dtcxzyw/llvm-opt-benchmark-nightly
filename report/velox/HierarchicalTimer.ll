@@ -201,7 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54   ; 7 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !54   ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !58
   %.not.i = icmp eq ptr %i.c, %i.e
@@ -229,21 +229,24 @@ _ZNSt13_Bit_iteratorppEi.exit.i:                  ; preds = %bb.d, %bb.c
 bb.e:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.k = load i64, ptr %i.c, align 8, !tbaa !36
   %i.l = or i64 %i.k, %i.j
-  store i64 %i.l, ptr %i.c, align 8, !tbaa !36
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.f:                                             ; preds = %_ZNSt13_Bit_iteratorppEi.exit.i
   %i.m = xor i64 %i.j, -1
   %i.n = load i64, ptr %i.c, align 8, !tbaa !36
   %i.o = and i64 %i.n, %i.m
-  store i64 %i.o, ptr %i.c, align 8, !tbaa !36
-  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+  br label %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i
 
 bb.g:                                             ; preds = %bb.b
   tail call void @_ZNSt6vectorIbSaIbEE13_M_insert_auxESt13_Bit_iteratorb(ptr noundef nonnull align 8 dereferenceable(40) %7, ptr %i.c, i32 %.sroa.2.0.copyload.i11.i, i1 noundef zeroext %3)
   br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
 
-_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %bb.g, %bb.f, %bb.e, %bb.a
+_ZNSt14_Bit_referenceaSEb.exit.sink.split.i:      ; preds = %bb.f, %bb.e
+  %.sink.i = phi i64 [ %i.o, %bb.f ], [ %i.l, %bb.e ]
+  store i64 %.sink.i, ptr %i.c, align 8, !tbaa !36
+  br label %_ZNSt6vectorIbSaIbEE9push_backEb.exit
+
+_ZNSt6vectorIbSaIbEE9push_backEb.exit:            ; preds = %_ZNSt14_Bit_referenceaSEb.exit.sink.split.i, %bb.g, %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #13
   call fastcc void @_ZN8facebook5velox12_GLOBAL__N_111buildPrefixB5cxx11ERKSt6vectorIbSaIbEE(ptr dead_on_unwind noalias writable align 8 %18, ptr noundef nonnull align 8 dereferenceable(40) %7)
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #13

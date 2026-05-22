@@ -201,13 +201,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 0, ptr %i.a, align 4
   %i.b = icmp samesign ult i32 %1, 128
+  %.sink2.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %.sink2.sroa.gep3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 2048
   %i.d = trunc i32 %1 to i8
   %i.e = and i8 %i.d, 63
-  %i.f = or disjoint i8 %i.e, -128                ; 3 uses
+  %i.f = or disjoint i8 %i.e, -128                ; 2 uses
   %i.g = lshr i32 %1, 6
   %i.h = trunc i32 %i.g to i8                     ; 2 uses
   %i.i = and i8 %i.h, 63
@@ -229,9 +231,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.s = or disjoint i8 %i.h, -64
   store i8 %i.s, ptr %i.a, align 4, !alias.scope !58
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.f, ptr %2, align 1, !alias.scope !58
-  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit
+  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.t = icmp samesign ult i32 %1, 65536
@@ -252,12 +252,16 @@ bb.g:                                             ; preds = %bb.e
   store i8 %i.n, ptr %i.x, align 1, !alias.scope !58
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %i.j, ptr %i.y, align 2, !alias.scope !58
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %i.f, ptr %3, align 1, !alias.scope !58
+  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split
+
+_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split: ; preds = %bb.g, %bb.d
+  %.sink2.sroa.phi = phi ptr [ %.sink2.sroa.gep, %bb.d ], [ %.sink2.sroa.gep3, %bb.g ]
+  %.sroa.0.05.i.ph = phi i64 [ 2, %bb.d ], [ 4, %bb.g ]
+  store i8 %i.f, ptr %.sink2.sroa.phi, align 1, !alias.scope !58
   br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit
 
-_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit: ; preds = %bb.c, %bb.d, %bb.f, %bb.g
-  %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.f ], [ 4, %bb.g ]
+_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit: ; preds = %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split, %bb.c, %bb.f
+  %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 3, %bb.f ], [ %.sroa.0.05.i.ph, %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !61)
   %i.z = load ptr, ptr %0, align 8, !alias.scope !61, !noalias !64, !nonnull !4, !noundef !4
   %i.aa = call noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_allCs6KaIMXx2hZw_14deltalake_hdfs(ptr noalias noundef nonnull %i.z, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef %.sroa.0.05.i), !noalias !61 ; 3 uses

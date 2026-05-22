@@ -145,9 +145,9 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #17
-  %i.e = call ptr @load_file(ptr noundef %0, ptr noundef nonnull %i.c) ; 8 uses
+  %i.e = call ptr @load_file(ptr noundef %0, ptr noundef nonnull %i.c) ; 7 uses
   %i.f = ptrtoint ptr %i.e to i64
-  %i.g = call ptr @load_file(ptr noundef %1, ptr noundef nonnull %i.d) ; 8 uses
+  %i.g = call ptr @load_file(ptr noundef %1, ptr noundef nonnull %i.d) ; 7 uses
   %i.h = ptrtoint ptr %i.g to i64                 ; 2 uses
   %i.i = load i64, ptr %i.c, align 8, !tbaa !14   ; 5 uses
   %i.j = load i64, ptr %i.d, align 8, !tbaa !14   ; 4 uses
@@ -550,8 +550,7 @@ bb.bd:                                            ; preds = %skip_whitespace.exi
   %i.ji = load i8, ptr %.4192, align 1, !tbaa !13
   %i.jj = sext i8 %i.ji to i32
   %i.jk = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.je, ptr noundef nonnull @.str.5, ptr noundef %i.jf, i32 noundef %i.jh, i32 noundef %i.jj) #14 ; 0 uses
-  tail call fastcc void @dump_inputs(ptr noundef %i.e, ptr noundef %i.g)
-  br label %bb.bg
+  br label %.sink.split
 
 bb.be:                                            ; preds = %skip_whitespace.exit84
   %or.cond5 = select i1 %i.jc, i1 %i.jd, i1 false
@@ -561,11 +560,14 @@ bb.bf:                                            ; preds = %bb.be
   %i.jl = load ptr, ptr @stderr, align 8, !tbaa !8
   %i.jm = load ptr, ptr @g_program, align 8, !tbaa !11
   %i.jn = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.jl, ptr noundef nonnull @.str.6, ptr noundef %i.jm) #14 ; 0 uses
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.bd, %bb.bf
   tail call fastcc void @dump_inputs(ptr noundef %i.e, ptr noundef %i.g)
   br label %bb.bg
 
-bb.bg:                                            ; preds = %bb.be, %bb.b, %bb.bf, %bb.bd, %.thread213
-  %.5 = phi i32 [ 1, %bb.bd ], [ 1, %.thread213 ], [ 0, %bb.b ], [ 1, %bb.bf ], [ 0, %bb.be ]
+bb.bg:                                            ; preds = %.sink.split, %bb.be, %bb.b, %.thread213
+  %.5 = phi i32 [ 0, %bb.be ], [ 1, %.thread213 ], [ 0, %bb.b ], [ 1, %.sink.split ]
   tail call void @free(ptr noundef %i.e) #17
   tail call void @free(ptr noundef %i.g) #17
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #17

@@ -201,8 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 104
   %i.i = tail call noundef nonnull align 8 dereferenceable(41) ptr @_ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x38IfcCurveEEcvRKS4_Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.h)
-  %4 = tail call noundef zeroext i1 @_ZN6Assimp3IFC12ProcessCurveERKNS0_10Schema_2x38IfcCurveERNS0_8TempMeshERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(41) %i.i, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(392) %2) ; 0 uses
-  br label %bb.m
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.j = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(24) %i.f, ptr nonnull @_ZTIN6Assimp4STEP6ObjectE, ptr nonnull @_ZTIN6Assimp3IFC10Schema_2x326IfcArbitraryOpenProfileDefE, i64 -1) #20 ; 2 uses
@@ -212,8 +211,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 104
   %i.l = tail call noundef nonnull align 8 dereferenceable(57) ptr @_ZNK6Assimp4STEP4LazyINS_3IFC10Schema_2x315IfcBoundedCurveEEcvRKS4_Ev(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
-  %5 = tail call noundef zeroext i1 @_ZN6Assimp3IFC12ProcessCurveERKNS0_10Schema_2x38IfcCurveERNS0_8TempMeshERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(41) %i.l, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(392) %2) ; 0 uses
-  br label %bb.m
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.m = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(24) %i.f, ptr nonnull @_ZTIN6Assimp4STEP6ObjectE, ptr nonnull @_ZTIN6Assimp3IFC10Schema_2x326IfcParameterizedProfileDefE, i64 -1) #20 ; 2 uses
@@ -332,7 +330,12 @@ bb.l:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   br label %bb.o
 
-bb.m:                                             ; preds = %bb.b, %bb.l, %bb.d
+.sink.split:                                      ; preds = %bb.d, %bb.b
+  %.sink = phi ptr [ %i.i, %bb.b ], [ %i.l, %bb.d ]
+  %4 = tail call noundef zeroext i1 @_ZN6Assimp3IFC12ProcessCurveERKNS0_10Schema_2x38IfcCurveERNS0_8TempMeshERNS0_14ConversionDataE(ptr noundef nonnull align 8 dereferenceable(41) %.sink, ptr noundef nonnull align 8 dereferenceable(48) %1, ptr noundef nonnull align 8 dereferenceable(392) %2) ; 0 uses
+  br label %bb.m
+
+bb.m:                                             ; preds = %.sink.split, %bb.l
   tail call void @_ZN6Assimp3IFC8TempMesh24RemoveAdjacentDuplicatesEv(ptr noundef nonnull align 8 dereferenceable(48) %1)
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -735,8 +738,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #23
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #20
   resume { ptr, i32 } %.pn

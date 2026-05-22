@@ -201,8 +201,7 @@ bb.l:                                             ; preds = %bb.k
   %switch.selectcmp.i = or i1 %switch.selectcmp.case1.i, %switch.selectcmp.case2.i
   %i.ce = select i1 %switch.selectcmp.i, ptr @ExportAlphaRGBA4444, ptr @ExportAlpha
   store ptr %i.ce, ptr %i.m, align 8, !tbaa !36
-  tail call void @WebPInitAlphaProcessing() #8
-  br label %.critedge
+  br label %.critedge.sink.split
 
 WebPIsAlphaMode.exit.i58:                         ; preds = %bb.f
   %i.cf = add nsw i32 %i.x, 1                     ; 2 uses
@@ -303,8 +302,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   store ptr @EmitRescaledAlphaYUV, ptr %i.l, align 8, !tbaa !22
-  tail call void @WebPInitAlphaProcessing() #8
-  br label %.critedge
+  br label %.critedge.sink.split
 
 bb.s:                                             ; preds = %bb.e
   br i1 %i.e, label %.thread66, label %bb.t
@@ -363,11 +361,14 @@ bb.x:                                             ; preds = %bb.w
   %or.cond = or i1 %i.fl, %i.fm
   %i.fn = select i1 %or.cond, ptr @EmitAlphaRGBA4444, ptr @EmitAlphaRGB
   store ptr %i.fn, ptr %i.l, align 8, !tbaa !22
+  br label %.critedge.sink.split
+
+.critedge.sink.split:                             ; preds = %bb.l, %bb.r, %bb.x
   tail call void @WebPInitAlphaProcessing() #8
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.n, %bb.o, %bb.m, %bb.q, %WebPIsAlphaMode.exit.i58, %bb.h, %bb.i, %bb.g, %bb.k, %WebPIsAlphaMode.exit.i, %bb.x, %bb.w, %bb.r, %bb.p, %bb.l, %bb.j, %.thread66, %.thread67, %bb.u, %bb.b
-  %.2 = phi i32 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %bb.u ], [ 1, %.thread67 ], [ 1, %.thread66 ], [ 1, %bb.j ], [ 1, %bb.l ], [ 1, %bb.p ], [ 1, %bb.r ], [ 1, %bb.w ], [ 1, %bb.x ], [ 0, %WebPIsAlphaMode.exit.i ], [ 0, %bb.k ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %WebPIsAlphaMode.exit.i58 ], [ 0, %bb.q ], [ 0, %bb.m ], [ 0, %bb.o ]
+.critedge:                                        ; preds = %.critedge.sink.split, %bb.n, %bb.o, %bb.m, %bb.q, %WebPIsAlphaMode.exit.i58, %bb.h, %bb.i, %bb.g, %bb.k, %WebPIsAlphaMode.exit.i, %bb.w, %bb.p, %bb.j, %.thread66, %.thread67, %bb.u, %bb.b
+  %.2 = phi i32 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %bb.u ], [ 1, %.thread67 ], [ 1, %.thread66 ], [ 1, %bb.j ], [ 0, %bb.q ], [ 1, %bb.p ], [ 0, %bb.m ], [ 1, %bb.w ], [ 0, %bb.o ], [ 0, %WebPIsAlphaMode.exit.i ], [ 0, %bb.k ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %WebPIsAlphaMode.exit.i58 ], [ 1, %.critedge.sink.split ]
   ret i32 %.2
 }
 

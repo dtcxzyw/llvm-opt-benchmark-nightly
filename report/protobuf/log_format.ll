@@ -170,15 +170,14 @@ bb.a:
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %11 = alloca %"struct.absl::lts_20250512::TimeZone::CivilInfo", align 8 ; 10 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 13 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 12 uses
   %i.e = load i64, ptr %i.d, align 8, !tbaa !14
   %i.f = icmp ult i64 %i.e, 34
   br i1 %i.f, label %bb.b, label %bb.c, !prof !18
 
 bb.b:                                             ; preds = %bb.a
-  store i64 0, ptr %i.d, align 8, !tbaa !14
   %.pre23.a = load ptr, ptr %8, align 8, !tbaa !19
-  br label %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit
+  br label %.sink.split.i
 
 bb.c:                                             ; preds = %bb.a
   %i.g = tail call noundef ptr @_ZN4absl12lts_2025051212log_internal8TimeZoneEv() ; 2 uses
@@ -228,9 +227,8 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20250
   %i.u = zext nneg i32 %i.s to i64                ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.pre24, i64 %i.u ; 2 uses
   store ptr %i.v, ptr %8, align 8, !tbaa !19
-  %i.w = sub i64 %.pre, %i.u                      ; 2 uses
-  store i64 %i.w, ptr %i.d, align 8, !tbaa !14
-  br label %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit
+  %i.w = sub i64 %.pre, %i.u
+  br label %.sink.split.i
 
 bb.f:                                             ; preds = %bb.c
   %i.x = load ptr, ptr %8, align 8, !tbaa !19     ; 16 uses
@@ -403,10 +401,17 @@ _ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #5
   br label %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit
 
-_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit: ; preds = %bb.b, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i, %bb.e, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i
-  %12 = phi ptr [ %.pre23.a, %bb.b ], [ %i.cj, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %i.v, %bb.e ], [ %.pre24, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ]
-  %13 = phi i64 [ 0, %bb.b ], [ %i.cl, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %i.w, %bb.e ], [ %.pre, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ]
-  %.2.i = phi i64 [ 0, %bb.b ], [ %i.ci, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %i.u, %bb.e ], [ 0, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ]
+.sink.split.i:                                    ; preds = %bb.b, %bb.e
+  %.pre23 = phi ptr [ %i.v, %bb.e ], [ %.pre23.a, %bb.b ]
+  %.sink.i = phi i64 [ %i.w, %bb.e ], [ 0, %bb.b ] ; 2 uses
+  %.2.ph.i = phi i64 [ %i.u, %bb.e ], [ 0, %bb.b ]
+  store i64 %.sink.i, ptr %i.d, align 8, !tbaa !14
+  br label %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit
+
+_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_119FormatBoundedFieldsENS0_11LogSeverityENS0_4TimeEiRNS0_4SpanIcEE.exit: ; preds = %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i, %.sink.split.i
+  %12 = phi ptr [ %.pre24, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ], [ %i.cj, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %.pre23, %.sink.split.i ]
+  %13 = phi i64 [ %.pre, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ], [ %i.cl, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %.sink.i, %.sink.split.i ]
+  %.2.i = phi i64 [ 0, %_ZN4absl12lts_2025051215LogSeverityNameENS0_11LogSeverityE.exit.i ], [ %i.ci, %_ZN4absl12lts_2025051212log_internal12_GLOBAL__N_120PutLeadingWhitespaceIiEENSt9enable_ifIXsr3std9is_signedIT_EE5valueEvE4typeES5_RPc.exit.i ], [ %.2.ph.i, %.sink.split.i ]
   %spec.select.i = call i64 @llvm.umin.i64(i64 %4, i64 %13) ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %12, ptr align 1 %5, i64 %spec.select.i, i1 false)
   %i.cm = load ptr, ptr %8, align 8, !tbaa !19

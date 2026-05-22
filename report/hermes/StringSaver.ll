@@ -123,10 +123,8 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.j ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.p, i64 %1
-  store ptr %3, ptr %0, align 8, !tbaa !39
-  br label %bb.j
+  %i.p = getelementptr inbounds nuw i8, ptr %i.d, i64 %i.j
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.q = add i64 %i.f, %1                         ; 3 uses
@@ -216,13 +214,17 @@ _ZN4llvh20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096EE12StartNewSla
   store ptr %i.bc, ptr %i.l, align 8, !tbaa !40
   %i.bd = add i64 %i.f, %i.az
   %i.be = and i64 %i.bd, %i.h
-  %i.bf = inttoptr i64 %i.be to ptr               ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.bf, i64 %1
-  store ptr %4, ptr %0, align 8, !tbaa !39
+  %i.bf = inttoptr i64 %i.be to ptr
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.b, %_ZN4llvh20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096EE12StartNewSlabEv.exit
+  %.sink24 = phi ptr [ %i.bf, %_ZN4llvh20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096EE12StartNewSlabEv.exit ], [ %i.p, %bb.b ] ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %.sink24, i64 %1
+  store ptr %3, ptr %0, align 8, !tbaa !39
   br label %bb.j
 
-bb.j:                                             ; preds = %_ZN4llvh23SmallVectorTemplateBaseISt4pairIPvmELb1EE9push_backERKS3_.exit, %_ZN4llvh20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096EE12StartNewSlabEv.exit, %bb.b
-  %.1 = phi ptr [ %i.p, %bb.b ], [ %i.ai, %_ZN4llvh23SmallVectorTemplateBaseISt4pairIPvmELb1EE9push_backERKS3_.exit ], [ %i.bf, %_ZN4llvh20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096EE12StartNewSlabEv.exit ]
+bb.j:                                             ; preds = %.sink.split, %_ZN4llvh23SmallVectorTemplateBaseISt4pairIPvmELb1EE9push_backERKS3_.exit
+  %.1 = phi ptr [ %i.ai, %_ZN4llvh23SmallVectorTemplateBaseISt4pairIPvmELb1EE9push_backERKS3_.exit ], [ %.sink24, %.sink.split ]
   ret ptr %.1
 }
 

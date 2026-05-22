@@ -201,15 +201,20 @@ bb.g:                                             ; preds = %bb.f
   call void @__cxa_guard_release(ptr nonnull @_ZGVZN4YAML3Exp3TabEvE1e) #25
   br label %_ZN4YAML3Exp3TabEv.exit
 
-common.resume:                                    ; preds = %bb.s, %bb.n, %bb.h
-  %common.resume.op = phi { ptr, i32 } [ %i.t, %bb.h ], [ %i.ab, %bb.n ], [ %i.ao, %bb.s ]
+common.resume.sink.split:                         ; preds = %bb.h, %bb.n
+  %_ZGVZN4YAML3Exp7CommentEvE1e.sink = phi ptr [ @_ZGVZN4YAML3Exp7CommentEvE1e, %bb.n ], [ @_ZGVZN4YAML3Exp3TabEvE1e, %bb.h ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.ab, %bb.n ], [ %i.t, %bb.h ]
+  call void @__cxa_guard_abort(ptr nonnull %_ZGVZN4YAML3Exp7CommentEvE1e.sink) #25
+  br label %common.resume
+
+common.resume:                                    ; preds = %common.resume.sink.split, %bb.s
+  %common.resume.op = phi { ptr, i32 } [ %i.ao, %bb.s ], [ %common.resume.op.ph, %common.resume.sink.split ]
   resume { ptr, i32 } %common.resume.op
 
 bb.h:                                             ; preds = %bb.f
   %i.t = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_guard_abort(ptr nonnull @_ZGVZN4YAML3Exp3TabEvE1e) #25
-  br label %common.resume
+  br label %common.resume.sink.split
 
 _ZN4YAML3Exp3TabEv.exit:                          ; preds = %bb.d, %bb.e, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #25
@@ -252,8 +257,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.l
   %i.ab = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_guard_abort(ptr nonnull @_ZGVZN4YAML3Exp7CommentEvE1e) #25, !noalias !140
-  br label %common.resume
+  br label %common.resume.sink.split
 
 _ZN4YAML3Exp7CommentEv.exit:                      ; preds = %.critedge, %bb.k, %bb.m
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(6) @_ZZN4YAML3Exp7CommentEvE1e, i64 6, i1 false)

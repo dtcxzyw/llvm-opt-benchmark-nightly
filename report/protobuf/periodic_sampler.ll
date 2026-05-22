@@ -53,7 +53,7 @@ bb.a:
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call noundef i32 %i.c(ptr noundef nonnull align 8 dereferenceable(40) %0) #5 ; 4 uses
   %i.e = icmp slt i32 %i.d, 2
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 5 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   br i1 %i.e, label %bb.b, label %bb.c, !prof !9
 
 bb.b:                                             ; preds = %bb.a
@@ -77,19 +77,23 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.o = sub nsw i64 1, %i.l
-  store i64 %i.o, ptr %i.f, align 8, !tbaa !10
-  br label %bb.g
+  br label %.sink.split
 
 bb.f:                                             ; preds = %bb.d, %bb.c
   %i.p = load ptr, ptr %0, align 8, !tbaa !7
   %i.q = load ptr, ptr %i.p, align 8
   %i.r = tail call noundef i64 %i.q(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %i.d) #5
   %i.s = sub nsw i64 0, %i.r
-  store i64 %i.s, ptr %i.f, align 8, !tbaa !10
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.e, %bb.f
+  %.sink = phi i64 [ %i.s, %bb.f ], [ %i.o, %bb.e ]
+  %.0.ph = phi i1 [ true, %bb.f ], [ false, %bb.e ]
+  store i64 %.sink, ptr %i.f, align 8, !tbaa !10
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e, %bb.b
-  %.0 = phi i1 [ %i.g, %bb.b ], [ false, %bb.e ], [ true, %bb.f ]
+bb.g:                                             ; preds = %.sink.split, %bb.b
+  %.0 = phi i1 [ %i.g, %bb.b ], [ %.0.ph, %.sink.split ]
   ret i1 %.0
 }
 

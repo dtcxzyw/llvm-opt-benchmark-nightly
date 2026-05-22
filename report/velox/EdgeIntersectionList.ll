@@ -201,14 +201,12 @@ bb.v:                                             ; preds = %_ZNSt6vectorIN4geos
 bb.w:                                             ; preds = %bb.r
   %i.dr = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPv(ptr noundef nonnull %i.dl) #17
-  br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89
+  br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89.sink.split
 
 .thread95:                                        ; preds = %bb.t
   %i.ds = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPv(ptr noundef nonnull %i.dm) #17
-  br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89
+  br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89.sink.split
 
 _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88: ; preds = %bb.s
   %i.dt = landingpad { ptr, i32 }
@@ -219,8 +217,14 @@ _ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88: ; pred
   call void %i.dw(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.dl) #19, !inline_history !74
   br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89
 
-_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89: ; preds = %.loopexit, %.loopexit.split-lp, %bb.v, %bb.w, %.thread95, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88, %bb.d
-  %.pn31 = phi { ptr, i32 } [ %i.dt, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88 ], [ %i.as, %bb.d ], [ %i.dq, %bb.v ], [ %i.dr, %bb.w ], [ %i.ds, %.thread95 ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
+_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89.sink.split: ; preds = %.thread95, %bb.w
+  %.sink = phi ptr [ %i.dl, %bb.w ], [ %i.dm, %.thread95 ]
+  %.pn31.ph = phi { ptr, i32 } [ %i.dr, %bb.w ], [ %i.ds, %.thread95 ]
+  call void @_ZdlPv(ptr noundef nonnull %.sink) #17
+  br label %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89
+
+_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89: ; preds = %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89.sink.split, %.loopexit, %.loopexit.split-lp, %bb.v, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88, %bb.d
+  %.pn31 = phi { ptr, i32 } [ %i.dt, %_ZNKSt14default_deleteIN4geos4geom18CoordinateSequenceEEclEPS2_.exit.i88 ], [ %i.as, %bb.d ], [ %i.dq, %bb.v ], [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ], [ %.pn31.ph, %_ZNSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EED2Ev.exit89.sink.split ]
   %i.dx = load ptr, ptr %3, align 8, !tbaa !55    ; 2 uses
   %.not.i.i.i90 = icmp eq ptr %i.dx, null
   br i1 %.not.i.i.i90, label %_ZNSt6vectorIN4geos4geom10CoordinateESaIS2_EED2Ev.exit91, label %bb.x

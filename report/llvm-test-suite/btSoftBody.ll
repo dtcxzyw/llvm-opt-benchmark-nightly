@@ -201,8 +201,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.ak = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_guard_abort(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #34
-  br label %.body
+  br label %.body.sink.split
 
 _ZN11btTransform11getIdentityEv.exit:             ; preds = %bb.g, %bb.e, %bb.d
   %i.al = load atomic i8, ptr @_ZGVZN11btTransform11getIdentityEvE17identityTransform acquire, align 8
@@ -232,8 +231,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.j
   %i.as = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_guard_abort(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #34
-  br label %.body
+  br label %.body.sink.split
 
 bb.m:                                             ; preds = %_ZN11btTransform11getIdentityEv.exit, %bb.i, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
@@ -528,8 +526,13 @@ bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #34
   br label %bb.aj
 
-.body:                                            ; preds = %bb.h, %bb.l, %bb.ad, %bb.y
-  %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %bb.ad ], [ %i.en, %bb.y ], [ %i.ak, %bb.h ], [ %i.as, %bb.l ]
+.body.sink.split:                                 ; preds = %bb.l, %bb.h
+  %.pn.pn.pn.pn.ph = phi { ptr, i32 } [ %i.as, %bb.l ], [ %i.ak, %bb.h ]
+  call void @__cxa_guard_abort(ptr nonnull @_ZGVZN11btTransform11getIdentityEvE17identityTransform) #34
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.ad, %bb.y
+  %.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn.pn.pn, %bb.ad ], [ %i.en, %bb.y ], [ %.pn.pn.pn.pn.ph, %.body.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #34
   invoke void @_ZN13btConvexShapeD2Ev(ptr noundef nonnull align 8 dereferenceable(72) %4)
           to label %bb.ag unwind label %bb.ak

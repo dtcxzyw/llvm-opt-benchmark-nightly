@@ -201,9 +201,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.d
   %i.n = getelementptr i8, ptr %6, i64 20
   store i32 2, ptr %i.n, align 4, !tbaa !33
-  %7 = getelementptr i8, ptr %6, i64 24
-  store i32 1, ptr %7, align 4, !tbaa !35
-  br label %.loopexit.sink.split
+  br label %bb.q
 
 bb.f:                                             ; preds = %bb.a
   %i.o = add i8 %i.a, -97
@@ -240,9 +238,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.i
   %i.aa = getelementptr i8, ptr %6, i64 20
   store i32 2, ptr %i.aa, align 4, !tbaa !33
-  %8 = getelementptr i8, ptr %6, i64 24
-  store i32 1, ptr %8, align 4, !tbaa !35
-  br label %.loopexit.sink.split
+  br label %bb.q
 
 bb.k:                                             ; preds = %bb.f
   %i.ab = icmp eq i8 %i.a, -33
@@ -269,9 +265,7 @@ bb.l:                                             ; preds = %bb.k
   store i32 1, ptr %i.ag, align 4, !tbaa !33
   %i.ah = getelementptr i8, ptr %6, i64 64
   store i32 2, ptr %i.ah, align 4, !tbaa !35
-  %9 = getelementptr i8, ptr %6, i64 68
-  store i32 83, ptr %9, align 4, !tbaa !7
-  br label %.loopexit.sink.split
+  br label %bb.q
 
 bb.m:                                             ; preds = %bb.p
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -297,18 +291,26 @@ bb.p:                                             ; preds = %bb.n
   %i.ao = getelementptr i8, ptr %i.ai, i64 4
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !30
   %i.aq = icmp eq i32 %i.ap, %i.ad
-  br i1 %i.aq, label %bb.q, label %bb.m
+  br i1 %i.aq, label %7, label %bb.m
 
-bb.q:                                             ; preds = %bb.p
+7:                                                ; preds = %bb.p
   store i32 1, ptr %6, align 4, !tbaa !33
-  %i.ar = getelementptr i8, ptr %6, i64 4
-  store i32 1, ptr %i.ar, align 4, !tbaa !35
+  br label %bb.q
+
+bb.q:                                             ; preds = %7, %bb.l, %bb.j, %bb.e
+  %.sink112 = phi i64 [ 24, %bb.e ], [ 24, %bb.j ], [ 68, %bb.l ], [ 4, %7 ]
+  %.sink110 = phi i32 [ 1, %bb.e ], [ 1, %bb.j ], [ 83, %bb.l ], [ 1, %7 ]
+  %.sink109.ph = phi i64 [ 28, %bb.e ], [ 28, %bb.j ], [ 72, %bb.l ], [ 8, %7 ]
+  %.sink.ph = phi i32 [ 223, %bb.e ], [ 223, %bb.j ], [ 115, %bb.l ], [ %i.aj, %7 ]
+  %.1.ph.ph = phi i32 [ 2, %bb.e ], [ 2, %bb.j ], [ 4, %bb.l ], [ 1, %7 ]
+  %i.ar = getelementptr i8, ptr %6, i64 %.sink112
+  store i32 %.sink110, ptr %i.ar, align 4, !tbaa !7
   br label %.loopexit.sink.split
 
-.loopexit.sink.split:                             ; preds = %bb.e, %bb.j, %bb.l, %bb.q, %bb.o
-  %.sink109 = phi i64 [ 8, %bb.o ], [ 8, %bb.q ], [ 72, %bb.l ], [ 28, %bb.j ], [ 28, %bb.e ]
-  %.sink = phi i32 [ %i.an, %bb.o ], [ %i.aj, %bb.q ], [ 115, %bb.l ], [ 223, %bb.j ], [ 223, %bb.e ]
-  %.1.ph = phi i32 [ 1, %bb.o ], [ 1, %bb.q ], [ 4, %bb.l ], [ 2, %bb.j ], [ 2, %bb.e ]
+.loopexit.sink.split:                             ; preds = %bb.q, %bb.o
+  %.sink109 = phi i64 [ 8, %bb.o ], [ %.sink109.ph, %bb.q ]
+  %.sink = phi i32 [ %i.an, %bb.o ], [ %.sink.ph, %bb.q ]
+  %.1.ph = phi i32 [ 1, %bb.o ], [ %.1.ph.ph, %bb.q ]
   %i.as = getelementptr i8, ptr %6, i64 %.sink109
   store i32 %.sink, ptr %i.as, align 4, !tbaa !7
   br label %.loopexit

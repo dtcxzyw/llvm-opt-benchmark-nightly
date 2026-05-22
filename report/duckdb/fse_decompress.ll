@@ -201,7 +201,7 @@ bb.a:
   %i.a = load i16, ptr %2, align 2, !tbaa !43     ; 2 uses
   %i.b = zext i16 %i.a to i32
   %i.c = load i64, ptr %1, align 8, !tbaa !36
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !37
   %i.f = add i32 %i.e, %i.b                       ; 7 uses
   %i.g = sub i32 0, %i.f
@@ -236,10 +236,7 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds i8, ptr %i.p, i64 %i.u ; 2 uses
   store ptr %i.v, ptr %i.o, align 8, !tbaa !35
   %i.w = and i32 %i.f, 7
-  store i32 %i.w, ptr %i.d, align 8, !tbaa !37
-  %.val.i.i = load i64, ptr %i.v, align 1, !tbaa !13
-  store i64 %.val.i.i, ptr %1, align 8, !tbaa !36
-  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit
+  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -264,12 +261,17 @@ bb.f:                                             ; preds = %bb.e
   store ptr %i.al, ptr %i.o, align 8, !tbaa !35
   %i.am = shl i32 %.021.i, 3
   %i.an = sub i32 %i.f, %i.am
-  store i32 %i.an, ptr %i.d, align 8, !tbaa !37
-  %.val.i = load i64, ptr %i.al, align 1, !tbaa !13
-  store i64 %.val.i, ptr %1, align 8, !tbaa !36
+  br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.sink.split
+
+_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.sink.split: ; preds = %bb.f, %bb.d
+  %storemerge = phi i32 [ %i.w, %bb.d ], [ %i.an, %bb.f ]
+  %.val.i.i.sink.in = phi ptr [ %i.v, %bb.d ], [ %i.al, %bb.f ]
+  store i32 %storemerge, ptr %i.d, align 8, !tbaa !37
+  %.val.i.i.sink = load i64, ptr %.val.i.i.sink.in, align 1, !tbaa !13
+  store i64 %.val.i.i.sink, ptr %1, align 8, !tbaa !36
   br label %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit
 
-_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit: ; preds = %bb.e, %bb.b, %bb.d, %bb.f
+_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit: ; preds = %_ZN11duckdb_zstdL17BIT_reloadDStreamEPNS_13BIT_DStream_tE.exit.sink.split, %bb.e, %bb.b
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.ao, ptr %i.ap, align 8, !tbaa !46

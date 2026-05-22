@@ -201,7 +201,6 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bm = sub nsw i32 %i.bi, %.067
-  %10 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %i.ap, i32 noundef %.067, i32 noundef %i.bm) #11 ; 0 uses
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.o
@@ -213,10 +212,13 @@ bb.r:                                             ; preds = %bb.o
   %i.bs = sext i16 %i.br to i32
   %i.bt = load i32, ptr %i.bb, align 4
   %i.bu = select i1 %i.bq, i32 %i.bt, i32 %i.bs
-  %11 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %7, i32 noundef 0, i32 noundef %i.bu) #11 ; 0 uses
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.q, %bb.r
+  %.sink89 = phi i32 [ %i.bm, %bb.q ], [ %i.bu, %bb.r ]
+  %.067.sink = phi i32 [ %.067, %bb.q ], [ 0, %bb.r ]
+  %.sink = phi ptr [ %i.ap, %bb.q ], [ %7, %bb.r ]
+  %10 = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %.sink, i32 noundef %.067.sink, i32 noundef %.sink89) #11 ; 0 uses
   %i.bv = load i32, ptr %i.bh, align 4
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
   %i.bx = load i16, ptr %i.bw, align 4

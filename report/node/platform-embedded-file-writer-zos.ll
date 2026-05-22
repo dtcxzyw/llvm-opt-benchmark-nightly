@@ -130,15 +130,16 @@ bb.d:                                             ; preds = %bb.c
   %i.u = ashr exact i64 %sext, 32
   %i.v = getelementptr inbounds i8, ptr %i.a, i64 %i.u
   %i.w = zext nneg i32 %.027.lcssa to i64
-  %3 = call i64 @fwrite(ptr noundef nonnull %i.v, i64 noundef 1, i64 noundef %i.w, ptr noundef %0) ; 0 uses
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.x = sext i32 %i.b to i64
-  %4 = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef %i.x, ptr noundef %0) ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge, %bb.e
+  %.sink35 = phi i64 [ %i.w, %._crit_edge ], [ %i.x, %bb.e ]
+  %.sink = phi ptr [ %i.v, %._crit_edge ], [ %i.a, %bb.e ]
+  %3 = call i64 @fwrite(ptr noundef nonnull %.sink, i64 noundef 1, i64 noundef %.sink35, ptr noundef %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret void

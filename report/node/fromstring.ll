@@ -201,8 +201,7 @@ bb.a:
   %i.l = zext i32 %i.k to i64
   %i.m = shl nuw nsw i64 %i.l, 3
   %i.n = add nuw nsw i64 %i.m, 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.n, i1 false)
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 .lr.ph41:                                         ; preds = %.preheader36, %.lr.ph41
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph41 ], [ 0, %.preheader36 ] ; 3 uses
@@ -226,8 +225,7 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph.preheader:                                 ; preds = %.preheader37
   %i.u = zext i32 %2 to i64
   %i.v = shl nuw nsw i64 %i.u, 3
-  tail call void @llvm.memset.p0.i64(ptr align 4 %1, i8 0, i64 %i.v, i1 false)
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.c:                                             ; preds = %bb.b
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 117
@@ -262,7 +260,13 @@ bb.f:                                             ; preds = %_ZN2v86bigint12IsPo
   tail call void @_ZN2v86bigint13ProcessorImpl15FromStringLargeENS0_8RWDigitsEPNS0_21FromStringAccumulatorE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %1, i32 %2, ptr noundef nonnull %3)
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.preheader, %.lr.ph43.preheader, %.preheader37, %.preheader, %bb.e, %bb.f, %bb.d
+.loopexit.sink.split:                             ; preds = %.lr.ph43.preheader, %.lr.ph.preheader
+  %.sink52 = phi i64 [ %i.v, %.lr.ph.preheader ], [ %i.n, %.lr.ph43.preheader ]
+  %.sink = phi ptr [ %1, %.lr.ph.preheader ], [ %scevgep, %.lr.ph43.preheader ]
+  tail call void @llvm.memset.p0.i64(ptr align 4 %.sink, i8 0, i64 %.sink52, i1 false)
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.sink.split, %.preheader37, %.preheader, %bb.e, %bb.f, %bb.d
   ret void
 }
 

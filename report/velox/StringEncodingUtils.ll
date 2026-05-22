@@ -201,8 +201,7 @@ bb.j:                                             ; preds = %bb.i, %_ZN5folly14A
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit: ; preds = %.loopexit
   %i.bg = extractvalue { i32, i1 } %i.be, 0
-  store i32 %i.bg, ptr %1, align 4
-  br label %.backedge
+  br label %.sink.split, !llvm.loop !128
 
 bb.k:                                             ; preds = %.loopexit
   br i1 %i.j, label %.thread80, label %bb.l
@@ -249,11 +248,7 @@ bb.p:                                             ; preds = %_ZNSt13__atomic_bas
 
 _ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit: ; preds = %.thread76, %bb.p
   %i.bw = load atomic i32, ptr %0 acquire, align 4
-  store i32 %i.bw, ptr %1, align 4, !tbaa !3
-  br label %.backedge
-
-.backedge:                                        ; preds = %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit, %bb.u, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit63, %.thread81, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit, %bb.o
-  br label %bb.c, !llvm.loop !128
+  br label %.sink.split, !llvm.loop !128
 
 bb.q:                                             ; preds = %.thread76
   %i.bx = load atomic i32, ptr %0 acquire, align 4 ; 2 uses
@@ -324,6 +319,14 @@ bb.w:                                             ; preds = %bb.v
 _ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit63: ; preds = %bb.v, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %.backedge
+
+.sink.split:                                      ; preds = %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit
+  %.sink = phi i32 [ %i.bw, %_ZNSt13__atomic_baseImE23compare_exchange_strongERmmSt12memory_orderS2_.exit ], [ %i.bg, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit ]
+  store i32 %.sink, ptr %1, align 4
+  br label %.backedge
+
+.backedge:                                        ; preds = %.sink.split, %bb.u, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit63, %.thread81, %_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE18unlockSharedInlineEv.exit, %bb.o
+  br label %bb.c, !llvm.loop !128
 
 .thread80:                                        ; preds = %.thread78, %bb.k, %bb.l, %bb.r
   ret i1 true

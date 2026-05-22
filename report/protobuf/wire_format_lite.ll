@@ -107,8 +107,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  store ptr %i.k, ptr %0, align 8, !tbaa !7
-  br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit
+  br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit.sink.split
 
 bb.f:                                             ; preds = %bb.d, %bb.c
   %i.l = tail call { i64, i8 } @_ZN6google8protobuf2io16CodedInputStream20ReadVarint64FallbackEv(ptr noundef nonnull align 8 dereferenceable(80) %0)
@@ -187,8 +186,7 @@ bb.l:                                             ; preds = %_ZN6google8protobuf
 bb.m:                                             ; preds = %bb.l
   %i.ao = zext nneg i32 %.01921 to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ai, i64 %i.ao
-  store ptr %i.ap, ptr %0, align 8, !tbaa !7
-  br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit
+  br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.aq = tail call noundef zeroext i1 @_ZN6google8protobuf2io16CodedInputStream12SkipFallbackEii(ptr noundef nonnull align 8 dereferenceable(80) %0, i32 noundef %.01921, i32 noundef %i.an)
@@ -286,8 +284,13 @@ _ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian32EPj.exit: ; preds = 
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
   br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit
 
-_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit: ; preds = %bb.t, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit, %bb.m, %bb.n, %bb.f, %bb.e, %bb.b, %_ZN6google8protobuf2io16CodedInputStream23DecrementRecursionDepthEv.exit, %bb.o, %bb.a, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian32EPj.exit, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian64EPm.exit
-  %.4 = phi i1 [ %.0.i16, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian32EPj.exit ], [ false, %bb.a ], [ false, %bb.b ], [ %.0.i13, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian64EPm.exit ], [ %i.m, %bb.f ], [ true, %bb.m ], [ %i.br, %_ZN6google8protobuf2io16CodedInputStream23DecrementRecursionDepthEv.exit ], [ false, %bb.o ], [ true, %bb.e ], [ false, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit ], [ %i.aq, %bb.n ], [ false, %bb.t ]
+_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit.sink.split: ; preds = %bb.e, %bb.m
+  %.sink = phi ptr [ %i.ap, %bb.m ], [ %i.k, %bb.e ]
+  store ptr %.sink, ptr %0, align 8, !tbaa !7
+  br label %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit
+
+_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit: ; preds = %bb.t, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit.sink.split, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit, %bb.n, %bb.f, %bb.b, %_ZN6google8protobuf2io16CodedInputStream23DecrementRecursionDepthEv.exit, %bb.o, %bb.a, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian32EPj.exit, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian64EPm.exit
+  %.4 = phi i1 [ %.0.i16, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian32EPj.exit ], [ false, %bb.a ], [ false, %bb.b ], [ %.0.i13, %_ZN6google8protobuf2io16CodedInputStream18ReadLittleEndian64EPm.exit ], [ %i.m, %bb.f ], [ %i.aq, %bb.n ], [ %i.br, %_ZN6google8protobuf2io16CodedInputStream23DecrementRecursionDepthEv.exit ], [ false, %bb.o ], [ true, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint64EPm.exit.sink.split ], [ false, %_ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit ], [ false, %bb.t ]
   ret i1 %.4
 }
 

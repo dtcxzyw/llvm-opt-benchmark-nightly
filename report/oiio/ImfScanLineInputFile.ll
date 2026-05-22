@@ -201,8 +201,7 @@ bb.bj:                                            ; preds = %bb.bi
 bb.bk:                                            ; preds = %bb.bj
   %i.fw = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_free_exception(ptr nonnull %i.fv) #22
-  br label %.body77
+  br label %.body77.sink.split
 
 bb.bl:                                            ; preds = %bb.bi
   %i.fx = load i8, ptr %i.ep, align 4, !tbaa !129, !range !87, !noundef !88
@@ -345,8 +344,7 @@ bb.bv:                                            ; preds = %.noexc75
 bb.bw:                                            ; preds = %bb.bv
   %i.im = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_free_exception(ptr nonnull %i.ii) #22
-  br label %.body77
+  br label %.body77.sink.split
 
 bb.bx:                                            ; preds = %.noexc75, %bb.bt, %_ZN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcess15update_pointersEPKNS_11FrameBufferEii.exit.i
   %.val.i73 = load ptr, ptr %i.er, align 8, !tbaa !210
@@ -380,8 +378,14 @@ bb.bz:                                            ; preds = %bb.bd
           cleanup
   br label %.body77
 
-.body77:                                          ; preds = %.loopexit101, %.loopexit.split-lp102.loopexit.split-lp, %.loopexit.split-lp102.loopexit, %bb.bw, %bb.bk, %bb.bz
-  %.pn.pn = phi { ptr, i32 } [ %i.iv, %bb.bz ], [ %i.fw, %bb.bk ], [ %i.im, %bb.bw ], [ %lpad.loopexit103, %.loopexit101 ], [ %lpad.loopexit106, %.loopexit.split-lp102.loopexit ], [ %lpad.loopexit.split-lp107, %.loopexit.split-lp102.loopexit.split-lp ]
+.body77.sink.split:                               ; preds = %bb.bk, %bb.bw
+  %.sink = phi ptr [ %i.ii, %bb.bw ], [ %i.fv, %bb.bk ]
+  %.pn.pn.ph = phi { ptr, i32 } [ %i.im, %bb.bw ], [ %i.fw, %bb.bk ]
+  call void @__cxa_free_exception(ptr nonnull %.sink) #22
+  br label %.body77
+
+.body77:                                          ; preds = %.body77.sink.split, %.loopexit101, %.loopexit.split-lp102.loopexit.split-lp, %.loopexit.split-lp102.loopexit, %bb.bz
+  %.pn.pn = phi { ptr, i32 } [ %i.iv, %bb.bz ], [ %lpad.loopexit106, %.loopexit.split-lp102.loopexit ], [ %lpad.loopexit.split-lp107, %.loopexit.split-lp102.loopexit.split-lp ], [ %lpad.loopexit103, %.loopexit101 ], [ %.pn.pn.ph, %.body77.sink.split ]
   call fastcc void @_ZNSt10unique_ptrIN27OpenImageIO_v3_1_Imf__3_3_512_GLOBAL__N_115ScanLineProcessESt14default_deleteIS2_EED2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %10) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #22
   br label %bb.cb

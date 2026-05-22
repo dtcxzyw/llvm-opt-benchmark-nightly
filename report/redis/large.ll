@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = udiv i64 %i.aa, 61
   %i.ac = trunc i64 %i.ab to i32
   store i32 %i.ac, ptr %i.l, align 8, !tbaa !91
-  tail call void @je_arena_decay(ptr noundef nonnull %0, ptr noundef %i.j, i1 noundef zeroext false, i1 noundef zeroext false) #10
-  br label %arena_decay_ticks.exit
+  br label %arena_decay_ticks.exit.sink.split
 
 bb.f:                                             ; preds = %bb.b
   %i.ad = icmp ult i64 %2, %3
@@ -247,8 +246,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ba = udiv i64 %i.az, 61
   %i.bb = trunc i64 %i.ba to i32
   store i32 %i.bb, ptr %i.ak, align 8, !tbaa !91
-  tail call void @je_arena_decay(ptr noundef nonnull %0, ptr noundef %i.ai, i1 noundef zeroext false, i1 noundef zeroext false) #10
-  br label %arena_decay_ticks.exit
+  br label %arena_decay_ticks.exit.sink.split
 
 bb.k:                                             ; preds = %bb.f, %bb.g, %bb.a
   %.not = icmp ult i64 %i.e, %2
@@ -289,8 +287,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bw = udiv i64 %i.bv, 61
   %i.bx = trunc i64 %i.bw to i32
   store i32 %i.bx, ptr %i.bg, align 8, !tbaa !91
-  tail call void @je_arena_decay(ptr noundef nonnull %0, ptr noundef %i.be, i1 noundef zeroext false, i1 noundef zeroext false) #10
-  br label %arena_decay_ticks.exit
+  br label %arena_decay_ticks.exit.sink.split
 
 bb.o:                                             ; preds = %bb.k
   br i1 %.not36, label %bb.p, label %arena_decay_ticks.exit
@@ -410,8 +407,13 @@ bb.y:                                             ; preds = %bb.x
   call void @je_arena_decay(ptr noundef nonnull %0, ptr noundef %i.dp, i1 noundef zeroext false, i1 noundef zeroext false) #10
   br label %arena_decay_ticks.exit
 
-arena_decay_ticks.exit:                           ; preds = %bb.p, %bb.y, %bb.w, %bb.x, %large_ralloc_no_move_shrink.exit.thread49, %bb.n, %bb.l, %bb.m, %bb.j, %bb.h, %bb.i, %bb.e, %bb.c, %bb.d, %bb.o
-  %.0 = phi i1 [ false, %bb.e ], [ false, %bb.j ], [ true, %bb.o ], [ false, %bb.y ], [ true, %large_ralloc_no_move_shrink.exit.thread49 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.m ], [ false, %bb.l ], [ false, %bb.n ], [ false, %bb.x ], [ false, %bb.w ], [ true, %bb.p ]
+arena_decay_ticks.exit.sink.split:                ; preds = %bb.e, %bb.j, %bb.n
+  %.sink = phi ptr [ %i.be, %bb.n ], [ %i.ai, %bb.j ], [ %i.j, %bb.e ]
+  tail call void @je_arena_decay(ptr noundef nonnull %0, ptr noundef %.sink, i1 noundef zeroext false, i1 noundef zeroext false) #10
+  br label %arena_decay_ticks.exit
+
+arena_decay_ticks.exit:                           ; preds = %arena_decay_ticks.exit.sink.split, %bb.p, %bb.y, %bb.w, %bb.x, %large_ralloc_no_move_shrink.exit.thread49, %bb.l, %bb.m, %bb.h, %bb.i, %bb.c, %bb.d, %bb.o
+  %.0 = phi i1 [ false, %bb.x ], [ false, %bb.w ], [ true, %bb.o ], [ false, %bb.y ], [ true, %large_ralloc_no_move_shrink.exit.thread49 ], [ false, %bb.d ], [ false, %bb.c ], [ false, %bb.i ], [ false, %bb.h ], [ false, %bb.m ], [ false, %bb.l ], [ true, %bb.p ], [ false, %arena_decay_ticks.exit.sink.split ]
   ret i1 %.0
 }
 

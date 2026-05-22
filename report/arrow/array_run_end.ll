@@ -201,15 +201,20 @@ bb.ay:                                            ; preds = %bb.aw
   %i.hj = atomicrmw volatile add ptr %i.hf, i32 1 acq_rel, align 4, !noalias !191 ; 0 uses
   br label %_ZN5arrow14NumericBuilderINS_9Int16TypeEEC2IS1_EENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEPNS_10MemoryPoolEE4typeEl.exit.i
 
-common.resume:                                    ; preds = %bb.gx, %bb.hd, %bb.ig, %bb.dv, %bb.eb, %bb.fe, %bb.at, %bb.az, %bb.cc
-  %common.resume.op = phi { ptr, i32 } [ %.pn75.i11, %bb.fe ], [ %.pn75.i, %bb.cc ], [ %i.hk, %bb.az ], [ %.pn81.pn.pn.i, %bb.at ], [ %i.us, %bb.eb ], [ %.pn81.pn.pn.i55, %bb.dv ], [ %i.ahy, %bb.hd ], [ %.pn81.pn.pn.i149, %bb.gx ], [ %.pn75.i105, %bb.ig ]
+common.resume.sink.split:                         ; preds = %bb.az, %bb.eb, %bb.hd
+  %.sink = phi ptr [ %13, %bb.hd ], [ %28, %bb.eb ], [ %43, %bb.az ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.ahy, %bb.hd ], [ %i.us, %bb.eb ], [ %i.hk, %bb.az ]
+  call void @_ZN5arrow12ArrayBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(216) %.sink) #19, !noalias !112
+  br label %common.resume
+
+common.resume:                                    ; preds = %common.resume.sink.split, %bb.gx, %bb.ig, %bb.dv, %bb.fe, %bb.at, %bb.cc
+  %common.resume.op = phi { ptr, i32 } [ %.pn75.i11, %bb.fe ], [ %.pn75.i, %bb.cc ], [ %.pn75.i105, %bb.ig ], [ %.pn81.pn.pn.i, %bb.at ], [ %.pn81.pn.pn.i149, %bb.gx ], [ %.pn81.pn.pn.i55, %bb.dv ], [ %common.resume.op.ph, %common.resume.sink.split ]
   resume { ptr, i32 } %common.resume.op
 
 bb.az:                                            ; preds = %_ZNK5arrow9ArrayData9GetValuesIsEEPKT_i.exit125.i
   %i.hk = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN5arrow12ArrayBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(216) %43) #19, !noalias !137
-  br label %common.resume
+  br label %common.resume.sink.split
 
 _ZN5arrow14NumericBuilderINS_9Int16TypeEEC2IS1_EENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEPNS_10MemoryPoolEE4typeEl.exit.i: ; preds = %bb.ay, %bb.ax, %.noexc.i.i
   %i.hl = getelementptr inbounds nuw i8, ptr %43, i64 160
@@ -612,8 +617,7 @@ bb.ea:                                            ; preds = %bb.dy
 bb.eb:                                            ; preds = %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit125.i
   %i.us = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN5arrow12ArrayBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(216) %28) #19, !noalias !213
-  br label %common.resume
+  br label %common.resume.sink.split
 
 _ZN5arrow14NumericBuilderINS_9Int32TypeEEC2IS1_EENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEPNS_10MemoryPoolEE4typeEl.exit.i: ; preds = %bb.ea, %bb.dz, %.noexc.i.i8
   %i.ut = getelementptr inbounds nuw i8, ptr %28, i64 160
@@ -1016,8 +1020,7 @@ bb.hc:                                            ; preds = %bb.ha
 bb.hd:                                            ; preds = %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit125.i
   %i.ahy = landingpad { ptr, i32 }
           cleanup
-  call void @_ZN5arrow12ArrayBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(216) %13) #19, !noalias !250
-  br label %common.resume
+  br label %common.resume.sink.split
 
 _ZN5arrow14NumericBuilderINS_9Int64TypeEEC2IS1_EENSt9enable_ifIXsr22is_parameter_free_typeIT_EE5valueEPNS_10MemoryPoolEE4typeEl.exit.i: ; preds = %bb.hc, %bb.hb, %.noexc.i.i102
   %i.ahz = getelementptr inbounds nuw i8, ptr %13, i64 160

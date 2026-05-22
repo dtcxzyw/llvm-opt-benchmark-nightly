@@ -201,7 +201,7 @@ input_load_string.exit:                           ; preds = %bb.h, %bb.i
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc i64 @parse_lex_input(ptr noundef nonnull %0, ptr noundef nonnull %1, i1 noundef zeroext %2) unnamed_addr #0 {
 bb.a:
-  %3 = alloca %struct.pm_parser, align 8          ; 15 uses
+  %3 = alloca %struct.pm_parser, align 8          ; 14 uses
   %4 = alloca %struct.parse_lex_data_t, align 8   ; 8 uses
   %5 = alloca %struct.pm_lex_callback_t, align 8  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
@@ -222,7 +222,7 @@ bb.a:
   %i.m = sext i32 %i.l to i64
   %i.n = shl nsw i64 %i.m, 1
   %i.o = or disjoint i64 %i.n, 1
-  %i.p = call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %i.i, i64 noundef %i.j, i32 noundef 3, i64 noundef %i.e, i64 noundef %i.o, i64 noundef %i.h) #9 ; 5 uses
+  %i.p = call i64 (i64, i64, i32, ...) @rb_funcall(i64 noundef %i.i, i64 noundef %i.j, i32 noundef 3, i64 noundef %i.e, i64 noundef %i.o, i64 noundef %i.h) #9 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   store i64 %i.p, ptr %4, align 8, !tbaa !56
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
@@ -320,28 +320,29 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bn = phi i1 [ %i.bm, %bb.h ], [ false, %bb.g ]
-  %6 = load i64, ptr @rb_cPrismParseLexResult, align 8, !tbaa !11
   %i.bo = load ptr, ptr %i.s, align 8, !tbaa !60
-  %7 = call fastcc i64 @parse_result_create(i64 noundef %6, ptr noundef %3, i64 noundef %i.bb, ptr noundef %i.bo, i64 noundef %i.p, i1 noundef zeroext %i.bn)
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.f
-  %8 = load i64, ptr @rb_cPrismLexResult, align 8, !tbaa !11
   %i.bp = load i64, ptr %i.q, align 8, !tbaa !59
   %i.bq = load ptr, ptr %i.s, align 8, !tbaa !60
   %i.br = load i8, ptr %i.v, align 1, !tbaa !43, !range !44, !noundef !45
   %i.bs = trunc nuw i8 %i.br to i1
-  %9 = call fastcc i64 @parse_result_create(i64 noundef %8, ptr noundef %3, i64 noundef %i.bp, ptr noundef %i.bq, i64 noundef %i.p, i1 noundef zeroext %i.bs)
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
-  %.034 = phi i64 [ %7, %bb.i ], [ %9, %bb.j ]
+  %.sink39 = phi i1 [ %i.bs, %bb.j ], [ %i.bn, %bb.i ]
+  %.sink38 = phi ptr [ %i.bq, %bb.j ], [ %i.bo, %bb.i ]
+  %.034 = phi i64 [ %i.bp, %bb.j ], [ %i.bb, %bb.i ]
+  %.sink.in = phi ptr [ @rb_cPrismLexResult, %bb.j ], [ @rb_cPrismParseLexResult, %bb.i ]
+  %.sink = load i64, ptr %.sink.in, align 8, !tbaa !11
+  %6 = call fastcc i64 @parse_result_create(i64 noundef %.sink, ptr noundef %3, i64 noundef %.034, ptr noundef %.sink38, i64 noundef %i.p, i1 noundef zeroext %.sink39)
   call void @pm_node_destroy(ptr noundef nonnull %3, ptr noundef %i.aa) #9
   call void @pm_parser_free(ptr noundef nonnull %3) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
-  ret i64 %.034
+  ret i64 %6
 }
 
 declare void @pm_string_free(ptr noundef) local_unnamed_addr #2

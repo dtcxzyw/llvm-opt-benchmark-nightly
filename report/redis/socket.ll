@@ -201,9 +201,7 @@ bb.b:                                             ; preds = %bb.a
   store i32 5, ptr %i.c, align 8, !tbaa !19
   %i.d = tail call ptr @__errno_location() #12
   %i.e = load i32, ptr %i.d, align 4, !tbaa !9
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 %i.e, ptr %4, align 4, !tbaa !22
-  br label %bb.f
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.a
   %i.f = tail call i32 @aeWait(i32 noundef %i.a, i32 noundef 2, i64 noundef %3) #11
@@ -214,9 +212,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 5, ptr %i.i, align 8, !tbaa !19
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i32 110, ptr %5, align 4, !tbaa !22
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -225,8 +221,14 @@ bb.e:                                             ; preds = %bb.c
   store i32 3, ptr %i.k, align 8, !tbaa !19
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d, %bb.b
-  %.0 = phi i32 [ -1, %bb.b ], [ -1, %bb.d ], [ 0, %bb.e ]
+.sink.split:                                      ; preds = %bb.b, %bb.d
+  %.sink = phi i32 [ 110, %bb.d ], [ %i.e, %bb.b ]
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 12
+  store i32 %.sink, ptr %4, align 4, !tbaa !22
+  br label %bb.f
+
+bb.f:                                             ; preds = %.sink.split, %bb.e
+  %.0 = phi i32 [ 0, %bb.e ], [ -1, %.sink.split ]
   ret i32 %.0
 }
 

@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %.preheader.i
 
 rbimpl_check_typeddata.exit:                      ; preds = %bb.g, %RTYPEDDATA_GET_DATA.exit.i, %.critedge.i
   %i.ap = phi ptr [ %i.an, %.critedge.i ], [ %i.y, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.y, %bb.g ] ; 3 uses
-  %.1.i = phi ptr [ %i.ao, %.critedge.i ], [ %i.ai, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.ai, %bb.g ] ; 7 uses
+  %.1.i = phi ptr [ %i.ao, %.critedge.i ], [ %i.ai, %RTYPEDDATA_GET_DATA.exit.i ], [ %i.ai, %bb.g ] ; 6 uses
   %i.aq = icmp slt i32 %0, 1
   br i1 %i.aq, label %bb.m, label %.preheader
 
@@ -262,9 +262,7 @@ rbimpl_RB_TYPE_P_fastpath.exit:                   ; preds = %rb_scan_args_set.ex
 bb.n:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit
   %i.bk = getelementptr inbounds nuw i8, ptr %.1.i, i64 8
   store i32 1, ptr %i.bk, align 8, !tbaa !33
-  %3 = getelementptr inbounds nuw i8, ptr %.1.i, i64 16
-  store i64 %i.ar, ptr %3, align 8, !tbaa !34
-  br label %bb.q
+  br label %.sink.split
 
 rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %rb_scan_args_set.exit, %rbimpl_RB_TYPE_P_fastpath.exit
   %i.bl = load i64, ptr @id_gets, align 8, !tbaa !10
@@ -287,13 +285,20 @@ bb.p:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.bs = load i64, ptr %i.a, align 8, !tbaa !10
   %i.bt = getelementptr inbounds nuw i8, ptr %.1.i, i64 16 ; 2 uses
   store i64 %i.bs, ptr %i.bt, align 8, !tbaa !34
-  %4 = getelementptr inbounds nuw i8, ptr %.1.i, i64 24
-  store i64 0, ptr %4, align 8, !tbaa !34
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.n, %bb.p
+  %.sink44 = phi i64 [ 24, %bb.p ], [ 16, %bb.n ]
+  %.sink = phi i64 [ 0, %bb.p ], [ %i.ar, %bb.n ]
+  %.019.ph = phi ptr [ @ripper_lex_get_str, %bb.p ], [ @ripper_lex_io_get, %bb.n ]
+  %.0.ph = phi ptr [ %i.bt, %bb.p ], [ %i.bg, %bb.n ]
+  %3 = getelementptr inbounds nuw i8, ptr %.1.i, i64 %.sink44
+  store i64 %.sink, ptr %3, align 8, !tbaa !34
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.o, %bb.p, %bb.n
-  %.019 = phi ptr [ @ripper_lex_io_get, %bb.n ], [ @ripper_lex_get_generic, %bb.o ], [ @ripper_lex_get_str, %bb.p ]
-  %.0 = phi ptr [ %i.bg, %bb.n ], [ %i.bp, %bb.o ], [ %i.bt, %bb.p ]
+bb.q:                                             ; preds = %.sink.split, %bb.o
+  %.019 = phi ptr [ @ripper_lex_get_generic, %bb.o ], [ %.019.ph, %.sink.split ]
+  %.0 = phi ptr [ %i.bp, %bb.o ], [ %.0.ph, %.sink.split ]
   br i1 %i.av, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q

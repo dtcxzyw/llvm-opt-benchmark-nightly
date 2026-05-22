@@ -201,7 +201,7 @@ declare ptr @_PyInterpreterState_GetEvalFrameFunc(ptr noundef) local_unnamed_add
 ; Function Attrs: nounwind uwtable
 define internal fastcc range(i32 -1, 1) i32 @new_code_arena() unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @mmap64(ptr noundef null, i64 noundef 65536, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #10 ; 12 uses
+  %i.a = tail call ptr @mmap64(ptr noundef null, i64 noundef 65536, i32 noundef 3, i32 noundef 34, i32 noundef -1, i64 noundef 0) #10 ; 11 uses
   %i.b = icmp eq ptr %i.a, inttoptr (i64 -1 to ptr)
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -307,9 +307,7 @@ round_up.exit:                                    ; preds = %_PyAnnotateMemoryMa
 bb.f:                                             ; preds = %._crit_edge
   %i.al = load ptr, ptr @PyExc_OSError, align 8, !tbaa !216
   %i.am = tail call ptr @PyErr_SetFromErrno(ptr noundef %i.al) #10 ; 0 uses
-  %0 = tail call i32 @munmap(ptr noundef %i.a, i64 noundef 65536) #10 ; 0 uses
-  tail call void (ptr, ...) @PyErr_FormatUnraisable(ptr noundef nonnull @.str.8) #10
-  br label %bb.j
+  br label %.sink.split
 
 bb.g:                                             ; preds = %._crit_edge
   %i.an = tail call ptr @PyMem_RawCalloc(i64 noundef 1, i64 noundef 48) #10 ; 8 uses
@@ -318,9 +316,7 @@ bb.g:                                             ; preds = %._crit_edge
 
 bb.h:                                             ; preds = %bb.g
   %i.ap = tail call ptr @PyErr_NoMemory() #10     ; 0 uses
-  %1 = tail call i32 @munmap(ptr noundef %i.a, i64 noundef 65536) #10 ; 0 uses
-  tail call void (ptr, ...) @PyErr_FormatUnraisable(ptr noundef nonnull @.str.9) #10
-  br label %bb.j
+  br label %.sink.split
 
 bb.i:                                             ; preds = %bb.g
   store ptr %i.a, ptr %i.an, align 8, !tbaa !210
@@ -338,8 +334,14 @@ bb.i:                                             ; preds = %bb.g
   store ptr %i.an, ptr getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 2816), align 8, !tbaa !195
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.f, %bb.i, %bb.h, %bb.b
-  %.2 = phi i32 [ -1, %bb.b ], [ -1, %bb.f ], [ -1, %bb.h ], [ 0, %bb.i ]
+.sink.split:                                      ; preds = %bb.h, %bb.f
+  %.str.8.sink = phi ptr [ @.str.8, %bb.f ], [ @.str.9, %bb.h ]
+  %0 = tail call i32 @munmap(ptr noundef %i.a, i64 noundef 65536) #10 ; 0 uses
+  tail call void (ptr, ...) @PyErr_FormatUnraisable(ptr noundef nonnull %.str.8.sink) #10
+  br label %bb.j
+
+bb.j:                                             ; preds = %.sink.split, %bb.i, %bb.b
+  %.2 = phi i32 [ -1, %bb.b ], [ 0, %bb.i ], [ -1, %.sink.split ]
   ret i32 %.2
 }
 

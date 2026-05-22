@@ -201,8 +201,7 @@ bb.k:                                             ; preds = %_ZNK5folly5RangeIPK
   %i.ai = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  call void @__cxa_free_exception(ptr nonnull %i.ah) #26
-  br label %.body
+  br label %.body.sink.split
 
 bb.l:                                             ; preds = %_ZNK5folly5RangeIPKcE4findERS1_.exit.i
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.z, i64 %i.af)
@@ -311,8 +310,7 @@ bb.r:                                             ; preds = %_ZNK5folly5RangeIPK
   %i.bh = landingpad { ptr, i32 }
           cleanup
           catch ptr @_ZTISt9exception
-  call void @__cxa_free_exception(ptr nonnull %i.bf) #26
-  br label %.body
+  br label %.body.sink.split
 
 _ZNK5folly5RangeIPKcE8subpieceEmm.exit.i:         ; preds = %_ZN5folly5qfindIPKcEEmRKNS_5RangeIT_EERKNS5_10value_typeE.exit.i.i
   %.sroa.speculated.i23.i = call i64 @llvm.umin.i64(i64 %gepdiff, i64 %i.bb)
@@ -512,8 +510,14 @@ bb.ab:                                            ; preds = %.invoke112, %.invok
           catch ptr @_ZTISt9exception
   br label %.body
 
-.body:                                            ; preds = %bb.k, %bb.r, %bb.ab
-  %eh.lpad-body = phi { ptr, i32 } [ %i.cw, %bb.ab ], [ %i.ai, %bb.k ], [ %i.bh, %bb.r ] ; 3 uses
+.body.sink.split:                                 ; preds = %bb.r, %bb.k
+  %.sink = phi ptr [ %i.ah, %bb.k ], [ %i.bf, %bb.r ]
+  %eh.lpad-body.ph = phi { ptr, i32 } [ %i.ai, %bb.k ], [ %i.bh, %bb.r ]
+  call void @__cxa_free_exception(ptr nonnull %.sink) #26
+  br label %.body
+
+.body:                                            ; preds = %.body.sink.split, %bb.ab
+  %eh.lpad-body = phi { ptr, i32 } [ %i.cw, %bb.ab ], [ %eh.lpad-body.ph, %.body.sink.split ] ; 3 uses
   %i.cx = extractvalue { ptr, i32 } %eh.lpad-body, 1
   %i.cy = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #26
   %i.cz = icmp eq i32 %i.cx, %i.cy

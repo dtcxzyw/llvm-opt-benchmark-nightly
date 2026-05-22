@@ -201,15 +201,16 @@ bb.l:                                             ; preds = %.thread
 
 FT_Done_Glyph.exit:                               ; preds = %.thread, %bb.l
   call void @ft_mem_free(ptr noundef %i.ae, ptr noundef nonnull %i.j) #5
-  store ptr null, ptr %1, align 8, !tbaa !90
+  br label %bb.m
+
+bb.m:                                             ; preds = %bb.k, %FT_Done_Glyph.exit
+  %.sink = phi ptr [ null, %FT_Done_Glyph.exit ], [ %i.j, %bb.k ]
+  %.016.ph = phi i32 [ %.040, %FT_Done_Glyph.exit ], [ 0, %bb.k ]
+  store ptr %.sink, ptr %1, align 8, !tbaa !90
   br label %FT_New_Glyph.exit.thread
 
-bb.m:                                             ; preds = %bb.k
-  store ptr %i.j, ptr %1, align 8, !tbaa !90
-  br label %FT_New_Glyph.exit.thread
-
-FT_New_Glyph.exit.thread:                         ; preds = %bb.g, %bb.c, %FT_New_Glyph.exit, %bb.m, %FT_Done_Glyph.exit, %bb.b, %bb.a
-  %.016 = phi i32 [ 6, %bb.b ], [ 37, %bb.a ], [ %i.k, %FT_New_Glyph.exit ], [ %.040, %FT_Done_Glyph.exit ], [ 0, %bb.m ], [ 18, %bb.g ], [ 6, %bb.c ]
+FT_New_Glyph.exit.thread:                         ; preds = %bb.m, %bb.g, %bb.c, %FT_New_Glyph.exit, %bb.b, %bb.a
+  %.016 = phi i32 [ 6, %bb.b ], [ 37, %bb.a ], [ %i.k, %FT_New_Glyph.exit ], [ 18, %bb.g ], [ 6, %bb.c ], [ %.016.ph, %bb.m ]
   ret i32 %.016
 }
 

@@ -201,7 +201,7 @@ upb_WireReader_ReadVarint.exit.outer:             ; preds = %upb_EpsCopyInputStr
   br label %upb_WireReader_ReadVarint.exit
 
 upb_WireReader_ReadVarint.exit:                   ; preds = %upb_WireReader_ReadVarint.exit.backedge, %upb_WireReader_ReadVarint.exit.outer
-  %.086 = phi ptr [ %.086.ph, %upb_WireReader_ReadVarint.exit.outer ], [ %.187, %upb_WireReader_ReadVarint.exit.backedge ] ; 11 uses
+  %.086 = phi ptr [ %.086.ph, %upb_WireReader_ReadVarint.exit.outer ], [ %.187, %upb_WireReader_ReadVarint.exit.backedge ] ; 10 uses
   %.082 = phi ptr [ %.082.ph, %upb_WireReader_ReadVarint.exit.outer ], [ %i.bz, %upb_WireReader_ReadVarint.exit.backedge ] ; 5 uses
   %.078 = phi ptr [ %.078.ph, %upb_WireReader_ReadVarint.exit.outer ], [ %.179, %upb_WireReader_ReadVarint.exit.backedge ] ; 3 uses
   %.074 = phi ptr [ %.074.ph, %upb_WireReader_ReadVarint.exit.outer ], [ %.074.be, %upb_WireReader_ReadVarint.exit.backedge ] ; 5 uses
@@ -268,7 +268,7 @@ bb.f:                                             ; preds = %bb.e
   %i.at = sdiv exact i64 %i.as, 24
   %i.au = shl nsw i64 %i.at, 1
   %i.av = tail call i64 @llvm.umax.i64(i64 %i.au, i64 4) ; 2 uses
-  %i.aw = load ptr, ptr %i.n, align 8, !tbaa !12  ; 9 uses
+  %i.aw = load ptr, ptr %i.n, align 8, !tbaa !12  ; 8 uses
   %i.ax = mul i64 %i.av, 24                       ; 7 uses
   %.not.i.i = icmp eq ptr %.086, null
   br i1 %.not.i.i, label %.upb_Arena_TryExtend.exit.thread_crit_edge.i.i, label %bb.g
@@ -301,8 +301,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.bh = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %i.ba
-  store ptr %i.bh, ptr %i.aw, align 8, !tbaa !53
-  br label %upb_UnknownFields_Grow.exit
+  br label %.thread.sink.split.i.i
 
 .critedge.i.i:                                    ; preds = %bb.g
   %.val.i.i = load ptr, ptr %i.aw, align 8, !tbaa !53 ; 2 uses
@@ -315,8 +314,7 @@ bb.j:                                             ; preds = %bb.i
 upb_Arena_ShrinkLast.exit.i.i:                    ; preds = %.critedge.i.i
   %.neg.i.i.i = sub i64 %i.ax, %i.bj
   %i.bm = getelementptr inbounds i8, ptr %.val.i.i, i64 %.neg.i.i.i
-  store ptr %i.bm, ptr %i.aw, align 8, !tbaa !53
-  br label %upb_UnknownFields_Grow.exit
+  br label %.thread.sink.split.i.i
 
 upb_Arena_TryExtend.exit.thread.i.i:              ; preds = %bb.i, %bb.h, %.upb_Arena_TryExtend.exit.thread_crit_edge.i.i
   %.val.i43.i.i = phi ptr [ %.val.i43.pre.i.i, %.upb_Arena_TryExtend.exit.thread_crit_edge.i.i ], [ %.val.i.i.i, %bb.h ], [ %.val.i.i.i, %bb.i ] ; 4 uses
@@ -350,6 +348,11 @@ bb.m:                                             ; preds = %upb_Arena_Malloc.ex
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.0.i44.i.i, ptr readonly align 1 %.086, i64 %i.bw, i1 false)
   br label %upb_UnknownFields_Grow.exit
 
+.thread.sink.split.i.i:                           ; preds = %upb_Arena_ShrinkLast.exit.i.i, %bb.j
+  %.sink.i.i = phi ptr [ %i.bm, %upb_Arena_ShrinkLast.exit.i.i ], [ %i.bh, %bb.j ]
+  store ptr %.sink.i.i, ptr %i.aw, align 8, !tbaa !53
+  br label %upb_UnknownFields_Grow.exit
+
 upb_Arena_Realloc.exit.i:                         ; preds = %upb_Arena_Malloc.exit.i.i
   %.not.i47 = icmp eq ptr %.0.i44.i.i, null
   br i1 %.not.i47, label %bb.n, label %upb_UnknownFields_Grow.exit
@@ -358,8 +361,8 @@ bb.n:                                             ; preds = %upb_Arena_Realloc.e
   tail call fastcc void @upb_UnknownFields_OutOfMemory(ptr noundef nonnull %0) #14
   unreachable
 
-upb_UnknownFields_Grow.exit:                      ; preds = %bb.j, %.critedge.i.i, %upb_Arena_ShrinkLast.exit.i.i, %bb.m, %upb_Arena_Realloc.exit.i
-  %.4 = phi ptr [ %.0.i44.i.i, %upb_Arena_Realloc.exit.i ], [ %.086, %upb_Arena_ShrinkLast.exit.i.i ], [ %.086, %.critedge.i.i ], [ %.086, %bb.j ], [ %.0.i44.i.i, %bb.m ] ; 3 uses
+upb_UnknownFields_Grow.exit:                      ; preds = %.critedge.i.i, %bb.m, %.thread.sink.split.i.i, %upb_Arena_Realloc.exit.i
+  %.4 = phi ptr [ %.0.i44.i.i, %upb_Arena_Realloc.exit.i ], [ %.086, %.thread.sink.split.i.i ], [ %.086, %.critedge.i.i ], [ %.0.i44.i.i, %bb.m ] ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.4, i64 %i.as
   %i.by = getelementptr inbounds nuw [24 x i8], ptr %.4, i64 %i.av
   br label %bb.o

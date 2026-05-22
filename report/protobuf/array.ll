@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.h = add nuw nsw i64 %i.e, %i.g               ; 4 uses
   %i.i = shl i64 %i.b, %i.h                       ; 5 uses
   %i.j = and i64 %.val, -8                        ; 2 uses
-  %i.k = inttoptr i64 %i.j to ptr                 ; 6 uses
+  %i.k = inttoptr i64 %i.j to ptr                 ; 5 uses
   %i.l = shl i64 %.021, %i.h                      ; 5 uses
   %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %.upb_Arena_TryExtend.exit.thread_crit_edge.i, label %bb.d
@@ -238,8 +238,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %.val14.i.i, i64 %i.q
-  store ptr %i.x, ptr %2, align 8, !tbaa !8
-  br label %upb_Arena_Realloc.exit.thread
+  br label %.thread.sink.split.i
 
 .critedge.i:                                      ; preds = %bb.d
   %.val.i = load ptr, ptr %2, align 8, !tbaa !8   ; 2 uses
@@ -254,8 +253,7 @@ upb_Arena_ShrinkLast.exit.i:                      ; preds = %.critedge.i
   %i.ad = and i64 %i.ac, -8
   %.neg.i.i = sub i64 %i.ad, %i.z
   %i.ae = getelementptr inbounds i8, ptr %.val.i, i64 %.neg.i.i
-  store ptr %i.ae, ptr %2, align 8, !tbaa !8
-  br label %upb_Arena_Realloc.exit.thread
+  br label %.thread.sink.split.i
 
 upb_Arena_TryExtend.exit.thread.i:                ; preds = %bb.f, %bb.e, %.upb_Arena_TryExtend.exit.thread_crit_edge.i
   %.pre-phi50.i = phi i64 [ %.pre49.i, %.upb_Arena_TryExtend.exit.thread_crit_edge.i ], [ %i.n, %bb.e ], [ %i.n, %bb.f ] ; 3 uses
@@ -290,12 +288,17 @@ bb.j:                                             ; preds = %upb_Arena_Malloc.ex
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.0.i43.i, ptr readonly align 8 %i.k, i64 %i.ao, i1 false)
   br label %upb_Arena_Realloc.exit.thread
 
+.thread.sink.split.i:                             ; preds = %upb_Arena_ShrinkLast.exit.i, %bb.g
+  %.sink.i = phi ptr [ %i.ae, %upb_Arena_ShrinkLast.exit.i ], [ %i.x, %bb.g ]
+  store ptr %.sink.i, ptr %2, align 8, !tbaa !8
+  br label %upb_Arena_Realloc.exit.thread
+
 upb_Arena_Realloc.exit:                           ; preds = %upb_Arena_Malloc.exit.i
   %.not.not = icmp eq ptr %.0.i43.i, null
   br i1 %.not.not, label %bb.k, label %upb_Arena_Realloc.exit.thread
 
-upb_Arena_Realloc.exit.thread:                    ; preds = %upb_Arena_ShrinkLast.exit.i, %.critedge.i, %bb.g, %bb.j, %upb_Arena_Realloc.exit
-  %.034.i27 = phi ptr [ %.0.i43.i, %upb_Arena_Realloc.exit ], [ %i.k, %upb_Arena_ShrinkLast.exit.i ], [ %i.k, %.critedge.i ], [ %i.k, %bb.g ], [ %.0.i43.i, %bb.j ]
+upb_Arena_Realloc.exit.thread:                    ; preds = %.thread.sink.split.i, %.critedge.i, %bb.j, %upb_Arena_Realloc.exit
+  %.034.i27 = phi ptr [ %.0.i43.i, %upb_Arena_Realloc.exit ], [ %i.k, %.thread.sink.split.i ], [ %i.k, %.critedge.i ], [ %.0.i43.i, %bb.j ]
   %i.ap = icmp ne i64 %i.h, 0
   %.neg.i = sext i1 %i.ap to i64
   %i.aq = add nsw i64 %i.h, %.neg.i

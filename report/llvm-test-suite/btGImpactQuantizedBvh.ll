@@ -201,8 +201,7 @@ bb.i:                                             ; preds = %bb.c
   %i.ed = sub nsw i32 %i.dw, %i.eb
   %i.ee = icmp slt i32 %i.eb, 0
   %.0.i.i = select i1 %i.ee, i32 %i.ed, i32 %i.ec
-  call fastcc void @_ZL41_find_quantized_collision_pairs_recursiveP21btGImpactQuantizedBvhS0_P9btPairSetRK26BT_BOX_BOX_TRANSFORM_CACHEiib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull align 4 dereferenceable(112) %3, i32 noundef %4, i32 noundef %.0.i.i, i1 noundef zeroext false)
-  br label %bb.m
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.b
   %i.ef = add nsw i32 %4, 1                       ; 8 uses
@@ -219,8 +218,7 @@ bb.k:                                             ; preds = %bb.j
   %i.em = sub nsw i32 %i.ef, %i.ek
   %i.en = icmp slt i32 %i.ek, 0
   %.0.i.i76 = select i1 %i.en, i32 %i.em, i32 %i.el
-  call fastcc void @_ZL41_find_quantized_collision_pairs_recursiveP21btGImpactQuantizedBvhS0_P9btPairSetRK26BT_BOX_BOX_TRANSFORM_CACHEiib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull align 4 dereferenceable(112) %3, i32 noundef %.0.i.i76, i32 noundef %5, i1 noundef zeroext false)
-  br label %bb.m
+  br label %.sink.split
 
 bb.l:                                             ; preds = %bb.j
   %i.eo = add nsw i32 %5, 1                       ; 5 uses
@@ -259,10 +257,15 @@ bb.l:                                             ; preds = %bb.j
   %i.fp = sub nsw i32 %i.eo, %i.fo
   %i.fq = icmp slt i32 %i.fo, 0
   %.0.i.i80 = select i1 %i.fq, i32 %i.fp, i32 %i.eu
-  call fastcc void @_ZL41_find_quantized_collision_pairs_recursiveP21btGImpactQuantizedBvhS0_P9btPairSetRK26BT_BOX_BOX_TRANSFORM_CACHEiib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull align 4 dereferenceable(112) %3, i32 noundef %.0.i.i79, i32 noundef %.0.i.i80, i1 noundef zeroext false)
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.i, %bb.l, %bb.k
+  %.sink = phi i32 [ %5, %bb.k ], [ %.0.i.i80, %bb.l ], [ %.0.i.i, %bb.i ]
+  %.0.i.i76.sink = phi i32 [ %.0.i.i76, %bb.k ], [ %.0.i.i79, %bb.l ], [ %4, %bb.i ]
+  call fastcc void @_ZL41_find_quantized_collision_pairs_recursiveP21btGImpactQuantizedBvhS0_P9btPairSetRK26BT_BOX_BOX_TRANSFORM_CACHEiib(ptr noundef nonnull %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef nonnull align 4 dereferenceable(112) %3, i32 noundef %.0.i.i76.sink, i32 noundef %.sink, i1 noundef zeroext false)
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.k, %bb.l, %bb.a, %bb.i, %_ZN9btPairSet9push_pairEii.exit
+bb.m:                                             ; preds = %.sink.split, %bb.a, %_ZN9btPairSet9push_pairEii.exit
   ret void
 }
 

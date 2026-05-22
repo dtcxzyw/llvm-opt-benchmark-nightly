@@ -201,11 +201,7 @@ bb.d:                                             ; preds = %decay_maybe_update_
   call fastcc void @duckdb_je_decay_deadline_init(ptr noundef nonnull %0)
   %i.l = icmp ugt i64 %i.k, 199
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 5 uses
-  br i1 %i.l, label %4, label %bb.e
-
-4:                                                ; preds = %bb.d
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1592) %i.m, i8 0, i64 1592, i1 false)
-  br label %decay_backlog_update.exit
+  br i1 %i.l, label %.sink.split.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.k
@@ -219,10 +215,15 @@ bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.o
   %i.s = shl nuw nsw i64 %i.k, 3
   %i.t = add nsw i64 %i.s, -8
-  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.r, i8 0, i64 %i.t, i1 false)
+  br label %.sink.split.i
+
+.sink.split.i:                                    ; preds = %bb.f, %bb.d
+  %.sink18.i = phi i64 [ %i.t, %bb.f ], [ 1592, %bb.d ]
+  %.sink.i = phi ptr [ %i.r, %bb.f ], [ %i.m, %bb.d ]
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %.sink.i, i8 0, i64 %.sink18.i, i1 false)
   br label %decay_backlog_update.exit
 
-decay_backlog_update.exit:                        ; preds = %4, %bb.e, %bb.f
+decay_backlog_update.exit:                        ; preds = %bb.e, %.sink.split.i
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.v = load i64, ptr %i.u, align 8, !tbaa !20
   %spec.select.i = call i64 @llvm.usub.sat.i64(i64 %2, i64 %i.v)

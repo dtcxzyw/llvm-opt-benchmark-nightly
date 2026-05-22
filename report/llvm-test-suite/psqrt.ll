@@ -31,8 +31,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr @pzero, align 8, !tbaa !8
-  %1 = call ptr @psetq(ptr noundef nonnull %i.b, ptr noundef %i.g) #3 ; 0 uses
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.e:                                             ; preds = %bb.c
   %i.h = icmp slt i32 %i.e, 0
@@ -40,8 +39,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.i = tail call ptr @errorp(i32 noundef 4, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #3
-  %2 = call ptr @psetq(ptr noundef nonnull %i.a, ptr noundef %i.i) #3 ; 0 uses
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.g:                                             ; preds = %bb.e
   %i.j = call ptr @psetq(ptr noundef nonnull %i.a, ptr noundef %0) #3 ; 0 uses
@@ -61,7 +59,13 @@ bb.h:                                             ; preds = %bb.h, %bb.g
   %i.u = icmp slt i32 %i.t, 0
   br i1 %i.u, label %bb.h, label %.loopexit, !llvm.loop !13
 
-.loopexit:                                        ; preds = %bb.h, %bb.f, %bb.d
+.loopexit.sink.split:                             ; preds = %bb.d, %bb.f
+  %.sink14 = phi ptr [ %i.i, %bb.f ], [ %i.g, %bb.d ]
+  %.sink = phi ptr [ %i.a, %bb.f ], [ %i.b, %bb.d ]
+  %1 = call ptr @psetq(ptr noundef nonnull %.sink, ptr noundef %.sink14) #3 ; 0 uses
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %bb.h, %.loopexit.sink.split
   %i.v = load ptr, ptr %i.a, align 8, !tbaa !8    ; 4 uses
   %.not11 = icmp eq ptr %i.v, null
   br i1 %.not11, label %bb.k, label %bb.i

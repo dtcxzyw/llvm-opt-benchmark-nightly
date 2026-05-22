@@ -201,8 +201,6 @@ bb.b:                                             ; preds = %bb.a
 .body:                                            ; preds = %bb.b
   %i.h = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZNSt12__shared_ptrIN5arrow2io16RandomAccessFileELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.f) #20
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 168) #21
   br label %bb.q
 
 _ZN5arrow2io8internal14ReadRangeCache8LazyImplC2Ev.exit: ; preds = %bb.b
@@ -227,8 +225,6 @@ bb.c:                                             ; preds = %bb.a
 .body9:                                           ; preds = %bb.c
   %i.o = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZNSt12__shared_ptrIN5arrow2io16RandomAccessFileELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %i.m) #20
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.k, i64 noundef 128) #21
   br label %bb.q
 
 _ZN5arrow2io8internal14ReadRangeCache4ImplC2Ev.exit: ; preds = %bb.c
@@ -359,7 +355,12 @@ _ZN5arrow2io9IOContextaSEOS1_.exit:               ; preds = %_ZNSt10shared_ptrIN
   ret void
 
 bb.q:                                             ; preds = %.body9, %.body
-  %.pn = phi { ptr, i32 } [ %i.h, %.body ], [ %i.o, %.body9 ]
+  %.sink13 = phi ptr [ %i.m, %.body9 ], [ %i.f, %.body ]
+  %.sink12 = phi i64 [ 128, %.body9 ], [ 168, %.body ]
+  %.sink = phi ptr [ %i.k, %.body9 ], [ %i.d, %.body ]
+  %.pn = phi { ptr, i32 } [ %i.o, %.body9 ], [ %i.h, %.body ]
+  tail call void @_ZNSt12__shared_ptrIN5arrow2io16RandomAccessFileELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %.sink13) #20
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef %.sink12) #21
   resume { ptr, i32 } %.pn
 }
 

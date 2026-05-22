@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.g = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.f) #24
-  br label %common.resume
+  br label %common.resume.sink.split
 
 bb.e:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %4, align 8, !tbaa !61
@@ -221,8 +220,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.j = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_free_exception(ptr nonnull %i.i) #24
-  br label %common.resume
+  br label %common.resume.sink.split
 
 bb.i:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
@@ -586,8 +584,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   br label %common.resume
 
-common.resume:                                    ; preds = %bb.d, %bb.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i
-  %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i ], [ %.pn14.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i ], [ %i.j, %bb.h ], [ %i.g, %bb.d ]
+common.resume.sink.split:                         ; preds = %bb.h, %bb.d
+  %.sink = phi ptr [ %i.f, %bb.d ], [ %i.i, %bb.h ]
+  %common.resume.op.ph = phi { ptr, i32 } [ %i.g, %bb.d ], [ %i.j, %bb.h ]
+  tail call void @__cxa_free_exception(ptr nonnull %.sink) #24
+  br label %common.resume
+
+common.resume:                                    ; preds = %common.resume.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i
+  %common.resume.op = phi { ptr, i32 } [ %.pn.pn.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit31.i ], [ %.pn14.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit44.i ], [ %common.resume.op.ph, %common.resume.sink.split ]
   resume { ptr, i32 } %common.resume.op
 
 _ZN16OpenColorIO_v2_512_GLOBAL__N_133AreColorSpacesInSameEqualityGroupERKSt10shared_ptrIKNS_10ColorSpaceEES6_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit47.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i48.i

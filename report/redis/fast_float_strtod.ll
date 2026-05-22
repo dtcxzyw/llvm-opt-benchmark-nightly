@@ -201,8 +201,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.z = fneg double %storemerge
-  store double %i.z, ptr %1, align 8, !tbaa !8
-  br label %bb.aj
+  br label %.sink.split
 
 bb.j:                                             ; preds = %bb.c
   %i.aa = icmp sgt i64 %i.d, -1
@@ -225,8 +224,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ah = load i8, ptr %i.ag, align 8, !tbaa !39, !range !35, !noundef !40
   %i.ai = trunc nuw i8 %i.ah to i1
   %i.aj = select i1 %i.ai, double -0.000000e+00, double 0.000000e+00
-  store double %i.aj, ptr %1, align 8, !tbaa !8
-  br label %bb.aj
+  br label %.sink.split
 
 bb.n:                                             ; preds = %bb.l
   %i.ak = uitofp i64 %i.ac to double
@@ -241,8 +239,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.ar = fneg double %i.an
-  store double %i.ar, ptr %1, align 8, !tbaa !8
-  br label %bb.aj
+  br label %.sink.split
 
 bb.p:                                             ; preds = %bb.d, %bb.k, %bb.j, %bb.b, %bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -622,8 +619,13 @@ _ZN10fast_float10digit_compIdcEENS_17adjusted_mantissaERNS_22parsed_number_strin
   %spec.select179 = select i1 %or.cond174, i32 34, i32 0
   br label %bb.aj
 
-bb.aj:                                            ; preds = %.thread, %bb.n, %bb.o, %bb.h, %bb.i, %bb.m
-  %.sroa.270.1 = phi i32 [ 0, %bb.n ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.m ], [ 0, %bb.o ], [ %spec.select179, %.thread ]
+.sink.split:                                      ; preds = %bb.m, %bb.i, %bb.o
+  %.sink = phi double [ %i.ar, %bb.o ], [ %i.z, %bb.i ], [ %i.aj, %bb.m ]
+  store double %.sink, ptr %1, align 8, !tbaa !8
+  br label %bb.aj
+
+bb.aj:                                            ; preds = %.sink.split, %.thread, %bb.n, %bb.h
+  %.sroa.270.1 = phi i32 [ 0, %bb.n ], [ %spec.select179, %.thread ], [ 0, %bb.h ], [ 0, %.sink.split ]
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %i.c, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.270.1, 1
   ret { ptr, i32 } %.fca.1.insert

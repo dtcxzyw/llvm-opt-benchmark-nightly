@@ -201,8 +201,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit406: ; preds = %bb
 bb.ey:                                            ; preds = %bb.ex
   %i.tm = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.tf, i64 noundef 1144) #23
-  br label %bb.gv
+  br label %.sink.split
 
 bb.ez:                                            ; preds = %.lr.ph618, %bb.fb
   %.sroa.0441.0617 = phi ptr [ %.pre681, %.lr.ph618 ], [ %i.uf, %bb.fb ] ; 3 uses
@@ -428,8 +427,7 @@ bb.fv:                                            ; preds = %bb.fs
 bb.fw:                                            ; preds = %bb.ft
   %i.wq = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.wm, i64 noundef 1144) #23
-  br label %bb.gv
+  br label %.sink.split
 
 bb.fx:                                            ; preds = %bb.fr
   %i.wr = load ptr, ptr %.0162, align 8
@@ -740,8 +738,7 @@ bb.gn:                                            ; preds = %._crit_edge627
 bb.go:                                            ; preds = %bb.gl
   %i.abn = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.aay, i64 noundef 16) #23
-  br label %bb.gv
+  br label %.sink.split
 
 bb.gp:                                            ; preds = %bb.gt
   %i.abo = landingpad { ptr, i32 }
@@ -802,8 +799,15 @@ bb.gu:                                            ; preds = %bb.gs, %bb.gp
   %.not540 = icmp eq ptr %i.abz, %.pre682
   br i1 %.not540, label %._crit_edge643.loopexit, label %bb.fq
 
-bb.gv:                                            ; preds = %bb.fv, %bb.fw, %bb.gb, %bb.gj, %bb.gn, %bb.go, %bb.gu, %bb.gk, %bb.gg, %bb.ew, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit244, %bb.fk, %bb.fp, %bb.fe, %bb.ey, %bb.x
-  %.pn203.pn.pn = phi { ptr, i32 } [ %i.wd, %bb.fp ], [ %i.tm, %bb.ey ], [ %i.dq, %bb.x ], [ %i.uh, %bb.fe ], [ %.pn178, %bb.gu ], [ %i.ux, %bb.fk ], [ %i.abn, %bb.go ], [ %.pn203, %bb.ew ], [ %i.abm, %bb.gn ], [ %.pn191, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit244 ], [ %i.wp, %bb.fv ], [ %i.wq, %bb.fw ], [ %i.xn, %bb.gb ], [ %i.ze, %bb.gg ], [ %i.aaw, %bb.gj ], [ %i.aax, %bb.gk ]
+.sink.split:                                      ; preds = %bb.ey, %bb.go, %bb.fw
+  %.sink = phi i64 [ 1144, %bb.fw ], [ 16, %bb.go ], [ 1144, %bb.ey ]
+  %.lcssa.sink = phi ptr [ %i.wm, %bb.fw ], [ %i.aay, %bb.go ], [ %i.tf, %bb.ey ]
+  %.pn203.pn.pn.ph = phi { ptr, i32 } [ %i.wq, %bb.fw ], [ %i.abn, %bb.go ], [ %i.tm, %bb.ey ]
+  call void @_ZdlPvm(ptr noundef nonnull %.lcssa.sink, i64 noundef %.sink) #23
+  br label %bb.gv
+
+bb.gv:                                            ; preds = %.sink.split, %bb.fv, %bb.gb, %bb.gj, %bb.gn, %bb.gu, %bb.gk, %bb.gg, %bb.ew, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit244, %bb.fk, %bb.fp, %bb.fe, %bb.x
+  %.pn203.pn.pn = phi { ptr, i32 } [ %i.wd, %bb.fp ], [ %i.ze, %bb.gg ], [ %i.dq, %bb.x ], [ %i.uh, %bb.fe ], [ %.pn178, %bb.gu ], [ %i.ux, %bb.fk ], [ %i.aaw, %bb.gj ], [ %.pn203, %bb.ew ], [ %i.abm, %bb.gn ], [ %.pn191, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit244 ], [ %i.wp, %bb.fv ], [ %i.aax, %bb.gk ], [ %i.xn, %bb.gb ], [ %.pn203.pn.pn.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
   call void @_ZNSt6vectorIN6Assimp11RAWImporter16GroupInformationESaIS2_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %6) #22
   br label %bb.gw
@@ -1206,8 +1210,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #23
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #22
   resume { ptr, i32 } %.pn

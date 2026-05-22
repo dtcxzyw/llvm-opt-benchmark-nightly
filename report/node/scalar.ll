@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c
   call fastcc void @sc_montmul(ptr noundef %0, ptr noundef nonnull readonly %3, ptr noundef nonnull @ossl_curve448_scalar_one)
   tail call fastcc void @sc_montmul(ptr noundef %0, ptr noundef %0, ptr noundef nonnull @sc_r2)
-  call void @OPENSSL_cleanse(ptr noundef nonnull %3, i64 noundef 56) #8
-  br label %bb.f
+  br label %.sink.split
 
 bb.e:                                             ; preds = %.lr.ph, %bb.e
   %.121 = phi i64 [ %spec.select, %.lr.ph ], [ %i.u, %bb.e ]
@@ -344,10 +343,14 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull readonly align 16 dereferenceable(56) %3, i64 56, i1 false), !tbaa.struct !15
   call void @OPENSSL_cleanse(ptr noundef nonnull %3, i64 noundef 56) #8
-  call void @OPENSSL_cleanse(ptr noundef nonnull %4, i64 noundef 56) #8
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.d, %._crit_edge
+  %.sink = phi ptr [ %4, %._crit_edge ], [ %3, %bb.d ]
+  call void @OPENSSL_cleanse(ptr noundef nonnull %.sink, i64 noundef 56) #8
   br label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge, %bb.d, %bb.b
+bb.f:                                             ; preds = %.sink.split, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   ret void

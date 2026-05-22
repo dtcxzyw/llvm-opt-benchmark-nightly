@@ -201,8 +201,7 @@ _ZN4llvh11raw_ostreamlsEPKc.exit50:               ; preds = %bb.w, %bb.x
   %i.ek = getelementptr inbounds i8, ptr %.sroa.060.064, i64 -12
   %i.el = load i32, ptr %i.ek, align 4, !tbaa !318
   %i.em = zext i32 %i.el to i64
-  %3 = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i49, i64 noundef %i.em) #19 ; 0 uses
-  br label %bb.al
+  br label %.sink.split
 
 bb.y:                                             ; preds = %.lr.ph
   %i.en = load i64, ptr %i.dm, align 8, !tbaa !318
@@ -233,8 +232,7 @@ bb.aa:                                            ; preds = %bb.y
 _ZN4llvh11raw_ostreamlsEPKc.exit53:               ; preds = %bb.z, %bb.aa
   %.0.i.i52 = phi ptr [ %i.ez, %bb.z ], [ %1, %bb.aa ]
   %i.fc = ptrtoint ptr %i.es to i64
-  %4 = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i52, i64 noundef %i.fc) #19 ; 0 uses
-  br label %bb.al
+  br label %.sink.split
 
 bb.ab:                                            ; preds = %.lr.ph
   %i.fd = load ptr, ptr %i.d, align 8, !tbaa !373
@@ -346,7 +344,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNK6
 bb.ak:                                            ; preds = %.lr.ph
   unreachable
 
-bb.al:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZN4llvh11raw_ostreamlsEPKc.exit53, %_ZN4llvh11raw_ostreamlsEPKc.exit50
+.sink.split:                                      ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit50, %_ZN4llvh11raw_ostreamlsEPKc.exit53
+  %.sink = phi i64 [ %i.fc, %_ZN4llvh11raw_ostreamlsEPKc.exit53 ], [ %i.em, %_ZN4llvh11raw_ostreamlsEPKc.exit50 ]
+  %.0.i.i52.sink = phi ptr [ %.0.i.i52, %_ZN4llvh11raw_ostreamlsEPKc.exit53 ], [ %.0.i.i49, %_ZN4llvh11raw_ostreamlsEPKc.exit50 ]
+  %3 = call noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh11raw_ostreamlsEm(ptr noundef nonnull align 8 dereferenceable(36) %.0.i.i52.sink, i64 noundef %.sink) #19 ; 0 uses
+  br label %bb.al
+
+bb.al:                                            ; preds = %.sink.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.gq = load ptr, ptr %i.d, align 8, !tbaa !373
   %i.gr = load ptr, ptr %i.f, align 8, !tbaa !376 ; 2 uses
   %i.gs = ptrtoint ptr %i.gq to i64

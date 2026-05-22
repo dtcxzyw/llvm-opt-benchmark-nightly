@@ -51,7 +51,7 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 7 uses
   %i.d = alloca [24 x i8], align 8                ; 12 uses
   %i.e = alloca [32 x i8], align 8                ; 6 uses
-  %i.f = alloca [16 x i8], align 8                ; 6 uses
+  %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = load ptr, ptr %0, align 8, !noundef !3   ; 2 uses
   %.not = icmp eq ptr %i.g, null
   br i1 %.not, label %bb.b, label %.split
@@ -161,15 +161,15 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6Str
 
 bb.k:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit23
   store ptr null, ptr %0, align 8
+  br label %bb.l
+
+bb.l:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit23, %bb.k
+  %.sroa.0.1.ph = phi i1 [ false, %bb.k ], [ true, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit23 ], [ true, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.m
 
-bb.l:                                             ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit23, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECsfY7SmN0bPrO_14deltalake_test.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  br label %bb.m
-
-bb.m:                                             ; preds = %bb.b, %bb.k, %bb.l
-  %.sroa.0.1 = phi i1 [ true, %bb.l ], [ false, %bb.k ], [ false, %bb.b ]
+bb.m:                                             ; preds = %bb.l, %bb.b
+  %.sroa.0.1 = phi i1 [ false, %bb.b ], [ %.sroa.0.1.ph, %bb.l ]
   ret i1 %.sroa.0.1
 
 bb.n:                                             ; preds = %bb.c
@@ -186,13 +186,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !8
   store i32 0, ptr %i.a, align 4, !noalias !8
   %i.b = icmp samesign ult i32 %2, 128
+  %.sink1.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %.sink1.sroa.gep2 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %2, 2048
   %i.d = trunc i32 %2 to i8
   %i.e = and i8 %i.d, 63
-  %i.f = or disjoint i8 %i.e, -128                ; 3 uses
+  %i.f = or disjoint i8 %i.e, -128                ; 2 uses
   %i.g = lshr i32 %2, 6
   %i.h = trunc i32 %i.g to i8                     ; 2 uses
   %i.i = and i8 %i.h, 63
@@ -214,9 +216,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.s = or disjoint i8 %i.h, -64
   store i8 %i.s, ptr %i.a, align 4, !alias.scope !11, !noalias !8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.f, ptr %3, align 1, !alias.scope !11, !noalias !8
-  br label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit
+  br label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.t = icmp samesign ult i32 %2, 65536
@@ -237,12 +237,16 @@ bb.g:                                             ; preds = %bb.e
   store i8 %i.n, ptr %i.x, align 1, !alias.scope !11, !noalias !8
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %i.j, ptr %i.y, align 2, !alias.scope !11, !noalias !8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %i.f, ptr %4, align 1, !alias.scope !11, !noalias !8
+  br label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit.sink.split
+
+_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit.sink.split: ; preds = %bb.g, %bb.d
+  %.sink1.sroa.phi = phi ptr [ %.sink1.sroa.gep, %bb.d ], [ %.sink1.sroa.gep2, %bb.g ]
+  %.sroa.0.05.i.i.ph = phi i64 [ 2, %bb.d ], [ 4, %bb.g ]
+  store i8 %i.f, ptr %.sink1.sroa.phi, align 1, !alias.scope !11, !noalias !8
   br label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit
 
-_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit: ; preds = %bb.c, %bb.d, %bb.f, %bb.g
-  %.sroa.0.05.i.i = phi i64 [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.f ], [ 4, %bb.g ]
+_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit: ; preds = %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit.sink.split, %bb.c, %bb.f
+  %.sroa.0.05.i.i = phi i64 [ 1, %bb.c ], [ 3, %bb.f ], [ %.sroa.0.05.i.i.ph, %_RNvXs2_NtNtCsbvkFyIu7lgC_4core3str7patterncNtB5_7Pattern12is_suffix_of.exit.sink.split ]
   %i.z = call noundef zeroext i1 @_RNvMNtCsbvkFyIu7lgC_4core5sliceSh9ends_withCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull readonly captures(address, read_provenance) %0, i64 noundef %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef %.sroa.0.05.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !8
   ret i1 %i.z
@@ -645,9 +649,9 @@ bb.l:                                             ; preds = %bb.c
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
   %.sroa.0277.0.copyload = phi i8 [ %i.cl, %.lr.ph.i.preheader ], [ %i.cm, %.lr.ph.i ] ; 2 uses
-  %.sroa.7279.0.copyload = load ptr, ptr %.sroa.7279.0..sroa_idx, align 8, !noalias !167 ; 2 uses
+  %.sroa.7279.0.copyload = load ptr, ptr %.sroa.7279.0..sroa_idx, align 8, !noalias !167
   %.sroa.8280.0.copyload = load i64, ptr %.sroa.8280.0..sroa_idx, align 8, !noalias !167
-  %.sroa.10.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !167 ; 2 uses
+  %.sroa.10.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !167
   %.sroa.11.0.copyload = load i64, ptr %.sroa.11.0..sroa_idx, align 8, !noalias !167
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad), !noalias !167
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ad), !noalias !167
@@ -730,33 +734,34 @@ bb.s:                                             ; preds = %.lr.ph.i
   %i.db = add nsw i64 %i.da, -5
   %i.dc = select i1 %i.cz, i64 %i.db, i64 0       ; 2 uses
   switch i64 %i.dc, label %bb.t [
-    i64 0, label %bb.u
+    i64 0, label %bb.x
     i64 1, label %_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit
-    i64 2, label %bb.v
-    i64 3, label %bb.w
-    i64 4, label %bb.x
+    i64 2, label %bb.u
+    i64 3, label %bb.v
+    i64 4, label %bb.w
   ]
 
 bb.t:                                             ; preds = %bb.s
   unreachable
 
 bb.u:                                             ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload) ]
   br label %_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit
 
 bb.v:                                             ; preds = %bb.s
   br label %_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit
 
 bb.w:                                             ; preds = %bb.s
+  br label %bb.x
+
+bb.x:                                             ; preds = %bb.s, %bb.w
+  %.sroa.10.0.copyload.lcssa.sink = phi ptr [ %.sroa.7279.0.copyload, %bb.w ], [ %.sroa.10.0.copyload, %bb.s ] ; 2 uses
+  %.sroa.6.0.i.ph = phi i64 [ %.sroa.8280.0.copyload, %bb.w ], [ %.sroa.11.0.copyload, %bb.s ]
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.10.0.copyload.lcssa.sink) ]
   br label %_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit
 
-bb.x:                                             ; preds = %bb.s
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7279.0.copyload) ]
-  br label %_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit
-
-_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit: ; preds = %bb.s, %bb.u, %bb.v, %bb.w, %bb.x
-  %.sroa.6.0.i = phi i64 [ %.sroa.11.0.copyload, %bb.u ], [ %.sroa.8280.0.copyload, %bb.x ], [ 1, %bb.v ], [ 2, %bb.w ], [ %i.dc, %bb.s ]
-  %.sroa.0.0.i = phi ptr [ %.sroa.10.0.copyload, %bb.u ], [ %.sroa.7279.0.copyload, %bb.x ], [ @26, %bb.v ], [ @27, %bb.w ], [ @25, %bb.s ]
+_RNvMs4_NtCs2pqxYH9ZEk8_3std4pathNtB5_9Component9as_os_str.exit: ; preds = %bb.x, %bb.s, %bb.u, %bb.v
+  %.sroa.6.0.i = phi i64 [ 2, %bb.v ], [ %i.dc, %bb.s ], [ 1, %bb.u ], [ %.sroa.6.0.i.ph, %bb.x ]
+  %.sroa.0.0.i = phi ptr [ @27, %bb.v ], [ @25, %bb.s ], [ @26, %bb.u ], [ %.sroa.10.0.copyload.lcssa.sink, %bb.x ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bc)
   %i.dd = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.val.i = load ptr, ptr %i.dd, align 8, !nonnull !3, !noundef !3
@@ -1159,13 +1164,15 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 0, ptr %i.a, align 4
   %i.b = icmp samesign ult i32 %1, 128
+  %.sink2.sroa.gep = getelementptr inbounds nuw i8, ptr %i.a, i64 1
+  %.sink2.sroa.gep3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = icmp samesign ult i32 %1, 2048
   %i.d = trunc i32 %1 to i8
   %i.e = and i8 %i.d, 63
-  %i.f = or disjoint i8 %i.e, -128                ; 3 uses
+  %i.f = or disjoint i8 %i.e, -128                ; 2 uses
   %i.g = lshr i32 %1, 6
   %i.h = trunc i32 %i.g to i8                     ; 2 uses
   %i.i = and i8 %i.h, 63
@@ -1187,9 +1194,7 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.b
   %i.s = or disjoint i8 %i.h, -64
   store i8 %i.s, ptr %i.a, align 4, !alias.scope !491
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %i.f, ptr %2, align 1, !alias.scope !491
-  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit
+  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split
 
 bb.e:                                             ; preds = %bb.b
   %i.t = icmp samesign ult i32 %1, 65536
@@ -1210,12 +1215,16 @@ bb.g:                                             ; preds = %bb.e
   store i8 %i.n, ptr %i.x, align 1, !alias.scope !491
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 %i.j, ptr %i.y, align 2, !alias.scope !491
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %i.f, ptr %3, align 1, !alias.scope !491
+  br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split
+
+_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split: ; preds = %bb.g, %bb.d
+  %.sink2.sroa.phi = phi ptr [ %.sink2.sroa.gep, %bb.d ], [ %.sink2.sroa.gep3, %bb.g ]
+  %.sroa.0.05.i.ph = phi i64 [ 2, %bb.d ], [ 4, %bb.g ]
+  store i8 %i.f, ptr %.sink2.sroa.phi, align 1, !alias.scope !491
   br label %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit
 
-_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit: ; preds = %bb.c, %bb.d, %bb.f, %bb.g
-  %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 2, %bb.d ], [ 3, %bb.f ], [ 4, %bb.g ]
+_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit: ; preds = %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split, %bb.c, %bb.f
+  %.sroa.0.05.i = phi i64 [ 1, %bb.c ], [ 3, %bb.f ], [ %.sroa.0.05.i.ph, %_RNvNtNtCsbvkFyIu7lgC_4core4char7methods15encode_utf8_raw.exit.sink.split ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !494)
   %i.z = load ptr, ptr %0, align 8, !alias.scope !494, !noalias !497, !nonnull !3, !noundef !3
   %i.aa = call noundef ptr @_RNvYNtNtNtNtCs2pqxYH9ZEk8_3std3sys5stdio4unix6StderrNtNtBa_2io5Write9write_allCsfY7SmN0bPrO_14deltalake_test(ptr noalias noundef nonnull %i.z, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef %.sroa.0.05.i), !noalias !494 ; 3 uses

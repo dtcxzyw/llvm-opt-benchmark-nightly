@@ -201,16 +201,14 @@ _ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i:       ; preds = %bb.k
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.t, ptr noundef nonnull align 8 dereferenceable(1) %i.i, i64 %i.ad, i1 false)
   store i64 %i.z, ptr %i.c, align 8, !tbaa !26
   store i64 0, ptr %i.j, align 8, !tbaa !26
-  store i8 0, ptr %i.x, align 1, !tbaa !17
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit
+  br label %.sink.split.i
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i:       ; preds = %bb.j
   %i.ae = add nuw nsw i64 %i.v, 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.i, ptr noundef nonnull align 8 dereferenceable(1) %i.t, i64 %i.ae, i1 false)
   store i64 %i.v, ptr %i.j, align 8, !tbaa !26
   store i64 0, ptr %i.c, align 8, !tbaa !26
-  store i8 0, ptr %i.s, align 1, !tbaa !17
-  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit
+  br label %.sink.split.i
 
 _ZNSt11char_traitsIcE4copyEPcPKcm.exit45.i:       ; preds = %bb.h
   %i.af = load i64, ptr %i.i, align 8, !tbaa !17
@@ -255,7 +253,12 @@ bb.m:                                             ; preds = %bb.l, %_ZNSt11char_
   store i64 %i.ao, ptr %i.j, align 8, !tbaa !26
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit: ; preds = %bb.f, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i, %bb.m
+.sink.split.i:                                    ; preds = %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i
+  %.pre50.sink.i = phi ptr [ %i.s, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit44.i ], [ %i.x, %_ZNSt11char_traitsIcE4copyEPcPKcm.exit43.i ]
+  store i8 0, ptr %.pre50.sink.i, align 1, !tbaa !17
+  br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit
+
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4swapERS4_.exit: ; preds = %bb.f, %bb.m, %.sink.split.i
   %i.aq = load ptr, ptr %3, align 8, !tbaa !29    ; 2 uses
   %i.ar = icmp eq ptr %i.aq, %i.i
   br i1 %i.ar, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i18

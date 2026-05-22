@@ -201,7 +201,6 @@ bb.aq:                                            ; preds = %.loopexit
   %i.ee = shl nuw nsw i32 %.07493.lcssa104, 5
   %i.ef = xor i32 %i.ee, 480
   %i.eg = zext nneg i32 %i.ef to i64
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.ed, ptr align 8 %i.ec, i64 %i.eg, i1 false)
   br label %.sink.split
 
 .loopexit.thread:                                 ; preds = %bb.ap, %.loopexit
@@ -218,13 +217,16 @@ bb.ar:                                            ; preds = %.loopexit.thread
 bb.as:                                            ; preds = %bb.ar, %.loopexit.thread
   %i.ej = sext i32 %i.eh to i64                   ; 2 uses
   %i.ek = shl nsw i64 %i.ej, 5
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %2, ptr nonnull align 8 %i.l, i64 %i.ek, i1 false)
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.aq, %bb.as
-  %i.el = phi i64 [ %i.ej, %bb.as ], [ %i.eb, %bb.aq ]
-  %.sink = phi ptr [ %i.ei, %bb.as ], [ %i.ea, %bb.aq ]
-  %.1.ph = phi i32 [ %i.eh, %bb.as ], [ %.07493.lcssa104, %bb.aq ]
+  %.sink114 = phi i64 [ %i.eg, %bb.aq ], [ %i.ek, %bb.as ]
+  %.sink113 = phi ptr [ %i.ec, %bb.aq ], [ %i.l, %bb.as ]
+  %.sink112 = phi ptr [ %i.ed, %bb.aq ], [ %2, %bb.as ]
+  %i.el = phi i64 [ %i.eb, %bb.aq ], [ %i.ej, %bb.as ]
+  %.sink = phi ptr [ %i.ea, %bb.aq ], [ %i.ei, %bb.as ]
+  %.1.ph = phi i32 [ %.07493.lcssa104, %bb.aq ], [ %i.eh, %bb.as ]
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %.sink112, ptr align 8 %.sink113, i64 %.sink114, i1 false)
   %i.em = getelementptr inbounds [32 x i8], ptr %2, i64 %i.el
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 16
   store ptr %.sink, ptr %i.en, align 8, !tbaa !47

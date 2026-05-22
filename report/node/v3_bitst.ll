@@ -94,7 +94,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @v2i_ASN1_BIT_STRING(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1, ptr noundef %2) #1 {
 bb.a:
-  %i.a = tail call ptr @ASN1_BIT_STRING_new() #3  ; 6 uses
+  %i.a = tail call ptr @ASN1_BIT_STRING_new() #3  ; 5 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.b, label %.preheader
 
@@ -157,8 +157,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @ERR_new() #3
   tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 74, ptr noundef nonnull @__func__.v2i_ASN1_BIT_STRING) #3
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 34, i32 noundef 524301, ptr noundef null) #3
-  tail call void @ASN1_BIT_STRING_free(ptr noundef nonnull %i.a) #3
-  br label %.loopexit
+  br label %.loopexit.sink.split
 
 bb.i:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %.032, i64 24
@@ -179,11 +178,14 @@ bb.j:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !21
   tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 34, i32 noundef 111, ptr noundef nonnull @.str.1, ptr noundef %i.ac) #3
+  br label %.loopexit.sink.split
+
+.loopexit.sink.split:                             ; preds = %bb.h, %.thread
   tail call void @ASN1_BIT_STRING_free(ptr noundef nonnull %i.a) #3
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.c, %.preheader, %.thread, %bb.h, %bb.b
-  %.020 = phi ptr [ null, %bb.b ], [ null, %.thread ], [ null, %bb.h ], [ %i.a, %.preheader ], [ %i.a, %bb.c ]
+.loopexit:                                        ; preds = %bb.c, %.loopexit.sink.split, %.preheader, %bb.b
+  %.020 = phi ptr [ null, %bb.b ], [ %i.a, %.preheader ], [ null, %.loopexit.sink.split ], [ %i.a, %bb.c ]
   ret ptr %.020
 }
 

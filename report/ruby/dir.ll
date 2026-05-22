@@ -201,8 +201,12 @@ bb.am:                                            ; preds = %.split.us
   %.not175 = icmp eq i8 %i.ct, 0                  ; 2 uses
   %brmerge = or i1 %.not175, %.not167.not
   %not..not175 = xor i1 %.not175, true
-  %4 = icmp ne i8 %i.ct, 47
-  %spec.select600 = select i1 %brmerge, i1 %not..not175, i1 %4
+  %.mux = zext i1 %not..not175 to i32
+  br i1 %brmerge, label %bb.aw, label %4
+
+4:                                                ; preds = %bb.am
+  %5 = icmp ne i8 %i.ct, 47
+  %6 = zext i1 %5 to i32
   br label %bb.aw
 
 bb.an:                                            ; preds = %.split.us
@@ -276,15 +280,14 @@ bb.av:                                            ; preds = %.thread
   br label %.outer
 
 .sink.split:                                      ; preds = %.thread, %.split242.us, %.split237.us, %bb.h, %bb.h, %bb.i, %bb.k, %.split247.us
-  %.us-phi243.sink = phi ptr [ %i.s, %bb.h ], [ %i.ab, %bb.i ], [ %i.ag, %bb.k ], [ %spec.select197, %.split247.us ], [ %i.s, %bb.h ], [ %.3148, %.thread ], [ %.us-phi243, %.split242.us ], [ %.us-phi238, %.split237.us ]
-  %.3.shrunk.ph = phi i1 [ true, %bb.h ], [ true, %bb.i ], [ true, %bb.k ], [ false, %.split247.us ], [ true, %bb.h ], [ true, %.split237.us ], [ true, %.split242.us ], [ true, %.thread ]
+  %.us-phi243.sink = phi ptr [ %i.ag, %bb.k ], [ %i.s, %bb.h ], [ %i.ab, %bb.i ], [ %spec.select197, %.split247.us ], [ %i.s, %bb.h ], [ %.3148, %.thread ], [ %.us-phi238, %.split237.us ], [ %.us-phi243, %.split242.us ]
+  %.3.ph = phi i32 [ 1, %bb.k ], [ 1, %bb.h ], [ 1, %bb.i ], [ 0, %.split247.us ], [ 1, %bb.h ], [ 1, %.split237.us ], [ 1, %.split242.us ], [ 1, %.thread ]
   store ptr %.us-phi243.sink, ptr %0, align 8, !tbaa !156
   store ptr %.0142.ph, ptr %1, align 8, !tbaa !156
   br label %bb.aw
 
-bb.aw:                                            ; preds = %bb.am, %.sink.split, %bb.e
-  %.3.shrunk = phi i1 [ true, %bb.e ], [ %.3.shrunk.ph, %.sink.split ], [ %spec.select600, %bb.am ]
-  %.3 = zext i1 %.3.shrunk to i32
+bb.aw:                                            ; preds = %.sink.split, %bb.am, %bb.e, %4
+  %.3 = phi i32 [ %6, %4 ], [ 1, %bb.e ], [ %.mux, %bb.am ], [ %.3.ph, %.sink.split ]
   ret i32 %.3
 }
 

@@ -201,8 +201,7 @@ bb.h:                                             ; preds = %bb.c
 bb.i:                                             ; preds = %bb.f
   %i.r = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_free_exception(ptr nonnull %i.p) #22
-  br label %_ZNSt6vectorIcSaIcEED2Ev.exit39
+  br label %_ZNSt6vectorIcSaIcEED2Ev.exit39.sink.split
 
 bb.j:                                             ; preds = %bb.g
   %i.s = landingpad { ptr, i32 }
@@ -237,8 +236,7 @@ bb.o:                                             ; preds = %bb.n, %bb.k
 bb.p:                                             ; preds = %bb.m
   %i.aa = landingpad { ptr, i32 }
           cleanup
-  call void @__cxa_free_exception(ptr nonnull %i.y) #22
-  br label %_ZNSt6vectorIcSaIcEED2Ev.exit39
+  br label %_ZNSt6vectorIcSaIcEED2Ev.exit39.sink.split
 
 bb.q:                                             ; preds = %bb.l
   %i.ab = load ptr, ptr %i.m, align 8
@@ -641,8 +639,14 @@ bb.ak:                                            ; preds = %bb.aj
   call void @_ZdlPvm(ptr noundef nonnull %.sroa.041.0, i64 noundef %i.fn) #23
   br label %_ZNSt6vectorIcSaIcEED2Ev.exit39
 
-_ZNSt6vectorIcSaIcEED2Ev.exit39:                  ; preds = %bb.ac, %bb.ad, %bb.aj, %bb.ak, %bb.o, %bb.p, %bb.j, %bb.i
-  %.pn24 = phi { ptr, i32 } [ %i.s, %bb.j ], [ %i.r, %bb.i ], [ %i.z, %bb.o ], [ %i.aa, %bb.p ], [ %i.fc, %bb.ac ], [ %i.fd, %bb.ad ], [ %.pn17.pn.pn, %bb.aj ], [ %.pn17.pn.pn, %bb.ak ]
+_ZNSt6vectorIcSaIcEED2Ev.exit39.sink.split:       ; preds = %bb.i, %bb.p
+  %.sink = phi ptr [ %i.y, %bb.p ], [ %i.p, %bb.i ]
+  %.pn24.ph = phi { ptr, i32 } [ %i.aa, %bb.p ], [ %i.r, %bb.i ]
+  call void @__cxa_free_exception(ptr nonnull %.sink) #22
+  br label %_ZNSt6vectorIcSaIcEED2Ev.exit39
+
+_ZNSt6vectorIcSaIcEED2Ev.exit39:                  ; preds = %_ZNSt6vectorIcSaIcEED2Ev.exit39.sink.split, %bb.ac, %bb.ad, %bb.aj, %bb.ak, %bb.o, %bb.j
+  %.pn24 = phi { ptr, i32 } [ %i.s, %bb.j ], [ %.pn17.pn.pn, %bb.aj ], [ %i.z, %bb.o ], [ %.pn17.pn.pn, %bb.ak ], [ %i.fc, %bb.ac ], [ %i.fd, %bb.ad ], [ %.pn24.ph, %_ZNSt6vectorIcSaIcEED2Ev.exit39.sink.split ]
   call fastcc void @"_ZNSt10unique_ptrIN6Assimp8IOStreamEZNS0_11MMDImporter14InternReadFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP7aiScenePNS0_8IOSystemEE3$_0ED2Ev"(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %5) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.al
@@ -869,8 +873,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.b
   %i.m = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 1144) #23
-  br label %bb.at
+  br label %.sink.split
 
 _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; preds = %bb.d, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -1127,8 +1130,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114: ; preds = %_Z
 bb.o:                                             ; preds = %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.da = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef 1144) #23
-  br label %bb.at
+  br label %.sink.split
 
 bb.p:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendERKS4_.exit.i, %bb.l, %.critedge.i
   %i.db = landingpad { ptr, i32 }
@@ -1476,8 +1478,14 @@ _ZNSt10unique_ptrIA_P6aiNodeSt14default_deleteIS2_EED2Ev.exit124: ; preds = %bb.
   call void @_ZdaPv(ptr noundef nonnull %i.ea) #23
   br label %bb.at
 
-bb.at:                                            ; preds = %_ZNSt10unique_ptrIA_P6aiNodeSt14default_deleteIS2_EED2Ev.exit124, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120, %bb.o, %bb.e
-  %.pn98.pn.pn = phi { ptr, i32 } [ %.pn98.pn, %_ZNSt10unique_ptrIA_P6aiNodeSt14default_deleteIS2_EED2Ev.exit124 ], [ %i.db, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120 ], [ %i.da, %bb.o ], [ %i.m, %bb.e ]
+.sink.split:                                      ; preds = %bb.e, %bb.o
+  %.sink = phi ptr [ %i.o, %bb.o ], [ %i.d, %bb.e ]
+  %.pn98.pn.pn.ph = phi { ptr, i32 } [ %i.da, %bb.o ], [ %i.m, %bb.e ]
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sink, i64 noundef 1144) #23
+  br label %bb.at
+
+bb.at:                                            ; preds = %.sink.split, %_ZNSt10unique_ptrIA_P6aiNodeSt14default_deleteIS2_EED2Ev.exit124, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120
+  %.pn98.pn.pn = phi { ptr, i32 } [ %.pn98.pn, %_ZNSt10unique_ptrIA_P6aiNodeSt14default_deleteIS2_EED2Ev.exit124 ], [ %i.db, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit120 ], [ %.pn98.pn.pn.ph, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #22
   resume { ptr, i32 } %.pn98.pn.pn
 }
@@ -1880,8 +1888,8 @@ bb.e:                                             ; preds = %_ZNK6Assimp9Formatt
   call void @_ZdlPvm(ptr noundef %.sink, i64 noundef %i.ac) #23
   br label %.body
 
-.body:                                            ; preds = %.body.sink.split, %bb.e, %bb.c
-  %.pn = phi { ptr, i32 } [ %i.n, %bb.c ], [ %i.y, %bb.e ], [ %.pn.ph, %.body.sink.split ]
+.body:                                            ; preds = %bb.c, %bb.e, %.body.sink.split
+  %.pn = phi { ptr, i32 } [ %.pn.ph, %.body.sink.split ], [ %i.n, %bb.c ], [ %i.y, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #22
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %0) #22
   resume { ptr, i32 } %.pn

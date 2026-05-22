@@ -201,10 +201,10 @@ bb.n:                                             ; preds = %bb.l
 
 _ZN6hermes2vm7Runtime10makeHandleINS0_15DictPropertyMapEEENS0_6HandleIT_EERKNS0_9GCPointerIS5_EE.exit.i: ; preds = %bb.n, %bb.m
   %.sroa.0.0.copyload.i.i.i6.i = phi i64 [ %i.by, %bb.m ], [ %.sroa.0.0.copyload.i.i.i6.pre.i, %bb.n ]
-  %i.ch = phi ptr [ %i.cf, %bb.m ], [ %.pre10.i, %bb.n ] ; 3 uses
+  %i.ch = phi ptr [ %i.cf, %bb.m ], [ %.pre10.i, %bb.n ] ; 2 uses
   %i.ci = phi ptr [ %i.bz, %bb.m ], [ %.pre.i, %bb.n ] ; 6 uses
   %.0.i.i.i.i.i.i.i = phi ptr [ %i.cb, %bb.m ], [ %i.cg, %bb.n ]
-  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 192 ; 3 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 192 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 208 ; 4 uses
   %i.cl = load i32, ptr %i.ck, align 8, !tbaa !50 ; 5 uses
   %i.cm = and i64 %.sroa.0.0.copyload.i.i.i6.i, 281474976710655
@@ -389,8 +389,7 @@ bb.ad:                                            ; preds = %"_ZZN6hermes2vm22he
   %i.fb = getelementptr inbounds nuw i8, ptr %i.fa, i64 128
   store i32 %i.cl, ptr %i.ck, align 8, !tbaa !50
   store ptr %i.fb, ptr %i.cs, align 8, !tbaa !49
-  store ptr %i.ch, ptr %i.cj, align 8, !tbaa !48
-  br label %bb.ae
+  br label %.sink.split
 
 .loopexit:                                        ; preds = %bb.ac, %..critedge_crit_edge.i.i
   %.pre-phi.i.i.ph = phi i64 [ %.pre.i.i, %..critedge_crit_edge.i.i ], [ %i.cr, %bb.ac ]
@@ -402,11 +401,15 @@ bb.ad:                                            ; preds = %"_ZZN6hermes2vm22he
   store i32 %i.cl, ptr %i.ck, align 8, !tbaa !50
   %i.fh = getelementptr inbounds nuw i8, ptr %i.ci, i64 200
   store ptr %i.fg, ptr %i.fh, align 8, !tbaa !49
+  br label %.sink.split
+
+.sink.split:                                      ; preds = %bb.ad, %.loopexit
+  %.sroa.020.2.ph = phi i32 [ 0, %bb.ad ], [ 1, %.loopexit ]
   store ptr %i.ch, ptr %i.cj, align 8, !tbaa !48
   br label %bb.ae
 
-bb.ae:                                            ; preds = %_ZN6hermes2vm11TwineChar16C2EPKc.exit14, %.loopexit, %bb.ad, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
-  %.sroa.020.2 = phi i32 [ %i.y, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.at, %_ZN6hermes2vm11TwineChar16C2EPKc.exit14 ], [ 1, %.loopexit ], [ 0, %bb.ad ]
+bb.ae:                                            ; preds = %.sink.split, %_ZN6hermes2vm11TwineChar16C2EPKc.exit14, %_ZN6hermes2vm11TwineChar16C2EPKc.exit
+  %.sroa.020.2 = phi i32 [ %i.y, %_ZN6hermes2vm11TwineChar16C2EPKc.exit ], [ %i.at, %_ZN6hermes2vm11TwineChar16C2EPKc.exit14 ], [ %.sroa.020.2.ph, %.sink.split ]
   %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.020.2, 0
   %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 -1688849860263936, 1
   ret { i32, i64 } %.fca.1.insert

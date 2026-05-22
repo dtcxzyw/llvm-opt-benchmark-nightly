@@ -44,28 +44,29 @@ bb.a:
   %.sroa.22.0.copyload.i = load i64, ptr %.sroa.22.0..sroa_idx.i, align 8 ; 2 uses
   switch i32 %.sroa.0.0.copyload.i, label %6 [
     i32 0, label %bb.b
-    i32 1, label %bb.c
+    i32 1, label %4
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.k = mul nsw i64 %.sroa.22.0.copyload.i, %3
-  store ptr null, ptr %0, align 8, !tbaa !37
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.k, ptr %4, align 8, !tbaa !40
-  br label %bb.d
+  br label %bb.c
 
-bb.c:                                             ; preds = %bb.a
+4:                                                ; preds = %bb.a
   %5 = sdiv i64 %3, %.sroa.22.0.copyload.i
-  store ptr null, ptr %0, align 8, !tbaa !37
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %5, ptr %i.l, align 8, !tbaa !40
-  br label %bb.d
+  br label %bb.c
 
 6:                                                ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.d
 
-bb.d:                                             ; preds = %6, %bb.c, %bb.b
+bb.c:                                             ; preds = %bb.b, %4
+  %.sink = phi i64 [ %5, %4 ], [ %i.k, %bb.b ]
+  store ptr null, ptr %0, align 8, !tbaa !37
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %.sink, ptr %i.l, align 8, !tbaa !40
+  br label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %6
   ret void
 }
 
