@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.z
 
 bb.ac:                                            ; preds = %bb.ab
   %.sroa.speculated = tail call i32 @llvm.umin.i32(i32 %i.cu, i32 %i.cs)
-  %i.db = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated, i32 8)
+  %i.db = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated, i32 15)
   %spec.select128 = lshr i32 %i.db, 3             ; 4 uses
   %i.dc = load ptr, ptr @stderr, align 8, !tbaa !172
   %i.dd = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dc, ptr noundef nonnull @.str.23, i32 noundef %i.cs, i32 noundef %i.cu, i32 noundef %i.cw, i32 noundef %spec.select128) #33 ; 0 uses

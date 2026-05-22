@@ -199,11 +199,11 @@ middle.block:                                     ; preds = %vector.body
 define dso_local void @consensus(ptr noundef captures(none) initializes((0, 4)) %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = load i32, ptr @cube, align 8, !tbaa !34  ; 2 uses
-  %3 = icmp slt i32 %i.a, 33
-  %i.b = add nsw i32 %i.a, -1
+  %i.b = add i32 %i.a, -1
   %i.c = ashr i32 %i.b, 5
   %i.d = add nsw i32 %i.c, 1
-  %i.e = select i1 %3, i32 1, i32 %i.d            ; 4 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %i.a, 32
+  %i.e = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.d, i32 1 ; 4 uses
   store i32 %i.e, ptr %0, align 4, !tbaa !4
   %i.f = sext i32 %i.e to i64
   %smin = tail call i32 @llvm.smin.i32(i32 %i.e, i32 1)

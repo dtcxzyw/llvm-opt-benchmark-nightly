@@ -201,9 +201,9 @@ bb.b:                                             ; preds = %bb.a
   tail call fastcc void @_ZL17PrintRequirementsP8_IO_FILEPKcyS2_j(ptr noundef %0, ptr noundef nonnull @.str, i64 noundef %i.b, ptr noundef nonnull @.str.1, i32 noundef %i.c)
   %i.d = icmp eq i32 %2, -1
   %spec.select = select i1 %i.d, i32 %i.c, i32 %2 ; 3 uses
-  %5 = icmp ugt i32 %spec.select, 1
-  %6 = and i32 %spec.select, -2
-  %.165 = select i1 %5, i32 %6, i32 %spec.select  ; 10 uses
+  %5 = and i32 %spec.select, -2
+  %.narrow = icmp ugt i32 %spec.select, 2
+  %.165 = select i1 %.narrow, i32 %5, i32 %spec.select ; 10 uses
   %i.e = icmp eq i32 %3, -1
   br i1 %i.e, label %.preheader88.preheader, label %bb.d
 

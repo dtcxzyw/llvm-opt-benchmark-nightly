@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %rcidm_should_roll.e
   store i8 %i.s, ptr %i.a, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8, !tbaa !30   ; 2 uses
-  %1 = icmp ugt i64 %i.u, 9999
-  %2 = urem i64 %i.u, 10000
-  %storemerge.i.i = select i1 %1, i64 %2, i64 0
+  %1 = urem i64 %i.u, 10000
+  %.narrow.i.i = icmp ugt i64 %i.u, 10000
+  %storemerge.i.i = select i1 %.narrow.i.i, i64 %1, i64 0
   store i64 %storemerge.i.i, ptr %i.t, align 8, !tbaa !30
   br label %rcidm_tick.exit
 
@@ -261,9 +261,9 @@ bb.e:                                             ; preds = %rcidm_should_roll.e
   %i.t = and i8 %i.s, -65
   store i8 %i.t, ptr %i.e, align 8
   %i.u = load i64, ptr %i.b, align 8, !tbaa !30   ; 2 uses
-  %2 = icmp ugt i64 %i.u, 9999
-  %3 = urem i64 %i.u, 10000
-  %storemerge.i.i = select i1 %2, i64 %3, i64 0
+  %2 = urem i64 %i.u, 10000
+  %.narrow.i.i = icmp ugt i64 %i.u, 10000
+  %storemerge.i.i = select i1 %.narrow.i.i, i64 %2, i64 0
   store i64 %storemerge.i.i, ptr %i.b, align 8, !tbaa !30
   br label %rcidm_tick.exit
 
@@ -304,9 +304,9 @@ bb.b:                                             ; preds = %rcidm_should_roll.e
   store i8 %i.m, ptr %i.a, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !tbaa !30   ; 2 uses
-  %1 = icmp ugt i64 %i.o, 9999
-  %2 = urem i64 %i.o, 10000
-  %storemerge.i.i = select i1 %1, i64 %2, i64 0
+  %1 = urem i64 %i.o, 10000
+  %.narrow.i.i = icmp ugt i64 %i.o, 10000
+  %storemerge.i.i = select i1 %.narrow.i.i, i64 %1, i64 0
   store i64 %storemerge.i.i, ptr %i.n, align 8, !tbaa !30
   br label %rcidm_tick.exit
 
@@ -369,9 +369,9 @@ bb.f:                                             ; preds = %rcidm_should_roll.e
   store i8 %i.w, ptr %i.a, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !30   ; 2 uses
-  %2 = icmp ugt i64 %i.y, 9999
-  %3 = urem i64 %i.y, 10000
-  %storemerge.i.i = select i1 %2, i64 %3, i64 0
+  %2 = urem i64 %i.y, 10000
+  %.narrow.i.i = icmp ugt i64 %i.y, 10000
+  %storemerge.i.i = select i1 %.narrow.i.i, i64 %2, i64 0
   store i64 %storemerge.i.i, ptr %i.x, align 8, !tbaa !30
   br label %rcidm_tick.exit
 
@@ -723,9 +723,9 @@ bb.t:                                             ; preds = %rcidm_should_roll.e
   store i8 %i.cg, ptr %i.bp, align 8
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !30 ; 2 uses
-  %2 = icmp ugt i64 %i.ci, 9999
-  %3 = urem i64 %i.ci, 10000
-  %storemerge.i.i = select i1 %2, i64 %3, i64 0
+  %2 = urem i64 %i.ci, 10000
+  %.narrow.i.i = icmp ugt i64 %i.ci, 10000
+  %storemerge.i.i = select i1 %.narrow.i.i, i64 %2, i64 0
   store i64 %storemerge.i.i, ptr %i.ch, align 8, !tbaa !30
   br label %rcidm_tick.exit
 

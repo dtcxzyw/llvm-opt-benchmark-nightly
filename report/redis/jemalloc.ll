@@ -201,10 +201,10 @@ tsd_fetch_impl.exit:                              ; preds = %bb.a
 
 compute_size_with_overflow.exit32:                ; preds = %bb.a, %tsd_fetch_impl.exit
   %.0.i80249 = phi ptr [ %i.e, %tsd_fetch_impl.exit ], [ %i.b, %bb.a ] ; 7 uses
-  %5 = icmp ult i64 %1, 8
   %i.g = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %1)
   %i.h = icmp samesign ugt i64 %i.g, 1
-  %or.cond47.i = select i1 %5, i1 true, i1 %i.h, !prof !121
+  %.narrow237 = icmp ult i64 %1, 7
+  %or.cond47.i = or i1 %.narrow237, %i.h
   br i1 %or.cond47.i, label %imalloc.exit, label %bb.b, !prof !121
 
 bb.b:                                             ; preds = %compute_size_with_overflow.exit32
@@ -349,10 +349,10 @@ imalloc_init_check.exit:                          ; preds = %bb.n
   br label %imalloc.exit
 
 compute_size_with_overflow.exit:                  ; preds = %bb.n, %bb.m
-  %6 = icmp ult i64 %1, 8
   %i.bq = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %1)
   %i.br = icmp samesign ugt i64 %i.bq, 1
-  %or.cond47.i11 = select i1 %6, i1 true, i1 %i.br, !prof !121
+  %.narrow = icmp ult i64 %1, 7
+  %or.cond47.i11 = or i1 %.narrow, %i.br
   br i1 %or.cond47.i11, label %aligned_usize_get.exit.i17.thread, label %bb.o, !prof !121
 
 bb.o:                                             ; preds = %compute_size_with_overflow.exit

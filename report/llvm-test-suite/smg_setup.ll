@@ -48,7 +48,7 @@ bb.a:
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !4
   %i.af = sub nsw i32 %i.ac, %i.ae
   %i.ag = tail call i32 @llvm.smax.i32(i32 %i.af, i32 -1)
-  %spec.select = add nsw i32 %i.ag, 1
+  %spec.select = add i32 %i.ag, 1
   %i.ah = tail call i32 @hypre_Log2(i32 noundef %spec.select) #5
   %i.ai = add nsw i32 %i.ah, 2                    ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses

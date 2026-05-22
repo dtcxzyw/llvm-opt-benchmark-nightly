@@ -201,9 +201,9 @@ _ZN14arrow_vendored17double_conversion5DiyFp9NormalizeEv.exit73.i: ; preds = %.l
   %i.eu = zext nneg i32 %i.et to i64
   %i.ev = shl i64 %i.ek, %i.eu                    ; 2 uses
   %i.ew = add nsw i32 %.19.lcssa.i65.i, 64
-  %5 = icmp sgt i32 %.19.lcssa.i65.i, -1086
   %spec.select.i74.i = call i32 @llvm.usub.sat.i32(i32 %i.ew, i32 -1074)
-  %.0.i.i = select i1 %5, i32 53, i32 %spec.select.i74.i ; 3 uses
+  %.narrow.i.i = icmp sgt i32 %.19.lcssa.i65.i, -1085
+  %.0.i.i = select i1 %.narrow.i.i, i32 53, i32 %spec.select.i74.i ; 3 uses
   %i.ex = sub nsw i32 64, %.0.i.i
   %i.ey = icmp samesign ult i32 %.0.i.i, 4
   br i1 %i.ey, label %bb.q, label %bb.r

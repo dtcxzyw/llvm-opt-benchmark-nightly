@@ -201,11 +201,11 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.i = load i32, ptr %i.h, align 8              ; 3 uses
-  %i.j = sub nsw i32 0, %i.i
+  %i.j = sub i32 0, %i.i
   %i.k = and i32 %i.j, 3
   %i.l = icmp ne i32 %i.k, 2
-  %.not.inv.i = icmp sgt i32 %i.i, -1
-  %narrow.i.not = select i1 %.not.inv.i, i1 true, i1 %i.l
+  %.not.inv.i = icmp sgt i32 %i.i, 1
+  %narrow.i.not = or i1 %.not.inv.i, %i.l
   br i1 %narrow.i.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -608,17 +608,17 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %i.h = load i32, ptr %i.g, align 8              ; 3 uses
-  %i.i = sub nsw i32 0, %i.h
+  %i.i = sub i32 0, %i.h
   %i.j = and i32 %i.i, 3                          ; 2 uses
   %i.k = icmp ne i32 %i.j, 2
-  %.not.inv.i = icmp sgt i32 %i.h, -1
-  %narrow.i.not = select i1 %.not.inv.i, i1 true, i1 %i.k
+  %.not.inv.i = icmp sgt i32 %i.h, 1
+  %narrow.i.not = or i1 %.not.inv.i, %i.k
   br i1 %narrow.i.not, label %bb.c, label %symbol_IsFunction.exit.thread21
 
 bb.c:                                             ; preds = %bb.b
   %.not.i = icmp slt i32 %i.h, 0
   %switch = icmp samesign ult i32 %i.j, 2
-  %or.cond25 = select i1 %.not.i, i1 %switch, i1 false
+  %or.cond25 = and i1 %.not.i, %switch
   br i1 %or.cond25, label %symbol_IsFunction.exit.thread21, label %symbol_IsFunction.exit.thread
 
 symbol_IsFunction.exit.thread21:                  ; preds = %bb.c, %bb.b
@@ -904,17 +904,17 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.i = load i32, ptr %i.h, align 8              ; 4 uses
-  %i.j = sub nsw i32 0, %i.i
+  %i.j = sub i32 0, %i.i
   %i.k = and i32 %i.j, 3                          ; 2 uses
   %i.l = icmp ne i32 %i.k, 2
-  %.not.inv.i = icmp sgt i32 %i.i, -1
-  %narrow.i.not = select i1 %.not.inv.i, i1 true, i1 %i.l
+  %.not.inv.i = icmp sgt i32 %i.i, 1
+  %narrow.i.not = or i1 %.not.inv.i, %i.l
   br i1 %narrow.i.not, label %bb.c, label %symbol_IsFunction.exit.thread31
 
 bb.c:                                             ; preds = %bb.b
   %.not.i = icmp slt i32 %i.i, 0
   %switch = icmp samesign ult i32 %i.k, 2
-  %or.cond = select i1 %.not.i, i1 %switch, i1 false
+  %or.cond = and i1 %.not.i, %switch
   br i1 %or.cond, label %symbol_IsFunction.exit.thread31, label %symbol_IsFunction.exit.thread
 
 symbol_IsFunction.exit.thread31:                  ; preds = %bb.c, %bb.b
@@ -1070,17 +1070,17 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
   %i.i = load i32, ptr %i.h, align 8              ; 4 uses
-  %i.j = sub nsw i32 0, %i.i
+  %i.j = sub i32 0, %i.i
   %i.k = and i32 %i.j, 3                          ; 2 uses
   %i.l = icmp ne i32 %i.k, 2
-  %.not.inv.i = icmp sgt i32 %i.i, -1
-  %narrow.i.not = select i1 %.not.inv.i, i1 true, i1 %i.l
+  %.not.inv.i = icmp sgt i32 %i.i, 1
+  %narrow.i.not = or i1 %.not.inv.i, %i.l
   br i1 %narrow.i.not, label %bb.c, label %symbol_IsFunction.exit.thread39
 
 bb.c:                                             ; preds = %bb.b
   %.not.i = icmp slt i32 %i.i, 0
   %switch = icmp samesign ult i32 %i.k, 2
-  %or.cond = select i1 %.not.i, i1 %switch, i1 false
+  %or.cond = and i1 %.not.i, %switch
   br i1 %or.cond, label %symbol_IsFunction.exit.thread39, label %symbol_IsFunction.exit.thread
 
 symbol_IsFunction.exit.thread39:                  ; preds = %bb.c, %bb.b

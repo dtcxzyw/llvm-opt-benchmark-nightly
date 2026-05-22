@@ -201,11 +201,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !64, !noalias !67, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.k, 8
   %i.l = add i64 %i.k, 1
   %i.m = lshr i64 %i.l, 3
   %i.n = mul nuw i64 %i.m, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.k, i64 %i.n ; 2 uses
+  %.narrow = icmp ult i64 %i.k, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.k, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.h, %i.o
   br i1 %.not.i, label %bb.d, label %bb.k
@@ -501,11 +501,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !109, !noalias !112, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.k, 8
   %i.l = add i64 %i.k, 1
   %i.m = lshr i64 %i.l, 3
   %i.n = mul nuw i64 %i.m, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.k, i64 %i.n ; 2 uses
+  %.narrow = icmp ult i64 %i.k, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.k, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.h, %i.o
   br i1 %.not.i, label %bb.d, label %bb.k
@@ -908,11 +908,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _RNvXs1_NtCs3gpiEk3WpjL_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.e, %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !355, !noundef !3 ; 3 uses
-  %1 = icmp ult i64 %i.v, 8
   %i.w = add i64 %i.v, 1
   %i.x = lshr i64 %i.w, 3
   %i.y = mul nuw i64 %i.x, 7
-  %.sroa.04.0.i.i = select i1 %1, i64 %i.v, i64 %i.y
+  %.narrow.i.i = icmp ult i64 %i.v, 7
+  %.sroa.04.0.i.i = select i1 %.narrow.i.i, i64 %i.v, i64 %i.y
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !noalias !355, !noundef !3
@@ -1315,7 +1315,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
 ._crit_edge:                                      ; preds = %_RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19, %._crit_edge.loopexit
   %.pre-phi = phi i64 [ %i.aa, %._crit_edge.loopexit ], [ 0, %_RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19 ]
   %i.ab = phi i64 [ %.pre, %._crit_edge.loopexit ], [ -1, %_RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread19 ] ; 2 uses
-  %i.ac = icmp ult i64 %i.ab, 8
+  %i.ac = icmp ult i64 %i.ab, 7
   %.sroa.04.0 = select i1 %i.ac, i64 %i.ab, i64 %.pre-phi
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.ae = load i64, ptr %i.ad, align 8, !noundef !3
@@ -1718,10 +1718,10 @@ bb.f:                                             ; preds = %_RNvXs_NtNtNtCsc8g9
 _RNvMs6_NtCs2HSpDNxY7OE_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %_RNvMs1_NtCs2HSpDNxY7OE_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i, %_RNvXs_NtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i
   %.sroa.0.0.i.i11.i.i = phi ptr [ %i.o, %_RNvXs_NtNtNtCsc8g9ilNZkOD_14allocator_api26stable5alloc6globalNtB4_6GlobalNtB6_9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs2HSpDNxY7OE_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i11.i.i, i64 %i.i ; 3 uses
-  %2 = icmp ult i64 %i.d, 8
   %i.r = lshr i64 %i.f, 3
   %i.s = mul nuw nsw i64 %i.r, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.s
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.s
   store ptr %i.q, ptr %i.b, align 8
   %.sroa.42.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.d, ptr %.sroa.42.0..sroa_idx, align 8
@@ -2057,10 +2057,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -2263,10 +2263,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.q, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.k
-  %2 = icmp ult i64 %i.d, 8
   %i.v = lshr i64 %i.f, 3
   %i.w = mul nuw nsw i64 %i.v, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.w
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.w
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcDNtNtCs2xb0BKvnu80_21datafusion_datasource11file_format17FileFormatFactoryEL_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcDNtNtCs2xb0BKvnu80_21datafusion_datasource11file_format17FileFormatFactoryEL_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -2467,10 +2467,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.q, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.u = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.k
-  %2 = icmp ult i64 %i.d, 8
   %i.v = lshr i64 %i.f, 3
   %i.w = mul nuw nsw i64 %i.v, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.w
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.w
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table20TableProviderFactoryEL_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcDNtNtCsanCXJAiNsO_18datafusion_catalog5table20TableProviderFactoryEL_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -2668,10 +2668,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr3udf9ScalarUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -2864,10 +2864,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udaf12AggregateUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -3060,10 +3060,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCs8VI8w5SIoU4_15datafusion_expr4udwf9WindowUDFEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -3256,10 +3256,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtCsanCXJAiNsO_18datafusion_catalog5table13TableFunctionEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -3452,10 +3452,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8Hz2sPNgbCO_10datafusion9execution13session_state12PreparedPlanEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -3648,10 +3648,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.n, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.h
-  %2 = icmp ult i64 %i.d, 8
   %i.s = lshr i64 %i.f, 3
   %i.t = mul nuw nsw i64 %i.s, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.t
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.t
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtBT_4sync3ArcNtNtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan4plan11LogicalPlanEEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -3845,10 +3845,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCsbvkFyIu7lgC_4core6option6OptionBP_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtCsbvkFyIu7lgC_4core6option6OptionBP_EEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -4062,10 +4062,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -4269,10 +4269,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.r, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.l
-  %2 = icmp ult i64 %i.e, 8
   %i.w = lshr i64 %i.g, 3
   %i.x = mul nuw nsw i64 %i.w, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.e, i64 %i.x
+  %.narrow = icmp ult i64 %i.e, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.e, i64 %i.x
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCs8ulvy0Wg6Ot_12delta_kernel6schema13MetadataValueEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -4573,10 +4573,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.u, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.o
-  %2 = icmp ult i64 %i.h, 8
   %i.z = lshr i64 %i.j, 3
   %i.aa = mul nuw nsw i64 %i.z, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.h, i64 %i.aa
+  %.narrow = icmp ult i64 %i.h, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.h, i64 %i.aa
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config20ParquetColumnOptionsEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config20ParquetColumnOptionsEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -4888,10 +4888,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnDecryptionPropertiesEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnDecryptionPropertiesEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -5097,10 +5097,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.s, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.m
-  %2 = icmp ult i64 %i.f, 8
   %i.x = lshr i64 %i.h, 3
   %i.y = mul nuw nsw i64 %i.x, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.f, i64 %i.y
+  %.narrow = icmp ult i64 %i.f, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.f, i64 %i.y
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnEncryptionPropertiesEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsjhHCjzi9uUI_17datafusion_common6config26ColumnEncryptionPropertiesEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h
@@ -5349,10 +5349,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExpruEE17new_uninitializedCsdJxlLsGgtXr_16delta_benchmarks.exit: ; preds = %bb.g, %bb.h

@@ -201,11 +201,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !5, !noalias !8, !noundef !3 ; 4 uses
-  %4 = icmp ult i64 %i.i, 8
   %i.j = add i64 %i.i, 1                          ; 6 uses
   %i.k = lshr i64 %i.j, 3
   %i.l = mul nuw i64 %i.k, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.i, i64 %i.l ; 2 uses
+  %.narrow = icmp ult i64 %i.i, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.i, i64 %i.l ; 2 uses
   %i.m = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.f, %i.m
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -608,7 +608,7 @@ _RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.pre13.i = add i64 %.pre.i.fr, 1
   %i.hb = lshr i64 %.pre13.i, 3
   %i.hc = mul nuw i64 %i.hb, 7
-  %i.hd = icmp ult i64 %.pre.i.fr, 8
+  %i.hd = icmp ult i64 %.pre.i.fr, 7
   %spec.select = select i1 %i.hd, i64 %.pre.i.fr, i64 %i.hc
   %.pre = load i64, ptr %i.d, align 8, !alias.scope !52
   br label %bb.z
@@ -1011,11 +1011,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _RNvXs1_NtCs3gpiEk3WpjL_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.e, %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !495, !noundef !3 ; 3 uses
-  %1 = icmp ult i64 %i.v, 8
   %i.w = add i64 %i.v, 1
   %i.x = lshr i64 %i.w, 3
   %i.y = mul nuw i64 %i.x, 7
-  %.sroa.04.0.i.i = select i1 %1, i64 %i.v, i64 %i.y
+  %.narrow.i.i = icmp ult i64 %i.v, 7
+  %.sroa.04.0.i.i = select i1 %.narrow.i.i, i64 %i.v, i64 %i.y
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !noalias !495, !noundef !3
@@ -1418,10 +1418,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.g, %bb.h
@@ -1625,10 +1625,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.r, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.l
-  %2 = icmp ult i64 %i.g, 8
   %i.w = lshr i64 %i.i, 3
   %i.x = mul nuw nsw i64 %i.w, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.g, i64 %i.x
+  %.narrow = icmp ult i64 %i.g, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.g, i64 %i.x
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config7section10SsoSessionEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config7section10SsoSessionEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.g, %bb.h
@@ -1863,10 +1863,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.r, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.l
-  %2 = icmp ult i64 %i.g, 8
   %i.w = lshr i64 %i.i, 3
   %i.x = mul nuw nsw i64 %i.w, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.g, i64 %i.x
+  %.narrow = icmp ult i64 %i.g, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.g, i64 %i.x
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config7section7ProfileEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config7section7ProfileEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.g, %bb.h
@@ -2102,10 +2102,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.s, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.m
-  %2 = icmp ult i64 %i.f, 8
   %i.x = lshr i64 %i.h, 3
   %i.y = mul nuw nsw i64 %i.x, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.f, i64 %i.y
+  %.narrow = icmp ult i64 %i.f, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.f, i64 %i.y
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config8property8PropertyEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtNtCsat9blWvDIpa_11aws_runtime10env_config8property8PropertyEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.g, %bb.h
@@ -2490,10 +2490,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.u, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.y = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.o
-  %2 = icmp ult i64 %i.h, 8
   %i.z = lshr i64 %i.j, 3
   %i.aa = mul nuw nsw i64 %i.z, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.h, i64 %i.aa
+  %.narrow = icmp ult i64 %i.h, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.h, i64 %i.aa
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsat9blWvDIpa_11aws_runtime10env_config8property13PropertiesKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtNtCsat9blWvDIpa_11aws_runtime10env_config8property13PropertiesKeyNtNtCs6Po7BT7Nknu_5alloc6string6StringEE17new_uninitializedCs9rVkZwOUgsI_13deltalake_aws.exit: ; preds = %bb.g, %bb.h

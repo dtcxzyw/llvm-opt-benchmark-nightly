@@ -201,10 +201,10 @@ vector.body2355:                                  ; preds = %vector.body2355, %v
   %i.blr = and <4 x i32> %wide.load2359, splat (i32 2147483647) ; 2 uses
   %i.bls = sub nsw <4 x i32> zeroinitializer, %i.blq
   %i.blt = sub nsw <4 x i32> zeroinitializer, %i.blr
-  %13 = icmp slt <4 x i32> %wide.load2358.a, zeroinitializer
-  %14 = icmp slt <4 x i32> %wide.load2359, zeroinitializer
-  %i.blu = select <4 x i1> %13, <4 x i32> %i.bls, <4 x i32> %i.blq
-  %i.blv = select <4 x i1> %14, <4 x i32> %i.blt, <4 x i32> %i.blr
+  %13 = icmp sgt <4 x i32> %wide.load2358.a, zeroinitializer
+  %14 = icmp sgt <4 x i32> %wide.load2359, zeroinitializer
+  %i.blu = select <4 x i1> %13, <4 x i32> %i.blq, <4 x i32> %i.bls
+  %i.blv = select <4 x i1> %14, <4 x i32> %i.blr, <4 x i32> %i.blt
   store <4 x i32> %i.blu, ptr %next.gep2357, align 4, !tbaa !3
   store <4 x i32> %i.blv, ptr %i.blp, align 4, !tbaa !3
   %index.next2360 = add nuw i64 %index2356, 8     ; 2 uses
@@ -225,8 +225,8 @@ scalar.ph2350:                                    ; preds = %scalar.ph2350.prehe
   %i.blx = load i32, ptr %.013412008.us, align 4, !tbaa !3 ; 2 uses
   %i.bly = and i32 %i.blx, 2147483647             ; 2 uses
   %i.blz = sub nsw i32 0, %i.bly
-  %.not16241625.us = icmp slt i32 %i.blx, 0
-  %i.bma = select i1 %.not16241625.us, i32 %i.blz, i32 %i.bly
+  %.not1624.narrow.us = icmp sgt i32 %i.blx, 0
+  %i.bma = select i1 %.not1624.narrow.us, i32 %i.bly, i32 %i.blz
   store i32 %i.bma, ptr %.013412008.us, align 4, !tbaa !3
   %i.bmb = add nuw nsw i32 %.013432007.us, 1      ; 2 uses
   %i.bmc = getelementptr inbounds nuw i8, ptr %.013412008.us, i64 4

@@ -100,9 +100,9 @@ bb.a:
   %i.f = shl nuw i32 1, %i.e                      ; 9 uses
   %notmask103 = shl nsw i32 -1, %12
   %i.g = xor i32 %notmask103, -1                  ; 14 uses
-  %16 = icmp slt i32 %5, 13
-  %17 = sub nsw i32 14, %5
-  %i.h = select i1 %16, i32 2, i32 %17            ; 8 uses
+  %16 = sub nsw i32 14, %5
+  %.narrow.i = icmp slt i32 %5, 12
+  %i.h = select i1 %.narrow.i, i32 2, i32 %16     ; 8 uses
   %i.i = add i32 %13, -2147483647
   %i.j = icmp ult i32 %i.i, -2147483646
   %i.k = add i32 %14, -2147483647
@@ -266,18 +266,18 @@ bb.k:                                             ; preds = %SharpYuvInit.exit
   %i.ct = shl i32 %i.cs, %i.h
   %i.cu = sub nsw i32 0, %i.h                     ; 3 uses
   %i.cv = ashr i32 %i.cs, %i.cu
-  %18 = icmp slt i32 %i.h, 0                      ; 3 uses
-  %i.cw = select i1 %18, i32 %i.cv, i32 %i.ct     ; 2 uses
+  %.narrow.i110 = icmp sgt i32 %i.h, 0            ; 3 uses
+  %i.cw = select i1 %.narrow.i110, i32 %i.ct, i32 %i.cv ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.a, i64 28
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !3  ; 2 uses
   %i.cz = shl i32 %i.cy, %i.h
   %i.da = ashr i32 %i.cy, %i.cu
-  %i.db = select i1 %18, i32 %i.da, i32 %i.cz     ; 3 uses
+  %i.db = select i1 %.narrow.i110, i32 %i.cz, i32 %i.da ; 3 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !3  ; 2 uses
   %i.de = shl i32 %i.dd, %i.h
   %i.df = ashr i32 %i.dd, %i.cu
-  %i.dg = select i1 %18, i32 %i.df, i32 %i.de     ; 3 uses
+  %i.dg = select i1 %.narrow.i110, i32 %i.de, i32 %i.df ; 3 uses
   %i.dh = add nuw nsw i32 %13, 1                  ; 2 uses
   %i.di = and i32 %i.dh, 2147483646               ; 14 uses
   %i.dj = add nuw nsw i32 %14, 1                  ; 3 uses
@@ -680,7 +680,7 @@ bb.a:
   %i.e = add i32 %5, 1                            ; 2 uses
   %i.f = and i32 %i.e, -2                         ; 4 uses
   %i.g = icmp eq i32 %4, 8
-  %i.h = icmp slt i32 %4, 13
+  %i.h = icmp slt i32 %4, 12
   %i.i = sub nsw i32 14, %4
   %i.j = select i1 %i.h, i32 2, i32 %i.i          ; 6 uses
   %i.k = sub nsw i32 0, %i.j                      ; 4 uses
@@ -826,7 +826,7 @@ middle.block227:                                  ; preds = %vector.body221
   %i.av = icmp sgt i32 %4, 8
   %i.aw = sdiv i32 %3, 2
   %i.ax = select i1 %i.av, i32 %i.aw, i32 %3      ; 2 uses
-  %7 = icmp slt i32 %i.j, 0
+  %.narrow.i69 = icmp sgt i32 %i.j, 0
   %i.ay = sext i32 %i.ax to i64                   ; 2 uses
   %i.az = sext i32 %i.f to i64                    ; 3 uses
   %i.ba = sext i32 %i.l to i64                    ; 3 uses
@@ -837,7 +837,7 @@ middle.block227:                                  ; preds = %vector.body221
   %min.iters.check149 = icmp sgt i32 %5, 39
   %ident.check123.not = icmp eq i32 %i.ax, 1
   %or.cond232 = and i1 %min.iters.check149, %ident.check123.not ; 2 uses
-  br i1 %7, label %.split.split.us.preheader, label %.split.split.preheader
+  br i1 %.narrow.i69, label %.split.split.us.preheader, label %.split.split.preheader
 
 .split.split.preheader:                           ; preds = %.split
   br i1 %or.cond232, label %vector.memcheck, label %.split.split.preheader236
@@ -886,7 +886,7 @@ vector.memcheck:                                  ; preds = %.split.split.prehea
 
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %wide.trip.count77, 2147483640 ; 3 uses
-  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.j, i64 0
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.k, i64 0
   %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer ; 3 uses
   br label %vector.body
 
@@ -895,22 +895,22 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.br = getelementptr inbounds [2 x i8], ptr %0, i64 %index
   %wide.load = load <8 x i16>, ptr %i.br, align 2, !tbaa !12
   %i.bs = zext <8 x i16> %wide.load to <8 x i32>
-  %8 = shl <8 x i32> %i.bs, %broadcast.splat
-  %i.bt = trunc <8 x i32> %8 to <8 x i16>
+  %7 = lshr <8 x i32> %i.bs, %broadcast.splat
+  %i.bt = trunc nuw <8 x i32> %7 to <8 x i16>
   %i.bu = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %index
   store <8 x i16> %i.bt, ptr %i.bu, align 2, !tbaa !12
   %i.bv = getelementptr inbounds [2 x i8], ptr %1, i64 %index
   %wide.load120 = load <8 x i16>, ptr %i.bv, align 2, !tbaa !12
   %i.bw = zext <8 x i16> %wide.load120 to <8 x i32>
-  %9 = shl <8 x i32> %i.bw, %broadcast.splat
-  %i.bx = trunc <8 x i32> %9 to <8 x i16>
+  %8 = lshr <8 x i32> %i.bw, %broadcast.splat
+  %i.bx = trunc nuw <8 x i32> %8 to <8 x i16>
   %i.by = getelementptr [2 x i8], ptr %invariant.gep89, i64 %index
   store <8 x i16> %i.bx, ptr %i.by, align 2, !tbaa !12
   %i.bz = getelementptr inbounds [2 x i8], ptr %2, i64 %index
   %wide.load121 = load <8 x i16>, ptr %i.bz, align 2, !tbaa !12
   %i.ca = zext <8 x i16> %wide.load121 to <8 x i32>
-  %10 = shl <8 x i32> %i.ca, %broadcast.splat
-  %i.cb = trunc <8 x i32> %10 to <8 x i16>
+  %9 = lshr <8 x i32> %i.ca, %broadcast.splat
+  %i.cb = trunc nuw <8 x i32> %9 to <8 x i16>
   %i.cc = getelementptr [2 x i8], ptr %invariant.gep91, i64 %index
   store <8 x i16> %i.cb, ptr %i.cc, align 2, !tbaa !12
   %index.next = add nuw i64 %index, 8             ; 2 uses
@@ -972,7 +972,7 @@ vector.memcheck124:                               ; preds = %.split.split.us.pre
 
 vector.ph150:                                     ; preds = %vector.memcheck124
   %n.vec152 = and i64 %wide.trip.count77, 2147483640 ; 3 uses
-  %broadcast.splatinsert153 = insertelement <8 x i32> poison, i32 %i.k, i64 0
+  %broadcast.splatinsert153 = insertelement <8 x i32> poison, i32 %i.j, i64 0
   %broadcast.splat154 = shufflevector <8 x i32> %broadcast.splatinsert153, <8 x i32> poison, <8 x i32> zeroinitializer ; 3 uses
   br label %vector.body155
 
@@ -981,22 +981,22 @@ vector.body155:                                   ; preds = %vector.body155, %ve
   %i.cu = getelementptr inbounds [2 x i8], ptr %0, i64 %index156
   %wide.load157 = load <8 x i16>, ptr %i.cu, align 2, !tbaa !12
   %i.cv = zext <8 x i16> %wide.load157 to <8 x i32>
-  %11 = lshr <8 x i32> %i.cv, %broadcast.splat154
-  %i.cw = trunc nuw <8 x i32> %11 to <8 x i16>
+  %10 = shl <8 x i32> %i.cv, %broadcast.splat154
+  %i.cw = trunc <8 x i32> %10 to <8 x i16>
   %i.cx = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %index156
   store <8 x i16> %i.cw, ptr %i.cx, align 2, !tbaa !12
   %i.cy = getelementptr inbounds [2 x i8], ptr %1, i64 %index156
   %wide.load158 = load <8 x i16>, ptr %i.cy, align 2, !tbaa !12
   %i.cz = zext <8 x i16> %wide.load158 to <8 x i32>
-  %12 = lshr <8 x i32> %i.cz, %broadcast.splat154
-  %i.da = trunc nuw <8 x i32> %12 to <8 x i16>
+  %11 = shl <8 x i32> %i.cz, %broadcast.splat154
+  %i.da = trunc <8 x i32> %11 to <8 x i16>
   %i.db = getelementptr [2 x i8], ptr %invariant.gep89, i64 %index156
   store <8 x i16> %i.da, ptr %i.db, align 2, !tbaa !12
   %i.dc = getelementptr inbounds [2 x i8], ptr %2, i64 %index156
   %wide.load159 = load <8 x i16>, ptr %i.dc, align 2, !tbaa !12
   %i.dd = zext <8 x i16> %wide.load159 to <8 x i32>
-  %13 = lshr <8 x i32> %i.dd, %broadcast.splat154
-  %i.de = trunc nuw <8 x i32> %13 to <8 x i16>
+  %12 = shl <8 x i32> %i.dd, %broadcast.splat154
+  %i.de = trunc <8 x i32> %12 to <8 x i16>
   %i.df = getelementptr [2 x i8], ptr %invariant.gep91, i64 %index156
   store <8 x i16> %i.de, ptr %i.df, align 2, !tbaa !12
   %index.next160 = add nuw i64 %index156, 8       ; 2 uses
@@ -1017,22 +1017,22 @@ middle.block161:                                  ; preds = %vector.body155
   %i.di = getelementptr inbounds [2 x i8], ptr %0, i64 %i.dh
   %i.dj = load i16, ptr %i.di, align 2, !tbaa !12
   %i.dk = zext i16 %i.dj to i32
-  %14 = lshr i32 %i.dk, %i.k
-  %i.dl = trunc nuw i32 %14 to i16
+  %13 = shl i32 %i.dk, %i.j
+  %i.dl = trunc i32 %13 to i16
   %i.dm = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv73
   store i16 %i.dl, ptr %i.dm, align 2, !tbaa !12
   %i.dn = getelementptr inbounds [2 x i8], ptr %1, i64 %i.dh
   %i.do = load i16, ptr %i.dn, align 2, !tbaa !12
   %i.dp = zext i16 %i.do to i32
-  %15 = lshr i32 %i.dp, %i.k
-  %i.dq = trunc nuw i32 %15 to i16
+  %14 = shl i32 %i.dp, %i.j
+  %i.dq = trunc i32 %14 to i16
   %gep90 = getelementptr [2 x i8], ptr %invariant.gep89, i64 %indvars.iv73
   store i16 %i.dq, ptr %gep90, align 2, !tbaa !12
   %i.dr = getelementptr inbounds [2 x i8], ptr %2, i64 %i.dh
   %i.ds = load i16, ptr %i.dr, align 2, !tbaa !12
   %i.dt = zext i16 %i.ds to i32
-  %16 = lshr i32 %i.dt, %i.k
-  %i.du = trunc nuw i32 %16 to i16
+  %15 = shl i32 %i.dt, %i.j
+  %i.du = trunc i32 %15 to i16
   %gep92 = getelementptr [2 x i8], ptr %invariant.gep91, i64 %indvars.iv73
   store i16 %i.du, ptr %gep92, align 2, !tbaa !12
   %indvars.iv.next74 = add nuw nsw i64 %indvars.iv73, 1 ; 2 uses
@@ -1045,22 +1045,22 @@ middle.block161:                                  ; preds = %vector.body155
   %i.dw = getelementptr inbounds [2 x i8], ptr %0, i64 %i.dv
   %i.dx = load i16, ptr %i.dw, align 2, !tbaa !12
   %i.dy = zext i16 %i.dx to i32
-  %17 = shl i32 %i.dy, %i.j
-  %i.dz = trunc i32 %17 to i16
+  %16 = lshr i32 %i.dy, %i.k
+  %i.dz = trunc nuw i32 %16 to i16
   %i.ea = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %indvars.iv
   store i16 %i.dz, ptr %i.ea, align 2, !tbaa !12
   %i.eb = getelementptr inbounds [2 x i8], ptr %1, i64 %i.dv
   %i.ec = load i16, ptr %i.eb, align 2, !tbaa !12
   %i.ed = zext i16 %i.ec to i32
-  %18 = shl i32 %i.ed, %i.j
-  %i.ee = trunc i32 %18 to i16
+  %17 = lshr i32 %i.ed, %i.k
+  %i.ee = trunc nuw i32 %17 to i16
   %gep = getelementptr [2 x i8], ptr %invariant.gep89, i64 %indvars.iv
   store i16 %i.ee, ptr %gep, align 2, !tbaa !12
   %i.ef = getelementptr inbounds [2 x i8], ptr %2, i64 %i.dv
   %i.eg = load i16, ptr %i.ef, align 2, !tbaa !12
   %i.eh = zext i16 %i.eg to i32
-  %19 = shl i32 %i.eh, %i.j
-  %i.ei = trunc i32 %19 to i16
+  %18 = lshr i32 %i.eh, %i.k
+  %i.ei = trunc nuw i32 %18 to i16
   %gep88 = getelementptr [2 x i8], ptr %invariant.gep91, i64 %indvars.iv
   store i16 %i.ei, ptr %gep88, align 2, !tbaa !12
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -1100,9 +1100,9 @@ bb.c:                                             ; preds = %bb.b, %.split67.us
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @UpdateChroma(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2, i32 noundef range(i32 -1073741824, 1073741824) %3, i32 noundef %4, i32 noundef %5) unnamed_addr #1 {
 bb.a:
-  %6 = icmp slt i32 %4, 13
-  %7 = sub nsw i32 14, %4
-  %i.a = select i1 %6, i32 2, i32 %7
+  %6 = sub nsw i32 14, %4
+  %.narrow.i.i = icmp slt i32 %4, 12
+  %i.a = select i1 %.narrow.i.i, i32 2, i32 %6
   %i.b = add nsw i32 %i.a, %4                     ; 15 uses
   %i.c = shl nsw i32 %3, 1                        ; 2 uses
   %i.d = sext i32 %i.c to i64                     ; 3 uses

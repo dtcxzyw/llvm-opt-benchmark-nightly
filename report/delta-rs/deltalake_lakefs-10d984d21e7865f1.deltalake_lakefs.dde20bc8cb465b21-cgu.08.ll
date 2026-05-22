@@ -103,11 +103,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !3, !noalias !6, !noundef !8 ; 4 uses
-  %4 = icmp ult i64 %i.k, 8
   %i.l = add i64 %i.k, 1                          ; 6 uses
   %i.m = lshr i64 %i.l, 3
   %i.n = mul nuw i64 %i.m, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.k, i64 %i.n ; 2 uses
+  %.narrow = icmp ult i64 %i.k, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.k, i64 %i.n ; 2 uses
   %i.o = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.h, %i.o
   br i1 %.not.i, label %bb.d, label %bb.p
@@ -510,7 +510,7 @@ _RNvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB5_13RawTableInner15rehash_in_pl
   %.pre13.i = add i64 %.pre12.i.fr, 1
   %i.mp = lshr i64 %.pre13.i, 3
   %i.mq = mul nuw i64 %i.mp, 7
-  %i.mr = icmp ult i64 %.pre12.i.fr, 8
+  %i.mr = icmp ult i64 %.pre12.i.fr, 7
   %spec.select = select i1 %i.mr, i64 %.pre12.i.fr, i64 %i.mq
   %.pre = load i64, ptr %i.f, align 8, !alias.scope !68
   br label %bb.ab
@@ -728,11 +728,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _RNvXs1_NtCsbZMnTeWjWd9_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtNtB7_3raw5inner13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.e, %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !125, !noundef !8 ; 3 uses
-  %1 = icmp ult i64 %i.v, 8
   %i.w = add i64 %i.v, 1
   %i.x = lshr i64 %i.w, 3
   %i.y = mul nuw i64 %i.x, 7
-  %.sroa.01.0.i.i = select i1 %1, i64 %i.v, i64 %i.y
+  %.narrow.i.i = icmp ult i64 %i.v, 7
+  %.sroa.01.0.i.i = select i1 %.narrow.i.i, i64 %i.v, i64 %i.y
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !noalias !125, !noundef !8

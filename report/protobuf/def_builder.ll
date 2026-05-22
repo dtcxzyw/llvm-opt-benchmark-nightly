@@ -201,13 +201,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = trunc i64 %i.a to i32                    ; 2 uses
-  %i.f = add nsw i32 %i.e, -1
-  %i.g = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.f, i1 true)
+  %i.f = add i32 %i.e, -1
+  %i.g = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.f, i1 false)
   %i.h = sub nuw nsw i32 32, %i.g
+  %.narrow.inv.narrow.i.i = icmp sgt i32 %i.e, 1
   %4 = shl nuw i32 1, %i.h
-  %.inv.i = icmp sgt i32 %i.e, 1
   %i.i = tail call i32 @llvm.smax.i32(i32 %4, i32 64)
-  %narrow = select i1 %.inv.i, i32 %i.i, i32 64
+  %narrow = select i1 %.narrow.inv.narrow.i.i, i32 %i.i, i32 64
   %spec.select = zext nneg i32 %narrow to i64     ; 2 uses
   store i64 %spec.select, ptr %i.b, align 8, !tbaa !44
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -272,13 +272,13 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = trunc i64 %i.a to i32                    ; 2 uses
-  %i.f = add nsw i32 %i.e, -1
-  %i.g = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.f, i1 true)
+  %i.f = add i32 %i.e, -1
+  %i.g = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.f, i1 false)
   %i.h = sub nuw nsw i32 32, %i.g
+  %.narrow.inv.narrow.i.i.i = icmp sgt i32 %i.e, 1
   %6 = shl nuw i32 1, %i.h
-  %.inv.i.i = icmp sgt i32 %i.e, 1
   %i.i = tail call i32 @llvm.smax.i32(i32 %6, i32 64)
-  %narrow.i = select i1 %.inv.i.i, i32 %i.i, i32 64
+  %narrow.i = select i1 %.narrow.inv.narrow.i.i.i, i32 %i.i, i32 64
   %spec.select.i = zext nneg i32 %narrow.i to i64 ; 2 uses
   store i64 %spec.select.i, ptr %i.b, align 8, !tbaa !44
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 64

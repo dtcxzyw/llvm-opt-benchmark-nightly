@@ -201,11 +201,11 @@ _ZN6hermes2vm7HadesGC11HeapSegment11setCellHeadEPKNS0_6GCCellEm.exit: ; preds = 
   br i1 %.not.i, label %bb.c, label %_ZN6hermes2vm7HadesGC6OldGen17addCellToFreelistEPNS2_12FreelistCellEPNS2_13SegmentBucketE.exit
 
 bb.c:                                             ; preds = %_ZN6hermes2vm7HadesGC11HeapSegment11setCellHeadEPKNS0_6GCCellEm.exit
-  %5 = icmp samesign ult i32 %i.r, 2048
   %i.ab = lshr i32 %i.r, 3
-  %i.ac = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.r, i1 true)
+  %i.ac = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.r, i1 false)
   %i.ad = sub nuw nsw i32 276, %i.ac
-  %.0.i.i = select i1 %5, i32 %i.ab, i32 %i.ad
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i = icmp samesign ult i32 %i.r, 2040
+  %.0.i.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i, i32 %i.ab, i32 %i.ad
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.af = zext nneg i32 %.0.i.i to i64            ; 3 uses
   %i.ag = getelementptr inbounds nuw [24 x i8], ptr %i.ae, i64 %i.af ; 3 uses
@@ -289,11 +289,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = and i32 %i.a, 16777215                   ; 3 uses
-  %3 = icmp samesign ult i32 %i.l, 2048
   %i.m = lshr i32 %i.l, 3
-  %i.n = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.l, i1 true)
+  %i.n = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.l, i1 false)
   %i.o = sub nuw nsw i32 276, %i.n
-  %.0.i = select i1 %3, i32 %i.m, i32 %i.o
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp samesign ult i32 %i.l, 2040
+  %.0.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.m, i32 %i.o
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.q = zext nneg i32 %.0.i to i64               ; 3 uses
   %i.r = getelementptr inbounds nuw [24 x i8], ptr %i.p, i64 %i.q ; 3 uses
@@ -331,11 +331,11 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef range(i32 0, 277) i32 @_ZN6hermes2vm7HadesGC6OldGen17getFreelistBucketEj(i32 noundef %0) local_unnamed_addr #6 align 2 {
 bb.a:
-  %1 = icmp ult i32 %0, 2048
   %i.a = lshr i32 %0, 3
-  %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %0, i1 true)
+  %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %0, i1 false)
   %i.c = sub nuw nsw i32 276, %i.b
-  %.0 = select i1 %1, i32 %i.a, i32 %i.c
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i32 %0, 2040
+  %.0 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.a, i32 %i.c
   ret i32 %.0
 }
 
@@ -380,11 +380,11 @@ bb.d:                                             ; preds = %_ZN6hermes2vm7Hades
   %i.q = and i32 %i.p, 16777215
   %i.r = or disjoint i32 %i.q, 33554432
   store i32 %i.r, ptr %1, align 4, !tbaa !59
-  %6 = icmp ult i32 %i.p, 2048
   %i.s = lshr i32 %i.p, 3
-  %i.t = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.p, i1 true)
+  %i.t = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.p, i1 false)
   %i.u = sub nuw nsw i32 276, %i.t
-  %.0.i = select i1 %6, i32 %i.s, i32 %i.u
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i32 %i.p, 2040
+  %.0.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.s, i32 %i.u
   %i.v = zext nneg i32 %.0.i to i64
   %i.w = getelementptr inbounds nuw [24 x i8], ptr %3, i64 %i.v
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
@@ -787,11 +787,11 @@ _ZN6hermes2vm7HadesGC6OldGen26addCellToFreelistFromSweepEPcS3_RSt5arrayINS2_13Se
   %i.dg = and i32 %i.df, 16777215
   %i.dh = or disjoint i32 %i.dg, 33554432
   store i32 %i.dh, ptr %.077127, align 4, !tbaa !59
-  %4 = icmp ult i32 %i.df, 2048
   %i.di = lshr i32 %i.df, 3
-  %i.dj = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.df, i1 true)
+  %i.dj = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.df, i1 false)
   %i.dk = sub nuw nsw i32 276, %i.dj
-  %.0.i.i = select i1 %4, i32 %i.di, i32 %i.dk
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i = icmp ult i32 %i.df, 2040
+  %.0.i.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i, i32 %i.di, i32 %i.dk
   %i.dl = zext nneg i32 %.0.i.i to i64
   %i.dm = getelementptr inbounds nuw [24 x i8], ptr %storemerge.i.i.i.i, i64 %i.dl
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 16 ; 2 uses
@@ -901,11 +901,11 @@ _ZN6hermes2vm7HadesGC6OldGen26addCellToFreelistFromSweepEPcS3_RSt5arrayINS2_13Se
   %i.fg = and i32 %i.ff, 16777215
   %i.fh = or disjoint i32 %i.fg, 33554432
   store i32 %i.fh, ptr %.2, align 4, !tbaa !59
-  %5 = icmp ult i32 %i.ff, 2048
   %i.fi = lshr i32 %i.ff, 3
-  %i.fj = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ff, i1 true)
+  %i.fj = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.ff, i1 false)
   %i.fk = sub nuw nsw i32 276, %i.fj
-  %.0.i.i106 = select i1 %5, i32 %i.fi, i32 %i.fk
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i106 = icmp ult i32 %i.ff, 2040
+  %.0.i.i106 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i106, i32 %i.fi, i32 %i.fk
   %i.fl = zext nneg i32 %.0.i.i106 to i64
   %i.fm = getelementptr inbounds nuw [24 x i8], ptr %storemerge.i.i.i.i, i64 %i.fl
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 16 ; 2 uses
@@ -1308,11 +1308,11 @@ bb.j:                                             ; preds = %bb.a, %_ZN4llvh7Err
 define hidden noundef ptr @_ZN6hermes2vm7HadesGC6OldGen6searchEj(ptr noundef nonnull align 8 dereferenceable(6672) %0, i32 noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %2 = alloca %"class.hermes::vm::CardTable::Boundary", align 8 ; 5 uses
-  %3 = icmp ult i32 %1, 2048
   %i.a = lshr i32 %1, 3
-  %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %1, i1 true)
+  %i.b = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %1, i1 false)
   %i.c = sub nuw nsw i32 276, %i.b
-  %.0.i = select i1 %3, i32 %i.a, i32 %i.c        ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i32 %1, 2040
+  %.0.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.a, i32 %i.c ; 2 uses
   %i.d = zext nneg i32 %.0.i to i64               ; 4 uses
   %i.e = icmp samesign ult i32 %.0.i, 256
   br i1 %i.e, label %bb.b, label %bb.j
@@ -1389,11 +1389,11 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.c
 
 bb.i:                                             ; preds = %bb.b
   %i.al = add i32 %1, 8                           ; 3 uses
-  %4 = icmp ult i32 %i.al, 2048
   %i.am = lshr i32 %i.al, 3
-  %i.an = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.al, i1 true)
+  %i.an = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.al, i1 false)
   %i.ao = sub nuw nsw i32 276, %i.an
-  %.0.i71 = select i1 %4, i32 %i.am, i32 %i.ao
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i71 = icmp ult i32 %i.al, 2040
+  %.0.i71 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i71, i32 %i.am, i32 %i.ao
   %i.ap = zext nneg i32 %.0.i71 to i64
   br label %bb.j
 
@@ -1521,11 +1521,11 @@ bb.o:                                             ; preds = %bb.n
 _ZN6hermes2vm7HadesGC6OldGen12FreelistCell5carveEj.exit: ; preds = %bb.n, %bb.o
   %i.dd = phi i32 [ %i.cm, %bb.n ], [ %i.dc, %bb.o ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #35
-  %5 = icmp samesign ult i32 %i.dd, 2048
   %i.de = lshr i32 %i.dd, 3
-  %i.df = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.dd, i1 true)
+  %i.df = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.dd, i1 false)
   %i.dg = sub nuw nsw i32 276, %i.df
-  %.0.i73 = select i1 %5, i32 %i.de, i32 %i.dg
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i74 = icmp samesign ult i32 %i.dd, 2040
+  %.0.i73 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i74, i32 %i.de, i32 %i.dg
   %i.dh = zext nneg i32 %.0.i73 to i64            ; 2 uses
   %.not69 = icmp eq i64 %.153145, %i.dh
   br i1 %.not69, label %_ZN6hermes2vm7HadesGC6OldGen17addCellToFreelistEPNS2_12FreelistCellEPNS2_13SegmentBucketE.exit, label %bb.p
@@ -1598,11 +1598,11 @@ _ZN6hermes2vm7HadesGC6OldGen22removeCellFromFreelistEPNS0_27AssignableCompressed
 
 bb.u:                                             ; preds = %_ZN6hermes2vm7HadesGC6OldGen22removeCellFromFreelistEPNS0_27AssignableCompressedPointerEmPNS2_13SegmentBucketE.exit
   %i.el = and i32 %i.ef, 16777215                 ; 3 uses
-  %6 = icmp samesign ult i32 %i.el, 2048
   %i.em = lshr i32 %i.el, 3
-  %i.en = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.el, i1 true)
+  %i.en = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.el, i1 false)
   %i.eo = sub nuw nsw i32 276, %i.en
-  %.0.i.i78 = select i1 %6, i32 %i.em, i32 %i.eo
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i = icmp samesign ult i32 %i.el, 2040
+  %.0.i.i78 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i, i32 %i.em, i32 %i.eo
   %i.ep = zext nneg i32 %.0.i.i78 to i64          ; 3 uses
   %i.eq = getelementptr inbounds nuw [24 x i8], ptr %i.br, i64 %i.ep ; 3 uses
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !52 ; 3 uses
@@ -1902,11 +1902,11 @@ bb.i:                                             ; preds = %bb.h
 
 _ZN6hermes2vm18AlignedHeapSegment5allocEj.exit:   ; preds = %bb.h, %bb.i
   %spec.select.i = phi ptr [ null, %bb.h ], [ %i.av, %bb.i ] ; 8 uses
-  %4 = icmp ult i32 %i.az, 2048
   %i.bc = lshr i32 %i.az, 3
   %i.bd = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.az, i1 true)
   %i.be = sub nuw nsw i32 276, %i.bd
-  %.0.i = select i1 %4, i32 %i.bc, i32 %i.be
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i32 %i.az, 2040
+  %.0.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.bc, i32 %i.be
   %i.bf = load ptr, ptr %i.ag, align 8, !tbaa !113, !noalias !543 ; 2 uses
   %i.bg = icmp eq ptr %i.bf, %i.as
   br i1 %i.bg, label %bb.j, label %_ZNSt5dequeISt5arrayIN6hermes2vm7HadesGC6OldGen13SegmentBucketELm267EESaIS6_EE4backEv.exit
@@ -1970,11 +1970,11 @@ _ZN6hermes2vm7HadesGC11HeapSegment11setCellHeadEPKNS0_6GCCellEm.exit.i: ; preds 
   br i1 %.not.i.i, label %bb.l, label %_ZN6hermes2vm7HadesGC6OldGen17addCellToFreelistEPvjPNS2_13SegmentBucketE.exit
 
 bb.l:                                             ; preds = %_ZN6hermes2vm7HadesGC11HeapSegment11setCellHeadEPKNS0_6GCCellEm.exit.i
-  %5 = icmp samesign ult i32 %i.cg, 2048
   %i.cq = lshr i32 %i.cg, 3
-  %i.cr = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cg, i1 true)
+  %i.cr = call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.cg, i1 false)
   %i.cs = sub nuw nsw i32 276, %i.cr
-  %.0.i.i.i = select i1 %5, i32 %i.cq, i32 %i.cs
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i = icmp samesign ult i32 %i.cg, 2040
+  %.0.i.i.i = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i, i32 %i.cq, i32 %i.cs
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.cu = zext nneg i32 %.0.i.i.i to i64          ; 3 uses
   %i.cv = getelementptr inbounds nuw [24 x i8], ptr %i.ct, i64 %i.cu ; 3 uses

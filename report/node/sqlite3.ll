@@ -201,9 +201,9 @@ bb.bt:                                            ; preds = %bb.br
   %i.ka = load i32, ptr %i.jz, align 1
   %i.kb = tail call i32 @llvm.bswap.i32(i32 %i.ka)
   %i.kc = sub i32 %i.kb, %3                       ; 3 uses
-  %5 = icmp slt i32 %i.kc, 0
+  %.narrow.i = icmp sgt i32 %i.kc, 0
   %spec.select.i = tail call i32 @llvm.ssub.sat.i32(i32 0, i32 %i.kc)
-  %.0.i310 = select i1 %5, i32 %spec.select.i, i32 %i.kc
+  %.0.i310 = select i1 %.narrow.i, i32 %i.kc, i32 %spec.select.i
   %wide.trip.count = zext i32 %i.cz to i64
   br label %.lr.ph
 
@@ -220,8 +220,8 @@ bb.bt:                                            ; preds = %bb.br
   %i.kj = tail call i32 @llvm.bswap.i32(i32 %i.ki)
   %i.kk = sub i32 %i.kj, %3                       ; 3 uses
   %spec.select.i311 = tail call i32 @llvm.ssub.sat.i32(i32 0, i32 %i.kk)
-  %6 = icmp slt i32 %i.kk, 0
-  %.0.i312 = select i1 %6, i32 %spec.select.i311, i32 %i.kk ; 2 uses
+  %.narrow.i312 = icmp sgt i32 %i.kk, 0
+  %.0.i312 = select i1 %.narrow.i312, i32 %i.kk, i32 %spec.select.i311 ; 2 uses
   %i.kl = icmp samesign ult i32 %.0.i312, %.0195441
   %spec.select280 = select i1 %i.kl, i32 %i.kd, i32 %.0206439 ; 2 uses
   %spec.select281 = tail call i32 @llvm.umin.i32(i32 %.0.i312, i32 %.0195441)
@@ -624,8 +624,8 @@ sqlite3SetTextEncoding.exit:                      ; preds = %.thread206, %sqlite
 
 bb.bh:                                            ; preds = %sqlite3SetTextEncoding.exit
   %spec.select.i = call i32 @llvm.ssub.sat.i32(i32 0, i32 %.sroa.7.0213)
-  %5 = icmp slt i32 %.sroa.7.0213, 0
-  %.0.i124 = select i1 %5, i32 %spec.select.i, i32 %.sroa.7.0213 ; 3 uses
+  %.narrow.i = icmp sgt i32 %.sroa.7.0213, 0
+  %.0.i124 = select i1 %.narrow.i, i32 %.sroa.7.0213, i32 %spec.select.i ; 3 uses
   %i.lp = icmp eq i32 %.0.i124, 0
   %spec.store.select1 = select i1 %i.lp, i32 -2000, i32 %.0.i124 ; 4 uses
   store i32 %spec.store.select1, ptr %i.lm, align 4, !tbaa !2942
@@ -1028,8 +1028,8 @@ bb.bf:                                            ; preds = %bb.bd
   %i.hk = load i32, ptr %i.g, align 4, !tbaa !5   ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #71
   %spec.select.i = call i32 @llvm.ssub.sat.i32(i32 0, i32 %i.hk)
-  %5 = icmp slt i32 %i.hk, 0
-  %.0.i1723 = select i1 %5, i32 %spec.select.i, i32 %i.hk ; 3 uses
+  %.narrow.i = icmp sgt i32 %i.hk, 0
+  %.0.i1723 = select i1 %.narrow.i, i32 %i.hk, i32 %spec.select.i ; 3 uses
   call fastcc void @sqlite3BeginWriteOperation(ptr noundef nonnull %0, i32 noundef 0, i32 noundef %.0.i1701)
   %i.hl = call fastcc i32 @sqlite3VdbeAddOp3(ptr noundef nonnull %.0.i2052, i32 noundef 101, i32 noundef %.0.i1701, i32 noundef 3, i32 noundef %.0.i1723) ; 0 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %i.bt, i64 24

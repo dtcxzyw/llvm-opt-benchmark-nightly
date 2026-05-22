@@ -201,16 +201,16 @@ bb.a:
   %i.b = sext i32 %0 to i64
   %i.c = getelementptr inbounds i8, ptr %i.a, i64 %i.b
   %i.d = load i8, ptr %i.c, align 1, !tbaa !37
-  %1 = icmp slt i32 %0, 1
-  br i1 %1, label %.critedge, label %.lr.ph
+  %1 = icmp sgt i32 %0, 0
+  br i1 %1, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = zext nneg i32 %0 to i64
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.c
-  %2 = icmp slt i32 %indvars.le, 1
-  br i1 %2, label %.critedge, label %bb.c, !llvm.loop !69
+  %2 = icmp sgt i32 %indvars.le, 0
+  br i1 %2, label %bb.c, label %.critedge, !llvm.loop !69
 
 bb.c:                                             ; preds = %.lr.ph, %bb.b
   %indvars.iv13 = phi i64 [ %i.e, %.lr.ph ], [ %indvars.iv.next, %bb.b ]

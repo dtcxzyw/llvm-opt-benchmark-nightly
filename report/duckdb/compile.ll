@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.f = add nsw i64 %2, -432
-  %i.g = tail call i64 @llvm.umin.i64(i64 %i.f, i64 134217728)
+  %i.g = tail call i64 @llvm.umin.i64(i64 %i.f, i64 134217735)
   %spec.store.select = lshr i64 %i.g, 3
   %i.h = trunc nuw nsw i64 %spec.store.select to i32
   br label %bb.f
@@ -250,7 +250,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.i = add nsw i64 %2, -432
-  %i.j = call i64 @llvm.umin.i64(i64 %i.i, i64 134217728)
+  %i.j = call i64 @llvm.umin.i64(i64 %i.i, i64 134217735)
   %spec.store.select.i = lshr i64 %i.j, 3
   %i.k = trunc nuw nsw i64 %spec.store.select.i to i32
   br label %bb.f
@@ -653,7 +653,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.i = add nsw i64 %2, -432
-  %i.j = call i64 @llvm.umin.i64(i64 %i.i, i64 134217728)
+  %i.j = call i64 @llvm.umin.i64(i64 %i.i, i64 134217735)
   %spec.store.select.i = lshr i64 %i.j, 3
   %i.k = trunc nuw nsw i64 %spec.store.select.i to i32
   br label %bb.f

@@ -201,8 +201,8 @@ sqlite3_free.exit:                                ; preds = %.lr.ph, %sqlite3DbS
 
 bb.g:                                             ; preds = %sqlite3_free.exit
   %i.al = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.p) #45
-  %i.am = trunc i64 %i.al to i32
-  %i.an = add i32 %i.am, 56                       ; 4 uses
+  %i.am = trunc i64 %i.al to i32                  ; 2 uses
+  %i.an = add i32 %i.am, 56                       ; 3 uses
   %.not.i.i51 = icmp eq ptr %0, null
   br i1 %.not.i.i51, label %sqlite3DbMallocRaw.exit.i, label %bb.h
 
@@ -229,9 +229,9 @@ sqlite3DbMallocRaw.exit.i:                        ; preds = %bb.g
 bb.k:                                             ; preds = %sqlite3DbMallocRaw.exit.i, %bb.i
   %.0.i11.i = phi ptr [ %i.at, %sqlite3DbMallocRaw.exit.i ], [ %i.ar, %bb.i ] ; 7 uses
   %i.au = zext i32 %i.an to i64
-  %4 = icmp ult i32 %i.an, 57
-  %5 = add nsw i64 %i.au, -56
-  %i.av = select i1 %4, i64 0, i64 %5
+  %4 = add nsw i64 %i.au, -56
+  %.narrow = icmp ugt i32 %i.am, -57
+  %i.av = select i1 %.narrow, i64 0, i64 %4
   %i.aw = getelementptr i8, ptr %.0.i11.i, i64 56
   call void @llvm.memset.p0.i64(ptr align 8 %i.aw, i8 0, i64 %i.av, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.0.i11.i, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false), !tbaa.struct !1851

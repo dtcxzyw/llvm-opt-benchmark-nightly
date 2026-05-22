@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.j, label %bb.d, label %_ZN6duckdbL10GetSegmentERKNS_20ListSegmentFunctionsERNS_14ArenaAllocatorERNS_10LinkedListE.exit
 
 bb.d:                                             ; preds = %bb.c
-  %.not6.i.i = icmp sgt i16 %i.h, -1
+  %.not6.i.i = icmp sgt i16 %i.h, 0
   %i.k = zext i1 %.not6.i.i to i16
   %.0.i.i = shl i16 %i.h, %i.k
   %i.l = load ptr, ptr %0, align 8, !tbaa !989
@@ -604,7 +604,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.bk, label %bb.h, label %_ZN6duckdbL10GetSegmentERKNS_20ListSegmentFunctionsERNS_14ArenaAllocatorERNS_10LinkedListE.exit
 
 bb.h:                                             ; preds = %bb.g
-  %.not6.i.i = icmp sgt i16 %i.bi, -1
+  %.not6.i.i = icmp sgt i16 %i.bi, 0
   %i.bl = zext i1 %.not6.i.i to i16
   %.0.i.i = shl i16 %i.bi, %i.bl
   %i.bm = load ptr, ptr %i.bc, align 8, !tbaa !989
@@ -1007,7 +1007,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.bh, label %bb.g, label %_ZNK6duckdb20ListSegmentFunctions9AppendRowERNS_14ArenaAllocatorERNS_10LinkedListERNS_28RecursiveUnifiedVectorFormatERm.exit
 
 bb.g:                                             ; preds = %bb.f
-  %.not6.i.i.i = icmp sgt i16 %i.bf, -1
+  %.not6.i.i.i = icmp sgt i16 %i.bf, 0
   %i.bi = zext i1 %.not6.i.i.i to i16
   %.0.i.i.i = shl i16 %i.bf, %i.bi
   %i.bj = load ptr, ptr %i.ax, align 8, !tbaa !989
@@ -1410,7 +1410,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.at, label %bb.g, label %_ZNK6duckdb20ListSegmentFunctions9AppendRowERNS_14ArenaAllocatorERNS_10LinkedListERNS_28RecursiveUnifiedVectorFormatERm.exit
 
 bb.g:                                             ; preds = %bb.f
-  %.not6.i.i.i = icmp sgt i16 %i.ar, -1
+  %.not6.i.i.i = icmp sgt i16 %i.ar, 0
   %i.au = zext i1 %.not6.i.i.i to i16
   %.0.i.i.i = shl i16 %i.ar, %i.au
   %i.av = load ptr, ptr %i.aj, align 8, !tbaa !989

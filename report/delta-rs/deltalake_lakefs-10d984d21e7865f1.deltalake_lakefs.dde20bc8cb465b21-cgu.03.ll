@@ -91,11 +91,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.i = load i64, ptr %i.h, align 8, !alias.scope !23, !noalias !26, !noundef !7 ; 4 uses
-  %4 = icmp ult i64 %i.i, 8
   %i.j = add i64 %i.i, 1                          ; 6 uses
   %i.k = lshr i64 %i.j, 3
   %i.l = mul nuw i64 %i.k, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.i, i64 %i.l ; 2 uses
+  %.narrow = icmp ult i64 %i.i, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.i, i64 %i.l ; 2 uses
   %i.m = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.f, %i.m
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -498,7 +498,7 @@ _RNvMsa_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_13RawTableInner15rehash_in_place.exit
   %.pre13.i = add i64 %.pre.i.fr, 1
   %i.hb = lshr i64 %.pre13.i, 3
   %i.hc = mul nuw i64 %i.hb, 7
-  %i.hd = icmp ult i64 %.pre.i.fr, 8
+  %i.hd = icmp ult i64 %.pre.i.fr, 7
   %spec.select = select i1 %i.hd, i64 %.pre.i.fr, i64 %i.hc
   %.pre = load i64, ptr %i.d, align 8, !alias.scope !70
   br label %bb.z
@@ -853,11 +853,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _RNvXs1_NtCs3gpiEk3WpjL_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtB7_3raw13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.e, %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !106, !noundef !7 ; 3 uses
-  %1 = icmp ult i64 %i.v, 8
   %i.w = add i64 %i.v, 1
   %i.x = lshr i64 %i.w, 3
   %i.y = mul nuw i64 %i.x, 7
-  %.sroa.04.0.i.i = select i1 %1, i64 %i.v, i64 %i.y
+  %.narrow.i.i = icmp ult i64 %i.v, 7
+  %.sroa.04.0.i.i = select i1 %.narrow.i.i, i64 %i.v, i64 %i.y
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !noalias !106, !noundef !7
@@ -1260,10 +1260,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCs6Po7BT7Nknu_5alloc6string6StringBP_EE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.g, %bb.h
@@ -1463,10 +1463,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.m, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.g
-  %2 = icmp ult i64 %i.c, 8
   %i.r = lshr i64 %i.e, 3
   %i.s = mul nuw nsw i64 %i.r, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.c, i64 %i.s
+  %.narrow = icmp ult i64 %i.c, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.c, i64 %i.s
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs4j34XAPZOn0_4http10extensions8AnyCloneNtNtBT_6marker4SyncNtB2H_4SendEL_EEE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsbvkFyIu7lgC_4core3any6TypeIdINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtCs4j34XAPZOn0_4http10extensions8AnyCloneNtNtBT_6marker4SyncNtB2H_4SendEL_EEE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.g, %bb.h
@@ -1653,10 +1653,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 bb.h:                                             ; preds = %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i, %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i
   %.sroa.0.0.i.i9.i.i = phi ptr [ %i.o, %_RNvXs_NtCs6Po7BT7Nknu_5alloc5allocNtB4_6GlobalNtNtCsbvkFyIu7lgC_4core5alloc9Allocator8allocate.exit.i.i ], [ inttoptr (i64 16 to ptr), %_RNvMs1_NtCs3gpiEk3WpjL_9hashbrown3rawNtB5_11TableLayout20calculate_layout_for.exit.i.i ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i9.i.i, i64 %i.i
-  %2 = icmp ult i64 %i.d, 8
   %i.t = lshr i64 %i.f, 3
   %i.u = mul nuw nsw i64 %i.t, 7
-  %.sroa.07.0.i.i = select i1 %2, i64 %i.d, i64 %i.u
+  %.narrow = icmp ult i64 %i.d, 7
+  %.sroa.07.0.i.i = select i1 %.narrow, i64 %i.d, i64 %i.u
   br label %_RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBR_14AttributeValueEE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit
 
 _RNvMs6_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTNtNtCsjyY8HP3IvQ6_12object_store10attributes9AttributeNtBR_14AttributeValueEE17new_uninitializedCsj34PGqTgg0L_16deltalake_lakefs.exit: ; preds = %bb.g, %bb.h

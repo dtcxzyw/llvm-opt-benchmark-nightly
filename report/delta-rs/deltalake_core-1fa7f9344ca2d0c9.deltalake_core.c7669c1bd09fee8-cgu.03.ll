@@ -201,11 +201,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !493, !noalias !496, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -501,11 +501,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !535, !noalias !538, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -801,11 +801,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !577, !noalias !580, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -1101,11 +1101,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !619, !noalias !622, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -1401,11 +1401,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !661, !noalias !664, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -1701,11 +1701,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !703, !noalias !706, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -2001,11 +2001,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !745, !noalias !748, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -2299,11 +2299,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.j = load i64, ptr %i.i, align 8, !alias.scope !787, !noalias !790, !noundef !3 ; 3 uses
-  %4 = icmp ult i64 %i.j, 8
   %i.k = add i64 %i.j, 1
   %i.l = lshr i64 %i.k, 3
   %i.m = mul nuw i64 %i.l, 7
-  %.sroa.03.0.i = select i1 %4, i64 %i.j, i64 %i.m ; 2 uses
+  %.narrow = icmp ult i64 %i.j, 7
+  %.sroa.03.0.i = select i1 %.narrow, i64 %i.j, i64 %i.m ; 2 uses
   %i.n = lshr i64 %.sroa.03.0.i, 1
   %.not.i = icmp ugt i64 %i.g, %i.n
   br i1 %.not.i, label %bb.d, label %bb.o
@@ -2706,11 +2706,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 _RNvXs1_NtCsbZMnTeWjWd9_9hashbrown10scopeguardINtB5_10ScopeGuardQNtNtNtB7_3raw5inner13RawTableInnerNCNvMsa_B12_B10_15rehash_in_place0ENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core.exit: ; preds = %bb.e, %bb.a, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val2.i, i64 8
   %i.v = load i64, ptr %i.u, align 8, !noalias !1148, !noundef !3 ; 3 uses
-  %1 = icmp ult i64 %i.v, 8
   %i.w = add i64 %i.v, 1
   %i.x = lshr i64 %i.w, 3
   %i.y = mul nuw i64 %i.x, 7
-  %.sroa.01.0.i.i = select i1 %1, i64 %i.v, i64 %i.y
+  %.narrow.i.i = icmp ult i64 %i.v, 7
+  %.sroa.01.0.i.i = select i1 %.narrow.i.i, i64 %i.v, i64 %i.y
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i) ]
   %i.z = getelementptr inbounds nuw i8, ptr %.val2.i, i64 24
   %i.aa = load i64, ptr %i.z, align 8, !noalias !1148, !noundef !3
@@ -3113,7 +3113,7 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.i.new
 ._crit_edge:                                      ; preds = %_RNvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread18, %._crit_edge.loopexit
   %.pre-phi = phi i64 [ %i.ai, %._crit_edge.loopexit ], [ 0, %_RNvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread18 ]
   %i.aj = phi i64 [ %.pre, %._crit_edge.loopexit ], [ -1, %_RNvMsa_NtNtCsbZMnTeWjWd9_9hashbrown3raw5innerNtB5_13RawTableInner23prepare_rehash_in_place.exit.thread18 ] ; 2 uses
-  %i.ak = icmp ult i64 %i.aj, 8
+  %i.ak = icmp ult i64 %i.aj, 7
   %.sroa.01.0 = select i1 %i.ak, i64 %i.aj, i64 %.pre-phi
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.am = load i64, ptr %i.al, align 8, !noundef !3

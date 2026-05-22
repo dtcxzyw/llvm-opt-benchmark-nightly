@@ -201,9 +201,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 .lr.ph.i.preheader:                               ; preds = %bb.d
   %i.k = load i16, ptr %.035, align 2             ; 3 uses
-  %4 = icmp ult i16 %i.k, 256
-  %5 = or i16 %i.k, 32
-  %trunc = select i1 %4, i16 %5, i16 %i.k
+  %4 = or i16 %i.k, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i16 %i.k, 224
+  %trunc = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i16 %4, i16 %i.k
   switch i16 %trunc, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit51 [
     i16 110, label %.lr.ph.i.1
     i16 105, label %.lr.ph.i46.1
@@ -213,9 +213,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %.035, i64 2
   %i.m = load i16, ptr %i.l, align 2              ; 2 uses
   %i.n = zext i16 %i.m to i32                     ; 2 uses
-  %6 = icmp ult i16 %i.m, 256
-  %7 = or i32 %i.n, 32
-  %i.o = select i1 %6, i32 %7, i32 %i.n
+  %5 = or i32 %i.n, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.1 = icmp ult i16 %i.m, 224
+  %i.o = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.1, i32 %5, i32 %i.n
   %.not.i.1 = icmp eq i32 %i.o, 97
   br i1 %.not.i.1, label %.lr.ph.i.2, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit51
 
@@ -223,9 +223,9 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %.035, i64 4
   %i.q = load i16, ptr %i.p, align 2              ; 2 uses
   %i.r = zext i16 %i.q to i32                     ; 2 uses
-  %8 = icmp ult i16 %i.q, 256
-  %9 = or i32 %i.r, 32
-  %i.s = select i1 %8, i32 %9, i32 %i.r
+  %6 = or i32 %i.r, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.2 = icmp ult i16 %i.q, 224
+  %i.s = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.2, i32 %6, i32 %i.r
   %.not.i.2 = icmp eq i32 %i.s, 110
   br i1 %.not.i.2, label %bb.e, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit51
 
@@ -287,9 +287,9 @@ bb.h:                                             ; preds = %.lr.ph85
   %i.aj = getelementptr inbounds nuw i8, ptr %.035, i64 2
   %i.ak = load i16, ptr %i.aj, align 2            ; 2 uses
   %i.al = zext i16 %i.ak to i32                   ; 2 uses
-  %10 = icmp ult i16 %i.ak, 256
-  %11 = or i32 %i.al, 32
-  %i.am = select i1 %10, i32 %11, i32 %i.al
+  %7 = or i32 %i.al, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i48.1 = icmp ult i16 %i.ak, 224
+  %i.am = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i48.1, i32 %7, i32 %i.al
   %.not.i48.1 = icmp eq i32 %i.am, 110
   br i1 %.not.i48.1, label %.lr.ph.i46.2, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit51
 
@@ -297,9 +297,9 @@ bb.h:                                             ; preds = %.lr.ph85
   %i.an = getelementptr inbounds nuw i8, ptr %.035, i64 4
   %i.ao = load i16, ptr %i.an, align 2            ; 2 uses
   %i.ap = zext i16 %i.ao to i32                   ; 2 uses
-  %12 = icmp ult i16 %i.ao, 256
-  %13 = or i32 %i.ap, 32
-  %i.aq = select i1 %12, i32 %13, i32 %i.ap
+  %8 = or i32 %i.ap, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i48.2 = icmp ult i16 %i.ao, 224
+  %i.aq = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i48.2, i32 %8, i32 %i.ap
   %.not.i48.2 = icmp eq i32 %i.aq, 102
   br i1 %.not.i48.2, label %bb.i, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit51
 
@@ -311,9 +311,9 @@ bb.i:                                             ; preds = %.lr.ph.i46.2
   %i.as = getelementptr inbounds nuw i8, ptr %.035, i64 6
   %i.at = load i16, ptr %i.as, align 2            ; 2 uses
   %i.au = zext i16 %i.at to i32                   ; 2 uses
-  %14 = icmp ult i16 %i.at, 256
-  %15 = or i32 %i.au, 32
-  %i.av = select i1 %14, i32 %15, i32 %i.au
+  %9 = or i32 %i.au, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55 = icmp ult i16 %i.at, 224
+  %i.av = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55, i32 %9, i32 %i.au
   %.not.i54 = icmp eq i32 %i.av, 105
   br i1 %.not.i54, label %.lr.ph.i52.1, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit57
 
@@ -321,9 +321,9 @@ bb.i:                                             ; preds = %.lr.ph.i46.2
   %i.aw = getelementptr inbounds nuw i8, ptr %.035, i64 8
   %i.ax = load i16, ptr %i.aw, align 2            ; 2 uses
   %i.ay = zext i16 %i.ax to i32                   ; 2 uses
-  %16 = icmp ult i16 %i.ax, 256
-  %17 = or i32 %i.ay, 32
-  %i.az = select i1 %16, i32 %17, i32 %i.ay
+  %10 = or i32 %i.ay, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.1 = icmp ult i16 %i.ax, 224
+  %i.az = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.1, i32 %10, i32 %i.ay
   %.not.i54.1 = icmp eq i32 %i.az, 110
   br i1 %.not.i54.1, label %.lr.ph.i52.2, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit57
 
@@ -331,9 +331,9 @@ bb.i:                                             ; preds = %.lr.ph.i46.2
   %i.ba = getelementptr inbounds nuw i8, ptr %.035, i64 10
   %i.bb = load i16, ptr %i.ba, align 2            ; 2 uses
   %i.bc = zext i16 %i.bb to i32                   ; 2 uses
-  %18 = icmp ult i16 %i.bb, 256
-  %19 = or i32 %i.bc, 32
-  %i.bd = select i1 %18, i32 %19, i32 %i.bc
+  %11 = or i32 %i.bc, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.2 = icmp ult i16 %i.bb, 224
+  %i.bd = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.2, i32 %11, i32 %i.bc
   %.not.i54.2 = icmp eq i32 %i.bd, 105
   br i1 %.not.i54.2, label %.lr.ph.i52.3, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit57
 
@@ -341,9 +341,9 @@ bb.i:                                             ; preds = %.lr.ph.i46.2
   %i.be = getelementptr inbounds nuw i8, ptr %.035, i64 12
   %i.bf = load i16, ptr %i.be, align 2            ; 2 uses
   %i.bg = zext i16 %i.bf to i32                   ; 2 uses
-  %20 = icmp ult i16 %i.bf, 256
-  %21 = or i32 %i.bg, 32
-  %i.bh = select i1 %20, i32 %21, i32 %i.bg
+  %12 = or i32 %i.bg, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.3 = icmp ult i16 %i.bf, 224
+  %i.bh = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.3, i32 %12, i32 %i.bg
   %.not.i54.3 = icmp eq i32 %i.bh, 116
   br i1 %.not.i54.3, label %.lr.ph.i52.4, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit57
 
@@ -351,9 +351,9 @@ bb.i:                                             ; preds = %.lr.ph.i46.2
   %i.bi = getelementptr inbounds nuw i8, ptr %.035, i64 14
   %i.bj = load i16, ptr %i.bi, align 2            ; 2 uses
   %i.bk = zext i16 %i.bj to i32                   ; 2 uses
-  %22 = icmp ult i16 %i.bj, 256
-  %23 = or i32 %i.bk, 32
-  %i.bl = select i1 %22, i32 %23, i32 %i.bk
+  %13 = or i32 %i.bk, 32
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.4 = icmp ult i16 %i.bj, 224
+  %i.bl = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i55.4, i32 %13, i32 %i.bk
   %.not.i54.4 = icmp eq i32 %i.bl, 121
   br i1 %.not.i54.4, label %bb.j, label %_ZN10fast_float21fastfloat_strncasecmpIDsEEbPKT_S3_m.exit57
 

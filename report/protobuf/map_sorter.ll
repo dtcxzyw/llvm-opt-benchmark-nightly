@@ -32,11 +32,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.j = shl i32 %i.h, 3
   %i.k = add nsw i32 %i.e, -1
-  %i.l = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.k, i1 true)
+  %i.l = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.k, i1 false)
   %i.m = sub nuw nsw i32 32, %i.l
+  %.narrow.inv.narrow.i.i.i = icmp sgt i32 %i.e, 1
   %4 = shl nuw i32 1, %i.m
-  %.inv.i.i = icmp sgt i32 %i.e, 1
-  %i.n = select i1 %.inv.i.i, i32 %4, i32 1       ; 2 uses
+  %i.n = select i1 %.narrow.inv.narrow.i.i.i, i32 %4, i32 1 ; 2 uses
   store i32 %i.n, ptr %i.g, align 4, !tbaa !16
   %i.o = shl i32 %i.n, 3
   %i.p = sext i32 %i.j to i64
@@ -199,11 +199,11 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
 bb.b:                                             ; preds = %._crit_edge
   %i.u = shl i32 %i.s, 3
   %i.v = add nsw i32 %i.p, -1
-  %i.w = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.v, i1 true)
+  %i.w = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.v, i1 false)
   %i.x = sub nuw nsw i32 32, %i.w
+  %.narrow.inv.narrow.i.i.i = icmp sgt i32 %i.p, 1
   %3 = shl nuw i32 1, %i.x
-  %.inv.i.i = icmp sgt i32 %i.p, 1
-  %i.y = select i1 %.inv.i.i, i32 %3, i32 1       ; 2 uses
+  %i.y = select i1 %.narrow.inv.narrow.i.i.i, i32 %3, i32 1 ; 2 uses
   store i32 %i.y, ptr %i.r, align 4, !tbaa !16
   %i.z = shl i32 %i.y, 3
   %i.aa = load ptr, ptr %0, align 8, !tbaa !17

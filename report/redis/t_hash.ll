@@ -201,8 +201,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.c, label %bb.cm
 
 bb.c:                                             ; preds = %bb.b
-  %6 = icmp slt i64 %1, 0
-  %.0 = tail call i64 @llvm.abs.i64(i64 %1, i1 true) ; 9 uses
+  %.0 = tail call i64 @llvm.abs.i64(i64 %1, i1 false) ; 9 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !149
   %i.k = tail call fastcc i32 @hashTypeExpireIfNeeded(ptr noundef %i.j, ptr noundef %i.f)
@@ -278,7 +277,8 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %.0178 = phi i64 [ %i.ak, %bb.l ], [ 0, %bb.k ]
   %i.al = icmp eq i64 %.0, 1
-  %or.cond = select i1 %6, i1 true, i1 %i.al
+  %.narrow = icmp slt i64 %1, -1
+  %or.cond = or i1 %.narrow, %i.al
   br i1 %or.cond, label %bb.n, label %bb.aq
 
 bb.n:                                             ; preds = %bb.m

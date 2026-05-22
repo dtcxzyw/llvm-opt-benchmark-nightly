@@ -201,10 +201,10 @@ _ZNK6icu_7815Normalizer2Impl9getNorm16Ei.exit.i:  ; preds = %bb.l, %bb.k, %bb.j,
   %i.bb = getelementptr inbounds [2 x i8], ptr %i.af, i64 %i.ba
   %i.bc = load i16, ptr %i.bb, align 2
   %.fr.i = freeze i16 %i.bc                       ; 2 uses
-  %1 = icmp ugt i16 %.fr.i, -1025
-  %2 = lshr i16 %.fr.i, 1
-  %3 = trunc i16 %2 to i8
-  %spec.select.i = select i1 %1, i8 %3, i8 0
+  %1 = lshr i16 %.fr.i, 1
+  %2 = trunc i16 %1 to i8
+  %.narrow.narrow.i.i = icmp ugt i16 %.fr.i, -1023
+  %spec.select.i = select i1 %.narrow.narrow.i.i, i8 %2, i8 0
   br label %_ZNK6icu_7815Normalizer2Impl24getCCFromYesOrMaybeYesCPEi.exit
 
 _ZNK6icu_7815Normalizer2Impl24getCCFromYesOrMaybeYesCPEi.exit: ; preds = %_ZNK6icu_7815Normalizer2Impl9getNorm16Ei.exit.i, %bb.e, %bb.a
@@ -607,10 +607,10 @@ _ZNK6icu_7815Normalizer2Impl12getRawNorm16Ei.exit: ; preds = %bb.ab, %bb.ae, %bb
   %i.ft = sext i32 %i.fs to i64
   %i.fu = getelementptr inbounds [2 x i8], ptr %i.ey, i64 %i.ft
   %i.fv = load i16, ptr %i.fu, align 2            ; 2 uses
-  %7 = icmp ugt i16 %i.fv, -1025
-  %8 = lshr i16 %i.fv, 1
-  %9 = trunc i16 %8 to i8
-  %i.fw = select i1 %7, i8 %9, i8 0
+  %7 = lshr i16 %i.fv, 1
+  %8 = trunc i16 %7 to i8
+  %.narrow.narrow.i = icmp ugt i16 %i.fv, -1023
+  %i.fw = select i1 %.narrow.narrow.i, i8 %8, i8 0
   br label %_ZNK6icu_7815Normalizer2Impl5getCCEt.exit
 
 bb.ah:                                            ; preds = %bb.z
@@ -1013,10 +1013,10 @@ bb.s:                                             ; preds = %.thread185, %bb.r
   br i1 %narrow.i106.not, label %.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %.loopexit126
-  %5 = icmp ugt i16 %.676, -1025
   %i.cf = lshr i16 %.676, 1
   %i.cg = trunc i16 %i.cf to i8
-  %i.ch = select i1 %5, i8 %i.cg, i8 0            ; 4 uses
+  %.narrow.narrow.i = icmp ugt i16 %.676, -1023
+  %i.ch = select i1 %.narrow.narrow.i, i8 %i.cg, i8 0 ; 4 uses
   %i.ci = icmp ule i8 %.163115120, %i.ch
   %i.cj = icmp eq i8 %i.ch, 0
   %or.cond = or i1 %i.cj, %i.ci
@@ -1051,10 +1051,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not43, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %5 = icmp ugt i16 %2, -1025
   %i.f = lshr i16 %2, 1
   %i.g = trunc i16 %i.f to i8
-  %i.h = select i1 %5, i8 %i.g, i8 0              ; 2 uses
+  %.narrow.narrow.i = icmp ugt i16 %2, -1023
+  %i.h = select i1 %.narrow.narrow.i, i8 %i.g, i8 0 ; 2 uses
   %i.i = icmp slt i32 %1, 65536
   br i1 %i.i, label %bb.d, label %bb.e
 
@@ -1457,10 +1457,10 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae
   br i1 %.not225, label %bb.aj, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %9 = icmp ugt i16 %i.dg, -1025
   %i.do = lshr i16 %i.dg, 1
   %i.dp = trunc i16 %i.do to i8                   ; 2 uses
-  %i.dq = select i1 %9, i8 %i.dp, i8 0            ; 5 uses
+  %.narrow.narrow.i = icmp ugt i16 %i.dg, -1023
+  %i.dq = select i1 %.narrow.narrow.i, i8 %i.dp, i8 0 ; 5 uses
   %i.dr = icmp ugt i8 %.1144, %i.dq
   %i.ds = icmp ne i8 %i.dq, 0
   %or.cond4.not = and i1 %i.ds, %i.dr
@@ -1863,10 +1863,10 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not, label %bb.ag, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %7 = icmp ugt i16 %i.cw, -1025
   %i.cz = lshr i16 %i.cw, 1
   %i.da = trunc i16 %i.cz to i8
-  %i.db = select i1 %7, i8 %i.da, i8 0            ; 3 uses
+  %.narrow.narrow.i = icmp ugt i16 %i.cw, -1023
+  %i.db = select i1 %.narrow.narrow.i, i8 %i.da, i8 0 ; 3 uses
   %i.dc = icmp eq i8 %i.db, 0
   %or.cond = and i1 %i.h, %i.dc
   br i1 %or.cond, label %.thread195, label %bb.z
@@ -2269,10 +2269,10 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g,
   %i.ba = sext i32 %.1125 to i64
   %i.bb = getelementptr inbounds [2 x i8], ptr %i.az, i64 %i.ba
   %i.bc = load i16, ptr %i.bb, align 2            ; 9 uses
-  %4 = icmp ugt i16 %i.bc, -1025
-  %5 = lshr i16 %i.bc, 1
-  %6 = trunc i16 %5 to i8
-  %i.bd = select i1 %4, i8 %6, i8 0               ; 4 uses
+  %4 = lshr i16 %i.bc, 1
+  %5 = trunc i16 %4 to i8
+  %.narrow.narrow.i = icmp ugt i16 %i.bc, -1023
+  %i.bd = select i1 %.narrow.narrow.i, i8 %5, i8 0 ; 4 uses
   %i.be = load i16, ptr %i.i, align 2             ; 3 uses
   %i.bf = icmp ule i16 %i.be, %i.bc
   %i.bg = icmp ult i16 %i.bc, -511

@@ -11,10 +11,10 @@ bb.a:
   %i.a = tail call i32 @BN_num_bits(ptr noundef %0) #2 ; 3 uses
   %i.b = add nsw i32 %i.a, 7
   %i.c = sdiv i32 %i.b, 8                         ; 2 uses
-  %2 = icmp sgt i32 %i.a, 0
-  %3 = and i32 %i.a, 7
-  %4 = icmp eq i32 %3, 0
-  %narrow = and i1 %2, %4                         ; 4 uses
+  %2 = and i32 %i.a, 7
+  %3 = icmp eq i32 %2, 0
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %i.a, 7
+  %narrow = and i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow, %3 ; 4 uses
   %i.d = icmp eq ptr %1, null
   br i1 %i.d, label %bb.f, label %bb.b
 

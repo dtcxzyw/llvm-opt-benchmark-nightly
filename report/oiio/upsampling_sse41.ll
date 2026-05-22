@@ -56,11 +56,11 @@ bb.a:
   %i.ah = lshr i32 %i.ag, 8
   %i.ai = add nuw nsw i32 %i.ah, %i.af            ; 2 uses
   %i.aj = add nsw i32 %i.ai, -14234               ; 2 uses
-  %9 = icmp ult i32 %i.aj, 16384
   %i.ak = lshr i32 %i.aj, 6
   %i.al = icmp samesign ult i32 %i.ai, 14234
   %i.am = select i1 %i.al, i32 0, i32 255
-  %i.an = select i1 %9, i32 %i.ak, i32 %i.am
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i = icmp ult i32 %i.aj, 16320
+  %i.an = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i, i32 %i.ak, i32 %i.am
   %i.ao = trunc i32 %i.an to i8
   store i8 %i.ao, ptr %6, align 1, !tbaa !9
   %i.ap = mul nuw nsw i32 %i.z, 6419
@@ -70,11 +70,11 @@ bb.a:
   %i.at = add nuw nsw i32 %i.aq, %i.as
   %i.au = sub nsw i32 %i.af, %i.at                ; 2 uses
   %i.av = add nsw i32 %i.au, 8708                 ; 2 uses
-  %10 = icmp ult i32 %i.av, 16384
   %i.aw = lshr i32 %i.av, 6
   %i.ax = icmp slt i32 %i.au, -8708
   %i.ay = select i1 %i.ax, i32 0, i32 255
-  %i.az = select i1 %10, i32 %i.aw, i32 %i.ay
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i = icmp ult i32 %i.av, 16320
+  %i.az = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i, i32 %i.aw, i32 %i.ay
   %i.ba = trunc i32 %i.az to i8
   %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 1
   store i8 %i.ba, ptr %i.bb, align 1, !tbaa !9
@@ -82,11 +82,11 @@ bb.a:
   %i.bd = lshr i32 %i.bc, 8
   %i.be = add nuw nsw i32 %i.bd, %i.af            ; 2 uses
   %i.bf = add nsw i32 %i.be, -17685               ; 2 uses
-  %11 = icmp ult i32 %i.bf, 16384
   %i.bg = lshr i32 %i.bf, 6
   %i.bh = icmp samesign ult i32 %i.be, 17685
   %i.bi = select i1 %i.bh, i32 0, i32 255
-  %i.bj = select i1 %11, i32 %i.bg, i32 %i.bi
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i = icmp ult i32 %i.bf, 16320
+  %i.bj = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i, i32 %i.bg, i32 %i.bi
   %i.bk = trunc i32 %i.bj to i8
   %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 2
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !9
@@ -106,11 +106,11 @@ bb.b:                                             ; preds = %bb.a
   %i.bv = lshr i32 %i.bu, 8
   %i.bw = add nuw nsw i32 %i.bt, %i.bv            ; 2 uses
   %i.bx = add nsw i32 %i.bw, -14234               ; 2 uses
-  %12 = icmp ult i32 %i.bx, 16384
   %i.by = lshr i32 %i.bx, 6
   %i.bz = icmp samesign ult i32 %i.bw, 14234
   %i.ca = select i1 %i.bz, i32 0, i32 255
-  %i.cb = select i1 %12, i32 %i.by, i32 %i.ca
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i261 = icmp ult i32 %i.bx, 16320
+  %i.cb = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i261, i32 %i.by, i32 %i.ca
   %i.cc = trunc i32 %i.cb to i8
   store i8 %i.cc, ptr %7, align 1, !tbaa !9
   %i.cd = mul nuw nsw i32 %i.bn, 6419
@@ -120,11 +120,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ch = add nuw nsw i32 %i.cg, %i.ce
   %i.ci = sub nsw i32 %i.bt, %i.ch                ; 2 uses
   %i.cj = add nsw i32 %i.ci, 8708                 ; 2 uses
-  %13 = icmp ult i32 %i.cj, 16384
   %i.ck = lshr i32 %i.cj, 6
   %i.cl = icmp slt i32 %i.ci, -8708
   %i.cm = select i1 %i.cl, i32 0, i32 255
-  %i.cn = select i1 %13, i32 %i.ck, i32 %i.cm
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i262 = icmp ult i32 %i.cj, 16320
+  %i.cn = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i262, i32 %i.ck, i32 %i.cm
   %i.co = trunc i32 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %7, i64 1
   store i8 %i.co, ptr %i.cp, align 1, !tbaa !9
@@ -132,11 +132,11 @@ bb.b:                                             ; preds = %bb.a
   %i.cr = lshr i32 %i.cq, 8
   %i.cs = add nuw nsw i32 %i.bt, %i.cr            ; 2 uses
   %i.ct = add nsw i32 %i.cs, -17685               ; 2 uses
-  %14 = icmp ult i32 %i.ct, 16384
   %i.cu = lshr i32 %i.ct, 6
   %i.cv = icmp samesign ult i32 %i.cs, 17685
   %i.cw = select i1 %i.cv, i32 0, i32 255
-  %i.cx = select i1 %14, i32 %i.cu, i32 %i.cw
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i263 = icmp ult i32 %i.ct, 16320
+  %i.cx = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i263, i32 %i.cu, i32 %i.cw
   %i.cy = trunc i32 %i.cx to i8
   %i.cz = getelementptr inbounds nuw i8, ptr %7, i64 2
   store i8 %i.cy, ptr %i.cz, align 1, !tbaa !9
@@ -523,11 +523,11 @@ bb.a:
   %i.ah = lshr i32 %i.ag, 8
   %i.ai = add nuw nsw i32 %i.ah, %i.af            ; 2 uses
   %i.aj = add nsw i32 %i.ai, -17685               ; 2 uses
-  %9 = icmp ult i32 %i.aj, 16384
   %i.ak = lshr i32 %i.aj, 6
   %i.al = icmp samesign ult i32 %i.ai, 17685
   %i.am = select i1 %i.al, i32 0, i32 255
-  %i.an = select i1 %9, i32 %i.ak, i32 %i.am
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i = icmp ult i32 %i.aj, 16320
+  %i.an = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i, i32 %i.ak, i32 %i.am
   %i.ao = trunc i32 %i.an to i8
   store i8 %i.ao, ptr %6, align 1, !tbaa !9
   %i.ap = mul nuw nsw i32 %i.z, 6419
@@ -537,11 +537,11 @@ bb.a:
   %i.at = add nuw nsw i32 %i.aq, %i.as
   %i.au = sub nsw i32 %i.af, %i.at                ; 2 uses
   %i.av = add nsw i32 %i.au, 8708                 ; 2 uses
-  %10 = icmp ult i32 %i.av, 16384
   %i.aw = lshr i32 %i.av, 6
   %i.ax = icmp slt i32 %i.au, -8708
   %i.ay = select i1 %i.ax, i32 0, i32 255
-  %i.az = select i1 %10, i32 %i.aw, i32 %i.ay
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i = icmp ult i32 %i.av, 16320
+  %i.az = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i, i32 %i.aw, i32 %i.ay
   %i.ba = trunc i32 %i.az to i8
   %i.bb = getelementptr inbounds nuw i8, ptr %6, i64 1
   store i8 %i.ba, ptr %i.bb, align 1, !tbaa !9
@@ -549,11 +549,11 @@ bb.a:
   %i.bd = lshr i32 %i.bc, 8
   %i.be = add nuw nsw i32 %i.bd, %i.af            ; 2 uses
   %i.bf = add nsw i32 %i.be, -14234               ; 2 uses
-  %11 = icmp ult i32 %i.bf, 16384
   %i.bg = lshr i32 %i.bf, 6
   %i.bh = icmp samesign ult i32 %i.be, 14234
   %i.bi = select i1 %i.bh, i32 0, i32 255
-  %i.bj = select i1 %11, i32 %i.bg, i32 %i.bi
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i = icmp ult i32 %i.bf, 16320
+  %i.bj = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i, i32 %i.bg, i32 %i.bi
   %i.bk = trunc i32 %i.bj to i8
   %i.bl = getelementptr inbounds nuw i8, ptr %6, i64 2
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !9
@@ -573,11 +573,11 @@ bb.b:                                             ; preds = %bb.a
   %i.bv = lshr i32 %i.bu, 8
   %i.bw = add nuw nsw i32 %i.bt, %i.bv            ; 2 uses
   %i.bx = add nsw i32 %i.bw, -17685               ; 2 uses
-  %12 = icmp ult i32 %i.bx, 16384
   %i.by = lshr i32 %i.bx, 6
   %i.bz = icmp samesign ult i32 %i.bw, 17685
   %i.ca = select i1 %i.bz, i32 0, i32 255
-  %i.cb = select i1 %12, i32 %i.by, i32 %i.ca
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i261 = icmp ult i32 %i.bx, 16320
+  %i.cb = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i.i261, i32 %i.by, i32 %i.ca
   %i.cc = trunc i32 %i.cb to i8
   store i8 %i.cc, ptr %7, align 1, !tbaa !9
   %i.cd = mul nuw nsw i32 %i.bn, 6419
@@ -587,11 +587,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ch = add nuw nsw i32 %i.cg, %i.ce
   %i.ci = sub nsw i32 %i.bt, %i.ch                ; 2 uses
   %i.cj = add nsw i32 %i.ci, 8708                 ; 2 uses
-  %13 = icmp ult i32 %i.cj, 16384
   %i.ck = lshr i32 %i.cj, 6
   %i.cl = icmp slt i32 %i.ci, -8708
   %i.cm = select i1 %i.cl, i32 0, i32 255
-  %i.cn = select i1 %13, i32 %i.ck, i32 %i.cm
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i262 = icmp ult i32 %i.cj, 16320
+  %i.cn = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i9.i262, i32 %i.ck, i32 %i.cm
   %i.co = trunc i32 %i.cn to i8
   %i.cp = getelementptr inbounds nuw i8, ptr %7, i64 1
   store i8 %i.co, ptr %i.cp, align 1, !tbaa !9
@@ -599,11 +599,11 @@ bb.b:                                             ; preds = %bb.a
   %i.cr = lshr i32 %i.cq, 8
   %i.cs = add nuw nsw i32 %i.bt, %i.cr            ; 2 uses
   %i.ct = add nsw i32 %i.cs, -14234               ; 2 uses
-  %14 = icmp ult i32 %i.ct, 16384
   %i.cu = lshr i32 %i.ct, 6
   %i.cv = icmp samesign ult i32 %i.cs, 14234
   %i.cw = select i1 %i.cv, i32 0, i32 255
-  %i.cx = select i1 %14, i32 %i.cu, i32 %i.cw
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i263 = icmp ult i32 %i.ct, 16320
+  %i.cx = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i.i10.i263, i32 %i.cu, i32 %i.cw
   %i.cy = trunc i32 %i.cx to i8
   %i.cz = getelementptr inbounds nuw i8, ptr %7, i64 2
   store i8 %i.cy, ptr %i.cz, align 1, !tbaa !9

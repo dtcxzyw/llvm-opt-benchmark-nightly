@@ -201,10 +201,10 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4, !tbaa !89   ; 4 uses
   %i.e = getelementptr i8, ptr %0, i64 136
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !85   ; 2 uses
-  %1 = icmp sgt i32 %i.d, 53
-  %2 = add nsw i32 %i.d, 8
-  %3 = sdiv i32 %2, 9
-  %i.g = select i1 %1, i32 6, i32 %3              ; 2 uses
+  %1 = add nsw i32 %i.d, 8
+  %2 = sdiv i32 %1, 9
+  %.narrow.i = icmp sgt i32 %i.d, 54
+  %i.g = select i1 %.narrow.i, i32 6, i32 %2      ; 2 uses
   %i.h = add i32 %i.d, 457
   %i.i = sdiv i32 %i.h, 512
   %i.j = sext i32 %i.b to i64

@@ -201,11 +201,11 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %2 = icmp ugt i64 %i.a, 64
   %i.b = lshr i64 %i.a, 2
   %i.c = icmp ugt i64 %i.a, 8
   %. = select i1 %i.c, i64 16, i64 4
-  %.08 = select i1 %2, i64 %i.b, i64 %.
+  %.narrow.narrow.narrow = icmp ugt i64 %i.a, 67
+  %.08 = select i1 %.narrow.narrow.narrow, i64 %i.b, i64 %.
   %i.d = add i64 %.08, %i.a
   %i.e = tail call noundef i64 @llvm.umax.i64(i64 %i.d, i64 %1) ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -248,11 +248,11 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %2 = icmp ugt i64 %i.f, 64
   %i.g = lshr i64 %i.f, 2
   %i.h = icmp ugt i64 %i.f, 8
   %..i = select i1 %i.h, i64 16, i64 4
-  %.08.i = select i1 %2, i64 %i.g, i64 %..i
+  %.narrow.narrow.narrow.i = icmp ugt i64 %i.f, 67
+  %.08.i = select i1 %.narrow.narrow.narrow.i, i64 %i.g, i64 %..i
   %i.i = add i64 %.08.i, %i.f
   %i.j = tail call noundef i64 @llvm.umax.i64(i64 %i.i, i64 %i.c) ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -365,11 +365,11 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i.i, label %bb.f, label %_ZN19CDynBufSeqOutStream19GetBufPtrForWritingEm.exit
 
 bb.f:                                             ; preds = %bb.e
-  %4 = icmp ugt i64 %i.h, 64
   %i.i = lshr i64 %i.h, 2
   %i.j = icmp ugt i64 %i.h, 8
   %..i.i = select i1 %i.j, i64 16, i64 4
-  %.08.i.i = select i1 %4, i64 %i.i, i64 %..i.i
+  %.narrow.narrow.narrow.i.i = icmp ugt i64 %i.h, 67
+  %.08.i.i = select i1 %.narrow.narrow.narrow.i.i, i64 %i.i, i64 %..i.i
   %i.k = add i64 %.08.i.i, %i.h
   %i.l = tail call noundef i64 @llvm.umax.i64(i64 %i.k, i64 %i.e) ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses

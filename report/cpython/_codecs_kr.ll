@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   store i8 %i.ai, ptr %i.aj, align 1, !tbaa !38
   %i.ak = trunc i16 %i.af to i8                   ; 2 uses
   %i.al = or i8 %i.ak, -128
-  %.not4679 = icmp slt i16 %i.af, 0
+  %.not4679 = icmp slt i16 %i.af, -128
   %.sink = select i1 %.not4679, i8 %i.ak, i8 %i.al
   %i.am = load ptr, ptr %6, align 8, !tbaa !41
   %i.an = getelementptr i8, ptr %i.am, i64 1

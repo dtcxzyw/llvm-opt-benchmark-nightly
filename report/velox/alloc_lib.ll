@@ -65,10 +65,10 @@ spin_acquire_lock.exit:                           ; preds = %bb.e, %bb.c, %bb.d
   br i1 %i.k, label %bb.g, label %bb.af
 
 bb.g:                                             ; preds = %spin_acquire_lock.exit
-  %1 = icmp samesign ult i64 %0, 23
   %i.l = add nuw nsw i64 %0, 23
   %i.m = and i64 %i.l, 496
-  %i.n = select i1 %1, i64 32, i64 %i.m           ; 8 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp samesign ult i64 %0, 9
+  %i.n = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.m ; 8 uses
   %i.o = lshr exact i64 %i.n, 3
   %i.p = trunc nuw nsw i64 %i.o to i32            ; 4 uses
   %i.q = load i32, ptr @_gm_, align 8, !tbaa !19  ; 4 uses
@@ -471,10 +471,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.e:                                             ; preds = %bb.c
-  %2 = icmp ult i64 %1, 23
   %i.e = add nuw i64 %1, 23
   %i.f = and i64 %i.e, -16
-  %i.g = select i1 %2, i64 32, i64 %i.f
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %1, 9
+  %i.g = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.f
   %i.h = getelementptr inbounds i8, ptr %0, i64 -16
   %i.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 880), align 8, !tbaa !10
   %i.j = and i32 %i.i, 2
@@ -877,10 +877,10 @@ spin_acquire_lock.exit:                           ; preds = %bb.c, %bb.a, %bb.b
   br i1 %i.l, label %bb.e, label %bb.ad
 
 bb.e:                                             ; preds = %spin_acquire_lock.exit
-  %2 = icmp samesign ult i64 %1, 23
   %i.m = add nuw nsw i64 %1, 23
   %i.n = and i64 %i.m, 496
-  %i.o = select i1 %2, i64 32, i64 %i.n           ; 8 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp samesign ult i64 %1, 9
+  %i.o = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.n ; 8 uses
   %i.p = lshr exact i64 %i.o, 3
   %i.q = trunc nuw nsw i64 %i.p to i32            ; 4 uses
   %i.r = load i32, ptr %0, align 8, !tbaa !19     ; 4 uses
@@ -1283,10 +1283,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.j
 
 bb.d:                                             ; preds = %bb.b
-  %2 = icmp ult i64 %1, 23
   %i.c = add nuw i64 %1, 23
   %i.d = and i64 %i.c, -16
-  %i.e = select i1 %2, i64 32, i64 %i.d
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %1, 9
+  %i.e = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.d
   %i.f = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.g = load i32, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 880), align 8, !tbaa !10
   %i.h = and i32 %i.g, 2
@@ -1392,10 +1392,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.t
 
 bb.d:                                             ; preds = %.loopexit
-  %3 = icmp ult i64 %2, 23
   %i.f = add i64 %2, 23
   %i.g = and i64 %i.f, -16
-  %i.h = select i1 %3, i64 32, i64 %i.g           ; 5 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %2, 9
+  %i.h = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.g ; 5 uses
   %i.i = add i64 %i.h, 24
   %i.j = add i64 %i.i, %.086                      ; 2 uses
   %i.k = icmp eq ptr %0, @_gm_
@@ -1719,10 +1719,10 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.e
   %i.f = shl i64 %1, 3                            ; 2 uses
-  %5 = icmp ult i64 %i.f, 23
-  %6 = and i64 %i.f, -16
-  %7 = add i64 %6, 16
-  %i.g = select i1 %5, i64 32, i64 %7
+  %5 = and i64 %i.f, -16
+  %6 = add i64 %5, 16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %i.f, 16
+  %i.g = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %6
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.d, %bb.i
@@ -1747,14 +1747,14 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %wide.load = load <2 x i64>, ptr %i.i, align 8, !tbaa !39 ; 2 uses
   %wide.load139 = load <2 x i64>, ptr %i.j, align 8, !tbaa !39 ; 2 uses
-  %8 = icmp ult <2 x i64> %wide.load, splat (i64 23)
-  %9 = icmp ult <2 x i64> %wide.load139, splat (i64 23)
-  %10 = add <2 x i64> %wide.load, splat (i64 23)
-  %11 = add <2 x i64> %wide.load139, splat (i64 23)
-  %12 = and <2 x i64> %10, splat (i64 -16)
-  %13 = and <2 x i64> %11, splat (i64 -16)
-  %i.k = select <2 x i1> %8, <2 x i64> splat (i64 32), <2 x i64> %12
-  %i.l = select <2 x i1> %9, <2 x i64> splat (i64 32), <2 x i64> %13
+  %7 = add <2 x i64> %wide.load, splat (i64 23)
+  %8 = add <2 x i64> %wide.load139, splat (i64 23)
+  %9 = and <2 x i64> %7, splat (i64 -16)
+  %10 = and <2 x i64> %8, splat (i64 -16)
+  %11 = icmp ult <2 x i64> %wide.load, splat (i64 9)
+  %12 = icmp ult <2 x i64> %wide.load139, splat (i64 9)
+  %i.k = select <2 x i1> %11, <2 x i64> splat (i64 32), <2 x i64> %9
+  %i.l = select <2 x i1> %12, <2 x i64> splat (i64 32), <2 x i64> %10
   %i.m = add <2 x i64> %i.k, %vec.phi             ; 2 uses
   %i.n = add <2 x i64> %i.l, %vec.phi138          ; 2 uses
   %index.next = add nuw i64 %index, 4             ; 2 uses
@@ -1774,10 +1774,10 @@ middle.block:                                     ; preds = %vector.body
 
 bb.k:                                             ; preds = %bb.j
   %i.q = load i64, ptr %2, align 8, !tbaa !39     ; 2 uses
-  %14 = icmp ult i64 %i.q, 23
-  %15 = add i64 %i.q, 23
-  %16 = and i64 %15, -16
-  %i.r = select i1 %14, i64 32, i64 %16           ; 2 uses
+  %13 = add i64 %i.q, 23
+  %14 = and i64 %13, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow104.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %i.q, 9
+  %i.r = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow104.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %14 ; 2 uses
   %i.s = mul i64 %i.r, %1
   br label %.loopexit
 
@@ -1786,10 +1786,10 @@ bb.k:                                             ; preds = %bb.j
   %.077106 = phi i64 [ %i.w, %.lr.ph ], [ %.077106.ph, %.lr.ph.preheader144 ]
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.074107
   %i.u = load i64, ptr %i.t, align 8, !tbaa !39   ; 2 uses
-  %17 = icmp ult i64 %i.u, 23
-  %18 = add i64 %i.u, 23
-  %19 = and i64 %18, -16
-  %i.v = select i1 %17, i64 32, i64 %19
+  %15 = add i64 %i.u, 23
+  %16 = and i64 %15, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow105.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %i.u, 9
+  %i.v = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow105.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %16
   %i.w = add i64 %i.v, %.077106                   ; 2 uses
   %i.x = add nuw i64 %.074107, 1                  ; 2 uses
   %.not96 = icmp eq i64 %i.x, %1
@@ -1921,10 +1921,10 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %niter158 = phi i64 [ 0, %.lr.ph112.split.us.preheader.new ], [ %niter158.next.1, %.lr.ph112.split.us ]
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.1111.us
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !39 ; 2 uses
-  %20 = icmp ult i64 %i.bi, 23
-  %21 = add i64 %i.bi, 23
-  %22 = and i64 %21, -16
-  %i.bj = select i1 %20, i64 32, i64 %22          ; 3 uses
+  %17 = add i64 %i.bi, 23
+  %18 = and i64 %17, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us = icmp ult i64 %i.bi, 9
+  %i.bj = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us, i64 32, i64 %18 ; 3 uses
   %i.bk = or disjoint i64 %i.bj, 3
   %i.bl = getelementptr inbounds nuw i8, ptr %.083109.us, i64 8
   store i64 %i.bk, ptr %i.bl, align 8, !tbaa !26
@@ -1935,10 +1935,10 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   store ptr %i.bo, ptr %i.bp, align 8, !tbaa !76
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.bn
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !39 ; 2 uses
-  %23 = icmp ult i64 %i.br, 23
-  %24 = add i64 %i.br, 23
-  %25 = and i64 %24, -16
-  %i.bs = select i1 %23, i64 32, i64 %25          ; 3 uses
+  %19 = add i64 %i.br, 23
+  %20 = and i64 %19, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.1 = icmp ult i64 %i.br, 9
+  %i.bs = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.1, i64 32, i64 %20 ; 3 uses
   %i.bt = add i64 %i.bj, %i.bs
   %i.bu = sub i64 %.182110.us, %i.bt              ; 3 uses
   %i.bv = or disjoint i64 %i.bs, 3
@@ -2016,10 +2016,10 @@ bb.y:                                             ; preds = %bb.y, %.lr.ph112.sp
   tail call void @llvm.assume(i1 %lcmp.mod156)
   %i.cy = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %.1111.us.epil.init
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !39 ; 2 uses
-  %26 = icmp ult i64 %i.cz, 23
-  %27 = add i64 %i.cz, 23
-  %28 = and i64 %27, -16
-  %i.da = select i1 %26, i64 32, i64 %28          ; 3 uses
+  %21 = add i64 %i.cz, 23
+  %22 = and i64 %21, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.epil = icmp ult i64 %i.cz, 9
+  %i.da = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow106.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.epil, i64 32, i64 %22 ; 3 uses
   %i.db = sub i64 %.182110.us.epil.init, %i.da
   %i.dc = or disjoint i64 %i.da, 3
   %i.dd = getelementptr inbounds nuw i8, ptr %.083109.us.epil.init, i64 8
@@ -2422,10 +2422,10 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.e:                                             ; preds = %bb.c
-  %3 = icmp ult i64 %2, 23
   %i.e = add nuw i64 %2, 23
   %i.f = and i64 %i.e, -16
-  %i.g = select i1 %3, i64 32, i64 %i.f
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %2, 9
+  %i.g = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.f
   %i.h = getelementptr inbounds i8, ptr %1, i64 -16
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 2 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !10
@@ -2522,10 +2522,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.j
 
 bb.d:                                             ; preds = %bb.b
-  %3 = icmp ult i64 %2, 23
   %i.c = add nuw i64 %2, 23
   %i.d = and i64 %i.c, -16
-  %i.e = select i1 %3, i64 32, i64 %i.d
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %2, 9
+  %i.e = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.d
   %i.f = getelementptr inbounds i8, ptr %1, i64 -16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 880 ; 2 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !10
@@ -2807,10 +2807,10 @@ bb.a:
   br i1 %i.a, label %bb.b, label %bb.aa
 
 bb.b:                                             ; preds = %bb.a
-  %2 = icmp samesign ult i64 %1, 23
   %i.b = add nuw nsw i64 %1, 23
   %i.c = and i64 %i.b, 496
-  %i.d = select i1 %2, i64 32, i64 %i.c           ; 8 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp samesign ult i64 %1, 9
+  %i.d = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.c ; 8 uses
   %i.e = lshr exact i64 %i.d, 3
   %i.f = trunc nuw nsw i64 %i.e to i32            ; 4 uses
   %i.g = load i32, ptr %0, align 8, !tbaa !19     ; 4 uses
@@ -3211,10 +3211,10 @@ bb.l:                                             ; preds = %bb.n, %.preheader.i
 
 bb.m:                                             ; preds = %bb.l
   %i.w = mul i64 %i.u, %2                         ; 2 uses
-  %5 = icmp ult i64 %i.w, 23
-  %6 = add i64 %i.w, 23
-  %7 = and i64 %6, -16
-  %i.x = select i1 %5, i64 32, i64 %7             ; 3 uses
+  %5 = add i64 %i.w, 23
+  %6 = and i64 %5, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i64 %i.w, 9
+  %i.x = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i64 32, i64 %6 ; 3 uses
   %i.y = sub i64 %.0101.i, %.011632.i
   %i.z = icmp ult i64 %i.y, %i.x
   br i1 %i.z, label %.thread13.i, label %bb.n
@@ -3291,10 +3291,10 @@ bb.o:                                             ; preds = %.thread5.i
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.210834.i
   %i.az = load i64, ptr %i.ay, align 8, !tbaa !39
   %i.ba = mul i64 %i.az, %2                       ; 2 uses
-  %8 = icmp ult i64 %i.ba, 23
-  %9 = add i64 %i.ba, 23
-  %10 = and i64 %9, -16
-  %i.bb = select i1 %8, i64 32, i64 %10           ; 3 uses
+  %7 = add i64 %i.ba, 23
+  %8 = and i64 %7, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i.prol = icmp ult i64 %i.ba, 9
+  %i.bb = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i.prol, i64 32, i64 %8 ; 3 uses
   %i.bc = sub i64 %i.aq, %i.bb                    ; 2 uses
   %i.bd = or disjoint i64 %i.bb, 3
   %i.be = getelementptr inbounds i8, ptr %i.ae, i64 -8
@@ -3324,10 +3324,10 @@ bb.o:                                             ; preds = %.thread5.i
   %i.bi = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %.210839.i
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !39
   %i.bk = mul i64 %i.bj, %2                       ; 2 uses
-  %11 = icmp ult i64 %i.bk, 23
-  %12 = add i64 %i.bk, 23
-  %13 = and i64 %12, -16
-  %i.bl = select i1 %11, i64 32, i64 %13          ; 3 uses
+  %9 = add i64 %i.bk, 23
+  %10 = and i64 %9, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i = icmp ult i64 %i.bk, 9
+  %i.bl = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i, i64 32, i64 %10 ; 3 uses
   %i.bm = or disjoint i64 %i.bl, 3
   %i.bn = getelementptr inbounds nuw i8, ptr %.09937.i, i64 8
   store i64 %i.bm, ptr %i.bn, align 8, !tbaa !26
@@ -3338,10 +3338,10 @@ bb.o:                                             ; preds = %.thread5.i
   %i.br = getelementptr i8, ptr %i.bq, i64 8
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !39
   %i.bt = mul i64 %i.bs, %2                       ; 2 uses
-  %14 = icmp ult i64 %i.bt, 23
-  %15 = add i64 %i.bt, 23
-  %16 = and i64 %15, -16
-  %i.bu = select i1 %14, i64 32, i64 %16          ; 3 uses
+  %11 = add i64 %i.bt, 23
+  %12 = and i64 %11, -16
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i.1 = icmp ult i64 %i.bt, 9
+  %i.bu = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow25.i.1, i64 32, i64 %12 ; 3 uses
   %i.bv = add i64 %i.bl, %i.bu
   %i.bw = sub i64 %.010036.i, %i.bv               ; 2 uses
   %i.bx = or disjoint i64 %i.bu, 3
@@ -3744,10 +3744,10 @@ bb.f:                                             ; preds = %.critedge.i
   br label %.preheader, !llvm.loop !17
 
 spin_acquire_lock.exit:                           ; preds = %bb.e, %bb.c, %bb.d
-  %4 = icmp ult i64 %1, 23
   %i.k = add i64 %1, 23
   %i.l = and i64 %i.k, -16
-  %i.m = select i1 %4, i64 32, i64 %i.l           ; 12 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp ult i64 %1, 9
+  %i.m = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i64 32, i64 %i.l ; 12 uses
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !101
   %.not.i13 = icmp eq i64 %1, 0
@@ -4150,15 +4150,15 @@ spin_acquire_lock.exit:                           ; preds = %bb.c, %bb.a, %bb.b
   %i.k = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !26
   %i.m = and i64 %i.l, -8
-  %4 = icmp ult i64 %1, 23
   %i.n = add i64 %1, 23
   %i.o = and i64 %i.n, -16
-  %5 = select i1 %4, i64 32, i64 %i.o
-  %6 = icmp ult i64 %2, 23
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %1, 9
+  %4 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.o
   %i.p = add i64 %2, 23
   %i.q = and i64 %i.p, -16
-  %i.r = select i1 %6, i64 32, i64 %i.q
-  %i.s = tail call fastcc ptr @try_realloc_chunk_with_min(ptr noundef nonnull %i.j, i64 noundef %5, i64 noundef %i.r) ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow22 = icmp ult i64 %2, 9
+  %i.r = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow22, i64 32, i64 %i.q
+  %i.s = tail call fastcc ptr @try_realloc_chunk_with_min(ptr noundef nonnull %i.j, i64 noundef %4, i64 noundef %i.r) ; 2 uses
   %i.t = load i32, ptr getelementptr inbounds nuw (i8, ptr @_gm_, i64 880), align 8, !tbaa !10
   %i.u = and i32 %i.t, 2
   %.not22 = icmp eq i32 %i.u, 0
@@ -4561,15 +4561,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not414, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %7 = icmp ult i64 %2, 23
   %i.l = add i64 %2, 23
   %i.m = and i64 %i.l, -16
-  %8 = select i1 %7, i64 32, i64 %i.m
-  %9 = icmp ult i64 %3, 23
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp ult i64 %2, 9
+  %7 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 32, i64 %i.m
   %i.n = add i64 %3, 23
   %i.o = and i64 %i.n, -16
-  %i.p = select i1 %9, i64 32, i64 %i.o
-  %i.q = tail call fastcc ptr @try_realloc_chunk_with_min(ptr noundef nonnull %i.a, i64 noundef %8, i64 noundef %i.p)
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow417 = icmp ult i64 %3, 9
+  %i.p = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow417, i64 32, i64 %i.o
+  %i.q = tail call fastcc ptr @try_realloc_chunk_with_min(ptr noundef nonnull %i.a, i64 noundef %7, i64 noundef %i.p)
   %.not417 = icmp eq ptr %i.q, null
   br i1 %.not417, label %bb.h, label %bb.f
 
@@ -4743,10 +4743,10 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not414, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %10 = icmp ult i64 %i.al, 23
   %i.ch = add i64 %i.al, 23
   %i.ci = and i64 %i.ch, -16
-  %i.cj = select i1 %10, i64 32, i64 %i.ci        ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow6 = icmp ult i64 %i.al, 9
+  %i.cj = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow6, i64 32, i64 %i.ci ; 2 uses
   %i.ck = tail call fastcc ptr @try_realloc_chunk_with_min(ptr noundef nonnull %i.a, i64 noundef %i.cj, i64 noundef %i.cj) ; 0 uses
   %i.cl = load i64, ptr %i.b, align 8, !tbaa !26  ; 2 uses
   %i.cm = and i64 %i.cl, -8

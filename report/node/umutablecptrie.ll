@@ -201,13 +201,13 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
   %i.c = sub nsw i32 %2, %i.b
-  %i.d = tail call i32 @llvm.smax.i32(i32 %i.c, i32 -1) ; 2 uses
+  %i.d = tail call i32 @llvm.smax.i32(i32 %i.c, i32 -1)
+  %.0 = add i32 %i.d, 1                           ; 2 uses
   %i.e = sub nsw i32 %3, %i.b                     ; 2 uses
-  %.not25.not = icmp slt i32 %i.d, %i.e
-  br i1 %.not25.not, label %.lr.ph, label %._crit_edge
+  %.not25 = icmp sgt i32 %.0, %i.e
+  br i1 %.not25, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %.0 = add nsw i32 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20

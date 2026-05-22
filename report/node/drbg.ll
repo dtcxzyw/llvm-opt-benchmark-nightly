@@ -52,9 +52,9 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store ptr %0, ptr %i.a, align 8, !tbaa !9
-  %i.b = add nuw nsw i32 %2, 7
+  %i.b = add i32 %2, 7
   %i.c = lshr i32 %i.b, 3
-  %.inv = icmp slt i32 %2, 0
+  %.inv = icmp slt i32 %2, -7
   %narrow = select i1 %.inv, i32 0, i32 %i.c
   %i.d = zext nneg i32 %narrow to i64
   %.019 = tail call i64 @llvm.umax.i64(i64 %3, i64 %i.d)

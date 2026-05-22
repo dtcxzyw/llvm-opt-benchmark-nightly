@@ -93,10 +93,10 @@ bb.e:                                             ; preds = %_ZNK4absl12lts_2025
   br i1 %i.p, label %bb.f, label %_ZN4absl12lts_202505124Cord15GetAppendBufferEmm.exit.thread
 
 bb.f:                                             ; preds = %bb.e
-  %7 = icmp samesign ult i32 %2, 20
   %spec.store.select.i.i.i.i = tail call i64 @llvm.umin.i64(i64 %i.f, i64 4083)
   %i.q = add nuw nsw i64 %spec.store.select.i.i.i.i, 13
-  %.0.i.i.i.i = select i1 %7, i64 32, i64 %i.q    ; 2 uses
+  %.narrow.i.i.i.i = icmp samesign ult i32 %2, 19
+  %.0.i.i.i.i = select i1 %.narrow.i.i.i.i, i64 32, i64 %i.q ; 2 uses
   %i.r = icmp samesign ult i64 %.0.i.i.i.i, 513   ; 2 uses
   %.neg.i.i.i.i = select i1 %i.r, i64 -8, i64 -64
   %i.s = select i1 %i.r, i64 8, i64 64
@@ -499,10 +499,10 @@ _ZN4absl12lts_2025051210CordBufferD2Ev.exit:      ; preds = %_ZN4absl12lts_20250
   br i1 %i.au, label %bb.l, label %_ZN4absl12lts_2025051210CordBuffer22CreateWithDefaultLimitEm.exit
 
 bb.l:                                             ; preds = %_ZN4absl12lts_2025051210CordBufferD2Ev.exit
-  %2 = icmp ult i32 %i.at, 20
   %i.av = call i32 @llvm.umin.i32(i32 %i.at, i32 4083)
   %narrow = add nuw nsw i32 %i.av, 13
-  %narrow18 = select i1 %2, i32 32, i32 %narrow   ; 2 uses
+  %.narrow.i.i.i = icmp ult i32 %i.at, 19
+  %narrow18 = select i1 %.narrow.i.i.i, i32 32, i32 %narrow ; 2 uses
   %.0.i.i.i = zext nneg i32 %narrow18 to i64
   %i.aw = icmp samesign ult i32 %narrow18, 513    ; 2 uses
   %.neg.i.i.i = select i1 %i.aw, i64 -8, i64 -64

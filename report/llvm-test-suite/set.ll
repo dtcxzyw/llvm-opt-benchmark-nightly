@@ -169,11 +169,11 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local noundef ptr @set_clear(ptr noundef returned writeonly captures(ret: address, provenance) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %2 = icmp slt i32 %1, 33
-  %i.a = add nsw i32 %1, -1
+  %i.a = add i32 %1, -1
   %i.b = lshr i32 %i.a, 5
   %i.c = add nuw nsw i32 %i.b, 1
-  %i.d = select i1 %2, i32 1, i32 %i.c            ; 3 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %1, 32
+  %i.d = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.c, i32 1 ; 3 uses
   store i32 %i.d, ptr %0, align 4, !tbaa !4
   %i.e = shl nuw nsw i32 %i.d, 2
   %i.f = zext nneg i32 %i.e to i64
@@ -190,11 +190,11 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local noundef ptr @set_fill(ptr noundef returned writeonly captures(ret: address, provenance) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #3 {
 bb.a:
-  %2 = icmp slt i32 %1, 33
-  %i.a = add nsw i32 %1, -1
+  %i.a = add i32 %1, -1
   %i.b = lshr i32 %i.a, 5
   %i.c = add nuw nsw i32 %i.b, 1
-  %i.d = select i1 %2, i32 1, i32 %i.c            ; 5 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %1, 32
+  %i.d = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.c, i32 1 ; 5 uses
   store i32 %i.d, ptr %0, align 4, !tbaa !4
   %i.e = zext nneg i32 %i.d to i64
   %i.f = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.e
@@ -597,11 +597,11 @@ bb.a:
   %i.h = zext nneg i32 %narrow to i64
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #24 ; 6 uses
   %i.j = load i32, ptr %i.a, align 4, !tbaa !28   ; 2 uses
-  %1 = icmp slt i32 %i.j, 33
-  %i.k = add nsw i32 %i.j, -1
+  %i.k = add i32 %i.j, -1
   %i.l = lshr i32 %i.k, 5
   %i.m = add nuw nsw i32 %i.l, 1
-  %i.n = select i1 %1, i32 1, i32 %i.m            ; 3 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.j, 32
+  %i.n = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.m, i32 1 ; 3 uses
   store i32 %i.n, ptr %i.i, align 4, !tbaa !4
   %i.o = shl nuw nsw i32 %i.n, 2
   %i.p = zext nneg i32 %i.o to i64
@@ -712,11 +712,11 @@ bb.a:
   %i.h = zext nneg i32 %narrow to i64
   %i.i = tail call noalias ptr @malloc(i64 noundef %i.h) #24 ; 8 uses
   %i.j = load i32, ptr %i.a, align 4, !tbaa !28   ; 3 uses
-  %1 = icmp slt i32 %i.j, 33
-  %i.k = add nsw i32 %i.j, -1
+  %i.k = add i32 %i.j, -1
   %i.l = lshr i32 %i.k, 5
   %i.m = add nuw nsw i32 %i.l, 1
-  %i.n = select i1 %1, i32 1, i32 %i.m            ; 6 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.j, 32
+  %i.n = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.m, i32 1 ; 6 uses
   %i.o = shl nuw nsw i32 %i.n, 2
   %i.p = zext nneg i32 %i.o to i64
   %i.q = add nsw i32 %i.n, -1
@@ -1119,11 +1119,11 @@ sf_new.exit:                                      ; preds = %bb.d, %bb.e
   %.0.i = phi ptr [ %i.u, %bb.d ], [ %i.s, %bb.e ] ; 7 uses
   %i.x = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i32 %i.k, ptr %i.x, align 4, !tbaa !28
-  %2 = icmp slt i32 %i.k, 33
-  %i.y = add nsw i32 %i.k, -1
+  %i.y = add i32 %i.k, -1
   %i.z = lshr i32 %i.y, 5
   %i.aa = add nuw nsw i32 %i.z, 2
-  %i.ab = select i1 %2, i32 2, i32 %i.aa          ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.k, 32
+  %i.ab = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.aa, i32 2 ; 2 uses
   store i32 %i.ab, ptr %.0.i, align 8, !tbaa !35
   %i.ac = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.r, ptr %i.ac, align 8, !tbaa !49
@@ -1526,11 +1526,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.0 = phi ptr [ %i.c, %bb.b ], [ %i.a, %bb.c ]  ; 7 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.0, i64 4
   store i32 %1, ptr %i.f, align 4, !tbaa !28
-  %2 = icmp slt i32 %1, 33
-  %i.g = add nsw i32 %1, -1
+  %i.g = add i32 %1, -1
   %i.h = lshr i32 %i.g, 5
   %i.i = add nuw nsw i32 %i.h, 2
-  %i.j = select i1 %2, i32 2, i32 %i.i            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %1, 32
+  %i.j = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.i, i32 2 ; 2 uses
   store i32 %i.j, ptr %.0, align 8, !tbaa !35
   %i.k = getelementptr inbounds nuw i8, ptr %.0, i64 8
   store i32 %0, ptr %i.k, align 8, !tbaa !49
@@ -1573,11 +1573,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.g, %bb.b ], [ %i.e, %bb.c ] ; 8 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i32 %i.d, ptr %i.j, align 4, !tbaa !28
-  %1 = icmp slt i32 %i.d, 33
-  %i.k = add nsw i32 %i.d, -1
+  %i.k = add i32 %i.d, -1
   %i.l = lshr i32 %i.k, 5
   %i.m = add nuw nsw i32 %i.l, 2
-  %i.n = select i1 %1, i32 2, i32 %i.m            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.d, 32
+  %i.n = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.m, i32 2 ; 2 uses
   store i32 %i.n, ptr %.0.i, align 8, !tbaa !35
   %i.o = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.b, ptr %i.o, align 8, !tbaa !49
@@ -1980,11 +1980,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.h, %bb.b ], [ %i.f, %bb.c ] ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i32 %i.e, ptr %i.k, align 4, !tbaa !28
-  %1 = icmp slt i32 %i.e, 33
-  %i.l = add nsw i32 %i.e, -1
+  %i.l = add i32 %i.e, -1
   %i.m = lshr i32 %i.l, 5
   %i.n = add nuw nsw i32 %i.m, 2
-  %i.o = select i1 %1, i32 2, i32 %i.n            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.e, 32
+  %i.o = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.n, i32 2 ; 2 uses
   store i32 %i.o, ptr %.0.i, align 8, !tbaa !35
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.d, ptr %i.p, align 8, !tbaa !49
@@ -2125,11 +2125,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.h, %bb.b ], [ %i.f, %bb.c ] ; 8 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 4 ; 2 uses
   store i32 %i.e, ptr %i.k, align 4, !tbaa !28
-  %1 = icmp slt i32 %i.e, 33
-  %i.l = add nsw i32 %i.e, -1
+  %i.l = add i32 %i.e, -1
   %i.m = lshr i32 %i.l, 5
   %i.n = add nuw nsw i32 %i.m, 2
-  %i.o = select i1 %1, i32 2, i32 %i.n            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.e, 32
+  %i.o = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.n, i32 2 ; 2 uses
   store i32 %i.o, ptr %.0.i, align 8, !tbaa !35
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.d, ptr %i.p, align 8, !tbaa !49
@@ -2159,11 +2159,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %i.af = sext i32 %i.ae to i64
   %i.ag = getelementptr inbounds [4 x i8], ptr %i.aa, i64 %i.af ; 3 uses
   %i.ah = load i32, ptr %i.k, align 4, !tbaa !28  ; 2 uses
-  %2 = icmp slt i32 %i.ah, 33
-  %i.ai = add nsw i32 %i.ah, -1
+  %i.ai = add i32 %i.ah, -1
   %i.aj = lshr i32 %i.ai, 5
   %i.ak = add nuw nsw i32 %i.aj, 1
-  %i.al = select i1 %2, i32 1, i32 %i.ak          ; 3 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.ah, 32
+  %i.al = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.ak, i32 1 ; 3 uses
   store i32 %i.al, ptr %i.ag, align 4, !tbaa !4
   %i.am = shl nuw nsw i32 %i.al, 2
   %i.an = zext nneg i32 %i.am to i64
@@ -2566,11 +2566,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.h, %bb.b ], [ %i.f, %bb.c ] ; 8 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.0.i, i64 4 ; 2 uses
   store i32 %i.e, ptr %i.l, align 4, !tbaa !28
-  %3 = icmp slt i32 %i.e, 33
-  %i.m = add nsw i32 %i.e, -1
+  %i.m = add i32 %i.e, -1
   %i.n = lshr i32 %i.m, 5
   %i.o = add nuw nsw i32 %i.n, 2
-  %i.p = select i1 %3, i32 2, i32 %i.o            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.e, 32
+  %i.p = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.o, i32 2 ; 2 uses
   store i32 %i.p, ptr %.0.i, align 8, !tbaa !35
   %i.q = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.b, ptr %i.q, align 8, !tbaa !49
@@ -2605,11 +2605,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %i.am = sext i32 %i.ac to i64                   ; 4 uses
   %.pre85 = load i32, ptr %.0.i, align 8, !tbaa !35 ; 4 uses
   %.pre86 = load i32, ptr %i.l, align 4, !tbaa !28 ; 2 uses
-  %4 = icmp slt i32 %.pre86, 33
-  %i.an = add nsw i32 %.pre86, -1
+  %i.an = add i32 %.pre86, -1
   %i.ao = lshr i32 %i.an, 5
   %i.ap = add nuw nsw i32 %i.ao, 1
-  %i.aq = select i1 %4, i32 1, i32 %i.ap          ; 6 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.us = icmp sgt i32 %.pre86, 32
+  %i.aq = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.us.us, i32 %i.ap, i32 1 ; 6 uses
   %i.ar = shl nuw nsw i32 %i.aq, 2
   %i.as = zext nneg i32 %i.ar to i64
   %i.at = add nsw i32 %i.aq, -1
@@ -2978,11 +2978,11 @@ sf_new.exit:                                      ; preds = %bb.d, %bb.e
   %.0.i = phi ptr [ %i.ag, %bb.d ], [ %i.ae, %bb.e ] ; 9 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.0.i, i64 4 ; 2 uses
   store i32 %.010.lcssa.i, ptr %i.ak, align 4, !tbaa !28
-  %2 = icmp slt i32 %.010.lcssa.i, 33
-  %i.al = add nsw i32 %.010.lcssa.i, -1
+  %i.al = add i32 %.010.lcssa.i, -1
   %i.am = lshr i32 %i.al, 5
   %i.an = add nuw nsw i32 %i.am, 2
-  %i.ao = select i1 %2, i32 2, i32 %i.an          ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %.010.lcssa.i, 32
+  %i.ao = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.an, i32 2 ; 2 uses
   store i32 %i.ao, ptr %.0.i, align 8, !tbaa !35
   %i.ap = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.b, ptr %i.ap, align 8, !tbaa !49
@@ -3004,11 +3004,11 @@ sf_new.exit:                                      ; preds = %bb.d, %bb.e
 .lr.ph.preheader:                                 ; preds = %sf_new.exit
   %.pre = load i32, ptr %.0.i, align 8, !tbaa !35
   %.pre38 = load i32, ptr %i.ak, align 4, !tbaa !28 ; 2 uses
-  %3 = icmp slt i32 %.pre38, 33
-  %i.ba = add nsw i32 %.pre38, -1
+  %i.ba = add i32 %.pre38, -1
   %i.bb = lshr i32 %i.ba, 5
   %i.bc = add nuw nsw i32 %i.bb, 1
-  %i.bd = select i1 %3, i32 1, i32 %i.bc          ; 3 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %.pre38, 32
+  %i.bd = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.bc, i32 1 ; 3 uses
   %i.be = shl nuw nsw i32 %i.bd, 2
   %i.bf = zext nneg i32 %i.be to i64
   %i.bg = add nsw i32 %i.bd, -1
@@ -3156,11 +3156,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.g, %bb.b ], [ %i.e, %bb.c ] ; 9 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 4 ; 2 uses
   store i32 %i.d, ptr %i.k, align 4, !tbaa !28
-  %1 = icmp slt i32 %i.d, 33
-  %i.l = add nsw i32 %i.d, -1
+  %i.l = add i32 %i.d, -1
   %i.m = lshr i32 %i.l, 5
   %i.n = add nuw nsw i32 %i.m, 2
-  %i.o = select i1 %1, i32 2, i32 %i.n            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %i.d, 32
+  %i.o = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.n, i32 2 ; 2 uses
   store i32 %i.o, ptr %.0.i, align 8, !tbaa !35
   %i.p = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.b, ptr %i.p, align 8, !tbaa !49
@@ -3182,11 +3182,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
 .lr.ph.preheader:                                 ; preds = %sf_new.exit
   %.pre = load i32, ptr %i.k, align 4, !tbaa !28  ; 2 uses
   %.pre51 = load i32, ptr %.0.i, align 8, !tbaa !35
-  %2 = icmp slt i32 %.pre, 33
-  %i.aa = add nsw i32 %.pre, -1
+  %i.aa = add i32 %.pre, -1
   %i.ab = lshr i32 %i.aa, 5
   %i.ac = add nuw nsw i32 %i.ab, 1
-  %i.ad = select i1 %2, i32 1, i32 %i.ac          ; 11 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp sgt i32 %.pre, 32
+  %i.ad = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i32 %i.ac, i32 1 ; 11 uses
   %i.ae = shl nuw nsw i32 %i.ad, 2
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = add nsw i32 %i.ad, -1
@@ -3367,11 +3367,11 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
   %.0.i = phi ptr [ %i.e, %bb.b ], [ %i.c, %bb.c ] ; 8 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i32 %2, ptr %i.i, align 4, !tbaa !28
-  %3 = icmp slt i32 %2, 33                        ; 2 uses
-  %i.j = add nsw i32 %2, -1
+  %i.j = add i32 %2, -1
   %i.k = lshr i32 %i.j, 5                         ; 2 uses
   %i.l = add nuw nsw i32 %i.k, 2
-  %i.m = select i1 %3, i32 2, i32 %i.l            ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i = icmp sgt i32 %2, 32 ; 2 uses
+  %i.m = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.l, i32 2 ; 2 uses
   store i32 %i.m, ptr %.0.i, align 8, !tbaa !35
   %i.n = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   store i32 %i.b, ptr %i.n, align 8, !tbaa !49
@@ -3398,7 +3398,7 @@ sf_new.exit:                                      ; preds = %bb.b, %bb.c
 
 .lr.ph:                                           ; preds = %sf_new.exit
   %i.ac = add nuw nsw i32 %i.k, 1
-  %i.ad = select i1 %3, i32 1, i32 %i.ac          ; 3 uses
+  %i.ad = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.inv.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.i, i32 %i.ac, i32 1 ; 3 uses
   %i.ae = shl nuw nsw i32 %i.ad, 2
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = add nsw i32 %i.ad, -1

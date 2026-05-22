@@ -201,10 +201,10 @@ bb.cy:                                            ; preds = %_ZN2v88internal15Tr
   %i.yx = load i64, ptr %i.sq, align 8
   %i.yy = lshr i64 %i.yx, 32
   %i.yz = trunc nuw i64 %i.yy to i32              ; 2 uses
-  %6 = icmp slt i32 %i.yz, 4
-  %7 = add nsw i32 %i.yz, -3
-  %8 = lshr i32 %7, 1
-  %.0.i222 = select i1 %6, i32 0, i32 %8
+  %6 = add i32 %i.yz, -3
+  %7 = lshr i32 %6, 1
+  %.narrow.i = icmp slt i32 %i.yz, 3
+  %.0.i222 = select i1 %.narrow.i, i32 0, i32 %7
   %.not153.not = icmp slt i32 %.0.i196593611, %.0.i222
   br i1 %.not153.not, label %bb.cz, label %_ZN2v88internal3Map17SlackForArraySizeEii.exit
 

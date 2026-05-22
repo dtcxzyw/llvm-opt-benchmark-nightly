@@ -201,12 +201,12 @@ bb.f:                                             ; preds = %._crit_edge
 
 bb.g:                                             ; preds = %.lr.ph56
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
-  %1 = icmp slt i32 %i.bm, 1
-  %i.bx = shl nuw nsw i32 %i.bm, 1
+  %i.bx = shl i32 %i.bm, 1
   %.nonneg = sub i32 0, %i.bm
   %i.by = lshr i32 %.nonneg, 3
   %i.bz = sub nsw i32 %i.bm, %i.by
-  %storemerge41 = select i1 %1, i32 %i.bz, i32 %i.bx ; 2 uses
+  %.narrow = icmp slt i32 %i.bm, 0
+  %storemerge41 = select i1 %.narrow, i32 %i.bz, i32 %i.bx ; 2 uses
   store i32 %storemerge41, ptr %i.bw, align 8, !tbaa !114
   %i.ca = add nsw i32 %storemerge41, 2
   %i.cb = sext i32 %i.ca to i64

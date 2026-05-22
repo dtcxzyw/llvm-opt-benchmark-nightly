@@ -201,9 +201,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
   %i.d = zext i32 %2 to i64                       ; 3 uses
-  %6 = icmp ugt i32 %2, 63
-  %7 = sub nsw i64 64, %i.d
-  %i.e = select i1 %6, i64 0, i64 %7
+  %6 = sub nsw i64 64, %i.d
+  %.narrow.i = icmp ugt i32 %2, 64
+  %i.e = select i1 %.narrow.i, i64 0, i64 %6
   %i.f = getelementptr i8, ptr %i.c, i64 %i.d
   call void @llvm.memset.p0.i64(ptr align 1 %i.f, i8 0, i64 %i.e, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.c, ptr noundef nonnull readonly align 1 dereferenceable(1) %3, i64 %i.d, i1 false)

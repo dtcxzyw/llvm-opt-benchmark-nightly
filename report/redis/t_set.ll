@@ -201,8 +201,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.l = load i64, ptr %i.a, align 8, !tbaa !58   ; 7 uses
-  %4 = icmp slt i64 %i.l, 0
-  %.0 = call i64 @llvm.abs.i64(i64 %i.l, i1 true) ; 11 uses
+  %.0 = call i64 @llvm.abs.i64(i64 %i.l, i1 false) ; 11 uses
   %i.m = load ptr, ptr %i.g, align 8, !tbaa !83
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !84
@@ -267,7 +266,8 @@ bb.i:                                             ; preds = %setTypeSize.exit
 
 bb.j:                                             ; preds = %setTypeSize.exit
   %i.an = icmp eq i64 %.0, 1
-  %or.cond = select i1 %4, i1 true, i1 %i.an
+  %.narrow = icmp slt i64 %i.l, -1
+  %or.cond = or i1 %.narrow, %i.an
   br i1 %or.cond, label %bb.k, label %bb.v
 
 bb.k:                                             ; preds = %bb.j

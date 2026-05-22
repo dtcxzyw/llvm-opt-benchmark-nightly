@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.z
 
 bb.h:                                             ; preds = %bb.e
-  %5 = icmp slt i32 %3, 0
-  %6 = icmp ugt i64 %i.c, 2147483647
-  %or.cond = select i1 %5, i1 true, i1 %6
+  %5 = icmp ugt i64 %i.c, 2147483647
+  %.narrow = icmp slt i32 %3, -1
+  %or.cond = or i1 %.narrow, %5
   br i1 %or.cond, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h

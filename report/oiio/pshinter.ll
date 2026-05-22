@@ -201,10 +201,10 @@ bb.r:                                             ; preds = %psh_blues_snap_stem
   br i1 %i.aq, label %.thread151, label %.thread162
 
 .thread151:                                       ; preds = %bb.r
-  %4 = icmp slt i64 %i.ad, 64
-  %i.cu = add nuw nsw i64 %i.ad, 32
+  %i.cu = add nsw i64 %i.ad, 32
   %i.cv = and i64 %i.cu, 9223372036854775744
-  %.1116154 = select i1 %4, i64 64, i64 %i.cv     ; 2 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow168 = icmp slt i64 %i.ad, 32
+  %.1116154 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow168, i64 64, i64 %i.cv ; 2 uses
   %i.cw = sub nsw i64 %.sroa.9136.1, %.1116154
   store i64 %i.cw, ptr %i.ct, align 8, !tbaa !160
   store i64 %.1116154, ptr %i.ar, align 8, !tbaa !161
@@ -216,10 +216,10 @@ bb.s:                                             ; preds = %psh_blues_snap_stem
   br i1 %i.aq, label %.thread157, label %.thread162
 
 .thread157:                                       ; preds = %bb.s
-  %5 = icmp slt i64 %i.ad, 64
-  %i.cy = add nuw nsw i64 %i.ad, 32
+  %i.cy = add nsw i64 %i.ad, 32
   %i.cz = and i64 %i.cy, 9223372036854775744
-  %.1116160 = select i1 %5, i64 64, i64 %i.cz
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow = icmp slt i64 %i.ad, 32
+  %.1116160 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow, i64 64, i64 %i.cz
   store i64 %.1116160, ptr %i.ar, align 8, !tbaa !161
   br label %.thread162
 
@@ -376,10 +376,10 @@ bb.aj:                                            ; preds = %psh_blues_snap_stem
   br label %.thread162
 
 bb.ak:                                            ; preds = %psh_dimension_quantize_len.exit
-  %6 = icmp slt i64 %i.fk, 64
-  %i.fx = add nuw nsw i64 %i.fk, 32
+  %i.fx = add nsw i64 %i.fk, 32
   %i.fy = and i64 %i.fx, 9223372036854775744
-  %.1116 = select i1 %6, i64 64, i64 %i.fy        ; 3 uses
+  %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow170 = icmp slt i64 %i.fk, 32
+  %.1116 = select i1 %.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow.narrow170, i64 64, i64 %i.fy ; 3 uses
   %i.fz = and i64 %.1116, 64
   %.not133 = icmp eq i64 %i.fz, 0
   %i.ga = lshr exact i64 %.1116, 1                ; 3 uses
