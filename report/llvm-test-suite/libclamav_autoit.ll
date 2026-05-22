@@ -201,7 +201,7 @@ bb.cm:                                            ; preds = %bb.cl
   br label %.lr.ph49.preheader.i.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.cl, %bb.ck, %bb.cj, %bb.ci
-  %i.akg = call i32 @llvm.umin.i32(i32 %.sroa.62.1.i, i32 20)
+  %i.akg = call i32 @llvm.umin.i32(i32 %.sroa.62.1.i, i32 21)
   %i.akh = and i32 %i.akg, 30                     ; 2 uses
   %i.aki = zext nneg i32 %i.akh to i64
   br label %.lr.ph.i.i
@@ -419,8 +419,9 @@ bb.dk:                                            ; preds = %bb.dj
   br label %.lr.ph49.preheader.i.i41
 
 .lr.ph.preheader.i.i49:                           ; preds = %bb.dj
-  %i.amq = call i32 @llvm.umin.i32(i32 %i.amc, i32 20) ; 2 uses
-  %i.amr = zext nneg i32 %i.amq to i64
+  %i.amq = call i32 @llvm.umin.i32(i32 %i.amc, i32 21)
+  %3 = and i32 %i.amq, 30                         ; 2 uses
+  %i.amr = zext nneg i32 %3 to i64
   br label %.lr.ph.i.i50
 
 .lr.ph.i.i50:                                     ; preds = %bb.dm, %.lr.ph.preheader.i.i49
@@ -447,7 +448,7 @@ bb.dm:                                            ; preds = %bb.dl, %.lr.ph.i.i5
 
 ._crit_edge.i.i55:                                ; preds = %bb.dm
   %i.anb = shl i32 %i.amz, 2
-  %.not42.i.i56 = icmp ult i32 %i.anb, %i.amq
+  %.not42.i.i56 = icmp ult i32 %i.anb, %3
   br i1 %.not42.i.i56, label %u2a.exit.i48, label %.lr.ph49.preheader.i.i41
 
 .lr.ph49.preheader.i.i41:                         ; preds = %._crit_edge.i.i55, %bb.dk
@@ -616,8 +617,9 @@ bb.dv:                                            ; preds = %bb.du
   br label %.lr.ph49.preheader.i335.i
 
 .lr.ph.preheader.i327.i:                          ; preds = %bb.du
-  %i.apv = call i32 @llvm.umin.i32(i32 %i.apc, i32 20) ; 2 uses
-  %i.apw = zext nneg i32 %i.apv to i64
+  %i.apv = call i32 @llvm.umin.i32(i32 %i.apc, i32 21)
+  %4 = and i32 %i.apv, 30                         ; 2 uses
+  %i.apw = zext nneg i32 %4 to i64
   br label %.lr.ph.i328.i
 
 .lr.ph.i328.i:                                    ; preds = %bb.dx, %.lr.ph.preheader.i327.i
@@ -644,7 +646,7 @@ bb.dx:                                            ; preds = %bb.dw, %.lr.ph.i328
 
 ._crit_edge.i333.i:                               ; preds = %bb.dx
   %i.aqg = shl i32 %i.aqe, 2
-  %.not42.i334.i = icmp ult i32 %i.aqg, %i.apv
+  %.not42.i334.i = icmp ult i32 %i.aqg, %4
   br i1 %.not42.i334.i, label %u2a.exit344.i, label %.lr.ph49.preheader.i335.i
 
 .lr.ph49.preheader.i335.i:                        ; preds = %._crit_edge.i333.i, %bb.dv
@@ -1047,8 +1049,9 @@ bb.hu:                                            ; preds = %bb.ht
   br label %.lr.ph49.preheader.i389.i
 
 .lr.ph.preheader.i381.i:                          ; preds = %bb.ht, %bb.hs, %bb.hr, %bb.hq
-  %i.cdy = call i32 @llvm.umin.i32(i32 %i.cbc, i32 20) ; 2 uses
-  %i.cdz = zext nneg i32 %i.cdy to i64
+  %i.cdy = call i32 @llvm.umin.i32(i32 %i.cbc, i32 21)
+  %5 = and i32 %i.cdy, 30                         ; 2 uses
+  %i.cdz = zext nneg i32 %5 to i64
   br label %.lr.ph.i382.i
 
 .lr.ph.i382.i:                                    ; preds = %bb.hw, %.lr.ph.preheader.i381.i
@@ -1075,7 +1078,7 @@ bb.hw:                                            ; preds = %bb.hv, %.lr.ph.i382
 
 ._crit_edge.i387.i:                               ; preds = %bb.hw
   %i.cej = shl i32 %i.ceh, 2
-  %.not42.i388.i = icmp ult i32 %i.cej, %i.cdy
+  %.not42.i388.i = icmp ult i32 %i.cej, %5
   br i1 %.not42.i388.i, label %u2a.exit398.i, label %.lr.ph49.preheader.i389.i
 
 .lr.ph49.preheader.i389.i:                        ; preds = %._crit_edge.i387.i, %bb.hu

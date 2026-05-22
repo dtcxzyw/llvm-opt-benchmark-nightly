@@ -105,7 +105,7 @@ bb.e:                                             ; preds = %bb.d, %PreLoopIniti
   %i.as = zext i1 %i.ar to i32
   %i.at = load i32, ptr %i.h, align 8, !tbaa !27
   %i.au = load i32, ptr %i.j, align 4, !tbaa !28
-  %i.av = mul nsw i32 %i.au, %i.at                ; 2 uses
+  %i.av = mul nsw i32 %i.au, %i.at                ; 3 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ag, i64 16
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !40 ; 2 uses
   %i.ay = icmp ne i32 %i.ax, 0                    ; 3 uses
@@ -143,15 +143,16 @@ InitPassStats.exit.i:                             ; preds = %bb.g, %bb.f
   br i1 %i.af, label %bb.h, label %bb.k
 
 bb.h:                                             ; preds = %InitPassStats.exit.i
-  %7 = tail call i32 @llvm.smax.i32(i32 %i.av, i32 200) ; 2 uses
   br i1 %i.ae, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
+  %7 = tail call i32 @llvm.smax.i32(i32 %i.av, i32 201)
   %i.bu = lshr i32 %7, 1
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  %i.bv = lshr i32 %7, 2
+  %8 = tail call i32 @llvm.smax.i32(i32 %i.av, i32 203)
+  %i.bv = lshr i32 %8, 2
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %InitPassStats.exit.i

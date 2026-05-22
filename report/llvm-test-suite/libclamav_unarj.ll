@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.preheader56, %.loo
   %i.av = load i16, ptr %i.a, align 2, !tbaa !48  ; 2 uses
   %i.aw = lshr i16 %i.av, 13                      ; 2 uses
   %i.ax = icmp eq i16 %i.aw, 7
-  br i1 %i.ax, label %.preheader54, label %.loopexit55.thread
+  br i1 %i.ax, label %.preheader54, label %.loopexit55
 
 .preheader54:                                     ; preds = %bb.b
   %i.ay = zext i16 %i.av to i32                   ; 2 uses
@@ -213,27 +213,29 @@ bb.b:                                             ; preds = %.preheader56, %.loo
   %.059 = phi i32 [ %i.ba, %.lr.ph ], [ 4096, %.preheader54 ]
   %.04558 = phi i16 [ %i.bb, %.lr.ph ], [ 7, %.preheader54 ]
   %i.ba = lshr i32 %.059, 1                       ; 2 uses
-  %i.bb = add i16 %.04558, 1                      ; 4 uses
+  %i.bb = add i16 %.04558, 1                      ; 2 uses
   %i.bc = and i32 %i.ba, %i.ay
   %.not = icmp eq i32 %i.bc, 0
   br i1 %.not, label %.loopexit55, label %.lr.ph, !llvm.loop !73
 
-.loopexit55:                                      ; preds = %.lr.ph
-  %i.bd = sext i16 %i.bb to i32
-  %i.be = icmp slt i16 %i.bb, 7
+.loopexit55:                                      ; preds = %.lr.ph, %bb.b
+  %.1 = phi i16 [ %i.aw, %bb.b ], [ %i.bb, %.lr.ph ]
+  %.1.fr = freeze i16 %.1                         ; 3 uses
+  %i.bd = sext i16 %.1.fr to i32
   %2 = add nsw i32 %i.bd, -3
+  %i.be = icmp slt i16 %.1.fr, 6
   %spec.select = select i1 %i.be, i32 3, i32 %2
+  %3 = trunc i16 %.1.fr to i8
   br label %.loopexit55.thread
 
-.loopexit55.thread:                               ; preds = %.loopexit55, %.preheader54, %bb.b
-  %.188 = phi i16 [ %i.aw, %bb.b ], [ %i.bb, %.loopexit55 ], [ 7, %.preheader54 ]
-  %3 = phi i32 [ 3, %bb.b ], [ %spec.select, %.loopexit55 ], [ 4, %.preheader54 ]
-  %i.bf = tail call fastcc i32 @fill_buf(ptr noundef %0, i32 noundef %3) ; 0 uses
-  %4 = trunc i16 %.188 to i8
+.loopexit55.thread:                               ; preds = %.loopexit55, %.preheader54
+  %.189 = phi i8 [ 7, %.preheader54 ], [ %3, %.loopexit55 ]
+  %4 = phi i32 [ 4, %.preheader54 ], [ %spec.select, %.loopexit55 ]
+  %i.bf = tail call fastcc i32 @fill_buf(ptr noundef %0, i32 noundef %4) ; 0 uses
   %i.bg = add nsw i32 %.24863, 1                  ; 2 uses
   %i.bh = sext i32 %.24863 to i64
   %i.bi = getelementptr inbounds i8, ptr %i.f, i64 %i.bh
-  store i8 %4, ptr %i.bi, align 1, !tbaa !20
+  store i8 %.189, ptr %i.bi, align 1, !tbaa !20
   %i.bj = icmp eq i32 %i.bg, %1
   br i1 %i.bj, label %bb.c, label %.loopexit53
 

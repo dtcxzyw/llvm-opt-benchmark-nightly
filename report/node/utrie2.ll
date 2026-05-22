@@ -201,11 +201,10 @@ bb.a:
   store i32 0, ptr %i.a, align 4
   %i.b = ptrtoint ptr %3 to i64
   %i.c = ptrtoint ptr %2 to i64
-  %i.d = sub i64 %i.b, %i.c                       ; 2 uses
-  %4 = icmp slt i64 %i.d, 8
-  %i.e = trunc i64 %i.d to i32
-  %.0 = select i1 %4, i32 %i.e, i32 7
-  %i.f = call i32 @utf8_nextCharSafeBody_78(ptr noundef %2, ptr noundef nonnull %i.a, i32 noundef %.0, i32 noundef %1, i8 noundef signext -1) #11 ; 12 uses
+  %i.d = sub i64 %i.b, %i.c
+  %.09 = tail call i64 @llvm.smin.i64(i64 %i.d, i64 7)
+  %i.e = trunc i64 %.09 to i32
+  %i.f = call i32 @utf8_nextCharSafeBody_78(ptr noundef %2, ptr noundef nonnull %i.a, i32 noundef %i.e, i32 noundef %1, i8 noundef signext -1) #11 ; 12 uses
   %i.g = load i32, ptr %i.a, align 4
   %i.h = icmp ult i32 %i.f, 55296
   br i1 %i.h, label %bb.b, label %bb.c
@@ -607,6 +606,9 @@ bb.a:
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

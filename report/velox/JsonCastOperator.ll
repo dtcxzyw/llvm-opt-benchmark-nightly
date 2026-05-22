@@ -201,8 +201,13 @@ bb.u:                                             ; preds = %_ZNK3fmt3v1115gener
   %.sroa.08.sroa.0.sroa.11.0.insert.shift81 = shl nuw i64 %.sroa.08.sroa.0.sroa.11.0.insert.ext80, 32
   %.sroa.08.sroa.0.sroa.0.0.insert.ext67 = zext i32 %.sroa.08.sroa.0.sroa.0.0 to i64
   %.sroa.08.sroa.0.sroa.0.0.insert.insert69 = or disjoint i64 %.sroa.08.sroa.0.sroa.11.0.insert.shift81, %.sroa.08.sroa.0.sroa.0.0.insert.ext67
-  %.not100 = icmp sgt i64 %.sroa.08.sroa.11.0, -1
-  br i1 %.not100, label %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit, label %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread
+  %.sroa.08.sroa.11.0.insert.ext51 = zext i64 %.sroa.08.sroa.11.0 to i128
+  %.sroa.08.sroa.11.0.insert.shift52 = shl nuw i128 %.sroa.08.sroa.11.0.insert.ext51, 64
+  %.sroa.08.sroa.0.0.insert.ext46 = zext i64 %.sroa.08.sroa.0.sroa.0.0.insert.insert69 to i128
+  %.sroa.08.sroa.0.0.insert.insert48 = or disjoint i128 %.sroa.08.sroa.11.0.insert.shift52, %.sroa.08.sroa.0.0.insert.ext46
+  %3 = tail call i128 @llvm.smax.i128(i128 %.sroa.08.sroa.0.0.insert.insert48, i128 -1)
+  %4 = trunc i128 %3 to i64
+  br label %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
 
 bb.v:                                             ; preds = %_ZNK3fmt3v1115generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcE3argEi.exit.thread35
   %.sroa.08.sroa.0.sroa.11.0.insert.ext76 = zext i32 %.sroa.08.sroa.0.sroa.11.0 to i64
@@ -251,12 +256,12 @@ bb.af:                                            ; preds = %_ZNK3fmt3v1115gener
   tail call void @_ZN3fmt3v1112report_errorEPKc(ptr noundef nonnull @.str.81) #46
   unreachable
 
-_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.u, %bb.r, %bb.s, %bb.t, %bb.v
-  %.0.i = phi i64 [ %.sroa.08.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert69, %bb.u ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert66, %bb.v ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ] ; 2 uses
+_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.r, %bb.s, %bb.t, %bb.u, %bb.v
+  %.0.i = phi i64 [ %.sroa.08.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %4, %bb.u ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert66, %bb.v ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ] ; 2 uses
   %i.be = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.be, label %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread, label %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread40
 
-_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.u, %bb.q, %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
+_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.q, %_ZNK3fmt3v1116basic_format_argINS0_15generic_contextISt20back_insert_iteratorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEcEEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
   tail call void @_ZN3fmt3v1112report_errorEPKc(ptr noundef nonnull @.str.80) #46
   unreachable
 
@@ -659,8 +664,13 @@ bb.u:                                             ; preds = %_ZNK3fmt3v117contex
   %.sroa.08.sroa.0.sroa.11.0.insert.shift81 = shl nuw i64 %.sroa.08.sroa.0.sroa.11.0.insert.ext80, 32
   %.sroa.08.sroa.0.sroa.0.0.insert.ext67 = zext i32 %.sroa.08.sroa.0.sroa.0.0 to i64
   %.sroa.08.sroa.0.sroa.0.0.insert.insert69 = or disjoint i64 %.sroa.08.sroa.0.sroa.11.0.insert.shift81, %.sroa.08.sroa.0.sroa.0.0.insert.ext67
-  %.not100 = icmp sgt i64 %.sroa.08.sroa.11.0, -1
-  br i1 %.not100, label %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit, label %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread
+  %.sroa.08.sroa.11.0.insert.ext51 = zext i64 %.sroa.08.sroa.11.0 to i128
+  %.sroa.08.sroa.11.0.insert.shift52 = shl nuw i128 %.sroa.08.sroa.11.0.insert.ext51, 64
+  %.sroa.08.sroa.0.0.insert.ext46 = zext i64 %.sroa.08.sroa.0.sroa.0.0.insert.insert69 to i128
+  %.sroa.08.sroa.0.0.insert.insert48 = or disjoint i128 %.sroa.08.sroa.11.0.insert.shift52, %.sroa.08.sroa.0.0.insert.ext46
+  %3 = tail call i128 @llvm.smax.i128(i128 %.sroa.08.sroa.0.0.insert.insert48, i128 -1)
+  %4 = trunc i128 %3 to i64
+  br label %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
 
 bb.v:                                             ; preds = %_ZNK3fmt3v117context3argEi.exit.thread35
   %.sroa.08.sroa.0.sroa.11.0.insert.ext76 = zext i32 %.sroa.08.sroa.0.sroa.11.0 to i64
@@ -709,12 +719,12 @@ bb.af:                                            ; preds = %_ZNK3fmt3v117contex
   tail call void @_ZN3fmt3v1112report_errorEPKc(ptr noundef nonnull @.str.81) #46
   unreachable
 
-_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.u, %bb.r, %bb.s, %bb.t, %bb.v
-  %.0.i = phi i64 [ %.sroa.08.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert69, %bb.u ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert66, %bb.v ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ] ; 2 uses
+_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit: ; preds = %bb.r, %bb.s, %bb.t, %bb.u, %bb.v
+  %.0.i = phi i64 [ %.sroa.08.sroa.0.sroa.0.0.insert.insert, %bb.t ], [ %4, %bb.u ], [ %.sroa.08.sroa.0.sroa.0.0.insert.insert66, %bb.v ], [ %i.bc, %bb.r ], [ %i.bd, %bb.s ] ; 2 uses
   %i.be = icmp ugt i64 %.0.i, 2147483647
   br i1 %i.be, label %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread, label %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread40
 
-_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.u, %bb.q, %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
+_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit.thread: ; preds = %bb.q, %_ZNK3fmt3v1116basic_format_argINS0_7contextEE5visitINS0_6detail19dynamic_spec_getterEEEDTclfp_Li0EEEOT_.exit
   tail call void @_ZN3fmt3v1112report_errorEPKc(ptr noundef nonnull @.str.80) #46
   unreachable
 
@@ -1115,6 +1125,9 @@ declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i128 @llvm.smax.i128(i128, i128) #30
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #30

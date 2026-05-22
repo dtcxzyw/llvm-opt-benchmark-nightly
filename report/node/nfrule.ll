@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %_ZNK6icu_786NFRule1
   br label %bb.ad
 
 bb.m:                                             ; preds = %_ZNK6icu_786NFRule11stripPrefixERNS_13UnicodeStringERKS1_RNS_13ParsePositionE.exit
-  %i.by = load i64, ptr %0, align 8               ; 3 uses
+  %i.by = load i64, ptr %0, align 8               ; 2 uses
   switch i64 %i.by, label %bb.p [
     i64 -5, label %bb.n
     i64 -6, label %bb.o
@@ -222,9 +222,8 @@ bb.o:                                             ; preds = %bb.m
   br label %bb.ad
 
 bb.p:                                             ; preds = %bb.m
-  %14 = icmp slt i64 %i.by, 1
-  %i.cd = uitofp nneg i64 %i.by to double
-  %15 = select i1 %14, double 0.000000e+00, double %i.cd
+  %14 = call i64 @llvm.smax.i64(i64 %i.by, i64 0)
+  %i.cd = uitofp nneg i64 %14 to double
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #8
   store ptr getelementptr inbounds nuw inrange(-16, 88) (i8, ptr @_ZTVN6icu_7813UnicodeStringE, i64 16), ptr %11, align 8
   %i.ce = getelementptr inbounds nuw i8, ptr %11, i64 8 ; 3 uses
@@ -255,7 +254,7 @@ bb.q:                                             ; preds = %bb.aa, %bb.p
   %i.ct = select i1 %i.cp, i32 %i.cs, i32 %i.cr
   %i.cu = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString9doReplaceEiiRKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %11, i32 noundef 0, i32 noundef %i.ct, ptr noundef nonnull align 8 dereferenceable(64) %i.ae, i32 noundef %i.p, i32 noundef %i.cf) #8 ; 0 uses
   %i.cv = load ptr, ptr %i.d, align 8
-  %i.cw = call noundef double @_ZNK6icu_786NFRule16matchToDelimiterERKNS_13UnicodeStringEidS3_RNS_13ParsePositionEPKNS_14NFSubstitutionEjid(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(64) %9, i32 noundef %.055, double noundef %15, ptr noundef nonnull align 8 dereferenceable(64) %11, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef %i.cv, i32 noundef %5, i32 noundef %6, double noundef %4)
+  %i.cw = call noundef double @_ZNK6icu_786NFRule16matchToDelimiterERKNS_13UnicodeStringEidS3_RNS_13ParsePositionEPKNS_14NFSubstitutionEjid(ptr noundef nonnull align 8 dereferenceable(112) %0, ptr noundef nonnull align 8 dereferenceable(64) %9, i32 noundef %.055, double noundef %i.cd, ptr noundef nonnull align 8 dereferenceable(64) %11, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef %i.cv, i32 noundef %5, i32 noundef %6, double noundef %4)
   %i.cx = load i32, ptr %i.b, align 8             ; 9 uses
   %.not65 = icmp ne i32 %i.cx, 0
   %i.cy = load ptr, ptr %i.d, align 8
@@ -657,6 +656,9 @@ declare i32 @llvm.smax.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

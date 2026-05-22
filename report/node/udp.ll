@@ -201,11 +201,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 .backedge.sink.split:                             ; preds = %bb.h
   %i.ag = getelementptr inbounds nuw i8, ptr %i.i, i64 160
-  %i.ah = load i64, ptr %i.ag, align 8            ; 2 uses
-  %1 = icmp sgt i64 %i.ah, -1
-  %i.ai = trunc i64 %i.ah to i32
-  %.sink = select i1 %1, i32 0, i32 %i.ai
-  tail call void %i.ae(ptr noundef nonnull %i.o, i32 noundef %.sink) #9
+  %i.ah = load i64, ptr %i.ag, align 8
+  %.sink50 = tail call i64 @llvm.smin.i64(i64 %i.ah, i64 0)
+  %i.ai = trunc i64 %.sink50 to i32
+  tail call void %i.ae(ptr noundef nonnull %i.o, i32 noundef %i.ai) #9
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.sink.split, %bb.h
@@ -606,6 +605,9 @@ declare i32 @sendmmsg(i32 noundef, ptr noundef, i32 noundef, i32 noundef) local_
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #8

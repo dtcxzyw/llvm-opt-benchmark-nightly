@@ -201,7 +201,7 @@ bb.cf:                                            ; preds = %.lr.ph.i250
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %bb.cf, %.critedge.loopexit.split.loop.exit.i252, %bb.ce, %bb.cd
-  %storemerge1220.i = phi i32 [ 0, %bb.cd ], [ %.mux.i, %bb.ce ], [ %i.vs, %.critedge.loopexit.split.loop.exit.i252 ], [ %umax.i231, %bb.cf ] ; 5 uses
+  %storemerge1220.i = phi i32 [ 0, %bb.cd ], [ %.mux.i, %bb.ce ], [ %i.vs, %.critedge.loopexit.split.loop.exit.i252 ], [ %umax.i231, %bb.cf ] ; 6 uses
   store i32 %storemerge1220.i, ptr %i.b, align 16, !tbaa !4
   %i.vt = load i32, ptr %i.ds, align 4, !tbaa !4
   %i.vu = add i32 %i.vt, 1
@@ -604,9 +604,10 @@ bb.dq:                                            ; preds = %bb.dp, %bb.do
   %i.ahk = zext nneg i16 %i.aaz to i64
   %i.ahl = getelementptr inbounds nuw [4 x i8], ptr %i.ei, i64 %i.ahk
   %i.ahm = load i32, ptr %i.ahl, align 4, !tbaa !4
-  %i.ahn = add i32 %i.ahm, %i.aaw
-  %4 = tail call i32 @llvm.umax.i32(i32 %storemerge1220.i, i32 1)
-  %5 = add i32 %4, 1                              ; 3 uses
+  %4 = add i32 %i.ahm, %i.aaw
+  %i.ahn = add i32 %storemerge1220.i, 1
+  %.inv.narrow.i = icmp eq i32 %storemerge1220.i, 0
+  %5 = select i1 %.inv.narrow.i, i32 2, i32 %i.ahn ; 3 uses
   %.not810.i = icmp ugt i32 %5, %.0696.i
   br i1 %.not810.i, label %.lr.ph1057.i.preheader, label %.preheader969.i
 
@@ -637,7 +638,7 @@ bb.dr:                                            ; preds = %bb.dx, %.preheader9
   %i.ahz = zext i32 %i.ahy to i64
   %i.aia = getelementptr inbounds nuw [4 x i8], ptr %i.aht, i64 %i.ahz
   %i.aib = load i32, ptr %i.aia, align 4, !tbaa !4
-  %i.aic = add i32 %i.ahn, %i.aib
+  %i.aic = add i32 %4, %i.aib
   %i.aid = icmp ult i32 %.1709.i, 5
   %i.aie = select i1 %i.aid, i32 %i.ahy, i32 3    ; 2 uses
   %i.aif = icmp ult i32 %i.ahx, 128

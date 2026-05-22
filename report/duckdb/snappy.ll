@@ -201,9 +201,9 @@ _ZNSt6vectorIPcSaIS0_EE9push_backERKS0_.exit:     ; preds = %bb.d, %_ZNSt6vector
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden noundef ptr @_ZN13duckdb_snappy19SnappySinkAllocator8AllocateEi(ptr noundef nonnull align 8 dereferenceable(32) %0, i32 noundef %1) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %i.a = sext i32 %1 to i64                       ; 3 uses
-  %2 = icmp slt i32 %1, 0
-  %3 = select i1 %2, i64 -1, i64 %i.a
+  %i.a = sext i32 %1 to i64                       ; 2 uses
+  %2 = tail call i32 @llvm.smax.i32(i32 %1, i32 -1)
+  %3 = sext i32 %2 to i64
   %i.b = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %3) #25 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
@@ -388,6 +388,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdaPv(ptr noundef) local_unnamed_addr #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #24

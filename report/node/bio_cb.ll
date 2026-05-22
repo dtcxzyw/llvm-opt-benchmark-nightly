@@ -199,13 +199,12 @@ define dso_local noundef i64 @BIO_debug_callback(ptr noundef %0, i32 noundef %1,
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  %6 = icmp sgt i64 %5, 0
   %spec.select = tail call i64 @llvm.smax.i64(i64 %5, i64 0)
   store i64 %spec.select, ptr %i.a, align 8, !tbaa !9
   %i.b = sext i32 %3 to i64
-  %7 = trunc i64 %5 to i32
-  %8 = select i1 %6, i32 1, i32 %7
-  %i.c = call i64 @BIO_debug_callback_ex(ptr noundef %0, i32 noundef %1, ptr noundef %2, i64 noundef %i.b, i32 noundef %3, i64 poison, i32 noundef %8, ptr noundef nonnull %i.a) ; 0 uses
+  %6 = tail call i64 @llvm.smin.i64(i64 %5, i64 1)
+  %7 = trunc i64 %6 to i32
+  %i.c = call i64 @BIO_debug_callback_ex(ptr noundef %0, i32 noundef %1, ptr noundef %2, i64 noundef %i.b, i32 noundef %3, i64 poison, i32 noundef %7, ptr noundef nonnull %i.a) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i64 %5
 }
@@ -215,6 +214,9 @@ declare i32 @llvm.smax.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #5
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

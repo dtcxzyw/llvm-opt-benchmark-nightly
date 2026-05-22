@@ -201,7 +201,7 @@ if.end4:                                          ; preds = %if.end, %_ZN6Halide
 ; Function Attrs: nounwind
 define linkonce i32 @_ZN6Halide7Runtime8Internal13default_traceEPvPK18halide_trace_event(ptr %user_context, ptr %e) #0 {
 entry:
-  %buffer = alloca [4096 x i8], align 4           ; 51 uses
+  %buffer = alloca [4096 x i8], align 4           ; 52 uses
   %i.a = atomicrmw add ptr @_ZZN6Halide7Runtime8Internal13default_traceEPvPK18halide_trace_eventE3ids, i32 1 seq_cst, align 4 ; 2 uses
   %call = tail call i32 @halide_get_trace_file(ptr %user_context) #17 ; 2 uses
   %cmp = icmp sgt i32 %call, 0
@@ -242,9 +242,9 @@ entry:
 
 if.then:                                          ; preds = %entry
   %lanes = getelementptr inbounds nuw i8, ptr %e, i64 18
-  %i.b = load i16, ptr %lanes, align 1, !tbaa !73 ; 2 uses
+  %i.b = load i16, ptr %lanes, align 1, !tbaa !73
   %dimensions = getelementptr inbounds nuw i8, ptr %e, i64 32
-  %i.c = load i32, ptr %dimensions, align 1, !tbaa !78 ; 2 uses
+  %i.c = load i32, ptr %dimensions, align 1, !tbaa !78
   %bits = getelementptr inbounds nuw i8, ptr %e, i64 17
   %i.d = load i8, ptr %bits, align 1, !tbaa !79   ; 2 uses
   %conv14 = zext i8 %i.d to i32
@@ -258,18 +258,16 @@ while.cond:                                       ; preds = %while.cond, %if.the
   br i1 %cmp15, label %while.cond, label %while.end
 
 while.end:                                        ; preds = %while.cond
-  %phitmp = trunc i16 %i.b to i8
-  %phitmp411 = trunc i32 %i.c to i8
-  %cmp1 = icmp ult i16 %i.b, 256
-  %phitmp. = select i1 %cmp1, i8 %phitmp, i8 -1   ; 2 uses
-  %cmp6 = icmp slt i32 %i.c, 256
-  %cond11 = select i1 %cmp6, i8 %phitmp411, i8 -1 ; 3 uses
-  %conv16 = zext i8 %phitmp. to i32
+  %phitmp.2 = tail call i16 @llvm.umin.i16(i16 %i.b, i16 255) ; 2 uses
+  %cond113 = tail call i32 @llvm.smin.i32(i32 %i.c, i32 255) ; 2 uses
+  %cond11 = trunc i32 %cond113 to i8              ; 2 uses
+  %conv16 = zext nneg i16 %phitmp.2 to i32
   %mul17 = mul nsw i32 %bytes.0, %conv16          ; 3 uses
   %conv18 = sext i32 %mul17 to i64                ; 7 uses
-  %conv19 = zext i8 %cond11 to i64
-  %mul20 = shl nuw nsw i64 %conv19, 2             ; 5 uses
-  %add = add nsw i64 %conv18, 48                  ; 2 uses
+  %cond11.mask = shl i32 %cond113, 2
+  %0 = and i32 %cond11.mask, 1020                 ; 2 uses
+  %mul20 = zext nneg i32 %0 to i64                ; 3 uses
+  %add = add nsw i64 %conv18, 48                  ; 3 uses
   %add21 = add nsw i64 %add, %mul20               ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %buffer)
   %cmp22 = icmp ult i64 %add21, 4097
@@ -281,6 +279,7 @@ if.then23:                                        ; preds = %while.end
   unreachable
 
 if.end:                                           ; preds = %while.end
+  %phitmp. = trunc nuw i16 %phitmp.2 to i8
   store i32 %i.a, ptr %buffer, align 4, !tbaa !71
   %parent_id = getelementptr inbounds nuw i8, ptr %e, i64 12
   %i.e = load i32, ptr %parent_id, align 1, !tbaa !80
@@ -559,7 +558,7 @@ for.inc.31:                                       ; preds = %for.inc.30
 
 for.cond54.preheader:                             ; preds = %for.body48.preheader666, %min.iters.checked
   %cmp55589 = icmp eq i32 %mul17, 0
-  br i1 %cmp55589, label %for.cond64.preheader, label %for.body56.lr.ph
+  br i1 %cmp55589, label %middle.block615.a, label %for.body56.lr.ph
 
 for.body56.lr.ph:                                 ; preds = %for.cond54.preheader
   %value = getelementptr inbounds nuw i8, ptr %e, i64 24
@@ -567,8 +566,8 @@ for.body56.lr.ph:                                 ; preds = %for.cond54.preheade
   %min.iters.check617 = icmp ult i32 %mul17, 4
   br i1 %min.iters.check617, label %for.body56.preheader, label %min.iters.checked618
 
-for.body56.preheader:                             ; preds = %middle.block615.a, %min.iters.checked618, %for.body56.lr.ph
-  %i53.0590.ph = phi i64 [ 0, %for.body56.lr.ph ], [ %n.vec620, %middle.block615.a ], [ 0, %min.iters.checked618 ]
+for.body56.preheader:                             ; preds = %middle.block615, %min.iters.checked618, %for.body56.lr.ph
+  %i53.0590.ph = phi i64 [ 0, %for.body56.lr.ph ], [ %n.vec620, %middle.block615 ], [ 0, %min.iters.checked618 ]
   br label %for.body56
 
 min.iters.checked618:                             ; preds = %for.body56.lr.ph
@@ -592,42 +591,58 @@ vector.body614:                                   ; preds = %min.iters.checked61
   %i.av = getelementptr i8, ptr %i.au, i64 48
   store i32 %wide.load664, ptr %i.av, align 4, !tbaa !8, !alias.scope !89, !noalias !86
   %i.aw = icmp eq i64 %index.next628, %n.vec620
-  br i1 %i.aw, label %middle.block615.a, label %vector.body614, !llvm.loop !91
+  br i1 %i.aw, label %middle.block615, label %vector.body614, !llvm.loop !91
 
-middle.block615.a:                                ; preds = %vector.body614
-  %cmp.n630.a = icmp eq i64 %n.vec620, %conv18
-  br i1 %cmp.n630.a, label %for.cond64.preheader, label %for.body56.preheader
+middle.block615:                                  ; preds = %vector.body614
+  %cmp.n630 = icmp eq i64 %n.vec620, %conv18
+  br i1 %cmp.n630, label %middle.block615.a, label %for.body56.preheader
 
-for.cond64.preheader:                             ; preds = %for.body56, %middle.block615.a, %for.cond54.preheader
-  %cmp65587 = icmp eq i8 %cond11, 0
-  br i1 %cmp65587, label %while.cond.i.preheader.a, label %for.body67.lr.ph
+middle.block615.a:                                ; preds = %for.body56, %middle.block615, %for.cond54.preheader
+  %cmp.n630.a = icmp eq i8 %cond11, 0
+  br i1 %cmp.n630.a, label %while.cond.i.preheader, label %for.cond64.preheader
 
-while.cond.i.preheader.a:                         ; preds = %vector.body633, %for.body67, %for.cond64.preheader
+while.cond.i.preheader:                           ; preds = %for.body67, %middle.block634, %middle.block615.a
   br label %while.cond.i
 
-for.body67.lr.ph:                                 ; preds = %for.cond64.preheader
+for.cond64.preheader:                             ; preds = %middle.block615.a
   %coordinates = getelementptr inbounds nuw i8, ptr %e, i64 36
   %.pre608 = load ptr, ptr %coordinates, align 1, !tbaa !94 ; 4 uses
-  %scevgep643 = getelementptr i8, ptr %buffer, i64 %add ; 3 uses
-  %i.ax = getelementptr i8, ptr %buffer, i64 %mul20
+  %cmp65587 = icmp eq i32 %0, 0
+  %umax636 = select i1 %cmp65587, i64 1, i64 %mul20 ; 5 uses
+  %min.iters.check637 = icmp samesign ult i64 %umax636, 4
+  br i1 %min.iters.check637, label %while.cond.i.preheader.a, label %for.body67.lr.ph
+
+while.cond.i.preheader.a:                         ; preds = %middle.block634, %for.body67.lr.ph, %for.cond64.preheader
+  %i63.0588.ph = phi i64 [ 0, %for.body67.lr.ph ], [ %n.vec640, %middle.block634 ], [ 0, %for.cond64.preheader ]
+  %invariant.gep5 = getelementptr i8, ptr %buffer, i64 %add
+  br label %for.body67
+
+for.body67.lr.ph:                                 ; preds = %for.cond64.preheader
+  %n.vec640 = and i64 %umax636, 1020              ; 3 uses
+  %scevgep643 = getelementptr i8, ptr %buffer, i64 %add ; 2 uses
+  %i.ax = getelementptr i8, ptr %buffer, i64 %umax636
   %i.ay = getelementptr i8, ptr %i.ax, i64 %conv18
   %scevgep645 = getelementptr i8, ptr %i.ay, i64 47
-  %i.az = getelementptr i8, ptr %.pre608, i64 %mul20
+  %i.az = getelementptr i8, ptr %.pre608, i64 %umax636
   %scevgep646 = getelementptr i8, ptr %i.az, i64 -1
   %bound0647 = icmp ule ptr %scevgep643, %scevgep646
   %bound1648 = icmp ule ptr %.pre608, %scevgep645
   %memcheck.conflict650 = and i1 %bound1648, %bound0647
-  br i1 %memcheck.conflict650, label %for.body67, label %vector.body633
+  br i1 %memcheck.conflict650, label %while.cond.i.preheader.a, label %vector.body633
 
 vector.body633:                                   ; preds = %for.body67.lr.ph, %vector.body633
   %index653 = phi i64 [ %index.next654, %vector.body633 ], [ 0, %for.body67.lr.ph ] ; 3 uses
-  %index.next654 = add nuw nsw i64 %index653, 4   ; 2 uses
-  %i.ba = getelementptr inbounds nuw i8, ptr %.pre608, i64 %index653
+  %index.next654 = add i64 %index653, 4           ; 2 uses
+  %i.ba = getelementptr inbounds i8, ptr %.pre608, i64 %index653
   %wide.load659665 = load i32, ptr %i.ba, align 1, !tbaa !8, !alias.scope !95
   %gep = getelementptr i8, ptr %scevgep643, i64 %index653
   store i32 %wide.load659665, ptr %gep, align 1, !tbaa !8, !alias.scope !98, !noalias !95
-  %i.bb = icmp eq i64 %index.next654, %mul20
-  br i1 %i.bb, label %while.cond.i.preheader.a, label %vector.body633, !llvm.loop !100
+  %i.bb = icmp eq i64 %index.next654, %n.vec640
+  br i1 %i.bb, label %middle.block634, label %vector.body633, !llvm.loop !100
+
+middle.block634:                                  ; preds = %vector.body633
+  %cmp.n656 = icmp eq i64 %umax636, %n.vec640
+  br i1 %cmp.n656, label %while.cond.i.preheader, label %while.cond.i.preheader.a
 
 for.body56:                                       ; preds = %for.body56.preheader, %for.body56
   %i53.0590 = phi i64 [ %inc61, %for.body56 ], [ %i53.0590.ph, %for.body56.preheader ] ; 3 uses
@@ -638,9 +653,9 @@ for.body56:                                       ; preds = %for.body56.preheade
   store i8 %i.bc, ptr %arrayidx59, align 1, !tbaa !8
   %inc61 = add nuw i64 %i53.0590, 1               ; 2 uses
   %cmp55 = icmp ult i64 %inc61, %conv18
-  br i1 %cmp55, label %for.body56, label %for.cond64.preheader, !llvm.loop !101
+  br i1 %cmp55, label %for.body56, label %middle.block615.a, !llvm.loop !101
 
-while.cond.i:                                     ; preds = %while.cond.i.preheader.a, %while.cond.i
+while.cond.i:                                     ; preds = %while.cond.i.preheader, %while.cond.i
   %i.be = atomicrmw xchg ptr @_ZN6Halide7Runtime8Internal22halide_trace_file_lockE, i32 1 seq_cst, align 4
   %tobool.i = icmp eq i32 %i.be, 0
   br i1 %tobool.i, label %_ZN6Halide7Runtime8Internal14ScopedSpinLockC2EPVi.exit, label %while.cond.i
@@ -650,15 +665,15 @@ _ZN6Halide7Runtime8Internal14ScopedSpinLockC2EPVi.exit: ; preds = %while.cond.i
   %cmp77 = icmp eq i64 %call76, %add21
   br i1 %cmp77, label %if.end79, label %if.then78
 
-for.body67:                                       ; preds = %for.body67.lr.ph, %for.body67
-  %i63.0588 = phi i64 [ %inc73, %for.body67 ], [ 0, %for.body67.lr.ph ] ; 3 uses
+for.body67:                                       ; preds = %for.body67, %while.cond.i.preheader.a
+  %i63.0588 = phi i64 [ %inc73, %for.body67 ], [ %i63.0588.ph, %while.cond.i.preheader.a ] ; 3 uses
   %arrayidx68 = getelementptr inbounds nuw i8, ptr %.pre608, i64 %i63.0588
   %i.bf = load i8, ptr %arrayidx68, align 1, !tbaa !8
-  %gep5 = getelementptr i8, ptr %scevgep643, i64 %i63.0588
+  %gep5 = getelementptr i8, ptr %invariant.gep5, i64 %i63.0588
   store i8 %i.bf, ptr %gep5, align 1, !tbaa !8
   %inc73 = add nuw nsw i64 %i63.0588, 1           ; 2 uses
-  %exitcond.not = icmp eq i64 %inc73, %mul20
-  br i1 %exitcond.not, label %while.cond.i.preheader.a, label %for.body67, !llvm.loop !102
+  %cmp65 = icmp samesign ult i64 %inc73, %mul20
+  br i1 %cmp65, label %for.body67, label %while.cond.i.preheader, !llvm.loop !102
 
 if.then78:                                        ; preds = %_ZN6Halide7Runtime8Internal14ScopedSpinLockC2EPVi.exit
   call void @halide_print(ptr %user_context, ptr nonnull @.str.1.36) #16
@@ -1059,6 +1074,9 @@ declare i32 @llvm.smin.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.umin.i16(i16, i16) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #15

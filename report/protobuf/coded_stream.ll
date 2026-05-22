@@ -201,10 +201,9 @@ _ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit.thread: ; preds =
 
 _ZN6google8protobuf2io16CodedInputStream12ReadVarint32EPj.exit: ; preds = %bb.a, %bb.b
   %.08.i = phi i32 [ %i.f, %bb.b ], [ 0, %bb.a ]
-  %i.i = tail call noundef i64 @_ZN6google8protobuf2io16CodedInputStream20ReadVarint32FallbackEj(ptr noundef nonnull align 8 dereferenceable(80) %0, i32 noundef %.08.i) ; 2 uses
-  %1 = trunc nuw i64 %i.i to i32
-  %2 = icmp sgt i64 %i.i, -1
-  %spec.select = select i1 %2, i32 %1, i32 0
+  %i.i = tail call noundef i64 @_ZN6google8protobuf2io16CodedInputStream20ReadVarint32FallbackEj(ptr noundef nonnull align 8 dereferenceable(80) %0, i32 noundef %.08.i)
+  %spec.select4 = tail call i64 @llvm.smax.i64(i64 %i.i, i64 0)
+  %spec.select = trunc nuw i64 %spec.select4 to i32
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !15
   %.pre4 = load ptr, ptr %0, align 8, !tbaa !16
   br label %bb.c
@@ -605,6 +604,9 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEmc(pt
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #17
