@@ -201,7 +201,7 @@ bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
   %i.b = ptrtoaddr ptr %0 to i64                  ; 2 uses
   %i.c = load i32, ptr %1, align 4                ; 7 uses
-  %i.d = sub nsw i32 %3, %i.c                     ; 6 uses
+  %i.d = sub nsw i32 %3, %i.c                     ; 7 uses
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %bb.b, label %bb.e
 
@@ -365,7 +365,7 @@ vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.ap, 4294967292              ; 4 uses
   %i.au = trunc nuw i64 %n.vec to i32
   %i.av = or disjoint i32 %i.au, 1
-  %i.aw = getelementptr i8, ptr %2, i64 %n.vec    ; 2 uses
+  %i.aw = getelementptr i8, ptr %2, i64 %n.vec
   %broadcast.splatinsert = insertelement <4 x i32> poison, i32 %.pr189, i64 0
   %broadcast.splat = shufflevector <4 x i32> %broadcast.splatinsert, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %vector.body
@@ -425,7 +425,7 @@ bb.i:                                             ; preds = %.lr.ph.prol
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.prol
   %i.bk = phi i32 [ %i.bh, %.lr.ph.prol ], [ 1, %bb.i ] ; 3 uses
-  %i.bl = getelementptr inbounds nuw i8, ptr %.2152.prol, i64 1 ; 3 uses
+  %i.bl = getelementptr inbounds nuw i8, ptr %.2152.prol, i64 1 ; 2 uses
   %i.bm = add nuw nsw i32 %i.bi, 1                ; 2 uses
   %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %xtraiter
@@ -433,7 +433,6 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.prol
 
 .lr.ph.prol.loopexit:                             ; preds = %bb.j, %.lr.ph.preheader281
   %.lcssa284.unr = phi i32 [ poison, %.lr.ph.preheader281 ], [ %i.bk, %bb.j ]
-  %.lcssa283.unr = phi ptr [ poison, %.lr.ph.preheader281 ], [ %i.bl, %bb.j ]
   %.unr = phi i32 [ %.ph, %.lr.ph.preheader281 ], [ %i.bk, %bb.j ]
   %.unr287 = phi i32 [ %.ph282, %.lr.ph.preheader281 ], [ %i.bm, %bb.j ]
   %.2152.unr = phi ptr [ %.2152.ph, %.lr.ph.preheader281 ], [ %i.bl, %bb.j ]
@@ -530,21 +529,23 @@ bb.r:                                             ; preds = %.lr.ph.3
 
 bb.s:                                             ; preds = %bb.r, %.lr.ph.3
   %i.ck = phi i32 [ %i.ch, %.lr.ph.3 ], [ 1, %bb.r ] ; 2 uses
-  %i.cl = getelementptr inbounds nuw i8, ptr %.2152, i64 4 ; 2 uses
+  %i.cl = getelementptr inbounds nuw i8, ptr %.2152, i64 4
   %i.cm = add nuw nsw i32 %i.bz, 4                ; 2 uses
   %exitcond.not.3 = icmp eq i32 %i.cm, %i.d
   br i1 %exitcond.not.3, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !41
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph.prol.loopexit, %bb.s, %middle.block
   %.lcssa198 = phi i32 [ %i.be, %middle.block ], [ %.lcssa284.unr, %.lr.ph.prol.loopexit ], [ %i.ck, %bb.s ]
-  %.lcssa = phi ptr [ %i.aw, %middle.block ], [ %.lcssa283.unr, %.lr.ph.prol.loopexit ], [ %i.cl, %bb.s ]
+  %6 = zext nneg i32 %i.d to i64
+  %7 = getelementptr i8, ptr %2, i64 %6
+  %scevgep = getelementptr i8, ptr %7, i64 -1
   %i.cn = add nsw i32 %i.d, -1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.preheader150
   %i.co = phi i32 [ %.pr189, %.preheader150 ], [ %.lcssa198, %._crit_edge.loopexit ] ; 2 uses
   %.2123.lcssa = phi i32 [ 0, %.preheader150 ], [ %i.cn, %._crit_edge.loopexit ]
-  %.2.lcssa = phi ptr [ %2, %.preheader150 ], [ %.lcssa, %._crit_edge.loopexit ] ; 9 uses
+  %.2.lcssa = phi ptr [ %2, %.preheader150 ], [ %scevgep, %._crit_edge.loopexit ] ; 9 uses
   %.2.lcssa208 = ptrtoaddr ptr %.2.lcssa to i64
   %i.cp = sub nsw i32 %i.d, %.2123.lcssa          ; 5 uses
   %i.cq = add nsw i32 %i.cp, -1                   ; 3 uses
