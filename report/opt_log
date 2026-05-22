@@ -1,0 +1,6 @@
+node/statem_srvr.bc: timeout
+hermes/ConsecutiveStringStorage.bc: timeout
+oiio/jmemmgr.bc: timeout
+velox/ArrayFunctionsRegistration.bc: timeout
+cpython/longobject.bc: timeout
+cpython/arraymodule.bc: timeout
