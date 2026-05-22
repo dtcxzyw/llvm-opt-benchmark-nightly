@@ -201,7 +201,7 @@ bb.ae:                                            ; preds = %_ZN6google8protobuf
 
 bb.af:                                            ; preds = %bb.ae
   invoke void @_ZN4absl12lts_202505128StatusOrIN6google8protobuf15FeatureResolverEEC2IKNS0_6StatusETnNSt9enable_ifIXsr17internal_statusor29IsConstructionFromStatusValidILb0ES4_T_EE5valueEiE4typeELi0EEEOSA_(ptr noundef nonnull align 8 dereferenceable(80) %0, ptr noundef nonnull align 8 dereferenceable(8) %17)
-          to label %22 unwind label %bb.ai
+          to label %.critedge68.critedge unwind label %bb.ai
 
 bb.ag:                                            ; preds = %bb.ad
   %i.ds = landingpad { ptr, i32 }
@@ -218,13 +218,6 @@ bb.ai:                                            ; preds = %bb.af
           cleanup
   call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %17) #22
   br label %bb.ak
-
-22:                                               ; preds = %bb.af
-  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %17) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %17) #22
-  call void @_ZN6google8protobuf10FeatureSetD1Ev(ptr noundef nonnull align 8 dereferenceable(72) %16) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
-  br label %.thread
 
 bb.aj:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #22
@@ -245,6 +238,13 @@ bb.al:                                            ; preds = %bb.ak, %bb.ag
   call void @_ZN6google8protobuf10FeatureSetD1Ev(ptr noundef nonnull align 8 dereferenceable(72) %16) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
   br label %common.resume
+
+.critedge68.critedge:                             ; preds = %bb.af
+  call void @_ZN4absl12lts_202505126StatusD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %17) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %17) #22
+  call void @_ZN6google8protobuf10FeatureSetD1Ev(ptr noundef nonnull align 8 dereferenceable(72) %16) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %16) #22
+  br label %.thread
 
 .critedge68.a:                                    ; preds = %bb.aj, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #22
@@ -552,7 +552,7 @@ bb.cd:                                            ; preds = %.body86, %bb.ap
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #22
   br label %common.resume
 
-.thread:                                          ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit82, %_ZN4absl12lts_202505126StatusD2Ev.exit78, %22, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN6google8protobuf10FeatureSetEED2Ev.exit, %_ZN4absl12lts_202505126StatusD2Ev.exit74, %_ZN4absl12lts_202505126StatusD2Ev.exit
+.thread:                                          ; preds = %_ZN4absl12lts_202505126StatusD2Ev.exit82, %_ZN4absl12lts_202505126StatusD2Ev.exit78, %.critedge68.critedge, %_ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN6google8protobuf10FeatureSetEED2Ev.exit, %_ZN4absl12lts_202505126StatusD2Ev.exit74, %_ZN4absl12lts_202505126StatusD2Ev.exit
   ret void
 }
 

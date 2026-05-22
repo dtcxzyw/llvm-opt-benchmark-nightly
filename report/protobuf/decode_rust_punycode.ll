@@ -201,14 +201,14 @@ _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_113ScanNextDeltaERPKcS4_j
   call void @_ZN4absl12lts_2025051218debugging_internal16Utf8ForCodePointC1Em(ptr noundef nonnull align 4 dereferenceable(8) %2, i64 noundef %i.ch)
   %i.ci = load i32, ptr %i.ad, align 4, !tbaa !22 ; 6 uses
   %.not97 = icmp eq i32 %i.ci, 0
-  br i1 %.not97, label %.thread93, label %bb.p
+  br i1 %.not97, label %.critedge.critedge, label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge
   %i.cj = add i32 %.040115155, 1                  ; 2 uses
   %i.ck = add i32 %i.cj, %i.ci
   %i.cl = zext i32 %i.ck to i64
   %i.cm = icmp ult i64 %i.j, %i.cl
-  br i1 %i.cm, label %.thread93, label %bb.q
+  br i1 %i.cm, label %.critedge.critedge, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %spec.store.select.i = call i32 @llvm.umin.i32(i32 %i.cg, i32 255) ; 3 uses
@@ -386,11 +386,7 @@ bb.q:                                             ; preds = %bb.p
   store i64 %i.gm, ptr %i.aq, align 8, !tbaa !17
   br label %._crit_edge.loopexit.i
 
-.thread93:                                        ; preds = %._crit_edge, %bb.p
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
-  br label %.thread
-
-bb.r:                                             ; preds = %._crit_edge.loopexit.i, %.preheader.i
+bb.r:                                             ; preds = %.preheader.i, %._crit_edge.loopexit.i
   %.pre-phi.i = phi i64 [ %.pre55.i, %._crit_edge.loopexit.i ], [ %i.cv, %.preheader.i ]
   %i.gn = phi i64 [ %.pre54.i, %._crit_edge.loopexit.i ], [ %i.cu, %.preheader.i ]
   %i.go = phi <2 x i32> [ %i.fs, %._crit_edge.loopexit.i ], [ %.lcssa166, %.preheader.i ] ; 2 uses
@@ -427,8 +423,12 @@ bb.r:                                             ; preds = %._crit_edge.loopexi
   %i.hk = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.hj
   br label %.thread
 
-.thread:                                          ; preds = %bb.h, %bb.o, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i, %bb.m, %.lr.ph117, %.thread93, %._crit_edge118
-  %.3 = phi ptr [ %i.hk, %._crit_edge118 ], [ null, %.thread93 ], [ null, %.lr.ph117 ], [ null, %bb.o ], [ null, %bb.m ], [ null, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i ], [ null, %bb.h ]
+.critedge.critedge:                               ; preds = %bb.p, %._crit_edge
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
+  br label %.thread
+
+.thread:                                          ; preds = %bb.h, %bb.m, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i, %bb.o, %.lr.ph117, %.critedge.critedge, %._crit_edge118
+  %.3 = phi ptr [ %i.hk, %._crit_edge118 ], [ null, %.critedge.critedge ], [ null, %.lr.ph117 ], [ null, %bb.m ], [ null, %bb.o ], [ null, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i ], [ null, %bb.h ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #5
   br label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_126ConsumeOptionalAsciiPrefixERPKcS4_PcS6_Rj.exit
 

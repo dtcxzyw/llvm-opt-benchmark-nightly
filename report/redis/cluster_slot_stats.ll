@@ -201,7 +201,7 @@ addReplyOrderBy.exit:                             ; preds = %.lr.ph.i.i, %collec
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
   br label %.thread96
 
-.thread96:                                        ; preds = %bb.v, %bb.ad, %bb.ab, %addReplyOrderBy.exit
+.thread96:                                        ; preds = %bb.v, %bb.ab, %bb.ad, %addReplyOrderBy.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   br label %bb.ar
 

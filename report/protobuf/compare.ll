@@ -201,14 +201,14 @@ default.unreachable:                              ; preds = %upb_MiniTableField_
   %.not.i46229 = icmp eq i64 %i.cv, 0
   br i1 %.not.i46229, label %_upb_Message_ExtensionsAreEqual.exit, label %.preheader.i
 
-_upb_Message_BaseFieldsAreEqual.exit.sink.split:  ; preds = %bb.ae, %bb.m, %upb_MessageValue_IsEqual.exit.i.thread.thread
+_upb_Message_BaseFieldsAreEqual.exit.sink.split:  ; preds = %bb.m, %bb.ae, %upb_MessageValue_IsEqual.exit.i.thread.thread
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #4
   br label %_upb_Message_BaseFieldsAreEqual.exit
 
-_upb_Message_BaseFieldsAreEqual.exit:             ; preds = %bb.ab, %bb.ac, %bb.ad, %bb.ah, %bb.ag, %bb.g, %_upb_Message_BaseFieldsAreEqual.exit.sink.split
+_upb_Message_BaseFieldsAreEqual.exit:             ; preds = %bb.g, %bb.ag, %bb.ah, %bb.ad, %bb.ac, %bb.ab, %_upb_Message_BaseFieldsAreEqual.exit.sink.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   br label %_upb_Message_ExtensionsAreEqual.exit.thread

@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %str_coderange.exit
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(70) %3, ptr noundef nonnull align 1 dereferenceable(70) @.str.95, i64 noundef 70, i1 false) #28
   br label %reg_set_source.exit
 
-.thread:                                          ; preds = %bb.b, %str_coderange.exit, %bb.a
+.thread:                                          ; preds = %str_coderange.exit, %bb.b, %bb.a
   %.2 = phi ptr [ %i.a, %bb.a ], [ %i.c, %str_coderange.exit ], [ %i.a, %bb.b ]
   %i.j = inttoptr i64 %1 to ptr                   ; 3 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !37
@@ -248,7 +248,7 @@ bb.j:                                             ; preds = %bb.i
   tail call void @rb_gc_writebarrier(i64 noundef %0, i64 noundef %i.w) #28
   br label %reg_set_source.exit
 
-reg_set_source.exit:                              ; preds = %bb.j, %bb.i, %bb.e, %RSTRING_PTR.exit
+reg_set_source.exit:                              ; preds = %bb.j, %bb.i, %RSTRING_PTR.exit, %bb.e
   %.1 = phi i32 [ -1, %bb.e ], [ -1, %RSTRING_PTR.exit ], [ 0, %bb.i ], [ 0, %bb.j ]
   ret i32 %.1
 }

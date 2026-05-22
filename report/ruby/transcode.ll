@@ -201,7 +201,7 @@ bb.am:                                            ; preds = %load_transcoder_ent
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.loopexit, label %.lr.ph.i, !llvm.loop !145
 
-bb.an:                                            ; preds = %bb.ai, %bb.c, %load_transcoder_entry.exit.i, %bb.d
+bb.an:                                            ; preds = %bb.ai, %load_transcoder_entry.exit.i, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   %i.ef = call i64 @rb_econv_open_exc(ptr noundef %i.q, ptr noundef %i.r, i32 noundef %i.v)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #19

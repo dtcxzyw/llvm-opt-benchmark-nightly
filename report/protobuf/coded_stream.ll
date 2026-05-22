@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.s, %bb.q, %bb.o, %bb.m, %bb.k, %bb.i, %bb.g, %bb.e
-  %.0.pn.ph = phi ptr [ %i.w, %bb.e ], [ %i.aj, %bb.g ], [ %i.az, %bb.i ], [ %i.bs, %bb.k ], [ %i.bw, %bb.m ], [ %i.ca, %bb.o ], [ %i.ce, %bb.q ], [ %i.ci, %bb.s ], [ %i.cm, %bb.u ]
+  %.0.pn.ph = phi ptr [ %i.cm, %bb.u ], [ %i.w, %bb.e ], [ %i.aj, %bb.g ], [ %i.az, %bb.i ], [ %i.bs, %bb.k ], [ %i.bw, %bb.m ], [ %i.ca, %bb.o ], [ %i.ce, %bb.q ], [ %i.ci, %bb.s ]
   store ptr %.0.pn.ph, ptr %0, align 8, !tbaa !16
   %i.cn = load i64, ptr %i.a, align 8, !tbaa !46
   br label %_ZN6google8protobuf2io12_GLOBAL__N_121ReadVarint64FromArrayEPKhPm.exit

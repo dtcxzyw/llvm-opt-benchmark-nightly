@@ -201,7 +201,7 @@ bb.bf:                                            ; preds = %bb.be, %.critedge8.
   tail call void %.val154.i(ptr noundef %i.h, ptr noundef %i.dp, ptr noundef nonnull @.str.4, ptr noundef %.val155.i) #5, !inline_history !52
   br label %pm_regexp_parse_group.exit.thread
 
-pm_regexp_parse_group.exit.thread:                ; preds = %bb.ao, %bb.am, %bb.al, %bb.as, %bb.at, %pm_regexp_options_remove.exit, %bb.w, %bb.s, %bb.q, %.loopexit86, %bb.t, %bb.i, %bb.l, %bb.ak, %bb.z, %bb.ah, %bb.bf, %bb.ac, %.loopexit
+pm_regexp_parse_group.exit.thread:                ; preds = %bb.ao, %bb.am, %bb.al, %bb.as, %bb.at, %pm_regexp_options_remove.exit, %bb.w, %bb.s, %bb.q, %.loopexit86, %bb.t, %bb.i, %bb.l, %bb.ak, %bb.z, %bb.bf, %.loopexit, %bb.ac, %bb.ah
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
   br label %bb.bt
 

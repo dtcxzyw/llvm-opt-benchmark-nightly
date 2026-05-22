@@ -201,7 +201,7 @@ bb.bo:                                            ; preds = %bb.bn
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i64 %.0.copyload.i3485) #8, !srcloc !20
   br label %bb.bq
 
-.critedge:                                        ; preds = %bb.bj, %bb.bi, %bb.bk
+.critedge:                                        ; preds = %bb.bk, %bb.bj, %bb.bi
   %.val3168.a = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.rh = getelementptr inbounds nuw i8, ptr %.val3168.a, i64 %i.px
   %.0.copyload.i3486 = load i32, ptr %i.rh, align 1 ; 2 uses

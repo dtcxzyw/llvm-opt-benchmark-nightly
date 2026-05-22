@@ -201,7 +201,7 @@ rb_shape_obj_too_complex_p.exit32.thread:         ; preds = %bb.j, %rb_shape_obj
   %spec.select = add i64 %sext, %.3
   br label %bb.k
 
-bb.k:                                             ; preds = %RCLASS_WRITABLE_FIELDS_OBJ.exit, %.thread, %bb.a
+bb.k:                                             ; preds = %.thread, %RCLASS_WRITABLE_FIELDS_OBJ.exit, %bb.a
   %.2 = phi i64 [ 0, %bb.a ], [ %spec.select, %.thread ], [ 0, %RCLASS_WRITABLE_FIELDS_OBJ.exit ]
   ret i64 %.2
 }

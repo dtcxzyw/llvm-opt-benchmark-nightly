@@ -201,7 +201,7 @@ ruby_nonempty_memcpy.exit123:                     ; preds = %bb.o, %.critedge, %
   %.not119 = icmp eq i32 %i.cf, 0
   br i1 %.not119, label %ruby_nonempty_memcpy.exit.split, label %.split169.us
 
-.split169.us:                                     ; preds = %ruby_nonempty_memcpy.exit123, %ruby_nonempty_memcpy.exit.split, %ruby_nonempty_memcpy.exit.split.us, %ruby_nonempty_memcpy.exit123.us
+.split169.us:                                     ; preds = %ruby_nonempty_memcpy.exit.split, %ruby_nonempty_memcpy.exit123, %ruby_nonempty_memcpy.exit.split.us, %ruby_nonempty_memcpy.exit123.us
   %.us-phi170 = phi i32 [ 0, %ruby_nonempty_memcpy.exit.split.us ], [ %i.bj, %ruby_nonempty_memcpy.exit123.us ], [ %i.cf, %ruby_nonempty_memcpy.exit123 ], [ 0, %ruby_nonempty_memcpy.exit.split ]
   tail call void @free(ptr noundef nonnull %i.af) #20
   br label %bb.s

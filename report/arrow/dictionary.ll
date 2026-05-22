@@ -201,7 +201,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.b
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.c, label %.critedge
 
-bb.c:                                             ; preds = %bb.b, %_ZN5arrow6StatusD2Ev.exit
+bb.c:                                             ; preds = %_ZN5arrow6StatusD2Ev.exit, %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %i.l = getelementptr inbounds nuw i8, ptr %.sroa.025.031, i64 16 ; 2 uses
   %i.m = icmp eq ptr %i.l, %i.d

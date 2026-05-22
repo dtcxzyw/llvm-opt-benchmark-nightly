@@ -201,7 +201,7 @@ bb.dr:                                            ; preds = %bb.dq
   tail call void @pm_buffer_append_byte(ptr noundef %1, i8 noundef zeroext -67) #27
   br label %bb.ds
 
-bb.ds:                                            ; preds = %bb.dr, %bb.dq
+bb.ds:                                            ; preds = %bb.dq, %bb.dr
   %i.nl = load ptr, ptr %i.b, align 8, !tbaa !76  ; 2 uses
   %i.nm = load ptr, ptr %i.a, align 8, !tbaa !78
   %i.nn = ptrtoint ptr %i.nm to i64
@@ -604,7 +604,7 @@ char_is_ascii_printable.exit668.thread:           ; preds = %.thread713, %bb.fs,
   %i.wy = tail call zeroext i1 @pm_diagnostic_list_append(ptr noundef %i.wx, ptr noundef %i.ww, ptr noundef %.val506.lcssa, i32 noundef 149) #27 ; 0 uses
   br label %.critedge480
 
-.critedge480:                                     ; preds = %bb.dl, %bb.dm, %.thread683, %.thread720, %.thread721, %match.exit648, %bb.fm, %bb.fn, %char_is_ascii_printable.exit659.thread, %bb.fp, %bb.ez, %match.exit626, %bb.fb, %bb.fc, %char_is_ascii_printable.exit637.thread, %bb.fe, %bb.en, %match.exit, %bb.ep, %bb.eq, %char_is_ascii_printable.exit.thread, %bb.es, %bb.eb, %bb.ea, %bb.eg, %bb.eh, %bb.ee, %bb.dy, %bb.dx, %bb.cy, %bb.cv, %bb.cw, %char_is_ascii_printable.exit668.thread, %bb.fr, %bb.fj, %peek.exit642.thread, %bb.ex, %peek.exit617.thread, %bb.el, %escape_write_byte.exit581, %escape_write_byte.exit571, %escape_write_byte.exit565, %escape_write_byte.exit559, %escape_write_byte.exit553, %escape_write_byte.exit547, %escape_write_byte.exit541, %escape_write_byte.exit535, %escape_write_byte.exit529, %escape_write_byte.exit523, %escape_write_byte.exit517, %escape_write_byte.exit
+.critedge480:                                     ; preds = %.thread683, %.thread720, %.thread721, %match.exit648, %bb.fm, %bb.fn, %char_is_ascii_printable.exit659.thread, %bb.fp, %bb.ez, %match.exit626, %bb.fb, %bb.fc, %char_is_ascii_printable.exit637.thread, %bb.fe, %bb.en, %match.exit, %bb.ep, %bb.eq, %char_is_ascii_printable.exit.thread, %bb.es, %bb.dm, %bb.dl, %bb.dx, %bb.dy, %bb.eb, %bb.ea, %bb.eg, %bb.eh, %bb.ee, %bb.cy, %bb.cv, %bb.cw, %char_is_ascii_printable.exit668.thread, %bb.fr, %bb.fj, %peek.exit642.thread, %bb.ex, %peek.exit617.thread, %bb.el, %escape_write_byte.exit581, %escape_write_byte.exit571, %escape_write_byte.exit565, %escape_write_byte.exit559, %escape_write_byte.exit553, %escape_write_byte.exit547, %escape_write_byte.exit541, %escape_write_byte.exit535, %escape_write_byte.exit529, %escape_write_byte.exit523, %escape_write_byte.exit517, %escape_write_byte.exit
   ret void
 }
 

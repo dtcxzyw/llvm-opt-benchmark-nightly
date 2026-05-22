@@ -201,9 +201,9 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.bd, label %._crit_edge.i.i, label %.lr.ph.i.i2
 
 bb.h:                                             ; preds = %._crit_edge, %._crit_edge.i.i
-  %.sroa.37.0.copyload.i.i = phi i64 [ 0, %._crit_edge.i.i ], [ %.sroa.37.0.copyload.i.i.pre, %._crit_edge ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ 0, %._crit_edge.i.i ], [ %.sroa.26.0.copyload.i.i.pre, %._crit_edge ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ], [ %i.am, %._crit_edge ] ; 3 uses
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.i.pre, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.i.pre, %._crit_edge ], [ 0, %._crit_edge.i.i ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.am, %._crit_edge ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1357)
   %.sroa.26.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.sroa.37.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %1, i64 24

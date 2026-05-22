@@ -201,7 +201,6 @@ bb.g:                                             ; preds = %.lr.ph
   br label %bb.aa
 
 ._crit_edge:                                      ; preds = %bb.f
-  %3 = trunc nuw i8 %.118.ph to i1                ; 2 uses
   br i1 %.121.ph, label %._crit_edge.thread, label %bb.h
 
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge
@@ -209,6 +208,7 @@ bb.g:                                             ; preds = %.lr.ph
   br label %bb.aa
 
 bb.h:                                             ; preds = %._crit_edge
+  %3 = trunc nuw i8 %.118.ph to i1                ; 2 uses
   br i1 %.1.ph, label %bb.i, label %bb.r
 
 bb.i:                                             ; preds = %bb.h

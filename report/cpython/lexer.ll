@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %.186, ptr %i.k, align 8, !tbaa !86
   br label %.thread120
 
-.thread120:                                       ; preds = %bb.h, %bb.m, %bb.l, %bb.b, %bb.c
+.thread120:                                       ; preds = %bb.m, %bb.l, %bb.h, %bb.b, %bb.c
   %.2 = phi i32 [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.m ], [ -1, %bb.l ], [ -1, %bb.h ]
   ret i32 %.2
 }
