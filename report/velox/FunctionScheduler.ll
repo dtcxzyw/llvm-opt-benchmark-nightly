@@ -201,7 +201,7 @@ bb.a:
   br label %bb.n
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = tail call double @llvm.floor.f64(double %i.a) ; 4 uses
+  %i.m = tail call double @llvm.floor.f64(double %i.a) ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   %i.o = load double, ptr %i.n, align 8, !tbaa !110
   %i.p = fmul double %i.o, f0x3FF40D931FF62706    ; 2 uses
@@ -380,6 +380,9 @@ bb.e:                                             ; preds = %_ZNSt8__detail8_Ada
   %i.df = fcmp uge double %i.db, %i.ak
   br i1 %i.df, label %bb.l, label %.backedge.backedge
 
+.backedge.backedge:                               ; preds = %bb.e, %bb.g, %bb.l
+  br label %.backedge, !llvm.loop !120
+
 bb.f:                                             ; preds = %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit88
   %i.dg = fcmp ugt double %i.by, %i.s
   br i1 %i.dg, label %bb.h, label %bb.g
@@ -397,9 +400,6 @@ bb.g:                                             ; preds = %bb.f
   %i.dq = load double, ptr %i.z, align 8, !tbaa !111
   %i.dr = fcmp ule double %i.dl, %i.dq
   br i1 %i.dr, label %bb.l, label %.backedge.backedge
-
-.backedge.backedge:                               ; preds = %bb.g, %bb.e, %bb.l
-  br label %.backedge, !llvm.loop !120
 
 bb.h:                                             ; preds = %bb.f
   %i.ds = fcmp ugt double %i.by, %i.t
@@ -489,13 +489,13 @@ _ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647
 
 bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.g, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit97, %bb.e
   %.076 = phi double [ %i.de, %bb.e ], [ %i.dp, %bb.g ], [ %i.fg, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit97 ], [ 0.000000e+00, %bb.h ], [ 0.000000e+00, %bb.i ], [ f0x3F8A41A41A41A41A, %bb.j ]
-  %.073 = phi double [ %i.db, %bb.e ], [ %i.dl, %bb.g ], [ %i.fa, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit97 ], [ -1.000000e+00, %bb.h ], [ 0.000000e+00, %bb.i ], [ 1.000000e+00, %bb.j ] ; 3 uses
+  %.073 = phi double [ %i.db, %bb.e ], [ %i.dl, %bb.g ], [ %i.fa, %_ZNSt8__detail8_AdaptorISt26linear_congruential_engineImLm16807ELm0ELm2147483647EEdEclEv.exit97 ], [ -1.000000e+00, %bb.h ], [ 0.000000e+00, %bb.i ], [ 1.000000e+00, %bb.j ] ; 2 uses
   %i.fh = fadd double %i.cu, %.076
   %i.fi = load double, ptr %i.an, align 8, !tbaa !108
   %i.fj = fneg double %.073
   %i.fk = tail call double @llvm.fmuladd.f64(double %i.fj, double %i.fi, double %i.fh)
   %i.fl = load double, ptr %i.ao, align 8, !tbaa !109
-  %i.fm = fadd double %i.m, %.073                 ; 2 uses
+  %i.fm = fadd double %i.m, %.073                 ; 3 uses
   %i.fn = fadd double %i.fm, 1.000000e+00
   %i.fo = tail call double @lgamma(double noundef %i.fn) #34
   %i.fp = fsub double %i.fl, %i.fo
@@ -505,8 +505,7 @@ bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %i.fs, label %.backedge.backedge, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %3 = fadd double %i.m, %.073
-  %i.ft = fadd double %3, f0x3FDFFFFFFFFFFFFE
+  %i.ft = fadd double %i.fm, f0x3FDFFFFFFFFFFFFE
   %i.fu = fptosi double %i.ft to i64
   br label %bb.p
 

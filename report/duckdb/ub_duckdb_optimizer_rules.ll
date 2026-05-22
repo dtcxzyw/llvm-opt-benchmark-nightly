@@ -201,8 +201,8 @@ _ZN6duckdb4RuleD2Ev.exit:                         ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6duckdb22CaseSimplificationRule5ApplyERNS_15LogicalOperatorERNS_6vectorISt17reference_wrapperINS_10ExpressionEELb1ESaIS6_EEERbb(ptr dead_on_unwind noalias writable writeonly sret(%"class.duckdb::unique_ptr.88") align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr nonnull readnone align 8 captures(none) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr nonnull readnone align 1 captures(none) %4, i1 zeroext %5) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %6 = alloca %"class.duckdb::Value", align 8     ; 7 uses
-  %7 = alloca %"class.duckdb::Value", align 8     ; 8 uses
+  %6 = alloca %"class.duckdb::Value", align 8     ; 9 uses
+  %7 = alloca %"class.duckdb::Value", align 8     ; 10 uses
   %8 = alloca %"struct.duckdb::LogicalType", align 8 ; 7 uses
   %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN6duckdb6vectorISt17reference_wrapperINS_10ExpressionEELb1ESaIS3_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %3, i64 noundef 0)
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !147
@@ -215,12 +215,11 @@ bb.a:
   br i1 %.not, label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %i.h = getelementptr inbounds nuw i8, ptr %i.c, i64 112 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %7, i64 24
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %.thread
-  %.058 = phi i64 [ 0, %.lr.ph ], [ %i.ax, %.thread ] ; 7 uses
+  %.058 = phi i64 [ 0, %.lr.ph ], [ %i.ax, %.thread ] ; 5 uses
   %i.i = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6duckdb6vectorINS_14BoundCaseCheckELb1ESaIS1_EEixEm(ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 noundef %.058) ; 3 uses
   %i.j = call noundef ptr @_ZNK6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %i.i) ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !13
@@ -246,7 +245,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   call void @_ZN6duckdb11LogicalTypeD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %8) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25
-  %i.q = load i8, ptr %9, align 8, !tbaa !151, !range !167, !noundef !168
+  %i.q = load i8, ptr %i.h, align 8, !tbaa !151, !range !167, !noundef !168
   %i.r = trunc nuw i8 %i.q to i1
   br i1 %i.r, label %bb.h, label %bb.f
 
@@ -263,7 +262,11 @@ bb.h:                                             ; preds = %bb.g, %bb.e
 
 bb.i:                                             ; preds = %bb.h
   %i.t = add i64 %.058, -1
-  br label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit
+  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
+  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
+  br label %.thread
 
 bb.j:                                             ; preds = %bb.c
   %i.u = landingpad { ptr, i32 }
@@ -288,10 +291,11 @@ bb.m:                                             ; preds = %bb.h, %bb.f
 
 bb.n:                                             ; preds = %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 112 ; 2 uses
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !150
   store ptr null, ptr %i.x, align 8, !tbaa !150
-  %i.z = load ptr, ptr %i.h, align 8, !tbaa !150  ; 3 uses
-  store ptr %i.y, ptr %i.h, align 8, !tbaa !150
+  %i.z = load ptr, ptr %9, align 8, !tbaa !150    ; 3 uses
+  store ptr %i.y, ptr %9, align 8, !tbaa !150
   %.not.i.i.i.i.i = icmp eq ptr %i.z, null
   br i1 %.not.i.i.i.i.i, label %_ZN6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEaSEOS4_.exit, label %_ZNKSt14default_deleteIN6duckdb10ExpressionEEclEPS1_.exit.i.i.i.i.i
 
@@ -311,7 +315,7 @@ _ZN6duckdb11NumericCastIlmvEET_T0_.exit:          ; preds = %_ZN6duckdb10unique_
   %i.af = getelementptr inbounds [16 x i8], ptr %i.ad, i64 %i.ae ; 2 uses
   %i.ag = load ptr, ptr %i.e, align 8, !tbaa !197 ; 2 uses
   %.not.i.i = icmp eq ptr %i.af, %i.ag
-  br i1 %.not.i.i, label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6duckdb14BoundCaseCheckESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
+  br i1 %.not.i.i, label %.critedge, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6duckdb14BoundCaseCheckESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i
 
 _ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6duckdb14BoundCaseCheckESt6vectorIS3_SaIS3_EEEES8_ET0_T_SA_S9_.exit.i.i: ; preds = %_ZN6duckdb11NumericCastIlmvEET_T0_.exit
   %i.ah = load ptr, ptr %i.d, align 8, !tbaa !197 ; 2 uses
@@ -354,26 +358,12 @@ _ZSt8_DestroyIN6duckdb14BoundCaseCheckEEvPT_.exit.i.i.i.i.i: ; preds = %_ZNKSt14
 
 _ZSt8_DestroyIPN6duckdb14BoundCaseCheckES1_EvT_S3_RSaIT0_E.exit.i.i.i: ; preds = %_ZSt8_DestroyIN6duckdb14BoundCaseCheckEEvPT_.exit.i.i.i.i.i
   store ptr %i.al, ptr %i.e, align 8, !tbaa !192
-  br label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit
+  br label %.critedge
 
 bb.o:                                             ; preds = %_ZN6duckdb10unique_ptrINS_10ExpressionESt14default_deleteIS1_ELb1EEaSEOS4_.exit
   %i.aw = landingpad { ptr, i32 }
           cleanup
   br label %bb.p
-
-_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit: ; preds = %_ZN6duckdb11NumericCastIlmvEET_T0_.exit, %_ZSt8_DestroyIPN6duckdb14BoundCaseCheckES1_EvT_S3_RSaIT0_E.exit.i.i.i, %bb.i
-  %cond1 = phi i1 [ true, %bb.i ], [ false, %_ZSt8_DestroyIPN6duckdb14BoundCaseCheckES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ false, %_ZN6duckdb11NumericCastIlmvEET_T0_.exit ]
-  %.1 = phi i64 [ %i.t, %bb.i ], [ %.058, %_ZSt8_DestroyIPN6duckdb14BoundCaseCheckES1_EvT_S3_RSaIT0_E.exit.i.i.i ], [ %.058, %_ZN6duckdb11NumericCastIlmvEET_T0_.exit ]
-  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
-  br i1 %cond1, label %.thread, label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.loopexit_crit_edge
-
-_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.loopexit_crit_edge: ; preds = %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit
-  %.pre.pre = load ptr, ptr %i.d, align 8, !tbaa !197
-  %.pre62.pre = load ptr, ptr %i.e, align 8, !tbaa !197
-  br label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge
 
 bb.p:                                             ; preds = %bb.o, %bb.m
   %.pn37 = phi { ptr, i32 } [ %i.w, %bb.m ], [ %i.aw, %bb.o ]
@@ -387,8 +377,8 @@ bb.q:                                             ; preds = %bb.p, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
   resume { ptr, i32 } %.pn37.pn
 
-.thread:                                          ; preds = %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit, %bb.b
-  %.348 = phi i64 [ %.1, %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit ], [ %.058, %bb.b ]
+.thread:                                          ; preds = %bb.i, %bb.b
+  %.348 = phi i64 [ %i.t, %bb.i ], [ %.058, %bb.b ]
   %i.ax = add i64 %.348, 1                        ; 2 uses
   %i.ay = load ptr, ptr %i.e, align 8, !tbaa !192 ; 2 uses
   %i.az = load ptr, ptr %i.d, align 8, !tbaa !195 ; 2 uses
@@ -399,9 +389,18 @@ bb.q:                                             ; preds = %bb.p, %bb.l
   %i.be = icmp ult i64 %i.ax, %i.bd
   br i1 %i.be, label %bb.b, label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge, !llvm.loop !200
 
-_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge: ; preds = %.thread, %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.loopexit_crit_edge
-  %.pre62 = phi ptr [ %.pre62.pre, %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.loopexit_crit_edge ], [ %i.ay, %.thread ]
-  %.pre.a = phi ptr [ %.pre.pre, %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.loopexit_crit_edge ], [ %i.az, %.thread ]
+.critedge:                                        ; preds = %_ZN6duckdb11NumericCastIlmvEET_T0_.exit, %_ZSt8_DestroyIPN6duckdb14BoundCaseCheckES1_EvT_S3_RSaIT0_E.exit.i.i.i
+  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %7) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
+  call void @_ZN6duckdb5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %6) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #25
+  %.pre = load ptr, ptr %i.d, align 8, !tbaa !197
+  %.pre75 = load ptr, ptr %i.e, align 8, !tbaa !197
+  br label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge
+
+_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge: ; preds = %.thread, %.critedge
+  %.pre62 = phi ptr [ %.pre75, %.critedge ], [ %i.ay, %.thread ]
+  %.pre.a = phi ptr [ %.pre, %.critedge ], [ %i.az, %.thread ]
   %i.bf = icmp eq ptr %.pre.a, %.pre62
   br i1 %i.bf, label %_ZNSt6vectorIN6duckdb14BoundCaseCheckESaIS1_EE5eraseEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EES8_.exit._crit_edge.thread, label %bb.r
 

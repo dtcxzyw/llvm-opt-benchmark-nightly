@@ -201,8 +201,8 @@ declare void @_ZN2v88internal8compiler17BranchEliminationD1Ev(ptr noundef nonnul
 define linkonce_odr hidden void @_ZN2v88internal8compiler19EscapeAnalysisPhase3RunEPNS1_14TFPipelineDataEPNS0_4ZoneE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %3 = alloca %"class.v8::internal::compiler::EscapeAnalysis", align 8 ; 18 uses
-  %4 = alloca %"class.v8::internal::compiler::GraphReducer", align 8 ; 7 uses
-  %5 = alloca %"class.v8::internal::compiler::EscapeAnalysisReducer", align 8 ; 9 uses
+  %4 = alloca %"class.v8::internal::compiler::GraphReducer", align 8 ; 8 uses
+  %5 = alloca %"class.v8::internal::compiler::EscapeAnalysisReducer", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 216 ; 3 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -251,21 +251,21 @@ _ZN2v88internal8compiler12MachineGraph4DeadEv.exit: ; preds = %bb.a, %bb.b
   call fastcc void @_ZN2v88internal8compiler12_GLOBAL__N_110AddReducerEPNS1_14TFPipelineDataEPNS1_12GraphReducerEPNS1_7ReducerE(ptr noundef nonnull %1, ptr noundef %4, ptr noundef %5)
   %i.ae = load ptr, ptr %i.n, align 8             ; 2 uses
   %.not = icmp eq ptr %i.ae, null
-  br i1 %.not, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit, label %bb.c
+  br i1 %.not, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 56
   %i.ag = load ptr, ptr %i.af, align 8            ; 3 uses
   %.not.i14 = icmp eq ptr %i.ag, null
-  br i1 %.not.i14, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit, label %bb.d
+  br i1 %.not.i14, label %bb.g, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 4 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8 ; 3 uses
   %i.ai = call noundef zeroext i1 @_ZNK2v88internal9LocalHeap8IsParkedEv(ptr noundef nonnull align 8 dereferenceable(1944) %i.ah) #29
-  br i1 %i.ai, label %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit
+  br i1 %i.ai, label %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i, label %bb.g
 
 _ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i: ; preds = %bb.d
-  %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 17
+  %i.aj = getelementptr inbounds nuw i8, ptr %i.ag, i64 17 ; 2 uses
   %i.ak = cmpxchg weak ptr %i.aj, i8 1, i8 0 seq_cst seq_cst, align 1
   %i.al = extractvalue { i8, i1 } %i.ak, 1
   br i1 %i.al, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit, label %bb.e
@@ -274,24 +274,23 @@ bb.e:                                             ; preds = %_ZNSt19_Optional_ba
   call void @_ZN2v88internal9LocalHeap14UnparkSlowPathEv(ptr noundef nonnull align 8 dereferenceable(1944) %i.ah) #29
   br label %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit
 
-_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit: ; preds = %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i, %bb.e, %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit, %bb.c, %bb.d
-  %.sroa.5.0 = phi i1 [ false, %bb.c ], [ false, %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit ], [ false, %bb.d ], [ true, %bb.e ], [ true, %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i ]
-  %.sroa.0.0 = phi ptr [ undef, %bb.c ], [ undef, %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit ], [ undef, %bb.d ], [ %i.ah, %bb.e ], [ %i.ah, %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i ] ; 2 uses
+_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit: ; preds = %_ZNSt19_Optional_base_implIN2v88internal13UnparkedScopeESt14_Optional_baseIS2_Lb0ELb0EEE8_M_resetEv.exit.i.i, %bb.e
   call void @_ZN2v88internal8compiler12GraphReducer11ReduceGraphEv(ptr noundef nonnull align 8 dereferenceable(280) %4) #29
   call void @_ZNK2v88internal8compiler21EscapeAnalysisReducer17VerifyReplacementEv(ptr noundef nonnull align 8 dereferenceable(240) %5) #29
-  br i1 %.sroa.5.0, label %bb.f, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit
+  %6 = cmpxchg weak ptr %i.aj, i8 0, i8 1 seq_cst seq_cst, align 1
+  %7 = extractvalue { i8, i1 } %6, 1
+  br i1 %7, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit
-  %6 = getelementptr inbounds nuw i8, ptr %.sroa.0.0, i64 9
-  %7 = cmpxchg weak ptr %6, i8 0, i8 1 seq_cst seq_cst, align 1
-  %8 = extractvalue { i8, i1 } %7, 1
-  br i1 %8, label %_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit, label %bb.g
-
-bb.g:                                             ; preds = %bb.f
-  call void @_ZN2v88internal9LocalHeap12ParkSlowPathEv(ptr noundef nonnull align 8 dereferenceable(1944) %.sroa.0.0) #29
+  call void @_ZN2v88internal9LocalHeap12ParkSlowPathEv(ptr noundef nonnull align 8 dereferenceable(1944) %i.ah) #29
   br label %_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit
 
-_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit: ; preds = %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit, %bb.f, %bb.g
+bb.g:                                             ; preds = %bb.d, %_ZN2v88internal8compiler12MachineGraph4DeadEv.exit, %bb.c
+  call void @_ZN2v88internal8compiler12GraphReducer11ReduceGraphEv(ptr noundef nonnull align 8 dereferenceable(280) %4) #29
+  call void @_ZNK2v88internal8compiler21EscapeAnalysisReducer17VerifyReplacementEv(ptr noundef nonnull align 8 dereferenceable(240) %5) #29
+  br label %_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit
+
+_ZN2v88internal8compiler21UnparkedScopeIfNeededD2Ev.exit: ; preds = %bb.g, %_ZN2v88internal8compiler21UnparkedScopeIfNeededC2EPNS1_12JSHeapBrokerEb.exit, %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 176
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 200
   %i.ao = load ptr, ptr %i.an, align 8

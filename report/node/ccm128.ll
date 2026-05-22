@@ -201,16 +201,12 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c
   store i8 %i.bs, ptr %i.bq, align 1, !tbaa !9
   %scevgep = getelementptr i8, ptr %0, i64 16
   %scevgep81.a = getelementptr i8, ptr %0, i64 17
-  br label %3
+  br label %iter.check
 
-3:                                                ; preds = %._crit_edge, %bb.g
-  %.057 = phi i64 [ %2, %bb.g ], [ %.158.lcssa, %._crit_edge ] ; 9 uses
+iter.check:                                       ; preds = %._crit_edge, %bb.g
+  %.057 = phi i64 [ %2, %bb.g ], [ %.lcssa77, %._crit_edge ] ; 8 uses
   %.156 = phi i64 [ %.055, %bb.g ], [ 0, %._crit_edge ] ; 10 uses
-  %.0 = phi ptr [ %1, %bb.g ], [ %.1.lcssa, %._crit_edge ] ; 9 uses
-  %.not = icmp eq i64 %.057, 0
-  br i1 %.not, label %._crit_edge, label %iter.check
-
-iter.check:                                       ; preds = %3
+  %.0 = phi ptr [ %1, %bb.g ], [ %.lcssa78, %._crit_edge ] ; 8 uses
   %i.bt = add i64 %.057, -1
   %i.bu = sub nsw i64 15, %.156
   %umin85 = tail call i64 @llvm.umin.i64(i64 %i.bt, i64 %i.bu) ; 3 uses
@@ -308,16 +304,16 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cy = select i1 %i.cw, i1 %i.cx, i1 false
   br i1 %i.cy, label %.lr.ph, label %._crit_edge, !llvm.loop !26
 
-._crit_edge:                                      ; preds = %.lr.ph, %vector.ph, %vec.epilog.middle.block, %3
-  %.158.lcssa = phi i64 [ 0, %3 ], [ %i.ch, %vec.epilog.middle.block ], [ %i.ca, %vector.ph ], [ %i.cv, %.lr.ph ]
-  %.1.lcssa = phi ptr [ %.0, %3 ], [ %i.cg, %vec.epilog.middle.block ], [ %i.bz, %vector.ph ], [ %i.cu, %.lr.ph ]
-  %.lcssa = phi i1 [ false, %3 ], [ %i.cp, %vec.epilog.middle.block ], [ %i.cd, %vector.ph ], [ %i.cx, %.lr.ph ]
+._crit_edge:                                      ; preds = %.lr.ph, %vec.epilog.middle.block, %vector.ph
+  %.lcssa78 = phi ptr [ %i.cg, %vec.epilog.middle.block ], [ %i.bz, %vector.ph ], [ %i.cu, %.lr.ph ]
+  %.lcssa77 = phi i64 [ %i.ch, %vec.epilog.middle.block ], [ %i.ca, %vector.ph ], [ %i.cv, %.lr.ph ]
+  %.lcssa = phi i1 [ %i.cp, %vec.epilog.middle.block ], [ %i.cd, %vector.ph ], [ %i.cx, %.lr.ph ]
   %i.cz = load ptr, ptr %i.g, align 8, !tbaa !15
   tail call void %i.b(ptr noundef nonnull %i.f, ptr noundef nonnull %i.f, ptr noundef %i.cz) #7
   %i.da = load i64, ptr %i.i, align 8, !tbaa !10
   %i.db = add i64 %i.da, 1
   store i64 %i.db, ptr %i.i, align 8, !tbaa !10
-  br i1 %.lcssa, label %3, label %.loopexit, !llvm.loop !27
+  br i1 %.lcssa, label %iter.check, label %.loopexit, !llvm.loop !27
 
 .loopexit:                                        ; preds = %._crit_edge, %bb.a
   ret void

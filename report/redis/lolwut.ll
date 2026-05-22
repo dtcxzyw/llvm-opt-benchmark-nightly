@@ -109,7 +109,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !44
   %i.o = call i32 @getLongFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.n, ptr noundef nonnull %i.b, ptr noundef null) #14
   %.not32 = icmp eq i32 %i.o, 0
-  br i1 %.not32, label %.thread, label %1
+  br i1 %.not32, label %.thread, label %.critedge
 
 .thread:                                          ; preds = %bb.c
   %i.p = load i64, ptr %i.b, align 8, !tbaa !16
@@ -124,19 +124,15 @@ bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   br label %bb.d
 
-1:                                                ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  br label %bb.t
-
 bb.d:                                             ; preds = %.thread, %bb.b, %bb.a
   %.1.sroa.phi = phi ptr [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 1), %bb.b ], [ %.1.sroa.gep, %.thread ], [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 1), %bb.a ] ; 5 uses
-  %.1.sroa.phi50 = phi ptr [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 2), %bb.b ], [ %.1.sroa.gep51, %.thread ], [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 2), %bb.a ] ; 6 uses
+  %.1.sroa.phi50 = phi ptr [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 2), %bb.b ], [ %.1.sroa.gep51, %.thread ], [ getelementptr inbounds nuw (i8, ptr @.str.1, i64 2), %bb.a ] ; 5 uses
   %.1 = phi ptr [ @.str.1, %bb.b ], [ %i.a, %.thread ], [ @.str.1, %bb.a ] ; 2 uses
   %i.w = load i8, ptr %.1, align 1, !tbaa !13
   switch i8 %i.w, label %.thread49 [
     i8 53, label %bb.e
     i8 52, label %bb.g
-    i8 54, label %2
+    i8 54, label %bb.j
     i8 56, label %bb.m
     i8 55, label %bb.o
   ]
@@ -149,7 +145,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.z = load i8, ptr %.1.sroa.phi50, align 1, !tbaa !13
   %.not33 = icmp eq i8 %i.z, 57
-  br i1 %.not33, label %bb.k, label %bb.i
+  br i1 %.not33, label %bb.l, label %bb.i
 
 bb.g:                                             ; preds = %bb.d
   %i.aa = load i8, ptr %.1.sroa.phi, align 1, !tbaa !13
@@ -165,22 +161,17 @@ bb.i:                                             ; preds = %bb.h, %bb.f
   call void @lolwut5Command(ptr noundef nonnull %0) #14
   br label %bb.r
 
-2:                                                ; preds = %bb.d
-  %3 = load i8, ptr %.1.sroa.phi, align 1, !tbaa !13
-  %4 = icmp eq i8 %3, 46
-  br i1 %4, label %bb.j, label %.thread49
+bb.j:                                             ; preds = %bb.d
+  %i.ae = load i8, ptr %.1.sroa.phi, align 1, !tbaa !13
+  %.not34.a = icmp eq i8 %i.ae, 46
+  br i1 %.not34.a, label %bb.k, label %.thread49
 
-bb.j:                                             ; preds = %2
-  %i.ae = load i8, ptr %.1.sroa.phi50, align 1, !tbaa !13
-  %.not34.a = icmp eq i8 %i.ae, 57
-  br i1 %.not34.a, label %.thread49, label %bb.l
-
-bb.k:                                             ; preds = %bb.f
+bb.k:                                             ; preds = %bb.j
   %i.af = load i8, ptr %.1.sroa.phi50, align 1, !tbaa !13
   %i.ag = icmp eq i8 %i.af, 57
-  br i1 %i.ag, label %bb.l, label %.thread49
+  br i1 %i.ag, label %.thread49, label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.f, %bb.k
   call void @lolwut6Command(ptr noundef nonnull %0) #14
   br label %bb.r
 
@@ -208,7 +199,7 @@ bb.q:                                             ; preds = %bb.p, %bb.n
   call void @lolwut8Command(ptr noundef nonnull %0) #14
   br label %bb.r
 
-.thread49:                                        ; preds = %bb.e, %bb.d, %2, %bb.j, %bb.g, %bb.h, %bb.k, %bb.m, %bb.n, %bb.p, %bb.o
+.thread49:                                        ; preds = %bb.d, %bb.j, %bb.k, %bb.g, %bb.h, %bb.e, %bb.m, %bb.n, %bb.p, %bb.o
   call void @lolwutUnstableCommand(ptr noundef nonnull %0)
   br label %bb.r
 
@@ -226,7 +217,11 @@ bb.s:                                             ; preds = %bb.r
   store i32 %i.at, ptr %i.c, align 8, !tbaa !18
   br label %bb.t
 
-bb.t:                                             ; preds = %1, %bb.r, %bb.s
+.critedge:                                        ; preds = %bb.c
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  br label %bb.t
+
+bb.t:                                             ; preds = %bb.r, %bb.s, %.critedge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret void
 }

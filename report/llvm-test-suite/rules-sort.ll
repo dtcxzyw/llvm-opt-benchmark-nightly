@@ -201,19 +201,19 @@ define dso_local ptr @inf_ForwardSortResolution(ptr noundef %0, ptr noundef %1, 
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64
   %.val52 = load i32, ptr %i.a, align 8           ; 3 uses
-  %i.b = add i32 %.val52, -1                      ; 2 uses
+  %i.b = add nsw i32 %.val52, -1                  ; 2 uses
   %.not76 = icmp sgt i32 %.val52, 0
   br i1 %.not76, label %.lr.ph, label %list_Delete.exit75
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.c = getelementptr i8, ptr %0, i64 56
-  %.val55 = load ptr, ptr %i.c, align 8
-  %i.d = load i32, ptr @fol_NOT, align 4
+  %i.c = getelementptr i8, ptr %0, i64 56         ; 2 uses
+  %.val55 = load ptr, ptr %i.c, align 8           ; 2 uses
+  %i.d = load i32, ptr @fol_NOT, align 4          ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %clause_GetLiteralAtom.exit
   %.03877 = phi i32 [ 0, %.lr.ph ], [ %.139, %clause_GetLiteralAtom.exit ] ; 2 uses
-  %i.e = zext nneg i32 %.03877 to i64
+  %i.e = zext nneg i32 %.03877 to i64             ; 2 uses
   %i.f = getelementptr inbounds nuw [8 x i8], ptr %.val55, i64 %i.e
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr i8, ptr %i.g, i64 24
@@ -247,16 +247,13 @@ clause_GetLiteralAtom.exit:                       ; preds = %bb.b, %bb.c
   br i1 %i.m, label %list_Delete.exit75, label %bb.d
 
 bb.d:                                             ; preds = %.critedge
-  %6 = getelementptr i8, ptr %0, i64 56           ; 2 uses
-  %.val54 = load ptr, ptr %6, align 8
-  %i.o = zext nneg i32 %.139 to i64               ; 3 uses
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.val54, i64 %i.o
+  %i.o = zext nneg i32 %.139 to i64               ; 2 uses
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr %.val55, i64 %i.o
   %i.q = load ptr, ptr %i.p, align 8
   %i.r = getelementptr i8, ptr %i.q, i64 24
   %.val1.i56 = load ptr, ptr %i.r, align 8        ; 3 uses
-  %.val5.val.i.i57 = load i32, ptr %.val1.i56, align 8
-  %i.s = load i32, ptr @fol_NOT, align 4
-  %.not.i.i58 = icmp eq i32 %.val5.val.i.i57, %i.s
+  %i.s = load i32, ptr %.val1.i56, align 8
+  %.not.i.i58 = icmp eq i32 %i.s, %i.d
   br i1 %.not.i.i58, label %bb.e, label %clause_GetLiteralAtom.exit62
 
 bb.e:                                             ; preds = %bb.d
@@ -278,16 +275,16 @@ clause_GetLiteralAtom.exit62:                     ; preds = %bb.d, %bb.e
 
 .lr.ph84:                                         ; preds = %clause_GetLiteralAtom.exit62
   %i.y = getelementptr i8, ptr %.0.i.i59, i64 16
-  %wide.trip.count = zext i32 %i.b to i64
+  %sext = sext i32 %i.b to i64
   %.pre88 = load i32, ptr @fol_NOT, align 4
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph84, %bb.i
   %i.z = phi i32 [ %.pre88, %.lr.ph84 ], [ %i.am, %bb.i ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.o, %.lr.ph84 ], [ %indvars.iv.next, %bb.i ]
+  %indvars.iv = phi i64 [ %i.e, %.lr.ph84 ], [ %indvars.iv.next, %bb.i ]
   %.04182 = phi ptr [ %i.w, %.lr.ph84 ], [ %.142, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 4 uses
-  %.val53 = load ptr, ptr %6, align 8
+  %.val53 = load ptr, ptr %i.c, align 8
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %.val53, i64 %indvars.iv.next
   %i.ab = load ptr, ptr %i.aa, align 8
   %i.ac = getelementptr i8, ptr %i.ab, i64 24
@@ -327,8 +324,8 @@ bb.h:                                             ; preds = %clause_GetLiteralAt
 bb.i:                                             ; preds = %clause_GetLiteralAtom.exit69, %bb.h
   %i.am = phi i32 [ %.pre, %bb.h ], [ %i.z, %clause_GetLiteralAtom.exit69 ]
   %.142 = phi ptr [ %i.ak, %bb.h ], [ %.04182, %clause_GetLiteralAtom.exit69 ] ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.f, !llvm.loop !28
+  %6 = icmp slt i64 %indvars.iv.next, %sext
+  br i1 %6, label %bb.f, label %._crit_edge, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %bb.i, %clause_GetLiteralAtom.exit62
   %.041.lcssa = phi ptr [ %i.w, %clause_GetLiteralAtom.exit62 ], [ %.142, %bb.i ] ; 5 uses
@@ -731,12 +728,12 @@ define dso_local ptr @inf_ForwardEmptySort(ptr noundef %0, ptr noundef %1, ptr n
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 64         ; 2 uses
   %.val75 = load i32, ptr %i.a, align 8           ; 3 uses
-  %i.b = add i32 %.val75, -1                      ; 2 uses
+  %i.b = add nsw i32 %.val75, -1                  ; 2 uses
   %.not109 = icmp sgt i32 %.val75, 0
   br i1 %.not109, label %.lr.ph111, label %list_Delete.exit106
 
 .lr.ph111:                                        ; preds = %bb.a
-  %i.c = getelementptr i8, ptr %0, i64 56         ; 2 uses
+  %i.c = getelementptr i8, ptr %0, i64 56         ; 4 uses
   %i.d = getelementptr i8, ptr %0, i64 68
   %i.e = getelementptr i8, ptr %0, i64 72
   br label %bb.b
@@ -744,7 +741,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph111, %.loopexit
   %.055110 = phi i32 [ 0, %.lr.ph111 ], [ %spec.select66, %.loopexit ] ; 3 uses
   %.val79 = load ptr, ptr %i.c, align 8
-  %i.f = zext nneg i32 %.055110 to i64
+  %i.f = zext nneg i32 %.055110 to i64            ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %.val79, i64 %i.f
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr i8, ptr %i.h, i64 24
@@ -831,9 +828,8 @@ clause_GetLiteralAtom.exit86:                     ; preds = %.lr.ph, %bb.e
 
 .critedge.thread137:                              ; preds = %bb.d, %.critedge
   %.055.lcssa140 = phi i32 [ %spec.select66, %.critedge ], [ %.055110, %bb.d ] ; 2 uses
-  %6 = getelementptr i8, ptr %0, i64 56           ; 2 uses
-  %.val77 = load ptr, ptr %6, align 8
-  %i.af = zext nneg i32 %.055.lcssa140 to i64     ; 3 uses
+  %.val77 = load ptr, ptr %i.c, align 8
+  %i.af = zext nneg i32 %.055.lcssa140 to i64     ; 2 uses
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.val77, i64 %i.af
   %i.ah = load ptr, ptr %i.ag, align 8
   %i.ai = getelementptr i8, ptr %i.ah, i64 24
@@ -866,16 +862,16 @@ clause_GetLiteralAtom.exit93:                     ; preds = %.critedge.thread137
   br i1 %.not59.not115, label %.lr.ph118.preheader, label %._crit_edge
 
 .lr.ph118.preheader:                              ; preds = %clause_GetLiteralAtom.exit93
-  %wide.trip.count = zext i32 %i.b to i64
+  %sext = sext i32 %i.b to i64
   %.pre125 = load i32, ptr @fol_NOT, align 4
   br label %.lr.ph118
 
 .lr.ph118:                                        ; preds = %.lr.ph118.preheader, %bb.i
   %i.ar = phi i32 [ %.pre125, %.lr.ph118.preheader ], [ %i.bc, %bb.i ] ; 2 uses
-  %indvars.iv122 = phi i64 [ %i.af, %.lr.ph118.preheader ], [ %indvars.iv.next123, %bb.i ]
+  %indvars.iv122 = phi i64 [ %i.f, %.lr.ph118.preheader ], [ %indvars.iv.next123, %bb.i ]
   %.051116 = phi ptr [ %i.ap, %.lr.ph118.preheader ], [ %.152, %bb.i ] ; 2 uses
   %indvars.iv.next123 = add nuw nsw i64 %indvars.iv122, 1 ; 4 uses
-  %.val76 = load ptr, ptr %6, align 8
+  %.val76 = load ptr, ptr %i.c, align 8
   %i.as = getelementptr inbounds nuw [8 x i8], ptr %.val76, i64 %indvars.iv.next123
   %i.at = load ptr, ptr %i.as, align 8
   %i.au = getelementptr i8, ptr %i.at, i64 24
@@ -913,8 +909,8 @@ bb.h:                                             ; preds = %clause_GetLiteralAt
 bb.i:                                             ; preds = %bb.h, %clause_GetLiteralAtom.exit100
   %i.bc = phi i32 [ %.pre, %bb.h ], [ %i.ar, %clause_GetLiteralAtom.exit100 ]
   %.152 = phi ptr [ %i.ba, %bb.h ], [ %.051116, %clause_GetLiteralAtom.exit100 ] ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next123, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph118, !llvm.loop !36
+  %6 = icmp slt i64 %indvars.iv.next123, %sext
+  br i1 %6, label %.lr.ph118, label %._crit_edge, !llvm.loop !36
 
 ._crit_edge:                                      ; preds = %bb.i, %clause_GetLiteralAtom.exit93
   %.051.lcssa = phi ptr [ %i.ap, %clause_GetLiteralAtom.exit93 ], [ %.152, %bb.i ] ; 5 uses

@@ -201,7 +201,7 @@ middle.block:                                     ; preds = %vector.body
 define internal fastcc void @cftmdl(i32 noundef range(i32 9, -2147483648) %0, i32 noundef %1, ptr noundef captures(none) %2, ptr noundef readonly captures(none) %3) unnamed_addr #14 {
 bb.a:
   %i.a = shl i32 %1, 2                            ; 3 uses
-  %i.b = icmp sgt i32 %1, 0                       ; 3 uses
+  %i.b = icmp sgt i32 %1, 0                       ; 2 uses
   br i1 %i.b, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
@@ -604,7 +604,7 @@ begin_hunk_1_@cftmdl:bb.a
   %i.ls = fneg double %i.lo
   %i.lt = tail call double @llvm.fmuladd.f64(double %i.lp, double %i.lm, double %i.ls) ; 3 uses
   %i.lu = add nsw i64 %indvars.iv419, %i.gy
-  br i1 %i.b, label %.lr.ph404.preheader, label %._crit_edge405
+  br i1 %i.b, label %.lr.ph404.preheader, label %._crit_edge409
 
 .lr.ph404.preheader:                              ; preds = %.lr.ph413
   %min.iters.check1067 = icmp ult i64 %i.jq, 22
@@ -902,7 +902,7 @@ middle.block1102:                                 ; preds = %vector.body1083
   %i.pw = icmp slt i64 %indvars.iv.next422, %i.lu
   br i1 %i.pw, label %.lr.ph404, label %._crit_edge405, !llvm.loop !63
 
-._crit_edge405:                                   ; preds = %.lr.ph404, %middle.block1102, %.lr.ph413
+._crit_edge405:                                   ; preds = %.lr.ph404, %middle.block1102
   %i.px = getelementptr inbounds nuw i8, ptr %i.ll, i64 16
   %i.py = load double, ptr %i.px, align 8, !tbaa !8 ; 5 uses
   %i.pz = getelementptr inbounds nuw i8, ptr %i.ll, i64 24
@@ -913,14 +913,11 @@ middle.block1102:                                 ; preds = %vector.body1083
   %i.qe = fneg double %i.qa
   %i.qf = tail call double @llvm.fmuladd.f64(double %i.qb, double %i.py, double %i.qe) ; 3 uses
   %.reass = add i64 %indvars.iv419, %invariant.op
-  br i1 %i.b, label %.lr.ph408, label %._crit_edge409
-
-.lr.ph408:                                        ; preds = %._crit_edge405
   %4 = fneg double %i.lk                          ; 3 uses
   %min.iters.check876 = icmp ult i64 %i.kp, 14
   br i1 %min.iters.check876, label %scalar.ph875.preheader, label %vector.memcheck732
 
-vector.memcheck732:                               ; preds = %.lr.ph408
+vector.memcheck732:                               ; preds = %._crit_edge405
   %bound0763 = icmp ult ptr %scevgep733, %scevgep739
   %bound1764 = icmp ult ptr %scevgep737, %scevgep735
   %found.conflict765 = and i1 %bound0763, %bound1764
@@ -1121,8 +1118,8 @@ middle.block911:                                  ; preds = %vector.body892
   %cmp.n912 = icmp eq i64 %i.kr, %n.vec879
   br i1 %cmp.n912, label %._crit_edge409, label %scalar.ph875.preheader
 
-scalar.ph875.preheader:                           ; preds = %vector.memcheck732, %.lr.ph408, %middle.block911
-  %indvars.iv426.ph = phi i64 [ %i.lf, %vector.memcheck732 ], [ %i.lf, %.lr.ph408 ], [ %i.qh, %middle.block911 ]
+scalar.ph875.preheader:                           ; preds = %vector.memcheck732, %._crit_edge405, %middle.block911
+  %indvars.iv426.ph = phi i64 [ %i.lf, %vector.memcheck732 ], [ %i.lf, %._crit_edge405 ], [ %i.qh, %middle.block911 ]
   br label %scalar.ph875
 
 scalar.ph875:                                     ; preds = %scalar.ph875.preheader, %scalar.ph875
@@ -1188,7 +1185,7 @@ scalar.ph875:                                     ; preds = %scalar.ph875.prehea
   %i.ts = icmp slt i64 %indvars.iv.next427, %.reass
   br i1 %i.ts, label %scalar.ph875, label %._crit_edge409, !llvm.loop !65
 
-._crit_edge409:                                   ; preds = %scalar.ph875, %middle.block911, %._crit_edge405
+._crit_edge409:                                   ; preds = %scalar.ph875, %middle.block911, %.lr.ph413
   %indvars.iv.next420 = add nsw i64 %indvars.iv419, %i.gx ; 2 uses
   %i.tt = icmp slt i64 %indvars.iv.next420, %i.hb
   %indvars.iv.next425 = add i32 %indvars.iv424, %i.gv

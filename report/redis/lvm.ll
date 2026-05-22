@@ -144,7 +144,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.thread, label %.thread39
 
-.thread:                                          ; preds = %bb.f, %bb.e, %bb.d, %bb.g
+.thread:                                          ; preds = %bb.f, %bb.e, %bb.g, %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.v = load i64, ptr %i.f, align 8, !tbaa !10
   store i64 %i.v, ptr %3, align 8, !tbaa !10
@@ -257,15 +257,13 @@ declare hidden void @luaG_runerror(ptr noundef, ptr noundef, ...) local_unnamed_
 ; Function Attrs: nounwind uwtable
 define hidden void @luaV_settable(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef readonly captures(none) %3) local_unnamed_addr #0 {
 .peel.begin:
-  %4 = alloca %struct.lua_TValue, align 8         ; 9 uses
+  %4 = alloca %struct.lua_TValue, align 8         ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #8
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !8
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.d = load i32, ptr %i.a, align 8, !tbaa !8
   %i.e = icmp eq i32 %i.d, 5
-  %.074.lcssa76.sroa.gep = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.074.lcssa76.sroa.gep105 = getelementptr inbounds nuw i8, ptr %4, i64 8
   br i1 %i.e, label %bb.c, label %bb.a
 
 bb.a:                                             ; preds = %.peel.begin
@@ -311,7 +309,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not52.peel, label %bb.h, label %.thread
 
 bb.h:                                             ; preds = %bb.g
-  %i.w = load ptr, ptr %i.a, align 8, !tbaa !23
+  %i.w = load ptr, ptr %i.c, align 8, !tbaa !23
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 304
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !31
   %i.z = tail call ptr @luaT_gettm(ptr noundef nonnull %i.r, i32 noundef 1, ptr noundef %i.y) #8 ; 2 uses
@@ -370,7 +368,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not52, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
-  %i.au = load ptr, ptr %i.a, align 8, !tbaa !23
+  %i.au = load ptr, ptr %i.c, align 8, !tbaa !23
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 304
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !31
   %i.ax = call ptr @luaT_gettm(ptr noundef nonnull %i.ap, i32 noundef 1, ptr noundef %i.aw) #8 ; 2 uses
@@ -430,8 +428,8 @@ bb.v:                                             ; preds = %bb.p, %bb.t, %bb.u
 
 .loopexit:                                        ; preds = %bb.v, %bb.i
   %.3.lcssa = phi ptr [ %.3.peel, %bb.i ], [ %.3, %bb.v ] ; 2 uses
-  %.074.lcssa76.sroa.phi = phi ptr [ %.074.lcssa76.sroa.gep, %bb.i ], [ %.074.lcssa76.sroa.gep105, %bb.v ]
-  %.074.lcssa76 = phi ptr [ %1, %bb.i ], [ %4, %bb.v ]
+  %.074.lcssa76.sroa.phi = phi ptr [ %1, %bb.i ], [ %4, %bb.v ]
+  %.074.lcssa76 = phi ptr [ %i.a, %bb.i ], [ %i.b, %bb.v ]
   %i.bt = getelementptr inbounds nuw i8, ptr %.3.lcssa, i64 8
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !34 ; 2 uses
@@ -442,9 +440,9 @@ bb.v:                                             ; preds = %bb.p, %bb.t, %bb.u
   store i32 %i.bx, ptr %i.by, align 8, !tbaa !8
   %i.bz = load ptr, ptr %i.bu, align 8, !tbaa !34 ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 16
-  %i.cb = load i64, ptr %.074.lcssa76, align 8, !tbaa !10
+  %i.cb = load i64, ptr %.074.lcssa76.sroa.phi, align 8, !tbaa !10
   store i64 %i.cb, ptr %i.ca, align 8, !tbaa !10
-  %i.cc = load i32, ptr %.074.lcssa76.sroa.phi, align 8, !tbaa !8
+  %i.cc = load i32, ptr %.074.lcssa76, align 8, !tbaa !8
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bz, i64 24
   store i32 %i.cc, ptr %i.cd, align 8, !tbaa !8
   %i.ce = load ptr, ptr %i.bu, align 8, !tbaa !34 ; 2 uses
@@ -496,7 +494,7 @@ bb.x:                                             ; preds = %bb.v
   call void (ptr, ptr, ...) @luaG_runerror(ptr noundef %0, ptr noundef nonnull @.str.4) #8
   br label %.thread60
 
-.thread60:                                        ; preds = %bb.q, %bb.r, %bb.s, %.thread, %callTM.exit, %.loopexit80
+.thread60:                                        ; preds = %.thread, %bb.s, %bb.r, %bb.q, %callTM.exit, %.loopexit80
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   ret void
 }

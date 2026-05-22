@@ -201,7 +201,7 @@ expr_context_name.exit:                           ; preds = %bb.n
   br label %bb.cf
 
 bb.o:                                             ; preds = %bb.m, %bb.k, %bb.k, %bb.l
-  %.sink = phi i64 [ 24, %bb.k ], [ 16, %bb.m ], [ 24, %bb.k ], [ 16, %bb.l ]
+  %.sink = phi i64 [ 16, %bb.m ], [ 24, %bb.k ], [ 16, %bb.l ], [ 24, %bb.k ]
   %i.ad = getelementptr i8, ptr %0, i64 %.sink
   %.0 = load i32, ptr %i.ad, align 8, !tbaa !13   ; 2 uses
   %.not141 = icmp eq i32 %.0, %1
@@ -224,7 +224,7 @@ thread-pre-split:                                 ; preds = %bb.o
   %.pr = load i32, ptr %0, align 8, !tbaa !42
   br label %.thread
 
-.thread:                                          ; preds = %bb.n, %thread-pre-split
+.thread:                                          ; preds = %thread-pre-split, %bb.n
   %i.ak = phi i32 [ %.pr, %thread-pre-split ], [ %i.w, %bb.n ]
   switch i32 %i.ak, label %bb.ce [
     i32 1, label %bb.p
@@ -627,10 +627,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %._crit_edge164, %bb.w
   %i.ax = phi ptr [ %.pre165, %._crit_edge164 ], [ %i.ak, %bb.w ] ; 4 uses
   %i.ay = icmp eq ptr %i.ax, null
-  %2 = getelementptr i8, ptr %i.ax, i64 16
   br i1 %i.ay, label %.critedge153, label %.split
 
 .split:                                           ; preds = %bb.y
+  %2 = getelementptr i8, ptr %i.ax, i64 16
   %i.az = load i64, ptr %i.ax, align 8, !tbaa !14 ; 2 uses
   %i.ba = icmp sgt i64 %i.az, 0
   br i1 %i.ba, label %.lr.ph159, label %.critedge153
@@ -669,7 +669,7 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph159
   %i.bl = phi i64 [ %.pre166, %..thread136_crit_edge ], [ %i.bb, %bb.aa ], [ %i.bb, %bb.z ] ; 2 uses
   %i.bm = add nuw nsw i64 %.091158, 1             ; 2 uses
   %i.bn = icmp slt i64 %i.bm, %i.bl
-  br i1 %i.bn, label %.lr.ph159, label %.critedge153, !llvm.loop !103
+  br i1 %i.bn, label %.lr.ph159, label %.critedge153
 
 .critedge153:                                     ; preds = %.thread136, %bb.y, %.split
   %i.bo = load ptr, ptr %i.ao, align 8, !tbaa !13
@@ -741,7 +741,7 @@ bb.ak:                                            ; preds = %.preheader
   %i.cj = add nuw nsw i64 %.084157, 1
   %i.ck = load ptr, ptr %i.br, align 8, !tbaa !13 ; 2 uses
   %i.cl = icmp eq ptr %i.ck, null
-  br i1 %i.cl, label %.critedge155, label %.lr.ph, !llvm.loop !104
+  br i1 %i.cl, label %.critedge155, label %.lr.ph, !llvm.loop !103
 
 .lr.ph:                                           ; preds = %.critedge.preheader, %.critedge
   %i.cm = phi ptr [ %i.ck, %.critedge ], [ %i.cf, %.critedge.preheader ] ; 2 uses
@@ -919,11 +919,11 @@ bb.a:
   %i.e = phi i64 [ %i.af, %bb.i ], [ %i.c, %.lr.ph ]
   %.0335978 = phi i64 [ %i.ag, %bb.i ], [ 0, %.lr.ph ] ; 2 uses
   %i.f = getelementptr [8 x i8], ptr %i.b, i64 %.0335978
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !105  ; 7 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !104  ; 7 uses
   %i.h = getelementptr i8, ptr %i.g, i64 24
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !106  ; 6 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !105  ; 6 uses
   %i.j = getelementptr i8, ptr %i.g, i64 32
-  %i.k = load i32, ptr %i.j, align 8, !tbaa !107  ; 4 uses
+  %i.k = load i32, ptr %i.j, align 8, !tbaa !106  ; 4 uses
   %i.l = icmp sgt i32 %i.i, %i.k
   br i1 %i.l, label %.split, label %bb.b
 
@@ -937,12 +937,12 @@ bb.b:                                             ; preds = %.lr.ph79
   %.not = icmp eq i32 %i.k, %i.i                  ; 2 uses
   %or.cond = or i1 %i.o, %.not
   %i.p = getelementptr i8, ptr %i.g, i64 28
-  %i.q = load i32, ptr %i.p, align 4, !tbaa !108  ; 5 uses
+  %i.q = load i32, ptr %i.p, align 4, !tbaa !107  ; 5 uses
   br i1 %or.cond, label %bb.c, label %..split67_crit_edge
 
 ..split67_crit_edge:                              ; preds = %bb.b
   %.phi.trans.insert95 = getelementptr i8, ptr %i.g, i64 36
-  %.pre96 = load i32, ptr %.phi.trans.insert95, align 4, !tbaa !109
+  %.pre96 = load i32, ptr %.phi.trans.insert95, align 4, !tbaa !108
   br label %.split67
 
 bb.c:                                             ; preds = %bb.b
@@ -951,7 +951,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.s = getelementptr i8, ptr %i.g, i64 36
-  %i.t = load i32, ptr %i.s, align 4, !tbaa !109  ; 2 uses
+  %i.t = load i32, ptr %i.s, align 4, !tbaa !108  ; 2 uses
   %.not44 = icmp eq i32 %i.q, %i.t
   br i1 %.not44, label %bb.e, label %.split67
 
@@ -966,7 +966,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr i8, ptr %i.g, i64 36
-  %i.y = load i32, ptr %i.x, align 4, !tbaa !109  ; 2 uses
+  %i.y = load i32, ptr %i.x, align 4, !tbaa !108  ; 2 uses
   %i.z = icmp sgt i32 %i.q, %i.y
   br i1 %i.z, label %.split72, label %bb.g
 
@@ -1163,7 +1163,7 @@ bb.b:                                             ; preds = %.lr.ph23
 .lr.ph23:                                         ; preds = %.lr.ph.split, %bb.b
   %.0121522 = phi i64 [ %i.e, %bb.b ], [ 0, %.lr.ph.split ] ; 2 uses
   %i.h = getelementptr [8 x i8], ptr %i.a, i64 %.0121522
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !110
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !109
   %i.j = tail call fastcc i32 @validate_pattern(ptr noundef %i.i, i32 noundef %1)
   %.not.not = icmp eq i32 %i.j, 0
   br i1 %.not.not, label %.critedge, label %bb.b
@@ -1233,22 +1233,22 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph34, %.critedge22
   %.01533 = phi i64 [ 0, %.lr.ph34 ], [ %i.y, %.critedge22 ] ; 2 uses
   %i.f = getelementptr [8 x i8], ptr %i.e, i64 %.01533
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !111  ; 3 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !113
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !110  ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !112
   %i.i = tail call fastcc i32 @validate_expr(ptr noundef %i.h, i32 noundef 2)
   %.not18 = icmp eq i32 %i.i, 0
   br i1 %.not18, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr i8, ptr %i.g, i64 8
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !115
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !114
   %i.l = tail call fastcc i32 @validate_expr(ptr noundef %i.k, i32 noundef 1)
   %.not19 = icmp eq i32 %i.l, 0
   br i1 %.not19, label %.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr i8, ptr %i.g, i64 16
-  %i.n = load ptr, ptr %i.m, align 8, !tbaa !116  ; 4 uses
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !115  ; 4 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %.critedge22, label %.lr.ph
 
@@ -1280,7 +1280,7 @@ bb.f:                                             ; preds = %.critedge.i
   %i.y = add nuw nsw i64 %.01533, 1               ; 2 uses
   %i.z = load i64, ptr %0, align 8, !tbaa !14
   %i.aa = icmp slt i64 %i.y, %i.z
-  br i1 %i.aa, label %bb.c, label %.thread, !llvm.loop !117
+  br i1 %i.aa, label %bb.c, label %.thread, !llvm.loop !116
 
 .thread.sink.split:                               ; preds = %.lr.ph32, %bb.b, %bb.a
   %.str.72.sink = phi ptr [ @.str.70, %bb.b ], [ @.str.70, %bb.a ], [ @.str.72, %.lr.ph32 ]
@@ -1572,18 +1572,17 @@ attributes #4 = { nounwind }
 !101 = !{!98, !8, i64 52}
 !102 = !{!98, !8, i64 0}
 !103 = distinct !{!103, !50}
-!104 = distinct !{!104, !50}
-!105 = !{!87, !87, i64 0}
-!106 = !{!91, !8, i64 24}
-!107 = !{!91, !8, i64 32}
-!108 = !{!91, !8, i64 28}
-!109 = !{!91, !8, i64 36}
-!110 = !{!57, !57, i64 0}
-!111 = !{!112, !112, i64 0}
-!112 = !{!"p1 _ZTS14_comprehension", !18, i64 0}
-!113 = !{!114, !20, i64 0}
-!114 = !{!"_comprehension", !20, i64 0, !20, i64 8, !18, i64 16, !8, i64 24}
-!115 = !{!114, !20, i64 8}
-!116 = !{!114, !18, i64 16}
-!117 = distinct !{!117, !50}
+!104 = !{!87, !87, i64 0}
+!105 = !{!91, !8, i64 24}
+!106 = !{!91, !8, i64 32}
+!107 = !{!91, !8, i64 28}
+!108 = !{!91, !8, i64 36}
+!109 = !{!57, !57, i64 0}
+!110 = !{!111, !111, i64 0}
+!111 = !{!"p1 _ZTS14_comprehension", !18, i64 0}
+!112 = !{!113, !20, i64 0}
+!113 = !{!"_comprehension", !20, i64 0, !20, i64 8, !18, i64 16, !8, i64 24}
+!114 = !{!113, !20, i64 8}
+!115 = !{!113, !18, i64 16}
+!116 = distinct !{!116, !50}
 end_hunk_1

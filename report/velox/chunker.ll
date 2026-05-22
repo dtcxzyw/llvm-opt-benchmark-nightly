@@ -201,9 +201,7 @@ _ZNK5arrow4json17MultiStringStream4PeekEv.exit24: ; preds = %bb.n
 
 .critedge.i:                                      ; preds = %bb.n, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit24, %bb.m, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit22
   store i32 9, ptr %i.r, align 8, !tbaa !63
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.w, ptr %5, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.o:                                             ; preds = %_ZNK5arrow4json17MultiStringStream4PeekEv.exit24
   %i.br = call noundef signext i8 @_ZN5arrow4json17MultiStringStream4TakeEv(ptr noundef nonnull align 8 dereferenceable(32) %1) ; 0 uses
@@ -219,9 +217,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   store i32 9, ptr %i.r, align 8, !tbaa !63
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.w, ptr %6, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.r:                                             ; preds = %bb.p
   %i.bw = shl nuw nsw i32 %i.ax, 10
@@ -231,9 +227,7 @@ bb.r:                                             ; preds = %bb.p
 
 bb.s:                                             ; preds = %bb.l
   store i32 9, ptr %i.r, align 8, !tbaa !63
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.w, ptr %7, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.t:                                             ; preds = %bb.r, %bb.k
   %.1.i = phi i32 [ %i.by, %bb.r ], [ %i.ax, %bb.k ]
@@ -242,9 +236,7 @@ bb.t:                                             ; preds = %bb.r, %bb.k
 
 .thread:                                          ; preds = %bb.f, %bb.i
   store i32 10, ptr %i.r, align 8, !tbaa !63
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.w, ptr %8, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.u:                                             ; preds = %_ZNK5arrow4json17MultiStringStream4PeekEv.exit
   %i.bz = call noundef signext i8 @_ZN5arrow4json17MultiStringStream4TakeEv(ptr noundef nonnull align 8 dereferenceable(32) %1) ; 0 uses
@@ -276,16 +268,12 @@ bb.x:                                             ; preds = %bb.w
   %i.cl = load i64, ptr %1, align 8, !tbaa !46
   %i.cm = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 11, ptr %i.cm, align 8, !tbaa !63
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.cl, ptr %9, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.y:                                             ; preds = %bb.x
   %i.cn = load i64, ptr %1, align 8, !tbaa !46
   store i32 12, ptr %i.r, align 8, !tbaa !63
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.cn, ptr %10, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.z:                                             ; preds = %bb.w
   %i.co = getelementptr inbounds i8, ptr %i.s, i64 -16 ; 3 uses
@@ -369,7 +357,13 @@ bb.ad:                                            ; preds = %_ZN5arrow9rapidjson
   store ptr %i.dv, ptr %i.ds, align 8, !tbaa !99
   br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
 
-_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread: ; preds = %bb.o, %bb.j, %.thread42, %.thread, %bb.y, %bb.s, %bb.q, %.critedge.i, %bb.ad, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit
+.critedge.sink.split:                             ; preds = %.critedge.i, %bb.q, %bb.s, %bb.y, %.thread, %.thread42
+  %.sink = phi i64 [ %i.cl, %.thread42 ], [ %i.w, %.thread ], [ %i.cn, %bb.y ], [ %i.w, %bb.s ], [ %i.w, %bb.q ], [ %i.w, %.critedge.i ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store i64 %.sink, ptr %5, align 8, !tbaa !66
+  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+
+_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread: ; preds = %bb.j, %bb.o, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS_4json17MultiStringStreamENS5_11StackStreamIcEEEEvRT2_RT3_.exit, %.critedge.sink.split, %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   ret void
 }
@@ -772,7 +766,7 @@ bb.ez:                                            ; preds = %_ZN5arrow4json17Mul
   %.sroa.107.18 = phi i32 [ %i.yx, %bb.ey ], [ %i.aeb, %_ZN5arrow4json17MultiStringStream4TakeEv.exit376 ] ; 3 uses
   %.179 = phi i32 [ %.0.i338, %bb.ey ], [ %i.aes, %_ZN5arrow4json17MultiStringStream4TakeEv.exit376 ]
   %i.acx = icmp eq ptr %i.acw, %i.acv
-  br i1 %i.acx, label %.critedge135, label %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363, !prof !109
+  br i1 %i.acx, label %.critedge135, label %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363
 
 _ZNK5arrow4json17MultiStringStream4PeekEv.exit363: ; preds = %bb.ez
   %i.acy = getelementptr inbounds i8, ptr %i.acw, i64 -8
@@ -780,7 +774,7 @@ _ZNK5arrow4json17MultiStringStream4PeekEv.exit363: ; preds = %bb.ez
   %i.ada = load i8, ptr %i.acz, align 1, !tbaa !38 ; 2 uses
   %i.adb = add i8 %i.ada, -48
   %or.cond1049 = icmp ult i8 %i.adb, 10
-  br i1 %or.cond1049, label %_ZNK5arrow4json17MultiStringStream4PeekEv.exit367, label %.critedge135, !prof !126
+  br i1 %or.cond1049, label %_ZNK5arrow4json17MultiStringStream4PeekEv.exit367, label %.critedge135, !prof !116
 
 _ZNK5arrow4json17MultiStringStream4PeekEv.exit367: ; preds = %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363
   %i.adc = mul nsw i32 %.179, 10
@@ -914,7 +908,7 @@ bb.fm:                                            ; preds = %_ZN5arrow4json17Mul
   br label %bb.fq
 
 .critedge135:                                     ; preds = %bb.ez, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit342, %.critedge137, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE12NumberStreamINS_4json17MultiStringStreamEcLb1ELb1EE4TakeEv.exit161.a, %bb.cn, %.critedge125, %.critedge130.thread926, %.critedge130, %bb.ek, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit312
-  %.sroa.107.19 = phi i32 [ %.sroa.107.12924, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit312 ], [ %.sroa.107.7, %.critedge125 ], [ %.sroa.107.15693, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit342 ], [ %i.yx, %bb.ek ], [ %.sroa.107.12.ph, %.critedge130 ], [ %.sroa.107.9, %bb.cn ], [ %i.acj, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE12NumberStreamINS_4json17MultiStringStreamEcLb1ELb1EE4TakeEv.exit161.a ], [ %.sroa.107.11912, %.critedge130.thread926 ], [ %.sroa.107.17, %.critedge137 ], [ %.sroa.107.18, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363 ], [ %.sroa.107.18, %bb.ez ] ; 4 uses
+  %.sroa.107.19 = phi i32 [ %.sroa.107.15693, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit342 ], [ %.sroa.107.12924, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit312 ], [ %.sroa.107.7, %.critedge125 ], [ %i.yx, %bb.ek ], [ %.sroa.107.12.ph, %.critedge130 ], [ %.sroa.107.9, %bb.cn ], [ %i.acj, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE12NumberStreamINS_4json17MultiStringStreamEcLb1ELb1EE4TakeEv.exit161.a ], [ %.sroa.107.11912, %.critedge130.thread926 ], [ %.sroa.107.17, %.critedge137 ], [ %.sroa.107.18, %_ZNK5arrow4json17MultiStringStream4PeekEv.exit363 ], [ %.sroa.107.18, %bb.ez ] ; 4 uses
   %i.aez = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.afa = load ptr, ptr %i.aez, align 8, !tbaa !98
   %i.afb = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
@@ -1317,9 +1311,7 @@ _ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekE
 
 .critedge.i:                                      ; preds = %bb.h, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit22, %bb.g, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit20
   store i32 9, ptr %i.j, align 8, !tbaa !63
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.s, ptr %5, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.i:                                             ; preds = %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit22
   %i.bf = getelementptr inbounds nuw i8, ptr %i.av, i64 2
@@ -1336,9 +1328,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   store i32 9, ptr %i.j, align 8, !tbaa !63
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.s, ptr %6, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.l:                                             ; preds = %bb.j
   %i.bk = shl nuw nsw i32 %i.ap, 10
@@ -1348,9 +1338,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.f
   store i32 9, ptr %i.j, align 8, !tbaa !63
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.s, ptr %7, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.n:                                             ; preds = %bb.l, %bb.e
   %.1.i = phi i32 [ %i.bm, %bb.l ], [ %i.ap, %bb.e ]
@@ -1359,9 +1347,7 @@ bb.n:                                             ; preds = %bb.l, %bb.e
 
 .thread27:                                        ; preds = %_ZN5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4TakeEv.exit16, %bb.d
   store i32 10, ptr %i.j, align 8, !tbaa !63
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.s, ptr %8, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 _ZN5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4TakeEv.exit24: ; preds = %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit
   %i.bn = getelementptr inbounds nuw i8, ptr %i.l, i64 1
@@ -1400,9 +1386,7 @@ bb.q:                                             ; preds = %bb.p
   %i.cf = sub i64 %i.cd, %i.ce
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 48
   store i32 11, ptr %i.cg, align 8, !tbaa !63
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.cf, ptr %9, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 bb.r:                                             ; preds = %bb.q
   %i.ch = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -1411,9 +1395,7 @@ bb.r:                                             ; preds = %bb.q
   %i.ck = ptrtoint ptr %i.ci to i64
   %i.cl = sub i64 %i.cj, %i.ck
   store i32 12, ptr %i.j, align 8, !tbaa !63
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 56
-  store i64 %i.cl, ptr %10, align 8, !tbaa !66
-  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+  br label %.critedge.sink.split
 
 _ZN5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4TakeEv.exit25: ; preds = %bb.p
   %i.cm = getelementptr inbounds nuw i8, ptr %i.l, i64 1
@@ -1476,7 +1458,13 @@ bb.t:                                             ; preds = %_ZN5arrow9rapidjson
   store ptr %i.dr, ptr %i.do, align 8, !tbaa !99
   br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
 
-_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread: ; preds = %bb.i, %_ZN5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4TakeEv.exit19, %.thread32, %.thread27, %bb.r, %bb.m, %bb.k, %.critedge.i, %bb.t, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit
+.critedge.sink.split:                             ; preds = %.critedge.i, %bb.k, %bb.m, %bb.r, %.thread27, %.thread32
+  %.sink = phi i64 [ %i.cf, %.thread32 ], [ %i.s, %.thread27 ], [ %i.cl, %bb.r ], [ %i.s, %bb.m ], [ %i.s, %bb.k ], [ %i.s, %.critedge.i ]
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store i64 %.sink, ptr %5, align 8, !tbaa !66
+  br label %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread
+
+_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit.thread: ; preds = %_ZN5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4TakeEv.exit19, %bb.i, %_ZN5arrow9rapidjson13GenericReaderINS0_4UTF8IcEES3_NS0_12CrtAllocatorEE19ParseStringToStreamILj76ES3_S3_NS0_18EncodedInputStreamIS3_NS0_12MemoryStreamEEENS5_11StackStreamIcEEEEvRT2_RT3_.exit, %.critedge.sink.split, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   ret void
 }
@@ -1879,7 +1867,7 @@ _ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekE
   %i.zf = load i8, ptr %i.zd, align 1, !tbaa !38  ; 2 uses
   %i.zg = add i8 %i.zf, -48
   %or.cond873 = icmp ult i8 %i.zg, 10
-  br i1 %or.cond873, label %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit279, label %.critedge135, !prof !126
+  br i1 %or.cond873, label %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit279, label %.critedge135, !prof !116
 
 _ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit279: ; preds = %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit277
   %i.zh = mul nsw i32 %.179, 10
@@ -1994,7 +1982,7 @@ bb.dl:                                            ; preds = %_ZN5arrow9rapidjson
   br label %bb.dp
 
 .critedge135:                                     ; preds = %bb.db, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit277, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit263, %.critedge137, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit225._crit_edge, %.critedge125, %.critedge130, %bb.co, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit250
-  %.sroa.107.19 = phi i32 [ %.sroa.107.12769, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit250 ], [ %.sroa.107.12.ph, %.critedge130 ], [ %.sroa.107.15559, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit263 ], [ %i.vo, %bb.co ], [ %.sroa.107.8.lcssa.ph, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit225._crit_edge ], [ %.sroa.107.7, %.critedge125 ], [ %.sroa.107.17, %.critedge137 ], [ %.sroa.107.18, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit277 ], [ %.sroa.107.18, %bb.db ] ; 4 uses
+  %.sroa.107.19 = phi i32 [ %.sroa.107.15559, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit263 ], [ %.sroa.107.12769, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit250 ], [ %.sroa.107.12.ph, %.critedge130 ], [ %i.vo, %bb.co ], [ %.sroa.107.8.lcssa.ph, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit225._crit_edge ], [ %.sroa.107.7, %.critedge125 ], [ %.sroa.107.17, %.critedge137 ], [ %.sroa.107.18, %_ZNK5arrow9rapidjson18EncodedInputStreamINS0_4UTF8IcEENS0_12MemoryStreamEE4PeekEv.exit277 ], [ %.sroa.107.18, %bb.db ] ; 4 uses
   %i.abf = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.abg = load ptr, ptr %i.abf, align 8, !tbaa !98
   %i.abh = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
@@ -2397,7 +2385,7 @@ attributes #21 = { nounwind allocsize(1) }
 !157 = !{!"branch_weights", i32 0, i32 -2147483648, i32 0}
 !158 = distinct !{!158, !90}
 !159 = distinct !{!159, !90}
-!160 = !{!"branch_weights", !"expected", i32 1073742, i32 2146409906}
+!160 = !{!"branch_weights", !"expected", i32 1073741, i32 2146409907}
 !161 = distinct !{!161, !90}
 !162 = distinct !{!162, !90}
 !163 = distinct !{!163, !90}

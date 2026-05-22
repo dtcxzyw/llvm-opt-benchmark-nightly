@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %bb.t
 
 .lr.ph485:                                        ; preds = %bb.u, %bb.as
   %i.bf = phi i32 [ %i.dm, %bb.as ], [ %i.ah, %bb.u ]
-  %.1254483 = phi i32 [ %.8261, %bb.as ], [ %i.bd, %bb.u ] ; 7 uses
+  %.1254483 = phi i32 [ %.7260, %bb.as ], [ %i.bd, %bb.u ] ; 4 uses
   %.0280482 = phi i32 [ %.3283, %bb.as ], [ 10, %bb.u ] ; 3 uses
   %.0284481 = phi i32 [ %.3287, %bb.as ], [ 1, %bb.u ] ; 3 uses
   %.0288480 = phi ptr [ %.6294, %bb.as ], [ null, %bb.u ] ; 9 uses
@@ -231,7 +231,6 @@ bb.w:                                             ; preds = %bb.v
 .thread:                                          ; preds = %bb.w
   %i.bq = load i64, ptr %i.e, align 8, !tbaa !63
   %i.br = trunc i64 %i.bq to i32
-  %2 = add nsw i32 %.1254483, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
   br label %bb.as
 
@@ -260,7 +259,6 @@ bb.ab:                                            ; preds = %bb.z
   %i.bw = load i64, ptr %i.d, align 8, !tbaa !63
   %i.bx = mul nsw i64 %i.bw, 1000
   store i64 %i.bx, ptr %i.d, align 8, !tbaa !63
-  %3 = add nsw i32 %.1254483, 2
   br label %bb.as
 
 .critedge:                                        ; preds = %bb.y
@@ -279,7 +277,6 @@ bb.ac:                                            ; preds = %.critedge
 .thread367:                                       ; preds = %bb.ac
   %i.cc = load i64, ptr %i.f, align 8, !tbaa !63
   %i.cd = trunc i64 %i.cc to i32
-  %4 = add nsw i32 %.1254483, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
   br label %bb.as
 
@@ -430,8 +427,7 @@ bb.ar:                                            ; preds = %.lr.ph469
 .critedge354:                                     ; preds = %.lr.ph477, %.critedge355.thread
   %.1289.lcssa = phi ptr [ null, %.critedge355.thread ], [ %i.dk, %.lr.ph477 ]
   call void @zfree(ptr noundef %i.cs) #12
-  %5 = add i32 %.1254483, 2
-  %i.dl = add i32 %5, %i.cn
+  %i.dl = add nsw i32 %i.cn, 2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #12
   br label %bb.as
@@ -441,13 +437,14 @@ bb.ar:                                            ; preds = %.lr.ph469
   call void @slotRangeArrayFree(ptr noundef %.0288480) #12
   br label %.thread373
 
-bb.as:                                            ; preds = %.critedge354, %bb.ab, %.thread, %.thread367
-  %.6294 = phi ptr [ %.0288480, %.thread367 ], [ %.0288480, %bb.ab ], [ %.0288480, %.thread ], [ %.1289.lcssa, %.critedge354 ] ; 2 uses
-  %.3287 = phi i32 [ %i.cd, %.thread367 ], [ %.0284481, %bb.ab ], [ %.0284481, %.thread ], [ %.0284481, %.critedge354 ] ; 2 uses
-  %.3283 = phi i32 [ %.0280482, %.thread367 ], [ %.0280482, %bb.ab ], [ %i.br, %.thread ], [ %.0280482, %.critedge354 ] ; 2 uses
-  %.8261 = phi i32 [ %4, %.thread367 ], [ %3, %bb.ab ], [ %2, %.thread ], [ %i.dl, %.critedge354 ] ; 2 uses
+bb.as:                                            ; preds = %.critedge354, %.thread367, %.thread, %bb.ab
+  %.6294 = phi ptr [ %.1289.lcssa, %.critedge354 ], [ %.0288480, %.thread367 ], [ %.0288480, %bb.ab ], [ %.0288480, %.thread ] ; 2 uses
+  %.3287 = phi i32 [ %.0284481, %.critedge354 ], [ %i.cd, %.thread367 ], [ %.0284481, %bb.ab ], [ %.0284481, %.thread ] ; 2 uses
+  %.3283 = phi i32 [ %.0280482, %.critedge354 ], [ %.0280482, %.thread367 ], [ %.0280482, %bb.ab ], [ %i.br, %.thread ] ; 2 uses
+  %.8261 = phi i32 [ %i.dl, %.critedge354 ], [ 2, %.thread367 ], [ 2, %bb.ab ], [ 2, %.thread ]
+  %.7260 = add nsw i32 %.8261, %.1254483          ; 2 uses
   %i.dm = load i32, ptr %i.i, align 8, !tbaa !105 ; 2 uses
-  %.not385 = icmp slt i32 %.8261, %i.dm
+  %.not385 = icmp slt i32 %.7260, %i.dm
   br i1 %.not385, label %.lr.ph485, label %._crit_edge486.loopexit, !llvm.loop !112
 
 ._crit_edge486.loopexit:                          ; preds = %bb.as
@@ -468,7 +465,7 @@ bb.as:                                            ; preds = %.critedge354, %bb.a
   call void @addReply(ptr noundef nonnull %0, ptr noundef %i.dr) #12
   br label %.thread373
 
-.thread373:                                       ; preds = %bb.x, %bb.aa, %bb.ad, %bb.af, %.critedge354.thread, %bb.ah, %.critedge350, %._crit_edge486
+.thread373:                                       ; preds = %.critedge354.thread, %bb.ad, %bb.x, %.critedge350, %bb.ah, %bb.af, %bb.aa, %._crit_edge486
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12

@@ -201,7 +201,7 @@ bb.a:
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %17 = alloca %"class.std::allocator.7", align 1 ; 4 uses
   %18 = alloca %"class.photos_editing_formats::image_io::Message", align 8 ; 9 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 5 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !51, !range !54, !noundef !55
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %bb.bx, label %bb.b
@@ -477,42 +477,42 @@ bb.t:                                             ; preds = %bb.n
   %i.co = load ptr, ptr %i.d, align 8, !tbaa !85
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.cq = icmp eq ptr %i.co, %i.cp
-  br i1 %i.cq, label %bb.u, label %bb.v
+  br i1 %i.cq, label %bb.u, label %19
 
 bb.u:                                             ; preds = %bb.t
   invoke void @_ZN22photos_editing_formats8image_io11DataLineMap13FindDataLinesERKNS0_9DataRangeERKNS0_11DataSegmentE(ptr noundef nonnull align 8 dereferenceable(25) %i.cp, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(28) %3)
-          to label %bb.v unwind label %bb.i
+          to label %19 unwind label %bb.i
 
-bb.v:                                             ; preds = %bb.u, %bb.t
-  %19 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %20 = load i64, ptr %19, align 8, !tbaa !73
-  %21 = sub i64 %20, %1
+19:                                               ; preds = %bb.u, %bb.t
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %21 = load i64, ptr %20, align 8, !tbaa !73
+  %22 = sub i64 %21, %1                           ; 2 uses
+  %.not220 = icmp eq i64 %22, 0
+  br i1 %.not220, label %.critedge73.loopexit, label %bb.v
+
+bb.v:                                             ; preds = %19
   %i.cr = getelementptr inbounds nuw i8, ptr %10, i64 40 ; 9 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %10, i64 48
   %i.ct = getelementptr inbounds nuw i8, ptr %10, i64 56
   %i.cu = getelementptr inbounds nuw i8, ptr %10, i64 64
   %i.cv = getelementptr inbounds nuw i8, ptr %9, i64 48
-  %i.cw = getelementptr inbounds nuw i8, ptr %9, i64 52 ; 3 uses
-  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 89 ; 3 uses
+  %i.cw = getelementptr inbounds nuw i8, ptr %9, i64 52 ; 2 uses
+  %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 89 ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 3 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 6 uses
   %i.db = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 2 uses
-  %i.dd = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 4 uses
-  br label %22
+  %i.dc = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+  %i.dd = getelementptr inbounds nuw i8, ptr %9, i64 24 ; 6 uses
+  br label %bb.w
 
-22:                                               ; preds = %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124, %bb.v
-  %.020 = phi i64 [ %21, %bb.v ], [ %.222, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124 ] ; 6 uses
-  %.not = icmp eq i64 %.020, 0
-  br i1 %.not, label %.critedge73.loopexit, label %bb.w
-
-bb.w:                                             ; preds = %22
+bb.w:                                             ; preds = %bb.v, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124
+  %.020221 = phi i64 [ %22, %bb.v ], [ %.222, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124 ] ; 4 uses
   %i.de = load ptr, ptr %i.bf, align 8, !tbaa !56
   %i.df = load ptr, ptr %i.bh, align 8, !tbaa !56 ; 2 uses
   %i.dg = icmp eq ptr %i.de, %i.df                ; 2 uses
   %i.dh = load i8, ptr %i.a, align 8, !range !54
-  %i.di = trunc nuw i8 %i.dh to i1                ; 2 uses
+  %i.di = trunc nuw i8 %i.dh to i1
   %or.cond = select i1 %i.dg, i1 true, i1 %i.di
   br i1 %or.cond, label %.critedge, label %bb.x
 
@@ -609,14 +609,19 @@ bb.ad:                                            ; preds = %.loopexit
   call void @_ZN22photos_editing_formats8image_io11DataContextD2Ev(ptr noundef nonnull align 8 dereferenceable(72) %10) #14
   br label %.body
 
-bb.ae:                                            ; preds = %bb.ax, %25, %bb.ai, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit108, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit, %bb.af
+.loopexit186:                                     ; preds = %bb.af, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit108, %bb.ai, %bb.ax
+  %lpad.loopexit = landingpad { ptr, i32 }
+          cleanup
+  br label %bb.bj
+
+bb.ae:                                            ; preds = %bb.at
   %i.ef = landingpad { ptr, i32 }
           cleanup
   br label %bb.bj
 
 bb.af:                                            ; preds = %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit
   invoke void @_ZN22photos_editing_formats8image_io9XmlReader11ReportErrorERKNS0_15DataMatchResultERKNS0_11DataContextE(ptr noundef nonnull align 8 dereferenceable(90) %0, ptr noundef nonnull align 8 dereferenceable(54) %9, ptr noundef nonnull align 8 dereferenceable(64) %4)
-          to label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121 unwind label %bb.ae
+          to label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121 unwind label %.loopexit186
 
 bb.ag:                                            ; preds = %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit
   %i.eg = load i8, ptr %i.cw, align 4, !tbaa !109, !range !54, !noundef !55
@@ -630,7 +635,7 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   invoke void @_ZN22photos_editing_formats8image_io14MessageHandler13ReportMessageERKNS0_7MessageE(ptr noundef nonnull align 8 dereferenceable(32) %i.ei, ptr noundef nonnull align 8 dereferenceable(54) %9)
-          to label %.noexc93 unwind label %bb.ae
+          to label %.noexc93 unwind label %.loopexit186
 
 .noexc93:                                         ; preds = %bb.ai, %bb.ah
   %i.ej = load i32, ptr %9, align 8, !tbaa !45    ; 2 uses
@@ -656,13 +661,13 @@ _ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15Da
   %i.el = load i64, ptr %i.da, align 8, !tbaa !7
   %i.em = add i64 %i.el, %i.ek
   store i64 %i.em, ptr %i.da, align 8, !tbaa !7
-  %i.en = sub i64 %.020, %i.ek                    ; 2 uses
+  %i.en = sub i64 %.020221, %i.ek                 ; 2 uses
   %i.eo = load i64, ptr %4, align 8, !tbaa !87
   %i.ep = add i64 %i.eo, %i.ek
   store i64 %i.ep, ptr %4, align 8, !tbaa !87
   %i.eq = load ptr, ptr %i.dj, align 8, !tbaa !28
   %i.er = invoke noundef zeroext i1 @_ZNK22photos_editing_formats8image_io7XmlRule11HasNextRuleEv(ptr noundef nonnull align 8 dereferenceable(80) %i.eq)
-          to label %bb.al unwind label %bb.ae
+          to label %bb.al unwind label %.loopexit186
 
 bb.al:                                            ; preds = %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit
   br i1 %i.er, label %bb.am, label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121
@@ -856,44 +861,27 @@ _ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteI
   br label %bb.bj
 
 bb.at:                                            ; preds = %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit
-  %23 = load i8, ptr %i.cw, align 4, !tbaa !109, !range !54, !noundef !55
-  %24 = trunc nuw i8 %23 to i1
-  br i1 %24, label %bb.au, label %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
+  invoke void @_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE(ptr noundef nonnull align 8 dereferenceable(90) %0, ptr noundef nonnull align 8 dereferenceable(54) %9)
+          to label %bb.au unwind label %bb.ae
 
 bb.au:                                            ; preds = %bb.at
-  %i.gn = load ptr, ptr %i.cx, align 8, !tbaa !50 ; 2 uses
-  %.not.i.i99 = icmp eq ptr %i.gn, null
-  br i1 %.not.i.i99, label %.noexc102, label %25
+  %23 = load i64, ptr %i.cz, align 8, !tbaa !105
+  %24 = load i64, ptr %i.da, align 8, !tbaa !7
+  %25 = add i64 %24, %23
+  store i64 %25, ptr %i.da, align 8, !tbaa !7
+  %i.gn = load ptr, ptr %i.dc, align 8, !tbaa !44 ; 2 uses
+  %.not.i.i99 = icmp eq ptr %i.gn, %i.dd
+  br i1 %.not.i.i99, label %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit103, label %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
 
-25:                                               ; preds = %bb.au
-  invoke void @_ZN22photos_editing_formats8image_io14MessageHandler13ReportMessageERKNS0_7MessageE(ptr noundef nonnull align 8 dereferenceable(32) %i.gn, ptr noundef nonnull align 8 dereferenceable(54) %9)
-          to label %.noexc102 unwind label %bb.ae
+_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103: ; preds = %bb.au
+  %i.go = load i64, ptr %i.dd, align 8, !tbaa !40
+  %i.gp = add i64 %i.go, 1
+  call void @_ZdlPvm(ptr noundef %i.gn, i64 noundef %i.gp) #15
+  br label %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit103
 
-.noexc102:                                        ; preds = %25, %bb.au
-  %26 = load i32, ptr %9, align 8, !tbaa !45      ; 2 uses
-  switch i32 %26, label %27 [
-    i32 8, label %.thread.i.i100
-    i32 6, label %.thread.i.i100
-  ]
-
-.thread.i.i100:                                   ; preds = %.noexc102, %.noexc102
-  store i8 1, ptr %i.a, align 8, !tbaa !51
-  br label %28
-
-27:                                               ; preds = %.noexc102
-  %spec.select.i.i.i101 = icmp ugt i32 %26, 1
-  br i1 %spec.select.i.i.i101, label %28, label %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
-
-28:                                               ; preds = %27, %.thread.i.i100
-  store i8 1, ptr %i.cy, align 1, !tbaa !52
-  br label %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
-
-_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103: ; preds = %28, %27, %bb.at
-  %29 = load i64, ptr %i.cz, align 8, !tbaa !105
-  %i.go = load i64, ptr %i.da, align 8, !tbaa !7
-  %i.gp = add i64 %i.go, %29
-  store i64 %i.gp, ptr %i.da, align 8, !tbaa !7
-  br label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121
+_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit103: ; preds = %bb.au, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
+  br label %.loopexit192
 
 bb.av:                                            ; preds = %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit
   %i.gq = load i8, ptr %i.cw, align 4, !tbaa !109, !range !54, !noundef !55
@@ -907,7 +895,7 @@ bb.aw:                                            ; preds = %bb.av
 
 bb.ax:                                            ; preds = %bb.aw
   invoke void @_ZN22photos_editing_formats8image_io14MessageHandler13ReportMessageERKNS0_7MessageE(ptr noundef nonnull align 8 dereferenceable(32) %i.gs, ptr noundef nonnull align 8 dereferenceable(54) %9)
-          to label %.noexc107 unwind label %bb.ae
+          to label %.noexc107 unwind label %.loopexit186
 
 .noexc107:                                        ; preds = %bb.ax, %bb.aw
   %i.gt = load i32, ptr %9, align 8, !tbaa !45    ; 2 uses
@@ -933,13 +921,13 @@ _ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15Da
   %i.gv = load i64, ptr %i.da, align 8, !tbaa !7
   %i.gw = add i64 %i.gv, %i.gu
   store i64 %i.gw, ptr %i.da, align 8, !tbaa !7
-  %i.gx = sub i64 %.020, %i.gu                    ; 3 uses
+  %i.gx = sub i64 %.020221, %i.gu                 ; 3 uses
   %i.gy = load i64, ptr %4, align 8, !tbaa !87
   %i.gz = add i64 %i.gy, %i.gu
   store i64 %i.gz, ptr %4, align 8, !tbaa !87
   %i.ha = load ptr, ptr %i.dj, align 8, !tbaa !28
   %i.hb = invoke noundef zeroext i1 @_ZNK22photos_editing_formats8image_io7XmlRule11HasNextRuleEv(ptr noundef nonnull align 8 dereferenceable(80) %i.ha)
-          to label %bb.ba unwind label %bb.ae
+          to label %bb.ba unwind label %.loopexit186
 
 bb.ba:                                            ; preds = %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit108
   br i1 %i.hb, label %bb.bb, label %bb.bi
@@ -1163,9 +1151,8 @@ _ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.
   call void %i.ji(ptr noundef nonnull align 8 dead_on_return(80) dereferenceable(80) %i.jf) #14, !inline_history !128
   br label %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121
 
-_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121: ; preds = %_ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.i.i120, %bb.bi, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit, %bb.af, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit, %bb.al, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit115, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103
-  %cond = phi i1 [ false, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103 ], [ true, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit115 ], [ true, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit ], [ true, %bb.al ], [ true, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit ], [ true, %bb.af ], [ true, %bb.bi ], [ true, %_ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.i.i120 ]
-  %.222 = phi i64 [ %.020, %_ZN22photos_editing_formats8image_io9XmlReader21ReportMessageIfNeededERKNS0_15DataMatchResultE.exit103 ], [ %i.gx, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit115 ], [ %.020, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit ], [ %i.en, %bb.al ], [ %i.en, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit ], [ %.020, %bb.af ], [ %i.gx, %bb.bi ], [ %i.gx, %_ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.i.i120 ]
+_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121: ; preds = %_ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.i.i120, %bb.bi, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit, %bb.af, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit, %bb.al, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit115
+  %.222 = phi i64 [ %i.gx, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit115 ], [ %.020221, %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit ], [ %.020221, %bb.af ], [ %i.en, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit ], [ %i.en, %bb.al ], [ %i.gx, %bb.bi ], [ %i.gx, %_ZNKSt14default_deleteIN22photos_editing_formats8image_io7XmlRuleEEclEPS2_.exit.i.i120 ] ; 2 uses
   %i.jj = load ptr, ptr %i.dc, align 8, !tbaa !44 ; 2 uses
   %i.jk = icmp eq ptr %i.jj, %i.dd
   br i1 %i.jk, label %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i122
@@ -1178,10 +1165,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124: ; preds = %_ZNSt6vectorISt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS3_EESaIS6_EE8pop_backEv.exit121, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i122
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #14
-  br i1 %cond, label %22, label %.loopexit192, !llvm.loop !141
+  %.not = icmp eq i64 %.222, 0
+  br i1 %.not, label %.critedge73.loopexit, label %bb.w, !llvm.loop !141
 
-bb.bj:                                            ; preds = %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit118, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit98, %bb.ae
-  %.pn55 = phi { ptr, i32 } [ %i.ef, %bb.ae ], [ %.pn53, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit98 ], [ %.pn51, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit118 ] ; 2 uses
+bb.bj:                                            ; preds = %.loopexit186, %bb.ae, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit118, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit98
+  %.pn55 = phi { ptr, i32 } [ %.pn51, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit118 ], [ %.pn53, %_ZNSt10unique_ptrIN22photos_editing_formats8image_io7XmlRuleESt14default_deleteIS2_EED2Ev.exit98 ], [ %lpad.loopexit, %.loopexit186 ], [ %i.ef, %bb.ae ] ; 2 uses
   %i.jn = load ptr, ptr %i.dc, align 8, !tbaa !44 ; 2 uses
   %i.jo = icmp eq ptr %i.jn, %i.dd
   br i1 %i.jo, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i125
@@ -1198,7 +1186,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %bb.bw
 
 .critedge:                                        ; preds = %bb.w
-  br i1 %i.dg, label %bb.bk, label %.critedge73
+  br i1 %i.dg, label %bb.bk, label %.critedge73.loopexit
 
 bb.bk:                                            ; preds = %.critedge
   invoke void @_ZN22photos_editing_formats8image_io9XmlReader25InitializeContextNameListEPNS0_17XmlHandlerContextE(ptr noundef nonnull align 8 dereferenceable(90) %0, ptr noundef nonnull %4)
@@ -1372,18 +1360,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit148: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #14
   br label %bb.bw
 
-.critedge73.loopexit:                             ; preds = %22
-  %.pre229 = load i8, ptr %i.a, align 8, !tbaa !51, !range !54
+.critedge73.loopexit:                             ; preds = %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124, %19, %.critedge
+  %.pre229 = load i8, ptr %i.a, align 8, !tbaa !51, !range !54, !noundef !55
   %.pre230 = trunc nuw i8 %.pre229 to i1
-  br label %.critedge73
-
-.critedge73:                                      ; preds = %.critedge73.loopexit, %.critedge
-  %.pre-phi = phi i1 [ %.pre230, %.critedge73.loopexit ], [ %i.di, %.critedge ]
-  %30 = xor i1 %.pre-phi, true
+  %26 = xor i1 %.pre230, true
   br label %.loopexit192
 
-.loopexit192:                                     ; preds = %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit136, %.critedge73, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit85, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit
-  %.3 = phi i1 [ false, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit85 ], [ false, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit136 ], [ %30, %.critedge73 ], [ true, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit124 ]
+.loopexit192:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit136, %.critedge73.loopexit, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit103, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit85, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit
+  %.3 = phi i1 [ false, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit85 ], [ false, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit ], [ false, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit136 ], [ %26, %.critedge73.loopexit ], [ true, %_ZN22photos_editing_formats8image_io15DataMatchResultD2Ev.exit103 ]
   %i.lm = load ptr, ptr %i.j, align 8, !tbaa !99  ; 2 uses
   %.not8.i.i.i149 = icmp eq ptr %i.lm, %i.j
   br i1 %.not8.i.i.i149, label %_ZN22photos_editing_formats8image_io11DataContextD2Ev.exit156, label %.lr.ph.i.i.i150

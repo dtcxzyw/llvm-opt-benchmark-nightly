@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br label %bb.m
 
 common.ret28:                                     ; preds = %bb.f, %bb.e, %bb.c, %bb.d, %tailrecurse, %.split, %bb.g, %bb.m
-  %common.ret28.op = phi i32 [ %spec.select, %bb.m ], [ %i.d, %bb.c ], [ %i.k, %bb.e ], [ 1, %bb.f ], [ %.135, %bb.d ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.g ]
+  %common.ret28.op = phi i32 [ %spec.select, %bb.m ], [ %i.d, %bb.c ], [ 1, %bb.f ], [ %i.k, %bb.e ], [ %.135, %bb.d ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.g ]
   ret i32 %common.ret28.op
 
 bb.m:                                             ; preds = %bb.l, %bb.i
@@ -248,8 +248,8 @@ bb.c:                                             ; preds = %bb.b
   %.not31 = icmp eq ptr %i.g, null
   br i1 %.not31, label %.critedge, label %bb.b, !llvm.loop !140
 
-tailrecurse.backedge:                             ; preds = %tailrecurse, %bb.g, %bb.e, %.split
-  %.sink = phi i64 [ 24, %bb.g ], [ 8, %.split ], [ 24, %bb.e ], [ 8, %tailrecurse ]
+tailrecurse.backedge:                             ; preds = %tailrecurse, %bb.e, %bb.g, %.split
+  %.sink = phi i64 [ 24, %bb.e ], [ 8, %.split ], [ 24, %bb.g ], [ 8, %tailrecurse ]
   %i.h = getelementptr i8, ptr %.tr, i64 %.sink
   %.tr.be = load ptr, ptr %i.h, align 8, !tbaa !35
   br label %tailrecurse
@@ -652,8 +652,8 @@ bb.c:                                             ; preds = %bb.b
   %.not37 = icmp eq ptr %i.g, null
   br i1 %.not37, label %.critedge, label %bb.b, !llvm.loop !229
 
-tailrecurse.backedge.sink.split:                  ; preds = %tailrecurse, %bb.f, %bb.d
-  %.sink64 = phi i64 [ 24, %bb.f ], [ 24, %bb.d ], [ 8, %tailrecurse ]
+tailrecurse.backedge.sink.split:                  ; preds = %tailrecurse, %bb.d, %bb.f
+  %.sink64 = phi i64 [ 24, %bb.d ], [ 24, %bb.f ], [ 8, %tailrecurse ]
   %i.h = getelementptr i8, ptr %.tr, i64 %.sink64
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !35
   br label %tailrecurse.backedge
@@ -743,7 +743,7 @@ bb.l:                                             ; preds = %tailrecurse
   br i1 %.not, label %.critedge, label %tailrecurse.backedge
 
 .critedge:                                        ; preds = %bb.e, %bb.l, %tailrecurse, %.lr.ph.i, %bb.c, %bb.b, %._crit_edge.i, %bb.g
-  %.1 = phi i32 [ -208, %.lr.ph.i ], [ 0, %bb.c ], [ -209, %bb.g ], [ 0, %._crit_edge.i ], [ %i.d, %bb.b ], [ -208, %bb.e ], [ 0, %tailrecurse ], [ 0, %bb.l ]
+  %.1 = phi i32 [ -208, %.lr.ph.i ], [ 0, %._crit_edge.i ], [ 0, %bb.c ], [ -209, %bb.g ], [ %i.d, %bb.b ], [ -208, %bb.e ], [ 0, %tailrecurse ], [ 0, %bb.l ]
   ret i32 %.1
 }
 
@@ -983,7 +983,7 @@ bb.o:                                             ; preds = %bb.n
   br label %common.ret119
 
 common.ret119:                                    ; preds = %bb.j, %bb.k, %bb.h, %.thread, %bb.m, %bb.o, %bb.i, %.preheader, %tailrecurse, %.split, %bb.l, %bb.p
-  %common.ret119.op = phi i32 [ %i.ar, %bb.p ], [ %i.p, %.preheader ], [ %i.x, %bb.j ], [ %.0.ph, %.thread ], [ 0, %bb.m ], [ %i.an, %bb.o ], [ %spec.select77, %bb.k ], [ %i.h, %bb.h ], [ %i.s, %bb.i ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.l ]
+  %common.ret119.op = phi i32 [ %i.ar, %bb.p ], [ %i.p, %.preheader ], [ %i.an, %bb.o ], [ %.0.ph, %.thread ], [ %i.x, %bb.j ], [ 0, %bb.m ], [ %spec.select77, %bb.k ], [ %i.h, %bb.h ], [ %i.s, %bb.i ], [ 0, %tailrecurse ], [ 0, %.split ], [ 0, %bb.l ]
   ret i32 %common.ret119.op
 
 bb.p:                                             ; preds = %bb.n
@@ -1353,8 +1353,8 @@ bb.e:                                             ; preds = %tailrecurse
 .critedge.loopexit40:                             ; preds = %.split
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.e, %tailrecurse, %bb.d, %bb.c, %bb.b, %.split, %.critedge.loopexit40
-  %.1 = phi i32 [ 0, %.split ], [ %spec.select, %bb.b ], [ 0, %bb.e ], [ 0, %tailrecurse ], [ 0, %bb.d ], [ 3, %bb.c ], [ 2, %.critedge.loopexit40 ]
+.critedge:                                        ; preds = %tailrecurse, %bb.d, %bb.e, %bb.c, %bb.b, %.split, %.critedge.loopexit40
+  %.1 = phi i32 [ 0, %.split ], [ %spec.select, %bb.b ], [ 0, %bb.d ], [ 0, %tailrecurse ], [ 0, %bb.e ], [ 3, %bb.c ], [ 2, %.critedge.loopexit40 ]
   ret i32 %.1
 }
 
@@ -1430,11 +1430,8 @@ declare ptr @onig_node_list_add(ptr noundef, ptr noundef) local_unnamed_addr #6
 
 ; Function Attrs: nofree nosync nounwind sspstrong memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc range(i32 0, 2) i32 @check_type_tree(ptr noundef readonly captures(none) %0, i32 noundef range(i32 2, 4) %1) unnamed_addr #11 {
-  br label %tailrecurse
-
-tailrecurse:                                      ; preds = %3, %2
-  %.tr = phi ptr [ %0, %2 ], [ %5, %3 ]           ; 2 uses
-  %i.a = load i32, ptr %.tr, align 8, !tbaa !35   ; 2 uses
+tailrecurse:
+  %i.a = load i32, ptr %0, align 8, !tbaa !35     ; 2 uses
   %i.b = shl nuw i32 1, %i.a
   %i.c = and i32 %i.b, 2031
   %i.d = icmp eq i32 %i.c, 0
@@ -1442,7 +1439,7 @@ tailrecurse:                                      ; preds = %3, %2
 
 .lr.ph:                                           ; preds = %tailrecurse, %tailrecurse.backedge
   %i.e = phi i32 [ %i.n, %tailrecurse.backedge ], [ %i.a, %tailrecurse ]
-  %.tr47 = phi ptr [ %.tr.be, %tailrecurse.backedge ], [ %.tr, %tailrecurse ] ; 6 uses
+  %.tr47 = phi ptr [ %.tr.be, %tailrecurse.backedge ], [ %0, %tailrecurse ] ; 5 uses
   switch i32 %i.e, label %.critedge [
     i32 8, label %.preheader
     i32 9, label %.preheader
@@ -1468,13 +1465,14 @@ bb.b:                                             ; preds = %bb.a
   %.not39 = icmp eq ptr %i.k, null
   br i1 %.not39, label %.critedge, label %bb.a, !llvm.loop !239
 
-bb.c:                                             ; preds = %.lr.ph
-  %i.l = getelementptr i8, ptr %.tr47, i64 8
+bb.c:                                             ; preds = %.lr.ph, %bb.d
+  %.sink63 = phi i64 [ 24, %bb.d ], [ 8, %.lr.ph ]
+  %i.l = getelementptr i8, ptr %.tr47, i64 %.sink63
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !35
   br label %tailrecurse.backedge
 
 tailrecurse.backedge:                             ; preds = %bb.c, %bb.f
-  %.tr.be = phi ptr [ %i.m, %bb.c ], [ %i.z, %bb.f ] ; 2 uses
+  %.tr.be = phi ptr [ %i.z, %bb.f ], [ %i.m, %bb.c ] ; 2 uses
   %i.n = load i32, ptr %.tr.be, align 8, !tbaa !35 ; 2 uses
   %i.o = shl nuw i32 1, %i.n
   %i.p = and i32 %i.o, 2031
@@ -1486,12 +1484,7 @@ bb.d:                                             ; preds = %.lr.ph
   %i.s = load i32, ptr %i.r, align 8, !tbaa !147
   %i.t = and i32 %i.s, %1
   %.not38 = icmp eq i32 %i.t, 0
-  br i1 %.not38, label %.critedge, label %3
-
-3:                                                ; preds = %bb.d
-  %4 = getelementptr i8, ptr %.tr47, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !139
-  br label %tailrecurse
+  br i1 %.not38, label %.critedge, label %bb.c
 
 bb.e:                                             ; preds = %.lr.ph
   %i.u = getelementptr i8, ptr %.tr47, i64 4
@@ -1506,8 +1499,8 @@ bb.f:                                             ; preds = %bb.e
   %.not = icmp eq ptr %i.z, null
   br i1 %.not, label %.critedge, label %tailrecurse.backedge
 
-.critedge:                                        ; preds = %tailrecurse.backedge, %bb.e, %.lr.ph, %bb.f, %bb.b, %bb.a, %tailrecurse, %bb.d
-  %.1 = phi i32 [ 1, %tailrecurse ], [ 0, %bb.b ], [ 1, %bb.d ], [ 1, %bb.a ], [ 0, %.lr.ph ], [ 1, %tailrecurse.backedge ], [ 0, %bb.f ], [ 1, %bb.e ]
+.critedge:                                        ; preds = %tailrecurse.backedge, %bb.e, %.lr.ph, %bb.f, %bb.d, %bb.b, %bb.a, %tailrecurse
+  %.1 = phi i32 [ 0, %bb.b ], [ 1, %tailrecurse ], [ 1, %bb.a ], [ 1, %bb.e ], [ 0, %bb.f ], [ 1, %tailrecurse.backedge ], [ 0, %.lr.ph ], [ 1, %bb.d ]
   ret i32 %.1
 }
 
@@ -1910,7 +1903,7 @@ bb.bn:                                            ; preds = %bb.a
   br i1 %i.ig, label %bb.bo, label %bb.bp
 
 common.ret184:                                    ; preds = %bb.by, %bb.ce, %bb.cc, %bb.cb, %bb.cd, %bb.as, %bb.ap, %bb.aq, %bb.ar, %bb.an, %.thread.a, %bb.e, %add_compile_string_length.exit.i, %bb.f, %add_compile_string_length.exit82.i, %bb.ac, %bb.al, %bb.at, %bb.ax, %bb.ay, %bb.bd, %bb.be, %bb.bf, %bb.bi, %._crit_edge102, %bb.bm, %.thread152, %bb.bq, %bb.br, %.split.i, %bb.bw, %bb.bx, %bb.bz, %bb.ca, %bb.cf, %bb.ch, %bb.ci, %.split.i77, %bb.cj, %bb.ck, %bb.cl, %bb.cm, %bb.a, %compile_length_string_raw_node.exit, %bb.b, %.preheader, %.preheader84, %bb.bo
-  %common.ret184.op = phi i32 [ %i.in, %bb.bo ], [ %i.d, %.preheader ], [ 1, %bb.ci ], [ -6, %bb.a ], [ %i.kp, %bb.cl ], [ 1, %compile_length_string_raw_node.exit ], [ %i.r, %.thread.a ], [ %i.ft, %bb.aq ], [ 0, %bb.e ], [ 0, %bb.f ], [ 1, %.split.i77 ], [ 5, %bb.as ], [ 33, %bb.ac ], [ %i.hy, %._crit_edge102 ], [ %i.fl, %bb.an ], [ %i.fv, %bb.ar ], [ 3, %bb.ap ], [ %i.ae, %add_compile_string_length.exit.i ], [ %i.ed, %add_compile_string_length.exit82.i ], [ %i.fe, %bb.al ], [ %i.gd, %bb.at ], [ %i.gq, %bb.ax ], [ %i.gr, %bb.ay ], [ %i.hf, %bb.bd ], [ %i.hh, %bb.be ], [ %i.hj, %bb.bf ], [ %i.ho, %bb.bi ], [ %i.id, %.thread152 ], [ %i.ic, %bb.bm ], [ %i.jq, %bb.cb ], [ %i.iq, %bb.bq ], [ -11, %bb.ca ], [ -6, %.split.i ], [ %i.kd, %bb.cf ], [ -6, %bb.br ], [ %i.jh, %bb.bw ], [ %i.ji, %bb.bx ], [ %i.jj, %bb.by ], [ -11, %bb.cc ], [ %i.jk, %bb.bz ], [ %i.jy, %bb.cd ], [ %spec.select, %bb.ce ], [ %i.kg, %bb.ch ], [ %i.kq, %bb.cm ], [ %i.kn, %bb.cj ], [ %i.ko, %bb.ck ], [ %i.f, %bb.b ], [ %i.k, %.preheader84 ]
+  %common.ret184.op = phi i32 [ %i.in, %bb.bo ], [ %i.d, %.preheader ], [ -6, %bb.a ], [ %i.kp, %bb.cl ], [ 1, %bb.ci ], [ 1, %compile_length_string_raw_node.exit ], [ %i.r, %.thread.a ], [ %i.ft, %bb.aq ], [ 0, %bb.e ], [ 0, %bb.f ], [ 1, %.split.i77 ], [ 5, %bb.as ], [ 33, %bb.ac ], [ %i.hy, %._crit_edge102 ], [ %i.fl, %bb.an ], [ %i.fv, %bb.ar ], [ 3, %bb.ap ], [ %i.ae, %add_compile_string_length.exit.i ], [ %i.ed, %add_compile_string_length.exit82.i ], [ %i.fe, %bb.al ], [ %i.gd, %bb.at ], [ %i.gq, %bb.ax ], [ %i.gr, %bb.ay ], [ %i.hf, %bb.bd ], [ %i.hh, %bb.be ], [ %i.hj, %bb.bf ], [ %i.ho, %bb.bi ], [ %i.id, %.thread152 ], [ %i.ic, %bb.bm ], [ %i.jq, %bb.cb ], [ %i.iq, %bb.bq ], [ -11, %bb.ca ], [ -6, %.split.i ], [ %i.kd, %bb.cf ], [ -6, %bb.br ], [ %i.jh, %bb.bw ], [ %i.ji, %bb.bx ], [ %i.jj, %bb.by ], [ -11, %bb.cc ], [ %i.jk, %bb.bz ], [ %i.jy, %bb.cd ], [ %spec.select, %bb.ce ], [ %i.kg, %bb.ch ], [ %i.kq, %bb.cm ], [ %i.kn, %bb.cj ], [ %i.ko, %bb.ck ], [ %i.f, %bb.b ], [ %i.k, %.preheader84 ]
   ret i32 %common.ret184.op
 
 bb.bo:                                            ; preds = %bb.bn

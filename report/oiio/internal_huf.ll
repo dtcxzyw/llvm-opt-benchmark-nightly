@@ -201,9 +201,8 @@ vector.body254:                                   ; preds = %vector.body254, %ve
   %index255 = phi i64 [ 0, %vector.ph246 ], [ %index.next258, %vector.body254 ] ; 2 uses
   %vec.ind256 = phi <16 x i64> [ %induction253, %vector.ph246 ], [ %vec.ind.next259, %vector.body254 ] ; 2 uses
   %next.gep257 = getelementptr i8, ptr %.182.lcssa.i, i64 %index255
-  %i.mq = add <16 x i64> %vec.ind256, splat (i64 4294967288)
-  %7 = and <16 x i64> %i.mq, splat (i64 4294967295)
-  %i.mr = lshr <16 x i64> %broadcast.splat250, %7
+  %i.mq = add nsw <16 x i64> %vec.ind256, splat (i64 -8)
+  %i.mr = lshr <16 x i64> %broadcast.splat250, %i.mq
   %i.ms = trunc <16 x i64> %i.mr to <16 x i8>
   store <16 x i8> %i.ms, ptr %next.gep257, align 1, !tbaa !25
   %index.next258 = add nuw i64 %index255, 16      ; 2 uses
@@ -223,14 +222,13 @@ vector.body254:                                   ; preds = %vector.body254, %ve
   br i1 %.not117.i, label %bb.ak, label %hufPackEncTable.exit.thread, !prof !29
 
 bb.ak:                                            ; preds = %.lr.ph181.i
-  %8 = trunc nuw i64 %indvars.iv225.i to i32
   %indvars.iv.next226.i = add nsw i64 %indvars.iv225.i, -8 ; 3 uses
-  %9 = and i64 %indvars.iv.next226.i, 4294967295
-  %i.mu = lshr i64 %i.mb, %9
+  %i.mu = lshr i64 %i.mb, %indvars.iv.next226.i
   %i.mv = trunc i64 %i.mu to i8
   %i.mw = getelementptr inbounds nuw i8, ptr %.283180.i, i64 1 ; 2 uses
   store i8 %i.mv, ptr %.283180.i, align 1, !tbaa !25
-  %i.mx = icmp slt i32 %8, 16
+  %7 = trunc nuw i64 %indvars.iv225.i to i32
+  %i.mx = icmp slt i32 %7, 16
   br i1 %i.mx, label %.thread132.loopexit246.i, label %.lr.ph181.i, !llvm.loop !32
 
 bb.al:                                            ; preds = %bb.ah
@@ -273,9 +271,8 @@ vector.body298:                                   ; preds = %vector.body298, %ve
   %index299 = phi i64 [ 0, %vector.ph290 ], [ %index.next302, %vector.body298 ] ; 2 uses
   %vec.ind300 = phi <16 x i64> [ %induction297, %vector.ph290 ], [ %vec.ind.next303, %vector.body298 ] ; 2 uses
   %next.gep301 = getelementptr i8, ptr %.081197.i, i64 %index299
-  %i.no = add <16 x i64> %vec.ind300, splat (i64 4294967288)
-  %10 = and <16 x i64> %i.no, splat (i64 4294967295)
-  %i.np = lshr <16 x i64> %broadcast.splat294, %10
+  %i.no = add nsw <16 x i64> %vec.ind300, splat (i64 -8)
+  %i.np = lshr <16 x i64> %broadcast.splat294, %i.no
   %i.nq = trunc <16 x i64> %i.np to <16 x i8>
   store <16 x i8> %i.nq, ptr %next.gep301, align 1, !tbaa !25
   %index.next302 = add nuw i64 %index299, 16      ; 2 uses
@@ -295,14 +292,13 @@ vector.body298:                                   ; preds = %vector.body298, %ve
   br i1 %.not115.i, label %bb.am, label %hufPackEncTable.exit.thread, !prof !29
 
 bb.am:                                            ; preds = %.lr.ph165.i
-  %11 = trunc nuw i64 %indvars.iv217.i to i32
   %indvars.iv.next218.i = add nsw i64 %indvars.iv217.i, -8 ; 3 uses
-  %12 = and i64 %indvars.iv.next218.i, 4294967295
-  %i.ns = lshr i64 %i.mz, %12
+  %i.ns = lshr i64 %i.mz, %indvars.iv.next218.i
   %i.nt = trunc i64 %i.ns to i8
   %i.nu = getelementptr inbounds nuw i8, ptr %.384163.i, i64 1 ; 2 uses
   store i8 %i.nt, ptr %.384163.i, align 1, !tbaa !25
-  %i.nv = icmp slt i32 %11, 16
+  %8 = trunc nuw i64 %indvars.iv217.i to i32
+  %i.nv = icmp slt i32 %8, 16
   br i1 %i.nv, label %.thread132.loopexit248.i, label %.lr.ph165.i, !llvm.loop !34
 
 .critedge120.thread.i:                            ; preds = %._crit_edge.i52, %.lr.ph200.i
@@ -389,10 +385,10 @@ bb.an:                                            ; preds = %.lr.ph191.i
   br label %.thread132.i
 
 .thread132.i:                                     ; preds = %.thread132.loopexit248.i, %.thread132.loopexit246.i, %.thread132.loopexit.i, %.critedge120.thread.i, %bb.al, %.critedge.i
-  %.380141.i = phi i32 [ %.279.i, %.thread132.loopexit.i ], [ %.279.i, %.critedge120.thread.i ], [ %.178.lcssa.ph.i, %bb.al ], [ %.178.lcssa.ph.i, %.thread132.loopexit246.i ], [ %.178.lcssa.ph.i, %.critedge.i ], [ %.178.lcssa.ph.i, %.thread132.loopexit248.i ]
-  %.889140.i = phi ptr [ %i.ot, %.thread132.loopexit.i ], [ %.081197.i, %.critedge120.thread.i ], [ %.081197.i, %bb.al ], [ %i.mw, %.thread132.loopexit246.i ], [ %.182.lcssa.i, %.critedge.i ], [ %i.nu, %.thread132.loopexit248.i ] ; 5 uses
-  %.4101139.i = phi i64 [ %i.nx, %.thread132.loopexit.i ], [ %i.nx, %.critedge120.thread.i ], [ %i.mz, %bb.al ], [ %i.mb, %.thread132.loopexit246.i ], [ %i.mb, %.critedge.i ], [ %i.mz, %.thread132.loopexit248.i ] ; 2 uses
-  %.8111138.i = phi i32 [ %i.ow, %.thread132.loopexit.i ], [ %i.ny, %.critedge120.thread.i ], [ %i.na, %bb.al ], [ %indvars227.le.i, %.thread132.loopexit246.i ], [ %i.mc, %.critedge.i ], [ %indvars219.le.i, %.thread132.loopexit248.i ] ; 3 uses
+  %.380141.i = phi i32 [ %.178.lcssa.ph.i, %.critedge.i ], [ %.279.i, %.critedge120.thread.i ], [ %.178.lcssa.ph.i, %bb.al ], [ %.279.i, %.thread132.loopexit.i ], [ %.178.lcssa.ph.i, %.thread132.loopexit246.i ], [ %.178.lcssa.ph.i, %.thread132.loopexit248.i ]
+  %.889140.i = phi ptr [ %.182.lcssa.i, %.critedge.i ], [ %.081197.i, %.critedge120.thread.i ], [ %.081197.i, %bb.al ], [ %i.ot, %.thread132.loopexit.i ], [ %i.mw, %.thread132.loopexit246.i ], [ %i.nu, %.thread132.loopexit248.i ] ; 5 uses
+  %.4101139.i = phi i64 [ %i.mb, %.critedge.i ], [ %i.nx, %.critedge120.thread.i ], [ %i.mz, %bb.al ], [ %i.nx, %.thread132.loopexit.i ], [ %i.mb, %.thread132.loopexit246.i ], [ %i.mz, %.thread132.loopexit248.i ] ; 2 uses
+  %.8111138.i = phi i32 [ %i.mc, %.critedge.i ], [ %i.ny, %.critedge120.thread.i ], [ %i.na, %bb.al ], [ %i.ow, %.thread132.loopexit.i ], [ %indvars227.le.i, %.thread132.loopexit246.i ], [ %indvars219.le.i, %.thread132.loopexit248.i ] ; 3 uses
   %i.ox = add i32 %.380141.i, 1                   ; 2 uses
   %.not.i48 = icmp ugt i32 %i.ox, %i.in
   br i1 %.not.i48, label %._crit_edge201.i, label %.lr.ph200.i, !llvm.loop !37
@@ -795,8 +791,8 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   %exitcond.not.i85 = icmp eq i64 %indvars.iv.next.i84, 16384
   br i1 %exitcond.not.i85, label %.thread, label %bb.bj, !llvm.loop !116
 
-.thread:                                          ; preds = %bb.bl, %hufUnpackEncTable.exit, %fasthuf_initialize.exit.thread, %bb.as, %bb.ar, %bb.g, %bb.f, %bb.e, %bb.d
-  %.2 = phi i32 [ %., %bb.d ], [ 23, %fasthuf_initialize.exit.thread ], [ 1, %bb.g ], [ 3, %bb.e ], [ 23, %bb.f ], [ %i.nz, %bb.as ], [ 1, %bb.ar ], [ 23, %hufUnpackEncTable.exit ], [ %.262, %bb.bl ]
+.thread:                                          ; preds = %bb.bl, %hufUnpackEncTable.exit, %fasthuf_initialize.exit.thread, %bb.ar, %bb.as, %bb.g, %bb.f, %bb.e, %bb.d
+  %.2 = phi i32 [ %., %bb.d ], [ %i.nz, %bb.as ], [ 1, %bb.ar ], [ 3, %bb.e ], [ 23, %bb.f ], [ 23, %hufUnpackEncTable.exit ], [ 1, %bb.g ], [ 23, %fasthuf_initialize.exit.thread ], [ %.262, %bb.bl ]
   ret i32 %.2
 }
 
@@ -1049,6 +1045,10 @@ bb.q:                                             ; preds = %bb.n
   %i.cz = icmp ult i64 %i.cw, %i.cy
   br i1 %i.cz, label %6, label %bb.r, !prof !29
 
+6:                                                ; preds = %bb.q
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.cw
+  br label %bb.t
+
 bb.r:                                             ; preds = %bb.q
   %.not117 = icmp eq ptr %0, null
   br i1 %.not117, label %FastHufDecoder_refill.exit154.thread, label %bb.s
@@ -1058,10 +1058,6 @@ bb.s:                                             ; preds = %bb.r
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !95
   %i.dc = tail call i32 (ptr, i32, ptr, ...) %i.db(ptr noundef nonnull %0, i32 noundef 23, ptr noundef nonnull @.str.5) #10 ; 0 uses
   br label %FastHufDecoder_refill.exit154.thread
-
-6:                                                ; preds = %bb.q
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.cw
-  br label %bb.t
 
 bb.t:                                             ; preds = %6, %bb.c
   %.2244 = phi i64 [ %.1243, %6 ], [ %.0242313, %bb.c ] ; 3 uses
@@ -1347,6 +1343,11 @@ bb.ak:                                            ; preds = %bb.aj
   %i.gp = tail call i32 (ptr, i32, ptr, ...) %i.go(ptr noundef nonnull %0, i32 noundef 23, ptr noundef nonnull @.str.8) #10 ; 0 uses
   br label %FastHufDecoder_refill.exit154.thread
 
+.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
+  %8 = shl i64 %.3229, 8
+  %9 = add nsw i32 %.390, -8
+  br label %bb.am
+
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
   %indvars.iv349 = phi i64 [ %indvars.iv.next350, %vec.epilog.scalar.ph ], [ %indvars.iv349.ph, %vec.epilog.scalar.ph.preheader ] ; 2 uses
   %i.gq = getelementptr [2 x i8], ptr %i.gf, i64 %indvars.iv349
@@ -1354,11 +1355,6 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %indvars.iv.next350 = add nuw nsw i64 %indvars.iv349, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next350, %i.fu
   br i1 %exitcond.not, label %.loopexit, label %vec.epilog.scalar.ph, !llvm.loop !138
-
-.loopexit:                                        ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %8 = shl i64 %.3229, 8
-  %9 = add nsw i32 %.390, -8
-  br label %bb.am
 
 bb.al:                                            ; preds = %bb.t
   %i.gr = trunc i32 %.298 to i16
@@ -1534,12 +1530,12 @@ bb.au:                                            ; preds = %bb.at
   br i1 %i.jg, label %.preheader, label %FastHufDecoder_refill.exit154, !llvm.loop !125
 
 FastHufDecoder_refill.exit154:                    ; preds = %.sink.split.i144, %bb.ao, %bb.am
-  %.5247 = phi i64 [ %.14256, %bb.ao ], [ %.4246, %bb.am ], [ %.16258, %.sink.split.i144 ] ; 2 uses
-  %.6232 = phi i64 [ %i.gz, %bb.ao ], [ %.5231, %bb.am ], [ %.14240, %.sink.split.i144 ]
-  %.5210 = phi i64 [ %i.hb, %bb.ao ], [ %.4209, %bb.am ], [ %.19224, %.sink.split.i144 ]
-  %.5192 = phi i32 [ %i.hc, %bb.ao ], [ %.4191, %bb.am ], [ 64, %.sink.split.i144 ]
-  %.5 = phi ptr [ %.16, %bb.ao ], [ %.4, %bb.am ], [ %.19, %.sink.split.i144 ]
-  %.7 = phi i32 [ 64, %bb.ao ], [ %.592, %bb.am ], [ 64, %.sink.split.i144 ]
+  %.5247 = phi i64 [ %.4246, %bb.am ], [ %.14256, %bb.ao ], [ %.16258, %.sink.split.i144 ] ; 2 uses
+  %.6232 = phi i64 [ %.5231, %bb.am ], [ %i.gz, %bb.ao ], [ %.14240, %.sink.split.i144 ]
+  %.5210 = phi i64 [ %.4209, %bb.am ], [ %i.hb, %bb.ao ], [ %.19224, %.sink.split.i144 ]
+  %.5192 = phi i32 [ %.4191, %bb.am ], [ %i.hc, %bb.ao ], [ 64, %.sink.split.i144 ]
+  %.5 = phi ptr [ %.4, %bb.am ], [ %.16, %bb.ao ], [ %.19, %.sink.split.i144 ]
+  %.7 = phi i32 [ %.592, %bb.am ], [ 64, %bb.ao ], [ 64, %.sink.split.i144 ]
   %i.jh = icmp ult i64 %.285, %5
   br i1 %i.jh, label %bb.b, label %._crit_edge, !llvm.loop !146
 
@@ -1559,8 +1555,8 @@ bb.aw:                                            ; preds = %bb.av
   %i.jl = tail call i32 (ptr, i32, ptr, ...) %i.jj(ptr noundef nonnull %0, i32 noundef 23, ptr noundef nonnull @.str.9, i32 noundef %i.jk) #10 ; 0 uses
   br label %FastHufDecoder_refill.exit154.thread
 
-FastHufDecoder_refill.exit154.thread:             ; preds = %bb.aj, %bb.ak, %bb.ah, %bb.ae, %bb.ag, %bb.ad, %bb.r, %bb.s, %bb.p, %bb.o, %._crit_edge, %bb.av, %bb.aw
-  %.6 = phi i32 [ 0, %._crit_edge ], [ 23, %bb.av ], [ 23, %bb.aw ], [ 23, %bb.o ], [ 23, %bb.p ], [ 23, %bb.s ], [ 23, %bb.r ], [ 23, %bb.ad ], [ 23, %bb.ag ], [ 23, %bb.ae ], [ 23, %bb.ah ], [ 23, %bb.ak ], [ 23, %bb.aj ]
+FastHufDecoder_refill.exit154.thread:             ; preds = %bb.ad, %bb.ag, %bb.ae, %bb.ah, %bb.ak, %bb.aj, %bb.o, %bb.p, %bb.s, %bb.r, %._crit_edge, %bb.av, %bb.aw
+  %.6 = phi i32 [ 0, %._crit_edge ], [ 23, %bb.av ], [ 23, %bb.aw ], [ 23, %bb.o ], [ 23, %bb.r ], [ 23, %bb.s ], [ 23, %bb.p ], [ 23, %bb.aj ], [ 23, %bb.ak ], [ 23, %bb.ah ], [ 23, %bb.ae ], [ 23, %bb.ag ], [ 23, %bb.ad ]
   ret i32 %.6
 }
 

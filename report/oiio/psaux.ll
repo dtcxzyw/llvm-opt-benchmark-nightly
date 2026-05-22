@@ -201,8 +201,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g, %bb.h, %bb.e
   %i.q = phi ptr [ %i.j, %bb.e ], [ %i.l, %bb.h ], [ %i.l, %bb.g ] ; 7 uses
   %.095 = phi i64 [ 0, %bb.e ], [ %i.p, %bb.h ], [ %i.k, %bb.g ]
-  %.not113 = phi i1 [ true, %bb.e ], [ true, %bb.h ], [ false, %bb.g ]
-  %.095.fr = freeze i64 %.095                     ; 6 uses
+  %.074 = phi i8 [ 0, %bb.e ], [ 0, %bb.h ], [ 1, %bb.g ] ; 3 uses
+  %.095.fr = freeze i64 %.095                     ; 5 uses
   %i.r = ptrtoint ptr %i.q to i64
   %i.s = icmp ult ptr %i.q, %1
   br i1 %i.s, label %bb.j, label %bb.w
@@ -335,7 +335,7 @@ bb.v:                                             ; preds = %bb.t, %bb.u, %bb.r
 
 bb.w:                                             ; preds = %.loopexit145, %bb.j, %bb.i
   %i.ay = phi ptr [ %i.q, %bb.i ], [ %i.q, %bb.j ], [ %storemerge.lcssa, %.loopexit145 ] ; 4 uses
-  %.390 = phi i64 [ 0, %bb.i ], [ 0, %bb.j ], [ %.087.lcssa, %.loopexit145 ] ; 5 uses
+  %.390 = phi i64 [ 0, %bb.i ], [ 0, %bb.j ], [ %.087.lcssa, %.loopexit145 ] ; 4 uses
   %.382 = phi i64 [ 1, %bb.i ], [ 1, %bb.j ], [ %.079.lcssa, %.loopexit145 ] ; 3 uses
   %.3 = phi i64 [ %2, %bb.i ], [ %2, %bb.j ], [ %.067.lcssa, %.loopexit145 ] ; 3 uses
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 1 ; 3 uses
@@ -351,42 +351,37 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x, %bb.x
   store ptr %i.az, ptr %i.b, align 8, !tbaa !26
-  %i.bc = call fastcc i64 @PS_Conv_ToInt(ptr noundef nonnull %i.b, ptr noundef nonnull %1) ; 3 uses
-  %i.bd = load ptr, ptr %i.b, align 8, !tbaa !26  ; 3 uses
+  %i.bc = call fastcc i64 @PS_Conv_ToInt(ptr noundef nonnull %i.b, ptr noundef nonnull %1) ; 4 uses
+  %i.bd = load ptr, ptr %i.b, align 8, !tbaa !26  ; 2 uses
   %.not112 = icmp eq ptr %i.az, %i.bd
-  br i1 %.not112, label %.loopexit, label %3
+  br i1 %.not112, label %.loopexit, label %bb.z
 
-3:                                                ; preds = %bb.y
-  %4 = icmp sgt i64 %i.bc, 1000
-  br i1 %4, label %.thread127.thread, label %bb.z
-
-bb.z:                                             ; preds = %3
-  %i.be = icmp sgt i64 %i.bc, -1001               ; 2 uses
-  %i.bf = select i1 %i.be, i64 %i.bc, i64 0
+bb.z:                                             ; preds = %bb.y
+  %3 = icmp slt i64 %i.bc, 1001
+  %i.be = icmp sgt i64 %i.bc, -1001
+  %.276 = select i1 %3, i8 %.074, i8 1
+  %4 = add i64 %i.bc, 1000
+  %5 = icmp ult i64 %4, 2001
+  %i.bf = select i1 %5, i64 %i.bc, i64 0
   %spec.select118 = add nsw i64 %i.bf, %.3
   br label %.thread127
 
 .thread127:                                       ; preds = %bb.z, %bb.x, %bb.w
-  %i.bg = phi ptr [ %i.ay, %bb.w ], [ %i.ay, %bb.x ], [ %i.bd, %bb.z ]
-  %.273 = phi i1 [ true, %bb.w ], [ true, %bb.x ], [ %i.be, %bb.z ]
-  %.6 = phi i64 [ %.3, %bb.w ], [ %.3, %bb.x ], [ %spec.select118, %bb.z ] ; 4 uses
+  %i.bg = phi ptr [ %i.bd, %bb.z ], [ %i.ay, %bb.x ], [ %i.ay, %bb.w ]
+  %.377 = phi i8 [ %.276, %bb.z ], [ %.074, %bb.x ], [ %.074, %bb.w ]
+  %.273 = phi i1 [ %i.be, %bb.z ], [ true, %bb.x ], [ true, %bb.w ]
+  %.6 = phi i64 [ %spec.select118, %bb.z ], [ %.3, %bb.x ], [ %.3, %bb.w ] ; 4 uses
   store ptr %i.bg, ptr %0, align 8, !tbaa !26
   %i.bh = icmp ne i64 %.095.fr, 0
   %i.bi = icmp ne i64 %.390, 0
   %or.cond8 = select i1 %i.bh, i1 true, i1 %i.bi
-  br i1 %or.cond8, label %7, label %.loopexit
+  br i1 %or.cond8, label %.thread127.thread, label %.loopexit
 
-.thread127.thread:                                ; preds = %3
-  store ptr %i.bd, ptr %0, align 8, !tbaa !26
-  %5 = icmp ne i64 %.095.fr, 0
-  %6 = icmp ne i64 %.390, 0
-  %or.cond8134 = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond8134, label %.thread138, label %.loopexit
-
-7:                                                ; preds = %.thread127
+.thread127.thread:                                ; preds = %.thread127
+  %.not113 = icmp eq i8 %.377, 0
   br i1 %.not113, label %bb.aa, label %.thread138
 
-bb.aa:                                            ; preds = %7
+bb.aa:                                            ; preds = %.thread127.thread
   br i1 %.273, label %.preheader143, label %.loopexit
 
 .preheader143:                                    ; preds = %bb.aa
@@ -471,14 +466,14 @@ bb.ak:                                            ; preds = %._crit_edge
   %i.cb = add nsw i64 %i.ca, %.297.lcssa
   br label %.thread138
 
-.thread138:                                       ; preds = %.lr.ph240, %bb.ac, %.thread127.thread, %7, %._crit_edge, %bb.ak
-  %.398 = phi i64 [ %.297.lcssa, %._crit_edge ], [ %i.cb, %bb.ak ], [ 2147483647, %7 ], [ 2147483647, %.thread127.thread ], [ 2147483647, %bb.ac ], [ 2147483647, %.lr.ph240 ] ; 2 uses
+.thread138:                                       ; preds = %.lr.ph240, %bb.ac, %.thread127.thread, %._crit_edge, %bb.ak
+  %.398 = phi i64 [ %.297.lcssa, %._crit_edge ], [ %i.cb, %bb.ak ], [ 2147483647, %.thread127.thread ], [ 2147483647, %bb.ac ], [ 2147483647, %.lr.ph240 ] ; 2 uses
   %i.cc = sub nsw i64 0, %.398
   %spec.select = select i1 %.078, i64 %.398, i64 %i.cc
   br label %.loopexit
 
-.loopexit:                                        ; preds = %bb.aj, %.thread127.thread, %bb.y, %bb.aa, %bb.c, %bb.a, %.thread127, %bb.f, %bb.d, %bb.d, %.thread138
-  %.1 = phi i64 [ 0, %.thread127 ], [ 0, %.thread127.thread ], [ 0, %bb.d ], [ %spec.select, %.thread138 ], [ 0, %bb.c ], [ 0, %bb.f ], [ 0, %bb.d ], [ 0, %bb.a ], [ 0, %bb.aa ], [ 0, %bb.y ], [ 0, %bb.aj ]
+.loopexit:                                        ; preds = %bb.aj, %bb.y, %bb.aa, %bb.c, %bb.a, %.thread127, %bb.f, %bb.d, %bb.d, %.thread138
+  %.1 = phi i64 [ 0, %.thread127 ], [ 0, %bb.y ], [ 0, %bb.d ], [ %spec.select, %.thread138 ], [ 0, %bb.c ], [ 0, %bb.aa ], [ 0, %bb.d ], [ 0, %bb.f ], [ 0, %bb.a ], [ 0, %bb.aj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   ret i64 %.1
 }
