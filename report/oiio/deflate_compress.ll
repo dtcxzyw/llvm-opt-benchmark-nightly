@@ -201,8 +201,8 @@ bb.bo:                                            ; preds = %.lr.ph
   br label %.critedge.i, !llvm.loop !124
 
 .critedge.i:                                      ; preds = %bb.bo, %..critedge.i_crit_edge, %bb.bn
-  %.062.lcssa.i = phi i32 [ %i.ej, %bb.bn ], [ %.062.i77, %..critedge.i_crit_edge ], [ %i.ej, %bb.bo ] ; 4 uses
-  %.lcssa.i = phi i32 [ %i.ee, %bb.bn ], [ %i.ep, %..critedge.i_crit_edge ], [ %i.ee, %bb.bo ] ; 7 uses
+  %.062.lcssa.i = phi i32 [ %i.ej, %bb.bn ], [ %.062.i77, %..critedge.i_crit_edge ], [ %i.ej, %bb.bo ] ; 5 uses
+  %.lcssa.i = phi i32 [ %i.ee, %bb.bn ], [ %i.ep, %..critedge.i_crit_edge ], [ %i.ee, %bb.bo ] ; 6 uses
   %i.eu = zext i8 %i.em to i32                    ; 6 uses
   %i.ev = icmp eq i8 %i.em, 0
   %i.ew = sub i32 %.lcssa.i, %.063.i              ; 4 uses
@@ -216,18 +216,17 @@ bb.bo:                                            ; preds = %.lr.ph
   %i.ey = phi i32 [ %i.fh, %.lr.ph.i ], [ %i.ew, %.preheader.i ]
   %.178.i = phi ptr [ %i.fe, %.lr.ph.i ], [ %.0.i, %.preheader.i ] ; 2 uses
   %.16477.i = phi i32 [ %i.fg, %.lr.ph.i ], [ %.063.i, %.preheader.i ]
-  %i.ez = add i32 %i.ey, -11                      ; 2 uses
-  %1 = icmp ult i32 %i.ez, 128
-  %2 = select i1 %1, i32 %i.ez, i32 127           ; 2 uses
+  %i.ez = add i32 %i.ey, -11
+  %1 = tail call i32 @llvm.umin.i32(i32 %i.ez, i32 127) ; 2 uses
   %i.fa = load i32, ptr %i.eh, align 4, !tbaa !3
   %i.fb = add i32 %i.fa, 1
   store i32 %i.fb, ptr %i.eh, align 4, !tbaa !3
-  %i.fc = shl i32 %2, 5
+  %i.fc = shl nuw nsw i32 %1, 5
   %i.fd = or disjoint i32 %i.fc, 18
   %i.fe = getelementptr inbounds nuw i8, ptr %.178.i, i64 4 ; 2 uses
   store i32 %i.fd, ptr %.178.i, align 4, !tbaa !3
   %i.ff = add i32 %.16477.i, 11
-  %i.fg = add i32 %i.ff, %2                       ; 3 uses
+  %i.fg = add i32 %i.ff, %1                       ; 3 uses
   %i.fh = sub i32 %.lcssa.i, %i.fg                ; 3 uses
   %i.fi = icmp ugt i32 %i.fh, 10
   br i1 %i.fi, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !125
@@ -262,24 +261,23 @@ bb.bq:                                            ; preds = %bb.bp
   %i.fu = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   store i32 %i.eu, ptr %.0.i, align 4, !tbaa !3
   %i.fv = add i32 %.063.i, 1
+  %2 = add i32 %.062.lcssa.i, -2
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.br, %bb.bq
   %.265.i = phi i32 [ %i.fv, %bb.bq ], [ %i.gd, %bb.br ] ; 2 uses
   %.2.i = phi ptr [ %i.fu, %bb.bq ], [ %i.gb, %bb.br ] ; 2 uses
-  %i.fw = sub i32 %.lcssa.i, %.265.i
-  %3 = add i32 %i.fw, -3                          ; 2 uses
-  %4 = icmp ult i32 %3, 4
-  %5 = select i1 %4, i32 %3, i32 3                ; 2 uses
+  %i.fw = sub i32 %2, %.265.i
+  %3 = tail call i32 @llvm.umin.i32(i32 %i.fw, i32 3) ; 2 uses
   %i.fx = load i32, ptr %i.eg, align 4, !tbaa !3
   %i.fy = add i32 %i.fx, 1
   store i32 %i.fy, ptr %i.eg, align 4, !tbaa !3
-  %i.fz = shl i32 %5, 5
+  %i.fz = shl nuw nsw i32 %3, 5
   %i.ga = or disjoint i32 %i.fz, 16
   %i.gb = getelementptr inbounds nuw i8, ptr %.2.i, i64 4 ; 2 uses
   store i32 %i.ga, ptr %.2.i, align 4, !tbaa !3
   %i.gc = add i32 %.265.i, 3
-  %i.gd = add i32 %i.gc, %5                       ; 3 uses
+  %i.gd = add i32 %i.gc, %3                       ; 3 uses
   %i.ge = sub i32 %.lcssa.i, %i.gd
   %i.gf = icmp ugt i32 %i.ge, 2
   br i1 %i.gf, label %bb.br, label %.loopexit.i, !llvm.loop !126
@@ -682,9 +680,8 @@ deflate_choose_all_literals.exit:                 ; preds = %deflate_choose_all_
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 2552 ; 2 uses
   tail call fastcc void @deflate_make_huffman_code(i32 noundef 32, i32 noundef 15, ptr noundef nonnull readonly %i.ao, ptr noundef nonnull %i.ap, ptr noundef nonnull %i.aq)
   %i.ar = tail call fastcc i32 @deflate_compute_true_cost(ptr noundef nonnull %0)
-  %i.as = add i32 %3, 257                         ; 2 uses
-  %9 = icmp ult i32 %i.as, 305000
-  %narrow = select i1 %9, i32 %i.as, i32 304999   ; 4 uses
+  %i.as = add i32 %3, 257
+  %narrow = tail call i32 @llvm.umin.i32(i32 %i.as, i32 304999) ; 4 uses
   %.not114 = icmp ugt i32 %3, %narrow
   br i1 %.not114, label %._crit_edge.thread, label %.lr.ph
 

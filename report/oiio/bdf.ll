@@ -201,18 +201,17 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %._crit_edge
   %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.b, i64 %.044.lcssa ; 2 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !113
-  %.fr = freeze i64 %i.y                          ; 2 uses
+  %.fr = freeze i64 %i.y
   %i.z = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.aa = load i16, ptr %i.z, align 8, !tbaa !115
   %i.ab = add i16 %i.aa, 1
-  %2 = icmp ugt i64 %.fr, 4294967295
-  %i.ac = trunc nuw i64 %.fr to i32
-  %spec.select = select i1 %2, i32 0, i32 %i.ac
+  %spec.select65 = tail call i64 @llvm.umin.i64(i64 %.fr, i64 4294967296)
+  %i.ac = trunc i64 %spec.select65 to i32
   br label %.thread60
 
 .thread60:                                        ; preds = %._crit_edge, %.thread, %bb.c
   %.25064 = phi i16 [ %i.ab, %bb.c ], [ 0, %._crit_edge ], [ %i.n, %.thread ]
-  %i.ad = phi i32 [ %spec.select, %bb.c ], [ 0, %._crit_edge ], [ %i.d, %.thread ]
+  %i.ad = phi i32 [ %i.ac, %bb.c ], [ 0, %._crit_edge ], [ %i.d, %.thread ]
   store i32 %i.ad, ptr %1, align 4, !tbaa !3
   %i.ae = zext i16 %.25064 to i32
   ret i32 %i.ae

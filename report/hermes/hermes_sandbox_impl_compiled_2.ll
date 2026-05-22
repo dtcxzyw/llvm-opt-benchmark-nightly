@@ -201,13 +201,12 @@ bb.s:                                             ; preds = %bb.r
   %i.en = lshr i64 %i.em, 16
   %i.eo = or i64 %i.en, %i.em
   %i.ep = trunc nuw i64 %i.eo to i32
-  %i.eq = add i32 %i.ep, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.eq, 65
-  %5 = select i1 %4, i32 64, i32 %i.eq
+  %i.eq = add i32 %i.ep, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.eq, i32 64)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
-  %.22470 = phi i32 [ %5, %bb.s ], [ %.12469, %bb.r ] ; 6 uses
+  %.22470 = phi i32 [ %4, %bb.s ], [ %.12469, %bb.r ] ; 6 uses
   %.val2717 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.er = getelementptr inbounds nuw i8, ptr %.val2717, i64 %i.bj
   %.0.copyload.i2886 = load i32, ptr %i.er, align 1 ; 3 uses

@@ -201,17 +201,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val440 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val440, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val416 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val416, i64 %i.b
   %.0.copyload.i443 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i443) #8, !srcloc !14
-  %i.u = shl i32 %4, 3
+  %i.u = shl i32 %3, 3
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val439 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val439, i64 %i.b
@@ -614,17 +613,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val385 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val385, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val379 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val379, i64 %i.e
   %.0.copyload.i406 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i406) #8, !srcloc !14
-  %i.x = mul i32 %4, 12
+  %i.x = mul i32 %3, 12
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val384 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val384, i64 %i.e
@@ -1027,17 +1025,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ac = lshr i64 %i.ab, 16
   %i.ad = or i64 %i.ac, %i.ab
   %i.ae = trunc nuw i64 %i.ad to i32
-  %i.af = add i32 %i.ae, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.af, 65
-  %5 = select i1 %4, i32 64, i32 %i.af            ; 2 uses
+  %i.af = add i32 %i.ae, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.af, i32 64) ; 2 uses
   %.val640 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val640, i64 %i.g
-  store i32 %5, ptr %i.ag, align 1
+  store i32 %4, ptr %i.ag, align 1
   %.val609 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ah = getelementptr inbounds nuw i8, ptr %.val609, i64 %i.b
   %.0.copyload.i646 = load i32, ptr %i.ah, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i646) #8, !srcloc !14
-  %i.ai = shl i32 %5, 3
+  %i.ai = shl i32 %4, 3
   %i.aj = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ai) #8 ; 21 uses
   %.val639 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ak = getelementptr inbounds nuw i8, ptr %.val639, i64 %i.b
@@ -1440,17 +1437,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val422 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val422, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val403 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val403, i64 %i.b
   %.0.copyload.i431 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i431) #8, !srcloc !14
-  %i.ah = mul i32 %5, 44
+  %i.ah = mul i32 %4, 44
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val421 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val421, i64 %i.b
@@ -1853,17 +1849,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val440 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val440, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val416 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val416, i64 %i.b
   %.0.copyload.i443 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i443) #8, !srcloc !14
-  %i.u = shl i32 %4, 3
+  %i.u = shl i32 %3, 3
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val439 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val439, i64 %i.b
@@ -2266,17 +2261,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val450 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val450, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val427 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val427, i64 %i.b
   %.0.copyload.i455 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i455) #8, !srcloc !14
-  %i.u = mul i32 %4, 12
+  %i.u = mul i32 %3, 12
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val449 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val449, i64 %i.b
@@ -2679,17 +2673,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val359 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val359, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val354 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val354, i64 %i.e
   %.0.copyload.i383 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i383) #8, !srcloc !14
-  %i.x = mul i32 %4, 12
+  %i.x = mul i32 %3, 12
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val358 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val358, i64 %i.e
@@ -3052,17 +3045,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val438 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val438, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val414 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val414, i64 %i.b
   %.0.copyload.i441 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i441) #8, !srcloc !14
-  %i.u = shl i32 %4, 3
+  %i.u = shl i32 %3, 3
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val437 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val437, i64 %i.b
@@ -3465,17 +3457,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val381 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val381, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val374 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val374, i64 %i.b
   %.0.copyload.i392 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i392) #8, !srcloc !14
-  %i.u = shl i32 %4, 2
+  %i.u = shl i32 %3, 2
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val380 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val380, i64 %i.b
@@ -3878,7 +3869,7 @@ bb.i:                                             ; preds = %bb.c
   %i.ao = getelementptr inbounds nuw i8, ptr %.val222, i64 %i.an
   %.0.copyload.i247 = load i32, ptr %i.ao, align 1 ; 4 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i247) #8, !srcloc !14
-  %i.ap = tail call i32 @llvm.umin.i32(i32 %.0.copyload.i247, i32 3840)
+  %i.ap = tail call i32 @llvm.umin.i32(i32 %.0.copyload.i247, i32 3967)
   %i.aq = lshr i32 %i.ap, 7
   %i.ar = shl i32 4096, %i.aq                     ; 2 uses
   %i.as = tail call i32 @w2c_hermes_dlmalloc(ptr noundef nonnull %0, i32 noundef %i.ar) #8 ; 4 uses
@@ -4281,17 +4272,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val692 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val692, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val659 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val659, i64 %i.b
   %.0.copyload.i697 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i697) #8, !srcloc !14
-  %i.ah = shl i32 %5, 3
+  %i.ah = shl i32 %4, 3
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val691 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val691, i64 %i.b
@@ -4694,13 +4684,12 @@ bb.b:                                             ; preds = %bb.a
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i32 [ %4, %bb.b ], [ %2, %bb.a ]      ; 6 uses
+  %.0 = phi i32 [ %3, %bb.b ], [ %2, %bb.a ]      ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 73 uses
   %i.t = zext i32 %1 to i64                       ; 38 uses
   %.val561 = load ptr, ptr %i.s, align 8, !tbaa !7
@@ -5103,17 +5092,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val375 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val375, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val351 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val351, i64 %i.e
   %.0.copyload.i378 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i378) #8, !srcloc !14
-  %i.x = shl i32 %4, 3
+  %i.x = shl i32 %3, 3
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val374 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val374, i64 %i.e
@@ -5487,17 +5475,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val372 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val372, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val348 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val348, i64 %i.e
   %.0.copyload.i375 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i375) #8, !srcloc !14
-  %i.x = shl i32 %4, 3
+  %i.x = shl i32 %3, 3
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val371 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val371, i64 %i.e
@@ -5900,17 +5887,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val691 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val691, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val659 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val659, i64 %i.b
   %.0.copyload.i696 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i696) #8, !srcloc !14
-  %i.ah = shl i32 %5, 3
+  %i.ah = shl i32 %4, 3
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val690 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val690, i64 %i.b
@@ -6313,17 +6299,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val418 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val418, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val400 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val400, i64 %i.b
   %.0.copyload.i429 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i429) #8, !srcloc !14
-  %i.ah = shl i32 %5, 6
+  %i.ah = shl i32 %4, 6
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val417 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val417, i64 %i.b
@@ -6726,13 +6711,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = lshr i64 %i.ag, 16
   %i.ai = or i64 %i.ah, %i.ag
   %i.aj = trunc nuw i64 %i.ai to i32
-  %i.ak = add i32 %i.aj, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ak, 65
-  %5 = select i1 %4, i32 64, i32 %i.ak
+  %i.ak = add i32 %i.aj, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ak, i32 64)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1608 = phi i32 [ %5, %bb.e ], [ %.0607, %bb.d ] ; 6 uses
+  %.1608 = phi i32 [ %4, %bb.e ], [ %.0607, %bb.d ] ; 6 uses
   %.val652 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.al = getelementptr inbounds nuw i8, ptr %.val652, i64 %i.b
   %.0.copyload.i683 = load i32, ptr %i.al, align 1 ; 3 uses
@@ -7135,17 +7119,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val432 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val432, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val408 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val408, i64 %i.b
   %.0.copyload.i435 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i435) #8, !srcloc !14
-  %i.u = shl i32 %4, 3
+  %i.u = shl i32 %3, 3
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 23 uses
   %.val431 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val431, i64 %i.b
@@ -7548,17 +7531,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ac = lshr i64 %i.ab, 16
   %i.ad = or i64 %i.ac, %i.ab
   %i.ae = trunc nuw i64 %i.ad to i32
-  %i.af = add i32 %i.ae, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.af, 65
-  %5 = select i1 %4, i32 64, i32 %i.af            ; 2 uses
+  %i.af = add i32 %i.ae, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.af, i32 64) ; 2 uses
   %.val632 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val632, i64 %i.g
-  store i32 %5, ptr %i.ag, align 1
+  store i32 %4, ptr %i.ag, align 1
   %.val603 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ah = getelementptr inbounds nuw i8, ptr %.val603, i64 %i.b
   %.0.copyload.i638 = load i32, ptr %i.ah, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i638) #8, !srcloc !14
-  %i.ai = shl i32 %5, 3
+  %i.ai = shl i32 %4, 3
   %i.aj = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ai) #8 ; 21 uses
   %.val631 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ak = getelementptr inbounds nuw i8, ptr %.val631, i64 %i.b
@@ -7961,17 +7943,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val674 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val674, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val643 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val643, i64 %i.b
   %.0.copyload.i684 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i684) #8, !srcloc !14
-  %i.ah = shl i32 %5, 4
+  %i.ah = shl i32 %4, 4
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val673 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val673, i64 %i.b
@@ -8374,17 +8355,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val437 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val437, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val413 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val413, i64 %i.b
   %.0.copyload.i440 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i440) #8, !srcloc !14
-  %i.u = shl i32 %4, 3
+  %i.u = shl i32 %3, 3
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 21 uses
   %.val436 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val436, i64 %i.b
@@ -8787,17 +8767,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val796 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val796, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val763 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val763, i64 %i.b
   %.0.copyload.i809 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i809) #8, !srcloc !14
-  %i.ah = mul i32 %5, 60
+  %i.ah = mul i32 %4, 60
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val795 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val795, i64 %i.b
@@ -9200,17 +9179,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val359 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val359, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val354 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val354, i64 %i.e
   %.0.copyload.i383 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i383) #8, !srcloc !14
-  %i.x = mul i32 %4, 12
+  %i.x = mul i32 %3, 12
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val358 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val358, i64 %i.e
@@ -9613,13 +9591,12 @@ bb.e:                                             ; preds = %bb.d
   %i.ah = lshr i64 %i.ag, 16
   %i.ai = or i64 %i.ah, %i.ag
   %i.aj = trunc nuw i64 %i.ai to i32
-  %i.ak = add i32 %i.aj, 1                        ; 2 uses
-  %5 = icmp ult i32 %i.ak, 65
-  %6 = select i1 %5, i32 64, i32 %i.ak
+  %i.ak = add i32 %i.aj, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.ak, i32 64)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1543 = phi i32 [ %6, %bb.e ], [ %.0542, %bb.d ] ; 6 uses
+  %.1543 = phi i32 [ %5, %bb.e ], [ %.0542, %bb.d ] ; 6 uses
   %.val588 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.al = getelementptr inbounds nuw i8, ptr %.val588, i64 %i.b
   %.0.copyload.i620 = load i32, ptr %i.al, align 1 ; 3 uses
@@ -10022,17 +9999,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val675 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val675, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val643 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val643, i64 %i.b
   %.0.copyload.i680 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i680) #8, !srcloc !14
-  %i.ah = shl i32 %5, 3
+  %i.ah = shl i32 %4, 3
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val674 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val674, i64 %i.b
@@ -10435,17 +10411,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ab = lshr i64 %i.aa, 16
   %i.ac = or i64 %i.ab, %i.aa
   %i.ad = trunc nuw i64 %i.ac to i32
-  %i.ae = add i32 %i.ad, 1                        ; 2 uses
-  %4 = icmp ult i32 %i.ae, 65
-  %5 = select i1 %4, i32 64, i32 %i.ae            ; 2 uses
+  %i.ae = add i32 %i.ad, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.ae, i32 64) ; 2 uses
   %.val431 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.af = getelementptr inbounds nuw i8, ptr %.val431, i64 %i.g
-  store i32 %5, ptr %i.af, align 1
+  store i32 %4, ptr %i.af, align 1
   %.val411 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val411, i64 %i.b
   %.0.copyload.i441 = load i32, ptr %i.ag, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i441) #8, !srcloc !14
-  %i.ah = mul i32 %5, 56
+  %i.ah = mul i32 %4, 56
   %i.ai = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ah) #8 ; 13 uses
   %.val430 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.aj = getelementptr inbounds nuw i8, ptr %.val430, i64 %i.b
@@ -10848,17 +10823,16 @@ bb.a:
   %i.o = lshr i64 %i.n, 16
   %i.p = or i64 %i.o, %i.n
   %i.q = trunc nuw i64 %i.p to i32
-  %i.r = add i32 %i.q, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.r, 65
-  %4 = select i1 %3, i32 64, i32 %i.r             ; 2 uses
+  %i.r = add i32 %i.q, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.r, i32 64) ; 2 uses
   %.val402 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.s = getelementptr inbounds nuw i8, ptr %.val402, i64 %i.c
-  store i32 %4, ptr %i.s, align 1
+  store i32 %3, ptr %i.s, align 1
   %.val397 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %.val397, i64 %i.b
   %.0.copyload.i427 = load i32, ptr %i.t, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i427) #8, !srcloc !14
-  %i.u = mul i32 %4, 52
+  %i.u = mul i32 %3, 52
   %i.v = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.u) #8 ; 11 uses
   %.val401 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val401, i64 %i.b
@@ -11261,17 +11235,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val387 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val387, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val382 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val382, i64 %i.e
   %.0.copyload.i414 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i414) #8, !srcloc !14
-  %i.x = mul i32 %4, 20
+  %i.x = mul i32 %3, 20
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 13 uses
   %.val386 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val386, i64 %i.e
@@ -11618,17 +11591,16 @@ bb.a:
   %i.r = lshr i64 %i.q, 16
   %i.s = or i64 %i.r, %i.q
   %i.t = trunc nuw i64 %i.s to i32
-  %i.u = add i32 %i.t, 1                          ; 2 uses
-  %3 = icmp ult i32 %i.u, 65
-  %4 = select i1 %3, i32 64, i32 %i.u             ; 2 uses
+  %i.u = add i32 %i.t, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.u, i32 64) ; 2 uses
   %.val359 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.v = getelementptr inbounds nuw i8, ptr %.val359, i64 %i.f
-  store i32 %4, ptr %i.v, align 1
+  store i32 %3, ptr %i.v, align 1
   %.val354 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.w = getelementptr inbounds nuw i8, ptr %.val354, i64 %i.e
   %.0.copyload.i383 = load i32, ptr %i.w, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i383) #8, !srcloc !14
-  %i.x = mul i32 %4, 12
+  %i.x = mul i32 %3, 12
   %i.y = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.x) #8 ; 21 uses
   %.val358 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.z = getelementptr inbounds nuw i8, ptr %.val358, i64 %i.e
@@ -12031,7 +12003,7 @@ bb.b:                                             ; preds = %.loopexit
 bb.c:                                             ; preds = %.loopexit
   %i.h = add i32 %2, 11
   %i.i = and i32 %i.h, -8
-  %i.j = icmp ult i32 %2, 11
+  %i.j = icmp ult i32 %2, 5
   %i.k = select i1 %i.j, i32 16, i32 %i.i         ; 5 uses
   %i.l = add i32 %i.k, 12
   %i.m = add i32 %i.l, %.0

@@ -201,13 +201,12 @@ bb.bt:                                            ; preds = %bb.bs
   %i.aah = lshr i64 %i.aag, 16
   %i.aai = or i64 %i.aah, %i.aag
   %i.aaj = trunc nuw i64 %i.aai to i32
-  %i.aak = add i32 %i.aaj, 1                      ; 2 uses
-  %3 = icmp ult i32 %i.aak, 65
-  %4 = select i1 %3, i32 64, i32 %i.aak
+  %i.aak = add i32 %i.aaj, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.aak, i32 64)
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
-  %.18 = phi i32 [ %4, %bb.bt ], [ %.17, %bb.bs ] ; 6 uses
+  %.18 = phi i32 [ %3, %bb.bt ], [ %.17, %bb.bs ] ; 6 uses
   %.val7355 = load ptr, ptr %i.f, align 8, !tbaa !21
   %i.aal = getelementptr inbounds nuw i8, ptr %.val7355, i64 %i.ne
   %.0.copyload.i7762 = load i32, ptr %i.aal, align 1 ; 3 uses
@@ -610,13 +609,12 @@ bb.fk:                                            ; preds = %bb.fj
   %.val25245 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.bxl = getelementptr inbounds nuw i8, ptr %.val25245, i64 %i.bww
   %i.bxm = getelementptr inbounds nuw i8, ptr %i.bxl, i64 4
-  %.0.copyload.i27608 = load i32, ptr %i.bxm, align 1 ; 3 uses
+  %.0.copyload.i27608 = load i32, ptr %i.bxm, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i27608) #16, !srcloc !22
   %i.bxn = add i32 %.0.copyload.i27608, 8
-  %2 = icmp ult i32 %i.bxn, 9
-  %i.bxo = add i32 %.0.copyload.i27608, 15
-  %3 = select i1 %2, i32 15, i32 %i.bxo           ; 2 uses
-  %i.bxp = and i32 %3, -8
+  %2 = tail call i32 @llvm.umax.i32(i32 %i.bxn, i32 8)
+  %i.bxo = add i32 %2, 7                          ; 2 uses
+  %i.bxp = and i32 %i.bxo, -8
   %i.bxq = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AHadesGC0x3A0x3AallocLongLived0x28unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.na, i32 noundef %i.bxp) #16 ; 2 uses
   %.val27138 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.bxr = getelementptr inbounds nuw i8, ptr %.val27138, i64 %i.bww
@@ -639,7 +637,7 @@ bb.fl:                                            ; preds = %bb.fk
   br label %bb.fm
 
 bb.fm:                                            ; preds = %bb.fl, %bb.fk
-  %i.bya = and i32 %3, 16777208
+  %i.bya = and i32 %i.bxo, 16777208
   %i.byb = or disjoint i32 %i.bya, 67108864
   %.val26139 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.byc = getelementptr inbounds nuw i8, ptr %.val26139, i64 %i.bxu
@@ -715,12 +713,11 @@ bb.fp:                                            ; preds = %bb.fo
   %i.bzf = getelementptr inbounds nuw i8, ptr %i.bze, i64 12
   %.0.copyload.i27615 = load i32, ptr %i.bzf, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i27615) #16, !srcloc !22
-  %i.bzg = shl i32 %.0.copyload.i27615, 1         ; 2 uses
+  %i.bzg = shl i32 %.0.copyload.i27615, 1
   %i.bzh = add i32 %i.bzg, 8
-  %4 = icmp ult i32 %i.bzh, 9
-  %i.bzi = add i32 %i.bzg, 15
-  %5 = select i1 %4, i32 15, i32 %i.bzi           ; 2 uses
-  %i.bzj = and i32 %5, -8
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.bzh, i32 8)
+  %i.bzi = add i32 %3, 7                          ; 2 uses
+  %i.bzj = and i32 %i.bzi, -8
   %i.bzk = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3AHadesGC0x3A0x3AallocLongLived0x28unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %i.na, i32 noundef %i.bzj) #16 ; 2 uses
   %.val27135 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.bzl = getelementptr inbounds nuw i8, ptr %.val27135, i64 %i.bza
@@ -744,7 +741,7 @@ bb.fq:                                            ; preds = %bb.fp
   br label %bb.fr
 
 bb.fr:                                            ; preds = %bb.fq, %bb.fp
-  %i.bzv = and i32 %5, 16777208
+  %i.bzv = and i32 %i.bzi, 16777208
   %i.bzw = or disjoint i32 %i.bzv, 50331648
   %.val26134 = load ptr, ptr %i.g, align 8, !tbaa !21
   %i.bzx = getelementptr inbounds nuw i8, ptr %.val26134, i64 %i.bzo
@@ -1147,7 +1144,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i) #16, !srcloc !22
   %i.g = add nuw nsw i32 %1, 11
   %i.h = and i32 %i.g, 504
-  %i.i = icmp samesign ult i32 %1, 11
+  %i.i = icmp samesign ult i32 %1, 5
   %i.j = select i1 %i.i, i32 16, i32 %i.h         ; 12 uses
   %i.k = lshr exact i32 %i.j, 3                   ; 4 uses
   %i.l = lshr i32 %.0.copyload.i, %i.k            ; 4 uses
@@ -1550,7 +1547,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.e = add nuw i32 %2, 11
   %i.f = and i32 %i.e, -8
-  %i.g = icmp ult i32 %2, 11
+  %i.g = icmp ult i32 %2, 5
   %i.h = select i1 %i.g, i32 16, i32 %i.f         ; 19 uses
   %i.i = add i32 %1, -8                           ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 59 uses
@@ -1953,13 +1950,12 @@ bb.fs:                                            ; preds = %bb.fr, %bb.fq
   %i.anp = lshr i64 %i.ano, 16
   %i.anq = or i64 %i.anp, %i.ano
   %i.anr = trunc nuw i64 %i.anq to i32
-  %i.ans = add i32 %i.anr, 1                      ; 2 uses
-  %3 = icmp ult i32 %i.ans, 65
-  %4 = select i1 %3, i32 64, i32 %i.ans           ; 2 uses
+  %i.ans = add i32 %i.anr, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.ans, i32 64) ; 2 uses
   %.val6772 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.ant = getelementptr inbounds nuw i8, ptr %.val6772, i64 %i.ir
-  store i32 %4, ptr %i.ant, align 1
-  %i.anu = mul i32 %4, 44
+  store i32 %3, ptr %i.ant, align 1
+  %i.anu = mul i32 %3, 44
   %i.anv = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.anu) #16 ; 13 uses
   %.val6771 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.anw = getelementptr inbounds nuw i8, ptr %.val6771, i64 %i.ys
@@ -2362,13 +2358,12 @@ bb.gv:                                            ; preds = %bb.gu, %bb.gt
   %i.aww = lshr i64 %i.awv, 16
   %i.awx = or i64 %i.aww, %i.awv
   %i.awy = trunc nuw i64 %i.awx to i32
-  %i.awz = add i32 %i.awy, 1                      ; 2 uses
-  %5 = icmp ult i32 %i.awz, 65
-  %6 = select i1 %5, i32 64, i32 %i.awz           ; 2 uses
+  %i.awz = add i32 %i.awy, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.awz, i32 64) ; 2 uses
   %.val6754 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.axa = getelementptr inbounds nuw i8, ptr %.val6754, i64 %i.ir
-  store i32 %6, ptr %i.axa, align 1
-  %i.axb = mul i32 %6, 44
+  store i32 %4, ptr %i.axa, align 1
+  %i.axb = mul i32 %4, 44
   %i.axc = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.axb) #16 ; 13 uses
   %.val6753 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.axd = getelementptr inbounds nuw i8, ptr %.val6753, i64 %i.asd
@@ -2762,13 +2757,12 @@ bb.hn:                                            ; preds = %bb.hm, %bb.hl
   %i.bcy = lshr i64 %i.bcx, 16
   %i.bcz = or i64 %i.bcy, %i.bcx
   %i.bda = trunc nuw i64 %i.bcz to i32
-  %i.bdb = add i32 %i.bda, 1                      ; 2 uses
-  %7 = icmp ult i32 %i.bdb, 65
-  %8 = select i1 %7, i32 64, i32 %i.bdb           ; 2 uses
+  %i.bdb = add i32 %i.bda, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.bdb, i32 64) ; 2 uses
   %.val6737 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.bdc = getelementptr inbounds nuw i8, ptr %.val6737, i64 %i.ir
-  store i32 %8, ptr %i.bdc, align 1
-  %i.bdd = mul i32 %8, 44
+  store i32 %5, ptr %i.bdc, align 1
+  %i.bdd = mul i32 %5, 44
   %i.bde = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.bdd) #16 ; 13 uses
   %.val6736 = load ptr, ptr %i.a, align 8, !tbaa !21
   %i.bdf = getelementptr inbounds nuw i8, ptr %.val6736, i64 %i.asd
@@ -3171,17 +3165,16 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.gc = lshr i64 %i.gb, 16
   %i.gd = or i64 %i.gc, %i.gb
   %i.ge = trunc nuw i64 %i.gd to i32
-  %i.gf = add i32 %i.ge, 1                        ; 2 uses
-  %5 = icmp ult i32 %i.gf, 65
-  %6 = select i1 %5, i32 64, i32 %i.gf            ; 2 uses
+  %i.gf = add i32 %i.ge, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.gf, i32 64) ; 2 uses
   %.val9757 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gg = getelementptr inbounds nuw i8, ptr %.val9757, i64 %i.dn
-  store i32 %6, ptr %i.gg, align 1
+  store i32 %5, ptr %i.gg, align 1
   %.val9528 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gh = getelementptr inbounds nuw i8, ptr %.val9528, i64 %i.dp
   %.0.copyload.i9992 = load i32, ptr %i.gh, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i9992) #16, !srcloc !22
-  %i.gi = shl i32 %6, 2
+  %i.gi = shl i32 %5, 2
   %i.gj = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.gi) #16 ; 5 uses
   %.val9756 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.gk = getelementptr inbounds nuw i8, ptr %.val9756, i64 %i.dp
@@ -3584,10 +3577,9 @@ bb.bj:                                            ; preds = %bb.bh, %bb.bg
   %i.rd = lshr i64 %i.rc, 16
   %i.re = or i64 %i.rd, %i.rc
   %i.rf = trunc nuw i64 %i.re to i32
-  %i.rg = add i32 %i.rf, 1                        ; 2 uses
-  %7 = icmp ult i32 %i.rg, 65
-  %8 = select i1 %7, i32 64, i32 %i.rg            ; 9 uses
-  %i.rh = mul i32 %8, 24                          ; 3 uses
+  %i.rg = add i32 %i.rf, 1
+  %6 = tail call i32 @llvm.umax.i32(i32 %i.rg, i32 64) ; 9 uses
+  %i.rh = mul i32 %6, 24                          ; 3 uses
   %i.ri = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.rh) #16 ; 31 uses
   %i.rj = add i32 %i.rh, %i.ri                    ; 2 uses
   %.not8985 = icmp eq i32 %.28404, 0
@@ -3940,7 +3932,7 @@ bb.bl:                                            ; preds = %bb.bj
 bb.bm:                                            ; preds = %.loopexit10467
   %i.ww = mul i32 %.38563, 24
   %i.wx = add i32 %.28404, %i.ww
-  %i.wy = add i32 %8, -1                          ; 3 uses
+  %i.wy = add i32 %6, -1                          ; 3 uses
   br label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bx, %bb.bm
@@ -4153,7 +4145,7 @@ bb.bx:                                            ; preds = %.loopexit10446, %bb
 
 .loopexit10462:                                   ; preds = %.preheader10461, %.loopexit10464, %.loopexit10465
   %.58535 = phi i32 [ %.48534, %.loopexit10465 ], [ 0, %.loopexit10464 ], [ 0, %.preheader10461 ] ; 6 uses
-  %i.zv = add i32 %8, -1                          ; 3 uses
+  %i.zv = add i32 %6, -1                          ; 3 uses
   %i.zw = and i32 %i.zv, %i.nl                    ; 3 uses
   %.not9004 = icmp eq i32 %.0.copyload.i10006, %i.nd
   br i1 %.not9004, label %bb.cc, label %.preheader10645
@@ -4273,7 +4265,7 @@ bb.ce:                                            ; preds = %.preheader10457
 .loopexit10448:                                   ; preds = %.preheader10457, %bb.ca, %bb.cc, %bb.bi
   %.178715 = phi i32 [ %.0.copyload.i10023, %bb.bi ], [ %i.nl, %bb.ca ], [ %i.nl, %bb.cc ], [ %i.nl, %.preheader10457 ]
   %.108601 = phi i32 [ %.68597, %bb.bi ], [ %i.zy, %bb.ca ], [ %i.aar, %bb.cc ], [ %i.abb, %.preheader10457 ]
-  %.78567 = phi i32 [ %.38563, %bb.bi ], [ %8, %bb.ca ], [ %8, %bb.cc ], [ %8, %.preheader10457 ] ; 2 uses
+  %.78567 = phi i32 [ %.38563, %bb.bi ], [ %6, %bb.ca ], [ %6, %bb.cc ], [ %6, %.preheader10457 ] ; 2 uses
   %.68536 = phi i32 [ %.18531, %bb.bi ], [ %.58535, %bb.ca ], [ %.58535, %bb.cc ], [ %.58535, %.preheader10457 ] ; 2 uses
   %.38405 = phi i32 [ %.28404, %bb.bi ], [ %i.ri, %bb.ca ], [ %i.ri, %bb.cc ], [ %i.ri, %.preheader10457 ] ; 2 uses
   %.48362 = phi i32 [ %.18359, %bb.bi ], [ 0, %bb.ca ], [ 0, %bb.cc ], [ 0, %.preheader10457 ] ; 2 uses
@@ -4296,7 +4288,7 @@ bb.cf:                                            ; preds = %.loopexit10448
 .loopexit10459:                                   ; preds = %.loopexit10447, %bb.ce, %bb.cd, %bb.cf, %.loopexit10448._crit_edge
   %.pre-phi10804 = phi i64 [ %i.abc, %bb.ce ], [ %i.abk, %.loopexit10448._crit_edge ], [ %i.aas, %bb.cd ], [ %i.abk, %bb.cf ], [ %i.zz, %.loopexit10447 ] ; 5 uses
   %i.abo = phi i32 [ %.0.copyload.i10006, %bb.ce ], [ %i.nd, %.loopexit10448._crit_edge ], [ %.0.copyload.i10006, %bb.cd ], [ %i.nd, %bb.cf ], [ %i.nd, %.loopexit10447 ]
-  %.88568 = phi i32 [ %8, %bb.ce ], [ %.78567, %.loopexit10448._crit_edge ], [ %8, %bb.cd ], [ %.78567, %bb.cf ], [ %8, %.loopexit10447 ]
+  %.88568 = phi i32 [ %6, %bb.ce ], [ %.78567, %.loopexit10448._crit_edge ], [ %6, %bb.cd ], [ %.78567, %bb.cf ], [ %6, %.loopexit10447 ]
   %.78537 = phi i32 [ %.58535, %bb.ce ], [ %.68536, %.loopexit10448._crit_edge ], [ %.58535, %bb.cd ], [ %.68536, %bb.cf ], [ %.58535, %.loopexit10447 ]
   %.48406 = phi i32 [ %i.ri, %bb.ce ], [ %.38405, %.loopexit10448._crit_edge ], [ %i.ri, %bb.cd ], [ %.38405, %bb.cf ], [ %i.ri, %.loopexit10447 ]
   %.58363 = phi i32 [ 0, %bb.ce ], [ %i.abn, %.loopexit10448._crit_edge ], [ 0, %bb.cd ], [ %.48362, %bb.cf ], [ 0, %.loopexit10447 ]
@@ -4699,13 +4691,12 @@ bb.fv:                                            ; preds = %bb.fu, %bb.ft
   %i.atk = lshr i64 %i.atj, 16
   %i.atl = or i64 %i.atk, %i.atj
   %i.atm = trunc nuw i64 %i.atl to i32
-  %i.atn = add i32 %i.atm, 1                      ; 2 uses
-  %9 = icmp ult i32 %i.atn, 65
-  %10 = select i1 %9, i32 64, i32 %i.atn          ; 2 uses
+  %i.atn = add i32 %i.atm, 1
+  %7 = tail call i32 @llvm.umax.i32(i32 %i.atn, i32 64) ; 2 uses
   %.val9675 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.ato = getelementptr inbounds nuw i8, ptr %.val9675, i64 %i.arp
-  store i32 %10, ptr %i.ato, align 1
-  %i.atp = shl i32 %10, 2
+  store i32 %7, ptr %i.ato, align 1
+  %i.atp = shl i32 %7, 2
   %i.atq = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.atp) #16 ; 24 uses
   %.val9674 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.atr = getelementptr inbounds nuw i8, ptr %.val9674, i64 %i.arn
@@ -5108,17 +5099,16 @@ bb.hn:                                            ; preds = %bb.hm, %bb.hl
   %i.bep = lshr i64 %i.beo, 16
   %i.beq = or i64 %i.bep, %i.beo
   %i.ber = trunc nuw i64 %i.beq to i32
-  %i.bes = add i32 %i.ber, 1                      ; 2 uses
-  %11 = icmp ult i32 %i.bes, 65
-  %12 = select i1 %11, i32 64, i32 %i.bes         ; 2 uses
+  %i.bes = add i32 %i.ber, 1
+  %8 = tail call i32 @llvm.umax.i32(i32 %i.bes, i32 64) ; 2 uses
   %.val9656 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.bet = getelementptr inbounds nuw i8, ptr %.val9656, i64 %i.bcc
-  store i32 %12, ptr %i.bet, align 1
+  store i32 %8, ptr %i.bet, align 1
   %.val9405 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.beu = getelementptr inbounds nuw i8, ptr %.val9405, i64 %i.baa
   %.0.copyload.i10149 = load i32, ptr %i.beu, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i10149) #16, !srcloc !22
-  %i.bev = shl i32 %12, 3
+  %i.bev = shl i32 %8, 3
   %i.bew = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.bev) #16 ; 5 uses
   %.val9655 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.bex = getelementptr inbounds nuw i8, ptr %.val9655, i64 %i.baa
@@ -5521,10 +5511,9 @@ bb.jc:                                            ; preds = %bb.ja, %bb.iz
   %i.bqd = lshr i64 %i.bqc, 16
   %i.bqe = or i64 %i.bqd, %i.bqc
   %i.bqf = trunc nuw i64 %i.bqe to i32
-  %i.bqg = add i32 %i.bqf, 1                      ; 2 uses
-  %13 = icmp ult i32 %i.bqg, 65
-  %14 = select i1 %13, i32 64, i32 %i.bqg         ; 9 uses
-  %i.bqh = mul i32 %14, 24                        ; 3 uses
+  %i.bqg = add i32 %i.bqf, 1
+  %9 = tail call i32 @llvm.umax.i32(i32 %i.bqg, i32 64) ; 9 uses
+  %i.bqh = mul i32 %9, 24                         ; 3 uses
   %i.bqi = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef %0, i32 noundef %i.bqh) #16 ; 31 uses
   %i.bqj = add i32 %i.bqh, %i.bqi                 ; 2 uses
   %.not9147 = icmp eq i32 %.18, 0
@@ -5877,7 +5866,7 @@ bb.je:                                            ; preds = %bb.jc
 bb.jf:                                            ; preds = %.loopexit10372
   %i.bvw = mul i32 %.298589, 24
   %i.bvx = add i32 %.18, %i.bvw
-  %i.bvy = add i32 %14, -1                        ; 3 uses
+  %i.bvy = add i32 %9, -1                         ; 3 uses
   br label %bb.jg
 
 bb.jg:                                            ; preds = %bb.jq, %bb.jf
@@ -6091,7 +6080,7 @@ bb.jq:                                            ; preds = %.loopexit10351, %bb
 
 .loopexit10367:                                   ; preds = %.preheader10366, %.loopexit10369, %.loopexit10370
   %.208550 = phi i32 [ %.198549, %.loopexit10370 ], [ 0, %.loopexit10369 ], [ 0, %.preheader10366 ] ; 6 uses
-  %i.byw = add i32 %14, -1                        ; 3 uses
+  %i.byw = add i32 %9, -1                         ; 3 uses
   %i.byx = and i32 %i.byw, %i.bmg                 ; 3 uses
   %.not9166 = icmp eq i32 %.0.copyload.i10163, %i.blx
   br i1 %.not9166, label %bb.jx, label %bb.jr
@@ -6216,7 +6205,7 @@ bb.jz:                                            ; preds = %.preheader10362
 .loopexit10353:                                   ; preds = %.preheader10362, %bb.jv, %bb.jx, %bb.jb
   %.428740 = phi i32 [ %.0.copyload.i10180, %bb.jb ], [ %i.bmg, %bb.jv ], [ %i.bmg, %bb.jx ], [ %i.bmg, %.preheader10362 ]
   %.288619 = phi i32 [ %.248615, %bb.jb ], [ %i.bzb, %bb.jv ], [ %i.bzu, %bb.jx ], [ %i.cae, %.preheader10362 ]
-  %.33 = phi i32 [ %.298589, %bb.jb ], [ %14, %bb.jv ], [ %14, %bb.jx ], [ %14, %.preheader10362 ] ; 2 uses
+  %.33 = phi i32 [ %.298589, %bb.jb ], [ %9, %bb.jv ], [ %9, %bb.jx ], [ %9, %.preheader10362 ] ; 2 uses
   %.218551 = phi i32 [ %.168546, %bb.jb ], [ %.208550, %bb.jv ], [ %.208550, %bb.jx ], [ %.208550, %.preheader10362 ] ; 2 uses
   %.19 = phi i32 [ %.18, %bb.jb ], [ %i.bqi, %bb.jv ], [ %i.bqi, %bb.jx ], [ %i.bqi, %.preheader10362 ] ; 2 uses
   %.13 = phi i32 [ %.10, %bb.jb ], [ 0, %bb.jv ], [ 0, %bb.jx ], [ 0, %.preheader10362 ] ; 2 uses
@@ -6239,7 +6228,7 @@ bb.ka:                                            ; preds = %.loopexit10353
 .loopexit10364:                                   ; preds = %.loopexit10352, %bb.jz, %bb.jy, %bb.ka, %.loopexit10353._crit_edge
   %.pre-phi10793 = phi i64 [ %i.caf, %bb.jz ], [ %i.can, %.loopexit10353._crit_edge ], [ %i.bzv, %bb.jy ], [ %i.can, %bb.ka ], [ %i.bzc, %.loopexit10352 ] ; 5 uses
   %i.car = phi i32 [ %.0.copyload.i10163, %bb.jz ], [ %i.blx, %.loopexit10353._crit_edge ], [ %.0.copyload.i10163, %bb.jy ], [ %i.blx, %bb.ka ], [ %i.blx, %.loopexit10352 ]
-  %.34 = phi i32 [ %14, %bb.jz ], [ %.33, %.loopexit10353._crit_edge ], [ %14, %bb.jy ], [ %.33, %bb.ka ], [ %14, %.loopexit10352 ]
+  %.34 = phi i32 [ %9, %bb.jz ], [ %.33, %.loopexit10353._crit_edge ], [ %9, %bb.jy ], [ %.33, %bb.ka ], [ %9, %.loopexit10352 ]
   %.228552 = phi i32 [ %.208550, %bb.jz ], [ %.218551, %.loopexit10353._crit_edge ], [ %.208550, %bb.jy ], [ %.218551, %bb.ka ], [ %.208550, %.loopexit10352 ]
   %.20 = phi i32 [ %i.bqi, %bb.jz ], [ %.19, %.loopexit10353._crit_edge ], [ %i.bqi, %bb.jy ], [ %.19, %bb.ka ], [ %i.bqi, %.loopexit10352 ]
   %.14 = phi i32 [ 0, %bb.jz ], [ %i.caq, %.loopexit10353._crit_edge ], [ 0, %bb.jy ], [ %.13, %bb.ka ], [ 0, %.loopexit10352 ]
@@ -6642,13 +6631,12 @@ bb.nq:                                            ; preds = %bb.np, %bb.no
   %i.cso = lshr i64 %i.csn, 16
   %i.csp = or i64 %i.cso, %i.csn
   %i.csq = trunc nuw i64 %i.csp to i32
-  %i.csr = add i32 %i.csq, 1                      ; 2 uses
-  %15 = icmp ult i32 %i.csr, 65
-  %16 = select i1 %15, i32 64, i32 %i.csr         ; 2 uses
+  %i.csr = add i32 %i.csq, 1
+  %10 = tail call i32 @llvm.umax.i32(i32 %i.csr, i32 64) ; 2 uses
   %.val9575 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.css = getelementptr inbounds nuw i8, ptr %.val9575, i64 %i.cqt
-  store i32 %16, ptr %i.css, align 1
-  %i.cst = shl i32 %16, 2
+  store i32 %10, ptr %i.css, align 1
+  %i.cst = shl i32 %10, 2
   %i.csu = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.cst) #16 ; 24 uses
   %.val9574 = load ptr, ptr %i.d, align 8, !tbaa !21
   %i.csv = getelementptr inbounds nuw i8, ptr %.val9574, i64 %i.cqr

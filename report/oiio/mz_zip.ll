@@ -201,21 +201,19 @@ bb.af:                                            ; preds = %bb.ae
 
 bb.ag:                                            ; preds = %bb.af
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
-  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !21 ; 2 uses
-  %1 = icmp ugt i64 %i.ec, 65534
+  %i.ec = load i64, ptr %i.eb, align 8, !tbaa !21
   %i.ed = load ptr, ptr %i.n, align 8, !tbaa !15
-  %2 = trunc nuw i64 %i.ec to i16
-  %.sink.i = select i1 %1, i16 -1, i16 %2
+  %.sink191.i = call i64 @llvm.umin.i64(i64 %i.ec, i64 65535)
+  %.sink.i = trunc nuw i64 %.sink191.i to i16
   %i.ee = call i32 @mz_stream_write_uint16(ptr noundef %i.ed, i16 noundef zeroext %.sink.i) #23 ; 2 uses
   %i.ef = icmp eq i32 %i.ee, 0
   br i1 %i.ef, label %bb.ah, label %.thread164.i
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.eg = load i64, ptr %i.eb, align 8, !tbaa !21 ; 2 uses
-  %3 = icmp ugt i64 %i.eg, 65534
+  %i.eg = load i64, ptr %i.eb, align 8, !tbaa !21
   %i.eh = load ptr, ptr %i.n, align 8, !tbaa !15
-  %4 = trunc nuw i64 %i.eg to i16
-  %.sink189.i = select i1 %3, i16 -1, i16 %4
+  %.sink189192.i = call i64 @llvm.umin.i64(i64 %i.eg, i64 65535)
+  %.sink189.i = trunc nuw i64 %.sink189192.i to i16
   %i.ei = call i32 @mz_stream_write_uint16(ptr noundef %i.eh, i16 noundef zeroext %.sink189.i) #23 ; 2 uses
   %i.ej = icmp eq i32 %i.ei, 0
   br i1 %i.ej, label %bb.ai, label %.thread164.i
@@ -229,11 +227,10 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.eo, label %.thread164.sink.split.i, label %.thread164.i
 
 .thread164.sink.split.i:                          ; preds = %bb.ai
-  %i.ep = load i64, ptr %i.am, align 8, !tbaa !24 ; 2 uses
-  %5 = icmp sgt i64 %i.ep, 4294967294
+  %i.ep = load i64, ptr %i.am, align 8, !tbaa !24
   %i.eq = load ptr, ptr %i.n, align 8, !tbaa !15
-  %6 = trunc i64 %i.ep to i32
-  %.sink190.i = select i1 %5, i32 -1, i32 %6
+  %.sink190193.i = call i64 @llvm.smin.i64(i64 %i.ep, i64 4294967295)
+  %.sink190.i = trunc i64 %.sink190193.i to i32
   %i.er = call i32 @mz_stream_write_uint32(ptr noundef %i.eq, i32 noundef %.sink190.i) #23
   br label %.thread164.i
 
@@ -636,11 +633,10 @@ bb.bo:                                            ; preds = %bb.bn
 
 .sink.split:                                      ; preds = %bb.bo
   %i.go = getelementptr inbounds nuw i8, ptr %2, i64 72
-  %i.gp = load i64, ptr %i.go, align 8, !tbaa !29 ; 2 uses
-  %4 = icmp sgt i64 %i.gp, 4294967294
-  %i.gq = trunc i64 %i.gp to i32
-  %.sink = select i1 %4, i32 -1, i32 %i.gq
-  %i.gr = call i32 @mz_stream_write_uint32(ptr noundef %0, i32 noundef %.sink) #23
+  %i.gp = load i64, ptr %i.go, align 8, !tbaa !29
+  %.sink471 = call i64 @llvm.smin.i64(i64 %i.gp, i64 4294967295)
+  %i.gq = trunc i64 %.sink471 to i32
+  %i.gr = call i32 @mz_stream_write_uint32(ptr noundef %0, i32 noundef %i.gq) #23
   br label %bb.bp
 
 bb.bp:                                            ; preds = %.sink.split, %.thread350
@@ -1042,6 +1038,9 @@ declare i32 @llvm.smin.i32(i32, i32) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #21
 
 attributes #0 = { mustprogress nofree nounwind willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

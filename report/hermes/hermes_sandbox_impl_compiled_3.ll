@@ -201,7 +201,7 @@ bb.a:
   %i.d = lshr i32 %2, 3
   %i.e = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %2, i1 false)
   %i.f = sub nuw nsw i32 276, %i.e
-  %i.g = icmp ult i32 %2, 2048
+  %i.g = icmp ult i32 %2, 2040
   %i.h = select i1 %i.g, i32 %i.d, i32 %i.f       ; 5 uses
   %i.i = icmp samesign ult i32 %i.h, 256
   br i1 %i.i, label %bb.b, label %bb.g
@@ -325,7 +325,7 @@ bb.f:                                             ; preds = %bb.b
   %i.be = lshr i32 %i.bd, 3
   %i.bf = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.bd, i1 false)
   %i.bg = sub nuw nsw i32 276, %i.bf
-  %i.bh = icmp ult i32 %i.bd, 2048
+  %i.bh = icmp ult i32 %i.bd, 2040
   %i.bi = select i1 %i.bh, i32 %i.be, i32 %i.bg
   br label %bb.g
 
@@ -728,7 +728,7 @@ bb.bz:                                            ; preds = %bb.by
   %i.zo = lshr i32 %i.yv, 3
   %i.zp = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.yv, i1 true)
   %i.zq = sub nuw nsw i32 276, %i.zp
-  %i.zr = icmp ult i32 %i.yv, 2048
+  %i.zr = icmp ult i32 %i.yv, 2040
   %i.zs = select i1 %i.zr, i32 %i.zo, i32 %i.zq
   %i.zt = mul i32 %i.zs, 12
   %i.zu = add i32 %i.zn, %i.zt
@@ -1131,13 +1131,12 @@ bb.a:
   %.val97 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.c = getelementptr inbounds nuw i8, ptr %.val97, i64 %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 4
-  %.0.copyload.i = load i32, ptr %i.d, align 1    ; 3 uses
+  %.0.copyload.i = load i32, ptr %i.d, align 1    ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i) #8, !srcloc !13
   %i.e = add i32 %.0.copyload.i, 8
-  %4 = icmp ult i32 %i.e, 9
-  %i.f = add i32 %.0.copyload.i, 15
-  %5 = select i1 %4, i32 15, i32 %i.f             ; 2 uses
-  %i.g = and i32 %5, -8                           ; 3 uses
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.e, i32 8)
+  %i.f = add i32 %4, 7                            ; 2 uses
+  %i.g = and i32 %i.f, -8                         ; 3 uses
   %i.h = add i32 %2, 1376
   %i.i = zext i32 %i.h to i64
   %.val96 = load ptr, ptr %i.a, align 8, !tbaa !7
@@ -1191,7 +1190,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %i.ae = and i32 %5, 16777208
+  %i.ae = and i32 %i.f, 16777208
   %i.af = or disjoint i32 %i.ae, 67108864
   %.val99 = load ptr, ptr %i.a, align 8, !tbaa !7
   %i.ag = getelementptr inbounds nuw i8, ptr %.val99, i64 %i.y
@@ -1594,9 +1593,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.au, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.av = add i32 %.0.copyload.i700, 1            ; 2 uses
-  %5 = icmp ult i32 %i.av, 196608
-  %6 = select i1 %5, i32 196607, i32 %i.av
+  %i.av = add i32 %.0.copyload.i700, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.av, i32 196607)
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.i
@@ -1610,7 +1608,7 @@ bb.l:                                             ; preds = %bb.i
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.j, %bb.l, %bb.k
-  %.1605 = phi i32 [ %i.at, %bb.j ], [ %6, %bb.k ], [ %i.az, %bb.l ]
+  %.1605 = phi i32 [ %i.at, %bb.j ], [ %5, %bb.k ], [ %i.az, %bb.l ]
   %i.ba = tail call i32 @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ADictPropertyMap0x3A0x3Acreate0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x29(ptr noundef nonnull %0, i32 noundef %3, i32 noundef %.1605) ; 4 uses
   %i.bb = icmp eq i32 %i.ba, -1
   br i1 %i.bb, label %.critedge, label %bb.n
@@ -2013,12 +2011,11 @@ bb.g:                                             ; preds = %bb.f, %bb.b
 ; Function Attrs: nounwind uwtable
 define hidden void @w2c_hermes_hermes0x3A0x3Avm0x3A0x3ADynamicStringPrimitive0x3Cchar16_t0x2C0x20false0x3E0x3A0x3Acreate0x28hermes0x3A0x3Avm0x3A0x3ARuntime0x260x2C0x20unsigned0x20int0x29(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = shl i32 %3, 1                            ; 2 uses
+  %i.a = shl i32 %3, 1
   %i.b = add i32 %i.a, 8
-  %4 = icmp ult i32 %i.b, 9
-  %i.c = add i32 %i.a, 15
-  %5 = select i1 %4, i32 15, i32 %i.c             ; 2 uses
-  %i.d = and i32 %5, -8                           ; 3 uses
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.b, i32 8)
+  %i.c = add i32 %4, 7                            ; 2 uses
+  %i.d = and i32 %i.c, -8                         ; 3 uses
   %i.e = add i32 %2, 1376
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
   %i.g = zext i32 %i.e to i64
@@ -2057,7 +2054,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %.val79, i64 %i.t
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   store i32 %3, ptr %i.v, align 1
-  %i.w = and i32 %5, 16777208
+  %i.w = and i32 %i.c, 16777208
   %i.x = or disjoint i32 %i.w, 50331648
   %.val78 = load ptr, ptr %i.f, align 8, !tbaa !7
   %i.y = getelementptr inbounds nuw i8, ptr %.val78, i64 %i.t
@@ -2460,13 +2457,12 @@ bb.dc:                                            ; preds = %bb.db
 
 bb.dd:                                            ; preds = %bb.dc
   %i.rs = getelementptr inbounds nuw i8, ptr %i.rr, i64 4
-  %.0.copyload.i3448 = load i32, ptr %i.rs, align 1 ; 8 uses
+  %.0.copyload.i3448 = load i32, ptr %i.rs, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3448) #8, !srcloc !13
   %i.rt = add i32 %.0.copyload.i3448, 8
-  %3 = icmp ult i32 %i.rt, 9
-  %i.ru = add i32 %.0.copyload.i3448, 15
-  %4 = select i1 %3, i32 15, i32 %i.ru            ; 2 uses
-  %i.rv = and i32 %4, -8                          ; 3 uses
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.rt, i32 8)
+  %i.ru = add i32 %3, 7                           ; 2 uses
+  %i.rv = and i32 %i.ru, -8                       ; 3 uses
   %i.rw = add i32 %.0.copyload.i3446, 1376
   %i.rx = zext i32 %i.rw to i64
   %.val2982 = load ptr, ptr %i.d, align 8, !tbaa !7
@@ -2504,7 +2500,7 @@ bb.dg:                                            ; preds = %bb.df, %bb.de
   %i.sl = getelementptr inbounds nuw i8, ptr %.val3143, i64 %i.sk
   %i.sm = getelementptr inbounds nuw i8, ptr %i.sl, i64 4
   store i32 %.0.copyload.i3448, ptr %i.sm, align 1
-  %i.sn = and i32 %4, 16777208
+  %i.sn = and i32 %i.ru, 16777208
   %i.so = or disjoint i32 %i.sn, 67108864
   %.val3142 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.sp = getelementptr inbounds nuw i8, ptr %.val3142, i64 %i.sk
@@ -2680,12 +2676,11 @@ bb.dn:                                            ; preds = %bb.dc
   %i.vb = getelementptr inbounds nuw i8, ptr %i.va, i64 4
   %.0.copyload.i3465 = load i32, ptr %i.vb, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i3465) #8, !srcloc !13
-  %i.vc = shl i32 %.0.copyload.i3465, 1           ; 2 uses
+  %i.vc = shl i32 %.0.copyload.i3465, 1
   %i.vd = add i32 %i.vc, 8
-  %5 = icmp ult i32 %i.vd, 9
-  %i.ve = add i32 %i.vc, 15
-  %6 = select i1 %5, i32 15, i32 %i.ve            ; 2 uses
-  %i.vf = and i32 %6, -8                          ; 3 uses
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.vd, i32 8)
+  %i.ve = add i32 %4, 7                           ; 2 uses
+  %i.vf = and i32 %i.ve, -8                       ; 3 uses
   %i.vg = add i32 %.0.copyload.i3446, 1376
   %i.vh = zext i32 %i.vg to i64
   %.val2976 = load ptr, ptr %i.d, align 8, !tbaa !7
@@ -2740,7 +2735,7 @@ bb.dr:                                            ; preds = %bb.dq
   br label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr, %bb.dq
-  %i.we = and i32 %6, 16777208
+  %i.we = and i32 %i.ve, 16777208
   %i.wf = or disjoint i32 %i.we, 50331648
   %.val3139 = load ptr, ptr %i.d, align 8, !tbaa !7
   %i.wg = getelementptr inbounds nuw i8, ptr %.val3139, i64 %i.vx
@@ -3143,7 +3138,7 @@ w2c_hermes_hermes0x3A0x3Avm0x3A0x3ACardTable0x3A0x3AupdateBoundaries0x28hermes0x
   %i.acm = lshr i32 %i.aal, 3
   %i.acn = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.aal, i1 false)
   %i.aco = sub nuw nsw i32 276, %i.acn
-  %i.acp = icmp ult i32 %i.aal, 2048
+  %i.acp = icmp ult i32 %i.aal, 2040
   %i.acq = select i1 %i.acp, i32 %i.acm, i32 %i.aco
   %i.acr = mul i32 %i.acq, 12
   %i.acs = add i32 %i.acr, %i.ub
@@ -3328,7 +3323,7 @@ bb.dc:                                            ; preds = %bb.da, %bb.cz, %bb.
   %i.afk = lshr i32 %i.aer, 3
   %i.afl = tail call range(i32 0, 33) i32 @llvm.ctlz.i32(i32 %i.aer, i1 false)
   %i.afm = sub nuw nsw i32 276, %i.afl
-  %i.afn = icmp ult i32 %i.aer, 2048
+  %i.afn = icmp ult i32 %i.aer, 2040
   %i.afo = select i1 %i.afn, i32 %i.afk, i32 %i.afm
   %i.afp = mul i32 %i.afo, 12
   %i.afq = add i32 %i.afp, %i.ub
@@ -3731,7 +3726,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.nd = fptoui double %.0.copyload.i1498 to i64
   %.fr = freeze i64 %i.nd                         ; 3 uses
   %i.ne = udiv i64 %.fr, 20
-  %i.nf = icmp ult i64 %.fr, 82165780
+  %i.nf = icmp ult i64 %.fr, 82165760
   %spec.select = select i1 %i.nf, i64 4108288, i64 %i.ne
   %i.ng = add i64 %spec.select, %.fr
   br label %.thread
@@ -4134,24 +4129,22 @@ bb.f:                                             ; preds = %bb.f, %bb.e
   %.0.copyload.i1515 = load i32, ptr %i.bq, align 1 ; 3 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1515) #8, !srcloc !13
   %i.br = add i32 %.0.copyload.i1515, 31          ; 3 uses
-  %i.bs = lshr i32 %i.br, 5                       ; 5 uses
+  %i.bs = lshr i32 %i.br, 5                       ; 6 uses
   %i.bt = icmp ult i32 %i.br, 32
   br i1 %i.bt, label %.loopexit1596, label %bb.g
 
 bb.g:                                             ; preds = %.loopexit1599
-  %4 = icmp ult i32 %i.br, 64
-  %5 = select i1 %4, i32 1, i32 %i.bs             ; 3 uses
-  %i.bu = and i32 %5, 3                           ; 2 uses
+  %i.bu = and i32 %i.bs, 3                        ; 2 uses
   %i.bv = zext i32 %i.a to i64
   %.val1438 = load ptr, ptr %i.b, align 8, !tbaa !7
   %i.bw = getelementptr inbounds nuw i8, ptr %.val1438, i64 %i.bv
   %.0.copyload.i1516 = load i32, ptr %i.bw, align 1 ; 6 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i1516) #8, !srcloc !13
-  %i.bx = icmp samesign ugt i32 %5, 3
+  %i.bx = icmp ugt i32 %i.br, 127
   br i1 %i.bx, label %bb.h, label %.loopexit1597
 
 bb.h:                                             ; preds = %bb.g
-  %i.by = and i32 %5, 134217724                   ; 2 uses
+  %i.by = and i32 %i.bs, 134217724                ; 2 uses
   %i.bz = add i32 %.0.copyload.i1516, 4
   %i.ca = add i32 %.0.copyload.i1516, 8
   %i.cb = add i32 %.0.copyload.i1516, 12

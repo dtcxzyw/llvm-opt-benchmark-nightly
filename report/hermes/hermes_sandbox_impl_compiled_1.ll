@@ -201,18 +201,17 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   %i.tp = lshr i64 %i.to, 16
   %i.tq = or i64 %i.tp, %i.to
   %i.tr = trunc nuw i64 %i.tq to i32
-  %i.ts = add i32 %i.tr, 1                        ; 2 uses
-  %6 = icmp ult i32 %i.ts, 65
-  %7 = select i1 %6, i32 64, i32 %i.ts            ; 2 uses
+  %i.ts = add i32 %i.tr, 1
+  %6 = tail call i32 @llvm.umax.i32(i32 %i.ts, i32 64) ; 2 uses
   %.val50438 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.tt = getelementptr inbounds nuw i8, ptr %.val50438, i64 %i.rs
-  store i32 %7, ptr %i.tt, align 1
+  store i32 %6, ptr %i.tt, align 1
   %i.tu = add nuw nsw i64 %i.e, 536               ; 4 uses
   %.val49209 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.tv = getelementptr inbounds nuw i8, ptr %.val49209, i64 %i.tu
   %.0.copyload.i51304 = load i32, ptr %i.tv, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i51304) #7, !srcloc !19
-  %i.tw = shl i32 %7, 4
+  %i.tw = shl i32 %6, 4
   %i.tx = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.tw) #7 ; 21 uses
   %.val50437 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ty = getelementptr inbounds nuw i8, ptr %.val50437, i64 %i.tu
@@ -615,7 +614,7 @@ bb.aia:                                           ; preds = %bb.ahz
   %i.inc = getelementptr inbounds nuw i8, ptr %.val48339, i64 %i.hex
   %.0.copyload.i52459 = load i32, ptr %i.inc, align 1 ; 12 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52459) #7, !srcloc !19
-  %i.ind = add i32 %.0.copyload.i52459, 31        ; 3 uses
+  %i.ind = add i32 %.0.copyload.i52459, 31        ; 2 uses
   %i.ine = icmp ult i32 %i.ind, 32
   br i1 %i.ine, label %.loopexit54409, label %bb.aib
 
@@ -634,22 +633,19 @@ bb.aib:                                           ; preds = %bb.aia
   br i1 %.not46350, label %bb.aic, label %bb.aiy
 
 bb.aic:                                           ; preds = %bb.aib
-  %i.inj = lshr i32 %i.ind, 5                     ; 2 uses
-  %8 = icmp ult i32 %i.ind, 64
-  %9 = add nsw i32 %i.inj, -1
-  %10 = select i1 %8, i32 0, i32 %9               ; 2 uses
-  %wide.trip.count55716 = zext nneg i32 %10 to i64
-  %exitcond5571757421 = icmp eq i32 %10, 0
+  %i.inj = lshr i32 %i.ind, 5                     ; 3 uses
+  %wide.trip.count55716 = zext nneg i32 %i.inj to i64
+  %exitcond5571757421 = icmp eq i32 %i.inj, 1
   br i1 %exitcond5571757421, label %.loopexit54409, label %.lr.ph57424
 
 bb.aid:                                           ; preds = %.lr.ph57424
+  %indvars.iv.next55713 = add nuw nsw i64 %indvars.iv5571257422, 1 ; 2 uses
   %exitcond55717 = icmp eq i64 %indvars.iv.next55713, %wide.trip.count55716
   br i1 %exitcond55717, label %.loopexit54409, label %.lr.ph57424
 
 .lr.ph57424:                                      ; preds = %bb.aic, %bb.aid
-  %indvars.iv5571257422 = phi i64 [ %indvars.iv.next55713, %bb.aid ], [ 0, %bb.aic ]
-  %indvars.iv.next55713 = add nuw nsw i64 %indvars.iv5571257422, 1 ; 3 uses
-  %indvars55714 = trunc i64 %indvars.iv.next55713 to i32 ; 2 uses
+  %indvars.iv5571257422 = phi i64 [ %indvars.iv.next55713, %bb.aid ], [ 1, %bb.aic ] ; 3 uses
+  %indvars55714 = trunc i64 %indvars.iv5571257422 to i32
   %i.ink = shl i32 %indvars55714, 2
   %i.inl = add i32 %i.ink, %.0.copyload.i52460
   %i.inm = zext i32 %i.inl to i64
@@ -661,7 +657,8 @@ bb.aid:                                           ; preds = %.lr.ph57424
   br i1 %.not46351, label %bb.aid, label %bb.aie
 
 bb.aie:                                           ; preds = %.lr.ph57424
-  %i.ino = icmp ugt i32 %i.inj, %indvars55714
+  %7 = trunc nuw nsw i64 %indvars.iv5571257422 to i32
+  %i.ino = icmp ugt i32 %i.inj, %7
   br i1 %i.ino, label %bb.aix, label %.loopexit54409
 
 .loopexit54409:                                   ; preds = %bb.aid, %bb.aic, %bb.aie, %bb.aia
@@ -1064,7 +1061,7 @@ bb.akb:                                           ; preds = %bb.aka, %.loopexit5
   %i.iyq = getelementptr inbounds nuw i8, ptr %.val48291, i64 %i.hfd
   %.0.copyload.i52516 = load i32, ptr %i.iyq, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52516) #7, !srcloc !19
-  %i.iyr = add i32 %.0.copyload.i52516, 31        ; 3 uses
+  %i.iyr = add i32 %.0.copyload.i52516, 31        ; 2 uses
   %i.iys = icmp ult i32 %i.iyr, 32
   br i1 %i.iys, label %.loopexit54618, label %bb.akc
 
@@ -1082,22 +1079,19 @@ bb.akc:                                           ; preds = %.loopexit54619
   br i1 %.not46386, label %bb.akd, label %bb.akh
 
 bb.akd:                                           ; preds = %bb.akc
-  %i.iyw = lshr i32 %i.iyr, 5                     ; 2 uses
-  %11 = icmp ult i32 %i.iyr, 64
-  %12 = add nsw i32 %i.iyw, -1
-  %13 = select i1 %11, i32 0, i32 %12             ; 2 uses
-  %wide.trip.count55726 = zext nneg i32 %13 to i64
-  %exitcond5572757425 = icmp eq i32 %13, 0
+  %i.iyw = lshr i32 %i.iyr, 5                     ; 3 uses
+  %wide.trip.count55726 = zext nneg i32 %i.iyw to i64
+  %exitcond5572757425 = icmp eq i32 %i.iyw, 1
   br i1 %exitcond5572757425, label %.loopexit54618, label %.lr.ph57428.a
 
 bb.ake:                                           ; preds = %.lr.ph57428.a
-  %exitcond55727 = icmp eq i64 %indvars.iv.next55723, %wide.trip.count55726
+  %indvars.iv.next55721 = add nuw nsw i64 %indvars.iv5572257426, 1 ; 2 uses
+  %exitcond55727 = icmp eq i64 %indvars.iv.next55721, %wide.trip.count55726
   br i1 %exitcond55727, label %.loopexit54618, label %.lr.ph57428.a
 
 .lr.ph57428.a:                                    ; preds = %bb.akd, %bb.ake
-  %indvars.iv5572257426 = phi i64 [ %indvars.iv.next55723, %bb.ake ], [ 0, %bb.akd ]
-  %indvars.iv.next55723 = add nuw nsw i64 %indvars.iv5572257426, 1 ; 3 uses
-  %indvars55724 = trunc i64 %indvars.iv.next55723 to i32 ; 2 uses
+  %indvars.iv5572257426 = phi i64 [ %indvars.iv.next55721, %bb.ake ], [ 1, %bb.akd ] ; 3 uses
+  %indvars55724 = trunc i64 %indvars.iv5572257426 to i32
   %i.iyx = shl i32 %indvars55724, 2
   %i.iyy = add i32 %i.iyx, %.0.copyload.i52517
   %i.iyz = zext i32 %i.iyy to i64
@@ -1109,7 +1103,8 @@ bb.ake:                                           ; preds = %.lr.ph57428.a
   br i1 %.not46387, label %bb.ake, label %bb.akf
 
 bb.akf:                                           ; preds = %.lr.ph57428.a
-  %i.izb = icmp ugt i32 %i.iyw, %indvars55724
+  %8 = trunc nuw nsw i64 %indvars.iv5572257426 to i32
+  %i.izb = icmp ugt i32 %i.iyw, %8
   br i1 %i.izb, label %bb.akg, label %.loopexit54618
 
 .loopexit54618:                                   ; preds = %bb.ake, %bb.akd, %bb.akf, %.loopexit54619
@@ -1512,7 +1507,7 @@ bb.alt:                                           ; preds = %.loopexit54307
   %i.jic = getelementptr inbounds nuw i8, ptr %.val48218, i64 %i.hex
   %.0.copyload.i52567 = load i32, ptr %i.jic, align 1 ; 12 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52567) #7, !srcloc !19
-  %i.jid = add i32 %.0.copyload.i52567, 31        ; 3 uses
+  %i.jid = add i32 %.0.copyload.i52567, 31        ; 2 uses
   %i.jie = icmp ult i32 %i.jid, 32
   br i1 %i.jie, label %.loopexit54305, label %bb.alu
 
@@ -1530,22 +1525,19 @@ bb.alu:                                           ; preds = %bb.alt
   br i1 %.not46462, label %bb.alv, label %bb.amr
 
 bb.alv:                                           ; preds = %bb.alu
-  %i.jii = lshr i32 %i.jid, 5                     ; 2 uses
-  %14 = icmp ult i32 %i.jid, 64
-  %15 = add nsw i32 %i.jii, -1
-  %16 = select i1 %14, i32 0, i32 %15             ; 2 uses
-  %wide.trip.count55736 = zext nneg i32 %16 to i64
-  %exitcond5573757429 = icmp eq i32 %16, 0
+  %i.jii = lshr i32 %i.jid, 5                     ; 3 uses
+  %wide.trip.count55736 = zext nneg i32 %i.jii to i64
+  %exitcond5573757429 = icmp eq i32 %i.jii, 1
   br i1 %exitcond5573757429, label %.loopexit54305, label %.lr.ph57432
 
 bb.alw:                                           ; preds = %.lr.ph57432
-  %exitcond55737 = icmp eq i64 %indvars.iv.next55733, %wide.trip.count55736
+  %indvars.iv.next55729 = add nuw nsw i64 %indvars.iv5573257430, 1 ; 2 uses
+  %exitcond55737 = icmp eq i64 %indvars.iv.next55729, %wide.trip.count55736
   br i1 %exitcond55737, label %.loopexit54305, label %.lr.ph57432
 
 .lr.ph57432:                                      ; preds = %bb.alv, %bb.alw
-  %indvars.iv5573257430 = phi i64 [ %indvars.iv.next55733, %bb.alw ], [ 0, %bb.alv ]
-  %indvars.iv.next55733 = add nuw nsw i64 %indvars.iv5573257430, 1 ; 3 uses
-  %indvars55734 = trunc i64 %indvars.iv.next55733 to i32 ; 2 uses
+  %indvars.iv5573257430 = phi i64 [ %indvars.iv.next55729, %bb.alw ], [ 1, %bb.alv ] ; 3 uses
+  %indvars55734 = trunc i64 %indvars.iv5573257430 to i32
   %i.jij = shl i32 %indvars55734, 2
   %i.jik = add i32 %i.jij, %.0.copyload.i52568
   %i.jil = zext i32 %i.jik to i64
@@ -1557,7 +1549,8 @@ bb.alw:                                           ; preds = %.lr.ph57432
   br i1 %.not46463, label %bb.alw, label %bb.alx
 
 bb.alx:                                           ; preds = %.lr.ph57432
-  %i.jin = icmp ugt i32 %i.jii, %indvars55734
+  %9 = trunc nuw nsw i64 %indvars.iv5573257430 to i32
+  %i.jin = icmp ugt i32 %i.jii, %9
   br i1 %i.jin, label %bb.amq, label %.loopexit54305
 
 .loopexit54305:                                   ; preds = %bb.alw, %bb.alv, %bb.alx, %bb.alt
@@ -1960,7 +1953,7 @@ bb.anf:                                           ; preds = %bb.ana
   %i.jot = getelementptr inbounds nuw i8, ptr %.val48213, i64 %i.hex
   %.0.copyload.i52595 = load i32, ptr %i.jot, align 1 ; 12 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i52595) #7, !srcloc !19
-  %i.jou = add i32 %.0.copyload.i52595, 31        ; 3 uses
+  %i.jou = add i32 %.0.copyload.i52595, 31        ; 2 uses
   %i.jov = icmp ult i32 %i.jou, 32
   br i1 %i.jov, label %.loopexit54295, label %bb.ang
 
@@ -1978,22 +1971,19 @@ bb.ang:                                           ; preds = %bb.anf
   br i1 %.not46424, label %bb.anh, label %bb.aod
 
 bb.anh:                                           ; preds = %bb.ang
-  %i.joz = lshr i32 %i.jou, 5                     ; 2 uses
-  %17 = icmp ult i32 %i.jou, 64
-  %18 = add nsw i32 %i.joz, -1
-  %19 = select i1 %17, i32 0, i32 %18             ; 2 uses
-  %wide.trip.count55746 = zext nneg i32 %19 to i64
-  %exitcond5574757433 = icmp eq i32 %19, 0
+  %i.joz = lshr i32 %i.jou, 5                     ; 3 uses
+  %wide.trip.count55746 = zext nneg i32 %i.joz to i64
+  %exitcond5574757433 = icmp eq i32 %i.joz, 1
   br i1 %exitcond5574757433, label %.loopexit54295, label %.lr.ph57436
 
 bb.ani:                                           ; preds = %.lr.ph57436
-  %exitcond55747 = icmp eq i64 %indvars.iv.next55743, %wide.trip.count55746
+  %indvars.iv.next55737 = add nuw nsw i64 %indvars.iv5574257434, 1 ; 2 uses
+  %exitcond55747 = icmp eq i64 %indvars.iv.next55737, %wide.trip.count55746
   br i1 %exitcond55747, label %.loopexit54295, label %.lr.ph57436
 
 .lr.ph57436:                                      ; preds = %bb.anh, %bb.ani
-  %indvars.iv5574257434 = phi i64 [ %indvars.iv.next55743, %bb.ani ], [ 0, %bb.anh ]
-  %indvars.iv.next55743 = add nuw nsw i64 %indvars.iv5574257434, 1 ; 3 uses
-  %indvars55744 = trunc i64 %indvars.iv.next55743 to i32 ; 2 uses
+  %indvars.iv5574257434 = phi i64 [ %indvars.iv.next55737, %bb.ani ], [ 1, %bb.anh ] ; 3 uses
+  %indvars55744 = trunc i64 %indvars.iv5574257434 to i32
   %i.jpa = shl i32 %indvars55744, 2
   %i.jpb = add i32 %i.jpa, %.0.copyload.i52596
   %i.jpc = zext i32 %i.jpb to i64
@@ -2005,7 +1995,8 @@ bb.ani:                                           ; preds = %.lr.ph57436
   br i1 %.not46425, label %bb.ani, label %bb.anj
 
 bb.anj:                                           ; preds = %.lr.ph57436
-  %i.jpe = icmp ugt i32 %i.joz, %indvars55744
+  %10 = trunc nuw nsw i64 %indvars.iv5574257434 to i32
+  %i.jpe = icmp ugt i32 %i.joz, %10
   br i1 %i.jpe, label %bb.aoc, label %.loopexit54295
 
 .loopexit54295:                                   ; preds = %bb.ani, %bb.anh, %bb.anj, %bb.anf
@@ -2408,13 +2399,12 @@ bb.arb:                                           ; preds = %bb.ara, %bb.aqz
   %i.kkn = lshr i64 %i.kkm, 16
   %i.kko = or i64 %i.kkn, %i.kkm
   %i.kkp = trunc nuw i64 %i.kko to i32
-  %i.kkq = add i32 %i.kkp, 1                      ; 2 uses
-  %20 = icmp ult i32 %i.kkq, 65
-  %21 = select i1 %20, i32 64, i32 %i.kkq         ; 2 uses
+  %i.kkq = add i32 %i.kkp, 1
+  %11 = tail call i32 @llvm.umax.i32(i32 %i.kkq, i32 64) ; 2 uses
   %.val49853 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.kkr = getelementptr inbounds nuw i8, ptr %.val49853, i64 %i.heh
-  store i32 %21, ptr %i.kkr, align 1
-  %i.kks = shl i32 %21, 6
+  store i32 %11, ptr %i.kkr, align 1
+  %i.kks = shl i32 %11, 6
   %i.kkt = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.kks) #7 ; 13 uses
   %.val49852 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.kku = getelementptr inbounds nuw i8, ptr %.val49852, i64 %i.hei
@@ -2817,13 +2807,12 @@ bb.aru:                                           ; preds = %bb.art, %bb.ars
   %i.kss = lshr i64 %i.ksr, 16
   %i.kst = or i64 %i.kss, %i.ksr
   %i.ksu = trunc nuw i64 %i.kst to i32
-  %i.ksv = add i32 %i.ksu, 1                      ; 2 uses
-  %22 = icmp ult i32 %i.ksv, 65
-  %23 = select i1 %22, i32 64, i32 %i.ksv         ; 2 uses
+  %i.ksv = add i32 %i.ksu, 1
+  %12 = tail call i32 @llvm.umax.i32(i32 %i.ksv, i32 64) ; 2 uses
   %.val49837 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ksw = getelementptr inbounds nuw i8, ptr %.val49837, i64 %i.heh
-  store i32 %23, ptr %i.ksw, align 1
-  %i.ksx = shl i32 %23, 6
+  store i32 %12, ptr %i.ksw, align 1
+  %i.ksx = shl i32 %12, 6
   %i.ksy = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.ksx) #7 ; 13 uses
   %.val49836 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ksz = getelementptr inbounds nuw i8, ptr %.val49836, i64 %i.hei
@@ -3226,13 +3215,12 @@ bb.ath:                                           ; preds = %bb.atg, %bb.atf
   %i.lic = lshr i64 %i.lib, 16
   %i.lid = or i64 %i.lic, %i.lib
   %i.lie = trunc nuw i64 %i.lid to i32
-  %i.lif = add i32 %i.lie, 1                      ; 2 uses
-  %24 = icmp ult i32 %i.lif, 65
-  %25 = select i1 %24, i32 64, i32 %i.lif         ; 2 uses
+  %i.lif = add i32 %i.lie, 1
+  %13 = tail call i32 @llvm.umax.i32(i32 %i.lif, i32 64) ; 2 uses
   %.val49809 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.lig = getelementptr inbounds nuw i8, ptr %.val49809, i64 %i.heh
-  store i32 %25, ptr %i.lig, align 1
-  %i.lih = shl i32 %25, 6
+  store i32 %13, ptr %i.lig, align 1
+  %i.lih = shl i32 %13, 6
   %i.lii = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.lih) #7 ; 13 uses
   %.val49808 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.lij = getelementptr inbounds nuw i8, ptr %.val49808, i64 %i.hei
@@ -3635,13 +3623,12 @@ bb.auc:                                           ; preds = %bb.aub, %bb.aua
   %i.lou = lshr i64 %i.lot, 16
   %i.lov = or i64 %i.lou, %i.lot
   %i.low = trunc nuw i64 %i.lov to i32
-  %i.lox = add i32 %i.low, 1                      ; 2 uses
-  %26 = icmp ult i32 %i.lox, 65
-  %27 = select i1 %26, i32 64, i32 %i.lox         ; 2 uses
+  %i.lox = add i32 %i.low, 1
+  %14 = tail call i32 @llvm.umax.i32(i32 %i.lox, i32 64) ; 2 uses
   %.val49794 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.loy = getelementptr inbounds nuw i8, ptr %.val49794, i64 %i.heh
-  store i32 %27, ptr %i.loy, align 1
-  %i.loz = shl i32 %27, 6
+  store i32 %14, ptr %i.loy, align 1
+  %i.loz = shl i32 %14, 6
   %i.lpa = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.loz) #7 ; 13 uses
   %.val49793 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.lpb = getelementptr inbounds nuw i8, ptr %.val49793, i64 %i.hei
@@ -4044,7 +4031,7 @@ bb.bha:                                           ; preds = %.preheader54566
   %i.pry = getelementptr inbounds nuw i8, ptr %i.prx, i64 1108
   %.0.copyload.i53459 = load i32, ptr %i.pry, align 1 ; 7 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i53459) #7, !srcloc !19
-  %i.prz = add i32 %.0.copyload.i53459, 31        ; 3 uses
+  %i.prz = add i32 %.0.copyload.i53459, 31        ; 2 uses
   %i.psa = icmp ult i32 %i.prz, 32
   br i1 %i.psa, label %.loopexit54565, label %bb.bhb
 
@@ -4062,22 +4049,19 @@ bb.bhb:                                           ; preds = %.loopexit54567
   br i1 %.not46266, label %bb.bhc, label %bb.bhg
 
 bb.bhc:                                           ; preds = %bb.bhb
-  %i.pse = lshr i32 %i.prz, 5                     ; 2 uses
-  %28 = icmp ult i32 %i.prz, 64
-  %29 = add nsw i32 %i.pse, -1
-  %30 = select i1 %28, i32 0, i32 %29             ; 2 uses
-  %wide.trip.count = zext nneg i32 %30 to i64
-  %exitcond57417 = icmp eq i32 %30, 0
+  %i.pse = lshr i32 %i.prz, 5                     ; 3 uses
+  %wide.trip.count = zext nneg i32 %i.pse to i64
+  %exitcond57417 = icmp eq i32 %i.pse, 1
   br i1 %exitcond57417, label %.loopexit54565, label %.lr.ph57420
 
 bb.bhd:                                           ; preds = %.lr.ph57420
+  %indvars.iv.next55705 = add nuw nsw i64 %indvars.iv5570457418, 1 ; 2 uses
   %exitcond = icmp eq i64 %indvars.iv.next55705, %wide.trip.count
   br i1 %exitcond, label %.loopexit54565, label %.lr.ph57420
 
 .lr.ph57420:                                      ; preds = %bb.bhc, %bb.bhd
-  %indvars.iv5570457418 = phi i64 [ %indvars.iv.next55705, %bb.bhd ], [ 0, %bb.bhc ]
-  %indvars.iv.next55705 = add nuw nsw i64 %indvars.iv5570457418, 1 ; 3 uses
-  %indvars55706 = trunc i64 %indvars.iv.next55705 to i32 ; 2 uses
+  %indvars.iv5570457418 = phi i64 [ %indvars.iv.next55705, %bb.bhd ], [ 1, %bb.bhc ] ; 3 uses
+  %indvars55706 = trunc i64 %indvars.iv5570457418 to i32
   %i.psf = shl i32 %indvars55706, 2
   %i.psg = add i32 %i.psf, %.0.copyload.i53460
   %i.psh = zext i32 %i.psg to i64
@@ -4089,7 +4073,8 @@ bb.bhd:                                           ; preds = %.lr.ph57420
   br i1 %.not46267, label %bb.bhd, label %bb.bhe
 
 bb.bhe:                                           ; preds = %.lr.ph57420
-  %i.psj = icmp ugt i32 %i.pse, %indvars55706
+  %15 = trunc nuw nsw i64 %indvars.iv5570457418 to i32
+  %i.psj = icmp ugt i32 %i.pse, %15
   br i1 %i.psj, label %bb.bhf, label %.loopexit54565
 
 .loopexit54565:                                   ; preds = %bb.bhd, %bb.bhc, %bb.bhe, %.loopexit54567
@@ -4492,17 +4477,16 @@ bb.enj:                                           ; preds = %bb.eni, %bb.enh
   %i.zds = lshr i64 %i.zdr, 16
   %i.zdt = or i64 %i.zds, %i.zdr
   %i.zdu = trunc nuw i64 %i.zdt to i32
-  %i.zdv = add i32 %i.zdu, 1                      ; 2 uses
-  %2 = icmp ult i32 %i.zdv, 65
-  %3 = select i1 %2, i32 64, i32 %i.zdv           ; 2 uses
+  %i.zdv = add i32 %i.zdu, 1
+  %2 = tail call i32 @llvm.umax.i32(i32 %i.zdv, i32 64) ; 2 uses
   %.val82547 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.zdw = getelementptr inbounds nuw i8, ptr %.val82547, i64 %i.jx
-  store i32 %3, ptr %i.zdw, align 1
+  store i32 %2, ptr %i.zdw, align 1
   %.val80082 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.zdx = getelementptr inbounds nuw i8, ptr %.val80082, i64 %i.jv
   %.0.copyload.i90184 = load i32, ptr %i.zdx, align 1 ; 5 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i90184) #7, !srcloc !19
-  %i.zdy = mul i32 %3, 24
+  %i.zdy = mul i32 %2, 24
   %i.zdz = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.zdy) #7 ; 13 uses
   %.val82546 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.zea = getelementptr inbounds nuw i8, ptr %.val82546, i64 %i.jv
@@ -4905,13 +4889,12 @@ bb.fox:                                           ; preds = %bb.fow, %bb.fov
   %i.aeie = lshr i64 %i.aeid, 16
   %i.aeif = or i64 %i.aeie, %i.aeid
   %i.aeig = trunc nuw i64 %i.aeif to i32
-  %i.aeih = add i32 %i.aeig, 1                    ; 2 uses
-  %4 = icmp ult i32 %i.aeih, 65
-  %5 = select i1 %4, i32 64, i32 %i.aeih          ; 2 uses
+  %i.aeih = add i32 %i.aeig, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.aeih, i32 64) ; 2 uses
   %.val82244 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aeii = getelementptr inbounds nuw i8, ptr %.val82244, i64 %i.aeeo
-  store i32 %5, ptr %i.aeii, align 1
-  %i.aeij = mul i32 %5, 24
+  store i32 %3, ptr %i.aeii, align 1
+  %i.aeij = mul i32 %3, 24
   %i.aeik = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.aeij) #7 ; 13 uses
   %.val82243 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aeil = getelementptr inbounds nuw i8, ptr %.val82243, i64 %i.aeen
@@ -5314,13 +5297,12 @@ bb.fpz:                                           ; preds = %bb.fpy, %bb.fpx
   %i.aeru = lshr i64 %i.aert, 16
   %i.aerv = or i64 %i.aeru, %i.aert
   %i.aerw = trunc nuw i64 %i.aerv to i32
-  %i.aerx = add i32 %i.aerw, 1                    ; 2 uses
-  %6 = icmp ult i32 %i.aerx, 65
-  %7 = select i1 %6, i32 64, i32 %i.aerx          ; 2 uses
+  %i.aerx = add i32 %i.aerw, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.aerx, i32 64) ; 2 uses
   %.val82226 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aery = getelementptr inbounds nuw i8, ptr %.val82226, i64 %i.aeeo
-  store i32 %7, ptr %i.aery, align 1
-  %i.aerz = mul i32 %7, 24
+  store i32 %4, ptr %i.aery, align 1
+  %i.aerz = mul i32 %4, 24
   %i.aesa = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.aerz) #7 ; 13 uses
   %.val82225 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aesb = getelementptr inbounds nuw i8, ptr %.val82225, i64 %i.aeen
@@ -5684,13 +5666,12 @@ bb.fqq:                                           ; preds = %bb.fqp, %bb.fqo
   %i.aexk = lshr i64 %i.aexj, 16
   %i.aexl = or i64 %i.aexk, %i.aexj
   %i.aexm = trunc nuw i64 %i.aexl to i32
-  %i.aexn = add i32 %i.aexm, 1                    ; 2 uses
-  %8 = icmp ult i32 %i.aexn, 65
-  %9 = select i1 %8, i32 64, i32 %i.aexn          ; 2 uses
+  %i.aexn = add i32 %i.aexm, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.aexn, i32 64) ; 2 uses
   %.val82210 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aexo = getelementptr inbounds nuw i8, ptr %.val82210, i64 %i.aeev
-  store i32 %9, ptr %i.aexo, align 1
-  %i.aexp = mul i32 %9, 56
+  store i32 %5, ptr %i.aexo, align 1
+  %i.aexp = mul i32 %5, 56
   %i.aexq = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.aexp) #7 ; 13 uses
   %.val82209 = load ptr, ptr %i.e, align 8, !tbaa !18
   %i.aexr = getelementptr inbounds nuw i8, ptr %.val82209, i64 %i.aeeu
@@ -6093,13 +6074,12 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ns = lshr i64 %i.nr, 16
   %i.nt = or i64 %i.ns, %i.nr
   %i.nu = trunc nuw i64 %i.nt to i32
-  %i.nv = add i32 %i.nu, 1                        ; 2 uses
-  %5 = icmp ult i32 %i.nv, 65
-  %6 = select i1 %5, i32 64, i32 %i.nv
+  %i.nv = add i32 %i.nu, 1
+  %5 = tail call i32 @llvm.umax.i32(i32 %i.nv, i32 64)
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %.41311 = phi i32 [ %6, %bb.aj ], [ %.31310, %bb.ai ] ; 6 uses
+  %.41311 = phi i32 [ %5, %bb.aj ], [ %.31310, %bb.ai ] ; 6 uses
   %.val1395 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.nw = getelementptr inbounds nuw i8, ptr %.val1395, i64 %i.lj
   %.0.copyload.i1595 = load i32, ptr %i.nw, align 1 ; 3 uses
@@ -6502,13 +6482,12 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.eo = lshr i64 %i.en, 16
   %i.ep = or i64 %i.eo, %i.en
   %i.eq = trunc nuw i64 %i.ep to i32
-  %i.er = add i32 %i.eq, 1                        ; 2 uses
-  %8 = icmp ult i32 %i.er, 65
-  %9 = select i1 %8, i32 64, i32 %i.er            ; 2 uses
+  %i.er = add i32 %i.eq, 1
+  %8 = tail call i32 @llvm.umax.i32(i32 %i.er, i32 64) ; 2 uses
   %.val1875 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.es = getelementptr inbounds nuw i8, ptr %.val1875, i64 %i.br
-  store i32 %9, ptr %i.es, align 1
-  %i.et = mul i32 %9, 56
+  store i32 %8, ptr %i.es, align 1
+  %i.et = mul i32 %8, 56
   %i.eu = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.et) #7 ; 13 uses
   %.val1874 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ev = getelementptr inbounds nuw i8, ptr %.val1874, i64 %i.bq
@@ -6911,13 +6890,12 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %i.ca = lshr i64 %i.bz, 16
   %i.cb = or i64 %i.ca, %i.bz
   %i.cc = trunc nuw i64 %i.cb to i32
-  %i.cd = add i32 %i.cc, 1                        ; 2 uses
-  %3 = icmp ult i32 %i.cd, 65
-  %4 = select i1 %3, i32 64, i32 %i.cd            ; 2 uses
+  %i.cd = add i32 %i.cc, 1
+  %3 = tail call i32 @llvm.umax.i32(i32 %i.cd, i32 64) ; 2 uses
   %.val4268 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ce = getelementptr inbounds nuw i8, ptr %.val4268, i64 %.pre4720
-  store i32 %4, ptr %i.ce, align 1
-  %i.cf = mul i32 %4, 20
+  store i32 %3, ptr %i.ce, align 1
+  %i.cf = mul i32 %3, 20
   %i.cg = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.cf) #7 ; 13 uses
   %.val4267 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ch = getelementptr inbounds nuw i8, ptr %.val4267, i64 %i.h
@@ -7320,13 +7298,12 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
   %i.lr = lshr i64 %i.lq, 16
   %i.ls = or i64 %i.lr, %i.lq
   %i.lt = trunc nuw i64 %i.ls to i32
-  %i.lu = add i32 %i.lt, 1                        ; 2 uses
-  %5 = icmp ult i32 %i.lu, 65
-  %6 = select i1 %5, i32 64, i32 %i.lu            ; 2 uses
+  %i.lu = add i32 %i.lt, 1
+  %4 = tail call i32 @llvm.umax.i32(i32 %i.lu, i32 64) ; 2 uses
   %.val4235 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.lv = getelementptr inbounds nuw i8, ptr %.val4235, i64 %i.jz
-  store i32 %6, ptr %i.lv, align 1
-  %i.lw = shl i32 %6, 5
+  store i32 %4, ptr %i.lv, align 1
+  %i.lw = shl i32 %4, 5
   %i.lx = tail call i32 @w2c_hermes_operator0x20new0x28unsigned0x20long0x29(ptr noundef nonnull %0, i32 noundef %i.lw) #7 ; 13 uses
   %.val4234 = load ptr, ptr %i.d, align 8, !tbaa !18
   %i.ly = getelementptr inbounds nuw i8, ptr %.val4234, i64 %i.jx

@@ -201,24 +201,24 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ck = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.cl = load ptr, ptr %i.ck, align 8
   %i.cm = load i16, ptr %i.ci, align 4
-  %i.cn = tail call noundef zeroext i16 %i.cl(i16 noundef zeroext %i.cm) #12 ; 6 uses
+  %i.cn = tail call noundef zeroext i16 %i.cl(i16 noundef zeroext %i.cm) #12 ; 7 uses
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   %i.cp = load ptr, ptr %i.co, align 8
   %i.cq = tail call noundef i32 %i.cp(ptr noundef nonnull %0, ptr noundef nonnull %i.ci, i32 noundef 2, ptr noundef nonnull %i.cj, ptr noundef nonnull %4) #12 ; 0 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.al, i64 18 ; 3 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.an, i64 18
-  %i.ct = zext i16 %i.cn to i32                   ; 5 uses
-  %5 = icmp ult i16 %i.cn, 513
-  %. = select i1 %5, i32 %i.ct, i32 512           ; 4 uses
-  %.not = icmp eq i32 %., 0
+  %i.ct = zext i16 %i.cn to i32                   ; 4 uses
+  %.302 = tail call i16 @llvm.umin.i16(i16 %i.cn, i16 512) ; 2 uses
+  %. = zext nneg i16 %.302 to i32
+  %.not = icmp eq i16 %i.cn, 0                    ; 2 uses
   br i1 %.not, label %.lr.ph316.preheader, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.o
-  %wide.trip.count = zext nneg i32 %. to i64
+  %wide.trip.count = zext nneg i16 %.302 to i64
   br label %.lr.ph
 
 .preheader306.a:                                  ; preds = %.lr.ph
-  %i.cu = icmp samesign ult i32 %., 512
+  %i.cu = icmp ult i16 %i.cn, 512
   br i1 %i.cu, label %.lr.ph316.preheader, label %._crit_edge
 
 .lr.ph316.preheader:                              ; preds = %bb.o, %.preheader306.a
@@ -229,7 +229,7 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.cx = shl nuw nsw i32 %.1270.lcssa397, 1
   %narrow = sub nuw nsw i32 1024, %i.cx
   %i.cy = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(1) %scevgep, i8 0, i64 %i.cy, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 2 %scevgep, i8 0, i64 %i.cy, i1 false)
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
@@ -261,8 +261,7 @@ bb.p:                                             ; preds = %._crit_edge
 
 .preheader305:                                    ; preds = %bb.p
   %invariant.umin = tail call i32 @llvm.umin.i32(i32 %i.ct, i32 256) ; 2 uses
-  %.not348 = icmp eq i16 %i.cn, 0
-  br i1 %.not348, label %.preheader, label %.lr.ph318.preheader
+  br i1 %.not, label %.preheader, label %.lr.ph318.preheader
 
 .lr.ph318.preheader:                              ; preds = %.preheader305
   %wide.trip.count369 = zext nneg i32 %invariant.umin to i64
