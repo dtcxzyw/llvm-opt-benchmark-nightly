@@ -201,7 +201,7 @@ bb.a:
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.outer, %bb.bq
-  %.0226 = phi ptr [ %i.sl, %bb.bq ], [ %.0226.ph, %.backedge.outer ] ; 37 uses
+  %.0226 = phi ptr [ %i.sl, %bb.bq ], [ %.0226.ph, %.backedge.outer ] ; 33 uses
   %.0224 = phi ptr [ %.1229, %bb.bq ], [ %.0224.ph, %.backedge.outer ] ; 29 uses
   %.0217 = phi i32 [ %i.tt, %bb.bq ], [ %.0217.ph, %.backedge.outer ] ; 10 uses
   %.0215 = phi i32 [ %i.tx, %bb.bq ], [ %.0215.ph, %.backedge.outer ] ; 12 uses
@@ -604,7 +604,7 @@ bb.bk:                                            ; preds = %.thread.i377, %ss_c
   br label %ss_compare.exit384.thread
 
 ss_compare.exit384.thread:                        ; preds = %.thread.i377, %bb.bj, %ss_compare.exit384, %bb.bk
-  %.1223 = phi i32 [ %i.rn, %bb.bk ], [ %.0222545, %ss_compare.exit384 ], [ %.0222545, %bb.bj ], [ %.0222545, %.thread.i377 ] ; 8 uses
+  %.1223 = phi i32 [ %i.rn, %bb.bk ], [ %.0222545, %ss_compare.exit384 ], [ %.0222545, %bb.bj ], [ %.0222545, %.thread.i377 ] ; 6 uses
   %.1220 = phi i32 [ %i.rq, %bb.bk ], [ %.0219547, %ss_compare.exit384 ], [ %.0219547, %bb.bj ], [ %.0219547, %.thread.i377 ] ; 2 uses
   %i.rr = icmp sgt i32 %.1220, 0
   br i1 %i.rr, label %.lr.ph, label %._crit_edge, !llvm.loop !196
@@ -614,28 +614,13 @@ ss_compare.exit384.thread:                        ; preds = %.thread.i377, %bb.b
   br i1 %i.rs, label %bb.bl, label %._crit_edge.thread
 
 bb.bl:                                            ; preds = %._crit_edge
-  %i.rt = zext nneg i32 %.1223 to i64             ; 5 uses
+  %i.rt = zext nneg i32 %.1223 to i64             ; 4 uses
   %i.ru = sub nsw i64 0, %i.rt
-  %i.rv = getelementptr [4 x i8], ptr %.0226, i64 %i.ru ; 9 uses
+  %i.rv = getelementptr inbounds [4 x i8], ptr %.0226, i64 %i.ru ; 7 uses
   %min.iters.check = icmp ult i32 %.1223, 8
-  br i1 %min.iters.check, label %.lr.ph.i386.preheader, label %vector.memcheck
+  br i1 %min.iters.check, label %.lr.ph.i386.preheader, label %vector.ph
 
-vector.memcheck:                                  ; preds = %bb.bl
-  %scevgep = getelementptr i8, ptr %.0226, i64 4
-  %8 = add nsw i32 %.1223, -1
-  %9 = zext i32 %8 to i64                         ; 2 uses
-  %10 = shl nuw nsw i64 %9, 2
-  %11 = sub nsw i64 %9, %i.rt
-  %12 = shl nsw i64 %11, 2
-  %scevgep116 = getelementptr i8, ptr %scevgep, i64 %12
-  %scevgep117 = getelementptr i8, ptr %.0226, i64 4
-  %scevgep118 = getelementptr i8, ptr %scevgep117, i64 %10
-  %bound0 = icmp ult ptr %i.rv, %scevgep118
-  %bound1 = icmp ult ptr %.0226, %scevgep116
-  %found.conflict = and i1 %bound0, %bound1
-  br i1 %found.conflict, label %.lr.ph.i386.preheader, label %vector.ph
-
-vector.ph:                                        ; preds = %vector.memcheck
+vector.ph:                                        ; preds = %bb.bl
   %n.vec = and i64 %i.rt, 2147483640              ; 4 uses
   %i.rw = shl nuw nsw i64 %n.vec, 2               ; 2 uses
   %i.rx = getelementptr i8, ptr %i.rv, i64 %i.rw
@@ -650,27 +635,27 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %next.gep = getelementptr i8, ptr %i.rv, i64 %i.sb ; 3 uses
   %next.gep119 = getelementptr i8, ptr %.0226, i64 %i.sb ; 3 uses
   %i.sc = getelementptr i8, ptr %next.gep, i64 16 ; 2 uses
-  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !3, !alias.scope !197, !noalias !200
-  %wide.load120 = load <4 x i32>, ptr %i.sc, align 4, !tbaa !3, !alias.scope !197, !noalias !200
+  %wide.load = load <4 x i32>, ptr %next.gep, align 4, !tbaa !3
+  %wide.load120 = load <4 x i32>, ptr %i.sc, align 4, !tbaa !3
   %i.sd = getelementptr i8, ptr %next.gep119, i64 16 ; 2 uses
-  %wide.load121 = load <4 x i32>, ptr %next.gep119, align 4, !tbaa !3, !alias.scope !200
-  %wide.load122 = load <4 x i32>, ptr %i.sd, align 4, !tbaa !3, !alias.scope !200
-  store <4 x i32> %wide.load121, ptr %next.gep, align 4, !tbaa !3, !alias.scope !197, !noalias !200
-  store <4 x i32> %wide.load122, ptr %i.sc, align 4, !tbaa !3, !alias.scope !197, !noalias !200
-  store <4 x i32> %wide.load, ptr %next.gep119, align 4, !tbaa !3, !alias.scope !200
-  store <4 x i32> %wide.load120, ptr %i.sd, align 4, !tbaa !3, !alias.scope !200
+  %wide.load121 = load <4 x i32>, ptr %next.gep119, align 4, !tbaa !3
+  %wide.load122 = load <4 x i32>, ptr %i.sd, align 4, !tbaa !3
+  store <4 x i32> %wide.load121, ptr %next.gep, align 4, !tbaa !3
+  store <4 x i32> %wide.load122, ptr %i.sc, align 4, !tbaa !3
+  store <4 x i32> %wide.load, ptr %next.gep119, align 4, !tbaa !3
+  store <4 x i32> %wide.load120, ptr %i.sd, align 4, !tbaa !3
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.se = icmp eq i64 %index.next, %n.vec
-  br i1 %i.se, label %middle.block, label %vector.body, !llvm.loop !202
+  br i1 %i.se, label %middle.block, label %vector.body, !llvm.loop !197
 
 middle.block:                                     ; preds = %vector.body
   %cmp.n = icmp eq i64 %n.vec, %i.rt
   br i1 %cmp.n, label %ss_blockswap.exit, label %.lr.ph.i386.preheader
 
-.lr.ph.i386.preheader:                            ; preds = %vector.memcheck, %bb.bl, %middle.block
-  %.012.i.ph = phi ptr [ %i.rv, %vector.memcheck ], [ %i.rv, %bb.bl ], [ %i.rx, %middle.block ]
-  %.0811.i.ph = phi i32 [ %.1223, %vector.memcheck ], [ %.1223, %bb.bl ], [ %i.rz, %middle.block ]
-  %.0910.i.ph = phi ptr [ %.0226, %vector.memcheck ], [ %.0226, %bb.bl ], [ %i.sa, %middle.block ]
+.lr.ph.i386.preheader:                            ; preds = %bb.bl, %middle.block
+  %.012.i.ph = phi ptr [ %i.rv, %bb.bl ], [ %i.rx, %middle.block ]
+  %.0811.i.ph = phi i32 [ %.1223, %bb.bl ], [ %i.rz, %middle.block ]
+  %.0910.i.ph = phi ptr [ %.0226, %bb.bl ], [ %i.sa, %middle.block ]
   br label %.lr.ph.i386
 
 .lr.ph.i386:                                      ; preds = %.lr.ph.i386.preheader, %.lr.ph.i386
@@ -685,7 +670,7 @@ middle.block:                                     ; preds = %vector.body
   %i.si = getelementptr inbounds nuw i8, ptr %.012.i, i64 4
   %i.sj = getelementptr inbounds nuw i8, ptr %.0910.i, i64 4
   %i.sk = icmp samesign ugt i32 %.0811.i, 1
-  br i1 %i.sk, label %.lr.ph.i386, label %ss_blockswap.exit, !llvm.loop !203
+  br i1 %i.sk, label %.lr.ph.i386, label %ss_blockswap.exit, !llvm.loop !198
 
 ss_blockswap.exit:                                ; preds = %.lr.ph.i386, %middle.block
   %i.sl = getelementptr inbounds nuw [4 x i8], ptr %.0226, i64 %i.rt ; 5 uses
@@ -708,7 +693,7 @@ bb.bn:                                            ; preds = %bb.bm
   %i.sr = getelementptr inbounds i8, ptr %.0230, i64 -4 ; 4 uses
   %i.ss = load i32, ptr %i.sr, align 4, !tbaa !3
   %i.st = icmp slt i32 %i.ss, 0
-  br i1 %i.st, label %.preheader, label %.loopexit.loopexit, !llvm.loop !204
+  br i1 %i.st, label %.preheader, label %.loopexit.loopexit, !llvm.loop !199
 
 bb.bo:                                            ; preds = %bb.bm
   %i.su = icmp ult ptr %.0224, %i.rv
@@ -719,7 +704,7 @@ bb.bo:                                            ; preds = %bb.bm
   %i.sv = load i32, ptr %.0228, align 4, !tbaa !3
   %i.sw = icmp slt i32 %i.sv, 0
   %i.sx = getelementptr inbounds nuw i8, ptr %.0228, i64 4
-  br i1 %i.sw, label %.preheader439, label %.loopexit.loopexit550, !llvm.loop !205
+  br i1 %i.sw, label %.preheader439, label %.loopexit.loopexit550, !llvm.loop !200
 
 .loopexit.loopexit:                               ; preds = %.preheader
   %.pre671 = ptrtoint ptr %i.sr to i64
@@ -1122,13 +1107,8 @@ begin_hunk_2_@llvm.memset.p0.i64
 !194 = distinct !{!194, !9}
 !195 = distinct !{!195, !9}
 !196 = distinct !{!196, !9}
-!197 = !{!198}
-!198 = distinct !{!198, !199}
-!199 = distinct !{!199, !"LVerDomain"}
-!200 = !{!201}
-!201 = distinct !{!201, !199}
-!202 = distinct !{!202, !9, !29, !30}
-!203 = distinct !{!203, !9, !29}
-!204 = distinct !{!204, !9}
-!205 = distinct !{!205, !9}
+!197 = distinct !{!197, !9, !29, !30}
+!198 = distinct !{!198, !9, !30, !29}
+!199 = distinct !{!199, !9}
+!200 = distinct !{!200, !9}
 end_hunk_2
