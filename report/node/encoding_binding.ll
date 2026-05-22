@@ -201,11 +201,9 @@ bb.x:                                             ; preds = %bb.w
   %i.ee = getelementptr i8, ptr %i.ed, i64 -2
   %i.ef = load <2 x i16>, ptr %i.ee, align 2
   %i.eg = and <2 x i16> %i.ef, splat (i16 -1024)
-  %3 = icmp eq <2 x i16> %i.eg, <i16 -10240, i16 -9216> ; 2 uses
-  %shift = shufflevector <2 x i1> %3, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = and <2 x i1> %3, %shift
-  %4 = extractelement <2 x i1> %foldExtExtBinop, i64 0
-  %i.eh = sext i1 %4 to i64
+  %.scalar = bitcast <2 x i16> %i.eg to i32
+  %3 = icmp eq i32 %.scalar, -603924480
+  %i.eh = sext i1 %3 to i64
   %spec.select = add nsw i64 %i.bo, %i.eh
   br label %bb.y
 
@@ -350,11 +348,9 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr i8, ptr %i.l, i64 -2
   %i.n = load <2 x i16>, ptr %i.m, align 2
   %i.o = and <2 x i16> %i.n, splat (i16 -1024)
-  %3 = icmp eq <2 x i16> %i.o, <i16 -10240, i16 -9216> ; 2 uses
-  %shift = shufflevector <2 x i1> %3, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = and <2 x i1> %3, %shift
-  %4 = extractelement <2 x i1> %foldExtExtBinop, i64 0
-  %i.p = sext i1 %4 to i64
+  %.scalar = bitcast <2 x i16> %i.o to i32
+  %3 = icmp eq i32 %.scalar, -603924480
+  %i.p = sext i1 %3 to i64
   %spec.select = add nsw i64 %.sroa.speculated109, %i.p
   br label %bb.e
 
@@ -433,11 +429,9 @@ bb.l:                                             ; preds = %bb.k
   %i.au = getelementptr i8, ptr %i.at, i64 -2
   %i.av = load <2 x i16>, ptr %i.au, align 2
   %i.aw = and <2 x i16> %i.av, splat (i16 -1024)
-  %5 = icmp eq <2 x i16> %i.aw, <i16 -10240, i16 -9216> ; 2 uses
-  %shift159 = shufflevector <2 x i1> %5, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop160 = and <2 x i1> %5, %shift159
-  %6 = extractelement <2 x i1> %foldExtExtBinop160, i64 0
-  br i1 %6, label %bb.m, label %.thread
+  %.scalar162 = bitcast <2 x i16> %i.aw to i32
+  %4 = icmp eq i32 %.scalar162, -603924480
+  br i1 %4, label %bb.m, label %.thread
 
 bb.m:                                             ; preds = %bb.l
   br i1 %i.ak, label %bb.n, label %bb.o

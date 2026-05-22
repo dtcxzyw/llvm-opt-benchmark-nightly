@@ -201,15 +201,13 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %i.y, label %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.z = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.r, <16 x i8> zeroinitializer) ; 2 uses
-  %shift = shufflevector <2 x i64> %i.z, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add nsw <2 x i64> %i.z, %shift
-  %3 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.z = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.r, <16 x i8> zeroinitializer)
+  %3 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.z)
   br label %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit
 
 _ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit: ; preds = %.thread, %bb.a, %._crit_edge, %bb.c
   %.0.i.lcssa74 = phi i64 [ %i.a, %bb.c ], [ %i.a, %._crit_edge ], [ 0, %bb.a ], [ %i.a, %.thread ] ; 3 uses
-  %.sroa.023.0.lcssa73 = phi <2 x i64> [ %.sroa.023.059.ph, %bb.c ], [ %.sroa.023.059.ph, %._crit_edge ], [ zeroinitializer, %bb.a ], [ %i.w, %.thread ] ; 2 uses
+  %.sroa.023.0.lcssa73 = phi <2 x i64> [ %.sroa.023.059.ph, %bb.c ], [ %.sroa.023.059.ph, %._crit_edge ], [ zeroinitializer, %bb.a ], [ %i.w, %.thread ]
   %.022.i = phi i64 [ %3, %bb.c ], [ 0, %._crit_edge ], [ 0, %bb.a ], [ 0, %.thread ]
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %.0.i.lcssa74 ; 2 uses
   %i.ab = sub i64 %2, %.0.i.lcssa74               ; 4 uses
@@ -267,9 +265,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZN7simdutf6scalar12_GLOBAL__N_14utf817count_code_pointsEPKcm.exit: ; preds = %.lr.ph.i, %middle.block, %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit
   %.07.lcssa.i = phi i64 [ 0, %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit ], [ %i.al, %middle.block ], [ %spec.select.i, %.lr.ph.i ]
-  %shift98 = shufflevector <2 x i64> %.sroa.023.0.lcssa73, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop99 = add nsw <2 x i64> %.sroa.023.0.lcssa73, %shift98
-  %4 = extractelement <2 x i64> %foldExtExtBinop99, i64 0
+  %4 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %.sroa.023.0.lcssa73)
   %i.ar = add i64 %4, %.022.i
   %i.as = add i64 %i.ar, %.07.lcssa.i
   ret i64 %i.as
@@ -330,15 +326,13 @@ bb.b:                                             ; preds = %.lr.ph.i
   br i1 %.not.i77.i, label %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit.i, label %.lr.ph.outer.i, !llvm.loop !1238
 
 ._crit_edge.i:                                    ; preds = %bb.b
-  %i.z = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.s, <16 x i8> zeroinitializer) ; 2 uses
-  %shift = shufflevector <2 x i64> %i.z, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add nsw <2 x i64> %i.z, %shift
-  %3 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.z = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %i.s, <16 x i8> zeroinitializer)
+  %3 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.z)
   br label %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit.i
 
 _ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit.i: ; preds = %.thread.i, %._crit_edge.i, %bb.a
   %.0.i.lcssa74.i = phi i64 [ %i.b, %._crit_edge.i ], [ 0, %bb.a ], [ %i.a, %.thread.i ] ; 3 uses
-  %.sroa.023.0.lcssa73.i = phi <2 x i64> [ %.sroa.023.059.ph.i, %._crit_edge.i ], [ zeroinitializer, %bb.a ], [ %i.x, %.thread.i ] ; 2 uses
+  %.sroa.023.0.lcssa73.i = phi <2 x i64> [ %.sroa.023.059.ph.i, %._crit_edge.i ], [ zeroinitializer, %bb.a ], [ %i.x, %.thread.i ]
   %.022.i.i = phi i64 [ %3, %._crit_edge.i ], [ 0, %bb.a ], [ 0, %.thread.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 %.0.i.lcssa74.i ; 2 uses
   %i.ab = sub i64 %2, %.0.i.lcssa74.i             ; 4 uses
@@ -396,9 +390,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZNK7simdutf8westmere14implementation10count_utf8EPKcm.exit: ; preds = %.lr.ph.i.i, %middle.block, %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit.i
   %.07.lcssa.i.i = phi i64 [ 0, %_ZN7simdutf8westmere12_GLOBAL__N_14utf826count_code_points_bytemaskEPKcm.exit.i ], [ %i.al, %middle.block ], [ %spec.select.i.i, %.lr.ph.i.i ]
-  %shift34 = shufflevector <2 x i64> %.sroa.023.0.lcssa73.i, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop35 = add nsw <2 x i64> %.sroa.023.0.lcssa73.i, %shift34
-  %4 = extractelement <2 x i64> %foldExtExtBinop35, i64 0
+  %4 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %.sroa.023.0.lcssa73.i)
   %i.ar = add i64 %4, %.022.i.i
   %i.as = add i64 %i.ar, %.07.lcssa.i.i
   ret i64 %i.as
@@ -801,15 +793,13 @@ bb.b:                                             ; preds = %.lr.ph.1, %.lr.ph.o
 ._crit_edge:                                      ; preds = %bb.b, %.lr.ph
   %.lcssa91 = phi <16 x i8> [ %i.v, %bb.b ], [ %i.k, %.lr.ph ]
   %.lcssa89 = phi i64 [ %i.w, %bb.b ], [ %i.x, %.lr.ph ]
-  %i.ab = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %.lcssa91, <16 x i8> zeroinitializer) ; 2 uses
-  %shift = shufflevector <2 x i64> %i.ab, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add nsw <2 x i64> %i.ab, %shift
-  %3 = extractelement <2 x i64> %foldExtExtBinop, i64 0
+  %i.ab = tail call noundef <2 x i64> @llvm.x86.sse2.psad.bw(<16 x i8> %.lcssa91, <16 x i8> zeroinitializer)
+  %3 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %i.ab)
   br label %_ZN7simdutf8westmere12_GLOBAL__N_14utf831utf16_length_from_utf8_bytemaskEPKcm.exit
 
 _ZN7simdutf8westmere12_GLOBAL__N_14utf831utf16_length_from_utf8_bytemaskEPKcm.exit: ; preds = %.thread, %bb.a, %._crit_edge
   %.016.i.lcssa56 = phi i64 [ %.lcssa89, %._crit_edge ], [ 0, %bb.a ], [ %i.l, %.thread ] ; 3 uses
-  %.sroa.015.0.lcssa55 = phi <2 x i64> [ %.sroa.015.041.ph, %._crit_edge ], [ zeroinitializer, %bb.a ], [ %i.z, %.thread ] ; 2 uses
+  %.sroa.015.0.lcssa55 = phi <2 x i64> [ %.sroa.015.041.ph, %._crit_edge ], [ zeroinitializer, %bb.a ], [ %i.z, %.thread ]
   %.017.i = phi i64 [ %3, %._crit_edge ], [ 0, %bb.a ], [ 0, %.thread ]
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 %.016.i.lcssa56 ; 2 uses
   %i.ad = sub i64 %2, %.016.i.lcssa56             ; 4 uses
@@ -876,9 +866,7 @@ middle.block:                                     ; preds = %vector.body
 
 _ZN7simdutf6scalar12_GLOBAL__N_14utf822utf16_length_from_utf8EPKcm.exit: ; preds = %.lr.ph.i, %middle.block, %_ZN7simdutf8westmere12_GLOBAL__N_14utf831utf16_length_from_utf8_bytemaskEPKcm.exit
   %.010.lcssa.i = phi i64 [ 0, %_ZN7simdutf8westmere12_GLOBAL__N_14utf831utf16_length_from_utf8_bytemaskEPKcm.exit ], [ %i.at, %middle.block ], [ %.2.i, %.lr.ph.i ]
-  %shift82 = shufflevector <2 x i64> %.sroa.015.0.lcssa55, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop83 = add nsw <2 x i64> %.sroa.015.0.lcssa55, %shift82
-  %4 = extractelement <2 x i64> %foldExtExtBinop83, i64 0
+  %4 = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %.sroa.015.0.lcssa55)
   %i.bb = add i64 %4, %.017.i
   %i.bc = add i64 %i.bb, %.010.lcssa.i
   ret i64 %i.bc

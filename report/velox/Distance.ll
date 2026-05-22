@@ -201,11 +201,10 @@ bb.o:                                             ; preds = %bb.i
   %i.cd = shufflevector <2 x double> %i.n, <2 x double> %i.g, <2 x i32> <i32 0, i32 2> ; 3 uses
   %i.ce = fcmp olt <2 x double> %i.cc, %i.cd
   %i.cf = select <2 x i1> %i.ce, <2 x double> %i.cd, <2 x double> %i.cc
-  %i.cg = fcmp ogt <2 x double> %i.cb, %i.cf      ; 2 uses
-  %shift = shufflevector <2 x i1> %i.cg, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop156 = or <2 x i1> %i.cg, %shift
-  %or.cond.i = extractelement <2 x i1> %foldExtExtBinop156, i64 0
-  br i1 %or.cond.i, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread, label %bb.p
+  %i.cg = fcmp ogt <2 x double> %i.cb, %i.cf
+  %4 = bitcast <2 x i1> %i.cg to i2
+  %or.cond.i.not = icmp eq i2 %4, 0
+  br i1 %or.cond.i.not, label %bb.p, label %_ZN4geos4geom8Envelope10intersectsERKNS0_10CoordinateES4_S4_S4_.exit.thread
 
 bb.p:                                             ; preds = %bb.o
   %i.ch = fcmp olt double %i.m, %i.o

@@ -201,15 +201,13 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.b = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %i.e, %vector.body ]
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @A, i64 %index
   %i.d = load <2 x i32>, ptr %i.c, align 8, !tbaa !4
-  %i.e = add <2 x i32> %i.d, %i.b                 ; 3 uses
+  %i.e = add <2 x i32> %i.d, %i.b                 ; 2 uses
   %index.next = add nuw i64 %index, 2             ; 2 uses
   %i.f = icmp eq i64 %index.next, %n.vec
   br i1 %i.f, label %middle.block, label %vector.body, !llvm.loop !64
 
 middle.block:                                     ; preds = %vector.body
-  %shift = shufflevector <2 x i32> %i.e, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add <2 x i32> %shift, %i.e
-  %bin.rdx = extractelement <2 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %bin.rdx = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %i.e) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader12
 
@@ -612,7 +610,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.b = phi <2 x i32> [ zeroinitializer, %vector.ph ], [ %i.e, %vector.body ]
   %i.c = getelementptr inbounds nuw [4 x i8], ptr @A, i64 %index
   %i.d = load <2 x i32>, ptr %i.c, align 8, !tbaa !4
-  %i.e = add <2 x i32> %i.d, %i.b                 ; 3 uses
+  %i.e = add <2 x i32> %i.d, %i.b                 ; 2 uses
   %i.f = getelementptr inbounds nuw [4 x i8], ptr @D, i64 %index ; 2 uses
   %i.g = load <2 x i32>, ptr %i.f, align 8, !tbaa !4
   %i.h = add nsw <2 x i32> %i.g, splat (i32 1)
@@ -635,9 +633,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.s, label %middle.block, label %vector.body, !llvm.loop !85
 
 middle.block:                                     ; preds = %vector.body
-  %shift = shufflevector <2 x i32> %i.e, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add <2 x i32> %shift, %i.e
-  %bin.rdx = extractelement <2 x i32> %foldExtExtBinop, i64 0 ; 2 uses
+  %bin.rdx = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %i.e) ; 2 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge, label %.lr.ph.preheader15
 
@@ -1039,6 +1035,9 @@ declare void @llvm.assume(i1 noundef) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #9
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

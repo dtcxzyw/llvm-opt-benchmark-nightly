@@ -34,10 +34,9 @@ bb.a:
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
   %i.c = load <4 x double>, ptr %0, align 8, !tbaa !7 ; 2 uses
   %i.d = shufflevector <4 x double> %i.c, <4 x double> poison, <2 x i32> <i32 0, i32 3> ; 4 uses
-  %2 = fcmp une <2 x double> %i.b, %i.d           ; 2 uses
-  %shift = shufflevector <2 x i1> %2, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = and <2 x i1> %2, %shift
-  %or.cond = extractelement <2 x i1> %foldExtExtBinop, i64 0
+  %2 = fcmp oeq <2 x double> %i.b, %i.d
+  %3 = bitcast <2 x i1> %2 to i2
+  %or.cond = icmp eq i2 %3, 0
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -424,10 +423,9 @@ bb.a:
   %i.b = load <2 x double>, ptr %i.a, align 8, !tbaa !7 ; 4 uses
   %i.c = load <4 x double>, ptr %1, align 8, !tbaa !7 ; 2 uses
   %i.d = shufflevector <4 x double> %i.c, <4 x double> poison, <2 x i32> <i32 0, i32 3> ; 4 uses
-  %3 = fcmp une <2 x double> %i.b, %i.d           ; 2 uses
-  %shift = shufflevector <2 x i1> %3, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = and <2 x i1> %3, %shift
-  %or.cond.i = extractelement <2 x i1> %foldExtExtBinop, i64 0
+  %3 = fcmp oeq <2 x double> %i.b, %i.d
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i = icmp eq i2 %4, 0
   br i1 %or.cond.i, label %_ZN4geos5index8quadtree8Quadtree12ensureExtentEPKNS_4geom8EnvelopeEd.exit.thread, label %_ZN4geos5index8quadtree8Quadtree12ensureExtentEPKNS_4geom8EnvelopeEd.exit
 
 _ZN4geos5index8quadtree8Quadtree12ensureExtentEPKNS_4geom8EnvelopeEd.exit.thread: ; preds = %bb.a

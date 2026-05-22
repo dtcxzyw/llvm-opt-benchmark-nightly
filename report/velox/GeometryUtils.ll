@@ -201,11 +201,10 @@ bb.b:                                             ; preds = %bb.a
   %i.an = extractelement <2 x double> %i.am, i64 1 ; 3 uses
   %i.ao = fmul double %i.an, 5.000000e-01
   %i.ap = tail call double @tan(double noundef %i.ao) #26, !tbaa !3 ; 3 uses
-  %1 = fcmp oeq <2 x double> %i.am, %i.aa         ; 2 uses
-  %shift = shufflevector <2 x i1> %1, <2 x i1> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = and <2 x i1> %1, %shift
-  %2 = extractelement <2 x i1> %foldExtExtBinop, i64 0
-  br i1 %2, label %.loopexit, label %.peel.next, !prof !110
+  %1 = fcmp une <2 x double> %i.am, %i.aa
+  %2 = bitcast <2 x i1> %1 to i2
+  %3 = icmp eq i2 %2, 0
+  br i1 %3, label %.loopexit, label %.peel.next, !prof !110
 
 .peel.next:                                       ; preds = %.peel.begin
   %foldExtExtBinop50 = fsub <2 x double> %i.am, %i.aa
