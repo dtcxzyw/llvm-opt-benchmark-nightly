@@ -1,0 +1,147 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index a064aa1016399..01622a32d6056 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -13,6 +13,7 @@
+ #include "InstCombineInternal.h"
+ #include "llvm/ADT/APInt.h"
+ #include "llvm/ADT/STLExtras.h"
++#include "llvm/ADT/Statistic.h"
+ #include "llvm/ADT/SmallVector.h"
+ #include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/CmpInstAnalysis.h"
+@@ -40,6 +41,7 @@
+ #include "llvm/IR/User.h"
+ #include "llvm/IR/Value.h"
+ #include "llvm/Support/Casting.h"
++#include "llvm/Support/CommandLine.h"
+ #include "llvm/Support/ErrorHandling.h"
+ #include "llvm/Support/KnownBits.h"
+ #include "llvm/Transforms/InstCombine/InstCombiner.h"
+@@ -57,6 +59,13 @@ namespace llvm {
+ extern cl::opt<bool> ProfcheckDisableMetadataFixes;
+ }
+ 
++static cl::opt<bool>
++    EnableSelectICmpBoundaryFold("instcombine-select-icmp-boundary-fold",
++                                 cl::init(true), cl::Hidden);
++
++STATISTIC(NumSelectICmpBoundaryFold,
++          "Number of select icmp boundary folds");
++
+ /// Replace a select operand based on an equality comparison with the identity
+ /// constant of a binop.
+ static Instruction *foldSelectBinOpIdentity(SelectInst &Sel,
+@@ -2057,6 +2066,103 @@ tryToReuseConstantFromSelectInComparison(SelectInst &Sel, ICmpInst &Cmp,
+   return &Sel;
+ }
+ 
++/// Narrow the true region of a select condition if the value on the boundary
++/// that is removed from the true region is the same for both select arms.
++static Instruction *foldSelectICmpAtBoundary(SelectInst &Sel, ICmpInst *Cmp,
++                                             InstCombinerImpl &IC) {
++  if (!EnableSelectICmpBoundaryFold)
++    return nullptr;
++
++  if (!Cmp->hasOneUse() || Cmp->hasSameSign())
++    return nullptr;
++
++  CmpPredicate Pred;
++  Value *X;
++  ConstantInt *CmpC;
++  if (!match(Cmp, m_ICmp(Pred, m_Value(X), m_ConstantInt(CmpC))))
++    return nullptr;
++
++  if (!X->getType()->isIntegerTy())
++    return nullptr;
++
++  APInt NewLimit = CmpC->getValue();
++  bool IsSigned = ICmpInst::isSigned(Pred);
++  auto IsMinValue = [&]() {
++    return IsSigned ? NewLimit.isMinSignedValue() : NewLimit.isMinValue();
++  };
++  auto IsMaxValue = [&]() {
++    return IsSigned ? NewLimit.isMaxSignedValue() : NewLimit.isMaxValue();
++  };
++
++  APInt Boundary = NewLimit;
++  switch (Pred) {
++  case ICmpInst::ICMP_ULT:
++  case ICmpInst::ICMP_SLT:
++    if (IsMinValue())
++      return nullptr;
++    --NewLimit;
++    Boundary = NewLimit;
++    break;
++  case ICmpInst::ICMP_UGT:
++  case ICmpInst::ICMP_SGT:
++    if (IsMaxValue())
++      return nullptr;
++    ++NewLimit;
++    Boundary = NewLimit;
++    break;
++  default:
++    return nullptr;
++  }
++
++  Constant *BoundaryC = ConstantInt::get(X->getType(), Boundary);
++  const SimplifyQuery Q = IC.getSimplifyQuery().getWithInstruction(&Sel);
++  auto SimplifyAtBoundary =
++      [&](Value *V, SmallVectorImpl<Instruction *> *DropFlags) -> Value * {
++    if (V == X)
++      return BoundaryC;
++    if (isa<Constant>(V))
++      return V;
++    return simplifyWithOpReplaced(V, X, BoundaryC, Q,
++                                  /*AllowRefinement=*/false, DropFlags);
++  };
++
++  Value *TrueAtBoundary =
++      SimplifyAtBoundary(Sel.getTrueValue(), /*DropFlags=*/nullptr);
++
++  SmallVector<Instruction *, 4> DropFalseFlags;
++  Value *FalseAtBoundary =
++      SimplifyAtBoundary(Sel.getFalseValue(), &DropFalseFlags);
++
++  if (!TrueAtBoundary || !FalseAtBoundary)
++    return nullptr;
++
++  bool SameAtBoundary = TrueAtBoundary == FalseAtBoundary;
++  if (!SameAtBoundary) {
++    auto *TrueC = dyn_cast<Constant>(TrueAtBoundary);
++    auto *FalseC = dyn_cast<Constant>(FalseAtBoundary);
++    SameAtBoundary = TrueC && FalseC && TrueC->isElementWiseEqual(FalseC);
++  }
++  if (!SameAtBoundary)
++    return nullptr;
++
++  ++NumSelectICmpBoundaryFold;
++  for (Instruction *I : DropFalseFlags) {
++    I->dropPoisonGeneratingAnnotations();
++    IC.addToWorklist(I);
++  }
++
++  InstCombiner::BuilderTy::InsertPointGuard Guard(IC.Builder);
++  IC.Builder.SetInsertPoint(&Sel);
++  Value *NewCmp =
++      IC.Builder.CreateICmp(Pred, X, ConstantInt::get(X->getType(), NewLimit),
++                            Cmp->getName() + ".narrow");
++  IC.replaceOperand(Sel, 0, NewCmp);
++  if (!ProfcheckDisableMetadataFixes)
++    setExplicitlyUnknownBranchWeightsIfProfiled(Sel, DEBUG_TYPE);
++
++  return &Sel;
++}
++
+ static Instruction *foldSelectZeroOrOnes(ICmpInst *Cmp, Value *TVal,
+                                          Value *FVal,
+                                          InstCombiner::BuilderTy &Builder) {
+@@ -2369,6 +2475,8 @@ Instruction *InstCombinerImpl::foldSelectInstWithICmp(SelectInst &SI,
+   if (Instruction *NewSel =
+           tryToReuseConstantFromSelectInComparison(SI, *ICI, *this))
+     return NewSel;
++  if (Instruction *NewSel = foldSelectICmpAtBoundary(SI, ICI, *this))
++    return NewSel;
+   if (Instruction *Folded =
+           foldICmpUSubSatWithAndForMostSignificantBitCmp(SI, ICI, Builder))
+     return Folded;
