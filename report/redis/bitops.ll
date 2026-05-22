@@ -201,12 +201,10 @@ middle.block:                                     ; preds = %vector.body
   %i.he = add nuw nsw <2 x i32> %i.hd, %i.hb      ; 2 uses
   %i.hf = lshr <2 x i32> %i.he, splat (i32 4)
   %i.hg = add nuw nsw <2 x i32> %i.hf, %i.he
-  %i.hh = and <2 x i32> %i.hg, splat (i32 252645135) ; 2 uses
+  %i.hh = and <2 x i32> %i.hg, splat (i32 252645135)
   %i.hi = tail call i32 @llvm.vector.reduce.add.v4i32(<4 x i32> %i.gt)
   %op.rdx = add nuw nsw i32 %i.hi, %i.gw
-  %shift = shufflevector <2 x i32> %i.hh, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add <2 x i32> %i.hh, %shift
-  %op.rdx168 = extractelement <2 x i32> %foldExtExtBinop, i64 0
+  %op.rdx168 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %i.hh)
   %op.rdx169 = add nuw i32 %op.rdx, %op.rdx168
   %i.hj = mul i32 %op.rdx169, 16843009
   %i.hk = lshr i32 %i.hj, 24
@@ -607,6 +605,9 @@ declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i64> @llvm.ctpop.v4i64(<4 x i64>) #3

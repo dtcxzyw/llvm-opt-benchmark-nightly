@@ -201,10 +201,8 @@ bb.c:                                             ; preds = %bb.b
   store double 1.000000e+00, ptr %i.s, align 8, !tbaa !18
   %i.t = load <2 x double>, ptr %2, align 8, !tbaa !21
   %i.u = fadd <2 x double> %i.t, splat (double 5.000000e+04)
-  %i.v = fptosi <2 x double> %i.u to <2 x i32>    ; 2 uses
-  %shift = shufflevector <2 x i32> %i.v, <2 x i32> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop = add nsw <2 x i32> %shift, %i.v
-  %5 = extractelement <2 x i32> %foldExtExtBinop, i64 0
+  %i.v = fptosi <2 x double> %i.u to <2 x i32>
+  %5 = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %i.v)
   %i.w = and i32 %5, 1
   %i.x = zext nneg i32 %i.w to i64
   %i.y = getelementptr inbounds nuw [48 x i8], ptr @Groundtxt, i64 %i.x
@@ -536,6 +534,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #5
 
 attributes #0 = { cold nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
