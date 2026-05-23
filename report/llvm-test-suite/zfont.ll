@@ -180,22 +180,22 @@ bb.k:                                             ; preds = %bb.j
   %i.an = load ptr, ptr %i.e, align 8, !tbaa !11  ; 3 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.ap = load i16, ptr %i.ao, align 8, !tbaa !13
-  %3 = lshr i16 %i.ap, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %.thread101 [
-    i16 0, label %bb.l
-    i16 10, label %bb.l
+  %3 = trunc i16 %i.ap to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %.thread101 [
+    i8 0, label %bb.l
+    i8 40, label %bb.l
   ]
 
 bb.l:                                             ; preds = %bb.k, %bb.k
   %i.aq = load ptr, ptr %i.f, align 8, !tbaa !11
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.as = load i16, ptr %i.ar, align 8, !tbaa !13
-  %5 = lshr i16 %i.as, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %.thread101 [
-    i16 0, label %bb.m
-    i16 10, label %bb.m
+  %4 = trunc i16 %i.as to i8
+  %trunc86 = and i8 %4, -4
+  switch i8 %trunc86, label %.thread101 [
+    i8 0, label %bb.m
+    i8 40, label %bb.m
   ]
 
 bb.m:                                             ; preds = %bb.l, %bb.l
@@ -308,11 +308,11 @@ bb.ac:                                            ; preds = %bb.ab
   %i.ch = load ptr, ptr %i.k, align 8, !tbaa !11
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 8
   %i.cj = load i16, ptr %i.ci, align 8, !tbaa !13
-  %7 = lshr i16 %i.cj, 2
-  %8 = and i16 %7, 63
-  switch i16 %8, label %.thread [
-    i16 0, label %bb.ad
-    i16 10, label %bb.ad
+  %5 = trunc i16 %i.cj to i8
+  %trunc94 = and i8 %5, -4
+  switch i8 %trunc94, label %.thread [
+    i8 0, label %bb.ad
+    i8 40, label %bb.ad
   ]
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ac, %bb.ab
@@ -388,11 +388,11 @@ bb.ao:                                            ; preds = %bb.an
   %i.dg = load ptr, ptr %i.j, align 8, !tbaa !11
   %i.dh = getelementptr inbounds nuw i8, ptr %i.dg, i64 8
   %i.di = load i16, ptr %i.dh, align 8, !tbaa !13 ; 2 uses
-  %9 = lshr i16 %i.di, 2
-  %10 = and i16 %9, 63
-  switch i16 %10, label %.thread101 [
-    i16 0, label %bb.ap
-    i16 10, label %bb.ap
+  %6 = trunc i16 %i.di to i8
+  %trunc90 = and i8 %6, -4
+  switch i8 %trunc90, label %.thread101 [
+    i8 0, label %bb.ap
+    i8 40, label %bb.ap
   ]
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ao

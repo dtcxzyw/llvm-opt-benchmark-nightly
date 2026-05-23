@@ -26,22 +26,22 @@ define dso_local range(i32 -20, 1) i32 @zadd(ptr noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.j [
-    i16 11, label %bb.b
-    i16 5, label %bb.e
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.j [
+    i8 44, label %bb.b
+    i8 20, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.e = load i16, ptr %i.d, align 8, !tbaa !8
-  %3 = lshr i16 %i.e, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.j [
-    i16 11, label %bb.c
-    i16 5, label %bb.d
+  %2 = trunc i16 %i.e to i8
+  %trunc23 = and i8 %2, -4
+  switch i8 %trunc23, label %bb.j [
+    i8 44, label %bb.c
+    i8 20, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -64,11 +64,11 @@ bb.e:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds i8, ptr %0, i64 -16 ; 5 uses
   %i.n = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.o = load i16, ptr %i.n, align 8, !tbaa !8
-  %5 = lshr i16 %i.o, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.j [
-    i16 11, label %bb.f
-    i16 5, label %bb.g
+  %3 = trunc i16 %i.o to i8
+  %trunc22 = and i8 %3, -4
+  switch i8 %trunc22, label %bb.j [
+    i8 44, label %bb.f
+    i8 20, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -122,11 +122,11 @@ bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 8 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %1 = lshr i16 %i.c, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.k [
-    i16 11, label %bb.b
-    i16 5, label %bb.f
+  %1 = trunc i16 %i.c to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.k [
+    i8 44, label %bb.b
+    i8 20, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -137,11 +137,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.g = load i16, ptr %i.f, align 8, !tbaa !8
-  %3 = lshr i16 %i.g, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.k [
-    i16 11, label %bb.d
-    i16 5, label %bb.e
+  %2 = trunc i16 %i.g to i8
+  %trunc21 = and i8 %2, -4
+  switch i8 %trunc21, label %bb.k [
+    i8 44, label %bb.d
+    i8 20, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -166,11 +166,11 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.p = load i16, ptr %i.o, align 8, !tbaa !8
-  %5 = lshr i16 %i.p, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.k [
-    i16 11, label %bb.h
-    i16 5, label %bb.i
+  %3 = trunc i16 %i.p to i8
+  %trunc20 = and i8 %3, -4
+  switch i8 %trunc20, label %bb.k [
+    i8 44, label %bb.h
+    i8 20, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -205,22 +205,22 @@ define dso_local range(i32 -20, 1) i32 @zmul(ptr noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.m [
-    i16 11, label %bb.b
-    i16 5, label %bb.e
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.m [
+    i8 44, label %bb.b
+    i8 20, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.e = load i16, ptr %i.d, align 8, !tbaa !8
-  %3 = lshr i16 %i.e, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.m [
-    i16 11, label %bb.c
-    i16 5, label %bb.d
+  %2 = trunc i16 %i.e to i8
+  %trunc40 = and i8 %2, -4
+  switch i8 %trunc40, label %bb.m [
+    i8 44, label %bb.c
+    i8 20, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -243,11 +243,11 @@ bb.e:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds i8, ptr %0, i64 -16 ; 5 uses
   %i.n = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.o = load i16, ptr %i.n, align 8, !tbaa !8
-  %5 = lshr i16 %i.o, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.m [
-    i16 11, label %bb.f
-    i16 5, label %bb.g
+  %3 = trunc i16 %i.o to i8
+  %trunc39 = and i8 %3, -4
+  switch i8 %trunc39, label %bb.m [
+    i8 44, label %bb.f
+    i8 20, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -311,22 +311,22 @@ define dso_local range(i32 -20, 1) i32 @zsub(ptr noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.j [
-    i16 11, label %bb.b
-    i16 5, label %bb.e
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.j [
+    i8 44, label %bb.b
+    i8 20, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
   %i.d = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.e = load i16, ptr %i.d, align 8, !tbaa !8
-  %3 = lshr i16 %i.e, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.j [
-    i16 11, label %bb.c
-    i16 5, label %bb.d
+  %2 = trunc i16 %i.e to i8
+  %trunc23 = and i8 %2, -4
+  switch i8 %trunc23, label %bb.j [
+    i8 44, label %bb.c
+    i8 20, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -349,11 +349,11 @@ bb.e:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds i8, ptr %0, i64 -16 ; 5 uses
   %i.n = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.o = load i16, ptr %i.n, align 8, !tbaa !8
-  %5 = lshr i16 %i.o, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.j [
-    i16 11, label %bb.f
-    i16 5, label %bb.g
+  %3 = trunc i16 %i.o to i8
+  %trunc22 = and i8 %3, -4
+  switch i8 %trunc22, label %bb.j [
+    i8 44, label %bb.f
+    i8 20, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -403,11 +403,11 @@ bb.a:
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %i.a, i64 16, i1 false), !tbaa.struct !15
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %2 = lshr i16 %i.c, 2
-  %3 = and i16 %2, 63
-  switch i16 %3, label %zdiv.exit.thread [
-    i16 11, label %bb.b
-    i16 5, label %bb.f
+  %2 = trunc i16 %i.c to i8
+  %trunc.i = and i8 %2, -4
+  switch i8 %trunc.i, label %zdiv.exit.thread [
+    i8 44, label %bb.b
+    i8 20, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -418,11 +418,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.g = load i16, ptr %i.f, align 8, !tbaa !8
-  %4 = lshr i16 %i.g, 2
-  %5 = and i16 %4, 63
-  switch i16 %5, label %zdiv.exit.thread [
-    i16 11, label %bb.d
-    i16 5, label %bb.e
+  %3 = trunc i16 %i.g to i8
+  %trunc21.i = and i8 %3, -4
+  switch i8 %trunc21.i, label %zdiv.exit.thread [
+    i8 44, label %bb.d
+    i8 20, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -447,11 +447,11 @@ bb.f:                                             ; preds = %bb.a
 bb.g:                                             ; preds = %bb.f
   %i.o = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.p = load i16, ptr %i.o, align 8, !tbaa !8
-  %6 = lshr i16 %i.p, 2
-  %7 = and i16 %6, 63
-  switch i16 %7, label %zdiv.exit.thread [
-    i16 11, label %bb.h
-    i16 5, label %bb.i
+  %4 = trunc i16 %i.p to i8
+  %trunc20.i = and i8 %4, -4
+  switch i8 %trunc20.i, label %zdiv.exit.thread [
+    i8 44, label %bb.h
+    i8 20, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -535,11 +535,11 @@ define dso_local range(i32 -20, 1) i32 @zneg(ptr noundef captures(none) %0) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.f [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.f [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -573,11 +573,11 @@ define dso_local range(i32 -20, 1) i32 @zceiling(ptr noundef captures(none) %0) 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -602,11 +602,11 @@ define dso_local range(i32 -20, 1) i32 @zfloor(ptr noundef captures(none) %0) #4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -631,11 +631,11 @@ define dso_local range(i32 -20, 1) i32 @zround(ptr noundef captures(none) %0) #4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -660,11 +660,11 @@ define dso_local range(i32 -20, 1) i32 @ztruncate(ptr noundef captures(none) %0)
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.g [
-    i16 11, label %bb.b
-    i16 5, label %bb.f
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.g [
+    i8 44, label %bb.b
+    i8 20, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a

@@ -201,9 +201,10 @@ bb.cu:                                            ; preds = %bb.cs
   %i.abu = getelementptr inbounds nuw i8, ptr %.01914, i64 46 ; 9 uses
   store i16 %i.abt, ptr %i.abu, align 2, !tbaa !8
   %i.abv = load i8, ptr %2, align 4
-  %14 = lshr i8 %i.abv, 4
-  %15 = and i8 %14, 7
-  switch i8 %15, label %bb.dn [
+  %14 = and i8 %i.abv, 112
+  %15 = sub i8 %14, 0                             ; 2 uses
+  %16 = call i8 @llvm.fshl.i8(i8 %15, i8 %15, i8 4)
+  switch i8 %16, label %bb.dn [
     i8 0, label %bb.cv
     i8 1, label %bb.cw
     i8 2, label %.loopexit2477
@@ -606,11 +607,10 @@ bb.jz:                                            ; preds = %bb.jy
   br i1 %.not2284, label %bb.ka, label %bb.kb
 
 bb.ka:                                            ; preds = %bb.jz
-  %16 = lshr i16 %i.bik, 10
-  %i.bil = and i16 %16, 7
+  %i.bil = and i16 %i.bik, 7168
   switch i16 %i.bil, label %bb.kb [
-    i16 1, label %bb.kc
-    i16 5, label %bb.kc
+    i16 1024, label %bb.kc
+    i16 5120, label %bb.kc
   ]
 
 bb.kb:                                            ; preds = %bb.ka, %bb.jz

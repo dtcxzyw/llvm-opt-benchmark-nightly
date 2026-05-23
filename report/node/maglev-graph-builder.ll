@@ -201,14 +201,14 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.not, label %bb.e, label %.critedge30
 
 bb.e:                                             ; preds = %bb.d
-  %9 = lshr i32 %i.o, 5
-  %10 = and i32 %9, 7
-  switch i32 %10, label %bb.s [
-    i32 1, label %.critedge30
-    i32 2, label %bb.f
-    i32 3, label %bb.j
-    i32 0, label %bb.q
-    i32 4, label %bb.r
+  %9 = trunc i32 %i.o to i8
+  %10 = lshr i8 %9, 5
+  switch i8 %10, label %bb.s [
+    i8 1, label %.critedge30
+    i8 2, label %bb.f
+    i8 3, label %bb.j
+    i8 0, label %bb.q
+    i8 4, label %bb.r
   ]
 
 bb.f:                                             ; preds = %bb.e

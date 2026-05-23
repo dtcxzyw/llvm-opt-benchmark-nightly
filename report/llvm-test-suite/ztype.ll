@@ -179,14 +179,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %access_check.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %1 = lshr i16 %i.d, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %access_check.exit [
-    i16 2, label %bb.d
-    i16 0, label %bb.e
-    i16 3, label %bb.e
-    i16 10, label %bb.e
-    i16 13, label %bb.e
+  %1 = trunc i16 %i.d to i8
+  %trunc.i = and i8 %1, -4
+  switch i8 %trunc.i, label %access_check.exit [
+    i8 8, label %bb.d
+    i8 0, label %bb.e
+    i8 12, label %bb.e
+    i8 40, label %bb.e
+    i8 52, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -218,14 +218,14 @@ define dso_local range(i32 -20, 2) i32 @access_check(ptr noundef %0, i32 noundef
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11
-  %3 = lshr i16 %i.b, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.g [
-    i16 2, label %bb.b
-    i16 0, label %bb.c
-    i16 3, label %bb.c
-    i16 10, label %bb.c
-    i16 13, label %bb.c
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %bb.g [
+    i8 8, label %bb.b
+    i8 0, label %bb.c
+    i8 12, label %bb.c
+    i8 40, label %bb.c
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -269,14 +269,14 @@ define dso_local range(i32 -20, 1) i32 @znoaccess(ptr noundef %0) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 5 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %access_check.exit [
-    i16 2, label %bb.b
-    i16 0, label %bb.c
-    i16 3, label %bb.c
-    i16 10, label %bb.c
-    i16 13, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc.i = and i8 %1, -4
+  switch i8 %trunc.i, label %access_check.exit [
+    i8 8, label %bb.b
+    i8 0, label %bb.c
+    i8 12, label %bb.c
+    i8 40, label %bb.c
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -303,14 +303,14 @@ define dso_local range(i32 -20, 1) i32 @zreadonly(ptr noundef %0) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 5 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %access_check.exit [
-    i16 2, label %bb.b
-    i16 0, label %bb.c
-    i16 3, label %bb.c
-    i16 10, label %bb.c
-    i16 13, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc.i = and i8 %1, -4
+  switch i8 %trunc.i, label %access_check.exit [
+    i8 8, label %bb.b
+    i8 0, label %bb.c
+    i8 12, label %bb.c
+    i8 40, label %bb.c
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -342,14 +342,14 @@ define dso_local range(i32 -20, 2) i32 @zrcheck(ptr noundef %0) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 5 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %access_check.exit [
-    i16 2, label %bb.b
-    i16 0, label %bb.c
-    i16 3, label %bb.c
-    i16 10, label %bb.c
-    i16 13, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc.i = and i8 %1, -4
+  switch i8 %trunc.i, label %access_check.exit [
+    i8 8, label %bb.b
+    i8 0, label %bb.c
+    i8 12, label %bb.c
+    i8 40, label %bb.c
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -377,14 +377,14 @@ define dso_local range(i32 -20, 2) i32 @zwcheck(ptr noundef %0) #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 5 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %access_check.exit [
-    i16 2, label %bb.b
-    i16 0, label %bb.c
-    i16 3, label %bb.c
-    i16 10, label %bb.c
-    i16 13, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc.i = and i8 %1, -4
+  switch i8 %trunc.i, label %access_check.exit [
+    i8 8, label %bb.b
+    i8 0, label %bb.c
+    i8 12, label %bb.c
+    i8 40, label %bb.c
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -414,12 +414,12 @@ bb.a:
   %2 = alloca %struct.ref_s, align 8              ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 2 uses
-  %3 = lshr i16 %i.b, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.c [
-    i16 5, label %bb.m
-    i16 11, label %bb.b
-    i16 13, label %bb.d
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %bb.c [
+    i8 20, label %bb.m
+    i8 44, label %bb.b
+    i8 52, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -554,12 +554,12 @@ bb.a:
   %2 = alloca %struct.ref_s, align 8              ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 2 uses
-  %3 = lshr i16 %i.b, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.c [
-    i16 5, label %bb.b
-    i16 11, label %bb.k
-    i16 13, label %bb.d
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %bb.c [
+    i8 20, label %bb.b
+    i8 44, label %bb.k
+    i8 52, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a

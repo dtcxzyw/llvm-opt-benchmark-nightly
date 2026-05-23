@@ -200,12 +200,12 @@ bb.c:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load i16, ptr %i.r, align 8, !tbaa !11   ; 2 uses
-  %4 = lshr i16 %i.s, 2
-  %5 = and i16 %4, 63
-  switch i16 %5, label %.loopexit [
-    i16 13, label %bb.e
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %4 = trunc i16 %i.s to i8
+  %trunc = and i8 %4, -4
+  switch i8 %trunc, label %.loopexit [
+    i8 52, label %bb.e
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.d:                                             ; preds = %.preheader, %.preheader

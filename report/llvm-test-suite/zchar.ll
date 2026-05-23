@@ -200,11 +200,11 @@ bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8    ; 2 uses
-  %1 = lshr i16 %i.c, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %setup_show.exit.thread [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
+  %1 = trunc i16 %i.c to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %setup_show.exit.thread [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -569,11 +569,11 @@ bb.d:                                             ; preds = %find_show.exit
 bb.e:                                             ; preds = %bb.d
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load i16, ptr %i.p, align 8, !tbaa !8
-  %1 = lshr i16 %i.q, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.k [
-    i16 0, label %bb.f
-    i16 10, label %bb.f
+  %1 = trunc i16 %i.q to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.k [
+    i8 0, label %bb.f
+    i8 40, label %bb.f
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e

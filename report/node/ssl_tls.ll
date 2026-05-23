@@ -201,13 +201,13 @@ bb.a:
 mbedtls_cipher_get_cipher_mode.exit:              ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.d = load i32, ptr %i.c, align 8
-  %1 = lshr i32 %i.d, 12
-  %2 = and i32 %1, 15
-  switch i32 %2, label %mbedtls_cipher_get_cipher_mode.exit.thread [
-    i32 2, label %mbedtls_ssl_get_base_mode.exit
-    i32 11, label %.fold.split.i
-    i32 8, label %.fold.split.i
-    i32 6, label %.fold.split.i
+  %1 = trunc i32 %i.d to i16
+  %trunc = and i16 %1, -4096
+  switch i16 %trunc, label %mbedtls_cipher_get_cipher_mode.exit.thread [
+    i16 8192, label %mbedtls_ssl_get_base_mode.exit
+    i16 -20480, label %.fold.split.i
+    i16 -32768, label %.fold.split.i
+    i16 24576, label %.fold.split.i
   ]
 
 mbedtls_cipher_get_cipher_mode.exit.thread:       ; preds = %bb.a, %mbedtls_cipher_get_cipher_mode.exit
@@ -240,13 +240,13 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %i.d, i64 8
   %.val = load i32, ptr %i.e, align 8
-  %2 = lshr i32 %.val, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.c [
-    i32 2, label %mbedtls_ssl_get_base_mode.exit
-    i32 11, label %.fold.split.i
-    i32 8, label %.fold.split.i
-    i32 6, label %.fold.split.i
+  %2 = trunc i32 %.val to i16
+  %trunc = and i16 %2, -4096
+  switch i16 %trunc, label %bb.c [
+    i16 8192, label %mbedtls_ssl_get_base_mode.exit
+    i16 -20480, label %.fold.split.i
+    i16 -32768, label %.fold.split.i
+    i16 24576, label %.fold.split.i
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -649,13 +649,13 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr i8, ptr %i.k, i64 8
   %.val.i = load i32, ptr %i.l, align 8
-  %9 = lshr i32 %.val.i, 12
-  %10 = and i32 %9, 15
-  switch i32 %10, label %bb.f [
-    i32 2, label %mbedtls_ssl_get_mode_from_ciphersuite.exit
-    i32 11, label %.fold.split.i.i
-    i32 8, label %.fold.split.i.i
-    i32 6, label %.fold.split.i.i
+  %9 = trunc i32 %.val.i to i16
+  %trunc.i = and i16 %9, -4096
+  switch i16 %trunc.i, label %bb.f [
+    i16 8192, label %mbedtls_ssl_get_mode_from_ciphersuite.exit
+    i16 -20480, label %.fold.split.i.i
+    i16 -32768, label %.fold.split.i.i
+    i16 24576, label %.fold.split.i.i
   ]
 
 bb.f:                                             ; preds = %bb.e

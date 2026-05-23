@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.k
   tail call void @PyErr_SetString(ptr noundef %i.q, ptr noundef nonnull @.str.2) #6
   br label %.critedge
 
-_PyUnicode_DATA.exit.i:                           ; preds = %bb.i, %bb.j, %bb.l
+_PyUnicode_DATA.exit.i:                           ; preds = %bb.j, %bb.i, %bb.l
   %.0123.in = phi ptr [ %i.p, %bb.l ], [ %.0.i.i.i, %bb.i ], [ %.val4.i.i, %bb.j ]
   %.0123 = load i8, ptr %.0123.in, align 1, !tbaa !11 ; 3 uses
   %i.r = icmp sgt i8 %.0123, -1

@@ -200,13 +200,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %3 = lshr i16 %i.c, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %common_transform.exit [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %3 = trunc i16 %i.c to i8
+  %trunc.i = and i8 %3, -4
+  switch i8 %trunc.i, label %common_transform.exit [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -257,11 +257,11 @@ bb.h:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %0, i64 -8
   %i.x = load i16, ptr %i.w, align 8, !tbaa !8
-  %5 = lshr i16 %i.x, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %common_transform.exit [
-    i16 11, label %bb.i
-    i16 5, label %bb.j
+  %4 = trunc i16 %i.x to i8
+  %trunc28.i = and i8 %4, -4
+  switch i8 %trunc28.i, label %common_transform.exit [
+    i8 44, label %bb.i
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -313,13 +313,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %5 = lshr i16 %i.c, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.m [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %5 = trunc i16 %i.c to i8
+  %trunc = and i8 %5, -4
+  switch i8 %trunc, label %bb.m [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -370,11 +370,11 @@ bb.h:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %0, i64 -8
   %i.x = load i16, ptr %i.w, align 8, !tbaa !8
-  %7 = lshr i16 %i.x, 2
-  %8 = and i16 %7, 63
-  switch i16 %8, label %bb.m [
-    i16 11, label %bb.i
-    i16 5, label %bb.j
+  %6 = trunc i16 %i.x to i8
+  %trunc28 = and i8 %6, -4
+  switch i8 %trunc28, label %bb.m [
+    i8 44, label %bb.i
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -430,13 +430,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %3 = lshr i16 %i.c, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %common_transform.exit [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %3 = trunc i16 %i.c to i8
+  %trunc.i = and i8 %3, -4
+  switch i8 %trunc.i, label %common_transform.exit [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -487,11 +487,11 @@ bb.h:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %0, i64 -8
   %i.x = load i16, ptr %i.w, align 8, !tbaa !8
-  %5 = lshr i16 %i.x, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %common_transform.exit [
-    i16 11, label %bb.i
-    i16 5, label %bb.j
+  %4 = trunc i16 %i.x to i8
+  %trunc28.i = and i8 %4, -4
+  switch i8 %trunc28.i, label %common_transform.exit [
+    i8 44, label %bb.i
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -547,13 +547,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %3 = lshr i16 %i.c, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %common_transform.exit [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %3 = trunc i16 %i.c to i8
+  %trunc.i = and i8 %3, -4
+  switch i8 %trunc.i, label %common_transform.exit [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -604,11 +604,11 @@ bb.h:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %0, i64 -8
   %i.x = load i16, ptr %i.w, align 8, !tbaa !8
-  %5 = lshr i16 %i.x, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %common_transform.exit [
-    i16 11, label %bb.i
-    i16 5, label %bb.j
+  %4 = trunc i16 %i.x to i8
+  %trunc28.i = and i8 %4, -4
+  switch i8 %trunc28.i, label %common_transform.exit [
+    i8 44, label %bb.i
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -664,13 +664,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %3 = lshr i16 %i.c, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %common_transform.exit [
-    i16 11, label %bb.b
-    i16 5, label %bb.c
-    i16 0, label %bb.d
-    i16 10, label %bb.d
+  %3 = trunc i16 %i.c to i8
+  %trunc.i = and i8 %3, -4
+  switch i8 %trunc.i, label %common_transform.exit [
+    i8 44, label %bb.b
+    i8 20, label %bb.c
+    i8 0, label %bb.d
+    i8 40, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -721,11 +721,11 @@ bb.h:                                             ; preds = %bb.c, %bb.b
   %i.v = getelementptr inbounds i8, ptr %0, i64 -16 ; 2 uses
   %i.w = getelementptr inbounds i8, ptr %0, i64 -8
   %i.x = load i16, ptr %i.w, align 8, !tbaa !8
-  %5 = lshr i16 %i.x, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %common_transform.exit [
-    i16 11, label %bb.i
-    i16 5, label %bb.j
+  %4 = trunc i16 %i.x to i8
+  %trunc28.i = and i8 %4, -4
+  switch i8 %trunc28.i, label %common_transform.exit [
+    i8 44, label %bb.i
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h

@@ -201,11 +201,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %12 = lshr i64 %.sroa.0.0.copyload.i, 8
-  %trunc = trunc i64 %12 to i8
-  switch i8 %trunc, label %bb.g [
-    i8 2, label %bb.d
-    i8 3, label %bb.e
+  %12 = trunc i64 %.sroa.0.0.copyload.i to i16
+  %trunc = and i16 %12, -256
+  switch i16 %trunc, label %bb.g [
+    i16 512, label %bb.d
+    i16 768, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c

@@ -201,14 +201,14 @@ bb.d:                                             ; preds = %bb.c
 mbedtls_cipher_get_cipher_mode.exit.i:            ; preds = %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %.val21.i, i64 8
   %i.v = load i32, ptr %i.u, align 8              ; 2 uses
-  %1 = lshr i32 %i.v, 12
-  %2 = and i32 %1, 15
-  switch i32 %2, label %mbedtls_ssl_get_record_expansion.exit.thread [
-    i32 6, label %bb.e
-    i32 8, label %bb.e
-    i32 11, label %bb.e
-    i32 7, label %bb.e
-    i32 2, label %mbedtls_cipher_get_block_size.exit.i
+  %1 = trunc i32 %i.v to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %mbedtls_ssl_get_record_expansion.exit.thread [
+    i16 24576, label %bb.e
+    i16 -32768, label %bb.e
+    i16 -20480, label %bb.e
+    i16 28672, label %bb.e
+    i16 8192, label %mbedtls_cipher_get_block_size.exit.i
   ]
 
 bb.e:                                             ; preds = %mbedtls_cipher_get_cipher_mode.exit.i, %mbedtls_cipher_get_cipher_mode.exit.i, %mbedtls_cipher_get_cipher_mode.exit.i, %mbedtls_cipher_get_cipher_mode.exit.i
@@ -611,14 +611,14 @@ bb.c:                                             ; preds = %bb.a
 mbedtls_cipher_get_cipher_mode.exit:              ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %.val21, i64 8
   %i.m = load i32, ptr %i.l, align 8              ; 2 uses
-  %1 = lshr i32 %i.m, 12
-  %2 = and i32 %1, 15
-  switch i32 %2, label %mbedtls_cipher_get_cipher_mode.exit.thread [
-    i32 6, label %bb.d
-    i32 8, label %bb.d
-    i32 11, label %bb.d
-    i32 7, label %bb.d
-    i32 2, label %mbedtls_cipher_get_block_size.exit
+  %1 = trunc i32 %i.m to i16
+  %trunc = and i16 %1, -4096
+  switch i16 %trunc, label %mbedtls_cipher_get_cipher_mode.exit.thread [
+    i16 24576, label %bb.d
+    i16 -32768, label %bb.d
+    i16 -20480, label %bb.d
+    i16 28672, label %bb.d
+    i16 8192, label %mbedtls_cipher_get_block_size.exit
   ]
 
 bb.d:                                             ; preds = %mbedtls_cipher_get_cipher_mode.exit, %mbedtls_cipher_get_cipher_mode.exit, %mbedtls_cipher_get_cipher_mode.exit, %mbedtls_cipher_get_cipher_mode.exit

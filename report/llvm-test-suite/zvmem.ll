@@ -104,18 +104,18 @@ bb.b:                                             ; preds = %bb.a
   %.01720.i = phi ptr [ %i.l, %select.unfold.i ], [ %i.g, %bb.b ] ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.01720.i, i64 8
   %i.j = load i16, ptr %i.i, align 8, !tbaa !24
-  %1 = lshr i16 %i.j, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %select.unfold.i [
-    i16 0, label %bb.c
-    i16 10, label %bb.c
-    i16 2, label %bb.c
-    i16 4, label %bb.c
-    i16 7, label %bb.c
-    i16 12, label %bb.c
-    i16 13, label %bb.c
-    i16 14, label %bb.c
-    i16 15, label %bb.c
+  %1 = trunc i16 %i.j to i8
+  %2 = lshr i8 %1, 2
+  switch i8 %2, label %select.unfold.i [
+    i8 0, label %bb.c
+    i8 10, label %bb.c
+    i8 2, label %bb.c
+    i8 4, label %bb.c
+    i8 7, label %bb.c
+    i8 12, label %bb.c
+    i8 13, label %bb.c
+    i8 14, label %bb.c
+    i8 15, label %bb.c
   ]
 
 bb.c:                                             ; preds = %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i, %.lr.ph.i
@@ -139,18 +139,18 @@ select.unfold.i:                                  ; preds = %bb.c, %.lr.ph.i
   %.01720.i26 = phi ptr [ %i.t, %select.unfold.i29 ], [ @estack, %.loopexit48 ] ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.01720.i26, i64 8
   %i.r = load i16, ptr %i.q, align 8, !tbaa !24
-  %3 = lshr i16 %i.r, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %select.unfold.i29 [
-    i16 0, label %bb.d
-    i16 10, label %bb.d
-    i16 2, label %bb.d
-    i16 4, label %bb.d
-    i16 7, label %bb.d
-    i16 12, label %bb.d
-    i16 13, label %bb.d
-    i16 14, label %bb.d
-    i16 15, label %bb.d
+  %3 = trunc i16 %i.r to i8
+  %4 = lshr i8 %3, 2
+  switch i8 %4, label %select.unfold.i29 [
+    i8 0, label %bb.d
+    i8 10, label %bb.d
+    i8 2, label %bb.d
+    i8 4, label %bb.d
+    i8 7, label %bb.d
+    i8 12, label %bb.d
+    i8 13, label %bb.d
+    i8 14, label %bb.d
+    i8 15, label %bb.d
   ]
 
 bb.d:                                             ; preds = %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25, %.lr.ph.i25
@@ -174,18 +174,18 @@ select.unfold.i29:                                ; preds = %bb.d, %.lr.ph.i25
   %.01720.i33 = phi ptr [ %i.ab, %select.unfold.i36 ], [ @dstack, %.loopexit ] ; 4 uses
   %i.y = getelementptr inbounds nuw i8, ptr %.01720.i33, i64 8
   %i.z = load i16, ptr %i.y, align 8, !tbaa !24
-  %5 = lshr i16 %i.z, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %select.unfold.i36 [
-    i16 0, label %bb.e
-    i16 10, label %bb.e
-    i16 2, label %bb.e
-    i16 4, label %bb.e
-    i16 7, label %bb.e
-    i16 12, label %bb.e
-    i16 13, label %bb.e
-    i16 14, label %bb.e
-    i16 15, label %bb.e
+  %5 = trunc i16 %i.z to i8
+  %6 = lshr i8 %5, 2
+  switch i8 %6, label %select.unfold.i36 [
+    i8 0, label %bb.e
+    i8 10, label %bb.e
+    i8 2, label %bb.e
+    i8 4, label %bb.e
+    i8 7, label %bb.e
+    i8 12, label %bb.e
+    i8 13, label %bb.e
+    i8 14, label %bb.e
+    i8 15, label %bb.e
   ]
 
 bb.e:                                             ; preds = %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32, %.lr.ph.i32
@@ -240,18 +240,18 @@ bb.a:
   %.01720 = phi ptr [ %i.e, %select.unfold ], [ %0, %bb.a ] ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.01720, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !24
-  %3 = lshr i16 %i.c, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %select.unfold [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
-    i16 2, label %bb.b
-    i16 4, label %bb.b
-    i16 7, label %bb.b
-    i16 12, label %bb.b
-    i16 13, label %bb.b
-    i16 14, label %bb.b
-    i16 15, label %bb.b
+  %3 = trunc i16 %i.c to i8
+  %4 = lshr i8 %3, 2
+  switch i8 %4, label %select.unfold [
+    i8 0, label %bb.b
+    i8 10, label %bb.b
+    i8 2, label %bb.b
+    i8 4, label %bb.b
+    i8 7, label %bb.b
+    i8 12, label %bb.b
+    i8 13, label %bb.b
+    i8 14, label %bb.b
+    i8 15, label %bb.b
   ]
 
 bb.b:                                             ; preds = %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph, %.lr.ph

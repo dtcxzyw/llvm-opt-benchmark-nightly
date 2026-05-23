@@ -200,11 +200,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.d = getelementptr inbounds i8, ptr %0, i64 -8 ; 3 uses
   %i.e = load i16, ptr %i.d, align 8, !tbaa !17   ; 2 uses
-  %2 = lshr i16 %i.e, 2
-  %3 = and i16 %2, 63
-  switch i16 %3, label %bb.m [
-    i16 3, label %bb.b
-    i16 13, label %bb.d
+  %2 = trunc i16 %i.e to i8
+  %trunc = and i8 %2, -4
+  switch i8 %trunc, label %bb.m [
+    i8 12, label %bb.b
+    i8 52, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a

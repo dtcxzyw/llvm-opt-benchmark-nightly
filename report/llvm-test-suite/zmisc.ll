@@ -28,11 +28,11 @@ bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %1 = lshr i16 %i.c, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %.loopexit [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
+  %1 = trunc i16 %i.c to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %.loopexit [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -57,14 +57,14 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   %i.k = add i16 %i.g, -1
   store i16 %i.k, ptr %i.h, align 2, !tbaa !14
   %i.l = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
-  %i.m = load i16, ptr %i.l, align 8, !tbaa !8    ; 3 uses
-  %i.n = zext i16 %i.m to i32                     ; 3 uses
-  %3 = lshr i32 %i.n, 2
-  %4 = and i32 %3, 63
-  switch i32 %4, label %bb.k [
-    i32 7, label %bb.c
-    i32 0, label %bb.h
-    i32 10, label %bb.i
+  %i.m = load i16, ptr %i.l, align 8, !tbaa !8    ; 4 uses
+  %i.n = zext i16 %i.m to i32                     ; 2 uses
+  %2 = trunc i16 %i.m to i8
+  %trunc22 = and i8 %2, -4
+  switch i8 %trunc22, label %bb.k [
+    i8 28, label %bb.c
+    i8 0, label %bb.h
+    i8 40, label %bb.i
   ]
 
 bb.c:                                             ; preds = %.lr.ph

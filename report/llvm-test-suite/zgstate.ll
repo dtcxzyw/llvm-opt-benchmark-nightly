@@ -200,11 +200,11 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds i8, ptr %0, i64 -16
   %i.d = getelementptr inbounds i8, ptr %0, i64 -8
   %i.e = load i16, ptr %i.d, align 8, !tbaa !29   ; 2 uses
-  %1 = lshr i16 %i.e, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.j [
-    i16 0, label %bb.c
-    i16 10, label %bb.c
+  %1 = trunc i16 %i.e to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.j [
+    i8 0, label %bb.c
+    i8 40, label %bb.c
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
@@ -228,11 +228,11 @@ bb.d:                                             ; preds = %bb.c
   %i.l = add nsw i32 %.in, -1                     ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.02230, i64 8
   %i.n = load i16, ptr %i.m, align 8, !tbaa !29
-  %3 = lshr i16 %i.n, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.g [
-    i16 5, label %bb.e
-    i16 11, label %bb.f
+  %2 = trunc i16 %i.n to i8
+  %trunc28 = and i8 %2, -4
+  switch i8 %trunc28, label %bb.g [
+    i8 20, label %bb.e
+    i8 44, label %bb.f
   ]
 
 bb.e:                                             ; preds = %.lr.ph
@@ -635,11 +635,11 @@ define dso_local range(i32 -20, 1) i32 @zsettransfer(ptr noundef readonly captur
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !29   ; 2 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
