@@ -1,0 +1,37 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index a09f881e06595..be472b6679eec 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -4505,6 +4505,32 @@ Instruction *InstCombinerImpl::visitSwitchInst(SwitchInst &SI) {
+     return replaceOperand(SI, 0, Op0);
+   }
+ 
++  const APInt *ShiftC, *MaskC;
++  if (Cond->hasOneUse() &&
++      match(Cond, m_c_And(m_OneUse(m_LShr(m_Value(Op0), m_APInt(ShiftC))),
++                          m_APInt(MaskC)))) {
++    uint64_t BitWidth = MaskC->getBitWidth();
++    uint64_t ShiftAmt = ShiftC->getLimitedValue(BitWidth);
++    APInt ShiftedMask = MaskC->shl(ShiftAmt);
++
++    if (ShiftAmt > 0 && ShiftAmt < BitWidth && !MaskC->isZero() &&
++        ShiftedMask.lshr(ShiftAmt) == *MaskC &&
++        all_of(SI.cases(), [&](const auto &Case) {
++          const APInt &CaseVal = Case.getCaseValue()->getValue();
++          return (CaseVal & ~*MaskC).isZero();
++        })) {
++      // Change 'switch ((X >> 2) & 3) case 1:' into
++      // 'switch (X & 12) case 4:'.
++      Builder.SetInsertPoint(&SI);
++      Value *NewCond = Builder.CreateAnd(Op0, ShiftedMask);
++      for (auto Case : SI.cases()) {
++        APInt ShiftedCase = Case.getCaseValue()->getValue().shl(ShiftAmt);
++        Case.setValue(ConstantInt::get(SI.getContext(), ShiftedCase));
++      }
++      return replaceOperand(SI, 0, NewCond);
++    }
++  }
++
+   uint64_t ShiftAmt;
+   if (match(Cond, m_Shl(m_Value(Op0), m_ConstantInt(ShiftAmt))) &&
+       ShiftAmt < Op0->getType()->getScalarSizeInBits() &&
