@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.a, %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %3 = load i64, ptr %i.j, align 2, !tbaa !14
-  %.not.i.not = icmp eq i64 %3, 0
+  %3 = load <4 x i16>, ptr %i.j, align 2, !tbaa !14
+  %4 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %3)
+  %.not.i.not = icmp eq i16 %4, 0
   br i1 %.not.i.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -234,8 +235,9 @@ bb.e:                                             ; preds = %bb.c, %bb.a, %bb.a,
 
 bb.f:                                             ; preds = %bb.a, %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %4 = load i64, ptr %i.v, align 2, !tbaa !14
-  %.not.i65.not = icmp eq i64 %4, 0
+  %5 = load <4 x i16>, ptr %i.v, align 2, !tbaa !14
+  %6 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %5)
+  %.not.i65.not = icmp eq i16 %6, 0
   br i1 %.not.i65.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
@@ -288,8 +290,9 @@ bb.k:                                             ; preds = %bb.a, %bb.a, %bb.a,
   %i.aj = or i16 %i.ai, %.sroa.12.0.copyload
   %.not.i67.not = icmp eq i16 %i.aj, 0
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
-  %5 = load i64, ptr %i.ak, align 2, !tbaa !14
-  %.not.i68.not = icmp eq i64 %5, 0               ; 2 uses
+  %7 = load <4 x i16>, ptr %i.ak, align 2, !tbaa !14
+  %8 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %7)
+  %.not.i68.not = icmp eq i16 %8, 0               ; 2 uses
   br i1 %.not.i67.not, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %bb.k
@@ -531,8 +534,9 @@ bb.ac:                                            ; preds = %.loopexit112
   %i.eq = getelementptr inbounds nuw i8, ptr %2, i64 6 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 3 uses
-  %6 = load i64, ptr %i.ep, align 2, !tbaa !14
-  %.not.i.not.i.i = icmp eq i64 %6, 0
+  %9 = load <4 x i16>, ptr %i.ep, align 2, !tbaa !14
+  %10 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %9)
+  %.not.i.not.i.i = icmp eq i16 %10, 0
   br i1 %.not.i.not.i.i, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
@@ -727,8 +731,9 @@ bb.m:                                             ; preds = %bb.d, %bb.d, %bb.d,
   %i.aq = getelementptr inbounds nuw i8, ptr %i.i, i64 6
   %i.ar = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.i, i64 10
-  %5 = load i64, ptr %i.ap, align 2, !tbaa !14
-  %.not.i.not.i.us = icmp eq i64 %5, 0
+  %5 = load <4 x i16>, ptr %i.ap, align 2, !tbaa !14
+  %6 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %5)
+  %.not.i.not.i.us = icmp eq i16 %6, 0
   br i1 %.not.i.not.i.us, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
@@ -975,8 +980,9 @@ bb.ab:                                            ; preds = %bb.aa
   %i.em = getelementptr inbounds nuw i8, ptr %i.k, i64 6 ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.k, i64 8 ; 2 uses
   %i.eo = getelementptr inbounds nuw i8, ptr %i.k, i64 10 ; 3 uses
-  %6 = load i64, ptr %i.el, align 2, !tbaa !14
-  %.not.i.not.i.i.i.us = icmp eq i64 %6, 0
+  %7 = load <4 x i16>, ptr %i.el, align 2, !tbaa !14
+  %8 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %7)
+  %.not.i.not.i.i.i.us = icmp eq i16 %8, 0
   br i1 %.not.i.not.i.i.i.us, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
@@ -1379,8 +1385,9 @@ bb.ad:                                            ; preds = %bb.ac
   %i.fd = getelementptr inbounds nuw i8, ptr %3, i64 6 ; 2 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   %i.ff = getelementptr inbounds nuw i8, ptr %3, i64 10 ; 3 uses
-  %4 = load i64, ptr %i.fc, align 2, !tbaa !14
-  %.not.i.not.i.i = icmp eq i64 %4, 0
+  %4 = load <4 x i16>, ptr %i.fc, align 2, !tbaa !14
+  %5 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %4)
+  %.not.i.not.i.i = icmp eq i16 %5, 0
   br i1 %.not.i.not.i.i, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
@@ -1449,8 +1456,9 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 6 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 10 ; 4 uses
-  %1 = load i64, ptr %i.b, align 2, !tbaa !14
-  %.not.i.not.i = icmp eq i64 %1, 0
+  %1 = load <4 x i16>, ptr %i.b, align 2, !tbaa !14
+  %2 = tail call i16 @llvm.vector.reduce.umax.v4i16(<4 x i16> %1)
+  %.not.i.not.i = icmp eq i16 %2, 0
   br i1 %.not.i.not.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -1557,6 +1565,9 @@ declare i16 @llvm.fshl.i16(i16, i16, i16) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.vector.reduce.umax.v4i16(<4 x i16>) #6
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8

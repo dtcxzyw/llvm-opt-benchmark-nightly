@@ -201,8 +201,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 112
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !801
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 36
-  %2 = load i32, ptr %i.ad, align 1, !tbaa !37
-  %i.ae = icmp eq i32 %2, 0
+  %2 = load <4 x i8>, ptr %i.ad, align 1, !tbaa !37
+  %3 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %2)
+  %i.ae = icmp eq i8 %3, 0
   %i.af = icmp eq i32 %1, %.054
   %or.cond = or i1 %i.af, %i.ae
   br i1 %or.cond, label %.thread, label %bb.e
@@ -605,13 +606,15 @@ bb.q:                                             ; preds = %bb.p
   %i.ce = load i8, ptr %i.cd, align 1, !tbaa !37  ; 2 uses
   store i8 %i.ce, ptr %.phi.trans.insert73.i, align 4, !tbaa !1025
   %i.cf = getelementptr inbounds nuw i8, ptr %i.aw, i64 52
-  %2 = load i32, ptr %i.cf, align 1, !tbaa !37
-  %i.cg = icmp ne i32 %2, 0
+  %2 = load <4 x i8>, ptr %i.cf, align 1, !tbaa !37
+  %3 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %2)
+  %i.cg = icmp ne i8 %3, 0
   %i.ch = zext i1 %i.cg to i8
   store i8 %i.ch, ptr %i.w, align 2, !tbaa !846
   %i.ci = getelementptr inbounds nuw i8, ptr %i.aw, i64 64
-  %3 = load i32, ptr %i.ci, align 1, !tbaa !37
-  %i.cj = icmp ne i32 %3, 0
+  %4 = load <4 x i8>, ptr %i.ci, align 1, !tbaa !37
+  %5 = tail call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %4)
+  %i.cj = icmp ne i8 %5, 0
   %i.ck = zext i1 %i.cj to i8
   store i8 %i.ck, ptr %i.x, align 1, !tbaa !908
   br label %bb.r
@@ -1014,14 +1017,16 @@ bb.aq:                                            ; preds = %sqlite3PagerReadFil
   %i.jm = getelementptr inbounds nuw i8, ptr %i.bf, i64 37
   store i8 1, ptr %i.jm, align 1, !tbaa !1030
   %i.jn = getelementptr inbounds nuw i8, ptr %i.b, i64 52
-  %6 = load i32, ptr %i.jn, align 4, !tbaa !37
-  %i.jo = icmp ne i32 %6, 0
+  %6 = load <4 x i8>, ptr %i.jn, align 4, !tbaa !37
+  %7 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %6)
+  %i.jo = icmp ne i8 %7, 0
   %i.jp = zext i1 %i.jo to i8
   %i.jq = getelementptr inbounds nuw i8, ptr %i.bf, i64 38
   store i8 %i.jp, ptr %i.jq, align 2, !tbaa !846
   %i.jr = getelementptr inbounds nuw i8, ptr %i.b, i64 64
-  %7 = load i32, ptr %i.jr, align 16, !tbaa !37
-  %i.js = icmp ne i32 %7, 0
+  %8 = load <4 x i8>, ptr %i.jr, align 16, !tbaa !37
+  %9 = call i8 @llvm.vector.reduce.umax.v4i8(<4 x i8> %8)
+  %i.js = icmp ne i8 %9, 0
   %i.jt = zext i1 %i.js to i8
   br label %.sink.split.i
 
@@ -1422,6 +1427,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #35
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.umax.v4i8(<4 x i8>) #35
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #35

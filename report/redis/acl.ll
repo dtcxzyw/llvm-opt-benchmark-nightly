@@ -201,7 +201,7 @@ vector.body:                                      ; preds = %.critedge
   %i.ej = or <4 x i8> %i.ed, %i.eh
   %bin.rdx32 = or <4 x i8> %i.ej, %i.ei
   %bin.rdx = sext <4 x i8> %bin.rdx32 to <4 x i32>
-  %i.ek = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %bin.rdx)
+  %i.ek = call i32 @llvm.vector.reduce.umax.v4i32(<4 x i32> %bin.rdx)
   %.not19.not = icmp eq i32 %i.ek, 0
   br i1 %.not19.not, label %bb.r, label %.critedge
 
@@ -603,6 +603,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #22
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.umax.v4i32(<4 x i32>) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24
