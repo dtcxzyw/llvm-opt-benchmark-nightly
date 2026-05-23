@@ -1,0 +1,18 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index a09f881e06595..396b2323809c8 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -4482,6 +4482,13 @@ Instruction *InstCombinerImpl::visitSwitchInst(SwitchInst &SI) {
+       // Change 'switch (X+C) case Case:' into 'switch (X) case Case-C'.
+       return [](const APInt &Case, const APInt &C) { return Case - C; };
+ 
++    if (match(Cond, m_Mul(m_Value(Op0), m_APInt(CondOpC))) && (*CondOpC)[0])
++      // Change 'switch (X*C) case Case:' into 'switch (X) case Case*C^-1',
++      // if C has a multiplicative inverse modulo 2^BitWidth.
++      return [](const APInt &Case, const APInt &C) {
++        return Case * C.multiplicativeInverse();
++      };
++
+     if (match(Cond, m_Sub(m_APInt(CondOpC), m_Value(Op0))))
+       // Change 'switch (C-X) case Case:' into 'switch (X) case C-Case'.
+       return [](const APInt &Case, const APInt &C) { return C - Case; };
