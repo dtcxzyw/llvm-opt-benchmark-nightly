@@ -201,13 +201,13 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ej = mul nsw i64 %i.eh, 1000000000
-  %i.ek = frem nnan double %i.bo, 1.000000e+03
+  %i.ek = frem double %i.bo, 1.000000e+03
   %i.el = tail call noundef double @llvm.fabs.f64(double %i.ek)
-  %i.em = frem nnan double %i.bs, 1.000000e+06
+  %i.em = frem double %i.bs, 1.000000e+06
   %i.en = tail call noundef double @llvm.fabs.f64(double %i.em)
   %i.eo = fmul nnan double %i.en, 1.000000e+03
   %i.ep = tail call double @llvm.fmuladd.f64(double %i.el, double 1.000000e+06, double %i.eo)
-  %i.eq = frem nnan double %.fr147, 1.000000e+09
+  %i.eq = frem double %.fr147, 1.000000e+09
   %i.er = tail call noundef double @llvm.fabs.f64(double %i.eq)
   %i.es = fadd double %i.ep, %i.er
   %i.et = fptosi double %i.es to i64
