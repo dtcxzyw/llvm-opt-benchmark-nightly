@@ -201,13 +201,12 @@ bb.bk:                                            ; preds = %bb.bj
 bb.bl:                                            ; preds = %bb.bj
   %i.ev = getelementptr i8, ptr %i.ek, i64 32
   %i.ew = load i32, ptr %i.ev, align 8            ; 5 uses
-  %3 = lshr i32 %i.ew, 2
-  %i.ex = and i32 %3, 7
+  %i.ex = and i32 %i.ew, 28
   %i.ey = and i32 %i.ew, 32
   %.not.i19.i.i = icmp eq i32 %i.ey, 0            ; 3 uses
   switch i32 %i.ex, label %bb.bs [
-    i32 1, label %bb.bm
-    i32 2, label %bb.bp
+    i32 4, label %bb.bm
+    i32 8, label %bb.bp
   ]
 
 bb.bm:                                            ; preds = %bb.bl
@@ -610,13 +609,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.l = getelementptr i8, ptr %2, i64 32
   %i.m = load i32, ptr %i.l, align 8              ; 5 uses
-  %4 = lshr i32 %i.m, 2
-  %i.n = and i32 %4, 7
+  %i.n = and i32 %i.m, 28
   %i.o = and i32 %i.m, 32
   %.not.i19.i = icmp eq i32 %i.o, 0               ; 3 uses
   switch i32 %i.n, label %bb.q [
-    i32 1, label %bb.k
-    i32 2, label %bb.n
+    i32 4, label %bb.k
+    i32 8, label %bb.n
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -1019,8 +1017,6 @@ bb.r:                                             ; preds = %bb.n
   store i64 %i.at, ptr %i.t, align 8, !tbaa !57
   %i.au = getelementptr i8, ptr %i.v, i64 32
   %i.av = load i32, ptr %i.au, align 8            ; 3 uses
-  %1 = lshr i32 %i.av, 2
-  %2 = and i32 %1, 7
   %i.aw = and i32 %i.av, 32
   %.not.i55.i = icmp eq i32 %i.aw, 0
   br i1 %.not.i55.i, label %bb.t, label %bb.s
@@ -1046,9 +1042,10 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.t, %bb.s
 
 .lr.ph.i:                                         ; preds = %_PyUnicode_DATA.exit.i
   %i.ba = add i64 %.val54.i, -1                   ; 3 uses
-  switch i32 %2, label %PyUnicode_READ.exit.i [
-    i32 1, label %PyUnicode_READ.exit.us.i
-    i32 2, label %PyUnicode_READ.exit.us75.i
+  %1 = and i32 %i.av, 28
+  switch i32 %1, label %PyUnicode_READ.exit.i [
+    i32 4, label %PyUnicode_READ.exit.us.i
+    i32 8, label %PyUnicode_READ.exit.us75.i
   ]
 
 PyUnicode_READ.exit.us.i:                         ; preds = %.lr.ph.i, %bb.u
@@ -1451,8 +1448,6 @@ bb.an:                                            ; preds = %.thread17.i.i.i, %b
   %i.cn = phi ptr [ %.pre32.i.i, %.thread17.i.i.i ], [ %i.bv, %bb.ak ] ; 3 uses
   %i.co = getelementptr i8, ptr %i.cn, i64 32
   %i.cp = load i32, ptr %i.co, align 8            ; 3 uses
-  %2 = lshr i32 %i.cp, 2
-  %3 = and i32 %2, 7
   %i.cq = and i32 %i.cp, 32
   %.not.i.i.i = icmp eq i32 %i.cq, 0
   br i1 %.not.i.i.i, label %bb.ap, label %bb.ao
@@ -1474,16 +1469,22 @@ _PyUnicode_DATA.exit.i.i:                         ; preds = %bb.ap, %bb.ao
   %.0.i.i.i53 = ptrtoaddr ptr %.0.i.i.i to i64
   %i.ct = icmp sgt i64 %.val.i.i, 0
   %.pre33.i.i = load i64, ptr %i.m, align 8, !tbaa !73 ; 4 uses
-  %4 = getelementptr i8, ptr %0, i64 32
-  %5 = load ptr, ptr %4, align 8, !tbaa !72       ; 4 uses
-  %6 = ptrtoaddr ptr %5 to i64
-  br i1 %i.ct, label %.lr.ph.i.i, label %.loopexit.i
+  br i1 %i.ct, label %.lr.ph.i.i, label %_PyUnicode_DATA.exit.i..loopexit_crit_edge.i
+
+_PyUnicode_DATA.exit.i..loopexit_crit_edge.i:     ; preds = %_PyUnicode_DATA.exit.i.i
+  %.phi.trans.insert.i = getelementptr i8, ptr %0, i64 32
+  %.pre.i = load ptr, ptr %.phi.trans.insert.i, align 8, !tbaa !72
+  br label %.loopexit.i
 
 .lr.ph.i.i:                                       ; preds = %_PyUnicode_DATA.exit.i.i
-  %i.cu = getelementptr [4 x i8], ptr %5, i64 %.pre33.i.i ; 15 uses
-  switch i32 %3, label %PyUnicode_READ.exit.i.i.preheader [
-    i32 1, label %PyUnicode_READ.exit.us.i.i.preheader
-    i32 2, label %PyUnicode_READ.exit.us26.i.i.preheader
+  %2 = and i32 %i.cp, 28
+  %3 = getelementptr i8, ptr %0, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !72       ; 11 uses
+  %5 = ptrtoaddr ptr %4 to i64
+  %i.cu = getelementptr [4 x i8], ptr %4, i64 %.pre33.i.i ; 15 uses
+  switch i32 %2, label %PyUnicode_READ.exit.i.i.preheader [
+    i32 4, label %PyUnicode_READ.exit.us.i.i.preheader
+    i32 8, label %PyUnicode_READ.exit.us26.i.i.preheader
   ]
 
 PyUnicode_READ.exit.us26.i.i.preheader:           ; preds = %.lr.ph.i.i
@@ -1525,7 +1526,7 @@ PyUnicode_READ.exit.us.i.i.preheader:             ; preds = %.lr.ph.i.i
 vector.memcheck:                                  ; preds = %PyUnicode_READ.exit.us.i.i.preheader
   %i.dc = add i64 %.val.i.i, %.pre33.i.i
   %i.dd = shl i64 %i.dc, 2
-  %scevgep = getelementptr i8, ptr %5, i64 %i.dd
+  %scevgep = getelementptr i8, ptr %4, i64 %i.dd
   %scevgep38 = getelementptr i8, ptr %.0.i.i.i, i64 %.val.i.i
   %bound0 = icmp ult ptr %i.cu, %scevgep38
   %bound1 = icmp ult ptr %.0.i.i.i, %scevgep
@@ -1587,7 +1588,7 @@ PyUnicode_READ.exit.i.i.preheader:                ; preds = %.lr.ph.i.i
 
 vector.memcheck52:                                ; preds = %PyUnicode_READ.exit.i.i.preheader
   %i.ds = shl i64 %.pre33.i.i, 2
-  %i.dt = add i64 %i.ds, %6
+  %i.dt = add i64 %i.ds, %5
   %i.du = sub i64 %i.dt, %.0.i.i.i53
   %diff.check = icmp ult i64 %i.du, 32
   br i1 %diff.check, label %PyUnicode_READ.exit.i.i.preheader67, label %vector.ph56
@@ -1703,10 +1704,11 @@ PyUnicode_READ.exit.i.i:                          ; preds = %PyUnicode_READ.exit
   %exitcond31.not.i.i.3 = icmp eq i64 %i.fu, %.val.i.i
   br i1 %exitcond31.not.i.i.3, label %.loopexit.i, label %PyUnicode_READ.exit.i.i, !llvm.loop !92
 
-.loopexit.i:                                      ; preds = %PyUnicode_READ.exit.us26.i.i, %PyUnicode_READ.exit.us.i.i.prol.loopexit, %PyUnicode_READ.exit.us.i.i, %PyUnicode_READ.exit.i.i.prol.loopexit, %PyUnicode_READ.exit.i.i, %middle.block, %middle.block49, %middle.block64, %_PyUnicode_DATA.exit.i.i
+.loopexit.i:                                      ; preds = %PyUnicode_READ.exit.us26.i.i, %PyUnicode_READ.exit.us.i.i.prol.loopexit, %PyUnicode_READ.exit.us.i.i, %PyUnicode_READ.exit.i.i.prol.loopexit, %PyUnicode_READ.exit.i.i, %middle.block, %middle.block49, %middle.block64, %_PyUnicode_DATA.exit.i..loopexit_crit_edge.i
+  %6 = phi ptr [ %.pre.i, %_PyUnicode_DATA.exit.i..loopexit_crit_edge.i ], [ %4, %middle.block49 ], [ %4, %middle.block64 ], [ %4, %middle.block ], [ %4, %PyUnicode_READ.exit.us.i.i.prol.loopexit ], [ %4, %PyUnicode_READ.exit.i.i.prol.loopexit ], [ %4, %PyUnicode_READ.exit.i.i ], [ %4, %PyUnicode_READ.exit.us.i.i ], [ %4, %PyUnicode_READ.exit.us26.i.i ]
   %i.fv = add i64 %.pre33.i.i, %.val.i.i          ; 2 uses
   store i64 %i.fv, ptr %i.m, align 8, !tbaa !73
-  %i.fw = tail call ptr @PyUnicode_FromKindAndData(i32 noundef 4, ptr noundef %5, i64 noundef %i.fv) #5 ; 5 uses
+  %i.fw = tail call ptr @PyUnicode_FromKindAndData(i32 noundef 4, ptr noundef %6, i64 noundef %i.fv) #5 ; 5 uses
   %i.fx = icmp eq ptr %i.fw, null
   br i1 %i.fx, label %csv_writerow_lock_held.exit, label %bb.aq
 

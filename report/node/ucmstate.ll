@@ -201,7 +201,7 @@ bb.r:                                             ; preds = %.sink.split, %bb.c
   br i1 %i.ag, label %bb.s, label %.preheader103
 
 .preheader103:                                    ; preds = %bb.r
-  %i.ah = load i32, ptr %i.f, align 4             ; 8 uses
+  %i.ah = load i32, ptr %i.f, align 4             ; 12 uses
   %i.ai = icmp sgt i32 %i.ah, 0
   br i1 %i.ai, label %.lr.ph, label %._crit_edge
 
@@ -286,37 +286,63 @@ bb.u:                                             ; preds = %._crit_edge
   br i1 %i.bg, label %.preheader102, label %.thread
 
 .preheader102:                                    ; preds = %bb.u, %bb.x
-  %indvars.iv137 = phi i64 [ %indvars.iv.next138.1, %bb.x ], [ 0, %bb.u ] ; 3 uses
+  %indvars.iv137 = phi i64 [ %indvars.iv.next138.1, %bb.x ], [ 0, %bb.u ] ; 5 uses
   %i.bh = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv137
   %i.bi = load i32, ptr %i.bh, align 4            ; 2 uses
   %i.bj = icmp slt i32 %i.bi, 0
-  br i1 %i.bj, label %bb.v, label %.preheader102.1
+  br i1 %i.bj, label %2, label %bb.v
 
-bb.v:                                             ; preds = %.preheader102
-  %2 = lshr i32 %i.bi, 20
-  %3 = and i32 %2, 15
-  switch i32 %3, label %.preheader102.1 [
-    i32 6, label %.thread
+2:                                                ; preds = %.preheader102
+  %3 = and i32 %i.bi, 15728640
+  switch i32 %3, label %bb.v [
+    i32 6291456, label %.thread
     i32 0, label %.thread
   ]
 
-.preheader102.1:                                  ; preds = %bb.v, %.preheader102
+bb.v:                                             ; preds = %2, %.preheader102
+  %4 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv137
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %6 = load i32, ptr %5, align 4                  ; 2 uses
+  %7 = icmp slt i32 %6, 0
+  br i1 %7, label %8, label %.preheader102.1
+
+8:                                                ; preds = %bb.v
+  %9 = and i32 %6, 15728640
+  switch i32 %9, label %.preheader102.1 [
+    i32 6291456, label %.thread
+    i32 0, label %.thread
+  ]
+
+.preheader102.1:                                  ; preds = %8, %bb.v
   %i.bk = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv137
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 4
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.bm = load i32, ptr %i.bl, align 4            ; 2 uses
   %i.bn = icmp slt i32 %i.bm, 0
-  br i1 %i.bn, label %bb.w, label %bb.x
+  br i1 %i.bn, label %10, label %bb.w
 
-bb.w:                                             ; preds = %.preheader102.1
-  %4 = lshr i32 %i.bm, 20
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.x [
-    i32 6, label %.thread
+10:                                               ; preds = %.preheader102.1
+  %11 = and i32 %i.bm, 15728640
+  switch i32 %11, label %bb.w [
+    i32 6291456, label %.thread
     i32 0, label %.thread
   ]
 
-bb.x:                                             ; preds = %bb.w, %.preheader102.1
-  %indvars.iv.next138.1 = add nuw nsw i64 %indvars.iv137, 2 ; 2 uses
+bb.w:                                             ; preds = %10, %.preheader102.1
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv137
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 12
+  %14 = load i32, ptr %13, align 4                ; 2 uses
+  %15 = icmp slt i32 %14, 0
+  br i1 %15, label %16, label %bb.x
+
+16:                                               ; preds = %bb.w
+  %17 = and i32 %14, 15728640
+  switch i32 %17, label %bb.x [
+    i32 6291456, label %.thread
+    i32 0, label %.thread
+  ]
+
+bb.x:                                             ; preds = %16, %bb.w
+  %indvars.iv.next138.1 = add nuw nsw i64 %indvars.iv137, 4 ; 2 uses
   %exitcond140.not.1 = icmp eq i64 %indvars.iv.next138.1, 256
   br i1 %exitcond140.not.1, label %bb.y, label %.preheader102, !llvm.loop !16
 
@@ -326,14 +352,14 @@ bb.y:                                             ; preds = %bb.x
   %.pre = load i32, ptr %i.f, align 4
   br label %.thread
 
-.thread:                                          ; preds = %bb.v, %bb.v, %bb.w, %bb.w, %bb.y, %bb.u
-  %6 = phi i32 [ %i.ah, %bb.u ], [ %.pre, %bb.y ], [ %i.ah, %bb.w ], [ %i.ah, %bb.w ], [ %i.ah, %bb.v ], [ %i.ah, %bb.v ] ; 8 uses
-  %i.bq = icmp sgt i32 %6, 0
+.thread:                                          ; preds = %2, %2, %8, %8, %10, %10, %16, %16, %bb.y, %bb.u
+  %18 = phi i32 [ %i.ah, %bb.u ], [ %.pre, %bb.y ], [ %i.ah, %16 ], [ %i.ah, %16 ], [ %i.ah, %10 ], [ %i.ah, %10 ], [ %i.ah, %8 ], [ %i.ah, %8 ], [ %i.ah, %2 ], [ %i.ah, %2 ] ; 8 uses
+  %i.bq = icmp sgt i32 %18, 0
   br i1 %i.bq, label %.preheader.lr.ph, label %._crit_edge120.thread
 
 .preheader.lr.ph:                                 ; preds = %.thread
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 131072 ; 2 uses
-  %i.bs = zext nneg i32 %6 to i64
+  %i.bs = zext nneg i32 %18 to i64
   br label %.preheader
 
 .loopexit:                                        ; preds = %bb.ak
@@ -352,7 +378,7 @@ bb.z:                                             ; preds = %bb.ak, %.preheader
   %i.bw = load i32, ptr %i.bv, align 4            ; 2 uses
   %i.bx = lshr i32 %i.bw, 24
   %i.by = and i32 %i.bx, 127                      ; 5 uses
-  %.not98 = icmp slt i32 %i.by, %6
+  %.not98 = icmp slt i32 %i.by, %18
   br i1 %.not98, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.ag, %bb.z
@@ -406,7 +432,7 @@ bb.ag:                                            ; preds = %bb.ac, %bb.ae
   %i.cr = load i32, ptr %i.cq, align 4            ; 2 uses
   %i.cs = lshr i32 %i.cr, 24
   %i.ct = and i32 %i.cs, 127                      ; 5 uses
-  %.not98.1 = icmp slt i32 %i.ct, %6
+  %.not98.1 = icmp slt i32 %i.ct, %18
   br i1 %.not98.1, label %bb.ah, label %bb.aa
 
 bb.ah:                                            ; preds = %bb.ag
@@ -430,7 +456,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %exitcond144.not.1, label %.loopexit, label %bb.z, !llvm.loop !18
 
 ._crit_edge120:                                   ; preds = %.loopexit
-  %.not172 = icmp eq i32 %6, 1
+  %.not172 = icmp eq i32 %18, 1
   br i1 %.not172, label %._crit_edge120.thread, label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge120
@@ -452,7 +478,7 @@ bb.an:                                            ; preds = %bb.am
   unreachable
 
 bb.ao:                                            ; preds = %bb.am
-  %i.dg = icmp eq i32 %6, 2
+  %i.dg = icmp eq i32 %18, 2
   br i1 %i.dg, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
@@ -502,13 +528,13 @@ bb.aw:                                            ; preds = %bb.au, %bb.at, %bb.
 
 ._crit_edge120.thread:                            ; preds = %.thread, %._crit_edge120, %bb.al, %bb.av
   %.2 = phi i32 [ 2, %bb.av ], [ 1, %bb.al ], [ 1, %._crit_edge120 ], [ 1, %.thread ] ; 2 uses
-  %i.dy = icmp slt i32 %.2, %6
+  %i.dy = icmp slt i32 %.2, %18
   br i1 %i.dy, label %.lr.ph123, label %._crit_edge124
 
 .lr.ph123:                                        ; preds = %._crit_edge120.thread
   %i.dz = getelementptr inbounds nuw i8, ptr %0, i64 131072
   %i.ea = zext nneg i32 %.2 to i64
-  %wide.trip.count151 = zext nneg i32 %6 to i64
+  %wide.trip.count151 = zext nneg i32 %18 to i64
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.lr.ph123, %bb.az
@@ -571,39 +597,64 @@ bb.a:
   br i1 %.not85, label %.preheader90, label %.thread
 
 .preheader90:                                     ; preds = %.lr.ph
-  %i.l = getelementptr inbounds nuw [1024 x i8], ptr %0, i64 %indvars.iv.next118 ; 2 uses
+  %i.l = getelementptr inbounds nuw [1024 x i8], ptr %0, i64 %indvars.iv.next118 ; 3 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.preheader90, %bb.e
-  %indvars.iv = phi i64 [ 0, %.preheader90 ], [ %indvars.iv.next, %bb.e ] ; 2 uses
+bb.b:                                             ; preds = %bb.e, %.preheader90
+  %indvars.iv = phi i64 [ 0, %.preheader90 ], [ %indvars.iv.next, %bb.e ] ; 3 uses
   %.07992 = phi i32 [ 0, %.preheader90 ], [ %.180.a, %bb.e ] ; 4 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv ; 2 uses
   %i.n = load i32, ptr %i.m, align 4              ; 3 uses
   %i.o = icmp slt i32 %i.n, 0
-  br i1 %i.o, label %bb.c, label %bb.e
+  br i1 %i.o, label %1, label %6
 
-bb.c:                                             ; preds = %bb.b
-  %1 = lshr i32 %i.n, 20
-  %i.p = and i32 %1, 15
-  switch i32 %i.p, label %bb.e [
-    i32 4, label %.sink.split
-    i32 5, label %bb.d
+1:                                                ; preds = %bb.b
+  %2 = and i32 %i.n, 15728640
+  switch i32 %2, label %6 [
+    i32 4194304, label %bb.c
+    i32 5242880, label %3
   ]
 
-bb.d:                                             ; preds = %bb.c
+3:                                                ; preds = %1
+  br label %bb.c
+
+bb.c:                                             ; preds = %1, %3
+  %.sink = phi i32 [ 2, %3 ], [ 1, %1 ]
+  %i.p = and i32 %i.n, -1048576
+  %4 = or i32 %i.p, %.07992
+  store i32 %4, ptr %i.m, align 4
+  %5 = add nsw i32 %.07992, %.sink
+  br label %6
+
+6:                                                ; preds = %bb.c, %bb.b, %1
+  %.180 = phi i32 [ %.07992, %1 ], [ %.07992, %bb.b ], [ %5, %bb.c ] ; 4 uses
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.l, i64 %indvars.iv
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4 ; 2 uses
+  %9 = load i32, ptr %8, align 4                  ; 3 uses
+  %10 = icmp slt i32 %9, 0
+  br i1 %10, label %11, label %bb.e
+
+11:                                               ; preds = %6
+  %12 = and i32 %9, 15728640
+  switch i32 %12, label %bb.e [
+    i32 4194304, label %.sink.split
+    i32 5242880, label %bb.d
+  ]
+
+bb.d:                                             ; preds = %11
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.c, %bb.d
-  %.sink.a = phi i32 [ 2, %bb.d ], [ 1, %bb.c ]
-  %i.q = and i32 %i.n, -1048576
-  %i.r = or i32 %i.q, %.07992
-  store i32 %i.r, ptr %i.m, align 4
-  %i.s = add nsw i32 %.07992, %.sink.a
+.sink.split:                                      ; preds = %bb.d, %11
+  %.sink.a = phi i32 [ 2, %bb.d ], [ 1, %11 ]
+  %i.q = and i32 %9, -1048576
+  %i.r = or i32 %i.q, %.180
+  store i32 %i.r, ptr %8, align 4
+  %i.s = add nsw i32 %.180, %.sink.a
   br label %bb.e
 
-bb.e:                                             ; preds = %.sink.split, %bb.b, %bb.c
-  %.180.a = phi i32 [ %.07992, %bb.c ], [ %.07992, %bb.b ], [ %i.s, %.sink.split ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+bb.e:                                             ; preds = %.sink.split, %11, %6
+  %.180.a = phi i32 [ %.180, %11 ], [ %.180, %6 ], [ %i.s, %.sink.split ] ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 256
   br i1 %exitcond.not, label %.preheader, label %bb.b, !llvm.loop !20
 
@@ -1006,11 +1057,10 @@ bb.i:                                             ; preds = %bb.h
   %indvars.iv60 = phi i64 [ %indvars.iv.next61, %ucm_findFallback.exit.us.i ], [ 0, %bb.i ] ; 2 uses
   %i.dx = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv60
   %i.dy = load i32, ptr %i.dx, align 4            ; 3 uses
-  %5 = lshr i32 %i.dy, 20
-  %i.dz = and i32 %5, 15
+  %i.dz = and i32 %i.dy, 15728640
   switch i32 %i.dz, label %ucm_findFallback.exit.us.i [
-    i32 4, label %bb.k
-    i32 5, label %bb.j
+    i32 4194304, label %bb.k
+    i32 5242880, label %bb.j
   ]
 
 bb.j:                                             ; preds = %.split.us.i
@@ -1061,11 +1111,10 @@ ucm_findFallback.exit.us.i:                       ; preds = %ucm_findFallback.ex
   %indvars.iv56 = phi i64 [ %indvars.iv.next57, %ucm_findFallback.exit.i ], [ 0, %bb.i ] ; 2 uses
   %i.et = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv56
   %i.eu = load i32, ptr %i.et, align 4            ; 3 uses
-  %6 = lshr i32 %i.eu, 20
-  %i.ev = and i32 %6, 15
+  %i.ev = and i32 %i.eu, 15728640
   switch i32 %i.ev, label %ucm_findFallback.exit.i [
-    i32 4, label %bb.m
-    i32 5, label %bb.n
+    i32 4194304, label %bb.m
+    i32 5242880, label %bb.n
   ]
 
 bb.m:                                             ; preds = %.split.i
@@ -1167,7 +1216,7 @@ vector.memcheck:                                  ; preds = %bb.u
   store i32 0, ptr %i.gk, align 4
   %i.gl = getelementptr inbounds [1024 x i8], ptr %0, i64 %i.gj ; 3 uses
   %diff.check = icmp eq i64 %i.gj, %i.dn
-  br i1 %diff.check, label %scalar.ph.a, label %vector.body104
+  br i1 %diff.check, label %scalar.ph, label %vector.body104
 
 vector.body104:                                   ; preds = %vector.memcheck, %vector.body104
   %index105 = phi i64 [ %index.next108, %vector.body104 ], [ 0, %vector.memcheck ] ; 3 uses
@@ -1176,14 +1225,14 @@ vector.body104:                                   ; preds = %vector.memcheck, %v
   %wide.load106 = load <4 x i32>, ptr %i.gm, align 4 ; 3 uses
   %wide.load107 = load <4 x i32>, ptr %i.gn, align 4 ; 3 uses
   %i.go = and <4 x i32> %wide.load106, splat (i32 14680064)
-  %7 = and <4 x i32> %wide.load107, splat (i32 14680064)
-  %8 = icmp eq <4 x i32> %i.go, splat (i32 4194304)
-  %i.gp = icmp eq <4 x i32> %7, splat (i32 4194304)
+  %5 = icmp eq <4 x i32> %i.go, splat (i32 4194304)
+  %6 = and <4 x i32> %wide.load107, splat (i32 14680064)
+  %i.gp = icmp eq <4 x i32> %6, splat (i32 4194304)
   %i.gq = and <4 x i32> %wide.load106, splat (i32 -16777216)
   %i.gr = and <4 x i32> %wide.load107, splat (i32 -16777216)
   %i.gs = or disjoint <4 x i32> %i.gq, splat (i32 6356990)
   %i.gt = or disjoint <4 x i32> %i.gr, splat (i32 6356990)
-  %i.gu = select <4 x i1> %8, <4 x i32> %i.gs, <4 x i32> %wide.load106
+  %i.gu = select <4 x i1> %5, <4 x i32> %i.gs, <4 x i32> %wide.load106
   %i.gv = select <4 x i1> %i.gp, <4 x i32> %i.gt, <4 x i32> %wide.load107
   %i.gw = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %index105 ; 2 uses
   %i.gx = getelementptr inbounds nuw i8, ptr %i.gw, i64 16
@@ -1193,34 +1242,50 @@ vector.body104:                                   ; preds = %vector.memcheck, %v
   %i.gy = icmp eq i64 %index.next108, 256
   br i1 %i.gy, label %.preheader212.i, label %vector.body104, !llvm.loop !36
 
-.preheader212.i:                                  ; preds = %vector.body104, %scalar.ph.a
+.preheader212.i:                                  ; preds = %vector.body104, %16
   %i.gz = shl i32 %i.ge, 24                       ; 2 uses
   br label %bb.w
 
-scalar.ph.a:                                      ; preds = %vector.memcheck, %scalar.ph.a
-  %indvars.iv255.i = phi i64 [ %indvars.iv.next256.i.1, %scalar.ph.a ], [ 0, %vector.memcheck ] ; 4 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv255.i
-  %10 = load i32, ptr %9, align 4                 ; 3 uses
-  %11 = and i32 %10, 14680064
-  %switch.i = icmp eq i32 %11, 4194304
-  %12 = and i32 %10, -16777216
-  %13 = or disjoint i32 %12, 6356990
-  %.sink.i = select i1 %switch.i, i32 %13, i32 %10
+scalar.ph:                                        ; preds = %vector.memcheck, %16
+  %indvars.iv255.i = phi i64 [ %indvars.iv.next256.i.1, %16 ], [ 0, %vector.memcheck ] ; 4 uses
+  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv255.i
+  %8 = load i32, ptr %7, align 4                  ; 3 uses
+  %9 = and i32 %8, 15728640
+  switch i32 %9, label %scalar.ph.a [
+    i32 4194304, label %10
+    i32 5242880, label %10
+  ]
+
+10:                                               ; preds = %scalar.ph, %scalar.ph
+  %11 = and i32 %8, -16777216
+  %12 = or disjoint i32 %11, 6356990
+  br label %scalar.ph.a
+
+scalar.ph.a:                                      ; preds = %10, %scalar.ph
+  %.sink.i = phi i32 [ %12, %10 ], [ %8, %scalar.ph ]
   %i.ha = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv255.i
   store i32 %.sink.i, ptr %i.ha, align 4
   %indvars.iv.next256.i = or disjoint i64 %indvars.iv255.i, 1 ; 2 uses
   %i.hb = getelementptr inbounds nuw [4 x i8], ptr %i.do, i64 %indvars.iv.next256.i
   %i.hc = load i32, ptr %i.hb, align 4            ; 3 uses
-  %14 = and i32 %i.hc, 14680064
-  %switch.i.1 = icmp eq i32 %14, 4194304
-  %i.hd = and i32 %i.hc, -16777216
-  %15 = or disjoint i32 %i.hd, 6356990
-  %.sink.i.1 = select i1 %switch.i.1, i32 %15, i32 %i.hc
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv.next256.i
-  store i32 %.sink.i.1, ptr %16, align 4
+  %i.hd = and i32 %i.hc, 15728640
+  switch i32 %i.hd, label %16 [
+    i32 4194304, label %13
+    i32 5242880, label %13
+  ]
+
+13:                                               ; preds = %scalar.ph.a, %scalar.ph.a
+  %14 = and i32 %i.hc, -16777216
+  %15 = or disjoint i32 %14, 6356990
+  br label %16
+
+16:                                               ; preds = %13, %scalar.ph.a
+  %.sink.i.1 = phi i32 [ %15, %13 ], [ %i.hc, %scalar.ph.a ]
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %i.gl, i64 %indvars.iv.next256.i
+  store i32 %.sink.i.1, ptr %17, align 4
   %indvars.iv.next256.i.1 = add nuw nsw i64 %indvars.iv255.i, 2 ; 2 uses
   %exitcond258.not.i.1 = icmp eq i64 %indvars.iv.next256.i.1, 256
-  br i1 %exitcond258.not.i.1, label %.preheader212.i, label %scalar.ph.a, !llvm.loop !37
+  br i1 %exitcond258.not.i.1, label %.preheader212.i, label %scalar.ph, !llvm.loop !37
 
 .preheader211.i:                                  ; preds = %bb.aa
   %i.he = load i32, ptr %i.c, align 4
@@ -1408,11 +1473,10 @@ bb.ai:                                            ; preds = %ucm_findFallback.ex
   %indvars.iv282.i = phi i64 [ %indvars.iv.next283.i, %ucm_findFallback.exit203.thread.us234.us.i ], [ 0, %.split231.us236.us.i ] ; 4 uses
   %i.jm = getelementptr inbounds nuw [4 x i8], ptr %i.jk, i64 %indvars.iv282.i
   %i.jn = load i32, ptr %i.jm, align 4            ; 3 uses
-  %17 = lshr i32 %i.jn, 20
-  %i.jo = and i32 %17, 15
+  %i.jo = and i32 %i.jn, 15728640
   switch i32 %i.jo, label %ucm_findFallback.exit203.thread.us234.us.i [
-    i32 4, label %bb.ak
-    i32 5, label %bb.aj
+    i32 4194304, label %bb.ak
+    i32 5242880, label %bb.aj
   ]
 
 bb.aj:                                            ; preds = %bb.ai
@@ -1558,11 +1622,10 @@ bb.ao:                                            ; preds = %ucm_findFallback.ex
   %indvars.iv271.i = phi i64 [ %indvars.iv.next272.i, %ucm_findFallback.exit203.thread.us.i ], [ 0, %.split231.us.i ] ; 4 uses
   %i.md = getelementptr inbounds nuw [4 x i8], ptr %i.mb, i64 %indvars.iv271.i
   %i.me = load i32, ptr %i.md, align 4            ; 3 uses
-  %18 = lshr i32 %i.me, 20
-  %i.mf = and i32 %18, 15
+  %i.mf = and i32 %i.me, 15728640
   switch i32 %i.mf, label %ucm_findFallback.exit203.thread.us.i [
-    i32 4, label %bb.aq
-    i32 5, label %bb.ap
+    i32 4194304, label %bb.aq
+    i32 5242880, label %bb.ap
   ]
 
 bb.ap:                                            ; preds = %bb.ao
@@ -1802,9 +1865,10 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.r, label %bb.i, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph
-  %3 = lshr i32 %i.q, 20
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.h [
+  %3 = and i32 %i.q, 15728640
+  %4 = sub i32 %3, 0                              ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 12)
+  switch i32 %5, label %bb.h [
     i32 7, label %bb.f
     i32 8, label %bb.g
     i32 6, label %.thread64
@@ -1949,11 +2013,10 @@ bb.f:                                             ; preds = %bb.b
   br i1 %.not50, label %bb.g, label %ucm_findFallback.exit
 
 bb.g:                                             ; preds = %bb.f
-  %7 = lshr i32 %i.g, 20
-  %i.s = and i32 %7, 15
+  %i.s = and i32 %i.g, 15728640
   switch i32 %i.s, label %ucm_findFallback.exit [
-    i32 4, label %bb.h
-    i32 5, label %bb.k
+    i32 4194304, label %bb.h
+    i32 5242880, label %bb.k
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -2019,6 +2082,9 @@ declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #13
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #13
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

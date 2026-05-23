@@ -185,7 +185,6 @@ $_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_ = comdat 
 @.str.62 = private unnamed_addr constant [17 x i8] c"!thrower.error()\00", align 1
 @_ZZN2v88internalL27__RT_impl_Runtime_WasmArrayENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateEE17wasm_module_bytes = internal constant [16 x i8] c"\00asm\01\00\00\00\01\06\01P\00^~\00", align 16
 @.str.64 = private unnamed_addr constant [28 x i8] c"isolate->IsOnCentralStack()\00", align 1
-@switch.table._ZN2v88internal23Runtime_WasmTraceMemoryEiPmPNS0_7IsolateE = private unnamed_addr constant [3 x ptr] [ptr @.str.33, ptr @.str.32, ptr @.str.31], align 8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef i64 @_ZN2v88internal30Runtime_SetWasmCompileControlsEiPmPNS0_7IsolateE(i32 noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 {
@@ -588,45 +587,58 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2: 
   %i.an = call noundef ptr %i.am(ptr noundef nonnull align 8 dereferenceable(80) %i.l) #26, !inline_history !27
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 100
   %i.ap = load i8, ptr %i.ao, align 4
-  %8 = lshr i8 %i.ap, 3
-  %i.aq = and i8 %8, 3
-  %9 = zext nneg i8 %i.aq to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal23Runtime_WasmTraceMemoryEiPmPNS0_7IsolateE, i64 %9
-  %switch.load = load ptr, ptr %switch.gep, align 8
+  %i.aq = and i8 %i.ap, 24
+  switch i8 %i.aq, label %10 [
+    i8 16, label %_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit
+    i8 8, label %8
+    i8 0, label %9
+  ]
+
+8:                                                ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  br label %_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit
+
+9:                                                ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  br label %_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit
+
+10:                                               ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  unreachable
+
+_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2, %8, %9
+  %.0.i = phi ptr [ @.str.33, %9 ], [ @.str.32, %8 ], [ @.str.31, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
-  %10 = add i64 %i.p, 23
-  %11 = inttoptr i64 %10 to ptr
-  %12 = load atomic volatile i64, ptr %11 acquire, align 8
-  store i64 %12, ptr %6, align 8
+  %11 = add i64 %i.p, 23
+  %12 = inttoptr i64 %11 to ptr
+  %13 = load atomic volatile i64, ptr %12 acquire, align 8
+  store i64 %13, ptr %6, align 8
   call void @_ZN2v88internal23WasmTrustedInstanceData14GetGlobalValueEPNS0_7IsolateERKNS0_4wasm10WasmGlobalE(ptr dead_on_unwind nonnull writable sret(%"class.v8::internal::wasm::WasmValue") align 8 %5, ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef %2, ptr noundef nonnull align 8 dereferenceable(24) %i.aj) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
-  %13 = call noundef i32 @_ZNK2v88internal9WasmFrame14function_indexEv(ptr noundef nonnull align 8 dereferenceable(80) %i.l) #26
-  %14 = load ptr, ptr %i.l, align 8
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 64
-  %16 = load ptr, ptr %15, align 8
-  %17 = call noundef i32 %16(ptr noundef nonnull align 8 dereferenceable(80) %i.l) #26, !inline_history !27
-  %18 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
-  %19 = load i8, ptr %18, align 4
-  %.not19.i = icmp eq i8 %19, 0
+  %14 = call noundef i32 @_ZNK2v88internal9WasmFrame14function_indexEv(ptr noundef nonnull align 8 dereferenceable(80) %i.l) #26
+  %15 = load ptr, ptr %i.l, align 8
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 64
+  %17 = load ptr, ptr %16, align 8
+  %18 = call noundef i32 %17(ptr noundef nonnull align 8 dereferenceable(80) %i.l) #26, !inline_history !27
+  %19 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %20 = load i8, ptr %19, align 4
+  %.not19.i = icmp eq i8 %20, 0
   %.str.29..str.30.i = select i1 %.not19.i, ptr @.str.30, ptr @.str.29
-  %20 = load i32, ptr %i.j, align 4
+  %21 = load i32, ptr %i.j, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   call void @_ZNK2v88internal4wasm9WasmValue9to_stringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr noundef nonnull align 8 dereferenceable(32) %5)
-  %21 = load ptr, ptr %7, align 8
-  call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.28, ptr noundef nonnull %switch.load, i32 noundef %13, i32 noundef %17, ptr noundef nonnull %.str.29..str.30.i, i32 noundef %20, ptr noundef %21) #26
-  %22 = load ptr, ptr %7, align 8                 ; 2 uses
-  %23 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
-  %24 = icmp eq ptr %22, %23
-  br i1 %24, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+  %22 = load ptr, ptr %7, align 8
+  call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.28, ptr noundef nonnull %.0.i, i32 noundef %14, i32 noundef %18, ptr noundef nonnull %.str.29..str.30.i, i32 noundef %21, ptr noundef %22) #26
+  %23 = load ptr, ptr %7, align 8                 ; 2 uses
+  %24 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 2 uses
+  %25 = icmp eq ptr %23, %24
+  br i1 %25, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
-  %i.ar = load i64, ptr %23, align 8
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit
+  %i.ar = load i64, ptr %24, align 8
   %i.as = add i64 %i.ar, 1
-  call void @_ZdlPvm(ptr noundef %22, i64 noundef %i.as) #29
+  call void @_ZdlPvm(ptr noundef %23, i64 noundef %i.as) #29
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN2v88internal4wasm21ExecutionTierToStringENS1_13ExecutionTierE.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 648
   %i.au = load i64, ptr %i.at, align 8
@@ -653,7 +665,7 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit: ;
   %i.a = load i64, ptr %1, align 8                ; 2 uses
   %i.b = and i64 %i.a, 1
   %i.c = icmp eq i64 %i.b, 0
-  br i1 %i.c, label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a, label %bb.b
+  br i1 %i.c, label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2, label %bb.b
 
 bb.b:                                             ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit, %bb.a
   %i.d = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1670), align 2, !range !5, !noundef !6
@@ -669,7 +681,7 @@ _ZN2v88internal12_GLOBAL__N_118CrashUnlessFuzzingEPNS0_7IsolateE.exit: ; preds =
   %i.g = load i64, ptr %i.f, align 8
   br label %_ZN2v88internalL33__RT_impl_Runtime_WasmTraceMemoryENS0_9ArgumentsILNS0_13ArgumentsTypeE0EEEPNS0_7IsolateE.exit
 
-_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
+_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
   %5 = inttoptr i64 %i.a to ptr                   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   call void @_ZN2v88internal4wasm16WasmCodeRefScopeC1Ev(ptr noundef nonnull align 8 dereferenceable(32) %3) #26
@@ -683,11 +695,24 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a
   %11 = call noundef ptr %10(ptr noundef nonnull align 8 dereferenceable(80) %7) #26, !inline_history !28
   %12 = getelementptr inbounds nuw i8, ptr %11, i64 100
   %13 = load i8, ptr %12, align 4
-  %14 = lshr i8 %13, 3
-  %15 = and i8 %14, 3
-  %16 = zext nneg i8 %15 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal23Runtime_WasmTraceMemoryEiPmPNS0_7IsolateE, i64 %16
-  %switch.load = load ptr, ptr %switch.gep, align 8
+  %14 = and i8 %13, 24
+  switch i8 %14, label %17 [
+    i8 16, label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a
+    i8 8, label %15
+    i8 0, label %16
+  ]
+
+15:                                               ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  br label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a
+
+16:                                               ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  br label %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a
+
+17:                                               ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2
+  unreachable
+
+_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2, %15, %16
+  %.0.i = phi ptr [ @.str.33, %16 ], [ @.str.32, %15 ], [ @.str.31, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2 ]
   %i.h = call noundef i32 @_ZNK2v88internal9WasmFrame14function_indexEv(ptr noundef nonnull align 8 dereferenceable(80) %7) #26
   %i.i = load ptr, ptr %7, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 64
@@ -700,7 +725,7 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit2.a
   %.not36.i = icmp eq i8 %i.p, 0
   %.str.45..str.46.i = select i1 %.not36.i, ptr @.str.46, ptr @.str.45
   %i.q = load i64, ptr %5, align 8
-  call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.44, ptr noundef nonnull %switch.load, i32 noundef %i.h, i32 noundef %i.l, i32 noundef %i.n, ptr noundef nonnull %.str.45..str.46.i, i64 noundef %i.q) #26
+  call void (ptr, ...) @_ZN2v88internal6PrintFEPKcz(ptr noundef nonnull @.str.44, ptr noundef nonnull %.0.i, i32 noundef %i.h, i32 noundef %i.l, i32 noundef %i.n, ptr noundef nonnull %.str.45..str.46.i, i64 noundef %i.q) #26
   %i.r = load ptr, ptr %7, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 96
   %i.t = load ptr, ptr %i.s, align 8

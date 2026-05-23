@@ -199,13 +199,14 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local i32 @MinGap(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef readonly captures(none) %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i16, ptr %3, align 4                ; 5 uses
-  %4 = lshr i16 %i.a, 10
-  %5 = and i16 %4, 7
-  switch i16 %5, label %bb.d [
-    i16 1, label %bb.b
+  %4 = and i16 %i.a, 7168
+  %5 = add nsw i16 %4, -1024
+  %6 = lshr exact i16 %5, 10
+  switch i16 %6, label %bb.d [
+    i16 0, label %bb.b
+    i16 1, label %bb.e
     i16 2, label %bb.e
-    i16 3, label %bb.e
-    i16 5, label %bb.c
+    i16 4, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -370,13 +371,14 @@ bb.j:                                             ; preds = %bb.c, %bb.c, %bb.c,
 define dso_local range(i32 -2147483648, 8388608) i32 @ActualGap(i32 noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef readonly captures(none) %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i16, ptr %3, align 4                ; 6 uses
-  %6 = lshr i16 %i.a, 10
-  %7 = and i16 %6, 7
-  switch i16 %7, label %bb.g [
-    i16 1, label %bb.b
-    i16 2, label %bb.c
-    i16 3, label %bb.e
-    i16 5, label %bb.f
+  %6 = and i16 %i.a, 7168
+  %7 = add nsw i16 %6, -1024
+  %8 = lshr exact i16 %7, 10
+  switch i16 %8, label %bb.g [
+    i16 0, label %bb.b
+    i16 1, label %bb.c
+    i16 2, label %bb.e
+    i16 4, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a

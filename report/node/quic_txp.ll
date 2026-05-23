@@ -201,14 +201,16 @@ bb.ev:                                            ; preds = %bb.eu
   %i.uq = load i64, ptr %i.up, align 8, !tbaa !152
   store i64 %i.uq, ptr %i.bj, align 8, !tbaa !153
   %i.ur = load i64, ptr %i.tl, align 8
-  %17 = lshr i64 %i.ur, 8
-  %trunc.i.i.i = trunc i64 %17 to i8
+  %17 = trunc i64 %i.ur to i16
+  %18 = add i16 %17, -512
+  %19 = lshr i16 %18, 8
+  %trunc.i.i.i = trunc nuw i16 %19 to i8
   switch i8 %trunc.i.i.i, label %.thread124.i.i [
-    i8 6, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
-    i8 2, label %ossl_quic_stream_send_get_final_size.exit.i.i
-    i8 3, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
     i8 4, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
-    i8 5, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
+    i8 0, label %ossl_quic_stream_send_get_final_size.exit.i.i
+    i8 1, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
+    i8 2, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
+    i8 3, label %ossl_quic_stream_send_get_final_size.exit.thread120.i.i
   ]
 
 ossl_quic_stream_send_get_final_size.exit.thread120.i.i: ; preds = %bb.ev, %bb.ev, %bb.ev, %bb.ev
@@ -358,13 +360,15 @@ bb.fk:                                            ; preds = %bb.fj
 bb.fl:                                            ; preds = %bb.fk, %._crit_edge.i223.i, %bb.fc
   %.21.i = phi i32 [ %.20.i, %._crit_edge.i223.i ], [ 1, %bb.fk ], [ %.20.i, %bb.fc ] ; 4 uses
   %.val.i.i153 = phi i64 [ %.val.pre.i.i, %._crit_edge.i223.i ], [ %i.wo, %bb.fk ], [ %i.vq, %bb.fc ] ; 3 uses
-  %18 = lshr i64 %.val.i.i153, 8
-  %trunc.i109.i.i = trunc i64 %18 to i8
-  %19 = add i8 %trunc.i109.i.i, -4
-  %switch.i.i.i = icmp ult i8 %19, -3
-  br i1 %switch.i.i.i, label %.thread148.i.i, label %bb.fm
+  %20 = trunc i64 %.val.i.i153 to i16
+  %trunc.i109.i.i = and i16 %20, -256
+  switch i16 %trunc.i109.i.i, label %.thread148.i.i [
+    i16 256, label %bb.fm
+    i16 512, label %bb.fm
+    i16 768, label %bb.fm
+  ]
 
-bb.fm:                                            ; preds = %bb.fl
+bb.fm:                                            ; preds = %bb.fl, %bb.fl, %bb.fl
   %i.wp = trunc i64 %.val.i.i153 to i32
   %i.wq = lshr i32 %i.wp, 8
   %i.wr = and i32 %i.wq, 255
@@ -767,13 +771,15 @@ bb.jl:                                            ; preds = %bb.jk, %bb.jh
   %i.ape = load ptr, ptr %i.at, align 8, !tbaa !59
   call void @ossl_quic_stream_map_update_state(ptr noundef %i.ape, ptr noundef nonnull %.186134.i) #8
   %.186.val.i = load i64, ptr %i.aon, align 8
-  %20 = lshr i64 %.186.val.i, 8
-  %trunc.i.i = trunc i64 %20 to i8
-  %21 = add i8 %trunc.i.i, -4
-  %switch.i.i = icmp ult i8 %21, -3
-  br i1 %switch.i.i, label %bb.jp, label %bb.jm
+  %21 = trunc i64 %.186.val.i to i16
+  %trunc.i.i = and i16 %21, -256
+  switch i16 %trunc.i.i, label %bb.jp [
+    i16 256, label %bb.jm
+    i16 512, label %bb.jm
+    i16 768, label %bb.jm
+  ]
 
-bb.jm:                                            ; preds = %bb.jl
+bb.jm:                                            ; preds = %bb.jl, %bb.jl, %bb.jl
   %i.apf = getelementptr inbounds nuw i8, ptr %.186134.i, i64 112 ; 2 uses
   %i.apg = load ptr, ptr %i.apf, align 8, !tbaa !60
   %i.aph = call i32 @ossl_quic_sstream_has_pending(ptr noundef %i.apg) #8

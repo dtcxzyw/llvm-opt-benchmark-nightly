@@ -29,27 +29,27 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not30, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.a = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.a = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %.not31 = icmp eq i32 %i.a, 0
   br i1 %.not31, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.b = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #3 ; 0 uses
-  %i.c = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.b = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #4 ; 0 uses
+  %i.c = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %.not32 = icmp eq i32 %i.c, 0
   br i1 %.not32, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.d = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull @.str.2) #3 ; 0 uses
+  %i.d = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull @.str.2) #4 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e
-  %i.e = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.e = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %.loopexit
 
 .thread:                                          ; preds = %bb.c
-  %i.g = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.g = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph.split.preheader, label %.loopexit
 
@@ -57,8 +57,8 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   br i1 %.not30, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.thread, %.lr.ph
-  %i.i = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #3 ; 0 uses
-  %i.j = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef 0) #3 ; 2 uses
+  %i.i = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #4 ; 0 uses
+  %i.j = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef 0) #4 ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !9    ; 3 uses
   %.not35.peel = icmp eq ptr %i.l, null
@@ -71,24 +71,24 @@ bb.g:                                             ; preds = %.lr.ph.split.prehea
   br i1 %.not36.peel, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.o = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.l, ptr noundef nonnull %i.n) #3 ; 0 uses
+  %i.o = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.l, ptr noundef nonnull %i.n) #4 ; 0 uses
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
-  %i.p = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.l) #3 ; 0 uses
+  %i.p = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.l) #4 ; 0 uses
   br label %bb.k
 
 bb.j:                                             ; preds = %.lr.ph.split.preheader
-  %i.q = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.n) #3 ; 0 uses
+  %i.q = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.n) #4 ; 0 uses
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
-  %i.r = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.r = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.s = icmp sgt i32 %i.r, 1
   br i1 %i.s, label %.lr.ph.split.peel.next, label %.loopexit
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %i.t = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef 0) #3 ; 2 uses
+  %i.t = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef 0) #4 ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !9    ; 3 uses
   %.not35.us.peel = icmp eq ptr %i.v, null
@@ -101,26 +101,26 @@ bb.l:                                             ; preds = %.lr.ph.split.us.pre
   br i1 %.not36.us.peel, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.y = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.v, ptr noundef nonnull %i.x) #3 ; 0 uses
+  %i.y = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.v, ptr noundef nonnull %i.x) #4 ; 0 uses
   br label %bb.p
 
 bb.n:                                             ; preds = %bb.l
-  %i.z = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.v) #3 ; 0 uses
+  %i.z = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.v) #4 ; 0 uses
   br label %bb.p
 
 bb.o:                                             ; preds = %.lr.ph.split.us.preheader
-  %i.aa = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.x) #3 ; 0 uses
+  %i.aa = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.x) #4 ; 0 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m
-  %i.ab = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.ab = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.ac = icmp sgt i32 %i.ab, 1
   br i1 %i.ac, label %.lr.ph.split.us.peel.next, label %.loopexit
 
 .lr.ph.split.us.peel.next:                        ; preds = %bb.p, %bb.u
   %.037.us = phi i32 [ %i.am, %bb.u ], [ 1, %bb.p ] ; 2 uses
-  %i.ad = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.4) #3 ; 0 uses
-  %i.ae = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef %.037.us) #3 ; 2 uses
+  %i.ad = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.4) #4 ; 0 uses
+  %i.ae = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef %.037.us) #4 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !9  ; 3 uses
   %.not35.us = icmp eq ptr %i.ag, null
@@ -133,28 +133,28 @@ bb.q:                                             ; preds = %.lr.ph.split.us.pee
   br i1 %.not36.us, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.aj = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.ai) #3 ; 0 uses
+  %i.aj = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.ag, ptr noundef nonnull %i.ai) #4 ; 0 uses
   br label %bb.u
 
 bb.s:                                             ; preds = %bb.q
-  %i.ak = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.ag) #3 ; 0 uses
+  %i.ak = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.ag) #4 ; 0 uses
   br label %bb.u
 
 bb.t:                                             ; preds = %.lr.ph.split.us.peel.next
-  %i.al = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.ai) #3 ; 0 uses
+  %i.al = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.ai) #4 ; 0 uses
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   %i.am = add nuw nsw i32 %.037.us, 1             ; 2 uses
-  %i.an = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.an = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.ao = icmp slt i32 %i.am, %i.an
   br i1 %i.ao, label %.lr.ph.split.us.peel.next, label %.loopexit, !llvm.loop !14
 
 .lr.ph.split.peel.next:                           ; preds = %bb.k, %bb.z
   %.037 = phi i32 [ %i.az, %bb.z ], [ 1, %bb.k ]  ; 2 uses
-  %i.ap = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.3) #3 ; 0 uses
-  %i.aq = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #3 ; 0 uses
-  %i.ar = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef %.037) #3 ; 2 uses
+  %i.ap = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.3) #4 ; 0 uses
+  %i.aq = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, ptr noundef nonnull @.str.1) #4 ; 0 uses
+  %i.ar = tail call ptr @OPENSSL_sk_value(ptr noundef nonnull %1, i32 noundef %.037) #4 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !9  ; 3 uses
   %.not35 = icmp eq ptr %i.at, null
@@ -163,7 +163,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
   br i1 %.not35, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph.split.peel.next
-  %i.aw = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.av) #3 ; 0 uses
+  %i.aw = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef %i.av) #4 ; 0 uses
   br label %bb.z
 
 bb.w:                                             ; preds = %.lr.ph.split.peel.next
@@ -171,16 +171,16 @@ bb.w:                                             ; preds = %.lr.ph.split.peel.n
   br i1 %.not36, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  %i.ax = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.at) #3 ; 0 uses
+  %i.ax = tail call i32 @BIO_puts(ptr noundef %0, ptr noundef nonnull %i.at) #4 ; 0 uses
   br label %bb.z
 
 bb.y:                                             ; preds = %bb.w
-  %i.ay = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.at, ptr noundef nonnull %i.av) #3 ; 0 uses
+  %i.ay = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.5, ptr noundef nonnull %i.at, ptr noundef nonnull %i.av) #4 ; 0 uses
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.v, %bb.y, %bb.x
   %i.az = add nuw nsw i32 %.037, 1                ; 2 uses
-  %i.ba = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #3
+  %i.ba = tail call i32 @OPENSSL_sk_num(ptr noundef nonnull %1) #4
   %i.bb = icmp slt i32 %i.az, %i.ba
   br i1 %i.bb, label %.lr.ph.split.peel.next, label %.loopexit, !llvm.loop !17
 
@@ -206,19 +206,20 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define dso_local i32 @X509V3_EXT_print(ptr noundef %0, ptr noundef %1, i64 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
-  %i.b = tail call ptr @X509_EXTENSION_get_data(ptr noundef %1) #3 ; 2 uses
-  %i.c = tail call ptr @ASN1_STRING_get0_data(ptr noundef %i.b) #3 ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  %i.b = tail call ptr @X509_EXTENSION_get_data(ptr noundef %1) #4 ; 2 uses
+  %i.c = tail call ptr @ASN1_STRING_get0_data(ptr noundef %i.b) #4 ; 3 uses
   store ptr %i.c, ptr %i.a, align 8, !tbaa !18
-  %i.d = tail call i32 @ASN1_STRING_length(ptr noundef %i.b) #3 ; 6 uses
-  %i.e = tail call ptr @X509V3_EXT_get(ptr noundef %1) #3 ; 11 uses
+  %i.d = tail call i32 @ASN1_STRING_length(ptr noundef %i.b) #4 ; 6 uses
+  %i.e = tail call ptr @X509V3_EXT_get(ptr noundef %1) #4 ; 11 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
-  %4 = lshr i64 %2, 16
-  %5 = and i64 %4, 15
-  switch i64 %5, label %bb.n [
+  %4 = and i64 %2, 983040
+  %5 = sub i64 %4, 0                              ; 2 uses
+  %6 = call i64 @llvm.fshl.i64(i64 %5, i64 %5, i64 48)
+  switch i64 %6, label %bb.n [
     i64 0, label %unknown_ext_print.exit
     i64 1, label %bb.c
     i64 2, label %bb.d
@@ -226,16 +227,16 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.12, i32 noundef %3, ptr noundef nonnull @.str.1) #3 ; 0 uses
+  %i.g = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.12, i32 noundef %3, ptr noundef nonnull @.str.1) #4 ; 0 uses
   br label %unknown_ext_print.exit
 
 bb.d:                                             ; preds = %bb.b
   %i.h = sext i32 %i.d to i64
-  %i.i = tail call i32 @ASN1_parse_dump(ptr noundef %0, ptr noundef %i.c, i64 noundef %i.h, i32 noundef %3, i32 noundef -1) #3
+  %i.i = tail call i32 @ASN1_parse_dump(ptr noundef %0, ptr noundef %i.c, i64 noundef %i.h, i32 noundef %3, i32 noundef -1) #4
   br label %unknown_ext_print.exit
 
 bb.e:                                             ; preds = %bb.b
-  %i.j = tail call i32 @BIO_dump_indent(ptr noundef %0, ptr noundef %i.c, i32 noundef %i.d, i32 noundef %3) #3
+  %i.j = tail call i32 @BIO_dump_indent(ptr noundef %0, ptr noundef %i.c, i32 noundef %i.d, i32 noundef %3) #4
   br label %unknown_ext_print.exit
 
 bb.f:                                             ; preds = %bb.a
@@ -246,15 +247,15 @@ bb.f:                                             ; preds = %bb.a
 
 bb.g:                                             ; preds = %bb.f
   %i.m = sext i32 %i.d to i64
-  %i.n = tail call ptr %i.l() #3
-  %i.o = call ptr @ASN1_item_d2i(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %i.m, ptr noundef %i.n) #3
+  %i.n = tail call ptr %i.l() #4
+  %i.o = call ptr @ASN1_item_d2i(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %i.m, ptr noundef %i.n) #4
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !21
   %i.r = sext i32 %i.d to i64
-  %i.s = call ptr %i.q(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %i.r) #3
+  %i.s = call ptr %i.q(ptr noundef null, ptr noundef nonnull %i.a, i64 noundef %i.r) #4
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -264,9 +265,10 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.t = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
-  %6 = lshr i64 %2, 16
-  %7 = and i64 %6, 15
-  switch i64 %7, label %bb.n [
+  %7 = and i64 %2, 983040
+  %8 = sub i64 %7, 0                              ; 2 uses
+  %9 = call i64 @llvm.fshl.i64(i64 %8, i64 %8, i64 48)
+  switch i64 %9, label %bb.n [
     i64 0, label %unknown_ext_print.exit
     i64 1, label %bb.k
     i64 2, label %bb.l
@@ -274,16 +276,16 @@ bb.j:                                             ; preds = %bb.i
   ]
 
 bb.k:                                             ; preds = %bb.j
-  %i.u = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.11, i32 noundef %3, ptr noundef nonnull @.str.1) #3 ; 0 uses
+  %i.u = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.11, i32 noundef %3, ptr noundef nonnull @.str.1) #4 ; 0 uses
   br label %unknown_ext_print.exit
 
 bb.l:                                             ; preds = %bb.j
   %i.v = sext i32 %i.d to i64
-  %i.w = call i32 @ASN1_parse_dump(ptr noundef %0, ptr noundef %i.t, i64 noundef %i.v, i32 noundef %3, i32 noundef -1) #3
+  %i.w = call i32 @ASN1_parse_dump(ptr noundef %0, ptr noundef %i.t, i64 noundef %i.v, i32 noundef %3, i32 noundef -1) #4
   br label %unknown_ext_print.exit
 
 bb.m:                                             ; preds = %bb.j
-  %i.x = call i32 @BIO_dump_indent(ptr noundef %0, ptr noundef %i.t, i32 noundef %i.d, i32 noundef %3) #3
+  %i.x = call i32 @BIO_dump_indent(ptr noundef %0, ptr noundef %i.t, i32 noundef %i.d, i32 noundef %3) #4
   br label %unknown_ext_print.exit
 
 bb.n:                                             ; preds = %bb.b, %bb.j
@@ -296,12 +298,12 @@ bb.o:                                             ; preds = %bb.i
   br i1 %.not61, label %bb.r, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.aa = call ptr %i.z(ptr noundef nonnull %i.e, ptr noundef nonnull %.049) #3 ; 3 uses
+  %i.aa = call ptr %i.z(ptr noundef nonnull %i.e, ptr noundef nonnull %.049) #4 ; 3 uses
   %i.ab = icmp eq ptr %i.aa, null
   br i1 %i.ab, label %bb.w, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ac = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.6, i32 noundef %3, ptr noundef nonnull @.str.1, ptr noundef nonnull %i.aa) #3 ; 0 uses
+  %i.ac = call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.6, i32 noundef %3, ptr noundef nonnull @.str.1, ptr noundef nonnull %i.aa) #4 ; 0 uses
   br label %bb.w
 
 bb.r:                                             ; preds = %bb.o
@@ -311,7 +313,7 @@ bb.r:                                             ; preds = %bb.o
   br i1 %.not62, label %bb.u, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.af = call ptr %i.ae(ptr noundef nonnull %i.e, ptr noundef nonnull %.049, ptr noundef null) #3 ; 3 uses
+  %i.af = call ptr %i.ae(ptr noundef nonnull %i.e, ptr noundef nonnull %.049, ptr noundef null) #4 ; 3 uses
   %i.ag = icmp eq ptr %i.af, null
   br i1 %i.ag, label %bb.w, label %bb.t
 
@@ -329,7 +331,7 @@ bb.u:                                             ; preds = %bb.r
   br i1 %.not63, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.am = call i32 %i.al(ptr noundef nonnull %i.e, ptr noundef nonnull %.049, ptr noundef %0, i32 noundef %3) #3
+  %i.am = call i32 %i.al(ptr noundef nonnull %i.e, ptr noundef nonnull %.049, ptr noundef %0, i32 noundef %3) #4
   %.not64 = icmp ne i32 %i.am, 0
   %spec.select = zext i1 %.not64 to i32
   br label %bb.w
@@ -338,26 +340,26 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.s,
   %.050 = phi ptr [ null, %bb.u ], [ %i.aa, %bb.q ], [ null, %bb.p ], [ null, %bb.t ], [ null, %bb.v ], [ null, %bb.s ]
   %.047 = phi ptr [ null, %bb.u ], [ null, %bb.q ], [ null, %bb.p ], [ %i.af, %bb.t ], [ null, %bb.v ], [ null, %bb.s ]
   %.0 = phi i32 [ 0, %bb.u ], [ 1, %bb.q ], [ 0, %bb.p ], [ 1, %bb.t ], [ %spec.select, %bb.v ], [ 0, %bb.s ] ; 2 uses
-  call void @OPENSSL_sk_pop_free(ptr noundef %.047, ptr noundef nonnull @X509V3_conf_free) #3
-  call void @CRYPTO_free(ptr noundef %.050, ptr noundef nonnull @.str.7, i32 noundef 130) #3
+  call void @OPENSSL_sk_pop_free(ptr noundef %.047, ptr noundef nonnull @X509V3_conf_free) #4
+  call void @CRYPTO_free(ptr noundef %.050, ptr noundef nonnull @.str.7, i32 noundef 130) #4
   %i.an = load ptr, ptr %i.k, align 8, !tbaa !19  ; 2 uses
   %.not65 = icmp eq ptr %i.an, null
   br i1 %.not65, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %i.ao = call ptr %i.an() #3
-  call void @ASN1_item_free(ptr noundef nonnull %.049, ptr noundef %i.ao) #3
+  %i.ao = call ptr %i.an() #4
+  call void @ASN1_item_free(ptr noundef nonnull %.049, ptr noundef %i.ao) #4
   br label %unknown_ext_print.exit
 
 bb.y:                                             ; preds = %bb.w
   %i.ap = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !26
-  call void %i.aq(ptr noundef nonnull %.049) #3
+  call void %i.aq(ptr noundef nonnull %.049) #4
   br label %unknown_ext_print.exit
 
 unknown_ext_print.exit:                           ; preds = %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.e, %bb.d, %bb.c, %bb.b, %bb.x, %bb.y
   %.048 = phi i32 [ %.0, %bb.x ], [ 1, %bb.c ], [ %.0, %bb.y ], [ 1, %bb.k ], [ %i.j, %bb.e ], [ 0, %bb.b ], [ %i.i, %bb.d ], [ 1, %bb.n ], [ %i.x, %bb.m ], [ 0, %bb.j ], [ %i.w, %bb.l ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.048
 }
 
@@ -382,7 +384,7 @@ declare void @ASN1_item_free(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 2) i32 @X509V3_extensions_print(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #3
+  %i.a = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #4
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %.thread, label %bb.b
 
@@ -391,13 +393,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.8, i32 noundef %4, ptr noundef nonnull @.str.1, ptr noundef nonnull %1) #3 ; 0 uses
+  %i.c = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.8, i32 noundef %4, ptr noundef nonnull @.str.1, ptr noundef nonnull %1) #4 ; 0 uses
   %i.d = add nsw i32 %4, 4
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.033 = phi i32 [ %i.d, %bb.c ], [ %4, %bb.b ]  ; 3 uses
-  %i.e = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #3
+  %i.e = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #4
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %.thread
 
@@ -410,17 +412,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 bb.e:                                             ; preds = %.lr.ph, %bb.n
   %.03544 = phi i32 [ 0, %.lr.ph ], [ %i.z, %bb.n ] ; 2 uses
-  %i.i = tail call ptr @OPENSSL_sk_value(ptr noundef %2, i32 noundef %.03544) #3 ; 4 uses
-  %i.j = tail call ptr @X509_EXTENSION_get_object(ptr noundef %i.i) #3 ; 3 uses
+  %i.i = tail call ptr @OPENSSL_sk_value(ptr noundef %2, i32 noundef %.03544) #4 ; 4 uses
+  %i.j = tail call ptr @X509_EXTENSION_get_object(ptr noundef %i.i) #4 ; 3 uses
   br i1 %.not37, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.k = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #3
+  %i.k = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #4
   %.not38 = icmp eq i32 %i.k, 82
   br i1 %.not38, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #3
+  %i.l = tail call i32 @OBJ_obj2nid(ptr noundef %i.j) #4
   %.not39 = icmp eq i32 %i.l, 90
   br i1 %.not39, label %bb.h, label %bb.n
 
@@ -428,16 +430,16 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e
   br i1 %.not40, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.m = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %.033, ptr noundef nonnull @.str.1) #3
+  %i.m = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %.033, ptr noundef nonnull @.str.1) #4
   %i.n = icmp slt i32 %i.m, 1
   br i1 %i.n, label %.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  %i.o = tail call i32 @i2a_ASN1_OBJECT(ptr noundef %0, ptr noundef %i.j) #3 ; 0 uses
-  %i.p = tail call i32 @X509_EXTENSION_get_critical(ptr noundef %i.i) #3
+  %i.o = tail call i32 @i2a_ASN1_OBJECT(ptr noundef %0, ptr noundef %i.j) #4 ; 0 uses
+  %i.p = tail call i32 @X509_EXTENSION_get_critical(ptr noundef %i.i) #4
   %.not41 = icmp eq i32 %i.p, 0
   %i.q = select i1 %.not41, ptr @.str.1, ptr @.str.10
-  %i.r = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.9, ptr noundef nonnull %i.q) #3
+  %i.r = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str.9, ptr noundef nonnull %i.q) #4
   %i.s = icmp slt i32 %i.r, 1
   br i1 %i.s, label %.thread, label %bb.k
 
@@ -447,19 +449,19 @@ bb.k:                                             ; preds = %bb.j
   br i1 %.not42, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.u = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %i.h, ptr noundef nonnull @.str.1) #3 ; 0 uses
-  %i.v = tail call ptr @X509_EXTENSION_get_data(ptr noundef %i.i) #3
-  %i.w = tail call i32 @ASN1_STRING_print(ptr noundef %0, ptr noundef %i.v) #3 ; 0 uses
+  %i.u = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %i.h, ptr noundef nonnull @.str.1) #4 ; 0 uses
+  %i.v = tail call ptr @X509_EXTENSION_get_data(ptr noundef %i.i) #4
+  %i.w = tail call i32 @ASN1_STRING_print(ptr noundef %0, ptr noundef %i.v) #4 ; 0 uses
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k
-  %i.x = tail call i32 @BIO_write(ptr noundef %0, ptr noundef nonnull @.str.3, i32 noundef 1) #3
+  %i.x = tail call i32 @BIO_write(ptr noundef %0, ptr noundef nonnull @.str.3, i32 noundef 1) #4
   %i.y = icmp slt i32 %i.x, 1
   br i1 %i.y, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %bb.g, %bb.m
   %i.z = add nuw nsw i32 %.03544, 1               ; 2 uses
-  %i.aa = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #3
+  %i.aa = tail call i32 @OPENSSL_sk_num(ptr noundef %2) #4
   %i.ab = icmp slt i32 %i.z, %i.aa
   br i1 %i.ab, label %bb.e, label %.thread, !llvm.loop !27
 
@@ -483,14 +485,14 @@ declare i32 @BIO_write(ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr
 ; Function Attrs: nounwind uwtable
 define dso_local i32 @X509V3_EXT_print_fp(ptr noundef %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @BIO_new_fp(ptr noundef %0, i32 noundef 0) #3 ; 3 uses
+  %i.a = tail call ptr @BIO_new_fp(ptr noundef %0, i32 noundef 0) #4 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = sext i32 %2 to i64
   %i.d = tail call i32 @X509V3_EXT_print(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef %i.c, i32 noundef %3)
-  %i.e = tail call i32 @BIO_free(ptr noundef nonnull %i.a) #3 ; 0 uses
+  %i.e = tail call i32 @BIO_free(ptr noundef nonnull %i.a) #4 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -506,10 +508,14 @@ declare i32 @ASN1_parse_dump(ptr noundef, ptr noundef, i64 noundef, i32 noundef,
 
 declare i32 @BIO_dump_indent(ptr noundef, ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.fshl.i64(i64, i64, i64) #3
+
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

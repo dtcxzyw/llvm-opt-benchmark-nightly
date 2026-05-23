@@ -201,11 +201,10 @@ bb.b:                                             ; preds = %bb.c, %bb.a
   %.0.i = phi ptr [ %.0.val, %bb.a ], [ %i.e, %bb.c ] ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %.0.i, i64 112
   %i.b = load i8, ptr %i.a, align 8
-  %0 = lshr i8 %i.b, 5
-  %i.c = and i8 %0, 3
+  %i.c = and i8 %i.b, 96
   switch i8 %i.c, label %qctx_should_autotick.exit.thread [
     i8 0, label %bb.c
-    i8 2, label %.loopexit
+    i8 64, label %.loopexit
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -608,15 +607,17 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.al = getelementptr inbounds nuw i8, ptr %i.aj, i64 256
   %i.am = load i64, ptr %i.al, align 8
-  %7 = lshr i64 %i.am, 8
-  %trunc.i = trunc i64 %7 to i8
+  %7 = trunc i64 %i.am to i16
+  %8 = add i16 %7, -256
+  %9 = lshr i16 %8, 8
+  %trunc.i = trunc nuw i16 %9 to i8
   switch i8 %trunc.i, label %.sink.split.i [
-    i8 6, label %bb.v
-    i8 1, label %bb.s
-    i8 2, label %bb.t
-    i8 3, label %bb.t
-    i8 4, label %bb.u
     i8 5, label %bb.v
+    i8 0, label %bb.s
+    i8 1, label %bb.t
+    i8 2, label %bb.t
+    i8 3, label %bb.u
+    i8 4, label %bb.v
   ]
 
 bb.s:                                             ; preds = %bb.r
@@ -1019,11 +1020,10 @@ bb.n:                                             ; preds = %bb.o, %quic_mutatio
   %.0.i.i = phi ptr [ %.val30, %quic_mutation_allowed.exit ], [ %i.an, %bb.o ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 112
   %i.ak = load i8, ptr %i.aj, align 8
-  %7 = lshr i8 %i.ak, 5
-  %i.al = and i8 %7, 3
+  %i.al = and i8 %i.ak, 96
   switch i8 %i.al, label %qctx_should_autotick.exit.thread.i [
     i8 0, label %bb.o
-    i8 2, label %qctx_maybe_autotick.exit
+    i8 64, label %qctx_maybe_autotick.exit
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -1238,13 +1238,16 @@ bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   store i32 0, ptr %i.d, align 4, !tbaa !5
   %i.z = load i64, ptr %i.y, align 8
-  %3 = lshr i64 %i.z, 16
-  %trunc.i = trunc i64 %3 to i8
-  switch i8 %trunc.i, label %ossl_quic_stream_recv_pending.exit.thread19 [
-    i8 5, label %ossl_quic_stream_recv_pending.exit.thread
-    i8 1, label %bb.k
-    i8 2, label %bb.k
-    i8 3, label %bb.k
+  %3 = trunc i64 %i.z to i32
+  %4 = and i32 %3, 16711680
+  %5 = add nsw i32 %4, -65536
+  %6 = lshr exact i32 %5, 16
+  %trunc.i = trunc nuw i32 %6 to i16
+  switch i16 %trunc.i, label %ossl_quic_stream_recv_pending.exit.thread19 [
+    i16 4, label %ossl_quic_stream_recv_pending.exit.thread
+    i16 0, label %bb.k
+    i16 1, label %bb.k
+    i16 2, label %bb.k
   ]
 
 ossl_quic_stream_recv_pending.exit.thread19:      ; preds = %bb.j
@@ -1303,10 +1306,10 @@ bb.n:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   store i32 0, ptr %i.b, align 4, !tbaa !5
   %i.as = load i64, ptr %i.y, align 8
-  %4 = lshr i64 %i.as, 16
-  %trunc.i11 = trunc i64 %4 to i8
-  %trunc.i11.off = add i8 %trunc.i11, -1
-  %switch = icmp ult i8 %trunc.i11.off, 3
+  %7 = trunc i64 %i.as to i32
+  %8 = and i32 %7, 16711680
+  %9 = add nsw i32 %8, -65536
+  %switch = icmp ult i32 %9, 196608
   br i1 %switch, label %bb.o, label %ossl_quic_stream_recv_pending.exit16
 
 bb.o:                                             ; preds = %bb.n
@@ -1403,15 +1406,17 @@ bb.f:                                             ; preds = %quic_mutation_allow
 bb.g:                                             ; preds = %bb.f
   %i.u = getelementptr inbounds nuw i8, ptr %i.s, i64 256
   %i.v = load i64, ptr %i.u, align 8
-  %2 = lshr i64 %i.v, 8
-  %trunc.i = trunc i64 %2 to i8
+  %2 = trunc i64 %i.v to i16
+  %3 = add i16 %2, -256
+  %4 = lshr i16 %3, 8
+  %trunc.i = trunc nuw i16 %4 to i8
   switch i8 %trunc.i, label %.sink.split.i [
-    i8 6, label %bb.k
-    i8 1, label %bb.h
-    i8 2, label %bb.i
-    i8 3, label %bb.i
-    i8 4, label %bb.j
     i8 5, label %bb.k
+    i8 0, label %bb.h
+    i8 1, label %bb.i
+    i8 2, label %bb.i
+    i8 3, label %bb.j
+    i8 4, label %bb.k
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -1814,13 +1819,15 @@ bb.ab:                                            ; preds = %bb.aa
   br label %qc_get_stream_write_buf_stat.exit
 
 bb.ac:                                            ; preds = %bb.aa
-  %5 = lshr i64 %.val18.i, 8
-  %trunc.i.i = trunc i64 %5 to i8
-  %6 = add i8 %trunc.i.i, -4
-  %switch.i.i = icmp ult i8 %6, -3
-  br i1 %switch.i.i, label %qc_get_stream_write_buf_stat.exit, label %bb.ad
+  %5 = trunc i64 %.val18.i to i16
+  %trunc.i.i = and i16 %5, -256
+  switch i16 %trunc.i.i, label %qc_get_stream_write_buf_stat.exit [
+    i16 256, label %bb.ad
+    i16 512, label %bb.ad
+    i16 768, label %bb.ad
+  ]
 
-bb.ad:                                            ; preds = %bb.ac
+bb.ad:                                            ; preds = %bb.ac, %bb.ac, %bb.ac
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bd, i64 112
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !150
   %i.bi = call i64 @ossl_quic_sstream_get_buffer_size(ptr noundef %i.bh) #10, !callees !207, !inline_history !208
@@ -1874,13 +1881,15 @@ bb.aj:                                            ; preds = %bb.ai
   br label %qc_get_stream_write_buf_stat.exit62
 
 bb.ak:                                            ; preds = %bb.ai
-  %7 = lshr i64 %.val18.i58, 8
-  %trunc.i.i60 = trunc i64 %7 to i8
-  %8 = add i8 %trunc.i.i60, -4
-  %switch.i.i61 = icmp ult i8 %8, -3
-  br i1 %switch.i.i61, label %qc_get_stream_write_buf_stat.exit62, label %bb.al
+  %6 = trunc i64 %.val18.i58 to i16
+  %trunc.i.i60 = and i16 %6, -256
+  switch i16 %trunc.i.i60, label %qc_get_stream_write_buf_stat.exit62 [
+    i16 256, label %bb.al
+    i16 512, label %bb.al
+    i16 768, label %bb.al
+  ]
 
-bb.al:                                            ; preds = %bb.ak
+bb.al:                                            ; preds = %bb.ak, %bb.ak, %bb.ak
   %i.bu = getelementptr inbounds nuw i8, ptr %i.br, i64 112
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !150
   %i.bw = call i64 @ossl_quic_sstream_get_buffer_used(ptr noundef %i.bv) #10, !callees !207, !inline_history !208
@@ -1934,13 +1943,15 @@ bb.ar:                                            ; preds = %bb.aq
   br label %qc_get_stream_write_buf_stat.exit74
 
 bb.as:                                            ; preds = %bb.aq
-  %9 = lshr i64 %.val18.i70, 8
-  %trunc.i.i72 = trunc i64 %9 to i8
-  %10 = add i8 %trunc.i.i72, -4
-  %switch.i.i73 = icmp ult i8 %10, -3
-  br i1 %switch.i.i73, label %qc_get_stream_write_buf_stat.exit74, label %bb.at
+  %7 = trunc i64 %.val18.i70 to i16
+  %trunc.i.i72 = and i16 %7, -256
+  switch i16 %trunc.i.i72, label %qc_get_stream_write_buf_stat.exit74 [
+    i16 256, label %bb.at
+    i16 512, label %bb.at
+    i16 768, label %bb.at
+  ]
 
-bb.at:                                            ; preds = %bb.as
+bb.at:                                            ; preds = %bb.as, %bb.as, %bb.as
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cf, i64 112
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !150
   %i.ck = call i64 @ossl_quic_sstream_get_buffer_avail(ptr noundef %i.cj) #10, !callees !207, !inline_history !208
@@ -2343,15 +2354,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 256
   %i.o = load i64, ptr %i.n, align 8
-  %4 = lshr i64 %i.o, 8
-  %trunc.i = trunc i64 %4 to i8
+  %4 = trunc i64 %i.o to i16
+  %5 = add i16 %4, -256
+  %6 = lshr i16 %5, 8
+  %trunc.i = trunc nuw i16 %6 to i8
   switch i8 %trunc.i, label %.sink.split.i [
-    i8 6, label %bb.i
-    i8 1, label %bb.f
-    i8 2, label %bb.g
-    i8 3, label %bb.g
-    i8 4, label %bb.h
     i8 5, label %bb.i
+    i8 0, label %bb.f
+    i8 1, label %bb.g
+    i8 2, label %bb.g
+    i8 3, label %bb.h
+    i8 4, label %bb.i
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -2728,13 +2741,15 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b
-  %3 = lshr i64 %.val7, 8
-  %trunc.i = trunc i64 %3 to i8
-  %4 = add i8 %trunc.i, -4
-  %switch.i = icmp ult i8 %4, -3
-  br i1 %switch.i, label %bb.g, label %bb.e
+  %3 = trunc i64 %.val7 to i16
+  %trunc.i = and i16 %3, -256
+  switch i16 %trunc.i, label %bb.g [
+    i16 256, label %bb.e
+    i16 512, label %bb.e
+    i16 768, label %bb.e
+  ]
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d
   %i.h = getelementptr inbounds nuw i8, ptr %i.e, i64 112
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !150
   %i.j = call i32 @ossl_quic_sstream_set_buffer_size(ptr noundef %i.i, i64 noundef %1) #10
@@ -2745,8 +2760,8 @@ bb.f:                                             ; preds = %bb.e
   call void (ptr, ptr, i32, ptr, i32, ptr, ...) @quic_raise_non_normal_error(ptr noundef nonnull %2, ptr nonnull poison, i32 noundef 4160, ptr noundef nonnull @__func__.ossl_quic_set_write_buffer_size, i32 noundef 786691, ptr noundef null)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.e, %bb.d, %bb.f, %bb.c
-  %.0 = phi i32 [ 1, %bb.d ], [ 0, %bb.f ], [ 0, %bb.c ], [ 1, %bb.e ]
+bb.g:                                             ; preds = %bb.d, %bb.e, %bb.f, %bb.c
+  %.0 = phi i32 [ 1, %bb.e ], [ 0, %bb.f ], [ 0, %bb.c ], [ 1, %bb.d ]
   %.val = load ptr, ptr %2, align 8, !tbaa !161
   %i.k = getelementptr i8, ptr %.val, i64 88
   %.val.val = load ptr, ptr %i.k, align 8, !tbaa !147
@@ -3149,11 +3164,10 @@ bb.m:                                             ; preds = %bb.n, %bb.l
   %.0.i.i = phi ptr [ %.val39, %bb.l ], [ %i.ar, %bb.n ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 112
   %i.ao = load i8, ptr %i.an, align 8
-  %3 = lshr i8 %i.ao, 5
-  %i.ap = and i8 %3, 3
+  %i.ap = and i8 %i.ao, 96
   switch i8 %i.ap, label %qctx_should_autotick.exit.thread.i [
     i8 0, label %bb.n
-    i8 2, label %qctx_maybe_autotick.exit
+    i8 64, label %qctx_maybe_autotick.exit
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -3556,13 +3570,15 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ab, label %test_poll_event_r.exit.thread128, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %4 = lshr i64 %i.z, 16
-  %trunc.i.i = trunc i64 %4 to i8
-  %5 = add i8 %trunc.i.i, -4
-  %switch.i.i = icmp ult i8 %5, -3
-  br i1 %switch.i.i, label %test_poll_event_r.exit.thread, label %bb.p
+  %4 = trunc i64 %i.z to i32
+  %5 = and i32 %4, 16711680
+  switch i32 %5, label %test_poll_event_r.exit.thread [
+    i32 65536, label %bb.p
+    i32 131072, label %bb.p
+    i32 196608, label %bb.p
+  ]
 
-bb.p:                                             ; preds = %bb.o
+bb.p:                                             ; preds = %bb.o, %bb.o, %bb.o
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 120
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !163
   %i.ae = call i32 @ossl_quic_rstream_available(ptr noundef %i.ad, ptr noundef nonnull %i.b, ptr noundef nonnull %i.a) #10
@@ -3579,7 +3595,7 @@ bb.r:                                             ; preds = %bb.q
   %.not6.i = icmp eq i32 %i.ag, 0
   br i1 %.not6.i, label %test_poll_event_r.exit.thread, label %test_poll_event_r.exit
 
-test_poll_event_r.exit.thread:                    ; preds = %bb.p, %bb.o, %bb.r
+test_poll_event_r.exit.thread:                    ; preds = %bb.p, %bb.r, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %bb.s
@@ -3655,13 +3671,15 @@ bb.y:                                             ; preds = %bb.x
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !149 ; 2 uses
   %i.bd = getelementptr i8, ptr %i.bc, i64 256
   %.val.i = load i64, ptr %i.bd, align 8
-  %6 = lshr i64 %.val.i, 8
-  %trunc.i.i87 = trunc i64 %6 to i8
-  %7 = add i8 %trunc.i.i87, -4
-  %switch.i.i88 = icmp ult i8 %7, -3
-  br i1 %switch.i.i88, label %test_poll_event_w.exit.thread, label %bb.z
+  %6 = trunc i64 %.val.i to i16
+  %trunc.i.i = and i16 %6, -256
+  switch i16 %trunc.i.i, label %test_poll_event_w.exit.thread [
+    i16 256, label %bb.z
+    i16 512, label %bb.z
+    i16 768, label %bb.z
+  ]
 
-bb.z:                                             ; preds = %bb.y
+bb.z:                                             ; preds = %bb.y, %bb.y, %bb.y
   %i.be = getelementptr inbounds nuw i8, ptr %i.bc, i64 112
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !150
   %i.bg = call i64 @ossl_quic_sstream_get_buffer_avail(ptr noundef %i.bf) #10
@@ -3710,7 +3728,7 @@ test_poll_event_w.exit:                           ; preds = %bb.ad
   %i.cc = or i64 %.1, 128
   br i1 %.not6.i.i.not, label %test_poll_event_w.exit.thread, label %bb.ae
 
-test_poll_event_w.exit.thread:                    ; preds = %bb.ad, %bb.ac, %bb.x, %bb.y, %bb.z, %bb.aa, %bb.ab, %test_poll_event_w.exit
+test_poll_event_w.exit.thread:                    ; preds = %bb.ad, %bb.y, %bb.ac, %bb.x, %bb.z, %bb.aa, %bb.ab, %test_poll_event_w.exit
   br label %bb.ae
 
 bb.ae:                                            ; preds = %test_poll_event_w.exit.thread, %test_poll_event_w.exit, %bb.w
@@ -4113,11 +4131,10 @@ bb.g:                                             ; preds = %bb.h, %bb.f
   %.0.i.i = phi ptr [ %.val46, %bb.f ], [ %i.y, %bb.h ] ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 112
   %i.v = load i8, ptr %i.u, align 8
-  %4 = lshr i8 %i.v, 5
-  %i.w = and i8 %4, 3
+  %i.w = and i8 %i.v, 96
   switch i8 %i.w, label %qctx_should_autotick.exit.thread.i [
     i8 0, label %bb.h
-    i8 2, label %.loopexit
+    i8 64, label %.loopexit
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -4520,15 +4537,17 @@ bb.d:                                             ; preds = %quic_mutation_allow
 bb.e:                                             ; preds = %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 256
   %i.t = load i64, ptr %i.s, align 8
-  %1 = lshr i64 %i.t, 8
-  %trunc.i = trunc i64 %1 to i8
+  %1 = trunc i64 %i.t to i16
+  %2 = add i16 %1, -256
+  %3 = lshr i16 %2, 8
+  %trunc.i = trunc nuw i16 %3 to i8
   switch i8 %trunc.i, label %quic_validate_for_write.exit.thread [
-    i8 6, label %bb.i
-    i8 1, label %bb.f
-    i8 2, label %bb.g
-    i8 3, label %bb.g
-    i8 4, label %bb.h
     i8 5, label %bb.i
+    i8 0, label %bb.f
+    i8 1, label %bb.g
+    i8 2, label %bb.g
+    i8 3, label %bb.h
+    i8 4, label %bb.i
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -4662,15 +4681,18 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 256
   %i.k = load i64, ptr %i.j, align 8
-  %7 = lshr i64 %i.k, 16
-  %trunc.i = trunc i64 %7 to i8
-  switch i8 %trunc.i, label %bb.l [
-    i8 6, label %bb.e
-    i8 1, label %quic_validate_for_read.exit
-    i8 2, label %quic_validate_for_read.exit
-    i8 3, label %quic_validate_for_read.exit
-    i8 4, label %bb.f
-    i8 5, label %bb.d
+  %7 = trunc i64 %i.k to i32
+  %8 = and i32 %7, 16711680
+  %9 = add nsw i32 %8, -65536
+  %10 = lshr exact i32 %9, 16
+  %trunc.i = trunc nuw i32 %10 to i16
+  switch i16 %trunc.i, label %bb.l [
+    i16 5, label %bb.e
+    i16 0, label %quic_validate_for_read.exit
+    i16 1, label %quic_validate_for_read.exit
+    i16 2, label %quic_validate_for_read.exit
+    i16 3, label %bb.f
+    i16 4, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c

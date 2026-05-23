@@ -1,4 +1,4 @@
-inline.NumInlined: 3274
+inline.NumInlined: 3275
 inline.NumDeleted: 574
 begin_hunk_0_@rb_vm_pop_frame:bb.a
   %i.k = getelementptr i8, ptr %i.b, i64 56
@@ -201,12 +201,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 bb.d:                                             ; preds = %._crit_edge
   %i.q = inttoptr i64 %i.o to ptr                 ; 3 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !77
-  %1 = trunc i64 %i.r to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %check_method_entry.exit [
-    i32 6, label %bb.e
-    i32 2, label %bb.f
+  %1 = trunc i64 %i.r to i16
+  %trunc.i11 = and i16 %1, -4096
+  switch i16 %trunc.i11, label %check_method_entry.exit [
+    i16 24576, label %bb.e
+    i16 8192, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -275,12 +274,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 bb.d:                                             ; preds = %._crit_edge
   %i.q = inttoptr i64 %i.o to ptr                 ; 3 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !77
-  %1 = trunc i64 %i.r to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %env_method_entry_unchecked.exit [
-    i32 6, label %bb.e
-    i32 2, label %bb.f
+  %1 = trunc i64 %i.r to i16
+  %trunc.i11 = and i16 %1, -4096
+  switch i16 %trunc.i11, label %env_method_entry_unchecked.exit [
+    i16 24576, label %bb.e
+    i16 8192, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -330,12 +328,11 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph.i
   %i.e = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !77
-  %1 = trunc i64 %i.f to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %check_cref.exit.thread.i [
-    i32 6, label %bb.c
-    i32 1, label %vm_env_cref.exit.thread6
+  %1 = trunc i64 %i.f to i16
+  %trunc.i.i = and i16 %1, -4096
+  switch i16 %trunc.i.i, label %check_cref.exit.thread.i [
+    i16 24576, label %bb.c
+    i16 4096, label %vm_env_cref.exit.thread6
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -372,13 +369,12 @@ check_cref.exit.thread.i:                         ; preds = %check_cref.exit.i, 
 bb.d:                                             ; preds = %._crit_edge.i
   %i.s = inttoptr i64 %i.q to ptr                 ; 4 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !77
-  %4 = trunc i64 %i.t to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.e
-    i32 1, label %vm_env_cref.exit.thread6
-    i32 2, label %bb.f
+  %2 = trunc i64 %i.t to i16
+  %trunc.i10.i = and i16 %2, -4096
+  switch i16 %trunc.i10.i, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.e
+    i16 4096, label %vm_env_cref.exit.thread6
+    i16 8192, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -398,12 +394,11 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.aa = inttoptr i64 %i.y to ptr                ; 3 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !77
-  %7 = trunc i64 %i.ab to i32
-  %8 = lshr i32 %7, 12
-  %9 = and i32 %8, 15
-  switch i32 %9, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.h
-    i32 1, label %vm_env_cref.exit.thread6
+  %3 = trunc i64 %i.ab to i16
+  %trunc8.i.i = and i16 %3, -4096
+  switch i16 %trunc8.i.i, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.h
+    i16 4096, label %vm_env_cref.exit.thread6
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -806,9 +801,10 @@ rb_class_of.exit:                                 ; preds = %bb.o, %bb.p, %bb.q,
 bb.u:                                             ; preds = %rb_class_of.exit
   %i.av = load i64, ptr %i.au, align 8, !tbaa !217
   %i.aw = trunc i64 %i.av to i32
-  %5 = lshr i32 %i.aw, 16
-  %6 = and i32 %5, 3
-  switch i32 %6, label %default.unreachable101 [
+  %5 = and i32 %i.aw, 196608
+  %6 = sub i32 %5, 0                              ; 2 uses
+  %7 = call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 16)
+  switch i32 %7, label %default.unreachable101 [
     i32 2, label %VM_CF_BLOCK_HANDLER.exit.thread
     i32 3, label %bb.v
     i32 1, label %.thread
@@ -932,12 +928,11 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph.i
 bb.ac:                                            ; preds = %._crit_edge.i
   %i.cf = inttoptr i64 %i.cd to ptr               ; 3 uses
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !77
-  %7 = trunc i64 %i.cg to i32
-  %8 = lshr i32 %7, 12
-  %9 = and i32 %8, 15
-  switch i32 %9, label %VM_CF_BLOCK_HANDLER.exit.thread [
-    i32 6, label %rb_vm_frame_method_entry.exit
-    i32 2, label %bb.ad
+  %8 = trunc i64 %i.cg to i16
+  %trunc.i11.i = and i16 %8, -4096
+  switch i16 %trunc.i11.i, label %VM_CF_BLOCK_HANDLER.exit.thread [
+    i16 24576, label %rb_vm_frame_method_entry.exit
+    i16 8192, label %bb.ad
   ]
 
 bb.ad:                                            ; preds = %bb.ac
@@ -1340,12 +1335,11 @@ rb_method_basic_definition_p.exit.thread4:        ; preds = %RB_SYMBOL_P.exit.th
 bb.n:                                             ; preds = %.lr.ph.i
   %i.ax = inttoptr i64 %i.av to ptr               ; 3 uses
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !77
-  %4 = trunc i64 %i.ay to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %check_cref.exit.thread.i [
-    i32 6, label %bb.o
-    i32 1, label %vm_env_cref.exit.thread10
+  %4 = trunc i64 %i.ay to i16
+  %trunc.i.i = and i16 %4, -4096
+  switch i16 %trunc.i.i, label %check_cref.exit.thread.i [
+    i16 24576, label %bb.o
+    i16 4096, label %vm_env_cref.exit.thread10
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -1382,13 +1376,12 @@ check_cref.exit.thread.i:                         ; preds = %check_cref.exit.i, 
 bb.p:                                             ; preds = %._crit_edge.i
   %i.bl = inttoptr i64 %i.bj to ptr               ; 4 uses
   %i.bm = load i64, ptr %i.bl, align 8, !tbaa !77
-  %7 = trunc i64 %i.bm to i32
-  %8 = lshr i32 %7, 12
-  %9 = and i32 %8, 15
-  switch i32 %9, label %VM_CF_BLOCK_HANDLER.exit [
-    i32 6, label %bb.q
-    i32 1, label %vm_env_cref.exit.thread10
-    i32 2, label %bb.r
+  %5 = trunc i64 %i.bm to i16
+  %trunc.i10.i = and i16 %5, -4096
+  switch i16 %trunc.i10.i, label %VM_CF_BLOCK_HANDLER.exit [
+    i16 24576, label %bb.q
+    i16 4096, label %vm_env_cref.exit.thread10
+    i16 8192, label %bb.r
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -1408,12 +1401,11 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.r
   %i.bt = inttoptr i64 %i.br to ptr               ; 3 uses
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !77
-  %10 = trunc i64 %i.bu to i32
-  %11 = lshr i32 %10, 12
-  %12 = and i32 %11, 15
-  switch i32 %12, label %VM_CF_BLOCK_HANDLER.exit [
-    i32 6, label %bb.t
-    i32 1, label %vm_env_cref.exit.thread10
+  %6 = trunc i64 %i.bu to i16
+  %trunc8.i.i = and i16 %6, -4096
+  switch i16 %trunc8.i.i, label %VM_CF_BLOCK_HANDLER.exit [
+    i16 24576, label %bb.t
+    i16 4096, label %vm_env_cref.exit.thread10
   ]
 
 bb.t:                                             ; preds = %bb.s
@@ -1747,12 +1739,11 @@ bb.q:                                             ; preds = %bb.p, %.lr.ph.i.i
 bb.r:                                             ; preds = %._crit_edge.i.i
   %i.br = inttoptr i64 %i.bp to ptr               ; 3 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !77
-  %6 = trunc i64 %i.bs to i32
-  %7 = lshr i32 %6, 12
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.u [
-    i32 6, label %rb_vm_frame_method_entry.exit.i
-    i32 2, label %bb.s
+  %6 = trunc i64 %i.bs to i16
+  %trunc.i11.i.i = and i16 %6, -4096
+  switch i16 %trunc.i11.i.i, label %bb.u [
+    i16 24576, label %rb_vm_frame_method_entry.exit.i
+    i16 8192, label %bb.s
   ]
 
 bb.s:                                             ; preds = %bb.r
@@ -2155,11 +2146,10 @@ rb_callable_method_entry_with_refinements.exit.thread21: ; preds = %bb.h, %bb.d,
 bb.j:                                             ; preds = %rb_callable_method_entry_with_refinements.exit.thread21
   %i.t = load i64, ptr %.024, align 8, !tbaa !170
   %i.u = trunc i64 %i.t to i32
-  %3 = lshr i32 %i.u, 16
-  %i.v = and i32 %3, 3
+  %i.v = and i32 %i.u, 196608
   switch i32 %i.v, label %bb.l [
-    i32 2, label %rb_callable_method_entry_with_refinements.exit.thread
-    i32 3, label %bb.k
+    i32 131072, label %rb_callable_method_entry_with_refinements.exit.thread
+    i32 196608, label %bb.k
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -2380,12 +2370,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i7.i:              ; preds = %._crit_edge.i
   br i1 %i.aj, label %bb.e, label %vm_env_cref_by_cref.exit
 
 bb.e:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i7.i
-  %2 = trunc i64 %i.ah to i32
-  %3 = lshr i32 %2, 12
-  %4 = and i32 %3, 15
-  switch i32 %4, label %vm_env_cref_by_cref.exit [
-    i32 1, label %.loopexit
-    i32 2, label %bb.f
+  %2 = trunc i64 %i.ah to i16
+  %trunc.i10.i = and i16 %2, -4096
+  switch i16 %trunc.i10.i, label %vm_env_cref_by_cref.exit [
+    i16 4096, label %.loopexit
+    i16 8192, label %bb.f
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -2542,12 +2531,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i7.i:              ; preds = %._crit_edge.i
   br i1 %i.ah, label %bb.c, label %vm_env_cref_by_cref.exit
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i7.i
-  %1 = trunc i64 %i.af to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %vm_env_cref_by_cref.exit [
-    i32 1, label %.loopexit
-    i32 2, label %bb.d
+  %1 = trunc i64 %i.af to i16
+  %trunc.i10.i = and i16 %1, -4096
+  switch i16 %trunc.i10.i, label %vm_env_cref_by_cref.exit [
+    i16 4096, label %.loopexit
+    i16 8192, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2677,12 +2665,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i7.i:              ; preds = %._crit_edge.i
   br i1 %i.ah, label %bb.c, label %vm_env_cref_by_cref.exit
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i7.i
-  %1 = trunc i64 %i.af to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %vm_env_cref_by_cref.exit [
-    i32 1, label %.loopexit
-    i32 2, label %bb.d
+  %1 = trunc i64 %i.af to i16
+  %trunc.i10.i = and i16 %1, -4096
+  switch i16 %trunc.i10.i, label %vm_env_cref_by_cref.exit [
+    i16 4096, label %.loopexit
+    i16 8192, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -3085,12 +3072,11 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i
 bb.f:                                             ; preds = %._crit_edge.i.i
   %i.aj = inttoptr i64 %i.ah to ptr               ; 3 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !77
-  %3 = trunc i64 %i.ak to i32
-  %4 = lshr i32 %3, 12
-  %5 = and i32 %4, 15
-  switch i32 %5, label %rb_vm_frame_method_entry.exit.i [
-    i32 6, label %bb.g
-    i32 2, label %bb.h
+  %3 = trunc i64 %i.ak to i16
+  %trunc.i11.i.i = and i16 %3, -4096
+  switch i16 %trunc.i11.i.i, label %rb_vm_frame_method_entry.exit.i [
+    i16 24576, label %bb.g
+    i16 8192, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -3493,12 +3479,11 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %.lr.ph.i
   %i.e = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !77
-  %5 = trunc i64 %i.f to i32
-  %6 = lshr i32 %5, 12
-  %7 = and i32 %6, 15
-  switch i32 %7, label %check_cref.exit.thread.i [
-    i32 6, label %bb.d
-    i32 1, label %vm_env_cref.exit
+  %5 = trunc i64 %i.f to i16
+  %trunc.i.i = and i16 %5, -4096
+  switch i16 %trunc.i.i, label %check_cref.exit.thread.i [
+    i16 24576, label %bb.d
+    i16 4096, label %vm_env_cref.exit
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -3535,13 +3520,12 @@ check_cref.exit.thread.i:                         ; preds = %check_cref.exit.i, 
 bb.e:                                             ; preds = %._crit_edge.i
   %i.s = inttoptr i64 %i.q to ptr                 ; 4 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !77
-  %8 = trunc i64 %i.t to i32
-  %9 = lshr i32 %8, 12
-  %10 = and i32 %9, 15
-  switch i32 %10, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.f
-    i32 1, label %vm_env_cref.exit
-    i32 2, label %bb.g
+  %6 = trunc i64 %i.t to i16
+  %trunc.i10.i = and i16 %6, -4096
+  switch i16 %trunc.i10.i, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.f
+    i16 4096, label %vm_env_cref.exit
+    i16 8192, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -3561,12 +3545,11 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.aa = inttoptr i64 %i.y to ptr                ; 3 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !77
-  %11 = trunc i64 %i.ab to i32
-  %12 = lshr i32 %11, 12
-  %13 = and i32 %12, 15
-  switch i32 %13, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.i
-    i32 1, label %vm_env_cref.exit
+  %7 = trunc i64 %i.ab to i16
+  %trunc8.i.i = and i16 %7, -4096
+  switch i16 %trunc8.i.i, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.i
+    i16 4096, label %vm_env_cref.exit
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -3634,12 +3617,11 @@ vm_get_ruby_level_caller_cfp.exit.thread36:       ; preds = %vm_get_ruby_level_c
 bb.n:                                             ; preds = %.lr.ph.i23
   %i.au = inttoptr i64 %i.as to ptr               ; 3 uses
   %i.av = load i64, ptr %i.au, align 8, !tbaa !77
-  %14 = trunc i64 %i.av to i32
-  %15 = lshr i32 %14, 12
-  %16 = and i32 %15, 15
-  switch i32 %16, label %check_cref.exit.thread.i27 [
-    i32 6, label %bb.o
-    i32 1, label %vm_env_cref.exit
+  %8 = trunc i64 %i.av to i16
+  %trunc.i.i27 = and i16 %8, -4096
+  switch i16 %trunc.i.i27, label %check_cref.exit.thread.i27 [
+    i16 24576, label %bb.o
+    i16 4096, label %vm_env_cref.exit
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -3676,13 +3658,12 @@ check_cref.exit.thread.i27:                       ; preds = %check_cref.exit.i31
 bb.p:                                             ; preds = %._crit_edge.i16
   %i.bi = inttoptr i64 %i.bg to ptr               ; 4 uses
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !77
-  %17 = trunc i64 %i.bj to i32
-  %18 = lshr i32 %17, 12
-  %19 = and i32 %18, 15
-  switch i32 %19, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.q
-    i32 1, label %vm_env_cref.exit
-    i32 2, label %bb.r
+  %9 = trunc i64 %i.bj to i16
+  %trunc.i10.i18 = and i16 %9, -4096
+  switch i16 %trunc.i10.i18, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.q
+    i16 4096, label %vm_env_cref.exit
+    i16 8192, label %bb.r
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -3702,12 +3683,11 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.r
   %i.bq = inttoptr i64 %i.bo to ptr               ; 3 uses
   %i.br = load i64, ptr %i.bq, align 8, !tbaa !77
-  %20 = trunc i64 %i.br to i32
-  %21 = lshr i32 %20, 12
-  %22 = and i32 %21, 15
-  switch i32 %22, label %vm_env_cref.exit.thread [
-    i32 6, label %bb.t
-    i32 1, label %vm_env_cref.exit
+  %10 = trunc i64 %i.br to i16
+  %trunc8.i.i19 = and i16 %10, -4096
+  switch i16 %trunc8.i.i19, label %vm_env_cref.exit.thread [
+    i16 24576, label %bb.t
+    i16 4096, label %vm_env_cref.exit
   ]
 
 bb.t:                                             ; preds = %bb.s
@@ -4110,12 +4090,11 @@ bb.f:                                             ; preds = %bb.e, %.lr.ph.i.i.i
 bb.g:                                             ; preds = %._crit_edge.i.i.i
   %i.x = inttoptr i64 %i.v to ptr                 ; 3 uses
   %i.y = load i64, ptr %i.x, align 8, !tbaa !77
-  %4 = trunc i64 %i.y to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %rb_ec_frame_method_id_and_class.exit.thread [
-    i32 6, label %rb_ec_frame_method_id_and_class.exit
-    i32 2, label %bb.h
+  %4 = trunc i64 %i.y to i16
+  %trunc.i11.i.i.i = and i16 %4, -4096
+  switch i16 %trunc.i11.i.i.i, label %rb_ec_frame_method_id_and_class.exit.thread [
+    i16 24576, label %rb_ec_frame_method_id_and_class.exit
+    i16 8192, label %bb.h
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -4346,12 +4325,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i
 bb.d:                                             ; preds = %._crit_edge.i.i
   %i.s = inttoptr i64 %i.q to ptr                 ; 3 uses
   %i.t = load i64, ptr %i.s, align 8, !tbaa !77
-  %4 = trunc i64 %i.t to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %rb_vm_control_frame_id_and_class.exit [
-    i32 6, label %rb_vm_frame_method_entry.exit.i
-    i32 2, label %bb.e
+  %4 = trunc i64 %i.t to i16
+  %trunc.i11.i.i = and i16 %4, -4096
+  switch i16 %trunc.i11.i.i, label %rb_vm_control_frame_id_and_class.exit [
+    i16 24576, label %rb_vm_frame_method_entry.exit.i
+    i16 8192, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -4564,12 +4542,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
 bb.d:                                             ; preds = %._crit_edge.i
   %i.v = inttoptr i64 %i.t to ptr                 ; 3 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !77
-  %1 = trunc i64 %i.w to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rb_vm_frame_method_entry.exit [
-    i32 6, label %bb.e
-    i32 2, label %bb.f
+  %1 = trunc i64 %i.w to i16
+  %trunc.i11.i = and i16 %1, -4096
+  switch i16 %trunc.i11.i, label %rb_vm_frame_method_entry.exit [
+    i16 24576, label %bb.e
+    i16 8192, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -4972,12 +4949,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i7.i.i:            ; preds = %._crit_edge.i.i
   br i1 %i.ak, label %bb.c, label %bb.w
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i7.i.i
-  %0 = trunc i64 %i.ai to i32
-  %1 = lshr i32 %0, 12
-  %2 = and i32 %1, 15
-  switch i32 %2, label %bb.w [
-    i32 1, label %vm_env_cref_by_cref.exit.i
-    i32 2, label %bb.d
+  %0 = trunc i64 %i.ai to i16
+  %trunc.i10.i.i = and i16 %0, -4096
+  switch i16 %trunc.i10.i.i, label %bb.w [
+    i16 4096, label %vm_env_cref_by_cref.exit.i
+    i16 8192, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -5032,13 +5008,12 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.f
   br i1 %i.bj, label %bb.g, label %cref_replace_with_duplicated_cref_each_frame.exit.thread.i
 
 bb.g:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
-  %3 = trunc i64 %i.bh to i32
-  %4 = lshr i32 %3, 12
-  %5 = and i32 %4, 15
-  switch i32 %5, label %cref_replace_with_duplicated_cref_each_frame.exit.thread.i [
-    i32 1, label %bb.h
-    i32 2, label %bb.j
-    i32 6, label %bb.j
+  %1 = trunc i64 %i.bh to i16
+  %trunc.i.i = and i16 %1, -4096
+  switch i16 %trunc.i.i, label %cref_replace_with_duplicated_cref_each_frame.exit.thread.i [
+    i16 4096, label %bb.h
+    i16 8192, label %bb.j
+    i16 24576, label %bb.j
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -5108,13 +5083,12 @@ rbimpl_RB_TYPE_P_fastpath.exit.i23.i:             ; preds = %bb.l
   br i1 %i.ch, label %bb.m, label %vm_cref_replace_with_duplicated_cref.exit
 
 bb.m:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i23.i
-  %6 = trunc i64 %i.cf to i32
-  %7 = lshr i32 %6, 12
-  %8 = and i32 %7, 15
-  switch i32 %8, label %vm_cref_replace_with_duplicated_cref.exit [
-    i32 1, label %bb.n
-    i32 2, label %bb.q
-    i32 6, label %bb.v
+  %2 = trunc i64 %i.cf to i16
+  %trunc.i25.i = and i16 %2, -4096
+  switch i16 %trunc.i25.i, label %vm_cref_replace_with_duplicated_cref.exit [
+    i16 4096, label %bb.n
+    i16 8192, label %bb.q
+    i16 24576, label %bb.v
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -5152,13 +5126,12 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i25.i:           ; preds = %bb.q
   br i1 %i.cx, label %bb.r, label %vm_cref_replace_with_duplicated_cref.exit
 
 bb.r:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i25.i
-  %9 = trunc i64 %i.cv to i32
-  %10 = lshr i32 %9, 12
-  %11 = and i32 %10, 15
-  switch i32 %11, label %vm_cref_replace_with_duplicated_cref.exit [
-    i32 1, label %bb.s
-    i32 2, label %bb.u
-    i32 6, label %bb.u
+  %3 = trunc i64 %i.cv to i16
+  %trunc20.i.i = and i16 %3, -4096
+  switch i16 %trunc20.i.i, label %vm_cref_replace_with_duplicated_cref.exit [
+    i16 4096, label %bb.s
+    i16 8192, label %bb.u
+    i16 24576, label %bb.u
   ]
 
 bb.s:                                             ; preds = %bb.r
@@ -5561,12 +5534,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i
 bb.d:                                             ; preds = %._crit_edge.i
   %i.q = inttoptr i64 %i.o to ptr                 ; 3 uses
   %i.r = load i64, ptr %i.q, align 8, !tbaa !77
-  %4 = trunc i64 %i.r to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %rb_vm_frame_method_entry.exit.thread [
-    i32 6, label %rb_vm_frame_method_entry.exit
-    i32 2, label %bb.e
+  %4 = trunc i64 %i.r to i16
+  %trunc.i11.i = and i16 %4, -4096
+  switch i16 %trunc.i11.i, label %rb_vm_frame_method_entry.exit.thread [
+    i16 24576, label %rb_vm_frame_method_entry.exit
+    i16 8192, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -5673,12 +5645,11 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph.i.i.i
 bb.d:                                             ; preds = %._crit_edge.i.i.i
   %i.v = inttoptr i64 %i.t to ptr                 ; 3 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !77
-  %2 = trunc i64 %i.w to i32
-  %3 = lshr i32 %2, 12
-  %4 = and i32 %3, 15
-  switch i32 %4, label %rb_ec_frame_method_id_and_class.exit [
-    i32 6, label %rb_vm_frame_method_entry.exit.i.i
-    i32 2, label %bb.e
+  %2 = trunc i64 %i.w to i16
+  %trunc.i11.i.i.i = and i16 %2, -4096
+  switch i16 %trunc.i11.i.i.i, label %rb_ec_frame_method_id_and_class.exit [
+    i16 24576, label %rb_vm_frame_method_entry.exit.i.i
+    i16 8192, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -6081,9 +6052,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load i64, ptr %.val45, align 8, !tbaa !170
   %i.g = trunc i64 %i.f to i32
-  %4 = lshr i32 %i.g, 16
-  %5 = and i32 %4, 3
-  switch i32 %5, label %default.unreachable56 [
+  %4 = and i32 %i.g, 196608
+  %5 = sub i32 %4, 0                              ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 16)
+  switch i32 %6, label %default.unreachable56 [
     i32 1, label %bb.c
     i32 2, label %bb.d
     i32 3, label %bb.g
@@ -6486,12 +6458,11 @@ bb.cc:                                            ; preds = %bb.cb, %.lr.ph.i.i
 bb.cd:                                            ; preds = %._crit_edge.i.i
   %i.ot = inttoptr i64 %i.or to ptr               ; 3 uses
   %i.ou = load i64, ptr %i.ot, align 8, !tbaa !77
-  %13 = trunc i64 %i.ou to i32
-  %14 = lshr i32 %13, 12
-  %15 = and i32 %14, 15
-  switch i32 %15, label %.thread.i [
-    i32 6, label %rb_vm_frame_method_entry.exit.i
-    i32 2, label %bb.ce
+  %13 = trunc i64 %i.ou to i16
+  %trunc.i11.i.i = and i16 %13, -4096
+  switch i16 %trunc.i11.i.i, label %.thread.i [
+    i16 24576, label %rb_vm_frame_method_entry.exit.i
+    i16 8192, label %bb.ce
   ]
 
 bb.ce:                                            ; preds = %bb.cd
@@ -6894,12 +6865,11 @@ bb.af:                                            ; preds = %rb_callable_method_
 bb.ag:                                            ; preds = %bb.af
   %i.dn = load i64, ptr %.0.i.i.i, align 8, !tbaa !170
   %i.do = trunc i64 %i.dn to i32
-  %9 = lshr i32 %i.do, 16
-  %i.dp = and i32 %9, 3
+  %i.dp = and i32 %i.do, 196608
   switch i32 %i.dp, label %bb.aj [
-    i32 1, label %bb.ah
-    i32 2, label %bb.ak
-    i32 3, label %bb.ai
+    i32 65536, label %bb.ah
+    i32 131072, label %bb.ak
+    i32 196608, label %bb.ai
   ]
 
 bb.ah:                                            ; preds = %bb.ag
@@ -7302,6 +7272,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef i64 @check_funcall_failed(i64 noundef %0, i64 noundef %1) #2 {
 bb.a:
+  %2 = alloca i64, align 8                        ; 4 uses
   %i.a = inttoptr i64 %0 to ptr                   ; 3 uses
   %i.b = getelementptr i8, ptr %i.a, i64 40       ; 2 uses
   %i.c = load i8, ptr %i.b, align 8
@@ -7310,26 +7281,65 @@ bb.a:
   br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load i64, ptr %i.a, align 8, !tbaa !855
+  %i.e = load i64, ptr %i.a, align 8, !tbaa !855  ; 2 uses
   %i.f = getelementptr i8, ptr %i.a, i64 16
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !470
-  %2 = tail call fastcc i32 @method_boundp(i64 noundef %i.e, i64 noundef %i.g, i32 noundef 3)
-  switch i32 %2, label %.critedge10 [
-    i32 2, label %.critedge
-    i32 0, label %bb.c
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !470  ; 3 uses
+  %3 = tail call fastcc ptr @callable_method_entry_or_negative(i64 noundef %i.e, i64 noundef %i.g, ptr noundef null) ; 3 uses
+  %.not.i.i.i14.i = icmp eq ptr %3, null
+  br i1 %.not.i.i.i14.i, label %bb.c, label %4
+
+4:                                                ; preds = %bb.b
+  %5 = getelementptr i8, ptr %3, i64 16
+  %6 = load ptr, ptr %5, align 8, !tbaa !83       ; 2 uses
+  %.not7.i.i.i.i = icmp eq ptr %6, null
+  br i1 %.not7.i.i.i.i, label %bb.c, label %7
+
+7:                                                ; preds = %4
+  %8 = load i8, ptr %6, align 8
+  %9 = and i8 %8, 15
+  switch i8 %9, label %rb_callable_method_entry_with_refinements.exit.thread21.i [
+    i8 7, label %bb.c
+    i8 11, label %10
+  ], !prof !219
+
+10:                                               ; preds = %7
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #23
+  %11 = call fastcc ptr @method_entry_resolve_refinement(i64 noundef %i.e, i64 noundef %i.g, i32 noundef 1, ptr noundef nonnull %2)
+  %12 = load i64, ptr %2, align 8, !tbaa !11
+  %13 = call fastcc ptr @prepare_callable_method_entry(i64 noundef %12, i64 noundef %i.g, ptr noundef %11, i32 noundef 1) ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
+  %.not12.i = icmp eq ptr %13, null
+  br i1 %.not12.i, label %bb.c, label %rb_callable_method_entry_with_refinements.exit.thread21.i
+
+rb_callable_method_entry_with_refinements.exit.thread21.i: ; preds = %10, %7
+  %.024.i = phi ptr [ %13, %10 ], [ %3, %7 ]      ; 2 uses
+  %14 = load i64, ptr %.024.i, align 8, !tbaa !170
+  %15 = trunc i64 %14 to i32
+  %16 = and i32 %15, 196608
+  switch i32 %16, label %17 [
+    i32 131072, label %bb.c
+    i32 196608, label %bb.c
   ]
 
-bb.c:                                             ; preds = %bb.b
+17:                                               ; preds = %rb_callable_method_entry_with_refinements.exit.thread21.i
+  %18 = getelementptr i8, ptr %.024.i, i64 16
+  %19 = load ptr, ptr %18, align 8, !tbaa !83
+  %20 = load i8, ptr %19, align 8
+  %21 = and i8 %20, 15
+  %22 = icmp eq i8 %21, 8
+  br i1 %22, label %.critedge, label %.critedge10
+
+bb.c:                                             ; preds = %10, %4, %rb_callable_method_entry_with_refinements.exit.thread21.i, %rb_callable_method_entry_with_refinements.exit.thread21.i, %7, %bb.b
   %i.h = load i8, ptr %i.b, align 8
   %i.i = and i8 %i.h, 2
   %i.j = icmp eq i8 %i.i, 0
   br i1 %i.j, label %.critedge10, label %.critedge
 
-.critedge:                                        ; preds = %bb.a, %bb.b, %bb.c
-  tail call void @rb_exc_raise(i64 noundef %1) #42
+.critedge:                                        ; preds = %17, %bb.a, %bb.c
+  call void @rb_exc_raise(i64 noundef %1) #42
   unreachable
 
-.critedge10:                                      ; preds = %bb.b, %bb.c
+.critedge10:                                      ; preds = %17, %bb.c
   ret i64 36
 }
 
@@ -7732,12 +7742,11 @@ bb.w:                                             ; preds = %bb.v, %.lr.ph.i
 bb.x:                                             ; preds = %._crit_edge.i
   %i.dr = inttoptr i64 %i.dp to ptr               ; 3 uses
   %i.ds = load i64, ptr %i.dr, align 8, !tbaa !77
-  %13 = trunc i64 %i.ds to i32
-  %14 = lshr i32 %13, 12
-  %15 = and i32 %14, 15
-  switch i32 %15, label %rb_vm_frame_method_entry.exit [
-    i32 6, label %bb.y
-    i32 2, label %bb.z
+  %13 = trunc i64 %i.ds to i16
+  %trunc.i11.i = and i16 %13, -4096
+  switch i16 %trunc.i11.i, label %rb_vm_frame_method_entry.exit [
+    i16 24576, label %bb.y
+    i16 8192, label %bb.z
   ]
 
 bb.y:                                             ; preds = %bb.x

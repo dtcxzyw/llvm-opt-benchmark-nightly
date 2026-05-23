@@ -201,7 +201,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.a, align 1, !tbaa !66    ; 3 uses
   %i.e = and i8 %i.d, 3
-  switch i8 %i.e, label %default.unreachable109.a [
+  switch i8 %i.e, label %default.unreachable109 [
     i8 0, label %bb.c
     i8 1, label %bb.e
     i8 2, label %bb.g
@@ -299,16 +299,20 @@ bb.j:                                             ; preds = %bb.i
   %i.bt = sext i32 %i.bs to i64
   br label %bb.k
 
-default.unreachable109.a:                         ; preds = %bb.r, %bb.k, %bb.b
+default.unreachable109:                           ; preds = %bb.r, %bb.b
+  unreachable
+
+default.unreachable109.a:                         ; preds = %bb.k
   unreachable
 
 bb.k:                                             ; preds = %bb.j, %bb.h, %bb.f, %bb.d
   %.088 = phi ptr [ %i.f, %bb.d ], [ %i.n, %bb.f ], [ %i.u, %bb.h ], [ %i.an, %bb.j ] ; 11 uses
   %.087 = phi i64 [ %i.j, %bb.d ], [ %i.r, %bb.f ], [ %i.ad, %bb.h ], [ %i.bd, %bb.j ]
   %.086 = phi i64 [ %i.m, %bb.d ], [ %i.t, %bb.f ], [ %i.am, %bb.h ], [ %i.bt, %bb.j ]
-  %9 = lshr i8 %i.d, 2
-  %10 = and i8 %9, 3
-  switch i8 %10, label %default.unreachable109.a [
+  %9 = and i8 %i.d, 12
+  %10 = sub i8 %9, 0                              ; 2 uses
+  %11 = call i8 @llvm.fshl.i8(i8 %10, i8 %10, i8 6)
+  switch i8 %11, label %default.unreachable109.a [
     i8 0, label %bb.r
     i8 1, label %bb.l
     i8 2, label %bb.n
@@ -370,7 +374,7 @@ bb.r:                                             ; preds = %bb.k, %bb.q, %bb.o,
   %i.cy = lshr i8 %i.d, 4
   %i.cz = zext nneg i8 %i.cy to i32               ; 2 uses
   %i.da = and i32 %i.cz, 3
-  switch i32 %i.da, label %default.unreachable109.a [
+  switch i32 %i.da, label %default.unreachable109 [
     i32 0, label %bb.y
     i32 1, label %bb.s
     i32 2, label %bb.u
@@ -773,11 +777,10 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x, %bb.v, %bb.t
   %.4.i = phi ptr [ %.3.i, %bb.t ], [ %i.ca, %bb.v ], [ %i.ck, %bb.x ] ; 6 uses
   %.063.i = phi i32 [ 0, %bb.t ], [ %i.cj, %bb.v ], [ %i.cn, %bb.x ]
-  %6 = lshr i32 %i.ax, 2
-  %i.co = and i32 %6, 3
+  %i.co = and i32 %i.ax, 12
   switch i32 %i.co, label %bb.ad [
-    i32 1, label %bb.z
-    i32 2, label %bb.ab
+    i32 4, label %bb.z
+    i32 8, label %bb.ab
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -1180,9 +1183,10 @@ bb.ci:                                            ; preds = %bb.ch, %bb.ce, %bb.
   %.0104.ph294.i = phi i32 [ %i.lk, %bb.ch ], [ %i.lk, %bb.ce ], [ %.0104.ph295.i, %bb.cc ], [ %.0104.ph304.i, %.lr.ph215.preheader.thread300.i ] ; 2 uses
   %.8.peel.i = phi ptr [ %i.mo, %bb.ch ], [ %i.me, %bb.ce ], [ %i.ly, %bb.cc ], [ %i.lg, %.lr.ph215.preheader.thread300.i ] ; 8 uses
   store i64 %.sink.i109, ptr %5, align 16, !tbaa !245
-  %7 = lshr i32 %.0104.ph294.i, 2
-  %8 = and i32 %7, 3
-  switch i32 %8, label %.unreachabledefault.a [
+  %6 = and i32 %.0104.ph294.i, 12
+  %7 = sub i32 %6, 0                              ; 2 uses
+  %8 = call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 30)
+  switch i32 %8, label %.lr.ph215.peel.next.i.unreachabledefault [
     i32 0, label %bb.co
     i32 1, label %bb.cm
     i32 2, label %bb.ck
@@ -1263,10 +1267,10 @@ bb.ct:                                            ; preds = %bb.cr
 
 .lr.ph215.peel.next.i:                            ; preds = %bb.ct, %.thread307.i
   %.2.peel313.i = phi i32 [ 3, %.thread307.i ], [ %.0103.ph298.i, %bb.ct ] ; 2 uses
-  %.2106.peel312.i = phi i32 [ %i.nx, %.thread307.i ], [ %i.ny, %bb.ct ] ; 4 uses
+  %.2106.peel312.i = phi i32 [ %i.nx, %.thread307.i ], [ %i.ny, %bb.ct ] ; 3 uses
   %.10.peel311.i = phi ptr [ %i.nu, %.thread307.i ], [ %.9.peel.i, %bb.ct ] ; 8 uses
   %i.oa = and i32 %.2106.peel312.i, 3
-  switch i32 %i.oa, label %.lr.ph215.peel.next.i.unreachabledefault [
+  switch i32 %i.oa, label %.unreachabledefault.a [
     i32 0, label %bb.cz
     i32 1, label %bb.cx
     i32 2, label %bb.cv
@@ -1327,9 +1331,10 @@ bb.dc:                                            ; preds = %bb.db, %bb.cy, %bb.
   %.sink326.i.peel = phi i64 [ %i.ob, %bb.cu ], [ %i.oh, %bb.cw ], [ %i.or, %bb.cy ], [ %i.oz, %bb.db ]
   %.8.i.peel = phi ptr [ %.10.peel311.i, %bb.cu ], [ %i.oc, %bb.cw ], [ %i.oi, %bb.cy ], [ %i.os, %bb.db ] ; 8 uses
   store i64 %.sink326.i.peel, ptr %i.kz, align 16, !tbaa !245
-  %9 = lshr i32 %.2106.peel312.i, 2
-  %10 = and i32 %9, 3
-  switch i32 %10, label %.unreachabledefault232 [
+  %9 = and i32 %.2106.peel312.i, 12
+  %10 = sub i32 %9, 0                             ; 2 uses
+  %11 = call i32 @llvm.fshl.i32(i32 %10, i32 %10, i32 30)
+  switch i32 %11, label %.unreachabledefault232 [
     i32 0, label %bb.di
     i32 1, label %bb.dg
     i32 2, label %bb.de
@@ -1394,7 +1399,7 @@ bb.dl:                                            ; preds = %bb.dk, %bb.dh, %bb.
   br i1 %i.py, label %.lr.ph215.i.peel.next, label %._crit_edge216.i
 
 .lr.ph215.i.peel.next:                            ; preds = %bb.dl
-  %i.pz = lshr i32 %.2106.peel312.i, 4
+  %i.pz = lshr i32 %.2106.peel312.i, 4            ; 2 uses
   %.not225 = icmp eq i32 %.2.peel313.i, 3
   %i.qa = and i32 %i.pz, 3
   switch i32 %i.qa, label %.lr.ph215.i.unreachabledefault [
@@ -1458,8 +1463,10 @@ bb.du:                                            ; preds = %bb.dt, %bb.dq, %bb.
   %.sink326.i.peel248 = phi i64 [ %i.qb, %bb.dm ], [ %i.qh, %bb.do ], [ %i.qr, %bb.dq ], [ %i.qz, %bb.dt ]
   %.8.i.peel249 = phi ptr [ %.9.i.peel, %bb.dm ], [ %i.qc, %bb.do ], [ %i.qi, %bb.dq ], [ %i.qs, %bb.dt ] ; 8 uses
   store i64 %.sink326.i.peel248, ptr %i.ld, align 16, !tbaa !245
-  %11 = lshr i32 %.2106.peel312.i, 6
-  switch i32 %11, label %default.unreachable [
+  %12 = and i32 %i.pz, 12
+  %13 = sub i32 %12, 0                            ; 2 uses
+  %14 = call i32 @llvm.fshl.i32(i32 %13, i32 %13, i32 30)
+  switch i32 %14, label %default.unreachable [
     i32 0, label %bb.ea
     i32 1, label %bb.dy
     i32 2, label %bb.dw
@@ -1551,10 +1558,10 @@ bb.ef:                                            ; preds = %bb.ee
 .lr.ph215.preheader.i.unreachabledefault:         ; preds = %.lr.ph215.preheader.i
   unreachable
 
-.unreachabledefault.a:                            ; preds = %bb.ci
+.unreachabledefault.a:                            ; preds = %.lr.ph215.peel.next.i
   unreachable
 
-.lr.ph215.peel.next.i.unreachabledefault:         ; preds = %.lr.ph215.peel.next.i
+.lr.ph215.peel.next.i.unreachabledefault:         ; preds = %bb.ci
   unreachable
 
 .unreachabledefault232:                           ; preds = %bb.dc
@@ -1956,6 +1963,12 @@ declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #10
 
 attributes #0 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -201,12 +201,11 @@ bb.l:                                             ; preds = %.loopexit174.i
   br i1 %i.kh, label %.outer.split.i.preheader, label %.loopexit171.split.i, !llvm.loop !19
 
 bb.m:                                             ; preds = %.lr.ph782
-  %2 = lshr i32 %i.kc, 20
-  %i.ki = and i32 %2, 15
+  %i.ki = and i32 %i.kc, 15728640
   switch i32 %i.ki, label %.outer.split.i [
-    i32 2, label %.outer.backedge.i
-    i32 6, label %.loopexit172.i
-    i32 7, label %bb.n
+    i32 2097152, label %.outer.backedge.i
+    i32 6291456, label %.loopexit172.i
+    i32 7340032, label %bb.n
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -582,12 +581,11 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ag
   br label %.backedge.i
 
 bb.ak:                                            ; preds = %bb.ac
-  %3 = lshr i32 %i.ov, 20
-  %i.px = and i32 %3, 15
+  %i.px = and i32 %i.ov, 15728640
   switch i32 %i.px, label %bb.ao [
-    i32 2, label %bb.al
-    i32 6, label %bb.ap
-    i32 7, label %.thread.i
+    i32 2097152, label %bb.al
+    i32 6291456, label %bb.ap
+    i32 7340032, label %.thread.i
   ]
 
 bb.al:                                            ; preds = %bb.ak
@@ -990,9 +988,10 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.w = trunc nuw nsw i64 %indvars.iv.next to i32
-  %4 = lshr i32 %i.p, 20
-  %5 = and i32 %4, 15
-  switch i32 %5, label %.thread [
+  %4 = and i32 %i.p, 15728640
+  %5 = sub i32 %4, 0                              ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 12)
+  switch i32 %6, label %.thread [
     i32 4, label %bb.f
     i32 0, label %bb.h
     i32 5, label %bb.i
@@ -1395,12 +1394,11 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZL27ucnv_MBCSSingleGetNextUCharP23UConverterToUnicodeArgsP10UErrorCode.exit
 
 bb.i:                                             ; preds = %bb.g
-  %2 = lshr i32 %i.ab, 20
-  %i.ah = and i32 %2, 15
+  %i.ah = and i32 %i.ab, 15728640
   switch i32 %i.ah, label %bb.e [
-    i32 2, label %bb.j
-    i32 6, label %.loopexit34.i
-    i32 7, label %.loopexit.i
+    i32 2097152, label %bb.j
+    i32 6291456, label %.loopexit34.i
+    i32 7340032, label %.loopexit.i
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -1803,9 +1801,10 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.e
-  %6 = lshr i32 %i.ad, 20
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.q [
+  %6 = and i32 %i.ad, 15728640
+  %7 = sub i32 %6, 0                              ; 2 uses
+  %8 = call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 12)
+  switch i32 %8, label %bb.q [
     i32 0, label %bb.i
     i32 4, label %bb.j
     i32 5, label %bb.k
@@ -2206,6 +2205,9 @@ declare i64 @strlen(ptr captures(none)) local_unnamed_addr #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.and.v4i32(<4 x i32>) #12

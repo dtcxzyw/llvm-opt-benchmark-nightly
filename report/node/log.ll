@@ -201,7 +201,6 @@ $_ZTVN2v88internal14SamplingThreadE = comdat any
 @_ZTVN2v88internal6TickerE = linkonce_odr hidden unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN2v88internal6TickerD2Ev, ptr @_ZN2v88internal6TickerD0Ev, ptr @_ZN2v88internal6Ticker11SampleStackERKNS_13RegisterStateE] }, comdat, align 8
 @.str.135 = private unnamed_addr constant [15 x i8] c"SamplingThread\00", align 1
 @_ZTVN2v88internal14SamplingThreadE = linkonce_odr hidden unnamed_addr constant { [5 x ptr] } { [5 x ptr] [ptr null, ptr null, ptr @_ZN2v84base6ThreadD2Ev, ptr @_ZN2v88internal14SamplingThreadD0Ev, ptr @_ZN2v88internal14SamplingThread3RunEv] }, comdat, align 8
-@switch.table._ZN2v88internal15CodeEventLogger15CodeCreateEventENS0_16LogEventListener7CodeTagEPKNS0_4wasm8WasmCodeENS_4base6VectorIKcEESt17basic_string_viewIcSt11char_traitsIcEEii = private unnamed_addr constant [3 x ptr] [ptr @.str.116, ptr @.str.115, ptr @.str.114], align 8
 @switch.table._ZN2v88internal24ExternalLogEventListener15CodeCreateEventENS0_16LogEventListener7CodeTagENS0_12DirectHandleINS0_12AbstractCodeEEENS4_INS0_18SharedFunctionInfoEEENS4_INS0_4NameEEEii = private unnamed_addr constant [12 x i32] [i32 1, i32 2, i32 3, i32 4, i32 6, i32 7, i32 9, i32 10, i32 11, i32 4, i32 10, i32 1], align 4
 @switch.table._ZN2v88internal12V8FileLogger10TimerEventENS_14LogEventStatusEPKc = private unnamed_addr constant [3 x ptr] [ptr @.str.23, ptr @.str.24, ptr @.str.25], align 8
 @switch.table._ZN2v88internal12V8FileLogger11ScriptEventENS0_15ScriptEventTypeEi = private unnamed_addr constant [6 x ptr] [ptr @.str.44, ptr @.str.45, ptr @.str.46, ptr @.str.47, ptr @.str.48, ptr @.str.49], align 8
@@ -604,7 +603,7 @@ _ZN2v88internal15CodeEventLogger10NameBuffer9AppendIntEi.exit: ; preds = %_ZN2v8
   %i.am = load ptr, ptr %i.a, align 8             ; 4 uses
   %i.an = load i64, ptr %i.am, align 8            ; 3 uses
   %i.ao = icmp ugt i64 %i.an, 4095
-  br i1 %i.ao, label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a, label %bb.ak
+  br i1 %i.ao, label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5, label %bb.ak
 
 bb.ak:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer9AppendIntEi.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 8
@@ -613,18 +612,31 @@ bb.ak:                                            ; preds = %_ZN2v88internal15Co
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.an
   store i8 45, ptr %i.ar, align 1
   %.pre = load ptr, ptr %i.a, align 8
-  br label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
+  br label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5
 
-_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a: ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer9AppendIntEi.exit, %bb.ak
+_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5: ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer9AppendIntEi.exit, %bb.ak
   %8 = phi ptr [ %i.am, %_ZN2v88internal15CodeEventLogger10NameBuffer9AppendIntEi.exit ], [ %.pre, %bb.ak ] ; 3 uses
   %9 = getelementptr inbounds nuw i8, ptr %2, i64 100
   %10 = load i8, ptr %9, align 4
-  %11 = lshr i8 %10, 3
-  %12 = and i8 %11, 3
-  %13 = zext nneg i8 %12 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal15CodeEventLogger15CodeCreateEventENS0_16LogEventListener7CodeTagEPKNS0_4wasm8WasmCodeENS_4base6VectorIKcEESt17basic_string_viewIcSt11char_traitsIcEEii, i64 %13
-  %switch.load = load ptr, ptr %switch.gep, align 8 ; 18 uses
-  %i.as = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %switch.load) #34
+  %11 = and i8 %10, 24
+  switch i8 %11, label %14 [
+    i8 16, label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
+    i8 8, label %12
+    i8 0, label %13
+  ]
+
+12:                                               ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5
+  br label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
+
+13:                                               ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5
+  br label %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
+
+14:                                               ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5
+  unreachable
+
+_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a: ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5, %12, %13
+  %.0.i = phi ptr [ @.str.116, %13 ], [ @.str.115, %12 ], [ @.str.114, %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5 ] ; 18 uses
+  %i.as = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #34
   %sext.i6 = shl i64 %i.as, 32
   %i.at = ashr exact i64 %sext.i6, 32
   %i.au = load i64, ptr %8, align 8               ; 3 uses
@@ -652,75 +664,75 @@ _ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a: ; preds = %_
   ]
 
 bb.al:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  %i.ay = load i8, ptr %switch.load, align 1
+  %i.ay = load i8, ptr %.0.i, align 1
   store i8 %i.ay, ptr %i.ax, align 1
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.am:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  %i.az = load i16, ptr %switch.load, align 1
+  %i.az = load i16, ptr %.0.i, align 1
   store i16 %i.az, ptr %i.ax, align 1
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.an:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ax, ptr noundef nonnull align 1 dereferenceable(3) %switch.load, i64 3, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %i.ax, ptr noundef nonnull align 1 dereferenceable(3) %.0.i, i64 3, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ao:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  %i.ba = load i32, ptr %switch.load, align 1
+  %i.ba = load i32, ptr %.0.i, align 1
   store i32 %i.ba, ptr %i.ax, align 1
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ap:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ax, ptr noundef nonnull align 1 dereferenceable(5) %switch.load, i64 5, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(5) %i.ax, ptr noundef nonnull align 1 dereferenceable(5) %.0.i, i64 5, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.aq:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ax, ptr noundef nonnull align 1 dereferenceable(6) %switch.load, i64 6, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(6) %i.ax, ptr noundef nonnull align 1 dereferenceable(6) %.0.i, i64 6, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ar:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ax, ptr noundef nonnull align 1 dereferenceable(7) %switch.load, i64 7, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.ax, ptr noundef nonnull align 1 dereferenceable(7) %.0.i, i64 7, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.as:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  %i.bb = load i64, ptr %switch.load, align 1
+  %i.bb = load i64, ptr %.0.i, align 1
   store i64 %i.bb, ptr %i.ax, align 1
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.at:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.ax, ptr noundef nonnull align 1 dereferenceable(9) %switch.load, i64 9, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(9) %i.ax, ptr noundef nonnull align 1 dereferenceable(9) %.0.i, i64 9, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.au:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.ax, ptr noundef nonnull align 1 dereferenceable(10) %switch.load, i64 10, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(10) %i.ax, ptr noundef nonnull align 1 dereferenceable(10) %.0.i, i64 10, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.av:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.ax, ptr noundef nonnull align 1 dereferenceable(11) %switch.load, i64 11, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(11) %i.ax, ptr noundef nonnull align 1 dereferenceable(11) %.0.i, i64 11, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.aw:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.ax, ptr noundef nonnull align 1 dereferenceable(12) %switch.load, i64 12, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.ax, ptr noundef nonnull align 1 dereferenceable(12) %.0.i, i64 12, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ax:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.ax, ptr noundef nonnull align 1 dereferenceable(13) %switch.load, i64 13, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(13) %i.ax, ptr noundef nonnull align 1 dereferenceable(13) %.0.i, i64 13, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ay:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.ax, ptr noundef nonnull align 1 dereferenceable(14) %switch.load, i64 14, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(14) %i.ax, ptr noundef nonnull align 1 dereferenceable(14) %.0.i, i64 14, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.az:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %i.ax, ptr noundef nonnull align 1 dereferenceable(15) %switch.load, i64 15, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %i.ax, ptr noundef nonnull align 1 dereferenceable(15) %.0.i, i64 15, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.ba:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ax, ptr noundef nonnull align 1 dereferenceable(16) %switch.load, i64 16, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %i.ax, ptr noundef nonnull align 1 dereferenceable(16) %.0.i, i64 16, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 bb.bb:                                            ; preds = %_ZN2v88internal15CodeEventLogger10NameBuffer10AppendByteEc.exit5.a
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 1 %switch.load, i64 %.sroa.speculated.i.i7, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 1 %.0.i, i64 %.sroa.speculated.i.i7, i1 false)
   br label %_ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8
 
 _ZN2v88internal15CodeEventLogger10NameBuffer11AppendBytesEPKc.exit8: ; preds = %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.ar, %bb.as, %bb.at, %bb.au, %bb.av, %bb.aw, %bb.ax, %bb.ay, %bb.az, %bb.ba, %bb.bb

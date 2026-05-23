@@ -201,9 +201,10 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.o = load i8, ptr %i.g, align 1
-  %2 = lshr i8 %i.o, 3
-  %3 = and i8 %2, 3
-  switch i8 %3, label %default.unreachable [
+  %2 = and i8 %i.o, 24
+  %3 = sub i8 %2, 0                               ; 2 uses
+  %4 = call i8 @llvm.fshl.i8(i8 %3, i8 %3, i8 5)
+  switch i8 %4, label %default.unreachable [
     i8 2, label %bb.e
     i8 0, label %bb.f
     i8 1, label %bb.f
@@ -312,9 +313,10 @@ bb.b:                                             ; preds = %.lr.ph.split.us
 
 bb.c:                                             ; preds = %bb.b
   %i.q = load i8, ptr %i.i, align 1
-  %3 = lshr i8 %i.q, 3
-  %4 = and i8 %3, 3
-  switch i8 %4, label %.unreachabledefault [
+  %3 = and i8 %i.q, 24
+  %4 = sub i8 %3, 0                               ; 2 uses
+  %5 = call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 5)
+  switch i8 %5, label %default.unreachable [
     i8 2, label %bb.e
     i8 0, label %bb.d
     i8 1, label %bb.d
@@ -337,10 +339,7 @@ _ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0
   %i.u = icmp eq ptr %i.t, %i.d
   br i1 %i.u, label %._crit_edge, label %.lr.ph.split.us
 
-.unreachabledefault:                              ; preds = %bb.c
-  unreachable
-
-default.unreachable:                              ; preds = %bb.g
+default.unreachable:                              ; preds = %bb.c
   unreachable
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit.thread, %_ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit.thread.us, %bb.a
@@ -364,9 +363,10 @@ bb.f:                                             ; preds = %.lr.ph.split
   br i1 %i.ad, label %bb.g, label %_ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit
 
 bb.g:                                             ; preds = %bb.f
-  %5 = lshr i8 %i.ae, 3
-  %6 = and i8 %5, 3
-  switch i8 %6, label %default.unreachable [
+  %6 = and i8 %i.ae, 24
+  %7 = sub i8 %6, 0                               ; 2 uses
+  %8 = call i8 @llvm.fshl.i8(i8 %7, i8 %7, i8 5)
+  switch i8 %8, label %.unreachabledefault18 [
     i8 2, label %bb.h
     i8 0, label %bb.i
     i8 1, label %bb.i
@@ -395,6 +395,9 @@ _ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0
   %i.ao = load ptr, ptr %i.an, align 8
   tail call void %i.ao(ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef 9, ptr noundef %i.al, i64 %i.ac) #21
   br label %_ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit.thread
+
+.unreachabledefault18:                            ; preds = %bb.g
+  unreachable
 
 _ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit.thread: ; preds = %bb.g, %bb.i, %bb.h, %_ZN2v88internal13GlobalHandles19ResetWeakNodeIfDeadEPNS1_4NodeEPFbPNS0_4HeapENS0_14FullObjectSlotEE.exit, %.lr.ph.split
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.012.016, i64 8 ; 2 uses
@@ -797,6 +800,9 @@ declare i64 @llvm.umin.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #18
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

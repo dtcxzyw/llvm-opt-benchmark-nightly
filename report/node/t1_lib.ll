@@ -201,9 +201,10 @@ bb.a:
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !120
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 28
   %i.f = load i32, ptr %i.e, align 4, !tbaa !121
-  %3 = lshr i32 %i.f, 16
-  %4 = and i32 %3, 3
-  switch i32 %4, label %default.unreachable [
+  %3 = and i32 %i.f, 196608
+  %4 = sub i32 %3, 0                              ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 16)
+  switch i32 %5, label %default.unreachable [
     i32 3, label %bb.b
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -606,9 +607,10 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !120
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 28
   %i.w = load i32, ptr %i.v, align 4, !tbaa !121
-  %2 = lshr i32 %i.w, 16
-  %3 = and i32 %2, 3
-  switch i32 %3, label %default.unreachable [
+  %2 = and i32 %i.w, 196608
+  %3 = sub i32 %2, 0                              ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 16)
+  switch i32 %4, label %default.unreachable [
     i32 3, label %tls1_get_supported_groups.exit
     i32 1, label %bb.g
     i32 2, label %bb.h
@@ -621,7 +623,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   br label %tls1_get_supported_groups.exit
 
-default.unreachable:                              ; preds = %bb.l, %bb.f
+default.unreachable:                              ; preds = %bb.f
   unreachable
 
 bb.i:                                             ; preds = %bb.f
@@ -660,9 +662,10 @@ bb.l:                                             ; preds = %bb.e
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !120
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 28
   %i.an = load i32, ptr %i.am, align 4, !tbaa !121
-  %4 = lshr i32 %i.an, 16
-  %5 = and i32 %4, 3
-  switch i32 %5, label %default.unreachable [
+  %5 = and i32 %i.an, 196608
+  %6 = sub i32 %5, 0                              ; 2 uses
+  %7 = call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 16)
+  switch i32 %7, label %.unreachabledefault.i68 [
     i32 3, label %tls1_get_supported_groups.exit69
     i32 1, label %bb.m
     i32 2, label %bb.n
@@ -674,6 +677,9 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.l
   br label %tls1_get_supported_groups.exit69
+
+.unreachabledefault.i68:                          ; preds = %bb.l
+  unreachable
 
 bb.o:                                             ; preds = %bb.l
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 2704
@@ -1077,8 +1083,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2176
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !120
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 28
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !121  ; 2 uses
-  %i.g = and i32 %i.f, 196608
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !121
+  %i.g = and i32 %i.f, 196608                     ; 2 uses
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.g, label %bb.c
 
@@ -1111,9 +1117,8 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.c,
   br i1 %.not24, label %tls1_in_list.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.l = lshr i32 %i.f, 16
-  %3 = and i32 %i.l, 3
-  switch i32 %3, label %default.unreachable [
+  %i.l = lshr exact i32 %i.g, 16
+  switch i32 %i.l, label %default.unreachable [
     i32 3, label %.lr.ph.i.preheader
     i32 1, label %bb.i
     i32 2, label %bb.j
@@ -1516,9 +1521,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !120  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.d = load i32, ptr %i.c, align 4, !tbaa !121
-  %3 = lshr i32 %i.d, 16
-  %4 = and i32 %3, 3
-  switch i32 %4, label %default.unreachable [
+  %3 = and i32 %i.d, 196608
+  %4 = sub i32 %3, 0                              ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 16)
+  switch i32 %5, label %default.unreachable [
     i32 3, label %bb.b
     i32 1, label %bb.c
     i32 2, label %bb.d
@@ -1921,9 +1927,10 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !120  ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 28
   %i.d = load i32, ptr %i.c, align 4, !tbaa !121
-  %3 = lshr i32 %i.d, 16
-  %4 = and i32 %3, 3
-  switch i32 %4, label %default.unreachable [
+  %3 = and i32 %i.d, 196608
+  %4 = sub i32 %3, 0                              ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 16)
+  switch i32 %5, label %default.unreachable [
     i32 3, label %.lr.ph
     i32 1, label %bb.b
     i32 2, label %bb.c
@@ -2229,9 +2236,10 @@ bb.g:                                             ; preds = %bb.f
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !120  ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 28
   %i.t = load i32, ptr %i.s, align 4, !tbaa !121
-  %1 = lshr i32 %i.t, 16
-  %2 = and i32 %1, 3
-  switch i32 %2, label %default.unreachable [
+  %1 = and i32 %i.t, 196608
+  %2 = sub i32 %1, 0                              ; 2 uses
+  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 16)
+  switch i32 %3, label %default.unreachable [
     i32 3, label %tls12_get_psigalgs.exit
     i32 1, label %bb.h
     i32 2, label %bb.i
@@ -2419,9 +2427,10 @@ bb.f:                                             ; preds = %bb.d
   %i.y = load ptr, ptr %i.c, align 8, !tbaa !120  ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 28
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !121
-  %1 = lshr i32 %i.aa, 16
-  %2 = and i32 %1, 3
-  switch i32 %2, label %default.unreachable [
+  %1 = and i32 %i.aa, 196608
+  %2 = sub i32 %1, 0                              ; 2 uses
+  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 16)
+  switch i32 %3, label %default.unreachable [
     i32 3, label %tls12_get_psigalgs.exit.i
     i32 1, label %bb.g
     i32 2, label %bb.h
@@ -2824,9 +2833,10 @@ bb.ar:                                            ; preds = %bb.ao
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !120 ; 5 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 28
   %i.ga = load i32, ptr %i.fz, align 4, !tbaa !121
-  %2 = lshr i32 %i.ga, 16
-  %3 = and i32 %2, 3
-  switch i32 %3, label %default.unreachable [
+  %2 = and i32 %i.ga, 196608
+  %3 = sub i32 %2, 0                              ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 16)
+  switch i32 %4, label %default.unreachable [
     i32 3, label %.lr.ph208
     i32 1, label %bb.as
     i32 2, label %bb.at
@@ -3228,6 +3238,9 @@ declare i64 @llvm.umin.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #13

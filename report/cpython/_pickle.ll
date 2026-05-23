@@ -201,8 +201,6 @@ bb.t:                                             ; preds = %bb.r
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.t, %bb.s
   %.0.i.i = phi ptr [ %.0.i.i.i, %bb.s ], [ %.val4.i.i, %bb.t ] ; 3 uses
-  %3 = lshr i32 %.val.i.i, 2
-  %4 = and i32 %3, 7
   %i.am = tail call ptr @PyBytesWriter_Create(i64 noundef %.val.i27) #14 ; 6 uses
   %i.an = icmp eq ptr %i.am, null
   br i1 %i.an, label %Py_DECREF.exit24.thread, label %bb.u
@@ -210,14 +208,18 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.t, %bb.s
 bb.u:                                             ; preds = %_PyUnicode_DATA.exit.i
   %i.ao = tail call ptr @PyBytesWriter_GetData(ptr noundef nonnull %i.am) #14 ; 2 uses
   %i.ap = icmp sgt i64 %.val.i27, 0
-  br i1 %i.ap, label %.lr.ph.i.a, label %raw_unicode_escape.exit
+  br i1 %i.ap, label %.lr.ph.i, label %raw_unicode_escape.exit
 
-.lr.ph.i.a:                                       ; preds = %bb.u, %bb.ac
-  %.07095.i = phi i64 [ %i.em, %bb.ac ], [ 0, %bb.u ] ; 4 uses
-  %.07194.i = phi ptr [ %.2.ph.i, %bb.ac ], [ %i.ao, %bb.u ] ; 4 uses
-  switch i32 %4, label %PyUnicode_READ.exit.i [
-    i32 1, label %bb.v
-    i32 2, label %bb.w
+.lr.ph.i:                                         ; preds = %bb.u
+  %3 = and i32 %.val.i.i, 28
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %bb.ac, %.lr.ph.i
+  %.07095.i = phi i64 [ 0, %.lr.ph.i ], [ %i.em, %bb.ac ] ; 4 uses
+  %.07194.i = phi ptr [ %i.ao, %.lr.ph.i ], [ %.2.ph.i, %bb.ac ] ; 4 uses
+  switch i32 %3, label %PyUnicode_READ.exit.i [
+    i32 4, label %bb.v
+    i32 8, label %bb.w
   ]
 
 bb.v:                                             ; preds = %.lr.ph.i.a

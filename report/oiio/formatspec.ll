@@ -201,12 +201,13 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j,
 define linkonce_odr hidden noundef ptr @_ZN11OpenImageIO4v3_14pugi4impl10xml_parser10parse_treeEPcPNS1_15xml_node_structEjc(ptr noundef nonnull align 8 dereferenceable(20) %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i8 noundef signext %4) local_unnamed_addr #12 align 2 {
 switch.lookup:
   %i.a = alloca ptr, align 8                      ; 21 uses
-  %i.b = lshr i32 %3, 4                           ; 2 uses
+  %i.b = lshr i32 %3, 4
   %i.c = and i32 %i.b, 15
   %i.d = zext nneg i32 %i.c to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN11OpenImageIO4v3_14pugi4impl10xml_parser10parse_treeEPcPNS1_15xml_node_structEjc, i64 %i.d
   %switch.load = load ptr, ptr %switch.gep, align 8
-  %i.e = and i32 %i.b, 3
+  %5 = lshr i32 %3, 4
+  %i.e = and i32 %5, 3
   %i.f = lshr i32 %3, 9
   %i.g = and i32 %i.f, 4
   %i.h = or disjoint i32 %i.e, %i.g

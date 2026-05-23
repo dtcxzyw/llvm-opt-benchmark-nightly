@@ -1,5 +1,5 @@
-inline.NumInlined: 146
-inline.NumDeleted: 72
+inline.NumInlined: 145
+inline.NumDeleted: 71
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -21,6 +21,8 @@ module asm ".globl _ZSt21ios_base_library_initv"
 %"class.v8::internal::FlagValue.0" = type { ptr }
 %"class.v8::internal::FlagValue" = type { i8 }
 %"class.v8::internal::compiler::Constant" = type { i32, i8, i64 }
+
+$_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE = comdat any
 
 @_ZN2v88internal8v8_flagsE = external local_unnamed_addr global %"struct.v8::internal::FlagValues", align 4096
 
@@ -59,7 +61,6 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal8compiler11FrameElider10MarkBlocksEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0) local_unnamed_addr #1 align 2 {
 bb.a:
-  %1 = alloca %"class.v8::internal::compiler::Constant", align 8 ; 8 uses
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.c = load ptr, ptr %i.b, align 8              ; 2 uses
@@ -72,8 +73,6 @@ bb.a:
 
 .lr.ph38:                                         ; preds = %bb.a
   %.old = getelementptr inbounds nuw i8, ptr %0, i64 9 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
   br label %bb.b
 
 ._crit_edge:                                      ; preds = %.critedge27, %bb.a
@@ -103,7 +102,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.critedge
   %i.r = phi i32 [ %i.o, %.lr.ph.preheader ], [ %i.ap, %.critedge ] ; 2 uses
   %indvars.iv = phi i64 [ %i.q, %.lr.ph.preheader ], [ %indvars.iv.next, %.critedge ] ; 2 uses
-  %i.s = load ptr, ptr %0, align 8                ; 3 uses
+  %i.s = load ptr, ptr %0, align 8                ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 208
   %i.u = load ptr, ptr %i.t, align 8
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv
@@ -134,64 +133,16 @@ bb.e:                                             ; preds = %switch.early.test
   %i.ae = getelementptr inbounds nuw i8, ptr %i.w, i64 40
   %i.af = and i32 %i.y, 255
   %i.ag = zext nneg i32 %i.af to i64
-  %i.ah = getelementptr [8 x i8], ptr %i.ae, i64 %i.ag
-  %i.ai = load i64, ptr %i.ah, align 8            ; 6 uses
+  %i.ah = getelementptr [8 x i8], ptr %i.ae, i64 %i.ag ; 2 uses
+  %i.ai = load i64, ptr %i.ah, align 8
   %i.aj = and i64 %i.ai, 7
   %i.ak = icmp eq i64 %i.aj, 3
-  br i1 %i.ak, label %4, label %bb.f
+  br i1 %i.ak, label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit, label %bb.f
 
-4:                                                ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %1)
-  %5 = trunc i64 %i.ai to i32
-  %6 = lshr i32 %5, 3
-  %7 = and i32 %6, 3
-  switch i32 %7, label %default.unreachable [
-    i32 0, label %8
-    i32 1, label %11
-    i32 2, label %13
-    i32 3, label %19
-  ]
-
-8:                                                ; preds = %4
-  %9 = lshr i64 %i.ai, 32
-  %10 = trunc nuw i64 %9 to i32
-  call void @_ZN2v88internal8compiler8ConstantC1Ei(ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %10) #7
-  br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
-
-11:                                               ; preds = %4
-  %12 = ashr i64 %i.ai, 32
-  store i32 1, ptr %1, align 8
-  store i8 0, ptr %2, align 4
-  store i64 %12, ptr %3, align 8
-  br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
-
-13:                                               ; preds = %4
-  %14 = ashr i64 %i.ai, 32
-  %15 = getelementptr inbounds nuw i8, ptr %i.s, i64 176
-  %16 = load ptr, ptr %15, align 8
-  %17 = getelementptr inbounds nuw [4 x i8], ptr %16, i64 %14
-  %.sroa.0.0.copyload.i = load i32, ptr %17, align 4
-  store i32 7, ptr %1, align 8
-  store i8 0, ptr %2, align 4
-  %18 = sext i32 %.sroa.0.0.copyload.i to i64
-  store i64 %18, ptr %3, align 8
-  br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
-
-19:                                               ; preds = %4
-  %20 = ashr i64 %i.ai, 32
-  %21 = getelementptr inbounds nuw i8, ptr %i.s, i64 144
-  %22 = load ptr, ptr %21, align 8
-  %23 = getelementptr inbounds nuw [16 x i8], ptr %22, i64 %20
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull align 8 dereferenceable(16) %23, i64 16, i1 false)
-  br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
-
-default.unreachable:                              ; preds = %4
-  unreachable
-
-_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit: ; preds = %8, %11, %13, %19
-  %.fca.1.load.i = load i64, ptr %3, align 8
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  %i.al = trunc i64 %.fca.1.load.i to i32
+_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit: ; preds = %bb.e
+  %1 = tail call { i64, i64 } @_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE(ptr noundef nonnull align 8 dereferenceable(352) %i.s, ptr noundef nonnull %i.ah)
+  %2 = extractvalue { i64, i64 } %1, 1
+  %i.al = trunc i64 %2 to i32
   %i.am = icmp sgt i32 %i.al, 0
   %i.an = load i8, ptr %.old, align 1, !range !5
   %i.ao = trunc nuw i8 %i.an to i1
@@ -594,11 +545,8 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph56
   br i1 %.not, label %._crit_edge61, label %.lr.ph60
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #3
-
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef nonnull align 8 dereferenceable(32) ptr @_ZNK2v88internal8compiler11FrameElider18instruction_blocksEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0) local_unnamed_addr #4 align 2 {
+define hidden noundef nonnull align 8 dereferenceable(32) ptr @_ZNK2v88internal8compiler11FrameElider18instruction_blocksEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -607,7 +555,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef ptr @_ZNK2v88internal8compiler11FrameElider13InstructionAtEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0, i32 noundef %1) local_unnamed_addr #4 align 2 {
+define hidden noundef ptr @_ZNK2v88internal8compiler11FrameElider13InstructionAtEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0, i32 noundef %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = sext i32 %1 to i64
@@ -618,8 +566,69 @@ bb.a:
   ret ptr %i.f
 }
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
+; Function Attrs: mustprogress nounwind uwtable
+define linkonce_odr hidden { i64, i64 } @_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE(ptr noundef nonnull align 8 dereferenceable(352) %0, ptr noundef %1) local_unnamed_addr #1 comdat align 2 {
+  %3 = alloca %"class.v8::internal::compiler::Constant", align 8 ; 10 uses
+  %4 = load i64, ptr %1, align 8                  ; 5 uses
+  %5 = trunc i64 %4 to i32
+  %6 = and i32 %5, 24
+  %7 = sub i32 %6, 0                              ; 2 uses
+  %8 = call i32 @llvm.fshl.i32(i32 %7, i32 %7, i32 29)
+  switch i32 %8, label %default.unreachable [
+    i32 0, label %9
+    i32 1, label %12
+    i32 2, label %16
+    i32 3, label %24
+  ]
+
+9:                                                ; preds = %2
+  %10 = lshr i64 %4, 32
+  %11 = trunc nuw i64 %10 to i32
+  call void @_ZN2v88internal8compiler8ConstantC1Ei(ptr noundef nonnull align 8 dereferenceable(16) %3, i32 noundef %11) #8
+  br label %29
+
+12:                                               ; preds = %2
+  %13 = ashr i64 %4, 32
+  store i32 1, ptr %3, align 8
+  %14 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i8 0, ptr %14, align 4
+  %15 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  store i64 %13, ptr %15, align 8
+  br label %29
+
+16:                                               ; preds = %2
+  %17 = ashr i64 %4, 32
+  %18 = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %19 = load ptr, ptr %18, align 8
+  %20 = getelementptr inbounds nuw [4 x i8], ptr %19, i64 %17
+  %.sroa.0.0.copyload = load i32, ptr %20, align 4
+  store i32 7, ptr %3, align 8
+  %21 = getelementptr inbounds nuw i8, ptr %3, i64 4
+  store i8 0, ptr %21, align 4
+  %22 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %23 = sext i32 %.sroa.0.0.copyload to i64
+  store i64 %23, ptr %22, align 8
+  br label %29
+
+24:                                               ; preds = %2
+  %25 = ashr i64 %4, 32
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %27 = load ptr, ptr %26, align 8
+  %28 = getelementptr inbounds nuw [16 x i8], ptr %27, i64 %25
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(16) %28, i64 16, i1 false)
+  br label %29
+
+default.unreachable:                              ; preds = %2
+  unreachable
+
+29:                                               ; preds = %24, %16, %12, %9
+  %.fca.0.load = load i64, ptr %3, align 8
+  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.fca.0.load, 0
+  %.fca.1.gep = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.fca.1.load = load i64, ptr %.fca.1.gep, align 8
+  %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.fca.1.load, 1
+  ret { i64, i64 } %.fca.1.insert
+}
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler11FrameElider16PropagateInOrderEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0) local_unnamed_addr #2 align 2 {
@@ -944,7 +953,7 @@ _ZN2v88internal8compiler11FrameElider18PropagateIntoBlockEPNS1_16InstructionBloc
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef ptr @_ZNK2v88internal8compiler11FrameElider18InstructionBlockAtENS1_9RpoNumberE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0, i32 %1) local_unnamed_addr #4 align 2 {
+define hidden noundef ptr @_ZNK2v88internal8compiler11FrameElider18InstructionBlockAtENS1_9RpoNumberE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0, i32 %1) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -958,7 +967,7 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler11FrameElider18PropagateIntoBlockEPNS1_16InstructionBlockE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(10) %0, ptr noundef captures(none) %1) local_unnamed_addr #5 align 2 {
@@ -1100,14 +1109,18 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 declare void @_ZN2v88internal8compiler8ConstantC1Ei(ptr noundef nonnull align 8 dereferenceable(16), i32 noundef) unnamed_addr #6
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #7
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nounwind }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

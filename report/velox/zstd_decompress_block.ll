@@ -201,12 +201,11 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %ZSTD_blockSizeMax.exit
   %i.du = zext i8 %i.b to i32                     ; 2 uses
-  %6 = lshr i32 %i.du, 2
-  %i.dv = and i32 %6, 3
-  %7 = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %4)
+  %6 = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %4)
+  %i.dv = and i32 %i.du, 12
   switch i32 %i.dv, label %bb.ak [
-    i32 3, label %bb.am
-    i32 1, label %bb.al
+    i32 12, label %bb.am
+    i32 4, label %bb.al
   ]
 
 bb.ak:                                            ; preds = %bb.aj
@@ -291,7 +290,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %ZSTD_allocateLiteralsBuffer.exit239
 
 bb.ax:                                            ; preds = %bb.av
-  %i.fb = getelementptr inbounds nuw i8, ptr %3, i64 %7
+  %i.fb = getelementptr inbounds nuw i8, ptr %3, i64 %6
   %i.fc = sub nsw i64 0, %.0212
   %i.fd = getelementptr inbounds i8, ptr %i.fb, i64 %i.fc
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 65504 ; 3 uses
@@ -358,12 +357,11 @@ bb.bd:                                            ; preds = %ZSTD_allocateLitera
 
 bb.be:                                            ; preds = %ZSTD_blockSizeMax.exit
   %i.gd = zext i8 %i.b to i32                     ; 2 uses
-  %8 = lshr i32 %i.gd, 2
-  %i.ge = and i32 %8, 3
-  %9 = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %4)
+  %7 = tail call i64 @llvm.umin.i64(i64 %i.i, i64 %4)
+  %i.ge = and i32 %i.gd, 12
   switch i32 %i.ge, label %bb.bf [
-    i32 3, label %bb.bi
-    i32 1, label %bb.bg
+    i32 12, label %bb.bi
+    i32 4, label %bb.bg
   ]
 
 bb.bf:                                            ; preds = %bb.be
@@ -446,7 +444,7 @@ bb.bs:                                            ; preds = %bb.br
   br label %bb.bu
 
 bb.bt:                                            ; preds = %bb.br
-  %i.hh = getelementptr inbounds nuw i8, ptr %3, i64 %9
+  %i.hh = getelementptr inbounds nuw i8, ptr %3, i64 %7
   %i.hi = sub nsw i64 0, %.0208
   %i.hj = getelementptr inbounds i8, ptr %i.hh, i64 %i.hi
   %i.hk = getelementptr inbounds nuw i8, ptr %i.hj, i64 65504 ; 3 uses
@@ -849,8 +847,6 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   %i.ad = lshr i32 %i.ab, 6
-  %4 = lshr i32 %i.ab, 4
-  %5 = and i32 %4, 3
   %i.ae = lshr exact i32 %i.ab, 2
   %i.af = and i32 %i.ae, 3
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
@@ -1061,7 +1057,7 @@ bb.s:                                             ; preds = %bb.r
   %i.du = icmp ugt i32 %i.dt, 9
   br i1 %i.du, label %ZSTD_buildSeqTable.exit.thread125, label %ZSTD_buildSeqTable.exit
 
-default.unreachable:                              ; preds = %ZSTD_buildSeqTable.exit.thread, %bb.k
+default.unreachable:                              ; preds = %bb.k
   unreachable
 
 ZSTD_buildSeqTable.exit.thread120:                ; preds = %bb.l, %bb.p, %bb.m
@@ -1093,7 +1089,10 @@ ZSTD_buildSeqTable.exit.thread:                   ; preds = %bb.q, %bb.o, %bb.n,
   %.val100 = load i32, ptr %i.an, align 4, !tbaa !29 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store i32 31, ptr %i.a, align 4, !tbaa !3
-  switch i32 %5, label %default.unreachable [
+  %4 = and i32 %i.ab, 48
+  %5 = sub i32 %4, 0                              ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 28)
+  switch i32 %6, label %default.unreachable49.i108 [
     i32 1, label %bb.t
     i32 0, label %bb.w
     i32 3, label %bb.x
@@ -1225,6 +1224,9 @@ bb.aa:                                            ; preds = %bb.z
   %i.fz = load i32, ptr %i.b, align 4, !tbaa !3   ; 2 uses
   %i.ga = icmp ugt i32 %i.fz, 8
   br i1 %i.ga, label %ZSTD_buildSeqTable.exit109.thread140, label %ZSTD_buildSeqTable.exit109
+
+default.unreachable49.i108:                       ; preds = %ZSTD_buildSeqTable.exit.thread
+  unreachable
 
 ZSTD_buildSeqTable.exit109.thread:                ; preds = %ZSTD_buildSeqTable.exit109.thread.loopexit, %bb.v, %bb.w, %bb.y
   %.1.i103.ph = phi i64 [ 1, %bb.v ], [ 0, %bb.y ], [ 0, %bb.w ], [ 0, %ZSTD_buildSeqTable.exit109.thread.loopexit ]
@@ -1627,6 +1629,9 @@ declare i64 @llvm.umax.i64(i64, i64) #15
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #15
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

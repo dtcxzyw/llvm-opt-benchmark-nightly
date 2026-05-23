@@ -201,13 +201,15 @@ bb.s:                                             ; preds = %bb.r
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %4 = lshr i64 %i.bs, 8
-  %trunc.i = trunc i64 %4 to i8
-  %trunc.off.i = add i8 %trunc.i, -1
-  %switch.i = icmp ult i8 %trunc.off.i, 3
-  br i1 %switch.i, label %bb.t, label %stream_has_data_to_send.exit.thread
+  %4 = trunc i64 %i.bs to i16
+  %trunc.i = and i16 %4, -256
+  switch i16 %trunc.i, label %stream_has_data_to_send.exit.thread [
+    i16 256, label %bb.t
+    i16 512, label %bb.t
+    i16 768, label %bb.t
+  ]
 
-bb.t:                                             ; preds = %bb.s
+bb.t:                                             ; preds = %bb.s, %bb.s, %bb.s
   store i64 2, ptr %i.a, align 8, !tbaa !49
   %i.bv = getelementptr inbounds nuw i8, ptr %1, i64 112
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !44
@@ -377,11 +379,11 @@ define dso_local range(i32 0, 2) i32 @ossl_quic_stream_map_ensure_send_part_id(p
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
-  %2 = lshr i64 %i.b, 8
-  %trunc = trunc i64 %2 to i8
-  switch i8 %trunc, label %bb.c [
-    i8 0, label %bb.d
-    i8 1, label %bb.b
+  %2 = trunc i64 %i.b to i16
+  %trunc = and i16 %2, -256
+  switch i16 %trunc, label %bb.c [
+    i16 0, label %bb.d
+    i16 256, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -434,23 +436,32 @@ define dso_local range(i32 0, 2) i32 @ossl_quic_stream_map_reset_stream_send_par
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 6 uses
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
-  %3 = lshr i64 %i.b, 8
-  %trunc.a = trunc i64 %3 to i8
+  %3 = trunc i64 %i.b to i16                      ; 2 uses
+  %4 = add i16 %3, -256
+  %5 = lshr i16 %4, 8
+  %trunc.a = trunc nuw i16 %5 to i8
   switch i8 %trunc.a, label %bb.f [
-    i8 6, label %bb.e
     i8 5, label %bb.e
-    i8 1, label %ossl_quic_stream_map_ensure_send_part_id.exit.a
-    i8 2, label %bb.b
-    i8 3, label %bb.c
+    i8 4, label %bb.e
+    i8 0, label %6
+    i8 1, label %bb.b
+    i8 2, label %bb.c
   ]
 
-ossl_quic_stream_map_ensure_send_part_id.exit.a:  ; preds = %bb.a
+6:                                                ; preds = %bb.a
+  %trunc = and i16 %3, -256
+  switch i16 %trunc, label %bb.b [
+    i16 0, label %bb.f
+    i16 256, label %ossl_quic_stream_map_ensure_send_part_id.exit.a
+  ]
+
+ossl_quic_stream_map_ensure_send_part_id.exit.a:  ; preds = %6
   %i.c = and i64 %i.b, -65281
   %i.d = or disjoint i64 %i.c, 512
   store i64 %i.d, ptr %i.a, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %ossl_quic_stream_map_ensure_send_part_id.exit.a, %bb.a
+bb.b:                                             ; preds = %6, %ossl_quic_stream_map_ensure_send_part_id.exit.a, %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.f = tail call i64 @ossl_quic_txfc_get_swm(ptr noundef nonnull %i.e) #12
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 104
@@ -490,8 +501,8 @@ shutdown_flush_done.exit:                         ; preds = %bb.c, %bb.d
 bb.e:                                             ; preds = %bb.a, %bb.a
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.a, %bb.e, %shutdown_flush_done.exit
-  %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.e ], [ 1, %shutdown_flush_done.exit ]
+bb.f:                                             ; preds = %6, %bb.a, %bb.e, %shutdown_flush_done.exit
+  %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.e ], [ 1, %shutdown_flush_done.exit ], [ 0, %6 ]
   ret i32 %.0
 }
 
@@ -502,11 +513,11 @@ define dso_local range(i32 0, 2) i32 @ossl_quic_stream_map_notify_reset_stream_a
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
-  %2 = lshr i64 %i.b, 8
-  %trunc = trunc i64 %2 to i8
-  switch i8 %trunc, label %bb.d [
-    i8 6, label %bb.c
-    i8 5, label %bb.b
+  %2 = trunc i64 %i.b to i16
+  %trunc = and i16 %2, -256
+  switch i16 %trunc, label %bb.d [
+    i16 1536, label %bb.c
+    i16 1280, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -594,20 +605,23 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 256 ; 3 uses
   %i.c = load i64, ptr %i.b, align 8              ; 2 uses
-  %4 = lshr i64 %i.c, 16
-  %trunc = trunc i64 %4 to i8                     ; 2 uses
-  switch i8 %trunc, label %bb.d [
-    i8 6, label %bb.c
-    i8 1, label %bb.b
-    i8 2, label %bb.b
-    i8 3, label %bb.b
-    i8 4, label %bb.c
-    i8 5, label %bb.c
+  %4 = trunc i64 %i.c to i32
+  %5 = and i32 %4, 16711680                       ; 2 uses
+  %6 = add nsw i32 %5, -65536
+  %7 = lshr exact i32 %6, 16
+  %trunc = trunc nuw i32 %7 to i16
+  switch i16 %trunc, label %bb.d [
+    i16 5, label %bb.c
+    i16 0, label %bb.b
+    i16 1, label %bb.b
+    i16 2, label %bb.b
+    i16 3, label %bb.c
+    i16 4, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
-  %trunc.off.i = add nsw i8 %trunc, -2
-  %switch.i = icmp ult i8 %trunc.off.i, 5
+  %8 = add nsw i32 %5, -131072
+  %switch.i = icmp ult i32 %8, 327680
   br i1 %switch.i, label %ossl_quic_stream_recv_get_final_size.exit, label %ossl_quic_stream_recv_get_final_size.exit.thread
 
 ossl_quic_stream_recv_get_final_size.exit:        ; preds = %bb.b
@@ -676,29 +690,36 @@ bb.a:
   br i1 %.not, label %bb.b, label %ossl_quic_stream_map_schedule_stop_sending.exit
 
 bb.b:                                             ; preds = %bb.a
-  %3 = lshr i64 %i.b, 16
-  %trunc = trunc i64 %3 to i8
-  %trunc.off = add i8 %trunc, -1
-  %switch = icmp ult i8 %trunc.off, 2
-  br i1 %switch, label %bb.c, label %ossl_quic_stream_map_schedule_stop_sending.exit
+  %3 = trunc i64 %i.b to i32
+  %4 = and i32 %3, 16711680                       ; 2 uses
+  switch i32 %4, label %ossl_quic_stream_map_schedule_stop_sending.exit [
+    i32 131072, label %bb.c
+    i32 65536, label %bb.c
+  ]
 
-bb.c:                                             ; preds = %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.b
   %i.d = or disjoint i64 %i.b, 67108864
   store i64 %i.d, ptr %i.a, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 64
   store i64 %2, ptr %i.e, align 8, !tbaa !53
   %i.f = and i64 %i.b, 17179869184
   %.not6.i = icmp eq i64 %i.f, 0
-  br i1 %.not6.i, label %bb.d, label %ossl_quic_stream_map_schedule_stop_sending.exit
+  br i1 %.not6.i, label %5, label %ossl_quic_stream_map_schedule_stop_sending.exit
 
-bb.d:                                             ; preds = %bb.c
+5:                                                ; preds = %bb.c
+  switch i32 %4, label %ossl_quic_stream_map_schedule_stop_sending.exit [
+    i32 65536, label %bb.d
+    i32 131072, label %bb.d
+  ]
+
+bb.d:                                             ; preds = %5, %5
   %i.g = or disjoint i64 %i.b, 17246978048
   store i64 %i.g, ptr %i.a, align 8
   tail call void @ossl_quic_stream_map_update_state(ptr noundef %0, ptr noundef nonnull %1)
   br label %ossl_quic_stream_map_schedule_stop_sending.exit
 
-ossl_quic_stream_map_schedule_stop_sending.exit:  ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %.0 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.c ], [ 1, %bb.d ]
+ossl_quic_stream_map_schedule_stop_sending.exit:  ; preds = %bb.d, %5, %bb.c, %bb.b, %bb.a
+  %.0 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.c ], [ 1, %5 ], [ 1, %bb.d ]
   ret i32 %.0
 }
 
@@ -717,13 +738,14 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not6, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %2 = lshr i64 %i.b, 16
-  %trunc = trunc i64 %2 to i8
-  %trunc.off = add i8 %trunc, -1
-  %switch = icmp ult i8 %trunc.off, 2
-  br i1 %switch, label %bb.d, label %bb.e
+  %2 = trunc i64 %i.b to i32
+  %3 = and i32 %2, 16711680
+  switch i32 %3, label %bb.e [
+    i32 65536, label %bb.d
+    i32 131072, label %bb.d
+  ]
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.c
   %i.e = or disjoint i64 %i.b, 17179869184
   store i64 %i.e, ptr %i.a, align 8
   tail call void @ossl_quic_stream_map_update_state(ptr noundef %0, ptr noundef nonnull %1)
@@ -939,11 +961,14 @@ define internal void @begin_shutdown_flush_each(ptr noundef captures(none) %0, p
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
   %i.b = load i64, ptr %i.a, align 8
-  %2 = and i64 %i.b, 65024
-  %switch.i = icmp eq i64 %2, 512
-  br i1 %switch.i, label %eligible_for_shutdown_flush.exit, label %eligible_for_shutdown_flush.exit.thread
+  %2 = trunc i64 %i.b to i16
+  %trunc.i = and i16 %2, -256
+  switch i16 %trunc.i, label %eligible_for_shutdown_flush.exit.thread [
+    i16 512, label %eligible_for_shutdown_flush.exit
+    i16 768, label %eligible_for_shutdown_flush.exit
+  ]
 
-eligible_for_shutdown_flush.exit:                 ; preds = %bb.a
+eligible_for_shutdown_flush.exit:                 ; preds = %bb.a, %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !44
   %i.e = tail call i32 @ossl_quic_sstream_is_totally_acked(ptr noundef %i.d) #12

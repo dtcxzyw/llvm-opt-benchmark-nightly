@@ -201,14 +201,15 @@ bb.z:                                             ; preds = %bb.t, %obj2ubits.ex
   %i.dd = or disjoint i64 %i.dc, %.sink133        ; 4 uses
   store i64 %i.dd, ptr %i.c, align 8
   %i.de = trunc i64 %.sink134 to i32
-  %3 = lshr i32 %i.de, 9
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.am [
-    i32 2, label %bb.aa
+  %3 = and i32 %i.de, 7680
+  %4 = add nsw i32 %3, -1024
+  %5 = lshr exact i32 %4, 9
+  switch i32 %5, label %bb.am [
+    i32 0, label %bb.aa
+    i32 2, label %bb.ak
     i32 4, label %bb.ak
-    i32 6, label %bb.ak
+    i32 7, label %bb.ak
     i32 9, label %bb.ak
-    i32 11, label %bb.ak
   ]
 
 bb.aa:                                            ; preds = %bb.z

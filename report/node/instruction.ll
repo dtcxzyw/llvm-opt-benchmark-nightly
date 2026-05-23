@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.d
   %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.9, i64 noundef 3) #31 ; 0 uses
   br label %.thread
 
-default.unreachable105:                           ; preds = %bb.m, %bb.d
+default.unreachable105:                           ; preds = %bb.d
   unreachable
 
 bb.l:                                             ; preds = %bb.a
@@ -214,9 +214,10 @@ bb.l:                                             ; preds = %bb.a
   br label %.thread
 
 bb.m:                                             ; preds = %bb.a
-  %2 = lshr i32 %i.b, 3
-  %3 = and i32 %2, 3
-  switch i32 %3, label %default.unreachable105 [
+  %2 = and i32 %i.b, 24
+  %3 = sub i32 %2, 0                              ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 29)
+  switch i32 %4, label %default.unreachable104 [
     i32 0, label %bb.n
     i32 1, label %bb.o
     i32 2, label %bb.p
@@ -251,6 +252,9 @@ bb.q:                                             ; preds = %bb.m
   %i.bo = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSolsEi(ptr noundef nonnull align 8 dereferenceable(8) %0, i32 noundef %i.bn) #31 ; 2 uses
   %i.bp = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.bo, ptr noundef nonnull @.str.11, i64 noundef 1) #31 ; 0 uses
   br label %.thread
+
+default.unreachable104:                           ; preds = %bb.m
+  unreachable
 
 bb.r:                                             ; preds = %bb.a
   %i.bq = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull @.str.15, i64 noundef 10) #31 ; 0 uses
@@ -654,10 +658,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.k = trunc i64 %i.h to i32
-  %3 = lshr i32 %i.k, 3
-  %i.l = and i32 %3, 3
-  %4 = ashr i64 %i.h, 32                          ; 4 uses
-  switch i32 %i.l, label %default.unreachable [
+  %3 = ashr i64 %i.h, 32                          ; 4 uses
+  %i.l = and i32 %i.k, 24
+  %4 = sub i32 %i.l, 0                            ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 29)
+  switch i32 %5, label %default.unreachable [
     i32 0, label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
     i32 1, label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
     i32 2, label %bb.c
@@ -667,7 +672,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 176
   %i.n = load ptr, ptr %i.m, align 8
-  %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %4
+  %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.n, i64 %3
   %.sroa.0.0.copyload.i = load i32, ptr %i.o, align 4
   %i.p = zext i32 %.sroa.0.0.copyload.i to i64
   br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
@@ -675,7 +680,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.b
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.r = load ptr, ptr %i.q, align 8
-  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %4
+  %i.s = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %3
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8
   br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
@@ -755,7 +760,7 @@ _ZNK2v88internal8compiler19InstructionSequence11GetConstantEi.exit: ; preds = %.
   br label %_ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit
 
 _ZNK2v88internal8compiler19InstructionSequence12GetImmediateEPKNS1_16ImmediateOperandE.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.b, %_ZNK2v88internal8compiler19InstructionSequence11GetConstantEi.exit
-  %.sroa.4.0 = phi i64 [ %.sroa.2.0.copyload.i, %_ZNK2v88internal8compiler19InstructionSequence11GetConstantEi.exit ], [ %.sroa.8.0.copyload.i, %bb.d ], [ %4, %bb.b ], [ %i.p, %bb.c ], [ %4, %bb.b ]
+  %.sroa.4.0 = phi i64 [ %.sroa.2.0.copyload.i, %_ZNK2v88internal8compiler19InstructionSequence11GetConstantEi.exit ], [ %.sroa.8.0.copyload.i, %bb.d ], [ %3, %bb.b ], [ %i.p, %bb.c ], [ %3, %bb.b ]
   %i.bl = trunc i64 %.sroa.4.0 to i32
   ret i32 %i.bl
 }
@@ -1157,6 +1162,9 @@ declare i16 @llvm.cttz.i16(i16, i1 immarg) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #29
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #29
 
 attributes #0 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -201,22 +201,20 @@ bb.va:                                            ; preds = %bb.uz, %bb.uy, %bb.
 
 switch.lookup1302:                                ; preds = %bb.ao
   %.val399 = load i64, ptr %i.ji, align 8, !tbaa !223 ; 3 uses
-  %11 = trunc i64 %.val399 to i32
   %i.cpp = lshr i64 %.val399, 6
   %i.cpq = and i64 %i.cpp, 3
   %switch.gep1303 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.TT_RunIns.37, i64 %i.cpq
   %switch.load1304 = load i64, ptr %switch.gep1303, align 8 ; 6 uses
-  %12 = lshr i32 %11, 4
-  %i.cpr = and i32 %12, 3
-  switch i32 %i.cpr, label %default.unreachable [
+  %11 = trunc i64 %.val399 to i32
+  %i.cpr = and i32 %11, 48
+  %12 = sub i32 %i.cpr, 0                         ; 2 uses
+  %13 = call i32 @llvm.fshl.i32(i32 %12, i32 %12, i32 28)
+  switch i32 %13, label %.unreachabledefault1.i.i [
     i32 0, label %bb.ve
     i32 1, label %bb.vb
     i32 2, label %bb.vc
     i32 3, label %bb.vd
   ]
-
-default.unreachable:                              ; preds = %switch.lookup1305, %switch.lookup1302
-  unreachable
 
 bb.vb:                                            ; preds = %switch.lookup1302
   %i.cps = lshr exact i64 %switch.load1304, 2
@@ -230,6 +228,9 @@ bb.vd:                                            ; preds = %switch.lookup1302
   %i.cpu = mul nuw nsw i64 %switch.load1304, 3
   %i.cpv = lshr exact i64 %i.cpu, 2
   br label %bb.ve
+
+.unreachabledefault1.i.i:                         ; preds = %switch.lookup1302
+  unreachable
 
 bb.ve:                                            ; preds = %bb.vd, %bb.vc, %bb.vb, %switch.lookup1302
   %i.cpw = phi i64 [ %i.cpv, %bb.vd ], [ %i.cpt, %bb.vc ], [ %i.cps, %bb.vb ], [ 0, %switch.lookup1302 ]
@@ -263,14 +264,15 @@ Ins_SROUND.exit:                                  ; preds = %bb.vf, %bb.vg
 
 switch.lookup1305:                                ; preds = %bb.ao
   %.val400 = load i64, ptr %i.ji, align 8, !tbaa !223 ; 3 uses
-  %13 = trunc i64 %.val400 to i32
   %i.cqg = lshr i64 %.val400, 6
   %i.cqh = and i64 %i.cqg, 3
   %switch.gep1306 = getelementptr inbounds nuw [8 x i8], ptr @switch.table.TT_RunIns.38, i64 %i.cqh
   %switch.load1307 = load i64, ptr %switch.gep1306, align 8 ; 6 uses
-  %14 = lshr i32 %13, 4
-  %i.cqi = and i32 %14, 3
-  switch i32 %i.cqi, label %default.unreachable [
+  %14 = trunc i64 %.val400 to i32
+  %i.cqi = and i32 %14, 48
+  %15 = sub i32 %i.cqi, 0                         ; 2 uses
+  %16 = call i32 @llvm.fshl.i32(i32 %15, i32 %15, i32 28)
+  switch i32 %16, label %.unreachabledefault1.i.i649 [
     i32 0, label %bb.vk
     i32 1, label %bb.vh
     i32 2, label %bb.vi
@@ -289,6 +291,9 @@ bb.vj:                                            ; preds = %switch.lookup1305
   %i.cql = mul nuw nsw i64 %switch.load1307, 3
   %i.cqm = lshr i64 %i.cql, 2
   br label %bb.vk
+
+.unreachabledefault1.i.i649:                      ; preds = %switch.lookup1305
+  unreachable
 
 bb.vk:                                            ; preds = %bb.vj, %bb.vi, %bb.vh, %switch.lookup1305
   %i.cqn = phi i64 [ %i.cqm, %bb.vj ], [ %i.cqk, %bb.vi ], [ %i.cqj, %bb.vh ], [ 0, %switch.lookup1305 ]
@@ -690,6 +695,9 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #20

@@ -201,7 +201,7 @@ currentpc.exit.i:                                 ; preds = %bb.d, %._crit_edge.
   %i.ac = lshr exact i64 %i.ab, 2
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = add nsw i32 %i.ad, -1
-  %i.af = tail call ptr @luaF_getlocalname(ptr noundef nonnull %i.o, i32 noundef %2, i32 noundef %i.ae) #10 ; 2 uses
+  %i.af = tail call ptr @luaF_getlocalname(ptr noundef nonnull %i.o, i32 noundef %2, i32 noundef %i.ae) #11 ; 2 uses
   %.not19.i = icmp eq ptr %i.af, null
   br i1 %.not19.i, label %getluaproto.exit.thread.i, label %currentpc.exit.i.select.unfold_crit_edge
 
@@ -235,7 +235,7 @@ select.unfold:                                    ; preds = %currentpc.exit.i.se
   %.1.i.ph = phi ptr [ %i.af, %currentpc.exit.i.select.unfold_crit_edge ], [ @.str.6, %getluaproto.exit.thread.i ]
   %i.av = getelementptr [16 x i8], ptr %i.au, i64 %.pre-phi
   %i.aw = getelementptr i8, ptr %i.av, i64 -16
-  tail call void @luaA_pushobject(ptr noundef nonnull %0, ptr noundef %i.aw) #10
+  tail call void @luaA_pushobject(ptr noundef nonnull %0, ptr noundef %i.aw) #11
   br label %findlocal.exit
 
 findlocal.exit:                                   ; preds = %getluaproto.exit.thread.i, %select.unfold
@@ -306,7 +306,7 @@ currentpc.exit.i:                                 ; preds = %bb.d, %._crit_edge.
   %i.ac = lshr exact i64 %i.ab, 2
   %i.ad = trunc i64 %i.ac to i32
   %i.ae = add nsw i32 %i.ad, -1
-  %i.af = tail call ptr @luaF_getlocalname(ptr noundef nonnull %i.o, i32 noundef %2, i32 noundef %i.ae) #10 ; 2 uses
+  %i.af = tail call ptr @luaF_getlocalname(ptr noundef nonnull %i.o, i32 noundef %2, i32 noundef %i.ae) #11 ; 2 uses
   %.not19.i = icmp eq ptr %i.af, null
   br i1 %.not19.i, label %getluaproto.exit.thread.i, label %currentpc.exit.i.select.unfold_crit_edge
 
@@ -470,7 +470,7 @@ funcinfo.exit.i:                                  ; preds = %bb.i, %bb.h
   %.str.11.sink.i.i = phi ptr [ %i.aw, %bb.i ], [ @.str.11, %bb.h ]
   store i32 %.sink.i.i, ptr %i.ag, align 4, !tbaa !52
   store ptr %.str.11.sink.i.i, ptr %i.ah, align 8, !tbaa !53
-  tail call void @luaO_chunkid(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.ax, i64 noundef 60) #10
+  tail call void @luaO_chunkid(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.ax, i64 noundef 60) #11
   br label %bb.aa
 
 bb.j:                                             ; preds = %bb.f
@@ -659,15 +659,15 @@ auxgetinfo.exit:                                  ; preds = %bb.e, %bb.c
   %i.dv = getelementptr inbounds nuw i8, ptr %2, i64 32
   store ptr @.str.9, ptr %i.dv, align 8, !tbaa !47
   %i.dw = getelementptr inbounds nuw i8, ptr %2, i64 56
-  tail call void @luaO_chunkid(ptr noundef nonnull %i.dw, ptr noundef nonnull @.str.9, i64 noundef 60) #10
+  tail call void @luaO_chunkid(ptr noundef nonnull %i.dw, ptr noundef nonnull @.str.9, i64 noundef 60) #11
   %i.dx = getelementptr inbounds nuw i8, ptr %2, i64 44
   store i32 0, ptr %i.dx, align 4, !tbaa !56
-  %i.dy = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.040, i32 noundef 102) #11
+  %i.dy = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.040, i32 noundef 102) #12
   %.not31 = icmp eq ptr %i.dy, null
   br i1 %.not31, label %bb.ag, label %bb.ab
 
 auxgetinfo.exit.thread:                           ; preds = %bb.f
-  %i.dz = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.0, i32 noundef 102) #11
+  %i.dz = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.0, i32 noundef 102) #12
   %.not3148 = icmp eq ptr %i.dz, null
   br i1 %.not3148, label %.thread65, label %bb.ac
 
@@ -703,7 +703,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   br i1 %i.eo, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #10
+  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #11
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ad, %bb.ae
@@ -717,12 +717,12 @@ bb.ag:                                            ; preds = %bb.af, %auxgetinfo.
   %.0283652 = phi ptr [ null, %auxgetinfo.exit ], [ %.028365162, %bb.af ]
   %.03950 = phi ptr [ %.040, %auxgetinfo.exit ], [ %.0394963, %bb.af ]
   %i.er = phi i1 [ true, %auxgetinfo.exit ], [ %i.eg, %bb.af ]
-  %i.es = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.03950, i32 noundef 76) #11
+  %i.es = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.03950, i32 noundef 76) #12
   %.not32 = icmp eq ptr %i.es, null
   br i1 %.not32, label %bb.am, label %bb.ah
 
 .thread65:                                        ; preds = %auxgetinfo.exit.thread
-  %i.et = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.0, i32 noundef 76) #11
+  %i.et = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %.0, i32 noundef 76) #12
   %.not3269 = icmp eq ptr %i.et, null
   br i1 %.not3269, label %bb.am, label %.thread73
 
@@ -746,7 +746,7 @@ bb.ai:                                            ; preds = %.thread73, %bb.ah
   br label %bb.ak
 
 bb.aj:                                            ; preds = %.thread73
-  %i.ez = tail call ptr @luaH_new(ptr noundef %0, i32 noundef 0, i32 noundef 0) #10 ; 2 uses
+  %i.ez = tail call ptr @luaH_new(ptr noundef %0, i32 noundef 0, i32 noundef 0) #11 ; 2 uses
   %i.fa = getelementptr inbounds nuw i8, ptr %.02836527276, i64 32 ; 2 uses
   %i.fb = load ptr, ptr %i.fa, align 8, !tbaa !27 ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %i.fb, i64 40
@@ -760,7 +760,7 @@ bb.aj:                                            ; preds = %.thread73
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i ], [ 0, %bb.aj ] ; 2 uses
   %i.fh = getelementptr inbounds nuw [4 x i8], ptr %i.fd, i64 %indvars.iv.i
   %i.fi = load i32, ptr %i.fh, align 4, !tbaa !4
-  %i.fj = tail call ptr @luaH_setnum(ptr noundef %0, ptr noundef %i.ez, i32 noundef %i.fi) #10 ; 2 uses
+  %i.fj = tail call ptr @luaH_setnum(ptr noundef %0, ptr noundef %i.ez, i32 noundef %i.fi) #11 ; 2 uses
   store i32 1, ptr %i.fj, align 8, !tbaa !27
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   store i32 1, ptr %i.fk, align 8, !tbaa !34
@@ -793,7 +793,7 @@ bb.ak:                                            ; preds = %._crit_edge.i, %bb.
   br i1 %i.fz, label %bb.al, label %collectvalidlines.exit
 
 bb.al:                                            ; preds = %bb.ak
-  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #10
+  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #11
   %.phi.trans.insert41 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.pre42 = load ptr, ptr %.phi.trans.insert41, align 8, !tbaa !46
   br label %collectvalidlines.exit
@@ -947,9 +947,10 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ba = lshr i32 %i.ap, 23                      ; 9 uses
-  %3 = lshr i32 %i.ay, 4
-  %4 = and i32 %3, 3
-  switch i32 %4, label %default.unreachable306 [
+  %3 = and i32 %i.ay, 48
+  %4 = sub i32 %3, 0                              ; 2 uses
+  %5 = call i32 @llvm.fshl.i32(i32 %4, i32 %4, i32 28)
+  switch i32 %5, label %default.unreachable.i [
     i32 0, label %bb.i
     i32 3, label %bb.k
     i32 2, label %bb.j
@@ -978,12 +979,16 @@ bb.m:                                             ; preds = %bb.k
   %i.bg = icmp samesign ult i32 %i.ba, %i.f
   br i1 %i.bg, label %checkArgMode.exit, label %.critedge232
 
+default.unreachable.i:                            ; preds = %bb.h
+  unreachable
+
 checkArgMode.exit:                                ; preds = %bb.m, %bb.l, %bb.j, %bb.i, %bb.h
   %i.bh = lshr i32 %i.ap, 14                      ; 2 uses
   %i.bi = and i32 %i.bh, 511                      ; 8 uses
-  %5 = lshr i8 %i.ax, 2
-  %6 = and i8 %5, 3
-  switch i8 %6, label %default.unreachable306 [
+  %6 = and i8 %i.ax, 12
+  %7 = sub i8 %6, 0                               ; 2 uses
+  %8 = call i8 @llvm.fshl.i8(i8 %7, i8 %7, i8 6)
+  switch i8 %8, label %default.unreachable.i238 [
     i8 0, label %bb.n
     i8 3, label %bb.p
     i8 2, label %bb.o
@@ -1011,6 +1016,9 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.bo = icmp samesign ult i32 %i.bi, %i.f
   br i1 %i.bo, label %.critedge, label %.critedge232
+
+default.unreachable.i238:                         ; preds = %checkArgMode.exit
+  unreachable
 
 bb.s:                                             ; preds = %bb.g
   %i.bp = lshr i32 %i.ap, 14                      ; 3 uses
@@ -1069,7 +1077,7 @@ bb.x:                                             ; preds = %.lr.ph
   %i.ck = icmp eq i32 %i.cj, 0
   br i1 %i.ck, label %.critedge, label %.critedge232
 
-default.unreachable306:                           ; preds = %checkArgMode.exit, %bb.h, %bb.g
+default.unreachable306:                           ; preds = %bb.g
   unreachable
 
 .critedge:                                        ; preds = %bb.r, %bb.q, %bb.o, %bb.n, %checkArgMode.exit, %bb.w, %._crit_edge, %bb.u, %bb.s, %bb.t, %bb.g
@@ -1358,7 +1366,7 @@ bb.bg:                                            ; preds = %luaG_checkopenop.ex
 define hidden void @luaG_typeerror(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store ptr null, ptr %i.a, align 8, !tbaa !78
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !34
@@ -1405,7 +1413,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %.thread, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret void
 }
 
@@ -1464,7 +1472,7 @@ currentpc.exit:                                   ; preds = %._crit_edge.i, %bb.
   %i.x = trunc i64 %i.w to i32
   %i.y = add nsw i32 %i.x, -1                     ; 2 uses
   %i.z = add nsw i32 %.tr56, 1
-  %i.aa = tail call ptr @luaF_getlocalname(ptr noundef %i.l, i32 noundef %i.z, i32 noundef %i.y) #10 ; 2 uses
+  %i.aa = tail call ptr @luaF_getlocalname(ptr noundef %i.l, i32 noundef %i.z, i32 noundef %i.y) #11 ; 2 uses
   store ptr %i.aa, ptr %3, align 8, !tbaa !78
   %.not45 = icmp eq ptr %i.aa, null
   br i1 %.not45, label %bb.e, label %.thread
@@ -1571,9 +1579,9 @@ define hidden void @luaG_runerror(ptr noundef %0, ptr noundef %1, ...) local_unn
 bb.a:
   %i.a = alloca [60 x i8], align 16               ; 4 uses
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.va_start.p0(ptr nonnull %2)
-  %i.b = call ptr @luaO_pushvfstring(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2) #10
+  %i.b = call ptr @luaO_pushvfstring(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %2) #11
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !23   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -1591,7 +1599,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %currentpc.exit.i.i, label %addinfo.exit
 
 currentpc.exit.i.i:                               ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !36   ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.d, i64 24
@@ -1627,15 +1635,15 @@ getluaproto.exit.i:                               ; preds = %bb.d, %bb.c, %curre
   %i.af = getelementptr inbounds nuw i8, ptr %i.q, i64 64
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !49
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 24
-  call void @luaO_chunkid(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ah, i64 noundef 60) #10
-  %i.ai = call ptr (ptr, ptr, ...) @luaO_pushfstring(ptr noundef nonnull %0, ptr noundef nonnull @.str.20, ptr noundef nonnull %i.a, i32 noundef %.0.i.ph.i, ptr noundef %i.b) #10 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @luaO_chunkid(ptr noundef nonnull %i.a, ptr noundef nonnull %i.ah, i64 noundef 60) #11
+  %i.ai = call ptr (ptr, ptr, ...) @luaO_pushfstring(ptr noundef nonnull %0, ptr noundef nonnull @.str.20, ptr noundef nonnull %i.a, i32 noundef %.0.i.ph.i, ptr noundef %i.b) #11 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %addinfo.exit
 
 addinfo.exit:                                     ; preds = %bb.a, %bb.b, %getluaproto.exit.i
   call void @llvm.va_end.p0(ptr nonnull %2)
   call void @luaG_errormsg(ptr noundef nonnull %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   ret void
 }
 
@@ -1648,7 +1656,7 @@ bb.a:
   %.off = add i32 %i.c, -3
   %switch = icmp ult i32 %.off, 2
   %spec.select = select i1 %switch, ptr %2, ptr %1 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store ptr null, ptr %i.a, align 8, !tbaa !78
   %i.d = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   %i.e = load i32, ptr %i.d, align 8, !tbaa !34
@@ -1695,7 +1703,7 @@ bb.d:                                             ; preds = %bb.c
   br label %luaG_typeerror.exit
 
 luaG_typeerror.exit:                              ; preds = %bb.d, %.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret void
 }
 
@@ -1704,11 +1712,11 @@ define hidden void @luaG_aritherror(ptr noundef %0, ptr noundef %1, ptr noundef 
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
   %3 = alloca %struct.lua_TValue, align 8         ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
-  %i.b = call ptr @luaV_tonumber(ptr noundef %1, ptr noundef nonnull %3) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  %i.b = call ptr @luaV_tonumber(ptr noundef %1, ptr noundef nonnull %3) #11
   %i.c = icmp eq ptr %i.b, null
   %spec.select = select i1 %i.c, ptr %1, ptr %2   ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store ptr null, ptr %i.a, align 8, !tbaa !78
   %i.d = getelementptr inbounds nuw i8, ptr %spec.select, i64 8
   %i.e = load i32, ptr %i.d, align 8, !tbaa !34
@@ -1755,8 +1763,8 @@ bb.d:                                             ; preds = %bb.c
   br label %luaG_typeerror.exit
 
 luaG_typeerror.exit:                              ; preds = %bb.d, %.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
   ret void
 }
 
@@ -1812,7 +1820,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @luaD_throw(ptr noundef nonnull %0, i32 noundef 5) #10
+  tail call void @luaD_throw(ptr noundef nonnull %0, i32 noundef 5) #11
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -1842,7 +1850,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.aa, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #10
+  tail call void @luaD_growstack(ptr noundef nonnull %0, i32 noundef 1) #11
   %.pre = load ptr, ptr %i.i, align 8, !tbaa !46
   br label %bb.f
 
@@ -1851,11 +1859,11 @@ bb.f:                                             ; preds = %bb.d, %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   store ptr %i.ac, ptr %i.i, align 8, !tbaa !46
   %i.ad = getelementptr inbounds i8, ptr %i.ab, i64 -16
-  tail call void @luaD_call(ptr noundef nonnull %0, ptr noundef nonnull %i.ad, i32 noundef 1) #10
+  tail call void @luaD_call(ptr noundef nonnull %0, ptr noundef nonnull %i.ad, i32 noundef 1) #11
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.a
-  tail call void @luaD_throw(ptr noundef nonnull %0, i32 noundef 2) #10
+  tail call void @luaD_throw(ptr noundef nonnull %0, i32 noundef 2) #11
   ret void
 }
 
@@ -1881,6 +1889,12 @@ declare hidden ptr @luaH_setnum(ptr noundef, ptr noundef, i32 noundef) local_unn
 
 declare hidden ptr @luaO_pushfstring(ptr noundef, ptr noundef, ...) local_unnamed_addr #5
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #10
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1891,8 +1905,9 @@ attributes #6 = { mustprogress nocallback nofree nounwind willreturn memory(argm
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind willreturn }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind willreturn memory(read) }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
+attributes #12 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

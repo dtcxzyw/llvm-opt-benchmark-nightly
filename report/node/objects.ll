@@ -201,14 +201,14 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef range(i32 0, 4) i32 @_ZN2v88internal12PropertyCell11UpdatedTypeEPNS0_7IsolateENS0_6TaggedIS1_EENS4_INS0_6ObjectEEENS0_15PropertyDetailsE(ptr noundef readnone captures(none) %0, i64 %1, i64 %2, i32 %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %4 = lshr i32 %3, 5
-  %5 = and i32 %4, 7
-  switch i32 %5, label %bb.f [
-    i32 1, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread13
-    i32 2, label %bb.b
-    i32 3, label %._crit_edge
-    i32 0, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread
-    i32 4, label %bb.e
+  %4 = trunc i32 %3 to i8
+  %5 = lshr i8 %4, 5
+  switch i8 %5, label %bb.f [
+    i8 1, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread13
+    i8 2, label %bb.b
+    i8 3, label %._crit_edge
+    i8 0, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread
+    i8 4, label %bb.e
   ]
 
 ._crit_edge:                                      ; preds = %bb.a
@@ -310,7 +310,7 @@ _ZN2v88internal9IsAnyHoleENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.
   %i.t = add i64 %i.h, 15
   %i.u = inttoptr i64 %i.t to ptr                 ; 3 uses
   %i.v = load i64, ptr %i.u, align 8
-  %i.w = lshr i64 %i.v, 32
+  %i.w = lshr i64 %i.v, 32                        ; 2 uses
   %i.x = trunc nuw i64 %i.w to i32                ; 4 uses
   %i.y = and i32 %i.x, 1
   %i.z = icmp eq i32 %i.y, 0
@@ -319,14 +319,14 @@ _ZN2v88internal9IsAnyHoleENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = %bb.
   %i.ac = and i32 %i.x, 2147483392
   %i.ad = and i32 %4, -2147483617
   %i.ae = load i64, ptr %3, align 8               ; 4 uses
-  %6 = lshr i32 %i.x, 5
-  %7 = and i32 %6, 7                              ; 2 uses
-  switch i32 %7, label %bb.f [
-    i32 1, label %_ZN2v88internal12PropertyCell11UpdatedTypeEPNS0_7IsolateENS0_6TaggedIS1_EENS4_INS0_6ObjectEEENS0_15PropertyDetailsE.exit
-    i32 2, label %bb.c
-    i32 3, label %._crit_edge.i
-    i32 0, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread.i
-    i32 4, label %bb.e
+  %6 = trunc i64 %i.w to i8
+  %7 = lshr i8 %6, 5
+  switch i8 %7, label %bb.f [
+    i8 1, label %_ZN2v88internal12PropertyCell11UpdatedTypeEPNS0_7IsolateENS0_6TaggedIS1_EENS4_INS0_6ObjectEEENS0_15PropertyDetailsE.exit
+    i8 2, label %bb.c
+    i8 3, label %._crit_edge.i
+    i8 0, label %_ZN2v88internalL19RemainsConstantTypeENS0_6TaggedINS0_12PropertyCellEEENS1_INS0_6ObjectEEE.exit.thread.i
+    i8 4, label %bb.e
   ]
 
 bb.c:                                             ; preds = %_ZN2v88internal9IsAnyHoleENS0_6TaggedINS0_6ObjectEEE.exit.thread
@@ -446,7 +446,9 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN2v88internal12PropertyCell10TransitionENS0_15PropertyDetailsENS0_12DirectHandleINS0_6ObjectEEE.exit: ; preds = %bb.i, %bb.m, %bb.n
   store atomic volatile i64 %i.bm, ptr %i.u release, align 8
-  %.not = icmp eq i32 %7, %.0.i25
+  %8 = lshr i32 %i.x, 5
+  %9 = and i32 %8, 7
+  %.not = icmp eq i32 %9, %.0.i25
   br i1 %.not, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %_ZN2v88internal12PropertyCell10TransitionENS0_15PropertyDetailsENS0_12DirectHandleINS0_6ObjectEEE.exit

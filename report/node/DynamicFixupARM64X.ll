@@ -201,9 +201,10 @@ _ZNK4LIEF12BinaryStream4readINS_2PE7details12fixup_recordEEENS_6resultIT_EEv.exi
   %i.cn = and i16 %i.cl, 4095
   %i.co = zext nneg i16 %i.cn to i32
   %i.cp = add i32 %i.bi, %i.co                    ; 3 uses
-  %9 = lshr i16 %i.cl, 12
-  %10 = and i16 %9, 3
-  switch i16 %10, label %default.unreachable117 [
+  %9 = and i16 %i.cl, 12288
+  %10 = sub i16 %9, 0                             ; 2 uses
+  %11 = call i16 @llvm.fshl.i16(i16 %10, i16 %10, i16 4)
+  switch i16 %11, label %default.unreachable117 [
     i16 0, label %bb.i
     i16 1, label %bb.k
     i16 2, label %bb.r
@@ -605,6 +606,9 @@ declare i64 @llvm.smax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.fshl.i16(i16, i16, i16) #19
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

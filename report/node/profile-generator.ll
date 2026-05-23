@@ -201,7 +201,6 @@ $_ZTVN2v88internal32CpuProfileMaxSamplesCallbackTaskE = comdat any
 @.str.90 = private unnamed_addr constant [44 x i8] c"Chunk size insufficient to serialize number\00", align 1
 @__const._ZNSt8__detail18__to_chars_10_implIjEEvPcjT_.__digits = private unnamed_addr constant [201 x i8] c"00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899\00", align 16
 @switch.table._ZNK2v88internal11ProfileNode11source_typeEv = private unnamed_addr constant [11 x i32] [i32 1, i32 2, i32 0, i32 0, i32 1, i32 1, i32 3, i32 0, i32 3, i32 1, i32 1], align 4
-@switch.table._ZN2v88internal10CpuProfile24StreamPendingTraceEventsEv = private unnamed_addr constant [3 x ptr] [ptr @.str.81, ptr @.str.82, ptr @.str.83], align 8
 
 @_ZN2v88internal11ProfileNodeD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN2v88internal11ProfileNodeD2Ev
 @_ZN2v88internal11ProfileTreeC1EPNS0_7IsolateEPNS0_16CodeEntryStorageE = hidden unnamed_addr alias void (ptr, ptr, ptr), ptr @_ZN2v88internal11ProfileTreeC2EPNS0_7IsolateEPNS0_16CodeEntryStorageE
@@ -604,7 +603,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.bi, align 8 ; 2 uses
   %i.bj = and i64 %.sroa.0.0.copyload.i.i, 4294967295
   %.not34.i = icmp eq i64 %i.bj, 0
-  br i1 %.not34.i, label %.thread.i.a, label %bb.i
+  br i1 %.not34.i, label %.thread.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %.sroa.05.0.extract.trunc.i = trunc i64 %.sroa.0.0.copyload.i.i to i32
@@ -613,23 +612,36 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.0.0.copyload.i41.pre.i = load i64, ptr %i.bi, align 8 ; 2 uses
   %.pre.i = and i64 %.sroa.0.0.copyload.i41.pre.i, 4294967295
   %i.bl = icmp eq i64 %.pre.i, 0
-  br i1 %i.bl, label %.thread.i.a, label %bb.j
+  br i1 %i.bl, label %.thread.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %.sroa.3.0.extract.shift.i = lshr i64 %.sroa.0.0.copyload.i41.pre.i, 32
   %.sroa.3.0.extract.trunc.i = trunc nuw i64 %.sroa.3.0.extract.shift.i to i32
   %i.bm = add nsw i32 %.sroa.3.0.extract.trunc.i, -1
   call void @_ZN2v87tracing11TracedValue10SetIntegerEPKci(ptr noundef nonnull align 8 dereferenceable(41) %i.ay, ptr noundef nonnull @.str.76, i32 noundef %i.bm) #31
+  br label %.thread.i
+
+.thread.i:                                        ; preds = %bb.j, %bb.i, %bb.h
+  %5 = load i32, ptr %i.ba, align 8
+  %6 = and i32 %5, 1610612736
+  switch i32 %6, label %9 [
+    i32 0, label %.thread.i.a
+    i32 536870912, label %7
+    i32 1073741824, label %8
+  ]
+
+7:                                                ; preds = %.thread.i
   br label %.thread.i.a
 
-.thread.i.a:                                      ; preds = %bb.j, %bb.i, %bb.h
-  %5 = load i32, ptr %i.ba, align 8
-  %6 = lshr i32 %5, 29
-  %7 = and i32 %6, 3
-  %8 = zext nneg i32 %7 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN2v88internal10CpuProfile24StreamPendingTraceEventsEv, i64 %8
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  call void @_ZN2v87tracing11TracedValue9SetStringEPKcS3_(ptr noundef nonnull align 8 dereferenceable(41) %i.ay, ptr noundef nonnull @.str.77, ptr noundef nonnull %switch.load) #31
+8:                                                ; preds = %.thread.i
+  br label %.thread.i.a
+
+9:                                                ; preds = %.thread.i
+  unreachable
+
+.thread.i.a:                                      ; preds = %8, %7, %.thread.i
+  %.0.i.i = phi ptr [ @.str.83, %8 ], [ @.str.82, %7 ], [ @.str.81, %.thread.i ]
+  call void @_ZN2v87tracing11TracedValue9SetStringEPKcS3_(ptr noundef nonnull align 8 dereferenceable(41) %i.ay, ptr noundef nonnull @.str.77, ptr noundef nonnull %.0.i.i) #31
   call void @_ZN2v87tracing11TracedValue13EndDictionaryEv(ptr noundef nonnull align 8 dereferenceable(41) %i.ay) #31
   %i.bn = getelementptr inbounds nuw i8, ptr %i.aw, i64 120
   %i.bo = load i32, ptr %i.bn, align 8

@@ -201,13 +201,12 @@ bb.w:                                             ; preds = %bb.v
   %i.be = add nsw i64 %.1140, -1                  ; 4 uses
   %i.bf = getelementptr i8, ptr %.2175, i64 32
   %i.bg = load i32, ptr %i.bf, align 8            ; 5 uses
-  %3 = lshr i32 %i.bg, 2
-  %i.bh = and i32 %3, 7
+  %i.bh = and i32 %i.bg, 28
   %i.bi = and i32 %i.bg, 32
   %.not.i19.i = icmp eq i32 %i.bi, 0              ; 3 uses
   switch i32 %i.bh, label %bb.ad [
-    i32 1, label %bb.x
-    i32 2, label %bb.aa
+    i32 4, label %bb.x
+    i32 8, label %bb.aa
   ]
 
 bb.x:                                             ; preds = %bb.w
@@ -610,9 +609,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr i8, ptr %0, i64 32
   %i.f = load i8, ptr %i.e, align 8
-  %2 = lshr i8 %i.f, 2
-  %3 = and i8 %2, 7
-  switch i8 %3, label %default.unreachable4 [
+  %2 = and i8 %i.f, 28
+  %3 = sub i8 %2, 0                               ; 2 uses
+  %4 = call i8 @llvm.fshl.i8(i8 %3, i8 %3, i8 6)
+  switch i8 %4, label %default.unreachable4 [
     i8 1, label %bb.d
     i8 2, label %bb.e
     i8 4, label %bb.f
@@ -1014,6 +1014,9 @@ declare i64 @llvm.smax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

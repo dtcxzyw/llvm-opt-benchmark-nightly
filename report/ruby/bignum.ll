@@ -201,9 +201,10 @@ bb.f:                                             ; preds = %bb.c
   unreachable
 
 bb.g:                                             ; preds = %bb.c, %bb.d
-  %5 = lshr i32 %3, 4
-  %6 = and i32 %5, 7
-  switch i32 %6, label %bb.i [
+  %5 = and i32 %3, 112
+  %6 = sub i32 %5, 0                              ; 2 uses
+  %7 = call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 28)
+  switch i32 %7, label %bb.i [
     i32 0, label %bb.h
     i32 4, label %bb.j
     i32 2, label %bb.j

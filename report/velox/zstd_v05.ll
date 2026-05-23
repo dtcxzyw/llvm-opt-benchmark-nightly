@@ -201,14 +201,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.n, label %ZSTDv05_decompressSequences.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %5 = lshr i32 %i.l, 4
-  %i.o = and i32 %5, 3
+  %i.o = and i32 %i.l, 48
   %i.p = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.q = load i8, ptr %i.p, align 1, !tbaa !27
   %i.r = zext i8 %i.q to i32                      ; 4 uses
   switch i32 %i.o, label %bb.g [
-    i32 3, label %bb.f
-    i32 2, label %.thread.i
+    i32 48, label %bb.f
+    i32 32, label %.thread.i
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -366,11 +365,10 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.ac
 
 bb.q:                                             ; preds = %bb.c
-  %6 = lshr i32 %i.l, 4
-  %i.dk = and i32 %6, 3
+  %i.dk = and i32 %i.l, 48
   switch i32 %i.dk, label %bb.r [
-    i32 3, label %bb.t
-    i32 2, label %bb.s
+    i32 48, label %bb.t
+    i32 32, label %bb.s
   ]
 
 bb.r:                                             ; preds = %bb.q
@@ -434,11 +432,10 @@ bb.x:                                             ; preds = %bb.u
   br label %bb.ac
 
 bb.y:                                             ; preds = %bb.c
-  %7 = lshr i32 %i.l, 4
-  %i.ep = and i32 %7, 3
+  %i.ep = and i32 %i.l, 48
   switch i32 %i.ep, label %bb.z [
-    i32 3, label %bb.ab
-    i32 2, label %bb.aa
+    i32 48, label %bb.ab
+    i32 32, label %bb.aa
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -489,7 +486,7 @@ bb.ab:                                            ; preds = %bb.y
   %i.fs = zext nneg i32 %i.fr to i64
   br label %bb.ac
 
-default.unreachable:                              ; preds = %FSEv05_buildDTable_raw.exit123.i.i, %FSEv05_buildDTable_raw.exit.i.i, %bb.ao, %bb.c
+default.unreachable:                              ; preds = %bb.ao, %bb.c
   unreachable
 
 bb.ac:                                            ; preds = %.thread171.i, %bb.x, %bb.w, %bb.p, %bb.k
@@ -556,11 +553,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.ae
 bb.ai:                                            ; preds = %bb.ah
   %i.gw = load i8, ptr %.094.i.i, align 1, !tbaa !27
   %i.gx = zext i8 %i.gw to i32                    ; 5 uses
-  %8 = lshr i32 %i.gx, 6
-  %9 = lshr i32 %i.gx, 4
-  %10 = and i32 %9, 3
-  %i.gy = lshr i32 %i.gx, 2
-  %11 = and i32 %i.gy, 3
+  %i.gy = lshr i32 %i.gx, 6
   %i.gz = and i32 %i.gx, 2
   %.not111.i.i = icmp eq i32 %i.gz, 0
   br i1 %.not111.i.i, label %bb.al, label %bb.aj
@@ -606,7 +599,7 @@ bb.an:                                            ; preds = %bb.am, %bb.ak
 
 bb.ao:                                            ; preds = %bb.an
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #27
-  switch i32 %8, label %default.unreachable [
+  switch i32 %i.gy, label %default.unreachable [
     i32 1, label %bb.ap
     i32 0, label %bb.aq
     i32 2, label %bb.as
@@ -706,7 +699,10 @@ bb.av:                                            ; preds = %bb.au
 
 FSEv05_buildDTable_raw.exit.i.i:                  ; preds = %bb.ar, %bb.av, %bb.as, %bb.ap
   %.397.i.i = phi ptr [ %i.jb, %bb.av ], [ %i.hw, %bb.ap ], [ %i.ht, %bb.as ], [ %i.ht, %bb.ar ] ; 8 uses
-  switch i32 %10, label %default.unreachable [
+  %5 = and i32 %i.gx, 48
+  %6 = sub i32 %5, 0                              ; 2 uses
+  %7 = call i32 @llvm.fshl.i32(i32 %6, i32 %6, i32 28)
+  switch i32 %7, label %.unreachabledefault118.i.i [
     i32 1, label %bb.aw
     i32 0, label %FSEv05_buildDTable_raw.exit123.loopexit.i.i
     i32 2, label %bb.ay
@@ -937,6 +933,9 @@ bb.ay:                                            ; preds = %FSEv05_buildDTable_
   %.not114.i.i = icmp eq i32 %i.gi, 0
   br i1 %.not114.i.i, label %.thread142.i.i, label %FSEv05_buildDTable_raw.exit123.i.i
 
+.unreachabledefault118.i.i:                       ; preds = %FSEv05_buildDTable_raw.exit.i.i
+  unreachable
+
 bb.az:                                            ; preds = %FSEv05_buildDTable_raw.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #27
   store i32 31, ptr %i.g, align 4, !tbaa !3
@@ -966,7 +965,10 @@ bb.bb:                                            ; preds = %bb.ba
 
 FSEv05_buildDTable_raw.exit123.i.i:               ; preds = %bb.bb, %bb.ay, %FSEv05_buildDTable_raw.exit123.loopexit.i.i, %bb.ax
   %.599.i.i = phi ptr [ %i.nn, %bb.bb ], [ %i.jg, %bb.ax ], [ %.397.i.i, %bb.ay ], [ %.397.i.i, %FSEv05_buildDTable_raw.exit123.loopexit.i.i ] ; 8 uses
-  switch i32 %11, label %default.unreachable [
+  %8 = and i32 %i.gx, 12
+  %9 = sub i32 %8, 0                              ; 2 uses
+  %10 = call i32 @llvm.fshl.i32(i32 %9, i32 %9, i32 30)
+  switch i32 %10, label %.unreachabledefault119.i.i [
     i32 1, label %bb.bc
     i32 0, label %bb.be
     i32 2, label %bb.bg
@@ -1040,6 +1042,9 @@ bb.bf:                                            ; preds = %bb.bf, %bb.be
 bb.bg:                                            ; preds = %FSEv05_buildDTable_raw.exit123.i.i
   %.not116.i.i = icmp eq i32 %i.gi, 0
   br i1 %.not116.i.i, label %.thread142.i.i, label %ZSTDv05_decodeSeqHeaders.exit.i
+
+.unreachabledefault119.i.i:                       ; preds = %FSEv05_buildDTable_raw.exit123.i.i
+  unreachable
 
 bb.bh:                                            ; preds = %FSEv05_buildDTable_raw.exit123.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #27
@@ -1442,6 +1447,9 @@ declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #23
 
 attributes #0 = { mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

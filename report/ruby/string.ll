@@ -201,12 +201,13 @@ rb_enc_asciicompat.exit:                          ; preds = %get_encoding.exit
 bb.i:                                             ; preds = %rb_enc_asciicompat.exit
   %i.ap = load i64, ptr %i.c, align 8, !tbaa !11
   %i.aq = trunc i64 %i.ap to i32
-  %1 = lshr i32 %i.aq, 20
-  %2 = and i32 %1, 3
-  %3 = inttoptr i64 %.0 to ptr                    ; 2 uses
-  %4 = load i64, ptr %3, align 8, !tbaa !11
-  %5 = and i64 %4, -3145729                       ; 3 uses
-  switch i32 %2, label %default.unreachable [
+  %1 = inttoptr i64 %.0 to ptr                    ; 2 uses
+  %2 = load i64, ptr %1, align 8, !tbaa !11
+  %3 = and i64 %2, -3145729                       ; 3 uses
+  %4 = and i32 %i.aq, 3145728
+  %5 = sub i32 %4, 0                              ; 2 uses
+  %6 = call i32 @llvm.fshl.i32(i32 %5, i32 %5, i32 12)
+  switch i32 %6, label %default.unreachable [
     i32 1, label %bb.j
     i32 3, label %bb.k
     i32 2, label %bb.k
@@ -214,19 +215,19 @@ bb.i:                                             ; preds = %rb_enc_asciicompat.
   ]
 
 bb.j:                                             ; preds = %bb.i
-  %i.ar = or disjoint i64 %5, 1048576
+  %i.ar = or disjoint i64 %3, 1048576
   br label %rb_enc_asciicompat.exit.thread.sink.split
 
 bb.k:                                             ; preds = %bb.i, %bb.i
-  %i.as = or disjoint i64 %5, 2097152
+  %i.as = or disjoint i64 %3, 2097152
   br label %rb_enc_asciicompat.exit.thread.sink.split
 
 default.unreachable:                              ; preds = %bb.i
   unreachable
 
 rb_enc_asciicompat.exit.thread.sink.split:        ; preds = %bb.i, %bb.k, %bb.j
-  %.sink = phi i64 [ %i.ar, %bb.j ], [ %i.as, %bb.k ], [ %5, %bb.i ]
-  store i64 %.sink, ptr %3, align 8, !tbaa !11
+  %.sink = phi i64 [ %i.ar, %bb.j ], [ %i.as, %bb.k ], [ %3, %bb.i ]
+  store i64 %.sink, ptr %1, align 8, !tbaa !11
   br label %rb_enc_asciicompat.exit.thread
 
 rb_enc_asciicompat.exit.thread:                   ; preds = %rb_enc_asciicompat.exit.thread.sink.split, %get_encoding.exit, %rb_enc_asciicompat.exit
@@ -628,6 +629,9 @@ declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #23
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #23
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

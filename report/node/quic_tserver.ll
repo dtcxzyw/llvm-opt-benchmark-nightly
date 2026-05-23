@@ -201,13 +201,15 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.n, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %6 = lshr i64 %i.l, 16
-  %trunc.i = trunc i64 %6 to i8
-  %7 = add i8 %trunc.i, -4
-  %switch.i = icmp ult i8 %7, -3
-  br i1 %switch.i, label %bb.n, label %bb.g
+  %6 = trunc i64 %i.l to i32
+  %7 = and i32 %6, 16711680
+  switch i32 %7, label %bb.n [
+    i32 65536, label %bb.g
+    i32 131072, label %bb.g
+    i32 196608, label %bb.g
+  ]
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.f, %bb.f, %bb.f
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 120
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !69
   %i.q = call i32 @ossl_quic_rstream_read(ptr noundef %i.p, ptr noundef %2, i64 noundef %3, ptr noundef %4, ptr noundef nonnull %i.a) #5
@@ -254,8 +256,8 @@ bb.m:                                             ; preds = %bb.l
   call void @ossl_quic_stream_map_update_state(ptr noundef %i.ae, ptr noundef nonnull %i.e) #5
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.l, %bb.m, %bb.g, %bb.e, %bb.f, %bb.d, %bb.c, %bb.b, %bb.i
-  %.2 = phi i32 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.g ], [ 0, %bb.i ], [ 1, %bb.d ], [ 0, %bb.c ], [ 0, %bb.f ], [ 1, %bb.m ], [ 1, %bb.l ]
+bb.n:                                             ; preds = %bb.f, %bb.l, %bb.m, %bb.g, %bb.e, %bb.d, %bb.c, %bb.b, %bb.i
+  %.2 = phi i32 [ 0, %bb.e ], [ 0, %bb.b ], [ 0, %bb.g ], [ 0, %bb.i ], [ 1, %bb.d ], [ 0, %bb.c ], [ 1, %bb.l ], [ 1, %bb.m ], [ 0, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret i32 %.2
 }
@@ -302,13 +304,15 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %2 = lshr i64 %i.j, 16
-  %trunc.i = trunc i64 %2 to i8
-  %3 = add i8 %trunc.i, -4
-  %switch.i = icmp ult i8 %3, -3
-  br i1 %switch.i, label %bb.h, label %bb.d
+  %2 = trunc i64 %i.j to i32
+  %3 = and i32 %2, 16711680
+  switch i32 %3, label %bb.h [
+    i32 65536, label %bb.d
+    i32 131072, label %bb.d
+    i32 196608, label %bb.d
+  ]
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 120 ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !69
   %i.o = call i32 @ossl_quic_rstream_peek(ptr noundef %i.n, ptr noundef nonnull %i.a, i64 noundef 1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c) #5
@@ -338,8 +342,8 @@ bb.g:                                             ; preds = %bb.f
   call void @ossl_quic_stream_map_update_state(ptr noundef %i.z, ptr noundef nonnull %i.g) #5
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.e, %bb.f, %bb.d, %bb.c, %bb.b, %bb.a, %bb.g
-  %.0 = phi i32 [ 1, %bb.b ], [ 0, %bb.a ], [ 1, %bb.g ], [ 0, %bb.d ], [ 0, %bb.f ], [ 0, %bb.c ], [ 0, %bb.e ]
+bb.h:                                             ; preds = %bb.c, %bb.e, %bb.f, %bb.d, %bb.b, %bb.a, %bb.g
+  %.0 = phi i32 [ 1, %bb.b ], [ 0, %bb.a ], [ 1, %bb.g ], [ 0, %bb.d ], [ 0, %bb.f ], [ 0, %bb.e ], [ 0, %bb.c ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
@@ -367,13 +371,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr i8, ptr %i.f, i64 256
   %.val = load i64, ptr %i.h, align 8
-  %5 = lshr i64 %.val, 8
-  %trunc.i = trunc i64 %5 to i8
-  %6 = add i8 %trunc.i, -4
-  %switch.i = icmp ult i8 %6, -3
-  br i1 %switch.i, label %ossl_quic_tserver_tick.exit, label %bb.d
+  %5 = trunc i64 %.val to i16
+  %trunc.i = and i16 %5, -256
+  switch i16 %trunc.i, label %ossl_quic_tserver_tick.exit [
+    i16 256, label %bb.d
+    i16 512, label %bb.d
+    i16 768, label %bb.d
+  ]
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 112
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !81
   %i.k = tail call i32 @ossl_quic_sstream_append(ptr noundef %i.j, ptr noundef %2, i64 noundef %3, ptr noundef %4) #5
@@ -407,8 +413,8 @@ bb.h:                                             ; preds = %bb.g
   store i8 %i.v, ptr %i.t, align 8
   br label %ossl_quic_tserver_tick.exit
 
-ossl_quic_tserver_tick.exit:                      ; preds = %bb.h, %bb.g, %bb.d, %bb.b, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.g ], [ 1, %bb.h ]
+ossl_quic_tserver_tick.exit:                      ; preds = %bb.c, %bb.h, %bb.g, %bb.d, %bb.b, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.d ], [ 0, %bb.b ], [ 1, %bb.h ], [ 1, %bb.g ], [ 0, %bb.c ]
   ret i32 %.0
 }
 
@@ -433,13 +439,15 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr i8, ptr %i.f, i64 256
   %.val = load i64, ptr %i.h, align 8
-  %2 = lshr i64 %.val, 8
-  %trunc.i = trunc i64 %2 to i8
-  %3 = add i8 %trunc.i, -4
-  %switch.i = icmp ult i8 %3, -3
-  br i1 %switch.i, label %ossl_quic_tserver_tick.exit, label %bb.d
+  %2 = trunc i64 %.val to i16
+  %trunc.i = and i16 %2, -256
+  switch i16 %trunc.i, label %ossl_quic_tserver_tick.exit [
+    i16 256, label %bb.d
+    i16 512, label %bb.d
+    i16 768, label %bb.d
+  ]
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 112 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !81
   %i.k = tail call i32 @ossl_quic_sstream_get_final_size(ptr noundef %i.j, ptr noundef null) #5
@@ -470,8 +478,8 @@ bb.g:                                             ; preds = %bb.f
   store i8 %i.v, ptr %i.t, align 8
   br label %ossl_quic_tserver_tick.exit
 
-ossl_quic_tserver_tick.exit:                      ; preds = %bb.g, %bb.f, %bb.b, %bb.c, %bb.a
-  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 1, %bb.f ], [ 1, %bb.g ]
+ossl_quic_tserver_tick.exit:                      ; preds = %bb.c, %bb.g, %bb.f, %bb.b, %bb.a
+  %.0 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 1, %bb.g ], [ 1, %bb.f ], [ 0, %bb.c ]
   ret i32 %.0
 }
 

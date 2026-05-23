@@ -70,9 +70,9 @@ bb.a:
   %2 = alloca %struct.ref_s, align 8              ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %i.b = load i16, ptr %i.a, align 8, !tbaa !16
+  %i.b = load i16, ptr %i.a, align 8, !tbaa !16   ; 2 uses
   %i.c = lshr i16 %i.b, 2
-  %i.d = and i16 %i.c, 63                         ; 3 uses
+  %i.d = and i16 %i.c, 63                         ; 2 uses
   %i.e = icmp samesign ugt i16 %i.d, 15
   %.053.sroa.gep = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.053.sroa.gep62 = getelementptr inbounds nuw i8, ptr %2, i64 10 ; 2 uses
@@ -89,11 +89,15 @@ bb.a:
   br i1 %.not, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  switch i16 %i.d, label %bb.ab [
-    i16 5, label %bb.c
-    i16 11, label %bb.e
-    i16 7, label %bb.g
-    i16 13, label %bb.h
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  %4 = add i8 %trunc, -20                         ; 2 uses
+  %5 = tail call i8 @llvm.fshl.i8(i8 %4, i8 %4, i8 5)
+  switch i8 %5, label %bb.ab [
+    i8 0, label %bb.c
+    i8 3, label %bb.e
+    i8 1, label %bb.g
+    i8 4, label %bb.h
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -152,9 +156,10 @@ bb.i:                                             ; preds = %.sink.split, %bb.a
   br i1 %.not183, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.i
-  %3 = lshr i16 %i.z, 2
-  %4 = and i16 %3, 15
-  switch i16 %4, label %default.unreachable [
+  %6 = and i16 %i.z, 60
+  %7 = sub i16 %6, 0                              ; 2 uses
+  %8 = call i16 @llvm.fshl.i16(i16 %7, i16 %7, i16 14)
+  switch i16 %8, label %default.unreachable [
     i16 0, label %bb.k
     i16 10, label %bb.k
     i16 1, label %bb.m
@@ -508,11 +513,11 @@ bb.a:
   %i.e = shl i32 %.022.us.us, 1                   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.01621.us.us, i64 8
   %i.g = load i16, ptr %i.f, align 8, !tbaa !16
-  %3 = lshr i16 %i.g, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %._crit_edge [
-    i16 11, label %bb.c
-    i16 5, label %bb.b
+  %3 = trunc i16 %i.g to i8
+  %trunc.us.us = and i8 %3, -4
+  switch i8 %trunc.us.us, label %._crit_edge [
+    i8 44, label %bb.c
+    i8 20, label %bb.b
   ]
 
 bb.b:                                             ; preds = %.lr.ph.split.us.split.us
@@ -533,11 +538,11 @@ bb.c:                                             ; preds = %.lr.ph.split.us.spl
   %i.l = shl i32 %.022, 1                         ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.01621, i64 8
   %i.n = load i16, ptr %i.m, align 8, !tbaa !16
-  %5 = lshr i16 %i.n, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %._crit_edge [
-    i16 11, label %bb.d
-    i16 5, label %bb.e
+  %4 = trunc i16 %i.n to i8
+  %trunc = and i8 %4, -4
+  switch i8 %trunc, label %._crit_edge [
+    i8 44, label %bb.d
+    i8 20, label %bb.e
   ]
 
 bb.d:                                             ; preds = %.lr.ph.split.split
@@ -571,11 +576,11 @@ define dso_local range(i32 -20, 1) i32 @real_param(ptr noundef readonly captures
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !16
-  %3 = lshr i16 %i.b, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.j [
-    i16 5, label %bb.b
-    i16 11, label %bb.c
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %bb.j [
+    i8 20, label %bb.b
+    i8 44, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -624,11 +629,11 @@ define dso_local range(i32 -20, 1) i32 @read_matrix(ptr noundef readonly capture
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !16   ; 2 uses
-  %2 = lshr i16 %i.b, 2
-  %3 = and i16 %2, 63
-  switch i16 %3, label %.loopexit [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
+  %2 = trunc i16 %i.b to i8
+  %trunc = and i8 %2, -4
+  switch i8 %trunc, label %.loopexit [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -647,11 +652,11 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(96) %i.f, i64 96, i1 false), !tbaa.struct !29
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.h = load i16, ptr %i.g, align 8, !tbaa !16
-  %4 = lshr i16 %i.h, 2
-  %5 = and i16 %4, 63
-  switch i16 %5, label %.loopexit [
-    i16 5, label %bb.e
-    i16 11, label %bb.f
+  %3 = trunc i16 %i.h to i8
+  %trunc18 = and i8 %3, -4
+  switch i8 %trunc18, label %.loopexit [
+    i8 20, label %bb.e
+    i8 44, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -664,11 +669,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d, %bb.e
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8, !tbaa !16
-  %6 = lshr i16 %i.l, 2
-  %7 = and i16 %6, 63
-  switch i16 %7, label %.loopexit [
-    i16 5, label %bb.g
-    i16 11, label %bb.h
+  %4 = trunc i16 %i.l to i8
+  %trunc18.1 = and i8 %4, -4
+  switch i8 %trunc18.1, label %.loopexit [
+    i8 20, label %bb.g
+    i8 44, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -682,11 +687,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.q = load i16, ptr %i.p, align 8, !tbaa !16
-  %8 = lshr i16 %i.q, 2
-  %9 = and i16 %8, 63
-  switch i16 %9, label %.loopexit [
-    i16 5, label %bb.i
-    i16 11, label %bb.j
+  %5 = trunc i16 %i.q to i8
+  %trunc18.2 = and i8 %5, -4
+  switch i8 %trunc18.2, label %.loopexit [
+    i8 20, label %bb.i
+    i8 44, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -700,11 +705,11 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.v = load i16, ptr %i.u, align 8, !tbaa !16
-  %10 = lshr i16 %i.v, 2
-  %11 = and i16 %10, 63
-  switch i16 %11, label %.loopexit [
-    i16 5, label %bb.k
-    i16 11, label %bb.l
+  %6 = trunc i16 %i.v to i8
+  %trunc18.3 = and i8 %6, -4
+  switch i8 %trunc18.3, label %.loopexit [
+    i8 20, label %bb.k
+    i8 44, label %bb.l
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -718,11 +723,11 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.aa = load i16, ptr %i.z, align 8, !tbaa !16
-  %12 = lshr i16 %i.aa, 2
-  %13 = and i16 %12, 63
-  switch i16 %13, label %.loopexit [
-    i16 5, label %bb.m
-    i16 11, label %bb.n
+  %7 = trunc i16 %i.aa to i8
+  %trunc18.4 = and i8 %7, -4
+  switch i8 %trunc18.4, label %.loopexit [
+    i8 20, label %bb.m
+    i8 44, label %bb.n
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -736,11 +741,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %i.af = load i16, ptr %i.ae, align 8, !tbaa !16
-  %14 = lshr i16 %i.af, 2
-  %15 = and i16 %14, 63
-  switch i16 %15, label %.loopexit [
-    i16 5, label %bb.o
-    i16 11, label %bb.p
+  %8 = trunc i16 %i.af to i8
+  %trunc18.5 = and i8 %8, -4
+  switch i8 %trunc18.5, label %.loopexit [
+    i8 20, label %bb.o
+    i8 44, label %bb.p
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -784,11 +789,11 @@ bb.d:                                             ; preds = %bb.c
   %i.h = load ptr, ptr %0, align 8, !tbaa !9      ; 12 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   %i.j = load i16, ptr %i.i, align 8, !tbaa !16
-  %1 = lshr i16 %i.j, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.e [
-    i16 11, label %bb.f
-    i16 5, label %bb.f
+  %1 = trunc i16 %i.j to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.e [
+    i8 44, label %bb.f
+    i8 20, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -799,11 +804,11 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8, !tbaa !16
-  %3 = lshr i16 %i.l, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.g [
-    i16 11, label %bb.h
-    i16 5, label %bb.h
+  %2 = trunc i16 %i.l to i8
+  %trunc.1 = and i8 %2, -4
+  switch i8 %trunc.1, label %bb.g [
+    i8 44, label %bb.h
+    i8 20, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -815,11 +820,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.f
   %i.n = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %i.o = load i16, ptr %i.n, align 8, !tbaa !16
-  %5 = lshr i16 %i.o, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.i [
-    i16 11, label %bb.j
-    i16 5, label %bb.j
+  %3 = trunc i16 %i.o to i8
+  %trunc.2 = and i8 %3, -4
+  switch i8 %trunc.2, label %bb.i [
+    i8 44, label %bb.j
+    i8 20, label %bb.j
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -831,11 +836,11 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.h, %bb.h
   %i.q = getelementptr inbounds nuw i8, ptr %i.h, i64 56 ; 2 uses
   %i.r = load i16, ptr %i.q, align 8, !tbaa !16
-  %7 = lshr i16 %i.r, 2
-  %8 = and i16 %7, 63
-  switch i16 %8, label %bb.k [
-    i16 11, label %bb.l
-    i16 5, label %bb.l
+  %4 = trunc i16 %i.r to i8
+  %trunc.3 = and i8 %4, -4
+  switch i8 %trunc.3, label %bb.k [
+    i8 44, label %bb.l
+    i8 20, label %bb.l
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -847,11 +852,11 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.j
   %i.t = getelementptr inbounds nuw i8, ptr %i.h, i64 72 ; 2 uses
   %i.u = load i16, ptr %i.t, align 8, !tbaa !16
-  %9 = lshr i16 %i.u, 2
-  %10 = and i16 %9, 63
-  switch i16 %10, label %bb.m [
-    i16 11, label %bb.n
-    i16 5, label %bb.n
+  %5 = trunc i16 %i.u to i8
+  %trunc.4 = and i8 %5, -4
+  switch i8 %trunc.4, label %bb.m [
+    i8 44, label %bb.n
+    i8 20, label %bb.n
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -863,11 +868,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.l
   %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 88 ; 2 uses
   %i.x = load i16, ptr %i.w, align 8, !tbaa !16
-  %11 = lshr i16 %i.x, 2
-  %12 = and i16 %11, 63
-  switch i16 %12, label %bb.o [
-    i16 11, label %.loopexit
-    i16 5, label %.loopexit
+  %6 = trunc i16 %i.x to i8
+  %trunc.5 = and i8 %6, -4
+  switch i8 %trunc.5, label %bb.o [
+    i8 44, label %.loopexit
+    i8 20, label %.loopexit
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -882,6 +887,9 @@ bb.o:                                             ; preds = %bb.n
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
@@ -889,6 +897,9 @@ declare i32 @llvm.umin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i16 @llvm.fshl.i16(i16, i16, i16) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #9

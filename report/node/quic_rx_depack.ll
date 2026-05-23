@@ -201,21 +201,22 @@ bb.cf:                                            ; preds = %bb.ce
 
 bb.cg:                                            ; preds = %bb.ce
   %i.gu = load i64, ptr %i.gh, align 8
-  %12 = lshr i64 %i.gu, 16
-  %trunc.i.i = trunc i64 %12 to i8                ; 2 uses
-  %trunc.off.i.i = add i8 %trunc.i.i, -1
-  %switch.i.i = icmp ult i8 %trunc.off.i.i, 2
-  br i1 %switch.i.i, label %bb.ch, label %depack_do_frame_stream.exit.i
+  %12 = trunc i64 %i.gu to i32
+  %13 = and i32 %12, 16711680                     ; 2 uses
+  switch i32 %13, label %depack_do_frame_stream.exit.i [
+    i32 65536, label %bb.ch
+    i32 131072, label %bb.ch
+  ]
 
-bb.ch:                                            ; preds = %bb.cg
+bb.ch:                                            ; preds = %bb.cg, %bb.cg
   %i.gv = load i8, ptr %i.bk, align 8
   %i.gw = and i8 %i.gv, 2
   %.not28.i.i = icmp eq i8 %i.gw, 0
   br i1 %.not28.i.i, label %bb.cj, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch
-  %trunc.off.i.i.i = add nsw i8 %trunc.i.i, -2
-  %switch.i.i.i = icmp ult i8 %trunc.off.i.i.i, 5
+  %14 = add nsw i32 %13, -131072
+  %switch.i.i.i = icmp ult i32 %14, 327680
   br i1 %switch.i.i.i, label %ossl_quic_stream_recv_get_final_size.exit.i.i, label %ossl_quic_stream_recv_get_final_size.exit.thread.i.i
 
 ossl_quic_stream_recv_get_final_size.exit.i.i:    ; preds = %bb.ci
@@ -303,7 +304,7 @@ depack_do_frame_stream.exit.thread.i:             ; preds = %bb.by, %bb.cp, %bb.
   br label %.critedge.i
 
 depack_do_frame_stream.exit.i:                    ; preds = %.thread.i.i, %bb.cj, %bb.cg, %bb.bz
-  %.2252.i = phi i64 [ 0, %bb.cg ], [ 0, %bb.cj ], [ 0, %bb.bz ], [ %i.hw, %.thread.i.i ]
+  %.2252.i = phi i64 [ %i.hw, %.thread.i.i ], [ 0, %bb.cg ], [ 0, %bb.bz ], [ 0, %bb.cj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n) #3
