@@ -201,53 +201,25 @@ _ZNK6icu_788Calendar11newestStampE19UCalendarDateFieldsS1_i.exit.preheader.i: ; 
   %i.aa = tail call i8 @llvm.smax.i8(i8 %i.z, i8 0)
   %spec.select.i.i = zext nneg i8 %i.aa to i32
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 105
-  %2 = load i8, ptr %i.ab, align 1
-  %3 = sext i8 %2 to i32
-  %spec.select.i.1.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.i, i32 %3)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 106
-  %5 = load i8, ptr %4, align 2
-  %6 = sext i8 %5 to i32
-  %spec.select.i.2.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.1.i, i32 %6)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 107
-  %8 = load i8, ptr %7, align 1
-  %9 = sext i8 %8 to i32
-  %spec.select.i.3.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.2.i, i32 %9)
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %11 = load i8, ptr %10, align 4
-  %12 = sext i8 %11 to i32
-  %spec.select.i.4.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.3.i, i32 %12)
-  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 109
+  %2 = load <8 x i8>, ptr %i.ab, align 1
+  %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 121
   %i.ad = load i8, ptr %i.ac, align 1
   %i.ae = sext i8 %i.ad to i32
-  %spec.select.i.5.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.4.i, i32 %i.ae)
-  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 110
+  %i.af = getelementptr inbounds nuw i8, ptr %0, i64 122
   %i.ag = load i8, ptr %i.af, align 2
-  %13 = sext i8 %i.ag to i32
-  %spec.select.i.6.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.5.i, i32 %13)
-  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 111
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 123
   %i.ai = load i8, ptr %i.ah, align 1
-  %14 = sext i8 %i.ai to i32
-  %spec.select.i.7.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.6.i, i32 %14)
-  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.ak = load i8, ptr %i.aj, align 8
+  %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 127
+  %i.ak = load i8, ptr %i.aj, align 1
   %i.al = sext i8 %i.ak to i32
-  %spec.select.i.8.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.7.i, i32 %i.al)
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 121
-  %16 = load i8, ptr %15, align 1
-  %17 = sext i8 %16 to i32
-  %spec.select.i11.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i.8.i, i32 %17)
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 122
-  %19 = load i8, ptr %18, align 2
-  %i.am = sext i8 %19 to i32
-  %spec.select.i11.1.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.i, i32 %i.am)
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 123
-  %21 = load i8, ptr %20, align 1
-  %22 = sext i8 %21 to i32
-  %spec.select.i11.2.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.1.i, i32 %22)
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 127
-  %24 = load i8, ptr %23, align 1
-  %25 = sext i8 %24 to i32
-  %spec.select.i18.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.2.i, i32 %25)
+  %3 = sext <8 x i8> %2 to <8 x i32>
+  %4 = tail call i32 @llvm.vector.reduce.smax.v8i32(<8 x i32> %3)
+  %spec.select.i11.i = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.ae)
+  %5 = tail call i8 @llvm.smax.i8(i8 %i.ag, i8 %i.ai)
+  %i.am = sext i8 %5 to i32
+  %spec.select.i11.1.i = tail call i32 @llvm.smax.i32(i32 %i.al, i32 %spec.select.i.i)
+  %spec.select.i11.2.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.i, i32 %i.am)
+  %spec.select.i18.i = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.2.i, i32 %spec.select.i11.1.i)
   %i.an = zext nneg i8 %i.w to i32
   %.not.not.i = icmp samesign ugt i32 %spec.select.i18.i, %i.an
   br i1 %.not.not.i, label %_ZN6icu_788Calendar16computeJulianDayER10UErrorCode.exit, label %_ZN6icu_788Calendar16computeJulianDayER10UErrorCode.exit.thread
@@ -505,53 +477,25 @@ _ZNK6icu_788Calendar11newestStampE19UCalendarDateFieldsS1_i.exit.preheader: ; pr
   %i.f = tail call i8 @llvm.smax.i8(i8 %i.e, i8 0)
   %spec.select.i = zext nneg i8 %i.f to i32
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 105
-  %2 = load i8, ptr %i.g, align 1
-  %3 = sext i8 %2 to i32
-  %spec.select.i.1 = tail call i32 @llvm.smax.i32(i32 %spec.select.i, i32 %3)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 106
-  %5 = load i8, ptr %4, align 2
-  %6 = sext i8 %5 to i32
-  %spec.select.i.2 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.1, i32 %6)
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 107
-  %8 = load i8, ptr %7, align 1
-  %9 = sext i8 %8 to i32
-  %spec.select.i.3 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.2, i32 %9)
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %11 = load i8, ptr %10, align 4
-  %12 = sext i8 %11 to i32
-  %spec.select.i.4 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.3, i32 %12)
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 109
+  %2 = load <8 x i8>, ptr %i.g, align 1
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 121
   %i.i = load i8, ptr %i.h, align 1
   %i.j = sext i8 %i.i to i32
-  %spec.select.i.5 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.4, i32 %i.j)
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 110
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 122
   %i.l = load i8, ptr %i.k, align 2
-  %13 = sext i8 %i.l to i32
-  %spec.select.i.6 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.5, i32 %13)
-  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 111
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 123
   %i.n = load i8, ptr %i.m, align 1
-  %14 = sext i8 %i.n to i32
-  %spec.select.i.7 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.6, i32 %14)
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.p = load i8, ptr %i.o, align 8
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 127
+  %i.p = load i8, ptr %i.o, align 1
   %i.q = sext i8 %i.p to i32
-  %spec.select.i.8 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.7, i32 %i.q)
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 121
-  %16 = load i8, ptr %15, align 1
-  %17 = sext i8 %16 to i32
-  %spec.select.i11 = tail call i32 @llvm.smax.i32(i32 %spec.select.i.8, i32 %17)
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 122
-  %19 = load i8, ptr %18, align 2
-  %i.r = sext i8 %19 to i32
-  %spec.select.i11.1 = tail call i32 @llvm.smax.i32(i32 %spec.select.i11, i32 %i.r)
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 123
-  %21 = load i8, ptr %20, align 1
-  %22 = sext i8 %21 to i32
-  %spec.select.i11.2 = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.1, i32 %22)
-  %23 = getelementptr inbounds nuw i8, ptr %0, i64 127
-  %24 = load i8, ptr %23, align 1
-  %25 = sext i8 %24 to i32
-  %spec.select.i18 = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.2, i32 %25)
+  %3 = sext <8 x i8> %2 to <8 x i32>
+  %4 = tail call i32 @llvm.vector.reduce.smax.v8i32(<8 x i32> %3)
+  %spec.select.i11 = tail call i32 @llvm.smax.i32(i32 %4, i32 %i.j)
+  %5 = tail call i8 @llvm.smax.i8(i8 %i.l, i8 %i.n)
+  %i.r = sext i8 %5 to i32
+  %spec.select.i11.1 = tail call i32 @llvm.smax.i32(i32 %i.q, i32 %spec.select.i)
+  %spec.select.i11.2 = tail call i32 @llvm.smax.i32(i32 %spec.select.i11, i32 %i.r)
+  %spec.select.i18 = tail call i32 @llvm.smax.i32(i32 %spec.select.i11.2, i32 %spec.select.i11.1)
   %i.s = zext nneg i8 %i.b to i32
   %.not.not = icmp samesign ugt i32 %spec.select.i18, %i.s
   br i1 %.not.not, label %.thread, label %bb.b
@@ -953,6 +897,9 @@ declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.smax.v4i32(<4 x i32>) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.smax.v8i32(<8 x i32>) #12
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
