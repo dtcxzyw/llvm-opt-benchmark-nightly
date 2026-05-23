@@ -201,13 +201,12 @@ declare void @abort() local_unnamed_addr #10
 define dso_local i64 @rdbSaveStringObject(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.c [
-    i32 1, label %bb.b
-    i32 0, label %.critedge
-    i32 8, label %.critedge
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.c [
+    i8 16, label %bb.b
+    i8 0, label %.critedge
+    i8 -128, label %.critedge
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -610,8 +609,8 @@ bb.a:
   %i.k = alloca i8, align 1                       ; 5 uses
   %i.l = alloca i8, align 1                       ; 5 uses
   %i.m = alloca i8, align 1                       ; 5 uses
-  %i.n = load i64, ptr %1, align 8
-  %i.o = trunc i64 %i.n to i32                    ; 5 uses
+  %i.n = load i64, ptr %1, align 8                ; 5 uses
+  %i.o = trunc i64 %i.n to i32
   %i.p = and i32 %i.o, 15
   switch i32 %i.p, label %bb.bx [
     i32 0, label %bb.b
@@ -672,11 +671,11 @@ rdbSaveType.exit:                                 ; preds = %bb.b, %bb.c, %.thre
   br label %bb.by
 
 bb.g:                                             ; preds = %bb.a
-  %2 = lshr i32 %i.o, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.m [
-    i32 9, label %bb.h
-    i32 11, label %bb.h
+  %2 = trunc i64 %i.n to i8
+  %trunc115 = and i8 %2, -16
+  switch i8 %trunc115, label %bb.m [
+    i8 -112, label %bb.h
+    i8 -80, label %bb.h
   ]
 
 bb.h:                                             ; preds = %bb.g, %bb.g
@@ -733,12 +732,12 @@ bb.m:                                             ; preds = %bb.g
   unreachable
 
 bb.n:                                             ; preds = %bb.a
-  %4 = lshr i32 %i.o, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.ad [
-    i32 6, label %bb.o
-    i32 2, label %bb.t
-    i32 11, label %bb.y
+  %3 = trunc i64 %i.n to i8
+  %trunc114 = and i8 %3, -16
+  switch i8 %trunc114, label %bb.ad [
+    i8 96, label %bb.o
+    i8 32, label %bb.t
+    i8 -80, label %bb.y
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -891,11 +890,11 @@ bb.ad:                                            ; preds = %bb.n
   unreachable
 
 bb.ae:                                            ; preds = %bb.a
-  %6 = lshr i32 %i.o, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.ap [
-    i32 11, label %bb.af
-    i32 7, label %bb.ak
+  %4 = trunc i64 %i.n to i8
+  %trunc113 = and i8 %4, -16
+  switch i8 %trunc113, label %bb.ap [
+    i8 -80, label %bb.af
+    i8 112, label %bb.ak
   ]
 
 bb.af:                                            ; preds = %bb.ae
@@ -1000,12 +999,12 @@ bb.ap:                                            ; preds = %bb.ae
   unreachable
 
 bb.aq:                                            ; preds = %bb.a
-  %8 = lshr i32 %i.o, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %bb.bm [
-    i32 11, label %bb.ar
-    i32 12, label %bb.aw
-    i32 2, label %bb.bb
+  %5 = trunc i64 %i.n to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %bb.bm [
+    i8 -80, label %bb.ar
+    i8 -64, label %bb.aw
+    i8 32, label %bb.bb
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -1408,8 +1407,8 @@ bb.a:
   %5 = alloca %struct.dictIterator, align 8       ; 10 uses
   %6 = alloca %struct.raxIterator, align 8        ; 20 uses
   %7 = alloca %struct.RedisModuleIO, align 8      ; 14 uses
-  %i.h = load i64, ptr %1, align 8                ; 2 uses
-  %i.i = trunc i64 %i.h to i32                    ; 5 uses
+  %i.h = load i64, ptr %1, align 8                ; 6 uses
+  %i.i = trunc i64 %i.h to i32
   %i.j = and i32 %i.i, 15
   switch i32 %i.j, label %bb.dw [
     i32 0, label %bb.b
@@ -1427,11 +1426,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.l, label %.thread, label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %8 = lshr i32 %i.i, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %bb.t [
-    i32 9, label %bb.d
-    i32 11, label %bb.j
+  %8 = trunc i64 %i.h to i8
+  %trunc541 = and i8 %8, -16
+  switch i8 %trunc541, label %bb.t [
+    i8 -112, label %bb.d
+    i8 -80, label %bb.j
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -1602,12 +1601,12 @@ bb.t:                                             ; preds = %bb.c
   unreachable
 
 bb.u:                                             ; preds = %bb.a
-  %10 = lshr i32 %i.i, 4
-  %11 = and i32 %10, 15
-  switch i32 %11, label %bb.af [
-    i32 2, label %bb.v
-    i32 6, label %bb.ad
-    i32 11, label %bb.ae
+  %9 = trunc i64 %i.h to i8
+  %trunc540 = and i8 %9, -16
+  switch i8 %trunc540, label %bb.af [
+    i8 32, label %bb.v
+    i8 96, label %bb.ad
+    i8 -80, label %bb.ae
   ]
 
 bb.v:                                             ; preds = %bb.u
@@ -1723,11 +1722,11 @@ bb.af:                                            ; preds = %bb.u
   unreachable
 
 bb.ag:                                            ; preds = %bb.a
-  %12 = lshr i32 %i.i, 4
-  %13 = and i32 %12, 15
-  switch i32 %13, label %bb.av [
-    i32 11, label %bb.ah
-    i32 7, label %bb.ai
+  %10 = trunc i64 %i.h to i8
+  %trunc539 = and i8 %10, -16
+  switch i8 %trunc539, label %bb.av [
+    i8 -80, label %bb.ah
+    i8 112, label %bb.ai
   ]
 
 bb.ah:                                            ; preds = %bb.ag
@@ -1882,12 +1881,12 @@ bb.av:                                            ; preds = %bb.ag
   unreachable
 
 bb.aw:                                            ; preds = %bb.a
-  %14 = lshr i32 %i.i, 4
-  %15 = and i32 %14, 15
-  switch i32 %15, label %bb.cf [
-    i32 11, label %bb.ax
-    i32 12, label %bb.ax
-    i32 2, label %bb.bf
+  %11 = trunc i64 %i.h to i8
+  %trunc = and i8 %11, -16
+  switch i8 %trunc, label %bb.cf [
+    i8 -80, label %bb.ax
+    i8 -64, label %bb.ax
+    i8 32, label %bb.bf
   ]
 
 bb.ax:                                            ; preds = %bb.aw, %bb.aw

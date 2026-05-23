@@ -201,12 +201,11 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 10 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !13
   %i.n = load i64, ptr %0, align 8
-  %7 = trunc i64 %i.n to i32
-  %8 = lshr i32 %7, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %.loopexit91 [
-    i32 11, label %bb.b
-    i32 7, label %bb.l
+  %7 = trunc i64 %i.n to i8
+  %trunc = and i8 %7, -16
+  switch i8 %trunc, label %.loopexit91 [
+    i8 -80, label %bb.b
+    i8 112, label %bb.l
   ]
 
 bb.b:                                             ; preds = %bb.a

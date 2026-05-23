@@ -201,9 +201,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.e = load i32, ptr %i.d, align 4
   %i.f = trunc i32 %i.e to i8
-  %1 = lshr i8 %i.f, 2
-  %2 = and i8 %1, 7
-  switch i8 %2, label %bb.e [
+  %1 = and i8 %i.f, 28
+  %2 = sub i8 %1, 0                               ; 2 uses
+  %3 = call i8 @llvm.fshl.i8(i8 %2, i8 %2, i8 6)
+  switch i8 %3, label %bb.e [
     i8 0, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit
     i8 4, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit
     i8 2, label %bb.c
@@ -248,9 +249,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.e = load i32, ptr %i.d, align 4
   %i.f = trunc i32 %i.e to i8
-  %2 = lshr i8 %i.f, 2
-  %3 = and i8 %2, 7
-  switch i8 %3, label %bb.f [
+  %2 = and i8 %i.f, 28
+  %3 = sub i8 %2, 0                               ; 2 uses
+  %4 = call i8 @llvm.fshl.i8(i8 %3, i8 %3, i8 6)
+  switch i8 %4, label %bb.f [
     i8 0, label %bb.g
     i8 4, label %bb.g
     i8 2, label %bb.c
@@ -653,9 +655,10 @@ bb.b:                                             ; preds = %.lr.ph
   %i.n = getelementptr inbounds nuw i8, ptr %i.j, i64 20
   %i.o = load i32, ptr %i.n, align 4
   %i.p = trunc i32 %i.o to i8
-  %2 = lshr i8 %i.p, 2
-  %3 = and i8 %2, 7
-  switch i8 %3, label %bb.f [
+  %2 = and i8 %i.p, 28
+  %3 = sub i8 %2, 0                               ; 2 uses
+  %4 = call i8 @llvm.fshl.i8(i8 %3, i8 %3, i8 6)
+  switch i8 %4, label %bb.f [
     i8 0, label %bb.g
     i8 4, label %bb.g
     i8 2, label %bb.c
@@ -1058,29 +1061,72 @@ bb.q:                                             ; preds = %bb.p
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal8compiler19LinearScanAllocator19ProcessCurrentRangeEPNS1_9LiveRangeENS1_22RegisterAllocationData9SpillModeE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #2 align 2 {
 bb.a:
-  %3 = alloca %"class.v8::base::EmbeddedVector", align 8 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #35
-  %.ptr2.i = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  store ptr %.ptr2.i, ptr %3, align 8
-  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %3 = alloca i32, align 4                        ; 5 uses
+  %4 = alloca %"class.v8::base::EmbeddedVector", align 8 ; 7 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
+  %.ptr2.i = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  store ptr %.ptr2.i, ptr %4, align 8
+  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 32, ptr %i.a, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(128) %.ptr2.i, i8 -1, i64 128, i1 false)
   call void @_ZN2v88internal8compiler19LinearScanAllocator25FindFreeRegistersForRangeEPNS1_9LiveRangeENS_4base6VectorINS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, ptr nonnull %.ptr2.i, i64 poison)
-  %i.b = load ptr, ptr %3, align 8
-  %4 = call noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, ptr %i.b, i64 poison)
-  br i1 %4, label %bb.d, label %bb.b
+  %i.b = load ptr, ptr %4, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #35
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 2 uses
+  %6 = load i32, ptr %5, align 4
+  %7 = lshr i32 %6, 22
+  %8 = and i32 %7, 63                             ; 2 uses
+  %.not.i.not.i = icmp eq i32 %8, 32
+  br i1 %.not.i.not.i, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
 
-bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %3, align 8
-  %i.d = call noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator18TryAllocateFreeRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, ptr %i.c, i64 poison)
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i: ; preds = %bb.a
+  %9 = call noundef zeroext i1 @_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi(ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull %3)
+  br i1 %9, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i, label %10
+
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i: ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i
+  %.pre.i = load i32, ptr %3, align 4
+  br label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+
+10:                                               ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %12 = load ptr, ptr %11, align 8
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 128
+  %14 = load ptr, ptr %13, align 8                ; 2 uses
+  %15 = icmp eq ptr %14, null
+  br i1 %15, label %bb.b, label %16
+
+16:                                               ; preds = %10
+  %17 = getelementptr inbounds nuw i8, ptr %14, i64 68
+  %18 = load i32, ptr %17, align 4                ; 2 uses
+  %19 = icmp eq i32 %18, 32
+  br i1 %19, label %bb.b, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i: ; preds = %16, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i, %bb.a
+  %20 = phi i32 [ %.pre.i, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i ], [ %8, %bb.a ], [ %18, %16 ] ; 2 uses
+  %21 = sext i32 %20 to i64
+  %22 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %21
+  %23 = getelementptr inbounds nuw i8, ptr %1, i64 96
+  %.sroa.0.0.copyload.i13.i = load i32, ptr %23, align 8
+  %24 = load i32, ptr %22, align 4
+  %.not.i = icmp slt i32 %24, %.sroa.0.0.copyload.i13.i
+  br i1 %.not.i, label %bb.b, label %_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE.exit
+
+_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE.exit: ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+  call void @_ZN2v88internal8compiler19LinearScanAllocator28SetLiveRangeAssignedRegisterEPNS1_9LiveRangeEi(ptr noundef nonnull readonly align 8 dereferenceable(168) %0, ptr noundef nonnull %1, i32 noundef %20)
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #35
+  br label %bb.d
+
+bb.b:                                             ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i, %16, %10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #35
+  %i.c = load ptr, ptr %4, align 8
+  %i.d = call noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator18TryAllocateFreeRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull %1, ptr %i.c, i64 poison)
   br i1 %i.d, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @_ZN2v88internal8compiler19LinearScanAllocator18AllocateBlockedRegEPNS1_9LiveRangeENS1_22RegisterAllocationData9SpillModeE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, i32 noundef %2)
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 4
+bb.d:                                             ; preds = %_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE.exit, %bb.b, %bb.c
   %i.e = load i32, ptr %5, align 4
   %i.f = and i32 %i.e, 8064
   %.not = icmp eq i32 %i.f, 4096
@@ -1122,7 +1168,7 @@ _ZN2v88internal8compiler19LinearScanAllocator11AddToActiveEPNS1_9LiveRangeE.exit
   br label %bb.g
 
 bb.g:                                             ; preds = %_ZN2v88internal8compiler19LinearScanAllocator11AddToActiveEPNS1_9LiveRangeE.exit, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #35
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
   ret void
 }
 
@@ -1525,121 +1571,24 @@ _ZN2v88internal8compiler9LiveRange17FirstIntersectionEPS2_.exit: ; preds = %bb.m
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(168) %0, ptr noundef captures(address) %1, ptr readonly captures(none) %2, i64 %3) local_unnamed_addr #2 align 2 {
 _ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a:
+  %4 = alloca i32, align 4                        ; 4 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i32, ptr %i.a, align 4
   %i.c = lshr i32 %i.b, 22
   %i.d = and i32 %i.c, 63                         ; 2 uses
   %.not.i.not = icmp eq i32 %i.d, 32
-  br i1 %.not.i.not, label %4, label %bb.c
+  br i1 %.not.i.not, label %.thread, label %bb.c
 
-4:                                                ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %6 = load i64, ptr %5, align 8                  ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %8 = load i64, ptr %7, align 8                  ; 2 uses
-  %9 = icmp eq i64 %6, %8
-  br i1 %9, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %.lr.ph.preheader.i
+.thread:                                          ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a
+  %5 = call noundef zeroext i1 @_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi(ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull %4)
+  br i1 %5, label %bb.a, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread
 
-.lr.ph.preheader.i:                               ; preds = %4
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %11 = load ptr, ptr %10, align 8                ; 3 uses
-  %12 = getelementptr [8 x i8], ptr %11, i64 %8   ; 4 uses
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %6
-  br label %.lr.ph.i
+bb.a:                                             ; preds = %.thread
+  %.pre = load i32, ptr %4, align 4
+  br label %bb.c
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.backedge, %.lr.ph.preheader.i
-  %.028.i = phi ptr [ %13, %.lr.ph.preheader.i ], [ %.028.i.be, %.lr.ph.i.backedge ] ; 5 uses
-  %.01127.i = phi i1 [ false, %.lr.ph.preheader.i ], [ %.01127.i.be, %.lr.ph.i.backedge ] ; 2 uses
-  %14 = load ptr, ptr %.028.i, align 8            ; 3 uses
-  %15 = getelementptr inbounds nuw i8, ptr %14, i64 8
-  %16 = load ptr, ptr %15, align 8                ; 4 uses
-  %17 = icmp eq ptr %16, null
-  br i1 %17, label %37, label %18
-
-18:                                               ; preds = %.lr.ph.i
-  %19 = getelementptr inbounds nuw i8, ptr %14, i64 20
-  %20 = load i32, ptr %19, align 4
-  %21 = trunc i32 %20 to i8
-  %22 = lshr i8 %21, 2
-  %23 = and i8 %22, 7
-  switch i8 %23, label %36 [
-    i8 0, label %37
-    i8 4, label %37
-    i8 2, label %24
-    i8 1, label %29
-    i8 3, label %33
-  ]
-
-24:                                               ; preds = %18
-  %25 = getelementptr inbounds nuw i8, ptr %16, i64 20
-  %26 = load i32, ptr %25, align 4
-  %27 = lshr i32 %26, 6
-  %28 = and i32 %27, 63                           ; 2 uses
-  %.not13.i.i = icmp eq i32 %28, 32
-  br i1 %.not13.i.i, label %37, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-29:                                               ; preds = %18
-  %30 = load i64, ptr %16, align 8
-  %31 = lshr i64 %30, 32
-  %32 = trunc nuw i64 %31 to i32
-  br label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-33:                                               ; preds = %18
-  %34 = getelementptr inbounds nuw i8, ptr %16, i64 48
-  %35 = load i32, ptr %34, align 8                ; 2 uses
-  %.not.i.i = icmp eq i32 %35, 32
-  br i1 %.not.i.i, label %37, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-36:                                               ; preds = %18
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #34
-  unreachable
-
-_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i: ; preds = %33, %24, %29
-  %.sink.i.i = phi i32 [ %32, %29 ], [ %28, %24 ], [ %35, %33 ] ; 2 uses
-  br i1 %.01127.i, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit, label %bb.a
-
-37:                                               ; preds = %33, %24, %18, %18, %.lr.ph.i
-  br i1 %.01127.i, label %.thread, label %38
-
-38:                                               ; preds = %37
-  %39 = getelementptr inbounds nuw i8, ptr %14, i64 20
-  %40 = load i32, ptr %39, align 4
-  %41 = and i32 %40, 24
-  %spec.select.i = icmp eq i32 %41, 8             ; 2 uses
-  %42 = getelementptr inbounds nuw i8, ptr %.028.i, i64 8 ; 2 uses
-  %.not.i12 = icmp eq ptr %42, %12
-  br i1 %.not.i12, label %.loopexit.i, label %.lr.ph.i.backedge
-
-.lr.ph.i.backedge:                                ; preds = %38, %.thread
-  %.028.i.be = phi ptr [ %42, %38 ], [ %43, %.thread ]
-  %.01127.i.be = phi i1 [ %spec.select.i, %38 ], [ true, %.thread ]
-  br label %.lr.ph.i, !llvm.loop !10
-
-.thread:                                          ; preds = %37
-  %43 = getelementptr inbounds nuw i8, ptr %.028.i, i64 8 ; 2 uses
-  %.not.i1228 = icmp eq ptr %43, %12
-  br i1 %.not.i1228, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %.lr.ph.i.backedge
-
-.loopexit.i:                                      ; preds = %38
-  br i1 %spec.select.i, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %bb.a
-
-bb.a:                                             ; preds = %.loopexit.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-  %.2 = phi i32 [ 32, %.loopexit.i ], [ %.sink.i.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ]
-  %.01752.i = phi ptr [ %12, %.loopexit.i ], [ %.028.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ] ; 2 uses
-  %44 = ptrtoint ptr %.01752.i to i64
-  %45 = ptrtoint ptr %11 to i64
-  %46 = sub i64 %44, %45
-  %47 = ashr exact i64 %46, 3
-  store i64 %47, ptr %5, align 8
-  br label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit
-
-_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit: ; preds = %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i, %bb.a
-  %.3 = phi i32 [ %.sink.i.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ], [ %.2, %bb.a ]
-  %.01753.i = phi ptr [ %.028.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ], [ %.01752.i, %bb.a ]
-  %.not = icmp eq ptr %.01753.i, %12
-  br i1 %.not, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %bb.c
-
-_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread: ; preds = %.thread, %.loopexit.i, %4, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit
+_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread: ; preds = %.thread
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 128
@@ -1653,8 +1602,8 @@ bb.b:                                             ; preds = %_ZN2v88internal8com
   %i.l = icmp eq i32 %i.k, 32
   br i1 %i.l, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread, label %bb.c
 
-bb.c:                                             ; preds = %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a, %bb.b
-  %.027 = phi i32 [ %i.d, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a ], [ %.3, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit ], [ %i.k, %bb.b ] ; 2 uses
+bb.c:                                             ; preds = %bb.b, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a, %bb.a
+  %.027 = phi i32 [ %.pre, %bb.a ], [ %i.d, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.a ], [ %i.k, %bb.b ] ; 2 uses
   %i.m = sext i32 %.027 to i64
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.m
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 96
@@ -1669,167 +1618,72 @@ bb.d:                                             ; preds = %bb.c
 
 _ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread: ; preds = %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, %bb.b, %bb.c, %bb.d
   %.0 = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ false, %bb.b ], [ false, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
   ret i1 %.0
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator18TryAllocateFreeRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef %1, ptr readonly captures(none) %2, i64 %3) local_unnamed_addr #2 align 2 {
 bb.a:
+  %4 = alloca i32, align 4                        ; 5 uses
   %i.a = alloca ptr, align 8                      ; 4 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.c = load i32, ptr %i.b, align 4              ; 2 uses
+  %5 = alloca i32, align 4                        ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #35
+  store i32 32, ptr %5, align 4
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4 ; 3 uses
+  %i.c = load i32, ptr %i.b, align 4
   %i.d = lshr i32 %i.c, 22
   %i.e = and i32 %i.d, 63                         ; 2 uses
   %.not.i.not = icmp eq i32 %i.e, 32
   br i1 %.not.i.not, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
 
 _ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit: ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %5 = load i64, ptr %4, align 8                  ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %7 = load i64, ptr %6, align 8                  ; 2 uses
-  %8 = icmp eq i64 %5, %7
-  br i1 %8, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %.lr.ph.preheader.i
+  %6 = call noundef zeroext i1 @_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi(ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull %5)
+  br i1 %6, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread, label %.lr.ph.i.a
 
-.lr.ph.preheader.i:                               ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %10 = load ptr, ptr %9, align 8                 ; 3 uses
-  %11 = getelementptr [8 x i8], ptr %10, i64 %7   ; 4 uses
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %5
-  br label %.lr.ph.i.a
-
-.lr.ph.i.a:                                       ; preds = %.lr.ph.i.backedge, %.lr.ph.preheader.i
-  %.028.i = phi ptr [ %12, %.lr.ph.preheader.i ], [ %.028.i.be, %.lr.ph.i.backedge ] ; 5 uses
-  %.01127.i = phi i1 [ false, %.lr.ph.preheader.i ], [ %.01127.i.be, %.lr.ph.i.backedge ] ; 2 uses
-  %i.f = load ptr, ptr %.028.i, align 8           ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 8
-  %i.h = load ptr, ptr %i.g, align 8              ; 4 uses
+.lr.ph.i.a:                                       ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %i.f = load ptr, ptr %7, align 8
+  %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 128
+  %i.h = load ptr, ptr %i.g, align 8              ; 2 uses
   %i.i = icmp eq ptr %i.h, null
-  br i1 %i.i, label %32, label %13
+  br i1 %i.i, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread, label %bb.b
 
-13:                                               ; preds = %.lr.ph.i.a
-  %14 = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  %15 = load i32, ptr %14, align 4
-  %16 = trunc i32 %15 to i8
-  %17 = lshr i8 %16, 2
-  %18 = and i8 %17, 7
-  switch i8 %18, label %31 [
-    i8 0, label %32
-    i8 4, label %32
-    i8 2, label %19
-    i8 1, label %24
-    i8 3, label %28
-  ]
+bb.b:                                             ; preds = %.lr.ph.i.a
+  %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 68
+  %i.k = load i32, ptr %i.j, align 4              ; 3 uses
+  %.not.i23.a = icmp eq i32 %i.k, 32
+  br i1 %.not.i23.a, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread
 
-19:                                               ; preds = %13
-  %20 = getelementptr inbounds nuw i8, ptr %i.h, i64 20
-  %21 = load i32, ptr %20, align 4
-  %22 = lshr i32 %21, 6
-  %23 = and i32 %22, 63                           ; 2 uses
-  %.not13.i.i = icmp eq i32 %23, 32
-  br i1 %.not13.i.i, label %32, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-24:                                               ; preds = %13
-  %25 = load i64, ptr %i.h, align 8
-  %26 = lshr i64 %25, 32
-  %27 = trunc nuw i64 %26 to i32
-  br label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-28:                                               ; preds = %13
-  %29 = getelementptr inbounds nuw i8, ptr %i.h, i64 48
-  %30 = load i32, ptr %29, align 8                ; 2 uses
-  %.not.i.i = icmp eq i32 %30, 32
-  br i1 %.not.i.i, label %32, label %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-
-31:                                               ; preds = %13
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #34
-  unreachable
-
-_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i: ; preds = %28, %19, %24
-  %.sink.i.i = phi i32 [ %27, %24 ], [ %23, %19 ], [ %30, %28 ] ; 2 uses
-  br i1 %.01127.i, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit, label %36
-
-32:                                               ; preds = %28, %19, %13, %13, %.lr.ph.i.a
-  br i1 %.01127.i, label %.thread, label %bb.b
-
-bb.b:                                             ; preds = %32
-  %i.j = getelementptr inbounds nuw i8, ptr %i.f, i64 20
-  %i.k = load i32, ptr %i.j, align 4
-  %33 = and i32 %i.k, 24
-  %spec.select.i = icmp eq i32 %33, 8             ; 2 uses
-  %34 = getelementptr inbounds nuw i8, ptr %.028.i, i64 8 ; 2 uses
-  %.not.i23.a = icmp eq ptr %34, %11
-  br i1 %.not.i23.a, label %.loopexit.i, label %.lr.ph.i.backedge
-
-.lr.ph.i.backedge:                                ; preds = %bb.b, %.thread
-  %.028.i.be = phi ptr [ %34, %bb.b ], [ %35, %.thread ]
-  %.01127.i.be = phi i1 [ %spec.select.i, %bb.b ], [ true, %.thread ]
-  br label %.lr.ph.i.a, !llvm.loop !10
-
-.thread:                                          ; preds = %32
-  %35 = getelementptr inbounds nuw i8, ptr %.028.i, i64 8 ; 2 uses
-  %.not.i2346 = icmp eq ptr %35, %11
-  br i1 %.not.i2346, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %.lr.ph.i.backedge
-
-.loopexit.i:                                      ; preds = %bb.b
-  br i1 %spec.select.i, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %36
-
-36:                                               ; preds = %.loopexit.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i
-  %.244 = phi i32 [ 32, %.loopexit.i ], [ %.sink.i.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ]
-  %.01752.i = phi ptr [ %11, %.loopexit.i ], [ %.028.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ] ; 2 uses
-  %37 = ptrtoint ptr %.01752.i to i64
-  %38 = ptrtoint ptr %10 to i64
-  %39 = sub i64 %37, %38
-  %40 = ashr exact i64 %39, 3
-  store i64 %40, ptr %4, align 8
-  br label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit
-
-_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit: ; preds = %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i, %36
-  %.3 = phi i32 [ %.sink.i.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ], [ %.244, %36 ] ; 2 uses
-  %.01753.i = phi ptr [ %.028.i, %_ZNK2v88internal8compiler11UsePosition12HintRegisterEPi.exit.i ], [ %.01752.i, %36 ]
-  %.not = icmp eq ptr %.01753.i, %11
-  br i1 %.not, label %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
-
-_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread: ; preds = %.thread, %.loopexit.i, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit
-  %.449 = phi i32 [ %.3, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit ], [ 32, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit ], [ 32, %.loopexit.i ], [ 32, %.thread ] ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %41 = load ptr, ptr %i.l, align 8
-  %i.m = getelementptr inbounds nuw i8, ptr %41, i64 128
-  %i.n = load ptr, ptr %i.m, align 8              ; 2 uses
-  %42 = icmp eq ptr %i.n, null
-  br i1 %42, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit, label %43
-
-43:                                               ; preds = %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread
-  %44 = getelementptr inbounds nuw i8, ptr %i.n, i64 68
-  %45 = load i32, ptr %44, align 4                ; 3 uses
-  %46 = icmp eq i32 %45, 32
-  br i1 %46, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit, label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread
-
-_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread: ; preds = %43
-  %47 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.o = load i32, ptr %47, align 8
-  %48 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %49 = load ptr, ptr %48, align 8
+_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread: ; preds = %bb.b
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %8 = load i32, ptr %i.l, align 8
+  %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.n = load ptr, ptr %i.m, align 8
   br label %bb.d
 
-_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit: ; preds = %bb.a, %43, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit
-  %.0 = phi i32 [ %.449, %43 ], [ %.3, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit ], [ %.449, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ], [ %i.e, %bb.a ] ; 3 uses
+_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread: ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit, %.lr.ph.i.a, %bb.b
+  %i.o = load i32, ptr %5, align 4
+  br label %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
+
+_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit: ; preds = %bb.a, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread
+  %9 = phi i32 [ %i.o, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread ], [ %i.e, %bb.a ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load i32, ptr %i.p, align 8              ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.s = load ptr, ptr %i.r, align 8              ; 3 uses
-  %i.t = icmp eq i32 %.0, 32
+  %i.t = icmp eq i32 %9, 32
   br i1 %i.t, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
   %i.u = load i32, ptr %i.s, align 4
   br label %bb.d
 
-bb.d:                                             ; preds = %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread, %bb.c, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
-  %i.v = phi ptr [ %i.s, %bb.c ], [ %i.s, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %49, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread ]
-  %i.w = phi i32 [ %i.q, %bb.c ], [ %i.q, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %i.o, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread ] ; 2 uses
-  %.051 = phi i32 [ 32, %bb.c ], [ %.0, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %45, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread ]
-  %i.x = phi i32 [ %i.u, %bb.c ], [ %.0, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %45, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit.thread ] ; 3 uses
+bb.d:                                             ; preds = %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread, %bb.c, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit
+  %i.v = phi ptr [ %i.s, %bb.c ], [ %i.s, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %i.n, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ]
+  %i.w = phi i32 [ %i.q, %bb.c ], [ %i.q, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %8, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ] ; 2 uses
+  %.051 = phi i32 [ 32, %bb.c ], [ %9, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %i.k, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ]
+  %i.x = phi i32 [ %i.u, %bb.c ], [ %9, %_ZNK2v88internal8compiler9LiveRange18RegisterFromBundleEPi.exit ], [ %i.k, %_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi.exit.thread ] ; 3 uses
   %i.y = icmp sgt i32 %i.w, 0
   br i1 %i.y, label %.lr.ph.i24, label %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit
 
@@ -1840,12 +1694,6 @@ bb.d:                                             ; preds = %_ZNK2v88internal8co
   %i.ac = sdiv i32 %i.ab, 4
   %i.ad = load ptr, ptr %0, align 8
   %wide.trip.count.i = zext nneg i32 %i.w to i64
-  %50 = lshr i32 %i.c, 13
-  %51 = trunc i32 %50 to i8
-  %switch.tableidx.i.i = add i8 %51, -16
-  %52 = icmp ult i8 %switch.tableidx.i.i, 5
-  %..i.i = select i1 %52, i64 384, i64 376
-  %53 = getelementptr inbounds nuw i8, ptr %i.ad, i64 %..i.i
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.j, %.lr.ph.i24
@@ -1868,13 +1716,20 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond.i, label %bb.j, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %10 = load i32, ptr %i.b, align 4
+  %11 = lshr i32 %10, 13
+  %12 = trunc i32 %11 to i8
   %i.am = icmp sgt i32 %.038.i, -1
   %i.an = lshr i32 %.038.i, 6
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = and i32 %.038.i, 63
   %i.aq = zext nneg i32 %i.ap to i64
   %i.ar = shl nuw i64 1, %i.aq
-  %i.as = load ptr, ptr %53, align 8
+  %switch.tableidx.i.i = add i8 %12, -16
+  %13 = icmp ult i8 %switch.tableidx.i.i, 5
+  %..i.i = select i1 %13, i64 384, i64 376
+  %14 = getelementptr inbounds nuw i8, ptr %i.ad, i64 %..i.i
+  %i.as = load ptr, ptr %14, align 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   %i.au = load ptr, ptr %i.at, align 8            ; 2 uses
   tail call void @llvm.assume(i1 %i.am)
@@ -1919,7 +1774,7 @@ _ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLonges
   br i1 %.not55, label %bb.k, label %.thread52
 
 bb.k:                                             ; preds = %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit
-  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 96
+  %i.bl = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %.sroa.0.0.copyload.i26 = load i32, ptr %i.bl, align 8
   %i.bm = icmp slt i32 %i.bj, %.sroa.0.0.copyload.i26
   br i1 %i.bm, label %bb.l, label %bb.p
@@ -1955,17 +1810,62 @@ bb.n:                                             ; preds = %bb.m
   %i.cb = call ptr @_ZNSt8_Rb_treeIPN2v88internal8compiler9LiveRangeES4_St9_IdentityIS4_ENS2_19LinearScanAllocator26UnhandledLiveRangeOrderingENS1_13ZoneAllocatorIS4_EEE15_M_insert_equalIRKS4_EESt17_Rb_tree_iteratorIS4_EOT_(ptr noundef nonnull align 8 dereferenceable(56) %i.ca, ptr noundef nonnull align 8 dereferenceable(8) %i.a) ; 0 uses
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.n, %bb.m, %_ZN2v88internal8compiler17RegisterAllocator12SplitRangeAtEPNS1_9LiveRangeENS1_16LifetimePositionE.exit
+bb.o:                                             ; preds = %_ZN2v88internal8compiler17RegisterAllocator12SplitRangeAtEPNS1_9LiveRangeENS1_16LifetimePositionE.exit, %bb.m, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %54 = call noundef zeroext i1 @_ZN2v88internal8compiler19LinearScanAllocator23TryAllocatePreferredRegEPNS1_9LiveRangeENS_4base6VectorIKNS1_16LifetimePositionEEE(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull %1, ptr nonnull %2, i64 poison)
-  br i1 %54, label %.thread52, label %bb.p
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #35
+  %15 = load i32, ptr %i.b, align 4
+  %16 = lshr i32 %15, 22
+  %17 = and i32 %16, 63                           ; 2 uses
+  %.not.i.not.i = icmp eq i32 %17, 32
+  br i1 %.not.i.not.i, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
 
-bb.p:                                             ; preds = %bb.o, %bb.k
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i: ; preds = %bb.o
+  %18 = call noundef zeroext i1 @_ZN2v88internal8compiler9LiveRange21RegisterFromFirstHintEPi(ptr noundef nonnull align 8 dereferenceable(100) %1, ptr noundef nonnull %4)
+  br i1 %18, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i, label %19
+
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i: ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i
+  %.pre.i = load i32, ptr %4, align 4
+  br label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+
+19:                                               ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.i
+  %20 = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %21 = load ptr, ptr %20, align 8
+  %22 = getelementptr inbounds nuw i8, ptr %21, i64 128
+  %23 = load ptr, ptr %22, align 8                ; 2 uses
+  %24 = icmp eq ptr %23, null
+  br i1 %24, label %.thread45, label %25
+
+25:                                               ; preds = %19
+  %26 = getelementptr inbounds nuw i8, ptr %23, i64 68
+  %27 = load i32, ptr %26, align 4                ; 2 uses
+  %28 = icmp eq i32 %27, 32
+  br i1 %28, label %.thread45, label %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+
+_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i: ; preds = %25, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i, %bb.o
+  %29 = phi i32 [ %.pre.i, %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit._crit_edge.i ], [ %17, %bb.o ], [ %27, %25 ] ; 2 uses
+  %30 = sext i32 %29 to i64
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %30
+  %.sroa.0.0.copyload.i13.i = load i32, ptr %i.bl, align 8
+  %32 = load i32, ptr %31, align 4
+  %.not.i28 = icmp slt i32 %32, %.sroa.0.0.copyload.i13.i
+  br i1 %.not.i28, label %.thread45, label %33
+
+.thread45:                                        ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i, %25, %19
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
+  br label %bb.p
+
+33:                                               ; preds = %_ZN2v88internal8compiler9LiveRange23RegisterFromControlFlowEPi.exit.thread.i
+  call void @_ZN2v88internal8compiler19LinearScanAllocator28SetLiveRangeAssignedRegisterEPNS1_9LiveRangeEi(ptr noundef nonnull readonly align 8 dereferenceable(168) %0, ptr noundef nonnull %1, i32 noundef %29)
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #35
+  br label %.thread52
+
+bb.p:                                             ; preds = %bb.k, %.thread45
   call void @_ZN2v88internal8compiler19LinearScanAllocator28SetLiveRangeAssignedRegisterEPNS1_9LiveRangeEi(ptr noundef nonnull align 8 dereferenceable(168) %0, ptr noundef nonnull %1, i32 noundef %.0.lcssa.i)
   br label %.thread52
 
-.thread52:                                        ; preds = %bb.l, %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit, %bb.o, %bb.p
-  %.2 = phi i1 [ true, %bb.o ], [ true, %bb.p ], [ false, %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit ], [ false, %bb.l ]
+.thread52:                                        ; preds = %bb.l, %33, %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit, %bb.p
+  %.2 = phi i1 [ true, %33 ], [ true, %bb.p ], [ false, %_ZN2v88internal8compiler19LinearScanAllocator34PickRegisterThatIsAvailableLongestEPNS1_9LiveRangeEiNS_4base6VectorIKNS1_16LifetimePositionEEE.exit ], [ false, %bb.l ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #35
   ret i1 %.2
 }
 
@@ -2368,9 +2268,10 @@ bb.aj:                                            ; preds = %_ZN2v88internal8com
   %i.fx = getelementptr inbounds nuw i8, ptr %i.d, i64 20
   %i.fy = load i32, ptr %i.fx, align 4
   %i.fz = trunc i32 %i.fy to i8
-  %5 = lshr i8 %i.fz, 2
-  %6 = and i8 %5, 7
-  switch i8 %6, label %bb.an [
+  %5 = and i8 %i.fz, 28
+  %6 = sub i8 %5, 0                               ; 2 uses
+  %7 = call i8 @llvm.fshl.i8(i8 %6, i8 %6, i8 6)
+  switch i8 %7, label %bb.an [
     i8 0, label %bb.ao
     i8 4, label %bb.ao
     i8 2, label %bb.ak
@@ -2772,6 +2673,9 @@ declare i32 @llvm.umax.i32(i32, i32) #32
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #32
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.fshl.i8(i8, i8, i8) #32
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

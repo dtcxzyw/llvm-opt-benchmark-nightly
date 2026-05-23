@@ -201,12 +201,11 @@ bb.g:                                             ; preds = %bb.a, %bb.f, %bb.e,
 define dso_local i64 @zsetLength(ptr noundef readonly captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.d [
-    i32 11, label %bb.b
-    i32 7, label %bb.c
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.d [
+    i8 -80, label %bb.b
+    i8 112, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -252,12 +251,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -607,12 +605,11 @@ bb.v:                                             ; preds = %._crit_edge70, %._c
 define dso_local void @zsetConvert(ptr noundef %0, i32 noundef %1) local_unnamed_addr #2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.d [
-    i32 11, label %bb.b
-    i32 7, label %bb.c
+  %2 = trunc i64 %i.a to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.d [
+    i8 -80, label %bb.b
+    i8 112, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -683,12 +680,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.m = load i64, ptr %0, align 8
-  %3 = trunc i64 %i.m to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.g [
-    i32 11, label %bb.e
-    i32 7, label %bb.f
+  %3 = trunc i64 %i.m to i8
+  %trunc.i.i = and i8 %3, -16
+  switch i8 %trunc.i.i, label %bb.g [
+    i8 -80, label %bb.e
+    i8 112, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -732,12 +728,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %0, align 8
-  %3 = trunc i64 %i.c to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.e [
-    i32 11, label %bb.c
-    i32 7, label %bb.d
+  %3 = trunc i64 %i.c to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %bb.e [
+    i8 -80, label %bb.c
+    i8 112, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -1094,12 +1089,11 @@ sdslen.exit119:                                   ; preds = %sdslen.exit.thread,
 
 bb.ac:                                            ; preds = %sdslen.exit119, %sdslen.exit, %bb.q
   %i.bt = load i64, ptr %0, align 8
-  %6 = trunc i64 %i.bt to i32
-  %7 = lshr i32 %6, 4
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.af [
-    i32 11, label %bb.ad
-    i32 7, label %bb.ae
+  %6 = trunc i64 %i.bt to i8
+  %trunc.i = and i8 %6, -16
+  switch i8 %trunc.i, label %bb.af [
+    i8 -80, label %bb.ad
+    i8 112, label %bb.ae
   ]
 
 bb.ad:                                            ; preds = %bb.ac
@@ -1502,12 +1496,11 @@ define dso_local range(i32 0, 2) i32 @zsetDel(ptr noundef captures(none) %0, ptr
 bb.a:
   %i.a = alloca ptr, align 8                      ; 4 uses
   %i.b = load i64, ptr %0, align 8
-  %2 = trunc i64 %i.b to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.e [
-    i32 11, label %bb.b
-    i32 7, label %bb.d
+  %2 = trunc i64 %i.b to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.e [
+    i8 -80, label %bb.b
+    i8 112, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1776,12 +1769,11 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 4 uses
   %i.e = alloca i32, align 4                      ; 4 uses
   %i.f = load i64, ptr %0, align 8
-  %4 = trunc i64 %i.f to i32
-  %5 = lshr i32 %4, 4                             ; 2 uses
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.d [
-    i32 11, label %bb.b
-    i32 7, label %bb.c
+  %4 = trunc i64 %i.f to i8                       ; 2 uses
+  %trunc.i = and i8 %4, -16
+  switch i8 %trunc.i, label %bb.d [
+    i8 -80, label %bb.b
+    i8 112, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1791,8 +1783,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = lshr i64 %i.i, 1
   %i.k = and i64 %i.j, 4294967295
   %.pre = load i64, ptr %0, align 8
-  %.pre77 = trunc i64 %.pre to i32
-  %.pre78 = lshr i32 %.pre77, 4
+  %.pre77 = trunc i64 %.pre to i8
   br label %zsetLength.exit
 
 bb.c:                                             ; preds = %bb.a
@@ -1810,12 +1801,12 @@ bb.d:                                             ; preds = %bb.a
   unreachable
 
 zsetLength.exit:                                  ; preds = %bb.b, %bb.c
-  %.pre-phi79 = phi i32 [ %.pre78, %bb.b ], [ %5, %bb.c ]
+  %.pre-phi = phi i8 [ %.pre77, %bb.b ], [ %4, %bb.c ]
   %.0.i = phi i64 [ %i.k, %bb.b ], [ %i.q, %bb.c ] ; 2 uses
-  %7 = and i32 %.pre-phi79, 15
-  switch i32 %7, label %bb.ag [
-    i32 11, label %bb.e
-    i32 7, label %bb.y
+  %trunc = and i8 %.pre-phi, -16
+  switch i8 %trunc, label %bb.ag [
+    i8 -80, label %bb.e
+    i8 112, label %bb.y
   ]
 
 bb.e:                                             ; preds = %zsetLength.exit
@@ -2070,12 +2061,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.k [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.k [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2108,12 +2098,11 @@ bb.e:                                             ; preds = %bb.c
   %i.y = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !103
   %i.aa = load i64, ptr %0, align 8
-  %4 = trunc i64 %i.aa to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.h [
-    i32 11, label %bb.f
-    i32 7, label %bb.g
+  %2 = trunc i64 %i.aa to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.h [
+    i8 -80, label %bb.f
+    i8 112, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -2255,12 +2244,11 @@ bb.a:
   %i.a = alloca [128 x i8], align 16              ; 5 uses
   %4 = alloca %struct.listpackEntry, align 8      ; 6 uses
   %i.b = load i64, ptr %0, align 8
-  %5 = trunc i64 %i.b to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.n [
-    i32 7, label %bb.b
-    i32 11, label %bb.i
+  %5 = trunc i64 %i.b to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %bb.n [
+    i8 112, label %bb.b
+    i8 -80, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -2663,12 +2651,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %i.f, align 8
-  %1 = trunc i64 %i.i to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %1 = trunc i64 %i.i to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2732,12 +2719,11 @@ bb.j:                                             ; preds = %.lr.ph, %bb.i
   %i.ai = tail call i32 @zsetDel(ptr noundef nonnull %i.f, ptr noundef %i.ah)
   %spec.select = add nuw nsw i32 %i.ai, %.04969   ; 3 uses
   %i.aj = load i64, ptr %i.f, align 8
-  %4 = trunc i64 %i.aj to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.m [
-    i32 11, label %bb.k
-    i32 7, label %bb.l
+  %2 = trunc i64 %i.aj to i8
+  %trunc.i58 = and i8 %2, -16
+  switch i8 %trunc.i58, label %bb.m [
+    i8 -80, label %bb.k
+    i8 112, label %bb.l
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -2943,12 +2929,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.ad = load i64, ptr %i.aa, align 8
-  %4 = trunc i64 %i.ad to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.p [
-    i32 11, label %bb.n
-    i32 7, label %bb.o
+  %4 = trunc i64 %i.ad to i8
+  %trunc.i = and i8 %4, -16
+  switch i8 %trunc.i, label %bb.p [
+    i8 -80, label %bb.n
+    i8 112, label %bb.o
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -3037,12 +3022,11 @@ bb.z:                                             ; preds = %bb.y
 bb.aa:                                            ; preds = %bb.z, %bb.y
   %.092 = phi i64 [ %i.bd, %bb.z ], [ 0, %bb.y ]  ; 3 uses
   %i.be = load i64, ptr %i.aa, align 8
-  %7 = trunc i64 %i.be to i32
-  %8 = lshr i32 %7, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %bb.as [
-    i32 11, label %bb.ab
-    i32 7, label %bb.aj
+  %5 = trunc i64 %i.be to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %bb.as [
+    i8 -80, label %bb.ab
+    i8 112, label %bb.aj
   ]
 
 bb.ab:                                            ; preds = %bb.aa
@@ -3445,12 +3429,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !224  ; 3 uses
   %i.h = load i64, ptr %1, align 8
-  %6 = trunc i64 %i.h to i32
-  %7 = lshr i32 %6, 4
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.d [
-    i32 11, label %bb.b
-    i32 7, label %bb.c
+  %6 = trunc i64 %i.h to i8
+  %trunc.i = and i8 %6, -16
+  switch i8 %trunc.i, label %bb.d [
+    i8 -80, label %bb.b
+    i8 112, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -3508,12 +3491,11 @@ bb.f:                                             ; preds = %zsetLength.exit
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !226
   tail call void %i.ag(ptr noundef nonnull %0, i64 noundef %i.ae) #17
   %i.ah = load i64, ptr %1, align 8
-  %9 = trunc i64 %i.ah to i32
-  %10 = lshr i32 %9, 4
-  %11 = and i32 %10, 15
-  switch i32 %11, label %bb.ao [
-    i32 11, label %bb.g
-    i32 7, label %bb.z
+  %7 = trunc i64 %i.ah to i8
+  %trunc = and i8 %7, -16
+  switch i8 %trunc, label %bb.ao [
+    i8 -80, label %bb.g
+    i8 112, label %bb.z
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -3916,12 +3898,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %6 = trunc i64 %.pre210 to i32
-  %7 = lshr i32 %6, 4
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %6 = trunc i64 %.pre210 to i8
+  %trunc.i = and i8 %6, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -3963,12 +3944,11 @@ bb.g:                                             ; preds = %zsetLength.exit, %b
 
 bb.h:                                             ; preds = %zsetLength.exit._crit_edge, %bb.b
   %i.v = phi i64 [ %.pre, %zsetLength.exit._crit_edge ], [ %.pre210, %bb.b ]
-  %9 = trunc i64 %i.v to i32
-  %10 = lshr i32 %9, 4
-  %11 = and i32 %10, 15
-  switch i32 %11, label %bb.at [
-    i32 11, label %bb.i
-    i32 7, label %bb.af
+  %7 = trunc i64 %i.v to i8
+  %trunc = and i8 %7, -16
+  switch i8 %trunc, label %bb.at [
+    i8 -80, label %bb.i
+    i8 112, label %bb.af
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -4371,12 +4351,11 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.u = load i64, ptr %i.r, align 8
-  %2 = trunc i64 %i.u to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.v [
-    i32 11, label %bb.f
-    i32 7, label %bb.r
+  %2 = trunc i64 %i.u to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.v [
+    i8 -80, label %bb.f
+    i8 112, label %bb.r
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -4612,12 +4591,11 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.d
   %i.v = load i64, ptr %i.l, align 8
-  %2 = trunc i64 %i.v to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.u [
-    i32 11, label %bb.j
-    i32 7, label %bb.q
+  %2 = trunc i64 %i.v to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.u [
+    i8 -80, label %bb.j
+    i8 112, label %bb.q
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -4773,12 +4751,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %7 = trunc i64 %.pre240 to i32
-  %8 = lshr i32 %7, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %7 = trunc i64 %.pre240 to i8
+  %trunc.i = and i8 %7, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -4820,12 +4797,11 @@ bb.g:                                             ; preds = %zsetLength.exit, %b
 
 bb.h:                                             ; preds = %zsetLength.exit._crit_edge, %bb.b
   %i.v = phi i64 [ %.pre, %zsetLength.exit._crit_edge ], [ %.pre240, %bb.b ]
-  %10 = trunc i64 %i.v to i32
-  %11 = lshr i32 %10, 4
-  %12 = and i32 %11, 15
-  switch i32 %12, label %bb.bm [
-    i32 11, label %bb.i
-    i32 7, label %bb.aj
+  %8 = trunc i64 %i.v to i8
+  %trunc = and i8 %8, -16
+  switch i8 %trunc, label %bb.bm [
+    i8 -80, label %bb.i
+    i8 112, label %bb.aj
   ]
 
 bb.i:                                             ; preds = %bb.h
@@ -5228,12 +5204,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %i.f, align 8
-  %1 = trunc i64 %i.i to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %1 = trunc i64 %i.i to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -5311,12 +5286,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.u = load i64, ptr %i.k, align 8
-  %1 = trunc i64 %i.u to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.i [
-    i32 11, label %bb.g
-    i32 7, label %bb.h
+  %1 = trunc i64 %i.u to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.i [
+    i8 -80, label %bb.g
+    i8 112, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -5442,12 +5416,11 @@ zsetScore.exit.thread.us:                         ; preds = %.lr.ph, %zsetScore.
 
 bb.e:                                             ; preds = %.lr.ph.split
   %i.af = load i64, ptr %i.h, align 8
-  %1 = trunc i64 %i.af to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.h [
-    i32 11, label %bb.f
-    i32 7, label %bb.g
+  %1 = trunc i64 %i.af to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.h [
+    i8 -80, label %bb.f
+    i8 112, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -5574,12 +5547,11 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.0 = phi i64 [ %i.z, %bb.h ], [ 0, %bb.g ]
   %i.aa = load i64, ptr %i.g, align 8
-  %2 = trunc i64 %i.aa to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.j [
-    i32 8, label %bb.k
-    i32 0, label %bb.k
+  %2 = trunc i64 %i.aa to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.j [
+    i8 -128, label %bb.k
+    i8 0, label %bb.k
   ], !prof !246
 
 bb.j:                                             ; preds = %bb.i
@@ -5801,12 +5773,11 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k, %bb.j
   %.0137 = phi i64 [ %i.q, %bb.k ], [ 0, %bb.j ]
   %i.r = load i64, ptr %i.j, align 8
-  %9 = trunc i64 %i.r to i32
-  %10 = lshr i32 %9, 4
-  %11 = and i32 %10, 15
-  switch i32 %11, label %bb.o [
-    i32 11, label %bb.m
-    i32 7, label %bb.n
+  %9 = trunc i64 %i.r to i8
+  %trunc.i = and i8 %9, -16
+  switch i8 %trunc.i, label %bb.o [
+    i8 -80, label %bb.m
+    i8 112, label %bb.n
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -5882,12 +5853,11 @@ bb.v:                                             ; preds = %bb.u
   %i.ao = sext i32 %3 to i64
   %i.ap = getelementptr inbounds [8 x i8], ptr @__const.genericZpopCommand.events, i64 %i.ao
   %i.aq = load i64, ptr %i.j, align 8
-  %12 = trunc i64 %i.aq to i32
-  %13 = lshr i32 %12, 4
-  %14 = and i32 %13, 15
-  switch i32 %14, label %.loopexit [
-    i32 11, label %bb.ab
-    i32 7, label %bb.w
+  %10 = trunc i64 %i.aq to i8
+  %trunc.peel = and i8 %10, -16
+  switch i8 %trunc.peel, label %.loopexit [
+    i8 -80, label %bb.ab
+    i8 112, label %bb.w
   ]
 
 bb.w:                                             ; preds = %.peel.begin
@@ -6056,12 +6026,11 @@ sdslen.exit.peel:                                 ; preds = %bb.ar, %bb.aq, %bb.
 .peel.next:                                       ; preds = %sdslen.exit.peel, %sdslen.exit
   %.0139 = phi i64 [ %i.ep, %sdslen.exit ], [ %i.cr, %sdslen.exit.peel ]
   %i.cs = load i64, ptr %i.j, align 8
-  %15 = trunc i64 %i.cs to i32
-  %16 = lshr i32 %15, 4
-  %17 = and i32 %16, 15
-  switch i32 %17, label %.loopexit [
-    i32 11, label %bb.as
-    i32 7, label %bb.ba
+  %11 = trunc i64 %i.cs to i8
+  %trunc = and i8 %11, -16
+  switch i8 %trunc, label %.loopexit [
+    i8 -80, label %bb.as
+    i8 112, label %bb.ba
   ]
 
 bb.as:                                            ; preds = %.peel.next
@@ -6264,12 +6233,11 @@ bb.bo:                                            ; preds = %.loopexit179
 bb.bp:                                            ; preds = %bb.bo, %.loopexit179
   %i.ew = sub nsw i64 %.0.i, %i.ad
   %i.ex = load i64, ptr %i.j, align 8
-  %18 = trunc i64 %i.ex to i32
-  %19 = lshr i32 %18, 4
-  %20 = and i32 %19, 15
-  switch i32 %20, label %bb.bs [
-    i32 11, label %bb.bq
-    i32 7, label %bb.br
+  %12 = trunc i64 %i.ex to i8
+  %trunc.i164 = and i8 %12, -16
+  switch i8 %trunc.i164, label %bb.bs [
+    i8 -80, label %bb.bq
+    i8 112, label %bb.br
   ]
 
 bb.bq:                                            ; preds = %bb.bp
@@ -6564,12 +6532,11 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.q = load i64, ptr %i.n, align 8
-  %8 = trunc i64 %i.q to i32
-  %9 = lshr i32 %8, 4
-  %10 = and i32 %9, 15
-  switch i32 %10, label %bb.g [
-    i32 11, label %bb.e
-    i32 7, label %bb.f
+  %8 = trunc i64 %i.q to i8
+  %trunc.i = and i8 %8, -16
+  switch i8 %trunc.i, label %bb.g [
+    i8 -80, label %bb.e
+    i8 112, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -6707,12 +6674,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = load i64, ptr %i.g, align 8
-  %7 = trunc i64 %i.j to i32
-  %8 = lshr i32 %7, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %bb.f [
-    i32 11, label %bb.d
-    i32 7, label %bb.e
+  %7 = trunc i64 %i.j to i8
+  %trunc.i = and i8 %7, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 -80, label %bb.d
+    i8 112, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -6780,12 +6746,11 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   %.0.sink = phi i64 [ %.0, %bb.k ], [ %spec.select, %bb.l ]
   tail call void @addReplyArrayLen(ptr noundef nonnull %0, i64 noundef %.0.sink) #17
   %i.af = load i64, ptr %i.g, align 8
-  %10 = trunc i64 %i.af to i32
-  %11 = lshr i32 %10, 4
-  %12 = and i32 %11, 15
-  switch i32 %12, label %.loopexit [
-    i32 7, label %bb.n
-    i32 11, label %bb.ae
+  %8 = trunc i64 %i.af to i8
+  %trunc = and i8 %8, -16
+  switch i8 %trunc, label %.loopexit [
+    i8 112, label %bb.n
+    i8 -80, label %bb.ae
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -7188,12 +7153,11 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.0 = phi i64 [ %i.ah, %bb.m ], [ 0, %bb.l ]
   %i.ai = load i64, ptr %i.ad, align 8
-  %2 = trunc i64 %i.ai to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.q [
-    i32 11, label %bb.o
-    i32 7, label %bb.p
+  %2 = trunc i64 %i.ai to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.q [
+    i8 -80, label %bb.o
+    i8 112, label %bb.p
   ]
 
 bb.o:                                             ; preds = %bb.n

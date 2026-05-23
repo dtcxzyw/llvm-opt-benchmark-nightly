@@ -201,12 +201,11 @@ bb.af:                                            ; preds = %bb.ac
   br i1 %.not63, label %_ZN4absl12lts_20250512neERKNS0_4CordES3_.exit.thread70, label %_ZN4absl12lts_20250512neERKNS0_4CordES3_.exit.thread
 
 bb.ag:                                            ; preds = %bb.aa
-  %4 = lshr i32 %i.co, 6
-  %i.dj = and i32 %4, 7
+  %i.dj = and i32 %i.co, 448
   switch i32 %i.dj, label %_ZN4absl12lts_20250512neERKNS0_4CordES3_.exit.thread70 [
     i32 0, label %bb.ah
-    i32 2, label %bb.aj
-    i32 1, label %bb.aq
+    i32 128, label %bb.aj
+    i32 64, label %bb.aq
   ]
 
 bb.ah:                                            ; preds = %bb.ag
@@ -609,12 +608,11 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %4 = lshr i16 %i.b, 6
-  %i.d = and i16 %4, 7
+  %i.d = and i16 %i.b, 448
   switch i16 %i.d, label %bb.j [
     i16 0, label %bb.c
-    i16 5, label %bb.d
-    i16 2, label %bb.e
+    i16 320, label %bb.d
+    i16 128, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -818,12 +816,11 @@ _ZN6google8protobuf8internal8TcParser14FindFieldEntryEPKNS1_16TcParseTableBaseEj
   ]
 
 bb.j:                                             ; preds = %_ZN6google8protobuf8internal8TcParser14FindFieldEntryEPKNS1_16TcParseTableBaseEj.exit
-  %6 = lshr i16 %i.be, 6
-  %i.bg = and i16 %6, 7
+  %i.bg = and i16 %i.be, 448
   switch i16 %i.bg, label %bb.v [
     i16 0, label %bb.k
-    i16 5, label %bb.l
-    i16 2, label %bb.q
+    i16 320, label %bb.l
+    i16 128, label %bb.q
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -1226,11 +1223,10 @@ _ZN6google8protobuf8internal12_GLOBAL__N_117SetHasForRepeatedERKNS1_16TcParseTab
   %i.v = load i32, ptr %i.u, align 4, !tbaa !3
   %i.w = or i32 %i.v, %i.s
   store i32 %i.w, ptr %i.u, align 4, !tbaa !3
-  %8 = lshr i16 %i.d, 6
-  %i.x = and i16 %8, 7
+  %i.x = and i16 %i.d, 448
   switch i16 %i.x, label %bb.ab [
-    i16 3, label %bb.e
-    i16 2, label %bb.l
+    i16 192, label %bb.e
+    i16 128, label %bb.l
     i16 0, label %bb.y
   ]
 
@@ -1633,11 +1629,10 @@ _ZN6google8protobuf8internal12_GLOBAL__N_117SetHasForRepeatedERKNS1_16TcParseTab
   %i.u = load i32, ptr %i.t, align 4, !tbaa !3
   %i.v = or i32 %i.u, %i.r
   store i32 %i.v, ptr %i.t, align 4, !tbaa !3
-  %6 = lshr i16 %i.d, 6
-  %i.w = and i16 %6, 7
+  %i.w = and i16 %i.d, 448
   switch i16 %i.w, label %bb.h [
-    i16 3, label %bb.e
-    i16 2, label %bb.f
+    i16 192, label %bb.e
+    i16 128, label %bb.f
     i16 0, label %bb.g
   ]
 
@@ -2040,11 +2035,10 @@ bb.e:                                             ; preds = %bb.d
 
 _ZN6google8protobuf8internal12_GLOBAL__N_117SetHasForRepeatedERKNS1_16TcParseTableBase10FieldEntryEPNS0_11MessageLiteE.exit: ; preds = %bb.d, %bb.e
   %i.u = and i16 %i.d, 1536                       ; 2 uses
-  %6 = lshr i16 %i.d, 6
-  %i.v = and i16 %6, 7
+  %i.v = and i16 %i.d, 448
   switch i16 %i.v, label %bb.o [
-    i16 3, label %bb.f
-    i16 2, label %bb.i
+    i16 192, label %bb.f
+    i16 128, label %bb.i
     i16 0, label %bb.n
   ]
 
@@ -2447,11 +2441,10 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN6google8protobuf8internal12_GLOBAL__N_117SetHasForRepeatedERKNS1_16TcParseTableBase10FieldEntryEPNS0_11MessageLiteE.exit
 
 _ZN6google8protobuf8internal12_GLOBAL__N_117SetHasForRepeatedERKNS1_16TcParseTableBase10FieldEntryEPNS0_11MessageLiteE.exit: ; preds = %bb.d, %bb.e
-  %6 = lshr i16 %i.d, 6
-  %i.u = and i16 %6, 7
+  %i.u = and i16 %i.d, 448
   switch i16 %i.u, label %bb.i [
-    i16 3, label %bb.f
-    i16 2, label %bb.g
+    i16 192, label %bb.f
+    i16 128, label %bb.g
     i16 0, label %bb.h
   ]
 

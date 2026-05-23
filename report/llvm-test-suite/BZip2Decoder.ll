@@ -201,12 +201,11 @@ _ZN9CInBuffer8ReadByteEv.exit.i.i.i:              ; preds = %bb.l, %.noexc96
 
 .loopexit102:                                     ; preds = %_ZN9CInBuffer8ReadByteEv.exit.i.i.i, %bb.i
   %i.ag = sub i32 8, %i.o
-  %4 = lshr i32 %i.n, %i.ag
-  %i.ah = lshr i32 %4, 16
-  %trunc = trunc i32 %i.ah to i8
-  switch i8 %trunc, label %bb.o [
-    i8 23, label %bb.m
-    i8 49, label %bb.p
+  %i.ah = lshr i32 %i.n, %i.ag
+  %4 = and i32 %i.ah, 16711680
+  switch i32 %4, label %bb.o [
+    i32 1507328, label %bb.m
+    i32 3211264, label %bb.p
   ]
 
 bb.m:                                             ; preds = %.loopexit102

@@ -200,13 +200,12 @@ bb.j:                                             ; preds = %._crit_edge1337, %.
   %.not783 = icmp eq i32 %i.cx, 0
   %i.cy = select i1 %.not783, i32 8, i32 15
   store i32 %i.cy, ptr %i.al, align 8, !tbaa !30
-  %1 = lshr i32 %i.cu, 1
-  %i.cz = and i32 %1, 3
+  %i.cz = and i32 %i.cu, 6
   switch i32 %i.cz, label %default.unreachable1846 [
     i32 0, label %bb.k
-    i32 1, label %bb.l
-    i32 2, label %bb.w
-    i32 3, label %bb.fn
+    i32 2, label %bb.l
+    i32 4, label %bb.w
+    i32 6, label %bb.fn
   ]
 
 bb.k:                                             ; preds = %bb.j

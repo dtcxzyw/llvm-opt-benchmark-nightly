@@ -201,13 +201,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr i8, ptr %1, i64 32
   %i.f = load i32, ptr %i.e, align 8              ; 14 uses
-  %2 = lshr i32 %i.f, 2
-  %i.g = and i32 %2, 7                            ; 4 uses
+  %i.g = and i32 %i.f, 28                         ; 4 uses
   %i.h = and i32 %i.f, 32
   %.not.i19.i = icmp eq i32 %i.h, 0               ; 12 uses
   switch i32 %i.g, label %bb.j [
-    i32 1, label %bb.d
-    i32 2, label %bb.g
+    i32 4, label %bb.d
+    i32 8, label %bb.g
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -279,8 +278,8 @@ PyUnicode_READ_CHAR.exit:                         ; preds = %_PyUnicode_DATA.exi
 
 bb.m:                                             ; preds = %PyUnicode_READ_CHAR.exit
   switch i32 %i.g, label %bb.t [
-    i32 1, label %bb.n
-    i32 2, label %bb.q
+    i32 4, label %bb.n
+    i32 8, label %bb.q
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -370,8 +369,8 @@ bb.y:                                             ; preds = %PyUnicode_READ_CHAR
   %.val45 = load i64, ptr %i.al, align 8, !tbaa !149 ; 3 uses
   %i.am = add i64 %.val46, -1                     ; 3 uses
   switch i32 %i.g, label %bb.af [
-    i32 1, label %bb.z
-    i32 2, label %bb.ac
+    i32 4, label %bb.z
+    i32 8, label %bb.ac
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -447,8 +446,8 @@ PyUnicode_READ_CHAR.exit88:                       ; preds = %_PyUnicode_DATA.exi
 bb.ai:                                            ; preds = %PyUnicode_READ_CHAR.exit88
   %i.bc = add i64 %.val46, -2                     ; 3 uses
   switch i32 %i.g, label %bb.ap [
-    i32 1, label %bb.aj
-    i32 2, label %bb.am
+    i32 4, label %bb.aj
+    i32 8, label %bb.am
   ]
 
 bb.aj:                                            ; preds = %bb.ai
@@ -529,8 +528,7 @@ bb.as:                                            ; preds = %PyUnicode_READ_CHAR
 .preheader:                                       ; preds = %bb.as
   %i.bt = getelementptr i8, ptr %0, i64 32
   %i.bu = load i32, ptr %i.bt, align 8            ; 3 uses
-  %3 = lshr i32 %i.bu, 2
-  %i.bv = and i32 %3, 7
+  %i.bv = and i32 %i.bu, 28
   %i.bw = and i32 %i.bu, 32
   %.not.i19.i111 = icmp eq i32 %i.bw, 0           ; 3 uses
   %i.bx = and i32 %i.bu, 64
@@ -539,8 +537,8 @@ bb.as:                                            ; preds = %PyUnicode_READ_CHAR
   %.0.i.i14.i114 = getelementptr i8, ptr %0, i64 %.0.v.i.i13.i113 ; 3 uses
   %i.by = getelementptr i8, ptr %0, i64 56        ; 3 uses
   switch i32 %i.bv, label %.preheader.split [
-    i32 1, label %.preheader.split.us
-    i32 2, label %.preheader.split.us133
+    i32 4, label %.preheader.split.us
+    i32 8, label %.preheader.split.us133
   ]
 
 .preheader.split.us:                              ; preds = %.preheader
@@ -703,13 +701,12 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %0, i64 32
   %i.g = load i32, ptr %i.f, align 8              ; 14 uses
-  %1 = lshr i32 %i.g, 2
-  %i.h = and i32 %1, 7                            ; 4 uses
+  %i.h = and i32 %i.g, 28                         ; 4 uses
   %i.i = and i32 %i.g, 32
   %.not.i19.i = icmp eq i32 %i.i, 0               ; 12 uses
   switch i32 %i.h, label %bb.j [
-    i32 1, label %bb.d
-    i32 2, label %bb.g
+    i32 4, label %bb.d
+    i32 8, label %bb.g
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -781,8 +778,8 @@ PyUnicode_READ_CHAR.exit:                         ; preds = %_PyUnicode_DATA.exi
 
 bb.m:                                             ; preds = %PyUnicode_READ_CHAR.exit
   switch i32 %i.h, label %bb.t [
-    i32 1, label %bb.n
-    i32 2, label %bb.q
+    i32 4, label %bb.n
+    i32 8, label %bb.q
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -858,8 +855,8 @@ PyUnicode_READ_CHAR.exit34:                       ; preds = %_PyUnicode_DATA.exi
 bb.w:                                             ; preds = %PyUnicode_READ_CHAR.exit34
   %i.ai = add nsw i64 %.val13, -1                 ; 3 uses
   switch i32 %i.h, label %bb.ad [
-    i32 1, label %bb.x
-    i32 2, label %bb.aa
+    i32 4, label %bb.x
+    i32 8, label %bb.aa
   ]
 
 bb.x:                                             ; preds = %bb.w
@@ -935,8 +932,8 @@ PyUnicode_READ_CHAR.exit55:                       ; preds = %_PyUnicode_DATA.exi
 bb.ag:                                            ; preds = %PyUnicode_READ_CHAR.exit55
   %i.ay = add nsw i64 %.val13, -2                 ; 3 uses
   switch i32 %i.h, label %bb.an [
-    i32 1, label %bb.ah
-    i32 2, label %bb.ak
+    i32 4, label %bb.ah
+    i32 8, label %bb.ak
   ]
 
 bb.ah:                                            ; preds = %bb.ag

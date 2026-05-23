@@ -201,14 +201,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.g, label %ZSTDv06_decompressSequences.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %6 = lshr i32 %i.e, 4
-  %i.h = and i32 %6, 3
+  %i.h = and i32 %i.e, 48
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 1
   %i.j = load i8, ptr %i.i, align 1, !tbaa !27
   %i.k = zext i8 %i.j to i32                      ; 4 uses
   switch i32 %i.h, label %bb.g [
-    i32 3, label %bb.f
-    i32 2, label %.thread.i
+    i32 48, label %bb.f
+    i32 32, label %.thread.i
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -366,11 +365,10 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.ac
 
 bb.q:                                             ; preds = %bb.c
-  %7 = lshr i32 %i.e, 4
-  %i.dd = and i32 %7, 3
+  %i.dd = and i32 %i.e, 48
   switch i32 %i.dd, label %bb.r [
-    i32 3, label %bb.t
-    i32 2, label %bb.s
+    i32 48, label %bb.t
+    i32 32, label %bb.s
   ]
 
 bb.r:                                             ; preds = %bb.q
@@ -434,11 +432,10 @@ bb.x:                                             ; preds = %bb.u
   br label %bb.ac
 
 bb.y:                                             ; preds = %bb.c
-  %8 = lshr i32 %i.e, 4
-  %i.ei = and i32 %8, 3
+  %i.ei = and i32 %i.e, 48
   switch i32 %i.ei, label %bb.z [
-    i32 3, label %bb.ab
-    i32 2, label %bb.aa
+    i32 48, label %bb.ab
+    i32 32, label %bb.aa
   ]
 
 bb.z:                                             ; preds = %bb.y

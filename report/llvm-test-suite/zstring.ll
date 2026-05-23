@@ -199,13 +199,12 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %3 = zext i16 %i.b to i32                       ; 2 uses
-  %4 = lshr i32 %3, 2
-  %5 = and i32 %4, 63
-  switch i32 %5, label %bb.i [
-    i32 3, label %bb.b
-    i32 13, label %bb.c
+  %i.b = load i16, ptr %i.a, align 8, !tbaa !8    ; 2 uses
+  %3 = trunc i16 %i.b to i8
+  %trunc = and i8 %3, -4
+  switch i8 %trunc, label %bb.i [
+    i8 12, label %bb.b
+    i8 52, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -213,8 +212,8 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
-  %6 = and i32 %3, 512
-  %.not.not = icmp eq i32 %6, 0
+  %4 = and i16 %i.b, 512
+  %.not.not = icmp eq i16 %4, 0
   br i1 %.not.not, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c

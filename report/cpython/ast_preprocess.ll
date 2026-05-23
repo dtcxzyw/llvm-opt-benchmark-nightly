@@ -201,11 +201,10 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.g, %bb.f
   br i1 %i.p, label %.lr.ph.i, label %parse_literal.exit.thread
 
 .lr.ph.i:                                         ; preds = %_PyUnicode_DATA.exit.i
-  %4 = lshr i32 %.val.i.i, 2
-  %i.q = and i32 %4, 7
+  %i.q = and i32 %.val.i.i, 28
   switch i32 %i.q, label %PyUnicode_READ.exit.i [
-    i32 1, label %PyUnicode_READ.exit.us.i
-    i32 2, label %PyUnicode_READ.exit.us69.i
+    i32 4, label %PyUnicode_READ.exit.us.i
+    i32 8, label %PyUnicode_READ.exit.us69.i
   ]
 
 PyUnicode_READ.exit.us.i:                         ; preds = %.lr.ph.i, %bb.j
@@ -395,8 +394,7 @@ bb.ad:                                            ; preds = %bb.ac
 
 .lr.ph.i.i:                                       ; preds = %bb.ad
   %i.bp = load i32, ptr %i.h, align 8             ; 3 uses
-  %5 = lshr i32 %i.bp, 2
-  %i.bq = and i32 %5, 7                           ; 6 uses
+  %i.bq = and i32 %i.bp, 28                       ; 6 uses
   %i.br = and i32 %i.bp, 32
   %.not.i19.i.i.i = icmp eq i32 %i.br, 0          ; 3 uses
   %i.bs = and i32 %i.bp, 64
@@ -404,8 +402,8 @@ bb.ad:                                            ; preds = %bb.ac
   %.0.v.i.i13.i.i.i = select i1 %.not.i.i12.i.i.i, i64 56, i64 40
   %.0.i.i14.i.i.i = getelementptr i8, ptr %1, i64 %.0.v.i.i13.i.i.i ; 18 uses
   switch i32 %i.bq, label %.lr.ph.i.split.i [
-    i32 1, label %.lr.ph.i.split.us.i
-    i32 2, label %.lr.ph.i.split.us75.i
+    i32 4, label %.lr.ph.i.split.us.i
+    i32 8, label %.lr.ph.i.split.us75.i
   ]
 
 .lr.ph.i.split.us.i:                              ; preds = %.lr.ph.i.i
@@ -653,8 +651,8 @@ bb.bc:                                            ; preds = %.split.us.i
 
 bb.bd:                                            ; preds = %bb.bc
   switch i32 %i.bq, label %bb.bi [
-    i32 1, label %bb.be
-    i32 2, label %bb.bg
+    i32 4, label %bb.be
+    i32 8, label %bb.bg
   ]
 
 bb.be:                                            ; preds = %bb.bd
@@ -714,8 +712,8 @@ bb.bk:                                            ; preds = %PyUnicode_READ_CHAR
 
 bb.bl:                                            ; preds = %bb.bk
   switch i32 %i.bq, label %bb.bq [
-    i32 1, label %bb.bo
-    i32 2, label %bb.bm
+    i32 4, label %bb.bo
+    i32 8, label %bb.bm
   ]
 
 bb.bm:                                            ; preds = %bb.bl
@@ -779,8 +777,8 @@ bb.bs:                                            ; preds = %.loopexit149.i.i
 
 bb.bt:                                            ; preds = %bb.bs
   switch i32 %i.bq, label %bb.by [
-    i32 1, label %bb.bu
-    i32 2, label %bb.bw
+    i32 4, label %bb.bu
+    i32 8, label %bb.bw
   ]
 
 bb.bu:                                            ; preds = %bb.bt
@@ -837,8 +835,8 @@ bb.ca:                                            ; preds = %PyUnicode_READ_CHAR
 
 bb.cb:                                            ; preds = %bb.ca
   switch i32 %i.bq, label %bb.cg [
-    i32 1, label %bb.cc
-    i32 2, label %bb.ce
+    i32 4, label %bb.cc
+    i32 8, label %bb.ce
   ]
 
 bb.cc:                                            ; preds = %bb.cb
@@ -898,8 +896,8 @@ bb.ci:                                            ; preds = %PyUnicode_READ_CHAR
 
 bb.cj:                                            ; preds = %bb.ci
   switch i32 %i.bq, label %bb.co [
-    i32 1, label %bb.cm
-    i32 2, label %bb.ck
+    i32 4, label %bb.cm
+    i32 8, label %bb.ck
   ]
 
 bb.ck:                                            ; preds = %bb.cj

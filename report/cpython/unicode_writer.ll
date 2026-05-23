@@ -201,8 +201,6 @@ bb.g:                                             ; preds = %ucs1lib_find_max_ch
   %i.y = load i64, ptr %i.x, align 8, !tbaa !25   ; 14 uses
   %i.z = getelementptr i8, ptr %i.w, i64 32
   %i.aa = load i32, ptr %i.z, align 8             ; 3 uses
-  %3 = lshr i32 %i.aa, 2
-  %4 = and i32 %3, 7
   %i.ab = and i32 %i.aa, 32
   %.not.i.i = icmp eq i32 %i.ab, 0
   br i1 %.not.i.i, label %bb.i, label %bb.h
@@ -221,10 +219,11 @@ bb.i:                                             ; preds = %.critedge
 
 _PyUnicode_DATA.exit.i:                           ; preds = %bb.i, %bb.h
   %.0.i.i = phi ptr [ %.0.i.i.i, %bb.h ], [ %.val4.i.i, %bb.i ] ; 5 uses
-  switch i32 %4, label %bb.m [
-    i32 1, label %bb.j
-    i32 2, label %bb.k
-    i32 4, label %bb.l
+  %3 = and i32 %i.aa, 28
+  switch i32 %3, label %bb.m [
+    i32 4, label %bb.j
+    i32 8, label %bb.k
+    i32 16, label %bb.l
   ]
 
 bb.j:                                             ; preds = %_PyUnicode_DATA.exit.i

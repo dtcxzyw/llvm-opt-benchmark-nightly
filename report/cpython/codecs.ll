@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %._crit_edge118, %bb
   %i.w = getelementptr i8, ptr %i.v, i64 32
   %i.x = load i32, ptr %i.w, align 8
   %.fr106 = freeze i32 %i.x                       ; 3 uses
-  %1 = lshr i32 %.fr106, 2
-  %i.y = and i32 %1, 7                            ; 2 uses
+  %i.y = and i32 %.fr106, 28                      ; 2 uses
   %i.z = and i32 %.fr106, 32
   %.not.i19.i = icmp eq i32 %i.z, 0
   %i.aa = and i32 %.fr106, 64
@@ -220,8 +219,8 @@ bb.e:                                             ; preds = %._crit_edge118, %bb
   %.03474.us = phi i64 [ %i.ar, %n_decimal_digits_for_codepoint.exit.us ], [ 0, %.lr.ph.split.us.preheader ]
   %.03573.us = phi i64 [ %i.as, %n_decimal_digits_for_codepoint.exit.us ], [ %.pre, %.lr.ph.split.us.preheader ] ; 4 uses
   switch i32 %i.y, label %_PyUnicode_DATA.exit25.i.us [
-    i32 1, label %_PyUnicode_DATA.exit.i.us
-    i32 2, label %_PyUnicode_DATA.exit17.i.us
+    i32 4, label %_PyUnicode_DATA.exit.i.us
+    i32 8, label %_PyUnicode_DATA.exit17.i.us
   ]
 
 _PyUnicode_DATA.exit17.i.us:                      ; preds = %.lr.ph.split.us
@@ -276,8 +275,8 @@ n_decimal_digits_for_codepoint.exit.us:           ; preds = %bb.j, %bb.i, %bb.h,
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   switch i32 %i.y, label %_PyUnicode_DATA.exit25.i [
-    i32 1, label %_PyUnicode_DATA.exit.i.us77.preheader
-    i32 2, label %_PyUnicode_DATA.exit17.i.us87.preheader
+    i32 4, label %_PyUnicode_DATA.exit.i.us77.preheader
+    i32 8, label %_PyUnicode_DATA.exit17.i.us87.preheader
   ]
 
 _PyUnicode_DATA.exit17.i.us87.preheader:          ; preds = %.lr.ph.split
@@ -533,13 +532,12 @@ bb.ad:                                            ; preds = %._crit_edge103
   %i.ds = load ptr, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.dt = getelementptr i8, ptr %i.ds, i64 32
   %i.du = load i32, ptr %i.dt, align 8            ; 5 uses
-  %2 = lshr i32 %i.du, 2
-  %i.dv = and i32 %2, 7
+  %i.dv = and i32 %i.du, 28
   %i.dw = and i32 %i.du, 32
   %.not.i19.i47 = icmp eq i32 %i.dw, 0            ; 3 uses
   switch i32 %i.dv, label %bb.ak [
-    i32 1, label %bb.ae
-    i32 2, label %bb.ah
+    i32 4, label %bb.ae
+    i32 8, label %bb.ah
   ]
 
 bb.ae:                                            ; preds = %.lr.ph102
@@ -919,8 +917,7 @@ bb.d:                                             ; preds = %._crit_edge100, %bb
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !14   ; 3 uses
   %i.r = getelementptr i8, ptr %i.q, i64 32
   %i.s = load i32, ptr %i.r, align 8              ; 3 uses
-  %1 = lshr i32 %i.s, 2
-  %i.t = and i32 %1, 7
+  %i.t = and i32 %i.s, 28
   %i.u = and i32 %i.s, 32
   %.not.i19.i = icmp eq i32 %i.u, 0               ; 2 uses
   %i.v = and i32 %i.s, 64
@@ -929,8 +926,8 @@ bb.d:                                             ; preds = %._crit_edge100, %bb
   %.0.i.i14.i = getelementptr i8, ptr %i.q, i64 %.0.v.i.i13.i ; 4 uses
   %i.w = getelementptr i8, ptr %i.q, i64 56       ; 2 uses
   switch i32 %i.t, label %.lr.ph.split [
-    i32 1, label %.lr.ph.split.us
-    i32 2, label %.lr.ph.split.us64
+    i32 4, label %.lr.ph.split.us
+    i32 8, label %.lr.ph.split.us64
   ]
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -1241,13 +1238,12 @@ Py_DECREF.exit:                                   ; preds = %._crit_edge86, %bb.
   %i.dw = load ptr, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.dx = getelementptr i8, ptr %i.dw, i64 32
   %i.dy = load i32, ptr %i.dx, align 8            ; 5 uses
-  %2 = lshr i32 %i.dy, 2
-  %i.dz = and i32 %2, 7
+  %i.dz = and i32 %i.dy, 28
   %i.ea = and i32 %i.dy, 32
   %.not.i19.i25 = icmp eq i32 %i.ea, 0            ; 3 uses
   switch i32 %i.dz, label %bb.s [
-    i32 1, label %bb.m
-    i32 2, label %bb.p
+    i32 4, label %bb.m
+    i32 8, label %bb.p
   ]
 
 bb.m:                                             ; preds = %.lr.ph85
@@ -1488,13 +1484,12 @@ bb.d:                                             ; preds = %bb.c
   %i.q = load ptr, ptr %i.a, align 8, !tbaa !14   ; 7 uses
   %i.r = getelementptr i8, ptr %i.q, i64 32
   %i.s = load i32, ptr %i.r, align 8              ; 5 uses
-  %1 = lshr i32 %i.s, 2
-  %i.t = and i32 %1, 7
+  %i.t = and i32 %i.s, 28
   %i.u = and i32 %i.s, 32
   %.not.i19.i = icmp eq i32 %i.u, 0               ; 3 uses
   switch i32 %i.t, label %bb.k [
-    i32 1, label %bb.e
-    i32 2, label %bb.h
+    i32 4, label %bb.e
+    i32 8, label %bb.h
   ]
 
 bb.e:                                             ; preds = %.lr.ph
@@ -1657,13 +1652,12 @@ bb.w:                                             ; preds = %._crit_edge98
   %i.bm = load ptr, ptr %i.a, align 8, !tbaa !14  ; 7 uses
   %i.bn = getelementptr i8, ptr %i.bm, i64 32
   %i.bo = load i32, ptr %i.bn, align 8            ; 5 uses
-  %2 = lshr i32 %i.bo, 2
-  %i.bp = and i32 %2, 7
+  %i.bp = and i32 %i.bo, 28
   %i.bq = and i32 %i.bo, 32
   %.not.i19.i47 = icmp eq i32 %i.bq, 0            ; 3 uses
   switch i32 %i.bp, label %bb.ad [
-    i32 1, label %bb.x
-    i32 2, label %bb.aa
+    i32 4, label %bb.x
+    i32 8, label %bb.aa
   ]
 
 bb.x:                                             ; preds = %.lr.ph97
@@ -2066,13 +2060,12 @@ bb.m:                                             ; preds = %bb.i
   %i.az = load ptr, ptr %i.j, align 8, !tbaa !14  ; 10 uses
   %i.ba = getelementptr i8, ptr %i.az, i64 32
   %i.bb = load i32, ptr %i.ba, align 8            ; 5 uses
-  %2 = lshr i32 %i.bb, 2
-  %i.bc = and i32 %2, 7
+  %i.bc = and i32 %i.bb, 28
   %i.bd = and i32 %i.bb, 32
   %.not.i19.i.i.i = icmp eq i32 %i.bd, 0          ; 3 uses
   switch i32 %i.bc, label %bb.t [
-    i32 1, label %bb.n
-    i32 2, label %bb.q
+    i32 4, label %bb.n
+    i32 8, label %bb.q
   ]
 
 bb.n:                                             ; preds = %.lr.ph.i.i
@@ -2475,13 +2468,12 @@ bb.f:                                             ; preds = %bb.b
   %i.y = load ptr, ptr %i.f, align 8, !tbaa !14   ; 10 uses
   %i.z = getelementptr i8, ptr %i.y, i64 32
   %i.aa = load i32, ptr %i.z, align 8             ; 5 uses
-  %2 = lshr i32 %i.aa, 2
-  %i.ab = and i32 %2, 7
+  %i.ab = and i32 %i.aa, 28
   %i.ac = and i32 %i.aa, 32
   %.not.i19.i.i.i = icmp eq i32 %i.ac, 0          ; 3 uses
   switch i32 %i.ab, label %bb.m [
-    i32 1, label %bb.g
-    i32 2, label %bb.j
+    i32 4, label %bb.g
+    i32 8, label %bb.j
   ]
 
 bb.g:                                             ; preds = %.lr.ph.i.i

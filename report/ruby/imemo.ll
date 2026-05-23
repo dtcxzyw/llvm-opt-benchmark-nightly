@@ -201,23 +201,22 @@ define hidden i64 @rb_imemo_memsize(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !21   ; 6 uses
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.i [
-    i32 11, label %bb.j
-    i32 10, label %bb.j
-    i32 12, label %bb.j
-    i32 1, label %bb.j
-    i32 0, label %bb.b
-    i32 4, label %bb.j
-    i32 7, label %bb.c
-    i32 5, label %bb.j
-    i32 6, label %bb.d
-    i32 2, label %bb.j
-    i32 3, label %bb.j
-    i32 8, label %bb.e
-    i32 13, label %bb.f
+  %1 = trunc i64 %i.b to i16
+  %2 = lshr i16 %1, 12
+  switch i16 %2, label %bb.i [
+    i16 11, label %bb.j
+    i16 10, label %bb.j
+    i16 12, label %bb.j
+    i16 1, label %bb.j
+    i16 0, label %bb.b
+    i16 4, label %bb.j
+    i16 7, label %bb.c
+    i16 5, label %bb.j
+    i16 6, label %bb.d
+    i16 2, label %bb.j
+    i16 3, label %bb.j
+    i16 8, label %bb.e
+    i16 13, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -322,23 +321,22 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 5 uses
   %i.g = inttoptr i64 %0 to ptr                   ; 33 uses
   %i.h = load i64, ptr %i.g, align 8, !tbaa !21   ; 2 uses
-  %2 = trunc i64 %i.h to i32
-  %3 = lshr i32 %2, 12
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.bo [
-    i32 11, label %bb.b
-    i32 10, label %mark_and_move_method_entry.exit
-    i32 12, label %bb.i
-    i32 1, label %bb.l
-    i32 0, label %bb.r
-    i32 4, label %bb.ae
-    i32 7, label %bb.ag
-    i32 5, label %bb.ah
-    i32 6, label %bb.aj
-    i32 2, label %bb.be
-    i32 3, label %bb.bf
-    i32 8, label %bb.bg
-    i32 13, label %bb.bi
+  %2 = trunc i64 %i.h to i16
+  %3 = lshr i16 %2, 12
+  switch i16 %3, label %bb.bo [
+    i16 11, label %bb.b
+    i16 10, label %mark_and_move_method_entry.exit
+    i16 12, label %bb.i
+    i16 1, label %bb.l
+    i16 0, label %bb.r
+    i16 4, label %bb.ae
+    i16 7, label %bb.ag
+    i16 5, label %bb.ah
+    i16 6, label %bb.aj
+    i16 2, label %bb.be
+    i16 3, label %bb.bf
+    i16 8, label %bb.bg
+    i16 13, label %bb.bi
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -741,23 +739,22 @@ define hidden void @rb_imemo_free(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = inttoptr i64 %0 to ptr                   ; 7 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !21   ; 3 uses
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.l [
-    i32 11, label %imemo_fields_free.exit
-    i32 10, label %bb.b
-    i32 12, label %imemo_fields_free.exit
-    i32 1, label %imemo_fields_free.exit
-    i32 0, label %bb.e
-    i32 4, label %imemo_fields_free.exit
-    i32 7, label %bb.f
-    i32 5, label %imemo_fields_free.exit
-    i32 6, label %bb.g
-    i32 2, label %imemo_fields_free.exit
-    i32 3, label %imemo_fields_free.exit
-    i32 8, label %bb.h
-    i32 13, label %bb.i
+  %1 = trunc i64 %i.b to i16
+  %2 = lshr i16 %1, 12
+  switch i16 %2, label %bb.l [
+    i16 11, label %imemo_fields_free.exit
+    i16 10, label %bb.b
+    i16 12, label %imemo_fields_free.exit
+    i16 1, label %imemo_fields_free.exit
+    i16 0, label %bb.e
+    i16 4, label %imemo_fields_free.exit
+    i16 7, label %bb.f
+    i16 5, label %imemo_fields_free.exit
+    i16 6, label %bb.g
+    i16 2, label %imemo_fields_free.exit
+    i16 3, label %imemo_fields_free.exit
+    i16 8, label %bb.h
+    i16 13, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a

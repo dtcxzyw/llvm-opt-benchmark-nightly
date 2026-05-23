@@ -180,13 +180,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.at = and i64 %.3617, 1
   %.not744 = icmp eq i64 %i.at, 0
   %i.au = trunc i64 %.3617 to i32                 ; 4 uses
-  %7 = lshr i32 %i.au, 1
-  %i.av = and i32 %7, 3
+  %i.av = and i32 %i.au, 6
   switch i32 %i.av, label %default.unreachable [
-    i32 2, label %bb.g
+    i32 4, label %bb.g
     i32 0, label %bb.at
-    i32 1, label %bb.az
-    i32 3, label %.thread836
+    i32 2, label %bb.az
+    i32 6, label %.thread836
   ], !prof !16
 
 bb.g:                                             ; preds = %.loopexit916
@@ -589,13 +588,12 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %i.at = and i64 %.3617, 1
   %.not744 = icmp eq i64 %i.at, 0
   %i.au = trunc i64 %.3617 to i32                 ; 4 uses
-  %7 = lshr i32 %i.au, 1
-  %i.av = and i32 %7, 3
+  %i.av = and i32 %i.au, 6
   switch i32 %i.av, label %default.unreachable [
-    i32 2, label %bb.g
+    i32 4, label %bb.g
     i32 0, label %bb.at
-    i32 1, label %bb.az
-    i32 3, label %.thread836
+    i32 2, label %bb.az
+    i32 6, label %.thread836
   ], !prof !16
 
 bb.g:                                             ; preds = %.loopexit916

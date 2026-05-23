@@ -201,13 +201,11 @@ bb.e:                                             ; preds = %activeDefragAlloc.e
   br i1 %i.o, label %bb.f, label %activeDefragAlloc.exit42.thread
 
 bb.f:                                             ; preds = %bb.e
-  %2 = trunc i64 %i.m to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.k [
-    i32 0, label %bb.g
-    i32 8, label %bb.i
-    i32 1, label %activeDefragAlloc.exit42.thread
+  %2 = trunc i64 %i.m to i8
+  switch i8 %2, label %bb.k [
+    i8 0, label %bb.g
+    i8 -128, label %bb.i
+    i8 16, label %activeDefragAlloc.exit42.thread
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -610,8 +608,8 @@ bb.l:                                             ; preds = %activeDefragKvobj.e
 
 activeDefragKvobj.exit.thread:                    ; preds = %activeDefragAllocWithoutFree.exit.i.i, %activeDefragAllocWithoutFree.exit.thread.i.i, %bb.h, %bb.g, %activeDefragKvobj.exit, %bb.l
   %.082 = phi ptr [ %i.c, %activeDefragAllocWithoutFree.exit.i.i ], [ %i.as, %bb.l ], [ %i.as, %activeDefragKvobj.exit ], [ %i.c, %bb.g ], [ %i.c, %bb.h ], [ %i.c, %activeDefragAllocWithoutFree.exit.thread.i.i ] ; 15 uses
-  %i.ba = load i64, ptr %.082, align 8            ; 2 uses
-  %i.bb = trunc i64 %i.ba to i32                  ; 5 uses
+  %i.ba = load i64, ptr %.082, align 8            ; 6 uses
+  %i.bb = trunc i64 %i.ba to i32
   %i.bc = and i32 %i.bb, 15
   switch i32 %i.bc, label %bb.ao [
     i32 0, label %bb.m
@@ -662,11 +660,11 @@ bb.o:                                             ; preds = %activeDefragAllocWi
   br label %activeDefragAlloc.exit.thread
 
 bb.p:                                             ; preds = %activeDefragKvobj.exit.thread
-  %3 = lshr i32 %i.bb, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.t [
-    i32 9, label %bb.q
-    i32 11, label %bb.r
+  %3 = trunc i64 %i.ba to i8
+  %trunc165 = and i8 %3, -16
+  switch i8 %trunc165, label %bb.t [
+    i8 -112, label %bb.q
+    i8 -80, label %bb.r
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -707,12 +705,12 @@ bb.t:                                             ; preds = %bb.p
   unreachable
 
 bb.u:                                             ; preds = %activeDefragKvobj.exit.thread
-  %5 = lshr i32 %i.bb, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.y [
-    i32 2, label %bb.v
-    i32 6, label %bb.w
-    i32 11, label %bb.w
+  %4 = trunc i64 %i.ba to i8
+  %trunc164 = and i8 %4, -16
+  switch i8 %trunc164, label %bb.y [
+    i8 32, label %bb.v
+    i8 96, label %bb.w
+    i8 -80, label %bb.w
   ]
 
 bb.v:                                             ; preds = %bb.u
@@ -753,11 +751,11 @@ bb.y:                                             ; preds = %bb.u
   unreachable
 
 bb.z:                                             ; preds = %activeDefragKvobj.exit.thread
-  %7 = lshr i32 %i.bb, 4
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.ad [
-    i32 11, label %bb.aa
-    i32 7, label %bb.ac
+  %5 = trunc i64 %i.ba to i8
+  %trunc163 = and i8 %5, -16
+  switch i8 %trunc163, label %bb.ad [
+    i8 -80, label %bb.aa
+    i8 112, label %bb.ac
   ]
 
 bb.aa:                                            ; preds = %bb.z
@@ -798,12 +796,12 @@ bb.ad:                                            ; preds = %bb.z
   unreachable
 
 bb.ae:                                            ; preds = %activeDefragKvobj.exit.thread
-  %9 = lshr i32 %i.bb, 4
-  %10 = and i32 %9, 15
-  switch i32 %10, label %bb.al [
-    i32 11, label %bb.af
-    i32 12, label %bb.ah
-    i32 2, label %bb.ak
+  %6 = trunc i64 %i.ba to i8
+  %trunc = and i8 %6, -16
+  switch i8 %trunc, label %bb.al [
+    i8 -80, label %bb.af
+    i8 -64, label %bb.ah
+    i8 32, label %bb.ak
   ]
 
 bb.af:                                            ; preds = %bb.ae

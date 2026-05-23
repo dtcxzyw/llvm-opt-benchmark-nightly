@@ -201,13 +201,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr i8, ptr %i.e, i64 32
   %i.aa = load i32, ptr %i.z, align 8             ; 5 uses
-  %3 = lshr i32 %i.aa, 2
-  %i.ab = and i32 %3, 7
+  %i.ab = and i32 %i.aa, 28
   %i.ac = and i32 %i.aa, 32
   %.not.i19.i = icmp eq i32 %i.ac, 0              ; 3 uses
   switch i32 %i.ab, label %bb.p [
-    i32 1, label %bb.j
-    i32 2, label %bb.m
+    i32 4, label %bb.j
+    i32 8, label %bb.m
   ]
 
 bb.j:                                             ; preds = %bb.i
@@ -610,13 +609,12 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.u = load i32, ptr %i.j, align 8              ; 8 uses
-  %5 = lshr i32 %i.u, 2
-  %i.v = and i32 %5, 7                            ; 2 uses
+  %i.v = and i32 %i.u, 28                         ; 2 uses
   %i.w = and i32 %i.u, 32
   %.not.i19.i = icmp eq i32 %i.w, 0               ; 6 uses
   switch i32 %i.v, label %bb.n [
-    i32 1, label %bb.h
-    i32 2, label %bb.k
+    i32 4, label %bb.h
+    i32 8, label %bb.k
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -706,8 +704,8 @@ bb.s:                                             ; preds = %PyUnicode_READ_CHAR
 
 bb.t:                                             ; preds = %bb.s
   switch i32 %i.v, label %bb.aa [
-    i32 1, label %bb.u
-    i32 2, label %bb.x
+    i32 4, label %bb.u
+    i32 8, label %bb.x
   ]
 
 bb.u:                                             ; preds = %bb.t
@@ -1110,13 +1108,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.v = getelementptr i8, ptr %i.e, i64 32
   %i.w = load i32, ptr %i.v, align 8              ; 5 uses
-  %3 = lshr i32 %i.w, 2
-  %i.x = and i32 %3, 7
+  %i.x = and i32 %i.w, 28
   %i.y = and i32 %i.w, 32
   %.not.i19.i = icmp eq i32 %i.y, 0               ; 3 uses
   switch i32 %i.x, label %bb.q [
-    i32 1, label %bb.k
-    i32 2, label %bb.n
+    i32 4, label %bb.k
+    i32 8, label %bb.n
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -1519,13 +1516,12 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   %i.w = getelementptr i8, ptr %i.e, i64 32
   %i.x = load i32, ptr %i.w, align 8              ; 5 uses
-  %3 = lshr i32 %i.x, 2
-  %i.y = and i32 %3, 7
+  %i.y = and i32 %i.x, 28
   %i.z = and i32 %i.x, 32
   %.not.i19.i = icmp eq i32 %i.z, 0               ; 3 uses
   switch i32 %i.y, label %bb.q [
-    i32 1, label %bb.k
-    i32 2, label %bb.n
+    i32 4, label %bb.k
+    i32 8, label %bb.n
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -1928,11 +1924,10 @@ bb.f:                                             ; preds = %bb.d
 
 _PyUnicode_DATA.exit.i.i:                         ; preds = %bb.f, %bb.e
   %.0.i.i.i = phi ptr [ %.0.i.i.i.i, %bb.e ], [ %.val4.i.i.i, %bb.f ] ; 6 uses
-  %2 = lshr i32 %.val.i.fr.i.i, 2
-  %i.t = and i32 %2, 7
+  %i.t = and i32 %.val.i.fr.i.i, 28
   switch i32 %i.t, label %_PyUnicode_DATA.exit.split.preheader.i.i [
-    i32 1, label %bb.k
-    i32 2, label %_PyUnicode_DATA.exit.split.us36.preheader.i.i
+    i32 4, label %bb.k
+    i32 8, label %_PyUnicode_DATA.exit.split.us36.preheader.i.i
   ]
 
 _PyUnicode_DATA.exit.split.us36.1.i.i:            ; preds = %_PyUnicode_DATA.exit.split.us36.preheader.i.i
@@ -2335,13 +2330,12 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.t = getelementptr i8, ptr %i.m, i64 32
   %i.u = load i32, ptr %i.t, align 8              ; 5 uses
-  %4 = lshr i32 %i.u, 2
-  %i.v = and i32 %4, 7
+  %i.v = and i32 %i.u, 28
   %i.w = and i32 %i.u, 32
   %.not.i19.i = icmp eq i32 %i.w, 0               ; 3 uses
   switch i32 %i.v, label %bb.p [
-    i32 1, label %bb.j
-    i32 2, label %bb.m
+    i32 4, label %bb.j
+    i32 8, label %bb.m
   ]
 
 bb.j:                                             ; preds = %bb.i

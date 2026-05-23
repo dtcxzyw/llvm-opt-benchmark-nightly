@@ -1,4 +1,4 @@
-inline.NumInlined: 358
+inline.NumInlined: 355
 inline.NumDeleted: 68
 begin_hunk_0_@get_localsplus_counts:bb.a
   br i1 %.not32, label %bb.e, label %bb.d
@@ -201,13 +201,14 @@ bb.p:                                             ; preds = %bb.n
   store i8 %i.bo, ptr %.136.i, align 1, !tbaa !106
   %i.bp = getelementptr i8, ptr %.136.i, i64 1    ; 4 uses
   %i.bq = load i8, ptr %i.bi, align 1, !tbaa !106
-  %1 = lshr i8 %i.bq, 3
-  %2 = and i8 %1, 15
-  switch i8 %2, label %bb.s [
-    i8 12, label %bb.r
-    i8 13, label %bb.q
-    i8 14, label %bb.q
-    i8 11, label %get_line_delta.exit.thread.i
+  %1 = and i8 %i.bq, 120
+  %2 = add nsw i8 %1, -80
+  %3 = lshr exact i8 %2, 3
+  switch i8 %3, label %bb.s [
+    i8 2, label %bb.r
+    i8 3, label %bb.q
+    i8 4, label %bb.q
+    i8 1, label %get_line_delta.exit.thread.i
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.p
@@ -610,27 +611,17 @@ bb.a:
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local i32 @_PyCode_CheckLineNumber(i32 noundef %0, ptr noundef captures(none) %1) local_unnamed_addr #8 {
 bb.a:
-  %i.a = getelementptr i8, ptr %1, i64 4          ; 3 uses
-  %.promoted = load i32, ptr %i.a, align 4, !tbaa !188 ; 2 uses
-  %.not35 = icmp sgt i32 %.promoted, %0
-  br i1 %.not35, label %..preheader_crit_edge, label %.lr.ph.a
+  %i.a = getelementptr i8, ptr %1, i64 4          ; 2 uses
+  br label %.lr.ph.a
 
-..preheader_crit_edge:                            ; preds = %bb.a
-  %.promoted38.pre = load i32, ptr %1, align 8, !tbaa !187
-  br label %.preheader
+.lr.ph.a:                                         ; preds = %.lr.ph.i.i.i.i.i.a, %bb.a
+  %2 = load i32, ptr %i.a, align 4, !tbaa !188
+  %.not = icmp sgt i32 %2, %0
+  br i1 %.not, label %.preheader, label %.lr.ph.i.i.i.i.i.a
 
-.lr.ph.a:                                         ; preds = %bb.a
-  %2 = getelementptr i8, ptr %1, i64 24           ; 3 uses
-  %3 = getelementptr i8, ptr %1, i64 32
-  %.val2.i = load ptr, ptr %3, align 8, !tbaa !186 ; 3 uses
-  %4 = getelementptr i8, ptr %1, i64 16           ; 2 uses
-  %5 = getelementptr i8, ptr %1, i64 8
-  %.promoted36 = load ptr, ptr %2, align 8, !tbaa !183
-  br label %6
-
-.preheader:                                       ; preds = %_PyLineTable_NextAddressRange.exit, %..preheader_crit_edge
-  %.promoted38 = phi i32 [ %.promoted38.pre, %..preheader_crit_edge ], [ %8, %_PyLineTable_NextAddressRange.exit ] ; 2 uses
-  %i.b = icmp sgt i32 %.promoted38, %0
+.preheader:                                       ; preds = %.lr.ph.a
+  %.promoted = load i32, ptr %1, align 8, !tbaa !187 ; 2 uses
+  %i.b = icmp sgt i32 %.promoted, %0
   br i1 %i.b, label %.lr.ph39, label %.preheader.._crit_edge_crit_edge
 
 .preheader.._crit_edge_crit_edge:                 ; preds = %.preheader
@@ -644,106 +635,13 @@ bb.a:
   %i.e = getelementptr i8, ptr %1, i64 8
   br label %bb.b
 
-6:                                                ; preds = %.lr.ph.a, %_PyLineTable_NextAddressRange.exit
-  %7 = phi ptr [ %.promoted36, %.lr.ph.a ], [ %.lcssa71, %_PyLineTable_NextAddressRange.exit ] ; 6 uses
-  %8 = phi i32 [ %.promoted, %.lr.ph.a ], [ %38, %_PyLineTable_NextAddressRange.exit ] ; 3 uses
-  %.not3.i = icmp ult ptr %7, %.val2.i
-  br i1 %.not3.i, label %9, label %_PyLineTable_NextAddressRange.exit.thread
-
-9:                                                ; preds = %6
-  %10 = load i8, ptr %7, align 1, !tbaa !106
-  %11 = lshr i8 %10, 3
-  %12 = and i8 %11, 15
-  switch i8 %12, label %30 [
-    i8 12, label %29
-    i8 13, label %13
-    i8 14, label %13
-    i8 11, label %get_line_delta.exit.i.i
-  ]
-
-13:                                               ; preds = %9, %9
-  %14 = getelementptr i8, ptr %7, i64 1           ; 2 uses
-  %15 = load i8, ptr %14, align 1, !tbaa !106
-  %16 = zext i8 %15 to i32                        ; 2 uses
-  %17 = and i32 %16, 63                           ; 2 uses
-  %18 = and i32 %16, 64
-  %.not11.i.i.i.i.i = icmp eq i32 %18, 0
-  br i1 %.not11.i.i.i.i.i, label %scan_signed_varint.exit.i.i.i, label %.lr.ph.i.i.i.i.i.a
-
-.lr.ph.i.i.i.i.i.a:                               ; preds = %13, %.lr.ph.i.i.i.i.i.a
-  %.014.i.i.i.i.i = phi i32 [ %21, %.lr.ph.i.i.i.i.i.a ], [ 0, %13 ]
-  %.0813.i.i.i.i.i = phi i32 [ %24, %.lr.ph.i.i.i.i.i.a ], [ %17, %13 ]
-  %.pn12.i.i.i.i.i = phi ptr [ %.010.i.i.i.i.i, %.lr.ph.i.i.i.i.i.a ], [ %14, %13 ]
-  %.010.i.i.i.i.i = getelementptr i8, ptr %.pn12.i.i.i.i.i, i64 1 ; 2 uses
-  %19 = load i8, ptr %.010.i.i.i.i.i, align 1, !tbaa !106
-  %20 = zext i8 %19 to i32                        ; 2 uses
-  %21 = add i32 %.014.i.i.i.i.i, 6                ; 2 uses
-  %22 = and i32 %20, 63
-  %23 = shl i32 %22, %21
-  %24 = or i32 %23, %.0813.i.i.i.i.i              ; 2 uses
-  %25 = and i32 %20, 64
-  %.not.i.i.i.i.i.a = icmp eq i32 %25, 0
-  br i1 %.not.i.i.i.i.i.a, label %scan_signed_varint.exit.i.i.i, label %.lr.ph.i.i.i.i.i.a, !llvm.loop !138
-
-scan_signed_varint.exit.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i.a, %13
-  %.08.lcssa.i.i.i.i.i = phi i32 [ %17, %13 ], [ %24, %.lr.ph.i.i.i.i.i.a ] ; 2 uses
-  %26 = and i32 %.08.lcssa.i.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i32 %26, 0
-  %27 = lshr i32 %.08.lcssa.i.i.i.i.i, 1          ; 2 uses
-  %28 = sub nsw i32 0, %27
-  %.0.i.i.i.i = select i1 %.not.i.i.i.i, i32 %27, i32 %28
-  br label %get_line_delta.exit.i.i
-
-29:                                               ; preds = %9
-  br label %get_line_delta.exit.i.i
-
-30:                                               ; preds = %9
-  br label %get_line_delta.exit.i.i
-
-get_line_delta.exit.i.i:                          ; preds = %30, %29, %scan_signed_varint.exit.i.i.i, %9
-  %.0.i.i.i = phi i32 [ 0, %30 ], [ 2, %29 ], [ %.0.i.i.i.i, %scan_signed_varint.exit.i.i.i ], [ 1, %9 ]
-  %31 = load i32, ptr %4, align 8, !tbaa !189
-  %32 = add i32 %31, %.0.i.i.i                    ; 2 uses
-  store i32 %32, ptr %4, align 8, !tbaa !189
-  %33 = load i8, ptr %7, align 1, !tbaa !106
-  %34 = icmp ult i8 %33, -8
-  %spec.select.i.i = select i1 %34, i32 %32, i32 -1
-  store i32 %spec.select.i.i, ptr %5, align 8, !tbaa !190
-  store i32 %8, ptr %1, align 8, !tbaa !187
-  %.val.val.i.i = load i8, ptr %7, align 1, !tbaa !106
-  %35 = shl i8 %.val.val.i.i, 1
-  %narrow.i.i.i = and i8 %35, 14
-  %36 = add nuw nsw i8 %narrow.i.i.i, 2
-  %37 = zext nneg i8 %36 to i32
-  %38 = add i32 %8, %37                           ; 3 uses
-  store i32 %38, ptr %i.a, align 4, !tbaa !188
-  %39 = getelementptr i8, ptr %7, i64 1           ; 4 uses
-  store ptr %39, ptr %2, align 8, !tbaa !183
-  %40 = icmp ult ptr %39, %.val2.i
-  br i1 %40, label %.lr.ph74, label %_PyLineTable_NextAddressRange.exit
-
-41:                                               ; preds = %.lr.ph74
-  %42 = getelementptr i8, ptr %44, i64 1          ; 4 uses
-  store ptr %42, ptr %2, align 8, !tbaa !183
-  %43 = icmp ult ptr %42, %.val2.i
-  br i1 %43, label %.lr.ph74, label %_PyLineTable_NextAddressRange.exit, !llvm.loop !191
-
-.lr.ph74:                                         ; preds = %get_line_delta.exit.i.i, %41
-  %44 = phi ptr [ %42, %41 ], [ %39, %get_line_delta.exit.i.i ] ; 3 uses
-  %45 = load i8, ptr %44, align 1, !tbaa !106
-  %46 = icmp sgt i8 %45, -1
-  br i1 %46, label %41, label %._PyLineTable_NextAddressRange.exit_crit_edge75, !llvm.loop !191
-
-._PyLineTable_NextAddressRange.exit_crit_edge75:  ; preds = %.lr.ph74
-  br label %_PyLineTable_NextAddressRange.exit, !llvm.loop !191
-
-_PyLineTable_NextAddressRange.exit:               ; preds = %41, %._PyLineTable_NextAddressRange.exit_crit_edge75, %get_line_delta.exit.i.i
-  %.lcssa71 = phi ptr [ %39, %get_line_delta.exit.i.i ], [ %44, %._PyLineTable_NextAddressRange.exit_crit_edge75 ], [ %42, %41 ]
-  %.not = icmp sgt i32 %38, %0
-  br i1 %.not, label %.preheader, label %6, !llvm.loop !192
+.lr.ph.i.i.i.i.i.a:                               ; preds = %.lr.ph.a
+  %3 = tail call i32 @_PyLineTable_NextAddressRange(ptr noundef nonnull %1)
+  %.not.i.i.i.i.i.a = icmp eq i32 %3, 0
+  br i1 %.not.i.i.i.i.i.a, label %_PyLineTable_NextAddressRange.exit.thread, label %.lr.ph.a, !llvm.loop !191
 
 bb.b:                                             ; preds = %.lr.ph39, %_PyLineTable_PreviousAddressRange.exit
-  %i.f = phi i32 [ %.promoted38, %.lr.ph39 ], [ %i.ah, %_PyLineTable_PreviousAddressRange.exit ] ; 3 uses
+  %i.f = phi i32 [ %.promoted, %.lr.ph39 ], [ %i.ah, %_PyLineTable_PreviousAddressRange.exit ] ; 3 uses
   %i.g = icmp slt i32 %i.f, 1
   br i1 %i.g, label %_PyLineTable_NextAddressRange.exit.thread, label %bb.c
 
@@ -757,16 +655,17 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   store ptr %i.i, ptr %i.c, align 8, !tbaa !183
   %i.j = load i8, ptr %i.i, align 1, !tbaa !106   ; 2 uses
   %i.k = icmp sgt i8 %i.j, -1
-  br i1 %i.k, label %bb.d, label %bb.e, !llvm.loop !193
+  br i1 %i.k, label %bb.d, label %bb.e, !llvm.loop !192
 
 bb.e:                                             ; preds = %bb.d
-  %47 = lshr i8 %i.j, 3
-  %48 = and i8 %47, 15
-  switch i8 %48, label %bb.h [
-    i8 12, label %bb.g
-    i8 13, label %bb.f
-    i8 14, label %bb.f
-    i8 11, label %get_line_delta.exit.i.i9
+  %4 = and i8 %i.j, 120
+  %5 = add nsw i8 %4, -80
+  %6 = lshr exact i8 %5, 3
+  switch i8 %6, label %bb.h [
+    i8 2, label %bb.g
+    i8 3, label %bb.f
+    i8 4, label %bb.f
+    i8 1, label %get_line_delta.exit.i.i9
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e
@@ -820,7 +719,7 @@ get_line_delta.exit.i.i9:                         ; preds = %bb.h, %bb.g, %scan_
   %.0.i12.i.i = getelementptr i8, ptr %.pn.i.i.i, i64 -1 ; 2 uses
   %i.ac = load i8, ptr %.0.i12.i.i, align 1, !tbaa !106 ; 2 uses
   %i.ad = icmp sgt i8 %i.ac, -1
-  br i1 %i.ad, label %.preheader.i.i, label %_PyLineTable_PreviousAddressRange.exit, !llvm.loop !194
+  br i1 %i.ad, label %.preheader.i.i, label %_PyLineTable_PreviousAddressRange.exit, !llvm.loop !193
 
 _PyLineTable_PreviousAddressRange.exit:           ; preds = %.preheader.i.i
   %i.ae = shl i8 %i.ac, 1
@@ -835,10 +734,10 @@ _PyLineTable_PreviousAddressRange.exit:           ; preds = %.preheader.i.i
   %spec.select.i.i11 = select i1 %i.ak, i32 %i.ab, i32 -1 ; 2 uses
   store i32 %spec.select.i.i11, ptr %i.e, align 8, !tbaa !190
   %i.al = icmp sgt i32 %i.ah, %0
-  br i1 %i.al, label %bb.b, label %_PyLineTable_NextAddressRange.exit.thread, !llvm.loop !195
+  br i1 %i.al, label %bb.b, label %_PyLineTable_NextAddressRange.exit.thread, !llvm.loop !194
 
-_PyLineTable_NextAddressRange.exit.thread:        ; preds = %6, %bb.b, %_PyLineTable_PreviousAddressRange.exit, %.preheader.._crit_edge_crit_edge
-  %.0 = phi i32 [ %.pre, %.preheader.._crit_edge_crit_edge ], [ -1, %bb.b ], [ %spec.select.i.i11, %_PyLineTable_PreviousAddressRange.exit ], [ -1, %6 ]
+_PyLineTable_NextAddressRange.exit.thread:        ; preds = %.lr.ph.i.i.i.i.i.a, %bb.b, %_PyLineTable_PreviousAddressRange.exit, %.preheader.._crit_edge_crit_edge
+  %.0 = phi i32 [ %.pre, %.preheader.._crit_edge_crit_edge ], [ -1, %bb.b ], [ %spec.select.i.i11, %_PyLineTable_PreviousAddressRange.exit ], [ -1, %.lr.ph.i.i.i.i.i.a ]
   ret i32 %.0
 }
 
@@ -932,13 +831,14 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.d = load i8, ptr %.val, align 1, !tbaa !106
-  %1 = lshr i8 %i.d, 3
-  %2 = and i8 %1, 15
-  switch i8 %2, label %bb.e [
-    i8 12, label %bb.d
-    i8 13, label %bb.c
-    i8 14, label %bb.c
-    i8 11, label %get_line_delta.exit.i
+  %1 = and i8 %i.d, 120
+  %2 = add nsw i8 %1, -80
+  %3 = lshr exact i8 %2, 3
+  switch i8 %3, label %bb.e [
+    i8 2, label %bb.d
+    i8 3, label %bb.c
+    i8 4, label %bb.c
+    i8 1, label %get_line_delta.exit.i
   ]
 
 bb.c:                                             ; preds = %bb.b, %bb.b
@@ -1009,16 +909,16 @@ bb.f:                                             ; preds = %.lr.ph
   %i.ag = getelementptr i8, ptr %i.ai, i64 1      ; 3 uses
   store ptr %i.ag, ptr %i.a, align 8, !tbaa !183
   %i.ah = icmp ult ptr %i.ag, %.val2
-  br i1 %i.ah, label %.lr.ph, label %advance.exit, !llvm.loop !191
+  br i1 %i.ah, label %.lr.ph, label %advance.exit, !llvm.loop !195
 
 .lr.ph:                                           ; preds = %get_line_delta.exit.i, %bb.f
   %i.ai = phi ptr [ %i.ag, %bb.f ], [ %i.ae, %get_line_delta.exit.i ] ; 2 uses
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !106
   %i.ak = icmp sgt i8 %i.aj, -1
-  br i1 %i.ak, label %bb.f, label %.advance.exit.loopexit_crit_edge5, !llvm.loop !191
+  br i1 %i.ak, label %bb.f, label %.advance.exit.loopexit_crit_edge5, !llvm.loop !195
 
 .advance.exit.loopexit_crit_edge5:                ; preds = %.lr.ph
-  br label %advance.exit, !llvm.loop !191
+  br label %advance.exit, !llvm.loop !195
 
 advance.exit:                                     ; preds = %bb.f, %get_line_delta.exit.i, %.advance.exit.loopexit_crit_edge5, %bb.a
   %.0 = phi i32 [ 0, %bb.a ], [ 1, %get_line_delta.exit.i ], [ 1, %.advance.exit.loopexit_crit_edge5 ], [ 1, %bb.f ]
@@ -1043,17 +943,18 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   store ptr %i.e, ptr %i.c, align 8, !tbaa !183
   %i.f = load i8, ptr %i.e, align 1, !tbaa !106   ; 2 uses
   %i.g = icmp sgt i8 %i.f, -1
-  br i1 %i.g, label %bb.c, label %bb.d, !llvm.loop !193
+  br i1 %i.g, label %bb.c, label %bb.d, !llvm.loop !192
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr i8, ptr %0, i64 16         ; 2 uses
-  %1 = lshr i8 %i.f, 3
-  %2 = and i8 %1, 15
-  switch i8 %2, label %bb.g [
-    i8 12, label %bb.f
-    i8 13, label %bb.e
-    i8 14, label %bb.e
-    i8 11, label %get_line_delta.exit.i
+  %1 = and i8 %i.f, 120
+  %2 = add nsw i8 %1, -80
+  %3 = lshr exact i8 %2, 3
+  switch i8 %3, label %bb.g [
+    i8 2, label %bb.f
+    i8 3, label %bb.e
+    i8 4, label %bb.e
+    i8 1, label %get_line_delta.exit.i
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -1108,7 +1009,7 @@ get_line_delta.exit.i:                            ; preds = %bb.g, %bb.f, %scan_
   %.0.i12.i = getelementptr i8, ptr %.pn.i.i, i64 -1 ; 2 uses
   %i.aa = load i8, ptr %.0.i12.i, align 1, !tbaa !106 ; 2 uses
   %i.ab = icmp sgt i8 %i.aa, -1
-  br i1 %i.ab, label %.preheader.i, label %retreat.exit, !llvm.loop !194
+  br i1 %i.ab, label %.preheader.i, label %retreat.exit, !llvm.loop !193
 
 retreat.exit:                                     ; preds = %.preheader.i
   %i.ac = shl i8 %i.aa, 1
@@ -1176,17 +1077,18 @@ bb.d:                                             ; preds = %bb.d, %bb.c
   %i.r = getelementptr i8, ptr %i.q, i64 -1       ; 3 uses
   %i.s = load i8, ptr %i.r, align 1, !tbaa !106   ; 2 uses
   %i.t = icmp sgt i8 %i.s, -1
-  br i1 %i.t, label %bb.d, label %bb.e, !llvm.loop !193
+  br i1 %i.t, label %bb.d, label %bb.e, !llvm.loop !192
 
 bb.e:                                             ; preds = %bb.d
   store ptr %i.r, ptr %i.k, align 8, !tbaa !183
-  %7 = lshr i8 %i.s, 3
-  %8 = and i8 %7, 15
-  switch i8 %8, label %bb.h [
-    i8 12, label %bb.g
-    i8 13, label %bb.f
-    i8 14, label %bb.f
-    i8 11, label %get_line_delta.exit.i
+  %7 = and i8 %i.s, 120
+  %8 = add nsw i8 %7, -80
+  %9 = lshr exact i8 %8, 3
+  switch i8 %9, label %bb.h [
+    i8 2, label %bb.g
+    i8 3, label %bb.f
+    i8 4, label %bb.f
+    i8 1, label %get_line_delta.exit.i
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e
@@ -1538,229 +1440,57 @@ declare ptr @PyObject_SelfIter(ptr noundef) #2
 define internal ptr @lineiter_next(ptr noundef captures(none) %0) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = getelementptr i8, ptr %0, i64 24         ; 3 uses
-  %1 = getelementptr i8, ptr %0, i64 48           ; 6 uses
-  %.val.i = load ptr, ptr %1, align 8, !tbaa !183 ; 6 uses
-  %2 = getelementptr i8, ptr %0, i64 56
-  %.val2.i = load ptr, ptr %2, align 8, !tbaa !186 ; 6 uses
-  %.not3.i = icmp ult ptr %.val.i, %.val2.i
-  br i1 %.not3.i, label %3, label %_PyLineTable_NextAddressRange.exit
+  %i.b = getelementptr i8, ptr %0, i64 24         ; 5 uses
+  %1 = tail call i32 @_PyLineTable_NextAddressRange(ptr noundef %i.b)
+  %.not = icmp eq i32 %1, 0
+  br i1 %.not, label %_PyLineTable_NextAddressRange.exit, label %get_line_delta.exit.i.i.a
 
-3:                                                ; preds = %bb.a
-  %4 = getelementptr i8, ptr %0, i64 40           ; 4 uses
-  %5 = load i8, ptr %.val.i, align 1, !tbaa !106
-  %6 = lshr i8 %5, 3
-  %7 = and i8 %6, 15
-  switch i8 %7, label %25 [
-    i8 12, label %24
-    i8 13, label %8
-    i8 14, label %8
-    i8 11, label %get_line_delta.exit.i.i.a
-  ]
-
-8:                                                ; preds = %3, %3
-  %9 = getelementptr i8, ptr %.val.i, i64 1       ; 2 uses
-  %10 = load i8, ptr %9, align 1, !tbaa !106
-  %11 = zext i8 %10 to i32                        ; 2 uses
-  %12 = and i32 %11, 63                           ; 2 uses
-  %13 = and i32 %11, 64
-  %.not11.i.i.i.i.i = icmp eq i32 %13, 0
-  br i1 %.not11.i.i.i.i.i, label %scan_signed_varint.exit.i.i.i, label %.lr.ph.i.i.i.i.i
-
-.lr.ph.i.i.i.i.i:                                 ; preds = %8, %.lr.ph.i.i.i.i.i
-  %.014.i.i.i.i.i = phi i32 [ %16, %.lr.ph.i.i.i.i.i ], [ 0, %8 ]
-  %.0813.i.i.i.i.i = phi i32 [ %19, %.lr.ph.i.i.i.i.i ], [ %12, %8 ]
-  %.pn12.i.i.i.i.i = phi ptr [ %.010.i.i.i.i.i, %.lr.ph.i.i.i.i.i ], [ %9, %8 ]
-  %.010.i.i.i.i.i = getelementptr i8, ptr %.pn12.i.i.i.i.i, i64 1 ; 2 uses
-  %14 = load i8, ptr %.010.i.i.i.i.i, align 1, !tbaa !106
-  %15 = zext i8 %14 to i32                        ; 2 uses
-  %16 = add i32 %.014.i.i.i.i.i, 6                ; 2 uses
-  %17 = and i32 %15, 63
-  %18 = shl i32 %17, %16
-  %19 = or i32 %18, %.0813.i.i.i.i.i              ; 2 uses
-  %20 = and i32 %15, 64
-  %.not.i.i.i.i.i = icmp eq i32 %20, 0
-  br i1 %.not.i.i.i.i.i, label %scan_signed_varint.exit.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !138
-
-scan_signed_varint.exit.i.i.i:                    ; preds = %.lr.ph.i.i.i.i.i, %8
-  %.08.lcssa.i.i.i.i.i = phi i32 [ %12, %8 ], [ %19, %.lr.ph.i.i.i.i.i ] ; 2 uses
-  %21 = and i32 %.08.lcssa.i.i.i.i.i, 1
-  %.not.i.i.i.i = icmp eq i32 %21, 0
-  %22 = lshr i32 %.08.lcssa.i.i.i.i.i, 1          ; 2 uses
-  %23 = sub nsw i32 0, %22
-  %.0.i.i.i.i = select i1 %.not.i.i.i.i, i32 %22, i32 %23
-  br label %get_line_delta.exit.i.i.a
-
-24:                                               ; preds = %3
-  br label %get_line_delta.exit.i.i.a
-
-25:                                               ; preds = %3
-  br label %get_line_delta.exit.i.i.a
-
-get_line_delta.exit.i.i.a:                        ; preds = %25, %24, %scan_signed_varint.exit.i.i.i, %3
-  %.0.i.i.i = phi i32 [ 0, %25 ], [ 2, %24 ], [ %.0.i.i.i.i, %scan_signed_varint.exit.i.i.i ], [ 1, %3 ]
-  %i.c = load i32, ptr %4, align 8, !tbaa !189
-  %26 = add i32 %i.c, %.0.i.i.i                   ; 3 uses
-  store i32 %26, ptr %4, align 8, !tbaa !189
-  %27 = load i8, ptr %.val.i, align 1, !tbaa !106
-  %28 = icmp ult i8 %27, -8
-  %spec.select.i.i = select i1 %28, i32 %26, i32 -1 ; 3 uses
-  %i.d = getelementptr i8, ptr %0, i64 32         ; 3 uses
-  store i32 %spec.select.i.i, ptr %i.d, align 8, !tbaa !190
-  %29 = getelementptr i8, ptr %0, i64 28          ; 4 uses
-  %i.e = load i32, ptr %29, align 4, !tbaa !188   ; 3 uses
-  store i32 %i.e, ptr %i.b, align 8, !tbaa !187
-  %.val.val.i.i = load i8, ptr %.val.i, align 1, !tbaa !106
-  %30 = shl i8 %.val.val.i.i, 1
-  %narrow.i.i.i = and i8 %30, 14
-  %31 = add nuw nsw i8 %narrow.i.i.i, 2
-  %32 = zext nneg i8 %31 to i32
-  %33 = add i32 %i.e, %32                         ; 2 uses
-  store i32 %33, ptr %29, align 4, !tbaa !188
-  %34 = getelementptr i8, ptr %.val.i, i64 1      ; 4 uses
-  store ptr %34, ptr %1, align 8, !tbaa !183
-  %35 = icmp ult ptr %34, %.val2.i
-  br i1 %35, label %.lr.ph, label %._crit_edge
-
-36:                                               ; preds = %.lr.ph
-  %37 = getelementptr i8, ptr %39, i64 1          ; 4 uses
-  store ptr %37, ptr %1, align 8, !tbaa !183
-  %38 = icmp ult ptr %37, %.val2.i
-  br i1 %38, label %.lr.ph, label %._crit_edge, !llvm.loop !191
-
-.lr.ph:                                           ; preds = %get_line_delta.exit.i.i.a, %36
-  %39 = phi ptr [ %37, %36 ], [ %34, %get_line_delta.exit.i.i.a ] ; 3 uses
-  %40 = load i8, ptr %39, align 1, !tbaa !106
-  %41 = icmp sgt i8 %40, -1
-  br i1 %41, label %36, label %._crit_edge95, !llvm.loop !191
-
-._crit_edge95:                                    ; preds = %.lr.ph
-  br label %._crit_edge, !llvm.loop !191
-
-._crit_edge:                                      ; preds = %36, %._crit_edge95, %get_line_delta.exit.i.i.a
-  %.lcssa93 = phi ptr [ %34, %get_line_delta.exit.i.i.a ], [ %39, %._crit_edge95 ], [ %37, %36 ]
+get_line_delta.exit.i.i.a:                        ; preds = %bb.a
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !187
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  store i32 %spec.select.i.i, ptr %i.a, align 4, !tbaa !7
-  br label %42
+  %i.d = getelementptr i8, ptr %0, i64 32         ; 3 uses
+  %i.e = load i32, ptr %i.d, align 8, !tbaa !190  ; 2 uses
+  store i32 %i.e, ptr %i.a, align 4, !tbaa !7
+  br label %bb.b
 
-42:                                               ; preds = %._crit_edge98, %._crit_edge
-  %43 = phi i32 [ %73, %._crit_edge98 ], [ %33, %._crit_edge ] ; 7 uses
-  %44 = phi i32 [ %67, %._crit_edge98 ], [ %26, %._crit_edge ]
-  %45 = phi ptr [ %.lcssa88, %._crit_edge98 ], [ %.lcssa93, %._crit_edge ] ; 6 uses
-  %.not3.i14 = icmp ult ptr %45, %.val2.i
-  br i1 %.not3.i14, label %46, label %_PyLineTable_NextAddressRange.exit32
+bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i22, %get_line_delta.exit.i.i.a
+  %2 = tail call i32 @_PyLineTable_NextAddressRange(ptr noundef nonnull %i.b)
+  %.not11.i.i.i.i.i21 = icmp eq i32 %2, 0
+  br i1 %.not11.i.i.i.i.i21, label %_PyLineTable_NextAddressRange.exit32, label %.lr.ph.i.i.i.i.i22
 
-46:                                               ; preds = %42
-  %47 = load i8, ptr %45, align 1, !tbaa !106
-  %48 = lshr i8 %47, 3
-  %49 = and i8 %48, 15
-  switch i8 %49, label %66 [
-    i8 12, label %65
-    i8 13, label %bb.b
-    i8 14, label %bb.b
-    i8 11, label %get_line_delta.exit.i.i16
-  ]
+.lr.ph.i.i.i.i.i22:                               ; preds = %bb.b
+  %3 = load i32, ptr %i.d, align 8, !tbaa !190
+  %.not.i.i.i.i.i27 = icmp eq i32 %3, %i.e
+  br i1 %.not.i.i.i.i.i27, label %bb.b, label %get_line_delta.exit.i.i16, !llvm.loop !201
 
-bb.b:                                             ; preds = %46, %46
-  %50 = getelementptr i8, ptr %45, i64 1          ; 2 uses
-  %51 = load i8, ptr %50, align 1, !tbaa !106
-  %52 = zext i8 %51 to i32                        ; 2 uses
-  %53 = and i32 %52, 63                           ; 2 uses
-  %54 = and i32 %52, 64
-  %.not11.i.i.i.i.i21 = icmp eq i32 %54, 0
-  br i1 %.not11.i.i.i.i.i21, label %scan_signed_varint.exit.i.i.i28, label %.lr.ph.i.i.i.i.i22
+get_line_delta.exit.i.i16:                        ; preds = %.lr.ph.i.i.i.i.i22
+  %4 = load i32, ptr %i.b, align 8, !tbaa !187    ; 3 uses
+  %5 = icmp slt i32 %4, 1
+  br i1 %5, label %_PyLineTable_NextAddressRange.exit32, label %bb.c
 
-.lr.ph.i.i.i.i.i22:                               ; preds = %bb.b, %.lr.ph.i.i.i.i.i22
-  %.014.i.i.i.i.i23 = phi i32 [ %57, %.lr.ph.i.i.i.i.i22 ], [ 0, %bb.b ]
-  %.0813.i.i.i.i.i24 = phi i32 [ %60, %.lr.ph.i.i.i.i.i22 ], [ %53, %bb.b ]
-  %.pn12.i.i.i.i.i25 = phi ptr [ %.010.i.i.i.i.i26, %.lr.ph.i.i.i.i.i22 ], [ %50, %bb.b ]
-  %.010.i.i.i.i.i26 = getelementptr i8, ptr %.pn12.i.i.i.i.i25, i64 1 ; 2 uses
-  %55 = load i8, ptr %.010.i.i.i.i.i26, align 1, !tbaa !106
-  %56 = zext i8 %55 to i32                        ; 2 uses
-  %57 = add i32 %.014.i.i.i.i.i23, 6              ; 2 uses
-  %58 = and i32 %56, 63
-  %59 = shl i32 %58, %57
-  %60 = or i32 %59, %.0813.i.i.i.i.i24            ; 2 uses
-  %61 = and i32 %56, 64
-  %.not.i.i.i.i.i27 = icmp eq i32 %61, 0
-  br i1 %.not.i.i.i.i.i27, label %scan_signed_varint.exit.i.i.i28, label %.lr.ph.i.i.i.i.i22, !llvm.loop !138
+bb.c:                                             ; preds = %get_line_delta.exit.i.i16
+  %i.f = getelementptr i8, ptr %0, i64 48         ; 2 uses
+  %.promoted.i.i = load ptr, ptr %i.f, align 8, !tbaa !183
+  br label %.preheader
 
-scan_signed_varint.exit.i.i.i28:                  ; preds = %.lr.ph.i.i.i.i.i22, %bb.b
-  %.08.lcssa.i.i.i.i.i29 = phi i32 [ %53, %bb.b ], [ %60, %.lr.ph.i.i.i.i.i22 ] ; 2 uses
-  %62 = and i32 %.08.lcssa.i.i.i.i.i29, 1
-  %.not.i.i.i.i30 = icmp eq i32 %62, 0
-  %63 = lshr i32 %.08.lcssa.i.i.i.i.i29, 1        ; 2 uses
-  %64 = sub nsw i32 0, %63
-  %.0.i.i.i.i31 = select i1 %.not.i.i.i.i30, i32 %63, i32 %64
-  br label %get_line_delta.exit.i.i16
-
-65:                                               ; preds = %46
-  br label %get_line_delta.exit.i.i16
-
-66:                                               ; preds = %46
-  br label %get_line_delta.exit.i.i16
-
-get_line_delta.exit.i.i16:                        ; preds = %66, %65, %scan_signed_varint.exit.i.i.i28, %46
-  %.0.i.i.i17 = phi i32 [ 0, %66 ], [ 2, %65 ], [ %.0.i.i.i.i31, %scan_signed_varint.exit.i.i.i28 ], [ 1, %46 ]
-  %67 = add i32 %44, %.0.i.i.i17                  ; 4 uses
-  store i32 %67, ptr %4, align 8, !tbaa !189
-  %68 = load i8, ptr %45, align 1, !tbaa !106
-  %69 = icmp ult i8 %68, -8
-  %spec.select.i.i18 = select i1 %69, i32 %67, i32 -1 ; 2 uses
-  store i32 %spec.select.i.i18, ptr %i.d, align 8, !tbaa !190
-  store i32 %43, ptr %i.b, align 8, !tbaa !187
-  %.val.val.i.i19 = load i8, ptr %45, align 1, !tbaa !106
-  %70 = shl i8 %.val.val.i.i19, 1
-  %narrow.i.i.i20 = and i8 %70, 14
-  %71 = add nuw nsw i8 %narrow.i.i.i20, 2
-  %72 = zext nneg i8 %71 to i32
-  %73 = add i32 %43, %72                          ; 3 uses
-  store i32 %73, ptr %29, align 4, !tbaa !188
-  %74 = getelementptr i8, ptr %45, i64 1          ; 4 uses
-  store ptr %74, ptr %1, align 8, !tbaa !183
-  %75 = icmp ult ptr %74, %.val2.i
-  br i1 %75, label %.lr.ph97, label %._crit_edge98
-
-bb.c:                                             ; preds = %.lr.ph97
-  %i.f = getelementptr i8, ptr %77, i64 1         ; 4 uses
-  store ptr %i.f, ptr %1, align 8, !tbaa !183
-  %76 = icmp ult ptr %i.f, %.val2.i
-  br i1 %76, label %.lr.ph97, label %._crit_edge98, !llvm.loop !191
-
-.lr.ph97:                                         ; preds = %get_line_delta.exit.i.i16, %bb.c
-  %77 = phi ptr [ %i.f, %bb.c ], [ %74, %get_line_delta.exit.i.i16 ] ; 3 uses
-  %78 = load i8, ptr %77, align 1, !tbaa !106
-  %79 = icmp sgt i8 %78, -1
-  br i1 %79, label %bb.c, label %._crit_edge100, !llvm.loop !191
-
-._crit_edge100:                                   ; preds = %.lr.ph97
-  br label %._crit_edge98, !llvm.loop !191
-
-._crit_edge98:                                    ; preds = %bb.c, %._crit_edge100, %get_line_delta.exit.i.i16
-  %.lcssa88 = phi ptr [ %74, %get_line_delta.exit.i.i16 ], [ %77, %._crit_edge100 ], [ %i.f, %bb.c ] ; 2 uses
-  %.not11 = icmp eq i32 %spec.select.i.i18, %spec.select.i.i
-  br i1 %.not11, label %42, label %80, !llvm.loop !201
-
-80:                                               ; preds = %._crit_edge98
-  %81 = icmp slt i32 %43, 1
-  br i1 %81, label %_PyLineTable_NextAddressRange.exit32, label %.preheader
-
-.preheader:                                       ; preds = %80, %.preheader
-  %i.g = phi ptr [ %i.h, %.preheader ], [ %.lcssa88, %80 ] ; 4 uses
+.preheader:                                       ; preds = %.preheader, %bb.c
+  %i.g = phi ptr [ %i.h, %.preheader ], [ %.promoted.i.i, %bb.c ] ; 4 uses
   %i.h = getelementptr i8, ptr %i.g, i64 -1       ; 4 uses
-  store ptr %i.h, ptr %1, align 8, !tbaa !183
+  store ptr %i.h, ptr %i.f, align 8, !tbaa !183
   %i.i = load i8, ptr %i.h, align 1, !tbaa !106   ; 2 uses
   %i.j = icmp sgt i8 %i.i, -1
-  br i1 %i.j, label %.preheader, label %bb.d, !llvm.loop !193
+  br i1 %i.j, label %.preheader, label %bb.d, !llvm.loop !192
 
 bb.d:                                             ; preds = %.preheader
-  %82 = lshr i8 %i.i, 3
-  %i.k = and i8 %82, 15
-  switch i8 %i.k, label %bb.g [
-    i8 12, label %bb.f
-    i8 13, label %bb.e
-    i8 14, label %bb.e
-    i8 11, label %get_line_delta.exit.i.i33
+  %6 = getelementptr i8, ptr %0, i64 40           ; 2 uses
+  %i.k = and i8 %i.i, 120
+  %7 = add nsw i8 %i.k, -80
+  %8 = lshr exact i8 %7, 3
+  switch i8 %8, label %bb.g [
+    i8 2, label %bb.f
+    i8 3, label %bb.e
+    i8 4, label %bb.e
+    i8 1, label %get_line_delta.exit.i.i33
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -1803,9 +1533,11 @@ bb.g:                                             ; preds = %bb.d
 
 get_line_delta.exit.i.i33:                        ; preds = %bb.g, %bb.f, %scan_signed_varint.exit.i.i.i44, %bb.d
   %.0.i.neg.i.i = phi i32 [ 0, %bb.g ], [ -2, %bb.f ], [ %i.z, %scan_signed_varint.exit.i.i.i44 ], [ -1, %bb.d ]
-  %i.aa = add i32 %67, %.0.i.neg.i.i              ; 2 uses
-  store i32 %i.aa, ptr %4, align 8, !tbaa !189
-  store i32 %43, ptr %29, align 4, !tbaa !188
+  %9 = load i32, ptr %6, align 8, !tbaa !189
+  %i.aa = add i32 %9, %.0.i.neg.i.i               ; 2 uses
+  store i32 %i.aa, ptr %6, align 8, !tbaa !189
+  %10 = getelementptr i8, ptr %0, i64 28
+  store i32 %4, ptr %10, align 4, !tbaa !188
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %.preheader.i.i, %get_line_delta.exit.i.i33
@@ -1813,14 +1545,14 @@ get_line_delta.exit.i.i33:                        ; preds = %bb.g, %bb.f, %scan_
   %.0.i12.i.i = getelementptr i8, ptr %.pn.i.i.i, i64 -1 ; 2 uses
   %i.ab = load i8, ptr %.0.i12.i.i, align 1, !tbaa !106 ; 2 uses
   %i.ac = icmp sgt i8 %i.ab, -1
-  br i1 %i.ac, label %.preheader.i.i, label %retreat.exit.i, !llvm.loop !194
+  br i1 %i.ac, label %.preheader.i.i, label %retreat.exit.i, !llvm.loop !193
 
 retreat.exit.i:                                   ; preds = %.preheader.i.i
   %i.ad = shl i8 %i.ab, 1
   %narrow.i.i.i34 = and i8 %i.ad, 14
   %i.ae = add nuw nsw i8 %narrow.i.i.i34, 2
   %i.af = zext nneg i8 %i.ae to i32
-  %i.ag = sub nsw i32 %43, %i.af
+  %i.ag = sub nsw i32 %4, %i.af
   store i32 %i.ag, ptr %i.b, align 8, !tbaa !187
   %i.ah = getelementptr i8, ptr %i.g, i64 -2
   %i.ai = load i8, ptr %i.ah, align 1, !tbaa !106
@@ -1829,9 +1561,10 @@ retreat.exit.i:                                   ; preds = %.preheader.i.i
   store i32 %spec.select.i.i35, ptr %i.d, align 8, !tbaa !190
   br label %_PyLineTable_NextAddressRange.exit32
 
-_PyLineTable_NextAddressRange.exit32:             ; preds = %42, %retreat.exit.i, %80
-  %83 = phi i32 [ %73, %80 ], [ %43, %retreat.exit.i ], [ %43, %42 ]
-  %i.ak = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.24, i32 noundef %i.e, i32 noundef %83, ptr noundef nonnull @_source_offset_converter, ptr noundef nonnull %i.a) #14
+_PyLineTable_NextAddressRange.exit32:             ; preds = %bb.b, %retreat.exit.i, %get_line_delta.exit.i.i16
+  %11 = getelementptr i8, ptr %0, i64 28
+  %12 = load i32, ptr %11, align 4, !tbaa !188
+  %i.ak = call ptr (ptr, ...) @Py_BuildValue(ptr noundef nonnull @.str.24, i32 noundef %i.c, i32 noundef %12, ptr noundef nonnull @_source_offset_converter, ptr noundef nonnull %i.a) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %_PyLineTable_NextAddressRange.exit
 
@@ -2234,13 +1967,14 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.1637.077.i = phi ptr [ %.lcssa61, %bb.v ], [ %i.k, %.lr.ph.preheader.i ] ; 3 uses
   %.sroa.1134.076.i = phi i32 [ %i.ae, %bb.v ], [ %i.n, %.lr.ph.preheader.i ]
   %i.o = load i8, ptr %.sroa.1637.077.i, align 1, !tbaa !106 ; 2 uses
-  %2 = lshr i8 %i.o, 3
-  %3 = and i8 %2, 15
-  switch i8 %3, label %bb.f [
-    i8 12, label %bb.e
-    i8 13, label %bb.d
-    i8 14, label %bb.d
-    i8 11, label %get_line_delta.exit.i.i.i
+  %2 = and i8 %i.o, 120
+  %3 = add nsw i8 %2, -80
+  %4 = lshr exact i8 %3, 3
+  switch i8 %4, label %bb.f [
+    i8 2, label %bb.e
+    i8 3, label %bb.d
+    i8 4, label %bb.d
+    i8 1, label %get_line_delta.exit.i.i.i
   ]
 
 bb.d:                                             ; preds = %.lr.ph.i, %.lr.ph.i
@@ -2297,16 +2031,16 @@ get_line_delta.exit.i.i.i:                        ; preds = %bb.f, %bb.e, %scan_
 bb.g:                                             ; preds = %.lr.ph
   %i.al = getelementptr i8, ptr %i.an, i64 1      ; 3 uses
   %i.am = icmp ult ptr %i.al, %i.m
-  br i1 %i.am, label %.lr.ph, label %._crit_edge72, !llvm.loop !191
+  br i1 %i.am, label %.lr.ph, label %._crit_edge72, !llvm.loop !195
 
 .lr.ph:                                           ; preds = %get_line_delta.exit.i.i.i, %bb.g
   %i.an = phi ptr [ %i.al, %bb.g ], [ %i.aj, %get_line_delta.exit.i.i.i ] ; 3 uses
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !106
   %i.ap = icmp sgt i8 %i.ao, -1
-  br i1 %i.ap, label %bb.g, label %._crit_edge, !llvm.loop !191
+  br i1 %i.ap, label %bb.g, label %._crit_edge, !llvm.loop !195
 
 ._crit_edge:                                      ; preds = %.lr.ph
-  br label %._crit_edge72, !llvm.loop !191
+  br label %._crit_edge72, !llvm.loop !195
 
 ._crit_edge72:                                    ; preds = %bb.g, %._crit_edge, %get_line_delta.exit.i.i.i
   %.lcssa61 = phi ptr [ %i.an, %._crit_edge ], [ %i.aj, %get_line_delta.exit.i.i.i ], [ %i.al, %bb.g ]

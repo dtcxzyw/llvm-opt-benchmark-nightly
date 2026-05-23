@@ -26,14 +26,14 @@ define dso_local i32 @zcopy(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8    ; 2 uses
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %copy_interval.exit [
-    i16 5, label %bb.b
-    i16 0, label %bb.e
-    i16 10, label %bb.e
-    i16 13, label %bb.e
-    i16 2, label %bb.k
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %copy_interval.exit [
+    i8 20, label %bb.b
+    i8 0, label %bb.e
+    i8 40, label %bb.e
+    i8 52, label %bb.e
+    i8 8, label %bb.k
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -222,14 +222,14 @@ bb.a:
   %1 = alloca %struct.ref_s, align 8              ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8    ; 2 uses
-  %2 = lshr i16 %i.b, 2
-  %3 = and i16 %2, 63
-  switch i16 %3, label %bb.g [
-    i16 0, label %bb.b
-    i16 10, label %bb.b
-    i16 13, label %bb.b
-    i16 2, label %bb.d
-    i16 7, label %bb.f
+  %2 = trunc i16 %i.b to i8
+  %trunc = and i8 %2, -4
+  switch i8 %trunc, label %bb.g [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
+    i8 52, label %bb.b
+    i8 8, label %bb.d
+    i8 28, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
@@ -289,15 +289,14 @@ bb.a:
   %i.b = getelementptr inbounds i8, ptr %0, i64 -16 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   %i.c = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !8    ; 2 uses
-  %1 = zext i16 %i.d to i32                       ; 2 uses
-  %2 = lshr i32 %1, 2
-  %3 = and i32 %2, 63
-  switch i32 %3, label %bb.m [
-    i32 2, label %bb.b
-    i32 0, label %bb.d
-    i32 10, label %bb.d
-    i32 13, label %bb.h
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !8    ; 3 uses
+  %1 = trunc i16 %i.d to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.m [
+    i8 8, label %bb.b
+    i8 0, label %bb.d
+    i8 40, label %bb.d
+    i8 52, label %bb.h
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -350,8 +349,8 @@ bb.h:                                             ; preds = %bb.a
   br i1 %i.y, label %bb.i, label %bb.m
 
 bb.i:                                             ; preds = %bb.h
-  %4 = and i32 %1, 512
-  %.not.not = icmp eq i32 %4, 0
+  %2 = and i16 %i.d, 512
+  %.not.not = icmp eq i16 %2, 0
   br i1 %.not.not, label %bb.m, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -396,15 +395,15 @@ bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 3 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -32 ; 4 uses
   %i.c = getelementptr inbounds i8, ptr %0, i64 -24
-  %i.d = load i16, ptr %i.c, align 8, !tbaa !8
-  %i.e = zext i16 %i.d to i32                     ; 3 uses
-  %1 = lshr i32 %i.e, 2
-  %2 = and i32 %1, 63
-  switch i32 %2, label %bb.p [
-    i32 2, label %bb.b
-    i32 0, label %bb.d
-    i32 10, label %bb.r
-    i32 13, label %bb.i
+  %i.d = load i16, ptr %i.c, align 8, !tbaa !8    ; 2 uses
+  %i.e = zext i16 %i.d to i32                     ; 2 uses
+  %1 = trunc i16 %i.d to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.p [
+    i8 8, label %bb.b
+    i8 0, label %bb.d
+    i8 40, label %bb.r
+    i8 52, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -530,18 +529,17 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds i8, ptr %0, i64 -24 ; 2 uses
   %i.l = load i16, ptr %i.k, align 8, !tbaa !8    ; 3 uses
-  %1 = lshr i16 %i.l, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.k [
-    i16 0, label %bb.d
-    i16 10, label %bb.d
-    i16 13, label %bb.d
+  %1 = trunc i16 %i.l to i8
+  %trunc = and i8 %1, -4                          ; 2 uses
+  switch i8 %trunc, label %bb.k [
+    i8 0, label %bb.d
+    i8 40, label %bb.d
+    i8 52, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c, %bb.c
-  %3 = zext i16 %i.l to i32                       ; 2 uses
-  %4 = and i32 %3, 512
-  %.not.not = icmp eq i32 %4, 0
+  %2 = and i16 %i.l, 512
+  %.not.not = icmp eq i16 %2, 0
   br i1 %.not.not, label %bb.k, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -559,12 +557,10 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.t, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %5 = lshr i32 %3, 2
-  %6 = and i32 %5, 63
-  switch i32 %6, label %bb.j [
-    i32 0, label %bb.h
-    i32 10, label %bb.h
-    i32 13, label %bb.i
+  switch i8 %trunc, label %bb.j [
+    i8 0, label %bb.h
+    i8 40, label %bb.h
+    i8 52, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g, %bb.g
@@ -611,12 +607,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds i8, ptr %0, i64 -24
   %i.h = load i16, ptr %i.g, align 8, !tbaa !8    ; 3 uses
-  %1 = lshr i16 %i.h, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %copy_interval.exit [
-    i16 10, label %bb.c
-    i16 0, label %bb.d
-    i16 13, label %bb.d
+  %1 = trunc i16 %i.h to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %copy_interval.exit [
+    i8 40, label %bb.c
+    i8 0, label %bb.d
+    i8 52, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -698,15 +694,14 @@ define dso_local i32 @zforall(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 3 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8
-  %i.c = load i16, ptr %i.b, align 8, !tbaa !8    ; 2 uses
-  %1 = zext i16 %i.c to i32                       ; 2 uses
-  %2 = lshr i32 %1, 2
-  %3 = and i32 %2, 63
-  switch i32 %3, label %bb.h [
-    i32 0, label %bb.b
-    i32 10, label %bb.b
-    i32 13, label %bb.c
-    i32 2, label %bb.d
+  %i.c = load i16, ptr %i.b, align 8, !tbaa !8    ; 3 uses
+  %1 = trunc i16 %i.c to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.h [
+    i8 0, label %bb.b
+    i8 40, label %bb.b
+    i8 52, label %bb.c
+    i8 8, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -715,8 +710,8 @@ bb.b:                                             ; preds = %bb.a, %bb.a
   br i1 %.not.not15, label %bb.h, label %bb.f
 
 bb.c:                                             ; preds = %bb.a
-  %4 = and i32 %1, 512
-  %.not.not14 = icmp eq i32 %4, 0
+  %2 = and i16 %i.c, 512
+  %.not.not14 = icmp eq i16 %2, 0
   br i1 %.not.not14, label %bb.h, label %bb.f
 
 bb.d:                                             ; preds = %bb.a

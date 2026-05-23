@@ -201,11 +201,10 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = load atomic i32, ptr %i.a monotonic, align 4
-  %2 = lshr i32 %i.e, 1
-  %i.f = and i32 %2, 1073741823
+  %i.f = and i32 %i.e, 2147483646
   switch i32 %i.f, label %bb.e [
     i32 0, label %bb.d
-    i32 1, label %bb.f
+    i32 2, label %bb.f
   ]
 
 bb.d:                                             ; preds = %bb.c

@@ -85,12 +85,10 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.u, label %bb.e, label %sdslen.exit.thread
 
 bb.e:                                             ; preds = %bb.d
-  %4 = trunc i64 %i.s to i32
-  %5 = lshr exact i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %sdslen.exit.thread [
-    i32 0, label %bb.f
-    i32 8, label %bb.f
+  %4 = trunc i64 %i.s to i8
+  switch i8 %4, label %sdslen.exit.thread [
+    i8 0, label %bb.f
+    i8 -128, label %bb.f
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e

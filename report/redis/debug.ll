@@ -201,8 +201,8 @@ bb.a:
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !14
   %i.ad = call i64 @getExpire(ptr noundef %0, ptr noundef %i.ac, ptr noundef null) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #24
-  %i.ae = load i64, ptr %3, align 8
-  %i.af = trunc i64 %i.ae to i32                  ; 2 uses
+  %i.ae = load i64, ptr %3, align 8               ; 2 uses
+  %i.af = trunc i64 %i.ae to i32
   %i.ag = and i32 %i.af, 15
   switch i32 %i.ag, label %bb.az [
     i32 0, label %bb.b
@@ -303,11 +303,11 @@ sdslen.exit:                                      ; preds = %.lr.ph113, %bb.e, %
 
 bb.j:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #24
-  %33 = lshr i32 %i.af, 4
-  %34 = and i32 %33, 15
-  switch i32 %34, label %bb.z [
-    i32 11, label %bb.k
-    i32 7, label %bb.s
+  %33 = trunc i64 %i.ae to i8
+  %trunc = and i8 %33, -16
+  switch i8 %trunc, label %bb.z [
+    i8 -80, label %bb.k
+    i8 112, label %bb.s
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -710,12 +710,10 @@ bb.bq:                                            ; preds = %bb.bo
   br i1 %.not600, label %bb.br, label %bb.bs
 
 bb.br:                                            ; preds = %bb.bq
-  %4 = trunc i64 %i.hj to i32
-  %5 = lshr exact i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.bs [
-    i32 0, label %bb.bt
-    i32 8, label %bb.bt
+  %4 = trunc i64 %i.hj to i8
+  switch i8 %4, label %bb.bs [
+    i8 0, label %bb.bt
+    i8 -128, label %bb.bt
   ]
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
@@ -1118,12 +1116,11 @@ bb.gb:                                            ; preds = %bb.ga, %bb.fz
 
 bb.gc:                                            ; preds = %bb.gb
   %i.yk = load i64, ptr %i.yi, align 8
-  %7 = trunc i64 %i.yk to i32
-  %8 = lshr i32 %7, 4
-  %9 = and i32 %8, 15
-  switch i32 %9, label %.thread703 [
-    i32 7, label %bb.gd
-    i32 2, label %bb.ge
+  %5 = trunc i64 %i.yk to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %.thread703 [
+    i8 112, label %bb.gd
+    i8 32, label %bb.ge
   ]
 
 bb.gd:                                            ; preds = %bb.gc
@@ -1526,12 +1523,10 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not.i, label %bb.o, label %.loopexit
 
 bb.o:                                             ; preds = %bb.n
-  %2 = trunc i64 %i.au to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %.loopexit [
-    i32 0, label %bb.p
-    i32 8, label %bb.p
+  %2 = trunc i64 %i.au to i8
+  switch i8 %2, label %.loopexit [
+    i8 0, label %bb.p
+    i8 -128, label %bb.p
   ]
 
 bb.p:                                             ; preds = %bb.o, %bb.o
@@ -1569,18 +1564,16 @@ cmdTokenCheck.exit:                               ; preds = %bb.r, %bb.m, %bb.k
   %i.bf = load ptr, ptr %i.ai, align 8, !tbaa !119
   %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %indvars.iv
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !103 ; 2 uses
-  %i.bi = load i64, ptr %i.bh, align 8            ; 2 uses
+  %i.bi = load i64, ptr %i.bh, align 8            ; 3 uses
   %i.bj = and i64 %i.bi, 15
   %i.bk = icmp eq i64 %i.bj, 0
-  %5 = trunc i64 %i.bi to i32                     ; 2 uses
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15                             ; 2 uses
   br i1 %i.bk, label %bb.t, label %cmdTokenCheck.exit._crit_edge
 
 bb.t:                                             ; preds = %cmdTokenCheck.exit
-  switch i32 %7, label %cmdTokenCheck.exit._crit_edge [
-    i32 0, label %bb.u
-    i32 8, label %bb.u
+  %3 = trunc i64 %i.bi to i8
+  switch i8 %3, label %cmdTokenCheck.exit._crit_edge [
+    i8 0, label %bb.u
+    i8 -128, label %bb.u
   ]
 
 bb.u:                                             ; preds = %bb.t, %bb.t
@@ -1588,9 +1581,12 @@ bb.u:                                             ; preds = %bb.t, %bb.t
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !14
   br label %bb.v
 
-cmdTokenCheck.exit._crit_edge:                    ; preds = %cmdTokenCheck.exit, %bb.t
-  %i.bn = and i32 %5, 15
-  %i.bo = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 128, ptr noundef nonnull @.str.289, i32 noundef %i.bn, i32 noundef %7) #24 ; 0 uses
+cmdTokenCheck.exit._crit_edge:                    ; preds = %bb.t, %cmdTokenCheck.exit
+  %4 = trunc i64 %i.bi to i32                     ; 2 uses
+  %5 = and i32 %4, 15
+  %6 = lshr i32 %4, 4
+  %i.bn = and i32 %6, 15
+  %i.bo = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.b, i64 noundef 128, ptr noundef nonnull @.str.289, i32 noundef %5, i32 noundef %i.bn) #24 ; 0 uses
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %cmdTokenCheck.exit._crit_edge
@@ -1993,12 +1989,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   br i1 %.not.i, label %bb.p, label %.loopexit
 
 bb.p:                                             ; preds = %bb.o
-  %3 = trunc i64 %i.al to i32
-  %4 = lshr exact i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %.loopexit [
-    i32 0, label %bb.q
-    i32 8, label %bb.q
+  %3 = trunc i64 %i.al to i8
+  switch i8 %3, label %.loopexit [
+    i8 0, label %bb.q
+    i8 -128, label %bb.q
   ]
 
 bb.q:                                             ; preds = %bb.p, %bb.p

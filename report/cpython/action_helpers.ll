@@ -201,13 +201,12 @@ bb.d:                                             ; preds = %bb.b
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !36 ; 9 uses
   %i.ae = getelementptr i8, ptr %i.ad, i64 32
   %i.af = load i32, ptr %i.ae, align 8            ; 5 uses
-  %3 = lshr i32 %i.af, 2
-  %i.ag = and i32 %3, 7
+  %i.ag = and i32 %i.af, 28
   %i.ah = and i32 %i.af, 32
   %.not.i19.i = icmp eq i32 %i.ah, 0              ; 3 uses
   switch i32 %i.ag, label %bb.k [
-    i32 1, label %bb.e
-    i32 2, label %bb.h
+    i32 4, label %bb.e
+    i32 8, label %bb.h
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -610,13 +609,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !36   ; 7 uses
   %i.d = getelementptr i8, ptr %i.c, i64 32
   %i.e = load i32, ptr %i.d, align 8              ; 5 uses
-  %11 = lshr i32 %i.e, 2
-  %i.f = and i32 %11, 7
+  %i.f = and i32 %i.e, 28
   %i.g = and i32 %i.e, 32
   %.not.i19.i.i = icmp eq i32 %i.g, 0             ; 3 uses
   switch i32 %i.f, label %bb.i [
-    i32 1, label %bb.c
-    i32 2, label %bb.f
+    i32 4, label %bb.c
+    i32 8, label %bb.f
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -738,13 +736,12 @@ bb.q:                                             ; preds = %PyUnicode_READ_CHAR
   %.013.i95 = phi i64 [ %.013.i, %bb.q ], [ %.013.i93, %bb.p ] ; 6 uses
   %.013.in.i94 = phi i64 [ %.013.i95, %bb.q ], [ %.val.i, %bb.p ]
   %i.ao = load i32, ptr %i.ai, align 8            ; 5 uses
-  %12 = lshr i32 %i.ao, 2
-  %i.ap = and i32 %12, 7
+  %i.ap = and i32 %i.ao, 28
   %i.aq = and i32 %i.ao, 32
   %.not.i19.i.i65 = icmp eq i32 %i.aq, 0          ; 3 uses
   switch i32 %i.ap, label %bb.x [
-    i32 1, label %bb.r
-    i32 2, label %bb.u
+    i32 4, label %bb.r
+    i32 8, label %bb.u
   ]
 
 bb.r:                                             ; preds = %.lr.ph
@@ -898,13 +895,12 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !36   ; 7 uses
   %i.d = getelementptr i8, ptr %i.c, i64 32
   %i.e = load i32, ptr %i.d, align 8              ; 5 uses
-  %11 = lshr i32 %i.e, 2
-  %i.f = and i32 %11, 7
+  %i.f = and i32 %i.e, 28
   %i.g = and i32 %i.e, 32
   %.not.i19.i.i = icmp eq i32 %i.g, 0             ; 3 uses
   switch i32 %i.f, label %bb.i [
-    i32 1, label %bb.c
-    i32 2, label %bb.f
+    i32 4, label %bb.c
+    i32 8, label %bb.f
   ]
 
 bb.c:                                             ; preds = %bb.b

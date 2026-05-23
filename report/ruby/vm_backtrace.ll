@@ -201,12 +201,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.b
   br i1 %i.i, label %bb.c, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
-  %1 = trunc i64 %i.g to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread4
-    i32 6, label %bb.d
+  %1 = trunc i64 %i.g to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread4
+    i16 24576, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -287,12 +286,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i7:                ; preds = %bb.c, %rbimpl_RB_TY
   br i1 %i.r, label %bb.e, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.e:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i7
-  %1 = trunc i64 %i.p to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread13
-    i32 6, label %bb.f
+  %1 = trunc i64 %i.p to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread13
+    i16 24576, label %bb.f
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -350,12 +348,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.b
   br i1 %i.i, label %bb.c, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
-  %1 = trunc i64 %i.g to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread4
-    i32 6, label %bb.d
+  %1 = trunc i64 %i.g to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread4
+    i16 24576, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -409,12 +406,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.b
   br i1 %i.i, label %bb.c, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
-  %1 = trunc i64 %i.g to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread4
-    i32 6, label %bb.d
+  %1 = trunc i64 %i.g to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread4
+    i16 24576, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -468,12 +464,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i:                 ; preds = %bb.b
   br i1 %i.i, label %bb.c, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i
-  %1 = trunc i64 %i.g to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread4
-    i32 6, label %bb.d
+  %1 = trunc i64 %i.g to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread4
+    i16 24576, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -690,12 +685,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i11:               ; preds = %bb.c, %rbimpl_RB_TY
   br i1 %i.s, label %bb.d, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i
 
 bb.d:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i11
-  %1 = trunc i64 %i.q to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
-    i32 7, label %frame2iseq.exit.thread17
-    i32 6, label %bb.e
+  %1 = trunc i64 %i.q to i16
+  %trunc.i = and i16 %1, -4096
+  switch i16 %trunc.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i [
+    i16 28672, label %frame2iseq.exit.thread17
+    i16 24576, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -882,12 +876,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i:               ; preds = %bb.c, %rbimpl_RB_TY
   br i1 %i.ag, label %bb.f, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i
 
 bb.f:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i
-  %1 = trunc i64 %i.ae to i32
-  %2 = lshr i32 %1, 12
-  %3 = and i32 %2, 15
-  switch i32 %3, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i [
-    i32 7, label %frame2iseq.exit.thread4.i
-    i32 6, label %bb.g
+  %1 = trunc i64 %i.ae to i16
+  %trunc.i.i = and i16 %1, -4096
+  switch i16 %trunc.i.i, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i [
+    i16 28672, label %frame2iseq.exit.thread4.i
+    i16 24576, label %bb.g
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -922,12 +915,11 @@ rbimpl_RB_TYPE_P_fastpath.exit.i.i27:             ; preds = %frame2iseq.exit.thr
   br i1 %i.aq, label %bb.h, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i28
 
 bb.h:                                             ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i.i27
-  %4 = trunc i64 %i.ao to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i28 [
-    i32 7, label %frame2iseq.exit.thread4.i32
-    i32 6, label %bb.i
+  %2 = trunc i64 %i.ao to i16
+  %trunc.i.i29 = and i16 %2, -4096
+  switch i16 %trunc.i.i29, label %rbimpl_RB_TYPE_P_fastpath.exit.thread.i.i28 [
+    i16 28672, label %frame2iseq.exit.thread4.i32
+    i16 24576, label %bb.i
   ]
 
 bb.i:                                             ; preds = %bb.h

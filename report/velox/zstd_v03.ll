@@ -201,11 +201,7 @@ bb.p:                                             ; preds = %ZSTD_decodeLiterals
   %i.ct = getelementptr inbounds nuw i8, ptr %i.ci, i64 2
   %i.cu = load i8, ptr %i.ct, align 1, !tbaa !9
   %i.cv = zext i8 %i.cu to i32                    ; 5 uses
-  %5 = lshr i32 %i.cv, 6
-  %6 = lshr i32 %i.cv, 4
-  %7 = and i32 %6, 3
-  %i.cw = lshr i32 %i.cv, 2
-  %8 = and i32 %i.cw, 3
+  %i.cw = lshr i32 %i.cv, 6
   %i.cx = and i32 %i.cv, 2
   %.not.i.i = icmp eq i32 %i.cx, 0
   br i1 %.not.i.i, label %bb.r, label %bb.q
@@ -243,7 +239,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #18
-  switch i32 %5, label %bb.x [
+  switch i32 %i.cw, label %bb.x [
     i32 2, label %bb.u
     i32 1, label %bb.v
   ]
@@ -588,9 +584,10 @@ FSE_buildDTable.exit.i:                           ; preds = %bb.ar, %bb.aq, %bb.
 
 FSE_buildDTable_raw.exit.i.i:                     ; preds = %bb.w, %FSE_buildDTable.exit.i, %bb.u
   %.281.i.i = phi ptr [ %i.eu, %FSE_buildDTable.exit.i ], [ %i.ds, %bb.u ], [ %i.do, %bb.w ] ; 7 uses
-  switch i32 %7, label %bb.au [
-    i32 2, label %bb.as
-    i32 1, label %FSE_buildDTable_raw.exit98.loopexit.i.i
+  %5 = and i32 %i.cv, 48
+  switch i32 %5, label %bb.au [
+    i32 32, label %bb.as
+    i32 16, label %FSE_buildDTable_raw.exit98.loopexit.i.i
   ]
 
 bb.as:                                            ; preds = %FSE_buildDTable_raw.exit.i.i
@@ -842,9 +839,10 @@ bb.aw:                                            ; preds = %bb.av
 
 FSE_buildDTable_raw.exit98.i.i:                   ; preds = %bb.aw, %FSE_buildDTable_raw.exit98.loopexit.i.i, %bb.at
   %.483.i.i = phi ptr [ %i.mf, %bb.aw ], [ %i.hy, %bb.at ], [ %.281.i.i, %FSE_buildDTable_raw.exit98.loopexit.i.i ] ; 7 uses
-  switch i32 %8, label %bb.bb [
-    i32 2, label %bb.ax
-    i32 1, label %bb.az
+  %6 = and i32 %i.cv, 12
+  switch i32 %6, label %bb.bb [
+    i32 8, label %bb.ax
+    i32 4, label %bb.az
   ]
 
 bb.ax:                                            ; preds = %FSE_buildDTable_raw.exit98.i.i

@@ -201,13 +201,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.q [
-    i32 0, label %bb.d
-    i32 8, label %bb.j
-    i32 1, label %bb.p
+  %1 = trunc i64 %i.b to i8
+  switch i8 %1, label %bb.q [
+    i8 0, label %bb.d
+    i8 -128, label %bb.j
+    i8 16, label %bb.p
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -492,12 +490,11 @@ declare void @sdsfree(ptr noundef) local_unnamed_addr #2
 define dso_local void @freeListObject(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.d [
-    i32 9, label %bb.b
-    i32 11, label %bb.c
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.d [
+    i8 -112, label %bb.b
+    i8 -80, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -529,13 +526,12 @@ declare void @lpFree(ptr noundef) local_unnamed_addr #2
 define dso_local void @freeSetObject(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.d [
-    i32 2, label %bb.b
-    i32 6, label %bb.c
-    i32 11, label %bb.c
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.d [
+    i8 32, label %bb.b
+    i8 96, label %bb.c
+    i8 -80, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -567,12 +563,11 @@ declare void @zfree(ptr noundef) local_unnamed_addr #2
 define dso_local void @freeZsetObject(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.d [
-    i32 7, label %bb.b
-    i32 11, label %bb.c
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.d [
+    i8 112, label %bb.b
+    i8 -80, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -806,12 +801,11 @@ bb.h:                                             ; preds = %dismissSds.exit, %b
 define dso_local void @dismissListObject(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.f [
-    i32 9, label %bb.b
-    i32 11, label %bb.e
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.f [
+    i8 -112, label %bb.b
+    i8 -80, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -878,13 +872,12 @@ define dso_local void @dismissSetObject(ptr noundef readonly captures(none) %0, 
 bb.a:
   %2 = alloca %struct.dictIterator, align 8       ; 6 uses
   %i.a = load i64, ptr %0, align 8
-  %3 = trunc i64 %i.a to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.n [
-    i32 2, label %bb.b
-    i32 6, label %bb.l
-    i32 11, label %bb.m
+  %3 = trunc i64 %i.a to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %bb.n [
+    i8 32, label %bb.b
+    i8 96, label %bb.l
+    i8 -80, label %bb.m
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1036,12 +1029,11 @@ declare i64 @intsetBlobLen(ptr noundef) local_unnamed_addr #2
 define dso_local void @dismissZsetObject(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.g [
-    i32 7, label %bb.b
-    i32 11, label %bb.f
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.g [
+    i8 112, label %bb.b
+    i8 -80, label %bb.f
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1125,13 +1117,12 @@ define dso_local void @dismissHashObject(ptr noundef readonly captures(none) %0,
 bb.a:
   %2 = alloca %struct.dictIterator, align 8       ; 6 uses
   %i.a = load i64, ptr %0, align 8
-  %3 = trunc i64 %i.a to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.i [
-    i32 2, label %bb.b
-    i32 11, label %bb.g
-    i32 12, label %bb.h
+  %3 = trunc i64 %i.a to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %bb.i [
+    i8 32, label %bb.b
+    i8 -80, label %bb.g
+    i8 -64, label %bb.h
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1534,12 +1525,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %2 = trunc i64 %i.e to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %createStringObjectFromLongLongForValue.exit [
-    i32 0, label %bb.d
-    i32 8, label %bb.d
+  %2 = trunc i64 %i.e to i8
+  switch i8 %2, label %createStringObjectFromLongLongForValue.exit [
+    i8 0, label %bb.d
+    i8 -128, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c
@@ -1600,12 +1589,11 @@ sdslen.exit.thread:                               ; preds = %bb.e, %sdslen.exit
   br i1 %.not32, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %sdslen.exit.thread
-  %5 = trunc i64 %.pre to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %.thread [
-    i32 0, label %bb.l
-    i32 8, label %bb.m
+  %3 = trunc i64 %.pre to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %.thread [
+    i8 0, label %bb.l
+    i8 -128, label %bb.m
   ]
 
 bb.l:                                             ; preds = %bb.k
@@ -1750,8 +1738,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @getObjectLength(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8                ; 2 uses
-  %i.b = trunc i64 %i.a to i32                    ; 2 uses
+  %i.a = load i64, ptr %0, align 8                ; 3 uses
+  %i.b = trunc i64 %i.a to i32
   %i.c = and i32 %i.b, 15
   switch i32 %i.c, label %stringObjectLen.exit [
     i32 0, label %bb.b
@@ -1773,13 +1761,12 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %1 = lshr exact i32 %i.b, 4
-  %2 = and i32 %1, 15
+  %1 = trunc i64 %i.a to i8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !20   ; 6 uses
-  switch i32 %2, label %bb.k [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
+  switch i8 %1, label %bb.k [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -1867,14 +1854,12 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
+  %1 = trunc i64 %i.a to i8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20   ; 6 uses
-  switch i32 %3, label %bb.j [
-    i32 0, label %bb.d
-    i32 8, label %bb.d
+  switch i8 %1, label %bb.j [
+    i8 0, label %bb.d
+    i8 -128, label %bb.d
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c
@@ -2069,14 +2054,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %bb.u, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %3 = trunc i64 %i.c to i32
-  %4 = lshr exact i32 %3, 4
-  %5 = and i32 %4, 15
+  %3 = trunc i64 %i.c to i8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !20   ; 12 uses
-  switch i32 %5, label %bb.k [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
+  switch i8 %3, label %bb.k [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -2130,14 +2113,13 @@ sdslen.exit:                                      ; preds = %bb.j, %bb.i, %bb.h,
   %i.ad = phi i64 [ %.pre, %bb.k ], [ %i.f, %bb.j ], [ %i.f, %bb.f ], [ %i.f, %bb.g ], [ %i.f, %bb.h ], [ %i.f, %bb.i ], [ %i.f, %bb.e ]
   %.031 = phi i64 [ %i.ac, %bb.k ], [ %i.z, %bb.j ], [ %i.o, %bb.f ], [ %i.r, %bb.g ], [ %i.u, %bb.h ], [ %i.x, %bb.i ], [ 0, %bb.e ] ; 2 uses
   %.029 = phi ptr [ %i.a, %bb.k ], [ %i.k, %bb.j ], [ %i.k, %bb.f ], [ %i.k, %bb.g ], [ %i.k, %bb.h ], [ %i.k, %bb.i ], [ %i.k, %bb.e ] ; 2 uses
-  %6 = trunc i64 %i.ad to i32
-  %7 = lshr i32 %6, 4
-  %8 = and i32 %7, 15
+  %4 = trunc i64 %i.ad to i8
+  %trunc = and i8 %4, -16
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !20 ; 12 uses
-  switch i32 %8, label %bb.r [
-    i32 0, label %bb.l
-    i32 8, label %bb.l
+  switch i8 %trunc, label %bb.r [
+    i8 0, label %bb.l
+    i8 -128, label %bb.l
   ]
 
 bb.l:                                             ; preds = %sdslen.exit, %sdslen.exit
@@ -2256,22 +2238,20 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.r
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.q [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.q [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
   %i.l = load i64, ptr %1, align 8
-  %5 = trunc i64 %i.l to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.q [
-    i32 0, label %bb.f
-    i32 8, label %bb.f
+  %3 = trunc i64 %i.l to i8
+  %trunc17 = and i8 %3, -16
+  switch i8 %trunc17, label %bb.q [
+    i8 0, label %bb.f
+    i8 -128, label %bb.f
   ]
 
 bb.f:                                             ; preds = %bb.e, %bb.e
@@ -2391,13 +2371,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.j [
-    i32 1, label %sdsAllocSize.exit
-    i32 0, label %bb.d
-    i32 8, label %sdsAllocSize.exit
+  %1 = trunc i64 %i.a to i8
+  switch i8 %1, label %bb.j [
+    i8 16, label %sdsAllocSize.exit
+    i8 0, label %bb.d
+    i8 -128, label %sdsAllocSize.exit
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2477,13 +2455,11 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.l [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
-    i32 1, label %bb.k
+  %2 = trunc i64 %i.c to i8
+  switch i8 %2, label %bb.l [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
+    i8 16, label %bb.k
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -2617,13 +2593,11 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.l [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
-    i32 1, label %bb.k
+  %2 = trunc i64 %i.c to i8
+  switch i8 %2, label %bb.l [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
+    i8 16, label %bb.k
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -2755,13 +2729,11 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr exact i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.l [
-    i32 0, label %bb.e
-    i32 8, label %bb.e
-    i32 1, label %bb.k
+  %2 = trunc i64 %i.c to i8
+  switch i8 %2, label %bb.l [
+    i8 0, label %bb.e
+    i8 -128, label %bb.e
+    i8 16, label %bb.k
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d
@@ -3164,16 +3136,15 @@ kvobjCommandLookupOrReply.exit44.thread:          ; preds = %bb.f
   br label %bb.p
 
 kvobjCommandLookupOrReply.exit44:                 ; preds = %bb.f
-  %i.al = load i64, ptr %i.ak, align 8
-  %1 = trunc i64 %i.al to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15                             ; 2 uses
-  %i.am = icmp samesign ult i32 %3, 13
+  %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
+  %1 = trunc i64 %i.al to i8
+  %i.am = icmp ult i8 %1, -48
   br i1 %i.am, label %switch.lookup, label %strEncoding.exit
 
 switch.lookup:                                    ; preds = %kvobjCommandLookupOrReply.exit44
-  %4 = zext nneg i32 %3 to i64
-  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.objectCommand, i64 %4
+  %2 = lshr i64 %i.al, 4
+  %3 = and i64 %2, 15
+  %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table.objectCommand, i64 %3
   %switch.load = load ptr, ptr %switch.gep, align 8
   br label %strEncoding.exit
 

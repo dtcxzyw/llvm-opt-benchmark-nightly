@@ -201,11 +201,10 @@ bb.e:                                             ; preds = %bb.a, %bb.a
   %i.aw = tail call noundef ptr @_ZNK6google8protobuf15FieldDescriptor12message_typeEv(ptr noundef nonnull align 8 dereferenceable(88) %1)
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 1
   %i.ay = load i16, ptr %i.ax, align 1
-  %13 = lshr i16 %i.ay, 2
-  %i.az = and i16 %13, 31
+  %i.az = and i16 %i.ay, 124
   switch i16 %i.az, label %bb.l [
-    i16 13, label %bb.f
-    i16 12, label %bb.i
+    i16 52, label %bb.f
+    i16 48, label %bb.i
   ]
 
 bb.f:                                             ; preds = %bb.e

@@ -26,13 +26,13 @@ bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load i16, ptr %i.b, align 8, !tbaa !8    ; 2 uses
-  %1 = lshr i16 %i.c, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 13, label %bb.b
-    i16 0, label %bb.b
-    i16 10, label %bb.b
-    i16 2, label %bb.c
+  %1 = trunc i16 %i.c to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 52, label %bb.b
+    i8 0, label %bb.b
+    i8 40, label %bb.b
+    i8 8, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a, %bb.a
@@ -51,13 +51,13 @@ bb.c:                                             ; preds = %bb.a
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %i.i = getelementptr inbounds i8, ptr %0, i64 -8 ; 2 uses
   %i.j = load i16, ptr %i.i, align 8, !tbaa !8    ; 2 uses
-  %3 = lshr i16 %i.j, 2
-  %4 = and i16 %3, 63
-  switch i16 %4, label %bb.g [
-    i16 13, label %bb.e
-    i16 0, label %bb.e
-    i16 10, label %bb.e
-    i16 2, label %bb.f
+  %2 = trunc i16 %i.j to i8
+  %trunc12 = and i8 %2, -4
+  switch i8 %trunc12, label %bb.g [
+    i8 52, label %bb.e
+    i8 0, label %bb.e
+    i8 40, label %bb.e
+    i8 8, label %bb.f
   ]
 
 bb.e:                                             ; preds = %bb.d, %bb.d, %bb.d
@@ -311,11 +311,11 @@ define dso_local range(i32 -20, 1) i32 @znot(ptr noundef captures(none) %0) #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i16, ptr %i.a, align 8, !tbaa !8
-  %1 = lshr i16 %i.b, 2
-  %2 = and i16 %1, 63
-  switch i16 %2, label %bb.d [
-    i16 1, label %bb.b
-    i16 5, label %bb.c
+  %1 = trunc i16 %i.b to i8
+  %trunc = and i8 %1, -4
+  switch i8 %trunc, label %bb.d [
+    i8 4, label %bb.b
+    i8 20, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -492,24 +492,23 @@ define dso_local range(i32 -20, 2) i32 @obj_compare(ptr noundef readonly capture
 bb.a:
   %i.a = getelementptr inbounds i8, ptr %0, i64 -16 ; 4 uses
   %i.b = getelementptr inbounds i8, ptr %0, i64 -8
-  %i.c = load i16, ptr %i.b, align 8, !tbaa !8
-  %2 = zext i16 %i.c to i32                       ; 2 uses
-  %3 = lshr i32 %2, 2
-  %4 = and i32 %3, 63
-  switch i32 %4, label %bb.q [
-    i32 5, label %bb.b
-    i32 11, label %bb.e
-    i32 13, label %bb.h
+  %i.c = load i16, ptr %i.b, align 8, !tbaa !8    ; 2 uses
+  %2 = trunc i16 %i.c to i8
+  %trunc = and i8 %2, -4
+  switch i8 %trunc, label %bb.q [
+    i8 20, label %bb.b
+    i8 44, label %bb.e
+    i8 52, label %bb.h
   ]
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.e = load i16, ptr %i.d, align 8, !tbaa !8
-  %5 = lshr i16 %i.e, 2
-  %6 = and i16 %5, 63
-  switch i16 %6, label %bb.q [
-    i16 5, label %bb.c
-    i16 11, label %bb.d
+  %3 = trunc i16 %i.e to i8
+  %trunc38 = and i8 %3, -4
+  switch i8 %trunc38, label %bb.q [
+    i8 20, label %bb.c
+    i8 44, label %bb.d
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -533,11 +532,11 @@ bb.e:                                             ; preds = %bb.a
   %i.o = load float, ptr %i.a, align 8, !tbaa !11 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.q = load i16, ptr %i.p, align 8, !tbaa !8
-  %7 = lshr i16 %i.q, 2
-  %8 = and i16 %7, 63
-  switch i16 %8, label %bb.q [
-    i16 5, label %bb.f
-    i16 11, label %bb.g
+  %4 = trunc i16 %i.q to i8
+  %trunc37 = and i8 %4, -4
+  switch i8 %trunc37, label %bb.q [
+    i8 20, label %bb.f
+    i8 44, label %bb.g
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -550,8 +549,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.a
-  %9 = and i32 %2, 512
-  %.not.not = icmp eq i32 %9, 0
+  %5 = and i16 %i.c, 512
+  %.not.not = icmp eq i16 %5, 0
   br i1 %.not.not, label %bb.q, label %bb.i
 
 bb.i:                                             ; preds = %bb.h

@@ -201,13 +201,12 @@ declare void @stopLoading(i32 noundef) local_unnamed_addr #3
 define dso_local i32 @rioWriteBulkObject(ptr noundef %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.i [
-    i32 1, label %bb.b
-    i32 0, label %bb.c
-    i32 8, label %bb.c
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.i [
+    i8 16, label %bb.b
+    i8 0, label %bb.c
+    i8 -128, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -483,12 +482,11 @@ bb.a:
   %3 = alloca %struct.dictIterator, align 8       ; 8 uses
   %i.e = tail call i64 @zsetLength(ptr noundef %2) #17 ; 2 uses
   %i.f = load i64, ptr %2, align 8
-  %4 = trunc i64 %i.f to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.z [
-    i32 11, label %bb.b
-    i32 7, label %bb.n
+  %4 = trunc i64 %i.f to i8
+  %trunc = and i8 %4, -16
+  switch i8 %trunc, label %bb.z [
+    i8 -80, label %bb.b
+    i8 112, label %bb.n
   ]
 
 bb.b:                                             ; preds = %bb.a

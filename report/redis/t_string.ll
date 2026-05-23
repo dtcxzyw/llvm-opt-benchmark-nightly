@@ -201,13 +201,11 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.b
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.k [
-    i32 0, label %bb.d
-    i32 8, label %bb.d
-    i32 1, label %bb.j
+  %1 = trunc i64 %i.b to i8
+  switch i8 %1, label %bb.k [
+    i8 0, label %bb.d
+    i8 -128, label %bb.d
+    i8 16, label %bb.j
   ]
 
 bb.d:                                             ; preds = %bb.c, %bb.c

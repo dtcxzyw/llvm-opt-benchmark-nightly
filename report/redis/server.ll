@@ -201,13 +201,12 @@ define dso_local i64 @dictEncObjHash(ptr noundef readonly captures(none) %0) #0 
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 4 uses
   %i.b = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.b to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.i [
-    i32 0, label %bb.b
-    i32 8, label %bb.b
-    i32 1, label %bb.h
+  %1 = trunc i64 %i.b to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.i [
+    i8 0, label %bb.b
+    i8 -128, label %bb.b
+    i8 16, label %bb.h
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a

@@ -201,12 +201,11 @@ _ZN2v88internal25LiteralBoilerplateBuilder14BuildConstantsINS0_7IsolateEEEvPT_PN
   store i32 0, ptr %i.b, align 4
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 4
   %i.bn = load i32, ptr %i.bm, align 4
-  %2 = lshr i32 %i.bn, 7
-  %i.bo = and i32 %2, 15
+  %i.bo = and i32 %i.bn, 1920
   switch i32 %i.bo, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
     i32 0, label %bb.k
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
   ]
 
 bb.k:                                             ; preds = %_ZN2v88internal25LiteralBoilerplateBuilder14BuildConstantsINS0_7IsolateEEEvPT_PNS0_19MaterializedLiteralE.exit
@@ -535,12 +534,11 @@ define hidden noundef zeroext i1 @_ZNK2v88internal7Literal12AsArrayIndexEPj(ptr 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  %2 = lshr i32 %i.b, 7
-  %i.c = and i32 %2, 15
+  %i.c = and i32 %i.b, 1920
   switch i32 %i.c, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit
     i32 0, label %bb.b
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -803,12 +801,11 @@ _ZN2v88internal25LiteralBoilerplateBuilder14BuildConstantsINS0_12LocalIsolateEEE
   store i32 0, ptr %i.b, align 4
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
   %i.bo = load i32, ptr %i.bn, align 4
-  %2 = lshr i32 %i.bo, 7
-  %i.bp = and i32 %2, 15
+  %i.bp = and i32 %i.bo, 1920
   switch i32 %i.bp, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
     i32 0, label %bb.k
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
   ]
 
 bb.k:                                             ; preds = %_ZN2v88internal25LiteralBoilerplateBuilder14BuildConstantsINS0_12LocalIsolateEEEvPT_PNS0_19MaterializedLiteralE.exit
@@ -1170,9 +1167,10 @@ define weak_odr hidden ptr @_ZNK2v88internal7Literal10BuildValueINS0_7IsolateEEE
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  %2 = lshr i32 %i.b, 7
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.p [
+  %2 = and i32 %i.b, 1920
+  %3 = sub i32 %2, 0                              ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 25)
+  switch i32 %4, label %bb.p [
     i32 0, label %bb.b
     i32 1, label %bb.d
     i32 3, label %bb.h
@@ -1353,9 +1351,10 @@ define weak_odr hidden ptr @_ZNK2v88internal7Literal10BuildValueINS0_12LocalIsol
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  %2 = lshr i32 %i.b, 7
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.v [
+  %2 = and i32 %i.b, 1920
+  %3 = sub i32 %2, 0                              ; 2 uses
+  %4 = call i32 @llvm.fshl.i32(i32 %3, i32 %3, i32 25)
+  switch i32 %4, label %bb.v [
     i32 0, label %bb.b
     i32 1, label %bb.g
     i32 3, label %bb.n
@@ -1758,9 +1757,10 @@ define hidden noundef zeroext i1 @_ZNK2v88internal7Literal15ToBooleanIsTrueEv(pt
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  %1 = lshr i32 %i.b, 7
-  %2 = and i32 %1, 15
-  switch i32 %2, label %bb.k [
+  %1 = and i32 %i.b, 1920
+  %2 = sub i32 %1, 0                              ; 2 uses
+  %3 = call i32 @llvm.fshl.i32(i32 %2, i32 %2, i32 25)
+  switch i32 %3, label %bb.k [
     i32 0, label %bb.b
     i32 1, label %bb.c
     i32 3, label %bb.d
@@ -2163,12 +2163,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.d = load i32, ptr %i.c, align 4
-  %2 = lshr i32 %i.d, 7
-  %i.e = and i32 %2, 15
+  %i.e = and i32 %i.d, 1920
   switch i32 %i.e, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
     i32 0, label %bb.b
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -2215,12 +2214,11 @@ _ZNK2v88internal7Literal12AsArrayIndexEPj.exit:   ; preds = %bb.c, %_ZNK2v88inte
 bb.d:                                             ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread23, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.v = load i32, ptr %i.u, align 4
-  %3 = lshr i32 %i.v, 7
-  %i.w = and i32 %3, 15
+  %i.w = and i32 %i.v, 1920
   switch i32 %i.w, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit19 [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i16
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i16
     i32 0, label %bb.e
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i13
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i13
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -2265,8 +2263,8 @@ _ZNK2v88internal7Literal12AsArrayIndexEPj.exit19: ; preds = %bb.d, %bb.e, %_ZNK2
   br label %bb.p
 
 _ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread: ; preds = %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i, %bb.a, %bb.b, %bb.c, %_ZNK2v88internal7Literal8ToUint32EPj.exit.i, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit
-  %i.as = load i32, ptr %i.c, align 4             ; 3 uses
-  %i.at = and i32 %i.as, 1920
+  %i.as = load i32, ptr %i.c, align 4             ; 2 uses
+  %i.at = and i32 %i.as, 1920                     ; 2 uses
   %i.au = icmp eq i32 %i.at, 384
   br i1 %i.au, label %bb.g, label %bb.i
 
@@ -2298,8 +2296,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %spec.select.i20, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %bb.j
-  %4 = and i32 %i.as, 128
-  %trunc.not = icmp eq i32 %4, 0
+  %trunc.not = icmp eq i32 %i.at, 0
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   br i1 %trunc.not, label %bb.l, label %bb.m
 
@@ -2347,12 +2344,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4
-  %1 = lshr i32 %i.c, 7
-  %i.d = and i32 %1, 15
+  %i.d = and i32 %i.c, 1920
   switch i32 %i.d, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
     i32 0, label %bb.b
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -2411,10 +2407,13 @@ _ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread1: ; preds = %bb.b, %_ZNK2v
   br label %bb.h
 
 _ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread: ; preds = %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i, %bb.a, %bb.b, %bb.c, %_ZNK2v88internal7Literal8ToUint32EPj.exit.i, %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit
-  %i.ai = load i32, ptr %i.b, align 4             ; 2 uses
+  %i.ai = load i32, ptr %i.b, align 4
   %i.aj = and i32 %i.ai, 1920
-  %2 = icmp eq i32 %i.aj, 384
-  br i1 %2, label %bb.d, label %3
+  switch i32 %i.aj, label %bb.g [
+    i32 384, label %bb.d
+    i32 0, label %bb.e
+    i32 128, label %bb.f
+  ]
 
 bb.d:                                             ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -2424,26 +2423,18 @@ bb.d:                                             ; preds = %_ZNK2v88internal7Li
   %i.ao = lshr i32 %i.an, 2
   br label %bb.h
 
-3:                                                ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread
-  %4 = lshr i32 %i.ai, 7
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.g [
-    i32 0, label %bb.e
-    i32 1, label %bb.f
-  ]
-
-bb.e:                                             ; preds = %3
+bb.e:                                             ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.aq = load i32, ptr %i.ap, align 8
   %i.ar = sitofp i32 %i.aq to double
   br label %_ZNK2v88internal7Literal8AsNumberEv.exit
 
-bb.f:                                             ; preds = %3
+bb.f:                                             ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.at = load double, ptr %i.as, align 8
   br label %_ZNK2v88internal7Literal8AsNumberEv.exit
 
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread
   call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str) #17
   unreachable
 
@@ -2732,12 +2723,11 @@ _ZN2v88internal10Expression18IsCompileTimeValueEv.exit: ; preds = %bb.l, %bb.m, 
   store i32 0, ptr %i.a, align 4
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bj, i64 4
   %i.bv = load i32, ptr %i.bu, align 4
-  %1 = lshr i32 %i.bv, 7
-  %i.bw = and i32 %1, 15
+  %i.bw = and i32 %i.bv, 1920
   switch i32 %i.bw, label %_ZNK2v88internal7Literal12AsArrayIndexEPj.exit.thread [
-    i32 3, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
+    i32 384, label %_ZNK2v88internal7Literal8ToUint32EPj.exit.i
     i32 0, label %bb.p
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit.i.i
   ]
 
 bb.p:                                             ; preds = %_ZN2v88internal10Expression18IsCompileTimeValueEv.exit
@@ -3012,17 +3002,18 @@ _ZN2v88internal10Expression18IsCompileTimeValueEv.exit: ; preds = %bb.j, %bb.k
 _ZN2v88internal10Expression18IsCompileTimeValueEv.exit.thread31: ; preds = %_ZN2v88internal25LiteralBoilerplateBuilder17InitDepthAndFlagsEPNS0_19MaterializedLiteralE.exit
   %i.ag = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   %i.ah = load i32, ptr %i.ag, align 4
-  %1 = lshr i32 %i.ah, 7
-  %2 = and i32 %1, 15
-  switch i32 %2, label %_ZN2v88internal10Expression18IsCompileTimeValueEv.exit.thread [
-    i32 8, label %bb.l
-    i32 1, label %bb.m
-    i32 7, label %bb.n
+  %1 = and i32 %i.ah, 1920
+  %2 = add nsw i32 %1, -128
+  %3 = lshr exact i32 %2, 7
+  switch i32 %3, label %_ZN2v88internal10Expression18IsCompileTimeValueEv.exit.thread [
+    i32 7, label %bb.l
+    i32 0, label %bb.m
+    i32 6, label %bb.n
+    i32 1, label %bb.n
     i32 2, label %bb.n
     i32 3, label %bb.n
     i32 4, label %bb.n
     i32 5, label %bb.n
-    i32 6, label %bb.n
   ]
 
 bb.l:                                             ; preds = %_ZN2v88internal10Expression18IsCompileTimeValueEv.exit.thread31
@@ -3425,12 +3416,11 @@ define hidden noundef zeroext i1 @_ZNK2v88internal7Literal8ToUint32EPj(ptr nound
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %i.a, align 4
-  %2 = lshr i32 %i.b, 7
-  %i.c = and i32 %2, 15
+  %i.c = and i32 %i.b, 1920
   switch i32 %i.c, label %_ZN2v88internal27DoubleToUint32IfEqualToSelfEdPj.exit [
-    i32 3, label %bb.b
+    i32 384, label %bb.b
     i32 0, label %bb.c
-    i32 1, label %_ZNK2v88internal7Literal8AsNumberEv.exit
+    i32 128, label %_ZNK2v88internal7Literal8AsNumberEv.exit
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -3832,6 +3822,9 @@ declare i64 @llvm.umin.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.fshl.i32(i32, i32, i32) #14
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -145,7 +145,7 @@ bb.a:
   %i.i = icmp eq i64 %i.h, 2
   %i.j = trunc i64 %i.g to i32
   %i.k = lshr i32 %i.j, 4
-  %i.l = and i32 %i.k, 15                         ; 2 uses
+  %i.l = and i32 %i.k, 15
   %i.m = icmp ne i32 %i.l, %1
   %i.n = and i1 %i.i, %i.m
   br i1 %i.n, label %bb.c, label %bb.b, !prof !49
@@ -348,61 +348,27 @@ bb.x:                                             ; preds = %bb.c
   %i.bp = shl i64 %2, 1                           ; 2 uses
   %i.bq = and i64 %i.g, 240
   %i.br = icmp eq i64 %i.bq, 96
-  br i1 %i.br, label %5, label %bb.aa
+  br i1 %i.br, label %bb.y, label %bb.aa
 
-5:                                                ; preds = %bb.x
-  switch i32 %i.l, label %19 [
-    i32 2, label %6
-    i32 6, label %bb.y
-    i32 11, label %15
-  ]
-
-6:                                                ; preds = %5
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %8 = load ptr, ptr %7, align 8, !tbaa !47       ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 24
-  %10 = load i64, ptr %9, align 8, !tbaa !58
-  %11 = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %12 = load i64, ptr %11, align 8, !tbaa !58
-  %13 = add i64 %12, %10
-  br label %setTypeSize.exit
-
-bb.y:                                             ; preds = %5
-  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 8
+bb.y:                                             ; preds = %bb.x
+  %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.bt = load ptr, ptr %i.bs, align 8, !tbaa !47
   %i.bu = tail call i32 @intsetLen(ptr noundef %i.bt) #11
-  %14 = zext i32 %i.bu to i64
-  br label %setTypeSize.exit
+  %5 = icmp eq i32 %i.bu, 0
+  br i1 %5, label %bb.aa, label %bb.z
 
-15:                                               ; preds = %5
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %17 = load ptr, ptr %16, align 8, !tbaa !47
-  %18 = tail call i64 @lpLength(ptr noundef %17) #11
-  br label %setTypeSize.exit
-
-19:                                               ; preds = %5
-  tail call void (ptr, i32, ptr, ...) @_serverPanic(ptr noundef nonnull @.str.1, i32 noundef 476, ptr noundef nonnull @.str.3) #11
-  tail call void @abort() #12
-  unreachable
-
-setTypeSize.exit:                                 ; preds = %6, %bb.y, %15
-  %.0.i55 = phi i64 [ %13, %6 ], [ %14, %bb.y ], [ %18, %15 ]
-  %.not = icmp eq i64 %.0.i55, 0
-  br i1 %.not, label %bb.aa, label %bb.z
-
-bb.z:                                             ; preds = %setTypeSize.exit
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.bv = load ptr, ptr %20, align 8, !tbaa !47
+bb.z:                                             ; preds = %bb.y
+  %i.bv = load ptr, ptr %i.bs, align 8, !tbaa !47
   %i.bw = tail call i64 @intsetMin(ptr noundef %i.bv) #11
   %i.bx = tail call i64 @lpEstimateBytesRepeatedInteger(i64 noundef %i.bw, i64 noundef %2) #11
-  %i.by = load ptr, ptr %20, align 8, !tbaa !47
+  %i.by = load ptr, ptr %i.bs, align 8, !tbaa !47
   %i.bz = tail call i64 @intsetMax(ptr noundef %i.by) #11
   %i.ca = tail call i64 @lpEstimateBytesRepeatedInteger(i64 noundef %i.bz, i64 noundef %2) #11
   %i.cb = tail call i64 @llvm.umax.i64(i64 %i.bx, i64 %i.ca)
   br label %bb.aa
 
-bb.aa:                                            ; preds = %bb.z, %setTypeSize.exit, %bb.x
-  %.045 = phi i64 [ %i.cb, %bb.z ], [ %i.bp, %setTypeSize.exit ], [ %i.bp, %bb.x ]
+bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
+  %.045 = phi i64 [ %i.cb, %bb.z ], [ %i.bp, %bb.y ], [ %i.bp, %bb.x ]
   %i.cc = tail call ptr @lpNew(i64 noundef %.045) #11 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #11
@@ -605,13 +571,12 @@ bb.g:                                             ; preds = %bb.a, %bb.f
   %.0108 = phi i64 [ %2, %bb.a ], [ %i.p, %bb.f ] ; 11 uses
   %.0107 = phi ptr [ %1, %bb.a ], [ %i.a, %bb.f ] ; 10 uses
   %i.q = load i64, ptr %0, align 8
-  %5 = trunc i64 %i.q to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.bb [
-    i32 2, label %bb.h
-    i32 11, label %bb.v
-    i32 6, label %bb.ak
+  %5 = trunc i64 %i.q to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %bb.bb [
+    i8 32, label %bb.h
+    i8 -80, label %bb.v
+    i8 96, label %bb.ak
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -1014,13 +979,12 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.j = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.j to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.h [
-    i32 2, label %bb.e
-    i32 6, label %bb.f
-    i32 11, label %bb.g
+  %1 = trunc i64 %i.j to i8
+  %trunc.i.i = and i8 %1, -16
+  switch i8 %trunc.i.i, label %bb.h [
+    i8 32, label %bb.e
+    i8 96, label %bb.f
+    i8 -80, label %bb.g
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -1189,13 +1153,12 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %.044 = phi i32 [ %4, %bb.a ], [ 0, %bb.d ]
   %.040 = phi ptr [ %1, %bb.a ], [ %i.a, %bb.d ]  ; 5 uses
   %i.n = load i64, ptr %0, align 8
-  %5 = trunc i64 %i.n to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.p [
-    i32 2, label %bb.f
-    i32 11, label %bb.j
-    i32 6, label %bb.m
+  %5 = trunc i64 %i.n to i8
+  %trunc = and i8 %5, -16
+  switch i8 %trunc, label %bb.p [
+    i8 32, label %bb.f
+    i8 -80, label %bb.j
+    i8 96, label %bb.m
   ]
 
 bb.f:                                             ; preds = %bb.e
@@ -1598,13 +1561,12 @@ define dso_local range(i32 0, 16) i32 @setTypeRandomElement(ptr noundef readonly
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = load i64, ptr %0, align 8
-  %4 = trunc i64 %i.b to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.j [
-    i32 2, label %bb.b
-    i32 6, label %bb.h
-    i32 11, label %bb.i
+  %4 = trunc i64 %i.b to i8
+  %trunc = and i8 %4, -16
+  switch i8 %trunc, label %bb.j [
+    i8 32, label %bb.b
+    i8 96, label %bb.h
+    i8 -80, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1806,13 +1768,12 @@ declare ptr @createStringObjectFromLongLong(i64 noundef) local_unnamed_addr #1
 define dso_local i64 @setTypeSize(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.e [
-    i32 2, label %bb.b
-    i32 6, label %bb.c
-    i32 11, label %bb.d
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.e [
+    i8 32, label %bb.b
+    i8 96, label %bb.c
+    i8 -80, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1862,13 +1823,12 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.g [
-    i32 2, label %bb.d
-    i32 6, label %bb.e
-    i32 11, label %bb.f
+  %1 = trunc i64 %i.a to i8
+  %trunc = and i8 %1, -16
+  switch i8 %trunc, label %bb.g [
+    i8 32, label %bb.d
+    i8 96, label %bb.e
+    i8 -80, label %bb.f
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -1915,13 +1875,12 @@ declare i64 @lpBytes(ptr noundef) local_unnamed_addr #1
 define dso_local void @setTypeConvert(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.e [
-    i32 2, label %bb.b
-    i32 6, label %bb.c
-    i32 11, label %bb.d
+  %2 = trunc i64 %i.a to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.e [
+    i8 32, label %bb.b
+    i8 96, label %bb.c
+    i8 -80, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -1986,13 +1945,12 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %2 = trunc i64 %i.d to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.q [
-    i32 6, label %bb.d
-    i32 11, label %bb.e
-    i32 2, label %bb.f
+  %2 = trunc i64 %i.d to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.q [
+    i8 96, label %bb.d
+    i8 -80, label %bb.e
+    i8 32, label %bb.f
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2385,13 +2343,12 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge
 
 bb.w:                                             ; preds = %bb.v
   %i.ct = load i64, ptr %.061, align 8
-  %1 = trunc i64 %i.ct to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.aa [
-    i32 2, label %bb.x
-    i32 6, label %bb.y
-    i32 11, label %bb.z
+  %1 = trunc i64 %i.ct to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.aa [
+    i8 32, label %bb.x
+    i8 96, label %bb.y
+    i8 -80, label %bb.z
   ]
 
 bb.x:                                             ; preds = %bb.w
@@ -2500,13 +2457,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %i.f, align 8
-  %1 = trunc i64 %i.i to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.g [
-    i32 2, label %bb.d
-    i32 6, label %bb.e
-    i32 11, label %bb.f
+  %1 = trunc i64 %i.i to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.g [
+    i8 32, label %bb.d
+    i8 96, label %bb.e
+    i8 -80, label %bb.f
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -2614,13 +2570,12 @@ setTypeRemove.exit:                               ; preds = %bb.j, %bb.k, %bb.l,
 bb.p:                                             ; preds = %setTypeRemove.exit
   %i.ay = add nsw i32 %.04968, 1                  ; 2 uses
   %i.az = load i64, ptr %i.f, align 8
-  %4 = trunc i64 %i.az to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.t [
-    i32 2, label %bb.q
-    i32 6, label %bb.r
-    i32 11, label %bb.s
+  %2 = trunc i64 %i.az to i8
+  %trunc.i57 = and i8 %2, -16
+  switch i8 %trunc.i57, label %bb.t [
+    i8 32, label %bb.q
+    i8 96, label %bb.r
+    i8 -80, label %bb.s
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -2954,13 +2909,12 @@ bb.w:                                             ; preds = %bb.u
   %i.bz = load i32, ptr %i.by, align 8, !tbaa !88
   tail call void @notifyKeyspaceEvent(i32 noundef 32, ptr noundef nonnull @.str.10, ptr noundef %i.bw, i32 noundef %i.bz) #11
   %i.ca = load i64, ptr %i.h, align 8
-  %1 = trunc i64 %i.ca to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.aa [
-    i32 2, label %bb.x
-    i32 6, label %bb.y
-    i32 11, label %bb.z
+  %1 = trunc i64 %i.ca to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.aa [
+    i8 32, label %bb.x
+    i8 96, label %bb.y
+    i8 -80, label %bb.z
   ]
 
 bb.x:                                             ; preds = %bb.w
@@ -3108,13 +3062,12 @@ setTypeAdd.exit:                                  ; preds = %bb.ag, %bb.ah, %bb.
 bb.am:                                            ; preds = %setTypeAdd.exit
   %i.et = load ptr, ptr %i.a, align 8, !tbaa !84  ; 4 uses
   %i.eu = load i64, ptr %i.et, align 8
-  %4 = trunc i64 %i.eu to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.aq [
-    i32 2, label %bb.an
-    i32 6, label %bb.ao
-    i32 11, label %bb.ap
+  %2 = trunc i64 %i.eu to i8
+  %trunc.i75 = and i8 %2, -16
+  switch i8 %trunc.i75, label %bb.aq [
+    i8 32, label %bb.an
+    i8 96, label %bb.ao
+    i8 -80, label %bb.ap
   ]
 
 bb.an:                                            ; preds = %bb.am
@@ -3467,13 +3420,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load i64, ptr %i.f, align 8
-  %1 = trunc i64 %i.i to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.g [
-    i32 2, label %bb.d
-    i32 6, label %bb.e
-    i32 11, label %bb.f
+  %1 = trunc i64 %i.i to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.g [
+    i8 32, label %bb.d
+    i8 96, label %bb.e
+    i8 -80, label %bb.f
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -3568,13 +3520,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.af = load i64, ptr %i.x, align 8
-  %2 = trunc i64 %i.af to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.j [
-    i32 2, label %bb.g
-    i32 6, label %bb.h
-    i32 11, label %bb.i
+  %2 = trunc i64 %i.af to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.j [
+    i8 32, label %bb.g
+    i8 96, label %bb.h
+    i8 -80, label %bb.i
   ]
 
 bb.g:                                             ; preds = %bb.f
@@ -3977,13 +3928,12 @@ bb.q:                                             ; preds = %._crit_edge
 bb.r:                                             ; preds = %.lr.ph235
   %i.ay = load ptr, ptr %i.h, align 8, !tbaa !109 ; 4 uses
   %i.az = load i64, ptr %i.ay, align 8
-  %6 = trunc i64 %i.az to i32
-  %7 = lshr i32 %6, 4
-  %8 = and i32 %7, 15
-  switch i32 %8, label %bb.v [
-    i32 2, label %bb.s
-    i32 6, label %bb.t
-    i32 11, label %bb.u
+  %6 = trunc i64 %i.az to i8
+  %trunc.i = and i8 %6, -16
+  switch i8 %trunc.i, label %bb.v [
+    i8 32, label %bb.s
+    i8 96, label %bb.t
+    i8 -80, label %bb.u
   ]
 
 bb.s:                                             ; preds = %bb.r
@@ -4019,13 +3969,12 @@ setTypeSize.exit:                                 ; preds = %bb.s, %bb.t, %bb.u
   %i.bo = add i64 %.0.i, %.0144233
   %i.bp = load ptr, ptr %i.av, align 8, !tbaa !109 ; 4 uses
   %i.bq = load i64, ptr %i.bp, align 8
-  %9 = trunc i64 %i.bq to i32
-  %10 = lshr i32 %9, 4
-  %11 = and i32 %10, 15
-  switch i32 %11, label %bb.z [
-    i32 2, label %bb.w
-    i32 6, label %bb.x
-    i32 11, label %bb.y
+  %7 = trunc i64 %i.bq to i8
+  %trunc.i192 = and i8 %7, -16
+  switch i8 %trunc.i192, label %bb.z [
+    i8 32, label %bb.w
+    i8 96, label %bb.x
+    i8 -80, label %bb.y
   ]
 
 bb.w:                                             ; preds = %setTypeSize.exit
@@ -4428,13 +4377,12 @@ bb.ck:                                            ; preds = %setTypeResetIterato
 
 bb.cl:                                            ; preds = %.loopexit
   %i.ja = load i64, ptr %i.co, align 8
-  %12 = trunc i64 %i.ja to i32
-  %13 = lshr i32 %12, 4
-  %14 = and i32 %13, 15
-  switch i32 %14, label %bb.cp [
-    i32 2, label %bb.cm
-    i32 6, label %bb.cn
-    i32 11, label %bb.co
+  %8 = trunc i64 %i.ja to i8
+  %trunc.i202 = and i8 %8, -16
+  switch i8 %trunc.i202, label %bb.cp [
+    i8 32, label %bb.cm
+    i8 96, label %bb.cn
+    i8 -80, label %bb.co
   ]
 
 bb.cm:                                            ; preds = %bb.cl
@@ -4476,13 +4424,12 @@ bb.cq:                                            ; preds = %setTypeSize.exit202
   call void @setKey(ptr noundef %0, ptr noundef %i.jq, ptr noundef nonnull %3, ptr noundef nonnull %i.b, i32 noundef 0) #11
   %i.jr = load ptr, ptr %i.b, align 8, !tbaa !84  ; 4 uses
   %i.js = load i64, ptr %i.jr, align 8
-  %15 = trunc i64 %i.js to i32
-  %16 = lshr i32 %15, 4
-  %17 = and i32 %16, 15
-  switch i32 %17, label %bb.cu [
-    i32 2, label %bb.cr
-    i32 6, label %bb.cs
-    i32 11, label %bb.ct
+  %9 = trunc i64 %i.js to i8
+  %trunc.i205 = and i8 %9, -16
+  switch i8 %trunc.i205, label %bb.cu [
+    i8 32, label %bb.cr
+    i8 96, label %bb.cs
+    i8 -80, label %bb.ct
   ]
 
 bb.cr:                                            ; preds = %bb.cq
@@ -4630,13 +4577,12 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.r = load i64, ptr %i.o, align 8
-  %1 = trunc i64 %i.r to i32
-  %2 = lshr i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.k [
-    i32 2, label %bb.h
-    i32 6, label %bb.i
-    i32 11, label %bb.j
+  %1 = trunc i64 %i.r to i8
+  %trunc.i = and i8 %1, -16
+  switch i8 %trunc.i, label %bb.k [
+    i8 32, label %bb.h
+    i8 96, label %bb.i
+    i8 -80, label %bb.j
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -4722,13 +4668,12 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   tail call void @addReplyBulk(ptr noundef nonnull %0, ptr noundef %i.ar) #11
   tail call void @decrRefCount(ptr noundef %i.ar) #11
   %i.bl = load i64, ptr %i.o, align 8
-  %4 = trunc i64 %i.bl to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.s [
-    i32 2, label %bb.p
-    i32 6, label %bb.q
-    i32 11, label %bb.r
+  %2 = trunc i64 %i.bl to i8
+  %trunc.i46 = and i8 %2, -16
+  switch i8 %trunc.i46, label %bb.s [
+    i8 32, label %bb.p
+    i8 96, label %bb.q
+    i8 -80, label %bb.r
   ]
 
 bb.p:                                             ; preds = %bb.o
@@ -4842,13 +4787,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.u = load i64, ptr %i.r, align 8
-  %4 = trunc i64 %i.u to i32
-  %5 = lshr i32 %4, 4
-  %6 = and i32 %5, 15
-  switch i32 %6, label %bb.h [
-    i32 2, label %bb.e
-    i32 6, label %bb.f
-    i32 11, label %bb.g
+  %4 = trunc i64 %i.u to i8
+  %trunc.i = and i8 %4, -16
+  switch i8 %trunc.i, label %bb.h [
+    i8 32, label %bb.e
+    i8 96, label %bb.f
+    i8 -80, label %bb.g
   ]
 
 bb.e:                                             ; preds = %bb.d
@@ -5251,13 +5195,12 @@ bb.a:
   %i.a = load ptr, ptr %0, align 8, !tbaa !109    ; 8 uses
   %i.b = load ptr, ptr %1, align 8, !tbaa !109    ; 8 uses
   %i.c = load i64, ptr %i.a, align 8
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.e [
-    i32 2, label %bb.b
-    i32 6, label %bb.c
-    i32 11, label %bb.d
+  %2 = trunc i64 %i.c to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.e [
+    i8 32, label %bb.b
+    i8 96, label %bb.c
+    i8 -80, label %bb.d
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -5291,13 +5234,12 @@ bb.e:                                             ; preds = %bb.a
 setTypeSize.exit:                                 ; preds = %bb.b, %bb.c, %bb.d
   %.0.i = phi i64 [ %i.j, %bb.b ], [ %i.n, %bb.c ], [ %i.q, %bb.d ]
   %i.r = load i64, ptr %i.b, align 8
-  %5 = trunc i64 %i.r to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.i [
-    i32 2, label %bb.f
-    i32 6, label %bb.g
-    i32 11, label %bb.h
+  %3 = trunc i64 %i.r to i8
+  %trunc.i6 = and i8 %3, -16
+  switch i8 %trunc.i6, label %bb.i [
+    i8 32, label %bb.f
+    i8 96, label %bb.g
+    i8 -80, label %bb.h
   ]
 
 bb.f:                                             ; preds = %setTypeSize.exit
@@ -5335,13 +5277,12 @@ setTypeSize.exit7:                                ; preds = %bb.f, %bb.g, %bb.h
 
 bb.j:                                             ; preds = %setTypeSize.exit7
   %i.ah = load i64, ptr %i.a, align 8
-  %8 = trunc i64 %i.ah to i32
-  %9 = lshr i32 %8, 4
-  %10 = and i32 %9, 15
-  switch i32 %10, label %bb.n [
-    i32 2, label %bb.k
-    i32 6, label %bb.l
-    i32 11, label %bb.m
+  %4 = trunc i64 %i.ah to i8
+  %trunc.i9 = and i8 %4, -16
+  switch i8 %trunc.i9, label %bb.n [
+    i8 32, label %bb.k
+    i8 96, label %bb.l
+    i8 -80, label %bb.m
   ]
 
 bb.k:                                             ; preds = %bb.j
@@ -5375,13 +5316,12 @@ bb.n:                                             ; preds = %bb.j
 setTypeSize.exit9:                                ; preds = %bb.k, %bb.l, %bb.m
   %.0.i8 = phi i64 [ %i.ao, %bb.k ], [ %i.as, %bb.l ], [ %i.av, %bb.m ]
   %i.aw = load i64, ptr %i.b, align 8
-  %11 = trunc i64 %i.aw to i32
-  %12 = lshr i32 %11, 4
-  %13 = and i32 %12, 15
-  switch i32 %13, label %bb.r [
-    i32 2, label %bb.o
-    i32 6, label %bb.p
-    i32 11, label %bb.q
+  %5 = trunc i64 %i.aw to i8
+  %trunc.i12 = and i8 %5, -16
+  switch i8 %trunc.i12, label %bb.r [
+    i8 32, label %bb.o
+    i8 96, label %bb.p
+    i8 -80, label %bb.q
   ]
 
 bb.o:                                             ; preds = %setTypeSize.exit9
@@ -5433,13 +5373,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr %i.a, align 8
-  %2 = trunc i64 %i.c to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.f [
-    i32 2, label %bb.c
-    i32 6, label %bb.d
-    i32 11, label %bb.e
+  %2 = trunc i64 %i.c to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.f [
+    i8 32, label %bb.c
+    i8 96, label %bb.d
+    i8 -80, label %bb.e
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -5477,13 +5416,12 @@ setTypeSize.exit:                                 ; preds = %bb.e, %bb.d, %bb.c,
 
 bb.g:                                             ; preds = %setTypeSize.exit
   %i.s = load i64, ptr %i.b, align 8
-  %5 = trunc i64 %i.s to i32
-  %6 = lshr i32 %5, 4
-  %7 = and i32 %6, 15
-  switch i32 %7, label %bb.k [
-    i32 2, label %bb.h
-    i32 6, label %bb.i
-    i32 11, label %bb.j
+  %3 = trunc i64 %i.s to i8
+  %trunc.i15 = and i8 %3, -16
+  switch i8 %trunc.i15, label %bb.k [
+    i8 32, label %bb.h
+    i8 96, label %bb.i
+    i8 -80, label %bb.j
   ]
 
 bb.h:                                             ; preds = %bb.g
@@ -5652,12 +5590,11 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %._crit_edge.thread
   %i.an = load ptr, ptr %i.j, align 8, !tbaa !109 ; 2 uses
   %i.ao = load i64, ptr %i.an, align 8
-  %8 = trunc i64 %i.ao to i32
-  %9 = lshr i32 %8, 4
-  %10 = and i32 %9, 15
-  switch i32 %10, label %bb.s [
-    i32 6, label %bb.q
-    i32 11, label %bb.r
+  %8 = trunc i64 %i.ao to i8
+  %trunc = and i8 %8, -16
+  switch i8 %trunc, label %bb.s [
+    i8 96, label %bb.q
+    i8 -80, label %bb.r
   ]
 
 bb.q:                                             ; preds = %bb.p
@@ -5830,12 +5767,11 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al
   %i.cl = load i64, ptr %i.ba, align 8
-  %11 = trunc i64 %i.cl to i32
-  %12 = lshr i32 %11, 4
-  %13 = and i32 %12, 15
-  switch i32 %13, label %bb.ao [
-    i32 11, label %bb.an
-    i32 6, label %bb.an
+  %9 = trunc i64 %i.cl to i8
+  %trunc159 = and i8 %9, -16
+  switch i8 %trunc159, label %bb.ao [
+    i8 -80, label %bb.an
+    i8 96, label %bb.an
   ]
 
 bb.an:                                            ; preds = %bb.am, %bb.am
@@ -5926,13 +5862,12 @@ bb.av:                                            ; preds = %.loopexit
 
 bb.aw:                                            ; preds = %bb.av
   %i.dm = load i64, ptr %i.ba, align 8
-  %14 = trunc i64 %i.dm to i32
-  %15 = lshr i32 %14, 4
-  %16 = and i32 %15, 15
-  switch i32 %16, label %bb.ba [
-    i32 2, label %bb.ax
-    i32 6, label %bb.ay
-    i32 11, label %bb.az
+  %10 = trunc i64 %i.dm to i8
+  %trunc.i = and i8 %10, -16
+  switch i8 %trunc.i, label %bb.ba [
+    i8 32, label %bb.ax
+    i8 96, label %bb.ay
+    i8 -80, label %bb.az
   ]
 
 bb.ax:                                            ; preds = %bb.aw
@@ -5976,13 +5911,12 @@ bb.bb:                                            ; preds = %setTypeSize.exit
   br i1 %or.cond211, label %maybeConvertToIntset.exit, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
-  %17 = trunc i64 %.pre188 to i32
-  %18 = lshr i32 %17, 4
-  %19 = and i32 %18, 15
-  switch i32 %19, label %bb.bg [
-    i32 2, label %bb.bd
-    i32 6, label %bb.be
-    i32 11, label %bb.bf
+  %11 = trunc i64 %.pre188 to i8
+  %trunc.i.i = and i8 %11, -16
+  switch i8 %trunc.i.i, label %bb.bg [
+    i8 32, label %bb.bd
+    i8 96, label %bb.be
+    i8 -80, label %bb.bf
   ]
 
 bb.bd:                                            ; preds = %bb.bc
@@ -6153,13 +6087,12 @@ bb.bt:                                            ; preds = %bb.bs, %maybeConver
   call void @setKey(ptr noundef %0, ptr noundef %i.ga, ptr noundef nonnull %3, ptr noundef nonnull %i.e, i32 noundef 0) #11
   %i.gb = load ptr, ptr %i.e, align 8, !tbaa !84  ; 4 uses
   %i.gc = load i64, ptr %i.gb, align 8
-  %20 = trunc i64 %i.gc to i32
-  %21 = lshr i32 %20, 4
-  %22 = and i32 %21, 15
-  switch i32 %22, label %bb.bx [
-    i32 2, label %bb.bu
-    i32 6, label %bb.bv
-    i32 11, label %bb.bw
+  %12 = trunc i64 %i.gc to i8
+  %trunc.i153 = and i8 %12, -16
+  switch i8 %trunc.i153, label %bb.bx [
+    i8 32, label %bb.bu
+    i8 96, label %bb.bv
+    i8 -80, label %bb.bw
   ]
 
 bb.bu:                                            ; preds = %bb.bt
@@ -6306,13 +6239,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.q = load i64, ptr %i.j, align 8
-  %2 = trunc i64 %i.q to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.h [
-    i32 2, label %bb.e
-    i32 6, label %bb.f
-    i32 11, label %bb.g
+  %2 = trunc i64 %i.q to i8
+  %trunc.i = and i8 %2, -16
+  switch i8 %trunc.i, label %bb.h [
+    i8 32, label %bb.e
+    i8 96, label %bb.f
+    i8 -80, label %bb.g
   ]
 
 bb.e:                                             ; preds = %bb.d

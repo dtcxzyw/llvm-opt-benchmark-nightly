@@ -201,8 +201,8 @@ bb.h:                                             ; preds = %rb_obj_gen_fields_p
   br label %rb_obj_gen_fields_p.exit.thread
 
 rb_obj_gen_fields_p.exit.thread:                  ; preds = %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %rb_type.exit.i, %bb.h, %rb_obj_gen_fields_p.exit
-  %.pre-phi = phi i32 [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %.pre26, %bb.h ], [ %i.y, %rb_obj_gen_fields_p.exit ] ; 2 uses
-  %i.ab = phi i64 [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %.pre, %bb.h ], [ %i.x, %rb_obj_gen_fields_p.exit ] ; 2 uses
+  %.pre-phi = phi i32 [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %i.y, %rb_type.exit.i ], [ %.pre26, %bb.h ], [ %i.y, %rb_obj_gen_fields_p.exit ]
+  %i.ab = phi i64 [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %i.x, %rb_type.exit.i ], [ %.pre, %bb.h ], [ %i.x, %rb_obj_gen_fields_p.exit ] ; 3 uses
   %i.ac = and i32 %.pre-phi, 31
   switch i32 %i.ac, label %bb.q [
     i32 5, label %bb.i
@@ -224,12 +224,12 @@ bb.k:                                             ; preds = %rb_obj_gen_fields_p
   br label %bb.q
 
 bb.l:                                             ; preds = %rb_obj_gen_fields_p.exit.thread
-  %1 = lshr i32 %.pre-phi, 12
-  %2 = and i32 %1, 15
-  switch i32 %2, label %bb.q [
-    i32 11, label %bb.m
-    i32 10, label %bb.o
-    i32 6, label %bb.p
+  %1 = trunc i64 %i.ab to i16
+  %trunc = and i16 %1, -4096
+  switch i16 %trunc, label %bb.q [
+    i16 -20480, label %bb.m
+    i16 -24576, label %bb.o
+    i16 24576, label %bb.p
   ]
 
 bb.m:                                             ; preds = %bb.l
@@ -632,14 +632,13 @@ bb.ar:                                            ; preds = %bb.c
 
 bb.as:                                            ; preds = %bb.ar
   %i.hi = load i64, ptr %i.f, align 8, !tbaa !109
-  %4 = trunc i64 %i.hi to i32
-  %5 = lshr i32 %4, 12
-  %6 = and i32 %5, 15
-  switch i32 %6, label %.critedge [
-    i32 6, label %bb.at
-    i32 7, label %bb.ba
-    i32 10, label %vm_ci_kwarg.exit
-    i32 11, label %bb.bb
+  %4 = trunc i64 %i.hi to i16
+  %trunc = and i16 %4, -4096
+  switch i16 %trunc, label %.critedge [
+    i16 24576, label %bb.at
+    i16 28672, label %bb.ba
+    i16 -24576, label %vm_ci_kwarg.exit
+    i16 -20480, label %bb.bb
   ]
 
 bb.at:                                            ; preds = %bb.as

@@ -201,13 +201,12 @@ asmCanFeedMigrationClient.exit:                   ; preds = %bb.d
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !94   ; 3 uses
   %i.w = load i64, ptr %i.v, align 8
-  %2 = trunc i64 %i.w to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.e [
-    i32 0, label %bb.g
-    i32 8, label %bb.g
-    i32 1, label %bb.f
+  %2 = trunc i64 %i.w to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.e [
+    i8 0, label %bb.g
+    i8 -128, label %bb.g
+    i8 16, label %bb.f
   ], !prof !108
 
 bb.e:                                             ; preds = %.lr.ph
@@ -610,13 +609,12 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv ; 2 uses
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !94   ; 3 uses
   %i.aa = load i64, ptr %i.z, align 8
-  %3 = trunc i64 %i.aa to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.h [
-    i32 0, label %bb.j
-    i32 8, label %bb.j
-    i32 1, label %bb.i
+  %3 = trunc i64 %i.aa to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %bb.h [
+    i8 0, label %bb.j
+    i8 -128, label %bb.j
+    i8 16, label %bb.i
   ], !prof !108
 
 bb.h:                                             ; preds = %.lr.ph

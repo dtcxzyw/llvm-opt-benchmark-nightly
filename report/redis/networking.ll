@@ -201,12 +201,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %bb.f [
-    i32 0, label %bb.d
-    i32 8, label %bb.e
+  %1 = trunc i64 %i.a to i8
+  switch i8 %1, label %bb.f [
+    i8 0, label %bb.d
+    i8 -128, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -245,12 +243,10 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %1 = trunc i64 %i.a to i32
-  %2 = lshr exact i32 %1, 4
-  %3 = and i32 %2, 15
-  switch i32 %3, label %sdslen.exit [
-    i32 0, label %bb.d
-    i32 8, label %bb.j
+  %1 = trunc i64 %i.a to i8
+  switch i8 %1, label %sdslen.exit [
+    i8 0, label %bb.d
+    i8 -128, label %bb.j
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -653,13 +649,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.j
 
 bb.m:                                             ; preds = %bb.a, %bb.h, %bb.l, %clientHasPendingReplies.exit.i, %bb.e, %bb.i, %bb.j, %bb.k, %bb.g
   %i.ah = load i64, ptr %1, align 8
-  %2 = trunc i64 %i.ah to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.u [
-    i32 0, label %bb.n
-    i32 8, label %bb.n
-    i32 1, label %bb.t
+  %2 = trunc i64 %i.ah to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.u [
+    i8 0, label %bb.n
+    i8 -128, label %bb.n
+    i8 16, label %bb.t
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m
@@ -1062,12 +1057,11 @@ sdslen.exit:                                      ; preds = %bb.a, %bb.b, %bb.c,
 define dso_local void @addReplyOrErrorObject(ptr noundef %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = load i64, ptr %1, align 8
-  %2 = trunc i64 %i.a to i32
-  %3 = lshr i32 %2, 4
-  %4 = and i32 %3, 15
-  switch i32 %4, label %bb.b [
-    i32 8, label %bb.c
-    i32 0, label %bb.c
+  %2 = trunc i64 %i.a to i8
+  %trunc = and i8 %2, -16
+  switch i8 %trunc, label %bb.b [
+    i8 -128, label %bb.c
+    i8 0, label %bb.c
   ], !prof !169
 
 bb.b:                                             ; preds = %bb.a
@@ -1470,13 +1464,12 @@ bb.l:                                             ; preds = %bb.k, %bb.j, %bb.j
 
 bb.m:                                             ; preds = %bb.a, %bb.h, %bb.l, %clientHasPendingReplies.exit.i, %bb.e, %bb.i, %bb.j, %bb.k, %bb.g
   %i.aj = load i64, ptr %1, align 8               ; 3 uses
-  %3 = trunc i64 %i.aj to i32
-  %4 = lshr i32 %3, 4
-  %5 = and i32 %4, 15
-  switch i32 %5, label %bb.aq [
-    i32 0, label %bb.n
-    i32 8, label %bb.n
-    i32 1, label %bb.an
+  %3 = trunc i64 %i.aj to i8
+  %trunc = and i8 %3, -16
+  switch i8 %trunc, label %bb.aq [
+    i8 0, label %bb.n
+    i8 -128, label %bb.n
+    i8 16, label %bb.an
   ]
 
 bb.n:                                             ; preds = %bb.m, %bb.m

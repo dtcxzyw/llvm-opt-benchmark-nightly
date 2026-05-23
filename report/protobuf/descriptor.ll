@@ -201,17 +201,16 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #42
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.be = load i8, ptr %i.bd, align 1
-  %22 = lshr i8 %i.be, 2
-  %23 = and i8 %22, 3
-  %24 = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 9 uses
-  store ptr %24, ptr %15, align 8, !tbaa !16, !alias.scope !1041
+  %22 = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 9 uses
+  store ptr %22, ptr %15, align 8, !tbaa !16, !alias.scope !1041
+  %23 = and i8 %i.be, 12
   switch i8 %23, label %._crit_edge.i.i8.i [
-    i8 2, label %._crit_edge.i.i.i80
-    i8 1, label %._crit_edge.i.i4.i
+    i8 8, label %._crit_edge.i.i.i80
+    i8 4, label %._crit_edge.i.i4.i
   ]
 
 ._crit_edge.i.i.i80:                              ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %24, ptr noundef nonnull align 1 dereferenceable(7) @.str.284, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %22, ptr noundef nonnull align 1 dereferenceable(7) @.str.284, i64 7, i1 false)
   %i.bf = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i64 7, ptr %i.bf, align 8, !tbaa !23, !alias.scope !1041
   %i.bg = getelementptr inbounds nuw i8, ptr %15, i64 23
@@ -219,7 +218,7 @@ bb.l:                                             ; preds = %bb.k
   br label %_ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisibilityE.exit
 
 ._crit_edge.i.i4.i:                               ; preds = %bb.l
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %24, ptr noundef nonnull align 1 dereferenceable(6) @.str.285, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %22, ptr noundef nonnull align 1 dereferenceable(6) @.str.285, i64 6, i1 false)
   %i.bh = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i64 6, ptr %i.bh, align 8, !tbaa !23, !alias.scope !1041
   %i.bi = getelementptr inbounds nuw i8, ptr %15, i64 22
@@ -229,7 +228,7 @@ bb.l:                                             ; preds = %bb.k
 ._crit_edge.i.i8.i:                               ; preds = %bb.l
   %i.bj = getelementptr inbounds nuw i8, ptr %15, i64 8
   store i64 0, ptr %i.bj, align 8, !tbaa !23, !alias.scope !1041
-  store i8 0, ptr %24, align 8, !tbaa !22, !alias.scope !1041
+  store i8 0, ptr %22, align 8, !tbaa !22, !alias.scope !1041
   br label %_ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisibilityE.exit
 
 _ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisibilityE.exit: ; preds = %._crit_edge.i.i.i80, %._crit_edge.i.i4.i, %._crit_edge.i.i8.i
@@ -247,7 +246,7 @@ _ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisi
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 16
   store i64 %i.bk, ptr %i.br, align 16
   %i.bs = getelementptr inbounds nuw i8, ptr %11, i64 24
-  store ptr %24, ptr %i.bs, align 8
+  store ptr %22, ptr %i.bs, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %11, i64 32
   store i64 %i.bn, ptr %i.bt, align 16
   %i.bu = getelementptr inbounds nuw i8, ptr %11, i64 40
@@ -258,11 +257,11 @@ _ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisi
 bb.m:                                             ; preds = %_ZN6google8protobuf12_GLOBAL__N_119VisibilityToKeywordB5cxx11ERKNS0_16SymbolVisibilityE.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #42
   %i.bv = load ptr, ptr %15, align 8, !tbaa !20   ; 2 uses
-  %i.bw = icmp eq ptr %i.bv, %24
+  %i.bw = icmp eq ptr %i.bv, %22
   br i1 %i.bw, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.m
-  %i.bx = load i64, ptr %24, align 8, !tbaa !22
+  %i.bx = load i64, ptr %22, align 8, !tbaa !22
   %i.by = add i64 %i.bx, 1
   call void @_ZdlPvm(ptr noundef %i.bv, i64 noundef %i.by) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -354,11 +353,11 @@ bb.s:                                             ; preds = %_ZN6google8protobuf
   %i.df = landingpad { ptr, i32 }
           cleanup
   %i.dg = load ptr, ptr %15, align 8, !tbaa !20   ; 2 uses
-  %i.dh = icmp eq ptr %i.dg, %24
+  %i.dh = icmp eq ptr %i.dg, %22
   br i1 %i.dh, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i82
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i82: ; preds = %bb.s
-  %i.di = load i64, ptr %24, align 8, !tbaa !22
+  %i.di = load i64, ptr %22, align 8, !tbaa !22
   %i.dj = add i64 %i.di, 1
   call void @_ZdlPvm(ptr noundef %i.dg, i64 noundef %i.dj) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit84
@@ -761,17 +760,16 @@ bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #42
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.bj = load i16, ptr %i.bi, align 1
-  %38 = lshr i16 %i.bj, 8
-  %39 = and i16 %38, 3
-  %40 = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 9 uses
-  store ptr %40, ptr %22, align 8, !tbaa !16, !alias.scope !1047
+  %38 = getelementptr inbounds nuw i8, ptr %22, i64 16 ; 9 uses
+  store ptr %38, ptr %22, align 8, !tbaa !16, !alias.scope !1047
+  %39 = and i16 %i.bj, 768
   switch i16 %39, label %._crit_edge.i.i8.i [
-    i16 2, label %._crit_edge.i.i.i211
-    i16 1, label %._crit_edge.i.i4.i
+    i16 512, label %._crit_edge.i.i.i211
+    i16 256, label %._crit_edge.i.i4.i
   ]
 
 ._crit_edge.i.i.i211:                             ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %40, ptr noundef nonnull align 1 dereferenceable(7) @.str.284, i64 7, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(7) %38, ptr noundef nonnull align 1 dereferenceable(7) @.str.284, i64 7, i1 false)
   %i.bk = getelementptr inbounds nuw i8, ptr %22, i64 8
   store i64 7, ptr %i.bk, align 8, !tbaa !23, !alias.scope !1047
   %i.bl = getelementptr inbounds nuw i8, ptr %22, i64 23
@@ -779,7 +777,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.o
 
 ._crit_edge.i.i4.i:                               ; preds = %bb.n
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %40, ptr noundef nonnull align 1 dereferenceable(6) @.str.285, i64 6, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(6) %38, ptr noundef nonnull align 1 dereferenceable(6) @.str.285, i64 6, i1 false)
   %i.bm = getelementptr inbounds nuw i8, ptr %22, i64 8
   store i64 6, ptr %i.bm, align 8, !tbaa !23, !alias.scope !1047
   %i.bn = getelementptr inbounds nuw i8, ptr %22, i64 22
@@ -789,7 +787,7 @@ bb.n:                                             ; preds = %bb.m
 ._crit_edge.i.i8.i:                               ; preds = %bb.n
   %i.bo = getelementptr inbounds nuw i8, ptr %22, i64 8
   store i64 0, ptr %i.bo, align 8, !tbaa !23, !alias.scope !1047
-  store i8 0, ptr %40, align 8, !tbaa !22, !alias.scope !1047
+  store i8 0, ptr %38, align 8, !tbaa !22, !alias.scope !1047
   br label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge.i.i8.i, %._crit_edge.i.i4.i, %._crit_edge.i.i.i211
@@ -807,7 +805,7 @@ bb.o:                                             ; preds = %._crit_edge.i.i8.i,
   %i.bw = getelementptr inbounds nuw i8, ptr %18, i64 16
   store i64 %i.bp, ptr %i.bw, align 16
   %i.bx = getelementptr inbounds nuw i8, ptr %18, i64 24
-  store ptr %40, ptr %i.bx, align 8
+  store ptr %38, ptr %i.bx, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %18, i64 32
   store i64 %i.bs, ptr %i.by, align 16
   %i.bz = getelementptr inbounds nuw i8, ptr %18, i64 40
@@ -818,11 +816,11 @@ bb.o:                                             ; preds = %._crit_edge.i.i8.i,
 bb.p:                                             ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #42
   %i.ca = load ptr, ptr %22, align 8, !tbaa !20   ; 2 uses
-  %i.cb = icmp eq ptr %i.ca, %40
+  %i.cb = icmp eq ptr %i.ca, %38
   br i1 %i.cb, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.p
-  %i.cc = load i64, ptr %40, align 8, !tbaa !22
+  %i.cc = load i64, ptr %38, align 8, !tbaa !22
   %i.cd = add i64 %i.cc, 1
   call void @_ZdlPvm(ptr noundef %i.ca, i64 noundef %i.cd) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
@@ -840,11 +838,11 @@ bb.r:                                             ; preds = %bb.o
   %i.cf = landingpad { ptr, i32 }
           cleanup
   %i.cg = load ptr, ptr %22, align 8, !tbaa !20   ; 2 uses
-  %i.ch = icmp eq ptr %i.cg, %40
+  %i.ch = icmp eq ptr %i.cg, %38
   br i1 %i.ch, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit214, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i212
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i212: ; preds = %bb.r
-  %i.ci = load i64, ptr %40, align 8, !tbaa !22
+  %i.ci = load i64, ptr %38, align 8, !tbaa !22
   %i.cj = add i64 %i.ci, 1
   call void @_ZdlPvm(ptr noundef %i.cg, i64 noundef %i.cj) #43
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit214

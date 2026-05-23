@@ -201,13 +201,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr i8, ptr %1, i64 32
   %i.h = load i32, ptr %i.g, align 8              ; 8 uses
-  %6 = lshr i32 %i.h, 2
-  %i.i = and i32 %6, 7                            ; 2 uses
+  %i.i = and i32 %i.h, 28                         ; 2 uses
   %i.j = and i32 %i.h, 32
   %.not.i19.i = icmp eq i32 %i.j, 0               ; 6 uses
   switch i32 %i.i, label %bb.i [
-    i32 1, label %bb.c
-    i32 2, label %bb.f
+    i32 4, label %bb.c
+    i32 8, label %bb.f
   ]
 
 bb.c:                                             ; preds = %bb.b
@@ -286,8 +285,8 @@ bb.l:                                             ; preds = %PyUnicode_READ_CHAR
 bb.m:                                             ; preds = %bb.l
   %i.y = add nsw i64 %.val, -1                    ; 3 uses
   switch i32 %i.i, label %bb.t [
-    i32 1, label %bb.n
-    i32 2, label %bb.q
+    i32 4, label %bb.n
+    i32 8, label %bb.q
   ]
 
 bb.n:                                             ; preds = %bb.m
@@ -690,8 +689,6 @@ _Py_NewRef.exit:                                  ; preds = %bb.ct, %bb.cu
 bb.cv:                                            ; preds = %_Py_NewRef.exit, %bb.cs
   %i.fg = getelementptr i8, ptr %.195, i64 32
   %i.fh = load i32, ptr %i.fg, align 8            ; 3 uses
-  %7 = lshr i32 %i.fh, 2
-  %8 = and i32 %7, 7
   %i.fi = and i32 %i.fh, 32
   %.not.i193 = icmp eq i32 %i.fi, 0
   br i1 %.not.i193, label %bb.cx, label %bb.cw
@@ -716,9 +713,10 @@ _PyUnicode_DATA.exit:                             ; preds = %bb.cw, %bb.cx
   br i1 %i.fm, label %.lr.ph208, label %Py_DECREF.exit124
 
 .lr.ph208:                                        ; preds = %_PyUnicode_DATA.exit
-  switch i32 %8, label %PyUnicode_READ.exit [
-    i32 1, label %PyUnicode_READ.exit.us
-    i32 2, label %PyUnicode_READ.exit.us222
+  %6 = and i32 %i.fh, 28
+  switch i32 %6, label %PyUnicode_READ.exit [
+    i32 4, label %PyUnicode_READ.exit.us
+    i32 8, label %PyUnicode_READ.exit.us222
   ]
 
 PyUnicode_READ.exit.us:                           ; preds = %.lr.ph208, %bb.cy
@@ -1121,8 +1119,6 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load i64, ptr %i.h, align 8, !tbaa !50   ; 5 uses
   %i.j = getelementptr i8, ptr %1, i64 32
   %i.k = load i32, ptr %i.j, align 8              ; 4 uses
-  %2 = lshr i32 %i.k, 2
-  %3 = and i32 %2, 7
   %i.l = and i32 %i.k, 32
   %.not58 = icmp eq i32 %i.l, 0
   br i1 %.not58, label %bb.d, label %bb.c
@@ -1198,6 +1194,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.05299118 = phi ptr [ %.05299, %.thread ], [ %i.p, %.thread95 ], [ %.052105112, %.lr.ph ] ; 3 uses
   %i.af = phi i1 [ %i.ad, %.thread ], [ false, %.thread95 ], [ %i.w, %.lr.ph ]
   %.100117 = phi i64 [ %.100, %.thread ], [ 500, %.thread95 ], [ %.106111, %.lr.ph ]
+  %2 = and i32 %i.k, 28
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 3 uses
   %i.ah = ptrtoint ptr %i.ag to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 3 uses
@@ -1208,9 +1205,9 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %.lr.ph81, %bb.t
   %.180 = phi i64 [ 0, %.lr.ph81 ], [ %i.cn, %bb.t ] ; 4 uses
-  switch i32 %3, label %bb.j [
-    i32 1, label %bb.h
-    i32 2, label %bb.i
+  switch i32 %2, label %bb.j [
+    i32 4, label %bb.h
+    i32 8, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g

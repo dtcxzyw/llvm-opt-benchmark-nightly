@@ -201,11 +201,10 @@ bb.c:                                             ; preds = %bb.b
   %i.d = load ptr, ptr %1, align 8                ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.f = load i32, ptr %i.e, align 4
-  %5 = lshr i32 %i.f, 7
-  %i.g = and i32 %5, 15
+  %i.g = and i32 %i.f, 1920
   switch i32 %i.g, label %bb.f [
     i32 0, label %bb.d
-    i32 1, label %bb.e
+    i32 128, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
@@ -227,11 +226,10 @@ _ZNK2v88internal7Literal8AsNumberEv.exit:         ; preds = %bb.d, %bb.e
   %.0.i = phi double [ %i.j, %bb.d ], [ %i.l, %bb.e ] ; 14 uses
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.n = load i32, ptr %i.m, align 4
-  %6 = lshr i32 %i.n, 7
-  %i.o = and i32 %6, 15
+  %i.o = and i32 %i.n, 1920
   switch i32 %i.o, label %bb.i [
     i32 0, label %bb.g
-    i32 1, label %bb.h
+    i32 128, label %bb.h
   ]
 
 bb.g:                                             ; preds = %_ZNK2v88internal7Literal8AsNumberEv.exit
@@ -634,11 +632,10 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.w = load i32, ptr %i.a, align 4
-  %4 = lshr i32 %i.w, 7
-  %i.x = and i32 %4, 15
+  %i.x = and i32 %i.w, 1920
   switch i32 %i.x, label %bb.i [
     i32 0, label %bb.g
-    i32 1, label %bb.h
+    i32 128, label %bb.h
   ]
 
 bb.g:                                             ; preds = %bb.f

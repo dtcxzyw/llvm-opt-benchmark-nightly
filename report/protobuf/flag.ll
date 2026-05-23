@@ -201,13 +201,12 @@ bb.a:
   store i64 0, ptr %i.a, align 8, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8
-  %3 = lshr i8 %i.c, 1
-  %i.d = and i8 %3, 3
+  %i.d = and i8 %i.c, 6
   switch i8 %i.d, label %default.unreachable2 [
     i8 0, label %bb.b
-    i8 1, label %bb.b
-    i8 2, label %bb.h
-    i8 3, label %bb.i
+    i8 2, label %bb.b
+    i8 4, label %bb.h
+    i8 6, label %bb.i
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -540,13 +539,12 @@ bb.a:
   %3 = alloca %"class.absl::lts_20250512::flags_internal::MaskedPointer", align 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.d = load i8, ptr %i.c, align 8
-  %4 = lshr i8 %i.d, 1
-  %i.e = and i8 %4, 3
+  %i.e = and i8 %i.d, 6
   switch i8 %i.e, label %default.unreachable21 [
     i8 0, label %bb.b
-    i8 1, label %bb.b
-    i8 2, label %bb.c
-    i8 3, label %bb.e
+    i8 2, label %bb.b
+    i8 4, label %bb.c
+    i8 6, label %bb.e
   ]
 
 bb.b:                                             ; preds = %bb.a, %bb.a
@@ -949,14 +947,13 @@ _ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit: ; preds = %bb
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.g = load i8, ptr %i.f, align 8
-  %5 = lshr i8 %i.g, 1
-  %i.h = and i8 %5, 3
+  %i.h = and i8 %i.g, 6
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 6 uses
   switch i8 %i.h, label %default.unreachable26 [
     i8 0, label %bb.c
-    i8 1, label %bb.c
-    i8 2, label %bb.e
-    i8 3, label %bb.k
+    i8 2, label %bb.c
+    i8 4, label %bb.e
+    i8 6, label %bb.k
   ]
 
 bb.c:                                             ; preds = %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit, %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit
@@ -1352,15 +1349,14 @@ _ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit: ; preds = %bb
   %.lobit7 = and i8 %i.j, 1
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.l = load i8, ptr %i.k, align 8
-  %2 = lshr i8 %i.l, 1
-  %i.m = and i8 %2, 3
+  %i.m = and i8 %i.l, 6
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 3 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !25   ; 5 uses
   switch i8 %i.m, label %default.unreachable48 [
     i8 0, label %bb.c
-    i8 1, label %bb.c
-    i8 2, label %bb.g
-    i8 3, label %bb.p
+    i8 2, label %bb.c
+    i8 4, label %bb.g
+    i8 6, label %bb.p
   ]
 
 bb.c:                                             ; preds = %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit, %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit
@@ -1763,13 +1759,12 @@ _ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit: ; preds = %bb
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.h = load i8, ptr %i.g, align 8
-  %2 = lshr i8 %i.h, 1
-  %i.i = and i8 %2, 3
+  %i.i = and i8 %i.h, 6
   switch i8 %i.i, label %default.unreachable14 [
     i8 0, label %bb.c
-    i8 1, label %bb.c
-    i8 2, label %bb.d
-    i8 3, label %bb.e
+    i8 2, label %bb.c
+    i8 4, label %bb.d
+    i8 6, label %bb.e
   ]
 
 bb.c:                                             ; preds = %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit, %_ZNK4absl12lts_2025051214flags_internal8FlagImpl9DataGuardEv.exit

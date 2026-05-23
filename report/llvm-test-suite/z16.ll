@@ -29,11 +29,10 @@ define dso_local i32 @FindShift(ptr noundef readonly captures(none) %0, ptr noun
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i16, ptr %i.a, align 8
-  %3 = lshr i16 %i.b, 10
-  %i.c = and i16 %3, 7
+  %i.c = and i16 %i.b, 7168
   switch i16 %i.c, label %bb.d [
-    i16 1, label %bb.b
-    i16 5, label %bb.c
+    i16 1024, label %bb.b
+    i16 5120, label %bb.c
   ]
 
 bb.b:                                             ; preds = %bb.a
@@ -436,11 +435,10 @@ bb.bf:                                            ; preds = %bb.o, %bb.o
 bb.bg:                                            ; preds = %bb.bf
   %i.ik = getelementptr inbounds nuw i8, ptr %.0349, i64 64
   %i.il = load i16, ptr %i.ik, align 8
-  %4 = lshr i16 %i.il, 10
-  %i.im = and i16 %4, 7
+  %i.im = and i16 %i.il, 7168
   switch i16 %i.im, label %bb.bj [
-    i16 1, label %bb.bh
-    i16 5, label %bb.bi
+    i16 1024, label %bb.bh
+    i16 5120, label %bb.bi
   ]
 
 bb.bh:                                            ; preds = %bb.bg
