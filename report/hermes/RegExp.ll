@@ -201,8 +201,7 @@ bb.fd:                                            ; preds = %bb.fc
 
 _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us: ; preds = %.lr.ph.split.us, %bb.fe
   %.0125526.us.us = phi i64 [ %i.ti, %bb.fe ], [ %i.td, %.lr.ph.split.us ] ; 3 uses
-  %14 = and i64 %.0125526.us.us, 4294967295
-  %i.tf = getelementptr inbounds nuw i8, ptr %i.av, i64 %14
+  %i.tf = getelementptr inbounds nuw i8, ptr %i.av, i64 %.0125526.us.us
   %i.tg = load i8, ptr %i.tf, align 1, !tbaa !27
   %i.th = icmp eq i8 %i.tg, 62
   br i1 %i.th, label %.split.us, label %bb.fe
@@ -231,8 +230,7 @@ bb.fe:                                            ; preds = %_ZNK6hermes2vm10Str
 
 _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us537: ; preds = %bb.ff, %.lr.ph.split.us.split.split.us
   %.0125526.us.us536 = phi i64 [ %i.td, %.lr.ph.split.us.split.split.us ], [ %i.tv, %bb.ff ] ; 3 uses
-  %15 = and i64 %.0125526.us.us536, 4294967295
-  %i.ts = getelementptr inbounds nuw i8, ptr %i.tr, i64 %15
+  %i.ts = getelementptr inbounds nuw i8, ptr %i.tr, i64 %.0125526.us.us536
   %i.tt = load i8, ptr %i.ts, align 1, !tbaa !27
   %i.tu = icmp eq i8 %i.tt, 62
   br i1 %i.tu, label %.split.us, label %bb.ff
@@ -263,8 +261,7 @@ bb.fh:                                            ; preds = %.lr.ph.split.us.spl
 _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us: ; preds = %.lr.ph.split.us.split.split, %bb.fh, %bb.fg
   %.0.i.sink.i.i328.us = phi ptr [ %i.tz, %bb.fh ], [ %i.to, %bb.fg ], [ %i.tn, %.lr.ph.split.us.split.split ]
   %i.ua = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i328.us, i64 %i.aj
-  %16 = and i64 %.0125526.us, 4294967295
-  %i.ub = getelementptr inbounds nuw i8, ptr %i.ua, i64 %16
+  %i.ub = getelementptr inbounds nuw i8, ptr %i.ua, i64 %.0125526.us
   %i.uc = load i8, ptr %i.ub, align 1, !tbaa !27
   %i.ud = icmp eq i8 %i.uc, 62
   br i1 %i.ud, label %.split.us, label %bb.fi
@@ -279,8 +276,7 @@ bb.fi:                                            ; preds = %_ZNK6hermes2vm10Str
 
 _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us: ; preds = %.lr.ph.split, %bb.fj
   %.0125526.us527 = phi i64 [ %i.ui, %bb.fj ], [ %i.td, %.lr.ph.split ] ; 3 uses
-  %17 = and i64 %.0125526.us527, 4294967295
-  %i.uf = getelementptr inbounds nuw [2 x i8], ptr %i.au, i64 %17
+  %i.uf = getelementptr inbounds nuw [2 x i8], ptr %i.au, i64 %.0125526.us527
   %i.ug = load i16, ptr %i.uf, align 2, !tbaa !80
   %i.uh = icmp eq i16 %i.ug, 62
   br i1 %i.uh, label %.split.us, label %bb.fj
@@ -309,8 +305,7 @@ bb.fj:                                            ; preds = %_ZNK6hermes2vm10Str
 
 _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us531: ; preds = %bb.fk, %.lr.ph.split.split.split.us
   %.0125526.us530 = phi i64 [ %i.td, %.lr.ph.split.split.split.us ], [ %i.uv, %bb.fk ] ; 3 uses
-  %18 = and i64 %.0125526.us530, 4294967295
-  %i.us = getelementptr inbounds nuw [2 x i8], ptr %i.ur, i64 %18
+  %i.us = getelementptr inbounds nuw [2 x i8], ptr %i.ur, i64 %.0125526.us530
   %i.ut = load i16, ptr %i.us, align 2, !tbaa !80
   %i.uu = icmp eq i16 %i.ut, 62
   br i1 %i.uu, label %.split.us, label %bb.fk
@@ -341,8 +336,7 @@ bb.fm:                                            ; preds = %.lr.ph.split.split.
 _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320: ; preds = %.lr.ph.split.split.split, %bb.fm, %bb.fl
   %.0.i.sink.i6.i321 = phi ptr [ %i.uz, %bb.fm ], [ %i.un, %bb.fl ], [ %i.uo, %.lr.ph.split.split.split ]
   %i.va = getelementptr inbounds nuw [2 x i8], ptr %.0.i.sink.i6.i321, i64 %i.aj
-  %19 = and i64 %.0125526, 4294967295
-  %i.vb = getelementptr inbounds nuw [2 x i8], ptr %i.va, i64 %19
+  %i.vb = getelementptr inbounds nuw [2 x i8], ptr %i.va, i64 %.0125526
   %i.vc = load i16, ptr %i.vb, align 2, !tbaa !80
   %i.vd = icmp eq i16 %i.vc, 62
   br i1 %i.vd, label %.split.us, label %bb.fn

@@ -201,8 +201,7 @@ x509_crt_verify_chain.exit:                       ; preds = %bb.be, %bb.r
   %indvars.iv.i = phi i64 [ %i.pd, %.lr.ph.split.preheader.i ], [ %indvars.iv.next.i, %bb.cf ]
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 3 uses
   %indvars.i = trunc i64 %indvars.iv.next.i to i32 ; 2 uses
-  %13 = and i64 %indvars.iv.next.i, 4294967295
-  %i.qe = getelementptr inbounds nuw [16 x i8], ptr %12, i64 %13 ; 2 uses
+  %i.qe = getelementptr inbounds nuw [16 x i8], ptr %12, i64 %indvars.iv.next.i ; 2 uses
   %i.qf = getelementptr inbounds nuw i8, ptr %i.qe, i64 8
   %i.qg = load i32, ptr %i.qf, align 8, !tbaa !92
   store i32 %i.qg, ptr %i.a, align 4, !tbaa !4

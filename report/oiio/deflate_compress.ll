@@ -201,8 +201,7 @@ bb.w:                                             ; preds = %._crit_edge.i39, %c
 ._crit_edge.i39:                                  ; preds = %.prol.loopexit, %.lr.ph.i38.new, %bb.w
   %.128.lcssa.i = phi i32 [ %.02734.i, %bb.w ], [ %.lcssa.unr, %.prol.loopexit ], [ %i.ie, %.lr.ph.i38.new ]
   %indvars.iv.next.i40 = add nsw i64 %indvars.iv.i37, -1 ; 2 uses
-  %5 = and i64 %indvars.iv.next.i40, 4294967295
-  %.not.i41 = icmp eq i64 %5, 0
+  %.not.i41 = icmp eq i64 %indvars.iv.next.i40, 0
   br i1 %.not.i41, label %.new113, label %bb.w, !llvm.loop !120
 
 .new113:                                          ; preds = %._crit_edge.i39

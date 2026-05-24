@@ -89,8 +89,7 @@ bb.b:                                             ; preds = %.lr.ph156, %.lr.ph
   %indvars.i.i155 = phi i32 [ %indvars.i.i152, %.lr.ph156 ], [ %indvars.i.i, %.lr.ph ]
   %indvars.iv.next.i.i60154 = phi i64 [ %indvars.iv.next.i.i58, %.lr.ph156 ], [ %indvars.iv.next.i.i, %.lr.ph ]
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.next.i.i60154, -1 ; 3 uses
-  %9 = and i64 %indvars.iv.next.i.i, 4294967295
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %9
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv.next.i.i
   %.0.copyload.i.i.i.i = load i64, ptr %i.r, align 1
   %i.s = icmp eq i64 %.0.copyload.i.i.i.i, 0
   br i1 %i.s, label %.lr.ph, label %_ZN2v86bigint12_GLOBAL__N_117ToStringFormatterC2ENS0_6DigitsEibPcjPNS0_13ProcessorImplE.exit.loopexit, !llvm.loop !5
@@ -337,8 +336,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.i, %.lr.ph.i.i.i
   %indvars.iv.i.i.i = phi i64 [ %i.dq, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.i ]
   %indvars.iv.next.i.i.i = add nsw i64 %indvars.iv.i.i.i, -1 ; 3 uses
-  %10 = and i64 %indvars.iv.next.i.i.i, 4294967295
-  %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %10
+  %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %indvars.iv.next.i.i.i
   %.0.copyload.i.i.i27.i.i = load i64, ptr %i.dr, align 1
   %i.ds = icmp eq i64 %.0.copyload.i.i.i27.i.i, 0
   br i1 %i.ds, label %bb.i, label %.loopexit.i.i

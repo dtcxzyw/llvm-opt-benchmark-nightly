@@ -201,9 +201,8 @@ hnsw_distance.exit:                               ; preds = %bb.h, %bb.i, %bb.j
 .lr.ph47.i:                                       ; preds = %bb.l, %.lr.ph47.preheader.i
   %indvars.iv53.i = phi i64 [ %i.be, %.lr.ph47.preheader.i ], [ %indvars.iv.next54.i, %bb.l ] ; 3 uses
   %i.bf = load ptr, ptr %.0.i, align 8, !tbaa !17 ; 2 uses
-  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 2 uses
-  %9 = and i64 %indvars.iv.next54.i, 4294967295   ; 2 uses
-  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.bf, i64 %9 ; 2 uses
+  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 3 uses
+  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.bf, i64 %indvars.iv.next54.i ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %i.bi = load float, ptr %i.bh, align 8, !tbaa !21
   %i.bj = fcmp olt float %i.bi, %.0.i114
@@ -212,19 +211,18 @@ hnsw_distance.exit:                               ; preds = %bb.h, %bb.i, %bb.j
 bb.l:                                             ; preds = %.lr.ph47.i
   %i.bk = getelementptr inbounds nuw [16 x i8], ptr %i.bf, i64 %indvars.iv53.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bk, ptr noundef nonnull align 8 dereferenceable(16) %i.bg, i64 16, i1 false), !tbaa.struct !25
-  %.not.i115 = icmp eq i64 %9, 0
+  %.not.i115 = icmp eq i64 %indvars.iv.next54.i, 0
   br i1 %.not.i115, label %.critedge.loopexit.i, label %.lr.ph47.i, !llvm.loop !28
 
 .critedge.loopexit.i:                             ; preds = %bb.l, %.lr.ph47.i
   %.038.lcssa.ph.i = phi i64 [ %indvars.iv53.i, %.lr.ph47.i ], [ 0, %bb.l ]
   %.pre57.i = load i32, ptr %i.az, align 8, !tbaa !19
-  %10 = and i64 %.038.lcssa.ph.i, 4294967295
   %i.bl = add i32 %.pre57.i, 1
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.preheader.i
   %i.bm = phi i32 [ 1, %.preheader.i ], [ %i.bl, %.critedge.loopexit.i ]
-  %.038.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %10, %.critedge.loopexit.i ]
+  %.038.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.038.lcssa.ph.i, %.critedge.loopexit.i ]
   %i.bn = load ptr, ptr %.0.i, align 8, !tbaa !17
   %i.bo = getelementptr inbounds nuw [16 x i8], ptr %i.bn, i64 %.038.lcssa.i ; 2 uses
   store ptr %2, ptr %i.bo, align 8, !tbaa !30
@@ -304,9 +302,8 @@ bb.p:                                             ; preds = %bb.o, %pq_push.exit
 .lr.ph47.i128:                                    ; preds = %bb.q, %.lr.ph47.preheader.i127
   %indvars.iv53.i129 = phi i64 [ %i.co, %.lr.ph47.preheader.i127 ], [ %indvars.iv.next54.i130, %bb.q ] ; 3 uses
   %i.cp = load ptr, ptr %i.n, align 8, !tbaa !17  ; 2 uses
-  %indvars.iv.next54.i130 = add nsw i64 %indvars.iv53.i129, -1 ; 2 uses
-  %11 = and i64 %indvars.iv.next54.i130, 4294967295 ; 2 uses
-  %i.cq = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %11 ; 2 uses
+  %indvars.iv.next54.i130 = add nsw i64 %indvars.iv53.i129, -1 ; 3 uses
+  %i.cq = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %indvars.iv.next54.i130 ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cq, i64 8
   %i.cs = load float, ptr %i.cr, align 8, !tbaa !21
   %i.ct = fcmp olt float %i.cs, %.0.i114
@@ -315,19 +312,18 @@ bb.p:                                             ; preds = %bb.o, %pq_push.exit
 bb.q:                                             ; preds = %.lr.ph47.i128
   %i.cu = getelementptr inbounds nuw [16 x i8], ptr %i.cp, i64 %indvars.iv53.i129
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.cu, ptr noundef nonnull align 8 dereferenceable(16) %i.cq, i64 16, i1 false), !tbaa.struct !25
-  %.not.i136 = icmp eq i64 %11, 0
+  %.not.i136 = icmp eq i64 %indvars.iv.next54.i130, 0
   br i1 %.not.i136, label %.critedge.loopexit.i131, label %.lr.ph47.i128, !llvm.loop !28
 
 .critedge.loopexit.i131:                          ; preds = %bb.q, %.lr.ph47.i128
   %.038.lcssa.ph.i132 = phi i64 [ %indvars.iv53.i129, %.lr.ph47.i128 ], [ 0, %bb.q ]
   %.pre57.i133 = load i32, ptr %i.t, align 8, !tbaa !19
-  %12 = and i64 %.038.lcssa.ph.i132, 4294967295
   %i.cv = add i32 %.pre57.i133, 1
   br label %.critedge.i134
 
 .critedge.i134:                                   ; preds = %.critedge.loopexit.i131, %.preheader.i125
   %i.cw = phi i32 [ 1, %.preheader.i125 ], [ %i.cv, %.critedge.loopexit.i131 ]
-  %.038.lcssa.i135 = phi i64 [ 0, %.preheader.i125 ], [ %12, %.critedge.loopexit.i131 ]
+  %.038.lcssa.i135 = phi i64 [ 0, %.preheader.i125 ], [ %.038.lcssa.ph.i132, %.critedge.loopexit.i131 ]
   %i.cx = load ptr, ptr %i.n, align 8, !tbaa !17
   %i.cy = getelementptr inbounds nuw [16 x i8], ptr %i.cx, i64 %.038.lcssa.i135 ; 2 uses
   store ptr %2, ptr %i.cy, align 8, !tbaa !30
@@ -574,9 +570,8 @@ bb.ac:                                            ; preds = %.lr.ph.i146.us
 .lr.ph47.i156.us:                                 ; preds = %bb.ad, %.lr.ph47.preheader.i155.us
   %indvars.iv53.i157.us = phi i64 [ %i.gw, %.lr.ph47.preheader.i155.us ], [ %indvars.iv.next54.i158.us, %bb.ad ] ; 3 uses
   %i.gx = load ptr, ptr %.0.i, align 8, !tbaa !17 ; 2 uses
-  %indvars.iv.next54.i158.us = add nsw i64 %indvars.iv53.i157.us, -1 ; 2 uses
-  %13 = and i64 %indvars.iv.next54.i158.us, 4294967295 ; 2 uses
-  %i.gy = getelementptr inbounds nuw [16 x i8], ptr %i.gx, i64 %13 ; 2 uses
+  %indvars.iv.next54.i158.us = add nsw i64 %indvars.iv53.i157.us, -1 ; 3 uses
+  %i.gy = getelementptr inbounds nuw [16 x i8], ptr %i.gx, i64 %indvars.iv.next54.i158.us ; 2 uses
   %i.gz = getelementptr inbounds nuw i8, ptr %i.gy, i64 8
   %i.ha = load float, ptr %i.gz, align 8, !tbaa !21
   %i.hb = fcmp olt float %i.ha, %.0.i140.us
@@ -585,19 +580,18 @@ bb.ac:                                            ; preds = %.lr.ph.i146.us
 bb.ad:                                            ; preds = %.lr.ph47.i156.us
   %i.hc = getelementptr inbounds nuw [16 x i8], ptr %i.gx, i64 %indvars.iv53.i157.us
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hc, ptr noundef nonnull align 8 dereferenceable(16) %i.gy, i64 16, i1 false), !tbaa.struct !25
-  %.not.i164.us = icmp eq i64 %13, 0
+  %.not.i164.us = icmp eq i64 %indvars.iv.next54.i158.us, 0
   br i1 %.not.i164.us, label %.critedge.loopexit.i159.us, label %.lr.ph47.i156.us, !llvm.loop !28
 
 .critedge.loopexit.i159.us:                       ; preds = %bb.ad, %.lr.ph47.i156.us
   %.038.lcssa.ph.i160.us = phi i64 [ %indvars.iv53.i157.us, %.lr.ph47.i156.us ], [ 0, %bb.ad ]
   %.pre57.i161.us = load i32, ptr %i.az, align 8, !tbaa !19
-  %14 = and i64 %.038.lcssa.ph.i160.us, 4294967295
   %i.hd = add i32 %.pre57.i161.us, 1
   br label %.critedge.i162.us
 
 .critedge.i162.us:                                ; preds = %.critedge.loopexit.i159.us, %.preheader.i153.us
   %i.he = phi i32 [ 1, %.preheader.i153.us ], [ %i.hd, %.critedge.loopexit.i159.us ]
-  %.038.lcssa.i163.us = phi i64 [ 0, %.preheader.i153.us ], [ %14, %.critedge.loopexit.i159.us ]
+  %.038.lcssa.i163.us = phi i64 [ 0, %.preheader.i153.us ], [ %.038.lcssa.ph.i160.us, %.critedge.loopexit.i159.us ]
   %i.hf = load ptr, ptr %.0.i, align 8, !tbaa !17
   %i.hg = getelementptr inbounds nuw [16 x i8], ptr %i.hf, i64 %.038.lcssa.i163.us ; 2 uses
   store ptr %i.ew, ptr %i.hg, align 8, !tbaa !30
@@ -666,9 +660,8 @@ bb.af:                                            ; preds = %.lr.ph.i168.us
 .lr.ph47.i178.us:                                 ; preds = %bb.ag, %.lr.ph47.preheader.i177.us
   %indvars.iv53.i179.us = phi i64 [ %i.ic, %.lr.ph47.preheader.i177.us ], [ %indvars.iv.next54.i180.us, %bb.ag ] ; 3 uses
   %i.id = load ptr, ptr %i.n, align 8, !tbaa !17  ; 2 uses
-  %indvars.iv.next54.i180.us = add nsw i64 %indvars.iv53.i179.us, -1 ; 2 uses
-  %15 = and i64 %indvars.iv.next54.i180.us, 4294967295 ; 2 uses
-  %i.ie = getelementptr inbounds nuw [16 x i8], ptr %i.id, i64 %15 ; 2 uses
+  %indvars.iv.next54.i180.us = add nsw i64 %indvars.iv53.i179.us, -1 ; 3 uses
+  %i.ie = getelementptr inbounds nuw [16 x i8], ptr %i.id, i64 %indvars.iv.next54.i180.us ; 2 uses
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 8
   %i.ig = load float, ptr %i.if, align 8, !tbaa !21
   %i.ih = fcmp olt float %i.ig, %.0.i140.us
@@ -677,19 +670,18 @@ bb.af:                                            ; preds = %.lr.ph.i168.us
 bb.ag:                                            ; preds = %.lr.ph47.i178.us
   %i.ii = getelementptr inbounds nuw [16 x i8], ptr %i.id, i64 %indvars.iv53.i179.us
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ii, ptr noundef nonnull align 8 dereferenceable(16) %i.ie, i64 16, i1 false), !tbaa.struct !25
-  %.not.i186.us = icmp eq i64 %15, 0
+  %.not.i186.us = icmp eq i64 %indvars.iv.next54.i180.us, 0
   br i1 %.not.i186.us, label %.critedge.loopexit.i181.us, label %.lr.ph47.i178.us, !llvm.loop !28
 
 .critedge.loopexit.i181.us:                       ; preds = %bb.ag, %.lr.ph47.i178.us
   %.038.lcssa.ph.i182.us = phi i64 [ %indvars.iv53.i179.us, %.lr.ph47.i178.us ], [ 0, %bb.ag ]
   %.pre57.i183.us = load i32, ptr %i.t, align 8, !tbaa !19
-  %16 = and i64 %.038.lcssa.ph.i182.us, 4294967295
   %i.ij = add i32 %.pre57.i183.us, 1
   br label %.critedge.i184.us
 
 .critedge.i184.us:                                ; preds = %.critedge.loopexit.i181.us, %.preheader.i175.us
   %i.ik = phi i32 [ 1, %.preheader.i175.us ], [ %i.ij, %.critedge.loopexit.i181.us ]
-  %.038.lcssa.i185.us = phi i64 [ 0, %.preheader.i175.us ], [ %16, %.critedge.loopexit.i181.us ]
+  %.038.lcssa.i185.us = phi i64 [ 0, %.preheader.i175.us ], [ %.038.lcssa.ph.i182.us, %.critedge.loopexit.i181.us ]
   %i.il = load ptr, ptr %i.n, align 8, !tbaa !17
   %i.im = getelementptr inbounds nuw [16 x i8], ptr %i.il, i64 %.038.lcssa.i185.us ; 2 uses
   store ptr %i.ew, ptr %i.im, align 8, !tbaa !30
@@ -793,9 +785,8 @@ thread-pre-split:                                 ; preds = %pq_max_distance.exi
 .lr.ph47.i200:                                    ; preds = %bb.am, %.lr.ph47.preheader.i199
   %indvars.iv53.i201 = phi i64 [ %i.kb, %.lr.ph47.preheader.i199 ], [ %indvars.iv.next54.i202, %bb.am ] ; 3 uses
   %i.kc = load ptr, ptr %.0.i, align 8, !tbaa !17 ; 2 uses
-  %indvars.iv.next54.i202 = add nsw i64 %indvars.iv53.i201, -1 ; 2 uses
-  %17 = and i64 %indvars.iv.next54.i202, 4294967295 ; 2 uses
-  %i.kd = getelementptr inbounds nuw [16 x i8], ptr %i.kc, i64 %17 ; 2 uses
+  %indvars.iv.next54.i202 = add nsw i64 %indvars.iv53.i201, -1 ; 3 uses
+  %i.kd = getelementptr inbounds nuw [16 x i8], ptr %i.kc, i64 %indvars.iv.next54.i202 ; 2 uses
   %i.ke = getelementptr inbounds nuw i8, ptr %i.kd, i64 8
   %i.kf = load float, ptr %i.ke, align 8, !tbaa !21
   %i.kg = fcmp olt float %i.kf, %.0.i140
@@ -804,19 +795,18 @@ thread-pre-split:                                 ; preds = %pq_max_distance.exi
 bb.am:                                            ; preds = %.lr.ph47.i200
   %i.kh = getelementptr inbounds nuw [16 x i8], ptr %i.kc, i64 %indvars.iv53.i201
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.kh, ptr noundef nonnull align 8 dereferenceable(16) %i.kd, i64 16, i1 false), !tbaa.struct !25
-  %.not.i208 = icmp eq i64 %17, 0
+  %.not.i208 = icmp eq i64 %indvars.iv.next54.i202, 0
   br i1 %.not.i208, label %.critedge.loopexit.i203, label %.lr.ph47.i200, !llvm.loop !28
 
 .critedge.loopexit.i203:                          ; preds = %bb.am, %.lr.ph47.i200
   %.038.lcssa.ph.i204 = phi i64 [ %indvars.iv53.i201, %.lr.ph47.i200 ], [ 0, %bb.am ]
   %.pre57.i205 = load i32, ptr %i.az, align 8, !tbaa !19
-  %18 = and i64 %.038.lcssa.ph.i204, 4294967295
   %i.ki = add i32 %.pre57.i205, 1
   br label %.critedge.i206
 
 .critedge.i206:                                   ; preds = %.critedge.loopexit.i203, %.preheader.i197
   %i.kj = phi i32 [ 1, %.preheader.i197 ], [ %i.ki, %.critedge.loopexit.i203 ]
-  %.038.lcssa.i207 = phi i64 [ 0, %.preheader.i197 ], [ %18, %.critedge.loopexit.i203 ]
+  %.038.lcssa.i207 = phi i64 [ 0, %.preheader.i197 ], [ %.038.lcssa.ph.i204, %.critedge.loopexit.i203 ]
   %i.kk = load ptr, ptr %.0.i, align 8, !tbaa !17
   %i.kl = getelementptr inbounds nuw [16 x i8], ptr %i.kk, i64 %.038.lcssa.i207 ; 2 uses
   store ptr %i.it, ptr %i.kl, align 8, !tbaa !30
@@ -911,9 +901,8 @@ bb.aq:                                            ; preds = %thread-pre-split244
 .lr.ph47.i222:                                    ; preds = %bb.ar, %.lr.ph47.preheader.i221
   %indvars.iv53.i223 = phi i64 [ %i.lp, %.lr.ph47.preheader.i221 ], [ %indvars.iv.next54.i224, %bb.ar ] ; 3 uses
   %i.lq = load ptr, ptr %i.n, align 8, !tbaa !17  ; 2 uses
-  %indvars.iv.next54.i224 = add nsw i64 %indvars.iv53.i223, -1 ; 2 uses
-  %19 = and i64 %indvars.iv.next54.i224, 4294967295 ; 2 uses
-  %i.lr = getelementptr inbounds nuw [16 x i8], ptr %i.lq, i64 %19 ; 2 uses
+  %indvars.iv.next54.i224 = add nsw i64 %indvars.iv53.i223, -1 ; 3 uses
+  %i.lr = getelementptr inbounds nuw [16 x i8], ptr %i.lq, i64 %indvars.iv.next54.i224 ; 2 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %i.lr, i64 8
   %i.lt = load float, ptr %i.ls, align 8, !tbaa !21
   %i.lu = fcmp olt float %i.lt, %.0.i140
@@ -922,19 +911,18 @@ bb.aq:                                            ; preds = %thread-pre-split244
 bb.ar:                                            ; preds = %.lr.ph47.i222
   %i.lv = getelementptr inbounds nuw [16 x i8], ptr %i.lq, i64 %indvars.iv53.i223
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.lv, ptr noundef nonnull align 8 dereferenceable(16) %i.lr, i64 16, i1 false), !tbaa.struct !25
-  %.not.i230 = icmp eq i64 %19, 0
+  %.not.i230 = icmp eq i64 %indvars.iv.next54.i224, 0
   br i1 %.not.i230, label %.critedge.loopexit.i225, label %.lr.ph47.i222, !llvm.loop !28
 
 .critedge.loopexit.i225:                          ; preds = %bb.ar, %.lr.ph47.i222
   %.038.lcssa.ph.i226 = phi i64 [ %indvars.iv53.i223, %.lr.ph47.i222 ], [ 0, %bb.ar ]
   %.pre57.i227 = load i32, ptr %i.t, align 8, !tbaa !19
-  %20 = and i64 %.038.lcssa.ph.i226, 4294967295
   %i.lw = add i32 %.pre57.i227, 1
   br label %.critedge.i228
 
 .critedge.i228:                                   ; preds = %.critedge.loopexit.i225, %.preheader.i219
   %i.lx = phi i32 [ 1, %.preheader.i219 ], [ %i.lw, %.critedge.loopexit.i225 ]
-  %.038.lcssa.i229 = phi i64 [ 0, %.preheader.i219 ], [ %20, %.critedge.loopexit.i225 ]
+  %.038.lcssa.i229 = phi i64 [ 0, %.preheader.i219 ], [ %.038.lcssa.ph.i226, %.critedge.loopexit.i225 ]
   %i.ly = load ptr, ptr %i.n, align 8, !tbaa !17
   %i.lz = getelementptr inbounds nuw [16 x i8], ptr %i.ly, i64 %.038.lcssa.i229 ; 2 uses
   store ptr %i.it, ptr %i.lz, align 8, !tbaa !30
@@ -1337,31 +1325,26 @@ bb.be:                                            ; preds = %bb.bd
 .lr.ph47.i:                                       ; preds = %bb.bf, %.lr.ph47.preheader.i
   %indvars.iv53.i = phi i64 [ %i.qd, %.lr.ph47.preheader.i ], [ %indvars.iv.next54.i, %bb.bf ] ; 3 uses
   %i.qe = load ptr, ptr %i.pd, align 8, !tbaa !17 ; 3 uses
-  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 2 uses
-  %4 = and i64 %indvars.iv.next54.i, 4294967295   ; 2 uses
-  %i.qf = getelementptr inbounds nuw [16 x i8], ptr %i.qe, i64 %4 ; 2 uses
+  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 3 uses
+  %i.qf = getelementptr inbounds nuw [16 x i8], ptr %i.qe, i64 %indvars.iv.next54.i ; 2 uses
   %i.qg = getelementptr inbounds nuw i8, ptr %i.qf, i64 8
   %i.qh = load float, ptr %i.qg, align 8, !tbaa !21
   %i.qi = fcmp olt float %i.qh, %i.pz
-  br i1 %i.qi, label %bb.bf, label %.critedge.loopexit.isplit
+  br i1 %i.qi, label %bb.bf, label %.critedge.loopexit.i
 
 bb.bf:                                            ; preds = %.lr.ph47.i
   %i.qj = getelementptr inbounds nuw [16 x i8], ptr %i.qe, i64 %indvars.iv53.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qj, ptr noundef nonnull align 8 dereferenceable(16) %i.qf, i64 16, i1 false), !tbaa.struct !25
-  %.not.i348 = icmp eq i64 %4, 0
+  %.not.i348 = icmp eq i64 %indvars.iv.next54.i, 0
   br i1 %.not.i348, label %..critedge.loopexit.i_crit_edge, label %.lr.ph47.i, !llvm.loop !28
 
 ..critedge.loopexit.i_crit_edge:                  ; preds = %bb.bf
   %.pre.pre = load ptr, ptr %i.pd, align 8, !tbaa !17
   br label %.critedge.loopexit.i, !llvm.loop !28
 
-.critedge.loopexit.isplit:                        ; preds = %.lr.ph47.i
-  %5 = and i64 %indvars.iv53.i, 4294967295
-  br label %.critedge.loopexit.i
-
-.critedge.loopexit.i:                             ; preds = %.critedge.loopexit.isplit, %..critedge.loopexit.i_crit_edge
-  %.pre = phi ptr [ %.pre.pre, %..critedge.loopexit.i_crit_edge ], [ %i.qe, %.critedge.loopexit.isplit ]
-  %.038.lcssa.ph.i = phi i64 [ 0, %..critedge.loopexit.i_crit_edge ], [ %5, %.critedge.loopexit.isplit ]
+.critedge.loopexit.i:                             ; preds = %.lr.ph47.i, %..critedge.loopexit.i_crit_edge
+  %.pre = phi ptr [ %.pre.pre, %..critedge.loopexit.i_crit_edge ], [ %i.qe, %.lr.ph47.i ]
+  %.038.lcssa.ph.i = phi i64 [ 0, %..critedge.loopexit.i_crit_edge ], [ %indvars.iv53.i, %.lr.ph47.i ]
   %.pre57.i = load i32, ptr %i.pg, align 8, !tbaa !19
   %i.qk = add i32 %.pre57.i, 1
   br label %.critedge.i
@@ -1764,9 +1747,8 @@ hnsw_distance.exit:                               ; preds = %bb.j, %bb.k, %bb.l
 .lr.ph47.i:                                       ; preds = %bb.n, %.lr.ph47.preheader.i
   %indvars.iv53.i = phi i64 [ %i.ar, %.lr.ph47.preheader.i ], [ %indvars.iv.next54.i, %bb.n ] ; 3 uses
   %i.as = load ptr, ptr %i.d, align 8, !tbaa !17  ; 2 uses
-  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 2 uses
-  %10 = and i64 %indvars.iv.next54.i, 4294967295  ; 2 uses
-  %i.at = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %10 ; 2 uses
+  %indvars.iv.next54.i = add nsw i64 %indvars.iv53.i, -1 ; 3 uses
+  %i.at = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %indvars.iv.next54.i ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.av = load float, ptr %i.au, align 8, !tbaa !21
   %i.aw = fcmp olt float %i.av, %.0.i53
@@ -1775,19 +1757,18 @@ hnsw_distance.exit:                               ; preds = %bb.j, %bb.k, %bb.l
 bb.n:                                             ; preds = %.lr.ph47.i
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %i.as, i64 %indvars.iv53.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, ptr noundef nonnull align 8 dereferenceable(16) %i.at, i64 16, i1 false), !tbaa.struct !25
-  %.not.i54 = icmp eq i64 %10, 0
+  %.not.i54 = icmp eq i64 %indvars.iv.next54.i, 0
   br i1 %.not.i54, label %.critedge.loopexit.i, label %.lr.ph47.i, !llvm.loop !28
 
 .critedge.loopexit.i:                             ; preds = %bb.n, %.lr.ph47.i
   %.038.lcssa.ph.i = phi i64 [ %indvars.iv53.i, %.lr.ph47.i ], [ 0, %bb.n ]
   %.pre57.i = load i32, ptr %i.l, align 8, !tbaa !19
-  %11 = and i64 %.038.lcssa.ph.i, 4294967295
   %i.ay = add i32 %.pre57.i, 1
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.loopexit.i, %.preheader.i
   %i.az = phi i32 [ 1, %.preheader.i ], [ %i.ay, %.critedge.loopexit.i ]
-  %.038.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %11, %.critedge.loopexit.i ]
+  %.038.lcssa.i = phi i64 [ 0, %.preheader.i ], [ %.038.lcssa.ph.i, %.critedge.loopexit.i ]
   %i.ba = load ptr, ptr %i.d, align 8, !tbaa !17
   %i.bb = getelementptr inbounds nuw [16 x i8], ptr %i.ba, i64 %.038.lcssa.i ; 2 uses
   store ptr %.04165, ptr %i.bb, align 8, !tbaa !30
