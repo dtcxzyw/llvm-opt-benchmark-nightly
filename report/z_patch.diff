@@ -1,0 +1,174 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+index 9e0bbe9cf3b62..74f7530f84e61 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyIndVar.cpp
+@@ -37,6 +37,7 @@ STATISTIC(NumElimIdentity, "Number of IV identities eliminated");
+ STATISTIC(NumElimOperand,  "Number of IV operands folded into a use");
+ STATISTIC(NumFoldedUser, "Number of IV users folded into a constant");
+ STATISTIC(NumElimRem     , "Number of IV remainder operations eliminated");
++STATISTIC(NumElimAnd     , "Number of IV and operations eliminated");
+ STATISTIC(
+     NumSimplifiedSDiv,
+     "Number of IV signed division operations converted to unsigned division");
+@@ -96,6 +97,9 @@ namespace {
+     bool eliminateOverflowIntrinsic(WithOverflowInst *WO);
+     bool eliminateSaturatingIntrinsic(SaturatingInst *SI);
+     bool eliminateTrunc(TruncInst *TI);
++    bool isAndMaskRedundant(const SCEV *IVSCEV, ConstantInt *MaskC,
++                            Instruction *CtxI);
++    bool eliminateAnd(BinaryOperator *And, Instruction *IVOperand);
+     bool eliminateIVUser(Instruction *UseInst, Instruction *IVOperand);
+     bool makeIVComparisonInvariant(ICmpInst *ICmp, Instruction *IVOperand);
+     void eliminateIVComparison(ICmpInst *ICmp, Instruction *IVOperand);
+@@ -600,6 +604,141 @@ bool SimplifyIndvar::eliminateTrunc(TruncInst *TI) {
+   return true;
+ }
+ 
++bool SimplifyIndvar::isAndMaskRedundant(const SCEV *IVSCEV, ConstantInt *MaskC,
++                                        Instruction *CtxI) {
++  const SCEV *MaskSCEV = SE->getConstant(MaskC);
++  if (SE->isKnownPredicateAt(ICmpInst::ICMP_ULE, IVSCEV, MaskSCEV, CtxI))
++    return true;
++
++  auto *AR = dyn_cast<SCEVAddRecExpr>(IVSCEV);
++  if (!AR || !AR->isAffine())
++    return false;
++
++  const Loop *ARLoop = AR->getLoop();
++  if (!ARLoop || !ARLoop->contains(CtxI))
++    return false;
++
++  auto *StepC = dyn_cast<SCEVConstant>(AR->getStepRecurrence(*SE));
++  if (!StepC || !StepC->getAPInt().isAllOnes())
++    return false;
++
++  const SCEV *MaxBE = SE->getSymbolicMaxBackedgeTakenCount(ARLoop);
++  if (isa<SCEVCouldNotCompute>(MaxBE) ||
++      SE->getTypeSizeInBits(MaxBE->getType()) >
++          SE->getTypeSizeInBits(AR->getType()))
++    return false;
++  MaxBE = SE->getNoopOrZeroExtend(MaxBE, AR->getType());
++
++  const SCEV *Start = AR->getStart();
++  const SCEV *One = SE->getOne(AR->getType());
++  auto GetMinusOneOperand = [](const SCEV *S) -> const SCEV * {
++    auto *Add = dyn_cast<SCEVAddExpr>(S);
++    if (!Add || Add->getNumOperands() != 2)
++      return nullptr;
++
++    auto *LHS = dyn_cast<SCEVConstant>(Add->getOperand(0));
++    if (LHS && LHS->getAPInt().isAllOnes())
++      return Add->getOperand(1);
++
++    auto *RHS = dyn_cast<SCEVConstant>(Add->getOperand(1));
++    if (RHS && RHS->getAPInt().isAllOnes())
++      return Add->getOperand(0);
++
++    return nullptr;
++  };
++
++  auto IsZExtDecrementEqualOnEntry = [&]() {
++    auto *StartZExt =
++        dyn_cast_or_null<SCEVZeroExtendExpr>(GetMinusOneOperand(Start));
++    auto *MaxBEZExt = dyn_cast<SCEVZeroExtendExpr>(MaxBE);
++    if (!StartZExt || !MaxBEZExt ||
++        StartZExt->getType() != MaxBEZExt->getType())
++      return false;
++
++    const SCEV *StartNarrow = StartZExt->getOperand();
++    if (GetMinusOneOperand(MaxBEZExt->getOperand()) != StartNarrow)
++      return false;
++
++    return SE->isKnownPredicateAt(ICmpInst::ICMP_NE, StartNarrow,
++                                  SE->getZero(StartNarrow->getType()), CtxI);
++  };
++
++  // For a countdown IV with step -1, Start == symbolic-max-BE means every
++  // executed value is in [0, Start].  The constant max BE then proves Start is
++  // covered by the low-bits mask.
++  if (!SE->isKnownPredicateAt(ICmpInst::ICMP_EQ, Start, MaxBE, CtxI) &&
++      !SE->isKnownPredicateAt(ICmpInst::ICMP_EQ, SE->getAddExpr(Start, One),
++                              SE->getAddExpr(MaxBE, One), CtxI) &&
++      !IsZExtDecrementEqualOnEntry())
++    return false;
++
++  auto *ConstantMaxBE =
++      dyn_cast<SCEVConstant>(SE->getConstantMaxBackedgeTakenCount(ARLoop));
++  if (!ConstantMaxBE)
++    return false;
++
++  APInt MaxBEValue = ConstantMaxBE->getAPInt();
++  const APInt &Mask = MaskC->getValue();
++  if (MaxBEValue.getBitWidth() > Mask.getBitWidth()) {
++    if (MaxBEValue.getActiveBits() > Mask.getBitWidth())
++      return false;
++    MaxBEValue = MaxBEValue.trunc(Mask.getBitWidth());
++  } else if (MaxBEValue.getBitWidth() < Mask.getBitWidth()) {
++    MaxBEValue = MaxBEValue.zext(Mask.getBitWidth());
++  }
++
++  return MaxBEValue.ule(Mask);
++}
++
++bool SimplifyIndvar::eliminateAnd(BinaryOperator *And,
++                                  Instruction *IVOperand) {
++  assert(And->getOpcode() == Instruction::And && "Expected an and");
++
++  if (!SE->isSCEVable(And->getType()) || And->getType() != IVOperand->getType())
++    return false;
++
++  Value *OtherOp;
++  if (And->getOperand(0) == IVOperand)
++    OtherOp = And->getOperand(1);
++  else if (And->getOperand(1) == IVOperand)
++    OtherOp = And->getOperand(0);
++  else
++    return false;
++
++  auto *MaskC = dyn_cast<ConstantInt>(OtherOp);
++  if (!MaskC)
++    return false;
++
++  const APInt &Mask = MaskC->getValue();
++  if (!Mask.isMask() || Mask.isAllOnes())
++    return false;
++
++  const SCEV *IVSCEV = SE->getSCEV(IVOperand);
++  if (!isAndMaskRedundant(IVSCEV, MaskC, And))
++    return false;
++
++  if (!LI->replacementPreservesLCSSAForm(And, IVOperand))
++    return false;
++
++  if (!impliesPoison(IVOperand, And)) {
++    SmallVector<Instruction *> DropPoisonGeneratingInsts;
++    if (!SE->canReuseInstruction(IVSCEV, IVOperand, DropPoisonGeneratingInsts))
++      return false;
++
++    for (Instruction *I : DropPoisonGeneratingInsts)
++      I->dropPoisonGeneratingAnnotations();
++  }
++
++  LLVM_DEBUG(dbgs() << "INDVARS: Eliminated and: " << *And << '\n');
++
++  SE->forgetValue(And);
++  And->replaceAllUsesWith(IVOperand);
++  ++NumElimAnd;
++  Changed = true;
++  DeadInsts.emplace_back(And);
++  return true;
++}
++
+ /// Eliminate an operation that consumes a simple IV and has no observable
+ /// side-effect given the range of IV values.  IVOperand is guaranteed SCEVable,
+ /// but UseInst may not be.
+@@ -618,6 +757,9 @@ bool SimplifyIndvar::eliminateIVUser(Instruction *UseInst,
+ 
+     if (Bin->getOpcode() == Instruction::SDiv)
+       return eliminateSDiv(Bin);
++
++    if (Bin->getOpcode() == Instruction::And && eliminateAnd(Bin, IVOperand))
++      return true;
+   }
+ 
+   if (auto *WO = dyn_cast<WithOverflowInst>(UseInst))
