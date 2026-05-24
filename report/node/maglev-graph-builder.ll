@@ -201,6 +201,7 @@ _ZN2v88internal8compiler12JSHeapBroker29sloppy_arguments_elements_mapEv.exit: ; 
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.eu = getelementptr inbounds nuw i8, ptr %i.er, i64 40
   %i.ev = getelementptr inbounds nuw i8, ptr %i.er, i64 48
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64
   br label %bb.w
 
 ._crit_edge:                                      ; preds = %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit, %_ZN2v88internal8compiler12JSHeapBroker29sloppy_arguments_elements_mapEv.exit
@@ -280,13 +281,12 @@ _ZN2v88internal6maglev18MaglevGraphBuilder16GetInt32ConstantEi.exit54: ; preds =
   br label %bb.ap
 
 bb.w:                                             ; preds = %.lr.ph, %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit
-  %7 = phi i32 [ %i.ea, %.lr.ph ], [ %i.gq, %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit ] ; 4 uses
-  %.034119 = phi i32 [ 0, %.lr.ph ], [ %11, %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit ] ; 2 uses
-  %8 = and i32 %.034119, 536870911
+  %.034119 = phi i32 [ %i.ea, %.lr.ph ], [ %i.gq, %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit ] ; 4 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit ] ; 2 uses
   %i.fv = load ptr, ptr %i.et, align 8            ; 4 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 256
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  store i32 %7, ptr %i.a, align 4
+  store i32 %.034119, ptr %i.a, align 4
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fv, i64 280
   %i.fy = load ptr, ptr %i.fx, align 8            ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fv, i64 272 ; 2 uses
@@ -298,7 +298,7 @@ bb.w:                                             ; preds = %.lr.ph, %_ZN2v88int
   %.0811.i.i.i.i.i.i58 = phi ptr [ %.19.i.i.i.i.i.i59, %.lr.ph.i.i.i.i.i.i56 ], [ %i.fz, %bb.w ]
   %i.ga = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i57, i64 32
   %i.gb = load i32, ptr %i.ga, align 4
-  %i.gc = icmp slt i32 %i.gb, %7                  ; 2 uses
+  %i.gc = icmp slt i32 %i.gb, %.034119            ; 2 uses
   %.19.i.i.i.i.i.i59 = select i1 %i.gc, ptr %.0811.i.i.i.i.i.i58, ptr %.012.i.i.i.i.i.i57 ; 4 uses
   %.1.in.v.i.i.i.i.i.i60 = select i1 %i.gc, i64 24, i64 16
   %.1.in.i.i.i.i.i.i61 = getelementptr inbounds nuw i8, ptr %.012.i.i.i.i.i.i57, i64 %.1.in.v.i.i.i.i.i.i60
@@ -313,7 +313,7 @@ _ZNSt8_Rb_treeIiSt4pairIKiPN2v88internal6maglev13Int32ConstantEESt10_Select1stIS
 _ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.i.i.i65: ; preds = %_ZNSt8_Rb_treeIiSt4pairIKiPN2v88internal6maglev13Int32ConstantEESt10_Select1stIS7_ESt4lessIiENS3_13ZoneAllocatorIS7_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i.i64
   %i.ge = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i.i.i59, i64 32
   %i.gf = load i32, ptr %i.ge, align 4
-  %i.gg = icmp slt i32 %7, %i.gf
+  %i.gg = icmp slt i32 %.034119, %i.gf
   br i1 %i.gg, label %_ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.thread.i.i.i67, label %bb.x
 
 _ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.thread.i.i.i67: ; preds = %_ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.i.i.i65, %_ZNSt8_Rb_treeIiSt4pairIKiPN2v88internal6maglev13Int32ConstantEESt10_Select1stIS7_ESt4lessIiENS3_13ZoneAllocatorIS7_EEE14_M_lower_boundEPSt13_Rb_tree_nodeIS7_EPSt18_Rb_tree_node_baseRS1_.exit.i.i.i.i.i64, %bb.w
@@ -336,9 +336,10 @@ bb.x:                                             ; preds = %_ZNSt3mapIiPN2v88in
 _ZN2v88internal6maglev18MaglevGraphBuilder16GetInt32ConstantEi.exit68: ; preds = %_ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.thread.i.i.i67, %bb.x
   %.0.i.i.i66 = phi ptr [ %i.gj, %_ZNSt3mapIiPN2v88internal6maglev13Int32ConstantESt4lessIiENS1_13ZoneAllocatorISt4pairIKiS4_EEEE4findERS9_.exit.thread.i.i.i67 ], [ %i.gl, %bb.x ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  %9 = add nuw nsw i32 %8, 3                      ; 2 uses
+  %7 = add nuw nsw i64 %indvars.iv, 3             ; 2 uses
   %i.gm = load i32, ptr %i.eu, align 8
-  %i.gn = icmp ult i32 %9, %i.gm
+  %8 = zext i32 %i.gm to i64
+  %i.gn = icmp samesign ult i64 %7, %8
   br i1 %i.gn, label %_ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit, label %bb.y, !prof !5
 
 bb.y:                                             ; preds = %_ZN2v88internal6maglev18MaglevGraphBuilder16GetInt32ConstantEi.exit68
@@ -347,12 +348,11 @@ bb.y:                                             ; preds = %_ZN2v88internal6mag
 
 _ZN2v88internal6maglev13VirtualObject3setEjPNS1_9ValueNodeE.exit: ; preds = %_ZN2v88internal6maglev18MaglevGraphBuilder16GetInt32ConstantEi.exit68
   %i.go = load ptr, ptr %i.ev, align 8
-  %10 = zext nneg i32 %9 to i64
-  %i.gp = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %10
+  %i.gp = getelementptr inbounds nuw [8 x i8], ptr %i.go, i64 %7
   store ptr %.0.i.i.i66, ptr %i.gp, align 8
-  %11 = add nuw nsw i32 %.034119, 1               ; 2 uses
-  %i.gq = add nsw i32 %7, -1
-  %exitcond.not = icmp eq i32 %11, %.sroa.speculated
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %i.gq = add nsw i32 %.034119, -1
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.w, !llvm.loop !895
 
 bb.z:                                             ; preds = %_ZNK2v88internal6maglev21MaglevCompilationUnit20shared_function_infoEv.exit
