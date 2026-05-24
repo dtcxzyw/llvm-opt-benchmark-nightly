@@ -1,0 +1,360 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index 0abdd415b767b..93e2d1c47f7d1 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -522,6 +522,17 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   /// or commutative.
+   bool SimplifyAssociativeOrCommutative(BinaryOperator &I);
+ 
++  /// If InnerVal1 and OuterVal form a symmetric pair, and "op" is commutative:
++  /// "(InnerVal0 op InnerVal1) op OuterVal" ==> "(X op' Y) op InnerVal0".
++  /// "OuterVal op (InnerVal0 op InnerVal1)" ==> "InnerVal0 op (X op' Y)".
++  /// X and Y are the inputs to the symmetric pair. "op'" indicates that
++  /// InnerOp will have its poison-generating flags dropped. Warning:
++  /// associativity not checked.
++  bool tryReassociateAndFoldSymmetricPair(BinaryOperator &OuterOp,
++                                          BinaryOperator &InnerOp,
++                                          Value *InnerVal0, Value *InnerVal1,
++                                          Value *OuterVal);
++
+   /// Tries to simplify binary operations which some other binary
+   /// operation distributes over.
+   ///
+diff --git a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+index 30088fc78d255..5f993e8b628ac 100644
+--- a/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstructionCombining.cpp
+@@ -532,6 +532,13 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         Value *B = Op0->getOperand(1);
+         Value *C = I.getOperand(1);
+ 
++        if (tryReassociateAndFoldSymmetricPair(I, *Op0, A, B, C)) {
++          I.swapOperands();
++          Changed = true;
++          ++NumReassoc;
++          continue;
++        }
++
+         // Does "B op C" simplify?
+         if (Value *V = simplifyBinOp(Opcode, B, C, SQ.getWithInstruction(&I))) {
+           // It simplifies to V.  Form "A op V".
+@@ -565,6 +572,13 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         Value *B = Op1->getOperand(0);
+         Value *C = Op1->getOperand(1);
+ 
++        if (tryReassociateAndFoldSymmetricPair(I, *Op1, C, B, A)) {
++          I.swapOperands();
++          Changed = true;
++          ++NumReassoc;
++          continue;
++        }
++
+         // Does "A op B" simplify?
+         if (Value *V = simplifyBinOp(Opcode, A, B, SQ.getWithInstruction(&I))) {
+           // It simplifies to V.  Form "V op C".
+@@ -593,6 +607,12 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         Value *B = Op0->getOperand(1);
+         Value *C = I.getOperand(1);
+ 
++        if (tryReassociateAndFoldSymmetricPair(I, *Op0, B, A, C)) {
++          Changed = true;
++          ++NumReassoc;
++          continue;
++        }
++
+         // Does "C op A" simplify?
+         if (Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I))) {
+           // It simplifies to V.  Form "V op B".
+@@ -613,6 +633,12 @@ bool InstCombinerImpl::SimplifyAssociativeOrCommutative(BinaryOperator &I) {
+         Value *B = Op1->getOperand(0);
+         Value *C = Op1->getOperand(1);
+ 
++        if (tryReassociateAndFoldSymmetricPair(I, *Op1, B, C, A)) {
++          Changed = true;
++          ++NumReassoc;
++          continue;
++        }
++
+         // Does "C op A" simplify?
+         if (Value *V = simplifyBinOp(Opcode, C, A, SQ.getWithInstruction(&I))) {
+           // It simplifies to V.  Form "B op V".
+@@ -1356,6 +1382,35 @@ InstCombinerImpl::matchSymmetricPair(Value *LHS, Value *RHS) {
+   }
+ }
+ 
++bool InstCombinerImpl::tryReassociateAndFoldSymmetricPair(
++    BinaryOperator &OuterOp, BinaryOperator &InnerOp, Value *InnerVal0,
++    Value *InnerVal1, Value *OuterVal) {
++  if (!OuterOp.isCommutative() || !OuterOp.isAssociative() ||
++      !InnerOp.isCommutative() || !InnerOp.isAssociative() ||
++      !InnerOp.hasOneUse() || OuterOp.getOpcode() != InnerOp.getOpcode())
++    return false;
++
++  unsigned OuterValIdx;
++  if (OuterOp.getOperand(0) == OuterVal)
++    OuterValIdx = 0;
++  else if (OuterOp.getOperand(1) == OuterVal)
++    OuterValIdx = 1;
++  else
++    return false; // OuterVal must be an operand of OuterOp
++
++  auto Pair = matchSymmetricPair(InnerVal1, OuterVal);
++  if (Pair) {
++    replaceOperand(InnerOp, 0, Pair->first);
++    replaceOperand(InnerOp, 1, Pair->second);
++    InnerOp.dropPoisonGeneratingFlags();
++    replaceOperand(OuterOp, OuterValIdx, InnerVal0);
++    ClearSubclassDataAfterReassociation(OuterOp);
++    return true;
++  }
++
++  return false;
++}
++
+ Value *InstCombinerImpl::SimplifySelectsFeedingBinaryOp(BinaryOperator &I,
+                                                         Value *LHS,
+                                                         Value *RHS) {
+diff --git a/llvm/test/Transforms/InstCombine/commutative-operation-over-minmax.ll b/llvm/test/Transforms/InstCombine/commutative-operation-over-minmax.ll
+new file mode 100644
+index 0000000000000..504af5db678fc
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/commutative-operation-over-minmax.ll
+@@ -0,0 +1,238 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=instcombine -S < %s | FileCheck %s
++
++define i32 @sadd_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @sadd_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = add i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = add i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @sadd_min_max_assoc2(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @sadd_min_max_assoc2(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[RHS:%.*]] = add i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[RET:%.*]] = add i32 [[RHS]], [[Z]]
++; CHECK-NEXT:    ret i32 [[RET]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %rhs = add i32 %min, %z
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %max, %rhs
++  ret i32 %ret
++}
++
++define i32 @sadd_min_max_assoc_comm(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @sadd_min_max_assoc_comm(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[RHS:%.*]] = add i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[RET:%.*]] = add i32 [[Z]], [[RHS]]
++; CHECK-NEXT:    ret i32 [[RET]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %rhs = add i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %max, %rhs
++  ret i32 %ret
++}
++
++define i32 @or_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @or_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = or i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = or i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = or i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = or i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @or_disjoint_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @or_disjoint_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = or i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = or i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = or disjoint i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = or i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @smul_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @smul_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = mul i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = mul i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = mul i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = mul i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @smul_min_max_assoc_comm(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @smul_min_max_assoc_comm(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = mul i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[RET:%.*]] = mul i32 [[LHS]], [[Z]]
++; CHECK-NEXT:    ret i32 [[RET]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = mul i32 %min, %z
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = mul i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @uadd_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @uadd_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = add i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.umin.i32(i32 %x, i32 %y)
++  %lhs = add i32 %z, %min
++  %max = call i32 @llvm.umax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @umul_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @umul_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = mul i32 [[X]], [[Y]]
++; CHECK-NEXT:    [[TMP5:%.*]] = mul i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[TMP5]]
++;
++  %min = call i32 @llvm.umin.i32(i32 %x, i32 %y)
++  %lhs = mul i32 %z, %min
++  %max = call i32 @llvm.umax.i32(i32 %x, i32 %y)
++  %ret = mul i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @add_min_max_assoc_wrong(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @add_min_max_assoc_wrong(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[MIN:%.*]] = call i32 @llvm.smin.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[Z]], [[MIN]]
++; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.umax.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP7:%.*]] = add i32 [[TMP5]], [[TMP6]]
++; CHECK-NEXT:    ret i32 [[TMP7]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = add i32 %z, %min
++  %max = call i32 @llvm.umax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @add_min_max_assoc_wrong2(i32 %x, i32 %y, i32 %z, ptr %p) {
++; CHECK-LABEL: define i32 @add_min_max_assoc_wrong2(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]], ptr [[P:%.*]]) {
++; CHECK-NEXT:    [[MIN:%.*]] = call i32 @llvm.smin.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP5:%.*]] = add i32 [[Z]], [[MIN]]
++; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.smax.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP7:%.*]] = add i32 [[TMP5]], [[TMP6]]
++; CHECK-NEXT:    store i32 [[TMP5]], ptr [[P]], align 4
++; CHECK-NEXT:    ret i32 [[TMP7]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = add i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  store i32 %lhs, ptr %p
++  ret i32 %ret
++}
++
++define i32 @mul_min_max_assoc_wrong(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @mul_min_max_assoc_wrong(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[MIN:%.*]] = call i32 @llvm.smin.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP5:%.*]] = mul i32 [[Z]], [[MIN]]
++; CHECK-NEXT:    [[TMP6:%.*]] = call i32 @llvm.umax.i32(i32 [[X]], i32 [[Y]])
++; CHECK-NEXT:    [[TMP7:%.*]] = add i32 [[TMP5]], [[TMP6]]
++; CHECK-NEXT:    ret i32 [[TMP7]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %x, i32 %y)
++  %lhs = mul i32 %z, %min
++  %max = call i32 @llvm.umax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @sadd_nsw_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @sadd_nsw_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = add i32 [[Y]], [[X]]
++; CHECK-NEXT:    [[RET:%.*]] = add i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[RET]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %y, i32 %x)
++  %lhs = add nsw i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define i32 @sadd_nuw_min_max_assoc(i32 %x, i32 %y, i32 %z) {
++; CHECK-LABEL: define i32 @sadd_nuw_min_max_assoc(
++; CHECK-SAME: i32 [[X:%.*]], i32 [[Y:%.*]], i32 [[Z:%.*]]) {
++; CHECK-NEXT:    [[LHS:%.*]] = add i32 [[Y]], [[X]]
++; CHECK-NEXT:    [[RET:%.*]] = add i32 [[Z]], [[LHS]]
++; CHECK-NEXT:    ret i32 [[RET]]
++;
++  %min = call i32 @llvm.smin.i32(i32 %y, i32 %x)
++  %lhs = add nuw i32 %z, %min
++  %max = call i32 @llvm.smax.i32(i32 %x, i32 %y)
++  %ret = add i32 %lhs, %max
++  ret i32 %ret
++}
++
++define float @fp_inner_no_reassoc_cmp(i1 %c, float %a, float %x, float %y) {
++; CHECK-LABEL: define float @fp_inner_no_reassoc_cmp(
++; CHECK-SAME: i1 [[C:%.*]], float [[A:%.*]], float [[X:%.*]], float [[Y:%.*]]) {
++; CHECK-NEXT:    [[S0:%.*]] = select i1 [[C]], float [[X]], float [[Y]]
++; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C]], float [[Y]], float [[X]]
++; CHECK-NEXT:    [[INNER:%.*]] = fadd float [[A]], [[S0]]
++; CHECK-NEXT:    [[RETF:%.*]] = fadd reassoc nsz float [[INNER]], [[S1]]
++; CHECK-NEXT:    ret float [[RETF]]
++;
++  %s0 = select i1 %c, float %x, float %y
++  %s1 = select i1 %c, float %y, float %x
++  %inner = fadd float %a, %s0
++  %retf = fadd reassoc nsz float %inner, %s1
++  ret float %retf
++}
++
++define float @fp_mixed_fmf_cmp(i1 %c, float %a, float %x, float %y) {
++; CHECK-LABEL: define float @fp_mixed_fmf_cmp(
++; CHECK-SAME: i1 [[C:%.*]], float [[A:%.*]], float [[X:%.*]], float [[Y:%.*]]) {
++; CHECK-NEXT:    [[S0:%.*]] = select i1 [[C]], float [[X]], float [[Y]]
++; CHECK-NEXT:    [[S1:%.*]] = select i1 [[C]], float [[Y]], float [[X]]
++; CHECK-NEXT:    [[INNER:%.*]] = fadd nnan float [[A]], [[S0]]
++; CHECK-NEXT:    [[RETF:%.*]] = fadd reassoc nnan ninf nsz float [[INNER]], [[S1]]
++; CHECK-NEXT:    ret float [[RETF]]
++;
++  %s0 = select i1 %c, float %x, float %y
++  %s1 = select i1 %c, float %y, float %x
++  %inner = fadd nnan float %a, %s0
++  %retf = fadd reassoc nsz nnan ninf float %inner, %s1
++  ret float %retf
++}
