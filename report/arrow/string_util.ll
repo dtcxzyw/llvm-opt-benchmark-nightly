@@ -70,18 +70,16 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.c, align 8, !tbaa !28, !alias.scope !27
   store i8 0, ptr %i.b, align 8, !tbaa !31, !alias.scope !27
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %3 = load ptr, ptr %2, align 8, !tbaa !32, !noalias !27 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %3, null
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 32
-  %i.e = load ptr, ptr %i.d, align 8, !noalias !27 ; 2 uses
-  %4 = icmp ugt ptr %3, %i.e
-  %.08.i.i.i = select i1 %4, ptr %3, ptr %i.e     ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.d, label %bb.b
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 48
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !32, !noalias !27 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.e, null
+  br i1 %.not5.i.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %3 = load ptr, ptr %2, align 8, !noalias !27    ; 2 uses
+  %4 = icmp ugt ptr %i.e, %3
+  %.08.i.i.i = select i1 %4, ptr %i.e, ptr %3
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !36, !noalias !27 ; 2 uses
   %i.h = ptrtoint ptr %.08.i.i.i to i64

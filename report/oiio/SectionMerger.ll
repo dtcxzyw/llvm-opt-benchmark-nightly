@@ -201,15 +201,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit72: ; preds = %_ZStl
   store i64 0, ptr %i.ah, align 8, !tbaa !57, !alias.scope !56
   store i8 0, ptr %i.ag, align 8, !tbaa !29, !alias.scope !56
   %i.bu = load ptr, ptr %i.ai, align 8, !tbaa !58, !noalias !56 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.bu, null
-  %13 = load ptr, ptr %i.aj, align 8, !noalias !56 ; 2 uses
-  %14 = icmp ugt ptr %i.bu, %13
-  %.08.i.i.i = select i1 %14, ptr %i.bu, ptr %13  ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.k, label %bb.i
+  %.not5.i.i = icmp eq ptr %i.bu, null
+  br i1 %.not5.i.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit72
+  %13 = load ptr, ptr %i.aj, align 8, !noalias !56 ; 2 uses
+  %14 = icmp ugt ptr %i.bu, %13
+  %.08.i.i.i = select i1 %14, ptr %i.bu, ptr %13
   %i.bv = load ptr, ptr %i.ak, align 8, !tbaa !60, !noalias !56 ; 2 uses
   %i.bw = ptrtoint ptr %.08.i.i.i to i64
   %i.bx = ptrtoint ptr %i.bv to i64
@@ -551,15 +549,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93: ; preds = %_ZStl
   store i64 0, ptr %i.h, align 8, !tbaa !57, !alias.scope !70
   store i8 0, ptr %i.g, align 8, !tbaa !29, !alias.scope !70
   %i.fj = load ptr, ptr %i.i, align 8, !tbaa !58, !noalias !70 ; 3 uses
-  %.not.i.not.i.i115 = icmp eq ptr %i.fj, null
-  %15 = load ptr, ptr %i.j, align 8, !noalias !70 ; 2 uses
-  %16 = icmp ugt ptr %i.fj, %15
-  %.08.i.i.i116 = select i1 %16, ptr %i.fj, ptr %15 ; 2 uses
-  %.not5.i.i117 = icmp eq ptr %.08.i.i.i116, null
-  %.not.i.i118 = select i1 %.not.i.not.i.i115, i1 true, i1 %.not5.i.i117
-  br i1 %.not.i.i118, label %bb.ar, label %bb.ap
+  %.not5.i.i117 = icmp eq ptr %i.fj, null
+  br i1 %.not5.i.i117, label %bb.ar, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93
+  %15 = load ptr, ptr %i.j, align 8, !noalias !70 ; 2 uses
+  %16 = icmp ugt ptr %i.fj, %15
+  %.08.i.i.i116 = select i1 %16, ptr %i.fj, ptr %15
   %i.fk = load ptr, ptr %i.k, align 8, !tbaa !60, !noalias !70 ; 2 uses
   %i.fl = ptrtoint ptr %.08.i.i.i116 to i64
   %i.fm = ptrtoint ptr %i.fk to i64
@@ -912,17 +908,15 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit152: ; preds = %_ZSt
   store i64 0, ptr %i.v, align 8, !tbaa !57, !alias.scope !80
   store i8 0, ptr %i.u, align 8, !tbaa !29, !alias.scope !80
   %i.jj = load ptr, ptr %i.w, align 8, !tbaa !58, !noalias !80 ; 3 uses
-  %.not.i.not.i.i174 = icmp eq ptr %i.jj, null
-  %17 = load ptr, ptr %i.x, align 8, !noalias !80 ; 2 uses
-  %18 = icmp ugt ptr %i.jj, %17
-  %.08.i.i.i175 = select i1 %18, ptr %i.jj, ptr %17 ; 2 uses
-  %.not5.i.i176 = icmp eq ptr %.08.i.i.i175, null
-  %.not.i.i177 = select i1 %.not.i.not.i.i174, i1 true, i1 %.not5.i.i176
-  br i1 %.not.i.i177, label %bb.by, label %bb.bw
+  %.not5.i.i176 = icmp eq ptr %i.jj, null
+  br i1 %.not5.i.i176, label %bb.by, label %bb.bw
 
 bb.bw:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit152
+  %17 = load ptr, ptr %i.x, align 8, !noalias !80 ; 2 uses
+  %18 = icmp ugt ptr %i.jj, %17
+  %.08.i.i.i173 = select i1 %18, ptr %i.jj, ptr %17
   %i.jk = load ptr, ptr %i.y, align 8, !tbaa !60, !noalias !80 ; 2 uses
-  %i.jl = ptrtoint ptr %.08.i.i.i175 to i64
+  %i.jl = ptrtoint ptr %.08.i.i.i173 to i64
   %i.jm = ptrtoint ptr %i.jk to i64
   %i.jn = sub i64 %i.jl, %i.jm
   %i.jo = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %12, i64 noundef 0, i64 noundef 0, ptr noundef %i.jk, i64 noundef %i.jn)
@@ -1325,15 +1319,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit138: ; preds = %_ZSt
   store i64 0, ptr %i.t, align 8, !tbaa !57, !alias.scope !142
   store i8 0, ptr %i.s, align 8, !tbaa !29, !alias.scope !142
   %i.ca = load ptr, ptr %i.u, align 16, !tbaa !58, !noalias !142 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.ca, null
-  %8 = load ptr, ptr %i.v, align 16, !noalias !142 ; 2 uses
-  %9 = icmp ugt ptr %i.ca, %8
-  %.08.i.i.i = select i1 %9, ptr %i.ca, ptr %8    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.o, label %bb.m
+  %.not5.i.i = icmp eq ptr %i.ca, null
+  br i1 %.not5.i.i, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit138
+  %8 = load ptr, ptr %i.v, align 16, !noalias !142 ; 2 uses
+  %9 = icmp ugt ptr %i.ca, %8
+  %.08.i.i.i = select i1 %9, ptr %i.ca, ptr %8
   %i.cb = load ptr, ptr %i.w, align 8, !tbaa !60, !noalias !142 ; 2 uses
   %i.cc = ptrtoint ptr %.08.i.i.i to i64
   %i.cd = ptrtoint ptr %i.cb to i64
@@ -1593,15 +1585,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit159: ; preds = %_ZSt
   store i64 0, ptr %i.ad, align 8, !tbaa !57, !alias.scope !151
   store i8 0, ptr %i.ac, align 8, !tbaa !29, !alias.scope !151
   %i.fm = load ptr, ptr %i.ae, align 8, !tbaa !58, !noalias !151 ; 3 uses
-  %.not.i.not.i.i160 = icmp eq ptr %i.fm, null
-  %10 = load ptr, ptr %i.af, align 8, !noalias !151 ; 2 uses
-  %11 = icmp ugt ptr %i.fm, %10
-  %.08.i.i.i161 = select i1 %11, ptr %i.fm, ptr %10 ; 2 uses
-  %.not5.i.i162 = icmp eq ptr %.08.i.i.i161, null
-  %.not.i.i163 = select i1 %.not.i.not.i.i160, i1 true, i1 %.not5.i.i162
-  br i1 %.not.i.i163, label %bb.al, label %bb.aj
+  %.not5.i.i162 = icmp eq ptr %i.fm, null
+  br i1 %.not5.i.i162, label %bb.al, label %bb.aj
 
 bb.aj:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit159
+  %10 = load ptr, ptr %i.af, align 8, !noalias !151 ; 2 uses
+  %11 = icmp ugt ptr %i.fm, %10
+  %.08.i.i.i161 = select i1 %11, ptr %i.fm, ptr %10
   %i.fn = load ptr, ptr %i.ag, align 8, !tbaa !60, !noalias !151 ; 2 uses
   %i.fo = ptrtoint ptr %.08.i.i.i161 to i64
   %i.fp = ptrtoint ptr %i.fn to i64
@@ -1883,15 +1873,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93: ; preds = %_ZStl
   store i64 0, ptr %i.e, align 8, !tbaa !57, !alias.scope !160
   store i8 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !160
   %i.bf = load ptr, ptr %i.f, align 8, !tbaa !58, !noalias !160 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.bf, null
-  %8 = load ptr, ptr %i.g, align 8, !noalias !160 ; 2 uses
-  %9 = icmp ugt ptr %i.bf, %8
-  %.08.i.i.i = select i1 %9, ptr %i.bf, ptr %8    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.l, label %bb.j
+  %.not5.i.i = icmp eq ptr %i.bf, null
+  br i1 %.not5.i.i, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93
+  %8 = load ptr, ptr %i.g, align 8, !noalias !160 ; 2 uses
+  %9 = icmp ugt ptr %i.bf, %8
+  %.08.i.i.i = select i1 %9, ptr %i.bf, ptr %8
   %i.bg = load ptr, ptr %i.h, align 8, !tbaa !60, !noalias !160 ; 2 uses
   %i.bh = ptrtoint ptr %.08.i.i.i to i64
   %i.bi = ptrtoint ptr %i.bg to i64
@@ -2124,15 +2112,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit108: ; preds = %_ZSt
   store i64 0, ptr %i.x, align 8, !tbaa !57, !alias.scope !168
   store i8 0, ptr %i.w, align 8, !tbaa !29, !alias.scope !168
   %i.ed = load ptr, ptr %i.y, align 8, !tbaa !58, !noalias !168 ; 3 uses
-  %.not.i.not.i.i109 = icmp eq ptr %i.ed, null
-  %10 = load ptr, ptr %i.z, align 8, !noalias !168 ; 2 uses
-  %11 = icmp ugt ptr %i.ed, %10
-  %.08.i.i.i110 = select i1 %11, ptr %i.ed, ptr %10 ; 2 uses
-  %.not5.i.i111 = icmp eq ptr %.08.i.i.i110, null
-  %.not.i.i112 = select i1 %.not.i.not.i.i109, i1 true, i1 %.not5.i.i111
-  br i1 %.not.i.i112, label %bb.af, label %bb.ad
+  %.not5.i.i111 = icmp eq ptr %i.ed, null
+  br i1 %.not5.i.i111, label %bb.af, label %bb.ad
 
 bb.ad:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit108
+  %10 = load ptr, ptr %i.z, align 8, !noalias !168 ; 2 uses
+  %11 = icmp ugt ptr %i.ed, %10
+  %.08.i.i.i110 = select i1 %11, ptr %i.ed, ptr %10
   %i.ee = load ptr, ptr %i.aa, align 8, !tbaa !60, !noalias !168 ; 2 uses
   %i.ef = ptrtoint ptr %.08.i.i.i110 to i64
   %i.eg = ptrtoint ptr %i.ee to i64
@@ -2426,15 +2412,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit49: ; preds = %_ZStl
   store i64 0, ptr %i.e, align 8, !tbaa !57, !alias.scope !176
   store i8 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !176
   %i.ac = load ptr, ptr %i.f, align 8, !tbaa !58, !noalias !176 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.ac, null
-  %6 = load ptr, ptr %i.g, align 8, !noalias !176 ; 2 uses
-  %7 = icmp ugt ptr %i.ac, %6
-  %.08.i.i.i = select i1 %7, ptr %i.ac, ptr %6    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.i, label %bb.g
+  %.not5.i.i = icmp eq ptr %i.ac, null
+  br i1 %.not5.i.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit49
+  %6 = load ptr, ptr %i.g, align 8, !noalias !176 ; 2 uses
+  %7 = icmp ugt ptr %i.ac, %6
+  %.08.i.i.i = select i1 %7, ptr %i.ac, ptr %6
   %i.ad = load ptr, ptr %i.h, align 8, !tbaa !60, !noalias !176 ; 2 uses
   %i.ae = ptrtoint ptr %.08.i.i.i to i64
   %i.af = ptrtoint ptr %i.ad to i64
@@ -2837,15 +2821,13 @@ bb.n:                                             ; preds = %bb.m
   store i64 0, ptr %i.e, align 8, !tbaa !57, !alias.scope !235
   store i8 0, ptr %i.d, align 8, !tbaa !29, !alias.scope !235
   %i.ch = load ptr, ptr %i.f, align 8, !tbaa !58, !noalias !235 ; 3 uses
-  %.not.i.not.i.i.i = icmp eq ptr %i.ch, null
-  %22 = load ptr, ptr %i.g, align 8, !noalias !235 ; 2 uses
-  %23 = icmp ugt ptr %i.ch, %22
-  %.08.i.i.i.i = select i1 %23, ptr %i.ch, ptr %22 ; 2 uses
-  %.not5.i.i.i = icmp eq ptr %.08.i.i.i.i, null
-  %.not.i.i.i = select i1 %.not.i.not.i.i.i, i1 true, i1 %.not5.i.i.i
-  br i1 %.not.i.i.i, label %bb.q, label %bb.o
+  %.not5.i.i.i = icmp eq ptr %i.ch, null
+  br i1 %.not5.i.i.i, label %bb.q, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
+  %22 = load ptr, ptr %i.g, align 8, !noalias !235 ; 2 uses
+  %23 = icmp ugt ptr %i.ch, %22
+  %.08.i.i.i.i = select i1 %23, ptr %i.ch, ptr %22
   %i.ci = load ptr, ptr %i.h, align 8, !tbaa !60, !noalias !235 ; 2 uses
   %i.cj = ptrtoint ptr %.08.i.i.i.i to i64
   %i.ck = ptrtoint ptr %i.ci to i64
@@ -2872,15 +2854,13 @@ _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit.i: ; pr
   store i64 0, ptr %i.k, align 8, !tbaa !57, !alias.scope !242
   store i8 0, ptr %i.j, align 8, !tbaa !29, !alias.scope !242
   %i.cq = load ptr, ptr %i.l, align 8, !tbaa !58, !noalias !242 ; 3 uses
-  %.not.i.not.i.i40.i = icmp eq ptr %i.cq, null
-  %24 = load ptr, ptr %i.m, align 8, !noalias !242 ; 2 uses
-  %25 = icmp ugt ptr %i.cq, %24
-  %.08.i.i.i41.i = select i1 %25, ptr %i.cq, ptr %24 ; 2 uses
-  %.not5.i.i42.i = icmp eq ptr %.08.i.i.i41.i, null
-  %.not.i.i43.i = select i1 %.not.i.not.i.i40.i, i1 true, i1 %.not5.i.i42.i
-  br i1 %.not.i.i43.i, label %bb.t, label %bb.r
+  %.not5.i.i42.i = icmp eq ptr %i.cq, null
+  br i1 %.not5.i.i42.i, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit.i
+  %24 = load ptr, ptr %i.m, align 8, !noalias !242 ; 2 uses
+  %25 = icmp ugt ptr %i.cq, %24
+  %.08.i.i.i41.i = select i1 %25, ptr %i.cq, ptr %24
   %i.cr = load ptr, ptr %i.n, align 8, !tbaa !60, !noalias !242 ; 2 uses
   %i.cs = ptrtoint ptr %.08.i.i.i41.i to i64
   %i.ct = ptrtoint ptr %i.cr to i64
@@ -3105,17 +3085,15 @@ bb.al:                                            ; preds = %bb.ak
   store i64 0, ptr %i.ab, align 8, !tbaa !57, !alias.scope !249
   store i8 0, ptr %i.aa, align 8, !tbaa !29, !alias.scope !249
   %i.et = load ptr, ptr %i.ac, align 8, !tbaa !58, !noalias !249 ; 3 uses
-  %.not.i.not.i.i68 = icmp eq ptr %i.et, null
-  %26 = load ptr, ptr %i.ad, align 8, !noalias !249 ; 2 uses
-  %27 = icmp ugt ptr %i.et, %26
-  %.08.i.i.i69 = select i1 %27, ptr %i.et, ptr %26 ; 2 uses
-  %.not5.i.i70 = icmp eq ptr %.08.i.i.i69, null
-  %.not.i.i71 = select i1 %.not.i.not.i.i68, i1 true, i1 %.not5.i.i70
-  br i1 %.not.i.i71, label %bb.ao, label %bb.am
+  %.not5.i.i70 = icmp eq ptr %i.et, null
+  br i1 %.not5.i.i70, label %bb.ao, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
+  %26 = load ptr, ptr %i.ad, align 8, !noalias !249 ; 2 uses
+  %27 = icmp ugt ptr %i.et, %26
+  %.08.i.i.i66 = select i1 %27, ptr %i.et, ptr %26
   %i.eu = load ptr, ptr %i.ae, align 8, !tbaa !60, !noalias !249 ; 2 uses
-  %i.ev = ptrtoint ptr %.08.i.i.i69 to i64
+  %i.ev = ptrtoint ptr %.08.i.i.i66 to i64
   %i.ew = ptrtoint ptr %i.eu to i64
   %i.ex = sub i64 %i.ev, %i.ew
   %i.ey = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %17, i64 noundef 0, i64 noundef 0, ptr noundef %i.eu, i64 noundef %i.ex)
@@ -3140,17 +3118,15 @@ _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit77: ; pr
   store i64 0, ptr %i.ah, align 8, !tbaa !57, !alias.scope !256
   store i8 0, ptr %i.ag, align 8, !tbaa !29, !alias.scope !256
   %i.fc = load ptr, ptr %i.ai, align 8, !tbaa !58, !noalias !256 ; 3 uses
-  %.not.i.not.i.i58 = icmp eq ptr %i.fc, null
-  %28 = load ptr, ptr %i.aj, align 8, !noalias !256 ; 2 uses
-  %29 = icmp ugt ptr %i.fc, %28
-  %.08.i.i.i59 = select i1 %29, ptr %i.fc, ptr %28 ; 2 uses
-  %.not5.i.i60 = icmp eq ptr %.08.i.i.i59, null
-  %.not.i.i61 = select i1 %.not.i.not.i.i58, i1 true, i1 %.not5.i.i60
-  br i1 %.not.i.i61, label %bb.ar, label %bb.ap
+  %.not5.i.i60 = icmp eq ptr %i.fc, null
+  br i1 %.not5.i.i60, label %bb.ar, label %bb.ap
 
 bb.ap:                                            ; preds = %_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit77
+  %28 = load ptr, ptr %i.aj, align 8, !noalias !256 ; 2 uses
+  %29 = icmp ugt ptr %i.fc, %28
+  %.08.i.i.i58 = select i1 %29, ptr %i.fc, ptr %28
   %i.fd = load ptr, ptr %i.ak, align 8, !tbaa !60, !noalias !256 ; 2 uses
-  %i.fe = ptrtoint ptr %.08.i.i.i59 to i64
+  %i.fe = ptrtoint ptr %.08.i.i.i58 to i64
   %i.ff = ptrtoint ptr %i.fd to i64
   %i.fg = sub i64 %i.fe, %i.ff
   %i.fh = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %18, i64 noundef 0, i64 noundef 0, ptr noundef %i.fd, i64 noundef %i.fg)
@@ -3553,15 +3529,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38: ; preds = %_ZStl
   store i64 0, ptr %i.bb, align 8, !tbaa !57, !alias.scope !265
   store i8 0, ptr %i.ba, align 8, !tbaa !29, !alias.scope !265
   %i.kt = load ptr, ptr %i.bc, align 8, !tbaa !58, !noalias !265 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.kt, null
-  %30 = load ptr, ptr %i.bd, align 8, !noalias !265 ; 2 uses
-  %31 = icmp ugt ptr %i.kt, %30
-  %.08.i.i.i = select i1 %31, ptr %i.kt, ptr %30  ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.cw, label %bb.cu
+  %.not5.i.i = icmp eq ptr %i.kt, null
+  br i1 %.not5.i.i, label %bb.cw, label %bb.cu
 
 bb.cu:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit38
+  %30 = load ptr, ptr %i.bd, align 8, !noalias !265 ; 2 uses
+  %31 = icmp ugt ptr %i.kt, %30
+  %.08.i.i.i = select i1 %31, ptr %i.kt, ptr %30
   %i.ku = load ptr, ptr %i.be, align 8, !tbaa !60, !noalias !265 ; 2 uses
   %i.kv = ptrtoint ptr %.08.i.i.i to i64
   %i.kw = ptrtoint ptr %i.ku to i64
@@ -3964,18 +3938,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit40: ; preds = %_ZStl
   %i.bf = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 0, ptr %i.bf, align 8, !tbaa !57, !alias.scope !306
   store i8 0, ptr %i.be, align 8, !tbaa !29, !alias.scope !306
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %9 = load ptr, ptr %8, align 8, !tbaa !58, !noalias !306 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %9, null
-  %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.bh = load ptr, ptr %i.bg, align 8, !noalias !306 ; 2 uses
-  %10 = icmp ugt ptr %9, %i.bh
-  %.08.i.i.i = select i1 %10, ptr %9, ptr %i.bh   ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.p, label %bb.n
+  %i.bg = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !58, !noalias !306 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.bh, null
+  br i1 %.not5.i.i, label %bb.p, label %bb.n
 
 bb.n:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit40
+  %8 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %9 = load ptr, ptr %8, align 8, !noalias !306   ; 2 uses
+  %10 = icmp ugt ptr %i.bh, %9
+  %.08.i.i.i = select i1 %10, ptr %i.bh, ptr %9
   %i.bi = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !60, !noalias !306 ; 2 uses
   %i.bk = ptrtoint ptr %.08.i.i.i to i64
@@ -4378,18 +4350,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit56: ; preds = %_ZStl
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 0, ptr %i.s, align 8, !tbaa !57, !alias.scope !318
   store i8 0, ptr %i.r, align 8, !tbaa !29, !alias.scope !318
-  %14 = getelementptr inbounds nuw i8, ptr %4, i64 48
-  %15 = load ptr, ptr %14, align 8, !tbaa !58, !noalias !318 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %15, null
-  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.u = load ptr, ptr %i.t, align 8, !noalias !318 ; 2 uses
-  %16 = icmp ugt ptr %15, %i.u
-  %.08.i.i.i = select i1 %16, ptr %15, ptr %i.u   ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.k, label %bb.i
+  %i.t = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %i.u = load ptr, ptr %i.t, align 8, !tbaa !58, !noalias !318 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.u, null
+  br i1 %.not5.i.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit56
+  %14 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %15 = load ptr, ptr %14, align 8, !noalias !318 ; 2 uses
+  %16 = icmp ugt ptr %i.u, %15
+  %.08.i.i.i = select i1 %16, ptr %i.u, ptr %15
   %i.v = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !60, !noalias !318 ; 2 uses
   %i.x = ptrtoint ptr %.08.i.i.i to i64
@@ -4683,18 +4653,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81: ; preds = %_ZStl
   %i.dd = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 0, ptr %i.dd, align 8, !tbaa !57, !alias.scope !325
   store i8 0, ptr %i.dc, align 8, !tbaa !29, !alias.scope !325
-  %17 = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %18 = load ptr, ptr %17, align 8, !tbaa !58, !noalias !325 ; 3 uses
-  %.not.i.not.i.i82 = icmp eq ptr %18, null
-  %i.de = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.df = load ptr, ptr %i.de, align 8, !noalias !325 ; 2 uses
-  %19 = icmp ugt ptr %18, %i.df
-  %.08.i.i.i83 = select i1 %19, ptr %18, ptr %i.df ; 2 uses
-  %.not5.i.i84 = icmp eq ptr %.08.i.i.i83, null
-  %.not.i.i85 = select i1 %.not.i.not.i.i82, i1 true, i1 %.not5.i.i84
-  br i1 %.not.i.i85, label %bb.aq, label %bb.ao
+  %i.de = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %i.df = load ptr, ptr %i.de, align 8, !tbaa !58, !noalias !325 ; 3 uses
+  %.not5.i.i84 = icmp eq ptr %i.df, null
+  br i1 %.not5.i.i84, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit81
+  %17 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %18 = load ptr, ptr %17, align 8, !noalias !325 ; 2 uses
+  %19 = icmp ugt ptr %i.df, %18
+  %.08.i.i.i83 = select i1 %19, ptr %i.df, ptr %18
   %i.dg = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.dh = load ptr, ptr %i.dg, align 8, !tbaa !60, !noalias !325 ; 2 uses
   %i.di = ptrtoint ptr %.08.i.i.i83 to i64
@@ -4906,21 +4874,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit121: ; preds = %_ZSt
   %i.fw = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 0, ptr %i.fw, align 8, !tbaa !57, !alias.scope !332
   store i8 0, ptr %i.fv, align 8, !tbaa !29, !alias.scope !332
-  %20 = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %21 = load ptr, ptr %20, align 8, !tbaa !58, !noalias !332 ; 3 uses
-  %.not.i.not.i.i122 = icmp eq ptr %21, null
-  %i.fx = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %i.fy = load ptr, ptr %i.fx, align 8, !noalias !332 ; 2 uses
-  %22 = icmp ugt ptr %21, %i.fy
-  %.08.i.i.i123 = select i1 %22, ptr %21, ptr %i.fy ; 2 uses
-  %.not5.i.i124 = icmp eq ptr %.08.i.i.i123, null
-  %.not.i.i125 = select i1 %.not.i.not.i.i122, i1 true, i1 %.not5.i.i124
-  br i1 %.not.i.i125, label %bb.bj, label %bb.bh
+  %i.fx = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !58, !noalias !332 ; 3 uses
+  %.not5.i.i124 = icmp eq ptr %i.fy, null
+  br i1 %.not5.i.i124, label %bb.bj, label %bb.bh
 
 bb.bh:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit121
+  %20 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %21 = load ptr, ptr %20, align 8, !noalias !332 ; 2 uses
+  %22 = icmp ugt ptr %i.fy, %21
+  %.08.i.i.i121 = select i1 %22, ptr %i.fy, ptr %21
   %i.fz = getelementptr inbounds nuw i8, ptr %10, i64 40
   %i.ga = load ptr, ptr %i.fz, align 8, !tbaa !60, !noalias !332 ; 2 uses
-  %i.gb = ptrtoint ptr %.08.i.i.i123 to i64
+  %i.gb = ptrtoint ptr %.08.i.i.i121 to i64
   %i.gc = ptrtoint ptr %i.ga to i64
   %i.gd = sub i64 %i.gb, %i.gc
   %i.ge = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef 0, i64 noundef 0, ptr noundef %i.ga, i64 noundef %i.gd)
@@ -5126,21 +5092,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit161: ; preds = %_ZSt
   %i.ip = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 0, ptr %i.ip, align 8, !tbaa !57, !alias.scope !339
   store i8 0, ptr %i.io, align 8, !tbaa !29, !alias.scope !339
-  %23 = getelementptr inbounds nuw i8, ptr %12, i64 48
-  %24 = load ptr, ptr %23, align 8, !tbaa !58, !noalias !339 ; 3 uses
-  %.not.i.not.i.i162 = icmp eq ptr %24, null
-  %i.iq = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %i.ir = load ptr, ptr %i.iq, align 8, !noalias !339 ; 2 uses
-  %25 = icmp ugt ptr %24, %i.ir
-  %.08.i.i.i163 = select i1 %25, ptr %24, ptr %i.ir ; 2 uses
-  %.not5.i.i164 = icmp eq ptr %.08.i.i.i163, null
-  %.not.i.i165 = select i1 %.not.i.not.i.i162, i1 true, i1 %.not5.i.i164
-  br i1 %.not.i.i165, label %bb.cb, label %bb.bz
+  %i.iq = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %i.ir = load ptr, ptr %i.iq, align 8, !tbaa !58, !noalias !339 ; 3 uses
+  %.not5.i.i164 = icmp eq ptr %i.ir, null
+  br i1 %.not5.i.i164, label %bb.cb, label %bb.bz
 
 bb.bz:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit161
+  %23 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %24 = load ptr, ptr %23, align 8, !noalias !339 ; 2 uses
+  %25 = icmp ugt ptr %i.ir, %24
+  %.08.i.i.i159 = select i1 %25, ptr %i.ir, ptr %24
   %i.is = getelementptr inbounds nuw i8, ptr %12, i64 40
   %i.it = load ptr, ptr %i.is, align 8, !tbaa !60, !noalias !339 ; 2 uses
-  %i.iu = ptrtoint ptr %.08.i.i.i163 to i64
+  %i.iu = ptrtoint ptr %.08.i.i.i159 to i64
   %i.iv = ptrtoint ptr %i.it to i64
   %i.iw = sub i64 %i.iu, %i.iv
   %i.ix = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %13, i64 noundef 0, i64 noundef 0, ptr noundef %i.it, i64 noundef %i.iw)
@@ -5427,18 +5391,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit116: ; preds = %_ZSt
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 0, ptr %i.x, align 8, !tbaa !57, !alias.scope !346
   store i8 0, ptr %i.w, align 8, !tbaa !29, !alias.scope !346
-  %23 = getelementptr inbounds nuw i8, ptr %5, i64 48
-  %24 = load ptr, ptr %23, align 8, !tbaa !58, !noalias !346 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %24, null
-  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.z = load ptr, ptr %i.y, align 8, !noalias !346 ; 2 uses
-  %25 = icmp ugt ptr %24, %i.z
-  %.08.i.i.i = select i1 %25, ptr %24, ptr %i.z   ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.i, label %bb.g
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 48
+  %i.z = load ptr, ptr %i.y, align 8, !tbaa !58, !noalias !346 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.z, null
+  br i1 %.not5.i.i, label %bb.i, label %bb.g
 
 bb.g:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit116
+  %23 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %24 = load ptr, ptr %23, align 8, !noalias !346 ; 2 uses
+  %25 = icmp ugt ptr %i.z, %24
+  %.08.i.i.i = select i1 %25, ptr %i.z, ptr %24
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 40
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !60, !noalias !346 ; 2 uses
   %i.ac = ptrtoint ptr %.08.i.i.i to i64
@@ -5841,17 +5803,15 @@ bb.ec:                                            ; preds = %_ZStlsISt11char_tra
   store i64 0, ptr %i.eq, align 8, !tbaa !57, !alias.scope !355
   store i8 0, ptr %i.ep, align 8, !tbaa !29, !alias.scope !355
   %i.nl = load ptr, ptr %i.er, align 8, !tbaa !58, !noalias !355 ; 3 uses
-  %.not.i.not.i.i227 = icmp eq ptr %i.nl, null
-  %26 = load ptr, ptr %i.es, align 8, !noalias !355 ; 2 uses
-  %27 = icmp ugt ptr %i.nl, %26
-  %.08.i.i.i228 = select i1 %27, ptr %i.nl, ptr %26 ; 2 uses
-  %.not5.i.i229 = icmp eq ptr %.08.i.i.i228, null
-  %.not.i.i230 = select i1 %.not.i.not.i.i227, i1 true, i1 %.not5.i.i229
-  br i1 %.not.i.i230, label %bb.ef, label %bb.ed
+  %.not5.i.i229 = icmp eq ptr %i.nl, null
+  br i1 %.not5.i.i229, label %bb.ef, label %bb.ed
 
 bb.ed:                                            ; preds = %bb.ec
+  %26 = load ptr, ptr %i.es, align 8, !noalias !355 ; 2 uses
+  %27 = icmp ugt ptr %i.nl, %26
+  %.08.i.i.i227 = select i1 %27, ptr %i.nl, ptr %26
   %i.nm = load ptr, ptr %i.et, align 8, !tbaa !60, !noalias !355 ; 2 uses
-  %i.nn = ptrtoint ptr %.08.i.i.i228 to i64
+  %i.nn = ptrtoint ptr %.08.i.i.i227 to i64
   %i.no = ptrtoint ptr %i.nm to i64
   %i.np = sub i64 %i.nn, %i.no
   %i.nq = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %20, i64 noundef 0, i64 noundef 0, ptr noundef %i.nm, i64 noundef %i.np)
@@ -6254,18 +6214,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit78: ; preds = %_ZStl
   %i.z = getelementptr inbounds nuw i8, ptr %7, i64 8
   store i64 0, ptr %i.z, align 8, !tbaa !57, !alias.scope !412
   store i8 0, ptr %i.y, align 8, !tbaa !29, !alias.scope !412
-  %22 = getelementptr inbounds nuw i8, ptr %6, i64 48
-  %23 = load ptr, ptr %22, align 8, !tbaa !58, !noalias !412 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %23, null
-  %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 32
-  %i.ab = load ptr, ptr %i.aa, align 8, !noalias !412 ; 2 uses
-  %24 = icmp ugt ptr %23, %i.ab
-  %.08.i.i.i = select i1 %24, ptr %23, ptr %i.ab  ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.k, label %bb.i
+  %i.aa = getelementptr inbounds nuw i8, ptr %6, i64 48
+  %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !58, !noalias !412 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.ab, null
+  br i1 %.not5.i.i, label %bb.k, label %bb.i
 
 bb.i:                                             ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit78
+  %22 = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %23 = load ptr, ptr %22, align 8, !noalias !412 ; 2 uses
+  %24 = icmp ugt ptr %i.ab, %23
+  %.08.i.i.i = select i1 %24, ptr %i.ab, ptr %23
   %i.ac = getelementptr inbounds nuw i8, ptr %6, i64 40
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !60, !noalias !412 ; 2 uses
   %i.ae = ptrtoint ptr %.08.i.i.i to i64
@@ -6464,18 +6422,16 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93: ; preds = %_ZStl
   %i.cl = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i64 0, ptr %i.cl, align 8, !tbaa !57, !alias.scope !419
   store i8 0, ptr %i.ck, align 8, !tbaa !29, !alias.scope !419
-  %25 = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %26 = load ptr, ptr %25, align 8, !tbaa !58, !noalias !419 ; 3 uses
-  %.not.i.not.i.i94 = icmp eq ptr %26, null
-  %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 32
-  %i.cn = load ptr, ptr %i.cm, align 8, !noalias !419 ; 2 uses
-  %27 = icmp ugt ptr %26, %i.cn
-  %.08.i.i.i95 = select i1 %27, ptr %26, ptr %i.cn ; 2 uses
-  %.not5.i.i96 = icmp eq ptr %.08.i.i.i95, null
-  %.not.i.i97 = select i1 %.not.i.not.i.i94, i1 true, i1 %.not5.i.i96
-  br i1 %.not.i.i97, label %bb.ae, label %bb.ac
+  %i.cm = getelementptr inbounds nuw i8, ptr %8, i64 48
+  %i.cn = load ptr, ptr %i.cm, align 8, !tbaa !58, !noalias !419 ; 3 uses
+  %.not5.i.i96 = icmp eq ptr %i.cn, null
+  br i1 %.not5.i.i96, label %bb.ae, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit93
+  %25 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %26 = load ptr, ptr %25, align 8, !noalias !419 ; 2 uses
+  %27 = icmp ugt ptr %i.cn, %26
+  %.08.i.i.i95 = select i1 %27, ptr %i.cn, ptr %26
   %i.co = getelementptr inbounds nuw i8, ptr %8, i64 40
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !60, !noalias !419 ; 2 uses
   %i.cq = ptrtoint ptr %.08.i.i.i95 to i64
@@ -6655,21 +6611,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit125: ; preds = %_ZSt
   %i.es = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i64 0, ptr %i.es, align 8, !tbaa !57, !alias.scope !426
   store i8 0, ptr %i.er, align 8, !tbaa !29, !alias.scope !426
-  %28 = getelementptr inbounds nuw i8, ptr %10, i64 48
-  %29 = load ptr, ptr %28, align 8, !tbaa !58, !noalias !426 ; 3 uses
-  %.not.i.not.i.i126 = icmp eq ptr %29, null
-  %i.et = getelementptr inbounds nuw i8, ptr %10, i64 32
-  %i.eu = load ptr, ptr %i.et, align 8, !noalias !426 ; 2 uses
-  %30 = icmp ugt ptr %29, %i.eu
-  %.08.i.i.i127 = select i1 %30, ptr %29, ptr %i.eu ; 2 uses
-  %.not5.i.i128 = icmp eq ptr %.08.i.i.i127, null
-  %.not.i.i129 = select i1 %.not.i.not.i.i126, i1 true, i1 %.not5.i.i128
-  br i1 %.not.i.i129, label %bb.au, label %bb.as
+  %i.et = getelementptr inbounds nuw i8, ptr %10, i64 48
+  %i.eu = load ptr, ptr %i.et, align 8, !tbaa !58, !noalias !426 ; 3 uses
+  %.not5.i.i128 = icmp eq ptr %i.eu, null
+  br i1 %.not5.i.i128, label %bb.au, label %bb.as
 
 bb.as:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit125
+  %28 = getelementptr inbounds nuw i8, ptr %10, i64 32
+  %29 = load ptr, ptr %28, align 8, !noalias !426 ; 2 uses
+  %30 = icmp ugt ptr %i.eu, %29
+  %.08.i.i.i125 = select i1 %30, ptr %i.eu, ptr %29
   %i.ev = getelementptr inbounds nuw i8, ptr %10, i64 40
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !60, !noalias !426 ; 2 uses
-  %i.ex = ptrtoint ptr %.08.i.i.i127 to i64
+  %i.ex = ptrtoint ptr %.08.i.i.i125 to i64
   %i.ey = ptrtoint ptr %i.ew to i64
   %i.ez = sub i64 %i.ex, %i.ey
   %i.fa = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %11, i64 noundef 0, i64 noundef 0, ptr noundef %i.ew, i64 noundef %i.ez)
@@ -6854,21 +6808,19 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit157: ; preds = %_ZSt
   %i.ha = getelementptr inbounds nuw i8, ptr %13, i64 8
   store i64 0, ptr %i.ha, align 8, !tbaa !57, !alias.scope !433
   store i8 0, ptr %i.gz, align 8, !tbaa !29, !alias.scope !433
-  %31 = getelementptr inbounds nuw i8, ptr %12, i64 48
-  %32 = load ptr, ptr %31, align 8, !tbaa !58, !noalias !433 ; 3 uses
-  %.not.i.not.i.i158 = icmp eq ptr %32, null
-  %i.hb = getelementptr inbounds nuw i8, ptr %12, i64 32
-  %i.hc = load ptr, ptr %i.hb, align 8, !noalias !433 ; 2 uses
-  %33 = icmp ugt ptr %32, %i.hc
-  %.08.i.i.i159 = select i1 %33, ptr %32, ptr %i.hc ; 2 uses
-  %.not5.i.i160 = icmp eq ptr %.08.i.i.i159, null
-  %.not.i.i161 = select i1 %.not.i.not.i.i158, i1 true, i1 %.not5.i.i160
-  br i1 %.not.i.i161, label %bb.bm, label %bb.bk
+  %i.hb = getelementptr inbounds nuw i8, ptr %12, i64 48
+  %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !58, !noalias !433 ; 3 uses
+  %.not5.i.i160 = icmp eq ptr %i.hc, null
+  br i1 %.not5.i.i160, label %bb.bm, label %bb.bk
 
 bb.bk:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit157
+  %31 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %32 = load ptr, ptr %31, align 8, !noalias !433 ; 2 uses
+  %33 = icmp ugt ptr %i.hc, %32
+  %.08.i.i.i155 = select i1 %33, ptr %i.hc, ptr %32
   %i.hd = getelementptr inbounds nuw i8, ptr %12, i64 40
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !60, !noalias !433 ; 2 uses
-  %i.hf = ptrtoint ptr %.08.i.i.i159 to i64
+  %i.hf = ptrtoint ptr %.08.i.i.i155 to i64
   %i.hg = ptrtoint ptr %i.he to i64
   %i.hh = sub i64 %i.hf, %i.hg
   %i.hi = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %13, i64 noundef 0, i64 noundef 0, ptr noundef %i.he, i64 noundef %i.hh)
@@ -7271,15 +7223,13 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit177: ; preds = %_ZSt
   store i64 0, ptr %i.cy, align 8, !tbaa !57, !alias.scope !444
   store i8 0, ptr %i.cx, align 8, !tbaa !29, !alias.scope !444
   %i.kh = load ptr, ptr %i.cz, align 8, !tbaa !58, !noalias !444 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.kh, null
-  %26 = load ptr, ptr %i.da, align 8, !noalias !444 ; 2 uses
-  %27 = icmp ugt ptr %i.kh, %26
-  %.08.i.i.i = select i1 %27, ptr %i.kh, ptr %26  ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i233 = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i233, label %bb.co, label %bb.cm
+  %.not5.i.i = icmp eq ptr %i.kh, null
+  br i1 %.not5.i.i, label %bb.co, label %bb.cm
 
 bb.cm:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit177
+  %26 = load ptr, ptr %i.da, align 8, !noalias !444 ; 2 uses
+  %27 = icmp ugt ptr %i.kh, %26
+  %.08.i.i.i = select i1 %27, ptr %i.kh, ptr %26
   %i.ki = load ptr, ptr %i.db, align 8, !tbaa !60, !noalias !444 ; 2 uses
   %i.kj = ptrtoint ptr %.08.i.i.i to i64
   %i.kk = ptrtoint ptr %i.ki to i64
@@ -7682,17 +7632,15 @@ bb.ev:                                            ; preds = %bb.ej, %_ZNSt12__sh
   store i64 0, ptr %i.dh, align 8, !tbaa !57, !alias.scope !451
   store i8 0, ptr %i.dg, align 8, !tbaa !29, !alias.scope !451
   %i.rt = load ptr, ptr %i.cz, align 8, !tbaa !58, !noalias !451 ; 3 uses
-  %.not.i.not.i.i318 = icmp eq ptr %i.rt, null
-  %28 = load ptr, ptr %i.da, align 8, !noalias !451 ; 2 uses
-  %29 = icmp ugt ptr %i.rt, %28
-  %.08.i.i.i319 = select i1 %29, ptr %i.rt, ptr %28 ; 2 uses
-  %.not5.i.i320 = icmp eq ptr %.08.i.i.i319, null
-  %.not.i.i321 = select i1 %.not.i.not.i.i318, i1 true, i1 %.not5.i.i320
-  br i1 %.not.i.i321, label %bb.ey, label %bb.ew
+  %.not5.i.i320 = icmp eq ptr %i.rt, null
+  br i1 %.not5.i.i320, label %bb.ey, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev
+  %28 = load ptr, ptr %i.da, align 8, !noalias !451 ; 2 uses
+  %29 = icmp ugt ptr %i.rt, %28
+  %.08.i.i.i318 = select i1 %29, ptr %i.rt, ptr %28
   %i.ru = load ptr, ptr %i.db, align 8, !tbaa !60, !noalias !451 ; 2 uses
-  %i.rv = ptrtoint ptr %.08.i.i.i319 to i64
+  %i.rv = ptrtoint ptr %.08.i.i.i318 to i64
   %i.rw = ptrtoint ptr %i.ru to i64
   %i.rx = sub i64 %i.rv, %i.rw
   %i.ry = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %23, i64 noundef 0, i64 noundef 0, ptr noundef %i.ru, i64 noundef %i.rx)

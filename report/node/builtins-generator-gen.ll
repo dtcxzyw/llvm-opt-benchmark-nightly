@@ -201,7 +201,7 @@ declare noundef ptr @_ZN2v88internal8compiler13CodeAssembler16UntypedParameterEi
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal8compiler13CodeAssembler9ParameterINS0_7ContextEEENS0_5TNodeIT_EEiNS_14SourceLocationE(ptr dead_on_unwind noalias writable sret(%"class.v8::internal::TNode.7") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %2, ptr %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 33 uses
+  %4 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 34 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -332,18 +332,16 @@ bb.c:                                             ; preds = %_ZNK2v814SourceLoca
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 0, ptr %i.bn, align 8, !alias.scope !185
   store i8 0, ptr %i.bm, align 8, !alias.scope !185
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
-  %8 = load ptr, ptr %7, align 8, !noalias !185   ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %8, null
-  %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %i.bp = load ptr, ptr %i.bo, align 8, !noalias !185 ; 2 uses
-  %9 = icmp ugt ptr %8, %i.bp
-  %.08.i.i.i = select i1 %9, ptr %8, ptr %i.bp    ; 2 uses
-  %.not4.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i9 = select i1 %.not.i.not.i.i, i1 true, i1 %.not4.i.i
-  br i1 %.not.i.i9, label %bb.e, label %bb.d
+  %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
+  %i.bp = load ptr, ptr %i.bo, align 8, !noalias !185 ; 3 uses
+  %.not4.i.i = icmp eq ptr %i.bp, null
+  br i1 %.not4.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %8 = load ptr, ptr %7, align 8, !noalias !185   ; 2 uses
+  %9 = icmp ugt ptr %i.bp, %8
+  %.08.i.i.i = select i1 %9, ptr %i.bp, ptr %8
   %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.br = load ptr, ptr %i.bq, align 8, !noalias !185 ; 2 uses
   %i.bs = ptrtoint ptr %.08.i.i.i to i64
@@ -413,19 +411,18 @@ _ZN2v88internal4Zone13AllocateArrayIcA_cEEPT_m.exit: ; preds = %bb.g, %bb.h
   %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 0, ptr %i.cq, align 8, !alias.scope !193
   store i8 0, ptr %i.cp, align 8, !alias.scope !193
-  %10 = load ptr, ptr %7, align 8, !noalias !193  ; 3 uses
-  %.not.i.not.i.i11 = icmp eq ptr %10, null
-  %i.cr = load ptr, ptr %i.bo, align 8, !noalias !193 ; 2 uses
-  %11 = icmp ugt ptr %10, %i.cr
-  %.08.i.i.i12 = select i1 %11, ptr %10, ptr %i.cr ; 2 uses
-  %.not4.i.i13 = icmp eq ptr %.08.i.i.i12, null
-  %.not.i.i14 = select i1 %.not.i.not.i.i11, i1 true, i1 %.not4.i.i13
-  br i1 %.not.i.i14, label %bb.j, label %bb.i
+  %i.cr = load ptr, ptr %i.bo, align 8, !noalias !193 ; 3 uses
+  %.not4.i.i13 = icmp eq ptr %i.cr, null
+  br i1 %.not4.i.i13, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayIcA_cEEPT_m.exit
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %11 = load ptr, ptr %10, align 8, !noalias !193 ; 2 uses
+  %12 = icmp ugt ptr %i.cr, %11
+  %.08.i.i.i11 = select i1 %12, ptr %i.cr, ptr %11
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.ct = load ptr, ptr %i.cs, align 8, !noalias !193 ; 2 uses
-  %i.cu = ptrtoint ptr %.08.i.i.i12 to i64
+  %i.cu = ptrtoint ptr %.08.i.i.i11 to i64
   %i.cv = ptrtoint ptr %i.ct to i64
   %i.cw = sub i64 %i.cu, %i.cv
   %i.cx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef %i.ct, i64 noundef %i.cw) ; 0 uses
@@ -828,7 +825,7 @@ declare void @_ZNSt6localeD1Ev(ptr noundef nonnull align 8 dead_on_return(8) der
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN2v88internal8compiler13CodeAssembler9ParameterINS0_17JSGeneratorObjectEEENS0_5TNodeIT_EEiNS_14SourceLocationE(ptr dead_on_unwind noalias writable sret(%"class.v8::internal::TNode.5") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %2, ptr %3) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %4 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 33 uses
+  %4 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 34 uses
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
@@ -959,18 +956,16 @@ bb.c:                                             ; preds = %_ZNK2v814SourceLoca
   %i.bn = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   store i64 0, ptr %i.bn, align 8, !alias.scope !206
   store i8 0, ptr %i.bm, align 8, !alias.scope !206
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
-  %8 = load ptr, ptr %7, align 8, !noalias !206   ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %8, null
-  %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 48 ; 2 uses
-  %i.bp = load ptr, ptr %i.bo, align 8, !noalias !206 ; 2 uses
-  %9 = icmp ugt ptr %8, %i.bp
-  %.08.i.i.i = select i1 %9, ptr %8, ptr %i.bp    ; 2 uses
-  %.not4.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i9 = select i1 %.not.i.not.i.i, i1 true, i1 %.not4.i.i
-  br i1 %.not.i.i9, label %bb.e, label %bb.d
+  %i.bo = getelementptr inbounds nuw i8, ptr %4, i64 64 ; 2 uses
+  %i.bp = load ptr, ptr %i.bo, align 8, !noalias !206 ; 3 uses
+  %.not4.i.i = icmp eq ptr %i.bp, null
+  br i1 %.not4.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %8 = load ptr, ptr %7, align 8, !noalias !206   ; 2 uses
+  %9 = icmp ugt ptr %i.bp, %8
+  %.08.i.i.i = select i1 %9, ptr %i.bp, ptr %8
   %i.bq = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.br = load ptr, ptr %i.bq, align 8, !noalias !206 ; 2 uses
   %i.bs = ptrtoint ptr %.08.i.i.i to i64
@@ -1040,19 +1035,18 @@ _ZN2v88internal4Zone13AllocateArrayIcA_cEEPT_m.exit: ; preds = %bb.g, %bb.h
   %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 8
   store i64 0, ptr %i.cq, align 8, !alias.scope !213
   store i8 0, ptr %i.cp, align 8, !alias.scope !213
-  %10 = load ptr, ptr %7, align 8, !noalias !213  ; 3 uses
-  %.not.i.not.i.i11 = icmp eq ptr %10, null
-  %i.cr = load ptr, ptr %i.bo, align 8, !noalias !213 ; 2 uses
-  %11 = icmp ugt ptr %10, %i.cr
-  %.08.i.i.i12 = select i1 %11, ptr %10, ptr %i.cr ; 2 uses
-  %.not4.i.i13 = icmp eq ptr %.08.i.i.i12, null
-  %.not.i.i14 = select i1 %.not.i.not.i.i11, i1 true, i1 %.not4.i.i13
-  br i1 %.not.i.i14, label %bb.j, label %bb.i
+  %i.cr = load ptr, ptr %i.bo, align 8, !noalias !213 ; 3 uses
+  %.not4.i.i13 = icmp eq ptr %i.cr, null
+  br i1 %.not4.i.i13, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %_ZN2v88internal4Zone13AllocateArrayIcA_cEEPT_m.exit
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 48
+  %11 = load ptr, ptr %10, align 8, !noalias !213 ; 2 uses
+  %12 = icmp ugt ptr %i.cr, %11
+  %.08.i.i.i11 = select i1 %12, ptr %i.cr, ptr %11
   %i.cs = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.ct = load ptr, ptr %i.cs, align 8, !noalias !213 ; 2 uses
-  %i.cu = ptrtoint ptr %.08.i.i.i12 to i64
+  %i.cu = ptrtoint ptr %.08.i.i.i11 to i64
   %i.cv = ptrtoint ptr %i.ct to i64
   %i.cw = sub i64 %i.cu, %i.cv
   %i.cx = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %6, i64 noundef 0, i64 noundef 0, ptr noundef %i.ct, i64 noundef %i.cw) ; 0 uses

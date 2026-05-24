@@ -201,15 +201,13 @@ bb.f:                                             ; preds = %_ZNKSt8functionIFbR
   store i64 0, ptr %i.at, align 8, !alias.scope !45
   store i8 0, ptr %i.as, align 8, !alias.scope !45
   %i.cg = load ptr, ptr %i.au, align 8, !noalias !45 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.cg, null
-  %7 = load ptr, ptr %i.av, align 8, !noalias !45 ; 2 uses
-  %8 = icmp ugt ptr %i.cg, %7
-  %.08.i.i.i = select i1 %8, ptr %i.cg, ptr %7    ; 2 uses
-  %.not4.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i18 = select i1 %.not.i.not.i.i, i1 true, i1 %.not4.i.i
-  br i1 %.not.i.i18, label %bb.h, label %bb.g
+  %.not4.i.i = icmp eq ptr %i.cg, null
+  br i1 %.not4.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %7 = load ptr, ptr %i.av, align 8, !noalias !45 ; 2 uses
+  %8 = icmp ugt ptr %i.cg, %7
+  %.08.i.i.i = select i1 %8, ptr %i.cg, ptr %7
   %i.ch = load ptr, ptr %i.aw, align 8, !noalias !45 ; 2 uses
   %i.ci = ptrtoint ptr %.08.i.i.i to i64
   %i.cj = ptrtoint ptr %i.ch to i64
@@ -437,15 +435,13 @@ bb.f:                                             ; preds = %_ZNKSt8functionIFbR
   store i64 0, ptr %i.aq, align 8, !alias.scope !53
   store i8 0, ptr %i.ap, align 8, !alias.scope !53
   %i.cd = load ptr, ptr %i.ar, align 8, !noalias !53 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.cd, null
-  %7 = load ptr, ptr %i.as, align 8, !noalias !53 ; 2 uses
-  %8 = icmp ugt ptr %i.cd, %7
-  %.08.i.i.i = select i1 %8, ptr %i.cd, ptr %7    ; 2 uses
-  %.not4.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i12 = select i1 %.not.i.not.i.i, i1 true, i1 %.not4.i.i
-  br i1 %.not.i.i12, label %bb.h, label %bb.g
+  %.not4.i.i = icmp eq ptr %i.cd, null
+  br i1 %.not4.i.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %7 = load ptr, ptr %i.as, align 8, !noalias !53 ; 2 uses
+  %8 = icmp ugt ptr %i.cd, %7
+  %.08.i.i.i = select i1 %8, ptr %i.cd, ptr %7
   %i.ce = load ptr, ptr %i.at, align 8, !noalias !53 ; 2 uses
   %i.cf = ptrtoint ptr %.08.i.i.i to i64
   %i.cg = ptrtoint ptr %i.ce to i64

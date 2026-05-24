@@ -201,8 +201,12 @@ _ZNSolsEPFRSoS_E.exit.preheader:                  ; preds = %.noexc25
           to label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit15 unwind label %.loopexit ; 0 uses
 
 bb.e:                                             ; preds = %_ZNSolsEPFRSoS_E.exit22.3
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 32
+  %5 = load ptr, ptr %4, align 8, !noalias !53    ; 2 uses
+  %6 = icmp ugt ptr %i.fo, %5
+  %.08.i.i.i = select i1 %6, ptr %i.fo, ptr %5
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !53, !noalias !56 ; 2 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !58, !noalias !53 ; 2 uses
   %i.ag = ptrtoint ptr %.08.i.i.i to i64
   %i.ah = ptrtoint ptr %i.af to i64
   %i.ai = sub i64 %i.ag, %i.ah
@@ -212,7 +216,7 @@ bb.e:                                             ; preds = %_ZNSolsEPFRSoS_E.ex
 bb.f:                                             ; preds = %bb.g, %bb.e
   %i.ak = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  %i.al = load ptr, ptr %0, align 8, !tbaa !61, !alias.scope !56 ; 2 uses
+  %i.al = load ptr, ptr %0, align 8, !tbaa !61, !alias.scope !53 ; 2 uses
   %i.am = icmp eq ptr %i.al, %i.fl
   br i1 %i.am, label %.body, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
@@ -615,20 +619,14 @@ _ZNSolsEPFRSoS_E.exit22.3:                        ; preds = %.noexc35.3
   call void @llvm.experimental.noalias.scope.decl(metadata !65)
   call void @llvm.experimental.noalias.scope.decl(metadata !66)
   %i.fl = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  store ptr %i.fl, ptr %0, align 8, !tbaa !67, !alias.scope !56
+  store ptr %i.fl, ptr %0, align 8, !tbaa !67, !alias.scope !53
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 0, ptr %i.fm, align 8, !tbaa !64, !alias.scope !56
-  store i8 0, ptr %i.fl, align 8, !tbaa !51, !alias.scope !56
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %5 = load ptr, ptr %4, align 8, !tbaa !68, !noalias !56 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %5, null
-  %i.fn = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.fo = load ptr, ptr %i.fn, align 8, !noalias !56 ; 2 uses
-  %6 = icmp ugt ptr %5, %i.fo
-  %.08.i.i.i = select i1 %6, ptr %5, ptr %i.fo    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.g, label %bb.e
+  store i64 0, ptr %i.fm, align 8, !tbaa !64, !alias.scope !53
+  store i8 0, ptr %i.fl, align 8, !tbaa !51, !alias.scope !53
+  %i.fn = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !68, !noalias !53 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.fo, null
+  br i1 %.not5.i.i, label %bb.g, label %bb.e
 
 _ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv.exit: ; preds = %bb.g, %bb.e
   %i.fp = load ptr, ptr @_ZTTNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE, align 8 ; 2 uses
@@ -1031,22 +1029,22 @@ attributes #22 = { builtin allocsize(0) }
 !50 = !{!"p1 short", !20, i64 0}
 !51 = !{!5, !5, i64 0}
 !52 = distinct !{null, null}
-!53 = !{!54, !55, i64 32}
-!54 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !55, i64 8, !55, i64 16, !55, i64 24, !55, i64 32, !55, i64 40, !55, i64 48, !37, i64 56}
-!55 = !{!"p1 omnipotent char", !20, i64 0}
-!56 = !{!57, !59}
-!57 = distinct !{!57, !58, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!58 = distinct !{!58, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
-!59 = distinct !{!59, !60, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
-!60 = distinct !{!60, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
-!61 = !{!62, !55, i64 0}
+!53 = !{!54, !56}
+!54 = distinct !{!54, !55, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!55 = distinct !{!55, !"_ZNKSt7__cxx1115basic_stringbufIcSt11char_traitsIcESaIcEE3strEv"}
+!56 = distinct !{!56, !57, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv: argument 0"}
+!57 = distinct !{!57, !"_ZNKSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEE3strEv"}
+!58 = !{!59, !60, i64 32}
+!59 = !{!"_ZTSSt15basic_streambufIcSt11char_traitsIcEE", !60, i64 8, !60, i64 16, !60, i64 24, !60, i64 32, !60, i64 40, !60, i64 48, !37, i64 56}
+!60 = !{!"p1 omnipotent char", !20, i64 0}
+!61 = !{!62, !60, i64 0}
 !62 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !63, i64 0, !31, i64 8, !5, i64 16}
-!63 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !55, i64 0}
+!63 = !{!"_ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_Alloc_hiderE", !60, i64 0}
 !64 = !{!62, !31, i64 8}
-!65 = !{!59}
-!66 = !{!57}
-!67 = !{!63, !55, i64 0}
-!68 = !{!54, !55, i64 40}
+!65 = !{!56}
+!66 = !{!54}
+!67 = !{!63, !60, i64 0}
+!68 = !{!59, !60, i64 40}
 !69 = !{ptr @_ZN4geos5index8quadtree8NodeBase10visitItemsEPKNS_4geom8EnvelopeERNS0_11ItemVisitorE}
 !70 = distinct !{!70, !71}
 !71 = !{!"llvm.loop.mustprogress"}

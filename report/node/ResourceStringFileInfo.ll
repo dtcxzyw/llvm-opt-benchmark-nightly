@@ -201,15 +201,13 @@ bb.i:                                             ; preds = %.lr.ph, %_ZNSt7__cx
   store i64 0, ptr %i.bp, align 8, !alias.scope !36
   store i8 0, ptr %i.bo, align 8, !alias.scope !36
   %i.cr = load ptr, ptr %i.bq, align 16, !noalias !36 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %i.cr, null
-  %10 = load ptr, ptr %i.br, align 16, !noalias !36 ; 2 uses
-  %11 = icmp ugt ptr %i.cr, %10
-  %.08.i.i.i = select i1 %11, ptr %i.cr, ptr %10  ; 2 uses
-  %.not4.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not4.i.i
-  br i1 %.not.i.i, label %bb.k, label %bb.j
+  %.not4.i.i = icmp eq ptr %i.cr, null
+  br i1 %.not4.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
+  %10 = load ptr, ptr %i.br, align 16, !noalias !36 ; 2 uses
+  %11 = icmp ugt ptr %i.cr, %10
+  %.08.i.i.i = select i1 %11, ptr %i.cr, ptr %10
   %i.cs = load ptr, ptr %i.bs, align 8, !noalias !36 ; 2 uses
   %i.ct = ptrtoint ptr %.08.i.i.i to i64
   %i.cu = ptrtoint ptr %i.cs to i64

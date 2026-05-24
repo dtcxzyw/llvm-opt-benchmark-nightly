@@ -56,18 +56,16 @@ _ZNSolsEl.exit:                                   ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store i64 0, ptr %i.e, align 8, !tbaa !22, !alias.scope !21
   store i8 0, ptr %i.d, align 8, !tbaa !24, !alias.scope !21
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %5 = load ptr, ptr %4, align 8, !tbaa !25, !noalias !21 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %5, null
-  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.g = load ptr, ptr %i.f, align 8, !noalias !21 ; 2 uses
-  %6 = icmp ugt ptr %5, %i.g
-  %.08.i.i.i = select i1 %6, ptr %5, ptr %i.g     ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.d, label %bb.b
+  %i.f = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !25, !noalias !21 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.g, null
+  br i1 %.not5.i.i, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %_ZNSolsEl.exit
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %5 = load ptr, ptr %4, align 8, !noalias !21    ; 2 uses
+  %6 = icmp ugt ptr %i.g, %5
+  %.08.i.i.i = select i1 %6, ptr %i.g, ptr %5
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !29, !noalias !21 ; 2 uses
   %i.j = ptrtoint ptr %.08.i.i.i to i64
@@ -307,18 +305,16 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !22, !alias.scope !70
   store i8 0, ptr %i.ak, align 8, !tbaa !24, !alias.scope !70
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !25, !noalias !70 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %6, null
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !70 ; 2 uses
-  %7 = icmp ugt ptr %6, %i.an
-  %.08.i.i.i = select i1 %7, ptr %6, ptr %i.an    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.m, label %bb.k
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !25, !noalias !70 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.an, null
+  br i1 %.not5.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %6 = load ptr, ptr %5, align 8, !noalias !70    ; 2 uses
+  %7 = icmp ugt ptr %i.an, %6
+  %.08.i.i.i = select i1 %7, ptr %i.an, ptr %6
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29, !noalias !70 ; 2 uses
   %i.aq = ptrtoint ptr %.08.i.i.i to i64
@@ -557,18 +553,16 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !22, !alias.scope !79
   store i8 0, ptr %i.ak, align 8, !tbaa !24, !alias.scope !79
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !25, !noalias !79 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %6, null
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !79 ; 2 uses
-  %7 = icmp ugt ptr %6, %i.an
-  %.08.i.i.i = select i1 %7, ptr %6, ptr %i.an    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.m, label %bb.k
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !25, !noalias !79 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.an, null
+  br i1 %.not5.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %6 = load ptr, ptr %5, align 8, !noalias !79    ; 2 uses
+  %7 = icmp ugt ptr %i.an, %6
+  %.08.i.i.i = select i1 %7, ptr %i.an, ptr %6
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29, !noalias !79 ; 2 uses
   %i.aq = ptrtoint ptr %.08.i.i.i to i64
@@ -804,18 +798,16 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !22, !alias.scope !88
   store i8 0, ptr %i.ak, align 8, !tbaa !24, !alias.scope !88
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !25, !noalias !88 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %6, null
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !88 ; 2 uses
-  %7 = icmp ugt ptr %6, %i.an
-  %.08.i.i.i = select i1 %7, ptr %6, ptr %i.an    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.m, label %bb.k
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !25, !noalias !88 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.an, null
+  br i1 %.not5.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %6 = load ptr, ptr %5, align 8, !noalias !88    ; 2 uses
+  %7 = icmp ugt ptr %i.an, %6
+  %.08.i.i.i = select i1 %7, ptr %i.an, ptr %6
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29, !noalias !88 ; 2 uses
   %i.aq = ptrtoint ptr %.08.i.i.i to i64
@@ -1051,18 +1043,16 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !22, !alias.scope !97
   store i8 0, ptr %i.ak, align 8, !tbaa !24, !alias.scope !97
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !25, !noalias !97 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %6, null
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !97 ; 2 uses
-  %7 = icmp ugt ptr %6, %i.an
-  %.08.i.i.i = select i1 %7, ptr %6, ptr %i.an    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.m, label %bb.k
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !25, !noalias !97 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.an, null
+  br i1 %.not5.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %6 = load ptr, ptr %5, align 8, !noalias !97    ; 2 uses
+  %7 = icmp ugt ptr %i.an, %6
+  %.08.i.i.i = select i1 %7, ptr %i.an, ptr %6
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29, !noalias !97 ; 2 uses
   %i.aq = ptrtoint ptr %.08.i.i.i to i64
@@ -1298,18 +1288,16 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   store i64 0, ptr %i.al, align 8, !tbaa !22, !alias.scope !106
   store i8 0, ptr %i.ak, align 8, !tbaa !24, !alias.scope !106
-  %5 = getelementptr inbounds nuw i8, ptr %2, i64 64
-  %6 = load ptr, ptr %5, align 8, !tbaa !25, !noalias !106 ; 3 uses
-  %.not.i.not.i.i = icmp eq ptr %6, null
-  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %i.an = load ptr, ptr %i.am, align 8, !noalias !106 ; 2 uses
-  %7 = icmp ugt ptr %6, %i.an
-  %.08.i.i.i = select i1 %7, ptr %6, ptr %i.an    ; 2 uses
-  %.not5.i.i = icmp eq ptr %.08.i.i.i, null
-  %.not.i.i = select i1 %.not.i.not.i.i, i1 true, i1 %.not5.i.i
-  br i1 %.not.i.i, label %bb.m, label %bb.k
+  %i.am = getelementptr inbounds nuw i8, ptr %2, i64 64
+  %i.an = load ptr, ptr %i.am, align 8, !tbaa !25, !noalias !106 ; 3 uses
+  %.not5.i.i = icmp eq ptr %i.an, null
+  br i1 %.not5.i.i, label %bb.m, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 48
+  %6 = load ptr, ptr %5, align 8, !noalias !106   ; 2 uses
+  %7 = icmp ugt ptr %i.an, %6
+  %.08.i.i.i = select i1 %7, ptr %i.an, ptr %6
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29, !noalias !106 ; 2 uses
   %i.aq = ptrtoint ptr %.08.i.i.i to i64
