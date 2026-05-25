@@ -201,14 +201,14 @@ bb.w:                                             ; preds = %bb.u
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 384
   %i.bt = load ptr, ptr %i.bs, align 8
   %i.bu = invoke noundef i32 %i.bt(ptr noundef nonnull align 8 dereferenceable(120) %i.bq, i32 noundef 0)
-          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.x, !inline_history !248 ; 4 uses
+          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.x, !inline_history !248 ; 6 uses
 
 _ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit: ; preds = %bb.w
   %i.bv = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #38
           to label %.noexc37 unwind label %bb.x   ; 14 uses
 
 .noexc37:                                         ; preds = %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit
-  %i.bw = sext i32 %i.bu to i64                   ; 4 uses
+  %i.bw = sext i32 %i.bu to i64                   ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
   store i8 0, ptr %i.bx, align 8, !tbaa !119, !noalias !382
   %i.by = getelementptr inbounds nuw i8, ptr %i.bv, i64 9
@@ -225,12 +225,12 @@ _ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10B
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bv, i64 36
   store i32 %i.bu, ptr %i.cd, align 4, !tbaa !236, !noalias !382
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bv, i64 40
-  %.sroa.speculated7.i.i.i = tail call i64 @llvm.smax.i64(i64 %i.bw, i64 -32768)
-  %i.cf = trunc i64 %.sroa.speculated7.i.i.i to i16
+  %.sroa.speculated7.i.i.i = tail call i32 @llvm.smax.i32(i32 %i.bu, i32 -32768)
+  %i.cf = trunc i32 %.sroa.speculated7.i.i.i to i16
   store i16 %i.cf, ptr %i.ce, align 8, !tbaa !237, !noalias !382
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bv, i64 42
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.smin.i64(i64 %i.bw, i64 32767)
-  %i.ch = trunc i64 %.sroa.speculated.i.i.i to i16
+  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.bu, i32 32767)
+  %i.ch = trunc i32 %.sroa.speculated.i.i.i to i16
   store i16 %i.ch, ptr %i.cg, align 2, !tbaa !238, !noalias !382
   %i.ci = getelementptr inbounds nuw i8, ptr %i.bv, i64 44
   store i8 1, ptr %i.ci, align 4, !tbaa !239, !noalias !382
@@ -633,14 +633,14 @@ bb.s:                                             ; preds = %bb.q
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 384
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = invoke noundef i32 %i.bm(ptr noundef nonnull align 8 dereferenceable(120) %i.bj, i32 noundef 0)
-          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.t, !inline_history !248 ; 3 uses
+          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.t, !inline_history !248 ; 4 uses
 
 _ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit: ; preds = %bb.s
   %i.bo = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #38
           to label %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit37 unwind label %bb.t ; 14 uses
 
 _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit37: ; preds = %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit
-  %i.bp = sext i32 %i.bn to i64                   ; 2 uses
+  %i.bp = sext i32 %i.bn to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   store i8 0, ptr %i.bq, align 8, !tbaa !119, !noalias !424
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 9
@@ -659,8 +659,8 @@ _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
   store i16 -32768, ptr %i.bx, align 8, !tbaa !237, !noalias !424
   %i.by = getelementptr inbounds nuw i8, ptr %i.bo, i64 42
-  %.sroa.speculated.i.i.i = tail call i64 @llvm.smin.i64(i64 %i.bp, i64 32767)
-  %i.bz = trunc i64 %.sroa.speculated.i.i.i to i16
+  %.sroa.speculated.i.i.i = tail call i32 @llvm.smin.i32(i32 %i.bn, i32 32767)
+  %i.bz = trunc i32 %.sroa.speculated.i.i.i to i16
   store i16 %i.bz, ptr %i.by, align 2, !tbaa !238, !noalias !424
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bo, i64 44
   store i8 0, ptr %i.ca, align 4, !tbaa !239, !noalias !424
@@ -1063,14 +1063,14 @@ bb.s:                                             ; preds = %bb.q
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 384
   %i.bm = load ptr, ptr %i.bl, align 8
   %i.bn = invoke noundef i32 %i.bm(ptr noundef nonnull align 8 dereferenceable(120) %i.bj, i32 noundef 0)
-          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.t, !inline_history !248 ; 3 uses
+          to label %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit unwind label %bb.t, !inline_history !248 ; 4 uses
 
 _ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit: ; preds = %bb.s
   %i.bo = invoke noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #38
           to label %_ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit37 unwind label %bb.t ; 14 uses
 
 _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED2Ev.exit37: ; preds = %_ZN8facebook5velox4exec12_GLOBAL__N_111singleValueIiEET_RKSt10shared_ptrINS0_10BaseVectorEE.exit
-  %i.bp = sext i32 %i.bn to i64                   ; 2 uses
+  %i.bp = sext i32 %i.bn to i64
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   store i8 0, ptr %i.bq, align 8, !tbaa !119, !noalias !470
   %i.br = getelementptr inbounds nuw i8, ptr %i.bo, i64 9
@@ -1087,8 +1087,8 @@ _ZNSt10unique_ptrIN8facebook5velox6common11BigintRangeESt14default_deleteIS3_EED
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bo, i64 36
   store i32 2147483647, ptr %i.bw, align 4, !tbaa !236, !noalias !470
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bo, i64 40
-  %.sroa.speculated7.i.i.i = tail call i64 @llvm.smax.i64(i64 %i.bp, i64 -32768)
-  %i.by = trunc i64 %.sroa.speculated7.i.i.i to i16
+  %.sroa.speculated7.i.i.i = tail call i32 @llvm.smax.i32(i32 %i.bn, i32 -32768)
+  %i.by = trunc i32 %.sroa.speculated7.i.i.i to i16
   store i16 %i.by, ptr %i.bx, align 8, !tbaa !237, !noalias !470
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bo, i64 42
   store i16 32767, ptr %i.bz, align 2, !tbaa !238, !noalias !470
@@ -1490,6 +1490,12 @@ declare i64 @llvm.smin.i64(i64, i64) #31
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.cttz.i16(i16, i1 immarg) #21
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #31
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #31
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
