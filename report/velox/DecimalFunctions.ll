@@ -201,17 +201,15 @@ _ZNK8facebook5velox4exec12VectorReaderINS0_12ShortDecimalINS0_15IntegerVariableI
           to label %bb.h unwind label %bb.m
 
 bb.h:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -300,19 +298,17 @@ bb.p:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.q
@@ -715,17 +711,15 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.n
 
 bb.i:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -814,19 +808,17 @@ bb.q:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.r
@@ -1229,17 +1221,15 @@ _ZNK8facebook5velox4exec12VectorReaderINS0_12ShortDecimalINS0_15IntegerVariableI
           to label %bb.h unwind label %bb.m
 
 bb.h:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -1328,19 +1318,17 @@ bb.p:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.q
@@ -1743,17 +1731,15 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.n
 
 bb.i:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -1842,19 +1828,17 @@ bb.q:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.r
@@ -2257,17 +2241,15 @@ _ZNK8facebook5velox4exec12VectorReaderINS0_12ShortDecimalINS0_15IntegerVariableI
           to label %bb.h unwind label %bb.m
 
 bb.h:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -2356,19 +2338,17 @@ bb.p:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.q
@@ -2771,17 +2751,15 @@ bb.h:                                             ; preds = %bb.g
           to label %bb.i unwind label %bb.n
 
 bb.i:                                             ; preds = %.noexc21
-  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8
-  %.sroa.311.0.extract.trunc.i.i = zext nneg i16 %.sroa.311.0.extract.shift.i.i to i32 ; 2 uses
-  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8
-  %.sroa.3.0.extract.trunc.i.i = zext nneg i16 %.sroa.3.0.extract.shift.i.i to i32 ; 2 uses
-  %5 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i, %.sroa.311.0.extract.trunc.i.i
-  %.sroa.speculated4.i.i = call i32 @llvm.smax.i32(i32 %5, i32 0)
-  %i.ak = trunc nuw i32 %.sroa.speculated4.i.i to i8
+  %.sroa.311.0.extract.shift.i.i = lshr i16 %i.ag, 8 ; 2 uses
+  %.sroa.3.0.extract.shift.i.i = lshr i16 %i.aj, 8 ; 2 uses
+  %5 = sub nsw i16 %.sroa.3.0.extract.shift.i.i, %.sroa.311.0.extract.shift.i.i
+  %.sroa.speculated4.i.i = call i16 @llvm.smax.i16(i16 %5, i16 0)
+  %i.ak = trunc nuw i16 %.sroa.speculated4.i.i to i8
   store i8 %i.ak, ptr %.val17, align 1, !tbaa !8928
-  %6 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i, %.sroa.3.0.extract.trunc.i.i
-  %.sroa.speculated.i.i = call i32 @llvm.smax.i32(i32 %6, i32 0)
-  %i.al = trunc nuw i32 %.sroa.speculated.i.i to i8
+  %6 = sub nsw i16 %.sroa.311.0.extract.shift.i.i, %.sroa.3.0.extract.shift.i.i
+  %.sroa.speculated.i.i = call i16 @llvm.smax.i16(i16 %6, i16 0)
+  %i.al = trunc nuw i16 %.sroa.speculated.i.i to i8
   %i.am = getelementptr inbounds nuw i8, ptr %.val17, i64 1
   store i8 %i.al, ptr %i.am, align 1, !tbaa !8930
   %i.an = getelementptr inbounds nuw i8, ptr %4, i64 96
@@ -2870,19 +2848,17 @@ bb.q:                                             ; preds = %_ZNKSt6vectorISt10s
   %i.bq = getelementptr inbounds nuw i8, ptr %.val16, i64 16
   %i.br = load ptr, ptr %.val16, align 8, !tbaa !582
   %i.bs = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.br)
-  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8
-  %.sroa.311.0.extract.trunc.i.i31 = zext nneg i16 %.sroa.311.0.extract.shift.i.i30 to i32 ; 2 uses
+  %.sroa.311.0.extract.shift.i.i30 = lshr i16 %i.bs, 8 ; 2 uses
   %i.bt = load ptr, ptr %i.bq, align 8, !tbaa !582
   %i.bu = tail call i16 @_ZN8facebook5velox24getDecimalPrecisionScaleERKNS0_4TypeE(ptr noundef nonnull align 8 dereferenceable(18) %i.bt)
-  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8
-  %.sroa.3.0.extract.trunc.i.i33 = zext nneg i16 %.sroa.3.0.extract.shift.i.i32 to i32 ; 2 uses
-  %7 = sub nsw i32 %.sroa.3.0.extract.trunc.i.i33, %.sroa.311.0.extract.trunc.i.i31
-  %.sroa.speculated4.i.i34 = tail call i32 @llvm.smax.i32(i32 %7, i32 0)
-  %i.bv = trunc nuw i32 %.sroa.speculated4.i.i34 to i8
+  %.sroa.3.0.extract.shift.i.i32 = lshr i16 %i.bu, 8 ; 2 uses
+  %7 = sub nsw i16 %.sroa.3.0.extract.shift.i.i32, %.sroa.311.0.extract.shift.i.i30
+  %.sroa.speculated4.i.i32 = tail call i16 @llvm.smax.i16(i16 %7, i16 0)
+  %i.bv = trunc nuw i16 %.sroa.speculated4.i.i32 to i8
   store i8 %i.bv, ptr %.val, align 1, !tbaa !8928
-  %8 = sub nsw i32 %.sroa.311.0.extract.trunc.i.i31, %.sroa.3.0.extract.trunc.i.i33
-  %.sroa.speculated.i.i35 = tail call i32 @llvm.smax.i32(i32 %8, i32 0)
-  %i.bw = trunc nuw i32 %.sroa.speculated.i.i35 to i8
+  %8 = sub nsw i16 %.sroa.311.0.extract.shift.i.i30, %.sroa.3.0.extract.shift.i.i32
+  %.sroa.speculated.i.i33 = tail call i16 @llvm.smax.i16(i16 %8, i16 0)
+  %i.bw = trunc nuw i16 %.sroa.speculated.i.i33 to i8
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 1
   store i8 %i.bw, ptr %i.bx, align 1, !tbaa !8930
   br label %bb.r
@@ -3285,7 +3261,7 @@ declare i64 @llvm.smax.i64(i64, i64) #26
 declare i64 @llvm.smin.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #26
+declare i16 @llvm.smax.i16(i16, i16) #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.usub.sat.i8(i8, i8) #26

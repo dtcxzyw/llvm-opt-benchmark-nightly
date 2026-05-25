@@ -201,17 +201,15 @@ bb.f:                                             ; preds = %._crit_edge
   %.neg = add i32 %.039.lcssa, %6
   %i.am = sub i32 %.neg, %.036.lcssa
   %.neg44 = sdiv i32 %i.am, -2
-  %i.an = add i32 %.neg44, %.039.lcssa
-  %i.ao = sext i32 %i.an to i64                   ; 2 uses
+  %i.an = add i32 %.neg44, %.039.lcssa            ; 2 uses
+  %i.ao = sext i32 %i.an to i64
   %i.ap = add nsw i64 %i.ao, %i.f
   %i.aq = sext i32 %2 to i64
   %i.ar = icmp sgt i64 %i.ap, %i.aq
   %i.as = sub nsw i32 %2, %6
-  %9 = sext i32 %i.as to i64
-  %.0 = select i1 %i.ar, i64 %9, i64 %i.ao
-  %spec.store.select = call i64 @llvm.smax.i64(i64 %.0, i64 0)
-  %10 = trunc nuw nsw i64 %spec.store.select to i32
-  store i32 %10, ptr %8, align 4, !tbaa !5
+  %spec.select50 = select i1 %i.ar, i32 %i.as, i32 %i.an
+  %spec.store.select = call i32 @llvm.smax.i32(i32 %spec.select50, i32 0)
+  store i32 %spec.store.select, ptr %8, align 4, !tbaa !5
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge
