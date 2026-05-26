@@ -201,11 +201,10 @@ declare noundef zeroext i1 @_ZN4absl12lts_2025051219str_format_internal16Convert
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_123ConvertIntImplInnerSlowERKNS2_9IntDigitsENS1_24FormatConversionSpecImplEPNS1_14FormatSinkImplE(ptr %.0.val, i64 %.8.val, i64 %0, i32 %1, ptr noundef %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.fr = freeze i64 %0                            ; 7 uses
-  %.sroa.4.0.extract.shift = lshr i64 %.fr, 8     ; 2 uses
+  %.sroa.4.0.extract.shift = lshr i64 %0, 8       ; 2 uses
   %.sroa.4.0.extract.trunc = trunc i64 %.sroa.4.0.extract.shift to i8 ; 4 uses
-  %.sroa.829.0.extract.shift = lshr i64 %.fr, 32
-  %.inv = icmp slt i64 %.fr, 0
+  %.sroa.829.0.extract.shift = lshr i64 %0, 32
+  %.inv = icmp slt i64 %0, 0
   %i.a = load i8, ptr %.0.val, align 1, !tbaa !7  ; 2 uses
   %i.b = icmp slt i8 %i.a, 49
   %i.c = zext i1 %i.b to i64                      ; 6 uses
@@ -213,7 +212,7 @@ bb.a:
   %i.e = sub i64 %.8.val, %i.c                    ; 8 uses
   %i.f = tail call i64 @llvm.usub.sat.i64(i64 %.sroa.829.0.extract.shift, i64 %i.e)
   %i.g = icmp eq i8 %i.a, 45
-  %i.h = and i64 %.fr, 254
+  %i.h = and i64 %0, 254
   %switch.i = icmp ne i64 %i.h, 2                 ; 3 uses
   %brmerge.i = or i1 %switch.i, %i.g
   %.mux.i = select i1 %switch.i, ptr null, ptr @.str.3
@@ -238,7 +237,7 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_110SignColumnEbNS1_24For
   %.sroa.5.0.i = phi ptr [ %.mux.i, %bb.a ], [ %spec.select.i, %bb.c ], [ @.str.4, %bb.b ] ; 2 uses
   %.sroa.03.0.i = phi i64 [ %.mux6.i, %bb.a ], [ %spec.select5.i, %bb.c ], [ 1, %bb.b ] ; 2 uses
   %i.k = tail call i64 @llvm.usub.sat.i64(i64 %i.f, i64 %.sroa.03.0.i)
-  %.sroa.01.0.extract.trunc.i = trunc i64 %.fr to i8 ; 3 uses
+  %.sroa.01.0.extract.trunc.i = trunc i64 %0 to i8 ; 3 uses
   %i.l = and i8 %.sroa.01.0.extract.trunc.i, -2
   %switch.i49 = icmp eq i8 %i.l, 6
   br i1 %switch.i49, label %bb.e, label %bb.d
@@ -250,7 +249,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %or.cond44, label %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_113BaseIndicatorERKNS2_9IntDigitsENS1_24FormatConversionSpecImplE.exit, label %bb.f
 
 bb.e:                                             ; preds = %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_110SignColumnEbNS1_24FormatConversionSpecImplE.exit
-  %i.n = and i64 %.fr, 2048
+  %i.n = and i64 %0, 2048
   %.not.i52 = icmp eq i64 %i.n, 0
   %i.o = icmp eq i64 %.8.val, %i.c
   %or.cond = select i1 %.not.i52, i1 true, i1 %i.o
@@ -271,7 +270,7 @@ _ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_113BaseIndicatorERKNS2_9
   %spec.select45 = zext i32 %narrow to i64        ; 3 uses
   %i.t = and i8 %.sroa.4.0.extract.trunc, 8
   %i.u = icmp ne i8 %i.t, 0
-  %i.v = and i64 %.fr, 255
+  %i.v = and i64 %0, 255
   %i.w = icmp eq i64 %i.v, 4
   %or.cond47 = and i1 %i.w, %i.u
   br i1 %or.cond47, label %bb.g, label %bb.j
@@ -292,26 +291,22 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_113BaseIndicatorERKNS2_9IntDigitsENS1_24FormatConversionSpecImplE.exit
   %.039 = phi i64 [ %.sroa.speculated, %bb.i ], [ %spec.select45, %bb.h ], [ %spec.select45, %_ZN4absl12lts_2025051219str_format_internal12_GLOBAL__N_113BaseIndicatorERKNS2_9IntDigitsENS1_24FormatConversionSpecImplE.exit ]
-  %i.aa = tail call noundef i64 @llvm.usub.sat.i64(i64 %.039, i64 %i.e) ; 3 uses
+  %i.aa = tail call noundef i64 @llvm.usub.sat.i64(i64 %.039, i64 %i.e) ; 4 uses
   %i.ab = tail call i64 @llvm.usub.sat.i64(i64 %i.r, i64 %i.aa)
   %i.ac = select i1 %.inv, i64 0, i64 %i.ab       ; 4 uses
   %i.ad = trunc i64 %.sroa.4.0.extract.shift to i1 ; 3 uses
   %i.ae = select i1 %i.ad, i64 0, i64 %i.ac       ; 5 uses
-  br i1 %i.s, label %bb.l, label %bb.k
+  %3 = and i8 %.sroa.4.0.extract.trunc, 16
+  %.not48 = icmp eq i8 %3, 0
+  %or.cond50 = or i1 %i.s, %.not48
+  br i1 %or.cond50, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %3 = and i8 %.sroa.4.0.extract.trunc, 16
-  %.not48 = icmp eq i8 %3, 0                      ; 2 uses
-  %i.af = select i1 %.not48, i64 0, i64 %i.ae
-  %spec.select42 = add i64 %i.af, %i.aa           ; 2 uses
-  br i1 %.not48, label %bb.l, label %.thread
-
-.thread:                                          ; preds = %bb.k
-  %4 = select i1 %i.ad, i64 %i.ac, i64 0
+  %4 = add i64 %i.ae, %i.aa
+  %i.af = select i1 %i.ad, i64 %i.ac, i64 0
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit
 
-bb.l:                                             ; preds = %bb.k, %bb.j
-  %.0 = phi i64 [ %i.aa, %bb.j ], [ %spec.select42, %bb.k ] ; 2 uses
+bb.l:                                             ; preds = %bb.j
   %i.ag = select i1 %i.ad, i64 %i.ac, i64 0       ; 2 uses
   %i.ah = icmp eq i64 %i.ae, 0
   br i1 %i.ah, label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit, label %bb.m
@@ -377,9 +372,9 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i
   store ptr %i.bh, ptr %i.am, align 8, !tbaa !20
   br label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit
 
-_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit: ; preds = %.thread, %bb.l, %._crit_edge.i
-  %i.bi = phi i64 [ %4, %.thread ], [ %i.ag, %bb.l ], [ %i.ag, %._crit_edge.i ] ; 5 uses
-  %.043 = phi i64 [ %spec.select42, %.thread ], [ %.0, %bb.l ], [ %.0, %._crit_edge.i ] ; 5 uses
+_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendEmc.exit: ; preds = %bb.k, %bb.l, %._crit_edge.i
+  %i.bi = phi i64 [ %i.af, %bb.k ], [ %i.ag, %bb.l ], [ %i.ag, %._crit_edge.i ] ; 5 uses
+  %.043 = phi i64 [ %4, %bb.k ], [ %i.aa, %bb.l ], [ %i.aa, %._crit_edge.i ] ; 5 uses
   %i.bj = icmp eq i64 %.sroa.03.0.i, 0
   br i1 %i.bj, label %_ZN4absl12lts_2025051219str_format_internal14FormatSinkImpl6AppendESt17basic_string_viewIcSt11char_traitsIcEE.exit, label %bb.p
 

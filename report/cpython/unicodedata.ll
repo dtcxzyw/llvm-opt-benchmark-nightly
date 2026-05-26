@@ -201,8 +201,7 @@ bb.ah:                                            ; preds = %bb.ah, %.preheader.
   %i.em = load i8, ptr %i.el, align 1, !tbaa !22  ; 2 uses
   %i.en = zext i8 %i.em to i32
   %i.eo = shl i32 %i.en, %.012.i.i61.i
-  %.fr96 = freeze i32 %i.eo
-  %i.ep = or i32 %.fr96, %.013.i.i60.i            ; 2 uses
+  %i.ep = or i32 %i.eo, %.013.i.i60.i             ; 2 uses
   %i.eq = add i32 %.014.i.i59.i, 1
   %i.er = add i32 %.012.i.i61.i, 7
   %.not.i.i62.i = icmp slt i8 %i.em, 0
@@ -605,8 +604,7 @@ _getrecord_ex.exit212:                            ; preds = %PyUnicode_READ.exit
   %i.ia = icmp ne i8 %i.hz, 0
   %.not170 = icmp ugt i8 %i.hz, %i.gl
   %or.cond180 = select i1 %i.ia, i1 %.not170, i1 false
-  %cond.fr = freeze i1 %or.cond180
-  br i1 %cond.fr, label %bb.ae, label %bb.ai
+  br i1 %or.cond180, label %bb.ae, label %bb.ai
 
 bb.ai:                                            ; preds = %_getrecord_ex.exit212, %PyUnicode_WRITE.exit208
   switch i32 %i.en, label %PyUnicode_READ.exit214 [

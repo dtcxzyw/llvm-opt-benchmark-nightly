@@ -201,8 +201,7 @@ rb_integer_type_p.exit.i.i:                       ; preds = %bb.b
 rb_float_value_inline.exit.i:                     ; preds = %rb_integer_type_p.exit.i.i
   %i.n = getelementptr i8, ptr %i.k, i64 16
   %i.o = load double, ptr %i.n, align 8, !tbaa !19
-  %.fr23 = freeze double %i.o
-  %i.p = tail call double @llvm.fabs.f64(double %.fr23) #22
+  %i.p = tail call double @llvm.fabs.f64(double %i.o) #22
   %i.q = fcmp oeq double %i.p, +inf
   br i1 %i.q, label %f_infinite_p.exit.thread13, label %f_infinite_p.exit.thread
 
@@ -242,8 +241,7 @@ rb_integer_type_p.exit.i.i5:                      ; preds = %bb.c
 rb_float_value_inline.exit.i9:                    ; preds = %rb_integer_type_p.exit.i.i5
   %i.ag = getelementptr i8, ptr %i.ad, i64 16
   %i.ah = load double, ptr %i.ag, align 8, !tbaa !19
-  %.fr25 = freeze double %i.ah
-  %i.ai = tail call double @llvm.fabs.f64(double %.fr25) #22
+  %i.ai = tail call double @llvm.fabs.f64(double %i.ah) #22
   %i.aj = fcmp oeq double %i.ai, +inf
   br i1 %i.aj, label %f_infinite_p.exit.thread13, label %f_infinite_p.exit10.thread
 

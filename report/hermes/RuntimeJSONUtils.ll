@@ -201,11 +201,12 @@ _ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit: ; preds = %bb.t
   %i.di = and i64 %.sroa.0.0.copyload.i.i.i81, 281474976710655
   %i.dj = inttoptr i64 %i.di to ptr               ; 3 uses
   %i.dk = load i32, ptr %i.dj, align 4
-  %.fr = freeze i32 %i.dk                         ; 2 uses
-  %.mask.i.i.i.i.i.i.i82 = and i32 %.fr, -16777216
-  switch i32 %.mask.i.i.i.i.i.i.i82, label %4 [
+  %.mask.i.i.i.i.i.i.i82 = and i32 %i.dk, -16777216
+  switch i32 %.mask.i.i.i.i.i.i.i82, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread [
     i32 939524096, label %bb.u
     i32 922746880, label %bb.w
+    i32 905969664, label %_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit
+    i32 1124073472, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit
   ]
 
 bb.u:                                             ; preds = %_ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit
@@ -234,14 +235,7 @@ bb.x:                                             ; preds = %bb.w
   store i64 %i.du, ptr %i.dv, align 8, !tbaa !95
   br label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread
 
-4:                                                ; preds = %_ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
-  switch i32 %.mask.i.i.i.i.i.i.i.i.i, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread [
-    i32 905969664, label %_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit
-    i32 1124073472, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit
-  ]
-
-_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit: ; preds = %4
+_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit: ; preds = %_ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dj, i64 20
   %i.dx = load i8, ptr %i.dw, align 4, !tbaa !177, !range !180, !noundef !67
   %i.dy = zext nneg i8 %i.dx to i64
@@ -249,7 +243,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit: ; preds =
   store i64 %i.dz, ptr %i.dg, align 8, !tbaa !95
   br label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread
 
-_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit: ; preds = %4
+_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit: ; preds = %_ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit
   %i.ea = load ptr, ptr %0, align 8, !tbaa !88, !nonnull !67, !align !68
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dj, i64 20
   %.sroa.0.0.copyload.i.i.i89 = load i32, ptr %i.eb, align 4, !tbaa !3 ; 2 uses
@@ -262,7 +256,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit: ; preds = 
   store i64 %i.eg, ptr %i.dg, align 8, !tbaa !95
   br label %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread
 
-_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread: ; preds = %4, %bb.t, %bb.x, %bb.v, %_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit, %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit
+_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit.thread: ; preds = %_ZN6hermes2vm5vmisaINS0_8JSNumberEEEbNS0_11HermesValueE.exit, %bb.t, %bb.x, %bb.v, %_ZN6hermes2vm10dyn_vmcastINS0_9JSBooleanEEEPT_NS0_11HermesValueE.exit, %_ZN6hermes2vm10dyn_vmcastINS0_8JSBigIntEEEPT_NS0_11HermesValueE.exit
   %i.eh = load ptr, ptr %i.o, align 8             ; 3 uses
   %i.ei = load i64, ptr %i.eh, align 8            ; 8 uses
   %.mask.i90 = and i64 %i.ei, -140737488355328

@@ -201,9 +201,8 @@ bb.u:                                             ; preds = %bb.j, %bb.p, %bb.t,
   br i1 %or.cond, label %bb.v, label %select.unfold
 
 bb.v:                                             ; preds = %bb.u
-  %i.ba = tail call i32 @FT_Set_Named_Instance(ptr noundef nonnull %1, i32 noundef %i.av) #22
-  %.fr = freeze i32 %i.ba                         ; 2 uses
-  %.not112 = icmp eq i32 %.fr, 0
+  %i.ba = tail call i32 @FT_Set_Named_Instance(ptr noundef nonnull %1, i32 noundef %i.av) #22 ; 2 uses
+  %.not112 = icmp eq i32 %i.ba, 0
   br i1 %.not112, label %select.unfold, label %bb.w
 
 select.unfold:                                    ; preds = %bb.v, %bb.u
@@ -221,7 +220,7 @@ select.unfold:                                    ; preds = %bb.v, %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.l, %bb.v, %bb.d, %select.unfold, %bb.b, %bb.c, %bb.f, %bb.i, %bb.a, %bb.m, %bb.n, %bb.o, %bb.e
-  %.0 = phi i32 [ 0, %bb.e ], [ %i.f, %bb.b ], [ %i.i, %bb.c ], [ 11, %bb.a ], [ %i.t, %bb.f ], [ %i.x, %bb.i ], [ %i.af, %bb.m ], [ %i.ah, %bb.n ], [ %i.aj, %bb.o ], [ %.2.ph, %select.unfold ], [ 2, %bb.d ], [ %i.ae, %bb.l ], [ %.fr, %bb.v ]
+  %.0 = phi i32 [ 0, %bb.e ], [ %i.f, %bb.b ], [ %i.i, %bb.c ], [ 11, %bb.a ], [ %i.t, %bb.f ], [ %i.x, %bb.i ], [ %i.af, %bb.m ], [ %i.ah, %bb.n ], [ %i.aj, %bb.o ], [ %.2.ph, %select.unfold ], [ 2, %bb.d ], [ %i.ae, %bb.l ], [ %i.ba, %bb.v ]
   ret i32 %.0
 }
 
@@ -624,10 +623,9 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   br i1 %i.vb, label %select.unfold, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.vc = call fastcc i32 @TT_Process_Composite_Component(ptr noundef %0, ptr noundef nonnull %i.uw, i32 noundef %i.or, i32 noundef %i.ur)
-  %.fr = freeze i32 %i.vc                         ; 2 uses
-  store i32 %.fr, ptr %i.e, align 4, !tbaa !3
-  %.not314 = icmp eq i32 %.fr, 0
+  %i.vc = call fastcc i32 @TT_Process_Composite_Component(ptr noundef %0, ptr noundef nonnull %i.uw, i32 noundef %i.or, i32 noundef %i.ur) ; 2 uses
+  store i32 %i.vc, ptr %i.e, align 4, !tbaa !3
+  %.not314 = icmp eq i32 %i.vc, 0
   br i1 %.not314, label %select.unfold, label %.thread342
 
 .thread342:                                       ; preds = %bb.ci, %bb.cm

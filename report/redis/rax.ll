@@ -201,15 +201,14 @@ raxFreeNode.exit183:                              ; preds = %.lr.ph317, %bb.ab
 
 bb.ac:                                            ; preds = %raxFreeNode.exit183
   %i.fx = and i32 %i.fv, 4
-  %.not147 = icmp ne i32 %i.fx, 0
+  %.not147 = icmp eq i32 %i.fx, 0
   %.mask149 = and i32 %i.fv, -8
-  %.not148 = icmp eq i32 %.mask149, 8
-  %or.cond166 = or i1 %.not147, %.not148
-  %cond.fr = freeze i1 %or.cond166
+  %.not148 = icmp ne i32 %.mask149, 8
+  %or.cond166.not323 = and i1 %.not147, %.not148
   %i.fy = lshr i32 %i.fv, 3                       ; 2 uses
-  %.not137 = icmp ne i32 %i.fy, 0
-  %or.cond322.not = and i1 %.not137, %cond.fr
-  br i1 %or.cond322.not, label %.lr.ph317, label %.thread203
+  %.not137 = icmp eq i32 %i.fy, 0
+  %or.cond322 = or i1 %or.cond166.not323, %.not137
+  br i1 %or.cond322, label %.thread203, label %.lr.ph317
 
 .thread203:                                       ; preds = %raxFreeNode.exit183, %bb.ac, %bb.aa
   %.in = phi ptr [ %.lcssa, %bb.aa ], [ %i.fu, %bb.ac ], [ %i.fu, %raxFreeNode.exit183 ]
@@ -612,11 +611,10 @@ bb.m:                                             ; preds = %raxGetData.exit, %r
 define dso_local void @raxRecursiveFree(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef readonly captures(address_is_null) %2) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = load i32, ptr %1, align 4
-  %.fr38 = freeze i32 %i.b                        ; 5 uses
-  %i.c = and i32 %.fr38, 4
+  %i.b = load i32, ptr %1, align 4                ; 5 uses
+  %i.c = and i32 %i.b, 4
   %.not = icmp eq i32 %i.c, 0                     ; 2 uses
-  %i.d = lshr i32 %.fr38, 3                       ; 3 uses
+  %i.d = lshr i32 %i.b, 3                         ; 3 uses
   %spec.select = select i1 %.not, i32 %i.d, i32 1 ; 2 uses
   %.not3340 = icmp eq i32 %spec.select, 0
   br i1 %.not3340, label %select.unfold._crit_edge, label %select.unfold.preheader
@@ -632,15 +630,15 @@ select.unfold.preheader:                          ; preds = %bb.a
   %i.k = shl nuw nsw i64 %i.e, 3
   %i.l = select i1 %.not, i64 %i.k, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.l
-  %i.n = and i32 %.fr38, 1
+  %i.n = and i32 %i.b, 1
   %.not27 = icmp eq i32 %i.n, 0
-  %i.o = shl i32 %.fr38, 2
+  %i.o = shl i32 %i.b, 2
   %i.p = and i32 %i.o, 8
   %i.q = xor i32 %i.p, 8
   %narrow = select i1 %.not27, i32 0, i32 %i.q
   %i.r = zext nneg i32 %narrow to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.r
-  %i.t = and i32 %.fr38, 3
+  %i.t = and i32 %i.b, 3
   %.not39 = icmp eq i32 %i.t, 1
   %i.u = select i1 %.not39, i64 -12, i64 -4
   %i.v = getelementptr inbounds i8, ptr %i.s, i64 %i.u
@@ -713,11 +711,10 @@ raxFreeNode.exit:                                 ; preds = %bb.c, %bb.d
 define dso_local void @raxRecursiveFreeWithCtx(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef readonly captures(address_is_null) %2, ptr noundef %3) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
-  %i.b = load i32, ptr %1, align 4
-  %.fr40 = freeze i32 %i.b                        ; 5 uses
-  %i.c = and i32 %.fr40, 4
+  %i.b = load i32, ptr %1, align 4                ; 5 uses
+  %i.c = and i32 %i.b, 4
   %.not = icmp eq i32 %i.c, 0                     ; 2 uses
-  %i.d = lshr i32 %.fr40, 3                       ; 3 uses
+  %i.d = lshr i32 %i.b, 3                         ; 3 uses
   %spec.select = select i1 %.not, i32 %i.d, i32 1 ; 2 uses
   %.not3542 = icmp eq i32 %spec.select, 0
   br i1 %.not3542, label %select.unfold._crit_edge, label %select.unfold.preheader
@@ -733,15 +730,15 @@ select.unfold.preheader:                          ; preds = %bb.a
   %i.k = shl nuw nsw i64 %i.e, 3
   %i.l = select i1 %.not, i64 %i.k, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 %i.l
-  %i.n = and i32 %.fr40, 1
+  %i.n = and i32 %i.b, 1
   %.not29 = icmp eq i32 %i.n, 0
-  %i.o = shl i32 %.fr40, 2
+  %i.o = shl i32 %i.b, 2
   %i.p = and i32 %i.o, 8
   %i.q = xor i32 %i.p, 8
   %narrow = select i1 %.not29, i32 0, i32 %i.q
   %i.r = zext nneg i32 %narrow to i64
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 %i.r
-  %i.t = and i32 %.fr40, 3
+  %i.t = and i32 %i.b, 3
   %.not41 = icmp eq i32 %i.t, 1
   %i.u = select i1 %.not41, i64 -12, i64 -4
   %i.v = getelementptr inbounds i8, ptr %i.s, i64 %i.u

@@ -201,8 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %.val.i = load i32, ptr %i.l, align 8, !tbaa !116
   %i.m = load i32, ptr @je_manual_arena_base, align 4, !tbaa !7
   %i.n = icmp ult i32 %.val.i, %i.m
-  %cond.fr = freeze i1 %i.n
-  br i1 %cond.fr, label %arena_i_reset_destroy_helper.exit.thread, label %arena_i_reset_destroy_helper.exit
+  br i1 %i.n, label %arena_i_reset_destroy_helper.exit.thread, label %arena_i_reset_destroy_helper.exit
 
 arena_i_reset_destroy_helper.exit:                ; preds = %bb.d
   tail call fastcc void @arena_reset_prepare_background_thread(ptr noundef %0, i32 noundef %i.h)
@@ -319,8 +318,7 @@ bb.g:                                             ; preds = %bb.f
   %.val.i = load i32, ptr %i.r, align 8, !tbaa !116
   %i.s = load i32, ptr @je_manual_arena_base, align 4, !tbaa !7
   %i.t = icmp ult i32 %.val.i, %i.s
-  %cond.fr = freeze i1 %i.t
-  br i1 %cond.fr, label %arena_i_reset_destroy_helper.exit.thread, label %arena_i_reset_destroy_helper.exit
+  br i1 %i.t, label %arena_i_reset_destroy_helper.exit.thread, label %arena_i_reset_destroy_helper.exit
 
 arena_i_reset_destroy_helper.exit:                ; preds = %bb.g
   %i.u = tail call i32 @je_arena_nthreads_get(ptr noundef nonnull %i.p, i1 noundef zeroext false) #15
@@ -723,8 +721,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 8 dereferenceable(16) @je_arena_config_default, i64 16, i1 false), !tbaa.struct !187
   store ptr %i.u, ptr %7, align 8, !tbaa !188
   %i.v = call ptr @je_arena_init(ptr noundef %0, i32 noundef %i.k, ptr noundef nonnull %7) #15
-  %.fr = freeze ptr %i.v
-  %i.w = icmp eq ptr %.fr, null
+  %i.w = icmp eq ptr %i.v, null
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
   br i1 %i.w, label %.sink.split, label %.thread104
 

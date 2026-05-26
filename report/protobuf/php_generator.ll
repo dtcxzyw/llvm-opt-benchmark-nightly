@@ -201,23 +201,20 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicy
   %i.la = icmp ne i64 %i.kw, 0
   call void @llvm.assume(i1 %i.la)
   %i.lb = icmp ult i64 %i.kw, 2                   ; 2 uses
-  br i1 %i.kz, label %43, label %bb.bw
+  br i1 %i.kz, label %bb.bh, label %bb.bw
 
-43:                                               ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE22find_or_prepare_insertIS8_EESE_INSI_8iteratorEbERKT_.exit.i.i.i.thread249.i.i.i.i
-  br i1 %i.lb, label %bb.bh, label %bb.bj
-
-bb.bh:                                            ; preds = %43
-  %44 = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i77.i.i.i.i, align 8, !tbaa !94
-  %.not.i.i.i.i.i.i.i.i = icmp ult i64 %44, 131072
-  br i1 %.not.i.i.i.i.i.i.i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i, label %bb.bi
+bb.bh:                                            ; preds = %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE22find_or_prepare_insertIS8_EESE_INSI_8iteratorEbERKT_.exit.i.i.i.thread249.i.i.i.i
+  br i1 %i.lb, label %bb.bi, label %bb.bj
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.lc = load ptr, ptr %i.dt, align 8, !tbaa !100
+  %43 = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i77.i.i.i.i, align 8, !tbaa !94
+  %.not.i.i.i.i.i.i.i.i = icmp ugt i64 %43, 131071
+  %i.lc = load ptr, ptr %i.dt, align 8
   %i.ld = icmp eq ptr %i.lc, %i.ii
-  %cond.fr.i.i.i.i.i = freeze i1 %i.ld
-  br i1 %cond.fr.i.i.i.i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.thread9.i.i.i.i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i
+  %or.cond.i.i.i.i = select i1 %.not.i.i.i.i.i.i.i.i, i1 %i.ld, i1 false
+  br i1 %or.cond.i.i.i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.thread9.i.i.i.i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i
 
-bb.bj:                                            ; preds = %43
+bb.bj:                                            ; preds = %bb.bh
   %i.le = load ptr, ptr %i.dt, align 8, !tbaa !52 ; 2 uses
   call void @llvm.prefetch.p0(ptr %i.le, i32 0, i32 1, i32 1)
   %i.lf = ptrtoint ptr %i.ii to i64               ; 2 uses
@@ -287,7 +284,7 @@ _ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicy
   store i64 0, ptr %.sroa.4.0..sroa_idx.i.i.i77.i.i.i.i, align 8, !tbaa !51
   br label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i
 
-_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.thread9.i.i.i.i.i, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.i.i.i.i.i, %bb.bi, %bb.bh
+_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE5eraseIS8_EEmRKT_.exit.i.i.i.i: ; preds = %._crit_edge.i.i.i.i.i.i.i, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.thread9.i.i.i.i.i, %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashMapPolicyIPKN6google8protobuf14FileDescriptorEiEENS1_6HashEqIS8_vE4HashENSB_2EqESaISt4pairIKS8_iEEE4findIS8_EENSI_8iteratorERKT_.exit.i.i.i.i.i, %bb.bi
   %i.mm = load i64, ptr %21, align 8, !tbaa !93, !noalias !145 ; 5 uses
   %i.mn = icmp ne i64 %i.mm, 0
   call void @llvm.assume(i1 %i.mn)
@@ -690,10 +687,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94: ; preds = %bb.
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i96:   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit94
   %i.ht = sub nuw i64 %.sroa.speculated.i, %i.hr
   %i.hu = getelementptr inbounds nuw i8, ptr %i.f, i64 %i.hr
-  %i.hv = call ptr @memchr(ptr noundef nonnull %i.hu, i32 noundef 47, i64 noundef %i.ht) #26
-  %.fr = freeze ptr %i.hv                         ; 2 uses
-  %.not.i.i97 = icmp eq ptr %.fr, null
-  %i.hw = ptrtoint ptr %.fr to i64
+  %i.hv = call ptr @memchr(ptr noundef nonnull %i.hu, i32 noundef 47, i64 noundef %i.ht) #26 ; 2 uses
+  %.not.i.i97 = icmp eq ptr %i.hv, null
+  %i.hw = ptrtoint ptr %i.hv to i64
   %i.hx = sub i64 %i.hw, %i.gh
   %i.hy = trunc i64 %i.hx to i32                  ; 2 uses
   %.not = icmp eq i32 %i.hy, -1
@@ -1096,8 +1092,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !100
   %i.h = load ptr, ptr %1, align 8, !tbaa !100
   %i.i = icmp eq ptr %i.g, %i.h
-  %cond.fr = freeze i1 %i.i
-  br i1 %cond.fr, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
+  br i1 %i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16

@@ -200,12 +200,11 @@ select.unfold.peel.next:
   %i.b = load i8, ptr %i.a, align 1, !tbaa !16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.d = load i8, ptr %i.c, align 1, !tbaa !16
-  %.not.i = icmp ne i8 %i.d, %i.b
-  %cond.fr = freeze i1 %.not.i
+  %.not.i.not = icmp eq i8 %i.d, %i.b
   br label %select.unfold
 
 select.unfold:                                    ; preds = %select.unfold, %select.unfold.peel.next
-  br i1 %cond.fr, label %.loopexit, label %select.unfold, !llvm.loop !20
+  br i1 %.not.i.not, label %select.unfold, label %.loopexit, !llvm.loop !20
 
 .loopexit:                                        ; preds = %select.unfold
   %i.e = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #15

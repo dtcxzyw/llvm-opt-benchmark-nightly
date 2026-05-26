@@ -201,10 +201,9 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not12.i, label %bb.k, label %.thread.i
 
 bb.k:                                             ; preds = %bb.j
-  %i.w = call i64 @_PyDeadline_Get(i64 noundef %i.l) #14
-  %.fr.i = freeze i64 %i.w                        ; 3 uses
-  store i64 %.fr.i, ptr %i.a, align 8, !tbaa !214
-  %i.x = icmp slt i64 %.fr.i, 0
+  %i.w = call i64 @_PyDeadline_Get(i64 noundef %i.l) #14 ; 3 uses
+  store i64 %i.w, ptr %i.a, align 8, !tbaa !214
+  %i.x = icmp slt i64 %i.w, 0
   br i1 %i.x, label %select.unfold.i, label %bb.l
 
 .thread.i:                                        ; preds = %bb.l, %bb.j, %bb.h, %bb.i, %bb.g
@@ -215,7 +214,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  %i.y = call i32 @_PyTime_AsTimespec(i64 noundef %.fr.i, ptr noundef nonnull %4) #14
+  %i.y = call i32 @_PyTime_AsTimespec(i64 noundef %i.w, ptr noundef nonnull %4) #14
   %i.z = icmp slt i32 %i.y, 0
   br i1 %i.z, label %.thread.i, label %.lr.ph.i
 

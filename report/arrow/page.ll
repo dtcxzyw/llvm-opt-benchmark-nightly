@@ -201,15 +201,14 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.v, %bb.w, %bb.t
-  %.167 = phi i64 [ %i.ax, %bb.t ], [ %i.k, %bb.v ], [ %i.k, %bb.x ], [ %i.k, %bb.w ]
+  %.167 = phi i64 [ %i.ax, %bb.t ], [ %i.k, %bb.v ], [ %i.k, %bb.x ], [ %i.k, %bb.w ] ; 2 uses
   %.159 = phi ptr [ %.056127, %bb.t ], [ %.056127, %bb.v ], [ %spec.select, %bb.x ], [ %.058126, %bb.w ] ; 2 uses
-  %.167.fr = freeze i64 %.167                     ; 2 uses
-  %i.bo = icmp slt i64 %.167.fr, 1
-  %or.cond = or i1 %.054.in86, %i.bo
+  %i.bo = icmp slt i64 %.167, 1
+  %or.cond = select i1 %.054.in86, i1 true, i1 %i.bo
   br i1 %or.cond, label %mi_page_to_full.exit.thread, label %mi_page_to_full.exit
 
 mi_page_to_full.exit:                             ; preds = %bb.y, %.sink.split.i.i, %bb.s, %mi_page_thread_free_collect.exit.i.i, %bb.n, %bb.m, %bb.k
-  %.369 = phi i64 [ %.167.fr, %bb.y ], [ %i.k, %bb.k ], [ %i.k, %bb.m ], [ %i.k, %bb.n ], [ %i.k, %mi_page_thread_free_collect.exit.i.i ], [ %i.k, %bb.s ], [ %i.k, %.sink.split.i.i ]
+  %.369 = phi i64 [ %.167, %bb.y ], [ %i.k, %bb.k ], [ %i.k, %bb.m ], [ %i.k, %bb.n ], [ %i.k, %mi_page_thread_free_collect.exit.i.i ], [ %i.k, %bb.s ], [ %i.k, %.sink.split.i.i ]
   %.265 = phi i64 [ %.063125, %bb.y ], [ %i.ab, %bb.k ], [ %i.ab, %bb.m ], [ %i.ab, %bb.n ], [ %i.ab, %mi_page_thread_free_collect.exit.i.i ], [ %i.ab, %bb.s ], [ %i.ab, %.sink.split.i.i ]
   %.361 = phi ptr [ %.159, %bb.y ], [ %.058126, %bb.k ], [ %.058126, %bb.m ], [ %.058126, %bb.n ], [ %.058126, %mi_page_thread_free_collect.exit.i.i ], [ %.058126, %bb.s ], [ %.058126, %.sink.split.i.i ] ; 2 uses
   %.not = icmp eq ptr %i.i, null

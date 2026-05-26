@@ -201,8 +201,7 @@ bb.i:                                             ; preds = %bb.g
   %i.bg = getelementptr inbounds nuw [2 x i8], ptr %i.bf, i64 %i.g
   %i.bh = load i16, ptr %i.bg, align 2, !tbaa !10
   %i.bi = add nsw i64 %.08298, -8
-  %.fr = freeze i16 %i.bh
-  %i.bj = icmp eq i16 %.fr, 0
+  %i.bj = icmp eq i16 %i.bh, 0
   br i1 %i.bj, label %select.unfold, label %.thread, !llvm.loop !15
 
 select.unfold:                                    ; preds = %bb.i, %bb.d, %bb.f, %bb.h, %bb.b
@@ -605,10 +604,9 @@ bb.a:
   br i1 %i.b, label %_ZN4utf88internal15sequence_lengthIPKcEENSt15iterator_traitsIT_E15difference_typeES5_.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load i8, ptr %i.a, align 1, !tbaa !9
-  %.fr47 = freeze i8 %i.c                         ; 2 uses
-  %i.d = zext i8 %.fr47 to i32                    ; 7 uses
-  %i.e = icmp sgt i8 %.fr47, -1                   ; 2 uses
+  %i.c = load i8, ptr %i.a, align 1, !tbaa !9     ; 2 uses
+  %i.d = zext i8 %i.c to i32                      ; 7 uses
+  %i.e = icmp sgt i8 %i.c, -1                     ; 2 uses
   br i1 %i.e, label %_ZN4utf88internal14get_sequence_1IPKcEENS0_9utf_errorERT_S5_Rj.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

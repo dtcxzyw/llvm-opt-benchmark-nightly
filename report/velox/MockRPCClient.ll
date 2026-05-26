@@ -201,8 +201,7 @@ _ZN8facebook5velox3rpc12_GLOBAL__N_114threadLocalRngEv.exit: ; preds = %bb.a, %_
   %i.ab = fptoui x86_fp80 %i.aa to i64            ; 2 uses
   %i.ac = add i64 %i.ab, 52
   %i.ad = udiv i64 %i.ac, %i.ab
-  %.fr.i.i.i.i = freeze i64 %i.ad
-  %spec.select.i.i.i.i = call i64 @llvm.umax.i64(i64 %.fr.i.i.i.i, i64 1)
+  %spec.select.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ad, i64 1)
   br label %select.unfold.i.i.i.i
 
 bb.i:                                             ; preds = %select.unfold.i.i.i.i
@@ -605,8 +604,7 @@ bb.t:                                             ; preds = %_ZNSt13random_devic
   %i.bz = fptoui x86_fp80 %i.by to i64            ; 2 uses
   %i.ca = add i64 %i.bz, 52
   %i.cb = udiv i64 %i.ca, %i.bz
-  %.fr.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = freeze i64 %i.cb
-  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %.fr.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 1)
+  %spec.select.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.cb, i64 1)
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bv, i64 4992 ; 2 uses
   %.phi.trans.insert.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.bv, i64 1816
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bv, i64 4984 ; 2 uses

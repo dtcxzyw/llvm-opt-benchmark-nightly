@@ -201,8 +201,7 @@ bb.d:                                             ; preds = %.noexc
   %i.aw = extractvalue { ptr, ptr } %i.at, 1
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !77
-  %.fr34.i = freeze i32 %i.ay
-  %i.az = and i32 %.fr34.i, 3
+  %i.az = and i32 %i.ay, 3
   %.not18.i = icmp eq i32 %i.az, 0
   br i1 %.not18.i, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.thread24.i, label %bb.j
 
@@ -241,8 +240,7 @@ bb.e:                                             ; preds = %.noexc21
   %i.bp = extractvalue { ptr, ptr } %i.bm, 1
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 32
   %i.br = load i32, ptr %i.bq, align 8, !tbaa !77
-  %.fr.i = freeze i32 %i.br
-  %i.bs = and i32 %.fr.i, 2
+  %i.bs = and i32 %i.br, 2
   %.not18.1.i = icmp eq i32 %i.bs, 0
   br i1 %.not18.1.i, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.2.i, label %bb.j
 
@@ -276,8 +274,7 @@ bb.f:                                             ; preds = %.noexc22
   %i.cd = extractvalue { ptr, ptr } %i.ca, 1
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 32
   %i.cf = load i32, ptr %i.ce, align 8, !tbaa !77
-  %.fr35.i = freeze i32 %i.cf
-  %i.cg = and i32 %.fr35.i, 2
+  %i.cg = and i32 %i.cf, 2
   %.not18.2.i = icmp eq i32 %i.cg, 0
   br i1 %.not18.2.i, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.thread24.2.i, label %bb.j
 
@@ -316,8 +313,7 @@ bb.g:                                             ; preds = %.noexc23
   %i.cw = extractvalue { ptr, ptr } %i.ct, 1
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 32
   %i.cy = load i32, ptr %i.cx, align 8, !tbaa !77
-  %.fr36.i = freeze i32 %i.cy
-  %i.cz = and i32 %.fr36.i, 2
+  %i.cz = and i32 %i.cy, 2
   %.not18.3.i = icmp eq i32 %i.cz, 0
   br i1 %.not18.3.i, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.4.i, label %bb.j
 
@@ -347,8 +343,7 @@ bb.h:                                             ; preds = %.noexc24
   %i.dj = extractvalue { ptr, ptr } %i.dg, 1
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 32
   %i.dl = load i32, ptr %i.dk, align 8, !tbaa !77
-  %.fr.4.i = freeze i32 %i.dl
-  %.not18.4.i = icmp eq i32 %.fr.4.i, 0
+  %.not18.4.i = icmp eq i32 %i.dl, 0
   br i1 %.not18.4.i, label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.5.i, label %bb.j
 
 _ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.5.i: ; preds = %bb.h, %.noexc24, %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.4.i
@@ -377,8 +372,7 @@ bb.i:                                             ; preds = %.noexc25
   %i.dv = extractvalue { ptr, ptr } %i.ds, 1
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 32
   %i.dx = load i32, ptr %i.dw, align 8, !tbaa !77
-  %.fr.5.i = freeze i32 %i.dx
-  %.not18.5.i = icmp eq i32 %.fr.5.i, 0
+  %.not18.5.i = icmp eq i32 %i.dx, 0
   br i1 %.not18.5.i, label %_ZN3upb9generator12_GLOBAL__N_111HasConflictESt17basic_string_viewIcSt11char_traitsIcEERKN4absl12lts_2025051213flat_hash_mapINSt7__cxx1112basic_stringIcS4_SaIcEEENS0_10FieldClassENS7_18container_internal10StringHashENSE_8StringEqESaISt4pairIKSC_SD_EEEE.exit, label %bb.j
 
 bb.j:                                             ; preds = %bb.g, %bb.h, %bb.f, %bb.i, %bb.e, %bb.d

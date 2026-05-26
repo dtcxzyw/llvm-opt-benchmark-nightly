@@ -201,8 +201,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa, %.lr.ph168
   %i.bl = tail call fastcc i32 @validate_pattern_match_value(ptr noundef nonnull %i.be)
-  %.fr = freeze i32 %i.bl
-  %.not128 = icmp eq i32 %.fr, 0
+  %.not128 = icmp eq i32 %i.bl, 0
   br i1 %.not128, label %.thread148, label %..thread136_crit_edge
 
 ..thread136_crit_edge:                            ; preds = %bb.ab
@@ -210,12 +209,12 @@ bb.ab:                                            ; preds = %bb.aa, %.lr.ph168
   br label %.thread136
 
 .thread136:                                       ; preds = %..thread136_crit_edge, %bb.aa, %bb.z
-  %i.bm = phi i64 [ %i.bc, %bb.z ], [ %.pre173, %..thread136_crit_edge ], [ %i.bc, %bb.aa ] ; 2 uses
+  %i.bm = phi i64 [ %.pre173, %..thread136_crit_edge ], [ %i.bc, %bb.aa ], [ %i.bc, %bb.z ] ; 2 uses
   %i.bn = add nuw nsw i64 %.091157167, 1          ; 2 uses
   %i.bo = icmp slt i64 %i.bn, %i.bm
   br i1 %i.bo, label %.lr.ph168, label %.thread140.thread
 
-.thread140.thread:                                ; preds = %.thread136, %.lr.ph159, %bb.y
+.thread140.thread:                                ; preds = %.thread136, %bb.y, %.lr.ph159
   %i.bp = load ptr, ptr %i.ao, align 8, !tbaa !13
   %i.bq = tail call fastcc i32 @validate_patterns(ptr noundef %i.bp, i32 noundef 0)
   br label %.thread148

@@ -201,11 +201,10 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = tail call i64 @rb_yield(i64 noundef %0) #13
-  %2 = freeze i64 %i.e
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.0 = phi i64 [ %2, %bb.b ], [ %0, %bb.a ]      ; 15 uses
+  %.0 = phi i64 [ %i.e, %bb.b ], [ %0, %bb.a ]    ; 15 uses
   %i.f = getelementptr i8, ptr %1, i64 44         ; 2 uses
   %i.g = load i32, ptr %i.f, align 4, !tbaa !94
   %.not24 = icmp eq i32 %i.g, 0
@@ -216,16 +215,15 @@ bb.d:                                             ; preds = %bb.c
   br label %sum_iter_fixnum.exit
 
 bb.e:                                             ; preds = %bb.c
-  %i.h = load i64, ptr %1, align 8, !tbaa !88
-  %.fr41 = freeze i64 %i.h                        ; 10 uses
-  %i.i = icmp eq i64 %.fr41, 0
-  %i.j = and i64 %.fr41, 7
+  %i.h = load i64, ptr %1, align 8, !tbaa !88     ; 10 uses
+  %i.i = icmp eq i64 %i.h, 0
+  %i.j = and i64 %i.h, 7
   %i.k = icmp ne i64 %i.j, 0
   %i.l = or i1 %i.i, %i.k
   br i1 %i.l, label %bb.f, label %rb_type.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = tail call i64 @llvm.fshl.i64(i64 %.fr41, i64 %.fr41, i64 62)
+  %i.m = tail call i64 @llvm.fshl.i64(i64 %i.h, i64 %i.h, i64 62)
   switch i64 %i.m, label %bb.g [
     i64 0, label %rb_type.exit.thread
     i64 1, label %rb_type.exit.thread
@@ -234,12 +232,12 @@ bb.f:                                             ; preds = %bb.e
   ]
 
 bb.g:                                             ; preds = %bb.f
-  %i.n = and i64 %.fr41, 255
+  %i.n = and i64 %i.h, 255
   %or.cond = icmp eq i64 %i.n, 12
   br i1 %or.cond, label %rb_type.exit.thread, label %rb_type.exit.thread32
 
 rb_type.exit:                                     ; preds = %bb.e
-  %i.o = inttoptr i64 %.fr41 to ptr
+  %i.o = inttoptr i64 %i.h to ptr
   %i.p = load i64, ptr %i.o, align 8, !tbaa !21
   %i.q = trunc i64 %i.p to i32
   %i.r = and i32 %i.q, 31
@@ -253,7 +251,7 @@ rb_type.exit:                                     ; preds = %bb.e
 rb_type.exit.thread:                              ; preds = %bb.g, %bb.f, %bb.f, %bb.f, %bb.f, %rb_type.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   store i64 %.0, ptr %i.b, align 8, !tbaa !11
-  %i.s = call i64 @rb_funcallv(i64 noundef %.fr41, i64 noundef 43, i32 noundef 1, ptr noundef nonnull %i.b) #13
+  %i.s = call i64 @rb_funcallv(i64 noundef %i.h, i64 noundef 43, i32 noundef 1, ptr noundef nonnull %i.b) #13
   store i64 %i.s, ptr %1, align 8, !tbaa !88
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %sum_iter_fixnum.exit
@@ -314,7 +312,7 @@ rb_long2num_inline.exit.i:                        ; preds = %rb_type.exit27.thre
   br label %sum_iter_fixnum.exit
 
 bb.k:                                             ; preds = %rb_type.exit27
-  %i.an = tail call i64 @rb_big_plus(i64 noundef %.0, i64 noundef %.fr41) #13
+  %i.an = tail call i64 @rb_big_plus(i64 noundef %.0, i64 noundef %i.h) #13
   store i64 %i.an, ptr %1, align 8, !tbaa !88
   br label %sum_iter_fixnum.exit
 
@@ -338,7 +336,7 @@ rb_type.exit27.thread39:                          ; preds = %bb.j, %rb_type.exit
   %i.at = load i64, ptr %i.as, align 8, !tbaa !92
   %i.au = shl i64 %i.at, 1
   %i.av = or disjoint i64 %i.au, 1
-  %i.aw = tail call i64 @rb_fix_plus(i64 noundef %i.av, i64 noundef %.fr41) #13 ; 4 uses
+  %i.aw = tail call i64 @rb_fix_plus(i64 noundef %i.av, i64 noundef %i.h) #13 ; 4 uses
   store i64 %i.aw, ptr %1, align 8, !tbaa !88
   store i64 0, ptr %i.as, align 8, !tbaa !92
   %i.ax = getelementptr i8, ptr %1, i64 8         ; 2 uses
@@ -378,7 +376,7 @@ rb_type.exit27.thread:                            ; preds = %bb.j, %bb.h, %bb.h,
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !92
   %i.bo = shl i64 %i.bn, 1
   %i.bp = or disjoint i64 %i.bo, 1
-  %i.bq = tail call i64 @rb_fix_plus(i64 noundef %i.bp, i64 noundef %.fr41) #13 ; 4 uses
+  %i.bq = tail call i64 @rb_fix_plus(i64 noundef %i.bp, i64 noundef %i.h) #13 ; 4 uses
   store i64 %i.bq, ptr %1, align 8, !tbaa !88
   store i64 0, ptr %i.bm, align 8, !tbaa !92
   %i.br = getelementptr i8, ptr %1, i64 8         ; 2 uses

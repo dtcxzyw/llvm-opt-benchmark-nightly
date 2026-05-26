@@ -201,8 +201,7 @@ bb.w:                                             ; preds = %unicode_eq.exit.thr
   br label %Py_INCREF.exit.i
 
 Py_INCREF.exit.i:                                 ; preds = %bb.w, %unicode_eq.exit.thread.i
-  %i.bg = tail call i32 @PyObject_RichCompareBool(ptr noundef nonnull %i.al, ptr noundef %1, i32 noundef 2) #12
-  %.fr.i = freeze i32 %i.bg                       ; 2 uses
+  %i.bg = tail call i32 @PyObject_RichCompareBool(ptr noundef nonnull %i.al, ptr noundef %1, i32 noundef 2) #12 ; 2 uses
   %i.bh = load i32, ptr %i.al, align 8, !tbaa !21 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.bh, -1
   br i1 %.not.i.i, label %bb.x, label %Py_DECREF.exit.i
@@ -218,7 +217,7 @@ bb.y:                                             ; preds = %bb.x
   br label %Py_DECREF.exit.i
 
 Py_DECREF.exit.i:                                 ; preds = %bb.y, %bb.x, %Py_INCREF.exit.i
-  %i.bk = icmp slt i32 %.fr.i, 0
+  %i.bk = icmp slt i32 %i.bg, 0
   br i1 %i.bk, label %set_do_lookup.exit.sink.split, label %bb.z
 
 bb.z:                                             ; preds = %Py_DECREF.exit.i
@@ -232,7 +231,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not31.i, label %set_compare_entry_lock_held.exit, label %set_do_lookup.exit23
 
 set_compare_entry_lock_held.exit:                 ; preds = %bb.aa
-  %.not32.i.not = icmp eq i32 %.fr.i, 0
+  %.not32.i.not = icmp eq i32 %i.bg, 0
   br i1 %.not32.i.not, label %set_compare_entry_lock_held.exit.thread35, label %set_do_lookup.exit.sink.split
 
 set_compare_entry_lock_held.exit.thread35:        ; preds = %set_compare_entry_lock_held.exit, %bb.l
@@ -635,8 +634,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 Py_DECREF.exit:                                   ; preds = %._crit_edge, %bb.ap, %bb.aq
   %i.cj = tail call ptr @PyErr_Occurred() #12
-  %.fr = freeze ptr %i.cj
-  %.not55 = icmp eq ptr %.fr, null
+  %.not55 = icmp eq ptr %i.cj, null
   br i1 %.not55, label %Py_DECREF.exit62, label %Py_DECREF.exit66
 
 Py_DECREF.exit62:                                 ; preds = %bb.af, %bb.ae, %.loopexit, %Py_DECREF.exit

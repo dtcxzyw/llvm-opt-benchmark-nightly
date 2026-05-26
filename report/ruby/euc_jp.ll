@@ -114,14 +114,13 @@ bb.a:
   %i.b = load i8, ptr %0, align 1, !tbaa !10      ; 4 uses
   %i.c = zext i8 %i.b to i64                      ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !10
-  %.fr = freeze i8 %i.e                           ; 3 uses
-  %i.f = sext i8 %.fr to i64
-  %i.g = icmp slt i8 %.fr, 0
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 3 uses
+  %i.f = sext i8 %i.e to i64
+  %i.g = icmp slt i8 %i.e, 0
   br i1 %i.g, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = icmp eq i8 %.fr, -1
+  %i.h = icmp eq i8 %i.e, -1
   br i1 %i.h, label %mbc_enc_len.exit.thread, label %mbc_enc_len.exit.thread31
 
 bb.c:                                             ; preds = %bb.a
@@ -353,21 +352,20 @@ mbc_enc_len.exit:                                 ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 4 uses
   %i.j = zext i8 %i.b to i64                      ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr @trans, i64 %i.j
-  %i.l = load i8, ptr %i.k, align 1, !tbaa !10
-  %.fr.i = freeze i8 %i.l                         ; 3 uses
-  %i.m = sext i8 %.fr.i to i64
-  %i.n = icmp slt i8 %.fr.i, 0
-  br i1 %i.n, label %bb.c, label %bb.d
+  %i.l = load i8, ptr %i.k, align 1, !tbaa !10    ; 3 uses
+  %i.m = sext i8 %i.l to i64
+  %i.n = icmp slt i8 %i.l, 0
+  br i1 %i.n, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %mbc_enc_len.exit
-  %i.o = icmp eq i8 %.fr.i, -1
-  br i1 %i.o, label %mbc_enc_len.exit.thread.i, label %mbc_enc_len.exit.thread31.i
+  %i.o = icmp eq ptr %i.i, %2
+  br i1 %i.o, label %mbc_enc_len.exit.i, label %bb.e
 
 bb.d:                                             ; preds = %mbc_enc_len.exit
-  %i.p = icmp eq ptr %i.i, %2
-  br i1 %i.p, label %mbc_enc_len.exit.i, label %bb.e
+  %i.p = icmp eq i8 %i.l, -1
+  br i1 %i.p, label %mbc_enc_len.exit.thread.i, label %mbc_enc_len.exit.thread31.i
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw [256 x i8], ptr @trans, i64 %i.m
   %i.r = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
   %i.s = load i8, ptr %i.i, align 1, !tbaa !10
@@ -397,17 +395,17 @@ bb.h:                                             ; preds = %bb.g
   %i.ah = select i1 %i.ag, i32 3, i32 -1
   br label %mbc_enc_len.exit.thread31.i
 
-mbc_enc_len.exit.thread.i:                        ; preds = %bb.c
+mbc_enc_len.exit.thread.i:                        ; preds = %bb.d
   %i.ai = zext i8 %i.b to i32
   br label %mbc_to_code.exit
 
-mbc_enc_len.exit.thread31.i:                      ; preds = %bb.h, %bb.f, %bb.c
-  %.0.i.ph.i = phi i32 [ %i.ah, %bb.h ], [ %i.z, %bb.f ], [ -1, %bb.c ]
+mbc_enc_len.exit.thread31.i:                      ; preds = %bb.h, %bb.f, %bb.d
+  %.0.i.ph.i = phi i32 [ %i.ah, %bb.h ], [ %i.z, %bb.f ], [ -1, %bb.d ]
   %i.aj = zext i8 %i.b to i32
   br label %.preheader.i
 
-mbc_enc_len.exit.i:                               ; preds = %bb.g, %bb.d
-  %.sink.i = phi i32 [ 0, %bb.d ], [ 1, %bb.g ]
+mbc_enc_len.exit.i:                               ; preds = %bb.g, %bb.c
+  %.sink.i = phi i32 [ 0, %bb.c ], [ 1, %bb.g ]
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr @EncLen_EUCJP, i64 %i.j
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !6
   %i.am = sub nsw i32 %.sink.i, %i.al             ; 2 uses
@@ -590,14 +588,13 @@ bb.a:
   %i.b = load i8, ptr %1, align 1, !tbaa !10      ; 6 uses
   %i.c = zext i8 %i.b to i64                      ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr @trans, i64 %i.c
-  %i.e = load i8, ptr %i.d, align 1, !tbaa !10
-  %.fr.i = freeze i8 %i.e                         ; 4 uses
-  %i.f = sext i8 %.fr.i to i64                    ; 2 uses
-  %i.g = icmp slt i8 %.fr.i, 0                    ; 2 uses
+  %i.e = load i8, ptr %i.d, align 1, !tbaa !10    ; 4 uses
+  %i.f = sext i8 %i.e to i64                      ; 2 uses
+  %i.g = icmp slt i8 %i.e, 0                      ; 2 uses
   br i1 %i.g, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.h = icmp eq i8 %.fr.i, -1
+  %i.h = icmp eq i8 %i.e, -1
   br i1 %i.h, label %mbc_to_code.exit.thread56, label %mbc_enc_len.exit.thread31.i
 
 bb.c:                                             ; preds = %bb.a
@@ -694,7 +691,7 @@ bb.i:                                             ; preds = %mbc_to_code.exit
 
 .thread58:                                        ; preds = %mbc_to_code.exit.thread56, %bb.i
   %.016.i5060 = phi i32 [ %.016.i, %bb.i ], [ %i.aq, %mbc_to_code.exit.thread56 ]
-  %i.au = icmp eq i8 %.fr.i, -1
+  %i.au = icmp eq i8 %i.e, -1
   %i.av = select i1 %i.au, i32 1, i32 -1
   br label %mbc_enc_len.exit
 

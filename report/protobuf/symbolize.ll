@@ -201,8 +201,7 @@ _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromO
 
 bb.r:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread110
   %bcmp = call i32 @bcmp(ptr nonnull %i.a, ptr %1, i64 %2)
-  %bcmp.fr = freeze i32 %bcmp
-  %i.cm = icmp eq i32 %bcmp.fr, 0
+  %i.cm = icmp eq i32 %bcmp, 0
   br i1 %i.cm, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile19ReadFromOffsetExactEPvml.exit48.thread, label %bb.s
 
 bb.s:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread110, %bb.r
@@ -605,8 +604,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.gq = getelementptr inbounds nuw i8, ptr %i.aw, i64 312
   %i.gr = load i64, ptr %i.gq, align 8, !tbaa !65
   %i.gs = add i64 %i.gp, %i.gr
-  %.fr11.i = freeze i64 %i.gs
-  %i.gt = inttoptr i64 %.fr11.i to ptr
+  %i.gt = inttoptr i64 %i.gs to ptr
   %.not84.3.i.i = icmp ult ptr %0, %i.gt
   br i1 %.not84.3.i.i, label %.thread.i.i, label %.thread.thread.i.i
 

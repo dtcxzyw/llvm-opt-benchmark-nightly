@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %._crit_edge.thread.
 bb.d:                                             ; preds = %bb.c, %._crit_edge.i.i.i
   %i.l = phi ptr [ %.pre.i.i, %bb.c ], [ %i.f, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.c ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %.fr = freeze ptr %i.l
-  %i.m = icmp ult ptr %.fr, %1
+  %i.m = icmp ult ptr %i.l, %1
   br i1 %i.m, label %select.unfold.i.i, label %bb.f
 
 select.unfold.i.i:                                ; preds = %bb.d, %._crit_edge.thread.i.i.i
@@ -605,8 +604,7 @@ bb.g:                                             ; preds = %bb.f, %._crit_edge.
   %.010.lcssa19.i.i.i = phi ptr [ %.010.lcssa20.i.i.i, %bb.f ], [ %.01115.i.i.i, %._crit_edge.i.i.i ]
   %.sroa.01.0.i.i.i = phi ptr [ %i.ah, %bb.f ], [ %.01115.i.i.i, %._crit_edge.i.i.i ]
   %i.aj = icmp ult ptr %i.ai, %.val
-  %cond.fr5.i = freeze i1 %i.aj
-  br i1 %cond.fr5.i, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
+  br i1 %i.aj, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
 
 bb.h:                                             ; preds = %.critedge
   %i.ak = getelementptr inbounds nuw i8, ptr %.08.lcssa.i.i.i7, i64 32
@@ -629,8 +627,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.at = getelementptr i8, ptr %i.ap, i64 24
   %.val10.i.i = load ptr, ptr %i.at, align 8, !tbaa !450
-  %.val10.i.fr.i = freeze ptr %.val10.i.i
-  %i.au = icmp eq ptr %.val10.i.fr.i, null
+  %i.au = icmp eq ptr %.val10.i.i, null
   br i1 %i.au, label %.thread.i, label %.thread.i.thread
 
 bb.l:                                             ; preds = %bb.j
@@ -666,8 +663,7 @@ bb.n:                                             ; preds = %bb.m, %._crit_edge.
   %.010.lcssa19.i24.i.i = phi ptr [ %.010.lcssa20.i33.i.i, %bb.m ], [ %.01115.i18.i.i, %._crit_edge.i23.i.i ]
   %.sroa.01.0.i25.i.i = phi ptr [ %i.az, %bb.m ], [ %.01115.i18.i.i, %._crit_edge.i23.i.i ]
   %i.bb = icmp ult ptr %i.ba, %.val
-  %cond.fr7.i = freeze i1 %i.bb
-  br i1 %cond.fr7.i, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
+  br i1 %i.bb, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
 
 bb.o:                                             ; preds = %bb.h
   %i.bc = icmp ult ptr %i.al, %.val
@@ -688,8 +684,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.q
   %i.bj = getelementptr i8, ptr %.08.lcssa.i.i.i7, i64 24
   %.val.i11.i = load ptr, ptr %i.bj, align 8, !tbaa !450
-  %.val.i11.fr.i = freeze ptr %.val.i11.i
-  %i.bk = icmp eq ptr %.val.i11.fr.i, null
+  %i.bk = icmp eq ptr %.val.i11.i, null
   br i1 %i.bk, label %.thread.i, label %.thread.i.thread
 
 bb.s:                                             ; preds = %bb.q
@@ -726,8 +721,7 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %.010.lcssa19.i45.i.i = phi ptr [ %.010.lcssa20.i54.i.i, %bb.t ], [ %.01115.i39.i.i, %._crit_edge.i44.i.i ]
   %.sroa.01.0.i46.i.i = phi ptr [ %i.bp, %bb.t ], [ %.01115.i39.i.i, %._crit_edge.i44.i.i ]
   %i.br = icmp ult ptr %i.bq, %.val
-  %cond.fr9.i = freeze i1 %i.br
-  br i1 %cond.fr9.i, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
+  br i1 %i.br, label %.thread.i, label %_ZNSt8_Rb_treeIPKvSt4pairIKS1_N7testing12_GLOBAL__N_115MockObjectStateEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS7_E.exit.i.i
 
 select.unfold2.i:                                 ; preds = %bb.p, %bb.i
   %.sroa.021.2.i.i = phi ptr [ null, %bb.p ], [ %i.an, %bb.i ] ; 2 uses
@@ -749,7 +743,7 @@ bb.v:                                             ; preds = %.thread.i
   %i.bv = icmp ult ptr %.val, %i.bu
   br label %.thread.i.thread
 
-.thread.i.thread:                                 ; preds = %bb.k, %bb.r, %bb.v, %.thread.i
+.thread.i.thread:                                 ; preds = %bb.k, %bb.v, %.thread.i, %bb.r
   %.sroa.12.2.i16.i16 = phi ptr [ %.sroa.12.2.i16.i, %bb.v ], [ %.sroa.12.2.i16.i, %.thread.i ], [ %i.bf, %bb.r ], [ %.08.lcssa.i.i.i7, %bb.k ]
   %i.bw = phi i1 [ %i.bv, %bb.v ], [ true, %.thread.i ], [ true, %bb.r ], [ true, %bb.k ]
   tail call void @_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_(i1 noundef zeroext %i.bw, ptr noundef nonnull %i.i, ptr noundef nonnull %.sroa.12.2.i16.i16, ptr noundef nonnull align 8 dereferenceable(32) getelementptr inbounds nuw (i8, ptr @_ZN7testing12_GLOBAL__N_122g_mock_object_registryE, i64 8)) #29
@@ -1152,8 +1146,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.j, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %i.m = icmp ult ptr %i.l, %i.k
-  %cond.fr = freeze i1 %i.m
-  br i1 %cond.fr, label %select.unfold, label %bb.f
+  br i1 %i.m, label %select.unfold, label %bb.f
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.d ] ; 3 uses

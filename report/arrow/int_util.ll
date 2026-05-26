@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %bb.d
   %i.n = icmp ult i8 %.090, 5
   %i.o = icmp ult i64 %i.f, 4294967296
   %or.cond5.i = and i1 %i.n, %i.o
-  %cond.fr = freeze i1 %or.cond5.i
-  br i1 %cond.fr, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
+  br i1 %or.cond5.i, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
 
 _ZN5arrow8internalL17ExpandedUIntWidthEmh.exit:   ; preds = %bb.e, %.lr.ph, %bb.c, %bb.d
   %.0.i = phi i8 [ 2, %bb.d ], [ %.090, %.lr.ph ], [ 1, %bb.c ], [ 4, %bb.e ] ; 2 uses
@@ -352,8 +351,7 @@ bb.g:                                             ; preds = %bb.f
   %i.u = icmp ult i8 %.05381, 5
   %i.v = icmp ult i64 %i.m, 4294967296
   %or.cond5.i = and i1 %i.u, %i.v
-  %cond.fr = freeze i1 %or.cond5.i
-  br i1 %cond.fr, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
+  br i1 %or.cond5.i, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit, label %_ZN5arrow8internalL17ExpandedUIntWidthEmh.exit.thread
 
 _ZN5arrow8internalL17ExpandedUIntWidthEmh.exit:   ; preds = %bb.g, %.lr.ph, %bb.e, %bb.f
   %.0.i = phi i8 [ 2, %bb.f ], [ %.05381, %.lr.ph ], [ 1, %bb.e ], [ 4, %bb.g ] ; 2 uses

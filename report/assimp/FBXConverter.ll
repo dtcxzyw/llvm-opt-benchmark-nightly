@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 168
   %i.ba = load i64, ptr %i.az, align 8
-  %.fr = freeze i64 %i.ba
-  %.not23 = icmp eq i64 %.fr, 0
+  %.not23 = icmp eq i64 %i.ba, 0
   br i1 %.not23, label %_ZNKSt18unordered_multimapImPKN6Assimp3FBX10ConnectionESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE5countERSA_.exit.thread29, label %bb.p
 
 bb.o:                                             ; preds = %bb.k
@@ -605,8 +604,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.aw = phi i32 [ %.pre.i.i, %bb.j ], [ %i.ar, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.j ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.ax = icmp slt i32 %i.aw, %i.o
-  %cond.fr.i.i = freeze i1 %i.ax
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIiSt4lessIiESaIiEE6insertERKi.exit
+  br i1 %i.ax, label %select.unfold.i.i, label %_ZNSt3setIiSt4lessIiESaIiEE6insertERKi.exit
 
 select.unfold.i.i:                                ; preds = %bb.k, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.k ] ; 3 uses

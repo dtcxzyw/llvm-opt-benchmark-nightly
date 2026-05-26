@@ -201,8 +201,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.an
   %i.aw = call i32 @strcasecmp(ptr noundef %i.g, ptr noundef nonnull @.str.27) #35
-  %.fr = freeze i32 %i.aw
-  %.not76 = icmp eq i32 %.fr, 0
+  %.not76 = icmp eq i32 %i.aw, 0
   %i.ax = or i64 %.05582, 268435456
   br i1 %.not76, label %select.unfold, label %._crit_edge.loopexit.split.loop.exit
 
@@ -217,12 +216,12 @@ select.unfold:                                    ; preds = %bb.ap, %bb.d, %bb.h
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %select.unfold, %._crit_edge.loopexit.split.loop.exit, %bb.a
+  %.055.lcssa = phi i64 [ 0, %bb.a ], [ %.05582, %._crit_edge.loopexit.split.loop.exit ], [ %.2.ph, %select.unfold ]
   %.054.lcssa = phi i32 [ 0, %bb.a ], [ %i.ay, %._crit_edge.loopexit.split.loop.exit ], [ %i.d, %select.unfold ]
-  %.3 = phi i64 [ 0, %bb.a ], [ %.05582, %._crit_edge.loopexit.split.loop.exit ], [ %.2.ph, %select.unfold ]
   call void @sdsfreesplitres(ptr noundef %i.c, i32 noundef %i.d) #31
   %i.az = load i32, ptr %i.a, align 4, !tbaa !9
   %.not77 = icmp eq i32 %.054.lcssa, %i.az
-  %.3. = select i1 %.not77, i64 %.3, i64 -1
+  %.3. = select i1 %.not77, i64 %.055.lcssa, i64 -1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
   ret i64 %.3.
 }

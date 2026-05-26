@@ -201,8 +201,7 @@ bb.k:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i79 = phi ptr [ %.val.i.i.i.i76, %upb_Arena_Malloc.exit.thread.i.i.i78 ], [ %i.cw, %upb_Arena_Malloc.exit.i.i.i80 ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i79, i8 0, i64 %i.cn, i1 false)
   %i.cx = call i32 @upb_Decode(ptr noundef nonnull %i.cg, i64 noundef %i.ci, ptr noundef nonnull %.0.i3.i.i.i79, ptr noundef nonnull @google__protobuf__EnumOptions_msg_init, ptr noundef %i.cl, i32 noundef 0, ptr noundef nonnull %i.cm) #11
-  %.fr = freeze i32 %i.cx
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.cx, 0
   br i1 %.not10.i, label %google_protobuf_EnumOptions_parse_ex.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %upb_Arena_Malloc.exit.i.i.i80
@@ -409,8 +408,7 @@ bb.h:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i = phi ptr [ %.val.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i ], [ %i.be, %upb_Arena_Malloc.exit.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i, i8 0, i64 %i.av, i1 false)
   %i.bf = call i32 @upb_Decode(ptr noundef nonnull %i.an, i64 noundef %i.ap, ptr noundef nonnull %.0.i3.i.i.i, ptr noundef nonnull @google__protobuf__EnumValueOptions_msg_init, ptr noundef %i.at, i32 noundef 0, ptr noundef nonnull %i.au) #11
-  %.fr = freeze i32 %i.bf
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.bf, 0
   br i1 %.not10.i, label %google_protobuf_EnumValueOptions_parse_ex.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %upb_Arena_Malloc.exit.i.i.i
@@ -813,8 +811,7 @@ bb.bl:                                            ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i = phi ptr [ %.val.i.i.i.i116, %upb_Arena_Malloc.exit.thread.i.i.i118 ], [ %i.km, %upb_Arena_Malloc.exit.i.i.i119 ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i, i8 0, i64 %i.kd, i1 false)
   %i.kn = call i32 @upb_Decode(ptr noundef nonnull %i.jw, i64 noundef %i.jy, ptr noundef nonnull %.0.i3.i.i.i, ptr noundef nonnull @google__protobuf__FieldOptions_msg_init, ptr noundef %i.kb, i32 noundef 0, ptr noundef nonnull %i.kc) #11
-  %.fr = freeze i32 %i.kn
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.kn, 0
   br i1 %.not10.i, label %google_protobuf_FieldOptions_parse_ex.exit, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %upb_Arena_Malloc.exit.i.i.i119
@@ -1002,8 +999,7 @@ bb.h:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i = phi ptr [ %.val.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i ], [ %i.ba, %upb_Arena_Malloc.exit.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i, i8 0, i64 %i.ar, i1 false)
   %i.bb = call i32 @upb_Decode(ptr noundef nonnull %i.aj, i64 noundef %i.al, ptr noundef nonnull %.0.i3.i.i.i, ptr noundef nonnull @google__protobuf__OneofOptions_msg_init, ptr noundef %i.ap, i32 noundef 0, ptr noundef nonnull %i.aq) #11
-  %.fr = freeze i32 %i.bb
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.bb, 0
   br i1 %.not10.i, label %google_protobuf_OneofOptions_parse_ex.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %upb_Arena_Malloc.exit.i.i.i
@@ -1406,8 +1402,7 @@ bb.w:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i.i = phi ptr [ %.val.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i ], [ %i.fa, %upb_Arena_Malloc.exit.i.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i.i, i8 0, i64 %i.er, i1 false)
   %i.fb = call i32 @upb_Decode(ptr noundef nonnull %i.em, i64 noundef %i.en, ptr noundef nonnull %.0.i3.i.i.i.i, ptr noundef nonnull @google__protobuf__FileOptions_msg_init, ptr noundef %i.ep, i32 noundef 0, ptr noundef nonnull %i.eq) #11
-  %.fr.i = freeze i32 %i.fb
-  %.not10.i.i = icmp eq i32 %.fr.i, 0
+  %.not10.i.i = icmp eq i32 %i.fb, 0
   br i1 %.not10.i.i, label %google_protobuf_FileOptions_parse_ex.exit.i, label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %upb_Arena_Malloc.exit.i.i.i.i
@@ -1707,8 +1702,7 @@ bb.n:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i = phi ptr [ %.val.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i ], [ %i.cu, %upb_Arena_Malloc.exit.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i, i8 0, i64 %i.cl, i1 false)
   %i.cv = call i32 @upb_Decode(ptr noundef nonnull %i.cd, i64 noundef %i.cf, ptr noundef nonnull %.0.i3.i.i.i, ptr noundef nonnull @google__protobuf__MethodOptions_msg_init, ptr noundef %i.cj, i32 noundef 0, ptr noundef nonnull %i.ck) #11
-  %.fr = freeze i32 %i.cv
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.cv, 0
   br i1 %.not10.i, label %google_protobuf_MethodOptions_parse_ex.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %upb_Arena_Malloc.exit.i.i.i
@@ -1919,8 +1913,7 @@ bb.h:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i = phi ptr [ %.val.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i ], [ %i.bi, %upb_Arena_Malloc.exit.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i, i8 0, i64 %i.az, i1 false)
   %i.bj = call i32 @upb_Decode(ptr noundef nonnull %i.as, i64 noundef %i.au, ptr noundef nonnull %.0.i3.i.i.i, ptr noundef nonnull @google__protobuf__ServiceOptions_msg_init, ptr noundef %i.ax, i32 noundef 0, ptr noundef nonnull %i.ay) #11
-  %.fr = freeze i32 %i.bj
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.bj, 0
   br i1 %.not10.i, label %google_protobuf_ServiceOptions_parse_ex.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %upb_Arena_Malloc.exit.i.i.i
@@ -2323,8 +2316,7 @@ bb.l:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i.i = phi ptr [ %.val.i.i.i.i.i, %upb_Arena_Malloc.exit.thread.i.i.i.i ], [ %i.ef, %upb_Arena_Malloc.exit.i.i.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i.i, i8 0, i64 %i.cf, i1 false)
   %i.eg = call i32 @upb_Decode(ptr noundef nonnull %i.ds, i64 noundef %i.du, ptr noundef nonnull %.0.i3.i.i.i.i, ptr noundef nonnull @google__protobuf__ExtensionRangeOptions_msg_init, ptr noundef %i.dx, i32 noundef 0, ptr noundef nonnull %i.dy) #11
-  %.fr.i = freeze i32 %i.eg
-  %.not10.i.i = icmp eq i32 %.fr.i, 0
+  %.not10.i.i = icmp eq i32 %i.eg, 0
   br i1 %.not10.i.i, label %google_protobuf_ExtensionRangeOptions_parse_ex.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %upb_Arena_Malloc.exit.i.i.i.i
@@ -2487,8 +2479,7 @@ bb.s:                                             ; preds = %upb_Arena_Malloc.ex
   %.0.i3.i.i.i151 = phi ptr [ %.val.i.i.i.i148, %upb_Arena_Malloc.exit.thread.i.i.i150 ], [ %i.gm, %upb_Arena_Malloc.exit.i.i.i152 ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 8 %.0.i3.i.i.i151, i8 0, i64 %i.gd, i1 false)
   %i.gn = call i32 @upb_Decode(ptr noundef nonnull %i.fw, i64 noundef %i.fy, ptr noundef nonnull %.0.i3.i.i.i151, ptr noundef nonnull @google__protobuf__MessageOptions_msg_init, ptr noundef %i.gb, i32 noundef 0, ptr noundef nonnull %i.gc) #11
-  %.fr = freeze i32 %i.gn
-  %.not10.i = icmp eq i32 %.fr, 0
+  %.not10.i = icmp eq i32 %i.gn, 0
   br i1 %.not10.i, label %google_protobuf_MessageOptions_parse_ex.exit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %upb_Arena_Malloc.exit.i.i.i152

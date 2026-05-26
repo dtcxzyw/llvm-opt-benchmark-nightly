@@ -201,13 +201,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.q = getelementptr i8, ptr %.tr16.i.i.i.i, i64 16
-  %.val.i.i.i.i = load i32, ptr %i.q, align 8, !tbaa !60
-  %.val.fr.i.i.i.i = freeze i32 %.val.i.i.i.i     ; 2 uses
-  %i.r = icmp eq i32 %.val.fr.i.i.i.i, 0
+  %.val.i.i.i.i = load i32, ptr %i.q, align 8, !tbaa !60 ; 2 uses
+  %i.r = icmp eq i32 %.val.i.i.i.i, 0
   br i1 %i.r, label %rb_shape_get_iv_index.exit, label %tailrecurse.backedge.i.i.i.i
 
 tailrecurse.backedge.i.i.i.i:                     ; preds = %bb.g, %bb.f
-  %.pn.in.in.i.i.i.i = phi i32 [ %.val.fr.i.i.i.i, %bb.f ], [ %.val13.fr.i.i.i.i, %bb.g ]
+  %.pn.in.in.i.i.i.i = phi i32 [ %.val.i.i.i.i, %bb.f ], [ %.val13.i.i.i.i, %bb.g ]
   %.pn.in.i.i.i.i = add i32 %.pn.in.in.i.i.i.i, -1
   %.pn.i.i.i.i = zext i32 %.pn.in.i.i.i.i to i64
   %.tr.be.i.i.i.i = getelementptr [24 x i8], ptr %i.m, i64 %.pn.i.i.i.i ; 2 uses
@@ -216,9 +215,8 @@ tailrecurse.backedge.i.i.i.i:                     ; preds = %bb.g, %bb.f
 
 bb.g:                                             ; preds = %bb.e
   %i.t = getelementptr i8, ptr %.tr16.i.i.i.i, i64 20
-  %.val13.i.i.i.i = load i32, ptr %i.t, align 4, !tbaa !61
-  %.val13.fr.i.i.i.i = freeze i32 %.val13.i.i.i.i ; 2 uses
-  %i.u = icmp eq i32 %.val13.fr.i.i.i.i, 0
+  %.val13.i.i.i.i = load i32, ptr %i.t, align 4, !tbaa !61 ; 2 uses
+  %i.u = icmp eq i32 %.val13.i.i.i.i, 0
   br i1 %i.u, label %rb_shape_get_iv_index.exit, label %tailrecurse.backedge.i.i.i.i
 
 shape_cache_find_ivar.exit.i.i:                   ; preds = %bb.d
@@ -453,13 +451,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %.tr16.i.i.i, i64 16
-  %.val.i.i.i = load i32, ptr %i.n, align 8, !tbaa !60
-  %.val.fr.i.i.i = freeze i32 %.val.i.i.i         ; 2 uses
-  %i.o = icmp eq i32 %.val.fr.i.i.i, 0
+  %.val.i.i.i = load i32, ptr %i.n, align 8, !tbaa !60 ; 2 uses
+  %i.o = icmp eq i32 %.val.i.i.i, 0
   br i1 %i.o, label %rb_shape_find_ivar.exit.thread, label %tailrecurse.backedge.i.i.i
 
 tailrecurse.backedge.i.i.i:                       ; preds = %bb.f, %bb.e
-  %.pn.in.in.i.i.i = phi i32 [ %.val.fr.i.i.i, %bb.e ], [ %.val13.fr.i.i.i, %bb.f ]
+  %.pn.in.in.i.i.i = phi i32 [ %.val.i.i.i, %bb.e ], [ %.val13.i.i.i, %bb.f ]
   %.pn.in.i.i.i = add i32 %.pn.in.in.i.i.i, -1
   %.pn.i.i.i = zext i32 %.pn.in.i.i.i to i64
   %.tr.be.i.i.i = getelementptr [24 x i8], ptr %i.j, i64 %.pn.i.i.i ; 2 uses
@@ -468,9 +465,8 @@ tailrecurse.backedge.i.i.i:                       ; preds = %bb.f, %bb.e
 
 bb.f:                                             ; preds = %bb.d
   %i.q = getelementptr i8, ptr %.tr16.i.i.i, i64 20
-  %.val13.i.i.i = load i32, ptr %i.q, align 4, !tbaa !61
-  %.val13.fr.i.i.i = freeze i32 %.val13.i.i.i     ; 2 uses
-  %i.r = icmp eq i32 %.val13.fr.i.i.i, 0
+  %.val13.i.i.i = load i32, ptr %i.q, align 4, !tbaa !61 ; 2 uses
+  %i.r = icmp eq i32 %.val13.i.i.i, 0
   br i1 %i.r, label %rb_shape_find_ivar.exit.thread, label %tailrecurse.backedge.i.i.i
 
 shape_cache_find_ivar.exit.i:                     ; preds = %bb.c
@@ -559,13 +555,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr i8, ptr %.tr16.i.i, i64 16
-  %.val.i.i = load i32, ptr %i.n, align 8, !tbaa !60
-  %.val.fr.i.i = freeze i32 %.val.i.i             ; 2 uses
-  %i.o = icmp eq i32 %.val.fr.i.i, 0
+  %.val.i.i = load i32, ptr %i.n, align 8, !tbaa !60 ; 2 uses
+  %i.o = icmp eq i32 %.val.i.i, 0
   br i1 %i.o, label %shape_find_ivar.exit.thread, label %tailrecurse.backedge.i.i
 
 tailrecurse.backedge.i.i:                         ; preds = %bb.f, %bb.e
-  %.pn.in.in.i.i = phi i32 [ %.val.fr.i.i, %bb.e ], [ %.val13.fr.i.i, %bb.f ]
+  %.pn.in.in.i.i = phi i32 [ %.val.i.i, %bb.e ], [ %.val13.i.i, %bb.f ]
   %.pn.in.i.i = add i32 %.pn.in.in.i.i, -1
   %.pn.i.i = zext i32 %.pn.in.i.i to i64
   %.tr.be.i.i = getelementptr [24 x i8], ptr %i.j, i64 %.pn.i.i ; 2 uses
@@ -574,9 +569,8 @@ tailrecurse.backedge.i.i:                         ; preds = %bb.f, %bb.e
 
 bb.f:                                             ; preds = %bb.d
   %i.q = getelementptr i8, ptr %.tr16.i.i, i64 20
-  %.val13.i.i = load i32, ptr %i.q, align 4, !tbaa !61
-  %.val13.fr.i.i = freeze i32 %.val13.i.i         ; 2 uses
-  %i.r = icmp eq i32 %.val13.fr.i.i, 0
+  %.val13.i.i = load i32, ptr %i.q, align 4, !tbaa !61 ; 2 uses
+  %i.r = icmp eq i32 %.val13.i.i, 0
   br i1 %i.r, label %shape_find_ivar.exit.thread, label %tailrecurse.backedge.i.i
 
 shape_cache_find_ivar.exit:                       ; preds = %bb.c
@@ -979,15 +973,13 @@ bb.g:                                             ; preds = %bb.f
   %i.u = inttoptr i64 %i.t to ptr                 ; 2 uses
   %i.v = getelementptr i8, ptr %i.u, i64 8        ; 2 uses
   %i.w = load i64, ptr %i.v, align 8, !tbaa !48
-  %.fr.i = freeze i64 %i.w
-  %i.x = icmp eq i64 %.fr.i, %1
+  %i.x = icmp eq i64 %i.w, %1
   br i1 %i.x, label %get_next_shape_internal_atomic.exit, label %.thread56.i.thread
 
 bb.h:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
   %i.y = call i32 @rb_managed_id_table_lookup(i64 noundef %i.r, i64 noundef %1, ptr noundef nonnull %i.a) #14
-  %.fr66.i = freeze i32 %i.y
-  %.not40.i = icmp eq i32 %.fr66.i, 0
+  %.not40.i = icmp eq i32 %i.y, 0
   %i.z = load i64, ptr %i.a, align 8              ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br i1 %.not40.i, label %.thread56.i, label %bb.i

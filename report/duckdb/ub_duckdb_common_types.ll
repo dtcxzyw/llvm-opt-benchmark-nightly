@@ -201,9 +201,8 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit141.thread: ; preds = %_
 bb.bl:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit141.thread
   %i.jz = load ptr, ptr %i.ie, align 8, !tbaa !774
   %i.ka = getelementptr inbounds nuw i8, ptr %i.jz, i64 %i.jr
-  %i.kb = load i8, ptr %i.ka, align 1, !tbaa !153
-  %.fr = freeze i8 %i.kb                          ; 2 uses
-  %i.kc = zext i8 %.fr to i64
+  %i.kb = load i8, ptr %i.ka, align 1, !tbaa !153 ; 2 uses
+  %i.kc = zext i8 %i.kb to i64
   %.not = icmp ugt i64 %i.hf, %i.kc
   br i1 %.not, label %.preheader, label %.loopexit187
 
@@ -270,7 +269,7 @@ _ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit149.thread: ; preds = %_
 
 bb.br:                                            ; preds = %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit149.thread
   %i.la = trunc i64 %.060199 to i8
-  %.not106 = icmp eq i8 %.fr, %i.la
+  %.not106 = icmp eq i8 %i.kb, %i.la
   br i1 %.not106, label %select.unfold, label %.loopexit187
 
 select.unfold:                                    ; preds = %bb.br, %_ZNK6duckdb21TemplatedValidityMaskImE10RowIsValidEm.exit149
@@ -673,8 +672,7 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.b ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.p, %bb.b ], [ %.02024.i, %._crit_edge.i ]
   %i.r = icmp ult i64 %i.q, %i.c
-  %cond.fr = freeze i1 %i.r
-  br i1 %cond.fr, label %select.unfold, label %bb.e
+  br i1 %i.r, label %select.unfold, label %bb.e
 
 select.unfold:                                    ; preds = %bb.c, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.c ] ; 3 uses

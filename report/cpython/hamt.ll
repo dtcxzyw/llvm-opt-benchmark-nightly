@@ -201,11 +201,10 @@ hamt_hash.exit:                                   ; preds = %bb.bb
   %i.gx = load ptr, ptr %i.gi, align 8, !tbaa !45
   %i.gy = getelementptr i8, ptr %i.gi, i64 8
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !45
-  %i.ha = tail call fastcc ptr @hamt_node_assoc(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 119496), i32 noundef %i.fy, i32 noundef %i.gw, ptr noundef %i.gx, ptr noundef %i.gz, ptr noundef %5)
-  %.fr = freeze ptr %i.ha                         ; 2 uses
+  %i.ha = tail call fastcc ptr @hamt_node_assoc(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 119496), i32 noundef %i.fy, i32 noundef %i.gw, ptr noundef %i.gx, ptr noundef %i.gz, ptr noundef %5) ; 2 uses
   %i.hb = getelementptr [8 x i8], ptr %i.er, i64 %.0157246
-  store ptr %.fr, ptr %i.hb, align 8, !tbaa !22
-  %i.hc = icmp eq ptr %.fr, null
+  store ptr %i.ha, ptr %i.hb, align 8, !tbaa !22
+  %i.hc = icmp eq ptr %i.ha, null
   br i1 %i.hc, label %.thread, label %bb.bc
 
 bb.bc:                                            ; preds = %hamt_hash.exit, %_Py_NewRef.exit195

@@ -201,17 +201,16 @@ bb.i:                                             ; preds = %bb.g, %bb.d
 
 bb.j:                                             ; preds = %bb.i
   %i.aa = call ptr @rb_errno_ptr() #23
-  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !7
-  %.fr = freeze i32 %i.ab                         ; 3 uses
-  %i.ac = icmp ne i32 %.fr, 0
+  %i.ab = load i32, ptr %i.aa, align 4, !tbaa !7  ; 3 uses
+  %i.ac = icmp ne i32 %i.ab, 0
   call void @llvm.assume(i1 %i.ac)
-  %i.ad = icmp eq i32 %.fr, 95
+  %i.ad = icmp eq i32 %i.ab, 95
   br i1 %i.ad, label %select.unfold, label %disable_nonblock.exit
 
 disable_nonblock.exit:                            ; preds = %bb.j
   %i.ae = call i32 @close(i32 noundef %.021) #23  ; 0 uses
   %i.af = load i64, ptr %i.a, align 8, !tbaa !24
-  %i.ag = call ptr @strerror(i32 noundef %.fr) #23
+  %i.ag = call ptr @strerror(i32 noundef %i.ab) #23
   call void @rb_load_fail(i64 noundef %i.af, ptr noundef %i.ag) #24
   unreachable
 

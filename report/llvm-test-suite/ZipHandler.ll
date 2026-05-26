@@ -201,9 +201,8 @@ bb.ga:                                            ; preds = %bb.fz
 bb.gb:                                            ; preds = %bb.ga
   %i.rx = icmp ne i32 %i.rw, 0
   %i.ry = load i8, ptr %i.c, align 1, !range !54
-  %.fr668 = freeze i8 %i.ry
-  %i.rz = trunc i8 %.fr668 to i1
-  %or.cond23 = or i1 %i.rx, %i.rz
+  %i.rz = trunc nuw i8 %i.ry to i1
+  %or.cond23 = select i1 %i.rx, i1 true, i1 %i.rz
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #22
   br i1 %or.cond23, label %select.unfold, label %_ZN9CMyComPtrI19ISequentialInStreamED2Ev.exit.thread
 

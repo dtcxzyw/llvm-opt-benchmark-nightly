@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.outer
 
 .outer:                                           ; preds = %bb.j, %bb.c
-  %.019.ph = phi i64 [ %.fr, %bb.j ], [ %1, %bb.c ] ; 2 uses
+  %.019.ph = phi i64 [ %i.r, %bb.j ], [ %1, %bb.c ] ; 2 uses
   %i.e = icmp sgt i64 %.019.ph, 0
   br label %bb.d
 
@@ -243,9 +243,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.e, label %bb.j, label %bb.d, !llvm.loop !201
 
 bb.j:                                             ; preds = %bb.i
-  %i.r = tail call i64 @_PyDeadline_Get(i64 noundef %.025) #13
-  %.fr = freeze i64 %i.r                          ; 2 uses
-  %i.s = icmp slt i64 %.fr, 0
+  %i.r = tail call i64 @_PyDeadline_Get(i64 noundef %.025) #13 ; 2 uses
+  %i.s = icmp slt i64 %i.r, 0
   br i1 %i.s, label %.thread36, label %.outer, !llvm.loop !201
 
 .thread36:                                        ; preds = %bb.j, %bb.g, %bb.h

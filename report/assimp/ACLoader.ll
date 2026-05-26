@@ -201,20 +201,19 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %i.ak = load i8, ptr %i.aj, align 1
-  %.fr143 = freeze i8 %i.ak                       ; 4 uses
-  %i.al = sext i8 %.fr143 to i32                  ; 2 uses
-  %i.am = add i8 %.fr143, -48
+  %i.ak = load i8, ptr %i.aj, align 1             ; 4 uses
+  %i.al = sext i8 %i.ak to i32                    ; 2 uses
+  %i.am = add i8 %i.ak, -48
   %or.cond.i = icmp ult i8 %i.am, 10
   br i1 %or.cond.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.an = add i8 %.fr143, -97
+  %i.an = add i8 %i.ak, -97
   %or.cond5.i = icmp ult i8 %i.an, 6
   br i1 %or.cond5.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ao = add i8 %.fr143, -65
+  %i.ao = add i8 %i.ak, -65
   %or.cond8.i = icmp ult i8 %i.ao, 6
   br i1 %or.cond8.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread137
 

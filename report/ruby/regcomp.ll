@@ -201,8 +201,7 @@ bb.g:                                             ; preds = %bb.f
   %i.af = getelementptr i8, ptr %i.ac, i64 20
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !156
   %i.ah = icmp eq i32 %i.ae, %i.ag
-  %.fr = freeze i32 %i.u
-  %i.ai = sext i32 %.fr to i64
+  %i.ai = sext i32 %i.u to i64
   %i.aj = getelementptr i8, ptr %i.q, i64 %i.ai   ; 2 uses
   br i1 %i.ah, label %bb.h, label %bb.i
 

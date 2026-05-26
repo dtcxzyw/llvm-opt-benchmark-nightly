@@ -201,9 +201,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 40
-  %i.dd = load i8, ptr %i.dc, align 8, !tbaa !278
-  %.fr = freeze i8 %i.dd                          ; 2 uses
-  switch i8 %.fr, label %.thread [
+  %i.dd = load i8, ptr %i.dc, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.dd, label %.thread [
     i8 8, label %_ZSt6get_ifIN6google8protobuf13json_internal14UntypedMessageEJNS3_4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 17, label %_ZSt6get_ifISt6vectorIN6google8protobuf13json_internal14UntypedMessageESaIS4_EEJNS4_4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES6_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -314,7 +313,7 @@ bb.w:                                             ; preds = %_ZSt6get_ifISt6vect
   br label %.critedge
 
 .thread:                                          ; preds = %bb.p, %..thread_crit_edge
-  %i.ej = phi i8 [ %.pre, %..thread_crit_edge ], [ %.fr, %bb.p ]
+  %i.ej = phi i8 [ %.pre, %..thread_crit_edge ], [ %i.dd, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   store i64 49, ptr %10, align 8, !tbaa !212, !alias.scope !295
   %i.ek = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -656,9 +655,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread123 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread123 [
     i8 0, label %_ZNKSt6vectorIN6google8protobuf13json_internal14UntypedMessage4BoolESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i
     i8 9, label %_ZSt6get_ifISt6vectorIN6google8protobuf13json_internal14UntypedMessage4BoolESaIS5_EEJS5_ijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_S7_S0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS4_SaIS4_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -792,7 +790,7 @@ _ZNSt6vectorIN6google8protobuf13json_internal14UntypedMessage4BoolESaIS4_EE17_M_
   br label %.critedge
 
 .thread123:                                       ; preds = %bb.p, %..thread123_crit_edge
-  %i.es = phi i8 [ %.pre, %..thread123_crit_edge ], [ %.fr, %bb.p ]
+  %i.es = phi i8 [ %.pre, %..thread123_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   store i64 54, ptr %10, align 8, !tbaa !212, !alias.scope !336
   %i.et = getelementptr inbounds nuw i8, ptr %10, i64 8
@@ -1127,9 +1125,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread115 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread115 [
     i8 2, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i.i
     i8 11, label %_ZSt6get_ifISt6vectorIjSaIjEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES2_S0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1259,7 +1256,7 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %.critedge
 
 .thread115:                                       ; preds = %bb.p, %..thread115_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread115_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread115_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !375)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTIj, i64 8), align 8, !tbaa !378, !noalias !375 ; 2 uses
@@ -1601,9 +1598,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread121 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread121 [
     i8 1, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i
     i8 10, label %_ZSt6get_ifISt6vectorIiSaIiEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES2_S0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1733,7 +1729,7 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %.critedge
 
 .thread121:                                       ; preds = %bb.p, %..thread121_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !415)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTIi, i64 8), align 8, !tbaa !378, !noalias !415 ; 2 uses
@@ -2075,9 +2071,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread115 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread115 [
     i8 4, label %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i
     i8 13, label %_ZSt6get_ifISt6vectorImSaImEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES2_S0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -2207,7 +2202,7 @@ _ZNSt6vectorImSaImEE17_M_realloc_insertIJRKmEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %.critedge
 
 .thread115:                                       ; preds = %bb.p, %..thread115_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread115_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread115_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !454)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTIm, i64 8), align 8, !tbaa !378, !noalias !454 ; 2 uses
@@ -2549,9 +2544,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread121 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread121 [
     i8 3, label %_ZNKSt6vectorIlSaIlEE12_M_check_lenEmPKc.exit.i.i.i
     i8 12, label %_ZSt6get_ifISt6vectorIlSaIlEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES2_S0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -2681,7 +2675,7 @@ _ZNSt6vectorIlSaIlEE17_M_realloc_insertIJlEEEvN9__gnu_cxx17__normal_iteratorIPlS
   br label %.critedge
 
 .thread121:                                       ; preds = %bb.p, %..thread121_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !492)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTIl, i64 8), align 8, !tbaa !378, !noalias !492 ; 2 uses
@@ -3023,9 +3017,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread121 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread121 [
     i8 6, label %_ZNKSt6vectorIdSaIdEE12_M_check_lenEmPKc.exit.i.i.i
     i8 15, label %_ZSt6get_ifISt6vectorIdSaIdEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES2_S0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -3155,7 +3148,7 @@ _ZNSt6vectorIdSaIdEE17_M_realloc_insertIJdEEEvN9__gnu_cxx17__normal_iteratorIPdS
   br label %.critedge
 
 .thread121:                                       ; preds = %bb.p, %..thread121_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !531)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTId, i64 8), align 8, !tbaa !378, !noalias !531 ; 2 uses
@@ -3497,9 +3490,8 @@ bb.o:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.p:                                             ; preds = %bb.o
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 40 ; 3 uses
-  %i.db = load i8, ptr %i.da, align 8, !tbaa !278
-  %.fr = freeze i8 %i.db                          ; 2 uses
-  switch i8 %.fr, label %.thread121 [
+  %i.db = load i8, ptr %i.da, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.db, label %.thread121 [
     i8 5, label %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i.i
     i8 14, label %_ZSt6get_ifISt6vectorIfSaIfEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES2_S0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -3629,7 +3621,7 @@ _ZNSt6vectorIfSaIfEE17_M_realloc_insertIJfEEEvN9__gnu_cxx17__normal_iteratorIPfS
   br label %.critedge
 
 .thread121:                                       ; preds = %bb.p, %..thread121_crit_edge
-  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %.fr, %bb.p ]
+  %i.et = phi i8 [ %.pre, %..thread121_crit_edge ], [ %i.db, %bb.p ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   tail call void @llvm.experimental.noalias.scope.decl(metadata !570)
   %i.eu = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZTIf, i64 8), align 8, !tbaa !378, !noalias !570 ; 2 uses
@@ -4021,9 +4013,8 @@ bb.q:                                             ; preds = %_ZN4absl12lts_20250
 
 bb.r:                                             ; preds = %bb.q
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dk, i64 40
-  %i.dm = load i8, ptr %i.dl, align 8, !tbaa !278
-  %.fr = freeze i8 %i.dm                          ; 2 uses
-  switch i8 %.fr, label %.thread [
+  %i.dm = load i8, ptr %i.dl, align 8, !tbaa !278 ; 2 uses
+  switch i8 %i.dm, label %.thread [
     i8 7, label %_ZSt6get_ifINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdS5_S9_St6vectorISA_SaISA_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_IS5_SaIS5_EESB_IS9_SaIS9_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 16, label %_ZSt6get_ifISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdS6_SC_S0_ISD_SaISD_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES8_S0_ISC_SaISC_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -4183,7 +4174,7 @@ bb.z:                                             ; preds = %_ZSt6get_ifISt6vect
   br label %.critedge
 
 .thread:                                          ; preds = %bb.r, %..thread_crit_edge
-  %i.fl = phi i8 [ %.pre, %..thread_crit_edge ], [ %.fr, %bb.r ]
+  %i.fl = phi i8 [ %.pre, %..thread_crit_edge ], [ %i.dm, %bb.r ]
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #25
   store i64 52, ptr %10, align 8, !tbaa !212, !alias.scope !607
   %i.fm = getelementptr inbounds nuw i8, ptr %10, i64 8

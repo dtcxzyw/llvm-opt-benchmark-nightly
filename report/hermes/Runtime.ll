@@ -201,10 +201,9 @@ bb.r:                                             ; preds = %_ZN6hermes2vm8JSObj
   %i.ct = add i64 %i.cs, %i.n
   %i.cu = inttoptr i64 %i.ct to ptr
   %i.cv = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
-  %i.cw = load double, ptr %i.cv, align 8, !tbaa !72
-  %.fr = freeze double %i.cw                      ; 2 uses
-  %i.cx = fcmp uno double %.fr, 0.000000e+00
-  %i.cy = bitcast double %.fr to i64
+  %i.cw = load double, ptr %i.cv, align 8, !tbaa !72 ; 2 uses
+  %i.cx = fcmp uno double %i.cw, 0.000000e+00
+  %i.cy = bitcast double %i.cw to i64
   br i1 %i.cx, label %_ZN6hermes2vm5vmisaINS0_8JSObjectEEEbNS0_11HermesValueE.exit.thread, label %_ZN6hermes2vm8JSObject17getNamedSlotValueENS0_6HandleIS1_EERNS0_7RuntimeENS0_23NamedPropertyDescriptorE.exit.thread, !prof !51
 
 bb.s:                                             ; preds = %_ZN6hermes2vm8JSObject23getNamedSlotValueUnsafeEPS1_RNS0_11PointerBaseENS0_23NamedPropertyDescriptorE.exit.i, %_ZN6hermes2vm8JSObject23getNamedSlotValueUnsafeEPS1_RNS0_11PointerBaseENS0_23NamedPropertyDescriptorE.exit.i
@@ -607,14 +606,13 @@ _ZN4llvh11raw_ostreamlsEPKc.exit28:               ; preds = %bb.e, %bb.f
 bb.g:                                             ; preds = %_ZN4llvh11raw_ostreamlsEPKc.exit28
   %i.ae = and i64 %.sroa.05.0.copyload, 281474976710655
   %i.af = inttoptr i64 %i.ae to ptr
-  %i.ag = load i32, ptr %i.af, align 4
-  %.fr52 = freeze i32 %i.ag                       ; 2 uses
-  %i.ah = add i32 %.fr52, -1140850688
+  %i.ag = load i32, ptr %i.af, align 4            ; 2 uses
+  %i.ah = add i32 %i.ag, -1140850688
   %i.ai = icmp ult i32 %i.ah, 150994944
   br i1 %i.ai, label %_ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit, label %_ZN4llvh11raw_ostreamlsEPKc.exit35
 
 _ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit: ; preds = %bb.g
-  %i.aj = lshr i32 %.fr52, 24
+  %i.aj = lshr i32 %i.ag, 24
   %i.ak = tail call noundef ptr @_ZN6hermes2vm11cellKindStrENS0_8CellKindE(i32 noundef %i.aj) #29 ; 4 uses
   %.not.i.i = icmp eq ptr %i.ak, null
   br i1 %.not.i.i, label %_ZN4llvh11raw_ostreamlsEPKc.exit31, label %_ZN4llvh9StringRefC2EPKc.exit.i
@@ -1017,10 +1015,9 @@ bb.t:                                             ; preds = %_ZN6hermes2vm8JSObj
   %i.dk = add i64 %i.dj, %i.e
   %i.dl = inttoptr i64 %i.dk to ptr
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
-  %i.dn = load double, ptr %i.dm, align 8, !tbaa !72
-  %.fr.i.i.i = freeze double %i.dn                ; 2 uses
-  %i.do = fcmp uno double %.fr.i.i.i, 0.000000e+00
-  %i.dp = bitcast double %.fr.i.i.i to i64
+  %i.dn = load double, ptr %i.dm, align 8, !tbaa !72 ; 2 uses
+  %i.do = fcmp uno double %i.dn, 0.000000e+00
+  %i.dp = bitcast double %i.dn to i64
   br i1 %i.do, label %bb.v, label %_ZN6hermes2vm8JSObject17getNamedSlotValueENS0_6HandleIS1_EERNS0_7RuntimeENS0_23NamedPropertyDescriptorE.exit.thread.i.i.i, !prof !51
 
 bb.u:                                             ; preds = %_ZN6hermes2vm8JSObject23getNamedSlotValueUnsafeEPS1_RNS0_11PointerBaseENS0_23NamedPropertyDescriptorE.exit.i.i.i.i, %_ZN6hermes2vm8JSObject23getNamedSlotValueUnsafeEPS1_RNS0_11PointerBaseENS0_23NamedPropertyDescriptorE.exit.i.i.i.i
@@ -1050,8 +1047,7 @@ _ZN6hermes2vm8JSObject17getNamedSlotValueENS0_6HandleIS1_EERNS0_7RuntimeENS0_23N
   %i.dy = and i64 %.sroa.3.0.i614.i.i.i, 281474976710655
   %i.dz = inttoptr i64 %i.dy to ptr               ; 2 uses
   %i.ea = load i32, ptr %i.dz, align 4
-  %.fr17.i.i.i = freeze i32 %i.ea
-  %i.eb = add i32 %.fr17.i.i.i, -1157627904
+  %i.eb = add i32 %i.ea, -1157627904
   %i.ec = icmp ult i32 %i.eb, 67108864
   br i1 %i.ec, label %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit.i.i.i, label %bb.v
 

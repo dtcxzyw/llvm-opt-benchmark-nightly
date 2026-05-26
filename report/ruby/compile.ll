@@ -201,8 +201,7 @@ bb.ec:                                            ; preds = %bb.eb
   %i.we = call i64 @rb_intern2(ptr noundef nonnull @.str.218, i64 noundef 17) #37
   %i.wf = call i64 @rb_id2sym(i64 noundef %i.we) #37
   %i.wg = icmp eq i64 %i.uy, %i.wf
-  %cond.fr.i = freeze i1 %i.wg
-  br i1 %cond.fr.i, label %select.unfold.i, label %event_name_to_flag.exit.i
+  br i1 %i.wg, label %select.unfold.i, label %event_name_to_flag.exit.i
 
 select.unfold.i:                                  ; preds = %bb.ec, %bb.eb, %bb.ea, %bb.dz, %bb.dy, %bb.dx, %bb.dw, %RB_SYMBOL_P.exit.thread.i167
   %.0.i163.ph.i = phi i32 [ 512, %bb.eb ], [ 256, %bb.ea ], [ 16, %bb.dz ], [ 8, %bb.dy ], [ 4, %bb.dx ], [ 2, %bb.dw ], [ 1, %RB_SYMBOL_P.exit.thread.i167 ], [ 16384, %bb.ec ]
@@ -605,8 +604,7 @@ bb.bq:                                            ; preds = %bb.bp
 ELEM_REMOVE.exit700:                              ; preds = %bb.bm, %bb.bp, %bb.bq, %bb.az, %bb.ay
   %i.ij = load ptr, ptr %i.d, align 8, !tbaa !68
   %i.ik = tail call fastcc i32 @remove_unreachable_chunk(ptr noundef %0, ptr noundef %i.ij)
-  %.fr = freeze i32 %i.ik
-  %.not601 = icmp eq i32 %.fr, 0
+  %.not601 = icmp eq i32 %i.ik, 0
   br i1 %.not601, label %ELEM_REMOVE.exit700.ELEM_REMOVE.exit.thread935_crit_edge, label %.backedge.backedge
 
 ELEM_REMOVE.exit700.ELEM_REMOVE.exit.thread935_crit_edge: ; preds = %ELEM_REMOVE.exit700
@@ -1009,20 +1007,18 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.h = getelementptr i8, ptr %i.b, i64 168
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !170
-  %4 = freeze ptr %i.i                            ; 3 uses
-  %.not61160 = icmp eq ptr %4, null
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !170  ; 3 uses
+  %.not61160 = icmp eq ptr %i.i, null
   br i1 %.not61160, label %._crit_edge.loopexit, label %.lr.ph161
 
 .lr.ph:                                           ; preds = %.lr.ph161
   %i.j = getelementptr i8, ptr %i.n, i64 168
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !170
-  %5 = freeze ptr %i.k                            ; 3 uses
-  %.not61 = icmp eq ptr %5, null
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !170  ; 3 uses
+  %.not61 = icmp eq ptr %i.k, null
   br i1 %.not61, label %._crit_edge.loopexit, label %.lr.ph161, !llvm.loop !1081
 
 .lr.ph161:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.l = phi ptr [ %5, %.lr.ph ], [ %4, %.lr.ph.preheader ] ; 2 uses
+  %i.l = phi ptr [ %i.k, %.lr.ph ], [ %i.i, %.lr.ph.preheader ] ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !46   ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !47   ; 3 uses
@@ -1034,7 +1030,7 @@ bb.b:                                             ; preds = %bb.a
   br label %._crit_edge.loopexit, !llvm.loop !1081
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %.._crit_edge.loopexit_crit_edge, %.lr.ph.preheader
-  %.lcssa159 = phi ptr [ %4, %.lr.ph.preheader ], [ %i.l, %.._crit_edge.loopexit_crit_edge ], [ %5, %.lr.ph ]
+  %.lcssa159 = phi ptr [ %i.i, %.lr.ph.preheader ], [ %i.l, %.._crit_edge.loopexit_crit_edge ], [ %i.k, %.lr.ph ]
   %.054.lcssa.ph = phi i32 [ %i.c, %.lr.ph.preheader ], [ %i.o, %.._crit_edge.loopexit_crit_edge ], [ %i.o, %.lr.ph ]
   %i.r = icmp eq ptr %.lcssa159, %0
   br label %._crit_edge
@@ -1437,20 +1433,18 @@ bb.a:
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.h = getelementptr i8, ptr %i.d, i64 168
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !170
-  %6 = freeze ptr %i.i                            ; 3 uses
-  %.not142 = icmp eq ptr %6, null
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !170  ; 3 uses
+  %.not142 = icmp eq ptr %i.i, null
   br i1 %.not142, label %._crit_edge.loopexit, label %.lr.ph143
 
 .lr.ph:                                           ; preds = %.lr.ph143
   %i.j = getelementptr i8, ptr %i.n, i64 168
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !170
-  %7 = freeze ptr %i.k                            ; 3 uses
-  %.not = icmp eq ptr %7, null
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !170  ; 3 uses
+  %.not = icmp eq ptr %i.k, null
   br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph143, !llvm.loop !1432
 
 .lr.ph143:                                        ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.l = phi ptr [ %7, %.lr.ph ], [ %6, %.lr.ph.preheader ] ; 2 uses
+  %i.l = phi ptr [ %i.k, %.lr.ph ], [ %i.i, %.lr.ph.preheader ] ; 2 uses
   %i.m = getelementptr i8, ptr %i.l, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !46   ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !47   ; 3 uses
@@ -1462,7 +1456,7 @@ bb.a:
   br label %._crit_edge.loopexit, !llvm.loop !1432
 
 ._crit_edge.loopexit:                             ; preds = %.lr.ph, %.._crit_edge.loopexit_crit_edge, %.lr.ph.preheader
-  %.lcssa141 = phi ptr [ %6, %.lr.ph.preheader ], [ %i.l, %.._crit_edge.loopexit_crit_edge ], [ %7, %.lr.ph ]
+  %.lcssa141 = phi ptr [ %i.i, %.lr.ph.preheader ], [ %i.l, %.._crit_edge.loopexit_crit_edge ], [ %i.k, %.lr.ph ]
   %.0.lcssa.ph = phi i32 [ %i.e, %.lr.ph.preheader ], [ %i.o, %.._crit_edge.loopexit_crit_edge ], [ %i.o, %.lr.ph ]
   %i.r = icmp eq ptr %.lcssa141, %0
   br label %._crit_edge

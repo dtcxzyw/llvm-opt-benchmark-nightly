@@ -201,14 +201,13 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load ptr, ptr @je_tcaches, align 8, !tbaa !147
   %i.h = zext i32 %1 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35
-  %.fr = freeze ptr %i.j                          ; 3 uses
-  %i.k = icmp eq ptr %.fr, null
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 3 uses
+  %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %tcaches_elm_remove.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %malloc_mutex_lock.exit
   store ptr inttoptr (i64 1 to ptr), ptr %i.i, align 8, !tbaa !35
-  %i.l = icmp eq ptr %.fr, inttoptr (i64 1 to ptr)
+  %i.l = icmp eq ptr %i.j, inttoptr (i64 1 to ptr)
   br i1 %i.l, label %tcaches_elm_remove.exit.thread, label %bb.f
 
 tcaches_elm_remove.exit.thread:                   ; preds = %malloc_mutex_lock.exit, %bb.e
@@ -219,7 +218,7 @@ tcaches_elm_remove.exit.thread:                   ; preds = %malloc_mutex_lock.e
 bb.f:                                             ; preds = %bb.e
   store atomic i8 0, ptr getelementptr inbounds nuw (i8, ptr @tcaches_mtx, i64 104) monotonic, align 8
   %i.n = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @tcaches_mtx, i64 64)) #13 ; 0 uses
-  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %.fr)
+  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %i.j)
   br label %bb.g
 
 bb.g:                                             ; preds = %tcaches_elm_remove.exit.thread, %bb.f
@@ -257,9 +256,8 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load ptr, ptr @je_tcaches, align 8, !tbaa !147
   %i.h = zext i32 %1 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35
-  %.fr = freeze ptr %i.j                          ; 2 uses
-  %switch = icmp ult ptr %.fr, inttoptr (i64 2 to ptr)
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !35   ; 2 uses
+  %switch = icmp ult ptr %i.j, inttoptr (i64 2 to ptr)
   %i.k = load ptr, ptr @tcaches_avail, align 8, !tbaa !147
   store ptr %i.k, ptr %i.i, align 8, !tbaa !35
   store ptr %i.i, ptr @tcaches_avail, align 8, !tbaa !147
@@ -268,7 +266,7 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   br i1 %switch, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %malloc_mutex_lock.exit
-  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %.fr)
+  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %i.j)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %malloc_mutex_lock.exit

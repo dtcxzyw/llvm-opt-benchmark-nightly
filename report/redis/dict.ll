@@ -201,7 +201,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not6074, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.n, %select.unfold
-  %.04575 = phi ptr [ %.fr, %select.unfold ], [ %i.ar, %bb.n ] ; 4 uses
+  %.04575 = phi ptr [ %i.bf, %select.unfold ], [ %i.ar, %bb.n ] ; 4 uses
   %i.as = load ptr, ptr %.04575, align 8, !tbaa !37 ; 4 uses
   %.not61 = icmp eq ptr %i.as, null
   br i1 %.not61, label %.critedge, label %bb.o
@@ -250,12 +250,11 @@ bb.t:                                             ; preds = %dictStoredKey2Key.e
   br i1 %.not62, label %select.unfold, label %.thread
 
 select.unfold:                                    ; preds = %bb.t
-  %i.bf = load ptr, ptr %.04575, align 8, !tbaa !37
-  %.fr = freeze ptr %i.bf                         ; 3 uses
-  %i.bg = ptrtoint ptr %.fr to i64
+  %i.bf = load ptr, ptr %.04575, align 8, !tbaa !37 ; 3 uses
+  %i.bg = ptrtoint ptr %i.bf to i64
   %i.bh = and i64 %i.bg, 3
   %.not.i67 = icmp ne i64 %i.bh, 0
-  %.not6088 = icmp eq ptr %.fr, null
+  %.not6088 = icmp eq ptr %i.bf, null
   %.not60 = or i1 %.not.i67, %.not6088
   br i1 %.not60, label %.critedge, label %.lr.ph
 
@@ -658,7 +657,7 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %select.unfold
-  %.04067 = phi ptr [ %.fr, %select.unfold ], [ %i.ac, %.lr.ph.preheader ] ; 4 uses
+  %.04067 = phi ptr [ %i.at, %select.unfold ], [ %i.ac, %.lr.ph.preheader ] ; 4 uses
   %i.ad = load ptr, ptr %.04067, align 8, !tbaa !37 ; 4 uses
   %.not50 = icmp eq ptr %i.ad, null
   br i1 %.not50, label %._crit_edgethread-pre-split, label %bb.g
@@ -717,12 +716,11 @@ bb.l:                                             ; preds = %dictStoredKey2Key.e
   br label %.loopexit
 
 select.unfold:                                    ; preds = %bb.l
-  %i.at = load ptr, ptr %.04067, align 8, !tbaa !37
-  %.fr = freeze ptr %i.at                         ; 3 uses
-  %i.au = ptrtoint ptr %.fr to i64
+  %i.at = load ptr, ptr %.04067, align 8, !tbaa !37 ; 3 uses
+  %i.au = ptrtoint ptr %i.at to i64
   %i.av = and i64 %i.au, 3
   %.not.i56 = icmp ne i64 %i.av, 0
-  %.not4988 = icmp eq ptr %.fr, null
+  %.not4988 = icmp eq ptr %i.at, null
   %.not49 = or i1 %.not.i56, %.not4988
   br i1 %.not49, label %._crit_edgethread-pre-split, label %.lr.ph
 
@@ -755,7 +753,7 @@ bb.m:                                             ; preds = %bb.e, %._crit_edge
   br label %.lr.ph.1
 
 .lr.ph.1:                                         ; preds = %select.unfold.1, %.lr.ph.preheader.1
-  %.04067.1 = phi ptr [ %.fr.1, %select.unfold.1 ], [ %i.bh, %.lr.ph.preheader.1 ] ; 4 uses
+  %.04067.1 = phi ptr [ %i.bv, %select.unfold.1 ], [ %i.bh, %.lr.ph.preheader.1 ] ; 4 uses
   %i.bi = load ptr, ptr %.04067.1, align 8, !tbaa !37 ; 4 uses
   %.not50.1 = icmp eq ptr %i.bi, null
   br i1 %.not50.1, label %.loopexit, label %bb.n
@@ -804,12 +802,11 @@ bb.s:                                             ; preds = %dictStoredKey2Key.e
   br i1 %.not52.1, label %select.unfold.1, label %.thread60
 
 select.unfold.1:                                  ; preds = %bb.s
-  %i.bv = load ptr, ptr %.04067.1, align 8, !tbaa !37
-  %.fr.1 = freeze ptr %i.bv                       ; 3 uses
-  %i.bw = ptrtoint ptr %.fr.1 to i64
+  %i.bv = load ptr, ptr %.04067.1, align 8, !tbaa !37 ; 3 uses
+  %i.bw = ptrtoint ptr %i.bv to i64
   %i.bx = and i64 %i.bw, 3
   %.not.i56.1 = icmp ne i64 %i.bx, 0
-  %.not49.189 = icmp eq ptr %.fr.1, null
+  %.not49.189 = icmp eq ptr %i.bv, null
   %.not49.1 = or i1 %.not.i56.1, %.not49.189
   br i1 %.not49.1, label %.loopexit, label %.lr.ph.1
 
@@ -1212,8 +1209,7 @@ dictGetNext.exit:                                 ; preds = %bb.o
 .loopexit:                                        ; preds = %dictGetNext.exit, %dictGetNext.exit.thread
   %i.bp = phi i64 [ %i.bm, %dictGetNext.exit.thread ], [ %i.bo, %dictGetNext.exit ] ; 3 uses
   %.not113 = icmp ult i64 %i.bp, %spec.select122
-  %cond.fr = freeze i1 %.not113
-  br i1 %cond.fr, label %.thread, label %.critedge
+  br i1 %.not113, label %.thread, label %.critedge
 
 .thread:                                          ; preds = %.loopexit, %bb.m, %bb.l, %bb.j, %bb.i
   %.591 = phi i64 [ %.187135, %bb.j ], [ %.187135, %bb.i ], [ %.187135, %bb.m ], [ %.187135, %bb.l ], [ %i.bp, %.loopexit ] ; 5 uses
@@ -1405,7 +1401,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.thread.i, %.lr.ph.i
-  %.076.i = phi ptr [ %4, %.lr.ph.i ], [ %.fr.i, %.thread.i ] ; 3 uses
+  %.076.i = phi ptr [ %4, %.lr.ph.i ], [ %i.al, %.thread.i ] ; 3 uses
   %i.f = load ptr, ptr %.076.i, align 8, !tbaa !37 ; 7 uses
   %.not52.i = icmp eq ptr %i.f, null
   br i1 %.not52.i, label %dictDefragBucket.exit, label %bb.d
@@ -1552,12 +1548,11 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %bb.o,
   br label %.thread.i
 
 .thread.i:                                        ; preds = %.thread.sink.split.i, %bb.y, %bb.j
-  %i.al = load ptr, ptr %.076.i, align 8, !tbaa !37
-  %.fr.i = freeze ptr %i.al                       ; 3 uses
-  %i.am = ptrtoint ptr %.fr.i to i64
+  %i.al = load ptr, ptr %.076.i, align 8, !tbaa !37 ; 3 uses
+  %i.am = ptrtoint ptr %i.al to i64
   %i.an = and i64 %i.am, 3
   %.not.i70.i = icmp ne i64 %i.an, 0
-  %.not87.i = icmp eq ptr %.fr.i, null
+  %.not87.i = icmp eq ptr %i.al, null
   %.not.i = or i1 %.not87.i, %.not.i70.i
   br i1 %.not.i, label %dictDefragBucket.exit, label %bb.c
 

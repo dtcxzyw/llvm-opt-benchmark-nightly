@@ -201,8 +201,7 @@ bb.bt:                                            ; preds = %authRequired.exit, 
 
 authRequired.exit.thread:                         ; preds = %bb.bs, %authRequired.exit, %sdslen.exit139, %bb.bf
   %i.ia = tail call i32 @processInputBuffer(ptr noundef nonnull %.val)
-  %.fr = freeze i32 %i.ia
-  %i.ib = icmp eq i32 %.fr, -1
+  %i.ib = icmp eq i32 %i.ia, -1
   br i1 %i.ib, label %beforeNextClient.exit, label %bb.bu
 
 bb.bu:                                            ; preds = %bb.as, %bb.at, %bb.au, %bb.bt, %authRequired.exit.thread
@@ -605,8 +604,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q
   %i.bb = tail call i32 @strcasecmp(ptr noundef readonly %i.aw, ptr noundef nonnull @.str.12) #33
-  %.fr712 = freeze i32 %i.bb
-  %.not8.i = icmp eq i32 %.fr712, 0
+  %.not8.i = icmp eq i32 %i.bb, 0
   br i1 %.not8.i, label %.thread649, label %getClientTypeByName.exit
 
 getClientTypeByName.exit:                         ; preds = %bb.r
@@ -1009,8 +1007,7 @@ bb.bm:                                            ; preds = %bb.bl
 
 bb.bn:                                            ; preds = %bb.bm
   %i.gb = call i32 @strcasecmp(ptr noundef readonly %i.fw, ptr noundef nonnull @.str.12) #33
-  %.fr = freeze i32 %i.gb
-  %.not8.i628 = icmp eq i32 %.fr, 0
+  %.not8.i628 = icmp eq i32 %i.gb, 0
   br i1 %.not8.i628, label %getClientTypeByName.exit631.thread, label %getClientTypeByName.exit631
 
 getClientTypeByName.exit631:                      ; preds = %bb.bn

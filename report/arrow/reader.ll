@@ -201,13 +201,12 @@ bb.a:
   br i1 %i.n, label %bb.b, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.o = load i32, ptr %i.f, align 4, !tbaa !3, !noalias !130
-  %.fr2.i.i = freeze i32 %i.o                     ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.o = load i32, ptr %i.f, align 4, !tbaa !3, !noalias !130 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.o, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.c, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = zext nneg i32 %.fr2.i.i to i64           ; 2 uses
+  %i.p = zext nneg i32 %i.o to i64                ; 2 uses
   %i.q = add i64 %i.i, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.q, %i.p
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i
@@ -610,13 +609,12 @@ bb.a:                                             ; preds = %_ZN5arrow6StatusD2E
   br i1 %i.p, label %bb.b, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.q = load i32, ptr %i.h, align 4, !tbaa !3, !noalias !684
-  %.fr2.i.i = freeze i32 %i.q                     ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.q = load i32, ptr %i.h, align 4, !tbaa !3, !noalias !684 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.q, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.c, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.r = zext nneg i32 %.fr2.i.i to i64           ; 2 uses
+  %i.r = zext nneg i32 %i.q to i64                ; 2 uses
   %i.s = add i64 %i.k, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.s, %i.r
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i
@@ -1019,13 +1017,12 @@ _ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit.i.i.i.i.i: ; preds = %_ZNSt16_Sp
   br i1 %i.av, label %bb.l, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf6FooterEEEbPKhl.exit.thread.i.i.i.i.i
 
 bb.l:                                             ; preds = %_ZNSt10shared_ptrIN5arrow6BufferEEaSERKS2_.exit.i.i.i.i.i
-  %i.aw = load i32, ptr %i.an, align 4, !tbaa !3, !noalias !2122
-  %.fr2.i.i.i.i.i.i = freeze i32 %i.aw            ; 2 uses
-  %or.cond.i.i.i.i.i.i.i.i.i = icmp sgt i32 %.fr2.i.i.i.i.i.i, 0
+  %i.aw = load i32, ptr %i.an, align 4, !tbaa !3, !noalias !2122 ; 2 uses
+  %or.cond.i.i.i.i.i.i.i.i.i = icmp sgt i32 %i.aw, 0
   br i1 %or.cond.i.i.i.i.i.i.i.i.i, label %bb.m, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf6FooterEEEbPKhl.exit.thread.i.i.i.i.i
 
 bb.m:                                             ; preds = %bb.l
-  %i.ax = zext nneg i32 %.fr2.i.i.i.i.i.i to i64  ; 2 uses
+  %i.ax = zext nneg i32 %i.aw to i64              ; 2 uses
   %i.ay = add i64 %i.aq, -1
   %.not.i.i.i.i23.i.i.i.i.i = icmp ult i64 %i.ay, %i.ax
   br i1 %.not.i.i.i.i23.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf6FooterEEEbPKhl.exit.thread.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf6FooterEEEbPKhl.exit.i.i.i.i.i
@@ -1428,13 +1425,12 @@ bb.a:
   br i1 %i.n, label %bb.b, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.o = load i32, ptr %i.f, align 4, !tbaa !3, !noalias !2516
-  %.fr2.i.i = freeze i32 %i.o                     ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.o = load i32, ptr %i.f, align 4, !tbaa !3, !noalias !2516 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.o, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.c, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = zext nneg i32 %.fr2.i.i to i64           ; 2 uses
+  %i.p = zext nneg i32 %i.o to i64                ; 2 uses
   %i.q = add i64 %i.i, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.q, %i.p
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i
@@ -1837,13 +1833,12 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.bm, label %bb.q, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.q:                                             ; preds = %bb.p
-  %i.bn = load i32, ptr %i.bh, align 4, !tbaa !3, !noalias !2638
-  %.fr2.i.i = freeze i32 %i.bn                    ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.bn = load i32, ptr %i.bh, align 4, !tbaa !3, !noalias !2638 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.bn, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.r, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.r:                                             ; preds = %bb.q
-  %i.bo = zext nneg i32 %.fr2.i.i to i64          ; 2 uses
+  %i.bo = zext nneg i32 %i.bn to i64              ; 2 uses
   %i.bp = add i64 %i.bk, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.bp, %i.bo
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i
@@ -2246,13 +2241,12 @@ _ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; pr
   br i1 %i.ae, label %bb.h, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.h:                                             ; preds = %_ZNSt12__shared_ptrIN5arrow6BufferELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %i.af = load i32, ptr %i.w, align 4, !tbaa !3, !noalias !2694
-  %.fr2.i.i = freeze i32 %i.af                    ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.af = load i32, ptr %i.w, align 4, !tbaa !3, !noalias !2694 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.af, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ag = zext nneg i32 %.fr2.i.i to i64          ; 2 uses
+  %i.ag = zext nneg i32 %i.af to i64              ; 2 uses
   %i.ah = add i64 %i.z, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.ah, %i.ag
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i

@@ -201,8 +201,7 @@ _ZNK6Assimp3MDL8HalfLife14HL1MeshTriverteqERKNS1_7TrivertE.exit516: ; preds = %b
   %i.apa = load i16, ptr %i.aoz, align 2
   %i.apb = load i16, ptr %i.amv, align 1
   %i.apc = icmp eq i16 %i.apa, %i.apb
-  %cond.fr = freeze i1 %i.apc
-  %spec.select4601 = select i1 %cond.fr, i16 %i.aok, i16 -1
+  %spec.select4601 = select i1 %i.apc, i16 %i.aok, i16 -1
   br label %_ZNK6Assimp3MDL8HalfLife14HL1MeshTriverteqERKNS1_7TrivertE.exit516.thread
 
 _ZNK6Assimp3MDL8HalfLife14HL1MeshTriverteqERKNS1_7TrivertE.exit516.thread: ; preds = %_ZNK6Assimp3MDL8HalfLife14HL1MeshTriverteqERKNS1_7TrivertE.exit516, %bb.ev, %bb.ew, %bb.ex
@@ -605,8 +604,7 @@ bb.h:                                             ; preds = %._crit_edge.thread.
 bb.i:                                             ; preds = %bb.h, %._crit_edge.i.i.i
   %i.bd = phi i16 [ %.pre.i.i, %bb.h ], [ %i.ax, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.h ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %.fr = freeze i16 %i.bd
-  %i.be = icmp slt i16 %.fr, %1
+  %i.be = icmp slt i16 %i.bd, %1
   br i1 %i.be, label %select.unfold.i.i, label %_ZNSt3setIsSt4lessIsESaIsEE6insertERKs.exit
 
 select.unfold.i.i:                                ; preds = %bb.i, %._crit_edge.thread.i.i.i
@@ -872,8 +870,7 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge.
   %i.ca = phi i16 [ %.pre.i.i, %bb.h ], [ %i.bu, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.h ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.cb = icmp slt i16 %i.ca, %i.u
-  %cond.fr.i.i = freeze i1 %i.cb
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIsSt4lessIsESaIsEE6insertERKs.exit
+  br i1 %i.cb, label %select.unfold.i.i, label %_ZNSt3setIsSt4lessIsESaIsEE6insertERKs.exit
 
 select.unfold.i.i:                                ; preds = %bb.i, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.i ] ; 3 uses
@@ -1276,8 +1273,7 @@ bb.e:                                             ; preds = %bb.d, %._crit_edge.
   %i.q = phi i16 [ %.pre81.i, %bb.d ], [ %i.l, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.d ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.r = icmp slt i16 %i.q, %.pre.i.i.i.pre.pre.pre
-  %cond.fr = freeze i1 %i.r
-  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIssSt9_IdentityIsESt4lessIsESaIsEE17_M_insert_unique_IRKsNS5_11_Alloc_nodeEEESt17_Rb_tree_iteratorIsESt23_Rb_tree_const_iteratorIsEOT_RT0_.exit.i
+  br i1 %i.r, label %select.unfold, label %_ZNSt8_Rb_treeIssSt9_IdentityIsESt4lessIsESaIsEE17_M_insert_unique_IRKsNS5_11_Alloc_nodeEEESt17_Rb_tree_iteratorIsESt23_Rb_tree_const_iteratorIsEOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.e, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.e ] ; 3 uses
@@ -1387,8 +1383,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.j, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %i.m = icmp slt i32 %i.l, %i.k
-  %cond.fr = freeze i1 %i.m
-  br i1 %cond.fr, label %select.unfold, label %bb.i
+  br i1 %i.m, label %select.unfold, label %bb.i
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.d ] ; 3 uses
@@ -1791,8 +1786,7 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.j, %bb.c ], [ %.02024.i, %._crit_edge.i ]
   %i.m = icmp slt i16 %i.l, %i.k
-  %cond.fr = freeze i1 %i.m
-  br i1 %cond.fr, label %select.unfold, label %bb.i
+  br i1 %i.m, label %select.unfold, label %bb.i
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.d ] ; 3 uses

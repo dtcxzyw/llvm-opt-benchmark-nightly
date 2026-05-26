@@ -201,18 +201,17 @@ bb.ar:                                            ; preds = %.thread95, %bb.af
   br i1 %or.cond, label %rb_float_new_inline.exit.thread, label %rb_float_new_inline.exit.thread.sink.split
 
 rb_float_new_inline.exit.thread.sink.split:       ; preds = %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.j, %bb.i, %bb.p
-  %.sink = phi i64 [ -9223372036854775806, %bb.ap ], [ %i.ah, %bb.j ], [ %i.ao, %bb.p ], [ %i.ag, %bb.i ], [ %i.dj, %bb.ao ], [ %i.dl, %bb.aq ], [ -9223372036854775806, %bb.ar ]
-  %3 = freeze i64 %.sink                          ; 2 uses
-  store i64 %3, ptr %i.d, align 8, !tbaa !35
+  %.sink = phi i64 [ -9223372036854775806, %bb.ap ], [ %i.ah, %bb.j ], [ %i.ao, %bb.p ], [ %i.ag, %bb.i ], [ %i.dj, %bb.ao ], [ %i.dl, %bb.aq ], [ -9223372036854775806, %bb.ar ] ; 2 uses
+  store i64 %.sink, ptr %i.d, align 8, !tbaa !35
   br label %rb_float_new_inline.exit.thread
 
 rb_float_new_inline.exit.thread:                  ; preds = %rb_float_new_inline.exit.thread.sink.split, %bb.k, %.lr.ph.preheader, %bb.ar, %._crit_edge, %RB_FLOAT_TYPE_P.exit.thread
-  %.fr110 = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %3, %rb_float_new_inline.exit.thread.sink.split ] ; 17 uses
+  %.fr110 = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %.sink, %rb_float_new_inline.exit.thread.sink.split ] ; 17 uses
   %i.dp = load i64, ptr %i.c, align 8, !tbaa !35  ; 9 uses
-  %4 = and i64 %i.dp, %.fr110
-  %5 = and i64 %4, 1
-  %or.cond129.not = icmp eq i64 %5, 0
-  br i1 %or.cond129.not, label %bb.av, label %bb.as
+  %3 = trunc i64 %i.dp to i1
+  %4 = trunc i64 %.fr110 to i1
+  %or.cond129 = select i1 %3, i1 %4, i1 false
+  br i1 %or.cond129, label %bb.as, label %bb.av
 
 bb.as:                                            ; preds = %rb_float_new_inline.exit.thread
   %i.dq = ashr i64 %i.dp, 1

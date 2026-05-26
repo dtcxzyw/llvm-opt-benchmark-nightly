@@ -201,9 +201,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = add i64 %i.d, %i.j
   %i.l = icmp ugt i64 %i.k, %3
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %i.j
-  %cond.fr = freeze i1 %i.l
   %.not23 = icmp eq ptr %2, null
-  %or.cond = select i1 %cond.fr, i1 true, i1 %.not23
+  %or.cond = select i1 %i.l, i1 true, i1 %.not23
   br i1 %or.cond, label %_ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread, label %_ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread30
 
 _ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread30: ; preds = %bb.d, %bb.b
@@ -343,9 +342,8 @@ bb.d:                                             ; preds = %bb.c
   %i.k = add i64 %i.d, %i.j
   %i.l = icmp ugt i64 %i.k, %3
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 %i.j
-  %cond.fr = freeze i1 %i.l
   %.not23 = icmp eq ptr %2, null
-  %or.cond = select i1 %cond.fr, i1 true, i1 %.not23
+  %or.cond = select i1 %i.l, i1 true, i1 %.not23
   br i1 %or.cond, label %_ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread, label %_ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread30
 
 _ZN11OpenImageIO4v3_13pvt7dataptrERK12TIFFDirEntryNS0_4spanIKhLm18446744073709551615EEEi.exit.thread30: ; preds = %bb.d, %bb.b

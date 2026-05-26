@@ -201,10 +201,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.cx, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cy = call ptr @memchr(ptr noundef %i.cr, i32 noundef %.1120, i64 noundef range(i64 -2147483648, 2147483648) %i.cw) #33
-  %.fr.i = freeze ptr %i.cy                       ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr.i, null
-  %i.cz = getelementptr i8, ptr %.fr.i, i64 1
+  %i.cy = call ptr @memchr(ptr noundef %i.cr, i32 noundef %.1120, i64 noundef range(i64 -2147483648, 2147483648) %i.cw) #33 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.cy, null
+  %i.cz = getelementptr i8, ptr %i.cy, i64 1
   br i1 %.not.i.i, label %search_delim.exit.thread.i, label %search_delim.exit.i
 
 bb.af:                                            ; preds = %bb.ad
@@ -227,8 +226,7 @@ bb.ag:                                            ; preds = %.lr.ph.i.i
 bb.ah:                                            ; preds = %.lr.ph.i.i
   %i.dg = load ptr, ptr %i.cb, align 8, !tbaa !90
   %i.dh = call i32 %i.dg(ptr noundef %.03043.i.i, ptr noundef nonnull %i.da, ptr noundef nonnull %.0.i144) #28, !inline_history !91
-  %.fr.i.i = freeze i32 %i.dh
-  %i.di = icmp eq i32 %.fr.i.i, %.1120
+  %i.di = icmp eq i32 %i.dh, %.1120
   %i.dj = zext nneg i32 %i.dc to i64
   %i.dk = getelementptr i8, ptr %.03043.i.i, i64 %i.dj ; 2 uses
   br i1 %i.di, label %search_delim.exit.i, label %bb.ai
@@ -395,8 +393,7 @@ bb.bb:                                            ; preds = %.lr.ph.i145.i
 bb.bc:                                            ; preds = %.lr.ph.i145.i
   %i.fk = load ptr, ptr %i.cb, align 8, !tbaa !90
   %i.fl = call i32 %i.fk(ptr noundef %.03043.i146.i, ptr noundef nonnull %i.fe, ptr noundef nonnull %.0.i144) #28, !inline_history !91
-  %.fr.i149.i = freeze i32 %i.fl
-  %i.fm = icmp eq i32 %.fr.i149.i, %.1120
+  %i.fm = icmp eq i32 %i.fl, %.1120
   %i.fn = zext nneg i32 %i.fg to i64
   %i.fo = getelementptr i8, ptr %.03043.i146.i, i64 %i.fn ; 2 uses
   br i1 %i.fm, label %search_delim.exit152.i, label %bb.bd
@@ -799,20 +796,21 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load i64, ptr @sym_encoding, align 8, !tbaa !13
   %i.d = tail call i64 @rb_hash_lookup2(i64 noundef %0, i64 noundef %i.c, i64 noundef 4) #28 ; 6 uses
   %i.e = load i64, ptr @sym_extenc, align 8, !tbaa !13
-  %i.f = tail call i64 @rb_hash_lookup2(i64 noundef %0, i64 noundef %i.e, i64 noundef 36) #28
-  %.fr = freeze i64 %i.f                          ; 2 uses
+  %i.f = tail call i64 @rb_hash_lookup2(i64 noundef %0, i64 noundef %i.e, i64 noundef 36) #28 ; 2 uses
   %i.g = load i64, ptr @sym_intenc, align 8, !tbaa !13
   %i.h = tail call i64 @rb_hash_lookup2(i64 noundef %0, i64 noundef %i.g, i64 noundef 36) #28 ; 5 uses
-  %4 = and i64 %.fr, -33
-  %or.cond = icmp eq i64 %4, 4                    ; 4 uses
-  br i1 %or.cond, label %.thread, label %bb.c
+  switch i64 %i.f, label %bb.c [
+    i64 4, label %.thread
+    i64 36, label %.thread
+  ]
 
-.thread:                                          ; preds = %bb.b
+.thread:                                          ; preds = %bb.b, %bb.b
   %i.i = icmp eq i64 %i.h, 36
   br i1 %i.i, label %bb.p, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.thread
-  %.14575 = phi i64 [ 36, %.thread ], [ %.fr, %bb.b ]
+  %4 = phi i1 [ true, %.thread ], [ false, %bb.b ] ; 3 uses
+  %.14575 = phi i64 [ 36, %.thread ], [ %i.f, %bb.b ]
   %i.j = icmp eq i64 %i.d, 4
   br i1 %i.j, label %bb.h, label %bb.d
 
@@ -834,12 +832,12 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %.2 = phi i64 [ %i.q, %bb.f ], [ %i.d, %bb.e ]
-  %i.r = select i1 %or.cond, ptr @.str.16, ptr @.str.17
+  %i.r = select i1 %4, ptr @.str.16, ptr @.str.17
   tail call void (ptr, ...) @rb_warn(ptr noundef nonnull @.str.15, i64 noundef %.2, ptr noundef nonnull %i.r) #34
-  br i1 %or.cond, label %bb.j, label %bb.i
+  br i1 %4, label %bb.j, label %bb.i
 
 bb.h:                                             ; preds = %bb.d, %bb.c
-  br i1 %or.cond, label %bb.j, label %bb.i
+  br i1 %4, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.s = tail call ptr @rb_to_encoding(i64 noundef %.14575) #28
@@ -1242,9 +1240,8 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr [8 x i8], ptr %1, i64 %i.b
   %i.d = getelementptr i8, ptr %i.c, i64 -8
   %i.e = load i64, ptr %i.d, align 8, !tbaa !13
-  %i.f = tail call i64 @rb_check_hash_type(i64 noundef %i.e) #28
-  %.fr = freeze i64 %i.f                          ; 4 uses
-  %i.g = icmp eq i64 %.fr, 4
+  %i.f = tail call i64 @rb_check_hash_type(i64 noundef %i.e) #28 ; 4 uses
+  %i.g = icmp eq i64 %i.f, 4
   br i1 %i.g, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1265,7 +1262,7 @@ bb.d:                                             ; preds = %.thread
   br label %.thread31
 
 .thread31:                                        ; preds = %bb.a, %bb.d, %.thread
-  %.02128 = phi i64 [ %.fr, %.thread ], [ %.fr, %bb.d ], [ 4, %bb.a ] ; 3 uses
+  %.02128 = phi i64 [ %i.f, %.thread ], [ %i.f, %bb.d ], [ 4, %bb.a ] ; 3 uses
   %.023 = phi ptr [ %1, %.thread ], [ %i.m, %bb.d ], [ %1, %bb.a ] ; 3 uses
   %.020 = phi i64 [ 4, %.thread ], [ %i.j, %bb.d ], [ 4, %bb.a ] ; 2 uses
   %.1 = phi i32 [ %.030, %.thread ], [ %i.l, %bb.d ], [ %0, %bb.a ] ; 2 uses
@@ -1282,7 +1279,7 @@ bb.e:                                             ; preds = %.thread31
 .thread34:                                        ; preds = %bb.c, %bb.e, %.thread31
   %.02041 = phi i64 [ %.020, %bb.e ], [ %.020, %.thread31 ], [ 4, %bb.c ]
   %.02340 = phi ptr [ %.023, %bb.e ], [ %.023, %.thread31 ], [ %1, %bb.c ]
-  %.0212839 = phi i64 [ %.02128, %bb.e ], [ %.02128, %.thread31 ], [ %.fr, %bb.c ]
+  %.0212839 = phi i64 [ %.02128, %bb.e ], [ %.02128, %.thread31 ], [ %i.f, %bb.c ]
   %.022 = phi i64 [ %i.o, %bb.e ], [ 4, %.thread31 ], [ 4, %bb.c ]
   %i.p = load i64, ptr %.02340, align 8, !tbaa !13
   %i.q = tail call i64 @rb_io_popen(i64 noundef %i.p, i64 noundef %.022, i64 noundef %.02041, i64 noundef %.0212839) ; 6 uses
@@ -1685,8 +1682,7 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.bu = load i64, ptr @sym_noreuse, align 8, !tbaa !13
-  %.fr.i = freeze i64 %i.bu
-  %i.bv = icmp eq i64 %i.b, %.fr.i
+  %i.bv = icmp eq i64 %i.b, %i.bu
   br i1 %i.bv, label %rb_num2int_inline.exit.i, label %do_io_advise.exit
 
 rb_num2int_inline.exit.i:                         ; preds = %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %rb_num2long_inline.exit11
@@ -2089,8 +2085,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !7
   %i.ay = load ptr, ptr %i.a, align 8, !tbaa !311
   %i.az = call fastcc i32 @io_internal_wait(i64 noundef %i.au, ptr noundef %i.av, i32 noundef %i.ax, i32 noundef 4, ptr noundef %i.ay)
-  %.fr = freeze i32 %i.az
-  %i.ba = icmp eq i32 %.fr, -1
+  %i.ba = icmp eq i32 %i.az, -1
   br i1 %i.ba, label %.thread25, label %bb.g
 
 .thread25:                                        ; preds = %bb.j, %bb.i, %bb.g, %bb.h, %bb.f, %io_internal_wait.exit.thread
@@ -2493,14 +2488,13 @@ bb.d:                                             ; preds = %bb.c
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.l
   %i.s = phi i64 [ %i.ao, %bb.l ], [ %i.r, %.lr.ph.preheader ] ; 2 uses
   %.05177 = phi ptr [ %.253, %bb.l ], [ %i.b, %.lr.ph.preheader ] ; 3 uses
-  %i.t = call fastcc i64 @rb_io_write_memory(ptr noundef %0, ptr noundef %.05177, i64 noundef %i.s)
-  %.fr = freeze i64 %i.t                          ; 3 uses
-  %i.u = icmp sgt i64 %.fr, 0
+  %i.t = call fastcc i64 @rb_io_write_memory(ptr noundef %0, ptr noundef %.05177, i64 noundef %i.s) ; 3 uses
+  %i.u = icmp sgt i64 %i.t, 0
   br i1 %i.u, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph
-  %i.v = getelementptr i8, ptr %.05177, i64 %.fr
-  %i.w = icmp eq i64 %.fr, %i.s
+  %i.v = getelementptr i8, ptr %.05177, i64 %i.t
+  %i.w = icmp eq i64 %i.t, %i.s
   br i1 %i.w, label %.thread70, label %bb.l
 
 bb.f:                                             ; preds = %.lr.ph

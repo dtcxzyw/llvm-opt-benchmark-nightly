@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.340.ph.1100 = phi i32 [ %spec.select.198, %bb.g ], [ %.340.ph.1, %bb.f ] ; 2 uses
-  %.3.ph.1101 = phi i32 [ %spec.select49.199, %bb.g ], [ %.3.ph.1, %bb.f ] ; 3 uses
+  %.3.ph.1101 = phi i32 [ %spec.select49.199, %bb.g ], [ %.3.ph.1, %bb.f ] ; 4 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !42 ; 2 uses
   %.not.1.1 = icmp eq i64 %i.ab, 0
@@ -215,11 +215,11 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.af = icmp eq i32 %.3.ph.1101, -1             ; 2 uses
-  %spec.select.1.1 = select i1 %i.af, i32 1, i32 %.340.ph.1100 ; 2 uses
-  br i1 %i.af, label %.thread68.thread, label %.thread68
+  %spec.select = select i1 %i.af, i32 1, i32 %.3.ph.1101
+  %spec.select.1.1 = select i1 %i.af, i32 1, i32 %.340.ph.1100
+  br label %.thread68.thread
 
-.thread68:                                        ; preds = %bb.j, %bb.i
-  %.340.ph.1.1 = phi i32 [ %spec.select.1.1, %bb.j ], [ %.340.ph.1100, %bb.i ]
+.thread68:                                        ; preds = %bb.i
   %i.ag = icmp eq i32 %.3.ph.1101, -1
   br i1 %i.ag, label %bb.l, label %.thread68.thread
 
@@ -233,8 +233,8 @@ bb.k:                                             ; preds = %bb.i, %bb.f, %bb.d,
   br label %bb.l
 
 .thread68.thread:                                 ; preds = %bb.j, %.thread68
-  %.3.ph.1.1108 = phi i32 [ %.3.ph.1101, %.thread68 ], [ 1, %bb.j ] ; 2 uses
-  %.340.ph.1.1107 = phi i32 [ %.340.ph.1.1, %.thread68 ], [ %spec.select.1.1, %bb.j ] ; 2 uses
+  %.3.ph.1.1108 = phi i32 [ %.3.ph.1101, %.thread68 ], [ %spec.select, %bb.j ] ; 2 uses
+  %.340.ph.1.1107 = phi i32 [ %.340.ph.1100, %.thread68 ], [ %spec.select.1.1, %bb.j ] ; 2 uses
   %i.ai = zext nneg i32 %.3.ph.1.1108 to i64      ; 2 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.ai
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !20
@@ -637,17 +637,13 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.i
   %i.bb = icmp eq i32 %.3.ph.1101.i, -1           ; 2 uses
-  %spec.select169 = select i1 %i.bb, i32 1, i32 %.340.ph.1100.i
-  %spec.select233 = select i1 %i.bb, i32 1, i32 %.3.ph.1101.i
+  %spec.select169 = select i1 %i.bb, i32 1, i32 %.3.ph.1101.i
+  %spec.select233 = select i1 %i.bb, i32 1, i32 %.340.ph.1100.i
   br label %checkHeavyEntries.exit
 
 .thread68.i:                                      ; preds = %bb.j
   %i.bc = icmp eq i32 %.3.ph.1101.i, -1
-  br i1 %i.bc, label %checkHeavyEntries.exit.thread, label %checkHeavyEntries.exit
-
-checkHeavyEntries.exit.thread:                    ; preds = %.thread68.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %bb.l
+  br i1 %i.bc, label %bb.l, label %checkHeavyEntries.exit
 
 checkHeavyEntries.exit.thread215:                 ; preds = %bb.c, %bb.e, %bb.g, %bb.j
   %.04385.lcssa.i = phi i32 [ 0, %bb.c ], [ 0, %bb.e ], [ 1, %bb.g ], [ 1, %bb.j ]
@@ -660,8 +656,8 @@ checkHeavyEntries.exit.thread215:                 ; preds = %bb.c, %bb.e, %bb.g,
   br label %checkLobbyEntries.exit
 
 checkHeavyEntries.exit:                           ; preds = %bb.k, %.thread68.i
-  %.3.ph.1.1108.i = phi i32 [ %.3.ph.1101.i, %.thread68.i ], [ %spec.select233, %bb.k ] ; 3 uses
-  %.340.ph.1.1107.i = phi i32 [ %.340.ph.1100.i, %.thread68.i ], [ %spec.select169, %bb.k ] ; 2 uses
+  %.3.ph.1.1108.i = phi i32 [ %.3.ph.1101.i, %.thread68.i ], [ %spec.select169, %bb.k ] ; 2 uses
+  %.340.ph.1.1107.i = phi i32 [ %.340.ph.1100.i, %.thread68.i ], [ %spec.select233, %bb.k ] ; 2 uses
   %i.be = zext nneg i32 %.3.ph.1.1108.i to i64    ; 2 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.be
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !20
@@ -676,10 +672,10 @@ checkHeavyEntries.exit:                           ; preds = %bb.k, %.thread68.i
   store i16 %i.x, ptr %i.bn, align 8, !tbaa !44
   store i64 %3, ptr %i.bm, align 8, !tbaa !42
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.not = icmp eq i32 %.3.ph.1.1108.i, -1
-  br i1 %.not, label %bb.l, label %checkLobbyEntries.exit
+  br label %checkLobbyEntries.exit
 
-bb.l:                                             ; preds = %checkHeavyEntries.exit.thread, %checkHeavyEntries.exit
+bb.l:                                             ; preds = %.thread68.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
   %.sroa.0.0.copyload = load i64, ptr %5, align 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
   %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8
@@ -883,10 +879,9 @@ chkDecayCounter.exit.thread:                      ; preds = %chkDecayCounter.exi
   %i.ey = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ez = getelementptr inbounds nuw [8 x i8], ptr %i.ey, i64 %.pre-phi
   %i.fa = load double, ptr %i.ez, align 8, !tbaa !33
-  %i.fb = fptoui double %i.fa to i64
-  %.fr = freeze i64 %i.fb                         ; 2 uses
-  %.not116 = icmp ugt i64 %3, %.fr
-  %i.fc = sub nuw i64 %3, %.fr
+  %i.fb = fptoui double %i.fa to i64              ; 2 uses
+  %.not116 = icmp ugt i64 %3, %i.fb
+  %i.fc = sub nuw i64 %3, %i.fb
   %i.fd = tail call i64 @llvm.umin.i64(i64 %i.fc, i64 255)
   %i.fe = trunc nuw i64 %i.fd to i8
   br i1 %.not116, label %select.unfold, label %.thread160
@@ -908,7 +903,7 @@ bb.ac:                                            ; preds = %select.unfold
   %spec.select = select i1 %.not117, i32 -1, i32 %i.da
   br label %checkLobbyEntries.exit
 
-checkLobbyEntries.exit:                           ; preds = %.thread.sink.split.i, %bb.p, %checkHeavyEntries.exit.thread215, %bb.u, %bb.ac, %checkHeavyEntries.exit
+checkLobbyEntries.exit:                           ; preds = %.thread.sink.split.i, %bb.p, %checkHeavyEntries.exit, %checkHeavyEntries.exit.thread215, %bb.u, %bb.ac
   %.sroa.050.4 = phi i32 [ %.3.ph.1.1108.i, %checkHeavyEntries.exit ], [ %.04385.lcssa.i, %checkHeavyEntries.exit.thread215 ], [ %spec.select, %bb.ac ], [ %.0103179.lcssa.wide, %bb.u ], [ %.036.lcssa.wide.i, %bb.p ], [ %.036.lcssa.wide.i, %.thread.sink.split.i ] ; 2 uses
   %.sroa.10.6 = phi i32 [ %.340.ph.1.1107.i, %checkHeavyEntries.exit ], [ %.03683.lcssa.wide.i, %checkHeavyEntries.exit.thread215 ], [ %i.fh, %bb.ac ], [ %i.ct, %bb.u ], [ %i.ca, %bb.p ], [ -1, %.thread.sink.split.i ] ; 2 uses
   %i.fi = icmp eq i32 %.sroa.050.4, -1

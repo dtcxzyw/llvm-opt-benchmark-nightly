@@ -201,7 +201,7 @@ bb.ci:                                            ; preds = %bb.ch, %.thread456,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @clusterManagerCommandCheck(i32 noundef %0, ptr noundef readonly captures(none) %1) #0 {
+define internal range(i32 0, 2) i32 @clusterManagerCommandCheck(i32 noundef %0, ptr noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = icmp eq i32 %0, 1
   %i.b = load ptr, ptr %1, align 8, !tbaa !29     ; 4 uses
@@ -366,7 +366,7 @@ bb.i:                                             ; preds = %getClusterHostFromC
 }
 
 ; Function Attrs: nounwind uwtable
-define internal i32 @clusterManagerCommandFix(i32 noundef %0, ptr noundef readonly captures(none) %1) #0 {
+define internal range(i32 0, 2) i32 @clusterManagerCommandFix(i32 noundef %0, ptr noundef readonly captures(none) %1) #0 {
 bb.a:
   %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @config, i64 592), align 8, !tbaa !126
   %i.b = or i32 %i.a, 1
@@ -553,8 +553,7 @@ bb.m:                                             ; preds = %.lr.ph
 .loopexit288:                                     ; preds = %.preheader287, %.preheader287, %bb.m
   store i8 0, ptr %i.bp, align 1, !tbaa !73
   %char0172 = load i8, ptr %i.b, align 16
-  %char0172.fr = freeze i8 %char0172
-  %.not173 = icmp eq i8 %char0172.fr, 0
+  %.not173 = icmp eq i8 %char0172, 0
   br i1 %.not173, label %.lr.ph.backedge, label %._crit_edge
 
 .lr.ph.backedge:                                  ; preds = %.loopexit288, %.lr.ph
@@ -898,8 +897,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gj = load i32, ptr %i.c, align 1
   %i.gk = icmp ne i32 7562617, %i.gj
   %i.gl = zext i1 %i.gk to i32
-  %bcmp162.fr = freeze i32 %i.gl
-  %.not163 = icmp eq i32 %bcmp162.fr, 0
+  %.not163 = icmp eq i32 %i.gl, 0
   br i1 %.not163, label %bb.ap, label %.thread261
 
 .thread261:                                       ; preds = %bb.an, %bb.ao
@@ -1302,8 +1300,7 @@ bb.ad:                                            ; preds = %bb.o
 
 bb.ae:                                            ; preds = %bb.ad
   %i.dq = load i32, ptr %i.p, align 8, !tbaa !141
-  %.fr265 = freeze i32 %i.dq
-  %i.dr = and i32 %.fr265, 1
+  %i.dr = and i32 %i.dq, 1
   %.not224 = icmp eq i32 %i.dr, 0
   br i1 %.not224, label %select.unfold257, label %.clusterManagerCheckRedisReply.exit.thread.loopexit_crit_edge281, !llvm.loop !453
 
@@ -1706,7 +1703,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.c
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc i32 @clusterManagerCheckCluster(i32 noundef range(i32 0, 2) %0) unnamed_addr #0 {
+define internal fastcc range(i32 0, 2) i32 @clusterManagerCheckCluster(i32 noundef range(i32 0, 2) %0) unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.listIter, align 8           ; 6 uses
   %i.a = alloca [4 x i8], align 1                 ; 6 uses
@@ -2109,12 +2106,11 @@ bb.gw:                                            ; preds = %bb.gv
 
 bb.gx:                                            ; preds = %bb.gw
   %i.agp = call fastcc i32 @clusterManagerMoveSlot(ptr noundef nonnull %i.afy, ptr noundef nonnull %.038.i, i32 noundef range(i32 -2147483648, 16384) %i.aex, i32 noundef 130, ptr noundef null)
-  %.fr.i183 = freeze i32 %i.agp                   ; 2 uses
-  %.not51.not.i = icmp eq i32 %.fr.i183, 0
+  %.not51.not.i = icmp eq i32 %i.agp, 0
   br i1 %.not51.not.i, label %clusterManagerFixMultipleSlotOwners.exit.thread.sink.split, label %.backedge.i
 
 .backedge.i:                                      ; preds = %bb.gx, %bb.gw, %bb.gr, %.lr.ph378
-  %.033.be.i = phi i32 [ %.fr.i183, %bb.gx ], [ %.033.i376, %bb.gr ], [ %.033.i376, %.lr.ph378 ], [ 1, %bb.gw ] ; 3 uses
+  %.033.be.i = phi i32 [ 1, %bb.gx ], [ %.033.i376, %bb.gr ], [ %.033.i376, %.lr.ph378 ], [ 1, %bb.gw ] ; 2 uses
   %i.agq = call ptr @listNext(ptr noundef nonnull %1) #32 ; 2 uses
   %.not47.i = icmp eq ptr %i.agq, null
   br i1 %.not47.i, label %clusterManagerFixMultipleSlotOwners.exit, label %.lr.ph378
@@ -2136,9 +2132,9 @@ bb.gx:                                            ; preds = %bb.gw
   br label %clusterManagerFixMultipleSlotOwners.exit.thread.sink.split
 
 clusterManagerFixMultipleSlotOwners.exit:         ; preds = %.backedge.i
+  %21 = icmp eq i32 %.033.be.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #32
-  %.not143 = icmp eq i32 %.033.be.i, 0
-  br i1 %.not143, label %clusterManagerFixMultipleSlotOwners.exit.thread, label %bb.gy
+  br i1 %21, label %clusterManagerFixMultipleSlotOwners.exit.thread, label %bb.gy
 
 clusterManagerFixMultipleSlotOwners.exit.thread.sink.split: ; preds = %bb.gq, %bb.gs, %clusterManagerCountKeysInSlot.exit.i180, %bb.gx, %bb.gu, %.thread.sink.split.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #32
@@ -2152,7 +2148,7 @@ clusterManagerFixMultipleSlotOwners.exit.thread:  ; preds = %bb.gp, %clusterMana
 
 bb.gy:                                            ; preds = %._crit_edge370, %._crit_edge374, %clusterManagerFixMultipleSlotOwners.exit
   %.1106 = phi i32 [ %.0105381, %._crit_edge370 ], [ %i.afh, %._crit_edge374 ], [ %.0105381, %clusterManagerFixMultipleSlotOwners.exit ] ; 2 uses
-  %.9 = phi i32 [ %.8382, %._crit_edge370 ], [ 0, %._crit_edge374 ], [ %.033.be.i, %clusterManagerFixMultipleSlotOwners.exit ] ; 2 uses
+  %.9 = phi i32 [ %.8382, %._crit_edge370 ], [ 0, %._crit_edge374 ], [ 1, %clusterManagerFixMultipleSlotOwners.exit ] ; 2 uses
   call void @listRelease(ptr noundef %i.ads) #32
   call void @llvm.lifetime.end.p0(ptr nonnull %20) #32
   %indvars.iv.next504 = add nuw nsw i64 %indvars.iv503, 1 ; 2 uses
@@ -2555,8 +2551,7 @@ bb.t:                                             ; preds = %clusterManagerGetCo
 
 bb.u:                                             ; preds = %bb.t
   %i.ct = call i32 @hi_sdscmp(ptr noundef nonnull %.01759, ptr noundef nonnull %.213.i.ph) #32
-  %.fr = freeze i32 %i.ct
-  %.not24 = icmp eq i32 %.fr, 0
+  %.not24 = icmp eq i32 %i.ct, 0
   call void @hi_sdsfree(ptr noundef nonnull %.213.i.ph) #32
   br i1 %.not24, label %select.unfold, label %.thread.thread
 
@@ -2959,8 +2954,7 @@ bb.bf:                                            ; preds = %.lr.ph113
 bb.bg:                                            ; preds = %bb.bf
   %.val = load ptr, ptr %i.ae, align 8, !tbaa !119
   %i.hs = call fastcc i32 @clusterManagerSetSlot(ptr noundef nonnull %i.hm, ptr %.val, i32 noundef %2, ptr noundef nonnull @.str.295, ptr noundef %4)
-  %.fr = freeze i32 %i.hs
-  %.not86 = icmp eq i32 %.fr, 0
+  %.not86 = icmp eq i32 %i.hs, 0
   br i1 %.not86, label %bb.bi, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf, %.lr.ph113
@@ -2995,7 +2989,7 @@ bb.bk:                                            ; preds = %bb.bj
 declare void @listDelNode(ptr noundef, ptr noundef) local_unnamed_addr #9
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef ptr @clusterManagerGetSlotOwner(ptr noundef readonly captures(none) %0, i32 noundef %1, ptr noundef nonnull writeonly captures(none) %2) unnamed_addr #0 {
+define internal fastcc ptr @clusterManagerGetSlotOwner(ptr noundef readonly captures(none) %0, i32 noundef %1, ptr noundef nonnull writeonly captures(none) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.listIter, align 8           ; 5 uses
   %or.cond = icmp ult i32 %1, 16384
@@ -3170,9 +3164,8 @@ bb.t:                                             ; preds = %.lr.ph, %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %.thread63, %bb.p
-  %.4 = phi ptr [ %i.aw, %bb.p ], [ %.3, %.thread63 ]
-  %.4.fr = freeze ptr %.4                         ; 2 uses
-  %.not56 = icmp eq ptr %.4.fr, null
+  %.4 = phi ptr [ %i.aw, %bb.p ], [ %.3, %.thread63 ] ; 2 uses
+  %.not56 = icmp eq ptr %.4, null
   br i1 %.not56, label %.select.unfold_crit_edge, label %.thread70
 
 .select.unfold_crit_edge:                         ; preds = %bb.u
@@ -3180,13 +3173,13 @@ bb.u:                                             ; preds = %.thread63, %bb.p
   br label %select.unfold
 
 select.unfold:                                    ; preds = %.select.unfold_crit_edge, %bb.j, %bb.i
-  %i.bs = phi i64 [ %i.p, %bb.j ], [ %i.p, %bb.i ], [ %.pre86, %.select.unfold_crit_edge ] ; 2 uses
+  %i.bs = phi i64 [ %.pre86, %.select.unfold_crit_edge ], [ %i.p, %bb.j ], [ %i.p, %bb.i ] ; 2 uses
   %i.bt = add nuw i64 %.04280, 1                  ; 2 uses
   %i.bu = icmp ult i64 %i.bt, %i.bs
   br i1 %i.bu, label %bb.f, label %.thread70, !llvm.loop !535
 
 .thread70:                                        ; preds = %select.unfold, %bb.u, %.preheader, %clusterManagerCheckRedisReply.exit.thread.thread75
-  %.772 = phi ptr [ null, %clusterManagerCheckRedisReply.exit.thread.thread75 ], [ null, %.preheader ], [ null, %select.unfold ], [ %.4.fr, %bb.u ]
+  %.772 = phi ptr [ null, %clusterManagerCheckRedisReply.exit.thread.thread75 ], [ null, %.preheader ], [ null, %select.unfold ], [ %.4, %bb.u ]
   call void @freeReplyObject(ptr noundef nonnull %i.b) #32
   br label %clusterManagerCheckRedisReply.exit.thread.thread
 

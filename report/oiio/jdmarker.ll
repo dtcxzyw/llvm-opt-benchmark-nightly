@@ -49,16 +49,13 @@ bb.c:                                             ; preds = %bb.b
   %or.cond39 = select i1 %or.cond, i1 true, i1 %i.y
   %i.z = icmp eq i32 %.031, %i.p
   %or.cond40 = select i1 %or.cond39, i1 true, i1 %i.z
-  br i1 %or.cond40, label %.thread35, label %2
+  br i1 %or.cond40, label %.thread35, label %bb.d
 
-2:                                                ; preds = %bb.c
-  %3 = icmp eq i32 %.031, %i.s
-  br i1 %3, label %select.unfold, label %bb.d
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.c
+  %2 = icmp eq i32 %.031, %i.s
   %i.aa = icmp eq i32 %.031, %i.v
-  %cond.fr = freeze i1 %i.aa
-  br i1 %cond.fr, label %select.unfold, label %bb.e
+  %or.cond41 = select i1 %2, i1 true, i1 %i.aa
+  br i1 %or.cond41, label %select.unfold, label %bb.e
 
 .thread35:                                        ; preds = %bb.c
   %i.ab = load ptr, ptr %0, align 8, !tbaa !32    ; 2 uses
@@ -91,7 +88,7 @@ bb.e:                                             ; preds = %bb.d
   store i32 0, ptr %i.a, align 4, !tbaa !7
   br label %.loopexit
 
-select.unfold:                                    ; preds = %bb.d, %2, %bb.b
+select.unfold:                                    ; preds = %bb.d, %bb.b
   %i.ar = load ptr, ptr %0, align 8, !tbaa !32    ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
   store i32 99, ptr %i.as, align 8, !tbaa !33

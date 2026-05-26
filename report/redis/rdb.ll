@@ -201,8 +201,7 @@ rdbLoadType.exit.i:                               ; preds = %bb.g, %bb.f
   %i.aa = add i8 %i.z, -9
   %or.cond3.i = icmp ult i8 %i.aa, 18
   %or.cond10.i = or i1 %or.cond.i, %or.cond3.i
-  %cond.fr = freeze i1 %or.cond10.i
-  br i1 %cond.fr, label %bb.i, label %bb.h
+  br i1 %or.cond10.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %rdbLoadType.exit.thread.i, %rdbLoadType.exit.i
   store i32 -1, ptr %1, align 4, !tbaa !9
@@ -210,7 +209,7 @@ bb.h:                                             ; preds = %rdbLoadType.exit.th
   br label %.thread
 
 bb.i:                                             ; preds = %rdbLoadType.exit.i
-  %i.ab = zext i8 %i.z to i32
+  %i.ab = zext nneg i8 %i.z to i32
   store i32 %i.ab, ptr %1, align 4, !tbaa !9
   br label %bb.k
 
@@ -613,17 +612,16 @@ bb.et:                                            ; preds = %bb.es
   br label %.thread1236
 
 bb.eu:                                            ; preds = %bb.ep
-  %i.ph = load i64, ptr %i.ak, align 8, !tbaa !76
-  %.fr = freeze i64 %i.ph                         ; 3 uses
+  %i.ph = load i64, ptr %i.ak, align 8, !tbaa !76 ; 3 uses
   br i1 %i.nt, label %bb.ev, label %bb.ew
 
 bb.ev:                                            ; preds = %bb.eu
-  %.not1030 = icmp eq i64 %.fr, 0
-  %i.pi = add i64 %i.oz, %.fr
+  %.not1030 = icmp eq i64 %i.ph, 0
+  %i.pi = add i64 %i.oz, %i.ph
   br i1 %.not1030, label %.thread1230, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.eu, %bb.ev
-  %.0892 = phi i64 [ %i.pi, %bb.ev ], [ %.fr, %bb.eu ] ; 3 uses
+  %.0892 = phi i64 [ %i.pi, %bb.ev ], [ %i.ph, %bb.eu ] ; 3 uses
   %i.pj = icmp ugt i64 %.0892, 281474976710655
   br i1 %i.pj, label %bb.ex, label %.thread1230
 
@@ -1026,8 +1024,7 @@ rdbLoadTime.exit:                                 ; preds = %bb.p, %.thread.i.i2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #20
   call void @keyMetaSpecAdd(ptr noundef nonnull %4, i32 noundef 0, i64 noundef %i.dk) #20
   %.val272 = load i64, ptr %i.ab, align 8, !tbaa !65
-  %.val272.fr = freeze i64 %.val272
-  %i.dl = and i64 %.val272.fr, 1
+  %i.dl = and i64 %.val272, 1
   %.not263 = icmp eq i64 %i.dl, 0
   br i1 %.not263, label %select.unfold, label %.thread
 
@@ -1083,8 +1080,7 @@ rdbLoadMillisecondTime.exit:                      ; preds = %bb.t, %.thread.i.i2
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #20
   call void @keyMetaSpecAdd(ptr noundef nonnull %4, i32 noundef 0, i64 noundef %i.ec) #20
   %.val271 = load i64, ptr %i.ab, align 8, !tbaa !65
-  %.val271.fr = freeze i64 %.val271
-  %i.ed = and i64 %.val271.fr, 1
+  %i.ed = and i64 %.val271, 1
   %.not262 = icmp eq i64 %i.ed, 0
   br i1 %.not262, label %select.unfold, label %.thread
 
@@ -1129,12 +1125,11 @@ bb.aa:                                            ; preds = %rdbLoadType.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #20
   %i.eq = call i32 @rdbLoadLenByRef(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull %i.k)
   %i.er = icmp eq i32 %i.eq, -1
-  %i.es = load i64, ptr %i.k, align 8
-  %.0.i = select i1 %i.er, i64 -1, i64 %i.es
-  %.0.i.fr = freeze i64 %.0.i                     ; 2 uses
+  %i.es = load i64, ptr %i.k, align 8             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #20
-  %i.et = icmp eq i64 %.0.i.fr, -1
-  br i1 %i.et, label %.thread, label %select.unfold
+  %i.et = icmp eq i64 %i.es, -1
+  %8 = select i1 %i.er, i1 true, i1 %i.et
+  br i1 %8, label %.thread, label %select.unfold
 
 .thread335:                                       ; preds = %rdbLoadType.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #20
@@ -1189,12 +1184,11 @@ bb.ai:                                            ; preds = %bb.ah
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #20
   %i.fl = call i32 @rdbLoadLenByRef(ptr noundef nonnull %0, ptr noundef null, ptr noundef nonnull %i.h)
   %i.fm = icmp eq i32 %i.fl, -1
-  %i.fn = load i64, ptr %i.h, align 8
-  %.0.i298 = select i1 %i.fm, i64 -1, i64 %i.fn
-  %.0.i298.fr = freeze i64 %.0.i298               ; 2 uses
+  %i.fn = load i64, ptr %i.h, align 8             ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #20
-  %i.fo = icmp eq i64 %.0.i298.fr, -1
-  br i1 %i.fo, label %.thread, label %select.unfold
+  %i.fo = icmp eq i64 %i.fn, -1
+  %9 = select i1 %i.fm, i1 true, i1 %i.fo
+  br i1 %9, label %.thread, label %select.unfold
 
 bb.aj:                                            ; preds = %rdbLoadType.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #20
@@ -1597,12 +1591,12 @@ select.unfold320:                                 ; preds = %bb.x, %.thread.i294
 select.unfold:                                    ; preds = %rdbLoadMillisecondTime.exit, %rdbLoadTime.exit, %rioRead.exit295, %bb.ai, %bb.aa, %bb.cu, %bb.bz, %bb.an, %bb.am, %bb.eh, %bb.da, %bb.ag
   %.1205 = phi i64 [ %.0204, %bb.cu ], [ %.0204, %bb.an ], [ %.0204, %bb.ai ], [ %.0204, %bb.da ], [ -1, %bb.eh ], [ %.0204, %rioRead.exit295 ], [ %.0204, %bb.aa ], [ %i.dk, %rdbLoadTime.exit ], [ %.0204, %bb.am ], [ %.0204, %bb.ag ], [ %.0204, %bb.bz ], [ %i.ec, %rdbLoadMillisecondTime.exit ]
   %.2203 = phi i64 [ %.0201, %bb.cu ], [ %.0201, %bb.an ], [ %.0201, %bb.ai ], [ %.0201, %bb.da ], [ -1, %bb.eh ], [ %i.ep, %rioRead.exit295 ], [ %.0201, %bb.aa ], [ %.0201, %rdbLoadTime.exit ], [ %.0201, %bb.am ], [ %.0201, %bb.ag ], [ %.0201, %bb.bz ], [ %.0201, %rdbLoadMillisecondTime.exit ]
-  %.2200 = phi i64 [ %.0198, %bb.cu ], [ %.0198, %bb.an ], [ %.0198, %bb.ai ], [ %.0198, %bb.da ], [ -1, %bb.eh ], [ %.0198, %rioRead.exit295 ], [ %.0.i.fr, %bb.aa ], [ %.0198, %rdbLoadTime.exit ], [ %.0198, %bb.am ], [ %.0198, %bb.ag ], [ %.0198, %bb.bz ], [ %.0198, %rdbLoadMillisecondTime.exit ]
+  %.2200 = phi i64 [ %.0198, %bb.cu ], [ %.0198, %bb.an ], [ %.0198, %bb.ai ], [ %.0198, %bb.da ], [ -1, %bb.eh ], [ %.0198, %rioRead.exit295 ], [ %i.es, %bb.aa ], [ %.0198, %rdbLoadTime.exit ], [ %.0198, %bb.am ], [ %.0198, %bb.ag ], [ %.0198, %bb.bz ], [ %.0198, %rdbLoadMillisecondTime.exit ]
   %.9 = phi i32 [ %.6, %bb.cu ], [ 7, %bb.an ], [ 7, %bb.ai ], [ %.8, %bb.da ], [ 0, %bb.eh ], [ 7, %rioRead.exit295 ], [ 7, %bb.aa ], [ 7, %rdbLoadTime.exit ], [ 7, %bb.am ], [ 7, %bb.ag ], [ 7, %bb.bz ], [ 7, %rdbLoadMillisecondTime.exit ]
   %.2193 = phi i64 [ %.0191, %bb.cu ], [ %.0191, %bb.an ], [ %.0191, %bb.ai ], [ %.0191, %bb.da ], [ %.1192, %bb.eh ], [ %.0191, %rioRead.exit295 ], [ %.0191, %bb.aa ], [ %.0191, %rdbLoadTime.exit ], [ %.0191, %bb.am ], [ %.0191, %bb.ag ], [ %.0191, %bb.bz ], [ %.0191, %rdbLoadMillisecondTime.exit ]
   %.1190 = phi ptr [ %.0189, %bb.cu ], [ %.0189, %bb.an ], [ %.0189, %bb.ai ], [ %.0189, %bb.da ], [ %.0189, %bb.eh ], [ %.0189, %rioRead.exit295 ], [ %.0189, %bb.aa ], [ %.0189, %rdbLoadTime.exit ], [ %.0189, %bb.am ], [ %i.ff, %bb.ag ], [ %.0189, %bb.bz ], [ %.0189, %rdbLoadMillisecondTime.exit ]
   %.3 = phi i32 [ %.0187, %bb.cu ], [ 0, %bb.an ], [ 1, %bb.ai ], [ %.0187, %bb.da ], [ 0, %bb.eh ], [ %.0187, %rioRead.exit295 ], [ %.0187, %bb.aa ], [ %.0187, %rdbLoadTime.exit ], [ %.0187, %bb.am ], [ %.0187, %bb.ag ], [ %.0187, %bb.bz ], [ %.0187, %rdbLoadMillisecondTime.exit ]
-  %.1186 = phi i64 [ %.0185, %bb.cu ], [ %.0185, %bb.an ], [ %.0.i298.fr, %bb.ai ], [ %.0185, %bb.da ], [ %.0185, %bb.eh ], [ %.0185, %rioRead.exit295 ], [ %.0185, %bb.aa ], [ %.0185, %rdbLoadTime.exit ], [ %.0185, %bb.am ], [ %.0185, %bb.ag ], [ %.0185, %bb.bz ], [ %.0185, %rdbLoadMillisecondTime.exit ]
+  %.1186 = phi i64 [ %.0185, %bb.cu ], [ %.0185, %bb.an ], [ %i.fn, %bb.ai ], [ %.0185, %bb.da ], [ %.0185, %bb.eh ], [ %.0185, %rioRead.exit295 ], [ %.0185, %bb.aa ], [ %.0185, %rdbLoadTime.exit ], [ %.0185, %bb.am ], [ %.0185, %bb.ag ], [ %.0185, %bb.bz ], [ %.0185, %rdbLoadMillisecondTime.exit ]
   %.1184 = phi i64 [ %.0183, %bb.cu ], [ %.0183, %bb.an ], [ %i.fi, %bb.ai ], [ %.0183, %bb.da ], [ %.0183, %bb.eh ], [ %.0183, %rioRead.exit295 ], [ %.0183, %bb.aa ], [ %.0183, %rdbLoadTime.exit ], [ %.0183, %bb.am ], [ %.0183, %bb.ag ], [ %.0183, %bb.bz ], [ %.0183, %rdbLoadMillisecondTime.exit ]
   %.1181 = phi i64 [ %.0180, %bb.cu ], [ %.0180, %bb.an ], [ %.0180, %bb.ai ], [ %.0180, %bb.da ], [ %.0180, %bb.eh ], [ %.0180, %rioRead.exit295 ], [ %.0180, %bb.aa ], [ %.0180, %rdbLoadTime.exit ], [ %.0180, %bb.am ], [ %i.ex, %bb.ag ], [ %.0180, %bb.bz ], [ %.0180, %rdbLoadMillisecondTime.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #20

@@ -201,8 +201,7 @@ bb.gd:                                            ; preds = %bb.gb
 
 bb.ge:                                            ; preds = %bb.gd
   %i.azs = sub i64 %i.azq, %i.azr
-  %.fr = freeze i64 %i.azs
-  %i.azt = icmp eq i64 %.fr, 1
+  %i.azt = icmp eq i64 %i.azs, 1
   br i1 %i.azt, label %_ZN17duckdb_libpgqueryL21yy_get_previous_stateEPv.exit1014, label %_ZN17duckdb_libpgqueryL18yy_get_next_bufferEPv.exit.thread1046
 
 bb.gf:                                            ; preds = %bb.gd

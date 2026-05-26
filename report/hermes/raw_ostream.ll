@@ -201,10 +201,9 @@ bb.d:                                             ; preds = %_ZNK4llvh9StringRef
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.pn.i = phi { i32, ptr } [ %i.n, %bb.d ], [ %i.k, %bb.c ]
-  %.pn.i.fr = freeze { i32, ptr } %.pn.i          ; 2 uses
-  %.sink.i = extractvalue { i32, ptr } %.pn.i.fr, 1
-  %.sink24.i = extractvalue { i32, ptr } %.pn.i.fr, 0 ; 2 uses
+  %.pn.i = phi { i32, ptr } [ %i.n, %bb.d ], [ %i.k, %bb.c ] ; 2 uses
+  %.sink.i = extractvalue { i32, ptr } %.pn.i, 1
+  %.sink24.i = extractvalue { i32, ptr } %.pn.i, 0 ; 2 uses
   store i32 %.sink24.i, ptr %3, align 8, !tbaa !3
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %.sink.i, ptr %i.o, align 8, !tbaa !106

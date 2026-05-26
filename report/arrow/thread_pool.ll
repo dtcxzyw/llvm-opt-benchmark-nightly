@@ -201,10 +201,9 @@ bb.d:                                             ; preds = %_ZNKSt7__cxx1112bas
   br i1 %.not31, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.d
-  %i.s = call ptr @memchr(ptr noundef %i.o, i32 noundef 44, i64 noundef %i.p) #32
-  %.fr = freeze ptr %i.s                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %i.t = ptrtoint ptr %.fr to i64
+  %i.s = call ptr @memchr(ptr noundef %i.o, i32 noundef 44, i64 noundef %i.p) #32 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.s, null
+  %i.t = ptrtoint ptr %i.s to i64
   %i.u = ptrtoint ptr %i.o to i64
   %i.v = sub i64 %i.t, %i.u                       ; 2 uses
   %.not = icmp eq i64 %i.v, -1

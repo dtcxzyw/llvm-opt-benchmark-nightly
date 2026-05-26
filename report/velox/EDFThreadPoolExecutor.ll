@@ -201,8 +201,7 @@ _ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_poli
 bb.t:                                             ; preds = %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.ca = atomicrmw add ptr %i.bw, i32 1 monotonic, align 4 ; 2 uses
   %i.cb = icmp slt i32 %i.ca, %i.bz
-  %cond.fr = freeze i1 %i.cb
-  %spec.select = select i1 %cond.fr, i32 %i.ca, i32 -1
+  %spec.select = select i1 %i.cb, i32 %i.ca, i32 -1
   br label %_ZN5folly21EDFThreadPoolExecutor4Task4nextEv.exit
 
 _ZN5folly21EDFThreadPoolExecutor4Task4nextEv.exit: ; preds = %bb.t, %_ZNSt12__shared_ptrIN5folly21EDFThreadPoolExecutor4TaskELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit

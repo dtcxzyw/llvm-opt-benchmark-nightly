@@ -201,16 +201,15 @@ bb.ig:                                            ; preds = %bb.ia, %bb.ib, %bb.
   br label %.backedge
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.ig
-  %.0..0..0..0.175 = load volatile i64, ptr %i.i, align 8, !tbaa !11
-  %.0..0.175.fr = freeze i64 %.0..0..0..0.175     ; 7 uses
-  %i.vm = icmp eq i64 %.0..0.175.fr, 0
-  %i.vn = and i64 %.0..0.175.fr, 7
+  %.0..0..0..0.175 = load volatile i64, ptr %i.i, align 8, !tbaa !11 ; 7 uses
+  %i.vm = icmp eq i64 %.0..0..0..0.175, 0
+  %i.vn = and i64 %.0..0..0..0.175, 7
   %i.vo = icmp ne i64 %i.vn, 0
   %i.vp = or i1 %i.vm, %i.vo
   br i1 %i.vp, label %bb.ih, label %rb_type.exit
 
 bb.ih:                                            ; preds = %.backedge
-  %i.vq = call i64 @llvm.fshl.i64(i64 %.0..0.175.fr, i64 %.0..0.175.fr, i64 62)
+  %i.vq = call i64 @llvm.fshl.i64(i64 %.0..0..0..0.175, i64 %.0..0..0..0.175, i64 62)
   switch i64 %i.vq, label %bb.ii [
     i64 0, label %rb_type.exit.thread
     i64 1, label %rb_type.exit.thread
@@ -219,16 +218,16 @@ bb.ih:                                            ; preds = %.backedge
   ]
 
 bb.ii:                                            ; preds = %bb.ih
-  %i.vr = trunc i64 %.0..0.175.fr to i1
+  %i.vr = trunc i64 %.0..0..0..0.175 to i1
   br i1 %i.vr, label %rb_type.exit.thread1466, label %bb.ij
 
 bb.ij:                                            ; preds = %bb.ii
-  %i.vs = and i64 %.0..0.175.fr, 254
+  %i.vs = and i64 %.0..0..0..0.175, 254
   %i.vt = icmp eq i64 %i.vs, 12
   br i1 %i.vt, label %rb_type.exit.thread, label %rb_type.exit.thread1464
 
 rb_type.exit:                                     ; preds = %.backedge
-  %i.vu = inttoptr i64 %.0..0.175.fr to ptr
+  %i.vu = inttoptr i64 %.0..0..0..0.175 to ptr
   %i.vv = load i64, ptr %i.vu, align 8, !tbaa !13
   %i.vw = trunc i64 %i.vv to i32
   %i.vx = and i32 %i.vw, 31
@@ -631,8 +630,7 @@ bb.kv:                                            ; preds = %bb.kt, %bb.ks
   %.not1139 = icmp ne i32 %i.aec, 0
   %i.aed = icmp sgt i32 %.31429, %.010151490
   %or.cond1196 = select i1 %.not1139, i1 %i.aed, i1 false
-  %cond.fr1494 = freeze i1 %or.cond1196
-  br i1 %cond.fr1494, label %.thread1496, label %.thread1507
+  br i1 %or.cond1196, label %.thread1496, label %.thread1507
 
 bb.kw:                                            ; preds = %bb.kq, %.loopexit
   %i.aee = icmp eq i32 %.010151490, 1
@@ -640,8 +638,7 @@ bb.kw:                                            ; preds = %bb.kq, %.loopexit
 
 bb.kx:                                            ; preds = %bb.kw
   %i.aef = load i8, ptr %.210311486, align 1, !tbaa !15
-  %.fr = freeze i8 %i.aef
-  %i.aeg = icmp eq i8 %.fr, 48
+  %i.aeg = icmp eq i8 %i.aef, 48
   br i1 %i.aeg, label %.thread1496, label %bb.ky
 
 bb.ky:                                            ; preds = %bb.kx, %bb.kw

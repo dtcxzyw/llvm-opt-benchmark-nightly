@@ -201,12 +201,12 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %bb.q, %bb.o
   %.sroa.01.0.i.i = phi i32 [ 0, %bb.o ], [ %i.bp, %bb.q ]
-  %i.bq = add nuw nsw i32 %.sroa.01.0.i.i, %i.bg
-  %.fr.i = freeze i32 %i.bq                       ; 2 uses
-  %i.br = icmp eq i32 %.fr.i, 1000000000          ; 2 uses
+  %i.bq = add nuw nsw i32 %.sroa.01.0.i.i, %i.bg  ; 2 uses
+  %i.br = icmp eq i32 %i.bq, 1000000000           ; 2 uses
   %i.bs = zext i1 %i.br to i64
-  %spec.select10.i.i = add nuw nsw i64 %i.az, %i.bs ; 2 uses
-  br i1 %i.br, label %_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit, label %_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i
+  %spec.select10.i.i = add nuw nsw i64 %i.az, %i.bs
+  %spec.select.i = select i1 %i.br, i32 0, i32 %i.bq
+  br label %_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit
 
 bb.s:                                             ; preds = %bb.m
   %i.bt = trunc i128 %i.as to i1
@@ -218,14 +218,10 @@ bb.s:                                             ; preds = %bb.m
 
 bb.t:                                             ; preds = %bb.s, %bb.m
   %.sroa.0.0.i.i = phi i32 [ 0, %bb.m ], [ %i.bw, %bb.s ]
-  %i.bx = add nuw nsw i32 %.sroa.0.0.i.i, %i.at
-  %.fr19.i = freeze i32 %i.bx                     ; 2 uses
-  %1 = icmp eq i32 %.fr19.i, 1000000000
-  br i1 %1, label %_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit, label %_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i
-
-_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i: ; preds = %bb.t, %bb.r
-  %.sroa.0.0.i = phi i64 [ %spec.select10.i.i, %bb.r ], [ 0, %bb.t ]
-  %.sroa.02.0.sink.i.i = phi i32 [ %.fr.i, %bb.r ], [ %.fr19.i, %bb.t ]
+  %i.bx = add nuw nsw i32 %.sroa.0.0.i.i, %i.at   ; 2 uses
+  %1 = icmp eq i32 %i.bx, 1000000000              ; 2 uses
+  %spec.select12.i = zext i1 %1 to i64
+  %spec.select13.i = select i1 %1, i32 0, i32 %i.bx
   br label %_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit
 
 _RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.thread15.i: ; preds = %bb.n, %bb.i
@@ -239,11 +235,11 @@ _RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.thread1
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking9panic_fmt(ptr noundef nonnull @54, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @56) #36
   unreachable
 
-_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit: ; preds = %bb.j, %bb.p, %bb.r, %bb.t, %_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i
-  %.sroa.02.0.sink.i12.i = phi i32 [ %.sroa.02.0.sink.i.i, %_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i ], [ 0, %bb.p ], [ 0, %bb.j ], [ 0, %bb.t ], [ 0, %bb.r ]
-  %.sroa.0.011.i = phi i64 [ %.sroa.0.0.i, %_RNvMsc_NtCsbvkFyIu7lgC_4core4timeNtB5_8Duration17try_from_secs_f64.exit.i ], [ %i.bl, %bb.p ], [ 0, %bb.j ], [ 1, %bb.t ], [ %spec.select10.i.i, %bb.r ]
-  %i.by = insertvalue { i64, i32 } poison, i64 %.sroa.0.011.i, 0
-  %i.bz = insertvalue { i64, i32 } %i.by, i32 %.sroa.02.0.sink.i12.i, 1
+_RNvMNtCsbvkFyIu7lgC_4core4timeNtB2_8Duration13from_secs_f64.exit: ; preds = %bb.j, %bb.p, %bb.r, %bb.t
+  %.sroa.0.0.ph.i = phi i64 [ %spec.select12.i, %bb.t ], [ %i.bl, %bb.p ], [ 0, %bb.j ], [ %spec.select10.i.i, %bb.r ]
+  %.sroa.02.0.sink.i.ph.i = phi i32 [ %spec.select13.i, %bb.t ], [ 0, %bb.p ], [ 0, %bb.j ], [ %spec.select.i, %bb.r ]
+  %i.by = insertvalue { i64, i32 } poison, i64 %.sroa.0.0.ph.i, 0
+  %i.bz = insertvalue { i64, i32 } %i.by, i32 %.sroa.02.0.sink.i.ph.i, 1
   ret { i64, i32 } %i.bz
 }
 

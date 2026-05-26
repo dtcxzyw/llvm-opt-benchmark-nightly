@@ -201,10 +201,8 @@ bary_add.exit.i:                                  ; preds = %bb.u, %.lr.ph83.i.i
 bary_zero_p.exit.i:                               ; preds = %bary_add.exit.i, %.preheader.i.1.i, %.preheader.i.1.thread.i
   %.05.i = phi i64 [ %i.fo, %bary_add.exit.i ], [ 0, %.preheader.i.1.i ], [ 0, %.preheader.i.1.thread.i ]
   %i.fp = call fastcc i32 @bary_pack(i32 noundef 1, ptr noundef nonnull %i.c, i64 noundef 4, ptr noundef %i.f, i64 noundef 1, i64 noundef 8, i64 noundef 0, i32 noundef 64)
-  %.fr = freeze i32 %i.fp
-  %i.fq = icmp eq i32 %.fr, 2                     ; 2 uses
+  %i.fq = icmp eq i32 %i.fp, 2
   %i.fr = load i64, ptr %i.f, align 8
-  %spec.select = select i1 %i.fq, i64 0, i64 %.05.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #23
@@ -214,7 +212,7 @@ bary_zero_p.exit.i:                               ; preds = %bary_add.exit.i, %.
   br i1 %i.fq, label %.thread, label %bb.v
 
 bb.v:                                             ; preds = %bary_zero_p.exit.i, %bb.j
-  %.020 = phi i64 [ %i.aw, %bb.j ], [ %spec.select, %bary_zero_p.exit.i ]
+  %.020 = phi i64 [ %i.aw, %bb.j ], [ %.05.i, %bary_zero_p.exit.i ]
   %.0 = phi i64 [ %i.au, %bb.j ], [ %i.fr, %bary_zero_p.exit.i ] ; 3 uses
   %i.fs = icmp eq i64 %.0, -1
   br i1 %i.fs, label %.thread, label %bb.w
@@ -617,8 +615,7 @@ bytes_2comp.exit.thread652:                       ; preds = %ruby_nonempty_memcp
 bb.af:                                            ; preds = %bytes_2comp.exit.thread652
   %i.dz = getelementptr i8, ptr %1, i64 %i.cv
   %i.ea = load i8, ptr %i.dz, align 1, !tbaa !15
-  %.fr = freeze i8 %i.ea
-  %i.eb = icmp eq i8 %.fr, 1
+  %i.eb = icmp eq i8 %i.ea, 1
   br i1 %i.eb, label %.thread531, label %.thread527
 
 .thread527:                                       ; preds = %bytes_2comp.exit.thread652, %bb.af, %ruby_nonempty_memcpy.exit364.thread
@@ -1021,8 +1018,7 @@ bb.z:                                             ; preds = %._crit_edge.i
   %i.dy = getelementptr [4 x i8], ptr %i.dx, i64 %i.dt
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !7
   %i.ea = icmp ult i32 %i.dw, %i.dz
-  %cond.fr = freeze i1 %i.ea
-  br i1 %cond.fr, label %.critedge2, label %.critedge
+  br i1 %i.ea, label %.critedge2, label %.critedge
 
 .critedge2:                                       ; preds = %bb.z, %.critedge2.i, %.lr.ph
   %i.eb = add nsw i32 %.0121219, -1               ; 2 uses

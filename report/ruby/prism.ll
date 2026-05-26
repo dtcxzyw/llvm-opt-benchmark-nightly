@@ -201,8 +201,7 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %.thread, %bb.g, %bb.f, %bb.e, %bb.d
   %i.ac = call i32 %3(ptr noundef %1) #27
-  %.fr = freeze i32 %i.ac
-  %.not22 = icmp eq i32 %.fr, 0
+  %.not22 = icmp eq i32 %i.ac, 0
   br i1 %.not22, label %select.unfold, label %.thread25
 
 select.unfold:                                    ; preds = %bb.h, %bb.c
@@ -605,8 +604,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.f
   %i.t = load i8, ptr %i.o, align 1, !tbaa !67
-  %.fr = freeze i8 %i.t
-  %i.u = icmp eq i8 %.fr, 42
+  %i.u = icmp eq i8 %i.t, 42
   br i1 %i.u, label %select.unfold, label %bb.t
 
 bb.j:                                             ; preds = %bb.d
@@ -620,8 +618,7 @@ bb.j:                                             ; preds = %bb.d
   %i.ac = or i16 %i.x, %i.ab
   %i.ad = icmp ne i16 %i.ac, 0
   %i.ae = zext i1 %i.ad to i32
-  %bcmp.fr = freeze i32 %i.ae
-  %i.af = icmp eq i32 %bcmp.fr, 0
+  %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %select.unfold, label %bb.t
 
 bb.k:                                             ; preds = %bb.a
@@ -1024,8 +1021,7 @@ accept1.exit.backedge:                            ; preds = %bb.bd, %bb.bd, %bb.
 
 bb.be:                                            ; preds = %bb.bd
   %i.gj = tail call fastcc zeroext i1 @token_begins_expression_p(i32 noundef %.val75)
-  %cond.fr = freeze i1 %i.gj
-  br i1 %cond.fr, label %accept1.exit.backedge, label %bb.bf
+  br i1 %i.gj, label %accept1.exit.backedge, label %bb.bf
 
 bb.bf:                                            ; preds = %bb.be, %pm_hash_node_elements_append.exit
   ret i1 %.1
@@ -1428,7 +1424,7 @@ thread-pre-split:                                 ; preds = %bb.b, %bb.c
   br label %accept1.exit272
 
 accept1.exit272:                                  ; preds = %.thread298, %thread-pre-split
-  %.val167 = phi i32 [ %i.b, %thread-pre-split ], [ %.val.fr, %.thread298 ] ; 2 uses
+  %.val167 = phi i32 [ %i.b, %thread-pre-split ], [ %.val, %.thread298 ] ; 2 uses
   %.0155 = phi i1 [ false, %thread-pre-split ], [ %.1156, %.thread298 ] ; 7 uses
   %.0153 = phi i1 [ false, %thread-pre-split ], [ %.1154, %.thread298 ] ; 6 uses
   %.0147 = phi i8 [ 0, %thread-pre-split ], [ %.2149, %.thread298 ] ; 12 uses
@@ -1831,9 +1827,8 @@ bb.dk:                                            ; preds = %bb.dj
   br label %accept1.exit272.thread301
 
 .thread298:                                       ; preds = %bb.dh, %bb.di, %bb.dj, %bb.dg, %accept1.exit270
-  %.val = load i32, ptr %i.a, align 8, !tbaa !170
-  %.val.fr = freeze i32 %.val                     ; 2 uses
-  %i.mh = icmp eq i32 %.val.fr, %3
+  %.val = load i32, ptr %i.a, align 8, !tbaa !170 ; 2 uses
+  %i.mh = icmp eq i32 %.val, %3
   br i1 %i.mh, label %accept1.exit272.thread301, label %accept1.exit272
 
 accept1.exit272.thread301:                        ; preds = %.thread298, %bb.dd, %bb.cz, %parse_arguments_append.exit233, %accept1.exit272, %bb.dk, %bb.c, %bb.a

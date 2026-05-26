@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %.lr.ph87.us, %bb.j
   %.not55.us = icmp eq i32 %i.bu, 0
   br i1 %.not55.us, label %bb.j, label %.critedge57
 
-.thread68.us:                                     ; preds = %select.unfold.us.us, %bb.j, %.preheader71.us, %.preheader.us
+.thread68.us:                                     ; preds = %select.unfold.us.us, %bb.j, %.preheader.us, %.preheader71.us
   store i8 0, ptr %i.b, align 1, !tbaa !36
   %i.bv = load ptr, ptr %i.av, align 8, !tbaa !46
   %i.bw = call i32 %i.bv(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i64 noundef 1, ptr noundef nonnull %i.ax) #7 ; 2 uses
@@ -241,9 +241,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.cj, label %select.unfold.us.us, label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.l
-  %i.ck = call fastcc i32 @save_attr(ptr noundef nonnull %0, ptr noundef %i.cc)
-  %.fr.us.us = freeze i32 %i.ck                   ; 2 uses
-  %.not56.us.us = icmp eq i32 %.fr.us.us, 0
+  %i.ck = call fastcc i32 @save_attr(ptr noundef nonnull %0, ptr noundef %i.cc) ; 2 uses
+  %.not56.us.us = icmp eq i32 %i.ck, 0
   br i1 %.not56.us.us, label %.select.unfold.us.us_crit_edge, label %.critedge57
 
 .select.unfold.us.us_crit_edge:                   ; preds = %bb.o
@@ -251,7 +250,7 @@ bb.o:                                             ; preds = %bb.n, %bb.l
   br label %select.unfold.us.us
 
 select.unfold.us.us:                              ; preds = %.select.unfold.us.us_crit_edge, %bb.n, %bb.m
-  %i.cl = phi i32 [ %i.bz, %bb.m ], [ %i.bz, %bb.n ], [ %.pre, %.select.unfold.us.us_crit_edge ] ; 2 uses
+  %i.cl = phi i32 [ %.pre, %.select.unfold.us.us_crit_edge ], [ %i.bz, %bb.n ], [ %i.bz, %bb.m ] ; 2 uses
   %indvars.iv.next112.a = add nuw nsw i64 %indvars.iv111.a, 1 ; 2 uses
   %i.cm = sext i32 %i.cl to i64
   %i.cn = icmp slt i64 %indvars.iv.next112.a, %i.cm
@@ -298,9 +297,8 @@ bb.q:                                             ; preds = %.lr.ph, %select.unf
   %i.db = load ptr, ptr %i.cz, align 8, !tbaa !50
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv
   %i.dd = load ptr, ptr %i.dc, align 8, !tbaa !31
-  %i.de = call fastcc i32 @save_attr(ptr noundef nonnull %0, ptr noundef %i.dd)
-  %.fr = freeze i32 %i.de                         ; 2 uses
-  %.not56 = icmp eq i32 %.fr, 0
+  %i.de = call fastcc i32 @save_attr(ptr noundef nonnull %0, ptr noundef %i.dd) ; 2 uses
+  %.not56 = icmp eq i32 %i.de, 0
   br i1 %.not56, label %select.unfold, label %.critedge57
 
 select.unfold:                                    ; preds = %bb.q
@@ -326,7 +324,7 @@ bb.s:                                             ; preds = %.lr.ph87, %bb.r
   %.not55 = icmp eq i32 %i.do, 0
   br i1 %.not55, label %bb.r, label %.critedge57
 
-.thread68:                                        ; preds = %select.unfold, %bb.r, %.preheader71, %.preheader
+.thread68:                                        ; preds = %select.unfold, %bb.r, %.preheader, %.preheader71
   store i8 0, ptr %i.b, align 1, !tbaa !36
   %i.dp = load ptr, ptr %i.av, align 8, !tbaa !46
   %i.dq = call i32 %i.dp(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i64 noundef 1, ptr noundef nonnull %i.ax) #7 ; 2 uses
@@ -346,7 +344,7 @@ bb.t:                                             ; preds = %.critedge
   br label %.critedge57
 
 .critedge57:                                      ; preds = %.thread68, %bb.q, %bb.s, %.thread68.us, %bb.o, %bb.k, %.critedge, %bb.t, %.critedge.i
-  %.042 = phi i32 [ %i.ay, %.critedge.i ], [ %i.du, %bb.t ], [ 0, %.critedge ], [ %.fr.us.us, %bb.o ], [ %.fr, %bb.q ], [ %i.bu, %bb.k ], [ %i.do, %bb.s ], [ %i.bw, %.thread68.us ], [ %i.dq, %.thread68 ]
+  %.042 = phi i32 [ %i.ay, %.critedge.i ], [ %i.du, %bb.t ], [ 0, %.critedge ], [ %i.ck, %bb.o ], [ %i.de, %bb.q ], [ %i.bw, %.thread68.us ], [ %i.bu, %bb.k ], [ %i.do, %bb.s ], [ %i.dq, %.thread68 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.042

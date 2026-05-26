@@ -201,8 +201,7 @@ bb.c:                                             ; preds = %_upb_WireReader_Ski
   %i.n = ashr exact i64 %sext.i.i, 32
   %i.o = load i64, ptr %i.f, align 8, !tbaa !16
   %i.p = icmp eq i64 %i.n, %i.o
-  %cond.fr.i = freeze i1 %i.p
-  br i1 %cond.fr.i, label %.thread48.sink.split, label %upb_EpsCopyInputStream_IsDone.exit, !prof !15
+  br i1 %i.p, label %.thread48.sink.split, label %upb_EpsCopyInputStream_IsDone.exit, !prof !15
 
 upb_EpsCopyInputStream_IsDone.exit:               ; preds = %bb.c
   %i.q = tail call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %3, ptr noundef %.026, i32 noundef %i.k) #3 ; 2 uses
@@ -256,7 +255,7 @@ bb.g:                                             ; preds = %bb.f
   br label %_upb_WireReader_SkipValue.exit.thread.backedge
 
 _upb_WireReader_SkipValue.exit.thread.backedge:   ; preds = %bb.g, %bb.i, %bb.h, %_upb_WireReader_SkipValue.exit
-  %.026.be = phi ptr [ %.1.i.fr, %_upb_WireReader_SkipValue.exit ], [ %i.af, %bb.g ], [ %i.aj, %bb.h ], [ %i.ak, %bb.i ]
+  %.026.be = phi ptr [ %.1.i, %_upb_WireReader_SkipValue.exit ], [ %i.af, %bb.g ], [ %i.aj, %bb.h ], [ %i.ak, %bb.i ]
   br label %_upb_WireReader_SkipValue.exit.thread
 
 upb_EpsCopyInputStream_HasErrorHandler.exit.i.i:  ; preds = %bb.f
@@ -321,9 +320,8 @@ bb.o:                                             ; preds = %bb.e
   br label %_upb_WireReader_SkipValue.exit
 
 _upb_WireReader_SkipValue.exit:                   ; preds = %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i, %bb.l, %bb.m, %bb.n, %bb.o
-  %.1.i = phi ptr [ %i.az, %bb.o ], [ %i.ay, %bb.n ], [ %i.aw, %bb.l ], [ %i.ai, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i ], [ %i.ax, %bb.m ]
-  %.1.i.fr = freeze ptr %.1.i                     ; 2 uses
-  %.not14 = icmp eq ptr %.1.i.fr, null
+  %.1.i = phi ptr [ %i.az, %bb.o ], [ %i.ay, %bb.n ], [ %i.aw, %bb.l ], [ %i.ai, %upb_EpsCopyInputStream_HasErrorHandler.exit.i.i ], [ %i.ax, %bb.m ] ; 2 uses
+  %.not14 = icmp eq ptr %.1.i, null
   br i1 %.not14, label %.thread48.sink.split, label %_upb_WireReader_SkipValue.exit.thread.backedge
 
 .thread48.sink.split:                             ; preds = %upb_EpsCopyInputStream_IsDone.exit, %bb.c, %upb_EpsCopyInputStream_HasErrorHandler.exit.i, %_upb_WireReader_SkipValue.exit, %bb.a

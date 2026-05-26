@@ -201,12 +201,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !321
-  %.fr31 = freeze i8 %i.h
-  %i.i = sext i8 %.fr31 to i32
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !321   ; 2 uses
+  %i.i = sext i8 %i.h to i32
   %i.j = add nsw i32 %i.i, -58
-  %or.cond.a = icmp ult i32 %i.j, -2
-  br i1 %or.cond.a, label %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread, label %bb.d
+  %or.cond.a = icmp ult i32 %i.j, -10
+  %2 = icmp slt i8 %i.h, 56
+  %or.cond = or i1 %2, %or.cond.a
+  br i1 %or.cond, label %_ZN4llvh7AArch6416checkArchVersionENS_9StringRefE.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.k = tail call fastcc { ptr, i64 } @_ZL14getArchSynonymN4llvh9StringRefE(ptr nonnull %i.b, i64 %i.c)
@@ -609,9 +610,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit.i.i:          ; preds = %_ZNK4llvh9StringRef
   %i.dm = or i64 %i.dh, %i.dl
   %i.dn = icmp ne i64 %i.dm, 0
   %i.do = zext i1 %i.dn to i32
-  %bcmp589.i.fr = freeze i32 %i.do
-  %i.dp = icmp eq i32 %bcmp589.i.fr, 0            ; 2 uses
-  %spec.select.i = select i1 %i.dp, ptr @.str.164, ptr %0 ; 2 uses
+  %i.dp = icmp eq i32 %i.do, 0
   br i1 %i.dp, label %_ZNK4llvh9StringRef6equalsES0_.exit.1, label %_ZNK4llvh9StringRef6equalsES0_.exit.5
 
 _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %bb.a, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i100.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i.i.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i14.i.i.i
@@ -628,7 +627,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit:              ; preds = %bb.a, %_ZNK4llvh9St
   br i1 %i.dy, label %.thread.split.loop.exit, label %_ZNK4llvh9StringRef6equalsES0_.exit.8
 
 _ZNK4llvh9StringRef6equalsES0_.exit.1:            ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.i31.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i
-  %.sroa.01.0.i.i56135 = phi ptr [ %spec.select.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i ], [ %0, %_ZNK4llvh9StringRef6equalsES0_.exit.i31.i ] ; 2 uses
+  %.sroa.01.0.i.i56135 = phi ptr [ @.str.164, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i ], [ %0, %_ZNK4llvh9StringRef6equalsES0_.exit.i31.i ] ; 2 uses
   %i.dz = load i32, ptr %.sroa.01.0.i.i56135, align 1
   %i.ea = icmp ne i32 %i.dz, 1701736302
   %i.eb = zext i1 %i.ea to i32
@@ -686,7 +685,7 @@ _ZNK4llvh9StringRef6equalsES0_.exit.thread.4:     ; preds = %bb.a, %_ZNK4llvh9St
   ]
 
 _ZNK4llvh9StringRef6equalsES0_.exit.5:            ; preds = %_ZNK4llvh9StringRef6equalsES0_.exit.thread.4, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i
-  %.sroa.01.0.i.i566974149197 = phi ptr [ %.sroa.01.0.i.i566974149, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.4 ], [ %spec.select.i, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i ] ; 3 uses
+  %.sroa.01.0.i.i566974149197 = phi ptr [ %.sroa.01.0.i.i566974149, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.4 ], [ %0, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i ] ; 3 uses
   %i.fi = phi i1 [ %i.fh, %_ZNK4llvh9StringRef6equalsES0_.exit.thread.4 ], [ false, %_ZNK4llvh9StringRef6equalsES0_.exit.i.i ]
   %i.fj = load i64, ptr %.sroa.01.0.i.i566974149197, align 1
   %i.fk = xor i64 %i.fj, 8099210678926075510

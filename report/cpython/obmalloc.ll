@@ -201,8 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %.val.i.i = load i64, ptr %i.ai, align 32, !tbaa !97
   %i.aj = shl i64 %.val.i.i, 16
   %i.ak = getelementptr i8, ptr %i.ab, i64 %i.aj
-  %.fr.i = freeze ptr %i.ak
-  %.not51.i.i = icmp ugt ptr %.fr.i, %0
+  %.not51.i.i = icmp ugt ptr %i.ak, %0
   br i1 %.not51.i.i, label %mi_is_valid_pointer.exit, label %_mi_segment_of.exit.thread.i
 
 _mi_segment_of.exit.i:                            ; preds = %bb.b
@@ -605,8 +604,7 @@ bb.e:                                             ; preds = %bb.b
 
 _mi_usable_size.exit.i:                           ; preds = %bb.e, %_mi_segment_page_start.exit.i.i.i.i.i, %bb.d
   %.1.i.i = phi i64 [ %i.w, %_mi_segment_page_start.exit.i.i.i.i.i ], [ %i.x, %bb.e ], [ %i.t, %bb.d ]
-  %.1.i.i.fr = freeze i64 %.1.i.i
-  %i.y = icmp ugt i64 %1, %.1.i.i.fr
+  %i.y = icmp ugt i64 %1, %.1.i.i
   br i1 %i.y, label %select.unfold, label %mi_expand.exit
 
 select.unfold:                                    ; preds = %_mi_usable_size.exit.i, %bb.a
@@ -1009,8 +1007,7 @@ bb.x:                                             ; preds = %.loopexit
 
 mi_option_get_clamp.exit.i.i:                     ; preds = %bb.x, %.loopexit
   %i.di = load i64, ptr getelementptr inbounds nuw (i8, ptr @options, i64 672), align 16, !tbaa !114
-  %.fr.i.i = freeze i64 %i.di
-  %i.dj = tail call i64 @llvm.smax.i64(i64 %.fr.i.i, i64 8)
+  %i.dj = tail call i64 @llvm.smax.i64(i64 %i.di, i64 8)
   %i.dk = tail call i64 @llvm.umin.i64(i64 %i.dj, i64 1024)
   %i.dl = getelementptr i8, ptr %3, i64 912       ; 2 uses
   %i.dm = getelementptr i8, ptr %3, i64 896

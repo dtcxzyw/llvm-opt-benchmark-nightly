@@ -201,10 +201,9 @@ bb.e:                                             ; preds = %_ZNSt6vectorINSt7__
   %sext = shl i64 %i.r, 32
   %i.z = ashr exact i64 %sext, 32
   %i.aa = icmp ugt i64 %i.y, %i.z
-  %cond.fr = freeze i1 %i.aa
   %i.ab = and i64 %i.v, 2147483648
   %i.ac = icmp ne i64 %i.ab, 0
-  %or.cond = or i1 %i.ac, %cond.fr
+  %or.cond = or i1 %i.ac, %i.aa
   br i1 %or.cond, label %_ZN8pystring4findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread, label %bb.f
 
 _ZN8pystring4findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread: ; preds = %bb.e, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE6resizeEm.exit
@@ -607,9 +606,8 @@ bb.a:
   %i.t = sext i32 %.020.i.us to i64
   %i.u = icmp ugt i64 %i.s, %i.t
   %i.v = trunc i64 %i.n to i32                    ; 2 uses
-  %cond.fr.us = freeze i1 %i.u
   %i.w = icmp slt i32 %i.v, 0
-  %or.cond.us = or i1 %i.w, %cond.fr.us
+  %or.cond.us = or i1 %i.w, %i.u
   br i1 %or.cond.us, label %_ZN8pystring4findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread, label %.preheader.split.us
 
 .preheader.split.us:                              ; preds = %.lr.ph50
@@ -663,9 +661,8 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %i.au = sext i32 %spec.select to i64
   %i.av = icmp ugt i64 %i.at, %i.au
   %i.aw = trunc i64 %i.aq to i32                  ; 2 uses
-  %cond.fr = freeze i1 %i.av
   %i.ax = icmp slt i32 %i.aw, 0
-  %or.cond = or i1 %i.ax, %cond.fr
+  %or.cond = or i1 %i.ax, %i.av
   br i1 %or.cond, label %_ZN8pystring4findERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_ii.exit.thread, label %.preheader.split
 
 .preheader.split:                                 ; preds = %.lr.ph
@@ -751,9 +748,8 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.y = ashr exact i64 %sext, 32
   %i.z = icmp ugt i64 %i.x, %i.y
   %i.aa = trunc i64 %i.u to i32                   ; 5 uses
-  %cond.fr = freeze i1 %i.z
   %.not37 = icmp eq i32 %i.aa, -1
-  %or.cond147.a = or i1 %cond.fr, %.not37
+  %or.cond147.a = or i1 %i.z, %.not37
   br i1 %or.cond147.a, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.d
@@ -871,9 +867,8 @@ bb.h:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.bm = ashr exact i64 %sext33.us, 32
   %i.bn = icmp ugt i64 %i.bl, %i.bm
   %i.bo = trunc i64 %i.bi to i32                  ; 2 uses
-  %cond.fr115 = freeze i1 %i.bn
   %.not.us54 = icmp eq i32 %i.bo, -1
-  %or.cond148 = or i1 %cond.fr115, %.not.us54
+  %or.cond148 = or i1 %i.bn, %.not.us54
   br i1 %or.cond148, label %.critedge, label %.lr.ph.split.split.us, !llvm.loop !127
 
 .loopexit.split.split.us:                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7replaceEmmPKcm.exit.i.us49
@@ -935,10 +930,9 @@ bb.j:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cj = ashr exact i64 %sext33, 32
   %i.ck = icmp ugt i64 %i.ci, %i.cj
   %i.cl = trunc i64 %i.cf to i32                  ; 2 uses
-  %cond.fr119 = freeze i1 %i.ck
   %i.cm = add nuw nsw i32 %.039, 1
   %.not = icmp eq i32 %i.cl, -1
-  %or.cond149 = or i1 %cond.fr119, %.not
+  %or.cond149 = or i1 %i.ck, %.not
   br i1 %or.cond149, label %.critedge, label %.lr.ph.split.split, !llvm.loop !127
 
 .loopexit.split.split:                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7replaceEmmPKcm.exit.i

@@ -201,8 +201,7 @@ bb.n:                                             ; preds = %bb.m
   %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %i.at
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !11
   %i.ay = icmp eq i64 %i.ax, %i.ae
-  %cond.fr = freeze i1 %i.ay
-  br i1 %cond.fr, label %class_search_class_ancestor.exit, label %rbimpl_RB_TYPE_P_fastpath.exit25.thread
+  br i1 %i.ay, label %class_search_class_ancestor.exit, label %rbimpl_RB_TYPE_P_fastpath.exit25.thread
 
 rbimpl_RB_TYPE_P_fastpath.exit25.thread:          ; preds = %bb.m, %bb.n, %bb.l, %rbimpl_RB_TYPE_P_fastpath.exit25
   %i.az = tail call fastcc ptr @RCLASS_EXT_READABLE(i64 noundef %1)
@@ -605,8 +604,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.0.i = phi i64 [ %i.d, %bb.c ], [ %i.b, %bb.b ]
-  %.0.i.fr = freeze i64 %.0.i
-  %i.e = and i64 %.0.i.fr, -5
+  %i.e = and i64 %.0.i, -5
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %rb_equal.exit, label %rb_equal.exit.thread
 

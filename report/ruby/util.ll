@@ -201,8 +201,7 @@ bb.cw:                                            ; preds = %bb.cy, %bb.cv
 
 bb.cx:                                            ; preds = %bb.cw
   %i.of = icmp ult i32 %i.oc, %i.oe
-  %cond.fr = freeze i1 %i.of
-  br i1 %cond.fr, label %cmp.exit.thread839, label %.thread846
+  br i1 %i.of, label %cmp.exit.thread839, label %.thread846
 
 bb.cy:                                            ; preds = %bb.cw
   %.not24.i = icmp ugt ptr %i.ob, %i.nw
@@ -275,8 +274,7 @@ bb.de:                                            ; preds = %bb.dg, %bb.dd
 
 bb.df:                                            ; preds = %bb.de
   %i.pf = icmp ult i32 %i.pc, %i.pe
-  %cond.fr842 = freeze i1 %i.pf
-  br i1 %cond.fr842, label %cmp.exit729.thread, label %cmp.exit729.thread844
+  br i1 %i.pf, label %cmp.exit729.thread, label %cmp.exit729.thread844
 
 bb.dg:                                            ; preds = %bb.de
   %.not24.i728 = icmp ugt ptr %i.pb, %i.ow
@@ -679,7 +677,7 @@ bb.q:                                             ; preds = %bb.p, %bb.l
   %i.aq = fcmp une double %i.am, %i.ap
   %or.cond559 = and i1 %i.ao, %i.aq
   %i.ar = sext i1 %or.cond559 to i32
-  %.0409 = add i32 %i.ar, %i.an                   ; 4 uses
+  %.0409 = add i32 %i.ar, %i.an                   ; 5 uses
   %or.cond = icmp ugt i32 %.0409, 22              ; 3 uses
   br i1 %or.cond, label %select.unfold.a, label %bb.r
 
@@ -687,14 +685,15 @@ bb.r:                                             ; preds = %bb.q
   %i.as = zext nneg i32 %.0409 to i64
   %i.at = getelementptr [8 x i8], ptr @tens, i64 %i.as
   %i.au = load double, ptr %i.at, align 8, !tbaa !39
-  %.fr = freeze double %i.au
-  %i.av = fcmp olt double %.sroa.090.0, %.fr
-  %6 = sext i1 %i.av to i32
-  %spec.select818 = add nsw i32 %.0409, %6
+  %i.av = fcmp olt double %.sroa.090.0, %i.au
+  br i1 %i.av, label %select.unfold, label %select.unfold.a
+
+select.unfold:                                    ; preds = %bb.r
+  %6 = add nsw i32 %.0409, -1
   br label %select.unfold.a
 
-select.unfold.a:                                  ; preds = %bb.r, %bb.q
-  %.2411 = phi i32 [ %spec.select818, %bb.r ], [ %.0409, %bb.q ] ; 28 uses
+select.unfold.a:                                  ; preds = %bb.r, %select.unfold, %bb.q
+  %.2411 = phi i32 [ %.0409, %bb.r ], [ %.0409, %bb.q ], [ %6, %select.unfold ] ; 28 uses
   %i.aw = load i32, ptr %i.a, align 4, !tbaa !7   ; 2 uses
   %i.ax = xor i32 %.0440, -1
   %i.ay = add i32 %i.aw, %i.ax                    ; 3 uses
@@ -1097,8 +1096,7 @@ bb.bz:                                            ; preds = %bb.cb, %bb.by
 
 bb.ca:                                            ; preds = %bb.bz
   %i.ki = icmp ult i32 %i.kf, %i.kh
-  %cond.fr749 = freeze i1 %i.ki
-  br i1 %cond.fr749, label %cmp.exit.thread751, label %cmp.exit.thread
+  br i1 %i.ki, label %cmp.exit.thread751, label %cmp.exit.thread
 
 bb.cb:                                            ; preds = %bb.bz
   %.not24.i = icmp ugt ptr %i.ke, %i.jz
@@ -1170,8 +1168,7 @@ bb.ci:                                            ; preds = %bb.ck, %bb.ch
 
 bb.cj:                                            ; preds = %bb.ci
   %i.le = icmp ult i32 %i.lb, %i.ld
-  %cond.fr754 = freeze i1 %i.le
-  br i1 %cond.fr754, label %cmp.exit607.thread, label %cmp.exit607.thread756
+  br i1 %i.le, label %cmp.exit607.thread, label %cmp.exit607.thread756
 
 bb.ck:                                            ; preds = %bb.ci
   %.not24.i606 = icmp ugt ptr %i.la, %i.kv
@@ -1423,8 +1420,7 @@ bb.do:                                            ; preds = %bb.dq, %bb.dn
 
 bb.dp:                                            ; preds = %bb.do
   %i.on = icmp ult i32 %i.ok, %i.om
-  %cond.fr759 = freeze i1 %i.on
-  br i1 %cond.fr759, label %.thread767, label %cmp.exit632.thread762
+  br i1 %i.on, label %.thread767, label %cmp.exit632.thread762
 
 bb.dq:                                            ; preds = %bb.do
   %.not24.i631 = icmp ugt ptr %i.oj, %i.oe
@@ -1579,8 +1575,7 @@ bb.ei:                                            ; preds = %bb.ek, %bb.eh
 
 bb.ej:                                            ; preds = %bb.ei
   %i.qj = icmp ult i32 %i.qg, %i.qi
-  %cond.fr772 = freeze i1 %i.qj
-  br i1 %cond.fr772, label %.preheader822.preheader, label %cmp.exit639.thread775
+  br i1 %i.qj, label %.preheader822.preheader, label %cmp.exit639.thread775
 
 bb.ek:                                            ; preds = %bb.ei
   %.not24.i638 = icmp ugt ptr %i.qf, %i.qa
@@ -1983,8 +1978,7 @@ bb.h:                                             ; preds = %bb.j, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = icmp ult i32 %i.at, %i.av
-  %cond.fr = freeze i1 %i.aw
-  br i1 %cond.fr, label %cmp.exit.thread84, label %cmp.exit.thread.preheader
+  br i1 %i.aw, label %cmp.exit.thread84, label %cmp.exit.thread.preheader
 
 bb.j:                                             ; preds = %bb.h
   %.not24.i = icmp ugt ptr %i.as, %i.j

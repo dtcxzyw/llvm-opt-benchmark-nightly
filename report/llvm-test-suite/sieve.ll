@@ -158,9 +158,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !25
-  %i.d = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.c, ptr noundef null, i32 noundef 10) #11, !inline_history !27
-  %.fr37 = freeze i64 %i.d                        ; 2 uses
-  %i.e = trunc i64 %.fr37 to i32
+  %i.d = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.c, ptr noundef null, i32 noundef 10) #11, !inline_history !27 ; 2 uses
+  %i.e = trunc i64 %i.d to i32
   %i.f = icmp slt i32 %i.e, 1
   br i1 %i.f, label %.thread, label %bb.c
 
@@ -171,7 +170,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = and i64 %.fr37, 2147483647               ; 2 uses
+  %i.g = and i64 %i.d, 2147483647                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, i8 0, i64 24, i1 false)
   %.not27 = icmp eq i64 %i.g, 0

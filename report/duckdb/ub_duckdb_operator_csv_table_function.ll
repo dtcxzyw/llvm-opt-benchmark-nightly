@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %._crit_edge.thread.
 bb.n:                                             ; preds = %bb.m, %._crit_edge.i.i.i35
   %i.by = phi i64 [ %.pre.i.i49, %bb.m ], [ %i.bt, %._crit_edge.i.i.i35 ]
   %.019.lcssa28.i.i.i36 = phi ptr [ %.019.lcssa29.i.i.i47, %bb.m ], [ %.02024.i.i.i30, %._crit_edge.i.i.i35 ]
-  %.fr = freeze i64 %i.by
-  %i.bz = icmp ult i64 %.fr, %i.bm
+  %i.bz = icmp ult i64 %i.by, %i.bm
   br i1 %i.bz, label %select.unfold.i.i43, label %_ZNSt3setImSt4lessImESaImEE6insertEOm.exit50
 
 select.unfold.i.i43:                              ; preds = %bb.n, %._crit_edge.thread.i.i.i46
@@ -605,8 +604,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.u = phi i8 [ %.pre81.i, %bb.e ], [ %i.o, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.v = icmp ult i8 %i.u, %i.t
-  %cond.fr = freeze i1 %i.v
-  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_5ValueEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE17_M_insert_unique_IRKS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_ESt23_Rb_tree_const_iteratorIS5_EOT_RT0_.exit.i
+  br i1 %i.v, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_5ValueEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE17_M_insert_unique_IRKS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_ESt23_Rb_tree_const_iteratorIS5_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.h, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ]
@@ -702,8 +700,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.t = phi i8 [ %.pre81.i, %bb.e ], [ %i.n, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.u = icmp ult i8 %i.t, %i.s
-  %cond.fr = freeze i1 %i.u
-  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_bESt10_Select1stIS4_ESt4lessIS1_ESaIS4_EE17_M_insert_unique_IRKS4_NSA_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_ESt23_Rb_tree_const_iteratorIS4_EOT_RT0_.exit.i
+  br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_bESt10_Select1stIS4_ESt4lessIS1_ESaIS4_EE17_M_insert_unique_IRKS4_NSA_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_ESt23_Rb_tree_const_iteratorIS4_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
@@ -824,8 +821,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.u = phi i8 [ %.pre81.i, %bb.e ], [ %i.o, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.v = icmp ult i8 %i.u, %i.t
-  %cond.fr = freeze i1 %i.v
-  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i
+  br i1 %i.v, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.h, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ]

@@ -201,13 +201,12 @@ bb.a:
   br i1 %i.m, label %bb.b, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = load i32, ptr %i.e, align 4, !tbaa !3, !noalias !758
-  %.fr2.i.i = freeze i32 %i.n                     ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.n = load i32, ptr %i.e, align 4, !tbaa !3, !noalias !758 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.n, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.c, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = zext nneg i32 %.fr2.i.i to i64           ; 2 uses
+  %i.o = zext nneg i32 %i.n to i64                ; 2 uses
   %i.p = add i64 %i.h, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.p, %i.o
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i
@@ -610,13 +609,12 @@ bb.a:
   br i1 %i.m, label %bb.b, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.n = load i32, ptr %i.e, align 4, !tbaa !3, !noalias !789
-  %.fr2.i.i = freeze i32 %i.n                     ; 2 uses
-  %or.cond.i.i.i.i.i = icmp sgt i32 %.fr2.i.i, 0
+  %i.n = load i32, ptr %i.e, align 4, !tbaa !3, !noalias !789 ; 2 uses
+  %or.cond.i.i.i.i.i = icmp sgt i32 %i.n, 0
   br i1 %or.cond.i.i.i.i.i, label %bb.c, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.o = zext nneg i32 %.fr2.i.i to i64           ; 2 uses
+  %i.o = zext nneg i32 %i.n to i64                ; 2 uses
   %i.p = add i64 %i.h, -1
   %.not.i.i.i.i.i = icmp ult i64 %i.p, %i.o
   br i1 %.not.i.i.i.i.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.thread.i, label %_ZN5arrow3ipc8internal17VerifyFlatbuffersIN3org6apache5arrow7flatbuf7MessageEEEbPKhl.exit.i

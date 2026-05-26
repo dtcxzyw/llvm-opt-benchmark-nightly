@@ -201,13 +201,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not28, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call fastcc i32 @ps_dimension_set_mask_bits(ptr noundef nonnull %i.f, ptr noundef %3, i32 noundef 0, i32 noundef %i.g, i32 noundef %1, ptr noundef %i.d)
-  %.fr = freeze i32 %i.j                          ; 2 uses
-  %.not29 = icmp eq i32 %.fr, 0
+  %i.j = tail call fastcc i32 @ps_dimension_set_mask_bits(ptr noundef nonnull %i.f, ptr noundef %3, i32 noundef 0, i32 noundef %i.g, i32 noundef %1, ptr noundef %i.d) ; 2 uses
+  %.not29 = icmp eq i32 %i.j, 0
   br i1 %.not29, label %select.unfold, label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %.024.ph = phi i32 [ %.fr, %bb.d ], [ %i.i, %bb.c ]
+  %.024.ph = phi i32 [ %i.j, %bb.d ], [ %i.i, %bb.c ]
   store i32 %.024.ph, ptr %i.a, align 8, !tbaa !206
   br label %select.unfold
 
@@ -239,13 +238,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not26, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call fastcc i32 @ps_dimension_set_mask_bits(ptr noundef nonnull %i.f, ptr noundef %2, i32 noundef %i.e, i32 noundef %i.g, i32 noundef 0, ptr noundef %i.d)
-  %.fr = freeze i32 %i.j                          ; 2 uses
-  %.not27 = icmp eq i32 %.fr, 0
+  %i.j = tail call fastcc i32 @ps_dimension_set_mask_bits(ptr noundef nonnull %i.f, ptr noundef %2, i32 noundef %i.e, i32 noundef %i.g, i32 noundef 0, ptr noundef %i.d) ; 2 uses
+  %.not27 = icmp eq i32 %i.j, 0
   br i1 %.not27, label %select.unfold, label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %.022.ph = phi i32 [ %.fr, %bb.d ], [ %i.i, %bb.c ]
+  %.022.ph = phi i32 [ %i.j, %bb.d ], [ %i.i, %bb.c ]
   store i32 %.022.ph, ptr %i.a, align 8, !tbaa !206
   br label %select.unfold
 

@@ -201,8 +201,7 @@ AddConstantToken.exit292:                         ; preds = %TBufferNewPage.exit
   br i1 %i.vx, label %.thread, label %bb.cf
 
 bb.cf:                                            ; preds = %AddConstantToken.exit292
-  %i.vy = icmp slt i64 %indvars.iv, %i.be
-  %.fr = freeze i1 %i.vy                          ; 3 uses
+  %i.vy = icmp slt i64 %indvars.iv, %i.be         ; 3 uses
   %i.vz = load i32, ptr %i.t, align 8, !tbaa !16  ; 2 uses
   %i.wa = icmp sgt i32 %i.vz, 0
   br i1 %i.wa, label %._crit_edge.i297, label %bb.cg
@@ -244,7 +243,7 @@ bb.ci:                                            ; preds = %TBufferNewPage.exit
   %i.wm = phi i32 [ %i.wj, %TBufferNewPage.exit.i296 ], [ %i.vz, %._crit_edge.i297 ]
   %i.wn = add nsw i32 %i.wm, -1                   ; 2 uses
   store i32 %i.wn, ptr %i.t, align 8, !tbaa !16
-  %i.wo = select i1 %.fr, i32 32768, i32 0
+  %i.wo = select i1 %i.vy, i32 32768, i32 0
   %i.wp = or i32 %i.va, %i.wo
   %i.wq = trunc i32 %i.wp to i16
   %i.wr = sext i32 %i.wn to i64
@@ -259,10 +258,10 @@ AddToken.exit300:                                 ; preds = %TBufferNewPage.exit
   %i.ww = lshr i32 %i.wv, 1
   %i.wx = and i32 %i.ww, 2147450879
   %.0.i9.i295 = select i1 %i.wu, i32 %i.wx, i32 %i.wt
-  %i.wy = select i1 %.fr, i32 65537, i32 65536
+  %i.wy = select i1 %i.vy, i32 65537, i32 65536
   %i.wz = add nuw i32 %i.wy, %.0.i9.i295
   store i32 %i.wz, ptr %i.ve, align 4, !tbaa !3
-  br i1 %.fr, label %bb.cj, label %.thread
+  br i1 %i.vy, label %bb.cj, label %.thread
 
 bb.cj:                                            ; preds = %AddToken.exit300, %bb.i
   %.2126 = phi ptr [ %i.ct, %bb.i ], [ %i.ve, %AddToken.exit300 ]

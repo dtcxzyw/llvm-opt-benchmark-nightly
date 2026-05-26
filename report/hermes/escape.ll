@@ -201,11 +201,10 @@ _ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit85: ; preds = %_ZN4
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit87
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit87: ; preds = %._crit_edge, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit
-  %.sroa.097.3 = phi ptr [ %.sroa.097.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %.sroa.097.1, %._crit_edge ]
+  %.sroa.097.3 = phi ptr [ %.sroa.097.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %.sroa.097.1, %._crit_edge ] ; 2 uses
   %.sroa.12.3 = phi ptr [ %.sroa.12.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %.sroa.12.1, %._crit_edge ]
-  %.sroa.097.3.fr = freeze ptr %.sroa.097.3       ; 2 uses
-  %.not.i86 = icmp eq ptr %.sroa.097.3.fr, null   ; 2 uses
-  %i.fc = getelementptr inbounds nuw i8, ptr %.sroa.097.3.fr, i64 1
+  %.not.i86 = icmp eq ptr %.sroa.097.3, null      ; 2 uses
+  %i.fc = getelementptr inbounds nuw i8, ptr %.sroa.097.3, i64 1
   %.sroa.12.5.idx = select i1 %.not.i86, i64 2, i64 0
   %.sroa.12.5 = getelementptr inbounds nuw i8, ptr %.sroa.12.3, i64 %.sroa.12.5.idx
   %.sroa.097.0.be = select i1 %.not.i86, ptr null, ptr %i.fc
@@ -608,11 +607,10 @@ bb.bg:                                            ; preds = %bb.bc
   br label %_ZN6hermes2vm10StringView14const_iteratorppEv.exit213
 
 _ZN6hermes2vm10StringView14const_iteratorppEv.exit213: ; preds = %.thread419, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit135, %bb.al, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit
-  %.sroa.0241.7 = phi ptr [ %.sroa.0241.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %spec.select441.lcssa, %.thread419 ], [ %spec.select, %bb.al ], [ %spec.select, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit135 ]
+  %.sroa.0241.7 = phi ptr [ %.sroa.0241.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %spec.select441.lcssa, %.thread419 ], [ %spec.select, %bb.al ], [ %spec.select, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit135 ] ; 2 uses
   %.sroa.27.7 = phi ptr [ %.sroa.27.0, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit ], [ %spec.select442.lcssa, %.thread419 ], [ %spec.select440, %bb.al ], [ %spec.select440, %_ZN4llvh23SmallVectorTemplateBaseIDsLb1EE9push_backERKDs.exit135 ]
-  %.sroa.0241.7.fr = freeze ptr %.sroa.0241.7     ; 2 uses
-  %.not.i212 = icmp eq ptr %.sroa.0241.7.fr, null ; 2 uses
-  %i.mw = getelementptr inbounds nuw i8, ptr %.sroa.0241.7.fr, i64 1
+  %.not.i212 = icmp eq ptr %.sroa.0241.7, null    ; 2 uses
+  %i.mw = getelementptr inbounds nuw i8, ptr %.sroa.0241.7, i64 1
   %.sroa.27.8.idx = select i1 %.not.i212, i64 2, i64 0
   %.sroa.27.8 = getelementptr inbounds nuw i8, ptr %.sroa.27.7, i64 %.sroa.27.8.idx
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10

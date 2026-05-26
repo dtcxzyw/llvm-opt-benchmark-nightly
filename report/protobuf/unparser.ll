@@ -201,8 +201,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 7, label %_ZSt6get_ifINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdS5_S9_St6vectorISA_SaISA_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_IS5_SaIS5_EESB_IS9_SaIS9_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 16, label %_ZSt6get_ifISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS6_EEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdS6_SC_S0_ISD_SaISD_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES8_S0_ISC_SaISC_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -605,8 +604,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 5, label %_ZSt6get_ifIfJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 14, label %_ZSt6get_ifISt6vectorIfSaIfEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES2_S0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -776,8 +774,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 6, label %_ZSt6get_ifIdJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 15, label %_ZSt6get_ifISt6vectorIdSaIdEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES2_S0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -947,8 +944,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 3, label %_ZSt6get_ifIlJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 12, label %_ZSt6get_ifISt6vectorIlSaIlEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES2_S0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1118,8 +1114,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 4, label %_ZSt6get_ifImJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 13, label %_ZSt6get_ifISt6vectorImSaImEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES2_S0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1289,8 +1284,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 1, label %_ZSt6get_ifIiJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 10, label %_ZSt6get_ifISt6vectorIiSaIiEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES2_S0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1460,8 +1454,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 2, label %_ZSt6get_ifIjJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 11, label %_ZSt6get_ifISt6vectorIjSaIjEEJN6google8protobuf13json_internal14UntypedMessage4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_S0_IS7_SaIS7_EES0_IiSaIiEES2_S0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS6_SaIS6_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1631,8 +1624,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 0, label %_ZSt6get_ifIN6google8protobuf13json_internal14UntypedMessage4BoolEJS4_ijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 9, label %_ZSt6get_ifISt6vectorIN6google8protobuf13json_internal14UntypedMessage4BoolESaIS5_EEJS5_ijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_S7_S0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES0_IS4_SaIS4_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]
@@ -1801,8 +1793,7 @@ bb.h:                                             ; preds = %_ZNK4absl12lts_2025
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 40
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !463
-  %.fr = freeze i8 %i.az
-  switch i8 %.fr, label %.thread [
+  switch i8 %i.az, label %.thread [
     i8 8, label %_ZSt6get_ifIN6google8protobuf13json_internal14UntypedMessageEJNS3_4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_St6vectorIS4_SaIS4_EESB_IiSaIiEESB_IjSaIjEESB_IlSaIlEESB_ImSaImEESB_IfSaIfEESB_IdSaIdEESB_ISA_SaISA_EESB_IS3_SaIS3_EEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
     i8 17, label %_ZSt6get_ifISt6vectorIN6google8protobuf13json_internal14UntypedMessageESaIS4_EEJNS4_4BoolEijlmfdNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES4_S0_IS7_SaIS7_EES0_IiSaIiEES0_IjSaIjEES0_IlSaIlEES0_ImSaImEES0_IfSaIfEES0_IdSaIdEES0_ISD_SaISD_EES6_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit
   ]

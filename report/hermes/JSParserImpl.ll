@@ -201,7 +201,7 @@ bb.a:
   br i1 %i.i, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit.thread34.thread, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit
 
 _ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit: ; preds = %bb.a, %bb.e
-  %i.j = phi i32 [ %.fr, %bb.e ], [ %i.h, %bb.a ]
+  %i.j = phi i32 [ %i.af, %bb.e ], [ %i.h, %bb.a ]
   %i.k = icmp eq i32 %i.j, 59
   br i1 %i.k, label %bb.b, label %bb.c
 
@@ -249,9 +249,8 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ae = call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.e, i32 noundef 0) #17 ; 2 uses
   store ptr %i.ae, ptr %i.b, align 8, !tbaa !85
-  %i.af = load i32, ptr %i.ae, align 8, !tbaa !235
-  %.fr = freeze i32 %i.af                         ; 2 uses
-  %i.ag = icmp eq i32 %.fr, 51
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !235 ; 2 uses
+  %i.ag = icmp eq i32 %i.af, 51
   br i1 %i.ag, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit.thread34.thread, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit
 
 _ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit.thread34: ; preds = %bb.d, %.thread
@@ -654,7 +653,7 @@ _ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer1
   br label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13
 
 _ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13: ; preds = %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13.preheader, %bb.e
-  %i.j = phi i32 [ %i.g, %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13.preheader ], [ %.fr, %bb.e ]
+  %i.j = phi i32 [ %i.g, %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13.preheader ], [ %i.bf, %bb.e ]
   %i.k = phi ptr [ %i.f, %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13.preheader ], [ %i.be, %bb.e ]
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %.sroa.0.0.copyload.i = load ptr, ptr %i.l, align 8, !tbaa !229 ; 2 uses
@@ -749,9 +748,8 @@ bb.d:                                             ; preds = %.thread, %_ZN6herme
 bb.e:                                             ; preds = %bb.d
   %i.be = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %i.e, i32 noundef 0) #17 ; 4 uses
   store ptr %i.be, ptr %i.b, align 8, !tbaa !85
-  %i.bf = load i32, ptr %i.be, align 8, !tbaa !235
-  %.fr = freeze i32 %i.bf                         ; 2 uses
-  %i.bg = icmp eq i32 %.fr, 54
+  %i.bf = load i32, ptr %i.be, align 8, !tbaa !235 ; 2 uses
+  %i.bg = icmp eq i32 %i.bf, 54
   br i1 %i.bg, label %.sink.split, label %_ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13
 
 _ZN6hermes6parser6detail12JSParserImpl11checkAndEatENS0_9TokenKindENS0_7JSLexer14GrammarContextE.exit13.thread21: ; preds = %bb.d

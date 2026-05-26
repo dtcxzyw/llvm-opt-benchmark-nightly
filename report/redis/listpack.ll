@@ -201,19 +201,18 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.f, label %lpCurrentEncodedSizeBytes.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.g = load i8, ptr %i.a, align 1, !tbaa !13
-  %.fr = freeze i8 %i.g                           ; 7 uses
-  %i.h = icmp eq i8 %.fr, -1
+  %i.g = load i8, ptr %i.a, align 1, !tbaa !13    ; 7 uses
+  %i.h = icmp eq i8 %i.g, -1
   br i1 %i.h, label %lpCurrentEncodedSizeBytes.exit.sink.split, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = zext i8 %.fr to i32                      ; 6 uses
-  %i.j = icmp sgt i8 %.fr, -1                     ; 2 uses
+  %i.i = zext i8 %i.g to i32                      ; 6 uses
+  %i.j = icmp sgt i8 %i.g, -1                     ; 2 uses
   %i.k = and i32 %i.i, 192
   %i.l = icmp eq i32 %i.k, 128                    ; 2 uses
   %i.m = and i32 %i.i, 224
   %i.n = icmp eq i32 %i.m, 192                    ; 2 uses
-  %.off.i = add i8 %.fr, 15
+  %.off.i = add i8 %i.g, 15
   %switch.i = icmp ult i8 %.off.i, 4
   %i.o = or i1 %switch.i, %i.l
   %i.p = or i1 %i.j, %i.o
@@ -226,7 +225,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.r, label %select.unfold, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %switch.selectcmp16.i = icmp eq i8 %.fr, -16
+  %switch.selectcmp16.i = icmp eq i8 %i.g, -16
   br i1 %switch.selectcmp16.i, label %select.unfold, label %lpCurrentEncodedSizeBytes.exit
 
 select.unfold:                                    ; preds = %bb.g, %bb.e, %bb.f
@@ -252,7 +251,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.n, label %lpEncodeBacklenBytes.exit, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %switch.tableidx = add nsw i8 %.fr, 15          ; 2 uses
+  %switch.tableidx = add nsw i8 %i.g, 15          ; 2 uses
   %i.x = icmp ult i8 %switch.tableidx, 4
   br i1 %i.x, label %switch.lookup, label %bb.l
 
@@ -272,7 +271,7 @@ bb.m:                                             ; preds = %bb.l
   br label %lpCurrentEncodedSizeUnsafe.exit
 
 bb.n:                                             ; preds = %bb.l
-  %cond = icmp eq i8 %.fr, -16
+  %cond = icmp eq i8 %i.g, -16
   br i1 %cond, label %bb.o, label %lpEncodeBacklenBytes.exit
 
 bb.o:                                             ; preds = %bb.n
@@ -675,9 +674,8 @@ lpSkip.exit.i:                                    ; preds = %switch.lookup, %bb.
   %i.bi = zext i32 %.shrunk.i.i to i64
   %i.bj = getelementptr inbounds nuw i8, ptr %.163, i64 %.0.i5.i.i
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bi ; 8 uses
-  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !13
-  %.fr.i = freeze i8 %i.bl                        ; 7 uses
-  %i.bm = icmp eq i8 %.fr.i, -1
+  %i.bl = load i8, ptr %i.bk, align 1, !tbaa !13  ; 7 uses
+  %i.bm = icmp eq i8 %i.bl, -1
   br i1 %i.bm, label %lpNext.exit, label %bb.u
 
 bb.u:                                             ; preds = %lpSkip.exit.i
@@ -693,13 +691,13 @@ bb.v:                                             ; preds = %bb.u
   br i1 %i.bs, label %lpDecodeBacklen.exit.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
-  %i.bt = zext i8 %.fr.i to i32                   ; 6 uses
-  %i.bu = icmp sgt i8 %.fr.i, -1                  ; 2 uses
+  %i.bt = zext i8 %i.bl to i32                    ; 6 uses
+  %i.bu = icmp sgt i8 %i.bl, -1                   ; 2 uses
   %i.bv = and i32 %i.bt, 192
   %i.bw = icmp eq i32 %i.bv, 128                  ; 2 uses
   %i.bx = and i32 %i.bt, 224
   %i.by = icmp eq i32 %i.bx, 192                  ; 2 uses
-  %.off.i.i = add i8 %.fr.i, 15
+  %.off.i.i = add i8 %i.bl, 15
   %switch.i.i = icmp ult i8 %.off.i.i, 4
   %i.bz = or i1 %switch.i.i, %i.bw
   %i.ca = or i1 %i.bu, %i.bz
@@ -712,7 +710,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.cc, label %select.unfold.i, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %switch.selectcmp16.i.i = icmp eq i8 %.fr.i, -16
+  %switch.selectcmp16.i.i = icmp eq i8 %i.bl, -16
   br i1 %switch.selectcmp16.i.i, label %select.unfold.i, label %lpDecodeBacklen.exit.thread
 
 select.unfold.i:                                  ; preds = %bb.y, %bb.x, %bb.w
@@ -738,7 +736,7 @@ bb.ab:                                            ; preds = %bb.aa
   br i1 %i.by, label %lpEncodeBacklenBytes.exit.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
-  %switch.tableidx101 = add nsw i8 %.fr.i, 15     ; 2 uses
+  %switch.tableidx101 = add nsw i8 %i.bl, 15      ; 2 uses
   %i.ci = icmp ult i8 %switch.tableidx101, 4
   br i1 %i.ci, label %switch.lookup102, label %bb.ad
 
@@ -758,7 +756,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %lpCurrentEncodedSizeUnsafe.exit.i
 
 bb.af:                                            ; preds = %bb.ad
-  %cond.i = icmp eq i8 %.fr.i, -16
+  %cond.i = icmp eq i8 %i.bl, -16
   br i1 %cond.i, label %bb.ag, label %lpEncodeBacklenBytes.exit.i
 
 bb.ag:                                            ; preds = %bb.af
@@ -1161,9 +1159,8 @@ lpSkip.exit.i:                                    ; preds = %switch.lookup, %bb.
   %i.gg = zext i32 %.shrunk.i.i to i64
   %i.gh = getelementptr inbounds nuw i8, ptr %.1117, i64 %.0.i5.i.i
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 %i.gg ; 8 uses
-  %i.gj = load i8, ptr %i.gi, align 1, !tbaa !13
-  %.fr.i = freeze i8 %i.gj                        ; 7 uses
-  %i.gk = icmp eq i8 %.fr.i, -1
+  %i.gj = load i8, ptr %i.gi, align 1, !tbaa !13  ; 7 uses
+  %i.gk = icmp eq i8 %i.gj, -1
   br i1 %i.gk, label %lpNext.exit, label %bb.bf
 
 bb.bf:                                            ; preds = %lpSkip.exit.i
@@ -1179,13 +1176,13 @@ bb.bg:                                            ; preds = %bb.bf
   br i1 %i.gq, label %lpDecodeBacklen.exit.thread, label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.gr = zext i8 %.fr.i to i32                   ; 6 uses
-  %i.gs = icmp sgt i8 %.fr.i, -1                  ; 2 uses
+  %i.gr = zext i8 %i.gj to i32                    ; 6 uses
+  %i.gs = icmp sgt i8 %i.gj, -1                   ; 2 uses
   %i.gt = and i32 %i.gr, 192
   %i.gu = icmp eq i32 %i.gt, 128                  ; 2 uses
   %i.gv = and i32 %i.gr, 224
   %i.gw = icmp eq i32 %i.gv, 192                  ; 2 uses
-  %.off.i.i = add i8 %.fr.i, 15
+  %.off.i.i = add i8 %i.gj, 15
   %switch.i.i = icmp ult i8 %.off.i.i, 4
   %i.gx = or i1 %switch.i.i, %i.gu
   %i.gy = or i1 %i.gs, %i.gx
@@ -1198,7 +1195,7 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %i.ha, label %select.unfold.i, label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi
-  %switch.selectcmp16.i.i = icmp eq i8 %.fr.i, -16
+  %switch.selectcmp16.i.i = icmp eq i8 %i.gj, -16
   br i1 %switch.selectcmp16.i.i, label %select.unfold.i, label %lpDecodeBacklen.exit.thread
 
 select.unfold.i:                                  ; preds = %bb.bj, %bb.bi, %bb.bh
@@ -1224,7 +1221,7 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %i.gw, label %lpEncodeBacklenBytes.exit.i, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
-  %switch.tableidx178 = add nsw i8 %.fr.i, 15     ; 2 uses
+  %switch.tableidx178 = add nsw i8 %i.gj, 15      ; 2 uses
   %i.hg = icmp ult i8 %switch.tableidx178, 4
   br i1 %i.hg, label %switch.lookup179, label %bb.bo
 
@@ -1244,7 +1241,7 @@ bb.bp:                                            ; preds = %bb.bo
   br label %lpCurrentEncodedSizeUnsafe.exit.i
 
 bb.bq:                                            ; preds = %bb.bo
-  %cond.i = icmp eq i8 %.fr.i, -16
+  %cond.i = icmp eq i8 %i.gj, -16
   br i1 %cond.i, label %bb.br, label %lpEncodeBacklenBytes.exit.i
 
 bb.br:                                            ; preds = %bb.bq

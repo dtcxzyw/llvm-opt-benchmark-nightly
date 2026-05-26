@@ -201,18 +201,17 @@ bb.e:                                             ; preds = %bb.b
   br i1 %i.o, label %.critedge, label %.thread304
 
 .thread304:                                       ; preds = %bb.d, %bb.e
-  %.1175.ph309 = phi i64 [ %.0174, %bb.e ], [ %1, %bb.d ] ; 3 uses
-  %.0178.ph308 = phi i64 [ %3, %bb.e ], [ %.0174, %bb.d ] ; 6 uses
+  %.1175.ph309 = phi i64 [ %.0174, %bb.e ], [ %1, %bb.d ] ; 4 uses
+  %.0178.ph308 = phi i64 [ %3, %bb.e ], [ %.0174, %bb.d ] ; 5 uses
   %i.p = inttoptr i64 %.0178.ph308 to ptr         ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 16
-  %i.r = load i64, ptr %i.q, align 8, !tbaa !12
-  %.fr = freeze i64 %i.r                          ; 2 uses
-  %5 = icmp slt i64 %.fr, 3                       ; 2 uses
-  br i1 %5, label %bb.f, label %.thread313
+  %i.r = load i64, ptr %i.q, align 8, !tbaa !12   ; 2 uses
+  %5 = icmp sgt i64 %i.r, 2
+  br i1 %5, label %.thread320, label %bb.f
 
 bb.f:                                             ; preds = %.thread304
-  %i.s = icmp sgt i64 %.fr, 0
-  br i1 %i.s, label %bb.g, label %.thread313
+  %i.s = icmp sgt i64 %i.r, 0
+  br i1 %i.s, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
   %i.t = load i64, ptr %i.p, align 8, !tbaa !15
@@ -228,20 +227,13 @@ bb.h:                                             ; preds = %bb.g
 RSTRING_PTR.exit:                                 ; preds = %bb.g, %bb.h
   %i.x = phi ptr [ %i.w, %bb.h ], [ %i.v, %bb.g ]
   %i.y = load i8, ptr %i.x, align 1, !tbaa !16
-  %.fr347 = freeze i8 %i.y
-  %i.z = icmp eq i8 %.fr347, 39
-  br i1 %i.z, label %.thread320, label %.thread313
+  %i.z = icmp eq i8 %i.y, 39
+  br i1 %i.z, label %.thread320, label %.critedge
 
-.thread313:                                       ; preds = %.thread304, %RSTRING_PTR.exit, %bb.f
-  %.2180 = phi i64 [ %.0178.ph308, %RSTRING_PTR.exit ], [ %.0178.ph308, %bb.f ], [ 4, %.thread304 ] ; 2 uses
-  %6 = icmp eq i64 %.0178.ph308, 4
-  %7 = or i1 %5, %6
-  br i1 %7, label %.critedge, label %.thread320
-
-.thread320:                                       ; preds = %RSTRING_PTR.exit, %bb.c, %bb.d, %.thread313
-  %.2327 = phi i64 [ %.0178.ph308, %.thread313 ], [ %1, %bb.d ], [ %1, %bb.c ], [ %.0178.ph308, %RSTRING_PTR.exit ] ; 4 uses
-  %.2180326 = phi i64 [ %.2180, %.thread313 ], [ %3, %bb.d ], [ %3, %bb.c ], [ 4, %RSTRING_PTR.exit ] ; 4 uses
-  %.1175301324.a = phi i64 [ %.1175.ph309, %.thread313 ], [ %.0174, %bb.d ], [ 4, %bb.c ], [ %.1175.ph309, %RSTRING_PTR.exit ] ; 4 uses
+.thread320:                                       ; preds = %.thread304, %RSTRING_PTR.exit, %bb.c, %bb.d
+  %.2327 = phi i64 [ %.0178.ph308, %RSTRING_PTR.exit ], [ %1, %bb.d ], [ %1, %bb.c ], [ %.0178.ph308, %.thread304 ] ; 4 uses
+  %.2180326 = phi i64 [ 4, %RSTRING_PTR.exit ], [ %3, %bb.d ], [ %3, %bb.c ], [ 4, %.thread304 ] ; 4 uses
+  %.1175301324.a = phi i64 [ %.1175.ph309, %RSTRING_PTR.exit ], [ %.0174, %bb.d ], [ 4, %bb.c ], [ %.1175.ph309, %.thread304 ] ; 4 uses
   %i.aa = inttoptr i64 %.2327 to ptr              ; 3 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !15
   %i.ac = and i64 %i.ab, 8192
@@ -337,15 +329,15 @@ bb.o:                                             ; preds = %digit_span.exit
   %i.bm = tail call i64 @rb_str_new(ptr noundef nonnull %.0191366, i64 noundef %i.bl) #14
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.k, %RSTRING_END.exit, %bb.e, %bb.o, %digit_span.exit, %.thread313
-  %.1175301325 = phi i64 [ %.1175.ph309, %.thread313 ], [ %.1175301324.a, %digit_span.exit ], [ %.1175301324.a, %bb.o ], [ %.0174, %bb.e ], [ %.1175301324.a, %RSTRING_END.exit ], [ %.1175301324.a, %bb.k ] ; 4 uses
-  %.4182 = phi i64 [ %.2180, %.thread313 ], [ %.2180326, %digit_span.exit ], [ %i.bm, %bb.o ], [ 4, %bb.e ], [ %.2180326, %RSTRING_END.exit ], [ %.2180326, %bb.k ] ; 3 uses
-  %.4 = phi i64 [ 4, %.thread313 ], [ %.2327, %digit_span.exit ], [ %.2180326, %bb.o ], [ 4, %bb.e ], [ %.2327, %RSTRING_END.exit ], [ %.2327, %bb.k ] ; 3 uses
-  %i.bn = icmp eq i64 %.1175301325, 4
+.critedge:                                        ; preds = %bb.k, %bb.f, %RSTRING_PTR.exit, %RSTRING_END.exit, %bb.e, %bb.o, %digit_span.exit
+  %.1175301324 = phi i64 [ %.1175.ph309, %bb.f ], [ %.1175301324.a, %digit_span.exit ], [ %.1175301324.a, %bb.o ], [ %.0174, %bb.e ], [ %.1175301324.a, %RSTRING_END.exit ], [ %.1175.ph309, %RSTRING_PTR.exit ], [ %.1175301324.a, %bb.k ] ; 4 uses
+  %.4182 = phi i64 [ %.0178.ph308, %bb.f ], [ %.2180326, %digit_span.exit ], [ %i.bm, %bb.o ], [ 4, %bb.e ], [ %.2180326, %RSTRING_END.exit ], [ %.0178.ph308, %RSTRING_PTR.exit ], [ %.2180326, %bb.k ] ; 3 uses
+  %.4 = phi i64 [ 4, %bb.f ], [ %.2327, %digit_span.exit ], [ %.2180326, %bb.o ], [ 4, %bb.e ], [ %.2327, %RSTRING_END.exit ], [ 4, %RSTRING_PTR.exit ], [ %.2327, %bb.k ] ; 3 uses
+  %i.bn = icmp eq i64 %.1175301324, 4
   br i1 %i.bn, label %bb.t, label %bb.p
 
 bb.p:                                             ; preds = %.critedge
-  %i.bo = inttoptr i64 %.1175301325 to ptr        ; 3 uses
+  %i.bo = inttoptr i64 %.1175301324 to ptr        ; 3 uses
   %i.bp = load i64, ptr %i.bo, align 8, !tbaa !15
   %i.bq = and i64 %i.bp, 8192
   %.not.i232 = icmp eq i64 %i.bq, 0
@@ -373,8 +365,8 @@ bb.s:                                             ; preds = %bb.r, %RSTRING_PTR.
 
 bb.t:                                             ; preds = %bb.r, %bb.s, %.critedge
   %.6184 = phi i64 [ %.4182, %.critedge ], [ %.4, %bb.s ], [ %.4182, %bb.r ] ; 4 uses
-  %.3177 = phi i64 [ 4, %.critedge ], [ %.4182, %bb.s ], [ %.1175301325, %bb.r ] ; 2 uses
-  %.6 = phi i64 [ %.4, %.critedge ], [ %.1175301325, %bb.s ], [ %.4, %bb.r ] ; 4 uses
+  %.3177 = phi i64 [ 4, %.critedge ], [ %.4182, %bb.s ], [ %.1175301324, %bb.r ] ; 2 uses
+  %.6 = phi i64 [ %.4, %.critedge ], [ %.1175301324, %bb.s ], [ %.4, %bb.r ] ; 4 uses
   %i.bz = icmp eq i64 %.6184, 4
   br i1 %i.bz, label %bb.x, label %bb.u
 

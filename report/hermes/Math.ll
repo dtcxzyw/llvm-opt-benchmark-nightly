@@ -201,8 +201,7 @@ bb.e:                                             ; preds = %_ZNSt23mersenne_twi
   %i.ai = fptoui x86_fp80 %i.ah to i64            ; 2 uses
   %i.aj = add i64 %i.ai, 52
   %i.ak = udiv i64 %i.aj, %i.ai
-  %.fr.i.i.i.i = freeze i64 %i.ak
-  %spec.select.i.i.i.i = call i64 @llvm.umax.i64(i64 %.fr.i.i.i.i, i64 1)
+  %spec.select.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ak, i64 1)
   br label %select.unfold.i.i.i.i
 
 bb.f:                                             ; preds = %select.unfold.i.i.i.i

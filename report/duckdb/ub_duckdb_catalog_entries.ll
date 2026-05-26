@@ -201,8 +201,7 @@ bb.m:                                             ; preds = %bb.l
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 16
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !847
   %i.ac = icmp eq i64 %i.ab, %i.b
-  %cond.fr = freeze i1 %i.ac
-  br i1 %cond.fr, label %_ZNSt10unique_ptrIN6duckdb17NotNullConstraintESt14default_deleteIS1_EED2Ev.exit, label %.thread
+  br i1 %i.ac, label %_ZNSt10unique_ptrIN6duckdb17NotNullConstraintESt14default_deleteIS1_EED2Ev.exit, label %.thread
 
 bb.n:                                             ; preds = %.lr.ph
   %i.ad = landingpad { ptr, i32 }
@@ -383,7 +382,7 @@ _ZNSt10unique_ptrIN6duckdb17NotNullConstraintESt14default_deleteIS1_EED2Ev.exit6
   br label %.body
 
 _ZNSt10unique_ptrIN6duckdb17NotNullConstraintESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.m, %bb.q, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_ELb1EEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i
-  %.439157 = phi i1 [ false, %bb.q ], [ false, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_ELb1EEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i ], [ true, %bb.m ]
+  %.439157 = phi i1 [ true, %bb.q ], [ true, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ConstraintESt14default_deleteIS2_ELb1EEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i ], [ false, %bb.m ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #30
   invoke void @_ZN6duckdb6Binder12CreateBinderERNS_13ClientContextENS_12optional_ptrIS0_Lb1EEENS_10BinderTypeE(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::shared_ptr.883") align 8 %9, ptr noundef nonnull align 8 dereferenceable(512) %2, ptr null, i8 noundef zeroext 0)
           to label %bb.v unwind label %bb.al
@@ -415,7 +414,7 @@ _ZNKSt14default_deleteIN6duckdb10CreateInfoEEclEPS1_.exit.i: ; preds = %bb.x
   br label %_ZNSt10unique_ptrIN6duckdb10CreateInfoESt14default_deleteIS1_EED2Ev.exit
 
 _ZNSt10unique_ptrIN6duckdb10CreateInfoESt14default_deleteIS1_EED2Ev.exit: ; preds = %bb.x, %_ZNKSt14default_deleteIN6duckdb10CreateInfoEEclEPS1_.exit.i
-  br i1 %.439157, label %bb.y, label %bb.ap
+  br i1 %.439157, label %bb.ap, label %bb.y
 
 bb.y:                                             ; preds = %_ZNSt10unique_ptrIN6duckdb10CreateInfoESt14default_deleteIS1_EED2Ev.exit
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 240

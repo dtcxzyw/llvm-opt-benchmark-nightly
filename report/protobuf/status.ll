@@ -201,17 +201,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit9: ; preds = %bb.e
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef ptr @_ZN4absl12lts_2025051219StatusMessageAsCStrERKNS0_6StatusE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #9 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !tbaa !18
-  %.fr12 = freeze i64 %i.a                        ; 3 uses
-  %i.b = trunc i64 %.fr12 to i1
+  %i.a = load i64, ptr %0, align 8, !tbaa !18     ; 3 uses
+  %i.b = trunc i64 %i.a to i1
   br i1 %i.b, label %bb.b, label %_ZNK4absl12lts_202505126Status7messageEv.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = and i64 %.fr12, 2
+  %i.c = and i64 %i.a, 2
   br label %_ZNK4absl12lts_202505126Status7messageEv.exit.thread5
 
 _ZNK4absl12lts_202505126Status7messageEv.exit:    ; preds = %bb.a
-  %i.d = inttoptr i64 %.fr12 to ptr               ; 2 uses
+  %i.d = inttoptr i64 %i.a to ptr                 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !16
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 16

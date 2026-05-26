@@ -201,10 +201,9 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %.val = load ptr, ptr %i.b, align 8             ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !229)
-  %i.ai = tail call ptr @memchr(ptr noundef %.val, i32 noundef 10, i64 noundef %i.d) #21, !noalias !229
-  %.fr.i = freeze ptr %i.ai                       ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr.i, null
-  %i.aj = ptrtoint ptr %.fr.i to i64
+  %i.ai = tail call ptr @memchr(ptr noundef %.val, i32 noundef 10, i64 noundef %i.d) #21, !noalias !229 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.ai, null
+  %i.aj = ptrtoint ptr %i.ai to i64
   %i.ak = ptrtoint ptr %.val to i64
   %i.al = sub i64 %i.aj, %i.ak
   %.not.i = icmp eq i64 %i.al, -1

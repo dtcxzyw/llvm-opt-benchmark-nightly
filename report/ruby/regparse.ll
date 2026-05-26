@@ -201,9 +201,8 @@ bb.ko:                                            ; preds = %bb.km, %bb.kn
   ]
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.yw = call fastcc i32 @fetch_named_backref_token(i32 noundef 40, ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull %2, ptr noundef nonnull %3)
-  %.fr = freeze i32 %i.yw                         ; 2 uses
-  %i.yx = icmp slt i32 %.fr, 0
+  %i.yw = call fastcc i32 @fetch_named_backref_token(i32 noundef 40, ptr noundef %0, ptr noundef %i.a, ptr noundef nonnull %2, ptr noundef nonnull %3) ; 2 uses
+  %i.yx = icmp slt i32 %i.yw, 0
   br i1 %i.yx, label %.thread1006, label %.thread1011
 
 bb.kq:                                            ; preds = %bb.ko
@@ -225,7 +224,7 @@ bb.kr:                                            ; preds = %bb.kq
   br label %.thread1011
 
 .thread1006:                                      ; preds = %bb.ki, %bb.kq, %bb.kp
-  %.8.ph = phi i32 [ -119, %bb.ki ], [ %i.yy, %bb.kq ], [ %.fr, %bb.kp ]
+  %.8.ph = phi i32 [ -119, %bb.ki ], [ %i.yy, %bb.kq ], [ %i.yw, %bb.kp ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #25
   br label %.loopexit
@@ -628,8 +627,8 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.y, %.lr.ph.i
-  %.1121.fr179.i = phi i32 [ %.0120.i, %.lr.ph.i ], [ %.2122.i, %bb.y ] ; 3 uses
-  %.0111178.i = phi i32 [ 0, %.lr.ph.i ], [ %.1112.i, %bb.y ] ; 3 uses
+  %.1121.fr179.i = phi i32 [ 0, %.lr.ph.i ], [ %.1112.i, %bb.y ] ; 3 uses
+  %.0111178.i = phi i32 [ %.0120.i, %.lr.ph.i ], [ %.2122.i, %bb.y ] ; 3 uses
   %i.ah = phi ptr [ %i.aa, %.lr.ph.i ], [ %i.av, %bb.y ] ; 6 uses
   %i.ai = load i32, ptr %i.k, align 8, !tbaa !70
   %i.aj = icmp eq i32 %i.ai, 1
@@ -675,41 +674,40 @@ switch.early.test.i:                              ; preds = %bb.u
 bb.v:                                             ; preds = %switch.early.test.i, %switch.early.test.i, %switch.early.test.i, %bb.u
   %.fr.lcssa.i = phi i32 [ %.fr.i, %switch.early.test.i ], [ %.fr.i, %switch.early.test.i ], [ %.fr.i, %switch.early.test.i ], [ %.0.i.i, %bb.u ]
   store ptr %i.av, ptr %i.b, align 8
-  %i.ax = icmp eq i32 %.1121.fr179.i, 2
-  %spec.select154 = select i1 %i.ax, i32 -215, i32 %.0111178.i
+  %i.ax = icmp eq i32 %.0111178.i, 2
+  %spec.select154 = select i1 %i.ax, i32 -215, i32 %.1121.fr179.i
   br label %select.unfold.i
 
 bb.w:                                             ; preds = %switch.early.test.i
-  %.not140.i = icmp eq i32 %.1121.fr179.i, 0
+  %.not140.i = icmp eq i32 %.0111178.i, 0
   br i1 %.not140.i, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.ay = load ptr, ptr %i.ac, align 8, !tbaa !72
   %i.az = tail call i32 %i.ay(i32 noundef %.fr.i, i32 noundef 4, ptr noundef nonnull %i.i) #25, !inline_history !118
-  %.fr184.i = freeze i32 %i.az
-  %.not141.i = icmp ne i32 %.fr184.i, 0           ; 2 uses
+  %.not141.i = icmp ne i32 %i.az, 0               ; 2 uses
   %..i = zext i1 %.not141.i to i32
-  %..0111.i = select i1 %.not141.i, i32 %.0111178.i, i32 -215
+  %..0111.i = select i1 %.not141.i, i32 %.1121.fr179.i, i32 -215
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
   %.2122.i = phi i32 [ %..i, %bb.x ], [ 0, %bb.w ] ; 2 uses
-  %.1112.i = phi i32 [ %..0111.i, %bb.x ], [ %.0111178.i, %bb.w ] ; 2 uses
+  %.1112.i = phi i32 [ %..0111.i, %bb.x ], [ %.1121.fr179.i, %bb.w ] ; 2 uses
   %.not139.i = icmp ult ptr %i.av, %3
   br i1 %.not139.i, label %bb.p, label %select.unfold.loopexit.i, !llvm.loop !119
 
 select.unfold.loopexit.i:                         ; preds = %bb.y, %bb.o
   %.lcssa.i = phi ptr [ %i.aa, %bb.o ], [ %i.av, %bb.y ] ; 2 uses
+  %.1121.lcssa.i = phi i32 [ %.0120.i, %bb.o ], [ %.2122.i, %bb.y ]
   %.0118.lcssa.i = phi i32 [ %i.t, %bb.o ], [ %.fr.i, %bb.y ]
   %.0114.lcssa.i = phi ptr [ %3, %bb.o ], [ %i.ah, %bb.y ]
   %.0111.lcssa.i = phi i32 [ 0, %bb.o ], [ %.1112.i, %bb.y ]
-  %.1121.fr.lcssa.i = phi i32 [ %.0120.i, %bb.o ], [ %.2122.i, %bb.y ]
   store ptr %.lcssa.i, ptr %i.b, align 8
   br label %select.unfold.i
 
 select.unfold.i:                                  ; preds = %bb.v, %select.unfold.loopexit.i
   %i.ba = phi ptr [ %i.av, %bb.v ], [ %.lcssa.i, %select.unfold.loopexit.i ] ; 10 uses
-  %.1121.fr172.i = phi i32 [ %.1121.fr179.i, %bb.v ], [ %.1121.fr.lcssa.i, %select.unfold.loopexit.i ]
+  %.1121.fr172.i = phi i32 [ %.0111178.i, %bb.v ], [ %.1121.lcssa.i, %select.unfold.loopexit.i ]
   %.1119.i = phi i32 [ %.fr.lcssa.i, %bb.v ], [ %.0118.lcssa.i, %select.unfold.loopexit.i ] ; 3 uses
   %.1115.i = phi ptr [ %i.ah, %bb.v ], [ %.0114.lcssa.i, %select.unfold.loopexit.i ] ; 4 uses
   %.2.i = phi i32 [ %spec.select154, %bb.v ], [ %.0111.lcssa.i, %select.unfold.loopexit.i ] ; 2 uses
@@ -1112,9 +1110,8 @@ bb.gd:                                            ; preds = %bb.gc
 
 bb.ge:                                            ; preds = %bb.gd
   %i.ti = getelementptr inbounds nuw i8, ptr %i.g, i64 56 ; 2 uses
-  %i.tj = call fastcc i32 @create_node_from_array(i32 noundef 1, ptr noundef nonnull %i.ti, ptr noundef nonnull %i.sz)
-  %.fr.i = freeze i32 %i.tj                       ; 2 uses
-  %.not330.i = icmp eq i32 %.fr.i, 0
+  %i.tj = call fastcc i32 @create_node_from_array(i32 noundef 1, ptr noundef nonnull %i.ti, ptr noundef nonnull %i.sz) ; 2 uses
+  %.not330.i = icmp eq i32 %i.tj, 0
   br i1 %.not330.i, label %.thread413.i, label %.thread484.i
 
 .thread413.i:                                     ; preds = %bb.ge
@@ -1123,9 +1120,8 @@ bb.ge:                                            ; preds = %bb.gd
   br i1 %.not331.i, label %bb.gf, label %.thread484.i
 
 bb.gf:                                            ; preds = %.thread413.i
-  %i.tl = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.sw, ptr noundef nonnull %i.sx)
-  %.fr502.i = freeze i32 %i.tl                    ; 2 uses
-  %.not332.i = icmp eq i32 %.fr502.i, 0
+  %i.tl = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.sw, ptr noundef nonnull %i.sx) ; 2 uses
+  %.not332.i = icmp eq i32 %i.tl, 0
   br i1 %.not332.i, label %bb.gg, label %.thread484.i
 
 bb.gg:                                            ; preds = %bb.gf
@@ -1203,9 +1199,8 @@ bb.gq:                                            ; preds = %bb.gp
   %i.un = load ptr, ptr %i.td, align 8, !tbaa !90
   store ptr %i.un, ptr %i.ui, align 8, !tbaa !13
   store ptr %i.uf, ptr %i.td, align 8, !tbaa !90
-  %i.uo = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.tf, ptr noundef nonnull %i.tb)
-  %.fr503.i = freeze i32 %i.uo                    ; 2 uses
-  %.not341.i = icmp eq i32 %.fr503.i, 0
+  %i.uo = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.tf, ptr noundef nonnull %i.tb) ; 2 uses
+  %.not341.i = icmp eq i32 %i.uo, 0
   br i1 %.not341.i, label %quantify_node.exit.thread441.i, label %.thread484.i
 
 quantify_node.exit.thread441.i:                   ; preds = %bb.gq
@@ -1311,9 +1306,8 @@ bb.hb:                                            ; preds = %bb.ha
   %i.vz = load ptr, ptr %i.tq, align 16, !tbaa !90
   store ptr %i.vz, ptr %i.vu, align 8, !tbaa !13
   store ptr %i.vr, ptr %i.tq, align 16, !tbaa !90
-  %i.wa = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.tb, ptr noundef nonnull %i.td)
-  %.fr504.i = freeze i32 %i.wa                    ; 2 uses
-  %.not353.i = icmp eq i32 %.fr504.i, 0
+  %i.wa = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.tb, ptr noundef nonnull %i.td) ; 2 uses
+  %.not353.i = icmp eq i32 %i.wa, 0
   br i1 %.not353.i, label %select.unfold458.i, label %.thread484.i
 
 select.unfold458.i:                               ; preds = %bb.hb
@@ -1395,9 +1389,8 @@ bb.hj:                                            ; preds = %bb.hi
 
 bb.hk:                                            ; preds = %bb.hj, %bb.hh
   %i.xb = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  %i.xc = call fastcc i32 @create_node_from_array(i32 noundef 1, ptr noundef nonnull %i.xb, ptr noundef nonnull %i.sw)
-  %.fr505.i = freeze i32 %i.xc                    ; 2 uses
-  %.not359.i = icmp eq i32 %.fr505.i, 0
+  %i.xc = call fastcc i32 @create_node_from_array(i32 noundef 1, ptr noundef nonnull %i.xb, ptr noundef nonnull %i.sw) ; 2 uses
+  %.not359.i = icmp eq i32 %i.xc, 0
   br i1 %.not359.i, label %bb.hl, label %.thread484.i
 
 bb.hl:                                            ; preds = %bb.hk
@@ -1438,9 +1431,8 @@ bb.hp:                                            ; preds = %bb.ho
   store ptr %i.xe, ptr %i.xl, align 8, !tbaa !13
   store ptr %i.xi, ptr %i.sw, align 8, !tbaa !90
   %i.xq = getelementptr inbounds nuw i8, ptr %i.g, i64 16
-  %i.xr = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.xq, ptr noundef nonnull %.1249.sroa.gep.i)
-  %.fr506.i = freeze i32 %i.xr                    ; 2 uses
-  %.not364.i = icmp eq i32 %.fr506.i, 0
+  %i.xr = call fastcc i32 @create_node_from_array(i32 noundef 0, ptr noundef nonnull %i.xq, ptr noundef nonnull %.1249.sroa.gep.i) ; 2 uses
+  %.not364.i = icmp eq i32 %i.xr, 0
   br i1 %.not364.i, label %.thread494.i, label %.thread484.i
 
 .thread494.i:                                     ; preds = %bb.hp, %bb.fq
@@ -1575,7 +1567,7 @@ bb.hx:                                            ; preds = %bb.hu
   br label %node_extended_grapheme_cluster.exit.thread
 
 .thread484.i:                                     ; preds = %bb.hv, %.loopexit.i, %create_node_from_array.exit.i, %bb.hq, %.thread494.i, %bb.hp, %bb.ho, %bb.hn, %bb.hm, %bb.hl, %bb.hk, %bb.hi, %.thread466.i, %node_new_cclass.exit395.thread.i, %bb.hb, %bb.ha, %bb.gz, %bb.gy, %bb.gx, %bb.gw, %bb.gv, %bb.gu, %bb.gt, %bb.gs, %bb.gr, %quantify_node.exit.thread441.i, %bb.gq, %bb.gp, %bb.go, %bb.gn, %bb.gm, %bb.gl, %bb.gk, %bb.gj, %bb.gi, %bb.gh, %bb.gg, %bb.gf, %.thread413.i, %bb.ge, %bb.gd, %bb.gc, %bb.gb, %bb.ga, %bb.fz, %bb.fy, %bb.fx, %bb.fv, %bb.fu, %add_property_to_cc.exit.i, %add_property_to_cc.exit.thread.i, %node_new_cclass.exit.thread.i, %propname2ctype.exit.thread.i, %node_new_str_raw.exit.thread.i347, %bb.fm, %bb.fl
-  %.12.i = phi i32 [ %i.qv, %bb.fl ], [ %i.rc, %bb.fm ], [ %i.rc, %node_new_str_raw.exit.thread.i347 ], [ %i.vq, %bb.gz ], [ %.11.i, %.thread494.i ], [ -5, %create_node_from_array.exit.i ], [ %.11.i, %bb.hq ], [ 0, %bb.hv ], [ -5, %bb.ha ], [ %i.rc, %propname2ctype.exit.thread.i ], [ %i.sg, %add_property_to_cc.exit.thread.i ], [ %i.sr, %bb.fv ], [ %i.sq, %bb.fu ], [ %i.sk, %add_property_to_cc.exit.i ], [ %i.rc, %node_new_cclass.exit.thread.i ], [ -5, %bb.ho ], [ %.fr506.i, %bb.hp ], [ %i.xh, %bb.hn ], [ %i.xf, %bb.hm ], [ %i.xd, %bb.hl ], [ %i.sv, %bb.fx ], [ %i.te, %bb.gb ], [ %i.ud, %bb.gn ], [ 0, %node_new_cclass.exit395.thread.i ], [ %.7.ph.i, %.thread466.i ], [ %i.wx, %bb.hi ], [ %.fr505.i, %bb.hk ], [ %i.to, %bb.gi ], [ %i.tn, %bb.gh ], [ %i.tm, %bb.gg ], [ %i.sy, %bb.fy ], [ %i.tk, %.thread413.i ], [ %.fr502.i, %bb.gf ], [ %i.ta, %bb.fz ], [ %i.th, %bb.gd ], [ %.fr.i, %bb.ge ], [ %i.tc, %bb.ga ], [ -5, %bb.gp ], [ %i.tp, %bb.gj ], [ %.fr503.i, %bb.gq ], [ %i.tv, %bb.gm ], [ %i.tv, %bb.gl ], [ %i.tr, %bb.gk ], [ 0, %.loopexit.i ], [ %i.up, %quantify_node.exit.thread441.i ], [ %.fr504.i, %bb.hb ], [ -5, %bb.gx ], [ %i.vp, %bb.gy ], [ -5, %bb.gt ], [ %i.vf, %bb.gw ], [ %i.vd, %bb.gv ], [ %i.vb, %bb.gu ], [ %i.us, %bb.gs ], [ %i.uq, %bb.gr ], [ %i.tg, %bb.gc ], [ %i.ue, %bb.go ]
+  %.12.i = phi i32 [ %i.qv, %bb.fl ], [ %i.rc, %bb.fm ], [ %i.rc, %node_new_str_raw.exit.thread.i347 ], [ %i.vq, %bb.gz ], [ %.11.i, %.thread494.i ], [ -5, %create_node_from_array.exit.i ], [ %.11.i, %bb.hq ], [ 0, %bb.hv ], [ -5, %bb.ha ], [ %i.rc, %propname2ctype.exit.thread.i ], [ %i.sg, %add_property_to_cc.exit.thread.i ], [ %i.sr, %bb.fv ], [ %i.sq, %bb.fu ], [ %i.sk, %add_property_to_cc.exit.i ], [ %i.rc, %node_new_cclass.exit.thread.i ], [ -5, %bb.ho ], [ %i.xr, %bb.hp ], [ %i.xh, %bb.hn ], [ %i.xf, %bb.hm ], [ %i.xd, %bb.hl ], [ %i.sv, %bb.fx ], [ %i.te, %bb.gb ], [ %i.ud, %bb.gn ], [ 0, %node_new_cclass.exit395.thread.i ], [ %.7.ph.i, %.thread466.i ], [ %i.wx, %bb.hi ], [ %i.xc, %bb.hk ], [ %i.to, %bb.gi ], [ %i.tn, %bb.gh ], [ %i.tm, %bb.gg ], [ %i.sy, %bb.fy ], [ %i.tk, %.thread413.i ], [ %i.tl, %bb.gf ], [ %i.ta, %bb.fz ], [ %i.th, %bb.gd ], [ %i.tj, %bb.ge ], [ %i.tc, %bb.ga ], [ -5, %bb.gp ], [ %i.tp, %bb.gj ], [ %i.uo, %bb.gq ], [ %i.tv, %bb.gm ], [ %i.tv, %bb.gl ], [ %i.tr, %bb.gk ], [ 0, %.loopexit.i ], [ %i.up, %quantify_node.exit.thread441.i ], [ %i.wa, %bb.hb ], [ -5, %bb.gx ], [ %i.vp, %bb.gy ], [ -5, %bb.gt ], [ %i.vf, %bb.gw ], [ %i.vd, %bb.gv ], [ %i.vb, %bb.gu ], [ %i.us, %bb.gs ], [ %i.uq, %bb.gr ], [ %i.tg, %bb.gc ], [ %i.ue, %bb.go ]
   %.0233.i = phi ptr [ null, %bb.fl ], [ null, %bb.fm ], [ null, %node_new_str_raw.exit.thread.i347 ], [ null, %bb.gz ], [ null, %.thread494.i ], [ null, %create_node_from_array.exit.i ], [ %i.xs, %bb.hq ], [ %i.yv, %bb.hv ], [ null, %bb.ha ], [ null, %propname2ctype.exit.thread.i ], [ null, %add_property_to_cc.exit.thread.i ], [ null, %bb.fv ], [ null, %bb.fu ], [ null, %add_property_to_cc.exit.i ], [ null, %node_new_cclass.exit.thread.i ], [ null, %bb.ho ], [ null, %bb.hp ], [ null, %bb.hn ], [ null, %bb.hm ], [ null, %bb.hl ], [ null, %bb.fx ], [ null, %bb.gb ], [ null, %bb.gn ], [ null, %node_new_cclass.exit395.thread.i ], [ null, %.thread466.i ], [ null, %bb.hi ], [ null, %bb.hk ], [ null, %bb.gi ], [ null, %bb.gh ], [ null, %bb.gg ], [ null, %bb.fy ], [ null, %.thread413.i ], [ null, %bb.gf ], [ null, %bb.fz ], [ null, %bb.gd ], [ null, %bb.ge ], [ null, %bb.ga ], [ null, %bb.gp ], [ null, %bb.gj ], [ null, %bb.gq ], [ null, %bb.gm ], [ null, %bb.gl ], [ null, %bb.gk ], [ null, %.loopexit.i ], [ null, %quantify_node.exit.thread441.i ], [ null, %bb.hb ], [ null, %bb.gx ], [ null, %bb.gy ], [ null, %bb.gt ], [ null, %bb.gw ], [ null, %bb.gv ], [ null, %bb.gu ], [ null, %bb.gs ], [ null, %bb.gr ], [ null, %bb.gc ], [ null, %bb.go ]
   %.12.fr.i = freeze i32 %.12.i                   ; 3 uses
   call void @onig_node_free(ptr noundef %.0233.i)
@@ -1978,10 +1970,9 @@ node_str_cat_codepoint.exit371.thread:            ; preds = %bb.kj
 node_str_cat_codepoint.exit371:                   ; preds = %bb.kj
   %i.ajt = zext nneg i32 %i.ajr to i64
   %i.aju = getelementptr i8, ptr %i.a, i64 %i.ajt
-  %i.ajv = call i32 @onig_node_str_cat(ptr noundef nonnull %i.ajf, ptr noundef nonnull %i.a, ptr noundef %i.aju)
-  %.fr = freeze i32 %i.ajv                        ; 2 uses
+  %i.ajv = call i32 @onig_node_str_cat(ptr noundef nonnull %i.ajf, ptr noundef nonnull %i.a, ptr noundef %i.aju) ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %.not329 = icmp eq i32 %.fr, 0
+  %.not329 = icmp eq i32 %i.ajv, 0
   br i1 %.not329, label %bb.kn, label %.thread443
 
 bb.kk:                                            ; preds = %bb.kh
@@ -2007,7 +1998,7 @@ bb.km:                                            ; preds = %bb.kl
   br label %.thread429
 
 .thread443:                                       ; preds = %bb.kg, %node_str_cat_codepoint.exit371, %node_new_empty.exit369.thread, %bb.km, %node_str_cat_codepoint.exit371.thread
-  %.5.ph = phi i32 [ %i.ajy, %bb.km ], [ -5, %node_new_empty.exit369.thread ], [ %.fr, %node_str_cat_codepoint.exit371 ], [ %i.aja, %bb.kg ], [ %i.ajr, %node_str_cat_codepoint.exit371.thread ]
+  %.5.ph = phi i32 [ %i.ajy, %bb.km ], [ -5, %node_new_empty.exit369.thread ], [ %i.ajv, %node_str_cat_codepoint.exit371 ], [ %i.aja, %bb.kg ], [ %i.ajr, %node_str_cat_codepoint.exit371.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #25
   br label %node_new_quantifier.exit380
@@ -2410,9 +2401,8 @@ bb.fm:                                            ; preds = %bb.fl, %bb.fk
   br label %.thread566
 
 bb.fn:                                            ; preds = %bb.fj
-  %i.qs = call fastcc i32 @add_code_range_to_buf0(ptr noundef nonnull %i.pm, ptr noundef nonnull %5, i32 noundef 10, i32 noundef 10, i32 noundef 1)
-  %.fr = freeze i32 %i.qs                         ; 2 uses
-  %i.qt = icmp slt i32 %.fr, 0
+  %i.qs = call fastcc i32 @add_code_range_to_buf0(ptr noundef nonnull %i.pm, ptr noundef nonnull %5, i32 noundef 10, i32 noundef 10, i32 noundef 1) ; 2 uses
+  %i.qt = icmp slt i32 %i.qs, 0
   br i1 %i.qt, label %parse_posix_bracket.exit.thread, label %.thread566
 
 .thread566:                                       ; preds = %bb.fi, %bb.fm, %.loopexit, %bb.fn, %bb.fa, %bb.ez
@@ -2429,7 +2419,7 @@ parse_posix_bracket.exit.thread.loopexit:         ; preds = %bb.w
 parse_posix_bracket.exit.thread:                  ; preds = %bb.cd, %bb.aw, %bb.dv, %bb.dk, %CC_ESC_WARN.exit427, %bb.z, %bb.ds, %bb.dl, %bb.dh, %parse_posix_bracket.exit, %bb.ap, %bb.ct, %.thread465, %bb.cr, %.thread478, %.thread491, %bb.eg, %bb.ed, %bb.eb, %bb.w, %parse_posix_bracket.exit.thread.loopexit, %bb.fn, %.thread448, %bb.es, %bb.eq, %bb.eo
   %.4307 = phi ptr [ %.0303.ph, %bb.w ], [ %.0303.ph, %bb.eo ], [ %.0303.ph, %bb.eq ], [ %.3306543, %bb.fn ], [ %.0303.ph, %.thread448 ], [ %.0300.ph, %bb.es ], [ %.0303.ph, %bb.cd ], [ %.0303.ph, %bb.aw ], [ %.0303.ph, %bb.dv ], [ %.0303.ph, %bb.dk ], [ %.0303.ph, %CC_ESC_WARN.exit427 ], [ %.0303.ph, %bb.z ], [ %.0303.ph, %bb.ds ], [ %.0303.ph, %bb.dl ], [ %.0303.ph, %bb.dh ], [ %.0303.ph, %parse_posix_bracket.exit ], [ %.0303.ph, %bb.ap ], [ %.0303.ph, %bb.eb ], [ %.0303.ph, %bb.ed ], [ %.0303.ph, %bb.eg ], [ %.2305507, %.thread491 ], [ %.0303.ph, %.thread478 ], [ %.0303.ph, %bb.cr ], [ %.0303.ph, %.thread465 ], [ %.0303.ph, %bb.ct ], [ %.0303.ph, %parse_posix_bracket.exit.thread.loopexit ] ; 2 uses
   %.5299 = phi ptr [ %.1295.ph, %bb.w ], [ %.1295.ph, %bb.eo ], [ %.1295.ph, %bb.eq ], [ %.4298546, %bb.fn ], [ %.1295.ph, %.thread448 ], [ %.1295.ph, %bb.es ], [ %.1295.ph, %bb.cd ], [ %.1295.ph, %bb.aw ], [ %.1295.ph, %bb.dv ], [ %.1295.ph, %bb.dk ], [ %.1295.ph, %CC_ESC_WARN.exit427 ], [ %.1295.ph, %bb.z ], [ %.1295.ph, %bb.ds ], [ %.1295.ph, %bb.dl ], [ %.1295.ph, %bb.dh ], [ %.1295.ph, %parse_posix_bracket.exit ], [ %.1295.ph, %bb.ap ], [ %.1295.ph, %bb.eb ], [ %.1295.ph, %bb.ed ], [ %.1295.ph, %bb.eg ], [ %.3297511, %.thread491 ], [ %.1295.ph, %.thread478 ], [ %.1295.ph, %bb.cr ], [ %.1295.ph, %.thread465 ], [ %.1295.ph, %bb.ct ], [ %.1295.ph, %parse_posix_bracket.exit.thread.loopexit ] ; 3 uses
-  %.15 = phi i32 [ -11, %bb.w ], [ %i.ok, %bb.eo ], [ %i.ol, %bb.eq ], [ %.fr, %bb.fn ], [ %.5.ph, %.thread448 ], [ %i.oo, %bb.es ], [ -121, %bb.aw ], [ %i.ej, %bb.ap ], [ %i.cd, %bb.z ], [ %.0126.i, %parse_posix_bracket.exit ], [ -121, %bb.cd ], [ %i.mf, %bb.dh ], [ %i.ef, %CC_ESC_WARN.exit427 ], [ %i.mk, %bb.dl ], [ %i.mz, %bb.ds ], [ -112, %bb.dk ], [ -112, %bb.dv ], [ %i.ns, %bb.eb ], [ %i.nt, %bb.ed ], [ %i.nx, %bb.eg ], [ %i.of, %.thread491 ], [ %.9, %.thread478 ], [ %i.kv, %bb.cr ], [ -110, %.thread465 ], [ %i.kz, %bb.ct ], [ -103, %parse_posix_bracket.exit.thread.loopexit ] ; 4 uses
+  %.15 = phi i32 [ -11, %bb.w ], [ %i.ok, %bb.eo ], [ %i.ol, %bb.eq ], [ %i.qs, %bb.fn ], [ %.5.ph, %.thread448 ], [ %i.oo, %bb.es ], [ -121, %bb.aw ], [ %i.ej, %bb.ap ], [ %i.cd, %bb.z ], [ %.0126.i, %parse_posix_bracket.exit ], [ -121, %bb.cd ], [ %i.mf, %bb.dh ], [ %i.ef, %CC_ESC_WARN.exit427 ], [ %i.mk, %bb.dl ], [ %i.mz, %bb.ds ], [ -112, %bb.dk ], [ -112, %bb.dv ], [ %i.ns, %bb.eb ], [ %i.nt, %bb.ed ], [ %i.nx, %bb.eg ], [ %i.of, %.thread491 ], [ %.9, %.thread478 ], [ %i.kv, %bb.cr ], [ -110, %.thread465 ], [ %i.kz, %bb.ct ], [ -103, %parse_posix_bracket.exit.thread.loopexit ] ; 4 uses
   %i.qx = load ptr, ptr %0, align 8, !tbaa !90
   %.not407 = icmp eq ptr %.4307, %i.qx
   br i1 %.not407, label %bbuf_free.exit434, label %bb.fo
@@ -2832,8 +2822,7 @@ bb.t:                                             ; preds = %bb.s
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !98
   %i.bp = getelementptr i8, ptr %i.bo, i64 8
   %i.bq = load i32, ptr %i.bp, align 4, !tbaa !60
-  %.fr148 = freeze i32 %i.bq
-  %i.br = and i32 %.fr148, 4194304
+  %i.br = and i32 %i.bq, 4194304
   %.not.i.i = icmp eq i32 %i.br, 0
   br i1 %.not.i.i, label %add_code_range.exit.thread, label %add_code_range.exit.thread127
 
@@ -2857,8 +2846,7 @@ bb.v:                                             ; preds = %bb.u
   %i.by = load ptr, ptr %i.bx, align 8, !tbaa !98
   %i.bz = getelementptr i8, ptr %i.by, i64 8
   %i.ca = load i32, ptr %i.bz, align 4, !tbaa !60
-  %.fr149 = freeze i32 %i.ca
-  %i.cb = and i32 %.fr149, 4194304
+  %i.cb = and i32 %i.ca, 4194304
   %.not.i115 = icmp eq i32 %i.cb, 0
   br i1 %.not.i115, label %add_code_range.exit.thread, label %add_code_range0.exit.thread132
 
@@ -2957,8 +2945,7 @@ bb.ae:                                            ; preds = %bitset_set_range.ex
   %i.dp = load ptr, ptr %i.do, align 8, !tbaa !98
   %i.dq = getelementptr i8, ptr %i.dp, i64 8
   %i.dr = load i32, ptr %i.dq, align 4, !tbaa !60
-  %.fr146 = freeze i32 %i.dr
-  %i.ds = and i32 %.fr146, 4194304
+  %i.ds = and i32 %i.dr, 4194304
   %.not.i.i119 = icmp eq i32 %i.ds, 0
   br i1 %.not.i.i119, label %add_code_range.exit.thread, label %add_code_range.exit121.thread137
 
@@ -2985,8 +2972,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !98
   %i.ec = getelementptr i8, ptr %i.eb, i64 8
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !60
-  %.fr147 = freeze i32 %i.ed
-  %i.ee = and i32 %.fr147, 4194304
+  %i.ee = and i32 %i.ed, 4194304
   %.not.i123 = icmp eq i32 %i.ee, 0
   br i1 %.not.i123, label %add_code_range.exit.thread, label %add_code_range0.exit.thread132
 

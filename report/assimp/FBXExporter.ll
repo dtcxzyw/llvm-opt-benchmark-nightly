@@ -201,8 +201,7 @@ bb.ahx:                                           ; preds = %bb.ahw, %._crit_edg
   %i.gjf = phi ptr [ %.pre.i.i, %bb.ahw ], [ %i.gja, %._crit_edge.i.i.i3140 ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ahw ], [ %.02024.i.i.i, %._crit_edge.i.i.i3140 ]
   %i.gjg = icmp ult ptr %i.gjf, %i.gfi
-  %cond.fr.i.i = freeze i1 %i.gjg
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3152
+  br i1 %i.gjg, label %select.unfold.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3152
 
 select.unfold.i.i:                                ; preds = %bb.ahx, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.ahx ] ; 3 uses
@@ -605,8 +604,7 @@ bb.ajq:                                           ; preds = %bb.ajp, %._crit_edg
   %i.gsh = phi i32 [ %.pre.i.i3255, %bb.ajp ], [ %i.gsc, %._crit_edge.i.i.i3242 ]
   %.019.lcssa28.i.i.i3243 = phi ptr [ %.019.lcssa29.i.i.i3253, %bb.ajp ], [ %.02024.i.i.i3237, %._crit_edge.i.i.i3242 ]
   %i.gsi = icmp slt i32 %i.gsh, %i.grr
-  %cond.fr.i.i3245 = freeze i1 %i.gsi
-  br i1 %cond.fr.i.i3245, label %select.unfold.i.i3250, label %bb.ajs
+  br i1 %i.gsi, label %select.unfold.i.i3250, label %bb.ajs
 
 select.unfold.i.i3250:                            ; preds = %bb.ajq, %._crit_edge.thread.i.i.i3252
   %.sroa.4.0.i.ph.i.i3251 = phi ptr [ %.019.lcssa29.i.i.i3253, %._crit_edge.thread.i.i.i3252 ], [ %.019.lcssa28.i.i.i3243, %bb.ajq ] ; 3 uses
@@ -1009,8 +1007,7 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.t = phi i32 [ %.pre81.i, %bb.e ], [ %i.n, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.u = icmp slt i32 %i.t, %i.s
-  %cond.fr = freeze i1 %i.u
-  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeI13aiTextureTypeSt4pairIKS0_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS9_ESt4lessIS0_ESaIS9_EE17_M_insert_unique_IRKS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_ESt23_Rb_tree_const_iteratorIS9_EOT_RT0_.exit.i
+  br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeI13aiTextureTypeSt4pairIKS0_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS9_ESt4lessIS0_ESaIS9_EE17_M_insert_unique_IRKS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_ESt23_Rb_tree_const_iteratorIS9_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
@@ -1413,8 +1410,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.lc, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %.0.i.i.i.i.i.fr = freeze i32 %.0.i.i.i.i.i
-  %i.le = icmp slt i32 %.0.i.i.i.i.i.fr, 0
+  %i.le = icmp slt i32 %.0.i.i.i.i.i, 0
   br i1 %i.le, label %select.unfold, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS5_cESt4lessIS5_ESaIS6_IKS5_S7_EEE4findERSA_.exit
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %bb.ad, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S6_IS5_cEESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i
@@ -1817,8 +1813,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.bl, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %.0.i.i.i.i.i.fr = freeze i32 %.0.i.i.i.i.i
-  %i.bn = icmp slt i32 %.0.i.i.i.i.i.fr, 0
+  %i.bn = icmp slt i32 %.0.i.i.i.i.i, 0
   br i1 %i.bn, label %select.unfold, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS5_cESt4lessIS5_ESaIS6_IKS5_S7_EEE4findERSA_.exit
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %bb.i, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S6_IS5_cEESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i

@@ -201,12 +201,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = zext nneg i32 %2 to i64                  ; 2 uses
   %i.c = shl nuw nsw i64 1, %i.b
-  %.fr17 = freeze i64 %i.c
-  %i.d = and i64 %.fr17, 58785793
+  %i.d = and i64 %i.c, 58785793
   %.not.not.i = icmp ne i64 %i.d, 0
   %i.e = getelementptr [10 x i8], ptr @builtin_types, i64 %i.b ; 2 uses
   %.not = icmp eq ptr %i.e, null
-  %or.cond = select i1 %.not.not.i, i1 true, i1 %.not
+  %or.cond = or i1 %.not, %.not.not.i
   br i1 %or.cond, label %rb_builtin_type_name.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

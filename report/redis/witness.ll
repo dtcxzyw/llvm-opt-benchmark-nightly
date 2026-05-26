@@ -150,9 +150,8 @@ witness_print_witness.exit:                       ; preds = %bb.e, %bb.d, %bb.f
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !22   ; 3 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !20
   %.not20 = icmp eq ptr %i.k, %i.l
-  %cond.fr = freeze i1 %.not20
   %.not31 = icmp eq ptr %i.k, null
-  %.not = select i1 %cond.fr, i1 true, i1 %.not31
+  %.not = or i1 %.not20, %.not31
   br i1 %.not, label %select.unfold._crit_edge, label %.lr.ph
 
 select.unfold._crit_edge:                         ; preds = %witness_print_witness.exit

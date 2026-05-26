@@ -201,8 +201,7 @@ rbimpl_RB_TYPE_P_fastpath.exit133:                ; preds = %rbimpl_RB_TYPE_P_fa
 
 rbimpl_RB_TYPE_P_fastpath.exit133.thread:         ; preds = %rbimpl_RB_TYPE_P_fastpath.exit135, %rbimpl_RB_TYPE_P_fastpath.exit133
   %i.ls = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.40, i32 noundef %.0107, ptr noundef nonnull %i.lh) #13
-  %.fr184 = freeze i32 %i.ls
-  %i.lt = icmp slt i32 %.fr184, 0
+  %i.lt = icmp slt i32 %i.ls, 0
   br i1 %i.lt, label %.thread179, label %bb.cu
 
 bb.cq:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit133
@@ -222,8 +221,7 @@ bb.cr:                                            ; preds = %bb.cq
 RSTRING_PTR.exit154:                              ; preds = %bb.cq, %bb.cr
   %i.mb = phi ptr [ %i.ma, %bb.cr ], [ %i.lz, %bb.cq ]
   %i.mc = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.41, i32 noundef %.0107, ptr noundef nonnull %i.lh, i32 noundef %i.lx, ptr noundef %i.mb) #13
-  %.fr = freeze i32 %i.mc
-  %i.md = icmp slt i32 %.fr, 0
+  %i.md = icmp slt i32 %i.mc, 0
   br i1 %i.md, label %.thread179, label %bb.cu
 
 rbimpl_RB_TYPE_P_fastpath.exit137.thread:         ; preds = %rbimpl_RB_TYPE_P_fastpath.exit141, %RARRAY_AREF.exit
@@ -247,8 +245,7 @@ rbimpl_RB_TYPE_P_fastpath.exit.thread:            ; preds = %rbimpl_RB_TYPE_P_fa
   %i.mp = inttoptr i64 %i.mo to ptr
   %i.mq = inttoptr i64 %i.kp to ptr
   %i.mr = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.42, i32 noundef %.0107, ptr noundef %i.mp, ptr noundef %i.mq) #13
-  %.fr186 = freeze i32 %i.mr
-  %i.ms = icmp slt i32 %.fr186, 0
+  %i.ms = icmp slt i32 %i.mr, 0
   br i1 %i.ms, label %.thread179, label %bb.cu
 
 bb.cs:                                            ; preds = %rbimpl_RB_TYPE_P_fastpath.exit
@@ -269,8 +266,7 @@ RSTRING_PTR.exit156:                              ; preds = %bb.cs, %bb.ct
   %i.na = phi ptr [ %i.mz, %bb.ct ], [ %i.my, %bb.cs ]
   %i.nb = inttoptr i64 %i.kp to ptr
   %i.nc = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.43, i32 noundef %.0107, i32 noundef %i.mw, ptr noundef %i.na, ptr noundef %i.nb) #13
-  %.fr185 = freeze i32 %i.nc
-  %i.nd = icmp slt i32 %.fr185, 0
+  %i.nd = icmp slt i32 %i.nc, 0
   br i1 %i.nd, label %.thread179, label %bb.cu
 
 bb.cu:                                            ; preds = %RSTRING_PTR.exit156, %rbimpl_RB_TYPE_P_fastpath.exit.thread, %RSTRING_PTR.exit154, %rbimpl_RB_TYPE_P_fastpath.exit133.thread, %RSTRING_PTR.exit152
@@ -279,8 +275,7 @@ bb.cu:                                            ; preds = %RSTRING_PTR.exit156
 
 .loopexit:                                        ; preds = %rb_array_len.exit.thread, %rb_array_len.exit, %bb.ck
   %i.nf = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %1, i32 noundef 1, ptr noundef nonnull @.str.2) #13
-  %.fr187 = freeze i32 %i.nf
-  %i.ng = icmp slt i32 %.fr187, 0
+  %i.ng = icmp slt i32 %i.nf, 0
   br i1 %i.ng, label %.thread179, label %bb.cv
 
 bb.cv:                                            ; preds = %.loopexit, %bb.bx, %bb.bw

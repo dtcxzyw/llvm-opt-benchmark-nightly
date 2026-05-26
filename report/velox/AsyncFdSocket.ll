@@ -201,8 +201,7 @@ _ZN5folly13AsyncFdSocket23FdSendMsgParamsCallback17getCmsgSizeAndFdsERKNS_11Asyn
   %i.an = ptrtoint ptr %i.al to i64
   %i.ao = ptrtoint ptr %i.am to i64
   %i.ap = sub i64 %i.an, %i.ao
-  %.fr = freeze i64 %i.ap
-  %i.aq = ashr i64 %.fr, 2
+  %i.aq = ashr exact i64 %i.ap, 2
   %i.ar = add nsw i64 %i.aq, 4                    ; 2 uses
   %i.as = and i64 %i.ar, -8
   %i.at = add nsw i64 %i.as, 16                   ; 2 uses
@@ -605,8 +604,7 @@ bb.e:                                             ; preds = %bb.a
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %11, i8 0, i64 24, i1 false)
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !3059
-  %.fr.i = freeze i64 %i.ac
-  %i.ad = icmp ult i64 %.fr.i, 16
+  %i.ad = icmp ult i64 %i.ac, 16
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.af = load ptr, ptr %i.ae, align 8            ; 4 uses
   %.not3942.i = icmp eq ptr %i.af, null

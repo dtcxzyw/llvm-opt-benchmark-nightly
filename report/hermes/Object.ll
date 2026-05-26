@@ -201,8 +201,7 @@ bb.b:                                             ; preds = %_ZNK6hermes2vm10Nat
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4
-  %.fr8 = freeze i32 %i.h
-  %i.i = add i32 %.fr8, -436207616
+  %i.i = add i32 %i.h, -436207616
   %i.j = icmp ult i32 %i.i, 855638016
   br i1 %i.j, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSObjectEEEPT_NS0_11HermesValueE.exit, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit.thread
 
@@ -605,8 +604,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = and i64 %.sroa.0.0.copyload.i.i, 281474976710655
   %i.c = inttoptr i64 %i.b to ptr
   %i.d = load i32, ptr %i.c, align 4
-  %.fr168 = freeze i32 %i.d
-  %i.e = add i32 %.fr168, -436207616
+  %i.e = add i32 %i.d, -436207616
   %i.f = icmp ult i32 %i.e, 855638016
   br i1 %i.f, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSObjectEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 

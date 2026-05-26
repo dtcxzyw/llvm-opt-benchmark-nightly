@@ -201,15 +201,14 @@ bb.ba:                                            ; preds = %_ZNK6hermes2vm10Str
   %i.ki = fmul nnan double %i.ke, 6.000000e+04
   %i.kj = tail call double @llvm.fmuladd.f64(double %i.kb, double 3.600000e+06, double %i.ki)
   %i.kk = tail call double @llvm.fmuladd.f64(double %i.kg, double 1.000000e+03, double %i.kj)
-  %i.kl = fadd double %i.kk, %i.kh
-  %.fr = freeze double %i.kl                      ; 2 uses
+  %i.kl = fadd double %i.kk, %i.kh                ; 2 uses
   %i.km = tail call double @llvm.fabs.f64(double %i.jy)
   %i.kn = fcmp one double %i.km, +inf
-  %i.ko = tail call double @llvm.fabs.f64(double %.fr)
+  %i.ko = tail call double @llvm.fabs.f64(double %i.kl)
   %i.kp = fcmp one double %i.ko, +inf
   %or.cond.i187.i = and i1 %i.kn, %i.kp
   %i.kq = fmul double %i.jy, 8.640000e+07
-  %i.kr = fadd double %i.kq, %.fr
+  %i.kr = fadd double %i.kq, %i.kl
   br i1 %or.cond.i187.i, label %_ZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheE.exit, label %_ZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheE.exit.thread
 
 _ZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheE.exit.thread: ; preds = %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit139.i", %bb.ai, %bb.ay, %bb.ba, %bb.at, %_ZNK6hermes2vm10StringView14const_iteratorgtERKS2_.exit175.i, %_ZNK6hermes2vm10StringView14const_iteratorgtERKS2_.exit.i, %_ZNK6hermes2vm10StringView14const_iteratoreqERKS2_.exit.i, %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit129.i", %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit.thread", %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit109.i", %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit99.i", %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit89.i", %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit.i", %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i, %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit184.i, %_ZNK6hermes2vm10StringView14const_iteratoreqERKS2_.exit151.thread.i, %bb.aq, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i123.i, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i128.i, %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.i126.i, %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.thread.i121.i, %"_ZZN6hermes2vmL12parseISODateENS0_10StringViewERNS0_20LocalTimeOffsetCacheEENK3$_0clEDs.exit119.thread.i.thread308", %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.thread.i49, %_ZNK6hermes2vm10StringView14const_iteratordeEv.exit.i55, %_ZNK6hermes2vm10StringView14const_iteratorneERKS2_.exit.i53

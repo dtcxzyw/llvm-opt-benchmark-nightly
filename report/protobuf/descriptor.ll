@@ -201,10 +201,9 @@ bb.l:                                             ; preds = %bb.k
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i16.i:   ; preds = %bb.l
   %i.am = sub nuw i64 %.sroa.03.0.copyload, %i.ak
   %i.an = getelementptr inbounds nuw i8, ptr %.sroa.24.0.copyload, i64 %i.ak
-  %i.ao = call ptr @memchr(ptr noundef nonnull %i.an, i32 noundef 46, i64 noundef %i.am) #40, !inline_history !272
-  %.fr.i = freeze ptr %i.ao                       ; 2 uses
-  %.not.i17.i = icmp eq ptr %.fr.i, null
-  %i.ap = ptrtoint ptr %.fr.i to i64
+  %i.ao = call ptr @memchr(ptr noundef nonnull %i.an, i32 noundef 46, i64 noundef %i.am) #40, !inline_history !272 ; 2 uses
+  %.not.i17.i = icmp eq ptr %i.ao, null
+  %i.ap = ptrtoint ptr %i.ao to i64
   %i.aq = sub i64 %i.ap, %i.aa                    ; 2 uses
   %.not.i20 = icmp eq i64 %i.aq, -1
   %or.cond.i = select i1 %.not.i17.i, i1 true, i1 %.not.i20
@@ -607,10 +606,9 @@ bb.d:                                             ; preds = %bb.c
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i16:     ; preds = %bb.d
   %i.m = sub nuw i64 %1, %i.k
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 %i.k
-  %i.o = tail call ptr @memchr(ptr noundef nonnull %i.n, i32 noundef 46, i64 noundef %i.m) #40
-  %.fr = freeze ptr %i.o                          ; 2 uses
-  %.not.i17 = icmp eq ptr %.fr, null
-  %i.p = ptrtoint ptr %.fr to i64
+  %i.o = tail call ptr @memchr(ptr noundef nonnull %i.n, i32 noundef 46, i64 noundef %i.m) #40 ; 2 uses
+  %.not.i17 = icmp eq ptr %i.o, null
+  %i.p = ptrtoint ptr %i.o to i64
   %i.q = sub i64 %i.p, %i.a                       ; 2 uses
   %.not = icmp eq i64 %i.q, -1
   %or.cond = select i1 %.not.i17, i1 true, i1 %.not
@@ -1013,8 +1011,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !166
   %i.h = load ptr, ptr %1, align 8, !tbaa !166
   %i.i = icmp eq ptr %i.g, %i.h
-  %cond.fr = freeze i1 %i.i
-  br i1 %cond.fr, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
+  br i1 %i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1417,10 +1414,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.b
   br label %bb.y
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b
-  %i.k = tail call ptr @memchr(ptr noundef nonnull %2, i32 noundef 46, i64 noundef %1) #40
-  %.fr = freeze ptr %i.k                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %i.l = ptrtoint ptr %.fr to i64
+  %i.k = tail call ptr @memchr(ptr noundef nonnull %2, i32 noundef 46, i64 noundef %1) #40 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.k, null
+  %i.l = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %2 to i64
   %i.n = sub i64 %i.l, %i.m                       ; 2 uses
   %i.o = icmp eq i64 %i.n, -1
@@ -1823,8 +1819,7 @@ bb.an:                                            ; preds = %bb.aj
 ._crit_edge421:                                   ; preds = %bb.an
   %.pre422 = load ptr, ptr %11, align 8, !tbaa !132 ; 2 uses
   %.pre423 = load i8, ptr %.pre422, align 1, !tbaa !135
-  %.pre423.fr = freeze i8 %.pre423
-  %i.jg = icmp eq i8 %.pre423.fr, 1
+  %i.jg = icmp eq i8 %.pre423, 1
   br i1 %i.jg, label %select.unfold, label %bb.ao
 
 bb.ao:                                            ; preds = %._crit_edge421
@@ -1874,8 +1869,7 @@ bb.aq:                                            ; preds = %bb.an
 ._crit_edge:                                      ; preds = %bb.aq
   %.pre419 = load ptr, ptr %11, align 8, !tbaa !132 ; 2 uses
   %.pre420 = load i8, ptr %.pre419, align 1, !tbaa !135
-  %.pre420.fr = freeze i8 %.pre420
-  %i.ka = icmp eq i8 %.pre420.fr, 4
+  %i.ka = icmp eq i8 %.pre420, 4
   br i1 %i.ka, label %select.unfold442, label %bb.ar
 
 bb.ar:                                            ; preds = %._crit_edge
@@ -2278,8 +2272,7 @@ bb.w:                                             ; preds = %bb.v
 _ZN6google8protobuf17DescriptorBuilder12LookupSymbolESt17basic_string_viewIcSt11char_traitsIcEES5_NS0_14DescriptorPool15PlaceholderTypeENS1_11ResolveModeEb.exit: ; preds = %._ZN6google8protobuf17DescriptorBuilder12LookupSymbolESt17basic_string_viewIcSt11char_traitsIcEES5_NS0_14DescriptorPool15PlaceholderTypeENS1_11ResolveModeEb.exitthread-pre-split_crit_edge, %.noexc118
   %i.eu = phi i8 [ %i.en, %.noexc118 ], [ %.pr248.pre, %._ZN6google8protobuf17DescriptorBuilder12LookupSymbolESt17basic_string_viewIcSt11char_traitsIcEES5_NS0_14DescriptorPool15PlaceholderTypeENS1_11ResolveModeEb.exitthread-pre-split_crit_edge ]
   %.sroa.0227.0 = phi ptr [ %i.em, %.noexc118 ], [ %i.et, %._ZN6google8protobuf17DescriptorBuilder12LookupSymbolESt17basic_string_viewIcSt11char_traitsIcEES5_NS0_14DescriptorPool15PlaceholderTypeENS1_11ResolveModeEb.exitthread-pre-split_crit_edge ]
-  %.fr = freeze i8 %i.eu
-  %i.ev = icmp eq i8 %.fr, 2
+  %i.ev = icmp eq i8 %i.eu, 2
   br i1 %i.ev, label %.thread238, label %.thread232
 
 bb.x:                                             ; preds = %bb.t

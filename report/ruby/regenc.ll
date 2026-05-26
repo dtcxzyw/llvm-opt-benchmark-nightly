@@ -201,13 +201,12 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.q = load ptr, ptr %0, align 8, !tbaa !14
-  %i.r = tail call i32 %i.q(ptr noundef nonnull %i.b, ptr noundef %3, ptr noundef nonnull %0) #11, !inline_history !20
-  %.fr = freeze i32 %i.r                          ; 4 uses
-  %i.s = icmp sgt i32 %.fr, 0
+  %i.r = tail call i32 %i.q(ptr noundef nonnull %i.b, ptr noundef %3, ptr noundef nonnull %0) #11, !inline_history !20 ; 4 uses
+  %i.s = icmp sgt i32 %i.r, 0
   br i1 %i.s, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.t = zext nneg i32 %.fr to i64
+  %i.t = zext nneg i32 %i.r to i64
   %i.u = getelementptr i8, ptr %i.b, i64 %i.t
   %i.v = icmp ugt ptr %i.u, %3
   %i.w = ptrtoint ptr %3 to i64
@@ -217,7 +216,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.v, label %onigenc_mbclen.exit, label %iter.check
 
 bb.g:                                             ; preds = %bb.e
-  %i.aa = icmp slt i32 %.fr, -1
+  %i.aa = icmp slt i32 %i.r, -1
   br i1 %i.aa, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
@@ -238,7 +237,7 @@ onigenc_mbclen.exit:                              ; preds = %bb.f, %bb.d, %bb.i,
   br i1 %i.ai, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.f, %onigenc_mbclen.exit
-  %i.aj = phi i32 [ %i.ah, %onigenc_mbclen.exit ], [ %.fr, %bb.f ] ; 10 uses
+  %i.aj = phi i32 [ %i.ah, %onigenc_mbclen.exit ], [ %i.r, %bb.f ] ; 10 uses
   %i.ak = zext nneg i32 %i.aj to i64              ; 5 uses
   %min.iters.check = icmp ult i32 %i.aj, 4
   %i.al = sub i64 %i.a, %i.c

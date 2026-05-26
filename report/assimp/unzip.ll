@@ -152,28 +152,31 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not.i, label %bb.f, label %unz64local_SearchCentralDir64.exit.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.ae = call i64 @call_ztell64(ptr noundef nonnull %3, ptr noundef nonnull %i.aa) #14 ; 2 uses
+  %i.ae = call i64 @call_ztell64(ptr noundef nonnull %3, ptr noundef nonnull %i.aa) #14 ; 3 uses
   %spec.select.i = call i64 @llvm.umin.i64(i64 %i.ae, i64 65535) ; 2 uses
-  %i.af = call noalias dereferenceable_or_null(1028) ptr @malloc(i64 noundef 1028) #15 ; 5 uses
+  %i.af = call noalias dereferenceable_or_null(1028) ptr @malloc(i64 noundef 1028) #15 ; 6 uses
   %i.ag = icmp eq ptr %i.af, null
-  br i1 %i.ag, label %unz64local_SearchCentralDir64.exit.thread, label %.preheader.i.a
+  br i1 %i.ag, label %unz64local_SearchCentralDir64.exit.thread, label %.preheader.i
 
-.preheader.i.a:                                   ; preds = %bb.f
+.preheader.i:                                     ; preds = %bb.f
+  %4 = icmp ugt i64 %i.ae, 4
+  br i1 %4, label %.preheader.i.a, label %bb.g
+
+.preheader.i.a:                                   ; preds = %.preheader.i
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 16 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 31 uses
-  br label %bb.g
+  br label %bb.h
 
-bb.g:                                             ; preds = %.loopexit.i, %.preheader.i.a
-  %.061.i = phi i64 [ %spec.select..fr.i, %.loopexit.i ], [ 4, %.preheader.i.a ] ; 2 uses
-  %4 = icmp ult i64 %.061.i, %spec.select.i
-  br i1 %4, label %bb.h, label %.thread.thread.i
+bb.g:                                             ; preds = %.loopexit.i, %.preheader.i
+  call void @free(ptr noundef nonnull %i.af) #14
+  br label %unz64local_SearchCentralDir64.exit.thread
 
-bb.h:                                             ; preds = %bb.g
-  %5 = add nuw nsw i64 %.061.i, 1024
-  %spec.select..i = call i64 @llvm.umin.i64(i64 %5, i64 %spec.select.i)
-  %spec.select..fr.i = freeze i64 %spec.select..i ; 4 uses
-  %i.aj = sub i64 %i.ae, %spec.select..fr.i       ; 2 uses
-  %i.ak = call i64 @llvm.umin.i64(i64 %spec.select..fr.i, i64 1028) ; 3 uses
+bb.h:                                             ; preds = %.loopexit.i, %.preheader.i.a
+  %.061104.i = phi i64 [ 4, %.preheader.i.a ], [ %spec.select..i, %.loopexit.i ]
+  %5 = add nuw nsw i64 %.061104.i, 1024           ; 2 uses
+  %spec.select..i = call i64 @llvm.umin.i64(i64 %5, i64 %spec.select.i) ; 3 uses
+  %i.aj = sub i64 %i.ae, %spec.select..i          ; 2 uses
+  %i.ak = call i64 @llvm.umin.i64(i64 %spec.select..i, i64 1028) ; 3 uses
   %i.al = call i64 @call_zseek64(ptr noundef nonnull %3, ptr noundef nonnull %i.aa, i64 noundef %i.aj, i32 noundef 0) #14
   %.not70.i = icmp eq i64 %i.al, 0
   br i1 %.not70.i, label %bb.i, label %.thread.thread.i
@@ -183,65 +186,61 @@ bb.i:                                             ; preds = %bb.h
   %i.an = load ptr, ptr %i.ai, align 8
   %i.ao = call i64 %i.am(ptr noundef %i.an, ptr noundef nonnull %i.aa, ptr noundef nonnull %i.af, i64 noundef %i.ak) #14, !inline_history !3
   %.not71.i = icmp eq i64 %i.ao, %i.ak
-  br i1 %.not71.i, label %6, label %.thread.thread.i
+  br i1 %.not71.i, label %.lr.ph.preheader.i, label %.thread.thread.i
 
-6:                                                ; preds = %bb.i
-  %7 = icmp ugt i64 %spec.select..fr.i, 3
-  br i1 %7, label %.lr.ph.preheader.i, label %.loopexit.i
-
-.lr.ph.preheader.i:                               ; preds = %6
+.lr.ph.preheader.i:                               ; preds = %bb.i
   %i.ap = add nuw nsw i64 %i.ak, 4294967292
   %i.aq = and i64 %i.ap, 4294967295
   br label %.lr.ph.i
 
-.lr.ph.i:                                         ; preds = %bb.n, %.lr.ph.preheader.i
-  %indvars.iv.i = phi i64 [ %i.aq, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.n ] ; 4 uses
+.lr.ph.i:                                         ; preds = %bb.m, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %i.aq, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.m ] ; 4 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.af, i64 %indvars.iv.i ; 4 uses
   %i.as = load i8, ptr %i.ar, align 1
   %i.at = icmp eq i8 %i.as, 80
-  br i1 %i.at, label %bb.j, label %bb.n
+  br i1 %i.at, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.au = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
   %i.av = load i8, ptr %i.au, align 1
   %i.aw = icmp eq i8 %i.av, 75
-  br i1 %i.aw, label %bb.k, label %bb.n
+  br i1 %i.aw, label %bb.k, label %bb.m
 
 bb.k:                                             ; preds = %bb.j
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ar, i64 2
   %i.ay = load i8, ptr %i.ax, align 1
   %i.az = icmp eq i8 %i.ay, 6
-  br i1 %i.az, label %bb.l, label %bb.n
+  br i1 %i.az, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ar, i64 3
   %i.bb = load i8, ptr %i.ba, align 1
   %i.bc = icmp eq i8 %i.bb, 7
-  br i1 %i.bc, label %bb.m, label %bb.n
+  br i1 %i.bc, label %bb.n, label %bb.m
 
-bb.m:                                             ; preds = %bb.l
-  %8 = and i64 %indvars.iv.i, 4294967295
-  %9 = add i64 %8, %i.aj
-  br label %.loopexit.i
-
-bb.n:                                             ; preds = %bb.l, %bb.k, %bb.j, %.lr.ph.i
+bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j, %.lr.ph.i
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  %10 = trunc nuw i64 %indvars.iv.i to i32
-  %11 = icmp sgt i32 %10, 0
-  br i1 %11, label %.lr.ph.i, label %.loopexit.i
+  %6 = trunc nuw i64 %indvars.iv.i to i32
+  %7 = icmp sgt i32 %6, 0
+  br i1 %7, label %.lr.ph.i, label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %bb.n, %bb.m, %6
-  %.164.i = phi i64 [ %9, %bb.m ], [ -1, %6 ], [ -1, %bb.n ] ; 2 uses
-  %.not72.i = icmp eq i64 %.164.i, -1
-  br i1 %.not72.i, label %bb.g, label %bb.o
+bb.n:                                             ; preds = %bb.l
+  %8 = and i64 %indvars.iv.i, 4294967295
+  %9 = add i64 %8, %i.aj                          ; 2 uses
+  %.not72.i = icmp eq i64 %9, -1
+  br i1 %.not72.i, label %.loopexit.i, label %bb.o
 
-.thread.thread.i:                                 ; preds = %bb.i, %bb.h, %bb.g
-  call void @free(ptr noundef %i.af) #14
+.loopexit.i:                                      ; preds = %bb.m, %bb.n
+  %10 = icmp ult i64 %5, %spec.select.i
+  br i1 %10, label %bb.h, label %bb.g
+
+.thread.thread.i:                                 ; preds = %bb.i, %bb.h
+  call void @free(ptr noundef nonnull %i.af) #14
   br label %unz64local_SearchCentralDir64.exit.thread
 
-bb.o:                                             ; preds = %.loopexit.i
+bb.o:                                             ; preds = %bb.n
   call void @free(ptr noundef nonnull %i.af) #14
-  %i.bd = call i64 @call_zseek64(ptr noundef nonnull %3, ptr noundef nonnull %i.aa, i64 noundef %.164.i, i32 noundef 0) #14
+  %i.bd = call i64 @call_zseek64(ptr noundef nonnull %3, ptr noundef nonnull %i.aa, i64 noundef %9, i32 noundef 0) #14
   %.not73.i = icmp eq i64 %i.bd, 0
   br i1 %.not73.i, label %bb.p, label %unz64local_SearchCentralDir64.exit.thread
 
@@ -365,8 +364,7 @@ unz64local_getLong.exit140.thread:                ; preds = %bb.w
 unz64local_getLong.exit140:                       ; preds = %bb.w
   %i.db = load i32, ptr %i.c, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
-  %.fr = freeze i32 %i.db
-  %.not82.i = icmp ne i32 %.fr, 101075792
+  %.not82.i = icmp ne i32 %i.db, 101075792
   %.not = icmp eq i64 %.0168174, -1
   %or.cond297 = select i1 %.not82.i, i1 true, i1 %.not
   br i1 %or.cond297, label %unz64local_SearchCentralDir64.exit.thread, label %bb.x
@@ -681,14 +679,14 @@ bb.ao:                                            ; preds = %unz64local_getLong6
   store i64 0, ptr %i.hy, align 8
   br label %bb.bg
 
-unz64local_SearchCentralDir64.exit.thread:        ; preds = %unz64local_getLong.exit140.thread, %unz64local_getLong.exit144.thread, %unz64local_getLong.exit144, %unz64local_getLong64.exit148, %bb.v, %unz64local_getLong.exit89.i, %unz64local_getLong.exit.i, %bb.o, %.thread.thread.i, %bb.f, %bb.e, %unz64local_getLong.exit140
+unz64local_SearchCentralDir64.exit.thread:        ; preds = %unz64local_getLong.exit140.thread, %unz64local_getLong.exit144.thread, %bb.g, %unz64local_getLong.exit144, %unz64local_getLong64.exit148, %bb.v, %unz64local_getLong.exit89.i, %unz64local_getLong.exit.i, %bb.o, %.thread.thread.i, %bb.f, %bb.e, %unz64local_getLong.exit140
   %i.hz = load ptr, ptr %i.ab, align 8            ; 4 uses
   %i.ia = call i64 @call_zseek64(ptr noundef nonnull %3, ptr noundef %i.hz, i64 noundef 0, i32 noundef 2) #14
   %.not.i94 = icmp eq i64 %i.ia, 0
   br i1 %.not.i94, label %bb.ap, label %unz64local_SearchCentralDir.exit.thread
 
 bb.ap:                                            ; preds = %unz64local_SearchCentralDir64.exit.thread
-  %i.ib = call i64 @call_ztell64(ptr noundef nonnull %3, ptr noundef %i.hz) #14 ; 2 uses
+  %i.ib = call i64 @call_ztell64(ptr noundef nonnull %3, ptr noundef %i.hz) #14 ; 3 uses
   %spec.select.i95 = call i64 @llvm.umin.i64(i64 %i.ib, i64 65535) ; 2 uses
   %i.ic = call noalias dereferenceable_or_null(1028) ptr @malloc(i64 noundef 1028) #15 ; 4 uses
   %i.id = icmp eq ptr %i.ic, null
@@ -696,20 +694,19 @@ bb.ap:                                            ; preds = %unz64local_SearchCe
 
 .preheader.i96:                                   ; preds = %bb.ap
   %i.ie = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %11 = icmp ugt i64 %i.ib, 4
+  br i1 %11, label %bb.aq, label %unz64local_SearchCentralDir.exit.thread.sink.split
+
+bb.aq:                                            ; preds = %.preheader.i96
   %12 = getelementptr inbounds nuw i8, ptr %3, i64 56
-  br label %bb.aq
+  br label %bb.ar
 
-bb.aq:                                            ; preds = %.loopexit.i99, %.preheader.i96
-  %.046.i = phi i64 [ %spec.select..fr.i98, %.loopexit.i99 ], [ 4, %.preheader.i96 ] ; 2 uses
-  %13 = icmp ult i64 %.046.i, %spec.select.i95
-  br i1 %13, label %bb.ar, label %unz64local_SearchCentralDir.exit.thread.sink.split
-
-bb.ar:                                            ; preds = %bb.aq
-  %14 = add nuw nsw i64 %.046.i, 1024
-  %spec.select..i97 = call i64 @llvm.umin.i64(i64 %14, i64 %spec.select.i95)
-  %spec.select..fr.i98 = freeze i64 %spec.select..i97 ; 4 uses
-  %i.if = sub i64 %i.ib, %spec.select..fr.i98     ; 2 uses
-  %i.ig = call i64 @llvm.umin.i64(i64 %spec.select..fr.i98, i64 1028) ; 3 uses
+bb.ar:                                            ; preds = %.loopexit.i99, %bb.aq
+  %.04665.i = phi i64 [ 4, %bb.aq ], [ %spec.select..i97, %.loopexit.i99 ]
+  %13 = add nuw nsw i64 %.04665.i, 1024           ; 2 uses
+  %spec.select..i97 = call i64 @llvm.umin.i64(i64 %13, i64 %spec.select.i95) ; 3 uses
+  %i.if = sub i64 %i.ib, %spec.select..i97        ; 2 uses
+  %i.ig = call i64 @llvm.umin.i64(i64 %spec.select..i97, i64 1028) ; 3 uses
   %i.ih = call i64 @call_zseek64(ptr noundef nonnull %3, ptr noundef %i.hz, i64 noundef %i.if, i32 noundef 0) #14
   %.not55.i = icmp eq i64 %i.ih, 0
   br i1 %.not55.i, label %bb.as, label %unz64local_SearchCentralDir.exit.thread.sink.split
@@ -719,66 +716,62 @@ bb.as:                                            ; preds = %bb.ar
   %i.ij = load ptr, ptr %12, align 8
   %i.ik = call i64 %i.ii(ptr noundef %i.ij, ptr noundef %i.hz, ptr noundef nonnull %i.ic, i64 noundef %i.ig) #14, !inline_history !8
   %.not56.i = icmp eq i64 %i.ik, %i.ig
-  br i1 %.not56.i, label %15, label %unz64local_SearchCentralDir.exit.thread.sink.split
+  br i1 %.not56.i, label %.lr.ph.preheader.i100, label %unz64local_SearchCentralDir.exit.thread.sink.split
 
-15:                                               ; preds = %bb.as
-  %16 = icmp ugt i64 %spec.select..fr.i98, 3
-  br i1 %16, label %.lr.ph.preheader.i100, label %.loopexit.i99
-
-.lr.ph.preheader.i100:                            ; preds = %15
+.lr.ph.preheader.i100:                            ; preds = %bb.as
   %i.il = add nuw nsw i64 %i.ig, 4294967292
   %i.im = and i64 %i.il, 4294967295
   br label %.lr.ph.i101
 
-.lr.ph.i101:                                      ; preds = %bb.ax, %.lr.ph.preheader.i100
-  %indvars.iv.i102 = phi i64 [ %i.im, %.lr.ph.preheader.i100 ], [ %indvars.iv.next.i103, %bb.ax ] ; 4 uses
+.lr.ph.i101:                                      ; preds = %bb.aw, %.lr.ph.preheader.i100
+  %indvars.iv.i102 = phi i64 [ %i.im, %.lr.ph.preheader.i100 ], [ %indvars.iv.next.i101, %bb.aw ] ; 4 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.ic, i64 %indvars.iv.i102 ; 4 uses
   %i.io = load i8, ptr %i.in, align 1
   %i.ip = icmp eq i8 %i.io, 80
-  br i1 %i.ip, label %bb.at, label %bb.ax
+  br i1 %i.ip, label %bb.at, label %bb.aw
 
 bb.at:                                            ; preds = %.lr.ph.i101
   %i.iq = getelementptr inbounds nuw i8, ptr %i.in, i64 1
   %i.ir = load i8, ptr %i.iq, align 1
   %i.is = icmp eq i8 %i.ir, 75
-  br i1 %i.is, label %bb.au, label %bb.ax
+  br i1 %i.is, label %bb.au, label %bb.aw
 
 bb.au:                                            ; preds = %bb.at
   %i.it = getelementptr inbounds nuw i8, ptr %i.in, i64 2
   %i.iu = load i8, ptr %i.it, align 1
   %i.iv = icmp eq i8 %i.iu, 5
-  br i1 %i.iv, label %bb.av, label %bb.ax
+  br i1 %i.iv, label %bb.av, label %bb.aw
 
 bb.av:                                            ; preds = %bb.au
   %i.iw = getelementptr inbounds nuw i8, ptr %i.in, i64 3
   %i.ix = load i8, ptr %i.iw, align 1
   %i.iy = icmp eq i8 %i.ix, 6
-  br i1 %i.iy, label %bb.aw, label %bb.ax
+  br i1 %i.iy, label %bb.ax, label %bb.aw
 
-bb.aw:                                            ; preds = %bb.av
-  %17 = and i64 %indvars.iv.i102, 4294967295
-  %18 = add i64 %17, %i.if
-  br label %.loopexit.i99
+bb.aw:                                            ; preds = %bb.av, %bb.au, %bb.at, %.lr.ph.i101
+  %indvars.iv.next.i101 = add nsw i64 %indvars.iv.i102, -1
+  %14 = trunc nuw i64 %indvars.iv.i102 to i32
+  %15 = icmp sgt i32 %14, 0
+  br i1 %15, label %.lr.ph.i101, label %.loopexit.i99
 
-bb.ax:                                            ; preds = %bb.av, %bb.au, %bb.at, %.lr.ph.i101
-  %indvars.iv.next.i103 = add nsw i64 %indvars.iv.i102, -1
-  %19 = trunc nuw i64 %indvars.iv.i102 to i32
-  %20 = icmp sgt i32 %19, 0
-  br i1 %20, label %.lr.ph.i101, label %.loopexit.i99
+bb.ax:                                            ; preds = %bb.av
+  %16 = and i64 %indvars.iv.i102, 4294967295
+  %17 = add i64 %16, %i.if                        ; 2 uses
+  %.not57.i = icmp eq i64 %17, -1
+  br i1 %.not57.i, label %.loopexit.i99, label %unz64local_SearchCentralDir.exit.thread.sink.split
 
-.loopexit.i99:                                    ; preds = %bb.ax, %bb.aw, %15
-  %.149.i = phi i64 [ %18, %bb.aw ], [ -1, %15 ], [ -1, %bb.ax ] ; 2 uses
-  %.not57.i = icmp eq i64 %.149.i, -1
-  br i1 %.not57.i, label %bb.aq, label %unz64local_SearchCentralDir.exit.thread.sink.split
+.loopexit.i99:                                    ; preds = %bb.aw, %bb.ax
+  %18 = icmp ult i64 %13, %spec.select.i95
+  br i1 %18, label %bb.ar, label %unz64local_SearchCentralDir.exit.thread.sink.split
 
-unz64local_SearchCentralDir.exit.thread.sink.split: ; preds = %.loopexit.i99, %bb.as, %bb.ar, %bb.aq
-  %.045.i232.ph = phi i64 [ -1, %bb.as ], [ -1, %bb.aq ], [ -1, %bb.ar ], [ %.149.i, %.loopexit.i99 ]
-  %.ph = phi i32 [ -1, %bb.as ], [ -1, %bb.aq ], [ -1, %bb.ar ], [ 0, %.loopexit.i99 ]
-  call void @free(ptr noundef %i.ic) #14
+unz64local_SearchCentralDir.exit.thread.sink.split: ; preds = %bb.ax, %.loopexit.i99, %bb.ar, %bb.as, %.preheader.i96
+  %.045.i229.ph = phi i64 [ -1, %.preheader.i96 ], [ -1, %bb.as ], [ -1, %bb.ar ], [ -1, %.loopexit.i99 ], [ %17, %bb.ax ]
+  %.ph = phi i32 [ -1, %.preheader.i96 ], [ -1, %bb.as ], [ -1, %bb.ar ], [ -1, %.loopexit.i99 ], [ 0, %bb.ax ]
+  call void @free(ptr noundef nonnull %i.ic) #14
   br label %unz64local_SearchCentralDir.exit.thread
 
 unz64local_SearchCentralDir.exit.thread:          ; preds = %unz64local_SearchCentralDir.exit.thread.sink.split, %bb.ap, %unz64local_SearchCentralDir64.exit.thread
-  %.045.i232 = phi i64 [ -1, %unz64local_SearchCentralDir64.exit.thread ], [ -1, %bb.ap ], [ %.045.i232.ph, %unz64local_SearchCentralDir.exit.thread.sink.split ] ; 3 uses
+  %.045.i232 = phi i64 [ -1, %unz64local_SearchCentralDir64.exit.thread ], [ -1, %bb.ap ], [ %.045.i229.ph, %unz64local_SearchCentralDir.exit.thread.sink.split ] ; 3 uses
   %i.iz = phi i32 [ -1, %unz64local_SearchCentralDir64.exit.thread ], [ -1, %bb.ap ], [ %.ph, %unz64local_SearchCentralDir.exit.thread.sink.split ]
   %i.ja = getelementptr inbounds nuw i8, ptr %3, i64 332
   store i32 0, ptr %i.ja, align 4
@@ -1181,22 +1174,22 @@ unz64local_getShort.exit92.i:                     ; preds = %bb.k
   br i1 %.not.i89.not.i, label %bb.l, label %.thread.i
 
 bb.l:                                             ; preds = %unz64local_getShort.exit92.i, %unz64local_getShort.exit92.thread.i
-  %.0131155.i = phi i64 [ %i.by, %unz64local_getShort.exit92.thread.i ], [ 0, %unz64local_getShort.exit92.i ]
+  %.0131155.i = phi i64 [ %i.by, %unz64local_getShort.exit92.thread.i ], [ 0, %unz64local_getShort.exit92.i ] ; 2 uses
   %i.cd = icmp eq i32 %i.bq, 0
   br i1 %i.cd, label %bb.m, label %.thread.i
 
 bb.m:                                             ; preds = %bb.l
   %i.ce = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %i.cf = load i64, ptr %i.ce, align 8            ; 2 uses
+  %i.cf = load i64, ptr %i.ce, align 8
   %.not60.i = icmp eq i64 %.0131155.i, %i.cf
-  %cond.fr156.i = freeze i1 %.not60.i
-  br i1 %cond.fr156.i, label %bb.n, label %.thread.i
+  br i1 %.not60.i, label %bb.n, label %.thread.i
 
 bb.n:                                             ; preds = %bb.m
-  switch i64 %i.cf, label %bb.o [
-    i64 0, label %.thread.i
-    i64 12, label %.thread.i
-    i64 8, label %.thread.i
+  %trunc.i = trunc nuw i64 %.0131155.i to i16
+  switch i16 %trunc.i, label %bb.o [
+    i16 0, label %.thread.i
+    i16 12, label %.thread.i
+    i16 8, label %.thread.i
   ]
 
 bb.o:                                             ; preds = %bb.n
@@ -1599,8 +1592,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.dn = load ptr, ptr %i.an, align 8
-  %.fr = freeze ptr %i.dn
-  %.not155 = icmp eq ptr %.fr, null
+  %.not155 = icmp eq ptr %i.dn, null
   %spec.select195 = select i1 %.not155, i32 %i.dl, i32 -3
   br label %select.unfold
 

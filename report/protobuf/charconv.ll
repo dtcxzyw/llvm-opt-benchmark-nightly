@@ -201,21 +201,20 @@ bb.ac:                                            ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   store i64 %i.d, ptr %i.a, align 8
   %i.di = icmp ult i64 %i.c, 4294967296
-  %i.dj = load i32, ptr %5, align 4, !tbaa !25
-  %.fr12.i.i = freeze i32 %i.dj                   ; 9 uses
+  %i.dj = load i32, ptr %5, align 4, !tbaa !25    ; 9 uses
   br i1 %i.di, label %bb.ad, label %bb.ag
 
 bb.ad:                                            ; preds = %bb.ac
   %i.dk = icmp ne i64 %i.c, 0
-  %i.dl = icmp sgt i32 %.fr12.i.i, 0
+  %i.dl = icmp sgt i32 %i.dj, 0
   %or.cond = and i1 %i.dk, %i.dl
   br i1 %or.cond, label %.lr.ph.i.i, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.ad
   %i.dm = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 4 uses
-  %wide.trip.count.i.i = zext nneg i32 %.fr12.i.i to i64 ; 3 uses
+  %wide.trip.count.i.i = zext nneg i32 %i.dj to i64 ; 3 uses
   %xtraiter = and i64 %wide.trip.count.i.i, 1
-  %i.dn = icmp eq i32 %.fr12.i.i, 1
+  %i.dn = icmp eq i32 %i.dj, 1
   br i1 %i.dn, label %.epil.preheader, label %.lr.ph.i.i.new
 
 .lr.ph.i.i.new:                                   ; preds = %.lr.ph.i.i
@@ -229,7 +228,7 @@ bb.ad:                                            ; preds = %bb.ac
 .epil.preheader:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.lr.ph.i.i
   %indvars.iv.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %indvars.iv.next.i.i.1, %._crit_edge.i.i.unr-lcssa ]
   %.01418.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i ], [ %i.ek, %._crit_edge.i.i.unr-lcssa ]
-  %lcmp.mod154 = trunc i32 %.fr12.i.i to i1
+  %lcmp.mod154 = trunc i32 %i.dj to i1
   call void @llvm.assume(i1 %lcmp.mod154)
   %i.do = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %indvars.iv.i.i.epil.init ; 2 uses
   %i.dp = load i32, ptr %i.do, align 4, !tbaa !3
@@ -244,7 +243,7 @@ bb.ad:                                            ; preds = %bb.ac
 ._crit_edge.i.i:                                  ; preds = %._crit_edge.i.i.unr-lcssa, %.epil.preheader
   %.lcssa = phi i64 [ %i.ek, %._crit_edge.i.i.unr-lcssa ], [ %i.du, %.epil.preheader ] ; 2 uses
   %.not.i.i = icmp ne i64 %.lcssa, 0
-  %i.dv = icmp samesign ult i32 %.fr12.i.i, 84
+  %i.dv = icmp samesign ult i32 %i.dj, 84
   %or.cond17.i.i = and i1 %i.dv, %.not.i.i
   br i1 %or.cond17.i.i, label %bb.af, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit
 
@@ -278,21 +277,21 @@ bb.af:                                            ; preds = %._crit_edge.i.i
   %i.el = trunc nuw i64 %.lcssa to i32
   %i.em = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %wide.trip.count.i.i
   store i32 %i.el, ptr %i.em, align 4, !tbaa !3
-  %i.en = add nuw nsw i32 %.fr12.i.i, 1
+  %i.en = add nuw nsw i32 %i.dj, 1
   store i32 %i.en, ptr %5, align 4, !tbaa !25
   br label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit
 
 bb.ag:                                            ; preds = %bb.ac
-  %6 = icmp ult i32 %.fr12.i.i, 2147483646
+  %6 = icmp sgt i32 %i.dj, -1
   br i1 %6, label %select.unfold.preheader.i.i, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit
 
 select.unfold.preheader.i.i:                      ; preds = %bb.ag
-  %i.eo = call i32 @llvm.umin.i32(i32 %.fr12.i.i, i32 83)
+  %i.eo = call i32 @llvm.umin.i32(i32 %i.dj, i32 83)
   br label %select.unfold.i.i
 
 select.unfold.i.i:                                ; preds = %select.unfold.i.i, %select.unfold.preheader.i.i
   %.013.i.i = phi i32 [ %i.ep, %select.unfold.i.i ], [ %i.eo, %select.unfold.preheader.i.i ] ; 3 uses
-  call void @_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12MultiplyStepEiPKjii(ptr noundef nonnull align 4 dereferenceable(340) %5, i32 noundef %.fr12.i.i, ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef %.013.i.i)
+  call void @_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE12MultiplyStepEiPKjii(ptr noundef nonnull align 4 dereferenceable(340) %5, i32 noundef %i.dj, ptr noundef nonnull %i.a, i32 noundef 2, i32 noundef %.013.i.i)
   %i.ep = add nsw i32 %.013.i.i, -1
   %.not.i2.i = icmp eq i32 %.013.i.i, 0
   br i1 %.not.i2.i, label %_ZN4absl12lts_2025051216strings_internal11BigUnsignedILi84EE10MultiplyByEm.exit, label %select.unfold.i.i, !llvm.loop !32

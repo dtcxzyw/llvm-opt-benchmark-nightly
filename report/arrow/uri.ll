@@ -201,10 +201,9 @@ bb.a:
   br i1 %.not11, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a
-  %i.h = tail call ptr @memchr(ptr noundef nonnull %.val, i32 noundef 58, i64 noundef %i.g) #25
-  %.fr = freeze ptr %i.h                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %i.i = ptrtoint ptr %.fr to i64
+  %i.h = tail call ptr @memchr(ptr noundef nonnull %.val, i32 noundef 58, i64 noundef %i.g) #25 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.h, null
+  %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %.val to i64
   %i.k = sub i64 %i.i, %i.j                       ; 2 uses
   %.not = icmp eq i64 %i.k, -1
@@ -239,10 +238,9 @@ bb.a:
   br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.a
-  %i.h = tail call ptr @memchr(ptr noundef nonnull %.val, i32 noundef 58, i64 noundef %i.g) #25
-  %.fr = freeze ptr %i.h                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %i.i = ptrtoint ptr %.fr to i64
+  %i.h = tail call ptr @memchr(ptr noundef nonnull %.val, i32 noundef 58, i64 noundef %i.g) #25 ; 2 uses
+  %.not.i.i = icmp eq ptr %i.h, null
+  %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %.val to i64
   %i.k = sub i64 %i.i, %i.j                       ; 3 uses
   %i.l = icmp eq i64 %i.k, -1

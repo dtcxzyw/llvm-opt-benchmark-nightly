@@ -201,10 +201,9 @@ _ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_
   %i.k = icmp eq i64 %.sroa.0231.0363, 0          ; 2 uses
   %spec.select298 = select i1 %i.k, ptr %i.g, ptr %.sroa.8234.0362 ; 3 uses
   %spec.select299 = select i1 %i.k, i64 %i.h, i64 %.sroa.0231.0363 ; 3 uses
-  %i.l = tail call ptr @memchr(ptr noundef nonnull %i.g, i32 noundef 10, i64 noundef %i.h) #29
-  %.fr = freeze ptr %i.l                          ; 2 uses
-  %.not.i = icmp eq ptr %.fr, null
-  %i.m = ptrtoint ptr %.fr to i64
+  %i.l = tail call ptr @memchr(ptr noundef nonnull %i.g, i32 noundef 10, i64 noundef %i.h) #29 ; 2 uses
+  %.not.i = icmp eq ptr %i.l, null
+  %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %i.g to i64
   %i.o = sub i64 %i.m, %i.n                       ; 5 uses
   %.not117 = icmp eq i64 %i.o, -1
@@ -293,8 +292,7 @@ bb.h:                                             ; preds = %.outer._crit_edge
 
 _ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit133: ; preds = %.thread270
   %lhsc303 = load i8, ptr %.sroa.17.5, align 1
-  %lhsc303.fr = freeze i8 %lhsc303
-  %i.ag = icmp eq i8 %lhsc303.fr, 35              ; 2 uses
+  %i.ag = icmp eq i8 %lhsc303, 35                 ; 2 uses
   %spec.select311 = select i1 %i.ag, i64 %2, i64 %.sroa.0239.5
   %spec.select575 = select i1 %i.ag, ptr %3, ptr %.sroa.17.5
   br label %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit133.thread274

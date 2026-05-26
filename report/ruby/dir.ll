@@ -201,18 +201,17 @@ bb.df:                                            ; preds = %.sink.split684, %bb
 ._crit_edge566:                                   ; preds = %bb.df, %bb.cz, %.preheader
   %.0288.lcssa = phi ptr [ %i.jg, %.preheader ], [ %.3291.us, %bb.cz ], [ %.3291, %bb.df ]
   %i.ks = add i64 %i.hm, %i.ia
-  %i.kt = call fastcc i32 @glob_helper(i32 noundef %0, ptr noundef nonnull %i.ik, i64 noundef %2, i64 noundef %i.ks, i32 noundef 1, i32 noundef %.2287.fr, ptr noundef %i.jg, ptr noundef %.0288.lcssa, i32 noundef %i.go, ptr noundef %9, i64 noundef %10, ptr noundef %11)
-  %.fr505 = freeze i32 %i.kt                      ; 2 uses
+  %i.kt = call fastcc i32 @glob_helper(i32 noundef %0, ptr noundef nonnull %i.ik, i64 noundef %2, i64 noundef %i.ks, i32 noundef 1, i32 noundef %.2287.fr, ptr noundef %i.jg, ptr noundef %.0288.lcssa, i32 noundef %i.go, ptr noundef %9, i64 noundef %10, ptr noundef %11) ; 2 uses
   call void @free(ptr noundef %i.ik) #20
   call void @free(ptr noundef %i.jg) #20
-  %.not357 = icmp eq i32 %.fr505, 0
+  %.not357 = icmp eq i32 %i.kt, 0
   br i1 %.not357, label %select.unfold.backedge, label %glob_getent.exit.thread
 
 select.unfold.backedge:                           ; preds = %._crit_edge566, %bb.cf, %bb.ce
   br label %select.unfold, !llvm.loop !149
 
 glob_getent.exit.thread:                          ; preds = %glob_alloc_n.exit.i387, %._crit_edge566, %bb.da
-  %.6434 = phi i32 [ -1, %bb.da ], [ -1, %glob_alloc_n.exit.i387 ], [ %.fr505, %._crit_edge566 ] ; 2 uses
+  %.6434 = phi i32 [ -1, %bb.da ], [ -1, %glob_alloc_n.exit.i387 ], [ %i.kt, %._crit_edge566 ] ; 2 uses
   br i1 %.not.i378, label %.thread477, label %glob_getent.exit.thread.thread
 
 glob_getent.exit.thread.thread:                   ; preds = %bb.ca, %glob_getent.exit.thread
@@ -507,11 +506,10 @@ bb.eg:                                            ; preds = %bb.ee, %bb.ed
   %i.nk = getelementptr i8, ptr %i.ng, i64 %i.b
   %i.nl = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.nk) #21
   %i.nm = add i64 %i.nl, %3
-  %i.nn = call fastcc i32 @glob_helper(i32 noundef %0, ptr noundef nonnull %i.ng, i64 noundef %2, i64 noundef %i.nm, i32 noundef 1, i32 noundef -2, ptr noundef %i.mp, ptr noundef %.4292.lcssa, i32 noundef %8, ptr noundef %9, i64 noundef %10, ptr noundef %11)
-  %.fr = freeze i32 %i.nn                         ; 2 uses
+  %i.nn = call fastcc i32 @glob_helper(i32 noundef %0, ptr noundef nonnull %i.ng, i64 noundef %2, i64 noundef %i.nm, i32 noundef 1, i32 noundef -2, ptr noundef %i.mp, ptr noundef %.4292.lcssa, i32 noundef %8, ptr noundef %9, i64 noundef %10, ptr noundef %11) ; 2 uses
   call void @free(ptr noundef nonnull %i.ng) #20
   call void @free(ptr noundef %i.mp) #20
-  %.not345 = icmp eq i32 %.fr, 0
+  %.not345 = icmp eq i32 %i.nn, 0
   br i1 %.not345, label %bb.eh, label %.thread494
 
 bb.eh:                                            ; preds = %bb.eg, %bb.dl
@@ -525,7 +523,7 @@ bb.eh:                                            ; preds = %bb.eg, %bb.dl
   br label %.thread494
 
 .thread494:                                       ; preds = %bb.eh, %bb.eg, %glob_alloc_n.exit405, %.thread494.sink.split, %.preheader507, %.preheader506
-  %.12 = phi i32 [ 0, %.preheader507 ], [ -1, %.thread494.sink.split ], [ 0, %.preheader506 ], [ -1, %glob_alloc_n.exit405 ], [ 0, %bb.eh ], [ %.fr, %bb.eg ]
+  %.12 = phi i32 [ 0, %.preheader507 ], [ -1, %.thread494.sink.split ], [ 0, %.preheader506 ], [ -1, %glob_alloc_n.exit405 ], [ 0, %bb.eh ], [ %i.nn, %bb.eg ]
   call void @free(ptr noundef %i.lk) #20
   br label %.thread451
 
@@ -928,8 +926,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.thread
   %i.k = tail call i32 @rb_gc_for_fd(i32 noundef %i.i) #20
-  %.fr = freeze i32 %i.k
-  %.not1.i = icmp eq i32 %.fr, 0
+  %.not1.i = icmp eq i32 %i.k, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br i1 %.not1.i, label %gc_for_fd_with_gvl.exit.thread, label %gc_for_fd_with_gvl.exit.thread34
 
@@ -1300,7 +1297,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
 
 bb.q:                                             ; preds = %.thread142.i, %.lr.ph.i
   %i.bc = phi i8 [ %i.az, %.lr.ph.i ], [ %i.cj, %.thread142.i ]
-  %.093160.i = phi i32 [ 0, %.lr.ph.i ], [ %4, %.thread142.i ] ; 2 uses
+  %.093160.i = phi i32 [ 0, %.lr.ph.i ], [ %.295.i, %.thread142.i ] ; 2 uses
   %.197159.i = phi ptr [ %.096.i, %.lr.ph.i ], [ %.4100.i, %.thread142.i ]
   %i.bd = icmp eq i8 %i.bc, 92
   %or.cond.i = and i1 %.not159, %i.bd
@@ -1425,19 +1422,18 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ae
 
 .thread142.i:                                     ; preds = %bb.ak, %bb.aj, %bb.ai, %bb.ah, %bb.af, %bb.ae, %.thread134.i, %bb.ab, %bb.z, %bb.x, %bb.v
   %.4100.i = phi ptr [ %i.bh, %bb.aj ], [ %.399.i, %bb.ak ], [ %i.br, %bb.ae ], [ %i.bh, %bb.ah ], [ %i.bh, %bb.af ], [ %i.bh, %bb.ai ], [ %i.br, %.thread134.i ], [ %i.br, %bb.z ], [ %i.br, %bb.ab ], [ %i.br, %bb.x ], [ %i.br, %bb.v ] ; 3 uses
-  %.295.i = phi i32 [ 0, %bb.aj ], [ 1, %bb.ak ], [ 0, %bb.ae ], [ %.mux.i, %bb.ah ], [ 1, %bb.af ], [ 0, %bb.ai ], [ 0, %.thread134.i ], [ 1, %bb.z ], [ 0, %bb.ab ], [ 1, %bb.x ], [ 1, %bb.v ]
-  %4 = freeze i32 %.295.i                         ; 2 uses
+  %.295.i = phi i32 [ 0, %bb.aj ], [ 1, %bb.ak ], [ 0, %bb.ae ], [ %.mux.i, %bb.ah ], [ 1, %bb.af ], [ 0, %bb.ai ], [ 0, %.thread134.i ], [ 1, %bb.z ], [ 0, %bb.ab ], [ 1, %bb.x ], [ 1, %bb.v ] ; 2 uses
   %i.cj = load i8, ptr %.4100.i, align 1, !tbaa !20 ; 2 uses
   %.not115.i = icmp eq i8 %i.cj, 93
   br i1 %.not115.i, label %._crit_edge.i, label %bb.q
 
 ._crit_edge.i:                                    ; preds = %.thread142.i, %bb.p
   %.197.lcssa.i = phi ptr [ %.096.i, %bb.p ], [ %.4100.i, %.thread142.i ]
-  %.093.lcssa.i = phi i32 [ 0, %bb.p ], [ %4, %.thread142.i ]
+  %.093.lcssa.i = phi i32 [ 0, %bb.p ], [ %.295.i, %.thread142.i ]
   %i.ck = icmp eq i32 %.093.lcssa.i, %.092.i
   %i.cl = getelementptr i8, ptr %.197.lcssa.i, i64 1 ; 2 uses
   %.not163 = icmp eq ptr %i.cl, null
-  %or.cond198 = or i1 %.not163, %i.ck
+  %or.cond198 = or i1 %i.ck, %.not163
   br i1 %or.cond198, label %.thread, label %bb.al
 
 bb.al:                                            ; preds = %._crit_edge.i
@@ -1840,8 +1836,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = tail call i32 @rb_gc_for_fd(i32 noundef %i.d) #20
-  %.fr = freeze i32 %i.f
-  %.not1.i = icmp eq i32 %.fr, 0
+  %.not1.i = icmp eq i32 %i.f, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br i1 %.not1.i, label %gc_for_fd_with_gvl.exit.thread, label %gc_for_fd_with_gvl.exit.thread32
 

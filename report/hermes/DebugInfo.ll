@@ -201,9 +201,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  %i.ai = load i64, ptr %i.d, align 8, !tbaa !20
-  %.fr = freeze i64 %i.ai                         ; 2 uses
-  %i.aj = icmp eq i64 %.fr, %i.t
+  %i.ai = load i64, ptr %i.d, align 8, !tbaa !20  ; 2 uses
+  %i.aj = icmp eq i64 %i.ai, %i.t
   br i1 %i.aj, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b
@@ -219,7 +218,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.ao = icmp sgt i64 %.fr, %i.t
+  %i.ao = icmp sgt i64 %i.ai, %i.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
   br i1 %i.ao, label %.loopexit, label %bb.d
 

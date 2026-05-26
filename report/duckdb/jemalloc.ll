@@ -201,8 +201,7 @@ sz_s2u_compute.exit29.i:                          ; preds = %bb.o, %bb.n
   %i.bm = add i64 %i.bl, %.0.i13
   %i.bn = add i64 %i.bm, %i.bi
   %i.bo = icmp ult i64 %i.bn, %.0.i13
-  %cond.fr = freeze i1 %i.bo
-  br i1 %cond.fr, label %malloc_init.exit.thread, label %aligned_usize_get.exit
+  br i1 %i.bo, label %malloc_init.exit.thread, label %aligned_usize_get.exit
 
 aligned_usize_get.exit:                           ; preds = %.thread15, %bb.f, %bb.h
   %storemerge.i = phi i64 [ %.0.i13, %.thread15 ], [ %i.v, %bb.f ], [ %i.ac, %bb.h ] ; 2 uses
@@ -605,9 +604,8 @@ select.unfold:                                    ; preds = %malloc_mutex_lock.e
   %i.aa = load ptr, ptr %.030, align 8, !tbaa !166 ; 3 uses
   %i.ab = load ptr, ptr %i.w, align 8, !tbaa !164
   %.not21 = icmp eq ptr %i.aa, %i.ab
-  %cond.fr = freeze i1 %.not21
   %.not2036 = icmp eq ptr %i.aa, null
-  %.not20 = select i1 %cond.fr, i1 true, i1 %.not2036
+  %.not20 = or i1 %.not21, %.not2036
   br i1 %.not20, label %select.unfold._crit_edge, label %select.unfold
 
 select.unfold._crit_edge:                         ; preds = %select.unfold, %malloc_mutex_lock.exit

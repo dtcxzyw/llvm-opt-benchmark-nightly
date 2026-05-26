@@ -85,8 +85,7 @@ bb.c:                                             ; preds = %bb.b
   %i.p = and i64 %.sroa.0.0.copyload.i.i67, 281474976710655
   %i.q = inttoptr i64 %i.p to ptr
   %i.r = load i32, ptr %i.q, align 4
-  %.fr147 = freeze i32 %i.r
-  %i.s = add i32 %.fr147, -436207616
+  %i.s = add i32 %i.r, -436207616
   %i.t = icmp ult i32 %i.s, 855638016
   br i1 %i.t, label %_ZNK6hermes2vm6Domain9getModuleERNS0_7RuntimeEj.exit, label %bb.f
 

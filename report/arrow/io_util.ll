@@ -201,10 +201,9 @@ bb.a:
   br i1 %.not3.i, label %_ZN5arrow6StatusD2Ev.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %bb.a
-  %i.b = tail call ptr @memchr(ptr noundef %2, i32 noundef 0, i64 noundef %1) #37, !noalias !117
-  %.fr.i = freeze ptr %i.b                        ; 2 uses
-  %.not.i.i.i = icmp eq ptr %.fr.i, null
-  %i.c = ptrtoint ptr %.fr.i to i64
+  %i.b = tail call ptr @memchr(ptr noundef %2, i32 noundef 0, i64 noundef %1) #37, !noalias !117 ; 2 uses
+  %.not.i.i.i = icmp eq ptr %i.b, null
+  %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %2 to i64
   %i.e = sub i64 %i.c, %i.d
   %.not.i = icmp eq i64 %i.e, -1
@@ -607,8 +606,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %.preheader.i
   %i.n = load i32, ptr %i.f, align 4, !tbaa !3
-  %.fr.i = freeze i32 %i.n
-  %i.o = icmp eq i32 %.fr.i, 4
+  %i.o = icmp eq i32 %i.n, 4
   br i1 %i.o, label %select.unfold.i, label %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit, !llvm.loop !1036
 
 bb.d:                                             ; preds = %.preheader.i
@@ -646,8 +644,7 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %.preheader.i3
   %i.y = tail call ptr @__errno_location() #41
   %i.z = load i32, ptr %i.y, align 4, !tbaa !3
-  %.fr.i12 = freeze i32 %i.z
-  %i.aa = icmp eq i32 %.fr.i12, 4
+  %i.aa = icmp eq i32 %i.z, 4
   br i1 %i.aa, label %select.unfold.i6, label %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit13, !llvm.loop !1036
 
 bb.g:                                             ; preds = %.preheader.i3
@@ -697,9 +694,8 @@ _ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread: ; preds = %
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.preheader.i
-  %i.j = load i32, ptr %i.c, align 4, !tbaa !3
-  %.fr.i = freeze i32 %i.j                        ; 2 uses
-  %i.k = icmp eq i32 %.fr.i, 4
+  %i.j = load i32, ptr %i.c, align 4, !tbaa !3    ; 2 uses
+  %i.k = icmp eq i32 %i.j, 4
   br i1 %i.k, label %select.unfold.i, label %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread2, !llvm.loop !1036
 
 _ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread2: ; preds = %bb.b
@@ -727,7 +723,7 @@ thread-pre-split:                                 ; preds = %_ZN5arrow8internal1
   br label %bb.d
 
 bb.d:                                             ; preds = %thread-pre-split, %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread2
-  %i.p = phi i32 [ %.pr, %thread-pre-split ], [ %.fr.i, %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread2 ] ; 2 uses
+  %i.p = phi i32 [ %.pr, %thread-pre-split ], [ %i.j, %_ZN5arrow8internal12_GLOBAL__N_112SelfPipeImpl6DoSendEm.exit.thread2 ] ; 2 uses
   %.not = icmp eq i32 %i.p, 0
   br i1 %.not, label %bb.f, label %bb.e
 

@@ -201,15 +201,14 @@ je_hpdata_age_heap_any.exit.thread8:              ; preds = %bb.a
   %i.d = add i64 %i.c, 40
   %i.e = inttoptr i64 %i.d to ptr
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16
-  %.fr = freeze ptr %i.g                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %.fr ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16   ; 2 uses
+  %.not.i.i = icmp eq ptr %i.g, null
+  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %i.g ; 2 uses
   tail call void @je_hpdata_age_heap_remove(ptr noundef nonnull %0, ptr noundef nonnull %spec.select)
   br label %je_hpdata_age_heap_any.exit.thread
 
 je_hpdata_age_heap_any.exit.thread:               ; preds = %bb.a, %je_hpdata_age_heap_any.exit.thread8
-  %.1.i.i7 = phi ptr [ null, %bb.a ], [ %spec.select, %je_hpdata_age_heap_any.exit.thread8 ]
+  %.1.i.i7 = phi ptr [ %spec.select, %je_hpdata_age_heap_any.exit.thread8 ], [ null, %bb.a ]
   ret ptr %.1.i.i7
 }
 
@@ -283,26 +282,24 @@ bb.b:                                             ; preds = %bb.d, %bb.a
 
 ._crit_edge.i:                                    ; preds = %._crit_edge.loopexit.i, %bb.b
   %.141.i6.lcssa.i = phi i64 [ %.040.i5.i, %bb.b ], [ %i.q, %._crit_edge.loopexit.i ]
-  %.039.i7.lcssa.i = phi i64 [ %i.c, %bb.b ], [ %i.m, %._crit_edge.loopexit.i ]
-  %i.r = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i6.lcssa.i, i1 true)
-  %i.s = shl i64 %.039.i7.lcssa.i, 6
-  %i.t = or disjoint i64 %i.s, %i.r
-  %.fr.i = freeze i64 %i.t                        ; 5 uses
-  %or.cond.i = icmp ugt i64 %.fr.i, 511
+  %.039.i7.lcssa.i = phi i64 [ %i.c, %bb.b ], [ %i.m, %._crit_edge.loopexit.i ] ; 2 uses
+  %i.r = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i6.lcssa.i, i1 true) ; 2 uses
+  %i.s = shl i64 %.039.i7.lcssa.i, 6              ; 2 uses
+  %i.t = or disjoint i64 %i.s, %i.r               ; 2 uses
+  %or.cond.i = icmp ugt i64 %i.s, 511
   br i1 %or.cond.i, label %fb_urange_iter.exit, label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge.i
-  %2 = lshr i64 %.fr.i, 6                         ; 3 uses
-  %i.u = and i64 %.fr.i, 63
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %2
+  %i.u = and i64 %.039.i7.lcssa.i, 288230376151711743 ; 3 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.u
   %i.w = load i64, ptr %i.v, align 8, !tbaa !35
-  %notmask.i.i = shl nsw i64 -1, %i.u
+  %notmask.i.i = shl nsw i64 -1, %i.r
   %.040.i.i = and i64 %i.w, %notmask.i.i          ; 2 uses
   %i.x = icmp eq i64 %.040.i.i, 0
   br i1 %i.x, label %.lr.ph19.i.preheader, label %._crit_edge20.i
 
 .lr.ph19.i.preheader:                             ; preds = %bb.c
-  %i.y = add nuw nsw i64 %2, 1                    ; 2 uses
+  %i.y = add nuw nsw i64 %i.u, 1                  ; 2 uses
   %i.z = icmp eq i64 %i.y, 8
   br i1 %i.z, label %fb_find_impl.exit.i, label %.lr.ph211
 
@@ -320,26 +317,26 @@ bb.c:                                             ; preds = %._crit_edge.i
 
 ._crit_edge20.i:                                  ; preds = %.lr.ph211, %bb.c
   %.141.i.lcssa.i = phi i64 [ %.040.i.i, %bb.c ], [ %i.ae, %.lr.ph211 ]
-  %.039.i.lcssa.i = phi i64 [ %2, %bb.c ], [ %i.ac, %.lr.ph211 ]
+  %.039.i.lcssa.i = phi i64 [ %i.u, %bb.c ], [ %i.ac, %.lr.ph211 ]
   %i.ag = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i.lcssa.i, i1 true)
-  %i.ah = shl nuw nsw i64 %.039.i.lcssa.i, 6
+  %i.ah = shl i64 %.039.i.lcssa.i, 6
   %i.ai = or disjoint i64 %i.ah, %i.ag
   br label %fb_find_impl.exit.i
 
 fb_find_impl.exit.i:                              ; preds = %.lr.ph19.i, %.lr.ph19.i.preheader, %._crit_edge20.i
   %.1.i.i = phi i64 [ %i.ai, %._crit_edge20.i ], [ 512, %.lr.ph19.i.preheader ], [ 512, %.lr.ph19.i ]
-  %i.aj = sub nsw i64 %.1.i.i, %.fr.i
+  %i.aj = sub nsw i64 %.1.i.i, %i.t
   br label %fb_urange_iter.exit
 
 fb_urange_iter.exit:                              ; preds = %.lr.ph.i, %.lr.ph.i.preheader, %._crit_edge.i, %fb_find_impl.exit.i
-  %.296 = phi i64 [ %.fr.i, %fb_find_impl.exit.i ], [ %.094, %._crit_edge.i ], [ %.094, %.lr.ph.i.preheader ], [ %.094, %.lr.ph.i ] ; 6 uses
+  %.296 = phi i64 [ %i.t, %fb_find_impl.exit.i ], [ %.094, %._crit_edge.i ], [ %.094, %.lr.ph.i.preheader ], [ %.094, %.lr.ph.i ] ; 6 uses
   %.292 = phi i64 [ %i.aj, %fb_find_impl.exit.i ], [ %.090, %._crit_edge.i ], [ %.090, %.lr.ph.i.preheader ], [ %.090, %.lr.ph.i ] ; 9 uses
   %.not = icmp ult i64 %.292, %i.a
   br i1 %.not, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %fb_urange_iter.exit
   %spec.select = tail call i64 @llvm.umax.i64(i64 %.292, i64 %.032)
-  %i.ak = add nuw nsw i64 %.292, %.296
+  %i.ak = add i64 %.292, %.296
   br label %bb.b
 
 bb.e:                                             ; preds = %fb_urange_iter.exit
@@ -538,13 +535,13 @@ fb_set_range.exit55:                              ; preds = %._crit_edge.i47, %f
   br i1 %i.eb, label %bb.f, label %bb.i
 
 bb.f:                                             ; preds = %fb_set_range.exit55
-  %i.ec = add nuw nsw i64 %.296, %i.a             ; 2 uses
+  %i.ec = add i64 %.296, %i.a                     ; 2 uses
   %i.ed = icmp ult i64 %i.ec, 512
   br i1 %i.ed, label %.lr.ph136, label %.thread108
 
 .lr.ph136:                                        ; preds = %bb.f, %bb.h
   %.2134 = phi i64 [ %i.fg, %bb.h ], [ %i.ec, %bb.f ] ; 2 uses
-  %.335133 = phi i64 [ %spec.select40, %bb.h ], [ %.032, %bb.f ] ; 5 uses
+  %.335133 = phi i64 [ %spec.select40, %bb.h ], [ %.032, %bb.f ] ; 4 uses
   %i.ee = lshr i64 %.2134, 6                      ; 3 uses
   %i.ef = and i64 %.2134, 63
   %i.eg = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.ee
@@ -553,7 +550,7 @@ bb.f:                                             ; preds = %fb_set_range.exit55
   %notmask.i4.i56 = shl nsw i64 -1, %i.ef
   %.040.i5.i57 = and i64 %notmask.i4.i56, %i.ei   ; 2 uses
   %i.ej = icmp eq i64 %.040.i5.i57, 0
-  br i1 %i.ej, label %.lr.ph.i72.preheader, label %._crit_edge.i58
+  br i1 %i.ej, label %.lr.ph.i72.preheader, label %bb.g
 
 .lr.ph.i72.preheader:                             ; preds = %.lr.ph136
   %i.ek = add nuw nsw i64 %i.ee, 1                ; 2 uses
@@ -574,30 +571,23 @@ bb.f:                                             ; preds = %fb_set_range.exit55
 
 ._crit_edge.loopexit.i74:                         ; preds = %.lr.ph212
   %i.es = xor i64 %i.eq, -1
-  br label %._crit_edge.i58
+  br label %bb.g
 
-._crit_edge.i58:                                  ; preds = %._crit_edge.loopexit.i74, %.lr.ph136
+bb.g:                                             ; preds = %.lr.ph136, %._crit_edge.loopexit.i74
   %.141.i6.lcssa.i59 = phi i64 [ %.040.i5.i57, %.lr.ph136 ], [ %i.es, %._crit_edge.loopexit.i74 ]
-  %.039.i7.lcssa.i60 = phi i64 [ %i.ee, %.lr.ph136 ], [ %i.eo, %._crit_edge.loopexit.i74 ]
-  %3 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i6.lcssa.i59, i1 true)
-  %4 = shl nuw nsw i64 %.039.i7.lcssa.i60, 6
-  %5 = or disjoint i64 %4, %3
-  %.fr.i61 = freeze i64 %5                        ; 5 uses
-  %or.cond.i62 = icmp ugt i64 %.fr.i61, 511
-  br i1 %or.cond.i62, label %.thread108, label %bb.g
-
-bb.g:                                             ; preds = %._crit_edge.i58
-  %6 = lshr i64 %.fr.i61, 6                       ; 3 uses
-  %7 = and i64 %.fr.i61, 63
-  %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %6
+  %.039.i7.lcssa.i60 = phi i64 [ %i.ee, %.lr.ph136 ], [ %i.eo, %._crit_edge.loopexit.i74 ] ; 4 uses
+  %2 = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i6.lcssa.i59, i1 true) ; 2 uses
+  %3 = shl nuw nsw i64 %.039.i7.lcssa.i60, 6
+  %4 = or disjoint i64 %3, %2                     ; 2 uses
+  %i.et = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.039.i7.lcssa.i60
   %i.eu = load i64, ptr %i.et, align 8, !tbaa !35
-  %notmask.i.i63 = shl nsw i64 -1, %7
+  %notmask.i.i63 = shl nsw i64 -1, %2
   %.040.i.i64 = and i64 %i.eu, %notmask.i.i63     ; 2 uses
   %i.ev = icmp eq i64 %.040.i.i64, 0
   br i1 %i.ev, label %.lr.ph19.i70.preheader, label %.loopexit
 
 .lr.ph19.i70.preheader:                           ; preds = %bb.g
-  %i.ew = add nuw nsw i64 %6, 1                   ; 2 uses
+  %i.ew = add nuw nsw i64 %.039.i7.lcssa.i60, 1   ; 2 uses
   %i.ex = icmp eq i64 %i.ew, 8
   br i1 %i.ex, label %.loopexit.thread, label %.lr.ph214
 
@@ -615,16 +605,16 @@ bb.g:                                             ; preds = %._crit_edge.i58
 
 .loopexit:                                        ; preds = %.lr.ph214, %bb.g
   %.141.i.lcssa.i66 = phi i64 [ %.040.i.i64, %bb.g ], [ %i.fc, %.lr.ph214 ]
-  %.039.i.lcssa.i67 = phi i64 [ %6, %bb.g ], [ %i.fa, %.lr.ph214 ] ; 2 uses
+  %.039.i.lcssa.i67 = phi i64 [ %.039.i7.lcssa.i60, %bb.g ], [ %i.fa, %.lr.ph214 ] ; 2 uses
   %i.fe = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %.141.i.lcssa.i66, i1 true)
   %i.ff = shl nuw nsw i64 %.039.i.lcssa.i67, 6
   %i.fg = or disjoint i64 %i.ff, %i.fe            ; 2 uses
-  %i.fh = sub nsw i64 %i.fg, %.fr.i61             ; 2 uses
+  %i.fh = sub nsw i64 %i.fg, %4                   ; 2 uses
   %i.fi = icmp eq i64 %i.fh, %.292
   br i1 %i.fi, label %.thread108, label %bb.h
 
 .loopexit.thread:                                 ; preds = %.lr.ph19.i70.preheader, %.lr.ph19.i70
-  %i.fj = sub nuw nsw i64 512, %.fr.i61           ; 2 uses
+  %i.fj = sub nsw i64 512, %4                     ; 2 uses
   %i.fk = icmp eq i64 %i.fj, %.292
   br i1 %i.fk, label %.thread108, label %.thread
 
@@ -637,15 +627,15 @@ bb.h:                                             ; preds = %.loopexit
   %i.fl = icmp ult i64 %.039.i.lcssa.i67, 8
   br i1 %i.fl, label %.lr.ph136, label %.thread108
 
-.thread108:                                       ; preds = %bb.h, %.loopexit, %._crit_edge.i58, %.lr.ph.i72.preheader, %.lr.ph.i72, %.loopexit.thread, %.thread, %bb.f
-  %.6 = phi i64 [ %spec.select40179, %.thread ], [ %.032, %bb.f ], [ %.335133, %.lr.ph.i72 ], [ %.292, %.loopexit.thread ], [ %.335133, %._crit_edge.i58 ], [ %.292, %.loopexit ], [ %spec.select40, %bb.h ], [ %.335133, %.lr.ph.i72.preheader ]
+.thread108:                                       ; preds = %bb.h, %.loopexit, %.lr.ph.i72.preheader, %.lr.ph.i72, %.loopexit.thread, %.thread, %bb.f
+  %.6 = phi i64 [ %spec.select40179, %.thread ], [ %.032, %bb.f ], [ %.292, %.loopexit.thread ], [ %.335133, %.lr.ph.i72 ], [ %.292, %.loopexit ], [ %spec.select40, %bb.h ], [ %.335133, %.lr.ph.i72.preheader ]
   store i64 %.6, ptr %i.ea, align 8, !tbaa !34
   br label %bb.i
 
 bb.i:                                             ; preds = %.thread108, %fb_set_range.exit55
   %.val43 = load ptr, ptr %0, align 8, !tbaa !31
   %i.fm = ptrtoint ptr %.val43 to i64
-  %i.fn = shl nuw nsw i64 %.296, 12
+  %i.fn = shl i64 %.296, 12
   %i.fo = add i64 %i.fn, %i.fm
   %i.fp = inttoptr i64 %i.fo to ptr
   ret ptr %i.fp

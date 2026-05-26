@@ -201,22 +201,21 @@ bb.y:                                             ; preds = %.thread140, %bb.x
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.v, %bb.o, %bb.y
-  %.5 = phi i64 [ %i.bq, %bb.y ], [ %.3132, %bb.v ], [ %.2110157, %bb.o ]
-  %.5.fr = freeze i64 %.5                         ; 3 uses
+  %.5 = phi i64 [ %i.bq, %bb.y ], [ %.3132, %bb.v ], [ %.2110157, %bb.o ] ; 3 uses
   br i1 %.not118, label %bb.aa, label %.thread149
 
 .thread149:                                       ; preds = %bb.z
   %i.br = load ptr, ptr %i.ae, align 8, !tbaa !72
-  %i.bs = getelementptr [4 x i8], ptr %i.br, i64 %.5.fr
+  %i.bs = getelementptr [4 x i8], ptr %i.br, i64 %.5
   store i32 %.0.i, ptr %i.bs, align 4, !tbaa !6
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bt = icmp eq i64 %.5.fr, 9223372036854775807
+  %i.bt = icmp eq i64 %.5, 9223372036854775807
   br i1 %i.bt, label %.thread143, label %bb.ab
 
 bb.ab:                                            ; preds = %.thread149, %bb.aa
-  %.6 = add i64 %.5.fr, 1                         ; 2 uses
+  %.6 = add i64 %.5, 1                            ; 2 uses
   %i.bu = add nuw nsw i64 %.0111156, 1            ; 2 uses
   %i.bv = icmp slt i64 %i.bu, %3
   br i1 %i.bv, label %bb.i, label %._crit_edge, !llvm.loop !94

@@ -201,11 +201,10 @@ bb.m:                                             ; preds = %bb.k
   br label %common.resume
 
 _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit7: ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit6
-  %i.as = load i8, ptr %i.al, align 1
-  %.fr = freeze i8 %i.as                          ; 2 uses
+  %i.as = load i8, ptr %i.al, align 1             ; 2 uses
   store ptr %i.am, ptr %i.ak, align 8
   %.sroa.059.2..sroa_idx81 = getelementptr inbounds nuw i8, ptr %.sroa.059, i64 2
-  store i8 %.fr, ptr %.sroa.059.2..sroa_idx81, align 2
+  store i8 %i.as, ptr %.sroa.059.2..sroa_idx81, align 2
   %i.at = load ptr, ptr %i.a, align 8, !nonnull !3, !align !4 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 24 ; 2 uses
   %i.av = load ptr, ptr %i.au, align 8            ; 2 uses
@@ -240,7 +239,7 @@ _ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8: ; preds = %_ZN6Assimp12StreamR
   br i1 %.not, label %bb.q, label %.thread
 
 bb.q:                                             ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8
-  %.not3 = icmp eq i8 %.fr, 0
+  %.not3 = icmp eq i8 %i.as, 0
   br i1 %.not3, label %bb.r, label %.thread
 
 .thread:                                          ; preds = %bb.q, %_ZN6Assimp12StreamReaderILb1ELb1EE5GetI1Ev.exit8

@@ -201,8 +201,7 @@ r_less.exit12.i:                                  ; preds = %bb.f
   %.neg.i = sext i1 %i.y to i32
   %i.z = tail call i32 @rb_cmpint(i64 noundef %i.v, i64 noundef %1, i64 noundef %i.i) #11
   %.not.i = icmp sgt i32 %i.z, %.neg.i
-  %cond.fr.i = freeze i1 %.not.i
-  br i1 %cond.fr.i, label %r_cover_p.exit, label %.thread.i
+  br i1 %.not.i, label %r_cover_p.exit, label %.thread.i
 
 .thread.i:                                        ; preds = %r_less.exit12.i, %RANGE_EXCL.exit.i
   br label %r_cover_p.exit
@@ -605,8 +604,7 @@ r_less.exit12.i.i:                                ; preds = %bb.l
   %.neg.i.i = sext i1 %i.bg to i32
   %i.bh = tail call i32 @rb_cmpint(i64 noundef %i.bd, i64 noundef %1, i64 noundef %i.j) #11
   %.not.i29.i = icmp sgt i32 %i.bh, %.neg.i.i
-  %cond.fr.i.i = freeze i1 %.not.i29.i
-  br i1 %cond.fr.i.i, label %range_include_internal.exit.thread, label %.thread.i.i
+  br i1 %.not.i29.i, label %range_include_internal.exit.thread, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %r_less.exit12.i.i, %RANGE_EXCL.exit.i.i
   br label %range_include_internal.exit.thread
@@ -786,8 +784,7 @@ r_less.exit12.i.i:                                ; preds = %bb.o
   %.neg.i.i = sext i1 %i.az to i32
   %i.ba = tail call i32 @rb_cmpint(i64 noundef %i.aw, i64 noundef %i.n, i64 noundef %i.i) #11
   %.not.i.i = icmp sgt i32 %i.ba, %.neg.i.i
-  %cond.fr.i.i = freeze i1 %.not.i.i
-  br i1 %cond.fr.i.i, label %r_cover_p.exit, label %.critedge.i
+  br i1 %.not.i.i, label %r_cover_p.exit, label %.critedge.i
 
 .critedge.i:                                      ; preds = %r_less.exit12.i.i, %bb.g
   %i.bb = icmp eq i64 %i.t, 4
@@ -933,8 +930,7 @@ r_less.exit12.i:                                  ; preds = %bb.ac
   %.neg.i = sext i1 %i.db to i32
   %i.dc = tail call i32 @rb_cmpint(i64 noundef %i.cy, i64 noundef %1, i64 noundef %i.i) #11
   %.not.i18 = icmp sgt i32 %i.dc, %.neg.i
-  %cond.fr.i = freeze i1 %.not.i18
-  br i1 %cond.fr.i, label %r_cover_p.exit, label %r_cover_range_p.exit.thread35
+  br i1 %.not.i18, label %r_cover_p.exit, label %r_cover_range_p.exit.thread35
 
 r_cover_p.exit:                                   ; preds = %bb.o, %bb.l, %r_less.exit.i.i, %r_less.exit12.i.i, %RANGE_END.exit.i, %bb.f, %RANGE_EXCL.exit.i, %bb.p, %bb.w, %r_cover_range_p.exit.thread35, %r_cover_range_p.exit, %bb.s, %bb.x, %r_less.exit12.i, %bb.ac, %r_less.exit.i13, %bb.z
   %.0 = phi i64 [ 0, %bb.ac ], [ 0, %bb.o ], [ 0, %r_less.exit12.i ], [ 0, %r_less.exit.i13 ], [ 0, %bb.z ], [ 20, %r_cover_range_p.exit.thread35 ], [ 0, %r_cover_range_p.exit ], [ 0, %bb.x ], [ 0, %bb.s ], [ 0, %bb.w ], [ 0, %bb.p ], [ 0, %RANGE_EXCL.exit.i ], [ 0, %bb.f ], [ 0, %RANGE_END.exit.i ], [ 0, %r_less.exit12.i.i ], [ 0, %r_less.exit.i.i ], [ 0, %bb.l ]

@@ -201,8 +201,7 @@ bb.q:                                             ; preds = %bb.p
   br label %Py_DECREF.exit54.i
 
 bb.r:                                             ; preds = %bb.n
-  %i.aa = tail call ptr @_PyLong_GCD(ptr noundef %.0386.i, ptr noundef nonnull %i.r) #6
-  %.fr.i = freeze ptr %i.aa                       ; 2 uses
+  %i.aa = tail call ptr @_PyLong_GCD(ptr noundef %.0386.i, ptr noundef nonnull %i.r) #6 ; 2 uses
   %i.ab = load i32, ptr %.0386.i, align 8, !tbaa !13 ; 2 uses
   %.not.i49.i = icmp sgt i32 %i.ab, -1
   br i1 %.not.i49.i, label %bb.s, label %Py_DECREF.exit50.i
@@ -233,11 +232,11 @@ bb.v:                                             ; preds = %bb.u
   br label %Py_DECREF.exit.i
 
 Py_DECREF.exit.i:                                 ; preds = %bb.v, %bb.u, %Py_DECREF.exit50.i
-  %i.ah = icmp eq ptr %.fr.i, null
+  %i.ah = icmp eq ptr %i.aa, null
   br i1 %i.ah, label %math_integer_gcd_impl.exit, label %Py_DECREF.exit54.i
 
 Py_DECREF.exit54.i:                               ; preds = %Py_DECREF.exit.i, %bb.q, %bb.p, %bb.o
-  %.139.i = phi ptr [ %.fr.i, %Py_DECREF.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.o ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.p ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.q ] ; 2 uses
+  %.139.i = phi ptr [ %i.aa, %Py_DECREF.exit.i ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.o ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.p ], [ getelementptr inbounds nuw (i8, ptr @_PyRuntime, i64 14328), %bb.q ] ; 2 uses
   %i.ai = add nuw nsw i64 %.0287.i, 1             ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.ai, %2
   br i1 %exitcond.not.i, label %math_integer_gcd_impl.exit, label %.lr.ph.i, !llvm.loop !25

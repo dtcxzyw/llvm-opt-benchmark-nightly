@@ -201,14 +201,11 @@ bb.r:                                             ; preds = %bb.q
   %i.cz = call i64 @FT_DivFix(i64 noundef 131072000, i64 noundef %i.cy) #19
   %i.da = trunc i64 %i.cz to i32                  ; 2 uses
   %i.db = icmp sgt i32 %i.bi, %i.da
-  br i1 %i.db, label %cf2_setGlyphWidth.exit, label %6
+  %6 = icmp samesign ugt i32 %i.bj, %i.da
+  %or.cond95 = select i1 %i.db, i1 true, i1 %6
+  br i1 %or.cond95, label %cf2_setGlyphWidth.exit, label %.cf2_checkTransform.exit_crit_edge
 
-6:                                                ; preds = %bb.r
-  %7 = icmp samesign ugt i32 %i.bj, %i.da
-  %cond.fr = freeze i1 %7
-  br i1 %cond.fr, label %cf2_setGlyphWidth.exit, label %.cf2_checkTransform.exit_crit_edge
-
-.cf2_checkTransform.exit_crit_edge:               ; preds = %6
+.cf2_checkTransform.exit_crit_edge:               ; preds = %bb.r
   %.pre = load ptr, ptr %i.ac, align 8, !tbaa !238
   br label %cf2_checkTransform.exit
 
@@ -611,8 +608,8 @@ bb.cl:                                            ; preds = %bb.ck
   store i64 %i.uc, ptr %i.ue, align 8, !tbaa !42
   br label %cf2_setGlyphWidth.exit
 
-cf2_setGlyphWidth.exit:                           ; preds = %6, %bb.q, %bb.p, %bb.r, %bb.cl, %bb.ck, %cf2_getGlyphOutline.exit.thread, %cf2_getGlyphOutline.exit
-  %.0 = phi i32 [ 3, %cf2_getGlyphOutline.exit.thread ], [ 0, %bb.cl ], [ 3, %cf2_getGlyphOutline.exit ], [ 0, %bb.ck ], [ 164, %bb.r ], [ 164, %6 ], [ 164, %bb.q ], [ 36, %bb.p ]
+cf2_setGlyphWidth.exit:                           ; preds = %bb.q, %bb.p, %bb.r, %bb.cl, %bb.ck, %cf2_getGlyphOutline.exit.thread, %cf2_getGlyphOutline.exit
+  %.0 = phi i32 [ 3, %cf2_getGlyphOutline.exit.thread ], [ 0, %bb.cl ], [ 3, %cf2_getGlyphOutline.exit ], [ 0, %bb.ck ], [ 164, %bb.r ], [ 36, %bb.p ], [ 164, %bb.q ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #19
   br label %bb.cm

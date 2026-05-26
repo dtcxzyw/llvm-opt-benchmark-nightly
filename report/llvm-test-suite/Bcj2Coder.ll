@@ -201,10 +201,9 @@ bb.v:                                             ; preds = %bb.t
   br label %bb.bo
 
 bb.w:                                             ; preds = %bb.u
-  %i.du = load i32, ptr %i.b, align 4, !tbaa !4
-  %.fr = freeze i32 %i.du                         ; 2 uses
-  %i.dv = icmp eq i32 %.fr, 0
-  %i.dw = add i32 %.fr, %.0225374                 ; 4 uses
+  %i.du = load i32, ptr %i.b, align 4, !tbaa !4   ; 2 uses
+  %i.dv = icmp eq i32 %i.du, 0
+  %i.dw = add i32 %i.du, %.0225374                ; 4 uses
   br i1 %i.dv, label %select.unfold, label %bb.x
 
 bb.x:                                             ; preds = %bb.w

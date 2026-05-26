@@ -125,8 +125,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ac = ashr exact i64 %sext.i.i, 32
   %i.ad = load i64, ptr %i.e, align 8, !tbaa !21
   %i.ae = icmp eq i64 %i.ac, %i.ad
-  %cond.fr.i = freeze i1 %i.ae
-  br i1 %cond.fr.i, label %_upb_Decoder_DecodeField.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !20
+  br i1 %i.ae, label %_upb_Decoder_DecodeField.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !20
 
 upb_EpsCopyInputStream_IsDone.exit:               ; preds = %bb.c
   %i.af = call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %.0, i32 noundef %i.z) #12 ; 2 uses
@@ -375,8 +374,7 @@ bb.x:                                             ; preds = %_upb_Decoder_FindFi
   %i.ed = load i8, ptr %i.ec, align 2, !tbaa !33
   %i.ee = zext nneg i8 %i.ed to i32
   %i.ef = shl nuw i32 1, %i.ee
-  %.fr301 = freeze i32 %i.ef
-  %i.eg = and i32 %.fr301, 32900
+  %i.eg = and i32 %i.ef, 32900
   %i.eh = icmp eq i32 %i.eg, 0
   %.0.copyload.i = load i32, ptr %.0.i16, align 1 ; 2 uses
   store i32 %.0.copyload.i, ptr %.sroa.0, align 8
@@ -389,8 +387,7 @@ bb.y:                                             ; preds = %_upb_Decoder_FindFi
   %i.el = load i8, ptr %i.ek, align 2, !tbaa !33
   %i.em = zext nneg i8 %i.el to i32
   %i.en = shl nuw i32 1, %i.em
-  %.fr299 = freeze i32 %i.en
-  %i.eo = and i32 %.fr299, 65602
+  %i.eo = and i32 %i.en, 65602
   %i.ep = icmp eq i32 %i.eo, 0
   %.0.copyload.i35 = load i64, ptr %.0.i16, align 1 ; 2 uses
   store i64 %.0.copyload.i35, ptr %.sroa.0, align 8
@@ -450,8 +447,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.fs = shl nuw nsw i64 %i.fr, 2
   %i.ft = getelementptr inbounds nuw i8, ptr %.0.i27, i64 %i.fs
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !22
-  %.fr = freeze ptr %i.fu
-  %.not4.i.i = icmp eq ptr %.fr, null
+  %.not4.i.i = icmp eq ptr %i.fu, null
   br i1 %.not4.i.i, label %_upb_Decoder_DecodeWireValue.exit.thread.thread, label %_upb_Decoder_DecodeWireValue.exit
 
 bb.ad:                                            ; preds = %upb_WireReader_ReadSize.exit
@@ -469,8 +465,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.fx = load i16, ptr %i.k, align 8, !tbaa !37
-  %.fr297 = freeze i16 %i.fx
-  %i.fy = and i16 %.fr297, 8
+  %i.fy = and i16 %i.fx, 8
   %.not6.i.i = icmp eq i16 %i.fy, 0
   br i1 %.not6.i.i, label %_upb_Decoder_DecodeWireValue.exit, label %_upb_Decoder_DecodeWireValue.exit.thread253
 
@@ -873,11 +868,10 @@ bb.cb:                                            ; preds = %_upb_Decoder_Reserv
 
 bb.cc:                                            ; preds = %bb.cb
   %sext.i.i78 = shl i64 %i.pq, 32
-  %i.pu = ashr exact i64 %sext.i.i78, 32
-  %i.pv = load i64, ptr %i.e, align 8, !tbaa !21  ; 2 uses
+  %i.pu = ashr exact i64 %sext.i.i78, 32          ; 2 uses
+  %i.pv = load i64, ptr %i.e, align 8, !tbaa !21
   %i.pw = icmp eq i64 %i.pu, %i.pv
-  %cond.fr.i79 = freeze i1 %i.pw
-  br i1 %cond.fr.i79, label %_upb_Decoder_DecodeVarintPacked.exit.i, label %upb_EpsCopyInputStream_IsDone.exit83, !prof !20
+  br i1 %i.pw, label %_upb_Decoder_DecodeVarintPacked.exit.i, label %upb_EpsCopyInputStream_IsDone.exit83, !prof !20
 
 upb_EpsCopyInputStream_IsDone.exit83:             ; preds = %bb.cc
   %i.px = call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %.0218.a, i32 noundef %i.pr) #12 ; 2 uses
@@ -979,7 +973,7 @@ _upb_Decoder_Reserve.exit:                        ; preds = %_upb_Decoder_Munge.
 
 _upb_Decoder_DecodeVarintPacked.exit.i:           ; preds = %bb.cc, %upb_EpsCopyInputStream_IsDone.exit83._upb_Decoder_DecodeVarintPacked.exit.i_crit_edge
   %i.re = phi ptr [ %.pre325, %upb_EpsCopyInputStream_IsDone.exit83._upb_Decoder_DecodeVarintPacked.exit.i_crit_edge ], [ %i.pn, %bb.cc ]
-  %i.rf = phi i64 [ %.pre324, %upb_EpsCopyInputStream_IsDone.exit83._upb_Decoder_DecodeVarintPacked.exit.i_crit_edge ], [ %i.pv, %bb.cc ]
+  %i.rf = phi i64 [ %.pre324, %upb_EpsCopyInputStream_IsDone.exit83._upb_Decoder_DecodeVarintPacked.exit.i_crit_edge ], [ %i.pu, %bb.cc ]
   %.1219260 = phi ptr [ null, %upb_EpsCopyInputStream_IsDone.exit83._upb_Decoder_DecodeVarintPacked.exit.i_crit_edge ], [ %.0218.a, %bb.cc ]
   %i.rg = add nsw i64 %i.rf, %i.oy                ; 2 uses
   store i64 %i.rg, ptr %i.e, align 8, !tbaa !21
@@ -1382,8 +1376,7 @@ upb_EpsCopyInputStream_EndCapture.exit.i:         ; preds = %bb.fa, %bb.ez
 bb.fb:                                            ; preds = %upb_EpsCopyInputStream_EndCapture.exit.i
   %i.abz = load ptr, ptr %i.m, align 8, !tbaa !74
   %.not31.i = icmp eq ptr %.sroa.0.0.i, %i.abz
-  %cond.fr.i61 = freeze i1 %.not31.i
-  br i1 %cond.fr.i61, label %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i, label %bb.fc
+  br i1 %.not31.i, label %_upb_Message_AddUnknown_dont_copy_me__upb_internal_use_only.exit.i, label %bb.fc
 
 bb.fc:                                            ; preds = %bb.fb
   %.val.i35.i = load i64, ptr %2, align 8, !tbaa !22
@@ -1455,8 +1448,7 @@ bb.fh:                                            ; preds = %_upb_Decoder_Decode
   %i.adb = ashr exact i64 %sext.i.i160, 32
   %i.adc = load i64, ptr %i.e, align 8, !tbaa !21
   %i.add = icmp eq i64 %i.adb, %i.adc
-  %cond.fr.i161 = freeze i1 %i.add
-  br i1 %cond.fr.i161, label %upb_EpsCopyInputStream_IsDone.exit165.thread, label %upb_EpsCopyInputStream_IsDone.exit165, !prof !20
+  br i1 %i.add, label %upb_EpsCopyInputStream_IsDone.exit165.thread, label %upb_EpsCopyInputStream_IsDone.exit165, !prof !20
 
 upb_EpsCopyInputStream_IsDone.exit165:            ; preds = %bb.fh
   %i.ade = call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %.0212, i32 noundef %i.acy) #12 ; 2 uses
@@ -1859,8 +1851,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.l = load i64, ptr %i.k, align 8, !tbaa !21
   %i.m = icmp eq i64 %i.j, %i.l
-  %cond.fr = freeze i1 %i.m
-  br i1 %cond.fr, label %bb.c, label %upb_EpsCopyInputStream_IsDoneStatus_dont_copy_me__upb_internal_use_only.exit, !prof !20
+  br i1 %i.m, label %bb.c, label %upb_EpsCopyInputStream_IsDoneStatus_dont_copy_me__upb_internal_use_only.exit, !prof !20
 
 upb_EpsCopyInputStream_IsDoneStatus_dont_copy_me__upb_internal_use_only.exit: ; preds = %bb.b
   %i.n = tail call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %i.a, i32 noundef %i.f) #12 ; 2 uses
@@ -2062,11 +2053,10 @@ bb.c:                                             ; preds = %.outer, %_upb_Decod
 
 bb.d:                                             ; preds = %bb.c
   %sext.i.i = shl i64 %i.al, 32
-  %i.ap = ashr exact i64 %sext.i.i, 32
-  %i.aq = load i64, ptr %i.n, align 8, !tbaa !21  ; 2 uses
+  %i.ap = ashr exact i64 %sext.i.i, 32            ; 2 uses
+  %i.aq = load i64, ptr %i.n, align 8, !tbaa !21
   %i.ar = icmp eq i64 %i.ap, %i.aq
-  %cond.fr.i = freeze i1 %i.ar
-  br i1 %cond.fr.i, label %upb_EpsCopyInputStream_IsDone.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !20
+  br i1 %i.ar, label %upb_EpsCopyInputStream_IsDone.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !20
 
 upb_EpsCopyInputStream_IsDone.exit:               ; preds = %bb.d
   %i.as = call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %.017, i32 noundef %i.am) #12 ; 2 uses
@@ -2246,7 +2236,7 @@ _upb_Decoder_Reserve.exit:                        ; preds = %upb_MiniTableEnum_C
 
 upb_EpsCopyInputStream_IsDone.exit.thread:        ; preds = %bb.d, %upb_EpsCopyInputStream_IsDone.exit.upb_EpsCopyInputStream_IsDone.exit.thread_crit_edge
   %i.de = phi ptr [ %.pre32, %upb_EpsCopyInputStream_IsDone.exit.upb_EpsCopyInputStream_IsDone.exit.thread_crit_edge ], [ %i.ai, %bb.d ]
-  %i.df = phi i64 [ %.pre, %upb_EpsCopyInputStream_IsDone.exit.upb_EpsCopyInputStream_IsDone.exit.thread_crit_edge ], [ %i.aq, %bb.d ]
+  %i.df = phi i64 [ %.pre, %upb_EpsCopyInputStream_IsDone.exit.upb_EpsCopyInputStream_IsDone.exit.thread_crit_edge ], [ %i.ap, %bb.d ]
   %.11821 = phi ptr [ null, %upb_EpsCopyInputStream_IsDone.exit.upb_EpsCopyInputStream_IsDone.exit.thread_crit_edge ], [ %.017, %bb.d ]
   %i.dg = add nsw i64 %i.df, %i.p                 ; 2 uses
   store i64 %i.dg, ptr %i.n, align 8, !tbaa !21

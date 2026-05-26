@@ -201,12 +201,11 @@ bb.e:                                             ; preds = %.noexc22
   %i.y = load i64, ptr %i.x, align 8, !tbaa !80
   %i.z = lshr i64 %i.y, 8                         ; 2 uses
   %.not.i.i.i.not = icmp eq i64 %i.z, 0
-  %i.aa = load ptr, ptr %i.w, align 8
-  %.fr = freeze ptr %i.aa                         ; 2 uses
+  %i.aa = load ptr, ptr %i.w, align 8             ; 2 uses
   br i1 %.not.i.i.i.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %.fr, i64 %i.z
+  %i.ab = getelementptr inbounds nuw [32 x i8], ptr %i.aa, i64 %i.z
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %_ZNSolsEPFRSoS_E.exit18, %bb.e
@@ -336,7 +335,7 @@ _ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i27: ; preds = %.noexc30, %bb
           to label %_ZNSolsEPFRSoS_E.exit18 unwind label %.loopexit ; 0 uses
 
 _ZNSolsEPFRSoS_E.exit18:                          ; preds = %.noexc32
-  %i.bw = icmp eq ptr %.fr, %.sroa.035.038
+  %i.bw = icmp eq ptr %i.aa, %.sroa.035.038
   br i1 %i.bw, label %._crit_edge, label %.lr.ph, !prof !94
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.j, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit15, %_ZNSolsEd.exit, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit16, %bb.m, %.noexc30, %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i27, %.noexc32

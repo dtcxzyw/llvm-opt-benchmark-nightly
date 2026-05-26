@@ -201,8 +201,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419: ; preds = %bb.km
 
 bb.kn:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414
   %.1795 = phi i8 [ %.0794, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419 ] ; 3 uses
-  %.sroa.02703.0.copyload = load i64, ptr %i.io, align 8, !tbaa !408
-  %.sroa.02703.0.copyload.fr = freeze i64 %.sroa.02703.0.copyload ; 7 uses
+  %.sroa.02703.0.copyload = load i64, ptr %i.io, align 8, !tbaa !408 ; 7 uses
   switch i8 %.0806, label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1507 [
     i8 0, label %bb.ko
     i8 79, label %bb.kw
@@ -214,20 +213,20 @@ bb.ko:                                            ; preds = %bb.kn
   br i1 %i.ayy, label %bb.kp, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.ayz = icmp slt i64 %.sroa.02703.0.copyload.fr, 12
+  %i.ayz = icmp slt i64 %.sroa.02703.0.copyload, 12
   br i1 %i.ayz, label %bb.kq, label %bb.kr
 
 bb.kq:                                            ; preds = %bb.kp
-  %i.aza = icmp eq i64 %.sroa.02703.0.copyload.fr, 0
+  %i.aza = icmp eq i64 %.sroa.02703.0.copyload, 0
   br i1 %i.aza, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kr:                                            ; preds = %bb.kp
-  %i.azb = icmp eq i64 %.sroa.02703.0.copyload.fr, 12
-  %i.azc = add nsw i64 %.sroa.02703.0.copyload.fr, -12
+  %i.azb = icmp eq i64 %.sroa.02703.0.copyload, 12
+  %i.azc = add nsw i64 %.sroa.02703.0.copyload, -12
   br i1 %i.azb, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 _ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit: ; preds = %bb.kr, %bb.kq, %bb.ko
-  %storemerge = phi i64 [ %.sroa.02703.0.copyload.fr, %bb.kq ], [ %i.azc, %bb.kr ], [ %.sroa.02703.0.copyload.fr, %bb.ko ] ; 3 uses
+  %storemerge = phi i64 [ %.sroa.02703.0.copyload, %bb.kq ], [ %i.azc, %bb.kr ], [ %.sroa.02703.0.copyload, %bb.ko ] ; 3 uses
   %i.azd = icmp slt i64 %storemerge, 10
   br i1 %i.azd, label %bb.ks, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread
 
@@ -271,7 +270,7 @@ bb.kw:                                            ; preds = %bb.kn
   store i8 79, ptr %i.kf, align 1, !tbaa !70
   %i.azo = load i8, ptr %.0731, align 1, !tbaa !70
   store i8 %i.azo, ptr %i.kg, align 1, !tbaa !70
-  %i.azp = trunc i64 %.sroa.02703.0.copyload.fr to i32
+  %i.azp = trunc i64 %.sroa.02703.0.copyload to i32
   store i32 %i.azp, ptr %i.is, align 8, !tbaa !735
   %i.azq = load ptr, ptr %0, align 8, !tbaa !446
   %i.azr = getelementptr i8, ptr %i.azq, i64 -24
@@ -674,8 +673,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419: ; preds = %bb.km
 
 bb.kn:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414
   %.1795 = phi i8 [ %.0794, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419 ] ; 3 uses
-  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408
-  %.sroa.02703.0.copyload.fr = freeze i64 %.sroa.02703.0.copyload ; 7 uses
+  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408 ; 7 uses
   switch i8 %.0806, label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1507 [
     i8 0, label %bb.ko
     i8 79, label %bb.kw
@@ -687,20 +685,20 @@ bb.ko:                                            ; preds = %bb.kn
   br i1 %i.ayz, label %bb.kp, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.aza = icmp slt i64 %.sroa.02703.0.copyload.fr, 12
+  %i.aza = icmp slt i64 %.sroa.02703.0.copyload, 12
   br i1 %i.aza, label %bb.kq, label %bb.kr
 
 bb.kq:                                            ; preds = %bb.kp
-  %i.azb = icmp eq i64 %.sroa.02703.0.copyload.fr, 0
+  %i.azb = icmp eq i64 %.sroa.02703.0.copyload, 0
   br i1 %i.azb, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kr:                                            ; preds = %bb.kp
-  %i.azc = icmp eq i64 %.sroa.02703.0.copyload.fr, 12
-  %i.azd = add nsw i64 %.sroa.02703.0.copyload.fr, -12
+  %i.azc = icmp eq i64 %.sroa.02703.0.copyload, 12
+  %i.azd = add nsw i64 %.sroa.02703.0.copyload, -12
   br i1 %i.azc, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 _ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit: ; preds = %bb.kr, %bb.kq, %bb.ko
-  %storemerge = phi i64 [ %.sroa.02703.0.copyload.fr, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload.fr, %bb.ko ] ; 3 uses
+  %storemerge = phi i64 [ %.sroa.02703.0.copyload, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload, %bb.ko ] ; 3 uses
   %i.aze = icmp slt i64 %storemerge, 10
   br i1 %i.aze, label %bb.ks, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread
 
@@ -744,7 +742,7 @@ bb.kw:                                            ; preds = %bb.kn
   store i8 79, ptr %i.kg, align 1, !tbaa !70
   %i.azp = load i8, ptr %.0731, align 1, !tbaa !70
   store i8 %i.azp, ptr %i.kh, align 1, !tbaa !70
-  %i.azq = trunc i64 %.sroa.02703.0.copyload.fr to i32
+  %i.azq = trunc i64 %.sroa.02703.0.copyload to i32
   store i32 %i.azq, ptr %i.it, align 8, !tbaa !735
   %i.azr = load ptr, ptr %0, align 8, !tbaa !446
   %i.azs = getelementptr i8, ptr %i.azr, i64 -24
@@ -1147,8 +1145,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419: ; preds = %bb.km
 
 bb.kn:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414
   %.1795 = phi i8 [ %.0794, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419 ] ; 3 uses
-  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408
-  %.sroa.02703.0.copyload.fr = freeze i64 %.sroa.02703.0.copyload ; 7 uses
+  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408 ; 7 uses
   switch i8 %.0806, label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1507 [
     i8 0, label %bb.ko
     i8 79, label %bb.kw
@@ -1160,20 +1157,20 @@ bb.ko:                                            ; preds = %bb.kn
   br i1 %i.ayz, label %bb.kp, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.aza = icmp slt i64 %.sroa.02703.0.copyload.fr, 12
+  %i.aza = icmp slt i64 %.sroa.02703.0.copyload, 12
   br i1 %i.aza, label %bb.kq, label %bb.kr
 
 bb.kq:                                            ; preds = %bb.kp
-  %i.azb = icmp eq i64 %.sroa.02703.0.copyload.fr, 0
+  %i.azb = icmp eq i64 %.sroa.02703.0.copyload, 0
   br i1 %i.azb, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kr:                                            ; preds = %bb.kp
-  %i.azc = icmp eq i64 %.sroa.02703.0.copyload.fr, 12
-  %i.azd = add nsw i64 %.sroa.02703.0.copyload.fr, -12
+  %i.azc = icmp eq i64 %.sroa.02703.0.copyload, 12
+  %i.azd = add nsw i64 %.sroa.02703.0.copyload, -12
   br i1 %i.azc, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 _ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit: ; preds = %bb.kr, %bb.kq, %bb.ko
-  %storemerge = phi i64 [ %.sroa.02703.0.copyload.fr, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload.fr, %bb.ko ] ; 3 uses
+  %storemerge = phi i64 [ %.sroa.02703.0.copyload, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload, %bb.ko ] ; 3 uses
   %i.aze = icmp slt i64 %storemerge, 10
   br i1 %i.aze, label %bb.ks, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread
 
@@ -1217,7 +1214,7 @@ bb.kw:                                            ; preds = %bb.kn
   store i8 79, ptr %i.kg, align 1, !tbaa !70
   %i.azp = load i8, ptr %.0731, align 1, !tbaa !70
   store i8 %i.azp, ptr %i.kh, align 1, !tbaa !70
-  %i.azq = trunc i64 %.sroa.02703.0.copyload.fr to i32
+  %i.azq = trunc i64 %.sroa.02703.0.copyload to i32
   store i32 %i.azq, ptr %i.it, align 8, !tbaa !735
   %i.azr = load ptr, ptr %0, align 8, !tbaa !446
   %i.azs = getelementptr i8, ptr %i.azr, i64 -24
@@ -1620,8 +1617,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419: ; preds = %bb.km
 
 bb.kn:                                            ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414
   %.1795 = phi i8 [ %.0794, %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1414 ], [ 0, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c.exit1419 ] ; 3 uses
-  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408
-  %.sroa.02703.0.copyload.fr = freeze i64 %.sroa.02703.0.copyload ; 7 uses
+  %.sroa.02703.0.copyload = load i64, ptr %i.ip, align 8, !tbaa !408 ; 7 uses
   switch i8 %.0806, label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1507 [
     i8 0, label %bb.ko
     i8 79, label %bb.kw
@@ -1633,20 +1629,20 @@ bb.ko:                                            ; preds = %bb.kn
   br i1 %i.ayz, label %bb.kp, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kp:                                            ; preds = %bb.ko
-  %i.aza = icmp slt i64 %.sroa.02703.0.copyload.fr, 12
+  %i.aza = icmp slt i64 %.sroa.02703.0.copyload, 12
   br i1 %i.aza, label %bb.kq, label %bb.kr
 
 bb.kq:                                            ; preds = %bb.kp
-  %i.azb = icmp eq i64 %.sroa.02703.0.copyload.fr, 0
+  %i.azb = icmp eq i64 %.sroa.02703.0.copyload, 0
   br i1 %i.azb, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 bb.kr:                                            ; preds = %bb.kp
-  %i.azc = icmp eq i64 %.sroa.02703.0.copyload.fr, 12
-  %i.azd = add nsw i64 %.sroa.02703.0.copyload.fr, -12
+  %i.azc = icmp eq i64 %.sroa.02703.0.copyload, 12
+  %i.azd = add nsw i64 %.sroa.02703.0.copyload, -12
   br i1 %i.azc, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit
 
 _ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit: ; preds = %bb.kr, %bb.kq, %bb.ko
-  %storemerge = phi i64 [ %.sroa.02703.0.copyload.fr, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload.fr, %bb.ko ] ; 3 uses
+  %storemerge = phi i64 [ %.sroa.02703.0.copyload, %bb.kq ], [ %i.azd, %bb.kr ], [ %.sroa.02703.0.copyload, %bb.ko ] ; 3 uses
   %i.aze = icmp slt i64 %storemerge, 10
   br i1 %i.aze, label %bb.ks, label %_ZN14arrow_vendored4date6make12ENSt6chrono8durationIlSt5ratioILl3600ELl1EEEE.exit.thread
 
@@ -1690,7 +1686,7 @@ bb.kw:                                            ; preds = %bb.kn
   store i8 79, ptr %i.kg, align 1, !tbaa !70
   %i.azp = load i8, ptr %.0731, align 1, !tbaa !70
   store i8 %i.azp, ptr %i.kh, align 1, !tbaa !70
-  %i.azq = trunc i64 %.sroa.02703.0.copyload.fr to i32
+  %i.azq = trunc i64 %.sroa.02703.0.copyload to i32
   store i32 %i.azq, ptr %i.it, align 8, !tbaa !735
   %i.azr = load ptr, ptr %0, align 8, !tbaa !446
   %i.azs = getelementptr i8, ptr %i.azr, i64 -24
@@ -2093,8 +2089,7 @@ bb.d:                                             ; preds = %bb.c
   %.not39 = icmp slt i64 %i.an, %2
   %.not40 = icmp slt i64 %i.ao, %4
   %or.cond41 = select i1 %.not39, i1 %.not40, i1 false
-  %cond.fr = freeze i1 %or.cond41
-  br i1 %cond.fr, label %bb.c, label %.thread
+  br i1 %or.cond41, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.d, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.ap, %bb.d ], [ %.026, %bb.c ]
@@ -2402,8 +2397,7 @@ bb.d:                                             ; preds = %bb.c
   %.not39 = icmp slt i64 %i.an, %2
   %.not40 = icmp slt i64 %i.ao, %4
   %or.cond41 = select i1 %.not39, i1 %.not40, i1 false
-  %cond.fr = freeze i1 %or.cond41
-  br i1 %cond.fr, label %bb.c, label %.thread
+  br i1 %or.cond41, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.d, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.ap, %bb.d ], [ %.026, %bb.c ]
@@ -2630,8 +2624,7 @@ bb.d:                                             ; preds = %bb.c
   %.not39 = icmp slt i64 %i.al, %2
   %.not40 = icmp slt i64 %i.am, %4
   %or.cond41 = select i1 %.not39, i1 %.not40, i1 false
-  %cond.fr = freeze i1 %or.cond41
-  br i1 %cond.fr, label %bb.c, label %.thread
+  br i1 %or.cond41, label %bb.c, label %.thread
 
 .thread:                                          ; preds = %bb.c, %bb.d, %bb.a
   %.0 = phi i64 [ 0, %bb.a ], [ %i.an, %bb.d ], [ %.026, %bb.c ]

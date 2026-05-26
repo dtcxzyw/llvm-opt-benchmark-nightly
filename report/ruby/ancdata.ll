@@ -201,16 +201,15 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define void @rsock_discard_cmsg_resource(ptr noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !37
-  %.fr = freeze i64 %i.b                          ; 3 uses
-  %i.c = icmp eq i64 %.fr, 0
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !37   ; 3 uses
+  %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !36   ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %.fr ; 2 uses
-  %i.g = icmp ult i64 %.fr, 16
+  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.b ; 2 uses
+  %i.g = icmp ult i64 %i.b, 16
   %.not1115 = icmp eq ptr %i.e, null
   %.not11 = select i1 %i.g, i1 true, i1 %.not1115
   br i1 %.not11, label %.loopexit, label %.lr.ph
@@ -578,9 +577,8 @@ bb.ak:                                            ; preds = %bb.aj
   br i1 %i.dz, label %bb.al, label %.thread180
 
 bb.al:                                            ; preds = %bb.ak
-  %i.ca = load i64, ptr %i.ae, align 8, !tbaa !37
-  %.fr.i = freeze i64 %i.ca                       ; 4 uses
-  %i.cb = trunc i64 %.fr.i to i32
+  %i.ca = load i64, ptr %i.ae, align 8, !tbaa !37 ; 4 uses
+  %i.cb = trunc i64 %i.ca to i32
   %i.cc = icmp ugt i32 %i.eb, %i.cb
   br i1 %i.cc, label %bb.am, label %bb.as
 
@@ -589,13 +587,13 @@ bb.am:                                            ; preds = %bb.al
   br i1 %.not133, label %bb.an, label %bb.au
 
 bb.an:                                            ; preds = %bb.am
-  %i.cd = icmp eq i64 %.fr.i, 0
+  %i.cd = icmp eq i64 %i.ca, 0
   br i1 %i.cd, label %rsock_discard_cmsg_resource.exit.thread, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.ce = load ptr, ptr %i.ad, align 8, !tbaa !36 ; 3 uses
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %.fr.i ; 2 uses
-  %i.cg = icmp ult i64 %.fr.i, 16
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.ca ; 2 uses
+  %i.cg = icmp ult i64 %i.ca, 16
   %.not1115.i = icmp eq ptr %i.ce, null
   %.not11.i = select i1 %i.cg, i1 true, i1 %.not1115.i
   br i1 %.not11.i, label %rsock_discard_cmsg_resource.exit.thread, label %.lr.ph.i
@@ -684,9 +682,8 @@ bb.au:                                            ; preds = %bb.am, %bb.aj, %bb.
 
 .loopexit564:                                     ; preds = %bb.au, %.thread180
   %.2123184 = phi i64 [ %i.dv, %.thread180 ], [ %.0121.ph.ph, %bb.au ]
-  %i.dw = load i64, ptr %i.ae, align 8, !tbaa !37
-  %.fr.i152 = freeze i64 %i.dw                    ; 3 uses
-  %i.dx = icmp eq i64 %.fr.i152, 0
+  %i.dw = load i64, ptr %i.ae, align 8, !tbaa !37 ; 3 uses
+  %i.dx = icmp eq i64 %i.dw, 0
   br i1 %i.dx, label %.outer.outer.backedge, label %bb.av
 
 .outer.outer.backedge:                            ; preds = %discard_cmsg.exit.i157, %bb.ay, %.loopexit564, %bb.av
@@ -708,8 +705,8 @@ bb.au:                                            ; preds = %bb.am, %bb.aj, %bb.
 
 bb.av:                                            ; preds = %.loopexit564
   %i.ec = load ptr, ptr %i.ad, align 8, !tbaa !36 ; 3 uses
-  %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 %.fr.i152 ; 2 uses
-  %i.ee = icmp ult i64 %.fr.i152, 16
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.ec, i64 %i.dw ; 2 uses
+  %i.ee = icmp ult i64 %i.dw, 16
   %.not1115.i153 = icmp eq ptr %i.ec, null
   %.not11.i154 = select i1 %i.ee, i1 true, i1 %.not1115.i153
   br i1 %.not11.i154, label %.outer.outer.backedge, label %.lr.ph.i155
@@ -785,15 +782,14 @@ bb.az:                                            ; preds = %bb.au
   br i1 %.not135, label %rsock_discard_cmsg_resource.exit.thread189, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.fr = load i64, ptr %i.ae, align 8, !tbaa !37
-  %.fr.i164 = freeze i64 %i.fr                    ; 3 uses
-  %i.fs = icmp eq i64 %.fr.i164, 0
+  %i.fr = load i64, ptr %i.ae, align 8, !tbaa !37 ; 3 uses
+  %i.fs = icmp eq i64 %i.fr, 0
   br i1 %i.fs, label %.outer.backedge, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
   %i.ft = load ptr, ptr %i.ad, align 8, !tbaa !36 ; 3 uses
-  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 %.fr.i164 ; 2 uses
-  %i.fv = icmp ult i64 %.fr.i164, 16
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 %i.fr ; 2 uses
+  %i.fv = icmp ult i64 %i.fr, 16
   %.not1115.i165 = icmp eq ptr %i.ft, null
   %.not11.i166 = select i1 %i.fv, i1 true, i1 %.not1115.i165
   br i1 %.not11.i166, label %.outer.backedge, label %.lr.ph.i167
@@ -900,15 +896,14 @@ bb.bh:                                            ; preds = %bb.bg, %bb.bf
   %i.ht = call i64 @rsock_io_socket_addrinfo(i64 noundef %0, ptr noundef %i.hr, i32 noundef %i.hs) #10
   %i.hu = call i64 (i64, ...) @rb_ary_new_from_args(i64 noundef 3, i64 noundef %.2115, i64 noundef %i.ht, i64 noundef %i.hq) #10 ; 3 uses
   %i.hv = call i32 @rsock_getfamily(ptr noundef nonnull %i.w) #10
-  %i.hw = load i64, ptr %i.ae, align 8, !tbaa !37
-  %.fr = freeze i64 %i.hw                         ; 3 uses
-  %.not138 = icmp eq i64 %.fr, 0
+  %i.hw = load i64, ptr %i.ae, align 8, !tbaa !37 ; 3 uses
+  %.not138 = icmp eq i64 %i.hw, 0
   br i1 %.not138, label %.loopexit, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
   %i.hx = load ptr, ptr %i.ad, align 8, !tbaa !36 ; 4 uses
-  %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 %.fr ; 6 uses
-  %i.hz = icmp ult i64 %.fr, 16
+  %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 %i.hw ; 6 uses
+  %i.hz = icmp ult i64 %i.hw, 16
   %.not139303305 = icmp eq ptr %i.hx, null
   %.not139303 = select i1 %i.hz, i1 true, i1 %.not139303305
   br i1 %.not139303, label %select.unfold._crit_edge, label %.lr.ph

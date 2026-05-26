@@ -201,13 +201,12 @@ bb.h:                                             ; preds = %bb.g
   br label %zipStoreEntryEncoding.exit
 
 bb.i:                                             ; preds = %bb.h
-  %i.z = load i64, ptr %i.b, align 8, !tbaa !14
-  %.fr181 = freeze i64 %i.z                       ; 7 uses
-  %or.cond3.i = icmp ult i64 %.fr181, 13
+  %i.z = load i64, ptr %i.b, align 8, !tbaa !14   ; 7 uses
+  %or.cond3.i = icmp ult i64 %i.z, 13
   br i1 %or.cond3.i, label %bb.n, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aa = add i64 %.fr181, 128
+  %i.aa = add i64 %i.z, 128
   %or.cond5.i = icmp ult i64 %i.aa, 256
   br i1 %or.cond5.i, label %.thread, label %bb.k
 
@@ -216,7 +215,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.q
 
 bb.k:                                             ; preds = %bb.j
-  %i.ab = add i64 %.fr181, 32768
+  %i.ab = add i64 %i.z, 32768
   %or.cond7.i = icmp ult i64 %i.ab, 65536
   br i1 %or.cond7.i, label %.thread141, label %bb.l
 
@@ -225,7 +224,7 @@ bb.k:                                             ; preds = %bb.j
   br label %bb.q
 
 bb.l:                                             ; preds = %bb.k
-  %i.ac = add i64 %.fr181, 8388608
+  %i.ac = add i64 %i.z, 8388608
   %or.cond9.i = icmp ult i64 %i.ac, 16777216
   br i1 %or.cond9.i, label %.thread144, label %bb.m
 
@@ -234,7 +233,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.q
 
 bb.m:                                             ; preds = %bb.l
-  %i.ad = add i64 %.fr181, 2147483648
+  %i.ad = add i64 %i.z, 2147483648
   %or.cond11.i = icmp ult i64 %i.ad, 4294967296   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   %. = select i1 %or.cond11.i, i8 -48, i8 -32
@@ -242,7 +241,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.q
 
 bb.n:                                             ; preds = %bb.i
-  %i.af = trunc nuw nsw i64 %.fr181 to i8
+  %i.af = trunc nuw nsw i64 %i.z to i8
   %i.ag = add nuw nsw i8 %i.af, -15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   br label %bb.q
@@ -277,7 +276,7 @@ zipStoreEntryEncoding.exit:                       ; preds = %bb.p, %bb.o, %.thre
   %i.as = phi i32 [ %i.ao, %bb.q ], [ %i.ai, %bb.p ], [ %i.ai, %bb.o ], [ %i.x, %.thread164 ]
   %i.at = phi i1 [ %i.an, %bb.q ], [ %i.ah, %bb.p ], [ %i.ah, %bb.o ], [ %i.w, %.thread164 ]
   %.0130136160 = phi i8 [ %.0130136.ph, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %.thread164 ] ; 3 uses
-  %.0138158 = phi i64 [ %.fr181, %bb.q ], [ 123456789, %bb.p ], [ 123456789, %bb.o ], [ 123456789, %.thread164 ] ; 5 uses
+  %.0138158 = phi i64 [ %i.z, %bb.q ], [ 123456789, %bb.p ], [ 123456789, %bb.o ], [ 123456789, %.thread164 ] ; 5 uses
   %.025.i = phi i64 [ 1, %bb.q ], [ %spec.select180, %bb.p ], [ 1, %bb.o ], [ 1, %.thread164 ]
   %i.au = add nuw nsw i64 %.025.i, %i.ar          ; 7 uses
   %i.av = load i8, ptr %1, align 1, !tbaa !13     ; 2 uses
@@ -680,13 +679,12 @@ bb.m:                                             ; preds = %zipEntry.exit
   br label %zipStoreEntryEncoding.exit
 
 bb.n:                                             ; preds = %bb.m
-  %i.y = load i64, ptr %i.b, align 8, !tbaa !14
-  %.fr80 = freeze i64 %i.y                        ; 11 uses
-  %or.cond3.i = icmp ult i64 %.fr80, 13
+  %i.y = load i64, ptr %i.b, align 8, !tbaa !14   ; 11 uses
+  %or.cond3.i = icmp ult i64 %i.y, 13
   br i1 %or.cond3.i, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.z = add i64 %.fr80, 128
+  %i.z = add i64 %i.y, 128
   %or.cond5.i = icmp ult i64 %i.z, 256
   br i1 %or.cond5.i, label %.thread, label %bb.p
 
@@ -695,7 +693,7 @@ bb.o:                                             ; preds = %bb.n
   br label %zipStoreEntryEncoding.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.aa = add i64 %.fr80, 32768
+  %i.aa = add i64 %i.y, 32768
   %or.cond7.i = icmp ult i64 %i.aa, 65536
   br i1 %or.cond7.i, label %.thread48, label %bb.q
 
@@ -704,7 +702,7 @@ bb.p:                                             ; preds = %bb.o
   br label %zipStoreEntryEncoding.exit
 
 bb.q:                                             ; preds = %bb.p
-  %i.ab = add i64 %.fr80, 8388608
+  %i.ab = add i64 %i.y, 8388608
   %or.cond9.i = icmp ult i64 %i.ab, 16777216
   br i1 %or.cond9.i, label %.thread51, label %bb.r
 
@@ -713,7 +711,7 @@ bb.q:                                             ; preds = %bb.p
   br label %zipStoreEntryEncoding.exit
 
 bb.r:                                             ; preds = %bb.q
-  %i.ac = add i64 %.fr80, 2147483648
+  %i.ac = add i64 %i.y, 2147483648
   %or.cond11.i = icmp ult i64 %i.ac, 4294967296   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   %. = select i1 %or.cond11.i, i32 4, i32 8
@@ -721,7 +719,7 @@ bb.r:                                             ; preds = %bb.q
   br label %zipStoreEntryEncoding.exit
 
 bb.s:                                             ; preds = %bb.n
-  %i.ad = trunc nuw nsw i64 %.fr80 to i8
+  %i.ad = trunc nuw nsw i64 %i.y to i8
   %i.ae = add nuw nsw i8 %i.ad, -15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   br label %zipStoreEntryEncoding.exit
@@ -740,7 +738,7 @@ zipStoreEntryEncoding.exit:                       ; preds = %bb.u, %bb.r, %.thre
   %.not.i2070 = phi i1 [ false, %bb.u ], [ true, %bb.s ], [ false, %bb.t ], [ false, %.thread72 ], [ true, %.thread48 ], [ true, %.thread51 ], [ true, %.thread ], [ true, %bb.r ]
   %.068 = phi i32 [ %3, %bb.u ], [ 0, %bb.s ], [ %3, %bb.t ], [ %3, %.thread72 ], [ 2, %.thread48 ], [ 3, %.thread51 ], [ 1, %.thread ], [ %., %bb.r ]
   %.0364266 = phi i8 [ 0, %bb.u ], [ %i.ae, %bb.s ], [ 0, %bb.t ], [ 0, %.thread72 ], [ -64, %.thread48 ], [ -16, %.thread51 ], [ -2, %.thread ], [ %.79, %bb.r ] ; 3 uses
-  %.0354564 = phi i64 [ 123456789, %bb.u ], [ %.fr80, %bb.s ], [ 123456789, %bb.t ], [ 123456789, %.thread72 ], [ %.fr80, %.thread48 ], [ %.fr80, %.thread51 ], [ %.fr80, %.thread ], [ %.fr80, %bb.r ] ; 5 uses
+  %.0354564 = phi i64 [ 123456789, %bb.u ], [ %i.y, %bb.s ], [ 123456789, %bb.t ], [ 123456789, %.thread72 ], [ %i.y, %.thread48 ], [ %i.y, %.thread51 ], [ %i.y, %.thread ], [ %i.y, %bb.r ] ; 5 uses
   %.025.i = phi i32 [ %spec.select, %bb.u ], [ 1, %bb.s ], [ 1, %bb.t ], [ 1, %.thread72 ], [ 1, %.thread48 ], [ 1, %.thread51 ], [ 1, %.thread ], [ 1, %bb.r ]
   %i.ah = add i32 %.025.i, %.068
   %i.ai = add i32 %.sroa.12.0, %.sroa.5.1

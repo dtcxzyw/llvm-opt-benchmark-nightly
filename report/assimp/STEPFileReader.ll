@@ -201,8 +201,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.bc = phi ptr [ %.pre.i.i, %bb.j ], [ %i.ax, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.j ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.bd = icmp ult ptr %i.bc, %i.as
-  %cond.fr.i.i = freeze i1 %i.bd
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE6insertERKS1_.exit
+  br i1 %i.bd, label %select.unfold.i.i, label %_ZNSt3setIPKcSt4lessIS1_ESaIS1_EE6insertERKS1_.exit
 
 select.unfold.i.i:                                ; preds = %bb.k, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.k ] ; 3 uses
@@ -605,8 +604,7 @@ bb.i:                                             ; preds = %._crit_edge.thread.
 bb.j:                                             ; preds = %bb.i, %._crit_edge.i.i.i
   %i.ba = phi ptr [ %.pre.i.i, %bb.i ], [ %i.au, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.i ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %.fr = freeze ptr %i.ba
-  %i.bb = icmp ult ptr %.fr, %1
+  %i.bb = icmp ult ptr %i.ba, %1
   br i1 %i.bb, label %select.unfold.i.i, label %_ZNSt3setIPKN6Assimp4STEP10LazyObjectESt4lessIS4_ESaIS4_EE6insertERKS4_.exit
 
 select.unfold.i.i:                                ; preds = %bb.j, %._crit_edge.thread.i.i.i

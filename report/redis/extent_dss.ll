@@ -121,22 +121,21 @@ atomic_load_b.exit:                               ; preds = %atomic_compare_exch
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader, %bb.q
-  %i.y = tail call ptr @sbrk(i64 noundef 0) #6
-  %.fr = freeze ptr %i.y                          ; 6 uses
-  %i.z = icmp eq ptr %.fr, inttoptr (i64 -1 to ptr)
+  %i.y = tail call ptr @sbrk(i64 noundef 0) #6    ; 6 uses
+  %i.z = icmp eq ptr %i.y, inttoptr (i64 -1 to ptr)
   br i1 %i.z, label %.thread, label %atomic_store_p.exit.i
 
 atomic_store_p.exit.i:                            ; preds = %bb.f
-  store atomic ptr %.fr, ptr @dss_max.0 release, align 8
-  %.not9.i = icmp ne ptr %.fr, %2
+  store atomic ptr %i.y, ptr @dss_max.0 release, align 8
+  %.not9.i = icmp ne ptr %i.y, %2
   %or.cond.i.not = and i1 %.not.i, %.not9.i
-  %i.aa = icmp eq ptr %.fr, null
+  %i.aa = icmp eq ptr %i.y, null
   %or.cond92 = or i1 %i.aa, %or.cond.i.not
   br i1 %or.cond92, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %atomic_store_p.exit.i
   %i.ab = load i8, ptr @je_opt_retain, align 1, !tbaa !16, !range !14, !noundef !15 ; 2 uses
-  %i.ac = ptrtoint ptr %.fr to i64                ; 4 uses
+  %i.ac = ptrtoint ptr %i.y to i64                ; 4 uses
   %i.ad = add i64 %i.ac, 4095
   %i.ae = and i64 %i.ad, -4096                    ; 4 uses
   %i.af = add i64 %i.r, %i.ae
@@ -177,7 +176,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aw = sub i64 %3, %i.ac
   %i.ax = add i64 %i.aw, %i.ag
   %i.ay = tail call ptr @sbrk(i64 noundef %i.ax) #6 ; 2 uses
-  %i.az = icmp eq ptr %i.ay, %.fr
+  %i.az = icmp eq ptr %i.ay, %i.y
   br i1 %i.az, label %atomic_store_p.exit, label %bb.q
 
 atomic_store_p.exit:                              ; preds = %bb.j

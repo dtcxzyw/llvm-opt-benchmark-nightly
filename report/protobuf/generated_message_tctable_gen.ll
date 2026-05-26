@@ -201,10 +201,9 @@ _ZN6google8protobuf8internal12_GLOBAL__N_114TreatEnumAsIntEPKNS0_15FieldDescript
 bb.co:                                            ; preds = %.noexc103
   %i.ox = load i32, ptr %i.b, align 4, !tbaa !3, !noalias !161 ; 2 uses
   %i.oy = icmp slt i32 %i.ox, 128
-  %i.oz = load i32, ptr %i.a, align 4, !noalias !161
-  %.fr.i.i = freeze i32 %i.oz                     ; 2 uses
-  %or.cond.i.i.i = icmp ult i32 %.fr.i.i, 2
-  %or.cond4.i.i.i = and i1 %i.oy, %or.cond.i.i.i
+  %i.oz = load i32, ptr %i.a, align 4, !noalias !161 ; 2 uses
+  %or.cond.i.i.i = icmp ult i32 %i.oz, 2
+  %or.cond4.i.i.i = select i1 %i.oy, i1 %or.cond.i.i.i, i1 false
   br i1 %or.cond4.i.i.i, label %bb.cp, label %bb.cv
 
 bb.cp:                                            ; preds = %bb.co
@@ -215,7 +214,7 @@ bb.cp:                                            ; preds = %bb.co
           to label %.noexc104 unwind label %.loopexit ; 2 uses
 
 .noexc104:                                        ; preds = %bb.cp
-  %i.pc = icmp eq i32 %.fr.i.i, 0
+  %i.pc = icmp eq i32 %i.oz, 0
   br i1 %i.pc, label %bb.da, label %bb.df
 
 bb.cq:                                            ; preds = %.noexc103

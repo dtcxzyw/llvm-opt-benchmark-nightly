@@ -201,10 +201,9 @@ bb.x:                                             ; preds = %.split.i
   br i1 %spec.select.i4, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cf = cmpxchg ptr %i.bw, i64 0, i64 1 acq_rel acquire, align 8
-  %.fr = freeze { i64, i1 } %i.cf                 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
+  %i.cf = cmpxchg ptr %i.bw, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.cf, 1
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.cf, 0
   %spec.select.i.i = call i64 @llvm.umin.i64(i64 %.sroa.01.0.i.i.i, i64 3)
   br i1 %.sroa.18.0.in.i.i.i, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread5, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -594,10 +593,9 @@ bb.p:                                             ; preds = %.split.i
   br i1 %spec.select.i, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %.noexc50
-  %i.bi = cmpxchg ptr %i.az, i64 0, i64 1 acq_rel acquire, align 8
-  %.fr = freeze { i64, i1 } %i.bi                 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
+  %i.bi = cmpxchg ptr %i.az, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.bi, 1
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.bi, 0
   %spec.select.i.i = call i64 @llvm.umin.i64(i64 %.sroa.01.0.i.i.i, i64 3)
   br i1 %.sroa.18.0.in.i.i.i, label %.thread10, label %.split7.us.i
 
@@ -1000,10 +998,9 @@ bb.q:                                             ; preds = %.split.i
   br i1 %spec.select.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.noexc38
-  %i.bh = cmpxchg ptr %i.ay, i64 0, i64 1 acq_rel acquire, align 8
-  %.fr = freeze { i64, i1 } %i.bh                 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
+  %i.bh = cmpxchg ptr %i.ay, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.bh, 1
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.bh, 0
   %spec.select.i.i = call i64 @llvm.umin.i64(i64 %.sroa.01.0.i.i.i, i64 3)
   br i1 %.sroa.18.0.in.i.i.i, label %.thread15, label %.split7.us.i
 

@@ -201,8 +201,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.ff = getelementptr inbounds nuw [4 x i8], ptr %i.dr, i64 %i.fe
   %i.fg = load i32, ptr %i.ff, align 4, !tbaa !3
   %.not248 = icmp slt i32 %i.fb, %i.dt
-  %cond.fr = freeze i1 %.not248
-  br i1 %cond.fr, label %select.unfold, label %.critedge4
+  br i1 %.not248, label %select.unfold, label %.critedge4
 
 select.unfold:                                    ; preds = %.select.unfold_crit_edge, %bb.aa, %bb.z
   %.pre-phi339 = phi i64 [ %.pre, %.select.unfold_crit_edge ], [ %i.ez, %bb.aa ], [ %i.ez, %bb.z ]
@@ -605,17 +604,16 @@ bb.eq:                                            ; preds = %bb.ep
   br i1 %i.yz, label %.preheader.i.i, label %.critedge2.i.i, !llvm.loop !60
 
 .critedge2.i.i:                                   ; preds = %bb.eq, %bb.ep, %.thread199.i.i
-  %.1148207.i.i = phi i32 [ %.1148204.i.i, %.thread199.i.i ], [ %.1148.i.i, %bb.ep ], [ %.1148.i.i, %bb.eq ]
-  %.1148207.fr.i.i = freeze i32 %.1148207.i.i     ; 3 uses
-  %i.za = icmp slt i32 %.0157243.i.i, %.1148207.fr.i.i
+  %.1148207.i.i = phi i32 [ %.1148204.i.i, %.thread199.i.i ], [ %.1148.i.i, %bb.ep ], [ %.1148.i.i, %bb.eq ] ; 3 uses
+  %i.za = icmp slt i32 %.0157243.i.i, %.1148207.i.i
   br i1 %i.za, label %bb.er, label %bb.es
 
 bb.er:                                            ; preds = %.critedge2.i.i
-  %i.zb = icmp ugt i32 %.1148207.fr.i.i, 4094
+  %i.zb = icmp samesign ugt i32 %.1148207.i.i, 4094
   br i1 %i.zb, label %.loopexit.thread.i.i, label %bb.es
 
 bb.es:                                            ; preds = %bb.er, %.critedge2.i.i, %bb.eo, %bb.en
-  %.2159.ph.i.i = phi i32 [ %.0157243.i.i, %.critedge2.i.i ], [ %.0157243.i.i, %bb.eo ], [ %.0157243.i.i, %bb.en ], [ %.1148207.fr.i.i, %bb.er ] ; 2 uses
+  %.2159.ph.i.i = phi i32 [ %.0157243.i.i, %.critedge2.i.i ], [ %.0157243.i.i, %bb.eo ], [ %.0157243.i.i, %bb.en ], [ %.1148207.i.i, %bb.er ] ; 2 uses
   %.4.ph.i.i = phi i32 [ %.2155244.i.i, %.critedge2.i.i ], [ %.2155244.i.i, %bb.eo ], [ %.2155244.i.i, %bb.en ], [ %.pn.i132.i, %bb.er ] ; 2 uses
   %indvars.iv.next350.i.i = add nuw nsw i64 %indvars.iv349.i.i, 1 ; 2 uses
   %exitcond353.not.i.i = icmp eq i64 %indvars.iv.next350.i.i, %wide.trip.count352.i.i
@@ -1018,10 +1016,9 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph
   %.not72 = icmp slt i32 %i.ae, %i.a
-  %cond.fr = freeze i1 %.not72
   %i.ag = trunc i64 %indvars.iv.next to i32
   %i.ah = sub i32 %i.ag, %.098                    ; 2 uses
-  br i1 %cond.fr, label %select.unfold, label %.thread
+  br i1 %.not72, label %select.unfold, label %.thread
 
 select.unfold:                                    ; preds = %bb.e, %.lr.ph
   %.178 = phi i32 [ %.07792, %.lr.ph ], [ %i.ah, %bb.e ] ; 2 uses

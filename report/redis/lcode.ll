@@ -201,8 +201,7 @@ getjumpcontrol.exit.i:                            ; preds = %bb.k, %bb.j
 
 select.unfold.i:                                  ; preds = %getjumpcontrol.exit.i
   %i.as = load i32, ptr %i.ai, align 4, !tbaa !4
-  %.fr.i = freeze i32 %i.as
-  %i.at = lshr i32 %.fr.i, 14
+  %i.at = lshr i32 %i.as, 14
   %i.au = add nsw i32 %i.at, -131071              ; 2 uses
   %i.av = icmp eq i32 %i.au, -1
   %i.aw = add nuw nsw i32 %.0814.i, 1
@@ -250,8 +249,7 @@ getjumpcontrol.exit.i49:                          ; preds = %bb.n, %bb.m
 
 select.unfold.i52:                                ; preds = %getjumpcontrol.exit.i49
   %i.bk = load i32, ptr %i.ba, align 4, !tbaa !4
-  %.fr.i53 = freeze i32 %i.bk
-  %i.bl = lshr i32 %.fr.i53, 14
+  %i.bl = lshr i32 %i.bk, 14
   %i.bm = add nsw i32 %i.bl, -131071              ; 2 uses
   %i.bn = icmp eq i32 %i.bm, -1
   %i.bo = add nuw nsw i32 %.0814.i47, 1
@@ -654,8 +652,7 @@ bb.t:                                             ; preds = %getjumpcontrol.exit
 
 patchtestreg.exit.i.i:                            ; preds = %bb.t, %getjumpcontrol.exit.i.i.i
   %i.cc = load i32, ptr %i.bo, align 4, !tbaa !4
-  %.fr.i.i = freeze i32 %i.cc
-  %i.cd = lshr i32 %.fr.i.i, 14
+  %i.cd = lshr i32 %i.cc, 14
   %i.ce = add nsw i32 %i.cd, -131071              ; 2 uses
   %i.cf = icmp eq i32 %i.ce, -1
   %i.cg = add nuw nsw i32 %.08.i.i, 1
@@ -717,8 +714,7 @@ bb.x:                                             ; preds = %getjumpcontrol.exit
 
 patchtestreg.exit.i37.i:                          ; preds = %bb.x, %getjumpcontrol.exit.i.i34.i
   %i.cz = load i32, ptr %i.cl, align 4, !tbaa !4
-  %.fr.i38.i = freeze i32 %i.cz
-  %i.da = lshr i32 %.fr.i38.i, 14
+  %i.da = lshr i32 %i.cz, 14
   %i.db = add nsw i32 %i.da, -131071              ; 2 uses
   %i.dc = icmp eq i32 %i.db, -1
   %i.dd = add nuw nsw i32 %.08.i32.i, 1

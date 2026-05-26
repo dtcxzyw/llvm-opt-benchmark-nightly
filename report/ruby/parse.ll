@@ -201,8 +201,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.di = getelementptr [2 x i8], ptr %i.co, i64 %spec.store.select
   %i.dj = getelementptr i8, ptr %i.di, i64 -2
   %.not3031 = icmp ugt ptr %i.dj, %i.db
-  %cond.fr = freeze i1 %.not3031
-  br i1 %cond.fr, label %.thread3626, label %parser_yyerror.exit3582
+  br i1 %.not3031, label %.thread3626, label %parser_yyerror.exit3582
 
 .thread3626:                                      ; preds = %bb.p, %bb.i
   %.32950 = phi ptr [ %.12948, %bb.i ], [ %i.df, %bb.p ] ; 381 uses
@@ -605,15 +604,14 @@ bb.hb:                                            ; preds = %bb.gt
   br label %parse_string.exit
 
 bb.hc:                                            ; preds = %bb.ha, %bb.gy, %is_global_name_punct.exit.thread.i.i908, %is_global_name_punct.exit.i.i905, %bb.gw
-  %.0.i124.i = phi i32 [ %i.adu, %bb.gw ], [ %i.adq, %is_global_name_punct.exit.thread.i.i908 ], [ %i.ael, %bb.ha ], [ %i.aeh, %bb.gy ], [ %i.adq, %is_global_name_punct.exit.i.i905 ]
-  %.0.i124.fr.i = freeze i32 %.0.i124.i           ; 3 uses
-  %i.aer = icmp ugt i32 %.0.i124.fr.i, 127
-  %i.aes = icmp eq i32 %.0.i124.fr.i, 95
+  %.0.i124.i = phi i32 [ %i.adu, %bb.gw ], [ %i.adq, %is_global_name_punct.exit.thread.i.i908 ], [ %i.ael, %bb.ha ], [ %i.aeh, %bb.gy ], [ %i.adq, %is_global_name_punct.exit.i.i905 ] ; 3 uses
+  %i.aer = icmp ugt i32 %.0.i124.i, 127
+  %i.aes = icmp eq i32 %.0.i124.i, 95
   %or.cond.i.i901 = or i1 %i.aer, %i.aes
   br i1 %or.cond.i.i901, label %parse_string.exit, label %bb.hd
 
 bb.hd:                                            ; preds = %bb.hc
-  %i.aet = and i32 %.0.i124.fr.i, 95
+  %i.aet = and i32 %.0.i124.i, 95
   %i.aeu = add nsw i32 %i.aet, -91
   %narrow.i.i.i902 = icmp ult i32 %i.aeu, -26
   br i1 %narrow.i.i.i902, label %select.unfold.i, label %parse_string.exit

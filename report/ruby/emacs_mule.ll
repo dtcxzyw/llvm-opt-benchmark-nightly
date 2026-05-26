@@ -200,14 +200,13 @@ bb.c:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
   %i.l = zext i8 %i.d to i64                      ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr @trans, i64 %i.l
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !10
-  %.fr46 = freeze i8 %i.n                         ; 3 uses
-  %i.o = sext i8 %.fr46 to i64
-  %i.p = icmp slt i8 %.fr46, 0
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !10    ; 3 uses
+  %i.o = sext i8 %i.n to i64
+  %i.p = icmp slt i8 %i.n, 0
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = icmp eq i8 %.fr46, -1
+  %i.q = icmp eq i8 %i.n, -1
   br i1 %i.q, label %iter.check, label %._crit_edge
 
 bb.e:                                             ; preds = %bb.c
@@ -220,14 +219,13 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load i8, ptr %i.k, align 1, !tbaa !10
   %i.v = zext i8 %i.u to i64
   %i.w = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.v
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !10
-  %.fr45 = freeze i8 %i.x                         ; 3 uses
-  %i.y = sext i8 %.fr45 to i64
-  %i.z = icmp slt i8 %.fr45, 0
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !10    ; 3 uses
+  %i.y = sext i8 %i.x to i64
+  %i.z = icmp slt i8 %i.x, 0
   br i1 %i.z, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = icmp eq i8 %.fr45, -1
+  %i.aa = icmp eq i8 %i.x, -1
   br i1 %i.aa, label %iter.check, label %._crit_edge
 
 bb.h:                                             ; preds = %bb.f
@@ -240,14 +238,13 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = load i8, ptr %i.t, align 1, !tbaa !10
   %i.af = zext i8 %i.ae to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.af
-  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !10
-  %.fr44 = freeze i8 %i.ah                        ; 3 uses
-  %i.ai = sext i8 %.fr44 to i64
-  %i.aj = icmp slt i8 %.fr44, 0
+  %i.ah = load i8, ptr %i.ag, align 1, !tbaa !10  ; 3 uses
+  %i.ai = sext i8 %i.ah to i64
+  %i.aj = icmp slt i8 %i.ah, 0
   br i1 %i.aj, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.ak = icmp eq i8 %.fr44, -1
+  %i.ak = icmp eq i8 %i.ah, -1
   br i1 %i.ak, label %iter.check, label %._crit_edge
 
 bb.k:                                             ; preds = %bb.i
@@ -260,8 +257,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ao = zext i8 %i.an to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.ao
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !10
-  %.fr = freeze i8 %i.aq
-  %i.ar = icmp eq i8 %.fr, -1
+  %i.ar = icmp eq i8 %i.aq, -1
   br i1 %i.ar, label %iter.check, label %._crit_edge
 
 mbc_enc_len.exit:                                 ; preds = %bb.k, %bb.h, %bb.e

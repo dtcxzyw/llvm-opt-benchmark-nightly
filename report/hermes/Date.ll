@@ -163,8 +163,7 @@ bb.d:                                             ; preds = %_ZNK6hermes2vm10Nat
   %i.k = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.l = inttoptr i64 %i.k to ptr                 ; 2 uses
   %i.m = load i32, ptr %i.l, align 4
-  %.fr = freeze i32 %i.m
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.m, -16777216
   %i.n = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1023410176
   br i1 %i.n, label %_ZN6hermes2vm10dyn_vmcastINS0_6JSDateEEEPT_NS0_11HermesValueE.exit, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit.thread
 
@@ -355,8 +354,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = and i64 %.sroa.01.0.copyload, 281474976710655
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4
-  %.fr = freeze i32 %i.e
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.e, -16777216
   %i.f = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1023410176
   br i1 %i.f, label %_ZN6hermes2vm10dyn_vmcastINS0_6JSDateEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 
@@ -759,8 +757,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i64 %.sroa.08.0.copyload, 281474976710655
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
-  %.fr = freeze i32 %i.g
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.g, -16777216
   %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1023410176
   br i1 %i.h, label %_ZN6hermes2vm10dyn_vmcastINS0_6JSDateEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 
@@ -935,8 +932,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i64 %.sroa.02.0.copyload, 281474976710655
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
-  %.fr = freeze i32 %i.g
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.g, -16777216
   %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1023410176
   br i1 %i.h, label %_ZN6hermes2vm10dyn_vmcastINS0_6JSDateEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 
@@ -1052,8 +1048,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i64 %.sroa.016.0.copyload, 281474976710655
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
-  %.fr = freeze i32 %i.g
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.g, -16777216
   %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1023410176
   br i1 %i.h, label %_ZN6hermes2vm10dyn_vmcastINS0_6JSDateEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 

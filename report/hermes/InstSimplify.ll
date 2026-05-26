@@ -201,8 +201,7 @@ bb.bh:                                            ; preds = %bb.bg
 .thread.i.i.i17.i:                                ; preds = %bb.bh, %bb.bg
   %i.gk = getelementptr inbounds nuw i8, ptr %i.gf, i64 2
   %.sroa.0.0.copyload.i.i.i.i18.i = load i32, ptr %i.gk, align 2
-  %.sroa.0.0.copyload.i.i.i.i18.i.fr = freeze i32 %.sroa.0.0.copyload.i.i.i.i18.i
-  %i.gl = and i32 %.sroa.0.0.copyload.i.i.i.i18.i.fr, 65535
+  %i.gl = and i32 %.sroa.0.0.copyload.i.i.i.i18.i, 65535
   %i.gm = icmp eq i32 %i.gl, 32
   %spec.select17.i.i.i19.i = select i1 %i.gm, ptr %i.gf, ptr %i.ap
   br label %_ZN12_GLOBAL__N_116simplifyAsNumberEPN6hermes12AsNumberInstE.exit.i
@@ -270,8 +269,7 @@ bb.bm:                                            ; preds = %bb.bl
 .thread.i.i.i22.i:                                ; preds = %bb.bm, %bb.bl
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hi, i64 2
   %.sroa.0.0.copyload.i.i.i.i23.i = load i32, ptr %i.hn, align 2
-  %.sroa.0.0.copyload.i.i.i.i23.i.fr = freeze i32 %.sroa.0.0.copyload.i.i.i.i23.i
-  %i.ho = and i32 %.sroa.0.0.copyload.i.i.i.i23.i.fr, 65535
+  %i.ho = and i32 %.sroa.0.0.copyload.i.i.i.i23.i, 65535
   %i.hp = icmp eq i32 %i.ho, 32
   %spec.select17.i.i.i24.i = select i1 %i.hp, ptr %i.hi, ptr %i.ap
   br label %_ZN12_GLOBAL__N_118reduceAsNumberLikeIN6hermes13AsNumericInstEEEPNS1_5ValueEPT_.exit.i.i.i
@@ -367,8 +365,7 @@ bb.br:                                            ; preds = %.lr.ph.i.i
 
 bb.bs:                                            ; preds = %bb.br
   %.not24.i.i = icmp eq ptr %.01737.i.i, %i.it
-  %cond.fr.i.i = freeze i1 %.not24.i.i
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %.thread56
+  br i1 %.not24.i.i, label %select.unfold.i.i, label %.thread56
 
 select.unfold.i.i:                                ; preds = %bb.bs, %bb.br, %.lr.ph.i.i
   %.118.ph.i.i = phi ptr [ %.01737.i.i, %.lr.ph.i.i ], [ %i.it, %bb.br ], [ %.01737.i.i, %bb.bs ] ; 3 uses
@@ -722,8 +719,7 @@ bb.cw:                                            ; preds = %bb.cu
   %i.nm = and i16 %.sroa.09.0.extract.trunc.i.i, -897
   %.not1.i.i37.i = icmp eq i16 %i.nm, 0
   %i.nn = and i1 %.not.i8.i.i, %.not1.i.i37.i
-  %cond.fr = freeze i1 %i.nn
-  br i1 %cond.fr, label %.thread49, label %.thread56
+  br i1 %i.nn, label %.thread49, label %.thread56
 
 bb.cx:                                            ; preds = %.lr.ph
   %i.no = call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %.sroa.027.071, i32 noundef 0) #10

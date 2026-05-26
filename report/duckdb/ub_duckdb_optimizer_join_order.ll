@@ -201,8 +201,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ah = load ptr, ptr %.sroa.036.069, align 8, !tbaa !563
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 24
   %i.aj = load i8, ptr %i.ai, align 8, !tbaa !562
-  %.fr59 = freeze i8 %i.aj
-  %i.ak = add i8 %.fr59, -5
+  %i.ak = add i8 %i.aj, -5
   %or.cond = icmp ult i8 %i.ak, 2
   %i.al = getelementptr inbounds nuw i8, ptr %.sroa.036.069, i64 8 ; 2 uses
   %.not56 = icmp eq ptr %i.al, %i.aa
@@ -605,8 +604,7 @@ bb.nj:                                            ; preds = %bb.ni, %._crit_edge
   %i.arw = phi i64 [ %.pre.i.i, %bb.ni ], [ %i.arq, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ni ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.arx = icmp ult i64 %i.arw, %i.arm
-  %cond.fr.i.i = freeze i1 %i.arx
-  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %bb.nl
+  br i1 %i.arx, label %select.unfold.i.i, label %bb.nl
 
 select.unfold.i.i:                                ; preds = %bb.nj, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.nj ] ; 3 uses

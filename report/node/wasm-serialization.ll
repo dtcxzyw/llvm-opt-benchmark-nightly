@@ -201,8 +201,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.el = atomicrmw xchg ptr %i.a, i8 1 monotonic, align 1
-  %.fr = freeze i8 %i.el
-  %i.em = trunc i8 %.fr to i1
+  %i.em = trunc i8 %i.el to i1
   br i1 %i.em, label %select.unfold, label %.critedge.backedge
 
 select.unfold:                                    ; preds = %bb.r, %bb.t, %bb.s, %.thread

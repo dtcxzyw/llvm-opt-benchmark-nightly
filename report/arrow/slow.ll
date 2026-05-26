@@ -201,14 +201,13 @@ bb.a:
   %i.f = fdiv x86_fp80 %i.d, %i.e
   %i.g = fptoui x86_fp80 %i.f to i64              ; 2 uses
   %i.h = add i64 %i.g, 52
-  %i.i = udiv i64 %i.h, %i.g
-  %.fr.i.i = freeze i64 %i.i                      ; 2 uses
-  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %.fr.i.i, i64 1) ; 5 uses
+  %i.i = udiv i64 %i.h, %i.g                      ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 5 uses
   %.promoted = load i64, ptr %1, align 8, !tbaa !24
   %xtraiter = and i64 %spec.select.i.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.j = add nsw i64 %spec.select.i.i, -1
-  %i.k = icmp ult i64 %.fr.i.i, 2
+  %i.k = icmp ult i64 %i.i, 2
   br label %select.unfold.i.i
 
 bb.b:                                             ; preds = %bb.a

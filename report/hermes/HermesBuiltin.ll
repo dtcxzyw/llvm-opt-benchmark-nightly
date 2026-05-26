@@ -84,8 +84,7 @@ bb.b:                                             ; preds = %_ZNK6hermes2vm10Nat
   %i.f = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4
-  %.fr24 = freeze i32 %i.h
-  %i.i = add i32 %.fr24, -436207616
+  %i.i = add i32 %i.h, -436207616
   %i.j = icmp ult i32 %i.i, 855638016
   %i.k = icmp ne i32 %i.b, 1
   %or.cond = and i1 %i.k, %i.j
@@ -488,8 +487,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = and i64 %.sroa.01.0.copyload, 281474976710655
   %i.h = inttoptr i64 %i.g to ptr                 ; 2 uses
   %i.i = load i32, ptr %i.h, align 4
-  %.fr = freeze i32 %i.i
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.i, -16777216
   %i.j = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1241513984
   br i1 %i.j, label %_ZN6hermes2vm10dyn_vmcastINS0_22GeneratorInnerFunctionEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 
@@ -881,9 +879,8 @@ bb.x:                                             ; preds = %_ZNK6hermes2vm9Arra
   %i.es = add i64 %i.er, %i.cv
   %i.et = inttoptr i64 %i.es to ptr
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 8
-  %i.ev = load double, ptr %i.eu, align 8, !tbaa !113
-  %.fr.i = freeze double %i.ev                    ; 2 uses
-  %i.ew = fcmp uno double %.fr.i, 0.000000e+00
+  %i.ev = load double, ptr %i.eu, align 8, !tbaa !113 ; 2 uses
+  %i.ew = fcmp uno double %i.ev, 0.000000e+00
   br i1 %i.ew, label %_ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit.thread104.i, label %_ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit.i, !prof !20
 
 bb.y:                                             ; preds = %_ZNK6hermes2vm9ArrayImpl2atERNS0_7RuntimeEj.exit.i, %_ZNK6hermes2vm9ArrayImpl2atERNS0_7RuntimeEj.exit.i
@@ -917,7 +914,7 @@ _ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit.thread104.i: ; 
   br label %bb.ac
 
 _ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit.i: ; preds = %bb.y, %bb.x
-  %.sroa.05.0.i.in.i = phi double [ %.fr.i, %bb.x ], [ %i.ey, %bb.y ] ; 2 uses
+  %.sroa.05.0.i.in.i = phi double [ %i.ev, %bb.x ], [ %i.ey, %bb.y ] ; 2 uses
   %.sroa.05.0.i.i = bitcast double %.sroa.05.0.i.in.i to i64
   store double %.sroa.05.0.i.in.i, ptr %.0.i.i.i.i.i.i.i, align 8, !tbaa !18
   %i.ff = icmp ult i64 %.sroa.05.0.i.i, -1970324836974592
@@ -950,9 +947,8 @@ bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
   store i32 0, ptr %4, align 4, !tbaa !26
   store i32 -1, ptr %i.cw, align 4, !tbaa !116
-  %i.fo = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.sroa.03.0.i22, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i.i, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(8) %4) #10
-  %.fr120.i = freeze i32 %i.fo                    ; 2 uses
-  %.mask.i30 = and i32 %.fr120.i, 255
+  %i.fo = call i32 @_ZN6hermes2vm8JSObject33getOwnComputedPrimitiveDescriptorENS0_6HandleIS1_EERNS0_7RuntimeENS2_INS0_11HermesValueEEENS1_11IgnoreProxyERNS0_13MutableHandleINS0_8SymbolIDEEERNS0_26ComputedPropertyDescriptorE(ptr nonnull %.sroa.03.0.i22, ptr noundef nonnull align 8 dereferenceable(9816) %1, ptr nonnull %.0.i.i.i.i.i.i.i, i32 noundef 1, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef nonnull align 4 dereferenceable(8) %4) #10 ; 2 uses
+  %.mask.i30 = and i32 %i.fo, 255
   %i.fp = icmp eq i32 %.mask.i30, 0
   br i1 %i.fp, label %.thread109.i, label %bb.ag, !prof !20
 
@@ -961,7 +957,7 @@ bb.af:                                            ; preds = %bb.ae
   br label %.thread.i
 
 bb.ag:                                            ; preds = %bb.af
-  %i.fq = and i32 %.fr120.i, 256
+  %i.fq = and i32 %i.fo, 256
   %.not121.i.a = icmp eq i32 %i.fq, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br i1 %.not121.i.a, label %.thread112.i, label %bb.an

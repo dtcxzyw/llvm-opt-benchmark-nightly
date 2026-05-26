@@ -201,15 +201,14 @@ je_edata_avail_any.exit.thread8:                  ; preds = %bb.a
   %i.d = add i64 %i.c, 40
   %i.e = inttoptr i64 %i.d to ptr
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16
-  %.fr = freeze ptr %i.g                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %.fr ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16   ; 2 uses
+  %.not.i.i = icmp eq ptr %i.g, null
+  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %i.g ; 2 uses
   tail call void @je_edata_avail_remove(ptr noundef nonnull %0, ptr noundef nonnull %spec.select)
   br label %je_edata_avail_any.exit.thread
 
 je_edata_avail_any.exit.thread:                   ; preds = %bb.a, %je_edata_avail_any.exit.thread8
-  %.1.i.i7 = phi ptr [ null, %bb.a ], [ %spec.select, %je_edata_avail_any.exit.thread8 ]
+  %.1.i.i7 = phi ptr [ %spec.select, %je_edata_avail_any.exit.thread8 ], [ null, %bb.a ]
   ret ptr %.1.i.i7
 }
 
@@ -612,15 +611,14 @@ je_edata_heap_any.exit.thread8:                   ; preds = %bb.a
   %i.d = add i64 %i.c, 40
   %i.e = inttoptr i64 %i.d to ptr
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16
-  %.fr = freeze ptr %i.g                          ; 2 uses
-  %.not.i.i = icmp eq ptr %.fr, null
-  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %.fr ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !16   ; 2 uses
+  %.not.i.i = icmp eq ptr %i.g, null
+  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %i.g ; 2 uses
   tail call void @je_edata_heap_remove(ptr noundef nonnull %0, ptr noundef nonnull %spec.select)
   br label %je_edata_heap_any.exit.thread
 
 je_edata_heap_any.exit.thread:                    ; preds = %bb.a, %je_edata_heap_any.exit.thread8
-  %.1.i.i7 = phi ptr [ null, %bb.a ], [ %spec.select, %je_edata_heap_any.exit.thread8 ]
+  %.1.i.i7 = phi ptr [ %spec.select, %je_edata_heap_any.exit.thread8 ], [ null, %bb.a ]
   ret ptr %.1.i.i7
 }
 

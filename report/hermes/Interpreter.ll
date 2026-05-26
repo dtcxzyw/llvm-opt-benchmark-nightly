@@ -201,9 +201,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = and i64 %.sroa.02.0.copyload, 281474976710655
   %i.c = inttoptr i64 %i.b to ptr                 ; 3 uses
-  %i.d = load i32, ptr %i.c, align 4
-  %.fr20 = freeze i32 %i.d                        ; 2 uses
-  %i.e = add i32 %.fr20, -1157627904
+  %i.d = load i32, ptr %i.c, align 4              ; 2 uses
+  %i.e = add i32 %i.d, -1157627904
   %i.f = icmp ult i32 %i.e, 67108864
   br i1 %i.f, label %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit, label %bb.c
 
@@ -212,7 +211,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit: ; p
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr20, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.d, -16777216
   %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 1140850688
   br i1 %i.h, label %_ZN6hermes2vm10dyn_vmcastINS0_13BoundFunctionEEEPT_NS0_11HermesValueE.exit, label %bb.d
 
@@ -615,8 +614,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.kz = and i64 %.sroa.0302.0.copyload, 281474976710655
   %i.la = inttoptr i64 %i.kz to ptr               ; 2 uses
   %i.lb = load i32, ptr %i.la, align 4
-  %.fr3731 = freeze i32 %i.lb
-  %i.lc = add i32 %.fr3731, -1224736768
+  %i.lc = add i32 %i.lb, -1224736768
   %i.ld = icmp ult i32 %i.lc, 67108864
   br i1 %i.ld, label %bb.al, label %bb.am
 
@@ -646,9 +644,8 @@ bb.am:                                            ; preds = %bb.ak, %bb.aj
 bb.an:                                            ; preds = %bb.am
   %i.ln = and i64 %.sroa.02.0.copyload.i, 281474976710655
   %i.lo = inttoptr i64 %i.ln to ptr               ; 3 uses
-  %i.lp = load i32, ptr %i.lo, align 4
-  %.fr20.i = freeze i32 %i.lp                     ; 2 uses
-  %i.lq = add i32 %.fr20.i, -1157627904
+  %i.lp = load i32, ptr %i.lo, align 4            ; 2 uses
+  %i.lq = add i32 %i.lp, -1157627904
   %i.lr = icmp ult i32 %i.lq, 67108864
   br i1 %i.lr, label %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit.i, label %bb.ao
 
@@ -657,7 +654,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit.i: ;
   br label %_ZN6hermes2vm11Interpreter18handleCallSlowPathERNS0_7RuntimeEPNS0_17PinnedHermesValueE.exit
 
 bb.ao:                                            ; preds = %bb.an
-  %.mask.i.i.i.i.i.i.i.i.i.i = and i32 %.fr20.i, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i.i = and i32 %i.lp, -16777216
   %i.lt = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i.i, 1140850688
   br i1 %i.lt, label %_ZN6hermes2vm10dyn_vmcastINS0_13BoundFunctionEEEPT_NS0_11HermesValueE.exit.i, label %bb.ap
 
@@ -1060,8 +1057,7 @@ bb.wn:                                            ; preds = %.loopexit
   %i.exp = and i64 %.sroa.03.0.copyload, 281474976710655
   %i.exq = inttoptr i64 %i.exp to ptr             ; 3 uses
   %i.exr = load i32, ptr %i.exq, align 4
-  %.fr = freeze i32 %i.exr
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.exr, -16777216
   %i.exs = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 486539264
   br i1 %i.exs, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSErrorEEEPT_NS0_11HermesValueE.exit.thread.thread
 

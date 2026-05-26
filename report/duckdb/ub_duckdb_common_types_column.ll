@@ -201,9 +201,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !501
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph207.prol.loopexit, %.lr.ph207, %.preheader202, %.preheader201
-  %i.cq = phi i64 [ %i.cb, %.lr.ph207 ], [ %.promoted205, %.preheader201 ], [ %.promoted205, %.preheader202 ], [ %.lcssa279.unr, %.lr.ph207.prol.loopexit ], [ %i.co, %.lr.ph ]
-  %.fr = freeze i64 %i.cq                         ; 2 uses
-  %i.cr = icmp eq i64 %.fr, 0
+  %i.cq = phi i64 [ %i.cb, %.lr.ph207 ], [ %.promoted205, %.preheader201 ], [ %.promoted205, %.preheader202 ], [ %.lcssa279.unr, %.lr.ph207.prol.loopexit ], [ %i.co, %.lr.ph ] ; 2 uses
+  %i.cr = icmp eq i64 %i.cq, 0
   br i1 %i.cr, label %.thread192, label %bb.g
 
 .thread192:                                       ; preds = %bb.e, %_ZN6duckdb16DictionaryVector14DictionarySizeERKNS_6VectorE.exit, %.loopexit
@@ -215,7 +214,7 @@ bb.g:                                             ; preds = %.loopexit
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
-  %i.cs = phi i64 [ %.fr, %bb.g ], [ %i.m, %bb.c ]
+  %i.cs = phi i64 [ %i.cq, %bb.g ], [ %i.m, %bb.c ]
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !502, !nonnull !64, !align !94 ; 4 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %0, i64 16

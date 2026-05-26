@@ -201,8 +201,7 @@ _ZNKSt15__str_hash_baseIcSaIcENSt7__cxx1112basic_stringIcSt11char_traitsIcES0_EE
   %i.m = load ptr, ptr %.sroa.04.08, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 5 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 144
   %i.o = load i8, ptr %i.n, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.o
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.o, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit.i
     i8 1, label %bb.c
   ]
@@ -254,8 +253,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.a = load ptr, ptr %0, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %bb.a
   ]
@@ -658,8 +656,7 @@ bb.a:
 _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %bb.b
     i8 1, label %bb.c
   ]
@@ -709,9 +706,8 @@ bb.a:
 
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
-  %i.d = load i8, ptr %i.c, align 8, !tbaa !67
-  %.fr = freeze i8 %i.d                           ; 2 uses
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  %i.d = load i8, ptr %i.c, align 8, !tbaa !67    ; 2 uses
+  switch i8 %i.d, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %bb.b
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -797,7 +793,7 @@ bb.h:                                             ; preds = %_ZNK5arrow7compute1
 
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #31
-  %i.t = icmp eq i8 %.fr, 2
+  %i.t = icmp eq i8 %i.d, 2
   %spec.select.i.i.i.i87 = select i1 %i.t, ptr %i.b, ptr null
   br label %_ZN5arrow7compute11CallNotNullERKNS0_10ExpressionE.exit
 
@@ -1200,8 +1196,7 @@ bb.a:
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.c
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %bb.b
     i8 1, label %bb.c
   ]
@@ -1232,8 +1227,7 @@ bb.d:                                             ; preds = %_ZNK5arrow7compute1
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.j = load i8, ptr %i.i, align 8, !tbaa !67
-  %.fr = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr, 2
+  %i.k = icmp eq i8 %i.j, 2
   br i1 %i.k, label %_ZNK5arrow7compute10Expression4callEv.exit, label %_ZNK5arrow7compute10Expression4typeEv.exit.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit:       ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -1280,15 +1274,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %i.e = load i8, ptr %i.d, align 8, !tbaa !67
-  %.fr = freeze i8 %i.e                           ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !tbaa !67    ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %i.g = load i8, ptr %i.f, align 8, !tbaa !67
-  %.not = icmp eq i8 %.fr, %i.g
+  %.not = icmp eq i8 %i.e, %i.g
   br i1 %.not, label %_ZNK5arrow7compute10Expression7literalEv.exit, label %.thread76
 
 _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %bb.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.e, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %bb.d
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -1587,8 +1580,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.a = load ptr, ptr %0, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %bb.a
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -1818,8 +1810,7 @@ bb.a:
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  %i.d = icmp eq i8 %.fr, 0
+  %i.d = icmp eq i8 %i.c, 0
   br i1 %i.d, label %_ZNK5arrow7compute10Expression7literalEv.exit, label %_ZNK5arrow7compute10Expression7literalEv.exit.thread
 
 _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -1850,8 +1841,7 @@ bb.a:
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.c
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %bb.b
     i8 1, label %bb.c
   ]
@@ -1878,8 +1868,7 @@ _ZNK5arrow7compute10Expression7literalEv.exit.i31: ; preds = %_ZNK5arrow7compute
   %i.h = load ptr, ptr %0, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.j = load i8, ptr %i.i, align 8, !tbaa !67
-  %.fr.i32 = freeze i8 %i.j
-  switch i8 %.fr.i32, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i34 [
+  switch i8 %i.j, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i34 [
     i8 0, label %bb.d
     i8 1, label %bb.e
   ]
@@ -1912,8 +1901,7 @@ bb.f:                                             ; preds = %_ZNK5arrow7compute1
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.f
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 144
   %i.r = load i8, ptr %i.q, align 8, !tbaa !67
-  %.fr = freeze i8 %i.r
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.r, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
     i8 2, label %_ZN5arrow7compute11CallNotNullERKNS0_10ExpressionE.exit
@@ -1972,8 +1960,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 144
   %i.au = load i8, ptr %i.at, align 8, !tbaa !67
-  %.fr105 = freeze i8 %i.au
-  %i.av = icmp eq i8 %.fr105, 2
+  %i.av = icmp eq i8 %i.au, 2
   br i1 %i.av, label %_ZNK5arrow7compute10Expression4callEv.exit, label %_ZNK5arrow7compute10Expression9field_refEv.exit
 
 _ZNK5arrow7compute10Expression4callEv.exit:       ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -2376,8 +2363,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.w = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 144
   %i.y = load i8, ptr %i.x, align 8, !tbaa !67
-  %.fr = freeze i8 %i.y
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.y, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -2780,8 +2766,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.w = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 4 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 144
   %i.y = load i8, ptr %i.x, align 8, !tbaa !67
-  %.fr = freeze i8 %i.y
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.y, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -3184,9 +3169,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit141: ; preds = %.b
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.g
   %i.ai = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 11 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 144
-  %i.ak = load i8, ptr %i.aj, align 8, !tbaa !67
-  %.fr = freeze i8 %i.ak                          ; 2 uses
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  %i.ak = load i8, ptr %i.aj, align 8, !tbaa !67  ; 2 uses
+  switch i8 %i.ak, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression9parameterEv.exit
   ]
@@ -3589,7 +3573,7 @@ bb.bk:                                            ; preds = %_ZNSt7__cxx1112basi
   br label %common.resume
 
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
-  %i.go = icmp eq i8 %.fr, 2
+  %i.go = icmp eq i8 %i.ak, 2
   %spec.select.i.i.i.i = select i1 %i.go, ptr %i.ai, ptr null
   call void @llvm.lifetime.start.p0(ptr nonnull %35) #31
   %i.gp = getelementptr inbounds nuw i8, ptr %spec.select.i.i.i.i, i64 32 ; 2 uses
@@ -3992,8 +3976,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.a = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression9field_refEv.exit
   ]
@@ -4219,8 +4202,7 @@ _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt
   %i.a = load ptr, ptr %0, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression7literalEv.exit.fold.split
   ]
@@ -4466,8 +4448,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit60:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.g = load i8, ptr %i.f, align 8, !tbaa !67
-  %.fr = freeze i8 %i.g
-  %i.h = icmp eq i8 %.fr, 2
+  %i.h = icmp eq i8 %i.g, 2
   br i1 %i.h, label %_ZNK5arrow7compute10Expression4callEv.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -4870,8 +4851,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 144
   %i.b = load i8, ptr %i.a, align 8, !tbaa !67
-  %.fr = freeze i8 %i.b
-  %i.c = icmp eq i8 %.fr, 2
+  %i.c = icmp eq i8 %i.b, 2
   br i1 %i.c, label %_ZNK5arrow7compute10Expression4callEv.exit, label %_ZNK5arrow7compute10Expression4callEv.exit.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit:       ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -5274,8 +5254,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.f = load i8, ptr %i.e, align 8, !tbaa !67, !noalias !621
-  %.fr.i = freeze i8 %i.f
-  %i.g = icmp eq i8 %.fr.i, 1
+  %i.g = icmp eq i8 %i.f, 1
   br i1 %i.g, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i, label %.thread76
 
 _ZNK5arrow7compute10Expression9field_refEv.exit.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
@@ -5387,8 +5366,7 @@ _ZNK5arrow7compute10Expression7literalEv.exit.i.i: ; preds = %_ZN5arrow5DatumC2E
   %i.ao = load ptr, ptr %38, align 8, !tbaa !63, !noalias !621, !nonnull !66, !noundef !66 ; 10 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 144 ; 3 uses
   %i.aq = load i8, ptr %i.ap, align 8, !tbaa !67, !noalias !621
-  %.fr.i.i = freeze i8 %i.aq
-  switch i8 %.fr.i.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i [
+  switch i8 %i.aq, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i [
     i8 0, label %bb.j
     i8 1, label %bb.k
   ]
@@ -5497,8 +5475,7 @@ bb.q:                                             ; preds = %bb.t, %bb.r, %_ZNK5
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i66.i: ; preds = %bb.l
   %i.bm = load i8, ptr %i.ap, align 8, !tbaa !67, !noalias !621
-  %.fr.i67.i = freeze i8 %i.bm
-  switch i8 %.fr.i67.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i69.i [
+  switch i8 %i.bm, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i69.i [
     i8 0, label %bb.r
     i8 1, label %bb.s
   ]
@@ -5536,8 +5513,7 @@ bb.u:                                             ; preds = %bb.t
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i73.i: ; preds = %bb.u
   %i.bx = load i8, ptr %i.ap, align 8, !tbaa !67, !noalias !621
-  %.fr.i74.i = freeze i8 %i.bx
-  switch i8 %.fr.i74.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i76.i [
+  switch i8 %i.bx, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i76.i [
     i8 0, label %bb.v
     i8 1, label %bb.w
   ]
@@ -5795,8 +5771,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 _ZNK5arrow7compute10Expression7literalEv.exit.i82.i: ; preds = %.critedge.i
   %i.dy = getelementptr inbounds nuw i8, ptr %i.dx, i64 144
   %i.dz = load i8, ptr %i.dy, align 8, !tbaa !67, !noalias !621
-  %.fr.i83.i = freeze i8 %i.dz
-  switch i8 %.fr.i83.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i85.i [
+  switch i8 %i.dz, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i85.i [
     i8 0, label %bb.ax
     i8 1, label %bb.ay
   ]
@@ -6199,8 +6174,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit64:         ; preds = %_ZN5arrow7compute10
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit64
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 144
   %i.lj = load i8, ptr %i.li, align 8, !tbaa !67
-  %.fr = freeze i8 %i.lj
-  %i.lk = icmp eq i8 %.fr, 2
+  %i.lk = icmp eq i8 %i.lj, 2
   br i1 %i.lk, label %_ZNK5arrow7compute10Expression4callEv.exit, label %bb.ds
 
 bb.ds:                                            ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i, %_ZN5arrow7compute10ExpressionD2Ev.exit64
@@ -6603,8 +6577,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit55:         ; preds = %_ZN5arrow7compute10
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit55
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 144
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !67
-  %.fr = freeze i8 %i.ar
-  %i.as = icmp eq i8 %.fr, 2
+  %i.as = icmp eq i8 %i.ar, 2
   br i1 %i.as, label %_ZNK5arrow7compute10Expression4callEv.exit, label %bb.r
 
 bb.r:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i, %_ZN5arrow7compute10ExpressionD2Ev.exit55
@@ -7007,8 +6980,7 @@ bb.ab:                                            ; preds = %.lr.ph, %.thread216
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.ab
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 144
   %i.bz = load i8, ptr %i.by, align 8, !tbaa !67
-  %.fr = freeze i8 %i.bz
-  %i.ca = icmp eq i8 %.fr, 2
+  %i.ca = icmp eq i8 %i.bz, 2
   br i1 %i.ca, label %_ZNK5arrow7compute10Expression4callEv.exit.i, label %.thread216
 
 _ZNK5arrow7compute10Expression4callEv.exit.i:     ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -7043,8 +7015,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i
   %i.cr = getelementptr inbounds nuw i8, ptr %.val15.i, i64 144
   %i.cs = load i8, ptr %i.cr, align 8, !tbaa !67, !noalias !721
-  %.fr.i.i = freeze i8 %i.cs
-  %i.ct = icmp eq i8 %.fr.i.i, 2
+  %i.ct = icmp eq i8 %i.cs, 2
   br i1 %i.ct, label %_ZNK5arrow7compute10Expression4callEv.exit.i.i, label %.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit.i.i:   ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
@@ -7070,8 +7041,7 @@ bb.ad:                                            ; preds = %bb.ac
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i: ; preds = %bb.ad
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 144
   %i.db = load i8, ptr %i.da, align 8, !tbaa !67, !noalias !721
-  %.fr12.i.i = freeze i8 %i.db
-  %i.dc = icmp eq i8 %.fr12.i.i, 1
+  %i.dc = icmp eq i8 %i.db, 1
   br i1 %i.dc, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i, label %.thread
 
 _ZNK5arrow7compute10Expression9field_refEv.exit.i.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i
@@ -7083,8 +7053,7 @@ _ZNK5arrow7compute10Expression9field_refEv.exit.i.i: ; preds = %_ZSt6get_ifIN5ar
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i
   %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 144
   %i.dg = load i8, ptr %i.df, align 8, !tbaa !67, !noalias !721
-  %.fr13.i.i = freeze i8 %i.dg
-  %i.dh = icmp eq i8 %.fr13.i.i, 0
+  %i.dh = icmp eq i8 %i.dg, 0
   br i1 %i.dh, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i, label %.thread
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
@@ -7103,8 +7072,7 @@ _ZN5arrow7compute12_GLOBAL__N_110Inequality24ExtractOneFromComparisonERKNS0_10Ex
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i18.i: ; preds = %_ZN5arrow7compute12_GLOBAL__N_110Inequality24ExtractOneFromComparisonERKNS0_10ExpressionE.exit.i
   %i.do = getelementptr inbounds nuw i8, ptr %i.dn, i64 144
   %i.dp = load i8, ptr %i.do, align 8, !tbaa !67, !noalias !718
-  %.fr19.i = freeze i8 %i.dp
-  %i.dq = icmp eq i8 %.fr19.i, 2
+  %i.dq = icmp eq i8 %i.dp, 2
   br i1 %i.dq, label %_ZNK5arrow7compute10Expression4callEv.exit21.i, label %.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit21.i:   ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i18.i
@@ -7136,8 +7104,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit23.thread.i
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 144
   %i.ei = load i8, ptr %i.eh, align 8, !tbaa !67, !noalias !718
-  %.fr20.i = freeze i8 %i.ei
-  %i.ej = icmp eq i8 %.fr20.i, 1
+  %i.ej = icmp eq i8 %i.ei, 1
   br i1 %i.ej, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i, label %.thread
 
 _ZNK5arrow7compute10Expression9field_refEv.exit.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
@@ -7170,8 +7137,7 @@ bb.af:                                            ; preds = %bb.ae
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i32.i: ; preds = %bb.af
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 144
   %i.es = load i8, ptr %i.er, align 8, !tbaa !67, !noalias !724
-  %.fr12.i33.i = freeze i8 %i.es
-  %i.et = icmp eq i8 %.fr12.i33.i, 1
+  %i.et = icmp eq i8 %i.es, 1
   br i1 %i.et, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i34.i, label %.thread
 
 _ZNK5arrow7compute10Expression9field_refEv.exit.i34.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i32.i
@@ -7183,8 +7149,7 @@ _ZNK5arrow7compute10Expression9field_refEv.exit.i34.i: ; preds = %_ZSt6get_ifIN5
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i36.i: ; preds = %_ZNK5arrow7compute10Expression9field_refEv.exit.i34.i
   %i.ew = getelementptr inbounds nuw i8, ptr %i.ev, i64 144
   %i.ex = load i8, ptr %i.ew, align 8, !tbaa !67, !noalias !724
-  %.fr13.i37.i = freeze i8 %i.ex
-  %i.ey = icmp eq i8 %.fr13.i37.i, 0
+  %i.ey = icmp eq i8 %i.ex, 0
   br i1 %i.ey, label %_ZNK5arrow7compute10Expression7literalEv.exit.i38.i, label %.thread
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i38.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i36.i
@@ -7587,8 +7552,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit60:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.g = load i8, ptr %i.f, align 8, !tbaa !67
-  %.fr = freeze i8 %i.g
-  %i.h = icmp eq i8 %.fr, 2
+  %i.h = icmp eq i8 %i.g, 2
   br i1 %i.h, label %_ZNK5arrow7compute10Expression4callEv.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -7991,8 +7955,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.f = load i8, ptr %i.e, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.f
-  %i.g = icmp eq i8 %.fr.i, 1
+  %i.g = icmp eq i8 %i.f, 1
   br i1 %i.g, label %_ZNK5arrow7compute10Expression9parameterEv.exit.i, label %_ZNK5arrow7compute10Expression9parameterEv.exit.thread.i
 
 _ZNK5arrow7compute10Expression9parameterEv.exit.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
@@ -8395,8 +8358,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit66:         ; preds = %_ZN5arrow7compute10
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit66
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fs, i64 144
   %i.fu = load i8, ptr %i.ft, align 8, !tbaa !67
-  %.fr = freeze i8 %i.fu
-  %i.fv = icmp eq i8 %.fr, 2
+  %i.fv = icmp eq i8 %i.fu, 2
   br i1 %i.fv, label %_ZNK5arrow7compute10Expression4callEv.exit, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i, %_ZN5arrow7compute10ExpressionD2Ev.exit66
@@ -8799,8 +8761,7 @@ bb.am:                                            ; preds = %bb.aj
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %bb.am
   %i.dq = getelementptr inbounds nuw i8, ptr %i.do, i64 144
   %i.dr = load i8, ptr %i.dq, align 8, !tbaa !67
-  %.fr = freeze i8 %i.dr
-  %i.ds = icmp eq i8 %.fr, 1
+  %i.ds = icmp eq i8 %i.dr, 1
   br i1 %i.ds, label %_ZNK5arrow7compute10Expression9field_refEv.exit102, label %bb.an
 
 bb.an:                                            ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i, %bb.am
@@ -9203,8 +9164,7 @@ bb.j:                                             ; preds = %.lr.ph, %bb.s
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.j
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 144
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !67
-  %.fr = freeze i8 %i.az
-  %i.ba = icmp eq i8 %.fr, 2
+  %i.ba = icmp eq i8 %i.az, 2
   br i1 %i.ba, label %_ZNK5arrow7compute10Expression4callEv.exit, label %_ZNK5arrow7compute10Expression4callEv.exit.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit:       ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -9607,8 +9567,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i: ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %.val1, i64 144
   %i.b = load i8, ptr %i.a, align 8, !tbaa !67, !noalias !1130
-  %.fr.i.i.i = freeze i8 %i.b
-  %i.c = icmp eq i8 %.fr.i.i.i, 2
+  %i.c = icmp eq i8 %i.b, 2
   br i1 %i.c, label %_ZNK5arrow7compute10Expression4callEv.exit.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %bb.a
@@ -9648,8 +9607,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i.i.i
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 144
   %i.v = load i8, ptr %i.u, align 8, !tbaa !67
-  %.fr18.i.i.i = freeze i8 %i.v
-  %i.w = icmp eq i8 %.fr18.i.i.i, 1
+  %i.w = icmp eq i8 %i.v, 1
   br i1 %i.w, label %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.i.i.i
@@ -9666,8 +9624,7 @@ _ZNK5arrow7compute10Expression9field_refEv.exit.i.i.i: ; preds = %_ZSt6get_ifIN5
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i: ; preds = %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i.i
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 144
   %i.ab = load i8, ptr %i.aa, align 8, !tbaa !67
-  %.fr19.i.i.i = freeze i8 %i.ab
-  %i.ac = icmp eq i8 %.fr19.i.i.i, 0
+  %i.ac = icmp eq i8 %i.ab, 0
   br i1 %i.ac, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %_ZNK5arrow7compute10Expression9field_refEv.exit.i.i.i
@@ -9878,8 +9835,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i26.i.i.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread.i.i.i
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 144
   %i.cx = load i8, ptr %i.cw, align 8, !tbaa !67
-  %.fr17.i.i.i = freeze i8 %i.cx
-  %i.cy = icmp eq i8 %.fr17.i.i.i, 1
+  %i.cy = icmp eq i8 %i.cx, 1
   br i1 %i.cy, label %_ZNK5arrow7compute10Expression9field_refEv.exit29.i.i.i, label %bb.q
 
 bb.q:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i26.i.i.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit24.thread.i.i.i
@@ -10282,8 +10238,7 @@ _ZN5arrow7compute10ExpressionD2Ev.exit60:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.g = load i8, ptr %i.f, align 8, !tbaa !67
-  %.fr = freeze i8 %i.g
-  %i.h = icmp eq i8 %.fr, 2
+  %i.h = icmp eq i8 %i.g, 2
   br i1 %i.h, label %_ZNK5arrow7compute10Expression4callEv.exit, label %.thread
 
 .thread:                                          ; preds = %_ZN5arrow7compute10ExpressionD2Ev.exit60, %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -10686,8 +10641,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
   %i.f = load i8, ptr %i.e, align 8, !tbaa !67
-  %.fr = freeze i8 %i.f
-  %i.g = icmp eq i8 %.fr, 2
+  %i.g = icmp eq i8 %i.f, 2
   br i1 %i.g, label %_ZNK5arrow7compute10Expression4callEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i, %bb.a
@@ -10970,8 +10924,7 @@ bb.a:
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  switch i8 %.fr, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
+  switch i8 %i.c, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit
     i8 1, label %bb.m
     i8 2, label %_ZN5arrow7compute11CallNotNullERKNS0_10ExpressionE.exit
@@ -11374,8 +11327,7 @@ bb.r:                                             ; preds = %_ZN5arrow10TypeHold
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %bb.r
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 144
   %i.bb = load i8, ptr %i.ba, align 8, !tbaa !67, !noalias !1381
-  %.fr.i = freeze i8 %i.bb
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i [
+  switch i8 %i.bb, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i [
     i8 0, label %bb.s
     i8 1, label %_ZNK5arrow7compute10Expression4typeEv.exit.sink.split.i
   ]
@@ -11778,8 +11730,7 @@ bb.if:                                            ; preds = %.lr.ph, %bb.nq
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %bb.if
   %i.yc = getelementptr inbounds nuw i8, ptr %i.yb, i64 144
   %i.yd = load i8, ptr %i.yc, align 8, !tbaa !67
-  %.fr.i109 = freeze i8 %i.yd
-  switch i8 %.fr.i109, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.yd, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %bb.ig
     i8 1, label %bb.ih
   ]
@@ -11858,8 +11809,7 @@ bb.in:                                            ; preds = %_ZN5arrow10TypeHold
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.in
   %i.yu = getelementptr inbounds nuw i8, ptr %i.yt, i64 144
   %i.yv = load i8, ptr %i.yu, align 8, !tbaa !67
-  %.fr = freeze i8 %i.yv
-  %i.yw = icmp eq i8 %.fr, 0
+  %i.yw = icmp eq i8 %i.yv, 0
   br i1 %i.yw, label %_ZNK5arrow7compute10Expression7literalEv.exit, label %.thread294
 
 _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -12262,8 +12212,7 @@ _ZNSt6vectorIN5arrow10TypeHolderESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i: ; pr
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %.lr.ph
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 144
   %i.r = load i8, ptr %i.q, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.r
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.r, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %bb.b
     i8 1, label %bb.c
   ]
@@ -12666,8 +12615,7 @@ _ZN5arrow7compute12_GLOBAL__N_115GetNullHandlingERKNS0_10Expression4CallE.exit: 
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %.lr.ph
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 144
   %i.dd = load i8, ptr %i.dc, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.dd
-  %i.de = icmp eq i8 %.fr.i, 0
+  %i.de = icmp eq i8 %i.dd, 0
   br i1 %i.de, label %_ZNK5arrow7compute10Expression7literalEv.exit.i, label %.critedge
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
@@ -12680,8 +12628,7 @@ _ZNK5arrow7compute10Expression7literalEv.exit.i99: ; preds = %_ZNK5arrow7compute
   %i.di = load ptr, ptr %.sroa.0156.0206, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 144
   %i.dk = load i8, ptr %i.dj, align 8, !tbaa !67
-  %.fr.i100 = freeze i8 %i.dk
-  switch i8 %.fr.i100, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.dk, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %bb.ac
     i8 1, label %bb.ad
   ]
@@ -13084,8 +13031,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   %i.c = load i8, ptr %i.b, align 8, !tbaa !67
-  %.fr = freeze i8 %i.c
-  %i.d = icmp eq i8 %.fr, 2
+  %i.d = icmp eq i8 %i.c, 2
   br i1 %i.d, label %_ZNK5arrow7compute10Expression4callEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i, %bb.a
@@ -13488,8 +13434,7 @@ bb.at:                                            ; preds = %.preheader.i.i.i
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i.i.i: ; preds = %bb.at
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 144
   %i.fz = load i8, ptr %i.fy, align 8, !tbaa !67
-  %.fr.i.i.i.i.i.i.i = freeze i8 %i.fz
-  %i.ga = icmp eq i8 %.fr.i.i.i.i.i.i.i, 0
+  %i.ga = icmp eq i8 %i.fz, 0
   br i1 %i.ga, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i.i.i
@@ -13525,8 +13470,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i.i.i"
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 144
   %i.gi = load i8, ptr %i.gh, align 8, !tbaa !67
-  %.fr.i.i5.i.i.i.i.i = freeze i8 %i.gi
-  %i.gj = icmp eq i8 %.fr.i.i5.i.i.i.i.i, 0
+  %i.gj = icmp eq i8 %i.gi, 0
   br i1 %i.gj, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEESG_EEbT_T0_.exit.i.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i.i.i
@@ -13929,8 +13873,7 @@ bb.eu:                                            ; preds = %bb.et
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i: ; preds = %bb.eu
   %i.wn = getelementptr inbounds nuw i8, ptr %i.wm, i64 144
   %i.wo = load i8, ptr %i.wn, align 8, !tbaa !67
-  %.fr141 = freeze i8 %i.wo
-  %i.wp = icmp eq i8 %.fr141, 0
+  %i.wp = icmp eq i8 %i.wo, 0
   br i1 %i.wp, label %_ZNK5arrow7compute10Expression7literalEv.exit, label %_ZNK5arrow7compute10Expression7literalEv.exit118
 
 _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -13942,8 +13885,7 @@ _ZNK5arrow7compute10Expression7literalEv.exit:    ; preds = %_ZSt6get_ifIN5arrow
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i115: ; preds = %_ZNK5arrow7compute10Expression7literalEv.exit
   %i.ws = getelementptr inbounds nuw i8, ptr %i.wr, i64 144
   %i.wt = load i8, ptr %i.ws, align 8, !tbaa !67
-  %.fr142 = freeze i8 %i.wt
-  %i.wu = icmp eq i8 %.fr142, 0
+  %i.wu = icmp eq i8 %i.wt, 0
   br i1 %i.wu, label %_ZNK5arrow7compute10Expression7literalEv.exit118, label %bb.ev
 
 bb.ev:                                            ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i115, %_ZNK5arrow7compute10Expression7literalEv.exit
@@ -14255,8 +14197,7 @@ bb.e:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 144
   %i.i = load i8, ptr %i.h, align 8, !tbaa !67
-  %.fr.i.i.i = freeze i8 %i.i
-  switch i8 %.fr.i.i.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i [
+  switch i8 %i.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i
     i8 1, label %bb.f
   ]
@@ -14659,8 +14600,7 @@ bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr %1, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 5 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 144
   %i.i = load i8, ptr %i.h, align 8, !tbaa !67
-  %.fr.i.i.i = freeze i8 %i.i
-  switch i8 %.fr.i.i.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i [
+  switch i8 %i.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i
     i8 1, label %bb.e
   ]
@@ -15063,8 +15003,7 @@ bb.i:                                             ; preds = %.lr.ph.i
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i: ; preds = %bb.i
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 144
   %i.ae = load i8, ptr %i.ad, align 8, !tbaa !67
-  %.fr.i.i.i.i.i = freeze i8 %i.ae
-  %i.af = icmp eq i8 %.fr.i.i.i.i.i, 0
+  %i.af = icmp eq i8 %i.ae, 0
   br i1 %i.af, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i
@@ -15094,8 +15033,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i"
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 144
   %i.an = load i8, ptr %i.am, align 8, !tbaa !67
-  %.fr.i.i5.i.i.i = freeze i8 %i.an
-  %i.ao = icmp eq i8 %.fr.i.i5.i.i.i, 0
+  %i.ao = icmp eq i8 %i.an, 0
   br i1 %i.ao, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEESC_EEbT_T0_.exit.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i
@@ -15484,8 +15422,7 @@ bb.au:                                            ; preds = %.outer, %bb.bq
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i36: ; preds = %bb.au
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 144
   %i.fp = load i8, ptr %i.fo, align 8, !tbaa !67
-  %.fr.i.i.i.i.i37 = freeze i8 %i.fp
-  %i.fq = icmp eq i8 %.fr.i.i.i.i.i37, 0
+  %i.fq = icmp eq i8 %i.fp, 0
   br i1 %i.fq, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i55, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i38"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i55: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i36
@@ -15515,8 +15452,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i41: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i38"
   %i.fx = getelementptr inbounds nuw i8, ptr %i.fw, i64 144
   %i.fy = load i8, ptr %i.fx, align 8, !tbaa !67
-  %.fr.i.i5.i.i.i42 = freeze i8 %i.fy
-  %i.fz = icmp eq i8 %.fr.i.i5.i.i.i42, 0
+  %i.fz = icmp eq i8 %i.fy, 0
   br i1 %i.fz, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i48, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclIPS4_NS_17__normal_iteratorISB_St6vectorIS4_SaIS4_EEEEEEbT_T0_.exit.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i48: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i41
@@ -15764,8 +15700,7 @@ bb.b:                                             ; preds = %.lr.ph, %_ZN5arrow7
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 144
   %i.h = load i8, ptr %i.g, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.h
-  %i.i = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.i = icmp eq i8 %i.h, 0
   br i1 %i.i, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -15795,8 +15730,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 144
   %i.q = load i8, ptr %i.p, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.q
-  %i.r = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.r = icmp eq i8 %i.q, 0
   br i1 %i.r, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEESG_EEbT_T0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -15970,8 +15904,7 @@ bb.q:                                             ; preds = %_ZN5arrow7compute10
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i: ; preds = %bb.q
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 144 ; 2 uses
   %i.bw = load i8, ptr %i.bv, align 8, !tbaa !67
-  %.fr.i.i.i.i.i = freeze i8 %i.bw
-  %i.bx = icmp eq i8 %.fr.i.i.i.i.i, 0
+  %i.bx = icmp eq i8 %i.bw, 0
   br i1 %i.bx, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i.i
@@ -16001,8 +15934,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i.i"
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 144
   %i.cf = load i8, ptr %i.ce, align 8, !tbaa !67
-  %.fr.i.i5.i.i.i = freeze i8 %i.cf
-  %i.cg = icmp eq i8 %.fr.i.i5.i.i.i, 0
+  %i.cg = icmp eq i8 %i.cf, 0
   br i1 %i.cg, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i, label %bb.r
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i.i
@@ -16233,8 +16165,7 @@ bb.a:
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %.lr.ph
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 144
   %i.e = load i8, ptr %i.d, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.e
-  %i.f = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.f = icmp eq i8 %i.e, 0
   br i1 %i.f, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -16264,8 +16195,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 144
   %i.n = load i8, ptr %i.m, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.n
-  %i.o = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.o = icmp eq i8 %i.n, 0
   br i1 %i.o, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEESG_EEbT_T0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -16583,8 +16513,7 @@ bb.a:
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %.lr.ph
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 144
   %i.f = load i8, ptr %i.e, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.f
-  %i.g = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.g = icmp eq i8 %i.f, 0
   br i1 %i.g, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -16614,8 +16543,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 144
   %i.o = load i8, ptr %i.n, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.o
-  %i.p = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.p = icmp eq i8 %i.o, 0
   br i1 %i.p, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclIPS4_SB_EEbT_T0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -16949,8 +16877,7 @@ bb.b:                                             ; preds = %.lr.ph
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
   %i.g = load i8, ptr %i.f, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.g
-  %i.h = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.h = icmp eq i8 %i.g, 0
   br i1 %i.h, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -16980,8 +16907,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 144
   %i.p = load i8, ptr %i.o, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.p
-  %i.q = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.q = icmp eq i8 %i.p, 0
   br i1 %i.q, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEESG_EEbT_T0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -17177,8 +17103,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5arrow7compute10ExpressionESt6ve
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5arrow7compute10ExpressionESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.j = load i8, ptr %i.i, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -17208,8 +17133,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 144
   %i.s = load i8, ptr %i.r, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.s
-  %i.t = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.t = icmp eq i8 %i.s, 0
   br i1 %i.t, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclINS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEKS4_EEbT_RT0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -17268,8 +17192,7 @@ _ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5arrow7compute10ExpressionESt6ve
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i: ; preds = %_ZSt9__advanceIN9__gnu_cxx17__normal_iteratorIPN5arrow7compute10ExpressionESt6vectorIS4_SaIS4_EEEElEvRT_T0_St26random_access_iterator_tag.exit
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.j = load i8, ptr %i.i, align 8, !tbaa !67
-  %.fr.i.i.i.i = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr.i.i.i.i, 0
+  %i.k = icmp eq i8 %i.j, 0
   br i1 %i.k, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i, label %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i.i
@@ -17299,8 +17222,7 @@ _ZNK5arrow7compute10Expression13IsNullLiteralEv.exit.i._ZSt6get_ifIN5arrow5Datum
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i: ; preds = %"_ZZZN5arrow7compute12CanonicalizeENS0_10ExpressionEPNS0_11ExecContextEENK3$_1clES1_ENK3$_08PriorityERKS1_.exit.i.i"
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 144
   %i.s = load i8, ptr %i.r, align 8, !tbaa !67
-  %.fr.i.i5.i.i = freeze i8 %i.s
-  %i.t = icmp eq i8 %.fr.i.i5.i.i, 0
+  %i.t = icmp eq i8 %i.s, 0
   br i1 %i.t, label %_ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i, label %"_ZN9__gnu_cxx5__ops14_Val_comp_iterIZZN5arrow7compute12CanonicalizeENS3_10ExpressionEPNS3_11ExecContextEENK3$_1clES4_E3$_0EclIKS4_NS_17__normal_iteratorIPS4_St6vectorIS4_SaIS4_EEEEEEbRT_T0_.exit"
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i.i10.i.i: ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i4.i.i
@@ -17703,8 +17625,7 @@ bb.a:
 _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 144
   %i.j = load i8, ptr %i.i, align 8, !tbaa !67, !noalias !1695
-  %.fr.i = freeze i8 %i.j
-  %i.k = icmp eq i8 %.fr.i, 2
+  %i.k = icmp eq i8 %i.j, 2
   br i1 %i.k, label %_ZNK5arrow7compute10Expression4callEv.exit.i, label %.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit.i:     ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
@@ -17757,8 +17678,7 @@ bb.b:                                             ; preds = %_ZSteqIcSt11char_tr
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i: ; preds = %.noexc
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 144
   %i.aj = load i8, ptr %i.ai, align 8, !tbaa !67, !noalias !1695
-  %.fr146.i = freeze i8 %i.aj
-  %i.ak = icmp eq i8 %.fr146.i, 1
+  %i.ak = icmp eq i8 %i.aj, 1
   br i1 %i.ak, label %_ZNK5arrow7compute10Expression9field_refEv.exit72.i, label %.thread
 
 _ZNK5arrow7compute10Expression9field_refEv.exit72.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i
@@ -17901,8 +17821,7 @@ bb.m:                                             ; preds = %bb.l
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i: ; preds = %bb.m
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 144
   %i.cb = load i8, ptr %i.ca, align 8, !tbaa !67, !noalias !1695
-  %.fr.i.i = freeze i8 %i.cb
-  %i.cc = icmp eq i8 %.fr.i.i, 1
+  %i.cc = icmp eq i8 %i.cb, 1
   br i1 %i.cc, label %_ZNK5arrow7compute10Expression9field_refEv.exit98.i.i, label %bb.n
 
 bb.n:                                             ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i.i, %bb.m
@@ -18305,8 +18224,7 @@ bb.ep:                                            ; preds = %.noexc4
 _ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i: ; preds = %bb.ep
   %i.or = getelementptr inbounds nuw i8, ptr %i.oq, i64 144
   %i.os = load i8, ptr %i.or, align 8, !tbaa !67, !noalias !1695
-  %.fr144.i = freeze i8 %i.os
-  %i.ot = icmp eq i8 %.fr144.i, 0
+  %i.ot = icmp eq i8 %i.os, 0
   br i1 %i.ot, label %_ZNK5arrow7compute10Expression7literalEv.exit.i, label %.thread
 
 _ZNK5arrow7compute10Expression7literalEv.exit.i:  ; preds = %_ZSt6get_ifIN5arrow5DatumEJS1_NS0_7compute10Expression9ParameterENS3_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i
@@ -18327,8 +18245,7 @@ bb.eq:                                            ; preds = %_ZNK5arrow7compute1
 _ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i97.i: ; preds = %.noexc5
   %i.oz = getelementptr inbounds nuw i8, ptr %i.oy, i64 144
   %i.pa = load i8, ptr %i.oz, align 8, !tbaa !67, !noalias !1695
-  %.fr145.i = freeze i8 %i.pa
-  %i.pb = icmp eq i8 %.fr145.i, 1
+  %i.pb = icmp eq i8 %i.pa, 1
   br i1 %i.pb, label %_ZNK5arrow7compute10Expression9field_refEv.exit105.i, label %.thread
 
 _ZNK5arrow7compute10Expression9field_refEv.exit105.i: ; preds = %_ZSt6get_ifIN5arrow7compute10Expression9ParameterEJNS0_5DatumES3_NS2_4CallEEENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i97.i
@@ -18573,8 +18490,7 @@ _ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt
   %.tr54 = phi ptr [ %i.o, %tailrecurse.backedge ], [ %0, %bb.a ] ; 9 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 144
   %i.d = load i8, ptr %i.c, align 8, !tbaa !67
-  %.fr = freeze i8 %i.d
-  %i.e = icmp eq i8 %.fr, 2
+  %i.e = icmp eq i8 %i.d, 2
   br i1 %i.e, label %_ZNK5arrow7compute10Expression4callEv.exit, label %_ZNK5arrow7compute10Expression4callEv.exit.thread
 
 _ZNK5arrow7compute10Expression4callEv.exit:       ; preds = %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i
@@ -18597,8 +18513,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !63, !nonnull !66, !noundef !66 ; 3 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 144
   %i.r = load i8, ptr %i.q, align 8, !tbaa !67
-  %.fr.i = freeze i8 %i.r
-  switch i8 %.fr.i, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
+  switch i8 %i.r, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i [
     i8 0, label %_ZNK5arrow7compute10Expression4typeEv.exit
     i8 1, label %_ZNK5arrow7compute10Expression4typeEv.exit.thread
   ]
@@ -18619,11 +18534,10 @@ _ZNK5arrow7compute10Expression4typeEv.exit:       ; preds = %_ZSteqIcSt11char_tr
   %.pre = load ptr, ptr %.tr54, align 8, !tbaa !63 ; 4 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 144
   %.pre66 = load i8, ptr %.phi.trans.insert, align 8, !tbaa !67
-  %1 = freeze i8 %.pre66
   %.2.i = load ptr, ptr %i.v, align 8, !tbaa !255
   %i.w = getelementptr inbounds nuw i8, ptr %.2.i, i64 40
   %i.x = load i32, ptr %i.w, align 8, !tbaa !196  ; 3 uses
-  switch i8 %1, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i34 [
+  switch i8 %.pre66, label %_ZSt6get_ifIN5arrow7compute10Expression4CallEJNS0_5DatumENS2_9ParameterES3_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit.i.i.i34 [
     i8 0, label %bb.b
     i8 1, label %bb.c
   ]

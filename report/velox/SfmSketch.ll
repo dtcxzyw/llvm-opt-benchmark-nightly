@@ -201,8 +201,7 @@ bb.a:
   %i.e = fptoui x86_fp80 %i.d to i64              ; 2 uses
   %i.f = add i64 %i.e, 52
   %i.g = udiv i64 %i.f, %i.e
-  %.fr.i.i.i.i = freeze i64 %i.g
-  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.fr.i.i.i.i, i64 1)
+  %spec.select.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.g, i64 1)
   br label %select.unfold.i.i.i.i
 
 bb.b:                                             ; preds = %select.unfold.i.i.i.i
