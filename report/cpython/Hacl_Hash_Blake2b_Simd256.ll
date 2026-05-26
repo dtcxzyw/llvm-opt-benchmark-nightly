@@ -57,10 +57,9 @@ bb.a:
   %i.a = shl i64 %indvars.iv.next, 7
   %i.b = and i64 %i.a, 4294967168
   %i.c = add i64 %3, %i.b                         ; 2 uses
-  %7 = xor i64 %i.c, -1
-  %8 = and i64 %3, %7
-  %9 = lshr i64 %8, 63
-  %i.d = add i64 %9, %4
+  %add.overflow = icmp ult i64 %i.c, %3
+  %7 = zext i1 %add.overflow to i64
+  %i.d = add i64 %4, %7
   %i.e = shl i64 %indvars.iv, 7
   %i.f = and i64 %i.e, 4294967168
   %i.g = getelementptr i8, ptr %5, i64 %i.f
@@ -463,10 +462,9 @@ bb.a:
   %i.f = getelementptr i8, ptr %i.c, i64 %i.e
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr align 1 %i.f, i64 %i.d, i1 false)
   %i.g = add i64 %4, %i.b                         ; 2 uses
-  %8 = xor i64 %i.g, -1
-  %9 = and i64 %4, %8
-  %10 = lshr i64 %9, 63
-  %i.h = add i64 %10, %5
+  %add.overflow = icmp ult i64 %i.g, %4
+  %8 = zext i1 %add.overflow to i64
+  %i.h = add i64 %5, %8
   call fastcc void @update_block(ptr noundef %1, ptr noundef %2, i1 noundef zeroext true, i1 noundef zeroext %3, i64 %i.g, i64 %i.h, ptr noundef nonnull %i.a)
   call void @_Py_LibHacl_Lib_Memzero0_memzero0(ptr noundef nonnull %i.a, i64 noundef 128) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
@@ -572,10 +570,9 @@ bb.a:
   %i.b = shl i64 %indvars.iv.next.i, 7
   %i.c = and i64 %i.b, 4294967168
   %i.d = add i64 %i.c, %1                         ; 2 uses
-  %5 = xor i64 %i.d, -1
-  %6 = and i64 %1, %5
-  %7 = lshr i64 %6, 63
-  %i.e = add i64 %7, %2
+  %add.overflow.i = icmp ult i64 %i.d, %1
+  %5 = zext i1 %add.overflow.i to i64
+  %i.e = add i64 %2, %5
   %i.f = shl i64 %indvars.iv.i, 7
   %i.g = and i64 %i.f, 4294967168
   %i.h = getelementptr i8, ptr %3, i64 %i.g
@@ -599,10 +596,9 @@ bb.a:
   %i.c = zext i32 %4 to i64                       ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.a, ptr readonly align 1 %3, i64 %i.c, i1 false)
   %i.d = add i64 %1, %i.c                         ; 2 uses
-  %5 = xor i64 %i.d, -1
-  %6 = and i64 %1, %5
-  %7 = lshr i64 %6, 63
-  %i.e = add i64 %7, %2
+  %add.overflow.i = icmp ult i64 %i.d, %1
+  %5 = zext i1 %add.overflow.i to i64
+  %i.e = add i64 %2, %5
   call fastcc void @update_block(ptr noundef nonnull %i.b, ptr noundef %0, i1 noundef zeroext true, i1 noundef zeroext false, i64 %i.d, i64 %i.e, ptr noundef nonnull %i.a)
   call void @_Py_LibHacl_Lib_Memzero0_memzero0(ptr noundef nonnull %i.a, i64 noundef 128) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #23
@@ -1005,12 +1001,11 @@ bb.e:                                             ; preds = %bb.d
   %indvars.iv.next.i203 = add nuw nsw i64 %indvars.iv.i202, 1 ; 3 uses
   %i.u = shl i64 %indvars.iv.next.i203, 7
   %i.v = add i64 %i.u, %.sroa.3153.0.copyload     ; 2 uses
-  %3 = xor i64 %i.v, -1
-  %4 = and i64 %.sroa.3153.0.copyload, %3
-  %5 = lshr i64 %4, 63
+  %add.overflow.i204 = icmp ult i64 %i.v, %.sroa.3153.0.copyload
+  %3 = zext i1 %add.overflow.i204 to i64
   %i.w = shl i64 %indvars.iv.i202, 7
   %i.x = getelementptr i8, ptr %1, i64 %i.w
-  tail call fastcc void @update_block(ptr noundef %.sroa.4126.0.copyload, ptr noundef %.sroa.5127.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.v, i64 %5, ptr noundef readonly %i.x)
+  tail call fastcc void @update_block(ptr noundef %.sroa.4126.0.copyload, ptr noundef %.sroa.5127.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.v, i64 %3, ptr noundef readonly %i.x)
   %exitcond.not.i204 = icmp eq i64 %indvars.iv.next.i203, %wide.trip.count.i
   br i1 %exitcond.not.i204, label %_Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit205, label %.lr.ph.i201, !llvm.loop !11
 
@@ -1031,7 +1026,7 @@ bb.f:                                             ; preds = %bb.d
   %.197 = select i1 %or.cond, i64 128, i64 %i.d
   %i.ac = getelementptr i8, ptr %.sroa.466.0.copyload, i64 %.197
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.ac, ptr align 1 %1, i64 %i.aa, i1 false)
-  %i.ad = add i64 %.sroa.3153.0.copyload, %i.aa   ; 7 uses
+  %i.ad = add i64 %.sroa.3153.0.copyload, %i.aa   ; 8 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.053, i64 24, i1 false), !tbaa.struct !23
   store ptr %.sroa.466.0.copyload, ptr %.sroa.6128.0..sroa_idx, align 8, !tbaa !19
   store i64 %i.ad, ptr %.sroa.3153.0..sroa_idx, align 8, !tbaa !13
@@ -1050,13 +1045,14 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.ai, label %_Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit213, label %.lr.ph.i209
 
 .lr.ph.i209:                                      ; preds = %bb.f
-  %i.aj = zext nneg i32 %.0190 to i64
-  %i.ak = sub i64 %i.ad, %i.aj                    ; 3 uses
-  %i.al = add i64 %i.ak, 128
-  %i.am = sub i64 -129, %i.ak
-  %6 = and i64 %i.ak, %i.am
-  %7 = lshr i64 %6, 63
-  tail call fastcc void @update_block(ptr noundef %.sroa.451.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.al, i64 %7, ptr noundef readonly %.sroa.466.0.copyload)
+  %i.aj = zext nneg i32 %.0190 to i64             ; 2 uses
+  %i.ak = sub i64 %i.ad, %i.aj                    ; 2 uses
+  %i.al = add i64 %i.ad, 128
+  %i.am = sub i64 %i.al, %i.aj
+  %4 = add i64 %i.ak, 128
+  %add.overflow.i213 = icmp ult i64 %i.am, %i.ak
+  %5 = zext i1 %add.overflow.i213 to i64
+  tail call fastcc void @update_block(ptr noundef %.sroa.451.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %4, i64 %5, ptr noundef readonly %.sroa.466.0.copyload)
   br label %_Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit213
 
 _Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit213: ; preds = %.lr.ph.i209, %bb.f
@@ -1084,12 +1080,11 @@ _Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit213: ; preds = %.lr.ph.i2
   %indvars.iv.next.i221 = add nuw nsw i64 %indvars.iv.i220, 1 ; 3 uses
   %i.ax = shl i64 %indvars.iv.next.i221, 7
   %i.ay = add i64 %i.ax, %i.ad                    ; 2 uses
-  %8 = xor i64 %i.ay, -1
-  %9 = and i64 %i.ad, %8
-  %10 = lshr i64 %9, 63
+  %add.overflow.i224 = icmp ult i64 %i.ay, %i.ad
+  %6 = zext i1 %add.overflow.i224 to i64
   %i.az = shl i64 %indvars.iv.i220, 7
   %i.ba = getelementptr i8, ptr %i.ab, i64 %i.az
-  tail call fastcc void @update_block(ptr noundef %.sroa.451.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.ay, i64 %10, ptr noundef readonly %i.ba)
+  tail call fastcc void @update_block(ptr noundef %.sroa.451.0.copyload, ptr noundef %.sroa.5.0.copyload, i1 noundef zeroext false, i1 noundef zeroext false, i64 %i.ay, i64 %6, ptr noundef readonly %i.ba)
   %exitcond.not.i222 = icmp eq i64 %indvars.iv.next.i221, %wide.trip.count.i218
   br i1 %exitcond.not.i222, label %_Py_LibHacl_Hacl_Hash_Blake2b_Simd256_update_multi.exit223, label %.lr.ph.i219, !llvm.loop !11
 
@@ -1130,7 +1125,7 @@ bb.a:
   %.sroa.551.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.551.0.copyload = load ptr, ptr %.sroa.551.0..sroa_idx, align 8, !tbaa !19
   %.sroa.652.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.sroa.652.0.copyload = load i64, ptr %.sroa.652.0..sroa_idx, align 8, !tbaa !13 ; 5 uses
+  %.sroa.652.0.copyload = load i64, ptr %.sroa.652.0..sroa_idx, align 8, !tbaa !13 ; 4 uses
   %i.e = and i64 %.sroa.652.0.copyload, 127       ; 2 uses
   %i.f = icmp eq i64 %i.e, 0
   %i.g = icmp ne i64 %.sroa.652.0.copyload, 0
@@ -1147,7 +1142,6 @@ bb.a:
   %i.l = zext nneg i32 %i.i to i64
   %.067 = select i1 %or.cond3, i64 128, i64 %i.l
   %i.m = zext nneg i32 %.0 to i64                 ; 3 uses
-  %2 = sub i64 %.sroa.652.0.copyload, %i.m
   %i.n = trunc i8 %.sroa.561.0.copyload to i1
   %i.o = getelementptr i8, ptr %.sroa.551.0.copyload, i64 %i.m
   %i.p = sub nsw i64 0, %.067
@@ -1155,10 +1149,9 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #23
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %i.b, i8 0, i64 128, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.b, ptr readonly align 1 %i.q, i64 %i.m, i1 false)
-  %3 = xor i64 %.sroa.652.0.copyload, -1
-  %4 = and i64 %2, %3
-  %5 = lshr i64 %4, 63
-  call fastcc void @update_block(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i1 noundef zeroext true, i1 noundef zeroext %i.n, i64 %.sroa.652.0.copyload, i64 %5, ptr noundef nonnull %i.b)
+  %add.overflow.i = icmp ult i64 %.sroa.652.0.copyload, %i.m
+  %2 = zext i1 %add.overflow.i to i64
+  call fastcc void @update_block(ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, i1 noundef zeroext true, i1 noundef zeroext %i.n, i64 %.sroa.652.0.copyload, i64 %2, ptr noundef nonnull %i.b)
   call void @_Py_LibHacl_Lib_Memzero0_memzero0(ptr noundef nonnull %i.b, i64 noundef 128) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23

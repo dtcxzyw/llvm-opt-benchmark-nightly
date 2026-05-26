@@ -201,19 +201,17 @@ bb.e:                                             ; preds = %bb.a
 bb.f:                                             ; preds = %bb.a
   %i.g = zext nneg i32 %2 to i64
   %i.h = add i64 %0, %i.g                         ; 2 uses
-  %3 = xor i64 %i.h, -1
-  %4 = and i64 %0, %3
-  %5 = lshr i64 %4, 63
-  tail call void @_Py_LibHacl_Hacl_Hash_SHA2_sha384_update_last(i64 %i.h, i64 %5, i32 noundef %2, ptr noundef %1, ptr noundef %.8.val) #15
+  %add.overflow1 = icmp ult i64 %i.h, %0
+  %3 = zext i1 %add.overflow1 to i64
+  tail call void @_Py_LibHacl_Hacl_Hash_SHA2_sha384_update_last(i64 %i.h, i64 %3, i32 noundef %2, ptr noundef %1, ptr noundef %.8.val) #15
   br label %bb.o
 
 bb.g:                                             ; preds = %bb.a
   %i.i = zext nneg i32 %2 to i64
   %i.j = add i64 %0, %i.i                         ; 2 uses
-  %6 = xor i64 %i.j, -1
-  %7 = and i64 %0, %6
-  %8 = lshr i64 %7, 63
-  tail call void @_Py_LibHacl_Hacl_Hash_SHA2_sha512_update_last(i64 %i.j, i64 %8, i32 noundef %2, ptr noundef %1, ptr noundef %.8.val) #15
+  %add.overflow = icmp ult i64 %i.j, %0
+  %4 = zext i1 %add.overflow to i64
+  tail call void @_Py_LibHacl_Hacl_Hash_SHA2_sha512_update_last(i64 %i.j, i64 %4, i32 noundef %2, ptr noundef %1, ptr noundef %.8.val) #15
   br label %bb.o
 
 bb.h:                                             ; preds = %bb.a
