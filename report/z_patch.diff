@@ -1,0 +1,57 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index a064aa1016399..69c53db371ee7 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -713,6 +713,42 @@ static Value *foldSelectICmpMinMax(const ICmpInst *Cmp, Value *TVal,
+   return nullptr;
+ }
+ 
++/// Fold:
++///   %u = umax %x, C
++///   %sum = add nsw %u, %x
++///   %ov = icmp ult %sum, %x
++///   %clamp = umin %sum, MAX
++///   select %ov, MAX, %clamp
++/// to %clamp.
++static Value *foldSelectICmpUMaxAddNSWClamp(const ICmpInst *Cmp, Value *TVal,
++                                            Value *FVal) {
++  if (Cmp->getPredicate() != ICmpInst::ICMP_ULT)
++    return nullptr;
++
++  Value *Sum = Cmp->getOperand(0);
++  Value *X = Cmp->getOperand(1);
++
++  const APInt *MaxC;
++  if (!match(TVal, m_APInt(MaxC)) || MaxC->isNegative())
++    return nullptr;
++
++  if (!match(FVal, m_c_Intrinsic<Intrinsic::umin>(m_Specific(Sum),
++                                                  m_SpecificInt(*MaxC))))
++    return nullptr;
++
++  const APInt *C;
++  if (!match(Sum, m_c_NSWAdd(m_Specific(X),
++                             m_c_Intrinsic<Intrinsic::umax>(
++                                 m_Specific(X), m_APInt(C)))) ||
++      !C->isStrictlyPositive())
++    return nullptr;
++
++  // If the ult overflow check is true, X must have the sign bit set. Then
++  // umax(X, C) is X, and add nsw X, X leaves Sum with the sign bit set, so
++  // umin(Sum, sign-clear MAX) is MAX.
++  return FVal;
++}
++
+ /// We want to turn:
+ ///   (select (icmp eq (and X, Y), 0), (and (lshr X, Z), 1), 1)
+ /// into:
+@@ -2403,6 +2439,9 @@ Instruction *InstCombinerImpl::foldSelectInstWithICmp(SelectInst &SI,
+   if (Value *V = foldSelectICmpMinMax(ICI, TrueVal, FalseVal, Builder, SQ))
+     return replaceInstUsesWith(SI, V);
+ 
++  if (Value *V = foldSelectICmpUMaxAddNSWClamp(ICI, TrueVal, FalseVal))
++    return replaceInstUsesWith(SI, V);
++
+   if (Instruction *V =
+           foldSelectICmpAndAnd(SI.getType(), ICI, TrueVal, FalseVal, Builder))
+     return V;
