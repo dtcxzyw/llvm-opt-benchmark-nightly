@@ -201,7 +201,7 @@ bb.a:
   %i.ck = mul nsw i32 %i.cj, %i.ci
   %i.cl = load ptr, ptr %2, align 8, !tbaa !2281  ; 3 uses
   %.not121145 = icmp eq ptr %i.cl, %2             ; 2 uses
-  %.pre176 = load ptr, ptr %1, align 8, !tbaa !2253 ; 4 uses
+  %.pre176 = load ptr, ptr %1, align 8            ; 2 uses
   br i1 %.not121145, label %._crit_edge150, label %.preheader126
 
 .preheader126:                                    ; preds = %._crit_edge, %._crit_edge144
@@ -267,12 +267,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.preh
   %i.do = add nuw nsw i32 %.058147, 1
   %i.dp = load ptr, ptr %.sroa.077.0146, align 8, !tbaa !2281 ; 2 uses
   %.not121 = icmp eq ptr %i.dp, %2
-  br i1 %.not121, label %._crit_edge150, label %.preheader126, !llvm.loop !2304
+  br i1 %.not121, label %._crit_edge150.loopexit, label %.preheader126, !llvm.loop !2304
 
-._crit_edge150:                                   ; preds = %._crit_edge144, %._crit_edge
+._crit_edge150.loopexit:                          ; preds = %._crit_edge144
+  %.pre = load ptr, ptr %1, align 8, !tbaa !2253
+  br label %._crit_edge150
+
+._crit_edge150:                                   ; preds = %._crit_edge150.loopexit, %._crit_edge
+  %5 = phi ptr [ %.pre, %._crit_edge150.loopexit ], [ %.pre176, %._crit_edge ] ; 3 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.dr = load ptr, ptr %i.dq, align 8, !tbaa !2253 ; 3 uses
-  %.not17.i = icmp eq ptr %.pre176, %i.dr
+  %.not17.i = icmp eq ptr %5, %i.dr
   br i1 %.not17.i, label %_ZNK13ContextMapperILi3EE11setAffinityERKSt6vectorIP4NodeI8IntervalILi3EES4_ESaIS6_EE.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %._crit_edge150
@@ -285,7 +290,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %.preh
 
 bb.e:                                             ; preds = %bb.g, %.lr.ph.i
   %.019.i = phi i32 [ 0, %.lr.ph.i ], [ %.1.i, %bb.g ] ; 3 uses
-  %.sroa.07.018.i = phi ptr [ %.pre176, %.lr.ph.i ], [ %i.ea, %bb.g ] ; 2 uses
+  %.sroa.07.018.i = phi ptr [ %5, %.lr.ph.i ], [ %i.ea, %bb.g ] ; 2 uses
   %i.du = load ptr, ptr %.sroa.07.018.i, align 8, !tbaa !2260 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.du, i64 56
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !4
@@ -305,7 +310,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not.i, label %.preheader.i, label %bb.e, !llvm.loop !2294
 
 bb.h:                                             ; preds = %bb.j, %.preheader.i
-  %.sroa.07.121.i = phi ptr [ %.pre176, %.preheader.i ], [ %i.el, %bb.j ] ; 2 uses
+  %.sroa.07.121.i = phi ptr [ %5, %.preheader.i ], [ %i.el, %bb.j ] ; 2 uses
   %i.eb = load ptr, ptr %.sroa.07.121.i, align 8, !tbaa !2260 ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 56
   %i.ed = load i32, ptr %i.ec, align 4, !tbaa !4
@@ -708,7 +713,7 @@ bb.a:
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !4
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.at = load i32, ptr %i.as, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !8326 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 128 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.pre.i, i64 104
   %i.av = getelementptr inbounds nuw i8, ptr %.pre.i, i64 32
@@ -1111,7 +1116,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !8890 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 128 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -1514,7 +1519,7 @@ bb.a:
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !4
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !8975 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 128 ; 2 uses
   %i.aj = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -1917,7 +1922,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !9191 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 128 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -2320,7 +2325,7 @@ bb.a:
   %i.au = load i32, ptr %i.at, align 4, !tbaa !4
   %i.av = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.aa, align 8, !tbaa !741, !noalias !9498 ; 3 uses
+  %.pre.i = load ptr, ptr %i.aa, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 128 ; 2 uses
   %i.ax = load ptr, ptr %i.u, align 8, !tbaa !6263
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
@@ -2723,8 +2728,8 @@ bb.aa:                                            ; preds = %_ZN18RefCountedBloc
 _ZN11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEC2ERKSC_ii.exit: ; preds = %_ZN18RefCountedBlockPtrI19FieldEngineBaseDataILi3Ed14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEELb0E18RefBlockControllerIS7_EED2Ev.exit.i, %bb.aa
   %i.if = load i32, ptr %10, align 8, !tbaa !2499 ; 2 uses
   %i.ig = icmp sgt i32 %i.if, 0
-  %.pre246 = load ptr, ptr %i.i, align 8, !tbaa !597, !noalias !10275 ; 3 uses
-  %.pre247 = load ptr, ptr %i.h, align 8, !tbaa !595, !noalias !10275 ; 3 uses
+  %.pre246 = load ptr, ptr %i.i, align 8, !tbaa !597 ; 3 uses
+  %.pre247 = load ptr, ptr %i.h, align 8, !tbaa !595 ; 3 uses
   br i1 %i.ig, label %.preheader.i, label %_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE13notifyPreReadEv.exit
 
 .preheader.i:                                     ; preds = %_ZN11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEC2ERKSC_ii.exit, %._crit_edge.i
@@ -2836,14 +2841,14 @@ _ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12C
   br i1 %i.ld, label %bb.ab, label %bb.ae
 
 bb.ab:                                            ; preds = %_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE13notifyPreReadEv.exit
-  %i.le = load i32, ptr %i.g, align 4, !tbaa !609, !noalias !10280
+  %i.le = load i32, ptr %i.g, align 4, !tbaa !609, !noalias !10275
   %i.lf = icmp eq i32 %i.le, 1
-  %i.lg = load i32, ptr %i.y, align 4, !tbaa !4, !noalias !10280 ; 4 uses
+  %i.lg = load i32, ptr %i.y, align 4, !tbaa !4, !noalias !10275 ; 4 uses
   br i1 %i.lf, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.lh = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10280 ; 2 uses
-  %i.li = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10280 ; 2 uses
+  %i.lh = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10275 ; 2 uses
+  %i.li = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10275 ; 2 uses
   %i.lj = load double, ptr %1, align 8, !tbaa !247
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #48
   %i.lk = load i32, ptr @_ZN5Pooma12_GLOBAL__N_115mainScheduler_sE, align 4, !tbaa !2598
@@ -2854,17 +2859,17 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ab
   %i.lm = add i32 %i.lg, 1
-  %i.ln = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10283 ; 2 uses
+  %i.ln = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10282 ; 2 uses
   %i.lo = add i32 %i.ln, 1
-  %i.lp = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10283 ; 2 uses
+  %i.lp = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10282 ; 2 uses
   %i.lq = add i32 %i.lp, 1
-  %i.lr = load i32, ptr %i.kw, align 4, !tbaa !236, !noalias !10286
+  %i.lr = load i32, ptr %i.kw, align 4, !tbaa !236, !noalias !10285
   %i.ls = sub i32 %i.lm, %i.lr
   %i.lt = getelementptr inbounds nuw i8, ptr %i.kw, i64 4
-  %i.lu = load i32, ptr %i.lt, align 4, !tbaa !236, !noalias !10286
+  %i.lu = load i32, ptr %i.lt, align 4, !tbaa !236, !noalias !10285
   %i.lv = sub i32 %i.lo, %i.lu
   %i.lw = getelementptr inbounds nuw i8, ptr %i.kw, i64 8
-  %i.lx = load i32, ptr %i.lw, align 4, !tbaa !236, !noalias !10286
+  %i.lx = load i32, ptr %i.lw, align 4, !tbaa !236, !noalias !10285
   %i.ly = sub i32 %i.lq, %i.lx
   %i.lz = load double, ptr %1, align 8, !tbaa !247
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #48
@@ -2875,20 +2880,20 @@ bb.ad:                                            ; preds = %bb.ab
   %i.mc = add i32 %i.lg, 1
   %i.md = add i32 %i.ln, 1
   %i.me = add i32 %i.lp, 1
-  %i.mf = load i32, ptr %i.kw, align 4, !tbaa !236, !noalias !10289
+  %i.mf = load i32, ptr %i.kw, align 4, !tbaa !236, !noalias !10288
   %i.mg = sub i32 %i.mc, %i.mf
   %i.mh = getelementptr inbounds nuw i8, ptr %i.kw, i64 4
-  %i.mi = load i32, ptr %i.mh, align 4, !tbaa !236, !noalias !10289
+  %i.mi = load i32, ptr %i.mh, align 4, !tbaa !236, !noalias !10288
   %i.mj = sub i32 %i.md, %i.mi
   %i.mk = getelementptr inbounds nuw i8, ptr %i.kw, i64 8
-  %i.ml = load i32, ptr %i.mk, align 4, !tbaa !236, !noalias !10289
+  %i.ml = load i32, ptr %i.mk, align 4, !tbaa !236, !noalias !10288
   %i.mm = sub i32 %i.me, %i.ml
   br label %_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE11totalDomainEv.exit
 
 bb.ae:                                            ; preds = %_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE13notifyPreReadEv.exit
-  %i.mn = load i32, ptr %i.y, align 4, !tbaa !4, !noalias !10275 ; 2 uses
-  %i.mo = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10275 ; 2 uses
-  %i.mp = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10275 ; 2 uses
+  %i.mn = load i32, ptr %i.y, align 4, !tbaa !4, !noalias !10299 ; 2 uses
+  %i.mo = load i32, ptr %i.aa, align 4, !tbaa !4, !noalias !10299 ; 2 uses
+  %i.mp = load i32, ptr %i.ad, align 4, !tbaa !4, !noalias !10299 ; 2 uses
   %i.mq = load double, ptr %1, align 8, !tbaa !247
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #48
   %i.mr = load i32, ptr @_ZN5Pooma12_GLOBAL__N_115mainScheduler_sE, align 4, !tbaa !2598
@@ -3291,7 +3296,7 @@ bb.a:
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !4  ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.at = load i32, ptr %i.as, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !11099 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 136 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.pre.i, i64 112
   %i.av = getelementptr inbounds nuw i8, ptr %.pre.i, i64 40
@@ -3694,7 +3699,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4  ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !11139 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 136 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -4097,7 +4102,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4  ; 3 uses
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !11224 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 136 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -4500,7 +4505,7 @@ bb.a:
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !4  ; 5 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !11264 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 136 ; 2 uses
   %i.aj = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -4903,7 +4908,7 @@ bb.a:
   %i.au = load i32, ptr %i.at, align 4, !tbaa !4  ; 3 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.aq, i64 32
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !4
-  %.pre.i = load ptr, ptr %i.aa, align 8, !tbaa !741, !noalias !11297 ; 3 uses
+  %.pre.i = load ptr, ptr %i.aa, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 136 ; 2 uses
   %i.ax = load ptr, ptr %i.u, align 8, !tbaa !6263
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 8
@@ -5306,7 +5311,7 @@ bb.a:
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !4
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 32
   %i.at = load i32, ptr %i.as, align 8, !tbaa !4  ; 3 uses
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !11634 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 144 ; 2 uses
   %i.au = getelementptr inbounds nuw i8, ptr %.pre.i, i64 120
   %i.av = getelementptr inbounds nuw i8, ptr %.pre.i, i64 48
@@ -5709,7 +5714,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4  ; 3 uses
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !11674 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 144 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -6112,7 +6117,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4  ; 3 uses
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !11759 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 144 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -6515,7 +6520,7 @@ bb.a:
   %i.at = load i32, ptr %i.as, align 4, !tbaa !4
   %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 32
   %i.av = load i32, ptr %i.au, align 8, !tbaa !4  ; 3 uses
-  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !11799 ; 3 uses
+  %.pre.i = load ptr, ptr %i.z, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 144 ; 2 uses
   %i.aw = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
@@ -6918,7 +6923,7 @@ bb.a:
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !4
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ac, i64 32
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !4  ; 5 uses
-  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !11839 ; 3 uses
+  %.pre.i = load ptr, ptr %i.x, align 8, !tbaa !741, !noalias !59 ; 3 uses
   %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %.pre.i, i64 144 ; 2 uses
   %i.aj = load ptr, ptr %i.t, align 8, !tbaa !6263
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
@@ -7321,33 +7326,33 @@ begin_hunk_17_@llvm.fabs.v2f64
 !10272 = distinct !{!10272, !"_ZNK18RefCountedBlockPtrI19FieldEngineBaseDataILi3Ed14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEELb0E18RefBlockControllerIS7_EEplEl"}
 !10273 = !{!10274}
 !10274 = distinct !{!10274, !10272, !"_ZNK18RefCountedBlockPtrI19FieldEngineBaseDataILi3Ed14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEELb0E18RefBlockControllerIS7_EEplEl: argument 0"}
-!10275 = !{!10276, !10278}
-!10276 = distinct !{!10276, !10277, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
-!10277 = distinct !{!10277, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
-!10278 = distinct !{!10278, !10279, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
-!10279 = distinct !{!10279, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
-!10280 = !{!10281, !10276, !10278}
-!10281 = distinct !{!10281, !10282, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi: argument 0"}
-!10282 = distinct !{!10282, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi"}
-!10283 = !{!10284, !10281, !10276, !10278}
-!10284 = distinct !{!10284, !10285, !"_Z9growRightILi3EE8IntervalIXT_EERKS1_i: argument 0"}
-!10285 = distinct !{!10285, !"_Z9growRightILi3EE8IntervalIXT_EERKS1_i"}
-!10286 = !{!10287, !10281, !10276, !10278}
-!10287 = distinct !{!10287, !10288, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE: argument 0"}
-!10288 = distinct !{!10288, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE"}
-!10289 = !{!10290, !10292, !10294, !10296, !10298}
-!10290 = distinct !{!10290, !10291, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE: argument 0"}
-!10291 = distinct !{!10291, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE"}
-!10292 = distinct !{!10292, !10293, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi: argument 0"}
-!10293 = distinct !{!10293, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi"}
-!10294 = distinct !{!10294, !10295, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
-!10295 = distinct !{!10295, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
-!10296 = distinct !{!10296, !10297, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
-!10297 = distinct !{!10297, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
-!10298 = distinct !{!10298, !10299, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEclEv: argument 0"}
-!10299 = distinct !{!10299, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEclEv"}
-!10300 = !{!10294, !10296, !10298}
-!10301 = !{!10302, !10304, !10298}
+!10275 = !{!10276, !10278, !10280}
+!10276 = distinct !{!10276, !10277, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi: argument 0"}
+!10277 = distinct !{!10277, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi"}
+!10278 = distinct !{!10278, !10279, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
+!10279 = distinct !{!10279, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
+!10280 = distinct !{!10280, !10281, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
+!10281 = distinct !{!10281, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
+!10282 = !{!10283, !10276, !10278, !10280}
+!10283 = distinct !{!10283, !10284, !"_Z9growRightILi3EE8IntervalIXT_EERKS1_i: argument 0"}
+!10284 = distinct !{!10284, !"_Z9growRightILi3EE8IntervalIXT_EERKS1_i"}
+!10285 = !{!10286, !10276, !10278, !10280}
+!10286 = distinct !{!10286, !10287, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE: argument 0"}
+!10287 = distinct !{!10287, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE"}
+!10288 = !{!10289, !10291, !10293, !10295, !10297}
+!10289 = distinct !{!10289, !10290, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE: argument 0"}
+!10290 = distinct !{!10290, !"_Z11shrinkRightILi3EE8IntervalIXT_EERKS1_RK3LocIXT_EE"}
+!10291 = distinct !{!10291, !10292, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi: argument 0"}
+!10292 = distinct !{!10292, !"_Z27cellDomainToCenteringDomainILi3EE8IntervalIXT_EERKS1_RK9CenteringIXT_EEi"}
+!10293 = distinct !{!10293, !10294, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
+!10294 = distinct !{!10294, !"_ZNK11FieldEngineI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
+!10295 = distinct !{!10295, !10296, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv: argument 0"}
+!10296 = distinct !{!10296, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE14physicalDomainEv"}
+!10297 = distinct !{!10297, !10298, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEclEv: argument 0"}
+!10298 = distinct !{!10298, !"_ZNK5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEEclEv"}
+!10299 = !{!10278, !10280}
+!10300 = !{!10293, !10295, !10297}
+!10301 = !{!10302, !10304, !10297}
 !10302 = distinct !{!10302, !10303, !"_ZN19View1ImplementationI5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE8IntervalILi3EELb0EE4makeISF_16CombineDomainOptI19TemporaryNewDomain1ISF_SF_ELb0EEEESD_RKSD_RKT_RKT0_: argument 0"}
 !10303 = distinct !{!10303, !"_ZN19View1ImplementationI5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE8IntervalILi3EELb0EE4makeISF_16CombineDomainOptI19TemporaryNewDomain1ISF_SF_ELb0EEEESD_RKSD_RKT_RKT0_"}
 !10304 = distinct !{!10304, !10305, !"_ZN5View1I5FieldI22UniformRectilinearMeshI10MeshTraitsILi3Ed21UniformRectilinearTag12CartesianTagLi3EEEd14MultiPatchViewI7GridTag6RemoteI5BrickELi3EEE8IntervalILi3EEE4makeERKSD_RKSF_: argument 0"}

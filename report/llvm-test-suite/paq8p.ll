@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %bb.ac
 bb.ae:                                            ; preds = %.thread, %bb.ab, %bb.ad, %bb.ac, %bb.u
   %i.ci = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 88), align 8, !tbaa !67 ; 2 uses
   %i.cj = icmp sgt i32 %i.ci, 0
-  %.pre93 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 32), align 8, !tbaa !64 ; 5 uses
+  %.pre93 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 32), align 8 ; 6 uses
   br i1 %i.cj, label %.lr.ph.i, label %_ZN5Mixer6updateEv.exit
 
 .lr.ph.i:                                         ; preds = %bb.ae
@@ -312,13 +312,18 @@ middle.block:                                     ; preds = %vector.body
 _Z5trainPsS_ii.exit.us.i:                         ; preds = %.lr.ph.i.us.i, %middle.block, %.lr.ph.split.us.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN5Mixer6updateEv.exit, label %.lr.ph.split.us.i, !llvm.loop !173
+  br i1 %exitcond.not.i, label %_ZN5Mixer6updateEv.exit.loopexit, label %.lr.ph.split.us.i, !llvm.loop !173
 
-_ZN5Mixer6updateEv.exit:                          ; preds = %_Z5trainPsS_ii.exit.us.i, %bb.ae, %.lr.ph.i
+_ZN5Mixer6updateEv.exit.loopexit:                 ; preds = %_Z5trainPsS_ii.exit.us.i
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 32), align 8, !tbaa !64
+  br label %_ZN5Mixer6updateEv.exit
+
+_ZN5Mixer6updateEv.exit:                          ; preds = %_ZN5Mixer6updateEv.exit.loopexit, %bb.ae, %.lr.ph.i
+  %0 = phi ptr [ %.pre, %_ZN5Mixer6updateEv.exit.loopexit ], [ %.pre93, %bb.ae ], [ %.pre93, %.lr.ph.i ]
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 88), align 8, !tbaa !67
   store i32 0, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 92), align 4, !tbaa !68
   store i32 1, ptr getelementptr inbounds nuw (i8, ptr @_ZZ13contextModel2vE1m, i64 96), align 8, !tbaa !69
-  store i16 256, ptr %.pre93, align 2, !tbaa !33
+  store i16 256, ptr %0, align 2, !tbaa !33
   %i.ee = tail call noundef i32 @_Z10matchModelR5Mixer(ptr noundef nonnull align 8 dereferenceable(136) @_ZZ13contextModel2vE1m)
   %i.ef = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ilog, i64 16), align 8, !tbaa !24
   %i.eg = and i32 %i.ee, 65535
