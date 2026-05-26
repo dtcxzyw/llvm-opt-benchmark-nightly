@@ -201,7 +201,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i.i: ; preds = %.lr.ph.i.i
   %i.cj = shl nuw i64 1, %i.ci
   %i.ck = and i64 %i.ch, %i.cj
   %.not.i.i.i.i = icmp eq i64 %i.ck, 0
-  %.pre34.i.i = load i32, ptr %i.x, align 4, !tbaa !90 ; 2 uses
+  %.pre34.i.i = load i32, ptr %i.x, align 4       ; 2 uses
   br i1 %.not.i.i.i.i, label %bb.j, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i.i
 
 bb.j:                                             ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i.i
@@ -604,7 +604,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i9.i: ; preds = %.lr.ph.i7.i
   %i.pv = shl nuw i64 1, %i.pu
   %i.pw = and i64 %i.pt, %i.pv
   %.not.i.i36.i.i = icmp eq i64 %i.pw, 0
-  %.pre46.i.i = load i32, ptr %i.nr, align 4, !tbaa !90 ; 2 uses
+  %.pre46.i.i = load i32, ptr %i.nr, align 4      ; 2 uses
   br i1 %.not.i.i36.i.i, label %bb.bl, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i10.i
 
 bb.bl:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i9.i
@@ -1007,7 +1007,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i: ; preds = %.lr.ph.i14
   %i.pj = shl nuw i64 1, %i.pi
   %i.pk = and i64 %i.ph, %i.pj
   %.not.i.i.i = icmp eq i64 %i.pk, 0
-  %.pre36.i = load i32, ptr %i.mx, align 4, !tbaa !90 ; 2 uses
+  %.pre36.i = load i32, ptr %i.mx, align 4        ; 2 uses
   br i1 %.not.i.i.i, label %bb.av, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i
 
 bb.av:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i
@@ -1410,7 +1410,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i72: ; preds = %.lr.ph.i70
   %i.adb = shl nuw i64 1, %i.ada
   %i.adc = and i64 %i.acz, %i.adb
   %.not.i.i.i73 = icmp eq i64 %i.adc, 0
-  %.pre34.i74 = load i32, ptr %i.aap, align 4, !tbaa !90 ; 2 uses
+  %.pre34.i74 = load i32, ptr %i.aap, align 4     ; 2 uses
   br i1 %.not.i.i.i73, label %bb.cn, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i75
 
 bb.cn:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i72
@@ -1813,7 +1813,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i179: ; preds = %.lr.ph.i174
   %i.aqt = shl nuw i64 1, %i.aqs
   %i.aqu = and i64 %i.aqr, %i.aqt
   %.not.i.i.i180 = icmp eq i64 %i.aqu, 0
-  %.pre36.i181 = load i32, ptr %i.aoh, align 4, !tbaa !90 ; 2 uses
+  %.pre36.i181 = load i32, ptr %i.aoh, align 4    ; 2 uses
   br i1 %.not.i.i.i180, label %bb.ef, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i182
 
 bb.ef:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i179
@@ -2216,7 +2216,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i302: ; preds = %.lr.ph.i297
   %i.bel = shl nuw i64 1, %i.bek
   %i.bem = and i64 %i.bej, %i.bel
   %.not.i.i.i303 = icmp eq i64 %i.bem, 0
-  %.pre36.i304 = load i32, ptr %i.bbz, align 4, !tbaa !90 ; 2 uses
+  %.pre36.i304 = load i32, ptr %i.bbz, align 4    ; 2 uses
   br i1 %.not.i.i.i303, label %bb.fx, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i305
 
 bb.fx:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i302
@@ -2619,7 +2619,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i424: ; preds = %.lr.ph.i419
   %i.brn = shl nuw i64 1, %i.brm
   %i.bro = and i64 %i.brl, %i.brn
   %.not.i.i.i425 = icmp eq i64 %i.bro, 0
-  %.pre34.i426 = load i32, ptr %i.bpr, align 4, !tbaa !90 ; 2 uses
+  %.pre34.i426 = load i32, ptr %i.bpr, align 4    ; 2 uses
   br i1 %.not.i.i.i425, label %bb.hn, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i427
 
 bb.hn:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i424
@@ -3022,7 +3022,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i504: ; preds = %.lr.ph.i499
   %i.ceh = shl nuw i64 1, %i.ceg
   %i.cei = and i64 %i.cef, %i.ceh
   %.not.i.i.i505 = icmp eq i64 %i.cei, 0
-  %.pre36.i506 = load i32, ptr %i.cbv, align 4, !tbaa !90 ; 2 uses
+  %.pre36.i506 = load i32, ptr %i.cbv, align 4    ; 2 uses
   br i1 %.not.i.i.i505, label %bb.jb, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i507
 
 bb.jb:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i504
@@ -3425,7 +3425,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i627: ; preds = %.lr.ph.i622
   %i.crz = shl nuw i64 1, %i.cry
   %i.csa = and i64 %i.crx, %i.crz
   %.not.i.i.i628 = icmp eq i64 %i.csa, 0
-  %.pre36.i629 = load i32, ptr %i.cpn, align 4, !tbaa !90 ; 2 uses
+  %.pre36.i629 = load i32, ptr %i.cpn, align 4    ; 2 uses
   br i1 %.not.i.i.i628, label %bb.kt, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i630
 
 bb.kt:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i627
@@ -3828,7 +3828,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i733: ; preds = %.lr.ph.i731
   %i.dfz = shl nuw i64 1, %i.dfy
   %i.dga = and i64 %i.dfx, %i.dfz
   %.not.i.i.i734 = icmp eq i64 %i.dga, 0
-  %.pre28.i735 = load i32, ptr %i.ddf, align 4, !tbaa !90 ; 2 uses
+  %.pre28.i735 = load i32, ptr %i.ddf, align 4    ; 2 uses
   br i1 %.not.i.i.i734, label %bb.ml, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i736
 
 bb.ml:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i733
@@ -4231,7 +4231,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i786: ; preds = %.lr.ph.i783
   %i.dte = shl nuw i64 1, %i.dtd
   %i.dtf = and i64 %i.dtc, %i.dte
   %.not.i.i.i787 = icmp eq i64 %i.dtf, 0
-  %.pre28.i788 = load i32, ptr %i.dqk, align 4, !tbaa !90 ; 2 uses
+  %.pre28.i788 = load i32, ptr %i.dqk, align 4    ; 2 uses
   br i1 %.not.i.i.i787, label %bb.ny, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i789
 
 bb.ny:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i786
@@ -4634,7 +4634,7 @@ _ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i919: ; preds = %.lr.ph.i914
   %i.efl = shl nuw i64 1, %i.efk
   %i.efm = and i64 %i.efj, %i.efl
   %.not.i.i.i920 = icmp eq i64 %i.efm, 0
-  %.pre34.i921 = load i32, ptr %i.edp, align 4, !tbaa !90 ; 2 uses
+  %.pre34.i921 = load i32, ptr %i.edp, align 4    ; 2 uses
   br i1 %.not.i.i.i920, label %bb.pj, label %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.thread.i922
 
 bb.pj:                                            ; preds = %_ZNK8facebook5velox10BaseVector8isNullAtEi.exit.i919

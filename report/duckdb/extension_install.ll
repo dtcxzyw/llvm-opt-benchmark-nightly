@@ -201,7 +201,7 @@ _ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESa
   %i.k = getelementptr inbounds nuw [8 x i8], ptr %i.j, i64 %i.i
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !490  ; 2 uses
   %.not.i.i = icmp eq ptr %i.l, null
-  %.pre = load ptr, ptr %1, align 8, !tbaa !15    ; 3 uses
+  %.pre = load ptr, ptr %1, align 8               ; 3 uses
   br i1 %.not.i.i, label %.loopexit29, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt8__detail15_Hash_code_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS6_S6_ENS_10_Select1stESt4hashIS6_ENS_18_Mod_range_hashingENS_20_Default_ranged_hashELb1EE12_M_hash_codeERS8_.exit

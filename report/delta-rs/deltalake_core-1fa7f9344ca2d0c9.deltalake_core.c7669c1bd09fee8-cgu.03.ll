@@ -201,8 +201,8 @@ bb.qx:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20939)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !20942)
   %i.hhy = icmp ugt i8 %i.hhv, 64
-  %.pre1708.pre = load i64, ptr %i.b, align 8, !alias.scope !20945 ; 2 uses
-  %.pre1709.pre = load ptr, ptr %i.c, align 16, !alias.scope !20945 ; 4 uses
+  %.pre1708.pre = load i64, ptr %i.b, align 8     ; 2 uses
+  %.pre1709.pre = load ptr, ptr %i.c, align 16    ; 4 uses
   br i1 %i.hhy, label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit50.thread, label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit50
 
 _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit50: ; preds = %bb.qx, %.thread793
@@ -213,8 +213,8 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hib = zext nneg i64 %i.hia to i128
   %i.hic = shl nuw nsw i128 %i.hib, 64
   %i.hid = or i128 %i.hic, %i.hhz                 ; 2 uses
-  store i128 %i.hid, ptr %1, align 16, !alias.scope !20950
-  store i8 -128, ptr %i.a, align 16, !alias.scope !20950
+  store i128 %i.hid, ptr %1, align 16, !alias.scope !20945
+  store i8 -128, ptr %i.a, align 16, !alias.scope !20945
   %i.hie = trunc nuw i64 %i.hia to i1
   %extract.t1942 = trunc i128 %i.hhz to i64       ; 2 uses
   %extract1945 = lshr i128 %i.hid, 64
@@ -226,7 +226,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hig = lshr i128 %i.hhu, 64
   %i.hih = trunc nuw i128 %i.hig to i64
   %i.hii = xor i64 %.pre1708.pre, %i.hif
-  %i.hij = load i64, ptr %.pre1709.pre, align 8, !noalias !20950, !noundef !3
+  %i.hij = load i64, ptr %.pre1709.pre, align 8, !noalias !20945, !noundef !3
   %i.hik = xor i64 %i.hij, %i.hih
   %i.hil = zext i64 %i.hii to i128
   %i.him = zext i64 %i.hik to i128
@@ -234,10 +234,10 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hio = lshr i128 %i.hin, 64
   %i.hip = xor i128 %i.hio, %i.hin
   %i.hiq = trunc i128 %i.hip to i64               ; 3 uses
-  store i64 %i.hiq, ptr %i.b, align 8, !alias.scope !20950
+  store i64 %i.hiq, ptr %i.b, align 8, !alias.scope !20945
   %i.hir = zext nneg i64 %i.hhx to i128
-  store i128 %i.hir, ptr %1, align 16, !alias.scope !20950
-  store i8 64, ptr %i.a, align 16, !alias.scope !20950
+  store i128 %i.hir, ptr %1, align 16, !alias.scope !20945
+  store i8 64, ptr %i.a, align 16, !alias.scope !20945
   %i.his = trunc nuw i64 %i.hhx to i1
   br i1 %i.his, label %.thread801, label %.thread800
 
@@ -247,17 +247,17 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hiv = zext i64 %i.hiu to i128
   %i.hiw = shl nuw i128 %i.hiv, 64
   %i.hix = or disjoint i128 %i.hiw, 1
-  store i128 %i.hix, ptr %1, align 16, !alias.scope !20951
-  store i8 -128, ptr %i.a, align 16, !alias.scope !20951
+  store i128 %i.hix, ptr %1, align 16, !alias.scope !20946
+  store i8 -128, ptr %i.a, align 16, !alias.scope !20946
   br label %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit48
 
 bb.qy:                                            ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit50
   %i.hiy = getelementptr inbounds nuw i8, ptr %.tr, i64 32
   %i.hiz = load i64, ptr %i.hiy, align 8, !noundef !3
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20956)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20957)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !20951)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !20952)
   %i.hja = xor i64 %.pre1708, %extract.t1942
-  %i.hjb = load i64, ptr %.pre1709, align 8, !noalias !20951, !noundef !3
+  %i.hjb = load i64, ptr %.pre1709, align 8, !noalias !20946, !noundef !3
   %i.hjc = xor i64 %i.hjb, %extract.t1946
   %i.hjd = zext i64 %i.hja to i128
   %i.hje = zext i64 %i.hjc to i128
@@ -265,12 +265,12 @@ bb.qy:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   %i.hjg = lshr i128 %i.hjf, 64
   %i.hjh = xor i128 %i.hjg, %i.hjf
   %i.hji = trunc i128 %i.hjh to i64               ; 2 uses
-  store i64 %i.hji, ptr %i.b, align 8, !alias.scope !20951
+  store i64 %i.hji, ptr %i.b, align 8, !alias.scope !20946
   %i.hjj = zext i64 %i.hiz to i128                ; 2 uses
-  store i128 %i.hjj, ptr %1, align 16, !alias.scope !20951
-  store i8 64, ptr %i.a, align 16, !alias.scope !20951
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20958)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !20959)
+  store i128 %i.hjj, ptr %1, align 16, !alias.scope !20946
+  store i8 64, ptr %i.a, align 16, !alias.scope !20946
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !20953)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !20956)
   br label %.thread800
 
 .thread800:                                       ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit50.thread, %bb.qy
@@ -282,8 +282,8 @@ bb.qy:                                            ; preds = %_RNvXs_NtCs2HSpDNxY
   %.not855 = icmp eq i64 %.in, -9223372036854775808 ; 2 uses
   %i.hjn = select i1 %.not855, i128 0, i128 18446744073709551616
   %i.hjo = or disjoint i128 %i.hjn, %i.hjm
-  store i128 %i.hjo, ptr %1, align 16, !alias.scope !20945
-  store i8 -128, ptr %i.a, align 16, !alias.scope !20945
+  store i128 %i.hjo, ptr %1, align 16, !alias.scope !20959
+  store i8 -128, ptr %i.a, align 16, !alias.scope !20959
   br i1 %.not855, label %.thread804, label %bb.qz
 
 .thread804:                                       ; preds = %.thread800
@@ -303,7 +303,7 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %.in857 = load i64, ptr %.in857.in, align 8, !range !849, !noundef !3
   %i.hjv = icmp ne i64 %.in857, -9223372036854775808 ; 2 uses
   %i.hjw = xor i64 %.off01941, %i.hju
-  %i.hjx = load i64, ptr %i.hjt, align 8, !noalias !20945, !noundef !3
+  %i.hjx = load i64, ptr %i.hjt, align 8, !noalias !20959, !noundef !3
   %i.hjy = xor i64 %i.hjx, %.off641944
   %i.hjz = zext i64 %i.hjw to i128
   %i.hka = zext i64 %i.hjy to i128
@@ -311,10 +311,10 @@ _RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4c
   %i.hkc = lshr i128 %i.hkb, 64
   %i.hkd = xor i128 %i.hkc, %i.hkb
   %i.hke = trunc i128 %i.hkd to i64
-  store i64 %i.hke, ptr %i.b, align 8, !alias.scope !20945
+  store i64 %i.hke, ptr %i.b, align 8, !alias.scope !20959
   %i.hkf = zext i1 %i.hjv to i128
-  store i128 %i.hkf, ptr %1, align 16, !alias.scope !20945
-  store i8 64, ptr %i.a, align 16, !alias.scope !20945
+  store i128 %i.hkf, ptr %1, align 16, !alias.scope !20959
+  store i8 64, ptr %i.a, align 16, !alias.scope !20959
   br i1 %i.hjv, label %bb.qz, label %.thread805
 
 .thread805:                                       ; preds = %_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize.exit48
@@ -717,21 +717,21 @@ begin_hunk_1_@llvm.umax.i64
 !20942 = !{!20943}
 !20943 = distinct !{!20943, !20944, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
 !20944 = distinct !{!20944, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}
-!20945 = !{!20946, !20948}
-!20946 = distinct !{!20946, !20947, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
-!20947 = distinct !{!20947, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}
-!20948 = distinct !{!20948, !20949, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize: argument 0"}
-!20949 = distinct !{!20949, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize"}
-!20950 = !{!20943, !20940}
-!20951 = !{!20952, !20954}
-!20952 = distinct !{!20952, !20953, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
-!20953 = distinct !{!20953, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}
-!20954 = distinct !{!20954, !20955, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher9write_u64: argument 0"}
-!20955 = distinct !{!20955, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher9write_u64"}
-!20956 = !{!20954}
-!20957 = !{!20952}
-!20958 = !{!20948}
-!20959 = !{!20946}
+!20945 = !{!20943, !20940}
+!20946 = !{!20947, !20949}
+!20947 = distinct !{!20947, !20948, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
+!20948 = distinct !{!20948, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}
+!20949 = distinct !{!20949, !20950, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher9write_u64: argument 0"}
+!20950 = distinct !{!20950, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher9write_u64"}
+!20951 = !{!20949}
+!20952 = !{!20947}
+!20953 = !{!20954}
+!20954 = distinct !{!20954, !20955, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize: argument 0"}
+!20955 = distinct !{!20955, !"_RNvXs_NtCs2HSpDNxY7OE_9hashbrown6hasherNtB4_13DefaultHasherNtNtCsbvkFyIu7lgC_4core4hash6Hasher11write_isize"}
+!20956 = !{!20957}
+!20957 = distinct !{!20957, !20958, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
+!20958 = distinct !{!20958, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}
+!20959 = !{!20957, !20954}
 !20960 = !{!20961, !20963}
 !20961 = distinct !{!20961, !20962, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core: argument 0"}
 !20962 = distinct !{!20962, !"_RINvMNtCsjTPIcpFZL1T_8foldhash4fastNtB3_10FoldHasher9write_numyECs14kWLkQVSKO_14deltalake_core"}

@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %_ZNKSt3mapINSt7__cx
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 64
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !369
   %i.ae = icmp eq i8 %i.ab, %i.ad
-  %.pre = load i64, ptr %i.e, align 8, !tbaa !16, !noalias !4419 ; 4 uses
+  %.pre = load i64, ptr %i.e, align 8, !tbaa !16  ; 4 uses
   br i1 %i.ae, label %bb.e, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !1148
 
 bb.e:                                             ; preds = %bb.d
@@ -244,38 +244,38 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %bb.g
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 65
-  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !4422, !range !392, !noundef !393
+  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !4419, !range !392, !noundef !393
   %i.az = getelementptr inbounds nuw i8, ptr %i.z, i64 65
-  %i.ba = load i8, ptr %i.az, align 1, !tbaa !4422, !range !392, !noundef !393
+  %i.ba = load i8, ptr %i.az, align 1, !tbaa !4419, !range !392, !noundef !393
   %i.bb = icmp eq i8 %i.ay, %i.ba
   br i1 %i.bb, label %bb.h, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !1148
 
 bb.h:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 66
-  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !4423, !range !392, !noundef !393
+  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !4420, !range !392, !noundef !393
   %i.be = getelementptr inbounds nuw i8, ptr %i.z, i64 66
-  %i.bf = load i8, ptr %i.be, align 2, !tbaa !4423, !range !392, !noundef !393
+  %i.bf = load i8, ptr %i.be, align 2, !tbaa !4420, !range !392, !noundef !393
   %i.bg = icmp eq i8 %i.bd, %i.bf
   br i1 %i.bg, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !1148
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit: ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 67
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !4424, !range !392, !noundef !393
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !4421, !range !392, !noundef !393
   %i.bj = getelementptr inbounds nuw i8, ptr %i.z, i64 67
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !4424, !range !392, !noundef !393
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !4421, !range !392, !noundef !393
   %i.bl = icmp eq i8 %i.bi, %i.bk
-  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !4425
+  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !4422
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, %bb.e, %bb.d, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, %bb.h, %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #37
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #37, !noalias !4419
-  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !4419
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #37, !noalias !4423
+  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !4423
   %i.bn = ptrtoint ptr %i.bm to i64
-  store i64 %i.bn, ptr %2, align 16, !noalias !4419
+  store i64 %i.bn, ptr %2, align 16, !noalias !4423
   %.sroa_idx3.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !4419
+  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !4423
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr nonnull @.str.218, i64 56, i64 13, ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #37, !noalias !4419
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #37, !noalias !4423
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox4core19TypeAnalysisResults11addVariableEONS0_4exec17SignatureVariableEE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr nonnull @.str.218) #45
           to label %bb.i unwind label %bb.j
 
@@ -678,8 +678,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit67.i.i.i.i.i.i.i.i
   %i.tg = extractvalue { ptr, i32 } %i.te, 1      ; 3 uses
   store i32 %i.tg, ptr %i.os, align 8, !noalias !17796
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.tg, 22
-  %.pre76.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %21, align 8, !tbaa !17774, !noalias !17811 ; 8 uses
-  %.pre77.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.oq, align 8, !noalias !17811 ; 2 uses
+  %.pre76.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %21, align 8, !tbaa !17774 ; 8 uses
+  %.pre77.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.oq, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc51.i..noexc53.i_crit_edge.i.i.i.i.i.i.i.i.i.i.i, label %.noexc52.i.i.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc51.i..noexc53.i_crit_edge.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.noexc51.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1082,8 +1082,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123.i.i.i.i.i.i.i.
   %i.zi = extractvalue { ptr, i32 } %i.zg, 1      ; 3 uses
   store i32 %i.zi, ptr %i.pq, align 8, !noalias !17833
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.zi, 22
-  %.pre80.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %31, align 8, !tbaa !17774, !noalias !17848 ; 8 uses
-  %.pre81.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.po, align 8, !noalias !17848 ; 2 uses
+  %.pre80.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %31, align 8, !tbaa !17774 ; 8 uses
+  %.pre81.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.po, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc30.i..noexc32.i_crit_edge.i.i.i.i.i.i.i.i.i.i.i, label %.noexc31.i.i.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc30.i..noexc32.i_crit_edge.i.i.i.i.i.i.i.i.i.i.i: ; preds = %.noexc30.i.i.i.i.i.i.i.i.i.i.i.i
@@ -1486,8 +1486,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit73.i.i.i.i.i.i.i.i
   %i.ks = extractvalue { ptr, i32 } %i.kq, 1      ; 3 uses
   store i32 %i.ks, ptr %i.hp, align 8, !noalias !17906
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.ks, 22
-  %.pre76.i.i.i.i.i.i.i.i.i = load i32, ptr %64, align 8, !tbaa !17774, !noalias !17921 ; 8 uses
-  %.pre77.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.hn, align 8, !noalias !17921 ; 2 uses
+  %.pre76.i.i.i.i.i.i.i.i.i = load i32, ptr %64, align 8, !tbaa !17774 ; 8 uses
+  %.pre77.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.hn, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc59.i..noexc61.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc60.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc59.i..noexc61.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc59.i.i.i.i.i.i.i.i.i.i
@@ -1890,8 +1890,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit124.i.i.i.i.i.i.i.
   %i.pl = extractvalue { ptr, i32 } %i.pj, 1      ; 3 uses
   store i32 %i.pl, ptr %i.in, align 8
   %.not15.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.pl, 22
-  %.pre80.i.i.i.i.i.i.i.i.i = load i32, ptr %74, align 8, !tbaa !17774, !noalias !17955 ; 8 uses
-  %.pre81.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.il, align 8, !noalias !17955 ; 2 uses
+  %.pre80.i.i.i.i.i.i.i.i.i = load i32, ptr %74, align 8, !tbaa !17774 ; 8 uses
+  %.pre81.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.il, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i, label %.noexc29.i..noexc31.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc30.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc29.i..noexc31.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc29.i.i.i.i.i.i.i.i.i.i
@@ -2294,8 +2294,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit65.i.i.i.i.i.i.i.i
   %i.aei = extractvalue { ptr, i32 } %i.aeg, 1    ; 3 uses
   store i32 %i.aei, ptr %i.abb, align 8, !noalias !18015
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.aei, 22
-  %.pre76.i.i.i.i.i.i.i.i.i57 = load i32, ptr %18, align 8, !tbaa !17774, !noalias !18030 ; 8 uses
-  %.pre77.i.i.i.i.i.i.i.i.i58 = load ptr, ptr %i.aaz, align 8, !noalias !18030 ; 2 uses
+  %.pre76.i.i.i.i.i.i.i.i.i57 = load i32, ptr %18, align 8, !tbaa !17774 ; 8 uses
+  %.pre77.i.i.i.i.i.i.i.i.i58 = load ptr, ptr %i.aaz, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc51.i..noexc53.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc52.i.i.i.i.i.i.i.i.i.i59, !prof !45
 
 .noexc51.i..noexc53.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc51.i.i.i.i.i.i.i.i.i.i56
@@ -2698,8 +2698,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit115.i.i.i.i.i.i.i.
   %i.ajc = extractvalue { ptr, i32 } %i.aja, 1    ; 3 uses
   store i32 %i.ajc, ptr %i.abz, align 8, !noalias !18052
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i86 = icmp eq i32 %i.ajc, 22
-  %.pre80.i.i.i.i.i.i.i.i.i87 = load i32, ptr %28, align 8, !tbaa !17774, !noalias !18067 ; 8 uses
-  %.pre81.i.i.i.i.i.i.i.i.i88 = load ptr, ptr %i.abx, align 8, !noalias !18067 ; 2 uses
+  %.pre80.i.i.i.i.i.i.i.i.i87 = load i32, ptr %28, align 8, !tbaa !17774 ; 8 uses
+  %.pre81.i.i.i.i.i.i.i.i.i88 = load ptr, ptr %i.abx, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i86, label %.noexc30.i..noexc32.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc31.i.i.i.i.i.i.i.i.i.i89, !prof !45
 
 .noexc30.i..noexc32.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc30.i.i.i.i.i.i.i.i.i.i85
@@ -3102,8 +3102,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit64.i.i.i.i.i.i.i.i
   %i.ky = extractvalue { ptr, i32 } %i.kw, 1      ; 3 uses
   store i32 %i.ky, ptr %i.hr, align 8, !noalias !18128
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.ky, 22
-  %.pre76.i.i.i.i.i.i.i.i.i = load i32, ptr %64, align 8, !tbaa !17774, !noalias !18143 ; 8 uses
-  %.pre77.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.hp, align 8, !noalias !18143 ; 2 uses
+  %.pre76.i.i.i.i.i.i.i.i.i = load i32, ptr %64, align 8, !tbaa !17774 ; 8 uses
+  %.pre77.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.hp, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc50.i..noexc52.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc51.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc50.i..noexc52.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc50.i.i.i.i.i.i.i.i.i.i
@@ -3506,8 +3506,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit114.i.i.i.i.i.i.i.
   %i.ps = extractvalue { ptr, i32 } %i.pq, 1      ; 3 uses
   store i32 %i.ps, ptr %i.ip, align 8, !noalias !18165
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.ps, 22
-  %.pre80.i.i.i.i.i.i.i.i.i = load i32, ptr %74, align 8, !tbaa !17774, !noalias !18180 ; 8 uses
-  %.pre81.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.in, align 8, !noalias !18180 ; 2 uses
+  %.pre80.i.i.i.i.i.i.i.i.i = load i32, ptr %74, align 8, !tbaa !17774 ; 8 uses
+  %.pre81.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.in, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc29.i..noexc31.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc30.i.i.i.i.i.i.i.i.i.i, !prof !45
 
 .noexc29.i..noexc31.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc29.i.i.i.i.i.i.i.i.i.i
@@ -3910,8 +3910,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit63.i.i.i.i.i.i.i.i
   %i.aes = extractvalue { ptr, i32 } %i.aeq, 1    ; 3 uses
   store i32 %i.aes, ptr %i.abj, align 8, !noalias !18240
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %i.aes, 22
-  %.pre76.i.i.i.i.i.i.i.i.i59 = load i32, ptr %18, align 8, !tbaa !17774, !noalias !18255 ; 8 uses
-  %.pre77.i.i.i.i.i.i.i.i.i60 = load ptr, ptr %i.abh, align 8, !noalias !18255 ; 2 uses
+  %.pre76.i.i.i.i.i.i.i.i.i59 = load i32, ptr %18, align 8, !tbaa !17774 ; 8 uses
+  %.pre77.i.i.i.i.i.i.i.i.i60 = load ptr, ptr %i.abh, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i.i, label %.noexc49.i..noexc51.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc50.i.i.i.i.i.i.i.i.i.i61, !prof !45
 
 .noexc49.i..noexc51.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc49.i.i.i.i.i.i.i.i.i.i58
@@ -4314,8 +4314,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit113.i.i.i.i.i.i.i.
   %i.ajo = extractvalue { ptr, i32 } %i.ajm, 1    ; 3 uses
   store i32 %i.ajo, ptr %i.ach, align 8, !noalias !18277
   %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i94 = icmp eq i32 %i.ajo, 22
-  %.pre80.i.i.i.i.i.i.i.i.i95 = load i32, ptr %28, align 8, !tbaa !17774, !noalias !18292 ; 8 uses
-  %.pre81.i.i.i.i.i.i.i.i.i96 = load ptr, ptr %i.acf, align 8, !noalias !18292 ; 2 uses
+  %.pre80.i.i.i.i.i.i.i.i.i95 = load i32, ptr %28, align 8, !tbaa !17774 ; 8 uses
+  %.pre81.i.i.i.i.i.i.i.i.i96 = load ptr, ptr %i.acf, align 8 ; 2 uses
   br i1 %.not15.i.i.i.i.i.i.i.i.i.i.i.i.i94, label %.noexc28.i..noexc30.i_crit_edge.i.i.i.i.i.i.i.i.i, label %.noexc29.i.i.i.i.i.i.i.i.i.i97, !prof !45
 
 .noexc28.i..noexc30.i_crit_edge.i.i.i.i.i.i.i.i.i: ; preds = %.noexc28.i.i.i.i.i.i.i.i.i.i93
@@ -4718,13 +4718,13 @@ begin_hunk_11_@llvm.trunc.v4f32
 !4416 = distinct !{null, null, ptr @_ZNSt12__shared_ptrIKN8facebook5velox4TypeELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
 !4417 = distinct !{null, null, null}
 !4418 = distinct !{!4418, !51}
-!4419 = !{!4420}
-!4420 = distinct !{!4420, !4421, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
-!4421 = distinct !{!4421, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
-!4422 = !{!370, !303, i64 65}
-!4423 = !{!370, !303, i64 66}
-!4424 = !{!370, !303, i64 67}
-!4425 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!4419 = !{!370, !303, i64 65}
+!4420 = !{!370, !303, i64 66}
+!4421 = !{!370, !303, i64 67}
+!4422 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!4423 = !{!4424}
+!4424 = distinct !{!4424, !4425, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
+!4425 = distinct !{!4425, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
 !4426 = !{!4427}
 !4427 = distinct !{!4427, !4428, !"_ZSt10__invoke_rISt10unique_ptrIN8facebook5velox4exec28SimpleFunctionAdapterFactoryESt14default_deleteIS4_EERZNS3_22SimpleFunctionRegistry16registerFunctionINS3_32SimpleFunctionAdapterFactoryImplINS2_4core9UDFHolderINS2_9functions12_GLOBAL__N_118DecimalAbsFunctionINS3_10VectorExecEEESG_NS2_11LongDecimalINS2_15IntegerVariableILm1EEENSJ_ILm5EEEEENS2_15ConstantCheckerIJSM_EEEJSM_EEEEEEEbRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISX_EERKSR_INS3_17SignatureVariableESaIS12_EEbEUlvE_JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES1A_E4typeEOS1B_DpOS1C_: argument 0"}
 !4428 = distinct !{!4428, !"_ZSt10__invoke_rISt10unique_ptrIN8facebook5velox4exec28SimpleFunctionAdapterFactoryESt14default_deleteIS4_EERZNS3_22SimpleFunctionRegistry16registerFunctionINS3_32SimpleFunctionAdapterFactoryImplINS2_4core9UDFHolderINS2_9functions12_GLOBAL__N_118DecimalAbsFunctionINS3_10VectorExecEEESG_NS2_11LongDecimalINS2_15IntegerVariableILm1EEENSJ_ILm5EEEEENS2_15ConstantCheckerIJSM_EEEJSM_EEEEEEEbRKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISX_EERKSR_INS3_17SignatureVariableESaIS12_EEbEUlvE_JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES1A_E4typeEOS1B_DpOS1C_"}

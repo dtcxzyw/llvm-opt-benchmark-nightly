@@ -201,7 +201,7 @@ bb.l:                                             ; preds = %_ZN6duckdb21Templat
 
 .preheader:                                       ; preds = %bb.l
   %i.bo = icmp ult i64 %i.bm, %i.be
-  %.pre = load i32, ptr %i.w, align 8, !tbaa !371 ; 4 uses
+  %.pre = load i32, ptr %i.w, align 8             ; 4 uses
   br i1 %i.bo, label %.lr.ph62, label %._crit_edge
 
 .lr.ph62:                                         ; preds = %.preheader
@@ -265,21 +265,21 @@ vector.body:                                      ; preds = %vector.body, %vecto
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   %i.cn = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.cl ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.cn, i64 8
-  %wide.load = load <2 x i32>, ptr %i.cn, align 4, !tbaa !3, !alias.scope !372
-  %wide.load91 = load <2 x i32>, ptr %i.co, align 4, !tbaa !3, !alias.scope !372
+  %wide.load = load <2 x i32>, ptr %i.cn, align 4, !tbaa !3, !alias.scope !371
+  %wide.load91 = load <2 x i32>, ptr %i.co, align 4, !tbaa !3, !alias.scope !371
   %i.cp = add <2 x i32> %vec.phi, %wide.load      ; 2 uses
   %i.cq = add <2 x i32> %vec.phi90, %wide.load91  ; 2 uses
   %i.cr = add i64 %i.ck, 3
   %index.next = add nuw i64 %index, 4             ; 2 uses
   %i.cs = add i64 %i.ck, 4
   %i.ct = icmp eq i64 %index.next, %n.vec
-  br i1 %i.ct, label %middle.block, label %vector.body, !llvm.loop !375
+  br i1 %i.ct, label %middle.block, label %vector.body, !llvm.loop !374
 
 middle.block:                                     ; preds = %vector.body
   store i64 %i.cr, ptr %i.t, align 8, !tbaa !370
   %bin.rdx = add <2 x i32> %i.cq, %i.cp
   %i.cu = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx) ; 2 uses
-  store i32 %i.cu, ptr %i.w, align 8, !tbaa !371, !alias.scope !378, !noalias !372
+  store i32 %i.cu, ptr %i.w, align 8, !tbaa !377, !alias.scope !378, !noalias !371
   br label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph62, %middle.block
@@ -305,7 +305,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit.prol:      ; preds = %scalar.ph.prol
   %i.cx = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %.ph92
   %i.cy = load i32, ptr %i.cx, align 4, !tbaa !3
   %i.cz = add i32 %.ph, %i.cy                     ; 3 uses
-  store i32 %i.cz, ptr %i.w, align 8, !tbaa !371
+  store i32 %i.cz, ptr %i.w, align 8, !tbaa !377
   %i.da = add i64 %.ph92, 1                       ; 2 uses
   store i64 %i.da, ptr %i.t, align 8, !tbaa !370
   br label %scalar.ph.prol.loopexit
@@ -438,7 +438,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit:           ; preds = %scalar.ph
   %i.du = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.dj
   %i.dv = load i32, ptr %i.du, align 4, !tbaa !3
   %i.dw = add i32 %i.di, %i.dv                    ; 2 uses
-  store i32 %i.dw, ptr %i.w, align 8, !tbaa !371
+  store i32 %i.dw, ptr %i.w, align 8, !tbaa !377
   %i.dx = add i64 %i.dj, 1                        ; 4 uses
   store i64 %i.dx, ptr %i.t, align 8, !tbaa !370
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -454,7 +454,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit.1:         ; preds = %_ZN6duckdb6vectorIj
   %i.dy = getelementptr inbounds nuw [4 x i8], ptr %i.bq, i64 %i.dx
   %i.dz = load i32, ptr %i.dy, align 4, !tbaa !3
   %i.ea = add i32 %i.dw, %i.dz                    ; 3 uses
-  store i32 %i.ea, ptr %i.w, align 8, !tbaa !371
+  store i32 %i.ea, ptr %i.w, align 8, !tbaa !377
   %i.eb = add i64 %i.dj, 2                        ; 3 uses
   store i64 %i.eb, ptr %i.t, align 8, !tbaa !370
   %exitcond70.not.1 = icmp eq i64 %i.eb, %i.be
@@ -533,7 +533,7 @@ _ZNK6duckdb15SelectionVector9get_indexEm.exit:    ; preds = %bb.b, %bb.c
 
 .preheader:                                       ; preds = %_ZNK6duckdb15SelectionVector9get_indexEm.exit
   %i.t = icmp ult i64 %i.r, %i.q
-  %.pre = load i32, ptr %i.j, align 8, !tbaa !371 ; 4 uses
+  %.pre = load i32, ptr %i.j, align 8             ; 4 uses
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
@@ -611,7 +611,7 @@ middle.block:                                     ; preds = %vector.body
   store i64 %i.aw, ptr %i.g, align 8, !tbaa !370
   %bin.rdx = add <2 x i32> %i.av, %i.au
   %i.az = tail call i32 @llvm.vector.reduce.add.v2i32(<2 x i32> %bin.rdx) ; 2 uses
-  store i32 %i.az, ptr %i.j, align 8, !tbaa !371, !alias.scope !388, !noalias !384
+  store i32 %i.az, ptr %i.j, align 8, !tbaa !377, !alias.scope !388, !noalias !384
   br label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph, %middle.block
@@ -638,7 +638,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit.prol:      ; preds = %scalar.ph.prol
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %.ph48
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !3
   %i.bf = add i32 %.ph, %i.be                     ; 3 uses
-  store i32 %i.bf, ptr %i.j, align 8, !tbaa !371
+  store i32 %i.bf, ptr %i.j, align 8, !tbaa !377
   %i.bg = add i64 %.ph48, 1                       ; 2 uses
   store i64 %i.bg, ptr %i.g, align 8, !tbaa !370
   br label %scalar.ph.prol.loopexit
@@ -771,7 +771,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit:           ; preds = %scalar.ph
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.bp
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !3
   %i.cc = add i32 %i.bo, %i.cb                    ; 2 uses
-  store i32 %i.cc, ptr %i.j, align 8, !tbaa !371
+  store i32 %i.cc, ptr %i.j, align 8, !tbaa !377
   %i.cd = add i64 %i.bp, 1                        ; 4 uses
   store i64 %i.cd, ptr %i.g, align 8, !tbaa !370
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -787,7 +787,7 @@ _ZN6duckdb6vectorIjLb1ESaIjEEixEm.exit.1:         ; preds = %_ZN6duckdb6vectorIj
   %i.ce = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.cd
   %i.cf = load i32, ptr %i.ce, align 4, !tbaa !3
   %i.cg = add i32 %i.cc, %i.cf                    ; 3 uses
-  store i32 %i.cg, ptr %i.j, align 8, !tbaa !371
+  store i32 %i.cg, ptr %i.j, align 8, !tbaa !377
   %i.ch = add i64 %i.bp, 2                        ; 3 uses
   store i64 %i.ch, ptr %i.g, align 8, !tbaa !370
   %exitcond32.not.1 = icmp eq i64 %i.ch, %i.q
@@ -1190,36 +1190,36 @@ begin_hunk_1_@llvm.vector.reduce.add.v2i32
 !368 = distinct !{!368, !45}
 !369 = distinct !{!369, !45}
 !370 = !{!268, !16, i64 104}
-!371 = !{!268, !4, i64 96}
-!372 = !{!373}
-!373 = distinct !{!373, !374}
-!374 = distinct !{!374, !"LVerDomain"}
-!375 = distinct !{!375, !45, !376, !377}
-!376 = !{!"llvm.loop.isvectorized", i32 1}
-!377 = !{!"llvm.loop.unroll.runtime.disable"}
+!371 = !{!372}
+!372 = distinct !{!372, !373}
+!373 = distinct !{!373, !"LVerDomain"}
+!374 = distinct !{!374, !45, !375, !376}
+!375 = !{!"llvm.loop.isvectorized", i32 1}
+!376 = !{!"llvm.loop.unroll.runtime.disable"}
+!377 = !{!268, !4, i64 96}
 !378 = !{!379}
-!379 = distinct !{!379, !374}
+!379 = distinct !{!379, !373}
 !380 = !{!166, !22, i64 0}
 !381 = !{!165, !16, i64 8}
-!382 = distinct !{!382, !45, !376}
+!382 = distinct !{!382, !45, !375}
 !383 = distinct !{!383, !45}
 !384 = !{!385}
 !385 = distinct !{!385, !386}
 !386 = distinct !{!386, !"LVerDomain"}
-!387 = distinct !{!387, !45, !376, !377}
+!387 = distinct !{!387, !45, !375, !376}
 !388 = !{!389}
 !389 = distinct !{!389, !386}
-!390 = distinct !{!390, !45, !376}
+!390 = distinct !{!390, !45, !375}
 !391 = distinct !{!391, !45}
 !392 = distinct !{null, null, null}
 !393 = distinct !{null}
 !394 = !{!88, !16, i64 0}
 !395 = distinct !{!395, !45}
-!396 = distinct !{!396, !45, !376, !377}
+!396 = distinct !{!396, !45, !375, !376}
 !397 = !{!"branch_weights", i32 4, i32 28}
-!398 = distinct !{!398, !45, !376, !377}
+!398 = distinct !{!398, !45, !375, !376}
 !399 = distinct !{!399, !186}
-!400 = distinct !{!400, !45, !376}
+!400 = distinct !{!400, !45, !375}
 !401 = distinct !{!401, !45}
 !402 = !{!403, !5, i64 8}
 !403 = !{!"_ZTS21duckdb_fsst_decoder_t", !404, i64 0, !5, i64 8, !5, i64 9, !5, i64 264}

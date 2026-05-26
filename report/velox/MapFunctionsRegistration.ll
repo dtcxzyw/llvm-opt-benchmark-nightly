@@ -201,14 +201,14 @@ bb.d:                                             ; preds = %_ZNKSt3mapINSt7__cx
   %i.ac = getelementptr inbounds nuw i8, ptr %i.z, i64 64
   %i.ad = load i8, ptr %i.ac, align 8, !tbaa !617
   %i.ae = icmp eq i8 %i.ab, %i.ad
-  %.pre = load i64, ptr %i.e, align 8, !tbaa !16, !noalias !726 ; 4 uses
-  br i1 %i.ae, label %bb.e, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  %.pre = load i64, ptr %i.e, align 8, !tbaa !16  ; 4 uses
+  br i1 %i.ae, label %bb.e, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 bb.e:                                             ; preds = %bb.d
   %i.af = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.ag = load i64, ptr %i.af, align 8, !tbaa !16
   %i.ah = icmp eq i64 %.pre, %i.ag
-  br i1 %i.ah, label %bb.f, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.ah, label %bb.f, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = icmp eq i64 %.pre, 0
@@ -219,7 +219,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.ak = load ptr, ptr %1, align 8, !tbaa !7
   %bcmp.i.i = tail call i32 @bcmp(ptr %i.ak, ptr %i.aj, i64 %.pre)
   %i.al = icmp eq i32 %bcmp.i.i, 0
-  br i1 %i.al, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.al, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 32
@@ -229,7 +229,7 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 40
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !16
   %i.as = icmp eq i64 %i.ap, %i.ar
-  br i1 %i.as, label %bb.g, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.as, label %bb.g, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 bb.g:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i
   %i.at = icmp eq i64 %i.ap, 0
@@ -240,42 +240,42 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8
   %i.av = load ptr, ptr %i.am, align 8, !tbaa !7
   %bcmp.i7.i = tail call i32 @bcmp(ptr %i.av, ptr %i.au, i64 %i.ap)
   %i.aw = icmp eq i32 %bcmp.i7.i, 0
-  br i1 %i.aw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.aw, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %bb.g
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 65
-  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !730, !range !551, !noundef !552
+  %i.ay = load i8, ptr %i.ax, align 1, !tbaa !727, !range !551, !noundef !552
   %i.az = getelementptr inbounds nuw i8, ptr %i.z, i64 65
-  %i.ba = load i8, ptr %i.az, align 1, !tbaa !730, !range !551, !noundef !552
+  %i.ba = load i8, ptr %i.az, align 1, !tbaa !727, !range !551, !noundef !552
   %i.bb = icmp eq i8 %i.ay, %i.ba
-  br i1 %i.bb, label %bb.h, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.bb, label %bb.h, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 bb.h:                                             ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 66
-  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !731, !range !551, !noundef !552
+  %i.bd = load i8, ptr %i.bc, align 2, !tbaa !728, !range !551, !noundef !552
   %i.be = getelementptr inbounds nuw i8, ptr %i.z, i64 66
-  %i.bf = load i8, ptr %i.be, align 2, !tbaa !731, !range !551, !noundef !552
+  %i.bf = load i8, ptr %i.be, align 2, !tbaa !728, !range !551, !noundef !552
   %i.bg = icmp eq i8 %i.bd, %i.bf
-  br i1 %i.bg, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !729
+  br i1 %i.bg, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !726
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit: ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 67
-  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !732, !range !551, !noundef !552
+  %i.bi = load i8, ptr %i.bh, align 1, !tbaa !729, !range !551, !noundef !552
   %i.bj = getelementptr inbounds nuw i8, ptr %i.z, i64 67
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !732, !range !551, !noundef !552
+  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !729, !range !551, !noundef !552
   %i.bl = icmp eq i8 %i.bi, %i.bk
-  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !733
+  br i1 %i.bl, label %bb.k, label %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread, !prof !730
 
 _ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, %bb.e, %bb.d, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit8.thread.i, %bb.h, %_ZNK8facebook5velox4exec17SignatureVariableeqERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #34, !noalias !726
-  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !726
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #34, !noalias !731
+  %i.bm = load ptr, ptr %1, align 8, !tbaa !7, !noalias !731
   %i.bn = ptrtoint ptr %i.bm to i64
-  store i64 %i.bn, ptr %2, align 16, !noalias !726
+  store i64 %i.bn, ptr %2, align 16, !noalias !731
   %.sroa_idx3.i = getelementptr inbounds nuw i8, ptr %2, i64 8
-  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !726
+  store i64 %.pre, ptr %.sroa_idx3.i, align 8, !noalias !731
   call void @_ZN3fmt3v117vformatB5cxx11ENS0_17basic_string_viewIcEENS0_17basic_format_argsINS0_7contextEEE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %3, ptr nonnull @.str.40, i64 56, i64 13, ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #34, !noalias !726
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #34, !noalias !731
   invoke void @_ZN8facebook5velox6detail14veloxCheckFailINS0_17VeloxRuntimeErrorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEvRKNS1_18VeloxCheckFailArgsET0_NS0_24CompileTimeStringLiteralE(ptr noundef nonnull align 8 dereferenceable(56) @_ZZN8facebook5velox4core19TypeAnalysisResults11addVariableEONS0_4exec17SignatureVariableEE18veloxCheckFailArgs, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr nonnull @.str.40) #42
           to label %bb.i unwind label %bb.j
 
@@ -678,7 +678,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = or disjoint i32 %i.h, 128
   %i.l = cmpxchg ptr %i.g, i32 %i.h, i32 %i.k seq_cst seq_cst, align 4, !noalias !7229 ; 2 uses
   %i.m = extractvalue { i32, i1 } %i.l, 1
-  br i1 %i.m, label %bb.d, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i, !prof !729
+  br i1 %i.m, label %bb.d, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i, !prof !726
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i: ; preds = %bb.c
   %i.n = extractvalue { i32, i1 } %i.l, 0
@@ -940,7 +940,7 @@ bb.r:                                             ; preds = %bb.q
   %i.bc = or disjoint i32 %i.az, 128
   %i.bd = cmpxchg ptr %i.j, i32 %i.az, i32 %i.bc seq_cst seq_cst, align 4, !noalias !7257 ; 2 uses
   %i.be = extractvalue { i32, i1 } %i.bd, 1
-  br i1 %i.be, label %bb.s, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i16, !prof !729
+  br i1 %i.be, label %bb.s, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i16, !prof !726
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i16: ; preds = %bb.r
   %i.bf = extractvalue { i32, i1 } %i.bd, 0
@@ -1343,7 +1343,7 @@ bb.c:                                             ; preds = %bb.b
   %i.m = or disjoint i32 %i.j, 128
   %i.n = cmpxchg ptr %i.h, i32 %i.j, i32 %i.m seq_cst seq_cst, align 4, !noalias !7359 ; 2 uses
   %i.o = extractvalue { i32, i1 } %i.n, 1
-  br i1 %i.o, label %bb.d, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i, !prof !729
+  br i1 %i.o, label %bb.d, label %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i, !prof !726
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.i.i.i.i.i.i.i: ; preds = %bb.c
   %i.p = extractvalue { i32, i1 } %i.n, 0
@@ -1746,7 +1746,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.ia = getelementptr inbounds nuw [32 x i8], ptr %i.hd, i64 %i.hz
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !612
   %.not.i.i.i88.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.ib
-  br i1 %.not.i.i.i88.us.us.us.us, label %.noexc57.thread, label %.critedge.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i88.us.us.us.us, label %.noexc57.thread, label %.critedge.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us.us:               ; preds = %.noexc56.us.us.us.us
   %i.ic = add nsw i32 %.sroa.0170.0223.us.us.us.us, -1
@@ -1796,7 +1796,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.iy = getelementptr inbounds nuw [32 x i8], ptr %i.hd, i64 %i.ix ; 2 uses
   %i.iz = load i64, ptr %i.iy, align 8, !tbaa !612
   %.not.i.i.i88.us.us240 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.iz
-  br i1 %.not.i.i.i88.us.us240, label %bb.ah, label %.critedge.i.i.backedge.us.us241, !prof !729
+  br i1 %.not.i.i.i88.us.us240, label %bb.ah, label %.critedge.i.i.backedge.us.us241, !prof !726
 
 bb.ah:                                            ; preds = %.noexc56.us.us238
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iy, i64 8
@@ -1840,7 +1840,7 @@ bb.ah:                                            ; preds = %.noexc56.us.us238
   %i.ju = getelementptr inbounds nuw [32 x i8], ptr %i.hd, i64 %i.jt ; 2 uses
   %i.jv = load i64, ptr %i.ju, align 8, !tbaa !612
   %.not.i.i.i88 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.jv
-  br i1 %.not.i.i.i88, label %bb.ai, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i88, label %bb.ai, label %.critedge.i.i.backedge, !prof !726
 
 bb.ai:                                            ; preds = %.noexc56
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ju, i64 8
@@ -2243,7 +2243,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.ao = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.an
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !612
   %.not.i.i.i.us.us.us.us = icmp eq i64 %.fr, %i.ap
-  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewES5_vvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewES5_vvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.d
   %i.aq = add nsw i32 %.sroa.042.079.us.us.us.us, -1
@@ -2293,7 +2293,7 @@ bb.f:                                             ; preds = %.lr.ph.us, %.crited
   %i.bm = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.bl ; 2 uses
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !612
   %.not.i.i.i.us.us98 = icmp eq i64 %.fr, %i.bn
-  br i1 %.not.i.i.i.us.us98, label %bb.g, label %.critedge.i.backedge.us.us99, !prof !729
+  br i1 %.not.i.i.i.us.us98, label %bb.g, label %.critedge.i.backedge.us.us99, !prof !726
 
 bb.g:                                             ; preds = %bb.f
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
@@ -2337,7 +2337,7 @@ bb.h:                                             ; preds = %.lr.ph, %.critedge.
   %i.ci = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %i.ch ; 2 uses
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !612
   %.not.i.i.i = icmp eq i64 %.fr, %i.cj
-  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !729
+  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !726
 
 bb.i:                                             ; preds = %bb.h
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
@@ -2740,7 +2740,7 @@ bb.l:                                             ; preds = %.critedge.i.i._crit
   %i.du = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.dt ; 2 uses
   %i.dv = load i64, ptr %i.du, align 8, !tbaa !612
   %.not.i.i.i16.us.us108 = icmp eq i64 %.fr, %i.dv
-  br i1 %.not.i.i.i16.us.us108, label %bb.m, label %.critedge.i.i.backedge.us.us109, !prof !729
+  br i1 %.not.i.i.i16.us.us108, label %bb.m, label %.critedge.i.i.backedge.us.us109, !prof !726
 
 bb.m:                                             ; preds = %.lr.ph.split.us.split.us112
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 8
@@ -2759,7 +2759,7 @@ bb.m:                                             ; preds = %.lr.ph.split.us.spl
   %i.eb = getelementptr inbounds nuw [16 x i8], ptr %i.de, i64 %i.ea
   %i.ec = load i64, ptr %i.eb, align 8, !tbaa !612
   %.not.i.i.i16.us.us.us = icmp eq i64 %.fr, %i.ec
-  br i1 %.not.i.i.i16.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us, !prof !729
+  br i1 %.not.i.i.i16.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us:                  ; preds = %.lr.ph.split.us.split.us.us
   %i.ed = add nsw i32 %.sroa.048.0103.us.us.us, -1
@@ -2798,7 +2798,7 @@ bb.n:                                             ; preds = %.lr.ph, %.critedge.
   %i.eu = getelementptr inbounds nuw [16 x i8], ptr %i.eh, i64 %i.et ; 2 uses
   %i.ev = load i64, ptr %i.eu, align 8, !tbaa !612
   %.not.i.i.i16 = icmp eq i64 %.fr, %i.ev
-  br i1 %.not.i.i.i16, label %bb.o, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i16, label %bb.o, label %.critedge.i.i.backedge, !prof !726
 
 bb.o:                                             ; preds = %bb.n
   %i.ew = getelementptr inbounds nuw i8, ptr %i.eu, i64 8
@@ -3201,7 +3201,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %i.ai ; 2 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !612
   %.not.i.i.i.us.us.us.us = icmp eq i64 %.fr, %i.ak
-  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvE14keyMatchesItemIS5_EEbRKT_RKS5_.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvE14keyMatchesItemIS5_EEbRKT_RKS5_.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.d
   %i.al = add nsw i32 %.sroa.040.075.us.us.us.us, -1
@@ -3250,7 +3250,7 @@ bb.f:                                             ; preds = %.lr.ph.us, %.crited
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %i.be ; 3 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !612
   %.not.i.i.i.us.us91 = icmp eq i64 %.fr, %i.bg
-  br i1 %.not.i.i.i.us.us91, label %bb.g, label %.critedge.i.backedge.us.us92, !prof !729
+  br i1 %.not.i.i.i.us.us91, label %bb.g, label %.critedge.i.backedge.us.us92, !prof !726
 
 bb.g:                                             ; preds = %bb.f
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
@@ -3293,7 +3293,7 @@ bb.h:                                             ; preds = %.lr.ph, %.critedge.
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %i.by ; 3 uses
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !612
   %.not.i.i.i = icmp eq i64 %.fr, %i.ca
-  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !729
+  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !726
 
 bb.i:                                             ; preds = %bb.h
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -3696,7 +3696,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.aj = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %i.ai ; 2 uses
   %i.ak = load i64, ptr %i.aj, align 8, !tbaa !612
   %.not.i.i.i.us.us.us.us = icmp eq i64 %.fr, %i.ak
-  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvE14keyMatchesItemIS5_EEbRKT_RKS5_.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvE14keyMatchesItemIS5_EEbRKT_RKS5_.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.d
   %i.al = add nsw i32 %.sroa.040.075.us.us.us.us, -1
@@ -3745,7 +3745,7 @@ bb.f:                                             ; preds = %.lr.ph.us, %.crited
   %i.bf = getelementptr inbounds nuw [16 x i8], ptr %i.ap, i64 %i.be ; 3 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !612
   %.not.i.i.i.us.us91 = icmp eq i64 %.fr, %i.bg
-  br i1 %.not.i.i.i.us.us91, label %bb.g, label %.critedge.i.backedge.us.us92, !prof !729
+  br i1 %.not.i.i.i.us.us91, label %bb.g, label %.critedge.i.backedge.us.us92, !prof !726
 
 bb.g:                                             ; preds = %bb.f
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
@@ -3788,7 +3788,7 @@ bb.h:                                             ; preds = %.lr.ph, %.critedge.
   %i.bz = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %i.by ; 3 uses
   %i.ca = load i64, ptr %i.bz, align 8, !tbaa !612
   %.not.i.i.i = icmp eq i64 %.fr, %i.ca
-  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !729
+  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !726
 
 bb.i:                                             ; preds = %bb.h
   %i.cb = getelementptr inbounds nuw i8, ptr %i.bz, i64 8
@@ -4191,7 +4191,7 @@ bb.af:                                            ; preds = %.critedge.i.i.backe
   %i.ia = getelementptr inbounds nuw [16 x i8], ptr %i.hm, i64 %i.hz
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !612
   %.not.i.i.i30.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i22.fr, %i.ib
-  br i1 %.not.i.i.i30.us.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i30.us.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us.us:               ; preds = %bb.af
   %i.ic = add nsw i32 %.sroa.070.0122.us.us.us.us, -1
@@ -4240,7 +4240,7 @@ bb.ah:                                            ; preds = %.lr.ph124.us, %.cri
   %i.iw = getelementptr inbounds nuw [16 x i8], ptr %i.ig, i64 %i.iv ; 2 uses
   %i.ix = load i64, ptr %i.iw, align 8, !tbaa !612
   %.not.i.i.i30.us.us129 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i22.fr, %i.ix
-  br i1 %.not.i.i.i30.us.us129, label %bb.ai, label %.critedge.i.i.backedge.us.us130, !prof !729
+  br i1 %.not.i.i.i30.us.us129, label %bb.ai, label %.critedge.i.i.backedge.us.us130, !prof !726
 
 bb.ai:                                            ; preds = %bb.ah
   %i.iy = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
@@ -4283,7 +4283,7 @@ bb.aj:                                            ; preds = %.lr.ph124, %.crited
   %i.jq = getelementptr inbounds nuw [16 x i8], ptr %i.jd, i64 %i.jp ; 2 uses
   %i.jr = load i64, ptr %i.jq, align 8, !tbaa !612
   %.not.i.i.i30 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i22.fr, %i.jr
-  br i1 %.not.i.i.i30, label %bb.ak, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i30, label %bb.ak, label %.critedge.i.i.backedge, !prof !726
 
 bb.ak:                                            ; preds = %bb.aj
   %i.js = getelementptr inbounds nuw i8, ptr %i.jq, i64 8
@@ -4686,7 +4686,7 @@ bb.x:                                             ; preds = %.critedge.i.i._crit
   %i.ha = getelementptr inbounds nuw [16 x i8], ptr %i.gk, i64 %i.gz ; 2 uses
   %i.hb = load i64, ptr %i.ha, align 8, !tbaa !612
   %.not.i.i.i20.us.us113 = icmp eq i64 %.fr, %i.hb
-  br i1 %.not.i.i.i20.us.us113, label %bb.y, label %.critedge.i.i.backedge.us.us114, !prof !729
+  br i1 %.not.i.i.i20.us.us113, label %bb.y, label %.critedge.i.i.backedge.us.us114, !prof !726
 
 bb.y:                                             ; preds = %.lr.ph.split.us.split.us117
   %i.hc = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
@@ -4705,7 +4705,7 @@ bb.y:                                             ; preds = %.lr.ph.split.us.spl
   %i.hh = getelementptr inbounds nuw [16 x i8], ptr %i.gk, i64 %i.hg
   %i.hi = load i64, ptr %i.hh, align 8, !tbaa !612
   %.not.i.i.i20.us.us.us = icmp eq i64 %.fr, %i.hi
-  br i1 %.not.i.i.i20.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us, !prof !729
+  br i1 %.not.i.i.i20.us.us.us, label %_ZNK5folly3f146detail8F14TableINS1_20ValueContainerPolicyIN8facebook5velox10StringViewEvvvvEEE4findIS6_EENS1_11F14ItemIterIPNS1_8F14ChunkIS6_EEEERKT_.exit.thread, label %.critedge.i.i.backedge.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us:                  ; preds = %.lr.ph.split.us.split.us.us
   %i.hj = add nsw i32 %.sroa.053.0108.us.us.us, -1
@@ -4744,7 +4744,7 @@ bb.z:                                             ; preds = %.lr.ph, %.critedge.
   %i.ia = getelementptr inbounds nuw [16 x i8], ptr %i.hn, i64 %i.hz ; 2 uses
   %i.ib = load i64, ptr %i.ia, align 8, !tbaa !612
   %.not.i.i.i20 = icmp eq i64 %.fr, %i.ib
-  br i1 %.not.i.i.i20, label %bb.aa, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i20, label %bb.aa, label %.critedge.i.i.backedge, !prof !726
 
 bb.aa:                                            ; preds = %bb.z
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ia, i64 8
@@ -5147,7 +5147,7 @@ bb.ad:                                            ; preds = %.critedge.i.i.backe
   %i.hw = getelementptr inbounds nuw [16 x i8], ptr %i.hi, i64 %i.hv
   %i.hx = load i64, ptr %i.hw, align 8, !tbaa !612
   %.not.i.i.i29.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i21.fr, %i.hx
-  br i1 %.not.i.i.i29.us.us.us.us, label %_ZN8facebook5velox4exec12StringWriter9copy_fromINS0_10StringViewEEEvRKT_.exit, label %.critedge.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i29.us.us.us.us, label %_ZN8facebook5velox4exec12StringWriter9copy_fromINS0_10StringViewEEEvRKT_.exit, label %.critedge.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us.us:               ; preds = %bb.ad
   %i.hy = add nsw i32 %.sroa.069.0121.us.us.us.us, -1
@@ -5196,7 +5196,7 @@ bb.af:                                            ; preds = %.lr.ph123.us, %.cri
   %i.is = getelementptr inbounds nuw [16 x i8], ptr %i.ic, i64 %i.ir ; 2 uses
   %i.it = load i64, ptr %i.is, align 8, !tbaa !612
   %.not.i.i.i29.us.us128 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i21.fr, %i.it
-  br i1 %.not.i.i.i29.us.us128, label %bb.ag, label %.critedge.i.i.backedge.us.us129, !prof !729
+  br i1 %.not.i.i.i29.us.us128, label %bb.ag, label %.critedge.i.i.backedge.us.us129, !prof !726
 
 bb.ag:                                            ; preds = %bb.af
   %i.iu = getelementptr inbounds nuw i8, ptr %i.is, i64 8
@@ -5239,7 +5239,7 @@ bb.ah:                                            ; preds = %.lr.ph123, %.crited
   %i.jm = getelementptr inbounds nuw [16 x i8], ptr %i.iz, i64 %i.jl ; 2 uses
   %i.jn = load i64, ptr %i.jm, align 8, !tbaa !612
   %.not.i.i.i29 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i21.fr, %i.jn
-  br i1 %.not.i.i.i29, label %bb.ai, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i29, label %bb.ai, label %.critedge.i.i.backedge, !prof !726
 
 bb.ai:                                            ; preds = %bb.ah
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jm, i64 8
@@ -5642,7 +5642,7 @@ bb.am:                                            ; preds = %bb.ah
   %i.ih = getelementptr inbounds nuw [16 x i8], ptr %i.ht, i64 %i.ig
   %i.ii = load i64, ptr %i.ih, align 8, !tbaa !612
   %.not.i.i.i43.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.ii
-  br i1 %.not.i.i.i43.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i43.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.i.backedge.us.us.us.us:             ; preds = %.noexc21.us.us.us.us
   %i.ij = add nsw i32 %.sroa.0125.0203.us.us.us.us, -1
@@ -5691,7 +5691,7 @@ bb.am:                                            ; preds = %bb.ah
   %i.jd = getelementptr inbounds nuw [16 x i8], ptr %i.in, i64 %i.jc ; 2 uses
   %i.je = load i64, ptr %i.jd, align 8, !tbaa !612
   %.not.i.i.i43.us.us219 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.je
-  br i1 %.not.i.i.i43.us.us219, label %bb.an, label %.critedge.i.i.i.backedge.us.us220, !prof !729
+  br i1 %.not.i.i.i43.us.us219, label %bb.an, label %.critedge.i.i.i.backedge.us.us220, !prof !726
 
 bb.an:                                            ; preds = %.noexc21.us.us217
   %i.jf = getelementptr inbounds nuw i8, ptr %i.jd, i64 8
@@ -5734,7 +5734,7 @@ bb.an:                                            ; preds = %.noexc21.us.us217
   %i.jx = getelementptr inbounds nuw [16 x i8], ptr %i.jk, i64 %i.jw ; 2 uses
   %i.jy = load i64, ptr %i.jx, align 8, !tbaa !612
   %.not.i.i.i43 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.jy
-  br i1 %.not.i.i.i43, label %bb.ao, label %.critedge.i.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i43, label %bb.ao, label %.critedge.i.i.i.backedge, !prof !726
 
 bb.ao:                                            ; preds = %.noexc21
   %i.jz = getelementptr inbounds nuw i8, ptr %i.jx, i64 8
@@ -6137,7 +6137,7 @@ bb.af:                                            ; preds = %bb.aa
   %i.ho = getelementptr inbounds nuw [16 x i8], ptr %i.ha, i64 %i.hn
   %i.hp = load i64, ptr %i.ho, align 8, !tbaa !612
   %.not.i.i.i48.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.hp
-  br i1 %.not.i.i.i48.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i48.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.i.backedge.us.us.us.us:             ; preds = %.noexc28.us.us.us.us
   %i.hq = add nsw i32 %.sroa.0130.0209.us.us.us.us, -1
@@ -6186,7 +6186,7 @@ bb.af:                                            ; preds = %bb.aa
   %i.ik = getelementptr inbounds nuw [16 x i8], ptr %i.hu, i64 %i.ij ; 2 uses
   %i.il = load i64, ptr %i.ik, align 8, !tbaa !612
   %.not.i.i.i48.us.us225 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.il
-  br i1 %.not.i.i.i48.us.us225, label %bb.ag, label %.critedge.i.i.i.backedge.us.us226, !prof !729
+  br i1 %.not.i.i.i48.us.us225, label %bb.ag, label %.critedge.i.i.i.backedge.us.us226, !prof !726
 
 bb.ag:                                            ; preds = %.noexc28.us.us223
   %i.im = getelementptr inbounds nuw i8, ptr %i.ik, i64 8
@@ -6229,7 +6229,7 @@ bb.ag:                                            ; preds = %.noexc28.us.us223
   %i.je = getelementptr inbounds nuw [16 x i8], ptr %i.ir, i64 %i.jd ; 2 uses
   %i.jf = load i64, ptr %i.je, align 8, !tbaa !612
   %.not.i.i.i48 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.jf
-  br i1 %.not.i.i.i48, label %bb.ah, label %.critedge.i.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i48, label %bb.ah, label %.critedge.i.i.i.backedge, !prof !726
 
 bb.ah:                                            ; preds = %.noexc28
   %i.jg = getelementptr inbounds nuw i8, ptr %i.je, i64 8
@@ -6632,7 +6632,7 @@ bb.ag:                                            ; preds = %bb.ab
   %i.hx = getelementptr inbounds nuw [16 x i8], ptr %i.hj, i64 %i.hw
   %i.hy = load i64, ptr %i.hx, align 8, !tbaa !612
   %.not.i.i.i73.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.hy
-  br i1 %.not.i.i.i73.us.us.us.us, label %.critedge42.i.i, label %.critedge.i.i.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i73.us.us.us.us, label %.critedge42.i.i, label %.critedge.i.i.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.i.i.backedge.us.us.us.us:           ; preds = %.noexc14.i.us.us.us.us
   %i.hz = add nsw i32 %.sroa.0328.0519.us.us.us.us, -1
@@ -6681,7 +6681,7 @@ bb.ag:                                            ; preds = %bb.ab
   %i.it = getelementptr inbounds nuw [16 x i8], ptr %i.id, i64 %i.is ; 2 uses
   %i.iu = load i64, ptr %i.it, align 8, !tbaa !612
   %.not.i.i.i73.us.us537 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.iu
-  br i1 %.not.i.i.i73.us.us537, label %bb.ah, label %.critedge.i.i.i.i.backedge.us.us538, !prof !729
+  br i1 %.not.i.i.i73.us.us537, label %bb.ah, label %.critedge.i.i.i.i.backedge.us.us538, !prof !726
 
 bb.ah:                                            ; preds = %.noexc14.i.us.us535
   %i.iv = getelementptr inbounds nuw i8, ptr %i.it, i64 8
@@ -6724,7 +6724,7 @@ bb.ah:                                            ; preds = %.noexc14.i.us.us535
   %i.jn = getelementptr inbounds nuw [16 x i8], ptr %i.ja, i64 %i.jm ; 2 uses
   %i.jo = load i64, ptr %i.jn, align 8, !tbaa !612
   %.not.i.i.i73 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i.fr, %i.jo
-  br i1 %.not.i.i.i73, label %bb.ai, label %.critedge.i.i.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i73, label %bb.ai, label %.critedge.i.i.i.i.backedge, !prof !726
 
 bb.ai:                                            ; preds = %.noexc14.i
   %i.jp = getelementptr inbounds nuw i8, ptr %i.jn, i64 8
@@ -7127,7 +7127,7 @@ bb.ck:                                            ; preds = %bb.cf
   %i.up = getelementptr inbounds nuw [16 x i8], ptr %i.ub, i64 %i.uo
   %i.uq = load i64, ptr %i.up, align 8, !tbaa !612
   %.not.i.i.i152.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i135.fr, %i.uq
-  br i1 %.not.i.i.i152.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i152.us.us.us.us, label %.critedge42.i, label %.critedge.i.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.i.backedge.us.us.us.us:             ; preds = %.noexc34.us.us.us.us
   %i.ur = add nsw i32 %.sroa.0248.0481.us.us.us.us, -1
@@ -7176,7 +7176,7 @@ bb.ck:                                            ; preds = %bb.cf
   %i.vl = getelementptr inbounds nuw [16 x i8], ptr %i.uv, i64 %i.vk ; 2 uses
   %i.vm = load i64, ptr %i.vl, align 8, !tbaa !612
   %.not.i.i.i152.us.us497 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i135.fr, %i.vm
-  br i1 %.not.i.i.i152.us.us497, label %bb.cl, label %.critedge.i.i.i.backedge.us.us498, !prof !729
+  br i1 %.not.i.i.i152.us.us497, label %bb.cl, label %.critedge.i.i.i.backedge.us.us498, !prof !726
 
 bb.cl:                                            ; preds = %.noexc34.us.us495
   %i.vn = getelementptr inbounds nuw i8, ptr %i.vl, i64 8
@@ -7219,7 +7219,7 @@ bb.cl:                                            ; preds = %.noexc34.us.us495
   %i.wf = getelementptr inbounds nuw [16 x i8], ptr %i.vs, i64 %i.we ; 2 uses
   %i.wg = load i64, ptr %i.wf, align 8, !tbaa !612
   %.not.i.i.i152 = icmp eq i64 %.sroa.0.0.copyload.i.i.i.i.i.i135.fr, %i.wg
-  br i1 %.not.i.i.i152, label %bb.cm, label %.critedge.i.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i152, label %bb.cm, label %.critedge.i.i.i.backedge, !prof !726
 
 bb.cm:                                            ; preds = %.noexc34
   %i.wh = getelementptr inbounds nuw i8, ptr %i.wf, i64 8
@@ -7622,7 +7622,7 @@ bb.ab:                                            ; preds = %bb.w
   %i.gc = getelementptr inbounds nuw [16 x i8], ptr %i.fo, i64 %i.gb
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !612
   %.not.i.i.i101.us.us.us.us = icmp eq i64 %.fr, %i.gd
-  br i1 %.not.i.i.i101.us.us.us.us, label %.thread304, label %.critedge.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i101.us.us.us.us, label %.thread304, label %.critedge.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us.us:               ; preds = %.noexc81.us.us.us.us
   %i.ge = add nsw i32 %.sroa.0278.0338.us.us.us.us, -1
@@ -7671,7 +7671,7 @@ bb.ab:                                            ; preds = %bb.w
   %i.gy = getelementptr inbounds nuw [16 x i8], ptr %i.gi, i64 %i.gx ; 2 uses
   %i.gz = load i64, ptr %i.gy, align 8, !tbaa !612
   %.not.i.i.i101.us.us344 = icmp eq i64 %.fr, %i.gz
-  br i1 %.not.i.i.i101.us.us344, label %bb.ac, label %.critedge.i.i.backedge.us.us345, !prof !729
+  br i1 %.not.i.i.i101.us.us344, label %bb.ac, label %.critedge.i.i.backedge.us.us345, !prof !726
 
 bb.ac:                                            ; preds = %.noexc81.us.us342
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gy, i64 8
@@ -7714,7 +7714,7 @@ bb.ac:                                            ; preds = %.noexc81.us.us342
   %i.hs = getelementptr inbounds nuw [16 x i8], ptr %i.hf, i64 %i.hr ; 2 uses
   %i.ht = load i64, ptr %i.hs, align 8, !tbaa !612
   %.not.i.i.i101 = icmp eq i64 %.fr, %i.ht
-  br i1 %.not.i.i.i101, label %bb.ad, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i101, label %bb.ad, label %.critedge.i.i.backedge, !prof !726
 
 bb.ad:                                            ; preds = %.noexc81
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hs, i64 8
@@ -8117,7 +8117,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.gc = getelementptr inbounds nuw [24 x i8], ptr %i.fb, i64 %i.gb
   %i.gd = load i64, ptr %i.gc, align 8, !tbaa !612
   %.not.i.i.i129.us.us.us.us = icmp eq i64 %.fr, %i.gd
-  br i1 %.not.i.i.i129.us.us.us.us, label %.noexc117.thread, label %.critedge.i.i98.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i129.us.us.us.us, label %.noexc117.thread, label %.critedge.i.i98.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i98.backedge.us.us.us.us:             ; preds = %.noexc116.us.us.us.us
   %i.ge = add nsw i32 %.sroa.0332.0440.us.us.us.us, -1
@@ -8167,7 +8167,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ha = getelementptr inbounds nuw [24 x i8], ptr %i.fb, i64 %i.gz ; 2 uses
   %i.hb = load i64, ptr %i.ha, align 8, !tbaa !612
   %.not.i.i.i129.us.us457 = icmp eq i64 %.fr, %i.hb
-  br i1 %.not.i.i.i129.us.us457, label %bb.ac, label %.critedge.i.i98.backedge.us.us458, !prof !729
+  br i1 %.not.i.i.i129.us.us457, label %bb.ac, label %.critedge.i.i98.backedge.us.us458, !prof !726
 
 bb.ac:                                            ; preds = %.noexc116.us.us455
   %i.hc = getelementptr inbounds nuw i8, ptr %i.ha, i64 8
@@ -8211,7 +8211,7 @@ bb.ac:                                            ; preds = %.noexc116.us.us455
   %i.hw = getelementptr inbounds nuw [24 x i8], ptr %i.fb, i64 %i.hv ; 2 uses
   %i.hx = load i64, ptr %i.hw, align 8, !tbaa !612
   %.not.i.i.i129 = icmp eq i64 %.fr, %i.hx
-  br i1 %.not.i.i.i129, label %bb.ad, label %.critedge.i.i98.backedge, !prof !729
+  br i1 %.not.i.i.i129, label %bb.ad, label %.critedge.i.i98.backedge, !prof !726
 
 bb.ad:                                            ; preds = %.noexc116
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
@@ -8614,7 +8614,7 @@ bb.cl:                                            ; preds = %bb.cg
   %i.uk = getelementptr inbounds nuw [16 x i8], ptr %i.tw, i64 %i.uj
   %i.ul = load i64, ptr %i.uk, align 8, !tbaa !612
   %.not.i.i.i201.us.us.us.us = icmp eq i64 %.sroa.0.0.copyload.i.i.i184.fr, %i.ul
-  br i1 %.not.i.i.i201.us.us.us.us, label %.critedge, label %.critedge.i.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i201.us.us.us.us, label %.critedge, label %.critedge.i.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.i.backedge.us.us.us.us:               ; preds = %.noexc91.us.us.us.us
   %i.um = add nsw i32 %.sroa.0324.0475.us.us.us.us, -1
@@ -8663,7 +8663,7 @@ bb.cl:                                            ; preds = %bb.cg
   %i.vg = getelementptr inbounds nuw [16 x i8], ptr %i.uq, i64 %i.vf ; 2 uses
   %i.vh = load i64, ptr %i.vg, align 8, !tbaa !612
   %.not.i.i.i201.us.us482 = icmp eq i64 %.sroa.0.0.copyload.i.i.i184.fr, %i.vh
-  br i1 %.not.i.i.i201.us.us482, label %bb.cm, label %.critedge.i.i.backedge.us.us483, !prof !729
+  br i1 %.not.i.i.i201.us.us482, label %bb.cm, label %.critedge.i.i.backedge.us.us483, !prof !726
 
 bb.cm:                                            ; preds = %.noexc91.us.us480
   %i.vi = getelementptr inbounds nuw i8, ptr %i.vg, i64 8
@@ -8706,7 +8706,7 @@ bb.cm:                                            ; preds = %.noexc91.us.us480
   %i.wa = getelementptr inbounds nuw [16 x i8], ptr %i.vn, i64 %i.vz ; 2 uses
   %i.wb = load i64, ptr %i.wa, align 8, !tbaa !612
   %.not.i.i.i201 = icmp eq i64 %.sroa.0.0.copyload.i.i.i184.fr, %i.wb
-  br i1 %.not.i.i.i201, label %bb.cn, label %.critedge.i.i.backedge, !prof !729
+  br i1 %.not.i.i.i201, label %bb.cn, label %.critedge.i.i.backedge, !prof !726
 
 bb.cn:                                            ; preds = %.noexc91
   %i.wc = getelementptr inbounds nuw i8, ptr %i.wa, i64 8
@@ -9109,7 +9109,7 @@ bb.d:                                             ; preds = %.critedge.i.backedg
   %i.ao = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %i.an
   %i.ap = load i64, ptr %i.ao, align 8, !tbaa !612
   %.not.i.i.i.us.us.us.us = icmp eq i64 %.fr, %i.ap
-  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEmvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !729
+  br i1 %.not.i.i.i.us.us.us.us, label %_ZNK5folly3f146detail21VectorContainerPolicyIN8facebook5velox10StringViewEmvvvSt17integral_constantIbLb1EEE14keyMatchesItemIS5_EEbRKT_RKj.exit.thread, label %.critedge.i.backedge.us.us.us.us, !prof !726
 
 .critedge.i.backedge.us.us.us.us:                 ; preds = %bb.d
   %i.aq = add nsw i32 %.sroa.041.078.us.us.us.us, -1
@@ -9159,7 +9159,7 @@ bb.f:                                             ; preds = %.lr.ph.us, %.crited
   %i.bm = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %i.bl ; 2 uses
   %i.bn = load i64, ptr %i.bm, align 8, !tbaa !612
   %.not.i.i.i.us.us97 = icmp eq i64 %.fr, %i.bn
-  br i1 %.not.i.i.i.us.us97, label %bb.g, label %.critedge.i.backedge.us.us98, !prof !729
+  br i1 %.not.i.i.i.us.us97, label %bb.g, label %.critedge.i.backedge.us.us98, !prof !726
 
 bb.g:                                             ; preds = %bb.f
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
@@ -9203,7 +9203,7 @@ bb.h:                                             ; preds = %.lr.ph, %.critedge.
   %i.ci = getelementptr inbounds nuw [24 x i8], ptr %i.m, i64 %i.ch ; 2 uses
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !612
   %.not.i.i.i = icmp eq i64 %.fr, %i.cj
-  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !729
+  br i1 %.not.i.i.i, label %bb.i, label %.critedge.i.backedge, !prof !726
 
 bb.i:                                             ; preds = %bb.h
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ci, i64 8
@@ -9606,14 +9606,14 @@ begin_hunk_19_@llvm.ucmp.i32.i32
 !723 = !{!660, !527, i64 1}
 !724 = distinct !{null}
 !725 = distinct !{!725, !73}
-!726 = !{!727}
-!727 = distinct !{!727, !728, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
-!728 = distinct !{!728, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
-!729 = !{!"branch_weights", i32 2146410443, i32 1073205}
-!730 = !{!618, !527, i64 65}
-!731 = !{!618, !527, i64 66}
-!732 = !{!618, !527, i64 67}
-!733 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!726 = !{!"branch_weights", i32 2146410443, i32 1073205}
+!727 = !{!618, !527, i64 65}
+!728 = !{!618, !527, i64 66}
+!729 = !{!618, !527, i64 67}
+!730 = !{!"branch_weights", !"expected", i32 -2147483648, i32 0}
+!731 = !{!732}
+!732 = distinct !{!732, !733, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_: argument 0"}
+!733 = distinct !{!733, !"_ZN8facebook5velox12errorMessageIJNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES7_N3fmt3v1117basic_string_viewIcEEDpRKT_"}
 !734 = !{!735, !735, i64 0}
 !735 = !{!"p1 _ZTSSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N8facebook5velox4exec17SignatureVariableEESt10_Select1stISC_ESt4lessIS5_ESaISC_EE", !11, i64 0}
 !736 = !{!737, !738, i64 8}

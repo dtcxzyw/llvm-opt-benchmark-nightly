@@ -201,7 +201,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4
   %i.e = and i32 %i.d, 16
   %.not = icmp ne i32 %i.e, 0
-  %.pr.pre92 = load i64, ptr %2, align 8, !tbaa !326 ; 3 uses
+  %.pr.pre92 = load i64, ptr %2, align 8, !tbaa !40 ; 3 uses
   %i.f = icmp ult i64 %.pr.pre92, -1970324836974592
   %or.cond = select i1 %.not, i1 %i.f, i1 false
   br i1 %or.cond, label %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit, label %.thread
@@ -604,7 +604,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4
   %i.e = and i32 %i.d, 16
   %.not = icmp ne i32 %i.e, 0
-  %.pr.pre37 = load i64, ptr %2, align 8, !tbaa !326 ; 3 uses
+  %.pr.pre37 = load i64, ptr %2, align 8, !tbaa !40 ; 3 uses
   %i.f = icmp ult i64 %.pr.pre37, -1970324836974592
   %or.cond = select i1 %.not, i1 %i.f, i1 false
   br i1 %or.cond, label %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit, label %.thread
@@ -1007,7 +1007,7 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 4
   %i.e = and i32 %i.d, 16
   %.not = icmp ne i32 %i.e, 0
-  %.pr.pre472 = load i64, ptr %2, align 8, !tbaa !326 ; 3 uses
+  %.pr.pre472 = load i64, ptr %2, align 8, !tbaa !40 ; 3 uses
   %i.f = icmp ult i64 %.pr.pre472, -1970324836974592
   %or.cond523 = select i1 %.not, i1 %i.f, i1 false
   br i1 %or.cond523, label %_ZN6hermes2vm20toArrayIndexFastPathENS0_11HermesValueE.exit, label %.thread

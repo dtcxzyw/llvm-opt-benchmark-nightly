@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not10.i.i.i = icmp eq ptr %i.o, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e
@@ -604,7 +604,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not10.i.i.i = icmp eq ptr %i.o, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e
@@ -1007,7 +1007,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %._cri
   %i.aw = load ptr, ptr %i.av, align 8, !tbaa !31 ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %.not10.i.i.i46 = icmp eq ptr %i.aw, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i46, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i47
 
 .lr.ph.i.i.i47:                                   ; preds = %bb.h
@@ -1143,7 +1143,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.ch = load ptr, ptr %i.av, align 8, !tbaa !31 ; 2 uses
   %.not10.i.i.i62 = icmp eq ptr %i.ch, null
-  %.pre132 = load ptr, ptr %4, align 8, !tbaa !23 ; 4 uses
+  %.pre132 = load ptr, ptr %4, align 8            ; 4 uses
   br i1 %.not10.i.i.i62, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit92, label %.lr.ph.i.i.i63
 
 .lr.ph.i.i.i63:                                   ; preds = %bb.n
@@ -1546,7 +1546,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %._cri
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !31 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not10.i.i.i15 = icmp eq ptr %i.ak, null
-  %.pre = load ptr, ptr %2, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %2, align 8               ; 4 uses
   br i1 %.not10.i.i.i15, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i16
 
 .lr.ph.i.i.i16:                                   ; preds = %bb.h
@@ -1718,7 +1718,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %.not10.i.i.i = icmp eq ptr %i.o, null
-  %.pre = load ptr, ptr %2, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %2, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e
@@ -2121,7 +2121,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !31 ; 2 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not10.i.i.i13 = icmp eq ptr %i.ag, null
-  %.pre = load ptr, ptr %2, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %2, align 8               ; 4 uses
   br i1 %.not10.i.i.i13, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i14
 
 .lr.ph.i.i.i14:                                   ; preds = %bb.f
@@ -2293,7 +2293,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %.not10.i.i.i = icmp eq ptr %i.o, null
-  %.pre = load ptr, ptr %2, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %2, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e
@@ -2696,7 +2696,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !31 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %.not10.i.i.i64 = icmp eq ptr %i.cz, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i64, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i65
 
 .lr.ph.i.i.i65:                                   ; preds = %bb.r
@@ -2831,7 +2831,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
   %i.ej = load ptr, ptr %i.cy, align 8, !tbaa !31 ; 2 uses
   %.not10.i.i.i80 = icmp eq ptr %i.ej, null
-  %.pre176 = load ptr, ptr %4, align 8, !tbaa !23 ; 4 uses
+  %.pre176 = load ptr, ptr %4, align 8            ; 4 uses
   br i1 %.not10.i.i.i80, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit110, label %.lr.ph.i.i.i81
 
 .lr.ph.i.i.i81:                                   ; preds = %bb.x
@@ -3234,7 +3234,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   %i.cz = load ptr, ptr %i.cy, align 8, !tbaa !31 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %.not10.i.i.i64 = icmp eq ptr %i.cz, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i64, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i65
 
 .lr.ph.i.i.i65:                                   ; preds = %bb.r
@@ -3369,7 +3369,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
   %i.ej = load ptr, ptr %i.cy, align 8, !tbaa !31 ; 2 uses
   %.not10.i.i.i80 = icmp eq ptr %i.ej, null
-  %.pre176 = load ptr, ptr %4, align 8, !tbaa !23 ; 4 uses
+  %.pre176 = load ptr, ptr %4, align 8            ; 4 uses
   br i1 %.not10.i.i.i80, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit110, label %.lr.ph.i.i.i81
 
 .lr.ph.i.i.i81:                                   ; preds = %bb.x
@@ -3772,7 +3772,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p, %._cri
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !31 ; 2 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 12 uses
   %.not10.i.i.i61 = icmp eq ptr %i.cx, null
-  %.pre = load ptr, ptr %3, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %3, align 8               ; 4 uses
   br i1 %.not10.i.i.i61, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i62
 
 .lr.ph.i.i.i62:                                   ; preds = %bb.r
@@ -3907,7 +3907,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %._cri
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.eh = load ptr, ptr %i.cw, align 8, !tbaa !31 ; 2 uses
   %.not10.i.i.i77 = icmp eq ptr %i.eh, null
-  %.pre159 = load ptr, ptr %4, align 8, !tbaa !23 ; 4 uses
+  %.pre159 = load ptr, ptr %4, align 8            ; 4 uses
   br i1 %.not10.i.i.i77, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit107, label %.lr.ph.i.i.i78
 
 .lr.ph.i.i.i78:                                   ; preds = %bb.x
@@ -4159,7 +4159,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !31   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 6 uses
   %.not10.i.i.i = icmp eq ptr %i.o, null
-  %.pre = load ptr, ptr %2, align 8, !tbaa !23    ; 4 uses
+  %.pre = load ptr, ptr %2, align 8               ; 4 uses
   br i1 %.not10.i.i.i, label %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEP24malloc_plus_memory_entrySt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e
