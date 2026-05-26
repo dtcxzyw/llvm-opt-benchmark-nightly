@@ -1,3 +1,5 @@
+inline.NumInlined: 245
+inline.NumDeleted: 29
 begin_hunk_0_@initListeners:bb.a
   %indvars.iv.next.i.6 = add nuw nsw i64 %indvars.iv.i.6, 1 ; 2 uses
   %i.gu = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1184), align 8, !tbaa !406 ; 2 uses
@@ -199,7 +201,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 
 bb.l:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %i.y, i64 48
-  %i.af = load i32, ptr %i.ae, align 4, !tbaa !47
+  %i.af = load i32, ptr %i.ae, align 8, !tbaa !47
   %.not74 = icmp eq i32 %i.af, 1
   br i1 %.not74, label %bb.m, label %bb.o
 

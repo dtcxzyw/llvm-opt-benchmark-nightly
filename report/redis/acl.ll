@@ -201,7 +201,6 @@ begin_hunk_0
 @.str.207 = private unnamed_addr constant [2 x i8] c">\00", align 1
 @.str.208 = private unnamed_addr constant [11 x i8] c"*redacted*\00", align 1
 @.str.209 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
-@.str.210 = private unnamed_addr constant [2 x i8] c"*\00", align 1
 @.str.211 = private unnamed_addr constant [71 x i8] c"Cannot authenticate as an internal connection on non-cluster instances\00", align 1
 @.str.212 = private unnamed_addr constant [37 x i8] c"-WRONGPASS invalid internal password\00", align 1
 @switch.table.aclCommand = private unnamed_addr constant [5 x ptr] [ptr @.str.155, ptr @.str.156, ptr @.str.158, ptr @.str.157, ptr @.str.159], align 8
@@ -604,13 +603,18 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %.lr.ph.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !39
-  %8 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.aa, ptr noundef nonnull dereferenceable(2) @.str.210) #29
-  %.fr.i = freeze i32 %8
-  %.not28.i = icmp eq i32 %.fr.i, 0
-  br i1 %.not28.i, label %ACLSelectorHasUnrestrictedKeyAccess.exit, label %bb.g
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !39  ; 2 uses
+  %8 = load i8, ptr %i.aa, align 1
+  %.not28.i = icmp eq i8 %8, 42
+  br i1 %.not28.i, label %.tail.i, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %.lr.ph.i
+.tail.i:                                          ; preds = %bb.f
+  %9 = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
+  %10 = load i8, ptr %9, align 1
+  %11 = icmp eq i8 %10, 0
+  br i1 %11, label %ACLSelectorHasUnrestrictedKeyAccess.exit, label %bb.g
+
+bb.g:                                             ; preds = %.tail.i, %bb.f, %.lr.ph.i
   %i.ab = call ptr @listNext(ptr noundef nonnull %5) #25 ; 2 uses
   %.not26.i = icmp eq ptr %i.ab, null
   br i1 %.not26.i, label %ACLSelectorHasUnrestrictedKeyAccess.exit.thread20, label %.lr.ph.i
@@ -619,7 +623,7 @@ ACLSelectorHasUnrestrictedKeyAccess.exit.thread20: ; preds = %bb.g, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %bb.h
 
-ACLSelectorHasUnrestrictedKeyAccess.exit:         ; preds = %bb.f
+ACLSelectorHasUnrestrictedKeyAccess.exit:         ; preds = %.tail.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %.critedge
 

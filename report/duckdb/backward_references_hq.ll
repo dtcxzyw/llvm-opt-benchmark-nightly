@@ -1,3 +1,5 @@
+inline.NumInlined: 29
+inline.NumDeleted: 13
 begin_hunk_0_@_ZN13duckdb_brotli26BrotliZopfliCreateCommandsEmmPKNS_10ZopfliNodeEPiPmPK19BrotliEncoderParamsPNS_7CommandES4_:bb.a
   %.055 = phi i64 [ %i.ag, %bb.c ], [ %i.aa, %bb.b ] ; 9 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %i.t, i64 4
@@ -199,7 +201,7 @@ _ZN13duckdb_brotliL18CombineLengthCodesEtti.exit: ; preds = %bb.r, %_ZN13duckdb_
   %i.ev = and i16 %i.eu, 56
   %i.ew = or disjoint i16 %i.et, %i.ev
   %.0.i57 = or disjoint i16 %i.ew, %.pn.i
-  store i16 %.0.i57, ptr %i.cq, align 2, !tbaa !43
+  store i16 %.0.i57, ptr %i.cq, align 4, !tbaa !43
   %i.ex = icmp ne i32 %i.av, 0
   %or.cond = and i1 %i.aq, %i.ex
   br i1 %or.cond, label %bb.s, label %bb.t

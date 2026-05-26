@@ -1,3 +1,5 @@
+inline.NumInlined: 21
+inline.NumDeleted: 15
 begin_hunk_0_@_Z19SetMethodPropertiesRK7CMethodPKyP8IUnknown:bb.a
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 2
   store i16 0, ptr %i.y, align 2, !tbaa !27
@@ -199,7 +201,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 _ZN9CMyComPtrI27ICompressSetCoderPropertiesED2Ev.exit: ; preds = %bb.bj, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
-  %i.da = load i64, ptr %i.r, align 8             ; 2 uses
+  %i.da = load i64, ptr %i.r, align 16            ; 2 uses
   %.idx = shl i64 %i.da, 4
   %.add79 = or disjoint i64 %.idx, 8              ; 2 uses
   %i.db = icmp eq i64 %i.da, 0
@@ -234,7 +236,7 @@ bb.bp:                                            ; preds = %.split128, %.split1
   %.pn.pn = phi { ptr, i32 } [ %i.dc, %_ZN9CMyComPtrI27ICompressSetCoderPropertiesED2Ev.exit97 ], [ %i.br, %.split.us ], [ %i.ck, %.split ], [ %i.cl, %.split128 ], [ %i.bs, %.split128.us ]
   %.165 = extractvalue { ptr, i32 } %.pn.pn, 0
   %i.dk = call ptr @__cxa_begin_catch(ptr %.165) #10 ; 0 uses
-  %i.dl = load i64, ptr %i.r, align 8             ; 2 uses
+  %i.dl = load i64, ptr %i.r, align 16            ; 2 uses
   %.idx84 = shl i64 %i.dl, 4
   %.ptr81.add = or disjoint i64 %.idx84, 8        ; 2 uses
   %i.dm = icmp eq i64 %i.dl, 0

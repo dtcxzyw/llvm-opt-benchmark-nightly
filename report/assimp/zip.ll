@@ -201,8 +201,7 @@ bb.n:                                             ; preds = %bb.m
   %.not53 = icmp eq i64 %i.bs, %i.r
   %.not54 = icmp eq i64 %i.cf, %i.t
   %or.cond = select i1 %.not53, i1 %.not54, i1 false
-  %cond.fr = freeze i1 %or.cond
-  %spec.select = select i1 %cond.fr, i32 -5, i32 0
+  %spec.select = select i1 %or.cond, i32 -5, i32 0
   br label %.thread58
 
 .thread58:                                        ; preds = %bb.j, %.split, %bb.k, %bb.i, %bb.h, %.split.us, %bb.n, %bb.m, %bb.d, %bb.a, %bb.b, %bb.c, %bb.f
@@ -605,9 +604,8 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.bc
   store ptr %.3171390, ptr %i.a, align 8
   store i64 %.2177389, ptr %i.c, align 8
-  %i.ps = tail call fastcc i32 @tdefl_flush_block(ptr noundef %0, i32 noundef 0)
-  %.fr = freeze i32 %i.ps                         ; 2 uses
-  %.not213 = icmp eq i32 %.fr, 0
+  %i.ps = tail call fastcc i32 @tdefl_flush_block(ptr noundef %0, i32 noundef 0) ; 2 uses
+  %.not213 = icmp eq i32 %i.ps, 0
   br i1 %.not213, label %select.unfold.backedge, label %.thread259.loopexit
 
 select.unfold.backedge:                           ; preds = %bb.bg, %bb.bd, %bb.bf
@@ -621,7 +619,7 @@ select.unfold.backedge:                           ; preds = %bb.bg, %bb.bd, %bb.
   br label %.thread259
 
 .thread259.loopexit:                              ; preds = %bb.bg
-  %i.pt = icmp sgt i32 %.fr, -1
+  %i.pt = icmp sgt i32 %i.ps, -1
   %i.pu = zext i1 %i.pt to i32
   br label %.thread259
 
@@ -1024,17 +1022,19 @@ mz_zip_set_error.exit430:                         ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
-  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096)
+  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096) ; 2 uses
   %spec.select.i = add nsw i64 %i.j, -4096
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
+  %2 = sub nsw i64 4096, %i.j
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.b
-  %i.m = phi i64 [ %i.g, %bb.b ], [ %.fr66.i, %bb.h ]
-  %.044.i = phi i64 [ %spec.select.i, %bb.b ], [ %i.ag, %bb.h ] ; 6 uses
-  %i.n = sub i64 %i.m, %.044.i                    ; 2 uses
-  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.n, i64 4096) ; 3 uses
+  %3 = phi i64 [ %i.ad, %bb.h ], [ %i.g, %bb.b ]  ; 2 uses
+  %i.m = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %2, %bb.b ] ; 2 uses
+  %.044.i = phi i64 [ %i.ag, %bb.h ], [ %spec.select.i, %bb.b ] ; 6 uses
+  %i.n = sub i64 %3, %.044.i                      ; 2 uses
+  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.n, i64 4096) ; 2 uses
   %i.o = load ptr, ptr %i.k, align 8
   %i.p = load ptr, ptr %i.l, align 8
   %i.q = call i64 %i.o(ptr noundef %i.p, i64 noundef %.044.i, ptr noundef nonnull %i.a, i64 noundef %spec.select5465.i) #36, !inline_history !22
@@ -1046,7 +1046,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.r, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %i.s = add nuw nsw i64 %spec.select5465.i, 4294967292
+  %4 = add i64 %i.m, %3
+  %umin.i = call i64 @llvm.umin.i64(i64 %4, i64 4096)
+  %i.s = add nuw nsw i64 %umin.i, 4294967292
   %i.t = and i64 %i.s, 4294967295
   br label %bb.e
 
@@ -1075,11 +1077,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not53.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.critedge.i
-  %i.ad = load i64, ptr %0, align 8
-  %.fr66.i = freeze i64 %i.ad                     ; 2 uses
-  %i.ae = sub i64 %.fr66.i, %.044.i
+  %i.ad = load i64, ptr %0, align 8               ; 2 uses
+  %i.ae = sub i64 %i.ad, %.044.i
   %i.af = icmp ugt i64 %i.ae, 65556
   %i.ag = add i64 %.044.i, -4093
+  %indvars.iv.next.i = add i64 %i.m, 4093
   br i1 %i.af, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.c, %bb.h
@@ -1482,8 +1484,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 zip_basename.exit:                                ; preds = %bb.w, %bb.y, %bb.z, %bb.aa
   %.2.i = phi ptr [ %i.cf, %bb.aa ], [ %.014.i, %bb.z ], [ %.014.i, %bb.y ], [ %.014.i, %bb.w ]
   %i.cg = call i32 @mz_zip_writer_add_file(ptr noundef nonnull %3, ptr noundef nonnull %.2.i, ptr noundef nonnull %i.ax, ptr noundef nonnull @.str.1, i16 noundef zeroext 0, i32 noundef 6, i32 noundef %.026)
-  %.fr = freeze i32 %i.cg
-  %.not37 = icmp eq i32 %.fr, 0
+  %.not37 = icmp eq i32 %i.cg, 0
   br i1 %.not37, label %.thread, label %bb.p
 
 .thread:                                          ; preds = %bb.p, %bb.q, %bb.r, %zip_basename.exit, %bb.o
