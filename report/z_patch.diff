@@ -1,0 +1,127 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index a064aa1016399..220d75c2b968e 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -3244,6 +3244,109 @@ static Value *simplifyNestedSelectsUsingImpliedCond(SelectInst &SI,
+   return nullptr;
+ }
+ 
++static bool isImpliedByAssumeAndSelectCond(Value *AssumeCond, Value *CondVal,
++                                           bool CondIsTrue, CmpPredicate Pred,
++                                           Value *LHS, Value *RHS,
++                                           const DataLayout &DL,
++                                           unsigned Depth = 0) {
++  if (Depth == MaxAnalysisRecursionDepth)
++    return false;
++
++  if (isImpliedCondition(AssumeCond, Pred, LHS, RHS, DL,
++                         /*LHSIsTrue=*/true, Depth)
++          .value_or(false))
++    return true;
++
++  Value *A, *B;
++  if (match(AssumeCond, m_LogicalAnd(m_Value(A), m_Value(B))))
++    return isImpliedByAssumeAndSelectCond(A, CondVal, CondIsTrue, Pred, LHS,
++                                          RHS, DL, Depth + 1) ||
++           isImpliedByAssumeAndSelectCond(B, CondVal, CondIsTrue, Pred, LHS,
++                                          RHS, DL, Depth + 1);
++
++  if (!match(AssumeCond, m_LogicalOr(m_Value(A), m_Value(B))))
++    return false;
++
++  auto AImplied =
++      isImpliedCondition(CondVal, A, DL, CondIsTrue, Depth + 1);
++  if (AImplied && !*AImplied &&
++      isImpliedByAssumeAndSelectCond(B, CondVal, CondIsTrue, Pred, LHS, RHS,
++                                     DL, Depth + 1))
++    return true;
++
++  auto BImplied =
++      isImpliedCondition(CondVal, B, DL, CondIsTrue, Depth + 1);
++  if (BImplied && !*BImplied &&
++      isImpliedByAssumeAndSelectCond(A, CondVal, CondIsTrue, Pred, LHS, RHS,
++                                     DL, Depth + 1))
++    return true;
++
++  return false;
++}
++
++static bool isICmpTrueOnSelectArm(CmpPredicate Pred, Value *LHS, Value *RHS,
++                                  SelectInst &SI, bool CondIsTrue,
++                                  const SimplifyQuery &SQ) {
++  if (isImpliedCondition(SI.getCondition(), Pred, LHS, RHS, SQ.DL,
++                         CondIsTrue)
++          .value_or(false))
++    return true;
++
++  if (!SQ.AC)
++    return false;
++
++  SimplifyQuery AssumeQ = SQ.getWithInstruction(&SI);
++  for (auto &AssumeVH : SQ.AC->assumptions()) {
++    if (!AssumeVH)
++      continue;
++
++    auto *Assume = cast<AssumeInst>(AssumeVH);
++    if (isValidAssumeForContext(Assume, AssumeQ) &&
++        isImpliedByAssumeAndSelectCond(Assume->getArgOperand(0),
++                                       SI.getCondition(), CondIsTrue, Pred,
++                                       LHS, RHS, SQ.DL))
++      return true;
++  }
++
++  return false;
++}
++
++static Value *foldSelectWithAssumedMinMaxArm(SelectInst &SI,
++                                             const SimplifyQuery &SQ) {
++  if (!SI.getCondition()->getType()->isIntegerTy(1) ||
++      !SI.getType()->isIntegerTy())
++    return nullptr;
++
++  auto TryFold = [&](Value *ArmVal, Value *MinMaxVal,
++                     bool ArmSelectedWhenCondTrue) -> Value * {
++    auto *MMI = dyn_cast<MinMaxIntrinsic>(MinMaxVal);
++    if (!MMI)
++      return nullptr;
++
++    Value *OtherVal;
++    if (MMI->getArgOperand(0) == ArmVal)
++      OtherVal = MMI->getArgOperand(1);
++    else if (MMI->getArgOperand(1) == ArmVal)
++      OtherVal = MMI->getArgOperand(0);
++    else
++      return nullptr;
++
++    CmpPredicate Pred = CmpInst::getNonStrictPredicate(MMI->getPredicate());
++    if (isICmpTrueOnSelectArm(Pred, ArmVal, OtherVal, SI,
++                              ArmSelectedWhenCondTrue, SQ))
++      return MinMaxVal;
++    return nullptr;
++  };
++
++  if (Value *V = TryFold(SI.getTrueValue(), SI.getFalseValue(),
++                         /*ArmSelectedWhenCondTrue=*/true))
++    return V;
++  if (Value *V = TryFold(SI.getFalseValue(), SI.getTrueValue(),
++                         /*ArmSelectedWhenCondTrue=*/false))
++    return V;
++  return nullptr;
++}
++
+ Instruction *InstCombinerImpl::foldAndOrOfSelectUsingImpliedCond(Value *Op,
+                                                                  SelectInst &SI,
+                                                                  bool IsAnd) {
+@@ -4431,6 +4534,12 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+                                     SQ.getWithInstruction(&SI)))
+     return replaceInstUsesWith(SI, V);
+ 
++  if (Value *V = foldSelectWithAssumedMinMaxArm(SI, SQ)) {
++    if (auto *I = dyn_cast<Instruction>(V))
++      I->dropPoisonGeneratingAnnotations();
++    return replaceInstUsesWith(SI, V);
++  }
++
+   if (Instruction *I = canonicalizeSelectToShuffle(SI))
+     return I;
+ 
