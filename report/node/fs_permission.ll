@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.e
 .lr.ph:                                           ; preds = %bb.m
   %i.ao = load ptr, ptr %1, align 8
   %i.ap = add nuw i64 %i.aj, 1
-  %.pre.pre = load ptr, ptr %i.l, align 8, !noalias !55 ; 3 uses
+  %.pre.pre = load ptr, ptr %i.l, align 8         ; 3 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %bb.aq
@@ -220,7 +220,6 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o, %bb.n
   %.03163.lcssa = phi i64 [ %.03163, %bb.o ], [ %i.ap, %bb.n ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
-  call void @llvm.experimental.noalias.scope.decl(metadata !55)
   %i.av = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   store ptr %i.av, ptr %2, align 8, !alias.scope !55
   %spec.select.i.i.i = call noundef i64 @llvm.umin.i64(i64 %.03163.lcssa, i64 %i.al) ; 8 uses
