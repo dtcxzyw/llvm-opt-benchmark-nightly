@@ -1,0 +1,119 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 58605a5da3de8..fbcc743e23660 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -4505,6 +4505,105 @@ static Instruction *foldSelectNegNot(SelectInst &SI,
+   return nullptr;
+ }
+ 
++static bool isKnownULESignBit(Value *V, const SimplifyQuery &SQ,
++                              const Instruction *CtxI) {
++  auto *Ty = dyn_cast<IntegerType>(V->getType());
++  if (!Ty)
++    return false;
++
++  if (auto *C = dyn_cast<ConstantInt>(V)) {
++    const APInt &Val = C->getValue();
++    return Val.ule(APInt::getSignMask(Val.getBitWidth()));
++  }
++
++  // Sufficient condition for non-constant values:
++  // if the sign bit is known zero, then V < SignBit, therefore V <= SignBit.
++  return isKnownNonNegative(V, SQ.getWithInstruction(CtxI));
++}
++
++static Value *foldSelectUAddNSWOverflowToUMinClamp(SelectInst &SI,
++                                                   const SimplifyQuery &SQ) {
++  if (!SI.getCondition()->getType()->isIntegerTy(1) ||
++      !SI.getType()->isIntegerTy())
++    return nullptr;
++
++  auto *Cmp = dyn_cast<ICmpInst>(SI.getCondition());
++  if (!Cmp)
++    return nullptr;
++
++  // Match:
++  //   %ov = icmp ult %sum, %x
++  //
++  // Also allow the equivalent:
++  //   %ov = icmp ugt %x, %sum
++  Value *Sum, *X;
++  if (Cmp->getPredicate() == ICmpInst::ICMP_ULT) {
++    Sum = Cmp->getOperand(0);
++    X = Cmp->getOperand(1);
++  } else if (Cmp->getPredicate() == ICmpInst::ICMP_UGT) {
++    X = Cmp->getOperand(0);
++    Sum = Cmp->getOperand(1);
++  } else {
++    return nullptr;
++  }
++
++  Value *K = SI.getTrueValue();
++  auto *Clamp = dyn_cast<MinMaxIntrinsic>(SI.getFalseValue());
++  if (!Clamp || Clamp->getIntrinsicID() != Intrinsic::umin)
++    return nullptr;
++
++  // Match:
++  //   %clamp = umin %sum, %K
++  //
++  // Allow commuted operands.
++  if (!((Clamp->getArgOperand(0) == Sum && Clamp->getArgOperand(1) == K) ||
++        (Clamp->getArgOperand(0) == K && Clamp->getArgOperand(1) == Sum)))
++    return nullptr;
++
++  // Match:
++  //   %sum = add nsw %u, %x
++  //
++  // Allow commuted add operands.
++  auto *Add = dyn_cast<BinaryOperator>(Sum);
++  if (!Add || Add->getOpcode() != Instruction::Add || !Add->hasNoSignedWrap())
++    return nullptr;
++
++  Value *U;
++  if (Add->getOperand(0) == X)
++    U = Add->getOperand(1);
++  else if (Add->getOperand(1) == X)
++    U = Add->getOperand(0);
++  else
++    return nullptr;
++
++  // Match:
++  //   %u = umax %x, %C
++  //
++  // Allow commuted operands.
++  auto *Umax = dyn_cast<MinMaxIntrinsic>(U);
++  if (!Umax || Umax->getIntrinsicID() != Intrinsic::umax)
++    return nullptr;
++
++  Value *C;
++  if (Umax->getArgOperand(0) == X)
++    C = Umax->getArgOperand(1);
++  else if (Umax->getArgOperand(1) == X)
++    C = Umax->getArgOperand(0);
++  else
++    return nullptr;
++
++  // Required:
++  //   C <=u SignBit
++  //   K <=u SignBit
++  //
++  // For non-constant values we currently use the stronger sufficient condition
++  // that the sign bit is known zero.
++  if (!isKnownULESignBit(C, SQ, &SI) || !isKnownULESignBit(K, SQ, &SI))
++    return nullptr;
++
++  return Clamp;
++}
++
+ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+   Value *CondVal = SI.getCondition();
+   Value *TrueVal = SI.getTrueValue();
+@@ -5319,5 +5418,8 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+     return CallInst::Create(Scmp, {CmpLHS, ConstantInt::get(SI.getType(), 0)});
+   }
+ 
++  if (Value *V = foldSelectUAddNSWOverflowToUMinClamp(SI, SQ))
++    return replaceInstUsesWith(SI, V);
++
+   return nullptr;
+ }
