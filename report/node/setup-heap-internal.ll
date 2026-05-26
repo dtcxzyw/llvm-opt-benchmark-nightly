@@ -201,12 +201,14 @@ bb.eg:                                            ; preds = %bb.ec
   %i.vk = getelementptr inbounds nuw i8, ptr %i.vj, i64 40
   store atomic volatile i64 0, ptr %i.vk monotonic, align 8
   %i.vl = add i64 %i.ch, -1
-  %i.vm = inttoptr i64 %i.vl to ptr               ; 2 uses
+  %i.vm = inttoptr i64 %i.vl to ptr               ; 3 uses
   %i.vn = getelementptr inbounds nuw i8, ptr %i.c, i64 776
   %i.vo = load i64, ptr %i.vn, align 8
   store atomic volatile i64 %i.vo, ptr %i.vm monotonic, align 8
-  %i.vp = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
-  store i64 3, ptr %i.vp, align 8
+  %4 = getelementptr inbounds nuw i8, ptr %i.vm, i64 8
+  %i.vp = getelementptr inbounds nuw i8, ptr %i.vm, i64 12
+  store atomic volatile i32 0, ptr %i.vp monotonic, align 4
+  store atomic i32 3, ptr %4 monotonic, align 8
   %i.vq = tail call i64 @_ZN2v88internal4Heap18AllocatePartialMapENS0_12InstanceTypeEi(ptr noundef nonnull align 8 dereferenceable(2992) %0, i16 noundef zeroext 205, i32 noundef 0) ; 2 uses
   %.not1486 = icmp eq i64 %i.vq, 0
   br i1 %.not1486, label %.critedge510, label %bb.eh
