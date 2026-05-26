@@ -201,11 +201,11 @@ bb.ej:                                            ; preds = %bb.ei
   store i64 0, ptr %4, align 8, !tbaa !25
   store ptr %1, ptr %i.ag, align 8, !tbaa !28
   %i.hw = invoke noundef i32 @_ZNK4YAML5RegEx5MatchINS_16StreamCharSourceEEEiRKT_(ptr noundef nonnull align 8 dereferenceable(32) %i.hv, ptr noundef nonnull align 8 dereferenceable(16) %4)
-          to label %bb.ek unwind label %bb.es     ; 2 uses
+          to label %bb.ek unwind label %bb.es
 
 bb.ek:                                            ; preds = %bb.ej
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
-  %i.hx = icmp sgt i32 %i.hw, -1                  ; 7 uses
+  %i.hx = icmp sgt i32 %i.hw, -1                  ; 8 uses
   %i.hy = load atomic i8, ptr @_ZGVZN4YAML3Exp5BlankEvE1e acquire, align 8
   %i.hz = icmp eq i8 %i.hy, 0
   br i1 %i.hz, label %bb.el, label %_ZN4YAML3Exp5BlankEv.exit314, !prof !24
@@ -243,11 +243,11 @@ _ZN4YAML3Exp5BlankEv.exit314:                     ; preds = %bb.ep, %bb.el, %bb.
   store i64 0, ptr %3, align 8, !tbaa !25
   store ptr %1, ptr %i.ah, align 8, !tbaa !28
   %i.if = invoke noundef i32 @_ZNK4YAML5RegEx5MatchINS_16StreamCharSourceEEEiRKT_(ptr noundef nonnull align 8 dereferenceable(32) @_ZZN4YAML3Exp5BlankEvE1e, ptr noundef nonnull align 8 dereferenceable(16) %3)
-          to label %bb.er unwind label %.loopexit402.loopexit ; 2 uses
+          to label %bb.er unwind label %.loopexit402.loopexit
 
 bb.er:                                            ; preds = %_ZN4YAML3Exp5BlankEv.exit314
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  %i.ig = icmp sgt i32 %i.if, -1                  ; 3 uses
+  %i.ig = icmp sgt i32 %i.if, -1                  ; 4 uses
   %i.ih = load i32, ptr %i.a, align 4, !tbaa !7   ; 2 uses
   %i.ii = icmp eq i32 %i.ih, 1
   %or.cond11 = select i1 %i.ii, i1 %i.ak, i1 false
@@ -299,10 +299,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i: ; preds
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit unwind label %.loopexit402.loopexit ; 0 uses
 
 bb.ev:                                            ; preds = %bb.et
-  %27 = and i32 %i.if, %i.hw
-  %28 = icmp sgt i32 %27, -1
-  %i.in = or i1 %.0175.shrunk, %28
-  %or.cond19 = or i1 %i.in, %.0172.shrunk
+  %or.cond15 = or i1 %i.hx, %.0172.shrunk
+  %i.in = or i1 %or.cond15, %.0175.shrunk
+  %or.cond19 = or i1 %i.in, %i.ig
   br i1 %or.cond19, label %bb.ey, label %bb.ew
 
 bb.ew:                                            ; preds = %bb.ev

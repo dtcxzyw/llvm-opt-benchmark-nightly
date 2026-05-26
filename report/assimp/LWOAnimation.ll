@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %_ZNSt12_Vector_base
 bb.t:                                             ; preds = %bb.q, %bb.p
   %i.dy = fcmp ugt double %i.dm, %i.dn
   %i.dz = trunc nuw i8 %i.dj to i1                ; 2 uses
-  %or.cond = or i1 %i.dy, %i.dz
+  %or.cond = select i1 %i.dy, i1 true, i1 %i.dz
   %i.ea = load double, ptr %i.dh, align 8         ; 3 uses
   br i1 %or.cond, label %bb.x, label %bb.u
 
@@ -272,15 +272,13 @@ bb.af:                                            ; preds = %bb.ae
   unreachable
 
 _ZNKSt6vectorI11aiVectorKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ae
-  %i.eq = sdiv exact i64 %i.eo, 24                ; 3 uses
+  %i.eq = sdiv exact i64 %i.eo, 24                ; 2 uses
   %.sroa.speculated.i.i.i98 = call i64 @llvm.umax.i64(i64 %i.eq, i64 1)
   %i.er = add nsw i64 %.sroa.speculated.i.i.i98, %i.eq ; 2 uses
-  %10 = icmp ult i64 %i.er, %i.eq
-  %i.es = call i64 @llvm.umin.i64(i64 %i.er, i64 384307168202282325)
-  %11 = select i1 %10, i64 384307168202282325, i64 %i.es ; 3 uses
-  %.not.i.i.i99 = icmp ne i64 %11, 0
+  %i.es = call i64 @llvm.umin.i64(i64 %i.er, i64 384307168202282325) ; 2 uses
+  %.not.i.i.i99 = icmp ne i64 %i.er, 0
   call void @llvm.assume(i1 %.not.i.i.i99)
-  %i.et = mul nuw nsw i64 %11, 24
+  %i.et = mul nuw nsw i64 %i.es, 24
   %i.eu = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.et) #17
           to label %.noexc108 unwind label %.loopexit192 ; 5 uses
 
@@ -312,7 +310,7 @@ bb.ag:                                            ; preds = %_ZNSt6vectorI11aiVe
 _ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i: ; preds = %bb.ag, %_ZNSt6vectorI11aiVectorKeySaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i
   store ptr %i.eu, ptr %1, align 8
   store ptr %i.ey, ptr %i.dc, align 8
-  %i.ez = getelementptr inbounds nuw [24 x i8], ptr %i.eu, i64 %11
+  %i.ez = getelementptr inbounds nuw [24 x i8], ptr %i.eu, i64 %i.es
   store ptr %i.ez, ptr %i.br, align 8
   br label %_ZNSt6vectorI11aiVectorKeySaIS0_EE9push_backERKS0_.exit
 

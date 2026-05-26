@@ -201,15 +201,13 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
-  %i.cg = ashr exact i64 %i.ce, 5                 ; 3 uses
+  %i.cg = ashr exact i64 %i.ce, 5                 ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.cg, i64 1)
   %i.ch = add nsw i64 %.sroa.speculated.i.i.i.i, %i.cg ; 2 uses
-  %3 = icmp ult i64 %i.ch, %i.cg
-  %i.ci = tail call i64 @llvm.umin.i64(i64 %i.ch, i64 288230376151711743)
-  %4 = select i1 %3, i64 288230376151711743, i64 %i.ci ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %4, 0
+  %i.ci = tail call i64 @llvm.umin.i64(i64 %i.ch, i64 288230376151711743) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.ch, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.cj = shl nuw nsw i64 %4, 5
+  %i.cj = shl nuw nsw i64 %i.ci, 5
   %i.ck = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cj) #13
           to label %.noexc26 unwind label %.loopexit79 ; 5 uses
 
@@ -246,7 +244,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN6goog
 
 _ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
   store ptr %i.co, ptr %i.aw, align 8, !tbaa !110
-  %i.cp = getelementptr inbounds nuw [32 x i8], ptr %i.ck, i64 %4 ; 2 uses
+  %i.cp = getelementptr inbounds nuw [32 x i8], ptr %i.ck, i64 %i.ci ; 2 uses
   store ptr %i.cp, ptr %i.ax, align 8, !tbaa !119
   br label %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit
 
@@ -335,15 +333,13 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i32: ; preds = %bb.n
-  %i.du = ashr exact i64 %i.ds, 5                 ; 3 uses
+  %i.du = ashr exact i64 %i.ds, 5                 ; 2 uses
   %.sroa.speculated.i.i.i.i33 = tail call i64 @llvm.umax.i64(i64 %i.du, i64 1)
   %i.dv = add nsw i64 %.sroa.speculated.i.i.i.i33, %i.du ; 2 uses
-  %5 = icmp ult i64 %i.dv, %i.du
-  %i.dw = tail call i64 @llvm.umin.i64(i64 %i.dv, i64 288230376151711743)
-  %6 = select i1 %5, i64 288230376151711743, i64 %i.dw ; 3 uses
-  %.not.i.i.i.i34 = icmp ne i64 %6, 0
+  %i.dw = tail call i64 @llvm.umin.i64(i64 %i.dv, i64 288230376151711743) ; 2 uses
+  %.not.i.i.i.i34 = icmp ne i64 %i.dv, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i34)
-  %i.dx = shl nuw nsw i64 %6, 5
+  %i.dx = shl nuw nsw i64 %i.dw, 5
   %i.dy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dx) #13
           to label %.noexc45 unwind label %.loopexit ; 5 uses
 
@@ -380,7 +376,7 @@ bb.p:                                             ; preds = %_ZNSt6vectorIN6goog
 
 _ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i43: ; preds = %bb.p, %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i40
   store ptr %i.ec, ptr %i.be, align 8, !tbaa !110
-  %i.ed = getelementptr inbounds nuw [32 x i8], ptr %i.dy, i64 %6 ; 2 uses
+  %i.ed = getelementptr inbounds nuw [32 x i8], ptr %i.dy, i64 %i.dw ; 2 uses
   store ptr %i.ed, ptr %i.bf, align 8, !tbaa !119
   br label %_ZNSt6vectorIN6google8protobuf18SymbolCheckerErrorESaIS2_EE9push_backEOS2_.exit46
 
@@ -465,15 +461,13 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_10DescriptorENS1_15DescriptorProtoEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ; preds = %bb.d
-  %i.n = ashr exact i64 %i.l, 4                   ; 3 uses
+  %i.n = ashr exact i64 %i.l, 4                   ; 2 uses
   %.sroa.speculated.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.n, i64 1)
   %i.o = add nsw i64 %.sroa.speculated.i.i.i.i.i.i, %i.n ; 2 uses
-  %3 = icmp ult i64 %i.o, %i.n
-  %i.p = tail call i64 @llvm.umin.i64(i64 %i.o, i64 576460752303423487)
-  %4 = select i1 %3, i64 576460752303423487, i64 %i.p ; 3 uses
-  %.not.i.i.i.i.i.i = icmp ne i64 %4, 0
+  %i.p = tail call i64 @llvm.umin.i64(i64 %i.o, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i.i.i = icmp ne i64 %i.o, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
-  %i.q = shl nuw nsw i64 %4, 4
+  %i.q = shl nuw nsw i64 %i.p, 4
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #13 ; 4 uses
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 %i.l ; 3 uses
   store ptr %1, ptr %i.s, align 8, !tbaa !133
@@ -498,7 +492,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIN6goog
 _ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_10DescriptorENS1_15DescriptorProtoEEESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i.i.i: ; preds = %bb.g, %_ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_10DescriptorENS1_15DescriptorProtoEEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i.i.i.i
   store ptr %i.r, ptr %i.a, align 8, !tbaa !135
   store ptr %i.u, ptr %i.d, align 8, !tbaa !131
-  %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %4
+  %i.v = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.p
   store ptr %i.v, ptr %i.f, align 8, !tbaa !132
   br label %"_ZZN6google8protobuf13SymbolChecker10InitializeEvENK3$_0clINS0_10DescriptorENS0_15DescriptorProtoEEEDaRKT_RKT0_.exit"
 
@@ -677,15 +671,13 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i.i.i: ; preds = %bb.j
-  %i.ay = ashr exact i64 %i.aw, 4                 ; 3 uses
+  %i.ay = ashr exact i64 %i.aw, 4                 ; 2 uses
   %.sroa.speculated.i.i.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.ay, i64 1)
   %i.az = add nsw i64 %.sroa.speculated.i.i.i.i.i.i, %i.ay ; 2 uses
-  %2 = icmp ult i64 %i.az, %i.ay
-  %i.ba = tail call i64 @llvm.umin.i64(i64 %i.az, i64 576460752303423487)
-  %3 = select i1 %2, i64 576460752303423487, i64 %i.ba ; 3 uses
-  %.not.i.i.i.i.i.i = icmp ne i64 %3, 0
+  %i.ba = tail call i64 @llvm.umin.i64(i64 %i.az, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i.i.i = icmp ne i64 %i.az, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i.i.i)
-  %i.bb = shl nuw nsw i64 %3, 4
+  %i.bb = shl nuw nsw i64 %i.ba, 4
   %i.bc = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bb) #13 ; 4 uses
   %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 %i.aw ; 3 uses
   store ptr %0, ptr %i.bd, align 8, !tbaa !144
@@ -710,7 +702,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN6goog
 _ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i.i.i: ; preds = %bb.m, %_ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i.i.i.i
   store ptr %i.bc, ptr %i.an, align 8, !tbaa !146
   store ptr %i.bf, ptr %i.ao, align 8, !tbaa !142
-  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %3
+  %i.bg = getelementptr inbounds nuw [16 x i8], ptr %i.bc, i64 %i.ba
   store ptr %i.bg, ptr %i.aq, align 8, !tbaa !143
   br label %"_ZZN6google8protobuf13SymbolChecker10InitializeEvENK3$_0clINS0_14EnumDescriptorENS0_19EnumDescriptorProtoEEEDaRKT_RKT0_.exit"
 
@@ -744,15 +736,13 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE12_M_check_lenEmPKc.exit.i.i.i10.i.i: ; preds = %bb.o
-  %i.bs = ashr exact i64 %i.bq, 4                 ; 3 uses
+  %i.bs = ashr exact i64 %i.bq, 4                 ; 2 uses
   %.sroa.speculated.i.i.i.i11.i.i = tail call i64 @llvm.umax.i64(i64 %i.bs, i64 1)
   %i.bt = add nsw i64 %.sroa.speculated.i.i.i.i11.i.i, %i.bs ; 2 uses
-  %4 = icmp ult i64 %i.bt, %i.bs
-  %i.bu = tail call i64 @llvm.umin.i64(i64 %i.bt, i64 576460752303423487)
-  %5 = select i1 %4, i64 576460752303423487, i64 %i.bu ; 3 uses
-  %.not.i.i.i.i12.i.i = icmp ne i64 %5, 0
+  %i.bu = tail call i64 @llvm.umin.i64(i64 %i.bt, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i12.i.i = icmp ne i64 %i.bt, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i12.i.i)
-  %i.bv = shl nuw nsw i64 %5, 4
+  %i.bv = shl nuw nsw i64 %i.bu, 4
   %i.bw = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bv) #13 ; 4 uses
   %i.bx = getelementptr inbounds i8, ptr %i.bw, i64 %i.bq ; 3 uses
   store ptr %0, ptr %i.bx, align 8, !tbaa !144
@@ -777,7 +767,7 @@ bb.r:                                             ; preds = %_ZNSt6vectorIN6goog
 _ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE17_M_realloc_insertIJS6_EEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i.i15.i.i: ; preds = %bb.r, %_ZNSt6vectorIN6google8protobuf8internal18DescriptorAndProtoINS1_14EnumDescriptorENS1_19EnumDescriptorProtoEEESaIS6_EE11_S_relocateEPS6_S9_S9_RS7_.exit16.i.i.i13.i.i
   store ptr %i.bw, ptr %i.bh, align 8, !tbaa !146
   store ptr %i.bz, ptr %i.bi, align 8, !tbaa !142
-  %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.bw, i64 %5
+  %i.ca = getelementptr inbounds nuw [16 x i8], ptr %i.bw, i64 %i.bu
   store ptr %i.ca, ptr %i.bk, align 8, !tbaa !143
   br label %"_ZZN6google8protobuf13SymbolChecker10InitializeEvENK3$_0clINS0_14EnumDescriptorENS0_19EnumDescriptorProtoEEEDaRKT_RKT0_.exit"
 

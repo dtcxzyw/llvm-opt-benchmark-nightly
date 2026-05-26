@@ -201,17 +201,15 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 bb.af:                                            ; preds = %bb.ad
-  %i.dj = ashr exact i64 %i.dh, 4                 ; 3 uses
+  %i.dj = ashr exact i64 %i.dh, 4                 ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.dj, i64 1)
   %i.dk = add nsw i64 %.sroa.speculated.i.i, %i.dj ; 2 uses
-  %6 = icmp ult i64 %i.dk, %i.dj
-  %i.dl = call i64 @llvm.umin.i64(i64 %i.dk, i64 576460752303423487)
-  %7 = select i1 %6, i64 576460752303423487, i64 %i.dl ; 3 uses
+  %i.dl = call i64 @llvm.umin.i64(i64 %i.dk, i64 576460752303423487) ; 2 uses
   %i.dm = ptrtoint ptr %i.bl to i64
   %i.dn = sub i64 %i.dm, %i.dg
-  %.not.i.i23 = icmp ne i64 %7, 0
+  %.not.i.i23 = icmp ne i64 %i.dk, 0
   call void @llvm.assume(i1 %.not.i.i23), !noalias !70
-  %i.do = shl nuw nsw i64 %7, 4
+  %i.do = shl nuw nsw i64 %i.dl, 4
   %i.dp = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.do) #18, !noalias !70 ; 5 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.dn ; 2 uses
   store ptr %i.bn, ptr %i.dq, align 8, !tbaa !10, !noalias !70
@@ -381,7 +379,7 @@ bb.as:                                            ; preds = %_ZNSt6vectorISt10sh
 _ZNSt6vectorISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE17_M_realloc_insertIJSt10unique_ptrIS3_St14default_deleteIS3_EEEEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit: ; preds = %_ZNSt6vectorISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, %bb.as
   store ptr %i.dp, ptr %i.av, align 8, !tbaa !80, !noalias !70
   store ptr %.0.lcssa.i.i.i21.i, ptr %i.ax, align 8, !tbaa !18, !noalias !70
-  %i.fm = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %7
+  %i.fm = getelementptr inbounds nuw [16 x i8], ptr %i.dp, i64 %i.dl
   store ptr %i.fm, ptr %i.bq, align 8, !tbaa !36, !noalias !70
   br label %_ZNSt10unique_ptrIN6hermes2vm20ChromeStackFrameNodeESt14default_deleteIS2_EED2Ev.exit.i
 
@@ -784,17 +782,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 4                   ; 3 uses
+  %i.h = ashr exact i64 %i.f, 4                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487)
-  %4 = select i1 %3, i64 576460752303423487, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = shl nuw nsw i64 %4, 4
+  %i.m = shl nuw nsw i64 %i.j, 4
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #18 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l
   tail call void @_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EEC2IS2_St14default_deleteIS2_EvEEOSt10unique_ptrIT_T0_E(ptr noundef nonnull align 8 dereferenceable(16) %i.o, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -853,7 +849,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorISt10sh
 _ZNSt12_Vector_baseISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22, %bb.c
   store ptr %i.n, ptr %0, align 8, !tbaa !80
   store ptr %.0.lcssa.i.i.i21, ptr %i.a, align 8, !tbaa !18
-  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %4
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %i.j
   store ptr %i.ac, ptr %i.y, align 8, !tbaa !36
   ret void
 }
@@ -875,19 +871,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 40                  ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 40                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %5 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 230584300921369395)
-  %6 = select i1 %5, i64 230584300921369395, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 230584300921369395) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp eq i64 %6, 0
+  %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit
-  %i.m = mul nuw nsw i64 %6, 40
+  %i.m = mul nuw nsw i64 %i.j, 40
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #18
   br label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit
 
@@ -1065,7 +1059,7 @@ bb.n:                                             ; preds = %_ZNSt6vectorIN6herm
 _ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit27, %bb.n
   store ptr %i.o, ptr %0, align 8, !tbaa !109
   store ptr %.0.lcssa.i.i.i26, ptr %i.a, align 8, !tbaa !98
-  %i.br = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %6
+  %i.br = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.j
   store ptr %i.br, ptr %i.bn, align 8, !tbaa !99
   ret void
 }

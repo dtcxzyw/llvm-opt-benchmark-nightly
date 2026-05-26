@@ -201,19 +201,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.i = sdiv exact i64 %i.g, 48                  ; 3 uses
+  %i.i = sdiv exact i64 %i.g, 48                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   %i.j = add nsw i64 %.sroa.speculated.i, %i.i    ; 2 uses
-  %3 = icmp ult i64 %i.j, %i.i
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 192153584101141162)
-  %4 = select i1 %3, i64 192153584101141162, i64 %i.k ; 4 uses
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 192153584101141162) ; 3 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.f
-  %.not.i = icmp eq i64 %4, 0
+  %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit
-  %i.n = mul nuw nsw i64 %4, 48
+  %i.n = mul nuw nsw i64 %i.k, 48
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25
   br label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit
 
@@ -382,7 +380,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN9benc
 _ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit36, %bb.i
   store ptr %i.p, ptr %0, align 8, !tbaa !116
   store ptr %.0.lcssa.i.i.i35, ptr %i.b, align 8, !tbaa !107
-  %i.br = getelementptr inbounds nuw [48 x i8], ptr %i.p, i64 %4
+  %i.br = getelementptr inbounds nuw [48 x i8], ptr %i.p, i64 %i.k
   store ptr %i.br, ptr %i.bn, align 8, !tbaa !108
   ret void
 
@@ -397,7 +395,7 @@ bb.k:                                             ; preds = %.noexc.i.i
           catch ptr null
   %i.bu = extractvalue { ptr, i32 } %i.bt, 0
   %i.bv = call ptr @__cxa_begin_catch(ptr %i.bu) #24 ; 0 uses
-  %i.bw = mul nuw nsw i64 %4, 48
+  %i.bw = mul nuw nsw i64 %i.k, 48
   call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %i.bw) #26
   invoke void @__cxa_rethrow() #28
           to label %bb.n unwind label %bb.j

@@ -23,7 +23,7 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 28
   store i32 %7, ptr %i.h, align 4, !tbaa !22
   %i.i = shl nsw i32 %8, 1                        ; 3 uses
-  %i.j = add nsw i32 %i.i, %5                     ; 4 uses
+  %i.j = add nsw i32 %i.i, %5                     ; 5 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 32
   store i32 %i.j, ptr %i.k, align 8, !tbaa !23
   %i.l = add nsw i32 %i.i, %6                     ; 2 uses
@@ -38,9 +38,11 @@ bb.a:
   store i32 %i.j, ptr %i.q, align 8, !tbaa !27
   %i.r = mul nsw i32 %i.j, %i.l
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 8 uses
-  %9 = tail call i32 @llvm.smin.i32(i32 %i.j, i32 14)
-  %reass.sub133 = sub i32 %i.r, %9
-  %i.t = add i32 %reass.sub133, 21
+  %9 = icmp slt i32 %i.j, 14
+  %reass.sub133 = sub nsw i32 14, %i.j
+  %spec.select = select i1 %9, i32 %reass.sub133, i32 0
+  %10 = add i32 %i.r, 7
+  %i.t = add i32 %10, %spec.select
   %i.u = and i32 %i.t, -8                         ; 2 uses
   store i32 %i.u, ptr %i.s, align 4, !tbaa !28
   %i.v = mul nsw i32 %i.u, %i.n                   ; 3 uses
@@ -67,14 +69,14 @@ bb.a:
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.ad = sext i32 %1 to i64
   %i.ae = shl nsw i64 %i.ad, 3
-  %i.af = tail call i32 @posix_memalign(ptr noundef nonnull %i.ac, i64 noundef 64, i64 noundef %i.ae) #7 ; 0 uses
+  %i.af = tail call i32 @posix_memalign(ptr noundef nonnull %i.ac, i64 noundef 64, i64 noundef %i.ae) #6 ; 0 uses
   %i.ag = load i32, ptr %i.b, align 4, !tbaa !8   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.ah = load i32, ptr %i.w, align 8, !tbaa !29
   %i.ai = mul nsw i32 %i.ah, %i.ag
   %i.aj = sext i32 %i.ai to i64
   %i.ak = shl nsw i64 %i.aj, 3
-  %i.al = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 64, i64 noundef %i.ak) #7 ; 0 uses
+  %i.al = call i32 @posix_memalign(ptr noundef nonnull %i.a, i64 noundef 64, i64 noundef %i.ak) #6 ; 0 uses
   %i.am = load ptr, ptr %i.a, align 8, !tbaa !32
   %i.an = load i32, ptr %i.w, align 8, !tbaa !29
   %i.ao = load i32, ptr %i.b, align 4, !tbaa !8
@@ -190,7 +192,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.cd = load i32, ptr %i.s, align 4, !tbaa !28
   %i.ce = sext i32 %i.cd to i64
   %i.cf = shl nsw i64 %i.ce, 3
-  %i.cg = call i32 @posix_memalign(ptr noundef nonnull %i.cc, i64 noundef 64, i64 noundef %i.cf) #7 ; 0 uses
+  %i.cg = call i32 @posix_memalign(ptr noundef nonnull %i.cc, i64 noundef 64, i64 noundef %i.cf) #6 ; 0 uses
   %i.ch = load ptr, ptr %i.cc, align 8, !tbaa !46
   %i.ci = load i32, ptr %i.s, align 4, !tbaa !28
   %i.cj = sext i32 %i.ci to i64
@@ -200,7 +202,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.cm = sext i32 %i.cl to i64
   %i.cn = shl nsw i64 %i.cm, 3
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 3 uses
-  %i.cp = call i32 @posix_memalign(ptr noundef nonnull %i.co, i64 noundef 64, i64 noundef %i.cn) #7 ; 0 uses
+  %i.cp = call i32 @posix_memalign(ptr noundef nonnull %i.co, i64 noundef 64, i64 noundef %i.cn) #6 ; 0 uses
   %i.cq = load ptr, ptr %i.co, align 8, !tbaa !32
   %i.cr = load i32, ptr %i.s, align 4, !tbaa !28
   %i.cs = sext i32 %i.cr to i64
@@ -210,7 +212,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %i.cv = sext i32 %i.cu to i64
   %i.cw = shl nsw i64 %i.cv, 3
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 200 ; 3 uses
-  %i.cy = call i32 @posix_memalign(ptr noundef nonnull %i.cx, i64 noundef 64, i64 noundef %i.cw) #7 ; 0 uses
+  %i.cy = call i32 @posix_memalign(ptr noundef nonnull %i.cx, i64 noundef 64, i64 noundef %i.cw) #6 ; 0 uses
   %i.cz = load ptr, ptr %i.cx, align 8, !tbaa !32
   %i.da = load i32, ptr %i.s, align 4, !tbaa !28
   %i.db = sext i32 %i.da to i64
@@ -277,7 +279,7 @@ bb.b:                                             ; preds = %.preheader.us, %bb.
   %i.ec = add i32 %i.eb, %i.cu
   %i.ed = add i32 %i.ec, %i.dd
   %i.ee = shl i32 %i.ed, 3
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret i32 %i.ee
 }
 
@@ -299,17 +301,14 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !34
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !32
-  tail call void @free(ptr noundef %i.c) #7
+  tail call void @free(ptr noundef %i.c) #6
   %i.d = load ptr, ptr %i.a, align 8, !tbaa !34
-  tail call void @free(ptr noundef %i.d) #7
+  tail call void @free(ptr noundef %i.d) #6
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #5
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #6
 
 attributes #0 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -317,8 +316,7 @@ attributes #2 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buf
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

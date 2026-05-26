@@ -201,17 +201,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 3                   ; 3 uses
+  %i.h = ashr exact i64 %i.f, 3                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
-  %4 = select i1 %3, i64 1152921504606846975, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = shl nuw nsw i64 %4, 3                    ; 2 uses
+  %i.m = shl nuw nsw i64 %i.j, 3                  ; 2 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #20 ; 10 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 2 uses
   invoke void @_ZN5arrow8internal16PlatformFilenameC1EOS1_(ptr noundef nonnull align 8 dereferenceable(8) %i.o, ptr noundef nonnull align 8 dereferenceable(8) %2)
@@ -353,7 +351,7 @@ bb.k:                                             ; preds = %_ZSt8_DestroyIPN5ar
 _ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZSt8_DestroyIPN5arrow8internal16PlatformFilenameEEvT_S4_.exit, %bb.k
   store ptr %i.n, ptr %0, align 8, !tbaa !258
   store ptr %.0.lcssa.i.i.i.i.i39, ptr %i.a, align 8, !tbaa !259
-  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %4
+  %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %i.j
   store ptr %i.al, ptr %i.ah, align 8, !tbaa !249
   ret void
 
@@ -626,19 +624,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 3                   ; 3 uses
+  %i.h = ashr exact i64 %i.f, 3                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %4 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975)
-  %5 = select i1 %4, i64 1152921504606846975, i64 %i.j ; 4 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 1152921504606846975) ; 3 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp eq i64 %5, 0
+  %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN5arrow8internal16PlatformFilenameESaIS2_EE12_M_check_lenEmPKc.exit
-  %i.m = shl nuw nsw i64 %5, 3
+  %i.m = shl nuw nsw i64 %i.j, 3
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #20
   br label %_ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE11_M_allocateEm.exit
 
@@ -842,7 +838,7 @@ bb.o:                                             ; preds = %_ZSt8_DestroyIPN5ar
 _ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZSt8_DestroyIPN5arrow8internal16PlatformFilenameEEvT_S4_.exit, %bb.o
   store ptr %i.o, ptr %0, align 8, !tbaa !258
   store ptr %.0.lcssa.i.i.i.i.i42, ptr %i.a, align 8, !tbaa !259
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %5
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %i.j
   store ptr %i.bh, ptr %i.bd, align 8, !tbaa !249
   ret void
 
@@ -878,7 +874,7 @@ _ZSt8_DestroyIPN5arrow8internal16PlatformFilenameES2_EvT_S4_RSaIT0_E.exit: ; pre
   br i1 %.not.i52, label %_ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_deallocateEPS2_m.exit53, label %bb.q
 
 bb.q:                                             ; preds = %_ZSt8_DestroyIPN5arrow8internal16PlatformFilenameES2_EvT_S4_RSaIT0_E.exit.thread, %_ZSt8_DestroyIPN5arrow8internal16PlatformFilenameES2_EvT_S4_RSaIT0_E.exit
-  %i.bo = shl nuw nsw i64 %5, 3
+  %i.bo = shl nuw nsw i64 %i.j, 3
   call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.bo) #21
   br label %_ZNSt12_Vector_baseIN5arrow8internal16PlatformFilenameESaIS2_EE13_M_deallocateEPS2_m.exit53
 
