@@ -1,5 +1,5 @@
 inline.NumInlined: 3091
-inline.NumDeleted: 1557
+inline.NumDeleted: 1558
 begin_hunk_0_@"_ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIN6hermes4inst6OpCodeEmESt6vectorIS6_SaIS6_EEEElNS0_5__ops15_Iter_comp_iterIZNS3_15ProfileAnalyzer20dumpInstructionStatsEvE3$_1EEEvT_SH_T0_T1_":bb.a
 bb.q:                                             ; preds = %bb.o
   %i.ds = icmp ugt i64 %.val1.i.i.i, %.val1.i27.i.i
@@ -201,17 +201,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorISt4pairIjN6hermes25FunctionRuntimeStatisticsEESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 80                  ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 80                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 115292150460684697)
-  %4 = select i1 %3, i64 115292150460684697, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 115292150460684697) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = mul nuw nsw i64 %4, 80
+  %i.m = mul nuw nsw i64 %i.j, 80
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #24 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 8 uses
   %i.p = load i32, ptr %2, align 8, !tbaa !315
@@ -430,7 +428,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorISt4pai
 _ZNSt12_Vector_baseISt4pairIjN6hermes25FunctionRuntimeStatisticsEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorISt4pairIjN6hermes25FunctionRuntimeStatisticsEESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit24, %bb.l
   store ptr %i.n, ptr %0, align 8, !tbaa !419
   store ptr %.0.lcssa.i.i.i23, ptr %i.a, align 8, !tbaa !324
-  %i.de = getelementptr inbounds nuw [80 x i8], ptr %i.n, i64 %4
+  %i.de = getelementptr inbounds nuw [80 x i8], ptr %i.n, i64 %i.j
   store ptr %i.de, ptr %i.da, align 8, !tbaa !327
   ret void
 }

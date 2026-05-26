@@ -201,15 +201,13 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZNKSt6vectorI11aiVectorKeySaIS0_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.h
-  %i.bo = sdiv exact i64 %i.bm, 24                ; 3 uses
+  %i.bo = sdiv exact i64 %i.bm, 24                ; 2 uses
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.bo, i64 1)
   %i.bp = add nsw i64 %.sroa.speculated.i.i.i.i, %i.bo ; 2 uses
-  %4 = icmp ult i64 %i.bp, %i.bo
-  %i.bq = call i64 @llvm.umin.i64(i64 %i.bp, i64 384307168202282325)
-  %5 = select i1 %4, i64 384307168202282325, i64 %i.bq ; 3 uses
-  %.not.i.i.i.i27 = icmp ne i64 %5, 0
+  %i.bq = call i64 @llvm.umin.i64(i64 %i.bp, i64 384307168202282325) ; 2 uses
+  %.not.i.i.i.i27 = icmp ne i64 %i.bp, 0
   call void @llvm.assume(i1 %.not.i.i.i.i27)
-  %i.br = mul nuw nsw i64 %5, 24
+  %i.br = mul nuw nsw i64 %i.bq, 24
   %i.bs = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.br) #15
           to label %.noexc29 unwind label %.loopexit ; 5 uses
 
@@ -243,7 +241,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorI11aiVe
 _ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorI11aiVectorKeySaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i.i
   store ptr %i.bs, ptr %i.d, align 8
   store ptr %i.bw, ptr %.sroa.sel52.v.sroa.sel, align 8
-  %i.bx = getelementptr inbounds nuw [24 x i8], ptr %i.bs, i64 %5
+  %i.bx = getelementptr inbounds nuw [24 x i8], ptr %i.bs, i64 %i.bq
   store ptr %i.bx, ptr %.sroa.sel, align 8
   br label %_ZNSt6vectorI11aiVectorKeySaIS0_EE9push_backEOS0_.exit
 

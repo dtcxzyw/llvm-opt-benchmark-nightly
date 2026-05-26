@@ -1,5 +1,5 @@
 inline.NumInlined: 1002
-inline.NumDeleted: 561
+inline.NumDeleted: 562
 begin_hunk_0_@_ZN6Assimp15ObjFileImporter20CreateDataFromImportEPKNS_7ObjFile5ModelEP7aiScene:bb.a
 bb.am:                                            ; preds = %bb.af, %bb.w
   unreachable
@@ -201,15 +201,13 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 
 _ZNKSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.k
-  %i.bb = ashr exact i64 %i.az, 3                 ; 3 uses
+  %i.bb = ashr exact i64 %i.az, 3                 ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.bb, i64 1)
   %i.bc = add nsw i64 %.sroa.speculated.i.i, %i.bb ; 2 uses
-  %7 = icmp ult i64 %i.bc, %i.bb
-  %i.bd = call i64 @llvm.umin.i64(i64 %i.bc, i64 1152921504606846975)
-  %8 = select i1 %7, i64 1152921504606846975, i64 %i.bd ; 3 uses
-  %.not.i.i55 = icmp ne i64 %8, 0
+  %i.bd = call i64 @llvm.umin.i64(i64 %i.bc, i64 1152921504606846975) ; 2 uses
+  %.not.i.i55 = icmp ne i64 %i.bc, 0
   call void @llvm.assume(i1 %.not.i.i55)
-  %i.be = shl nuw nsw i64 %8, 3
+  %i.be = shl nuw nsw i64 %i.bd, 3
   %i.bf = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.be) #24
           to label %.noexc57 unwind label %.loopexit60 ; 10 uses
 
@@ -322,7 +320,7 @@ bb.n:                                             ; preds = %.loopexit.split-lp,
 _ZNSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE9push_backEOS4_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrI6aiMeshSt14default_deleteIS1_EESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit22.i, %bb.m
   store ptr %i.bf, ptr %5, align 8
   store ptr %i.bz, ptr %i.c, align 8
-  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %8
+  %i.cd = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bd
   store ptr %i.cd, ptr %i.ae, align 8
   %.pr.pre = load ptr, ptr %6, align 8            ; 2 uses
   %.not.i = icmp eq ptr %.pr.pre, null

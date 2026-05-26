@@ -201,15 +201,13 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.j
-  %i.ap = ashr exact i64 %i.an, 2                 ; 3 uses
+  %i.ap = ashr exact i64 %i.an, 2                 ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.ap, i64 1)
   %i.aq = add nsw i64 %.sroa.speculated.i.i.i, %i.ap ; 2 uses
-  %7 = icmp ult i64 %i.aq, %i.ap
-  %i.ar = call i64 @llvm.umin.i64(i64 %i.aq, i64 2305843009213693951)
-  %8 = select i1 %7, i64 2305843009213693951, i64 %i.ar ; 3 uses
-  %.not.i.i.i = icmp ne i64 %8, 0
+  %i.ar = call i64 @llvm.umin.i64(i64 %i.aq, i64 2305843009213693951) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.aq, 0
   call void @llvm.assume(i1 %.not.i.i.i)
-  %i.as = shl nuw nsw i64 %8, 2
+  %i.as = shl nuw nsw i64 %i.ar, 2
   %i.at = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.as) #32
           to label %.noexc11 unwind label %bb.c   ; 4 uses
 
@@ -235,7 +233,7 @@ bb.m:                                             ; preds = %_ZNSt6vectorIjSaIjE
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i: ; preds = %bb.m, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
   store ptr %i.at, ptr %i.ae, align 8, !tbaa !101
   store ptr %i.aw, ptr %i.af, align 8, !tbaa !253
-  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %8
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %i.at, i64 %i.ar
   store ptr %i.ax, ptr %i.ah, align 8, !tbaa !103
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
@@ -546,19 +544,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.i = ashr exact i64 %i.g, 5                   ; 3 uses
+  %i.i = ashr exact i64 %i.g, 5                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   %i.j = add nsw i64 %.sroa.speculated.i, %i.i    ; 2 uses
-  %3 = icmp ult i64 %i.j, %i.i
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 288230376151711743)
-  %4 = select i1 %3, i64 288230376151711743, i64 %i.k ; 4 uses
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 288230376151711743) ; 3 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.f
-  %.not.i = icmp eq i64 %4, 0
+  %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE12_M_check_lenEmPKc.exit
-  %i.n = shl nuw nsw i64 %4, 5
+  %i.n = shl nuw nsw i64 %i.k, 5
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #32
   br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_M_allocateEm.exit
 
@@ -718,7 +714,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorINSt7__
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE13_M_deallocateEPS5_m.exit: ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit36, %bb.i
   store ptr %i.p, ptr %0, align 8, !tbaa !104
   store ptr %.0.lcssa.i.i.i35, ptr %i.b, align 8, !tbaa !107
-  %i.bl = getelementptr inbounds nuw [32 x i8], ptr %i.p, i64 %4
+  %i.bl = getelementptr inbounds nuw [32 x i8], ptr %i.p, i64 %i.k
   store ptr %i.bl, ptr %i.bh, align 8, !tbaa !110
   ret void
 
@@ -733,7 +729,7 @@ bb.k:                                             ; preds = %.noexc.i
           catch ptr null
   %i.bo = extractvalue { ptr, i32 } %i.bn, 0
   %i.bp = call ptr @__cxa_begin_catch(ptr %i.bo) #29 ; 0 uses
-  %i.bq = shl nuw nsw i64 %4, 5
+  %i.bq = shl nuw nsw i64 %i.k, 5
   call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef %i.bq) #30
   invoke void @__cxa_rethrow() #31
           to label %bb.n unwind label %bb.j

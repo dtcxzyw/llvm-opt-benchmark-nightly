@@ -201,15 +201,13 @@ bb.ab:                                            ; preds = %bb.aa
   unreachable
 
 _ZNKSt6vectorIN2v88internal12_GLOBAL__N_111MyersDiffer5PointESaIS4_EE12_M_check_lenEmPKc.exit.i.i.i23: ; preds = %bb.aa
-  %i.fr = ashr exact i64 %i.fp, 3                 ; 3 uses
+  %i.fr = ashr exact i64 %i.fp, 3                 ; 2 uses
   %.sroa.speculated.i.i.i.i24 = tail call i64 @llvm.umax.i64(i64 %i.fr, i64 1)
   %i.fs = add nsw i64 %.sroa.speculated.i.i.i.i24, %i.fr ; 2 uses
-  %7 = icmp ult i64 %i.fs, %i.fr
-  %i.ft = tail call i64 @llvm.umin.i64(i64 %i.fs, i64 1152921504606846975)
-  %8 = select i1 %7, i64 1152921504606846975, i64 %i.ft ; 3 uses
-  %.not.i.i.i.i25 = icmp ne i64 %8, 0
+  %i.ft = tail call i64 @llvm.umin.i64(i64 %i.fs, i64 1152921504606846975) ; 2 uses
+  %.not.i.i.i.i25 = icmp ne i64 %i.fs, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i25)
-  %i.fu = shl nuw nsw i64 %8, 3
+  %i.fu = shl nuw nsw i64 %i.ft, 3
   %i.fv = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fu) #10 ; 4 uses
   %i.fw = getelementptr inbounds i8, ptr %i.fv, i64 %i.fp ; 2 uses
   store i64 %.sroa.7.0, ptr %i.fw, align 4
@@ -231,7 +229,7 @@ bb.ad:                                            ; preds = %_ZNSt6vectorIN2v88i
 
 _ZNSt6vectorIN2v88internal12_GLOBAL__N_111MyersDiffer5PointESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i28: ; preds = %bb.ad, %_ZNSt6vectorIN2v88internal12_GLOBAL__N_111MyersDiffer5PointESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit21.i.i.i26
   store ptr %i.fv, ptr %6, align 8
-  %i.fz = getelementptr inbounds nuw [8 x i8], ptr %i.fv, i64 %8
+  %i.fz = getelementptr inbounds nuw [8 x i8], ptr %i.fv, i64 %i.ft
   br label %_ZN2v88internal12_GLOBAL__N_111MyersDiffer4PathD2Ev.exit
 
 _ZN2v88internal12_GLOBAL__N_111MyersDiffer4PathD2Ev.exit: ; preds = %bb.x, %bb.z, %_ZNSt6vectorIN2v88internal12_GLOBAL__N_111MyersDiffer5PointESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i.i28

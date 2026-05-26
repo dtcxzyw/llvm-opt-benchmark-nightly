@@ -82,15 +82,13 @@ bb.g:                                             ; preds = %bb.f
   unreachable
 
 _ZNKSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.f
-  %i.af = ashr exact i64 %i.ad, 4                 ; 3 uses
+  %i.af = ashr exact i64 %i.ad, 4                 ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.af, i64 1)
   %i.ag = add nsw i64 %.sroa.speculated.i.i.i, %i.af ; 2 uses
-  %4 = icmp ult i64 %i.ag, %i.af
-  %i.ah = call i64 @llvm.umin.i64(i64 %i.ag, i64 576460752303423487)
-  %5 = select i1 %4, i64 576460752303423487, i64 %i.ah ; 3 uses
-  %.not.i.i.i = icmp ne i64 %5, 0
+  %i.ah = call i64 @llvm.umin.i64(i64 %i.ag, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.ag, 0
   call void @llvm.assume(i1 %.not.i.i.i)
-  %i.ai = shl nuw nsw i64 %5, 4
+  %i.ai = shl nuw nsw i64 %i.ah, 4
   %i.aj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ai) #10
           to label %.noexc16 unwind label %bb.i   ; 5 uses
 
@@ -122,7 +120,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN22pho
 _ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.h, %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i
   store ptr %i.aj, ptr %i.l, align 8, !tbaa !33
   store ptr %i.an, ptr %i.n, align 8, !tbaa !29
-  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.aj, i64 %5
+  %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.aj, i64 %i.ah
   store ptr %i.ao, ptr %i.w, align 8, !tbaa !30
   br label %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE9push_backERKS2_.exit
 
@@ -185,7 +183,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   %i.bj = ptrtoint ptr %i.o to i64
   %i.bk = ptrtoint ptr %i.m to i64
-  %i.bl = sub i64 %i.bj, %i.bk                    ; 5 uses
+  %i.bl = sub i64 %i.bj, %i.bk                    ; 4 uses
   %i.bm = icmp eq i64 %i.bl, 9223372036854775792
   br i1 %i.bm, label %bb.n, label %_ZNKSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i21
 
@@ -194,12 +192,9 @@ bb.n:                                             ; preds = %bb.m
   unreachable
 
 _ZNKSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE12_M_check_lenEmPKc.exit.i.i21: ; preds = %bb.m
-  %6 = ashr exact i64 %i.bl, 4
-  %i.bn = ashr exact i64 %i.bl, 3                 ; 2 uses
-  %7 = icmp ult i64 %i.bn, %6
-  %i.bo = call i64 @llvm.umin.i64(i64 %i.bn, i64 576460752303423487)
-  %8 = select i1 %7, i64 576460752303423487, i64 %i.bo ; 2 uses
-  %i.bp = shl nuw nsw i64 %8, 4
+  %i.bn = ashr exact i64 %i.bl, 3
+  %i.bo = call i64 @llvm.umin.i64(i64 %i.bn, i64 576460752303423487) ; 2 uses
+  %i.bp = shl nuw nsw i64 %i.bo, 4
   %i.bq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bp) #10 ; 4 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.bl
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.br, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !31
@@ -226,7 +221,7 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN22pho
 _ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i32: ; preds = %bb.o, %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i29
   store ptr %i.bq, ptr %i.l, align 8, !tbaa !33
   store ptr %i.bu, ptr %i.n, align 8, !tbaa !29
-  %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bq, i64 %8
+  %i.bv = getelementptr inbounds nuw [16 x i8], ptr %i.bq, i64 %i.bo
   store ptr %i.bv, ptr %i.bf, align 8, !tbaa !30
   br label %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE9push_backERKS2_.exit33
 

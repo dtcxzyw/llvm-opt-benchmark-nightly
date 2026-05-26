@@ -1,5 +1,5 @@
 inline.NumInlined: 1155
-inline.NumDeleted: 569
+inline.NumDeleted: 570
 begin_hunk_0_@_ZN4absl12lts_2025051214flags_internal16FinalizeRegistryEv:bb.a
 _ZNSt6vectorIPN4absl12lts_2025051215CommandLineFlagESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit.i: ; preds = %bb.e, %.noexc
   %.not.i8.i = icmp eq ptr %i.i, null
@@ -201,15 +201,13 @@ bb.p:                                             ; preds = %bb.o
   unreachable
 
 _ZNKSt6vectorIPN4absl12lts_2025051215CommandLineFlagESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.o
-  %i.cf = ashr exact i64 %i.cd, 3                 ; 3 uses
+  %i.cf = ashr exact i64 %i.cd, 3                 ; 2 uses
   %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.cf, i64 1)
   %i.cg = add nsw i64 %.sroa.speculated.i.i.i, %i.cf ; 2 uses
-  %0 = icmp ult i64 %i.cg, %i.cf
-  %i.ch = tail call i64 @llvm.umin.i64(i64 %i.cg, i64 1152921504606846975)
-  %1 = select i1 %0, i64 1152921504606846975, i64 %i.ch ; 3 uses
-  %.not.i.i.i = icmp ne i64 %1, 0
+  %i.ch = tail call i64 @llvm.umin.i64(i64 %i.cg, i64 1152921504606846975) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.cg, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
-  %i.ci = shl nuw nsw i64 %1, 3
+  %i.ci = shl nuw nsw i64 %i.ch, 3
   %i.cj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ci) #35
           to label %.noexc30 unwind label %.loopexit38 ; 5 uses
 
@@ -236,7 +234,7 @@ bb.r:                                             ; preds = %_ZNSt6vectorIPN4abs
 _ZNSt6vectorIPN4absl12lts_2025051215CommandLineFlagESaIS3_EE17_M_realloc_insertIJRKS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.r, %_ZNSt6vectorIPN4absl12lts_2025051215CommandLineFlagESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
   store ptr %i.cj, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4absl12lts_2025051214flags_internal12FlagRegistry14GlobalRegistryEvE15global_registry, i64 32), align 8, !tbaa !92
   store ptr %i.cn, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4absl12lts_2025051214flags_internal12FlagRegistry14GlobalRegistryEvE15global_registry, i64 40), align 8, !tbaa !93
-  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %1 ; 2 uses
+  %i.co = getelementptr inbounds nuw [8 x i8], ptr %i.cj, i64 %i.ch ; 2 uses
   store ptr %i.co, ptr getelementptr inbounds nuw (i8, ptr @_ZZN4absl12lts_2025051214flags_internal12FlagRegistry14GlobalRegistryEvE15global_registry, i64 48), align 8, !tbaa !90
   br label %_ZNSt6vectorIPN4absl12lts_2025051215CommandLineFlagESaIS3_EE9push_backERKS3_.exit
 
@@ -639,15 +637,13 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt6vectorISt10unique_ptrIN4absl12lts_2025051214flags_internal18FlagStateInterfaceESt14default_deleteIS4_EESaIS7_EE12_M_check_lenEmPKc.exit.i: ; preds = %bb.d
-  %i.n = ashr exact i64 %i.l, 3                   ; 3 uses
+  %i.n = ashr exact i64 %i.l, 3                   ; 2 uses
   %.sroa.speculated.i.i = call i64 @llvm.umax.i64(i64 %i.n, i64 1)
   %i.o = add nsw i64 %.sroa.speculated.i.i, %i.n  ; 2 uses
-  %3 = icmp ult i64 %i.o, %i.n
-  %i.p = call i64 @llvm.umin.i64(i64 %i.o, i64 1152921504606846975)
-  %4 = select i1 %3, i64 1152921504606846975, i64 %i.p ; 3 uses
-  %.not.i.i = icmp ne i64 %4, 0
+  %i.p = call i64 @llvm.umin.i64(i64 %i.o, i64 1152921504606846975) ; 2 uses
+  %.not.i.i = icmp ne i64 %i.o, 0
   call void @llvm.assume(i1 %.not.i.i)
-  %i.q = shl nuw nsw i64 %4, 3
+  %i.q = shl nuw nsw i64 %i.p, 3
   %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #35
           to label %.noexc8 unwind label %bb.g    ; 10 uses
 
@@ -758,7 +754,7 @@ _ZNSt10unique_ptrIN4absl12lts_2025051214flags_internal18FlagStateInterfaceESt14d
 _ZNSt6vectorISt10unique_ptrIN4absl12lts_2025051214flags_internal18FlagStateInterfaceESt14default_deleteIS4_EESaIS7_EE12emplace_backIJS7_EEERS7_DpOT_.exit: ; preds = %_ZNSt6vectorISt10unique_ptrIN4absl12lts_2025051214flags_internal18FlagStateInterfaceESt14default_deleteIS4_EESaIS7_EE11_S_relocateEPS7_SA_SA_RS8_.exit22.i, %bb.f
   store ptr %i.r, ptr %i.a, align 8, !tbaa !110
   store ptr %i.am, ptr %i.d, align 8, !tbaa !112
-  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %4
+  %i.as = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %i.p
   store ptr %i.as, ptr %i.f, align 8, !tbaa !115
   %.pr = load ptr, ptr %2, align 8, !tbaa !107    ; 3 uses
   %.not.i4 = icmp eq ptr %.pr, null

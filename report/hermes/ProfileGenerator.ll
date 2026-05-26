@@ -201,15 +201,13 @@ bb.bo:                                            ; preds = %bb.bn
   unreachable
 
 _ZNKSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.bn
-  %i.ql = sdiv exact i64 %i.qj, 72                ; 3 uses
+  %i.ql = sdiv exact i64 %i.qj, 72                ; 2 uses
   %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ql, i64 1)
   %i.qm = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.ql ; 2 uses
-  %14 = icmp ult i64 %i.qm, %i.ql
-  %i.qn = call i64 @llvm.umin.i64(i64 %i.qm, i64 128102389400760775)
-  %15 = select i1 %14, i64 128102389400760775, i64 %i.qn ; 3 uses
-  %.not.i.i.i.i36.i = icmp ne i64 %15, 0
+  %i.qn = call i64 @llvm.umin.i64(i64 %i.qm, i64 128102389400760775) ; 2 uses
+  %.not.i.i.i.i36.i = icmp ne i64 %i.qm, 0
   call void @llvm.assume(i1 %.not.i.i.i.i36.i)
-  %i.qo = mul nuw nsw i64 %15, 72
+  %i.qo = mul nuw nsw i64 %i.qn, 72
   %i.qp = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.qo) #13, !noalias !12 ; 5 uses
   %i.qq = getelementptr inbounds nuw i8, ptr %i.qp, i64 %i.qj ; 10 uses
   %.sroa.053.sroa.8.0.insert.ext86.i = zext i32 %.sroa.053.sroa.8.2.i to i64
@@ -260,7 +258,7 @@ bb.bp:                                            ; preds = %_ZNSt6vectorISt7var
 _ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE17_M_realloc_insertIJS8_EEEvN9__gnu_cxx17__normal_iteratorIPS8_SA_EEDpOT_.exit.i.i.i: ; preds = %bb.bp, %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE11_S_relocateEPS8_SB_SB_RS9_.exit22.i.i.i.i
   store ptr %i.qp, ptr %12, align 8, !tbaa !53, !noalias !12
   store ptr %i.qt, ptr %i.ao, align 8, !tbaa !56, !noalias !12
-  %i.qu = getelementptr inbounds nuw [72 x i8], ptr %i.qp, i64 %15
+  %i.qu = getelementptr inbounds nuw [72 x i8], ptr %i.qp, i64 %i.qn
   store ptr %i.qu, ptr %i.an, align 8, !tbaa !57, !noalias !12
   br label %_ZNSt6vectorISt7variantIJN8facebook6hermes17sampling_profiler34ProfileSampleCallStackSuspendFrameENS3_41ProfileSampleCallStackNativeFunctionFrameENS3_39ProfileSampleCallStackHostFunctionFrameENS3_37ProfileSampleCallStackJSFunctionFrameEEESaIS8_EE9push_backEOS8_.exit.i
 
@@ -663,17 +661,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 40                  ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 40                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %5 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 230584300921369395)
-  %6 = select i1 %5, i64 230584300921369395, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 230584300921369395) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %6, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = mul nuw nsw i64 %6, 40
+  %i.m = mul nuw nsw i64 %i.j, 40
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #13 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 4 uses
   %i.p = load i64, ptr %2, align 8, !tbaa !47
@@ -754,7 +750,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorIN8face
 _ZNSt12_Vector_baseIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN8facebook6hermes17sampling_profiler13ProfileSampleESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit25, %bb.c
   store ptr %i.n, ptr %0, align 8, !tbaa !38
   store ptr %.0.lcssa.i.i.i24, ptr %i.a, align 8, !tbaa !41
-  %i.as = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %6
+  %i.as = getelementptr inbounds nuw [40 x i8], ptr %i.n, i64 %i.j
   store ptr %i.as, ptr %i.ao, align 8, !tbaa !42
   ret void
 }
