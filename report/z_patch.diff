@@ -1,0 +1,48 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+index 05508d84c036b..50a56678083d8 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCasts.cpp
+@@ -11,6 +11,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "InstCombineInternal.h"
++#include "llvm/ADT/APFloat.h"
+ #include "llvm/ADT/APInt.h"
+ #include "llvm/ADT/DenseMap.h"
+ #include "llvm/ADT/STLExtras.h"
+@@ -3192,25 +3193,27 @@ Instruction *InstCombinerImpl::optimizeBitCastFromPhi(CastInst &CI,
+   return RetVal;
+ }
+ 
+-/// Fold (bitcast (or (and (bitcast X to int), signmask), nneg Y) to fp) to
+-/// copysign((bitcast Y to fp), X)
++/// Fold (bitcast (or (and SignBits, signmask), Y) to fp) to
++/// copysign((bitcast Y to fp), (bitcast SignBits to fp)) if Y has a known zero
++/// sign bit.
+ static Value *foldCopySignIdioms(BitCastInst &CI,
+                                  InstCombiner::BuilderTy &Builder,
+                                  const SimplifyQuery &SQ) {
+-  Value *X, *Y;
++  Value *SignBits, *Y;
+   Type *FTy = CI.getType();
+   if (!FTy->isFPOrFPVectorTy())
+     return nullptr;
+-  if (!match(&CI, m_ElementWiseBitCast(m_c_Or(
+-                      m_And(m_ElementWiseBitCast(m_Value(X)), m_SignMask()),
+-                      m_Value(Y)))))
++  Type *EltTy = FTy->getScalarType();
++  if (!APFloat::hasSignBitInMSB(EltTy->getFltSemantics()))
+     return nullptr;
+-  if (X->getType() != FTy)
++  if (!match(&CI, m_ElementWiseBitCast(m_c_Or(
++                      m_c_And(m_Value(SignBits), m_SignMask()), m_Value(Y)))))
+     return nullptr;
+   if (!isKnownNonNegative(Y, SQ))
+     return nullptr;
+ 
+-  return Builder.CreateCopySign(Builder.CreateBitCast(Y, FTy), X);
++  return Builder.CreateCopySign(Builder.CreateBitCast(Y, FTy),
++                                Builder.CreateBitCast(SignBits, FTy));
+ }
+ 
+ Instruction *InstCombinerImpl::visitBitCast(BitCastInst &CI) {
