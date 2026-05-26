@@ -201,9 +201,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.an, 1
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.01.0.i.i.i, i64 3)
   br i1 %.sroa.18.0.in.i.i.i, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -344,9 +345,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.ak, 1
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %.sroa.01.0.i.i.i, i64 3)
   br i1 %.sroa.18.0.in.i.i.i, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -749,7 +751,7 @@ bb.ge:                                            ; preds = %bb.gd, %.loopexit.i
   %i.vv = add nsw i64 %i.vu, %i.vo
   %i.vw = mul nsw i64 %i.vv, 1000
   %i.vx = getelementptr inbounds nuw i8, ptr %i.qr, i64 88
-  %i.vy = load i32, ptr %i.vx, align 4, !alias.scope !12439, !noalias !12440, !noundef !4
+  %i.vy = load i32, ptr %i.vx, align 8, !alias.scope !12439, !noalias !12440, !noundef !4
   %i.vz = udiv i32 %i.vy, 1000000
   %i.wa = zext nneg i32 %i.vz to i64
   %i.wb = add nsw i64 %i.vw, %i.wa

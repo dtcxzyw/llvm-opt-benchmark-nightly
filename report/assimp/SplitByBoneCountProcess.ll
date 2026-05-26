@@ -201,7 +201,8 @@ bb.v:                                             ; preds = %bb.u, %._crit_edge.
   %i.hk = phi i32 [ %.pre.i.i, %bb.u ], [ %i.hf, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.u ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.hl = icmp ult i32 %i.hk, %i.gw
-  br i1 %i.hl, label %select.unfold.i.i, label %_ZNSt3setIjSt4lessIjESaIjEE6insertERKj.exit
+  %cond.fr.i.i = freeze i1 %i.hl
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIjSt4lessIjESaIjEE6insertERKj.exit
 
 select.unfold.i.i:                                ; preds = %bb.v, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.v ] ; 3 uses
@@ -604,8 +605,8 @@ bb.bk:                                            ; preds = %bb.bx, %bb.bv, %bb.
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit398
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.1:           ; preds = %.loopexit582, %_ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread
-  %i.ok = load i32, ptr %i.du, align 4
-  store i32 %i.ok, ptr %i.ob, align 4
+  %i.ok = load i32, ptr %i.du, align 8
+  store i32 %i.ok, ptr %i.ob, align 8
   %i.ol = load ptr, ptr %i.ea, align 8
   %.not.i359.1 = icmp ne ptr %i.ol, null
   %i.om = select i1 %.not.i359.1, i1 %i.ne, i1 false
@@ -661,9 +662,9 @@ bb.bo:                                            ; preds = %bb.bn
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.3
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.3:           ; preds = %.loopexit582.2, %_ZNK6aiMesh16HasTextureCoordsEj.exit.2
-  %i.pd = load i32, ptr %i.ed, align 4
+  %i.pd = load i32, ptr %i.ed, align 8
   %i.pe = getelementptr inbounds nuw i8, ptr %i.fi, i64 184
-  store i32 %i.pd, ptr %i.pe, align 4
+  store i32 %i.pd, ptr %i.pe, align 8
   %i.pf = load ptr, ptr %i.ee, align 8
   %.not.i359.3 = icmp ne ptr %i.pf, null
   %i.pg = select i1 %.not.i359.3, i1 %i.ne, i1 false
@@ -719,9 +720,9 @@ bb.bs:                                            ; preds = %bb.br
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.5
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.5:           ; preds = %.loopexit582.4, %_ZNK6aiMesh16HasTextureCoordsEj.exit.4
-  %i.px = load i32, ptr %i.eh, align 4
+  %i.px = load i32, ptr %i.eh, align 8
   %i.py = getelementptr inbounds nuw i8, ptr %i.fi, i64 192
-  store i32 %i.px, ptr %i.py, align 4
+  store i32 %i.px, ptr %i.py, align 8
   %i.pz = load ptr, ptr %i.ei, align 8
   %.not.i359.5 = icmp ne ptr %i.pz, null
   %i.qa = select i1 %.not.i359.5, i1 %i.ne, i1 false
@@ -777,9 +778,9 @@ bb.bw:                                            ; preds = %bb.bv
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.7
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.7:           ; preds = %.loopexit582.6, %_ZNK6aiMesh16HasTextureCoordsEj.exit.6
-  %i.qr = load i32, ptr %i.el, align 4
+  %i.qr = load i32, ptr %i.el, align 8
   %i.qs = getelementptr inbounds nuw i8, ptr %i.fi, i64 200
-  store i32 %i.qr, ptr %i.qs, align 4
+  store i32 %i.qr, ptr %i.qs, align 8
   %i.qt = load ptr, ptr %i.em, align 8
   %.not.i359.7 = icmp ne ptr %i.qt, null
   %i.qu = select i1 %.not.i359.7, i1 %i.ne, i1 false

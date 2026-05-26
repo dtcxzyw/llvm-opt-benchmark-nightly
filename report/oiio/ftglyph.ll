@@ -201,9 +201,10 @@ bb.d:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.b
-  %i.d = tail call ptr @FT_Lookup_Renderer(ptr noundef nonnull %0, i32 noundef %1, ptr noundef null) #5 ; 2 uses
-  %.not = icmp eq ptr %i.d, null
-  %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
+  %i.d = tail call ptr @FT_Lookup_Renderer(ptr noundef nonnull %0, i32 noundef %1, ptr noundef null) #5
+  %.fr = freeze ptr %i.d                          ; 2 uses
+  %.not = icmp eq ptr %.fr, null
+  %i.e = getelementptr inbounds nuw i8, ptr %.fr, i64 40
   br i1 %.not, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c, %bb.d, %bb.b
@@ -271,9 +272,10 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
-  %i.e = tail call ptr @FT_Lookup_Renderer(ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef null) #5 ; 2 uses
-  %.not.i = icmp eq ptr %i.e, null
-  %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 40
+  %i.e = tail call ptr @FT_Lookup_Renderer(ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef null) #5
+  %.fr.i = freeze ptr %i.e                        ; 2 uses
+  %.not.i = icmp eq ptr %.fr.i, null
+  %i.f = getelementptr inbounds nuw i8, ptr %.fr.i, i64 40
   br i1 %.not.i, label %FT_New_Glyph.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e, %bb.d

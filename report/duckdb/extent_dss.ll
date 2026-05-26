@@ -121,25 +121,26 @@ atomic_load_b.exit:                               ; preds = %atomic_compare_exch
   br label %bb.f
 
 bb.f:                                             ; preds = %.preheader, %bb.p
-  %i.y = tail call ptr @sbrk(i64 noundef 0) #6    ; 7 uses
-  %i.z = icmp eq ptr %i.y, inttoptr (i64 -1 to ptr)
+  %i.y = tail call ptr @sbrk(i64 noundef 0) #6
+  %.fr = freeze ptr %i.y                          ; 7 uses
+  %i.z = icmp eq ptr %.fr, inttoptr (i64 -1 to ptr)
   br i1 %i.z, label %.thread93, label %atomic_store_p.exit.i
 
 atomic_store_p.exit.i:                            ; preds = %bb.f
-  store atomic ptr %i.y, ptr @dss_max.0 release, align 8
-  %.not9.i = icmp ne ptr %i.y, %2
+  store atomic ptr %.fr, ptr @dss_max.0 release, align 8
+  %.not9.i = icmp ne ptr %.fr, %2
   %or.cond.i.not96 = and i1 %.not.i, %.not9.i
-  %i.aa = icmp eq ptr %i.y, null
+  %i.aa = icmp eq ptr %.fr, null
   %or.cond = or i1 %i.aa, %or.cond.i.not96
   br i1 %or.cond, label %.thread93, label %bb.g
 
 bb.g:                                             ; preds = %atomic_store_p.exit.i
   %i.ab = load i8, ptr @duckdb_je_opt_retain, align 1, !tbaa !10, !range !8, !noundef !9 ; 2 uses
-  %i.ac = ptrtoint ptr %i.y to i64                ; 3 uses
+  %i.ac = ptrtoint ptr %.fr to i64                ; 3 uses
   %i.ad = add i64 %i.ac, 4095
   %i.ae = and i64 %i.ad, -4096                    ; 5 uses
   %i.af = sub i64 %i.ae, %i.ac
-  %i.ag = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.af ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %.fr, i64 %i.af ; 2 uses
   %i.ah = add i64 %i.r, %i.ae
   %i.ai = and i64 %i.ah, %i.s                     ; 2 uses
   %i.aj = sub i64 %i.ai, %i.ae
@@ -173,7 +174,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ax = sub i64 %3, %i.ac
   %i.ay = add i64 %i.ax, %i.ai
   %i.az = tail call ptr @sbrk(i64 noundef %i.ay) #6 ; 2 uses
-  %i.ba = icmp eq ptr %i.az, %i.y
+  %i.ba = icmp eq ptr %i.az, %.fr
   br i1 %i.ba, label %atomic_store_p.exit, label %bb.p
 
 atomic_store_p.exit:                              ; preds = %bb.i

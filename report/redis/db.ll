@@ -201,7 +201,8 @@ bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !64
   %i.ab = tail call i32 @sdscmp(ptr noundef %i.aa, ptr noundef %i.y) #20
-  %i.ac = icmp eq i32 %i.ab, 0
+  %.fr85 = freeze i32 %i.ab
+  %i.ac = icmp eq i32 %.fr85, 0
   tail call void @decrRefCount(ptr noundef %i.t) #20
   br i1 %i.ac, label %select.unfold71, label %.thread76
 
@@ -220,7 +221,8 @@ bb.k:                                             ; preds = %bb.j
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 8
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !64
   %i.am = tail call i32 @sdscmp(ptr noundef %i.al, ptr noundef %i.aj) #20
-  %.not59 = icmp eq i32 %i.am, 0
+  %.fr84 = freeze i32 %i.am
+  %.not59 = icmp eq i32 %.fr84, 0
   tail call void @decrRefCount(ptr noundef %i.ae) #20
   br i1 %.not59, label %.thread76, label %select.unfold71
 
@@ -246,7 +248,8 @@ bb.n:                                             ; preds = %bb.m
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !64
   %i.az = tail call i32 @strcasecmp(ptr noundef %i.at, ptr noundef %i.ay) #24
-  %i.ba = icmp eq i32 %i.az, 0
+  %.fr83 = freeze i32 %i.az
+  %i.ba = icmp eq i32 %.fr83, 0
   tail call void @sdsfree(ptr noundef %i.at) #20
   br i1 %i.ba, label %select.unfold71, label %.thread76
 
@@ -272,7 +275,8 @@ bb.q:                                             ; preds = %bb.p
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 8
   %i.bm = load ptr, ptr %i.bl, align 8, !tbaa !64
   %i.bn = tail call i32 @strcasecmp(ptr noundef %i.bh, ptr noundef %i.bm) #24
-  %.not64 = icmp eq i32 %i.bn, 0
+  %.fr = freeze i32 %i.bn
+  %.not64 = icmp eq i32 %.fr, 0
   tail call void @sdsfree(ptr noundef %i.bh) #20
   br i1 %.not64, label %.thread76, label %select.unfold71
 
@@ -675,7 +679,7 @@ bb.m:                                             ; preds = %bb.l, %bb.g
 bb.n:                                             ; preds = %bb.m
   %i.av = getelementptr inbounds nuw i8, ptr %i.r, i64 44
   %i.aw = getelementptr inbounds nuw i8, ptr %i.r, i64 48
-  %i.ax = load i32, ptr %i.aw, align 4, !tbaa !110
+  %i.ax = load i32, ptr %i.aw, align 8, !tbaa !110
   %i.ay = sext i32 %i.ax to i64                   ; 3 uses
   %i.az = load i32, ptr %i.av, align 4, !tbaa !110 ; 4 uses
   %i.ba = icmp sgt i32 %i.az, -1
@@ -785,7 +789,7 @@ sdslen.exit:                                      ; preds = %bb.v, %bb.w, %bb.x,
 
 bb.ab:                                            ; preds = %sdslen.exit
   %i.cr = getelementptr inbounds nuw i8, ptr %i.r, i64 48
-  %i.cs = load i32, ptr %i.cr, align 4, !tbaa !110
+  %i.cs = load i32, ptr %i.cr, align 8, !tbaa !110
   %i.ct = sext i32 %i.cs to i64
   %i.cu = add nsw i64 %.1111, %i.ct               ; 2 uses
   %i.cv = add nsw i64 %i.cp, -1
@@ -1188,7 +1192,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.n = tail call i32 @strcasecmp(ptr noundef %i.f, ptr noundef nonnull @.str.85) #24
-  %.not50 = icmp eq i32 %i.n, 0
+  %.fr = freeze i32 %i.n
+  %.not50 = icmp eq i32 %.fr, 0
   br i1 %.not50, label %.loopexit59, label %.loopexit
 
 bb.i:                                             ; preds = %bb.d, %bb.g, %bb.f, %bb.b

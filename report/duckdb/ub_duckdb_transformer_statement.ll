@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4, !tbaa !3
+  store i32 %i.o, ptr %i.c, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -251,7 +251,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.af = add nsw i32 %i.w, -1
-  store i32 %i.af, ptr %i.t, align 4, !tbaa !3
+  store i32 %i.af, ptr %i.t, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i3
 
 bb.l:                                             ; preds = %bb.j
@@ -301,7 +301,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.aw = add nsw i32 %i.an, -1
-  store i32 %i.aw, ptr %i.ak, align 4, !tbaa !3
+  store i32 %i.aw, ptr %i.ak, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
 
 bb.r:                                             ; preds = %bb.p
@@ -704,7 +704,7 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   %i.dm = add nsw i32 %i.dd, -1
-  store i32 %i.dm, ptr %i.da, align 4, !tbaa !3
+  store i32 %i.dm, ptr %i.da, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i
 
 bb.ar:                                            ; preds = %bb.ap
@@ -1107,7 +1107,8 @@ bb.af:                                            ; preds = %._crit_edge.thread.
 bb.ag:                                            ; preds = %bb.af, %._crit_edge.i.i.i
   %i.el = phi i64 [ %.pre.i.i, %bb.af ], [ %i.eg, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.af ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %i.em = icmp ult i64 %i.el, %storemerge441
+  %.fr = freeze i64 %i.el
+  %i.em = icmp ult i64 %.fr, %storemerge441
   br i1 %i.em, label %select.unfold.i.i, label %bb.ai
 
 select.unfold.i.i:                                ; preds = %bb.ag, %._crit_edge.thread.i.i.i
@@ -1510,7 +1511,7 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.bb
   %i.dw = getelementptr inbounds nuw i8, ptr %i.eb, i64 8
   %i.dx = icmp eq i64 %i.ed, 1
-  %i.dy = load i8, ptr %i.dw, align 1
+  %i.dy = load i8, ptr %i.dw, align 8
   %i.dz = icmp eq i8 %i.dy, 1
   %i.ea = select i1 %i.dx, i1 %i.dz, i1 false
   br i1 %i.ea, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !2260
@@ -1747,7 +1748,7 @@ bb.ca:                                            ; preds = %bb.bz
 bb.cb:                                            ; preds = %bb.cc
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gj, i64 8
   %i.gf = icmp eq i64 %i.gl, 2
-  %i.gg = load i8, ptr %i.ge, align 1
+  %i.gg = load i8, ptr %i.ge, align 8
   %i.gh = icmp eq i8 %i.gg, 2
   %i.gi = select i1 %i.gf, i1 %i.gh, i1 false
   br i1 %i.gi, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit170, label %.lr.ph.i.i.i.i161, !llvm.loop !2260
@@ -1907,7 +1908,7 @@ bb.cq:                                            ; preds = %bb.cp
 bb.cr:                                            ; preds = %bb.cs
   %i.ia = getelementptr inbounds nuw i8, ptr %i.if, i64 8
   %i.ib = icmp eq i64 %i.ih, 3
-  %i.ic = load i8, ptr %i.ia, align 1
+  %i.ic = load i8, ptr %i.ia, align 8
   %i.id = icmp eq i8 %i.ic, 3
   %i.ie = select i1 %i.ib, i1 %i.id, i1 false
   br i1 %i.ie, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit189, label %.lr.ph.i.i.i.i180, !llvm.loop !2260
@@ -2064,7 +2065,7 @@ bb.dg:                                            ; preds = %bb.df
 bb.dh:                                            ; preds = %bb.di
   %i.jr = getelementptr inbounds nuw i8, ptr %i.jw, i64 8
   %i.js = icmp eq i64 %i.jy, 0
-  %i.jt = load i8, ptr %i.jr, align 1
+  %i.jt = load i8, ptr %i.jr, align 8
   %i.ju = icmp eq i8 %i.jt, 0
   %i.jv = select i1 %i.js, i1 %i.ju, i1 false
   br i1 %i.jv, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit208, label %.lr.ph.i.i.i.i199, !llvm.loop !2260
@@ -2214,7 +2215,7 @@ bb.dt:                                            ; preds = %bb.ds
 bb.du:                                            ; preds = %bb.dv
   %i.lm = getelementptr inbounds nuw i8, ptr %i.lr, i64 8
   %i.ln = icmp eq i64 %i.lt, 4
-  %i.lo = load i8, ptr %i.lm, align 1
+  %i.lo = load i8, ptr %i.lm, align 8
   %i.lp = icmp eq i8 %i.lo, 4
   %i.lq = select i1 %i.ln, i1 %i.lp, i1 false
   br i1 %i.lq, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit227, label %.lr.ph.i.i.i.i218, !llvm.loop !2260
@@ -2617,7 +2618,7 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.ah
   %i.do = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   %i.dp = icmp eq i64 %i.dv, 5
-  %i.dq = load i8, ptr %i.do, align 1
+  %i.dq = load i8, ptr %i.do, align 8
   %i.dr = icmp eq i8 %i.dq, 5
   %i.ds = select i1 %i.dp, i1 %i.dr, i1 false
   br i1 %i.ds, label %_ZNSt13unordered_setIN6duckdb12SequenceInfoENS0_13EnumClassHashESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !2260
@@ -3020,7 +3021,8 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %.019.lcssa28.i = phi ptr [ %.019.lcssa29.i, %bb.b ], [ %.02024.i, %._crit_edge.i ]
   %.sroa.05.0.i = phi ptr [ %i.o, %bb.b ], [ %.02024.i, %._crit_edge.i ]
   %i.q = icmp ult i8 %i.p, %i.c
-  br i1 %i.q, label %select.unfold, label %bb.e
+  %cond.fr = freeze i1 %i.q
+  br i1 %cond.fr, label %select.unfold, label %bb.e
 
 select.unfold:                                    ; preds = %bb.c, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.019.lcssa29.i, %._crit_edge.thread.i ], [ %.019.lcssa28.i, %bb.c ] ; 3 uses
@@ -3102,7 +3104,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 32
-  %i.n = load i8, ptr %i.c, align 1, !tbaa !1428
+  %i.n = load i8, ptr %i.c, align 8, !tbaa !1428
   %i.o = load i8, ptr %i.m, align 1, !tbaa !1428
   %i.p = icmp ult i8 %i.n, %i.o
   br label %.thread
@@ -3505,7 +3507,7 @@ bb.f:                                             ; preds = %.thread34
 bb.g:                                             ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ac = icmp eq i64 %i.ai, %i.d
-  %i.ad = load i8, ptr %i.ab, align 1
+  %i.ad = load i8, ptr %i.ab, align 8
   %i.ae = icmp eq i8 %i.c, %i.ad
   %i.af = select i1 %i.ac, i1 %i.ae, i1 false
   br i1 %i.af, label %_ZNKSt10_HashtableIN6duckdb12SequenceInfoES1_SaIS1_ENSt8__detail9_IdentityESt8equal_toIS1_ENS0_13EnumClassHashENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE15_M_find_node_trIS1_EEPNS3_10_Hash_nodeIS1_Lb1EEEmRKT_m.exit, label %.lr.ph.i.i, !llvm.loop !2567

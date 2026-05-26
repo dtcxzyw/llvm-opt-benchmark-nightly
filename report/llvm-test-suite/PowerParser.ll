@@ -201,7 +201,8 @@ bb.jj:                                            ; preds = %bb.if
 bb.jk:                                            ; preds = %bb.if
   %.not = xor i1 %i.azl, true
   %or.cond5 = select i1 %.not, i1 true, i1 %i.azn
-  br i1 %or.cond5, label %.thread, label %bb.jl
+  %cond.fr = freeze i1 %or.cond5
+  br i1 %cond.fr, label %.thread, label %bb.jl
 
 .thread:                                          ; preds = %bb.jj, %bb.jk
   call void @_ZN2PP12RestartblockD2Ev(ptr noundef nonnull align 8 dead_on_return(520) dereferenceable(520) %39) #29
@@ -604,7 +605,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  %i.p = load i32, ptr %i.c, align 4, !tbaa !4
+  %i.p = load i32, ptr %i.c, align 8, !tbaa !4
   %i.q = load i32, ptr %i.o, align 4, !tbaa !4
   %i.r = icmp slt i32 %i.p, %i.q
   br label %.thread

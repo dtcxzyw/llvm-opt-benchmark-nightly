@@ -201,7 +201,8 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge.
   %i.ct = phi i32 [ %.pre.i.i, %bb.h ], [ %i.cn, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.h ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.cu = icmp ult i32 %i.ct, %i.cj
-  br i1 %i.cu, label %select.unfold.i.i, label %_ZNSt3setIjSt4lessIjESaIjEE6insertEOj.exit
+  %cond.fr.i.i = freeze i1 %i.cu
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIjSt4lessIjESaIjEE6insertEOj.exit
 
 select.unfold.i.i:                                ; preds = %bb.i, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.i ] ; 3 uses
@@ -604,7 +605,7 @@ bb.k:                                             ; preds = %bb.i
   %i.dm = zext i32 %i.dl to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.dk, ptr nonnull align 4 %i.a, i64 %i.dm, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr align 1 %1, i64 %i.dj, i1 false)
-  store i32 %i.dg, ptr %0, align 4
+  store i32 %i.dg, ptr %0, align 8
   br label %_ZN6Assimp12PrefixStringER8aiStringPKcj.exit
 
 .critedge:                                        ; preds = %_ZNSt8_Rb_treeIjjSt9_IdentityIjESt4lessIjESaIjEE14_M_lower_boundEPSt13_Rb_tree_nodeIjEPSt18_Rb_tree_node_baseRKj.exit.i.i, %bb.g, %.lr.ph, %_ZNSt3setIjSt4lessIjESaIjEE4findERKj.exit
@@ -1007,7 +1008,8 @@ bb.aq:                                            ; preds = %bb.ap, %._crit_edge
   %i.lj = phi i32 [ %.pre.i.i, %bb.ap ], [ %i.ld, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ap ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
   %i.lk = icmp ult i32 %i.lj, %i.kz
-  br i1 %i.lk, label %select.unfold.i.i, label %bb.as
+  %cond.fr.i.i = freeze i1 %i.lk
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %bb.as
 
 select.unfold.i.i:                                ; preds = %bb.aq, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.aq ] ; 3 uses
@@ -1410,9 +1412,9 @@ bb.f:                                             ; preds = %bb.b
   br i1 %i.ak, label %_ZN8aiStringaSERKS_.exit, label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph
-  %i.al = load i32, ptr %i.w, align 4
+  %i.al = load i32, ptr %i.w, align 8
   %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.al, i32 1023) ; 2 uses
-  store i32 %spec.select.i, ptr %i.p, align 4
+  store i32 %spec.select.i, ptr %i.p, align 8
   %i.am = getelementptr inbounds nuw i8, ptr %i.p, i64 4 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.w, i64 4
   %i.ao = zext nneg i32 %spec.select.i to i64     ; 2 uses
@@ -1815,9 +1817,9 @@ bb.g:                                             ; preds = %.lr.ph57
   br i1 %i.ax, label %_ZN8aiStringaSERKS_.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ay = load i32, ptr %i.y, align 4
+  %i.ay = load i32, ptr %i.y, align 8
   %spec.select.i = call i32 @llvm.umin.i32(i32 %i.ay, i32 1023) ; 2 uses
-  store i32 %spec.select.i, ptr %i.af, align 4
+  store i32 %spec.select.i, ptr %i.af, align 8
   %i.az = getelementptr inbounds nuw i8, ptr %i.af, i64 4 ; 2 uses
   %i.ba = zext nneg i32 %spec.select.i to i64     ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.az, ptr nonnull align 4 %i.z, i64 %i.ba, i1 false)

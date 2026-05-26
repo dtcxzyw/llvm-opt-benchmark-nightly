@@ -201,9 +201,10 @@ bb.k:                                             ; preds = %bb.j
   %i.cj = zext i32 %i.ci to i64
   %.val382 = load ptr, ptr %i.d, align 8, !tbaa !8
   %i.ck = getelementptr inbounds nuw i8, ptr %.val382, i64 %i.cj
-  %.0.copyload.i407 = load i8, ptr %i.ck, align 1 ; 2 uses
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i407) #13, !srcloc !31
-  %.not362 = icmp ne i8 %.0.copyload.i407, 0
+  %.0.copyload.i407 = load i8, ptr %i.ck, align 1
+  %.0.copyload.i407.fr = freeze i8 %.0.copyload.i407 ; 2 uses
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i8 %.0.copyload.i407.fr) #13, !srcloc !31
+  %.not362 = icmp ne i8 %.0.copyload.i407.fr, 0
   %.not363 = icmp eq i32 %.fr, 0
   %or.cond421 = or i1 %.not363, %.not362
   br i1 %or.cond421, label %.thread, label %bb.n

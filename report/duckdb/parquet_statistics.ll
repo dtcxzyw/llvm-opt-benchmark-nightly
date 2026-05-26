@@ -201,7 +201,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.ab = add nsw i32 %i.s, -1
-  store i32 %i.ab, ptr %i.l, align 4, !tbaa !3
+  store i32 %i.ab, ptr %i.l, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -604,7 +604,8 @@ bb.d:                                             ; preds = %bb.c, %._crit_edge.
   %i.w = icmp ult i64 %i.q, %i.p
   %i.x = icmp ult i64 %spec.select.i6.i, %i.p
   %i.y = select i1 %i.w, i1 %i.x, i1 false
-  br i1 %i.y, label %select.unfold, label %bb.f
+  %cond.fr = freeze i1 %i.y
+  br i1 %cond.fr, label %select.unfold, label %bb.f
 
 select.unfold:                                    ; preds = %bb.d, %._crit_edge.thread.i
   %.sroa.4.0.i.ph = phi ptr [ %.021.lcssa31.i, %._crit_edge.thread.i ], [ %.021.lcssa30.i, %bb.d ] ; 3 uses

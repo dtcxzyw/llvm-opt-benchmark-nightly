@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
 
 GetProba.exit.i:                                  ; preds = %bb.d, %bb.c
   %i.bm = phi i8 [ %i.bl, %bb.d ], [ -1, %bb.c ]  ; 3 uses
-  store i8 %i.bm, ptr %i.av, align 1, !tbaa !26
+  store i8 %i.bm, ptr %i.av, align 8, !tbaa !26
   %i.bn = icmp eq i32 %i.az, 0
   br i1 %i.bn, label %GetProba.exit36.i, label %bb.e
 
@@ -231,7 +231,7 @@ GetProba.exit37.i:                                ; preds = %bb.f, %GetProba.exi
   %i.ca = phi i32 [ %i.bz, %bb.f ], [ 255, %GetProba.exit36.i ] ; 2 uses
   %i.cb = trunc i32 %i.ca to i8                   ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 3618 ; 2 uses
-  store i8 %i.cb, ptr %i.cc, align 1, !tbaa !26
+  store i8 %i.cb, ptr %i.cc, align 2, !tbaa !26
   %.not34.i = icmp eq i8 %i.bm, -1
   %.not35.i = icmp eq i8 %i.bt, -1
   %or.cond.i = select i1 %.not34.i, i1 %.not35.i, i1 false
@@ -277,9 +277,9 @@ bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i
   br label %ResetSegments.exit.i
 
 ResetSegments.exit.loopexit.i:                    ; preds = %bb.i
-  %.pre.i = load i8, ptr %i.av, align 1, !tbaa !26
+  %.pre.i = load i8, ptr %i.av, align 8, !tbaa !26
   %.pre70.i = load i8, ptr %i.bu, align 1, !tbaa !26
-  %.pre71.i = load i8, ptr %i.cc, align 1, !tbaa !26
+  %.pre71.i = load i8, ptr %i.cc, align 2, !tbaa !26
   br label %ResetSegments.exit.i
 
 ResetSegments.exit.i:                             ; preds = %ResetSegments.exit.loopexit.i, %.critedge.i, %bb.h, %bb.g
@@ -682,7 +682,8 @@ bb.u:                                             ; preds = %.loopexit
   %i.dx = load i8, ptr %i.ds, align 1, !tbaa !26
   %i.dy = zext i8 %i.dx to i32
   %i.dz = tail call i32 @VP8PutBit(ptr noundef %0, i32 noundef %i.dw, i32 noundef %i.dy) #9
-  %.not105 = icmp eq i32 %i.dz, 0
+  %.fr = freeze i32 %i.dz
+  %.not105 = icmp eq i32 %.fr, 0
   br i1 %.not105, label %.thread, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.c

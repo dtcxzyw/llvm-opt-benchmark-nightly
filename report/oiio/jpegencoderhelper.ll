@@ -126,7 +126,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.t = phi i32 [ %.pre81.i, %bb.e ], [ %i.n, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.u = icmp slt i32 %i.t, %i.s
-  br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE17_M_insert_unique_IRKS6_NSC_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS6_ESt23_Rb_tree_const_iteratorIS6_EOT_RT0_.exit.i
+  %cond.fr = freeze i1 %i.u
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE17_M_insert_unique_IRKS6_NSC_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS6_ESt23_Rb_tree_const_iteratorIS6_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
@@ -270,7 +271,8 @@ _ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt
 bb.b:                                             ; preds = %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS2_.exit.i.i
   %i.h = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 32
   %i.i = load i32, ptr %i.h, align 4, !tbaa !19
-  %i.j = icmp slt i32 %6, %i.i
+  %.fr = freeze i32 %i.i
+  %i.j = icmp slt i32 %6, %.fr
   br i1 %i.j, label %select.unfold, label %.lr.ph.i.i.i53
 
 select.unfold:                                    ; preds = %bb.b, %bb.a, %_ZNSt8_Rb_treeI12uhdr_img_fmtSt4pairIKS0_St6vectorIiSaIiEEESt10_Select1stIS6_ESt4lessIS0_ESaIS6_EE14_M_lower_boundEPSt13_Rb_tree_nodeIS6_EPSt18_Rb_tree_node_baseRS2_.exit.i.i

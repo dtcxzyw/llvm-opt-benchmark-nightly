@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.f = phi i64 [ %.val68, %bb.b ], [ 0, %bb.a ]
-  %i.g = add i64 %i.f, %.val                      ; 2 uses
-  %i.h = add i64 %i.g, -1                         ; 2 uses
+  %i.g = add i64 %i.f, %.val
+  %.fr78 = freeze i64 %i.g                        ; 2 uses
+  %i.h = add i64 %.fr78, -1                       ; 2 uses
   %i.i = add i64 %.val, -1
   %i.j = icmp ult i64 %i.i, 4
   %or.cond3 = select i1 %.not, i1 %i.j, i1 false
@@ -259,7 +260,7 @@ bb.j:                                             ; preds = %bb.i
   br label %.thread72
 
 bb.k:                                             ; preds = %bb.i
-  %i.z = add i64 %i.g, -2                         ; 2 uses
+  %i.z = add i64 %.fr78, -2                       ; 2 uses
   %.not64 = icmp eq i64 %i.z, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   br i1 %.not64, label %bb.o, label %.thread75

@@ -201,9 +201,10 @@ _ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112
   br i1 %.not121.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZSt7getlineIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit.i
-  %i.fr = call ptr @memchr(ptr noundef %.pre223.i, i32 noundef 58, i64 noundef %i.fq) #25 ; 2 uses
-  %.not.i21.i = icmp eq ptr %i.fr, null
-  %i.fs = ptrtoint ptr %i.fr to i64
+  %i.fr = call ptr @memchr(ptr noundef %.pre223.i, i32 noundef 58, i64 noundef %i.fq) #25
+  %.fr.i = freeze ptr %i.fr                       ; 2 uses
+  %.not.i21.i = icmp eq ptr %.fr.i, null
+  %i.fs = ptrtoint ptr %.fr.i to i64
   %i.ft = ptrtoint ptr %.pre223.i to i64
   %i.fu = sub i64 %i.fs, %i.ft                    ; 4 uses
   %.not.i = icmp eq i64 %i.fu, -1
@@ -606,7 +607,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.q = add nsw i32 %i.h, -1
-  store i32 %i.q, ptr %i.e, align 4, !tbaa !3
+  store i32 %i.q, ptr %i.e, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.g:                                             ; preds = %bb.e

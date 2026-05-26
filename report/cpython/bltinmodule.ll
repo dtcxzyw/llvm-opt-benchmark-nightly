@@ -201,7 +201,8 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %.lr.ph
   %i.v = getelementptr i8, ptr %0, i64 32
   %i.w = load i32, ptr %i.v, align 8, !tbaa !39
-  %.not = icmp eq i32 %i.w, 0
+  %.fr = freeze i32 %i.w
+  %.not = icmp eq i32 %.fr, 0
   br i1 %.not, label %_PyObject_VectorcallTstate.exit, label %bb.h
 
 bb.f:                                             ; preds = %.lr.ph
@@ -604,7 +605,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr i8, ptr %1, i64 32
-  %i.g = load i8, ptr %i.f, align 1, !tbaa !17
+  %i.g = load i8, ptr %i.f, align 8, !tbaa !17
   %i.h = zext i8 %i.g to i64
   %i.i = tail call ptr @PyLong_FromLong(i64 noundef %i.h) #10
   br label %bb.t

@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %upb_WireReader_Read
   %i.y = ashr exact i64 %sext.i.i, 32
   %i.z = load i64, ptr %i.m, align 8, !tbaa !34
   %i.aa = icmp eq i64 %i.y, %i.z
-  br i1 %i.aa, label %upb_EpsCopyInputStream_IsDone.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !52
+  %cond.fr.i = freeze i1 %i.aa
+  br i1 %cond.fr.i, label %upb_EpsCopyInputStream_IsDone.exit.thread, label %upb_EpsCopyInputStream_IsDone.exit, !prof !52
 
 upb_EpsCopyInputStream_IsDone.exit:               ; preds = %bb.b
   %i.ab = tail call ptr @upb_EpsCopyInputStream_IsDoneFallback_dont_copy_me__upb_internal_use_only(ptr noundef nonnull %0, ptr noundef %.074, i32 noundef %i.v) #12 ; 2 uses
@@ -384,14 +385,14 @@ upb_WireReader_ReadVarint.exit.backedge:          ; preds = %bb.r, %bb.q, %bb.s,
 bb.s:                                             ; preds = %bb.o
   %i.ci = getelementptr inbounds nuw i8, ptr %.183, i64 8
   %.0.copyload.i = load i64, ptr %.0.i, align 1
-  store i64 %.0.copyload.i, ptr %i.ci, align 1
+  store i64 %.0.copyload.i, ptr %i.ci, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   br label %upb_WireReader_ReadVarint.exit.backedge
 
 bb.t:                                             ; preds = %bb.o
   %i.ck = getelementptr inbounds nuw i8, ptr %.183, i64 8
   %.0.copyload.i49 = load i32, ptr %.0.i, align 1
-  store i32 %.0.copyload.i49, ptr %i.ck, align 1
+  store i32 %.0.copyload.i49, ptr %i.ck, align 8
   %i.cl = getelementptr inbounds nuw i8, ptr %.0.i, i64 4
   br label %upb_WireReader_ReadVarint.exit.backedge
 

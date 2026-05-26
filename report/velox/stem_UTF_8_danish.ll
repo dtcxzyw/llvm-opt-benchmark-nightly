@@ -201,8 +201,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %.not29.i, label %select.unfold, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cs = tail call i32 @slice_del(ptr noundef nonnull %0) #3 ; 2 uses
-  %i.ct = icmp sgt i32 %i.cs, -1
+  %i.cs = tail call i32 @slice_del(ptr noundef nonnull %0) #3
+  %.fr = freeze i32 %i.cs                         ; 2 uses
+  %i.ct = icmp sgt i32 %.fr, -1
   br i1 %i.ct, label %select.unfold, label %bb.af
 
 select.unfold:                                    ; preds = %bb.ae, %bb.ab, %bb.z, %bb.ad
@@ -210,8 +211,8 @@ select.unfold:                                    ; preds = %bb.ae, %bb.ab, %bb.
   store i32 %i.cu, ptr %i.a, align 8, !tbaa !7
   br label %bb.af
 
-bb.af:                                            ; preds = %bb.ae, %bb.ac, %bb.j, %bb.l, %bb.p, %bb.y, %bb.w, %bb.x, %bb.m, %select.unfold
-  %.5 = phi i32 [ 1, %select.unfold ], [ %i.ao, %bb.j ], [ %i.au, %bb.m ], [ %i.by, %bb.x ], [ %i.bc, %bb.p ], [ %i.ca, %bb.y ], [ %i.bw, %bb.w ], [ %i.ar, %bb.l ], [ -1, %bb.ac ], [ %i.cs, %bb.ae ]
+bb.af:                                            ; preds = %bb.ae, %bb.j, %bb.l, %bb.ac, %bb.p, %bb.y, %bb.w, %bb.x, %bb.m, %select.unfold
+  %.5 = phi i32 [ 1, %select.unfold ], [ %i.by, %bb.x ], [ %i.au, %bb.m ], [ -1, %bb.ac ], [ %i.bc, %bb.p ], [ %i.ca, %bb.y ], [ %i.bw, %bb.w ], [ %i.ao, %bb.j ], [ %i.ar, %bb.l ], [ %.fr, %bb.ae ]
   ret i32 %.5
 }
 

@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.h
   %i.u = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.v = icmp eq i64 %i.ab, 18
-  %i.w = load i8, ptr %i.u, align 1
+  %i.w = load i8, ptr %i.u, align 8
   %i.x = icmp eq i8 %i.w, 18
   %i.y = select i1 %i.v, i1 %i.x, i1 false
   br i1 %i.y, label %_ZNSt13unordered_setIN6duckdb10MetricTypeENS0_22MetricTypeHashFunctionESt8equal_toIS1_ESaIS1_EE4findERKS1_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !298
@@ -604,7 +604,8 @@ bb.n:                                             ; preds = %._crit_edge.thread.
 bb.o:                                             ; preds = %bb.n, %._crit_edge.i.i.i
   %i.bg = phi i32 [ %.pre.i.i, %bb.n ], [ %i.bb, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.n ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %i.bh = icmp ult i32 %i.bg, %i.az
+  %.fr = freeze i32 %i.bg
+  %i.bh = icmp ult i32 %.fr, %i.az
   br i1 %i.bh, label %select.unfold.i.i, label %bb.q
 
 select.unfold.i.i:                                ; preds = %bb.o, %._crit_edge.thread.i.i.i
@@ -1007,7 +1008,7 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.o
   %i.ag = add nsw i32 %i.x, -1
-  store i32 %i.ag, ptr %i.u, align 4, !tbaa !3
+  store i32 %i.ag, ptr %i.u, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i
 
 bb.q:                                             ; preds = %bb.o
@@ -1247,7 +1248,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.r = add nsw i32 %i.i, -1
-  store i32 %i.r, ptr %i.f, align 4, !tbaa !3
+  store i32 %i.r, ptr %i.f, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -1650,7 +1651,7 @@ bb.f:                                             ; preds = %.thread34
 bb.g:                                             ; preds = %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
   %i.ac = icmp eq i64 %i.ai, %i.d
-  %i.ad = load i8, ptr %i.ab, align 1
+  %i.ad = load i8, ptr %i.ab, align 8
   %i.ae = icmp eq i8 %i.c, %i.ad
   %i.af = select i1 %i.ac, i1 %i.ae, i1 false
   br i1 %i.af, label %_ZNKSt10_HashtableIN6duckdb10MetricTypeES1_SaIS1_ENSt8__detail9_IdentityESt8equal_toIS1_ENS0_22MetricTypeHashFunctionENS3_18_Mod_range_hashingENS3_20_Default_ranged_hashENS3_20_Prime_rehash_policyENS3_17_Hashtable_traitsILb1ELb1ELb1EEEE15_M_find_node_trIS1_EEPNS3_10_Hash_nodeIS1_Lb1EEEmRKT_m.exit, label %.lr.ph.i.i, !llvm.loop !644

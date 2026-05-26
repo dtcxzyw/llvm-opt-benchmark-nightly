@@ -201,8 +201,8 @@ _ZNK6aiMesh24HasTangentsAndBitangentsEv.exit.thread: ; preds = %bb.j, %.loopexit
   %i.gm = urem i64 %i.gl, 12
   %i.gn = sub nsw i64 %i.gl, %i.gm
   %i.go = add nsw i64 %i.gn, 12                   ; 8 uses
-  %i.gp = load i32, ptr %i.v, align 4
-  store i32 %i.gp, ptr %i.gi, align 4
+  %i.gp = load i32, ptr %i.v, align 8
+  store i32 %i.gp, ptr %i.gi, align 8
   %i.gq = load ptr, ptr %i.w, align 8
   %.not.i147 = icmp ne ptr %i.gq, null
   %i.gr = select i1 %.not.i147, i1 %i.fh, i1 false
@@ -243,9 +243,9 @@ bb.m:                                             ; preds = %_ZNK6aiMesh16HasTex
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.2
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.2:           ; preds = %.loopexit273.1, %_ZNK6aiMesh16HasTextureCoordsEj.exit.1
-  %i.gz = load i32, ptr %i.ae, align 4
+  %i.gz = load i32, ptr %i.ae, align 8
   %i.ha = getelementptr inbounds nuw i8, ptr %i.ax, i64 184
-  store i32 %i.gz, ptr %i.ha, align 4
+  store i32 %i.gz, ptr %i.ha, align 8
   %i.hb = load ptr, ptr %i.af, align 8
   %.not.i147.2 = icmp ne ptr %i.hb, null
   %i.hc = select i1 %.not.i147.2, i1 %i.fh, i1 false
@@ -287,9 +287,9 @@ bb.o:                                             ; preds = %_ZNK6aiMesh16HasTex
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.4
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.4:           ; preds = %.loopexit273.3, %_ZNK6aiMesh16HasTextureCoordsEj.exit.3
-  %i.hl = load i32, ptr %i.ai, align 4
+  %i.hl = load i32, ptr %i.ai, align 8
   %i.hm = getelementptr inbounds nuw i8, ptr %i.ax, i64 192
-  store i32 %i.hl, ptr %i.hm, align 4
+  store i32 %i.hl, ptr %i.hm, align 8
   %i.hn = load ptr, ptr %i.aj, align 8
   %.not.i147.4 = icmp ne ptr %i.hn, null
   %i.ho = select i1 %.not.i147.4, i1 %i.fh, i1 false
@@ -331,9 +331,9 @@ bb.q:                                             ; preds = %_ZNK6aiMesh16HasTex
   br label %_ZNK6aiMesh16HasTextureCoordsEj.exit.6
 
 _ZNK6aiMesh16HasTextureCoordsEj.exit.6:           ; preds = %.loopexit273.5, %_ZNK6aiMesh16HasTextureCoordsEj.exit.5
-  %i.hx = load i32, ptr %i.am, align 4
+  %i.hx = load i32, ptr %i.am, align 8
   %i.hy = getelementptr inbounds nuw i8, ptr %i.ax, i64 200
-  store i32 %i.hx, ptr %i.hy, align 4
+  store i32 %i.hx, ptr %i.hy, align 8
   %i.hz = load ptr, ptr %i.an, align 8
   %.not.i147.6 = icmp ne ptr %i.hz, null
   %i.ia = select i1 %.not.i147.6, i1 %i.fh, i1 false
@@ -736,8 +736,8 @@ bb.am:                                            ; preds = %bb.bb, %bb.az, %bb.
 
 bb.an:                                            ; preds = %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
   %i.gv = getelementptr inbounds nuw i8, ptr %i.bv, i64 176
-  %i.gw = load i32, ptr %i.ad, align 4
-  store i32 %i.gw, ptr %i.gv, align 4
+  %i.gw = load i32, ptr %i.ad, align 8
+  store i32 %i.gw, ptr %i.gv, align 8
   %i.gx = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ew) #17
           to label %bb.ao unwind label %bb.am     ; 2 uses
 
@@ -776,9 +776,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.1:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i162.not.2, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.ar
 
 bb.ar:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.1
-  %i.he = load i32, ptr %i.av, align 4
+  %i.he = load i32, ptr %i.av, align 8
   %i.hf = getelementptr inbounds nuw i8, ptr %i.bv, i64 184
-  store i32 %i.he, ptr %i.hf, align 4
+  store i32 %i.he, ptr %i.hf, align 8
   %i.hg = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ew) #17
           to label %bb.as unwind label %bb.am     ; 2 uses
 
@@ -818,9 +818,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.3:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i162.not.4, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.av
 
 bb.av:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.3
-  %i.ho = load i32, ptr %i.az, align 4
+  %i.ho = load i32, ptr %i.az, align 8
   %i.hp = getelementptr inbounds nuw i8, ptr %i.bv, i64 192
-  store i32 %i.ho, ptr %i.hp, align 4
+  store i32 %i.ho, ptr %i.hp, align 8
   %i.hq = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ew) #17
           to label %bb.aw unwind label %bb.am     ; 2 uses
 
@@ -860,9 +860,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.5:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i162.not.6, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.az
 
 bb.az:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.5
-  %i.hy = load i32, ptr %i.bd, align 4
+  %i.hy = load i32, ptr %i.bd, align 8
   %i.hz = getelementptr inbounds nuw i8, ptr %i.bv, i64 200
-  store i32 %i.hy, ptr %i.hz, align 4
+  store i32 %i.hy, ptr %i.hz, align 8
   %i.ia = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.ew) #17
           to label %bb.ba unwind label %bb.am     ; 2 uses
 
@@ -1071,7 +1071,8 @@ bb.bn:                                            ; preds = %bb.bk, %switch.look
 ._crit_edge342:                                   ; preds = %bb.cs, %bb.bn
   %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 1 ; 2 uses
   %i.ky = load i32, ptr %i.bw, align 4
-  %i.kz = icmp eq i32 %i.ky, %.fr
+  %.fr492 = freeze i32 %i.ky
+  %i.kz = icmp eq i32 %.fr492, %.fr
   br i1 %i.kz, label %.thread, label %bb.bd
 
 .lr.ph341:                                        ; preds = %bb.bn, %bb.cs

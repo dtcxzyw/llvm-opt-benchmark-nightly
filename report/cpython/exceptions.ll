@@ -201,10 +201,11 @@ bb.g:                                             ; preds = %bb.f
 PyTuple_GET_SIZE.exit:                            ; preds = %bb.f
   %i.g = getelementptr i8, ptr %3, i64 16
   %i.h = load i64, ptr %i.g, align 8, !tbaa !28
+  %4 = freeze i64 %i.h
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %PyTuple_GET_SIZE.exit
-  %i.i = phi i64 [ %i.h, %PyTuple_GET_SIZE.exit ], [ 0, %bb.a ]
+  %i.i = phi i64 [ %4, %PyTuple_GET_SIZE.exit ], [ 0, %bb.a ]
   %i.j = add i64 %i.i, %2                         ; 2 uses
   %i.k = add i64 %i.j, -1                         ; 2 uses
   %i.l = add i64 %2, -1
@@ -307,7 +308,7 @@ bb.u:                                             ; preds = %bb.s
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !10 ; 3 uses
   %.not67 = icmp ne ptr %i.am, null
   %.not68 = icmp eq i64 %.147, 1
-  %or.cond = select i1 %.not67, i1 %.not68, i1 false
+  %or.cond = and i1 %.not68, %.not67
   br i1 %or.cond, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %.thread77

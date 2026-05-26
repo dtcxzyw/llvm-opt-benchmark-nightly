@@ -201,7 +201,8 @@ _ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit2417: ; preds = %_ZN4ll
 
 bb.j:                                             ; preds = %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit2417
   %i.pz = load i32, ptr %i.py, align 4, !tbaa !81
-  %i.qa = icmp eq i32 %i.pz, 1
+  %.fr = freeze i32 %i.pz
+  %i.qa = icmp eq i32 %.fr, 1
   br i1 %i.qa, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser9JSONArrayENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONNumberEKNS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES9_.exit2424
 
 _ZN4llvh16dyn_cast_or_nullIN6hermes6parser9JSONArrayENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit: ; preds = %bb.j
@@ -368,7 +369,8 @@ _ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.i: ; preds = %_ZNK4llv
 
 bb.q:                                             ; preds = %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.i
   %i.st = load i32, ptr %i.ss, align 4, !tbaa !81
-  %i.su = icmp eq i32 %i.st, 0
+  %.fr.i = freeze i32 %i.st
+  %i.su = icmp eq i32 %.fr.i, 0
   br i1 %i.su, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.i, label %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.thread.i
 
 _ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.i: ; preds = %bb.q
@@ -771,7 +773,8 @@ _ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.i2433: ; preds = %bb.a
 
 bb.aj:                                            ; preds = %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.i2433
   %i.aap = load i32, ptr %i.aao, align 4, !tbaa !81
-  %i.aaq = icmp eq i32 %i.aap, 0
+  %.fr.i2435 = freeze i32 %i.aap
+  %i.aaq = icmp eq i32 %.fr.i2435, 0
   br i1 %i.aaq, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.i2435, label %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.thread.i2432
 
 _ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.thread.i2432: ; preds = %bb.aj, %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit.i2433, %bb.ai
@@ -1174,7 +1177,8 @@ _ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZNK6hermes6parser10JSONObject3getEN4llvh9StringRefE.exit
   %i.j = load i32, ptr %i.i, align 4, !tbaa !81
-  %i.k = icmp eq i32 %i.j, 0
+  %.fr = freeze i32 %i.j
+  %i.k = icmp eq i32 %.fr, 0
   br i1 %i.k, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit, label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit.thread
 
 _ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit: ; preds = %bb.b

@@ -201,7 +201,8 @@ rioRead.exit:                                     ; preds = %bb.g
 bb.h:                                             ; preds = %rioRead.exit
   %i.bo = and i32 %i.ao, 7
   %i.bp = call i32 @rdbLoadSkipMetaIfAllowed(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.bo)
-  %i.bq = icmp eq i32 %i.bp, -1
+  %.fr79 = freeze i32 %i.bp
+  %i.bq = icmp eq i32 %.fr79, -1
   br i1 %i.bq, label %.thread67, label %.thread70
 
 bb.i:                                             ; preds = %rioRead.exit
@@ -215,7 +216,8 @@ bb.i:                                             ; preds = %rioRead.exit
 bb.j:                                             ; preds = %bb.i
   %i.bw = and i32 %i.ao, 7
   %i.bx = call i32 @rdbLoadSkipMetaIfAllowed(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i32 noundef %i.bw)
-  %i.by = icmp eq i32 %i.bx, -1
+  %.fr = freeze i32 %i.bx
+  %i.by = icmp eq i32 %.fr, -1
   br i1 %i.by, label %.thread67, label %.thread70
 
 bb.k:                                             ; preds = %bb.i
@@ -618,9 +620,11 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.l
   %i.aq = call i32 @rdbSaveLen(ptr noundef nonnull %4, i64 noundef 0) #16
-  %6 = icmp eq i32 %i.aq, -1
-  %i.ar = add nsw i32 %.043, 1
-  br i1 %6, label %select.unfold, label %.thread63
+  %.fr = freeze i32 %i.aq
+  %6 = icmp ne i32 %.fr, -1                       ; 2 uses
+  %7 = zext i1 %6 to i32
+  %i.ar = add nsw i32 %.043, %7
+  br i1 %6, label %.thread63, label %select.unfold
 
 bb.n:                                             ; preds = %bb.l
   %i.as = add i64 %i.ah, -4                       ; 2 uses

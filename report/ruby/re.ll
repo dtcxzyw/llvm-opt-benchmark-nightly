@@ -201,9 +201,10 @@ bb.d:                                             ; preds = %.lr.ph212, %bb.an
 
 bb.e:                                             ; preds = %bb.d
   store i32 1, ptr %i.a, align 4, !tbaa !7
-  %i.z = load i8, ptr %.0154209, align 1, !tbaa !13 ; 2 uses
-  %i.aa = zext nneg i8 %i.z to i32
-  %i.ab = icmp slt i8 %i.z, 0
+  %i.z = load i8, ptr %.0154209, align 1, !tbaa !13
+  %.fr = freeze i8 %i.z                           ; 2 uses
+  %i.aa = zext nneg i8 %.fr to i32
+  %i.ab = icmp slt i8 %.fr, 0
   br i1 %i.ab, label %.thread, label %.thread237
 
 bb.f:                                             ; preds = %bb.d
@@ -245,9 +246,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %._crit_edge219
   store i32 1, ptr %i.a, align 4, !tbaa !7
-  %i.ar = load i8, ptr %i.ak, align 1, !tbaa !13  ; 2 uses
-  %i.as = zext nneg i8 %i.ar to i32
-  %i.at = icmp slt i8 %i.ar, 0
+  %i.ar = load i8, ptr %i.ak, align 1, !tbaa !13
+  %.fr205 = freeze i8 %i.ar                       ; 2 uses
+  %i.as = zext nneg i8 %.fr205 to i32
+  %i.at = icmp slt i8 %.fr205, 0
   br i1 %i.at, label %.thread189, label %.thread238
 
 bb.j:                                             ; preds = %._crit_edge219
@@ -309,9 +311,10 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   store i32 1, ptr %i.a, align 4, !tbaa !7
-  %i.bj = load i8, ptr %i.be, align 1, !tbaa !13  ; 2 uses
-  %i.bk = zext nneg i8 %i.bj to i32
-  %i.bl = icmp slt i8 %i.bj, 0
+  %i.bj = load i8, ptr %i.be, align 1, !tbaa !13
+  %.fr206 = freeze i8 %i.bj                       ; 2 uses
+  %i.bk = zext nneg i8 %.fr206 to i32
+  %i.bl = icmp slt i8 %.fr206, 0
   br i1 %i.bl, label %.thread191, label %bb.r
 
 bb.q:                                             ; preds = %bb.o
@@ -336,12 +339,13 @@ bb.s:                                             ; preds = %bb.r
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.u
   %.0149207.us = phi ptr [ %i.by, %bb.u ], [ %i.br, %.lr.ph ] ; 4 uses
   store i32 1, ptr %i.a, align 4, !tbaa !7
-  %i.bt = load i8, ptr %.0149207.us, align 1, !tbaa !13 ; 2 uses
-  %i.bu = icmp slt i8 %i.bt, 0
+  %i.bt = load i8, ptr %.0149207.us, align 1, !tbaa !13
+  %.fr207.us = freeze i8 %i.bt                    ; 2 uses
+  %i.bu = icmp slt i8 %.fr207.us, 0
   br i1 %i.bu, label %.thread193.us, label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.split.us
-  %cond = icmp eq i8 %i.bt, 62
+  %cond = icmp eq i8 %.fr207.us, 62
   br i1 %cond, label %.split.us, label %bb.u
 
 .thread193.us:                                    ; preds = %.lr.ph.split.us
@@ -744,7 +748,8 @@ bb.e:                                             ; preds = %rb_obj_write.exit24
   tail call void @rb_gc() #28
   tail call void @onig_region_copy(ptr noundef nonnull %i.t, ptr noundef %i.u) #28
   %i.w = load i32, ptr %i.t, align 8, !tbaa !31
-  %.not6.i = icmp eq i32 %i.w, 0
+  %.fr = freeze i32 %i.w
+  %.not6.i = icmp eq i32 %.fr, 0
   br i1 %.not6.i, label %rb_reg_region_copy.exit, label %bb.f
 
 rb_reg_region_copy.exit:                          ; preds = %bb.e
@@ -1147,7 +1152,8 @@ bb.bi:                                            ; preds = %bb.bh
   %.0137 = or disjoint i32 %masksel, %i.h
   %i.da = call i64 @rb_str_cat(i64 noundef %3, ptr noundef nonnull %i.c, i64 noundef 1) #28 ; 0 uses
   %i.db = call fastcc i32 @unescape_nonascii0(ptr noundef %i.b, ptr noundef nonnull %1, ptr noundef %2, i64 noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, i32 noundef %.0137, i32 noundef 1)
-  %i.dc = icmp slt i32 %i.db, 0
+  %.fr = freeze i32 %i.db
+  %i.dc = icmp slt i32 %.fr, 0
   br i1 %i.dc, label %.thread220, label %.loopexit229.loopexit
 
 bb.bj:                                            ; preds = %bb.bh

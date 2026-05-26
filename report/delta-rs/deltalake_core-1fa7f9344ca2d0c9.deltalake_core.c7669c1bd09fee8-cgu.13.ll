@@ -201,9 +201,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -347,9 +348,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -490,9 +492,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -636,9 +639,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -779,9 +783,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -925,9 +930,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1068,9 +1074,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1214,9 +1221,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1357,9 +1365,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1503,9 +1512,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1646,9 +1656,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1792,9 +1803,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -1935,9 +1947,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -2081,9 +2094,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -2224,9 +2238,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -2370,9 +2385,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -2513,9 +2529,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.al = extractvalue { i64, i1 } %i.ak, 1
-  %i.am = extractvalue { i64, i1 } %i.ak, 0
+  %i.ak = cmpxchg ptr %i.ab, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.ak                 ; 2 uses
+  %i.al = extractvalue { i64, i1 } %.fr, 1
+  %i.am = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.am, i64 3)
   br i1 %i.al, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -2659,9 +2676,10 @@ bb.f:                                             ; preds = %.split.i
   br i1 %spec.select.i3, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %i.ao = extractvalue { i64, i1 } %i.an, 1
-  %i.ap = extractvalue { i64, i1 } %i.an, 0
+  %i.an = cmpxchg ptr %i.ae, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.an                 ; 2 uses
+  %i.ao = extractvalue { i64, i1 } %.fr, 1
+  %i.ap = extractvalue { i64, i1 } %.fr, 0
   %spec.select.i.i = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 3)
   br i1 %i.ao, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit.thread3, label %_RNvMNtNtNtCs2pqxYH9ZEk8_3std4sync4mpmc7contextNtB2_7Context10wait_until.exit
 
@@ -3064,7 +3082,7 @@ bb.lc:                                            ; preds = %bb.lb, %.loopexit.i
   %i.akx = add nsw i64 %i.akw, %i.akq
   %i.aky = mul nsw i64 %i.akx, 1000
   %i.akz = getelementptr inbounds nuw i8, ptr %i.aft, i64 88
-  %i.ala = load i32, ptr %i.akz, align 4, !alias.scope !26293, !noalias !26294, !noundef !4
+  %i.ala = load i32, ptr %i.akz, align 8, !alias.scope !26293, !noalias !26294, !noundef !4
   %i.alb = udiv i32 %i.ala, 1000000
   %i.alc = zext nneg i32 %i.alb to i64
   %i.ald = add nsw i64 %i.aky, %i.alc
@@ -3467,7 +3485,7 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %.val.i.i = load ptr, ptr %i.aq, align 8, !alias.scope !27797 ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %.val1.i.i = load ptr, ptr %i.ar, align 8, !alias.scope !27797, !nonnull !4, !align !18, !noundef !4 ; 5 uses
+  %.val1.i.i = load ptr, ptr %i.ar, align 16, !alias.scope !27797, !nonnull !4, !align !18, !noundef !4 ; 5 uses
   %i.as = load ptr, ptr %.val1.i.i, align 8, !invariant.load !4, !noalias !27797 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -3870,7 +3888,7 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %.val.i.i = load ptr, ptr %i.aq, align 8, !alias.scope !27921 ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %.val1.i.i = load ptr, ptr %i.ar, align 8, !alias.scope !27921, !nonnull !4, !align !18, !noundef !4 ; 5 uses
+  %.val1.i.i = load ptr, ptr %i.ar, align 16, !alias.scope !27921, !nonnull !4, !align !18, !noundef !4 ; 5 uses
   %i.as = load ptr, ptr %.val1.i.i, align 8, !invariant.load !4, !noalias !27921 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -4273,7 +4291,7 @@ bb.l:                                             ; preds = %bb.k
   %i.aq = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %.val.i.i = load ptr, ptr %i.aq, align 8, !alias.scope !28045 ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.z, i64 16
-  %.val1.i.i = load ptr, ptr %i.ar, align 8, !alias.scope !28045, !nonnull !4, !align !18, !noundef !4 ; 5 uses
+  %.val1.i.i = load ptr, ptr %i.ar, align 16, !alias.scope !28045, !nonnull !4, !align !18, !noundef !4 ; 5 uses
   %i.as = load ptr, ptr %.val1.i.i, align 8, !invariant.load !4, !noalias !28045 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.as, null
   br i1 %.not.i.i.i.i, label %bb.n, label %bb.m
@@ -4676,7 +4694,7 @@ bb.i:                                             ; preds = %bb.h
   %i.af = trunc i64 %i.ac to i32                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !32181
   store i32 %i.ae, ptr %i.b, align 4, !noalias !32181
-  %i.ag = load i32, ptr %i.k, align 4, !noalias !32181, !noundef !4
+  %i.ag = load i32, ptr %i.k, align 8, !noalias !32181, !noundef !4
   %i.ah = icmp eq i32 %i.ag, %i.af
   br i1 %i.ah, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtNtCskQDtHcQtBkN_5tokio7runtime4task8NotifiedINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtNtNtB17_9scheduler12multi_thread6handle6HandleEEEECs14kWLkQVSKO_14deltalake_core.exit, label %.lr.ph.i
 

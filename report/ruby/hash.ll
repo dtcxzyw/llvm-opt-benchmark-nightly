@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.f = inttoptr i64 %i.e to ptr
   %i.g = getelementptr i8, ptr %i.f, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !70
-  %i.i = icmp eq ptr %i.h, @rb_hashtype_ident
+  %.fr = freeze ptr %i.h
+  %i.i = icmp eq ptr %.fr, @rb_hashtype_ident
   br i1 %i.i, label %rb_hash_compare_by_id_p.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -604,7 +605,8 @@ RHASH_EMPTY_P.exit.thread:                        ; preds = %bb.c
 .thread:                                          ; preds = %RHASH_EMPTY_P.exit.thread
   %i.p = getelementptr i8, ptr %i.l, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !70
-  %i.r = icmp eq ptr %i.q, @rb_hashtype_ident
+  %.fr = freeze ptr %i.q
+  %i.r = icmp eq ptr %.fr, @rb_hashtype_ident
   br i1 %i.r, label %rb_hash_to_a.exit, label %rb_hash_compare_by_id_p.exit.thread
 
 rb_hash_to_a.exit:                                ; preds = %.thread
@@ -1007,7 +1009,8 @@ bb.e:                                             ; preds = %._crit_edge
   %i.v = inttoptr i64 %i.u to ptr
   %i.w = getelementptr i8, ptr %i.v, i64 8
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !70
-  %i.y = icmp eq ptr %i.x, @rb_hashtype_ident
+  %.fr.i = freeze ptr %i.x
+  %i.y = icmp eq ptr %.fr.i, @rb_hashtype_ident
   br i1 %i.y, label %rb_hash_compare_by_id_p.exit.i, label %copy_compare_by_id.exit
 
 rb_hash_compare_by_id_p.exit.i:                   ; preds = %bb.e
@@ -1051,7 +1054,8 @@ bb.h:                                             ; preds = %rb_hash_new_with_si
   %i.ar = inttoptr i64 %i.aq to ptr
   %i.as = getelementptr i8, ptr %i.ar, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !70
-  %i.au = icmp eq ptr %i.at, @rb_hashtype_ident
+  %.fr.i21 = freeze ptr %i.at
+  %i.au = icmp eq ptr %.fr.i21, @rb_hashtype_ident
   br i1 %i.au, label %rb_hash_compare_by_id_p.exit.i21, label %copy_compare_by_id.exit22
 
 rb_hash_compare_by_id_p.exit.i21:                 ; preds = %bb.h
@@ -1280,7 +1284,8 @@ bb.b:                                             ; preds = %bb.a
   %i.f = inttoptr i64 %i.e to ptr
   %i.g = getelementptr i8, ptr %i.f, i64 8
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !70
-  %i.i = icmp eq ptr %i.h, @rb_hashtype_ident
+  %.fr.i = freeze ptr %i.h
+  %i.i = icmp eq ptr %.fr.i, @rb_hashtype_ident
   br i1 %i.i, label %rb_hash_compare_by_id_p.exit.i, label %copy_compare_by_id.exit
 
 rb_hash_compare_by_id_p.exit.i:                   ; preds = %bb.b
@@ -1401,7 +1406,8 @@ bb.b:                                             ; preds = %RHASH_EMPTY_P.exit
 RB_OBJ_FROZEN.exit.thread:                        ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   %i.ab = call i32 @rb_st_lookup(ptr noundef nonnull %2, i64 noundef %1, ptr noundef nonnull %i.a) #29
-  %.not.i20 = icmp eq i32 %i.ab, 0
+  %.fr = freeze i32 %i.ab
+  %.not.i20 = icmp eq i32 %.fr, 0
   %i.ac = load i64, ptr %i.a, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   br i1 %.not.i20, label %.thread28, label %bb.h
@@ -1664,7 +1670,8 @@ bb.c:                                             ; preds = %bb.b
 .thread:                                          ; preds = %RHASH_EMPTY_P.exit.thread
   %i.q = getelementptr i8, ptr %i.h, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !70
-  %i.s = icmp eq ptr %i.r, @rb_hashtype_ident
+  %.fr = freeze ptr %i.r
+  %i.s = icmp eq ptr %.fr, @rb_hashtype_ident
   br i1 %i.s, label %rb_hash_compare_by_id_p.exit, label %compact_after_delete.exit
 
 rb_hash_compare_by_id_p.exit:                     ; preds = %.thread
@@ -2067,7 +2074,8 @@ RHASH_EMPTY_P.exit.thread:                        ; preds = %Check_Type.exit
 .thread:                                          ; preds = %RHASH_EMPTY_P.exit.thread
   %i.q = getelementptr i8, ptr %i.m, i64 8
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !70
-  %i.s = icmp eq ptr %i.r, @rb_hashtype_ident
+  %.fr = freeze ptr %i.r
+  %i.s = icmp eq ptr %.fr, @rb_hashtype_ident
   br i1 %i.s, label %rb_hash_compare_by_id_p.exit, label %rb_hash_compare_by_id_p.exit.thread
 
 rb_hash_compare_by_id_p.exit:                     ; preds = %.thread

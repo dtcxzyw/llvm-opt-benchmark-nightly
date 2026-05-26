@@ -201,7 +201,8 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.af = load i64, ptr getelementptr inbounds nuw (i8, ptr @_ZN8NArchive3N7z8kPropMapE, i64 288), align 16, !tbaa !26
   %i.ag = icmp eq i64 %i.af, %i.g
-  br i1 %i.ag, label %select.unfold, label %_ZN8NArchive3N7zL13FindPropInMapEy.exit
+  %cond.fr = freeze i1 %i.ag
+  br i1 %cond.fr, label %select.unfold, label %_ZN8NArchive3N7zL13FindPropInMapEy.exit
 
 select.unfold:                                    ; preds = %bb.n, %bb.b, %bb.j, %bb.c, %bb.d, %bb.i, %bb.e, %bb.m, %bb.f, %bb.k, %bb.g, %bb.l, %bb.h
   %.ph = phi i64 [ 0, %bb.b ], [ 6, %bb.h ], [ 10, %bb.l ], [ 5, %bb.g ], [ 9, %bb.k ], [ 4, %bb.f ], [ 11, %bb.m ], [ 3, %bb.e ], [ 7, %bb.i ], [ 2, %bb.d ], [ 1, %bb.c ], [ 8, %bb.j ], [ 12, %bb.n ]

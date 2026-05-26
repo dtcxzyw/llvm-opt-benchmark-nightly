@@ -201,12 +201,12 @@ vector.ph27:                                      ; preds = %vector.body
   %i.ap = select i1 %.not29.i, i32 0, i32 -1727483681
   %i.aq = xor i32 %i.ap, %i.ah
   %i.ar = xor i32 %i.aq, %i.an
-  store i32 %i.ar, ptr %i.e, align 4, !tbaa !7
+  store i32 %i.ar, ptr %i.e, align 8, !tbaa !7
   %i.as = getelementptr i8, ptr %0, i64 2488
-  %i.at = load i32, ptr %i.as, align 4, !tbaa !7
+  %i.at = load i32, ptr %i.as, align 8, !tbaa !7
   %i.au = and i32 %i.ak, -2147483648
   %i.av = getelementptr i8, ptr %0, i64 904       ; 2 uses
-  %i.aw = load i32, ptr %i.av, align 4, !tbaa !7  ; 3 uses
+  %i.aw = load i32, ptr %i.av, align 8, !tbaa !7  ; 3 uses
   %i.ax = and i32 %i.aw, 2147483646
   %i.ay = or disjoint i32 %i.ax, %i.au
   %i.az = lshr exact i32 %i.ay, 1
@@ -229,7 +229,7 @@ vector.ph27:                                      ; preds = %vector.body
   %i.bn = select i1 %.not29.i.2, i32 0, i32 -1727483681
   %i.bo = xor i32 %i.bn, %i.bf
   %i.bp = xor i32 %i.bo, %i.bl
-  store i32 %i.bp, ptr %i.av, align 4, !tbaa !7
+  store i32 %i.bp, ptr %i.av, align 8, !tbaa !7
   %i.bq = getelementptr i8, ptr %0, i64 2492
   %vector.recur.init30 = insertelement <4 x i32> poison, i32 %i.bi, i64 3
   br label %vector.body28
@@ -261,7 +261,7 @@ vector.body28:                                    ; preds = %vector.body28, %vec
 next_state.exit:                                  ; preds = %vector.body28
   %i.cf = extractelement <4 x i32> %wide.load34, i64 3
   %i.cg = getelementptr i8, ptr %0, i64 1584
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !7
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !7
   %i.ci = and i32 %i.cf, -2147483648
   %i.cj = load i32, ptr %0, align 8, !tbaa !7     ; 2 uses
   %i.ck = and i32 %i.cj, 2147483646
@@ -664,17 +664,18 @@ bb.ar:                                            ; preds = %.thread95, %bb.af
   br i1 %or.cond, label %rb_float_new_inline.exit.thread, label %rb_float_new_inline.exit.thread.sink.split
 
 rb_float_new_inline.exit.thread.sink.split:       ; preds = %bb.ar, %bb.aq, %bb.ap, %bb.ao, %bb.j, %bb.i, %bb.p
-  %.sink = phi i64 [ -9223372036854775806, %bb.ap ], [ %i.ah, %bb.j ], [ %i.ao, %bb.p ], [ %i.ag, %bb.i ], [ %i.dj, %bb.ao ], [ %i.dl, %bb.aq ], [ -9223372036854775806, %bb.ar ] ; 2 uses
-  store i64 %.sink, ptr %i.d, align 8, !tbaa !35
+  %.sink = phi i64 [ -9223372036854775806, %bb.ap ], [ %i.ah, %bb.j ], [ %i.ao, %bb.p ], [ %i.ag, %bb.i ], [ %i.dj, %bb.ao ], [ %i.dl, %bb.aq ], [ -9223372036854775806, %bb.ar ]
+  %3 = freeze i64 %.sink                          ; 2 uses
+  store i64 %3, ptr %i.d, align 8, !tbaa !35
   br label %rb_float_new_inline.exit.thread
 
 rb_float_new_inline.exit.thread:                  ; preds = %rb_float_new_inline.exit.thread.sink.split, %bb.k, %.lr.ph.preheader, %bb.ar, %._crit_edge, %RB_FLOAT_TYPE_P.exit.thread
-  %i.dp = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %.sink, %rb_float_new_inline.exit.thread.sink.split ] ; 17 uses
+  %i.dp = phi i64 [ 4, %RB_FLOAT_TYPE_P.exit.thread ], [ 4, %._crit_edge ], [ 4, %bb.ar ], [ 4, %bb.k ], [ 4, %.lr.ph.preheader ], [ %3, %rb_float_new_inline.exit.thread.sink.split ] ; 17 uses
   %i.dq = load i64, ptr %i.c, align 8, !tbaa !35  ; 9 uses
-  %3 = trunc i64 %i.dq to i1
-  %4 = trunc i64 %i.dp to i1
-  %or.cond129 = select i1 %3, i1 %4, i1 false
-  br i1 %or.cond129, label %bb.as, label %bb.av
+  %4 = and i64 %i.dq, %i.dp
+  %5 = and i64 %4, 1
+  %or.cond129.not = icmp eq i64 %5, 0
+  br i1 %or.cond129.not, label %bb.av, label %bb.as
 
 bb.as:                                            ; preds = %rb_float_new_inline.exit.thread
   %i.dr = ashr i64 %i.dq, 1

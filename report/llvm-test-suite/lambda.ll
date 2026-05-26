@@ -201,7 +201,8 @@ bb.ao:                                            ; preds = %bb.al, %bb.ak
   %.7125 = phi ptr [ %spec.store.select5, %bb.al ], [ %.6124, %bb.ak ] ; 2 uses
   %.1 = phi ptr [ %i.cq, %bb.al ], [ %.0, %bb.ak ] ; 2 uses
   %i.cx = load i32, ptr %i.c, align 4, !tbaa !4
-  %i.cy = and i32 %i.cx, 2
+  %.fr237 = freeze i32 %i.cx
+  %i.cy = and i32 %.fr237, 2
   %.not161 = icmp eq i32 %i.cy, 0
   br i1 %.not161, label %select.unfold204, label %.preheader236, !llvm.loop !19
 
@@ -231,7 +232,8 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   %i.dh = load ptr, ptr %i.dg, align 8
   call void %i.dh(ptr noundef nonnull align 8 dereferenceable(16) %.2.ph) #7
   %i.di = icmp eq ptr %.2.ph, %.8126.ph
-  br i1 %i.di, label %.sink.split, label %.thread214
+  %cond.fr219 = freeze i1 %i.di
+  br i1 %cond.fr219, label %.sink.split, label %.thread214
 
 bb.as:                                            ; preds = %bb.ag
   %i.dj = load ptr, ptr %i.b, align 8, !tbaa !8

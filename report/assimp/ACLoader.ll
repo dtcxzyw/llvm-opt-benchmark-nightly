@@ -201,7 +201,7 @@ _ZNSt6vectorIP7aiLightSaIS1_EE9push_backERKS1_.exit: ; preds = %bb.j, %_ZNSt6vec
   ]
 
 bb.o:                                             ; preds = %._crit_edge.i.i
-  %i.ck = load i8, ptr %i.bs, align 1
+  %i.ck = load i8, ptr %i.bs, align 4
   store i8 %i.ck, ptr %i.cj, align 1
   br label %bb.q
 
@@ -604,7 +604,7 @@ bb.ew:                                            ; preds = %_ZNSt6vectorISt4pai
 
 bb.ex:                                            ; preds = %bb.ew
   %i.add = trunc nuw nsw i64 %i.adb to i32
-  store i32 %i.add, ptr %i.a, align 4
+  store i32 %i.add, ptr %i.a, align 8
   %i.ade = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   %i.adf = load ptr, ptr %i.acz, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ade, ptr align 1 %i.adf, i64 %i.adb, i1 false)
@@ -677,14 +677,14 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
   %.sroa.5.0..sroa_idx420 = getelementptr inbounds nuw i8, ptr %i.a, i64 1036
   store float %i.aee, ptr %.sroa.5.0..sroa_idx420, align 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1040 ; 2 uses
-  store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 4
+  store float 0.000000e+00, ptr %.sroa.6.0..sroa_idx, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1044
   %i.aen = load <2 x float>, ptr %i.aef, align 4
   store <2 x float> %i.aen, ptr %.sroa.7.0..sroa_idx, align 4
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1052
   store float %i.aeh, ptr %.sroa.9.0..sroa_idx, align 4
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1056 ; 2 uses
-  store float 0.000000e+00, ptr %.sroa.10.0..sroa_idx, align 4
+  store float 0.000000e+00, ptr %.sroa.10.0..sroa_idx, align 8
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1060
   %i.aeo = load <2 x float>, ptr %i.aei, align 8
   store <2 x float> %i.aeo, ptr %.sroa.11.0..sroa_idx, align 4
@@ -693,7 +693,7 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
   %.sroa.14.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1072 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.14.0..sroa_idx, i8 0, i64 16, i1 false)
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1088
-  store float 1.000000e+00, ptr %.sroa.15.0..sroa_idx, align 4
+  store float 1.000000e+00, ptr %.sroa.15.0..sroa_idx, align 8
   %i.aep = load i32, ptr %1, align 8
   %i.aeq = icmp eq i32 %i.aep, 2
   %i.aer = getelementptr inbounds nuw i8, ptr %1, i64 200
@@ -705,13 +705,13 @@ _ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit: ; 
 bb.fd:                                            ; preds = %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit
   %i.aet = getelementptr inbounds nuw i8, ptr %1, i64 140
   %i.aeu = load float, ptr %i.aet, align 4
-  store float %i.aeu, ptr %.sroa.6.0..sroa_idx, align 4
+  store float %i.aeu, ptr %.sroa.6.0..sroa_idx, align 8
   %i.aev = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.aew = load float, ptr %i.aev, align 8
-  store float %i.aew, ptr %.sroa.10.0..sroa_idx, align 4
+  store float %i.aew, ptr %.sroa.10.0..sroa_idx, align 8
   %i.aex = getelementptr inbounds nuw i8, ptr %1, i64 148
   %i.aey = load float, ptr %i.aex, align 4
-  store float %i.aey, ptr %.sroa.14.0..sroa_idx, align 4
+  store float %i.aey, ptr %.sroa.14.0..sroa_idx, align 8
   br label %bb.fe
 
 bb.fe:                                            ; preds = %_ZN8aiString3SetERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit, %bb.fd
@@ -1114,19 +1114,20 @@ bb.j:                                             ; preds = %bb.g
 
 bb.k:                                             ; preds = %bb.f
   %i.aj = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %i.ak = load i8, ptr %i.aj, align 1             ; 4 uses
-  %i.al = sext i8 %i.ak to i32                    ; 2 uses
-  %i.am = add i8 %i.ak, -48
+  %i.ak = load i8, ptr %i.aj, align 1
+  %.fr143 = freeze i8 %i.ak                       ; 4 uses
+  %i.al = sext i8 %.fr143 to i32                  ; 2 uses
+  %i.am = add i8 %.fr143, -48
   %or.cond.i = icmp ult i8 %i.am, 10
   br i1 %or.cond.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.an = add i8 %i.ak, -97
+  %i.an = add i8 %.fr143, -97
   %or.cond5.i = icmp ult i8 %i.an, 6
   br i1 %or.cond5.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ao = add i8 %i.ak, -65
+  %i.ao = add i8 %.fr143, -65
   %or.cond8.i = icmp ult i8 %i.ao, 6
   br i1 %or.cond8.i, label %_ZN6Assimp17HexDigitToDecimalEc.exit, label %_ZN6Assimp17HexDigitToDecimalEc.exit.thread137
 

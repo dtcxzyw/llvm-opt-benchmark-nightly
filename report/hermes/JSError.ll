@@ -201,8 +201,9 @@ bb.h:                                             ; preds = %bb.d, %bb.d
   %i.al = add i64 %i.ak, %i.r
   %i.am = inttoptr i64 %i.al to ptr
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 8
-  %i.ao = load double, ptr %i.an, align 8, !tbaa !512 ; 2 uses
-  %i.ap = fcmp uno double %i.ao, 0.000000e+00
+  %i.ao = load double, ptr %i.an, align 8, !tbaa !512
+  %.fr = freeze double %i.ao                      ; 2 uses
+  %i.ap = fcmp uno double %.fr, 0.000000e+00
   br i1 %i.ap, label %_ZN6hermes2vm10dyn_vmcastINS0_15StringPrimitiveEEEPT_NS0_11HermesValueE.exit, label %_ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit, !prof !309
 
 bb.i:                                             ; preds = %bb.d, %bb.d
@@ -214,7 +215,7 @@ default.unreachable:                              ; preds = %bb.d
   unreachable
 
 _ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit: ; preds = %bb.h, %bb.i
-  %.sroa.05.0.i.in = phi double [ %i.ar, %bb.i ], [ %i.ao, %bb.h ]
+  %.sroa.05.0.i.in = phi double [ %i.ar, %bb.i ], [ %.fr, %bb.h ]
   %.sroa.05.0.i = bitcast double %.sroa.05.0.i.in to i64 ; 2 uses
   %i.as = icmp ugt i64 %.sroa.05.0.i, -844424930131969
   br i1 %i.as, label %_ZNK6hermes2vm13HermesValue329unboxToHVERNS0_11PointerBaseE.exit.thread28, label %_ZN6hermes2vm10dyn_vmcastINS0_15StringPrimitiveEEEPT_NS0_11HermesValueE.exit
@@ -617,9 +618,10 @@ bb.c:                                             ; preds = %bb.b
 
 select.unfold.i:                                  ; preds = %bb.c
   %i.r = getelementptr inbounds nuw i8, ptr %.01330.i, i64 24
-  %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !3 ; 2 uses
-  %.not.i.i.i.i.i.i = icmp eq i32 %.sroa.0.0.copyload.i.i.i.i, 0
-  %i.s = zext i32 %.sroa.0.0.copyload.i.i.i.i to i64
+  %.sroa.0.0.copyload.i.i.i.i = load i32, ptr %i.r, align 4, !tbaa !3
+  %.sroa.0.0.copyload.i.i.i.fr.i = freeze i32 %.sroa.0.0.copyload.i.i.i.i ; 2 uses
+  %.not.i.i.i.i.i.i = icmp eq i32 %.sroa.0.0.copyload.i.i.i.fr.i, 0
+  %i.s = zext i32 %.sroa.0.0.copyload.i.i.i.fr.i to i64
   %i.t = add i64 %i.s, %i.n                       ; 2 uses
   %.not33.i = icmp eq i64 %i.t, 0
   %.not.i = or i1 %.not.i.i.i.i.i.i, %.not33.i
@@ -1022,7 +1024,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPKN6hermes2vm9CodeBlockEjNS_12DenseMapInfoIS
   store ptr %i.bh, ptr %.sink.i.i.i, align 8, !tbaa !373
   %i.cf = getelementptr inbounds nuw i8, ptr %.sink.i.i.i, i64 8
   %i.cg = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !3
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !3
   store i32 %i.ch, ptr %i.cf, align 8, !tbaa !3
   %i.ci = add i32 %i.bg, 1                        ; 2 uses
   store i32 %i.ci, ptr %i.ao, align 8, !tbaa !566

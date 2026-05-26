@@ -201,7 +201,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i: ; preds = %bb.n
 
 .noexc25:                                         ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 8
-  store i32 %i.bl, ptr %i.bq, align 4, !tbaa !3
+  store i32 %i.bl, ptr %i.bq, align 8, !tbaa !3
   %i.br = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
   store ptr %i.bp, ptr %i.br, align 8, !tbaa !85
   %i.bs = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bo) #21
@@ -209,7 +209,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i: ; preds = %bb.n
 
 bb.o:                                             ; preds = %.noexc25
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
-  store i32 %i.bl, ptr %i.bt, align 4, !tbaa !3
+  store i32 %i.bl, ptr %i.bt, align 8, !tbaa !3
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
   store ptr %i.bs, ptr %i.bu, align 8, !tbaa !85
   %.not.i.i = icmp eq i32 %i.bl, 0
@@ -264,7 +264,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i28: ; preds = %bb.q
 
 .noexc34:                                         ; preds = %_ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i28
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
-  store i32 %i.cg, ptr %i.cl, align 4, !tbaa !3
+  store i32 %i.cg, ptr %i.cl, align 8, !tbaa !3
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   store ptr %i.ck, ptr %i.cm, align 8, !tbaa !85
   %i.cn = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cj) #21
@@ -272,7 +272,7 @@ _ZNSt15__new_allocatorIiE8allocateEmPKv.exit.i.i.i28: ; preds = %bb.q
 
 bb.r:                                             ; preds = %.noexc34
   %i.co = getelementptr inbounds nuw i8, ptr %i.ce, i64 24
-  store i32 %i.cg, ptr %i.co, align 4, !tbaa !3
+  store i32 %i.cg, ptr %i.co, align 8, !tbaa !3
   %i.cp = getelementptr inbounds nuw i8, ptr %i.ce, i64 32
   store ptr %i.cn, ptr %i.cp, align 8, !tbaa !85
   %.not.i.i30 = icmp eq i32 %i.cg, 0
@@ -675,8 +675,9 @@ _ZN10duckdb_re23DFA5Workq10insert_newEi.exit:     ; preds = %bb.h, %.thread52
   %.pre-phi = phi i64 [ %.pre, %bb.h ], [ %i.ap, %.thread52 ] ; 4 uses
   %i.bd = load ptr, ptr %i.x, align 8, !tbaa !114 ; 4 uses
   %i.be = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.pre-phi
-  %i.bf = load i32, ptr %i.be, align 4, !tbaa !115 ; 5 uses
-  %i.bg = and i32 %i.bf, 7
+  %i.bf = load i32, ptr %i.be, align 4, !tbaa !115
+  %.fr54 = freeze i32 %i.bf                       ; 5 uses
+  %i.bg = and i32 %.fr54, 7
   switch i32 %i.bg, label %bb.i [
     i32 2, label %select.unfold
     i32 5, label %select.unfold
@@ -730,7 +731,7 @@ bb.k:                                             ; preds = %bb.i, %_ZStlsISt11c
 
 bb.l:                                             ; preds = %_ZN10duckdb_re23DFA5Workq10insert_newEi.exit, %_ZN10duckdb_re23DFA5Workq10insert_newEi.exit
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.pre-phi ; 2 uses
-  %i.bs = and i32 %i.bf, 8
+  %i.bs = and i32 %.fr54, 8
   %.not44 = icmp eq i32 %i.bs, 0
   br i1 %.not44, label %bb.m, label %bb.n
 
@@ -744,7 +745,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  %i.bx = phi i32 [ %i.bf, %bb.l ], [ %.pre60, %bb.m ] ; 5 uses
+  %i.bx = phi i32 [ %.fr54, %bb.l ], [ %.pre60, %bb.m ] ; 5 uses
   %.2 = phi i32 [ %.142.ph, %bb.l ], [ %i.bu, %bb.m ] ; 6 uses
   %i.by = and i32 %i.bx, 7
   %i.bz = icmp eq i32 %i.by, 6
@@ -781,7 +782,7 @@ bb.s:                                             ; preds = %_ZN10duckdb_re23DFA
 
 bb.t:                                             ; preds = %_ZN10duckdb_re23DFA5Workq10insert_newEi.exit
   %i.cl = getelementptr inbounds nuw [8 x i8], ptr %i.bd, i64 %.pre-phi ; 2 uses
-  %i.cm = and i32 %i.bf, 8
+  %i.cm = and i32 %.fr54, 8
   %.not = icmp eq i32 %i.cm, 0
   br i1 %.not, label %bb.u, label %bb.v
 
@@ -812,7 +813,7 @@ bb.w:                                             ; preds = %bb.v
   br label %.outer
 
 select.unfold:                                    ; preds = %_ZN10duckdb_re23DFA5Workq10insert_newEi.exit, %_ZN10duckdb_re23DFA5Workq10insert_newEi.exit
-  %i.cw = and i32 %i.bf, 8                        ; 2 uses
+  %i.cw = and i32 %.fr54, 8                       ; 2 uses
   %.lobit = lshr exact i32 %i.cw, 3
   %i.cx = xor i32 %.lobit, 1
   %spec.select53 = add nuw nsw i32 %i.cx, %.040

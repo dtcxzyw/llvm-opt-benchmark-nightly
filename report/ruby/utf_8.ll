@@ -146,13 +146,14 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i8, ptr %i.a, align 1, !tbaa !11
   %i.l = zext i8 %i.k to i64
   %i.m = getelementptr i8, ptr %i.i, i64 %i.l
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !11    ; 3 uses
-  %i.o = sext i8 %i.n to i64
-  %i.p = icmp slt i8 %i.n, 0
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !11
+  %.fr31 = freeze i8 %i.n                         ; 3 uses
+  %i.o = sext i8 %.fr31 to i64
+  %i.p = icmp slt i8 %.fr31, 0
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = icmp eq i8 %i.n, -1
+  %i.q = icmp eq i8 %.fr31, -1
   br i1 %i.q, label %mbc_enc_len.exit.thread25, label %mbc_enc_len.exit.thread
 
 bb.e:                                             ; preds = %bb.c
@@ -165,13 +166,14 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load i8, ptr %i.j, align 1, !tbaa !11
   %i.v = zext i8 %i.u to i64
   %i.w = getelementptr i8, ptr %i.s, i64 %i.v
-  %i.x = load i8, ptr %i.w, align 1, !tbaa !11    ; 3 uses
-  %i.y = sext i8 %i.x to i64
-  %i.z = icmp slt i8 %i.x, 0
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !11
+  %.fr30 = freeze i8 %i.x                         ; 3 uses
+  %i.y = sext i8 %.fr30 to i64
+  %i.z = icmp slt i8 %.fr30, 0
   br i1 %i.z, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = icmp eq i8 %i.x, -1
+  %i.aa = icmp eq i8 %.fr30, -1
   br i1 %i.aa, label %mbc_enc_len.exit.thread25, label %mbc_enc_len.exit.thread
 
 bb.h:                                             ; preds = %bb.f
@@ -184,7 +186,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ae = zext i8 %i.ad to i64
   %i.af = getelementptr i8, ptr %i.ac, i64 %i.ae
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !11
-  %i.ah = icmp eq i8 %i.ag, -1
+  %.fr = freeze i8 %i.ag
+  %i.ah = icmp eq i8 %.fr, -1
   br i1 %i.ah, label %mbc_enc_len.exit.thread25, label %mbc_enc_len.exit.thread
 
 mbc_enc_len.exit.thread:                          ; preds = %bb.d, %bb.g, %bb.i, %bb.a

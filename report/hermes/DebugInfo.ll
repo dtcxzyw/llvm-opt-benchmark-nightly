@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph
 
 .peel.next.preheader:                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 12 ; 2 uses
-  %i.j = load i32, ptr %i.i, align 1, !tbaa !65
+  %i.j = load i32, ptr %i.i, align 4, !tbaa !65
   %.not18 = icmp ugt i32 %i.j, %1
   br i1 %.not18, label %._crit_edge.loopexit, label %.lr.ph20
 
@@ -342,7 +342,7 @@ bb.c:                                             ; preds = %.lr.ph.i
 
 .peel.next.i.preheader:                           ; preds = %bb.c
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 12 ; 3 uses
-  %i.ao = load i32, ptr %i.an, align 1, !tbaa !65
+  %i.ao = load i32, ptr %i.an, align 4, !tbaa !65
   %.not.i35 = icmp ugt i32 %i.ao, %.010.lcssa
   br i1 %.not.i35, label %_ZNK6hermes3hbc9DebugInfo21getFilenameForAddressEj.exit, label %.lr.ph37.preheader
 
@@ -745,8 +745,9 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
-  %i.ai = load i64, ptr %i.d, align 8, !tbaa !20  ; 2 uses
-  %i.aj = icmp eq i64 %i.ai, %i.t
+  %i.ai = load i64, ptr %i.d, align 8, !tbaa !20
+  %.fr = freeze i64 %i.ai                         ; 2 uses
+  %i.aj = icmp eq i64 %.fr, %i.t
   br i1 %i.aj, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.b
@@ -762,7 +763,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.ao = icmp sgt i64 %i.ai, %i.t
+  %i.ao = icmp sgt i64 %.fr, %i.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
   br i1 %i.ao, label %.loopexit, label %bb.d
 
@@ -1165,7 +1166,7 @@ _ZN4llvh12DenseMapBaseINS_8DenseMapIPN6hermes12UniqueStringEjNS_12DenseMapInfoIS
   store ptr %i.bh, ptr %.sink.i.i.i, align 8, !tbaa !13
   %i.cf = getelementptr inbounds nuw i8, ptr %.sink.i.i.i, i64 8
   %i.cg = getelementptr inbounds nuw i8, ptr %.020.i, i64 8
-  %i.ch = load i32, ptr %i.cg, align 4, !tbaa !3
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !3
   store i32 %i.ch, ptr %i.cf, align 8, !tbaa !3
   %i.ci = add i32 %i.bg, 1                        ; 2 uses
   store i32 %i.ci, ptr %i.ao, align 8, !tbaa !41

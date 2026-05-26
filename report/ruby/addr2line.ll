@@ -201,7 +201,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.at = call i64 @strlcpy(ptr noundef nonnull dereferenceable(1) @binary_filename, ptr noundef nonnull dereferenceable(1) %i.am, i64 noundef 4096) #15 ; 0 uses
   %i.au = trunc nuw nsw i64 %indvars.iv to i32
   %i.av = call fastcc i64 @fill_lines(i32 noundef %0, ptr noundef %1, i32 noundef 1, ptr noundef %i.a, ptr noundef %i.c, i32 noundef %i.au, ptr noundef %2)
-  %i.aw = icmp eq i64 %i.av, -1
+  %.fr = freeze i64 %i.av
+  %i.aw = icmp eq i64 %.fr, -1
   br i1 %i.aw, label %bb.o, label %.thread
 
 bb.o:                                             ; preds = %bb.n
@@ -604,7 +605,8 @@ read_dw_form_addr.exit.i.i:                       ; preds = %uleb128.exit190.i.i
   %.not90.i.i = icmp ule i64 %.077.i.i, %i.un
   %i.yq = icmp ult i64 %i.un, %.076.i.i
   %or.cond93.i.i = select i1 %.not90.i.i, i1 %i.yq, i1 false
-  br i1 %or.cond93.i.i, label %ranges_include.exit.i, label %read_dw_form_addr.exit.thread.i.i.backedge
+  %cond.fr.i.i = freeze i1 %or.cond93.i.i
+  br i1 %cond.fr.i.i, label %ranges_include.exit.i, label %read_dw_form_addr.exit.thread.i.i.backedge
 
 read_dw_form_addr.exit.thread.i.i.backedge:       ; preds = %.lr.ph.i136.i.i, %.lr.ph.i114.i.i, %.lr.ph.i.i103.i, %read_dw_form_addr.exit.i.i, %bb.dc, %bb.db, %bb.cy, %uleb128.exit134.i.i, %uleb128.exit112.i.i, %bb.cv, %read_dw_form_addr.exit.thread.i.i
   %.07.i.i285.be = phi ptr [ %i.wb, %uleb128.exit134.i.i ], [ %i.vr, %.lr.ph.i114.i.i ], [ %.9.i.i, %read_dw_form_addr.exit.i.i ], [ %i.xq, %bb.db ], [ %i.xq, %bb.dc ], [ %i.ux, %bb.cy ], [ %i.vn, %uleb128.exit112.i.i ], [ %i.vd, %.lr.ph.i.i103.i ], [ %i.ux, %read_dw_form_addr.exit.thread.i.i ], [ %i.uz, %bb.cv ], [ %i.wf, %.lr.ph.i136.i.i ]
@@ -638,7 +640,8 @@ bb.dk:                                            ; preds = %.lr.ph.i.i
   %i.yz = add i64 %.37068.i.i, %.val.i3.i.i19170.i.i
   %i.za = icmp ult i64 %i.un, %i.yz
   %or.cond95.i.i = select i1 %.not.i100.i, i1 %i.za, i1 false
-  br i1 %or.cond95.i.i, label %ranges_include.exit.i, label %bb.dl
+  %cond.fr28.i.i = freeze i1 %or.cond95.i.i
+  br i1 %cond.fr28.i.i, label %ranges_include.exit.i, label %bb.dl
 
 bb.dl:                                            ; preds = %bb.dk, %.lr.ph.i.i
   %.572.i.i = phi i64 [ %.37068.i.i, %bb.dk ], [ %.val.i3.i.i19170.i.i, %.lr.ph.i.i ]
@@ -1041,7 +1044,7 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr i8, ptr %i.d, i64 %i.c     ; 2 uses
   %i.n = getelementptr i8, ptr %2, i64 56
   store ptr %i.m, ptr %i.n, align 8, !tbaa !93
-  %i.o = load i16, ptr %i.d, align 2, !tbaa !131  ; 4 uses
+  %i.o = load i16, ptr %i.d, align 4, !tbaa !131  ; 4 uses
   %i.p = getelementptr i8, ptr %2, i64 8
   store i16 %i.o, ptr %i.p, align 8, !tbaa !97
   %i.q = icmp ugt i16 %i.o, 5

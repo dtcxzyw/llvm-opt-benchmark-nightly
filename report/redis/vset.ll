@@ -201,7 +201,8 @@ exprStackPush.exit:                               ; preds = %exprParseString.exi
   store i32 %i.dr, ptr %i.c, align 8, !tbaa !27
   %i.ds = getelementptr inbounds nuw i8, ptr %.03154, i64 4
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !15
-  %i.du = icmp eq i32 %i.dt, 0
+  %.fr = freeze i32 %i.dt
+  %i.du = icmp eq i32 %.fr, 0
   br i1 %i.du, label %.thread58, label %bb.b
 
 .thread58:                                        ; preds = %exprStackPush.exit, %bb.aa, %exprParseString.exit.thread56
@@ -604,8 +605,9 @@ bb.r:                                             ; preds = %bb.q
 
 jsonSkipWhiteSpaces.exit57.i:                     ; preds = %bb.r, %bb.q, %bb.p
   %.9.i = phi ptr [ %i.at, %bb.p ], [ %.8.i, %bb.q ], [ %scevgep177.i, %bb.r ] ; 6 uses
-  %.not38.i = icmp uge ptr %.9.i, %i.b            ; 2 uses
-  %brmerge.i = select i1 %.not38.i, i1 true, i1 %i.ah
+  %.not38.i = icmp uge ptr %.9.i, %i.b
+  %cond.fr = freeze i1 %.not38.i                  ; 2 uses
+  %brmerge.i = select i1 %cond.fr, i1 true, i1 %i.ah
   br i1 %brmerge.i, label %.thread.loopexit100.split.loop.exit114.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %jsonSkipWhiteSpaces.exit57.i
@@ -892,7 +894,7 @@ bb.ap:                                            ; preds = %jsonSkipWhiteSpaces
   br i1 %i.eg, label %.preheader.i, label %jsonSeekField.exit.thread
 
 .thread.loopexit100.split.loop.exit114.i:         ; preds = %jsonSkipWhiteSpaces.exit57.i
-  br i1 %.not38.i, label %jsonSeekField.exit.thread, label %jsonSeekField.exit
+  br i1 %cond.fr, label %jsonSeekField.exit.thread, label %jsonSeekField.exit
 
 jsonSeekField.exit:                               ; preds = %.thread.loopexit100.split.loop.exit114.i
   store ptr %.9.i, ptr %i.a, align 8, !tbaa !49
@@ -1295,7 +1297,8 @@ bb.d:                                             ; preds = %bb.c
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 8 ; 2 uses
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !100
   %i.ak = tail call ptr %i.ah(ptr noundef %i.aj, ptr noundef %i.j, ptr noundef null) #22
-  %.not55 = icmp eq ptr %i.ak, null
+  %.fr = freeze ptr %i.ak
+  %.not55 = icmp eq ptr %.fr, null
   br i1 %.not55, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d

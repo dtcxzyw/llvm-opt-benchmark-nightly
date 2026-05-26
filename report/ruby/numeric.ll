@@ -201,30 +201,31 @@ bb.u:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   br label %rb_int_div.exit
 
 rb_int_div.exit:                                  ; preds = %bb.s, %bb.u
-  %.0.i72 = phi i64 [ %i.bk, %bb.s ], [ %i.bt, %bb.u ] ; 6 uses
-  %i.bu = trunc i64 %.0.i72 to i1
+  %.0.i72 = phi i64 [ %i.bk, %bb.s ], [ %i.bt, %bb.u ]
+  %.0.i72.fr = freeze i64 %.0.i72                 ; 6 uses
+  %i.bu = trunc i64 %.0.i72.fr to i1
   br i1 %i.bu, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %rb_int_div.exit
-  %i.bv = icmp slt i64 %.0.i72, 100
+  %i.bv = icmp slt i64 %.0.i72.fr, 100
   br i1 %i.bv, label %.critedge.preheader, label %int_lt.exit.thread99
 
 bb.w:                                             ; preds = %rb_int_div.exit
-  %i.bw = icmp eq i64 %.0.i72, 0
-  %i.bx = and i64 %.0.i72, 6
+  %i.bw = icmp eq i64 %.0.i72.fr, 0
+  %i.bx = and i64 %.0.i72.fr, 6
   %i.by = icmp ne i64 %i.bx, 0
   %i.bz = or i1 %i.bw, %i.by
   br i1 %i.bz, label %.critedge.preheader, label %rbimpl_RB_TYPE_P_fastpath.exit.i73
 
 rbimpl_RB_TYPE_P_fastpath.exit.i73:               ; preds = %bb.w
-  %i.ca = inttoptr i64 %.0.i72 to ptr
+  %i.ca = inttoptr i64 %.0.i72.fr to ptr
   %i.cb = load i64, ptr %i.ca, align 8, !tbaa !13
   %i.cc = and i64 %i.cb, 31
   %i.cd = icmp eq i64 %i.cc, 10
   br i1 %i.cd, label %int_lt.exit, label %.critedge.preheader
 
 int_lt.exit:                                      ; preds = %rbimpl_RB_TYPE_P_fastpath.exit.i73
-  %i.ce = tail call i64 @rb_big_lt(i64 noundef %.0.i72, i64 noundef 101) #25
+  %i.ce = tail call i64 @rb_big_lt(i64 noundef %.0.i72.fr, i64 noundef 101) #25
   %.not = icmp eq i64 %i.ce, 0
   br i1 %.not, label %int_lt.exit.thread99, label %.critedge.preheader
 

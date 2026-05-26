@@ -201,9 +201,10 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.jd = call i32 @rb_st_insert(ptr noundef %i.jc, i64 noundef %i.iy, i64 noundef %0) #21 ; 0 uses
   %.not163 = icmp ne i64 %i.iy, %0
   %i.je = load i64, ptr %i.l, align 8
-  %i.jf = icmp eq i64 %i.je, 36
-  %or.cond258 = select i1 %.not163, i1 %i.jf, i1 false
-  br i1 %or.cond258, label %.thread240, label %bb.bl
+  %.fr = freeze i64 %i.je
+  %i.jf = icmp eq i64 %.fr, 36
+  %or.cond263 = and i1 %.not163, %i.jf
+  br i1 %or.cond263, label %.thread240, label %bb.bl
 
 .thread240:                                       ; preds = %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #21
@@ -606,7 +607,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = tail call i64 @rb_id2str(i64 noundef %0) #21
-  %.not.i = icmp eq i64 %i.g, 0
+  %.fr = freeze i64 %i.g
+  %.not.i = icmp eq i64 %.fr, 0
   br i1 %.not.i, label %skipping_ivar_name.exit.thread, label %skipping_ivar_name.exit
 
 skipping_ivar_name.exit:                          ; preds = %bb.c
@@ -747,7 +749,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.i = tail call i64 @rb_id2str(i64 noundef %0) #21
-  %.not.i = icmp eq i64 %i.i, 0
+  %.fr = freeze i64 %i.i
+  %.not.i = icmp eq i64 %.fr, 0
   br i1 %.not.i, label %bb.k, label %skipping_ivar_name.exit
 
 .thread:                                          ; preds = %bb.a, %bb.b, %bb.c

@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.x = and i64 %i.u, 281474976710655
   %i.y = inttoptr i64 %i.x to ptr                 ; 2 uses
-  %i.z = load i32, ptr %i.y, align 4              ; 2 uses
-  %i.aa = add i32 %i.z, -1157627904
+  %i.z = load i32, ptr %i.y, align 4
+  %.fr71 = freeze i32 %i.z                        ; 2 uses
+  %i.aa = add i32 %.fr71, -1157627904
   %i.ab = icmp ult i32 %i.aa, 67108864
   br i1 %i.ab, label %_ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit, label %.critedge.thread64
 
@@ -213,7 +214,7 @@ _ZN6hermes2vm10dyn_vmcastINS0_14NativeFunctionEEEPT_NS0_11HermesValueE.exit: ; p
   br i1 %.not, label %bb.j, label %_ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit, !prof !23
 
 .critedge.thread64:                               ; preds = %bb.c
-  %i.ae = add i32 %i.z, -1140850688
+  %i.ae = add i32 %.fr71, -1140850688
   %i.af = icmp ult i32 %i.ae, 150994944
   br i1 %i.af, label %_ZN6hermes2vm10dyn_vmcastINS0_8CallableEEEPT_NS0_11HermesValueE.exit, label %bb.g
 

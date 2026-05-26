@@ -201,7 +201,7 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %._crit_edge.i.i
-  %i.t = load i8, ptr %i.m, align 1
+  %i.t = load i8, ptr %i.m, align 4
   store i8 %i.t, ptr %i.s, align 1
   br label %bb.g
 
@@ -512,21 +512,21 @@ bb.r:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.cx = load ptr, ptr %i.bp, align 8            ; 4 uses
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cx, i64 1028 ; 2 uses
   %.sroa.0345.0.copyload346 = load float, ptr %i.bi, align 4
-  %.sroa.7347.0.copyload349 = load float, ptr %.sroa.7347.0..sroa_idx348, align 4
+  %.sroa.7347.0.copyload349 = load float, ptr %.sroa.7347.0..sroa_idx348, align 8
   %.sroa.9350.0.copyload352 = load float, ptr %.sroa.9350.0..sroa_idx351, align 4
-  %.sroa.11353.0.copyload355 = load float, ptr %.sroa.11353.0..sroa_idx354, align 4
+  %.sroa.11353.0.copyload355 = load float, ptr %.sroa.11353.0..sroa_idx354, align 8
   %.sroa.13356.0.copyload358 = load float, ptr %.sroa.13356.0..sroa_idx357, align 4
-  %.sroa.15359.0.copyload361 = load float, ptr %.sroa.15359.0..sroa_idx360, align 4
+  %.sroa.15359.0.copyload361 = load float, ptr %.sroa.15359.0..sroa_idx360, align 8
   %.sroa.17362.0.copyload364 = load float, ptr %.sroa.17362.0..sroa_idx363, align 4
-  %.sroa.19365.0.copyload367 = load float, ptr %.sroa.19365.0..sroa_idx366, align 4
+  %.sroa.19365.0.copyload367 = load float, ptr %.sroa.19365.0..sroa_idx366, align 8
   %.sroa.21368.0.copyload370 = load float, ptr %.sroa.21368.0..sroa_idx369, align 4
-  %.sroa.23371.0.copyload373 = load float, ptr %.sroa.23371.0..sroa_idx372, align 4
+  %.sroa.23371.0.copyload373 = load float, ptr %.sroa.23371.0..sroa_idx372, align 8
   %.sroa.25374.0.copyload376 = load float, ptr %.sroa.25374.0..sroa_idx375, align 4
-  %.sroa.27377.0.copyload379 = load float, ptr %.sroa.27377.0..sroa_idx378, align 4
+  %.sroa.27377.0.copyload379 = load float, ptr %.sroa.27377.0..sroa_idx378, align 8
   %.sroa.29380.0.copyload382 = load float, ptr %.sroa.29380.0..sroa_idx381, align 4
-  %.sroa.31383.0.copyload385 = load float, ptr %.sroa.31383.0..sroa_idx384, align 4
+  %.sroa.31383.0.copyload385 = load float, ptr %.sroa.31383.0..sroa_idx384, align 8
   %.sroa.33386.0.copyload388 = load float, ptr %.sroa.33386.0..sroa_idx387, align 4
-  %.sroa.35389.0.copyload391 = load float, ptr %.sroa.35389.0..sroa_idx390, align 4
+  %.sroa.35389.0.copyload391 = load float, ptr %.sroa.35389.0..sroa_idx390, align 8
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cx, i64 1044 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cx, i64 1060 ; 2 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cx, i64 1076 ; 2 uses
@@ -745,7 +745,7 @@ bb.ac:                                            ; preds = %bb.ab
   ]
 
 bb.ad:                                            ; preds = %._crit_edge.i.i182
-  %i.gw = load i8, ptr %i.gq, align 1
+  %i.gw = load i8, ptr %i.gq, align 4
   store i8 %i.gw, ptr %i.gv, align 1
   br label %bb.af
 
@@ -1148,11 +1148,11 @@ bb.aw:                                            ; preds = %bb.av
   %.pre521 = load float, ptr %i.mw, align 4
   %i.qy = load <2 x float>, ptr %i.mk, align 4    ; 2 uses
   %i.qz = extractelement <2 x float> %i.qy, i64 0 ; 3 uses
-  %.pre516 = load float, ptr %i.mu, align 4       ; 3 uses
+  %.pre516 = load float, ptr %i.mu, align 8       ; 3 uses
   %i.ra = load <2 x float>, ptr %i.mx, align 4    ; 2 uses
   %i.rb = extractelement <2 x float> %i.ra, i64 0 ; 2 uses
-  %.pre519 = load float, ptr %i.ml, align 4       ; 3 uses
-  %i.rc = load <2 x float>, ptr %i.ms, align 4    ; 2 uses
+  %.pre519 = load float, ptr %i.ml, align 8       ; 3 uses
+  %i.rc = load <2 x float>, ptr %i.ms, align 8    ; 2 uses
   %i.rd = extractelement <2 x float> %i.rc, i64 0 ; 2 uses
   %.pre537 = fmul float %i.qz, %.pre519
   %.pre539 = fmul float %i.qz, %.pre520
@@ -1264,7 +1264,7 @@ bb.ba:                                            ; preds = %.lr.ph468, %_ZNK6ai
   %i.tw = getelementptr inbounds nuw [12 x i8], ptr %i.tv, i64 %indvars.iv506 ; 4 uses
   %i.tx = load float, ptr %i.mk, align 4
   %i.ty = load float, ptr %i.tw, align 4          ; 3 uses
-  %i.tz = load float, ptr %i.mu, align 4
+  %i.tz = load float, ptr %i.mu, align 8
   %i.ua = getelementptr inbounds nuw i8, ptr %i.tw, i64 4
   %i.ub = load float, ptr %i.ua, align 4          ; 3 uses
   %i.uc = fmul float %i.tz, %i.ub
@@ -1273,25 +1273,25 @@ bb.ba:                                            ; preds = %.lr.ph468, %_ZNK6ai
   %i.uf = getelementptr inbounds nuw i8, ptr %i.tw, i64 8 ; 2 uses
   %i.ug = load float, ptr %i.uf, align 4          ; 3 uses
   %i.uh = call float @llvm.fmuladd.f32(float %i.ue, float %i.ug, float %i.ud)
-  %i.ui = load float, ptr %i.mz, align 4
+  %i.ui = load float, ptr %i.mz, align 8
   %i.uj = fadd float %i.uh, %i.ui
   %.sroa.0.0.vec.insert.i.i = insertelement <2 x float> poison, float %i.uj, i64 0
   %i.uk = load float, ptr %i.mx, align 4
-  %i.ul = load float, ptr %i.ml, align 4
+  %i.ul = load float, ptr %i.ml, align 8
   %i.um = fmul float %i.ub, %i.ul
   %i.un = call float @llvm.fmuladd.f32(float %i.uk, float %i.ty, float %i.um)
   %i.uo = load float, ptr %i.mq, align 4
   %i.up = call float @llvm.fmuladd.f32(float %i.uo, float %i.ug, float %i.un)
-  %i.uq = load float, ptr %i.mt, align 4
+  %i.uq = load float, ptr %i.mt, align 8
   %i.ur = fadd float %i.uq, %i.up
   %.sroa.0.4.vec.insert.i.i = insertelement <2 x float> %.sroa.0.0.vec.insert.i.i, float %i.ur, i64 1
   %i.us = load float, ptr %i.mw, align 4
-  %i.ut = load float, ptr %i.ms, align 4
+  %i.ut = load float, ptr %i.ms, align 8
   %i.uu = fmul float %i.ub, %i.ut
   %i.uv = call float @llvm.fmuladd.f32(float %i.us, float %i.ty, float %i.uu)
   %i.uw = load float, ptr %i.mm, align 4
   %i.ux = call float @llvm.fmuladd.f32(float %i.uw, float %i.ug, float %i.uv)
-  %i.uy = load float, ptr %i.mo, align 4
+  %i.uy = load float, ptr %i.mo, align 8
   %i.uz = fadd float %i.uy, %i.ux
   store <2 x float> %.sroa.0.4.vec.insert.i.i, ptr %i.tw, align 4
   store float %i.uz, ptr %i.uf, align 4
@@ -1694,7 +1694,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i: ; preds = %_ZNSt11ch
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i
   %.0.i.i.i8.i = phi i32 [ %i.cq, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i ], [ %.0.i6.i.i.i12.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i ]
-  %i.cs = icmp slt i32 %.0.i.i.i8.i, 0
+  %.0.i.i.i8.i.fr = freeze i32 %.0.i.i.i8.i
+  %i.cs = icmp slt i32 %.0.i.i.i8.i.fr, 0
   br i1 %i.cs, label %select.unfold, label %.noexc104
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i, %._crit_edge.thread.i
@@ -1984,7 +1985,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i256: ; preds = %_ZNSt1
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i248: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i256, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i246
   %.0.i.i.i8.i249 = phi i32 [ %i.gg, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i246 ], [ %.0.i6.i.i.i12.i259, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i256 ]
-  %i.gi = icmp slt i32 %.0.i.i.i8.i249, 0
+  %.0.i.i.i8.i249.fr = freeze i32 %.0.i.i.i8.i249
+  %i.gi = icmp slt i32 %.0.i.i.i8.i249.fr, 0
   br i1 %i.gi, label %select.unfold338, label %.noexc118
 
 select.unfold338:                                 ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i248, %._crit_edge.thread.i260
@@ -2387,7 +2389,7 @@ bb.bo:                                            ; preds = %bb.bh
 
 bb.bp:                                            ; preds = %bb.bg
   store ptr %i.kk, ptr %i.ab, align 8
-  store i32 %spec.select.i, ptr %i.kk, align 4
+  store i32 %spec.select.i, ptr %i.kk, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.mx, ptr nonnull align 4 %i.or, i64 %i.ot, i1 false)
   %i.ps = getelementptr inbounds nuw i8, ptr %i.mx, i64 %i.ot
   store i8 0, ptr %i.ps, align 1

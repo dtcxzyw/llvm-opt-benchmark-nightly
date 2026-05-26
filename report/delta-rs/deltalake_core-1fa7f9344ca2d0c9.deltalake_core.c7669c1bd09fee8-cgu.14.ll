@@ -201,7 +201,7 @@ bb.bg:                                            ; preds = %bb.bf
 
 _RNvXs1k_NtCs8ulvy0Wg6Ot_12delta_kernel6schemaNtB6_9ArrayTypeNtNtCsbvkFyIu7lgC_4core5clone5Clone5clone.exit.i.i: ; preds = %.noexc26
   %i.er = getelementptr inbounds nuw i8, ptr %i.dh, i64 48
-  %i.es = load i8, ptr %i.er, align 8, !range !208, !alias.scope !5990, !noalias !5988, !noundef !12
+  %i.es = load i8, ptr %i.er, align 16, !range !208, !alias.scope !5990, !noalias !5988, !noundef !12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.i, ptr noundef nonnull align 8 dereferenceable(24) %i.g, i64 24, i1 false), !noalias !5991
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.da, ptr noundef nonnull align 8 dereferenceable(16) %i.f, i64 16, i1 false), !noalias !5991
   store i8 %i.es, ptr %i.db, align 8, !alias.scope !5982, !noalias !5991
@@ -604,7 +604,8 @@ _RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalNtB7_12IsWhitespace
   store i8 1, ptr %i.a, align 1, !alias.scope !7124
   %.not.i.i.i = icmp ne i64 %.pre2.i.i.i, %.pre.i.i.i22
   %or.cond.not.i.i.i = select i1 %i.i, i1 true, i1 %.not.i.i.i
-  br i1 %or.cond.not.i.i.i, label %select.unfold, label %.loopexit
+  %cond.fr = freeze i1 %or.cond.not.i.i.i
+  br i1 %cond.fr, label %select.unfold, label %.loopexit
 
 select.unfold:                                    ; preds = %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalNtB7_12IsWhitespaceE7get_endCs14kWLkQVSKO_14deltalake_core.exit.i.i, %bb.m
   %.lcssa1728 = phi i64 [ %i.bb, %bb.m ], [ %.lcssa1729, %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalNtB7_12IsWhitespaceE7get_endCs14kWLkQVSKO_14deltalake_core.exit.i.i ]
@@ -1007,7 +1008,7 @@ bb.pi:                                            ; preds = %bb.lg
   %i.aks = getelementptr inbounds nuw i8, ptr %i.ado, i64 8
   %i.akt = load ptr, ptr %i.aks, align 8, !nonnull !12, !align !503, !noundef !12
   %i.aku = getelementptr inbounds nuw i8, ptr %i.ado, i64 16
-  %i.akv = load ptr, ptr %i.aku, align 8, !nonnull !12, !align !503, !noundef !12
+  %i.akv = load ptr, ptr %i.aku, align 16, !nonnull !12, !align !503, !noundef !12
   %i.akw = ptrtoint ptr %i.akt to i64
   %i.akx = ptrtoint ptr %i.akv to i64
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(8) %i.jm)
@@ -1410,7 +1411,7 @@ switch.lookup:                                    ; preds = %bb.d
   %.sroa.116454.0.ph = getelementptr inbounds nuw i8, ptr %i.na, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cn)
   store i8 %switch.masked, ptr %i.cn, align 8
-  %i.bhd = load i64, ptr %.sroa.116454.0.ph, align 8, !range !50, !noundef !12
+  %i.bhd = load i64, ptr %.sroa.116454.0.ph, align 16, !range !50, !noundef !12
   %.not5914 = icmp eq i64 %i.bhd, -9223372036854775808
   br i1 %.not5914, label %bb.ajg, label %bb.aje
 
@@ -1454,7 +1455,7 @@ bb.aje:                                           ; preds = %switch.lookup
   %i.bhg = getelementptr inbounds nuw i8, ptr %i.na, i64 40
   %i.bhh = load ptr, ptr %i.bhg, align 8, !nonnull !12, !noundef !12 ; 5 uses
   %i.bhi = getelementptr inbounds nuw i8, ptr %i.na, i64 48
-  %i.bhj = load i64, ptr %i.bhi, align 8, !noundef !12 ; 5 uses
+  %i.bhj = load i64, ptr %i.bhi, align 16, !noundef !12 ; 5 uses
   %i.bhk = icmp eq i64 %i.bhj, 1
   br i1 %i.bhk, label %bb.aji, label %bb.ajj
 
@@ -1857,8 +1858,8 @@ bb.ee:                                            ; preds = %bb.ec
 bb.ef:                                            ; preds = %_RNvXsK_NtNtCs4lawaffTVVK_9sqlparser3ast5valueNtB5_13DateTimeFieldNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
   %i.yf = getelementptr inbounds nuw i8, ptr %.tr376604, i64 88
   %i.yg = getelementptr inbounds nuw i8, ptr %.tr603, i64 88
-  %.val370 = load i8, ptr %i.yg, align 1, !range !208, !noundef !12
-  %.val371 = load i8, ptr %i.yf, align 1, !range !208, !noundef !12
+  %.val370 = load i8, ptr %i.yg, align 8, !range !208, !noundef !12
+  %.val371 = load i8, ptr %i.yf, align 8, !range !208, !noundef !12
   %i.yh = sub nsw i8 %.val370, %.val371           ; 2 uses
   %i.yi = icmp eq i8 %i.yh, 0
   br i1 %i.yi, label %tailrecurse.backedge.sink.split, label %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs4lawaffTVVK_9sqlparser3ast5IdentINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2A_s_0ECs14kWLkQVSKO_14deltalake_core.exit
@@ -2261,33 +2262,33 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 bb.t:                                             ; preds = %bb.r
   %i.cz = getelementptr inbounds nuw i8, ptr %.tr60, i64 8
-  %i.da = load i32, ptr %i.cz, align 4, !alias.scope !15161, !noalias !15164, !noundef !12
+  %i.da = load i32, ptr %i.cz, align 8, !alias.scope !15161, !noalias !15164, !noundef !12
   %i.db = getelementptr inbounds nuw i8, ptr %.tr2561, i64 8
-  %i.dc = load i32, ptr %i.db, align 4, !alias.scope !15164, !noalias !15161, !noundef !12
+  %i.dc = load i32, ptr %i.db, align 8, !alias.scope !15164, !noalias !15161, !noundef !12
   %i.dd = tail call i8 @llvm.ucmp.i8.i32(i32 %i.da, i32 %i.dc)
   br label %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtNtCs4lawaffTVVK_9sqlparser3ast5query20MatchRecognizeSymbolINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2Y_s_0ECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.u:                                             ; preds = %bb.r
   %i.de = getelementptr inbounds nuw i8, ptr %.tr60, i64 8
-  %i.df = load i32, ptr %i.de, align 4, !alias.scope !15161, !noalias !15164, !noundef !12
+  %i.df = load i32, ptr %i.de, align 8, !alias.scope !15161, !noalias !15164, !noundef !12
   %i.dg = getelementptr inbounds nuw i8, ptr %.tr2561, i64 8
-  %i.dh = load i32, ptr %i.dg, align 4, !alias.scope !15164, !noalias !15161, !noundef !12
+  %i.dh = load i32, ptr %i.dg, align 8, !alias.scope !15164, !noalias !15161, !noundef !12
   %i.di = tail call i8 @llvm.ucmp.i8.i32(i32 %i.df, i32 %i.dh)
   br label %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtNtCs4lawaffTVVK_9sqlparser3ast5query20MatchRecognizeSymbolINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2Y_s_0ECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.v:                                             ; preds = %bb.r
   %i.dj = getelementptr inbounds nuw i8, ptr %.tr60, i64 8
-  %i.dk = load i32, ptr %i.dj, align 4, !alias.scope !15161, !noalias !15164, !noundef !12
+  %i.dk = load i32, ptr %i.dj, align 8, !alias.scope !15161, !noalias !15164, !noundef !12
   %i.dl = getelementptr inbounds nuw i8, ptr %.tr2561, i64 8
-  %i.dm = load i32, ptr %i.dl, align 4, !alias.scope !15164, !noalias !15161, !noundef !12
+  %i.dm = load i32, ptr %i.dl, align 8, !alias.scope !15164, !noalias !15161, !noundef !12
   %i.dn = tail call i8 @llvm.ucmp.i8.i32(i32 %i.dk, i32 %i.dm)
   br label %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtNtCs4lawaffTVVK_9sqlparser3ast5query20MatchRecognizeSymbolINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2Y_s_0ECs14kWLkQVSKO_14deltalake_core.exit
 
 bb.w:                                             ; preds = %bb.r
   %i.do = getelementptr inbounds nuw i8, ptr %.tr60, i64 8
-  %i.dp = load i32, ptr %i.do, align 4, !alias.scope !15161, !noalias !15164, !noundef !12 ; 2 uses
+  %i.dp = load i32, ptr %i.do, align 8, !alias.scope !15161, !noalias !15164, !noundef !12 ; 2 uses
   %i.dq = getelementptr inbounds nuw i8, ptr %.tr2561, i64 8
-  %i.dr = load i32, ptr %i.dq, align 4, !alias.scope !15164, !noalias !15161, !noundef !12 ; 2 uses
+  %i.dr = load i32, ptr %i.dq, align 8, !alias.scope !15164, !noalias !15161, !noundef !12 ; 2 uses
   %i.ds = tail call i8 @llvm.ucmp.i8.i32(i32 %i.dp, i32 %i.dr)
   %i.dt = icmp eq i32 %i.dp, %i.dr
   br i1 %i.dt, label %bb.x, label %_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtNtCs4lawaffTVVK_9sqlparser3ast5query20MatchRecognizeSymbolINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2Y_s_0ECs14kWLkQVSKO_14deltalake_core.exit
@@ -2690,9 +2691,9 @@ bb.aa:                                            ; preds = %bb.e, %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dg = getelementptr inbounds nuw i8, ptr %.tr1384, i64 16
-  %i.dh = load ptr, ptr %i.dg, align 8, !nonnull !12, !noundef !12
+  %i.dh = load ptr, ptr %i.dg, align 16, !nonnull !12, !noundef !12
   %i.di = getelementptr inbounds nuw i8, ptr %.tr83, i64 16
-  %i.dj = load ptr, ptr %i.di, align 8, !nonnull !12, !noundef !12
+  %i.dj = load ptr, ptr %i.di, align 16, !nonnull !12, !noundef !12
   %i.dk = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6StringINtB5_14SlicePartialEqBC_E17equal_same_lengthCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull %i.dj, ptr noundef nonnull %i.dh, i64 noundef %i.dc)
   br label %_RNvXs2P_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_6ExistsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -2996,11 +2997,11 @@ bb.y:                                             ; preds = %bb.ae, %bb.af, %bb.
 
 bb.z:                                             ; preds = %bb.e
   %i.de = getelementptr inbounds nuw i8, ptr %.tr118, i64 16
-  %i.df = load ptr, ptr %i.de, align 8, !nonnull !12, !noundef !12
+  %i.df = load ptr, ptr %i.de, align 16, !nonnull !12, !noundef !12
   %i.dg = getelementptr inbounds nuw i8, ptr %.tr118, i64 24
   %i.dh = load i64, ptr %i.dg, align 8, !noundef !12
   %i.di = getelementptr inbounds nuw i8, ptr %.tr23119, i64 16
-  %i.dj = load ptr, ptr %i.di, align 8, !nonnull !12, !noundef !12
+  %i.dj = load ptr, ptr %i.di, align 16, !nonnull !12, !noundef !12
   %i.dk = getelementptr inbounds nuw i8, ptr %.tr23119, i64 24
   %i.dl = load i64, ptr %i.dk, align 8, !noundef !12
   %i.dm = tail call fastcc noundef i8 @_RINvNtNtCsbvkFyIu7lgC_4core5slice3cmp13chaining_implNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtB6_6option6OptionNtNtB6_3cmp8OrderingENtNtB6_7convert10InfallibleNCNvXs4_B2_BO_NtB2_15SlicePartialOrd15partial_compare0NCB2A_s_0ECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %i.df, i64 noundef %i.dh, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) %i.dj, i64 noundef %i.dl) #55
@@ -3403,8 +3404,8 @@ bb.j:                                             ; preds = %bb.h
 bb.k:                                             ; preds = %bb.h
   %i.as = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.at = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val.i.i = load i8, ptr %i.as, align 1, !range !208, !alias.scope !17103, !noalias !17104, !noundef !12
-  %.val2.i.i = load i8, ptr %i.at, align 1, !range !208, !alias.scope !17104, !noalias !17103, !noundef !12
+  %.val.i.i = load i8, ptr %i.as, align 8, !range !208, !alias.scope !17103, !noalias !17104, !noundef !12
+  %.val2.i.i = load i8, ptr %i.at, align 8, !range !208, !alias.scope !17104, !noalias !17103, !noundef !12
   %i.au = sub nsw i8 %.val.i.i, %.val2.i.i
   br label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast22FunctionArgumentClauseNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit
 
@@ -3492,8 +3493,8 @@ bb.v:                                             ; preds = %bb.h
   tail call void @llvm.experimental.noalias.scope.decl(metadata !17118)
   %i.cd = getelementptr inbounds nuw i8, ptr %i.af, i64 328
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ag, i64 328
-  %.val.i21 = load i8, ptr %i.cd, align 1, !range !208, !alias.scope !17115, !noalias !17118, !noundef !12
-  %.val4.i = load i8, ptr %i.ce, align 1, !range !208, !alias.scope !17118, !noalias !17115, !noundef !12
+  %.val.i21 = load i8, ptr %i.cd, align 8, !range !208, !alias.scope !17115, !noalias !17118, !noundef !12
+  %.val4.i = load i8, ptr %i.ce, align 8, !range !208, !alias.scope !17118, !noalias !17115, !noundef !12
   %i.cf = sub nsw i8 %.val.i21, %.val4.i          ; 2 uses
   %i.cg = icmp eq i8 %i.cf, 0
   br i1 %i.cg, label %bb.w, label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast22FunctionArgumentClauseNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit
@@ -3511,8 +3512,8 @@ bb.x:                                             ; preds = %bb.h
 bb.y:                                             ; preds = %bb.h
   %i.cl = getelementptr inbounds nuw i8, ptr %i.af, i64 8
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
-  %.val3.i.i = load i8, ptr %i.cl, align 1, !range !208, !alias.scope !17103, !noalias !17104, !noundef !12
-  %.val4.i.i = load i8, ptr %i.cm, align 1, !range !208, !alias.scope !17104, !noalias !17103, !noundef !12
+  %.val3.i.i = load i8, ptr %i.cl, align 8, !range !208, !alias.scope !17103, !noalias !17104, !noundef !12
+  %.val4.i.i = load i8, ptr %i.cm, align 8, !range !208, !alias.scope !17104, !noalias !17103, !noundef !12
   %i.cn = sub nsw i8 %.val3.i.i, %.val4.i.i
   br label %_RNCNvXs4_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs4lawaffTVVK_9sqlparser3ast22FunctionArgumentClauseNtB7_15SlicePartialOrd15partial_compare0Cs14kWLkQVSKO_14deltalake_core.exit
 
@@ -3915,8 +3916,8 @@ bb.hr:                                            ; preds = %bb.hp
 
 bb.hs:                                            ; preds = %bb.hq
   %i.zt = getelementptr inbounds nuw i8, ptr %.tr127262, i64 2
-  %i.zu = load i8, ptr %i.zp, align 1, !noundef !12
-  %i.zv = load i8, ptr %i.zt, align 1, !noundef !12
+  %i.zu = load i8, ptr %i.zp, align 2, !noundef !12
+  %i.zv = load i8, ptr %i.zt, align 2, !noundef !12
   %i.zw = tail call i8 @llvm.ucmp.i8.i8(i8 %i.zu, i8 %i.zv)
   br label %_RNvXs1E_NtNtCs4lawaffTVVK_9sqlparser3ast9data_typeNtB6_12BinaryLengthNtNtCsbvkFyIu7lgC_4core3cmp10PartialOrd11partial_cmp.exit
 

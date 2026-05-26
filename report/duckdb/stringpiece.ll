@@ -201,8 +201,9 @@ bb.d:                                             ; preds = %bb.a, %_ZSt8find_en
 define hidden noundef i64 @_ZNK10duckdb_re211StringPiece5rfindEcm(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i8 noundef signext %1, i64 noundef %2) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !7    ; 2 uses
-  %i.c = icmp eq i64 %i.b, 0
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !7
+  %.fr = freeze i64 %i.b                          ; 2 uses
+  %i.c = icmp eq i64 %.fr, 0
   br i1 %i.c, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -212,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not12, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %spec.select = tail call i64 @llvm.umin.i64(i64 %i.b, i64 %i.d)
+  %spec.select = tail call i64 @llvm.umin.i64(i64 %.fr, i64 %i.d)
   br label %bb.c
 
 select.unfold:                                    ; preds = %bb.c

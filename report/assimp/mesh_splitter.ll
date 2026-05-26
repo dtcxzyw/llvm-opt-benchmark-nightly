@@ -201,8 +201,8 @@ bb.ar:                                            ; preds = %bb.bg, %bb.be, %bb.
 
 bb.as:                                            ; preds = %_ZNK6aiMesh16HasTextureCoordsEj.exit.preheader
   %i.hr = getelementptr inbounds nuw i8, ptr %i.cr, i64 176
-  %i.hs = load i32, ptr %i.az, align 4
-  store i32 %i.hs, ptr %i.hr, align 4
+  %i.hs = load i32, ptr %i.az, align 8
+  store i32 %i.hs, ptr %i.hr, align 8
   %i.ht = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.fs) #15
           to label %bb.at unwind label %bb.ar     ; 2 uses
 
@@ -241,9 +241,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.1:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i164.not.2, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.aw
 
 bb.aw:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.1
-  %i.ia = load i32, ptr %i.br, align 4
+  %i.ia = load i32, ptr %i.br, align 8
   %i.ib = getelementptr inbounds nuw i8, ptr %i.cr, i64 184
-  store i32 %i.ia, ptr %i.ib, align 4
+  store i32 %i.ia, ptr %i.ib, align 8
   %i.ic = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.fs) #15
           to label %bb.ax unwind label %bb.ar     ; 2 uses
 
@@ -283,9 +283,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.3:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i164.not.4, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.ba
 
 bb.ba:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.3
-  %i.ik = load i32, ptr %i.bv, align 4
+  %i.ik = load i32, ptr %i.bv, align 8
   %i.il = getelementptr inbounds nuw i8, ptr %i.cr, i64 192
-  store i32 %i.ik, ptr %i.il, align 4
+  store i32 %i.ik, ptr %i.il, align 8
   %i.im = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.fs) #15
           to label %bb.bb unwind label %bb.ar     ; 2 uses
 
@@ -325,9 +325,9 @@ _ZNK6aiMesh15HasVertexColorsEj.exit.5:            ; preds = %_ZNK6aiMesh15HasVer
   br i1 %.not.i164.not.6, label %_ZNK6aiMesh16HasTextureCoordsEj.exit.thread.split, label %bb.be
 
 bb.be:                                            ; preds = %_ZNK6aiMesh15HasVertexColorsEj.exit.5
-  %i.iu = load i32, ptr %i.bz, align 4
+  %i.iu = load i32, ptr %i.bz, align 8
   %i.iv = getelementptr inbounds nuw i8, ptr %i.cr, i64 200
-  store i32 %i.iu, ptr %i.iv, align 4
+  store i32 %i.iu, ptr %i.iv, align 8
   %i.iw = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.fs) #15
           to label %bb.bf unwind label %bb.ar     ; 2 uses
 
@@ -536,7 +536,8 @@ bb.bs:                                            ; preds = %bb.bp, %switch.look
 ._crit_edge345:                                   ; preds = %bb.cx, %bb.bs
   %indvars.iv.next378 = add nuw nsw i64 %indvars.iv377, 1 ; 2 uses
   %i.lu = load i32, ptr %i.cs, align 4
-  %i.lv = icmp eq i32 %i.lu, %.fr
+  %.fr502 = freeze i32 %i.lu
+  %i.lv = icmp eq i32 %.fr502, %.fr
   br i1 %i.lv, label %.thread, label %bb.bi
 
 .lr.ph344:                                        ; preds = %bb.bs, %bb.cx

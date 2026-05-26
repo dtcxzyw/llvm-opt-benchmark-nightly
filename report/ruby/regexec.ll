@@ -201,7 +201,8 @@ bb.iy:                                            ; preds = %bb.iw, %bb.ix
 
 bb.iz:                                            ; preds = %bb.iy
   %i.aks = icmp ult ptr %i.ako, %.3
-  br i1 %i.aks, label %enclen_approx.exit2930, label %enclen_approx.exit2930.thread
+  %cond.fr = freeze i1 %i.aks
+  br i1 %cond.fr, label %enclen_approx.exit2930, label %enclen_approx.exit2930.thread
 
 bb.ja:                                            ; preds = %bb.iy
   %i.akt = call i32 @onigenc_mbclen_approximate(ptr noundef %i.ako, ptr noundef %.3, ptr noundef nonnull %i.af) #21
@@ -604,7 +605,8 @@ bb.no:                                            ; preds = %bb.nn, %bb.nm
 
 bb.np:                                            ; preds = %bb.no
   %i.azm = icmp ult ptr %i.azi, %.3
-  br i1 %i.azm, label %enclen_approx.exit2982, label %enclen_approx.exit2982.thread
+  %cond.fr3354 = freeze i1 %i.azm
+  br i1 %cond.fr3354, label %enclen_approx.exit2982, label %enclen_approx.exit2982.thread
 
 bb.nq:                                            ; preds = %bb.no
   %i.azn = call i32 @onigenc_mbclen_approximate(ptr noundef %i.azi, ptr noundef %.3, ptr noundef nonnull %i.af) #21
@@ -1007,7 +1009,7 @@ bb.aeo:                                           ; preds = %bb.aem, %bb.aen
   br label %bb.aep
 
 bb.aep:                                           ; preds = %bb.adr, %bb.aeo, %bb.ads
-  %i.dgp = load i8, ptr %i.ddj, align 1, !tbaa !66
+  %i.dgp = load i8, ptr %i.ddj, align 4, !tbaa !66
   %i.dgq = load ptr, ptr %i.m, align 8, !tbaa !19
   %i.dgr = load i8, ptr %i.dgq, align 1, !tbaa !66
   %i.dgs = icmp eq i8 %i.dgp, %i.dgr
@@ -1410,7 +1412,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ae, %bb.
   %i.ed = icmp ule ptr %.1374, %1
   %.not471 = icmp ugt ptr %4, %.1374
   %or.cond499 = or i1 %i.ed, %.not471
-  br i1 %or.cond499, label %bb.aq, label %.thread
+  %cond.fr = freeze i1 %or.cond499
+  br i1 %cond.fr, label %bb.aq, label %.thread
 
 bb.ak:                                            ; preds = %bb.aa
   %i.ee = and i32 %i.ap, 32768
@@ -1813,7 +1816,8 @@ bb.cv:                                            ; preds = %bb.co
 
 bb.cw:                                            ; preds = %bb.cv
   %i.mi = call fastcc i32 @backward_search_range(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, ptr noundef %2, ptr noundef %.0, ptr noundef %.0368, ptr noundef %i.d, ptr noundef %i.e)
-  %.not.not565 = icmp eq i32 %i.mi, 0
+  %.fr = freeze i32 %i.mi
+  %.not.not565 = icmp eq i32 %.fr, 0
   br i1 %.not.not565, label %.thread549, label %.thread553
 
 .thread553:                                       ; preds = %bb.cw
@@ -2216,12 +2220,13 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.cx = load ptr, ptr %i.j, align 8, !tbaa !53
-  %i.cy = call ptr @onigenc_get_prev_char_head(ptr noundef %i.cx, ptr noundef %5, ptr noundef nonnull %.1106, ptr noundef %2) #21 ; 2 uses
-  %i.cz = icmp eq ptr %i.cy, null
+  %i.cy = call ptr @onigenc_get_prev_char_head(ptr noundef %i.cx, ptr noundef %5, ptr noundef nonnull %.1106, ptr noundef %2) #21
+  %.fr = freeze ptr %i.cy                         ; 2 uses
+  %i.cz = icmp eq ptr %.fr, null
   br i1 %i.cz, label %slow_search_backward.exit.thread, label %.backedge
 
 .backedge:                                        ; preds = %bb.z, %is_mbc_newline_ex.exit
-  %.081.be = phi ptr [ %i.cy, %bb.z ], [ %i.br, %is_mbc_newline_ex.exit ]
+  %.081.be = phi ptr [ %.fr, %bb.z ], [ %i.br, %is_mbc_newline_ex.exit ]
   br label %bb.b
 
 .thread:                                          ; preds = %bb.q, %bb.w, %slow_search_backward.exit.thread103, %bb.x, %bb.y, %bb.o, %is_mbc_newline_ex.exit

@@ -201,7 +201,7 @@ bb.bx:                                            ; preds = %bb.bw
   ]
 
 bb.by:                                            ; preds = %._crit_edge.i.i.i453
-  %i.lo = load i8, ptr %i.lh, align 1
+  %i.lo = load i8, ptr %i.lh, align 4
   store i8 %i.lo, ptr %i.ln, align 1
   br label %bb.ca
 
@@ -311,7 +311,8 @@ bb.ci:                                            ; preds = %bb.cf
 .thread:                                          ; preds = %_ZSt4findISt14_List_iteratorIN6Assimp8Q3Shader8SkinData12TextureEntryEEA64_cET_S7_S7_RKT0_.exit, %bb.ci
   %i.mm = getelementptr inbounds nuw i8, ptr %.0228799, i64 76
   %i.mn = load i32, ptr %i.mm, align 4
-  %.not261 = icmp eq i32 %i.mn, 0
+  %.fr = freeze i32 %i.mn
+  %.not261 = icmp eq i32 %.fr, 0
   br i1 %.not261, label %bb.cj, label %bb.ck
 
 bb.cj:                                            ; preds = %.thread

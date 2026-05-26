@@ -201,8 +201,9 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.i.not.i, label %select.unfold, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aq = tail call i32 @slice_del(ptr noundef nonnull %0) #2 ; 2 uses
-  %i.ar = icmp sgt i32 %i.aq, -1
+  %i.aq = tail call i32 @slice_del(ptr noundef nonnull %0) #2
+  %.fr = freeze i32 %i.aq                         ; 2 uses
+  %i.ar = icmp sgt i32 %.fr, -1
   br i1 %i.ar, label %select.unfold, label %.thread139
 
 select.unfold:                                    ; preds = %bb.j, %bb.f, %bb.g, %bb.i, %bb.h, %r_mark_regions.exit
@@ -473,7 +474,7 @@ bb.at:                                            ; preds = %bb.aj, %bb.ar
   br label %.thread139
 
 .thread139:                                       ; preds = %bb.al, %bb.am, %bb.an, %bb.ao, %bb.ap, %bb.aq, %bb.q, %bb.s, %bb.o, %bb.u, %bb.m, %bb.ac, %bb.ae, %bb.j, %bb.z, %bb.x, %bb.at
-  %.7 = phi i32 [ %i.ax, %bb.m ], [ %i.bn, %bb.x ], [ %i.aq, %bb.j ], [ 1, %bb.at ], [ %i.bp, %bb.z ], [ %i.bz, %bb.ae ], [ %i.bw, %bb.ac ], [ %i.bb, %bb.q ], [ %i.bd, %bb.s ], [ %i.az, %bb.o ], [ %i.bg, %bb.u ], [ %i.cr, %bb.al ], [ %i.ct, %bb.am ], [ %i.cv, %bb.an ], [ %i.cx, %bb.ao ], [ %i.cz, %bb.ap ], [ %i.db, %bb.aq ]
+  %.7 = phi i32 [ %i.bn, %bb.x ], [ %i.ax, %bb.m ], [ %.fr, %bb.j ], [ 1, %bb.at ], [ %i.bp, %bb.z ], [ %i.bz, %bb.ae ], [ %i.bw, %bb.ac ], [ %i.bb, %bb.q ], [ %i.bd, %bb.s ], [ %i.az, %bb.o ], [ %i.bg, %bb.u ], [ %i.cr, %bb.al ], [ %i.ct, %bb.am ], [ %i.cv, %bb.an ], [ %i.cx, %bb.ao ], [ %i.cz, %bb.ap ], [ %i.db, %bb.aq ]
   ret i32 %.7
 }
 

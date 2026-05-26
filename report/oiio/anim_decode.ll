@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
   %.0102142 = phi i32 [ 0, %.lr.ph ], [ %i.ey, %bb.o ] ; 2 uses
   %i.ds = load i32, ptr %i.bl, align 4, !tbaa !47
   %i.dt = add nsw i32 %i.ds, %.0102142            ; 4 uses
-  %i.du = load i32, ptr %i.bm, align 8, !tbaa !48 ; 5 uses
+  %i.du = load i32, ptr %i.bm, align 8, !tbaa !48 ; 6 uses
   %i.dv = load i32, ptr %i.cw, align 8, !tbaa !44 ; 2 uses
   %i.dw = add nsw i32 %i.dv, %i.du                ; 3 uses
   %i.dx = load i32, ptr %i.cx, align 8, !tbaa !48 ; 4 uses
@@ -221,14 +221,17 @@ bb.k:                                             ; preds = %.lr.ph, %bb.o
 
 bb.l:                                             ; preds = %bb.k
   %i.ee = icmp slt i32 %i.du, %i.dx
+  %cond.fr = freeze i1 %i.ee                      ; 2 uses
   %i.ef = sub nsw i32 %i.dx, %i.du
+  %spec.select = select i1 %cond.fr, i32 %i.du, i32 -1
   %i.eg = icmp sgt i32 %i.dw, %i.dz               ; 2 uses
   %i.eh = sub nsw i32 %i.dw, %i.dz
   %spec.select137 = select i1 %i.eg, i32 %i.dz, i32 -1 ; 2 uses
   %spec.select138 = select i1 %i.eg, i32 %i.eh, i32 0 ; 2 uses
-  br i1 %i.ee, label %FindBlendRangeAtRow.exit, label %FindBlendRangeAtRow.exit.thread
+  br i1 %cond.fr, label %FindBlendRangeAtRow.exit, label %FindBlendRangeAtRow.exit.thread
 
 FindBlendRangeAtRow.exit:                         ; preds = %bb.l, %bb.k
+  %.1123 = phi i32 [ %i.du, %bb.k ], [ %spec.select, %bb.l ]
   %.1 = phi i32 [ %i.dv, %bb.k ], [ %i.ef, %bb.l ] ; 2 uses
   %.0120 = phi i32 [ -1, %bb.k ], [ %spec.select137, %bb.l ] ; 2 uses
   %.0119 = phi i32 [ 0, %bb.k ], [ %spec.select138, %bb.l ] ; 2 uses
@@ -237,7 +240,7 @@ FindBlendRangeAtRow.exit:                         ; preds = %bb.l, %bb.k
 
 bb.m:                                             ; preds = %FindBlendRangeAtRow.exit
   %i.ej = mul i32 %i.dt, %i.i
-  %i.ek = add i32 %i.du, %i.ej
+  %i.ek = add i32 %.1123, %i.ej
   %i.el = zext i32 %i.ek to i64                   ; 2 uses
   %i.em = load ptr, ptr %i.cg, align 8, !tbaa !34
   %i.en = getelementptr inbounds nuw [4 x i8], ptr %i.em, i64 %i.el

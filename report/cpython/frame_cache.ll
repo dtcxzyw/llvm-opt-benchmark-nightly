@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.a
 
 .preheader6.31.i:                                 ; preds = %.preheader6.30.i
   %i.cs = getelementptr i8, ptr %i.b, i64 254696  ; 3 uses
-  %i.ct = load i64, ptr %i.cs, align 8, !tbaa !51 ; 2 uses
-  %i.cu = icmp eq i64 %i.ct, %1
+  %i.ct = load i64, ptr %i.cs, align 8, !tbaa !51
+  %.fr = freeze i64 %i.ct                         ; 2 uses
+  %i.cu = icmp eq i64 %.fr, %1
   br i1 %i.cu, label %frame_cache_alloc_slot.exit.thread, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %.preheader6.31.i
@@ -330,7 +331,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.dz, label %frame_cache_alloc_slot.exit.thread, label %.preheader.31.i
 
 .preheader.31.i:                                  ; preds = %.preheader.30.i
-  %i.ea = icmp eq i64 %i.ct, 0
+  %i.ea = icmp eq i64 %.fr, 0
   br i1 %i.ea, label %frame_cache_alloc_slot.exit.thread, label %frame_cache_alloc_slot.exit.thread40
 
 frame_cache_alloc_slot.exit.thread:               ; preds = %.preheader.30.i, %.preheader.29.i, %.preheader.28.i, %.preheader.27.i, %.preheader.26.i, %.preheader.25.i, %.preheader.24.i, %.preheader.23.i, %.preheader.22.i, %.preheader.21.i, %.preheader.20.i, %.preheader.19.i, %.preheader.18.i, %.preheader.17.i, %.preheader.16.i, %.preheader.15.i, %.preheader.14.i, %.preheader.13.i, %.preheader.12.i, %.preheader.11.i, %.preheader.10.i, %.preheader.9.i, %.preheader.8.i, %.preheader.7.i, %.preheader.6.i, %.preheader.5.i, %.preheader.4.i, %.preheader.3.i, %.preheader.2.i, %.preheader.1.i, %.preheader6.31.i, %.preheader6.30.i, %.preheader6.29.i, %.preheader6.28.i, %.preheader6.27.i, %.preheader6.26.i, %.preheader6.25.i, %.preheader6.24.i, %.preheader6.23.i, %.preheader6.22.i, %.preheader6.21.i, %.preheader6.20.i, %.preheader6.19.i, %.preheader6.18.i, %.preheader6.17.i, %.preheader6.16.i, %.preheader6.15.i, %.preheader6.14.i, %.preheader6.13.i, %.preheader6.12.i, %.preheader6.11.i, %.preheader6.10.i, %.preheader6.9.i, %.preheader6.8.i, %.preheader6.7.i, %.preheader6.6.i, %.preheader6.5.i, %.preheader6.4.i, %.preheader6.3.i, %.preheader6.2.i, %.preheader6.1.i, %.preheader.31.i, %.preheader6.preheader.i, %.preheader.preheader.i

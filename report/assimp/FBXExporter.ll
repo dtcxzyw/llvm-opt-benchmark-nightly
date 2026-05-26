@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.an = add nsw i32 %i.ae, -1
-  store i32 %i.an, ptr %i.ab, align 4
+  store i32 %i.an, ptr %i.ab, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -369,7 +369,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.bc = add nsw i32 %i.at, -1
-  store i32 %i.bc, ptr %i.aq, align 4
+  store i32 %i.bc, ptr %i.aq, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -596,7 +596,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.as = add nsw i32 %i.aj, -1
-  store i32 %i.as, ptr %i.ag, align 4
+  store i32 %i.as, ptr %i.ag, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -752,7 +752,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.ac = add nsw i32 %i.t, -1
-  store i32 %i.ac, ptr %i.q, align 4
+  store i32 %i.ac, ptr %i.q, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -992,7 +992,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.as = add nsw i32 %i.aj, -1
-  store i32 %i.as, ptr %i.ag, align 4
+  store i32 %i.as, ptr %i.ag, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.k:                                             ; preds = %bb.i
@@ -1323,7 +1323,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.cf = add nsw i32 %i.bw, -1
-  store i32 %i.cf, ptr %i.bt, align 4
+  store i32 %i.cf, ptr %i.bt, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.l:                                             ; preds = %bb.j
@@ -1726,7 +1726,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i
   %i.an = add nsw i32 %i.ae, -1
-  store i32 %i.an, ptr %i.ab, align 4
+  store i32 %i.an, ptr %i.ab, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.k:                                             ; preds = %bb.i
@@ -2129,7 +2129,7 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.ak = add nsw i32 %i.ab, -1
-  store i32 %i.ak, ptr %i.y, align 4
+  store i32 %i.ak, ptr %i.y, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.i:                                             ; preds = %bb.g
@@ -2391,7 +2391,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.by = add nsw i32 %i.bp, -1
-  store i32 %i.by, ptr %i.bm, align 4
+  store i32 %i.by, ptr %i.bm, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -2794,7 +2794,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m
   %i.dx = add nsw i32 %i.do, -1
-  store i32 %i.dx, ptr %i.dl, align 4
+  store i32 %i.dx, ptr %i.dl, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.o:                                             ; preds = %bb.m
@@ -3197,7 +3197,8 @@ bb.ahx:                                           ; preds = %bb.ahw, %._crit_edg
   %i.gjf = phi ptr [ %.pre.i.i, %bb.ahw ], [ %i.gja, %._crit_edge.i.i.i3140 ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ahw ], [ %.02024.i.i.i, %._crit_edge.i.i.i3140 ]
   %i.gjg = icmp ult ptr %i.gjf, %i.gfi
-  br i1 %i.gjg, label %select.unfold.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3152
+  %cond.fr.i.i = freeze i1 %i.gjg
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit3152
 
 select.unfold.i.i:                                ; preds = %bb.ahx, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.ahx ] ; 3 uses
@@ -3600,7 +3601,8 @@ bb.ajq:                                           ; preds = %bb.ajp, %._crit_edg
   %i.gsh = phi i32 [ %.pre.i.i3254, %bb.ajp ], [ %i.gsc, %._crit_edge.i.i.i3242 ]
   %.019.lcssa28.i.i.i3243 = phi ptr [ %.019.lcssa29.i.i.i3252, %bb.ajp ], [ %.02024.i.i.i3237, %._crit_edge.i.i.i3242 ]
   %i.gsi = icmp slt i32 %i.gsh, %i.grr
-  br i1 %i.gsi, label %select.unfold.i.i3249, label %bb.ajs
+  %cond.fr.i.i3245 = freeze i1 %i.gsi
+  br i1 %cond.fr.i.i3245, label %select.unfold.i.i3249, label %bb.ajs
 
 select.unfold.i.i3249:                            ; preds = %bb.ajq, %._crit_edge.thread.i.i.i3251
   %.sroa.4.0.i.ph.i.i3250 = phi ptr [ %.019.lcssa29.i.i.i3252, %._crit_edge.thread.i.i.i3251 ], [ %.019.lcssa28.i.i.i3243, %bb.ajq ] ; 3 uses
@@ -4003,7 +4005,7 @@ bb.apj:                                           ; preds = %_ZNSt7__cxx1112basi
   ]
 
 bb.apk:                                           ; preds = %._crit_edge.i.i3624
-  %i.huu = load i8, ptr %i.hpb, align 1
+  %i.huu = load i8, ptr %i.hpb, align 4
   store i8 %i.huu, ptr %i.hut, align 1
   br label %bb.apm
 
@@ -4406,7 +4408,7 @@ _ZNSt6vectorIlSaIlEE9push_backEOl.exit:           ; preds = %_ZNSt6vectorIlSaIlE
   br i1 %.not.i4038, label %bb.aui, label %bb.auh
 
 bb.auh:                                           ; preds = %_ZNSt6vectorIlSaIlEE9push_backEOl.exit
-  %i.jae = load float, ptr %i.jab, align 4
+  %i.jae = load float, ptr %i.jab, align 8
   store float %i.jae, ptr %i.jac, align 4
   %i.jaf = load ptr, ptr %i.iho, align 8
   %i.jag = getelementptr inbounds nuw i8, ptr %i.jaf, i64 4
@@ -4443,7 +4445,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4039: ; preds = %bb.aui
 
 .noexc4046:                                       ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4039
   %i.jat = getelementptr inbounds i8, ptr %i.jas, i64 %i.jak ; 2 uses
-  %i.jau = load float, ptr %i.jab, align 4
+  %i.jau = load float, ptr %i.jab, align 8
   store float %i.jau, ptr %i.jat, align 4
   %i.jav = icmp sgt i64 %i.jak, 0
   br i1 %i.jav, label %bb.auj, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i4042
@@ -4539,7 +4541,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit4057:      ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not.i4058, label %bb.auq, label %bb.aup
 
 bb.aup:                                           ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit4057
-  %i.jby = load float, ptr %i.jbv, align 4
+  %i.jby = load float, ptr %i.jbv, align 8
   store float %i.jby, ptr %i.jbw, align 4
   %i.jbz = load ptr, ptr %i.ihs, align 8
   %i.jca = getelementptr inbounds nuw i8, ptr %i.jbz, i64 4
@@ -4569,7 +4571,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4059: ; preds = %bb.auq
 
 .noexc4066:                                       ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4059
   %i.jcn = getelementptr inbounds i8, ptr %i.jcm, i64 %i.jce ; 2 uses
-  %i.jco = load float, ptr %i.jbv, align 4
+  %i.jco = load float, ptr %i.jbv, align 8
   store float %i.jco, ptr %i.jcn, align 4
   %i.jcp = icmp sgt i64 %i.jce, 0
   br i1 %i.jcp, label %bb.aur, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i4062
@@ -4896,9 +4898,9 @@ _ZNSt6vectorIlSaIlEE9push_backEOl.exit4120:       ; preds = %_ZNSt6vectorIlSaIlE
   %i.jfy = getelementptr inbounds nuw i8, ptr %i.jet, i64 8
   %i.jfz = getelementptr inbounds nuw i8, ptr %i.jet, i64 16
   %i.jga = getelementptr inbounds nuw i8, ptr %i.jet, i64 12
-  %i.jgb = load float, ptr %i.jfy, align 4, !noalias !332 ; 3 uses
+  %i.jgb = load float, ptr %i.jfy, align 8, !noalias !332 ; 3 uses
   %i.jgc = fneg float %i.jgb                      ; 2 uses
-  %i.jgd = load <2 x float>, ptr %i.jfz, align 4, !noalias !332 ; 6 uses
+  %i.jgd = load <2 x float>, ptr %i.jfz, align 8, !noalias !332 ; 6 uses
   %i.jge = shufflevector <2 x float> %i.jgd, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.jgf = extractelement <2 x float> %i.jgd, i64 1 ; 2 uses
   %i.jgg = fmul <2 x float> %i.jgd, %i.jgd
@@ -5301,7 +5303,7 @@ _ZNSt6vectorIlSaIlEE9push_backEOl.exit4209:       ; preds = %_ZNSt6vectorIlSaIlE
   br i1 %.not.i4210, label %bb.awm, label %bb.awl
 
 bb.awl:                                           ; preds = %_ZNSt6vectorIlSaIlEE9push_backEOl.exit4209
-  %i.jnp = load float, ptr %i.jnm, align 4
+  %i.jnp = load float, ptr %i.jnm, align 8
   store float %i.jnp, ptr %i.jnn, align 4
   %i.jnq = load ptr, ptr %i.iho, align 8
   %i.jnr = getelementptr inbounds nuw i8, ptr %i.jnq, i64 4
@@ -5338,7 +5340,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4211: ; preds = %bb.awm
 
 .noexc4218:                                       ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4211
   %i.joe = getelementptr inbounds i8, ptr %i.jod, i64 %i.jnv ; 2 uses
-  %i.jof = load float, ptr %i.jnm, align 4
+  %i.jof = load float, ptr %i.jnm, align 8
   store float %i.jof, ptr %i.joe, align 4
   %i.jog = icmp sgt i64 %i.jnv, 0
   br i1 %i.jog, label %bb.awn, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i4214
@@ -5434,7 +5436,7 @@ _ZNSt6vectorIfSaIfEE9push_backERKf.exit4229:      ; preds = %_ZNSt6vectorIfSaIfE
   br i1 %.not.i4230, label %bb.awu, label %bb.awt
 
 bb.awt:                                           ; preds = %_ZNSt6vectorIfSaIfEE9push_backERKf.exit4229
-  %i.jpj = load float, ptr %i.jpg, align 4
+  %i.jpj = load float, ptr %i.jpg, align 8
   store float %i.jpj, ptr %i.jph, align 4
   %i.jpk = load ptr, ptr %i.ihs, align 8
   %i.jpl = getelementptr inbounds nuw i8, ptr %i.jpk, i64 4
@@ -5464,7 +5466,7 @@ _ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4231: ; preds = %bb.awu
 
 .noexc4238:                                       ; preds = %_ZNKSt6vectorIfSaIfEE12_M_check_lenEmPKc.exit.i.i4231
   %i.jpy = getelementptr inbounds i8, ptr %i.jpx, i64 %i.jpp ; 2 uses
-  %i.jpz = load float, ptr %i.jpg, align 4
+  %i.jpz = load float, ptr %i.jpg, align 8
   store float %i.jpz, ptr %i.jpy, align 4
   %i.jqa = icmp sgt i64 %i.jpp, 0
   br i1 %i.jqa, label %bb.awv, label %_ZNSt6vectorIfSaIfEE11_S_relocateEPfS2_S2_RS0_.exit16.i.i4234
@@ -5867,7 +5869,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.bf = add nsw i32 %i.aw, -1
-  store i32 %i.bf, ptr %i.at, align 4
+  store i32 %i.bf, ptr %i.at, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.n:                                             ; preds = %bb.l
@@ -6270,7 +6272,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.t = phi i32 [ %.pre81.i, %bb.e ], [ %i.n, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.u = icmp slt i32 %i.t, %i.s
-  br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeI13aiTextureTypeSt4pairIKS0_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS9_ESt4lessIS0_ESaIS9_EE17_M_insert_unique_IRKS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_ESt23_Rb_tree_const_iteratorIS9_EOT_RT0_.exit.i
+  %cond.fr = freeze i1 %i.u
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeI13aiTextureTypeSt4pairIKS0_NSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESt10_Select1stIS9_ESt4lessIS0_ESaIS9_EE17_M_insert_unique_IRKS9_NSF_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS9_ESt23_Rb_tree_const_iteratorIS9_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
@@ -6673,7 +6676,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.lc, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %i.le = icmp slt i32 %.0.i.i.i.i.i, 0
+  %.0.i.i.i.i.i.fr = freeze i32 %.0.i.i.i.i.i
+  %i.le = icmp slt i32 %.0.i.i.i.i.i.fr, 0
   br i1 %i.le, label %select.unfold, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS5_cESt4lessIS5_ESaIS6_IKS5_S7_EEE4findERSA_.exit
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %bb.ad, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S6_IS5_cEESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i
@@ -6786,7 +6790,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %_ZNKSt3mapINSt7__cx
   store i64 1, ptr %i.ct, align 8
   store i8 0, ptr %i.cu, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m) #31
-  %i.mc = load float, ptr %i.lw, align 4
+  %i.mc = load float, ptr %i.lw, align 8
   %i.md = fpext float %i.mc to double
   store double %i.md, ptr %i.m, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n) #31
@@ -6796,7 +6800,7 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i:     ; preds = %_ZNKSt3mapINSt7__cx
   store double %i.mg, ptr %i.n, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #31
   %i.mh = getelementptr inbounds nuw i8, ptr %.sroa.0371.0420, i64 40
-  %i.mi = load float, ptr %i.mh, align 4
+  %i.mi = load float, ptr %i.mh, align 8
   %i.mj = fpext float %i.mi to double
   store double %i.mj, ptr %i.o, align 8
   invoke void @_ZN6Assimp3FBX4Node6AddP70IJdddEEEvRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_SA_SA_DpOT_(ptr noundef nonnull align 8 dereferenceable(112) %12, ptr noundef nonnull align 8 dereferenceable(32) %i.lv, ptr noundef nonnull align 8 dereferenceable(32) %i.lv, ptr noundef nonnull align 8 dereferenceable(32) %33, ptr noundef nonnull align 8 dereferenceable(32) %34, ptr noundef nonnull align 8 dereferenceable(8) %i.m, ptr noundef nonnull align 8 dereferenceable(8) %i.n, ptr noundef nonnull align 8 dereferenceable(8) %i.o)
@@ -6870,13 +6874,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit329: ; preds = %_Z
   br label %bb.bk
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE7compareEmmPKc.exit.thread: ; preds = %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS5_cESt4lessIS5_ESaIS6_IKS5_S7_EEE4findERSA_.exit, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i
-  %i.nc = load float, ptr %i.lw, align 4
+  %i.nc = load float, ptr %i.lw, align 8
   %i.nd = fpext float %i.nc to double
   %i.ne = getelementptr inbounds nuw i8, ptr %.sroa.0371.0420, i64 36
   %i.nf = load float, ptr %i.ne, align 4
   %i.ng = fpext float %i.nf to double
   %i.nh = getelementptr inbounds nuw i8, ptr %.sroa.0371.0420, i64 40
-  %i.ni = load float, ptr %i.nh, align 4
+  %i.ni = load float, ptr %i.nh, align 8
   %i.nj = fpext float %i.ni to double
   invoke void @_ZN6Assimp3FBX4Node12AddP70vectorERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEddd(ptr noundef nonnull align 8 dereferenceable(112) %12, ptr noundef nonnull align 8 dereferenceable(32) %i.lv, double noundef %i.nd, double noundef %i.ng, double noundef %i.nj)
           to label %bb.as unwind label %bb.aq
@@ -7279,7 +7283,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i: ; preds = %_ZNSt11c
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i
   %.0.i.i.i.i.i = phi i32 [ %i.bl, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i.i.i ], [ %.0.i6.i.i.i.i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i.i.i ]
-  %i.bn = icmp slt i32 %.0.i.i.i.i.i, 0
+  %.0.i.i.i.i.i.fr = freeze i32 %.0.i.i.i.i.i
+  %i.bn = icmp slt i32 %.0.i.i.i.i.i.fr, 0
   br i1 %i.bn, label %select.unfold, label %_ZNKSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS5_cESt4lessIS5_ESaIS6_IKS5_S7_EEE4findERSA_.exit
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.i.i, %bb.i, %_ZNKSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_S6_IS5_cEESt10_Select1stIS9_ESt4lessIS5_ESaIS9_EE14_M_lower_boundEPKSt13_Rb_tree_nodeIS9_EPKSt18_Rb_tree_node_baseRS7_.exit.i.i
@@ -7682,7 +7687,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4
+  store i32 %i.o, ptr %i.c, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -8085,7 +8090,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 32
-  %i.l = load float, ptr %i.b, align 4            ; 2 uses
+  %i.l = load float, ptr %i.b, align 8            ; 2 uses
   %i.m = load float, ptr %i.k, align 4            ; 2 uses
   %i.n = fcmp une float %i.l, %i.m
   br i1 %i.n, label %bb.e, label %bb.f
@@ -8108,7 +8113,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 40
-  %i.w = load float, ptr %i.v, align 4
+  %i.w = load float, ptr %i.v, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.h, i64 40
   %i.y = load float, ptr %i.x, align 4
   %i.z = fcmp olt float %i.w, %i.y

@@ -201,7 +201,7 @@ bb.bo:                                            ; preds = %bb.bm
 
 bb.bp:                                            ; preds = %bb.bo
   %i.ht = add nsw i32 %i.hl, -1
-  store i32 %i.ht, ptr %i.aw, align 4
+  store i32 %i.ht, ptr %i.aw, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
 
 bb.bq:                                            ; preds = %bb.bo
@@ -370,7 +370,7 @@ bb.cf:                                            ; preds = %bb.cd
 
 bb.cg:                                            ; preds = %bb.cf
   %i.je = add nsw i32 %i.iv, -1
-  store i32 %i.je, ptr %i.is, align 4
+  store i32 %i.je, ptr %i.is, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i187
 
 bb.ch:                                            ; preds = %bb.cf
@@ -773,7 +773,7 @@ bb.hj:                                            ; preds = %bb.hh
 
 bb.hk:                                            ; preds = %bb.hj
   %i.ama = add nsw i32 %i.alr, -1
-  store i32 %i.ama, ptr %i.alo, align 4
+  store i32 %i.ama, ptr %i.alo, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i316
 
 bb.hl:                                            ; preds = %bb.hj
@@ -1176,7 +1176,8 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
   %i.gd = phi i64 [ %.pre.i.i, %bb.ad ], [ %i.fx, %._crit_edge.i.i.i220 ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ad ], [ %.02024.i.i.i, %._crit_edge.i.i.i220 ]
   %i.ge = icmp ult i64 %i.gd, %i.ft
-  br i1 %i.ge, label %select.unfold.i.i, label %_ZNSt3setImSt4lessImESaImEE6insertEOm.exit
+  %cond.fr.i.i = freeze i1 %i.ge
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setImSt4lessImESaImEE6insertEOm.exit
 
 select.unfold.i.i:                                ; preds = %bb.ae, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.ae ] ; 3 uses
@@ -1579,21 +1580,21 @@ bb.jd:                                            ; preds = %.lr.ph208.i.i
 
 .loopexit.i.i:                                    ; preds = %bb.jc, %bb.ja, %bb.iz
   %i.aob = load <4 x float>, ptr %i.aet, align 4
-  %i.aoc = load <4 x float>, ptr %.sroa.789.0..sroa_idx90.i.i, align 4
+  %i.aoc = load <4 x float>, ptr %.sroa.789.0..sroa_idx90.i.i, align 8
   %i.aod = load <4 x float>, ptr %.sroa.992.0..sroa_idx93.i.i, align 4
-  %i.aoe = load <4 x float>, ptr %.sroa.1195.0..sroa_idx96.i.i, align 4
+  %i.aoe = load <4 x float>, ptr %.sroa.1195.0..sroa_idx96.i.i, align 8
   %i.aof = load <4 x float>, ptr %.sroa.1398.0..sroa_idx99.i.i, align 4
-  %i.aog = load <4 x float>, ptr %.sroa.15101.0..sroa_idx102.i.i, align 4
+  %i.aog = load <4 x float>, ptr %.sroa.15101.0..sroa_idx102.i.i, align 8
   %i.aoh = load <4 x float>, ptr %.sroa.17104.0..sroa_idx105.i.i, align 4
-  %i.aoi = load <4 x float>, ptr %.sroa.19107.0..sroa_idx108.i.i, align 4
+  %i.aoi = load <4 x float>, ptr %.sroa.19107.0..sroa_idx108.i.i, align 8
   %i.aoj = load <4 x float>, ptr %.sroa.21110.0..sroa_idx111.i.i, align 4
-  %i.aok = load <4 x float>, ptr %.sroa.23113.0..sroa_idx114.i.i, align 4
+  %i.aok = load <4 x float>, ptr %.sroa.23113.0..sroa_idx114.i.i, align 8
   %i.aol = load <4 x float>, ptr %.sroa.25116.0..sroa_idx117.i.i, align 4
-  %i.aom = load <4 x float>, ptr %.sroa.27119.0..sroa_idx120.i.i, align 4
+  %i.aom = load <4 x float>, ptr %.sroa.27119.0..sroa_idx120.i.i, align 8
   %i.aon = load <4 x float>, ptr %.sroa.29122.0..sroa_idx123.i.i, align 4
-  %i.aoo = load <4 x float>, ptr %.sroa.31125.0..sroa_idx126.i.i, align 4
+  %i.aoo = load <4 x float>, ptr %.sroa.31125.0..sroa_idx126.i.i, align 8
   %i.aop = load <4 x float>, ptr %.sroa.33128.0..sroa_idx129.i.i, align 4
-  %i.aoq = load <4 x float>, ptr %.sroa.35.0..sroa_idx131.i.i, align 4
+  %i.aoq = load <4 x float>, ptr %.sroa.35.0..sroa_idx131.i.i, align 8
   %i.aor = load ptr, ptr %14, align 8             ; 6 uses
   %i.aos = getelementptr inbounds nuw i8, ptr %i.aor, i64 1028
   %i.aot = load <4 x double>, ptr %16, align 8, !noalias !205
@@ -1996,7 +1997,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4
+  store i32 %i.o, ptr %i.c, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2067,7 +2068,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.v = add nsw i32 %i.m, -1
-  store i32 %i.v, ptr %i.j, align 4
+  store i32 %i.v, ptr %i.j, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -2117,7 +2118,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.am = add nsw i32 %i.ad, -1
-  store i32 %i.am, ptr %i.aa, align 4
+  store i32 %i.am, ptr %i.aa, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i4
 
 bb.m:                                             ; preds = %bb.k
@@ -2520,7 +2521,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4
+  store i32 %i.o, ptr %i.c, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -2756,7 +2757,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.y = add nsw i32 %i.p, -1
-  store i32 %i.y, ptr %i.m, align 4
+  store i32 %i.y, ptr %i.m, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.d

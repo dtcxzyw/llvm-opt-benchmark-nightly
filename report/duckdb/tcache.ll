@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
   %i.aw = getelementptr inbounds nuw i8, ptr %i.aq, i64 10552
   tail call void @duckdb_je_malloc_mutex_lock_slow(ptr noundef nonnull %i.aw) #15
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aq, i64 10616
-  store atomic i8 1, ptr %i.ax monotonic, align 1
+  store atomic i8 1, ptr %i.ax monotonic, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -271,7 +271,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.i
   %i.bs = getelementptr inbounds nuw i8, ptr %i.aq, i64 10616
-  store atomic i8 0, ptr %i.bs monotonic, align 1
+  store atomic i8 0, ptr %i.bs monotonic, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.aq, i64 10624
   %i.bu = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.bt) #15 ; 0 uses
   br label %.preheader
@@ -674,7 +674,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.nb = getelementptr inbounds nuw i8, ptr %i.mv, i64 10552
   tail call void @duckdb_je_malloc_mutex_lock_slow(ptr noundef nonnull %i.nb) #15
   %i.nc = getelementptr inbounds nuw i8, ptr %i.mv, i64 10616
-  store atomic i8 1, ptr %i.nc monotonic, align 1
+  store atomic i8 1, ptr %i.nc monotonic, align 8
   br label %bb.ap
 
 bb.ap:                                            ; preds = %bb.ao, %bb.an
@@ -744,7 +744,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
 
 bb.ax:                                            ; preds = %bb.at
   %i.nx = getelementptr inbounds nuw i8, ptr %i.mv, i64 10616
-  store atomic i8 0, ptr %i.nx monotonic, align 1
+  store atomic i8 0, ptr %i.nx monotonic, align 8
   %i.ny = getelementptr inbounds nuw i8, ptr %i.mv, i64 10624
   %i.nz = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.ny) #15 ; 0 uses
   br label %.preheader
@@ -1126,7 +1126,7 @@ bb.j:                                             ; preds = %bb.i, %.thread7
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !130
   tail call void @duckdb_je_tcache_stats_merge(ptr noundef %0, ptr noundef %i.aq, ptr noundef nonnull %i.b)
   %i.ar = getelementptr inbounds nuw i8, ptr %i.b, i64 10488
-  store atomic i8 0, ptr %i.ar monotonic, align 1
+  store atomic i8 0, ptr %i.ar monotonic, align 8
   %i.as = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.c) #15 ; 0 uses
   store ptr null, ptr %i.a, align 8, !tbaa !39
   ret void
@@ -1320,7 +1320,7 @@ bb.p:                                             ; preds = %bb.m
 
 bb.q:                                             ; preds = %bb.p
   %i.cb = call ptr @duckdb_je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext true) #15 ; 7 uses
-  %i.cc = load i8, ptr %0, align 1, !tbaa !10, !range !12, !noundef !13
+  %i.cc = load i8, ptr %0, align 8, !tbaa !10, !range !12, !noundef !13
   %i.cd = trunc nuw i8 %i.cc to i1
   br i1 %i.cd, label %bb.r, label %arena_ichoose.exit
 
@@ -1661,7 +1661,7 @@ bb.q:                                             ; preds = %bb.n
 
 bb.r:                                             ; preds = %bb.q
   %i.cb = call ptr @duckdb_je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext false) #15 ; 6 uses
-  %i.cc = load i8, ptr %0, align 1, !tbaa !10, !range !12, !noundef !13
+  %i.cc = load i8, ptr %0, align 8, !tbaa !10, !range !12, !noundef !13
   %i.cd = trunc nuw i8 %i.cc to i1
   br i1 %i.cd, label %bb.s, label %arena_choose.exit.i
 
@@ -1778,7 +1778,7 @@ bb.c:                                             ; preds = %bb.c, %bb.b
   br i1 %exitcond.not.i, label %tcache_bin_settings_backup.exit, label %bb.c
 
 tcache_bin_settings_backup.exit:                  ; preds = %bb.c
-  %i.j = load i8, ptr %0, align 1, !tbaa !10, !range !12, !noundef !13
+  %i.j = load i8, ptr %0, align 8, !tbaa !10, !range !12, !noundef !13
   %i.k = trunc nuw i8 %i.j to i1
   br i1 %i.k, label %bb.d, label %duckdb_je_tcache_cleanup.exit
 
@@ -2181,13 +2181,14 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load ptr, ptr @duckdb_je_tcaches, align 8, !tbaa !140
   %i.h = zext i32 %1 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h ; 2 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !33   ; 3 uses
-  %i.k = icmp eq ptr %i.j, null
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !33
+  %.fr = freeze ptr %i.j                          ; 3 uses
+  %i.k = icmp eq ptr %.fr, null
   br i1 %i.k, label %tcaches_elm_remove.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %malloc_mutex_lock.exit
   store ptr inttoptr (i64 1 to ptr), ptr %i.i, align 8, !tbaa !33
-  %i.l = icmp eq ptr %i.j, inttoptr (i64 1 to ptr)
+  %i.l = icmp eq ptr %.fr, inttoptr (i64 1 to ptr)
   br i1 %i.l, label %tcaches_elm_remove.exit.thread, label %tcaches_elm_remove.exit
 
 tcaches_elm_remove.exit.thread:                   ; preds = %malloc_mutex_lock.exit, %bb.e
@@ -2198,7 +2199,7 @@ tcaches_elm_remove.exit.thread:                   ; preds = %malloc_mutex_lock.e
 tcaches_elm_remove.exit:                          ; preds = %bb.e
   store atomic i8 0, ptr getelementptr inbounds nuw (i8, ptr @tcaches_mtx, i64 64) monotonic, align 8
   %i.n = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull getelementptr inbounds nuw (i8, ptr @tcaches_mtx, i64 72)) #15 ; 0 uses
-  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %i.j, i1 noundef zeroext false)
+  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %.fr, i1 noundef zeroext false)
   br label %bb.f
 
 bb.f:                                             ; preds = %tcaches_elm_remove.exit.thread, %tcaches_elm_remove.exit
@@ -2236,8 +2237,9 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   %i.g = load ptr, ptr @duckdb_je_tcaches, align 8, !tbaa !140
   %i.h = zext i32 %1 to i64
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.g, i64 %i.h ; 3 uses
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !33   ; 2 uses
-  %switch = icmp ult ptr %i.j, inttoptr (i64 2 to ptr)
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !33
+  %.fr = freeze ptr %i.j                          ; 2 uses
+  %switch = icmp ult ptr %.fr, inttoptr (i64 2 to ptr)
   %i.k = load ptr, ptr @tcaches_avail, align 8, !tbaa !140
   store ptr %i.k, ptr %i.i, align 8, !tbaa !33
   store ptr %i.i, ptr @tcaches_avail, align 8, !tbaa !140
@@ -2246,7 +2248,7 @@ malloc_mutex_lock.exit:                           ; preds = %bb.c, %bb.d
   br i1 %switch, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %malloc_mutex_lock.exit
-  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %i.j, i1 noundef zeroext false)
+  tail call fastcc void @tcache_destroy(ptr noundef %0, ptr noundef nonnull %.fr, i1 noundef zeroext false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %malloc_mutex_lock.exit

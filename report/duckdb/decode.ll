@@ -201,30 +201,32 @@ bb.q:                                             ; preds = %.critedge.i
   %i.ef = zext nneg i8 %i.dx to i32
   %i.eg = lshr i32 32, %i.ef
   %i.eh = zext nneg i32 %i.eg to i64
-  %i.ei = sub i64 %.04273.i, %i.eh                ; 3 uses
+  %i.ei = sub i64 %.04273.i, %i.eh
+  %.fr66.i = freeze i64 %i.ei                     ; 3 uses
   %i.ej = add i64 %.03875.i, 1                    ; 2 uses
   %i.ek = getelementptr inbounds nuw [2 x i8], ptr %i.i, i64 %i.ee ; 2 uses
   %i.el = load i16, ptr %i.ek, align 2, !tbaa !145
   %i.em = add i16 %i.el, 1
   store i16 %i.em, ptr %i.ek, align 2, !tbaa !145
-  %i.en = add i64 %i.ei, -33
+  %i.en = add i64 %.fr66.i, -33
   %i.eo = icmp ult i64 %i.en, -32
   br i1 %i.eo, label %._crit_edge.i101, label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %.critedge.i
-  %.244.ph.i = phi i64 [ %.04273.i, %.critedge.i ], [ %i.ei, %bb.q ] ; 2 uses
+  %.244.ph.i = phi i64 [ %.04273.i, %.critedge.i ], [ %.fr66.i, %bb.q ] ; 2 uses
   %.240.ph.i = phi i64 [ %.03875.i, %.critedge.i ], [ %i.ej, %bb.q ] ; 2 uses
   %i.ep = add nuw nsw i64 %.04671.i, 1            ; 2 uses
   %exitcond.not.i104 = icmp eq i64 %i.ep, 18
   br i1 %exitcond.not.i104, label %._crit_edge.i101, label %bb.m, !llvm.loop !150
 
 ._crit_edge.i101:                                 ; preds = %bb.r, %bb.q, %bb.l
-  %.345.i = phi i64 [ %.pre234, %bb.l ], [ %.244.ph.i, %bb.r ], [ %i.ei, %bb.q ]
+  %.345.i = phi i64 [ %.pre234, %bb.l ], [ %.244.ph.i, %bb.r ], [ %.fr66.i, %bb.q ]
   %.341.i = phi i64 [ %.pre233, %bb.l ], [ %.240.ph.i, %bb.r ], [ %i.ej, %bb.q ]
   %i.eq = icmp eq i64 %.341.i, 1
   %i.er = icmp eq i64 %.345.i, 0
   %or.cond.i = select i1 %i.eq, i1 true, i1 %i.er
-  br i1 %or.cond.i, label %_ZN13duckdb_brotliL25ReadCodeLengthCodeLengthsEPNS_24BrotliDecoderStateStructE.exit, label %.critedge
+  %cond.fr = freeze i1 %or.cond.i
+  br i1 %cond.fr, label %_ZN13duckdb_brotliL25ReadCodeLengthCodeLengthsEPNS_24BrotliDecoderStateStructE.exit, label %.critedge
 
 _ZN13duckdb_brotliL25ReadCodeLengthCodeLengthsEPNS_24BrotliDecoderStateStructE.exit: ; preds = %._crit_edge.i101
   %i.es = getelementptr inbounds nuw i8, ptr %4, i64 912

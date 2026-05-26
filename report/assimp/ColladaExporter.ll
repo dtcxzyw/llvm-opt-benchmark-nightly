@@ -201,7 +201,7 @@ _ZN6Assimp15ColladaExporter7PushTagEv.exit:       ; preds = %_ZNSt7__cxx1112basi
 .lr.ph:                                           ; preds = %_ZN6Assimp15ColladaExporter7PushTagEv.exit
   %i.ek = getelementptr inbounds nuw i8, ptr %i.eg, i64 104
   %i.el = load ptr, ptr %i.ek, align 8            ; 2 uses
-  %i.em = load i32, ptr %1, align 4               ; 2 uses
+  %i.em = load i32, ptr %1, align 8               ; 2 uses
   %i.en = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.eo = zext i32 %i.em to i64
   br label %bb.v
@@ -604,7 +604,7 @@ _ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic
 .lr.ph575:                                        ; preds = %.preheader
   %i.mr = getelementptr inbounds nuw i8, ptr %i.mn, i64 104
   %i.ms = load ptr, ptr %i.mr, align 8
-  %i.mt = load i32, ptr %1, align 4               ; 2 uses
+  %i.mt = load i32, ptr %1, align 8               ; 2 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.mv = zext i32 %i.mt to i64
   br label %bb.aa
@@ -722,7 +722,7 @@ _ZNK8aiStringeqERKS_.exit248.thread:              ; preds = %bb.aa, %_ZNK8aiStri
 .lr.ph577:                                        ; preds = %.loopexit525
   %i.oh = getelementptr inbounds nuw i8, ptr %i.od, i64 88
   %i.oi = load ptr, ptr %i.oh, align 8
-  %i.oj = load i32, ptr %1, align 4               ; 2 uses
+  %i.oj = load i32, ptr %1, align 8               ; 2 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ol = zext i32 %i.oj to i64
   br label %bb.ag
@@ -1101,7 +1101,8 @@ bb.ba:                                            ; preds = %._crit_edge.thread.
 bb.bb:                                            ; preds = %bb.ba, %._crit_edge.i.i.i.i
   %i.ti = phi ptr [ %.pre.i.i.i, %bb.ba ], [ %i.td, %._crit_edge.i.i.i.i ]
   %.019.lcssa28.i.i.i.i = phi ptr [ %.019.lcssa29.i.i.i.i, %bb.ba ], [ %.02024.i.i.i.i, %._crit_edge.i.i.i.i ]
-  %i.tj = icmp ult ptr %i.ti, %.03844.i
+  %.fr.i = freeze ptr %i.ti
+  %i.tj = icmp ult ptr %.fr.i, %.03844.i
   br i1 %i.tj, label %select.unfold.i.i.i, label %_ZNSt3setIPK6aiNodeSt4lessIS2_ESaIS2_EE6insertERKS2_.exit.i
 
 select.unfold.i.i.i:                              ; preds = %bb.bb, %._crit_edge.thread.i.i.i.i
@@ -1504,7 +1505,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 32
-  %i.y = load i32, ptr %i.b, align 4
+  %i.y = load i32, ptr %i.b, align 8
   %i.z = load i32, ptr %i.x, align 4
   %i.aa = icmp ult i32 %i.y, %i.z
   br label %.thread

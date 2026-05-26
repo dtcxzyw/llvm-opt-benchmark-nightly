@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = getelementptr i8, ptr %i.f, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !128
   %i.k = load i8, ptr %i.j, align 8
-  %i.l = and i8 %i.k, 15
+  %.fr17 = freeze i8 %i.k
+  %i.l = and i8 %.fr17, 15
   %cond1.i = icmp eq i8 %i.l, 1
   br i1 %cond1.i, label %cframe.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.i7
 
@@ -604,7 +605,8 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.i = getelementptr i8, ptr %i.f, i64 16
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !128  ; 2 uses
   %i.k = load i8, ptr %i.j, align 8
-  %i.l = and i8 %i.k, 15
+  %.fr21 = freeze i8 %i.k
+  %i.l = and i8 %.fr21, 15
   %cond1.i = icmp eq i8 %i.l, 1
   br i1 %cond1.i, label %cframe.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.i11
 
@@ -753,7 +755,8 @@ bb.c:                                             ; preds = %rbimpl_RB_TYPE_P_fa
   %i.h = getelementptr i8, ptr %i.e, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !128  ; 2 uses
   %i.j = load i8, ptr %i.i, align 8
-  %i.k = and i8 %i.j, 15
+  %.fr41 = freeze i8 %i.j
+  %i.k = and i8 %.fr41, 15
   %cond1.i = icmp eq i8 %i.k, 1
   br i1 %cond1.i, label %cframe.exit, label %rbimpl_RB_TYPE_P_fastpath.exit.i.i
 
@@ -1156,10 +1159,11 @@ bb.d:                                             ; preds = %.preheader.1
   %i.q = getelementptr [8 x i8], ptr %2, i64 %i.p
   %i.r = load i64, ptr %i.q, align 8, !tbaa !17
   %i.s = add nuw nsw i32 %.286.i, 1
+  %6 = freeze i64 %i.r
   br label %bb.e
 
 bb.e:                                             ; preds = %.preheader.1, %bb.d
-  %i.t = phi i64 [ %i.r, %bb.d ], [ 4, %.preheader.1 ] ; 4 uses
+  %i.t = phi i64 [ %6, %bb.d ], [ 4, %.preheader.1 ] ; 4 uses
   %.286.i.1 = phi i32 [ %i.s, %bb.d ], [ %.286.i, %.preheader.1 ]
   %i.u = icmp eq i32 %.286.i.1, %.1.i6974
   br i1 %i.u, label %rb_scan_args_set.exit, label %bb.f

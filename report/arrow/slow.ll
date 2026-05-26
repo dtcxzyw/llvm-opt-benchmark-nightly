@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.ar = add nsw i32 %i.ai, -1
-  store i32 %i.ar, ptr %i.af, align 4, !tbaa !3
+  store i32 %i.ar, ptr %i.af, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -251,7 +251,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.bi = add nsw i32 %i.az, -1
-  store i32 %i.bi, ptr %i.aw, align 4, !tbaa !3
+  store i32 %i.bi, ptr %i.aw, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i4.i
 
 bb.m:                                             ; preds = %bb.k
@@ -654,7 +654,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = add nsw i32 %i.s, -1
-  store i32 %i.ab, ptr %i.p, align 4, !tbaa !3
+  store i32 %i.ab, ptr %i.p, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -704,7 +704,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.as = add nsw i32 %i.aj, -1
-  store i32 %i.as, ptr %i.ag, align 4, !tbaa !3
+  store i32 %i.as, ptr %i.ag, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i4
 
 bb.l:                                             ; preds = %bb.j
@@ -1107,13 +1107,14 @@ bb.a:
   %i.f = fdiv x86_fp80 %i.d, %i.e
   %i.g = fptoui x86_fp80 %i.f to i64              ; 2 uses
   %i.h = add i64 %i.g, 52
-  %i.i = udiv i64 %i.h, %i.g                      ; 2 uses
-  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1) ; 5 uses
+  %i.i = udiv i64 %i.h, %i.g
+  %.fr.i.i = freeze i64 %i.i                      ; 2 uses
+  %spec.select.i.i = tail call i64 @llvm.umax.i64(i64 %.fr.i.i, i64 1) ; 5 uses
   %.promoted = load i64, ptr %1, align 8, !tbaa !24
   %xtraiter = and i64 %spec.select.i.i, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   %i.j = add nsw i64 %spec.select.i.i, -1
-  %i.k = icmp ult i64 %i.i, 2
+  %i.k = icmp ult i64 %.fr.i.i, 2
   br label %select.unfold.i.i
 
 bb.b:                                             ; preds = %bb.a

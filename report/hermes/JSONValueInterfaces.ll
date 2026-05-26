@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.dn = add nsw i32 %i.de, -1
-  store i32 %i.dn, ptr %i.db, align 4, !tbaa !4
+  store i32 %i.dn, ptr %i.db, align 8, !tbaa !4
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.m:                                             ; preds = %bb.k
@@ -237,7 +237,8 @@ _ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit: ; preds = %bb.a
 
 bb.b:                                             ; preds = %_ZNRSt8optionalIPN6hermes6parser9JSONValueEE5valueEv.exit
   %i.e = load i32, ptr %i.b, align 4, !tbaa !92
-  %i.f = icmp eq i32 %i.e, 0                      ; 2 uses
+  %.fr = freeze i32 %i.e
+  %i.f = icmp eq i32 %.fr, 0                      ; 2 uses
   %spec.select = select i1 %i.f, ptr %i.b, ptr null
   %spec.select5 = zext i1 %i.f to i8
   br label %_ZN4llvh16dyn_cast_or_nullIN6hermes6parser10JSONObjectENS2_9JSONValueEEENS_10cast_rettyIT_PT0_E8ret_typeES8_.exit

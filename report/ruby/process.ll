@@ -201,8 +201,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not16, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i64 @rb_fiber_scheduler_process_wait(i64 noundef %i.c, i32 noundef %0, i32 noundef %1) #26 ; 2 uses
-  %i.e = icmp eq i64 %i.d, 36
+  %i.d = tail call i64 @rb_fiber_scheduler_process_wait(i64 noundef %i.c, i32 noundef %0, i32 noundef %1) #26
+  %.fr = freeze i64 %i.d                          ; 2 uses
+  %i.e = icmp eq i64 %.fr, 36
   br i1 %i.e, label %.thread, label %bb.k
 
 .thread:                                          ; preds = %bb.c, %bb.b, %bb.a
@@ -320,7 +321,7 @@ bb.j:                                             ; preds = %waitpid_no_SIGCHLD.
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.c, %bb.j
-  %.4 = phi i64 [ %.3, %bb.j ], [ %i.d, %bb.c ]
+  %.4 = phi i64 [ %.3, %bb.j ], [ %.fr, %bb.c ]
   ret i64 %.4
 }
 
@@ -723,7 +724,8 @@ bb.e:                                             ; preds = %RB_SYMBOL_P.exit.th
 bb.f:                                             ; preds = %bb.e
   %i.t = load i64, ptr @id_err, align 8, !tbaa !47
   %i.u = icmp eq i64 %i.o, %i.t
-  br i1 %i.u, label %.thread17, label %bb.l
+  %cond.fr = freeze i1 %i.u
+  br i1 %cond.fr, label %.thread17, label %bb.l
 
 RB_SYMBOL_P.exit.thread14:                        ; preds = %bb.d, %RB_SYMBOL_P.exit
   %i.v = tail call i64 @rb_io_check_io(i64 noundef %0) #26 ; 2 uses

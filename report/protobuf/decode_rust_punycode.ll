@@ -133,9 +133,10 @@ bb.i:                                             ; preds = %bb.o, %.lr.ph.i51
   %i.au = phi ptr [ %.07497147, %.lr.ph.i51 ], [ %i.aw, %bb.o ] ; 2 uses
   %i.av = phi i32 [ %.07298146, %.lr.ph.i51 ], [ %i.bk, %bb.o ]
   %i.aw = getelementptr inbounds nuw i8, ptr %i.au, i64 1 ; 4 uses
-  %i.ax = load i8, ptr %i.au, align 1, !tbaa !14  ; 4 uses
-  %i.ay = sext i8 %i.ax to i32                    ; 3 uses
-  %i.az = add i8 %i.ax, -48
+  %i.ax = load i8, ptr %i.au, align 1, !tbaa !14
+  %.fr47.i = freeze i8 %i.ax                      ; 4 uses
+  %i.ay = sext i8 %.fr47.i to i32                 ; 3 uses
+  %i.az = add i8 %.fr47.i, -48
   %or.cond.i.i = icmp ult i8 %i.az, 10
   br i1 %or.cond.i.i, label %bb.j, label %bb.k
 
@@ -144,7 +145,7 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i
 
 bb.k:                                             ; preds = %bb.i
-  %i.bb = add i8 %i.ax, -97
+  %i.bb = add i8 %.fr47.i, -97
   %or.cond5.i.i = icmp ult i8 %i.bb, 26
   br i1 %or.cond5.i.i, label %bb.l, label %bb.m
 
@@ -154,7 +155,7 @@ bb.l:                                             ; preds = %bb.k
 
 bb.m:                                             ; preds = %bb.k
   %i.bd = add nsw i32 %i.ay, -65
-  %i.be = add i8 %i.ax, -91
+  %i.be = add i8 %.fr47.i, -91
   %or.cond.i = icmp ult i8 %i.be, -26
   br i1 %or.cond.i, label %.critedge, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_110DigitValueEc.exit.thread.i
 

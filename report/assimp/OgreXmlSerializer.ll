@@ -201,7 +201,8 @@ bb.ab:                                            ; preds = %._crit_edge.thread.
 bb.ac:                                            ; preds = %bb.ab, %._crit_edge.i.i.i
   %i.bx = phi i32 [ %.pre.i.i, %bb.ab ], [ %i.bs, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.ab ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %i.by = icmp ult i32 %i.bx, %i.au
+  %.fr = freeze i32 %i.bx
+  %i.by = icmp ult i32 %.fr, %i.au
   br i1 %i.by, label %select.unfold.i.i, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread87
 
 select.unfold.i.i:                                ; preds = %bb.ac, %._crit_edge.thread.i.i.i
@@ -604,7 +605,7 @@ bb.bq:                                            ; preds = %bb.bo
 
 bb.br:                                            ; preds = %bb.bq
   %i.es = add nsw i32 %i.ej, -1
-  store i32 %i.es, ptr %i.eg, align 4
+  store i32 %i.es, ptr %i.eg, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.bs:                                            ; preds = %bb.bq
@@ -1007,7 +1008,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4
+  store i32 %i.o, ptr %i.c, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d
@@ -1173,7 +1174,7 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.v
   %i.ag = add nsw i32 %i.x, -1
-  store i32 %i.ag, ptr %i.u, align 4
+  store i32 %i.ag, ptr %i.u, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.x:                                             ; preds = %bb.v
@@ -1576,7 +1577,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 bb.ch:                                            ; preds = %bb.cg
   store float %i.iz, ptr %i.ed, align 4
-  store float %i.iz, ptr %i.ee, align 4
+  store float %i.iz, ptr %i.ee, align 8
   store float %i.iz, ptr %i.ef, align 4
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit133.thread183
 
@@ -1626,7 +1627,7 @@ bb.cp:                                            ; preds = %bb.co
           to label %bb.cq unwind label %bb.bb
 
 bb.cq:                                            ; preds = %bb.cp
-  store float %i.jg, ptr %i.ee, align 4
+  store float %i.jg, ptr %i.ee, align 8
   br label %bb.cr
 
 bb.cr:                                            ; preds = %bb.cq, %bb.co
@@ -2029,7 +2030,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.z = add nsw i32 %i.q, -1
-  store i32 %i.z, ptr %i.n, align 4
+  store i32 %i.z, ptr %i.n, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -2432,7 +2433,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.r = add nsw i32 %i.i, -1
-  store i32 %i.r, ptr %i.f, align 4
+  store i32 %i.r, ptr %i.f, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i
 
 bb.f:                                             ; preds = %bb.d

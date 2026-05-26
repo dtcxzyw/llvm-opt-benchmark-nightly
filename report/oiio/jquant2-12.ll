@@ -201,14 +201,16 @@ bb.h:                                             ; preds = %bb.g
   %spec.select.i.i = zext i1 %i.dd to i32
   %spec.select79.i.i = tail call i32 @llvm.smax.i32(i32 %i.ck, i32 %i.cs)
   %i.de = icmp sgt i32 %i.da, %spec.select79.i.i
-  br i1 %i.de, label %.thread89.i.i, label %bb.j
+  %cond.fr.i.i = freeze i1 %i.de
+  br i1 %cond.fr.i.i, label %.thread89.i.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.g
   %i.df = icmp sgt i32 %i.da, %i.cs
   %spec.select80.i.i = select i1 %i.df, i32 2, i32 1
   %spec.select81.i.i = tail call i32 @llvm.smax.i32(i32 %i.da, i32 %i.cs)
   %i.dg = icmp sgt i32 %i.ck, %spec.select81.i.i
-  br i1 %i.dg, label %.thread.i.i, label %bb.j
+  %cond.fr88.i.i = freeze i1 %i.dg
+  br i1 %cond.fr88.i.i, label %.thread.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %.2.i.i = phi i32 [ %spec.select.i.i, %bb.h ], [ %spec.select80.i.i, %bb.i ]

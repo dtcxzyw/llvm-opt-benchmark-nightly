@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph
 
 .lr.ph99:                                         ; preds = %.critedge, %select.unfold
   %.04498 = phi i32 [ %i.ad, %select.unfold ], [ 0, %.critedge ]
-  %.14897 = phi i32 [ %3, %select.unfold ], [ %.047.lcssa, %.critedge ] ; 2 uses
+  %.14897 = phi i32 [ %.148.be, %select.unfold ], [ %.047.lcssa, %.critedge ] ; 2 uses
   %.05096 = phi ptr [ %i.ae, %select.unfold ], [ %i.k, %.critedge ] ; 2 uses
   %i.u = load i8, ptr %.05096, align 1            ; 3 uses
   %i.v = add i8 %i.u, -48
@@ -212,9 +212,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.w = sext i8 %i.u to i32                      ; 2 uses
   %i.x = add nsw i32 %i.w, -65
   %i.y = add nsw i32 %i.w, -97
-  %umin.i = tail call i32 @llvm.umin.i32(i32 %i.x, i32 %i.y) ; 2 uses
-  %i.z = icmp ult i32 %umin.i, 16
-  %switch.offset.i = add nsw i32 %umin.i, 10
+  %umin.i = tail call i32 @llvm.umin.i32(i32 %i.x, i32 %i.y)
+  %umin.i.fr = freeze i32 %umin.i                 ; 2 uses
+  %i.z = icmp ult i32 %umin.i.fr, 16
+  %switch.offset.i = add nuw nsw i32 %umin.i.fr, 10
   %spec.select = select i1 %i.z, i32 %switch.offset.i, i32 9999999
   br label %select.unfold
 
@@ -225,9 +226,9 @@ bb.e:                                             ; preds = %.lr.ph99
 
 select.unfold:                                    ; preds = %.preheader.i, %bb.e
   %.2.i = phi i32 [ %i.ab, %bb.e ], [ %spec.select, %.preheader.i ]
-  %3 = add nsw i32 %.14897, -1
   %i.ac = shl i32 %.04498, 4
   %i.ad = or i32 %.2.i, %i.ac                     ; 2 uses
+  %.148.be = add nsw i32 %.14897, -1
   %i.ae = getelementptr inbounds nuw i8, ptr %.05096, i64 1
   %i.af = icmp sgt i32 %.14897, 1
   br i1 %i.af, label %.lr.ph99, label %._crit_edge.loopexit, !llvm.loop !41

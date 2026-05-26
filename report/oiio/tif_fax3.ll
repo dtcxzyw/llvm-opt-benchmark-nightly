@@ -201,9 +201,10 @@ bb.bm:                                            ; preds = %bb.bl
   br i1 %i.mp, label %bb.bn, label %.thread
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.mq = sub nuw i32 %.0112, %.0113              ; 2 uses
-  %i.mr = icmp ult i32 %i.mq, 4
-  %i.ms = sub nsw i32 0, %i.mq
+  %i.mq = sub nuw i32 %.0112, %.0113
+  %.fr = freeze i32 %i.mq                         ; 2 uses
+  %i.mr = icmp ult i32 %.fr, 4
+  %i.ms = sub nsw i32 0, %.fr
   br i1 %i.mr, label %.thread599, label %.thread
 
 .thread:                                          ; preds = %bb.bn, %bb.bm

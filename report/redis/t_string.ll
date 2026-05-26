@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %sdslen.exit277.thre
 
 sdslen.exit280:                                   ; preds = %sdslen.exit277.thread, %bb.z, %bb.aa, %bb.ab, %bb.ac, %bb.ad
   %.0.i279 = phi i64 [ %i.cf, %bb.ad ], [ %i.bu, %bb.z ], [ %i.bx, %bb.aa ], [ %i.ca, %bb.ab ], [ %i.cd, %bb.ac ], [ 0, %sdslen.exit277.thread ] ; 2 uses
-  %i.cg = trunc i64 %.0.i279 to i32               ; 11 uses
+  %i.cg = trunc i64 %.0.i279 to i32               ; 10 uses
   switch i8 %i.bm, label %sdslen.exit283 [
     i8 0, label %bb.ae
     i8 1, label %bb.af
@@ -391,7 +391,7 @@ bb.at:                                            ; preds = %.lr.ph368, %.thread
   %.0215364 = phi i32 [ 0, %.lr.ph368 ], [ %.2217321, %.thread326 ] ; 5 uses
   %.0218363 = phi i32 [ 0, %.lr.ph368 ], [ %.2220319, %.thread326 ] ; 6 uses
   %.0221362 = phi i32 [ 0, %.lr.ph368 ], [ %.2223317, %.thread326 ] ; 6 uses
-  %.0224361 = phi i32 [ %i.cg, %.lr.ph368 ], [ %.3227, %.thread326 ] ; 8 uses
+  %.0224361 = phi i32 [ %i.cg, %.lr.ph368 ], [ %.3227, %.thread326 ] ; 9 uses
   %.0231360 = phi i32 [ %i.dv, %.lr.ph368 ], [ %.1232314, %.thread326 ] ; 3 uses
   %i.ff = add i32 %.0367, -1                      ; 11 uses
   %i.fg = zext i32 %i.ff to i64
@@ -424,13 +424,15 @@ bb.aw:                                            ; preds = %bb.av, %bb.au
   %i.fu = icmp eq i32 %i.ff, 0
   %i.fv = icmp eq i32 %i.fj, 0
   %or.cond9 = or i1 %i.fu, %i.fv
-  br i1 %or.cond9, label %.thread303, label %.thread326
+  %cond.fr = freeze i1 %or.cond9
+  br i1 %cond.fr, label %.thread303, label %.thread326
 
 .thread:                                          ; preds = %bb.av
   %i.fw = icmp eq i32 %.0224361, 0
   %i.fx = icmp eq i32 %.0218363, 0
   %or.cond9415 = select i1 %i.fw, i1 true, i1 %i.fx
-  br i1 %or.cond9415, label %.thread303, label %.thread421
+  %cond.fr417 = freeze i1 %or.cond9415
+  br i1 %cond.fr417, label %.thread303, label %.thread421
 
 .thread421:                                       ; preds = %.thread
   %i.fy = sub i32 %.0221362, %.0224361
@@ -451,7 +453,8 @@ bb.ax:                                            ; preds = %bb.at
   %.4 = select i1 %i.gj, i32 %.3366, i32 %i.fj    ; 2 uses
   %.1 = select i1 %i.gj, i32 %i.ff, i32 %.0367    ; 2 uses
   %.not262 = icmp eq i32 %.0224361, %i.cg
-  br i1 %.not262, label %.thread326, label %.thread303
+  %cond.fr302 = freeze i1 %.not262
+  br i1 %cond.fr302, label %.thread326, label %.thread303
 
 .thread303:                                       ; preds = %.thread, %bb.ax, %bb.aw
   %.1232.ph = phi i32 [ %.0231360, %bb.ax ], [ %i.fo, %bb.aw ], [ %i.fo, %.thread ]
@@ -517,7 +520,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %.2220319 = phi i32 [ %.0218363, %bb.ax ], [ %.2220318, %bb.ba ], [ %.2220318, %bb.bd ], [ %.2220318, %bb.az ], [ %i.fj, %bb.aw ]
   %.2223317 = phi i32 [ %.0221362, %bb.ax ], [ %.2223316, %bb.ba ], [ %.2223316, %bb.bd ], [ %.2223316, %bb.az ], [ %.1222, %bb.aw ]
   %.1232314 = phi i32 [ %.0231360, %bb.ax ], [ %.1232313, %bb.ba ], [ %.1232313, %bb.bd ], [ %.1232313, %bb.az ], [ %i.fo, %bb.aw ]
-  %.3227 = phi i32 [ %i.cg, %bb.ax ], [ %i.cg, %bb.ba ], [ %i.cg, %bb.bd ], [ %i.cg, %bb.az ], [ %i.ff, %bb.aw ]
+  %.3227 = phi i32 [ %.0224361, %bb.ax ], [ %i.cg, %bb.ba ], [ %i.cg, %bb.bd ], [ %i.cg, %bb.az ], [ %i.ff, %bb.aw ]
   %.2214 = phi i32 [ %.0212365, %bb.ax ], [ %.0212365, %bb.ba ], [ %i.gv, %bb.bd ], [ %.0212365, %bb.az ], [ %.0212365, %bb.aw ] ; 2 uses
   %i.gw = icmp ne i32 %.2325, 0
   %i.gx = icmp ne i32 %.5323, 0

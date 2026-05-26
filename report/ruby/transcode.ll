@@ -201,9 +201,10 @@ ruby_nonempty_memcpy.exit200.i:                   ; preds = %bb.j, %bb.i
   %i.bf = getelementptr i8, ptr %i.be, i64 %..i
   store ptr %i.bf, ptr %.020, align 8, !tbaa !29
   %i.bg = load ptr, ptr %spec.select24, align 8, !tbaa !29
-  %i.bh = getelementptr i8, ptr %i.bg, i64 %..i   ; 2 uses
-  store ptr %i.bh, ptr %spec.select24, align 8, !tbaa !29
-  %.not190.i = icmp eq ptr %i.bh, %spec.select
+  %i.bh = getelementptr i8, ptr %i.bg, i64 %..i
+  %.fr225.i = freeze ptr %i.bh                    ; 2 uses
+  store ptr %.fr225.i, ptr %spec.select24, align 8, !tbaa !29
+  %.not190.i = icmp eq ptr %.fr225.i, %spec.select
   br i1 %.not190.i, label %select.unfold219.i, label %.thread221.i
 
 bb.k:                                             ; preds = %.backedge
@@ -299,8 +300,9 @@ bb.t:                                             ; preds = %bb.s
   br i1 %.not183.i, label %.thread217.i, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cr = call fastcc i32 @rb_trans_conv(ptr noundef nonnull %0, ptr noundef nonnull %spec.select24, ptr noundef %i.cq, ptr noundef nonnull %.020, ptr noundef %.019, i32 noundef %5, ptr noundef %i.d) ; 2 uses
-  %i.cs = icmp eq i32 %i.cr, 3
+  %i.cr = call fastcc i32 @rb_trans_conv(ptr noundef nonnull %0, ptr noundef nonnull %spec.select24, ptr noundef %i.cq, ptr noundef nonnull %.020, ptr noundef %.019, i32 noundef %5, ptr noundef %i.d)
+  %.fr.i = freeze i32 %i.cr                       ; 2 uses
+  %i.cs = icmp eq i32 %.fr.i, 3
   br i1 %i.cs, label %.thread221.i, label %select.unfold219.i
 
 bb.v:                                             ; preds = %bb.s
@@ -326,7 +328,7 @@ bb.w:                                             ; preds = %bb.v
   br label %rb_econv_convert0.exit
 
 select.unfold219.i:                               ; preds = %.preheader62, %.thread217.i, %bb.u, %bb.r, %ruby_nonempty_memcpy.exit200.i
-  %.5.i = phi i32 [ %.192.i, %ruby_nonempty_memcpy.exit200.i ], [ %i.cp, %bb.r ], [ %i.cr, %bb.u ], [ %i.cv, %.thread217.i ], [ %i.cw, %.preheader62 ] ; 4 uses
+  %.5.i = phi i32 [ %.192.i, %ruby_nonempty_memcpy.exit200.i ], [ %i.cp, %bb.r ], [ %.fr.i, %bb.u ], [ %i.cv, %.thread217.i ], [ %i.cw, %.preheader62 ] ; 4 uses
   store i32 %.5.i, ptr %i.h, align 8, !tbaa !52
   switch i32 %.5.i, label %rb_econv_convert0.exit [
     i32 6, label %bb.x

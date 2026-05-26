@@ -201,7 +201,7 @@ bb.ad:                                            ; preds = %sz_size2index.exit.
   br i1 %i.ei, label %bb.af, label %bb.ae, !prof !118
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.ej = load i8, ptr %i.g, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.ej = load i8, ptr %i.g, align 8, !tbaa !95, !range !96, !noundef !97
   %i.ek = trunc nuw i8 %i.ej to i1
   %i.el = getelementptr inbounds nuw i8, ptr %i.g, i64 864 ; 4 uses
   br i1 %i.ek, label %bb.ah, label %iallocztm_explicit_slab.exit.i.thread
@@ -604,7 +604,7 @@ bb.w:                                             ; preds = %aligned_usize_get.e
   br i1 %i.dn, label %bb.y, label %bb.x, !prof !118
 
 bb.x:                                             ; preds = %bb.w
-  %i.do = load i8, ptr %i.e, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.do = load i8, ptr %i.e, align 8, !tbaa !95, !range !96, !noundef !97
   %i.dp = trunc nuw i8 %i.do to i1
   %i.dq = getelementptr inbounds nuw i8, ptr %i.e, i64 864
   %spec.select = select i1 %i.dp, ptr %i.dq, ptr null
@@ -973,7 +973,7 @@ bb.x:                                             ; preds = %aligned_usize_get.e
   br i1 %i.dl, label %bb.z, label %bb.y, !prof !118
 
 bb.y:                                             ; preds = %bb.x
-  %i.dm = load i8, ptr %i.e, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.dm = load i8, ptr %i.e, align 8, !tbaa !95, !range !96, !noundef !97
   %i.dn = trunc nuw i8 %i.dm to i1
   %i.do = getelementptr inbounds nuw i8, ptr %i.e, i64 864
   %spec.select = select i1 %i.dn, ptr %i.do, ptr null
@@ -1376,7 +1376,7 @@ bb.ah:                                            ; preds = %sz_size2index.exit.
   br i1 %i.eq, label %bb.aj, label %bb.ai, !prof !118
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.er = load i8, ptr %i.g, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.er = load i8, ptr %i.g, align 8, !tbaa !95, !range !96, !noundef !97
   %i.es = trunc nuw i8 %i.er to i1
   %i.et = getelementptr inbounds nuw i8, ptr %i.g, i64 864 ; 4 uses
   br i1 %i.es, label %bb.al, label %iallocztm_explicit_slab.exit.i.thread
@@ -1779,7 +1779,7 @@ bb.l:                                             ; preds = %tsd_fetch_impl.exit
   br i1 %i.bu, label %bb.m, label %tcache_get_from_ind.exit, !prof !9
 
 bb.m:                                             ; preds = %bb.l
-  %i.bv = load i8, ptr %i.e, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.bv = load i8, ptr %i.e, align 8, !tbaa !95, !range !96, !noundef !97
   %i.bw = trunc nuw i8 %i.bv to i1
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 864
   %spec.select = select i1 %i.bw, ptr %i.bx, ptr null
@@ -2182,7 +2182,7 @@ bb.r:                                             ; preds = %aligned_usize_get.e
   br i1 %i.cn, label %bb.t, label %bb.s, !prof !118
 
 bb.s:                                             ; preds = %bb.r
-  %i.co = load i8, ptr %i.e, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.co = load i8, ptr %i.e, align 8, !tbaa !95, !range !96, !noundef !97
   %i.cp = trunc nuw i8 %i.co to i1
   %i.cq = getelementptr inbounds nuw i8, ptr %i.e, i64 864
   %spec.select = select i1 %i.cp, ptr %i.cq, ptr null
@@ -2585,7 +2585,7 @@ bb.bl:                                            ; preds = %bb.bk
   ]
 
 bb.bm:                                            ; preds = %bb.bl
-  %i.iu = load i8, ptr %i.s, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.iu = load i8, ptr %i.s, align 8, !tbaa !95, !range !96, !noundef !97
   %i.iv = trunc nuw i8 %i.iu to i1
   %i.iw = getelementptr inbounds nuw i8, ptr %i.s, i64 864
   %spec.select = select i1 %i.iv, ptr %i.iw, ptr null
@@ -2988,7 +2988,7 @@ bb.ah:                                            ; preds = %sz_size2index.exit.
   br i1 %i.eo, label %bb.aj, label %bb.ai, !prof !118
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.ep = load i8, ptr %i.m, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.ep = load i8, ptr %i.m, align 8, !tbaa !95, !range !96, !noundef !97
   %i.eq = trunc nuw i8 %i.ep to i1
   %i.er = getelementptr inbounds nuw i8, ptr %i.m, i64 864 ; 4 uses
   br i1 %i.eq, label %bb.al, label %iallocztm_explicit_slab.exit.i.thread
@@ -3391,7 +3391,8 @@ sz_s2u_compute.exit29.i:                          ; preds = %bb.o, %bb.n
   %i.bm = add i64 %i.bl, %.0.i13
   %i.bn = add i64 %i.bm, %i.bi
   %i.bo = icmp ult i64 %i.bn, %.0.i13
-  br i1 %i.bo, label %malloc_init.exit.thread, label %aligned_usize_get.exit
+  %cond.fr = freeze i1 %i.bo
+  br i1 %cond.fr, label %malloc_init.exit.thread, label %aligned_usize_get.exit
 
 aligned_usize_get.exit:                           ; preds = %.thread15, %bb.f, %bb.h
   %storemerge.i = phi i64 [ %.0.i13, %.thread15 ], [ %i.v, %bb.f ], [ %i.ac, %bb.h ] ; 2 uses
@@ -3794,7 +3795,7 @@ bb.y:                                             ; preds = %mallocx_arena_get.e
 
 bb.z:                                             ; preds = %bb.y
   %i.dx = call ptr @duckdb_je_arena_choose_hard(ptr noundef nonnull %.0.i133153, i1 noundef zeroext false) ; 7 uses
-  %i.dy = load i8, ptr %.0.i133153, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.dy = load i8, ptr %.0.i133153, align 8, !tbaa !95, !range !96, !noundef !97
   %i.dz = trunc nuw i8 %i.dy to i1
   br i1 %i.dz, label %bb.aa, label %arena_get_from_ind.exit
 
@@ -4086,7 +4087,7 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.j = tail call ptr @duckdb_je_arena_choose_hard(ptr noundef nonnull %0, i1 noundef zeroext false) ; 7 uses
-  %i.k = load i8, ptr %0, align 1, !tbaa !95, !range !96, !noundef !97
+  %i.k = load i8, ptr %0, align 8, !tbaa !95, !range !96, !noundef !97
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.g, label %arena_choose_impl.exit
 
@@ -4489,13 +4490,14 @@ select.unfold:                                    ; preds = %malloc_mutex_lock.e
   %i.aa = load ptr, ptr %.030, align 8, !tbaa !166 ; 3 uses
   %i.ab = load ptr, ptr %i.w, align 8, !tbaa !164
   %.not21 = icmp eq ptr %i.aa, %i.ab
+  %cond.fr = freeze i1 %.not21
   %.not2036 = icmp eq ptr %i.aa, null
-  %.not20 = or i1 %.not21, %.not2036
+  %.not20 = select i1 %cond.fr, i1 true, i1 %.not2036
   br i1 %.not20, label %select.unfold._crit_edge, label %select.unfold
 
 select.unfold._crit_edge:                         ; preds = %select.unfold, %malloc_mutex_lock.exit
   %i.ac = getelementptr inbounds nuw i8, ptr %i.i, i64 10488
-  store atomic i8 0, ptr %i.ac monotonic, align 1
+  store atomic i8 0, ptr %i.ac monotonic, align 8
   %i.ad = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.k) #21 ; 0 uses
   br label %arena_get.exit.thread
 

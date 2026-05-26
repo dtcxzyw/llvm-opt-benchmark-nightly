@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %bb.b
   %i.e = and i64 %i.b, 281474976710655
   %i.f = inttoptr i64 %i.e to ptr                 ; 2 uses
   %i.g = load i32, ptr %i.f, align 4
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.g, -16777216
+  %.fr = freeze i32 %i.g
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
   %i.h = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 939524096
   br i1 %i.h, label %_ZN6hermes2vm10dyn_vmcastINS0_8JSNumberEEEPT_NS0_11HermesValueE.exit, label %_ZN6hermes2vm11TwineChar16C2EPKc.exit
 
@@ -255,7 +256,8 @@ bb.c:                                             ; preds = %bb.b
   %i.f = and i64 %i.b, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.h, -16777216
+  %.fr = freeze i32 %i.h
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
   %i.i = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 939524096
   br i1 %i.i, label %bb.d, label %.thread
 
@@ -395,7 +397,8 @@ bb.c:                                             ; preds = %bb.b
   %i.f = and i64 %i.b, 281474976710655
   %i.g = inttoptr i64 %i.f to ptr                 ; 2 uses
   %i.h = load i32, ptr %i.g, align 4
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.h, -16777216
+  %.fr = freeze i32 %i.h
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
   %i.i = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 939524096
   br i1 %i.i, label %bb.d, label %.thread
 

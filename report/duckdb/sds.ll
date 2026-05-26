@@ -201,16 +201,17 @@ _ZN10duckdb_hllL10sdsHdrSizeEc.exit:              ; preds = %_ZN10duckdb_hllL6sd
   %i.av = icmp ult i64 %i.au, 1048576
   %i.aw = shl nuw nsw i64 %i.au, 1
   %i.ax = add i64 %i.au, 1048576
-  %.042 = select i1 %i.av, i64 %i.aw, i64 %i.ax   ; 8 uses
-  %i.ay = icmp ult i64 %.042, 256
+  %.042 = select i1 %i.av, i64 %i.aw, i64 %i.ax
+  %.042.fr = freeze i64 %.042                     ; 8 uses
+  %i.ay = icmp ult i64 %.042.fr, 256
   br i1 %i.ay, label %_ZN10duckdb_hllL10sdsHdrSizeEc.exit51, label %bb.l
 
 bb.l:                                             ; preds = %_ZN10duckdb_hllL10sdsHdrSizeEc.exit
-  %i.az = icmp ult i64 %.042, 65536
+  %i.az = icmp ult i64 %.042.fr, 65536
   br i1 %i.az, label %_ZN10duckdb_hllL10sdsHdrSizeEc.exit51, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ba = icmp ult i64 %.042, 4294967296          ; 2 uses
+  %i.ba = icmp ult i64 %.042.fr, 4294967296       ; 2 uses
   %spec.select = select i1 %i.ba, i8 3, i8 4
   %spec.select76 = select i1 %i.ba, i64 10, i64 18
   br label %_ZN10duckdb_hllL10sdsHdrSizeEc.exit51
@@ -222,7 +223,7 @@ _ZN10duckdb_hllL10sdsHdrSizeEc.exit51:            ; preds = %bb.m, %_ZN10duckdb_
   %.0.i4958 = phi i8 [ 2, %bb.l ], [ 1, %_ZN10duckdb_hllL10sdsHdrSizeEc.exit ], [ %spec.select, %bb.m ] ; 3 uses
   %.0.i50 = phi i64 [ 6, %bb.l ], [ 4, %_ZN10duckdb_hllL10sdsHdrSizeEc.exit ], [ %spec.select76, %bb.m ] ; 3 uses
   %i.bb = icmp eq i8 %i.c, %.0.i4958
-  %i.bc = add i64 %.042, 1
+  %i.bc = add i64 %.042.fr, 1
   %i.bd = add i64 %i.bc, %.0.i50                  ; 2 uses
   br i1 %i.bb, label %bb.n, label %bb.o
 
@@ -287,21 +288,21 @@ _ZN10duckdb_hllL9sdssetlenEPcm.exit:              ; preds = %bb.n
 
 bb.q:                                             ; preds = %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread67, %_ZN10duckdb_hllL9sdssetlenEPcm.exit
   %.04169 = phi ptr [ %i.bi, %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread67 ], [ %i.bs, %_ZN10duckdb_hllL9sdssetlenEPcm.exit ] ; 2 uses
-  %i.bu = trunc i64 %.042 to i8
+  %i.bu = trunc i64 %.042.fr to i8
   %i.bv = getelementptr inbounds i8, ptr %.04169, i64 -3
   store i8 %i.bu, ptr %i.bv, align 1, !tbaa !9
   br label %_ZN10duckdb_hllL11sdssetallocEPcm.exit
 
 bb.r:                                             ; preds = %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread70, %_ZN10duckdb_hllL9sdssetlenEPcm.exit
   %.04172 = phi ptr [ %i.bi, %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread70 ], [ %i.bs, %_ZN10duckdb_hllL9sdssetlenEPcm.exit ] ; 2 uses
-  %i.bw = trunc i64 %.042 to i16
+  %i.bw = trunc i64 %.042.fr to i16
   %i.bx = getelementptr inbounds i8, ptr %.04172, i64 -4
   store i16 %i.bw, ptr %i.bx, align 1, !tbaa !13
   br label %_ZN10duckdb_hllL11sdssetallocEPcm.exit
 
 bb.s:                                             ; preds = %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread73, %_ZN10duckdb_hllL9sdssetlenEPcm.exit
   %.04175 = phi ptr [ %i.bi, %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread73 ], [ %i.bs, %_ZN10duckdb_hllL9sdssetlenEPcm.exit ] ; 2 uses
-  %i.by = trunc i64 %.042 to i32
+  %i.by = trunc i64 %.042.fr to i32
   %i.bz = getelementptr inbounds i8, ptr %.04175, i64 -6
   store i32 %i.by, ptr %i.bz, align 1, !tbaa !16
   br label %_ZN10duckdb_hllL11sdssetallocEPcm.exit
@@ -309,7 +310,7 @@ bb.s:                                             ; preds = %_ZN10duckdb_hllL9sd
 bb.t:                                             ; preds = %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread, %_ZN10duckdb_hllL9sdssetlenEPcm.exit
   %.04166 = phi ptr [ %i.bi, %_ZN10duckdb_hllL9sdssetlenEPcm.exit.thread ], [ %i.bs, %_ZN10duckdb_hllL9sdssetlenEPcm.exit ] ; 2 uses
   %i.ca = getelementptr inbounds i8, ptr %.04166, i64 -10
-  store i64 %.042, ptr %i.ca, align 1, !tbaa !20
+  store i64 %.042.fr, ptr %i.ca, align 1, !tbaa !20
   br label %_ZN10duckdb_hllL11sdssetallocEPcm.exit
 
 _ZN10duckdb_hllL11sdssetallocEPcm.exit:           ; preds = %bb.t, %bb.s, %bb.r, %bb.q, %_ZN10duckdb_hllL9sdssetlenEPcm.exit, %bb.o, %bb.n, %_ZN10duckdb_hllL8sdsavailEPc.exit

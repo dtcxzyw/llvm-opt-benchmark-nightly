@@ -201,7 +201,8 @@ bb.l:                                             ; preds = %.preheader165
   %i.at = call i64 @rdbLoadTime(ptr noundef nonnull @redis_check_rdb.rdb) #13
   %i.au = mul nsw i64 %i.at, 1000
   %i.av = load i64, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 48), align 8, !tbaa !41
-  %i.aw = and i64 %i.av, 1
+  %.fr174 = freeze i64 %i.av
+  %i.aw = and i64 %.fr174, 1
   %.not103 = icmp eq i64 %i.aw, 0
   br i1 %.not103, label %.preheader165.backedge, label %rioRead.exit.thread
 
@@ -209,7 +210,8 @@ bb.m:                                             ; preds = %.preheader165
   store i32 2, ptr getelementptr inbounds nuw (i8, ptr @rdbstate, i64 56), align 8, !tbaa !25
   %i.ax = call i64 @rdbLoadMillisecondTime(ptr noundef nonnull @redis_check_rdb.rdb, i32 noundef %i.aq) #13
   %i.ay = load i64, ptr getelementptr inbounds nuw (i8, ptr @redis_check_rdb.rdb, i64 48), align 8, !tbaa !41
-  %i.az = and i64 %i.ay, 1
+  %.fr172 = freeze i64 %i.ay
+  %i.az = and i64 %.fr172, 1
   %.not102 = icmp eq i64 %i.az, 0
   br i1 %.not102, label %.preheader165.backedge, label %rioRead.exit.thread
 
@@ -254,7 +256,8 @@ rioRead.exit122:                                  ; preds = %rioRead.exit122.loo
 
 bb.q:                                             ; preds = %.preheader165
   %i.bl = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
-  %i.bm = icmp eq i64 %i.bl, -1
+  %.fr170 = freeze i64 %i.bl
+  %i.bm = icmp eq i64 %.fr170, -1
   br i1 %i.bm, label %rioRead.exit.thread, label %.preheader165.backedge
 
 bb.r:                                             ; preds = %.preheader165
@@ -348,7 +351,8 @@ bb.y:                                             ; preds = %.preheader165
 
 bb.z:                                             ; preds = %bb.y
   %i.cl = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
-  %i.cm = icmp eq i64 %i.cl, -1
+  %.fr169 = freeze i64 %i.cl
+  %i.cm = icmp eq i64 %.fr169, -1
   br i1 %i.cm, label %rioRead.exit.thread, label %.preheader165.backedge
 
 bb.aa:                                            ; preds = %.preheader165
@@ -363,7 +367,8 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab
   %i.cr = call i64 @rdbLoadLen(ptr noundef nonnull @redis_check_rdb.rdb, ptr noundef null) #13
-  %i.cs = icmp eq i64 %i.cr, -1
+  %.fr = freeze i64 %i.cr
+  %i.cs = icmp eq i64 %.fr, -1
   br i1 %i.cs, label %rioRead.exit.thread, label %.preheader165.backedge
 
 bb.ad:                                            ; preds = %.preheader165

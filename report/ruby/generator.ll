@@ -201,16 +201,17 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #24
   store i64 %0, ptr %i.a, align 16, !tbaa !10
   store i64 20, ptr %i.aq, align 8, !tbaa !10
-  %i.ay = call i64 @rb_proc_call_with_block(i64 noundef %i.aw, i32 noundef 2, ptr noundef nonnull %i.a, i64 noundef 4) #24 ; 11 uses
+  %i.ay = call i64 @rb_proc_call_with_block(i64 noundef %i.aw, i32 noundef 2, ptr noundef nonnull %i.a, i64 noundef 4) #24
+  %.fr101 = freeze i64 %i.ay                      ; 11 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  %i.az = icmp eq i64 %i.ay, 0
-  %i.ba = and i64 %i.ay, 7
+  %i.az = icmp eq i64 %.fr101, 0
+  %i.ba = and i64 %.fr101, 7
   %i.bb = icmp ne i64 %i.ba, 0
   %i.bc = or i1 %i.az, %i.bb
   br i1 %i.bc, label %bb.p, label %rb_type.exit69.peel
 
 bb.p:                                             ; preds = %bb.o
-  %i.bd = call i64 @llvm.fshl.i64(i64 %i.ay, i64 %i.ay, i64 62)
+  %i.bd = call i64 @llvm.fshl.i64(i64 %.fr101, i64 %.fr101, i64 62)
   switch i64 %i.bd, label %bb.q [
     i64 0, label %rb_type.exit69.peel.thread
     i64 1, label %rb_type.exit69.peel.thread
@@ -219,12 +220,12 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p
-  %i.be = and i64 %i.ay, 255
+  %i.be = and i64 %.fr101, 255
   %or.cond = icmp eq i64 %i.be, 12
   br i1 %or.cond, label %.loopexit88, label %rb_type.exit69.peel.thread
 
 rb_type.exit69.peel:                              ; preds = %bb.o
-  %i.bf = inttoptr i64 %i.ay to ptr
+  %i.bf = inttoptr i64 %.fr101 to ptr
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !23
   %i.bh = trunc i64 %i.bg to i32
   %i.bi = and i32 %i.bh, 31
@@ -234,7 +235,7 @@ rb_type.exit69.peel:                              ; preds = %bb.o
   ]
 
 .loopexit:                                        ; preds = %rb_type.exit69.peel, %.peel.begin
-  %.058.lcssa = phi i64 [ %0, %.peel.begin ], [ %i.ay, %rb_type.exit69.peel ] ; 3 uses
+  %.058.lcssa = phi i64 [ %0, %.peel.begin ], [ %.fr101, %rb_type.exit69.peel ] ; 3 uses
   %.0.lcssa = phi i1 [ false, %.peel.begin ], [ true, %rb_type.exit69.peel ] ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.bk = load i32, ptr %i.bj, align 8, !tbaa !95
@@ -258,7 +259,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.w
 
 .loopexit88:                                      ; preds = %bb.q, %rb_type.exit69.peel, %.peel.begin
-  %.058.lcssa84 = phi i64 [ %0, %.peel.begin ], [ %i.ay, %rb_type.exit69.peel ], [ %i.ay, %bb.q ]
+  %.058.lcssa84 = phi i64 [ %0, %.peel.begin ], [ %.fr101, %rb_type.exit69.peel ], [ %.fr101, %bb.q ]
   %.0.lcssa80 = phi i1 [ false, %.peel.begin ], [ true, %rb_type.exit69.peel ], [ true, %bb.q ]
   %i.br = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.bs = load i32, ptr %i.br, align 8, !tbaa !95
@@ -281,13 +282,13 @@ rb_type.exit69.peel.thread:                       ; preds = %bb.p, %bb.p, %bb.p,
   br i1 %i.bx, label %.loopexit90, label %.loopexit89
 
 .loopexit90:                                      ; preds = %rb_type.exit69.peel.thread, %bb.n
-  %.058.lcssa86 = phi i64 [ %0, %bb.n ], [ %i.ay, %rb_type.exit69.peel.thread ] ; 2 uses
+  %.058.lcssa86 = phi i64 [ %0, %bb.n ], [ %.fr101, %rb_type.exit69.peel.thread ] ; 2 uses
   %i.by = call fastcc i64 @rb_class_of(i64 noundef %.058.lcssa86) #30
   call void (i64, ptr, ...) @raise_generator_error(i64 noundef %.058.lcssa86, ptr noundef nonnull @.str.83, i64 noundef %i.by) #29
   unreachable
 
 .loopexit89:                                      ; preds = %rb_type.exit69.peel.thread, %bb.m
-  %.058.lcssa85 = phi i64 [ %0, %bb.m ], [ %i.ay, %rb_type.exit69.peel.thread ]
+  %.058.lcssa85 = phi i64 [ %0, %bb.m ], [ %.fr101, %rb_type.exit69.peel.thread ]
   %i.bz = call i64 @rb_convert_type(i64 noundef %.058.lcssa85, i32 noundef 5, ptr noundef nonnull @.str.53, ptr noundef nonnull @.str.59) #24
   br label %bb.w
 

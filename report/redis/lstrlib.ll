@@ -201,7 +201,8 @@ bb.a:
   %i.h = call i64 @luaL_optinteger(ptr noundef %0, i32 noundef 4, i64 noundef %i.g) #10
   %i.i = trunc i64 %i.h to i32
   %i.j = load i8, ptr %i.d, align 1, !tbaa !10
-  %.not47 = icmp eq i8 %i.j, 94                   ; 2 uses
+  %.fr = freeze i8 %i.j
+  %.not47 = icmp eq i8 %.fr, 94                   ; 2 uses
   %spec.select.idx = zext i1 %.not47 to i64
   %spec.select = getelementptr inbounds nuw i8, ptr %i.d, i64 %spec.select.idx
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
@@ -604,7 +605,8 @@ check_capture.exit.i:                             ; preds = %bb.bg, %bb.bf
 bb.bh:                                            ; preds = %check_capture.exit.i
   %i.fy = load ptr, ptr %i.fr, align 8, !tbaa !35
   %bcmp.i = tail call i32 @bcmp(ptr %i.fy, ptr %.075.ph.ph, i64 %i.ft)
-  %i.fz = icmp ne i32 %bcmp.i, 0
+  %bcmp.i.fr = freeze i32 %bcmp.i
+  %i.fz = icmp ne i32 %bcmp.i.fr, 0
   %i.ga = icmp eq ptr %.075.ph.ph, null
   %or.cond = select i1 %i.fz, i1 true, i1 %i.ga
   br i1 %or.cond, label %start_capture.exit, label %bb.bi

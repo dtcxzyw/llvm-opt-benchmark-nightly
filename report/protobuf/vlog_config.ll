@@ -201,9 +201,10 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.thread: ; preds = %
   br i1 %.not79, label %.lr.ph.preheader, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.thread
-  %i.i = tail call ptr @memchr(ptr noundef %.sroa.7.0, i32 noundef 46, i64 noundef %.sroa.064.0) #19 ; 2 uses
-  %.not.i51 = icmp eq ptr %i.i, null
-  %i.j = ptrtoint ptr %i.i to i64
+  %i.i = tail call ptr @memchr(ptr noundef %.sroa.7.0, i32 noundef 46, i64 noundef %.sroa.064.0) #19
+  %.fr = freeze ptr %i.i                          ; 2 uses
+  %.not.i51 = icmp eq ptr %.fr, null
+  %i.j = ptrtoint ptr %.fr to i64
   %i.k = ptrtoint ptr %.sroa.7.0 to i64
   %i.l = sub i64 %i.j, %i.k                       ; 3 uses
   %.not42 = icmp eq i64 %i.l, -1
@@ -520,7 +521,7 @@ bb.t:                                             ; preds = %bb.p, %.lr.ph
   %.119 = phi ptr [ %.01846, %.lr.ph ], [ %i.av, %bb.p ]
   %.117 = phi i32 [ %.01647, %.lr.ph ], [ %i.ax, %bb.p ] ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.02045, i64 8
-  store atomic i32 %.117, ptr %i.bb seq_cst, align 4
+  store atomic i32 %.117, ptr %i.bb seq_cst, align 8
   %i.bc = getelementptr inbounds nuw i8, ptr %.02045, i64 16
   %i.bd = load atomic ptr, ptr %i.bc seq_cst, align 8 ; 2 uses
   %.not = icmp eq ptr %i.bd, null

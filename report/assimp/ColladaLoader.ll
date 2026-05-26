@@ -201,7 +201,7 @@ bb.ak:                                            ; preds = %bb.ai
   br i1 %i.tc, label %_ZN10aiMetadata3SetI8aiStringEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  %i.td = load i32, ptr %i.sg, align 4
+  %i.td = load i32, ptr %i.sg, align 8
   %spec.select.i.i = call i32 @llvm.umin.i32(i32 %i.td, i32 1023) ; 2 uses
   store i32 %spec.select.i.i, ptr %i.ta, align 4
   %i.te = getelementptr inbounds nuw i8, ptr %i.ta, i64 4 ; 2 uses
@@ -213,7 +213,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %_ZN10aiMetadata3SetI8aiStringEEbjRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKT_.exit
 
 .thread29.i:                                      ; preds = %_ZN8aiStringaSERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
-  %.pre.i = load i32, ptr %i.sg, align 4
+  %.pre.i = load i32, ptr %i.sg, align 8
   %i.ti = invoke noalias noundef nonnull dereferenceable(1028) ptr @_Znwm(i64 noundef 1028) #30
           to label %.noexc54 unwind label %bb.am  ; 3 uses
 
@@ -616,7 +616,7 @@ bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw i8, ptr %i.h, i64 68 ; 2 uses
   %i.aw = load float, ptr %i.av, align 4
   %i.ax = getelementptr inbounds nuw i8, ptr %i.h, i64 72
-  %i.ay = load float, ptr %i.ax, align 4
+  %i.ay = load float, ptr %i.ax, align 8
   %i.az = fmul float %i.ay, 7.151600e-01
   %i.ba = call float @llvm.fmuladd.f32(float %i.aw, float 2.126710e-01, float %i.az)
   %i.bb = getelementptr inbounds nuw i8, ptr %i.h, i64 76
@@ -625,13 +625,13 @@ bb.f:                                             ; preds = %bb.e
   %i.be = fmul float %i.ap, %i.bd
   store float %i.be, ptr %i.ao, align 4
   %i.bf = getelementptr inbounds nuw i8, ptr %i.h, i64 80
-  store float 1.000000e+00, ptr %i.bf, align 4
+  store float 1.000000e+00, ptr %i.bf, align 8
   %i.bg = call noundef i32 @_ZN10aiMaterial17AddBinaryPropertyEPKvjPKcjj18aiPropertyTypeInfo(ptr noundef nonnull align 8 dereferenceable(16) %i.g, ptr noundef nonnull %i.av, i32 noundef 16, ptr noundef nonnull @.str.74, i32 noundef 0, i32 noundef 0, i32 noundef 1) ; 0 uses
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
   %i.bh = getelementptr inbounds nuw i8, ptr %i.h, i64 80
-  %i.bi = load float, ptr %i.bh, align 4
+  %i.bi = load float, ptr %i.bh, align 8
   %i.bj = fmul float %i.ap, %i.bi
   store float %i.bj, ptr %i.ao, align 4
   br label %bb.h
@@ -1034,7 +1034,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i: ; preds = %_ZNSt11ch
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i
   %.0.i.i.i8.i = phi i32 [ %i.gh, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i ], [ %.0.i6.i.i.i12.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i ]
-  %i.gj = icmp slt i32 %.0.i.i.i8.i, 0
+  %.0.i.i.i8.i.fr = freeze i32 %.0.i.i.i8.i
+  %i.gj = icmp slt i32 %.0.i.i.i8.i.fr, 0
   br i1 %i.gj, label %.noexc158.thread220, label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE6insertERKS5_.exit
 
 .noexc158.thread220:                              ; preds = %._crit_edge.thread.i, %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i
@@ -1208,7 +1209,7 @@ bb.ah:                                            ; preds = %_ZNKSt7__cxx1112bas
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aa, ptr align 1 %i.ij, i64 %i.ik, i1 false)
   %i.il = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ik
   store i8 0, ptr %i.il, align 1
-  store i32 %spec.select.i, ptr %i.hk, align 4
+  store i32 %spec.select.i, ptr %i.hk, align 8
   %i.im = getelementptr inbounds nuw i8, ptr %i.hk, i64 4 ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.im, ptr nonnull align 4 %i.aa, i64 %i.ik, i1 false)
   %i.in = getelementptr inbounds nuw i8, ptr %i.im, i64 %i.ik
@@ -1611,7 +1612,7 @@ bb.f:                                             ; preds = %bb.e
   br label %_ZN8aiStringaSERKS_.exit
 
 _ZN8aiStringaSERKS_.exit:                         ; preds = %bb.e, %bb.f
-  %i.ar = load i32, ptr %i.ag, align 4            ; 3 uses
+  %i.ar = load i32, ptr %i.ag, align 8            ; 3 uses
   %i.as = getelementptr inbounds nuw i8, ptr %i.ah, i64 1028
   store i32 %i.ar, ptr %i.as, align 4
   %i.at = getelementptr inbounds nuw i8, ptr %i.ah, i64 1044
@@ -1619,14 +1620,14 @@ _ZN8aiStringaSERKS_.exit:                         ; preds = %bb.e, %bb.f
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ah, i64 1052
   store float -1.000000e+00, ptr %.sroa.5.0..sroa_idx, align 4
   %i.au = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 80
-  %i.av = load float, ptr %i.au, align 4
+  %i.av = load float, ptr %i.au, align 8
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ah, i64 1068
   store float %i.av, ptr %i.aw, align 4
   %i.ax = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 84
   %i.ay = load float, ptr %i.ax, align 4
   store float %i.ay, ptr %i.ai, align 4
   %i.az = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 88
-  %i.ba = load float, ptr %i.az, align 4
+  %i.ba = load float, ptr %i.az, align 8
   store float %i.ba, ptr %i.aj, align 4
   %i.bb = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 68 ; 3 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 108 ; 3 uses
@@ -1634,7 +1635,7 @@ _ZN8aiStringaSERKS_.exit:                         ; preds = %bb.e, %bb.f
   %i.be = load float, ptr %i.bb, align 4, !noalias !77
   %i.bf = fmul float %i.bd, %i.be                 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 72 ; 2 uses
-  %i.bh = load float, ptr %i.bg, align 4, !noalias !77
+  %i.bh = load float, ptr %i.bg, align 8, !noalias !77
   %i.bi = fmul float %i.bd, %i.bh                 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 76 ; 3 uses
   %i.bk = load float, ptr %i.bj, align 4, !noalias !77
@@ -1665,7 +1666,7 @@ _ZN8aiStringaSERKS_.exit:                         ; preds = %bb.e, %bb.f
   %i.bw = load float, ptr %i.bc, align 4          ; 3 uses
   %i.bx = load float, ptr %i.bb, align 4, !noalias !80
   %i.by = fmul float %i.bw, %i.bx
-  %i.bz = load float, ptr %i.bg, align 4, !noalias !80
+  %i.bz = load float, ptr %i.bg, align 8, !noalias !80
   %i.ca = fmul float %i.bw, %i.bz
   %i.cb = load float, ptr %i.bj, align 4, !noalias !80
   %i.cc = fmul float %i.bw, %i.cb
@@ -1699,7 +1700,7 @@ bb.h:                                             ; preds = %bb.g
   %i.cr = fmul float %i.cq, f0x3C8EFA35           ; 5 uses
   store float %i.cr, ptr %i.ak, align 4
   %i.cs = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 104
-  %i.ct = load float, ptr %i.cs, align 4          ; 2 uses
+  %i.ct = load float, ptr %i.cs, align 8          ; 2 uses
   %i.cu = fcmp ult float %i.ct, f0x4E6E6B18
   br i1 %i.cu, label %bb.m, label %bb.i
 
@@ -1711,7 +1712,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.cy = getelementptr inbounds nuw i8, ptr %.19.i.i.i, i64 96
-  %i.cz = load float, ptr %i.cy, align 4          ; 2 uses
+  %i.cz = load float, ptr %i.cy, align 8          ; 2 uses
   %i.da = fcmp une float %i.cz, 0.000000e+00
   %i.db = fdiv float 1.000000e+00, %i.cz
   %.0 = select i1 %i.da, float %i.db, float 1.000000e+00
@@ -2114,14 +2115,14 @@ bb.go:                                            ; preds = %bb.gn
   br label %bb.gp
 
 bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.go
-  %i.all = load <4 x float>, ptr %i.ahj, align 4
+  %i.all = load <4 x float>, ptr %i.ahj, align 8
   %i.alm = load <4 x float>, ptr %i.ahk, align 4
   %i.aln = getelementptr inbounds nuw i8, ptr %i.ahi, i64 1104 ; 2 uses
-  %i.alo = load <4 x float>, ptr %i.aln, align 4
+  %i.alo = load <4 x float>, ptr %i.aln, align 8
   %i.alp = getelementptr inbounds nuw i8, ptr %i.ahi, i64 1108
   %i.alq = load float, ptr %i.alp, align 4
   %i.alr = getelementptr inbounds nuw i8, ptr %i.ahi, i64 1112
-  %i.als = load float, ptr %i.alr, align 4
+  %i.als = load float, ptr %i.alr, align 8
   %i.alt = load float, ptr %i.ahp, align 4
   %i.alu = load <4 x float>, ptr %i.afv, align 8  ; 4 uses
   %i.alv = load <4 x float>, ptr %i.afw, align 8  ; 4 uses
@@ -2137,7 +2138,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.
   %i.amf = insertelement <4 x float> poison, float %i.aiw, i64 0
   %i.amg = shufflevector <4 x float> %i.amf, <4 x float> poison, <4 x i32> zeroinitializer
   %i.amh = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.alx, <4 x float> %i.amg, <4 x float> %i.ame)
-  store <4 x float> %i.amh, ptr %i.ahj, align 4
+  store <4 x float> %i.amh, ptr %i.ahj, align 8
   %i.ami = insertelement <4 x float> poison, float %i.aji, i64 0
   %i.amj = shufflevector <4 x float> %i.ami, <4 x float> poison, <4 x i32> zeroinitializer
   %i.amk = fmul <4 x float> %i.alv, %i.amj
@@ -2150,7 +2151,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.
   %i.amr = insertelement <4 x float> poison, float %i.ajs, i64 0
   %i.ams = shufflevector <4 x float> %i.amr, <4 x float> poison, <4 x i32> zeroinitializer
   %i.amt = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.alx, <4 x float> %i.ams, <4 x float> %i.amq)
-  store <4 x float> %i.amt, ptr %i.ajd, align 4
+  store <4 x float> %i.amt, ptr %i.ajd, align 8
   %i.amu = insertelement <4 x float> poison, float %i.ake, i64 0
   %i.amv = shufflevector <4 x float> %i.amu, <4 x float> poison, <4 x i32> zeroinitializer
   %i.amw = fmul <4 x float> %i.alv, %i.amv
@@ -2163,7 +2164,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.
   %i.and = insertelement <4 x float> poison, float %i.akp, i64 0
   %i.ane = shufflevector <4 x float> %i.and, <4 x float> poison, <4 x i32> zeroinitializer
   %i.anf = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.alx, <4 x float> %i.ane, <4 x float> %i.anc)
-  store <4 x float> %i.anf, ptr %i.ajz, align 4
+  store <4 x float> %i.anf, ptr %i.ajz, align 8
   %i.ang = insertelement <4 x float> poison, float %i.alq, i64 0
   %i.anh = shufflevector <4 x float> %i.ang, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ani = fmul <4 x float> %i.alv, %i.anh
@@ -2175,7 +2176,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.
   %i.ano = insertelement <4 x float> poison, float %i.alt, i64 0
   %i.anp = shufflevector <4 x float> %i.ano, <4 x float> poison, <4 x i32> zeroinitializer
   %i.anq = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.alx, <4 x float> %i.anp, <4 x float> %i.ann)
-  store <4 x float> %i.anq, ptr %i.aln, align 4
+  store <4 x float> %i.anq, ptr %i.aln, align 8
   %i.anr = load ptr, ptr %i.afz, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #26
   %i.ans = getelementptr inbounds nuw i8, ptr %i.ahi, i64 4 ; 9 uses
@@ -2204,7 +2205,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.gn, %bb.
   ]
 
 bb.gq:                                            ; preds = %._crit_edge.i.i
-  %i.any = load i8, ptr %i.ans, align 1
+  %i.any = load i8, ptr %i.ans, align 4
   store i8 %i.any, ptr %i.anx, align 1
   br label %bb.gs
 
@@ -2263,7 +2264,7 @@ bb.gt:                                            ; preds = %_ZNSt7__cxx1112basi
   ]
 
 bb.gu:                                            ; preds = %._crit_edge.i.i537
-  %i.aoo = load i8, ptr %i.ans, align 1
+  %i.aoo = load i8, ptr %i.ans, align 4
   store i8 %i.aoo, ptr %i.aon, align 1
   br label %bb.gw
 
@@ -2325,7 +2326,7 @@ bb.gy:                                            ; preds = %.thread661
 
 bb.gz:                                            ; preds = %bb.gy
   %i.apc = trunc nuw nsw i64 %i.apa to i32
-  store i32 %i.apc, ptr %i.ahi, align 4
+  store i32 %i.apc, ptr %i.ahi, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ans, ptr align 1 %.pre1093, i64 %i.apa, i1 false)
   %i.apd = getelementptr inbounds nuw i8, ptr %i.ans, i64 %i.apa
   store i8 0, ptr %i.apd, align 1
@@ -2728,7 +2729,7 @@ bb.fs:                                            ; preds = %bb.fr
 
 bb.ft:                                            ; preds = %bb.fs
   %i.aid = trunc nuw nsw i64 %i.aib to i32
-  store i32 %i.aid, ptr %i.ahx, align 4
+  store i32 %i.aid, ptr %i.ahx, align 8
   %i.aie = getelementptr inbounds nuw i8, ptr %i.ahx, i64 4 ; 2 uses
   %i.aif = load ptr, ptr %7, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.aie, ptr align 1 %i.aif, i64 %i.aib, i1 false)
@@ -3131,7 +3132,7 @@ bb.hv:                                            ; preds = %bb.hu
 
 bb.hw:                                            ; preds = %bb.hv
   %i.axd = trunc nuw nsw i64 %i.axb to i32
-  store i32 %i.axd, ptr %i.awr, align 4
+  store i32 %i.axd, ptr %i.awr, align 8
   %i.axe = getelementptr inbounds nuw i8, ptr %i.awr, i64 4 ; 2 uses
   %i.axf = load ptr, ptr %4, align 8
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.axe, ptr align 1 %i.axf, i64 %i.axb, i1 false)

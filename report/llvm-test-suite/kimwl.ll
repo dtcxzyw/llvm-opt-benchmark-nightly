@@ -201,7 +201,8 @@ bb.k:                                             ; preds = %_ZL7yyinputv.exit.t
   %i.be = icmp eq i32 %sext21, 704643072
   %i.bf = icmp eq i32 %sext27, 788529152
   %or.cond5 = and i1 %i.be, %i.bf
-  %i.bg = sext i1 %or.cond5 to i32
+  %cond.fr = freeze i1 %or.cond5
+  %i.bg = sext i1 %cond.fr to i32
   %spec.select = add nsw i32 %.018, %i.bg
   br label %.thread41
 

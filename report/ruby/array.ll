@@ -201,8 +201,9 @@ bb.w:                                             ; preds = %bb.u
 rb_array_len.exit45:                              ; preds = %bb.v, %bb.w
   %.0.i44 = phi i64 [ %i.aw, %bb.v ], [ %i.ax, %bb.w ]
   %i.ay = icmp sgt i64 %i.ai, %.0.i44
+  %cond.fr = freeze i1 %i.ay
   %.not28 = icmp eq i64 %i.ai, 0
-  %or.cond = or i1 %i.ay, %.not28
+  %or.cond = select i1 %cond.fr, i1 true, i1 %.not28
   br i1 %or.cond, label %rb_long2num_inline.exit, label %.lr.ph80
 
 rb_long2num_inline.exit:                          ; preds = %rb_array_len.exit45, %rb_array_len.exit35, %bb.p, %.preheader, %bb.t, %bb.s, %bb.j, %bb.i, %bb.e
@@ -605,17 +606,19 @@ bb.be:                                            ; preds = %._crit_edge
   %i.gq = and i64 %i.gp, 127                      ; 2 uses
   %.not205 = icmp sgt i64 %i.gq, %spec.select212
   %i.gr = tail call i64 @llvm.umin.i64(i64 %spec.select209, i64 %i.gq)
+  %cond.fr = freeze i1 %.not205
   %i.gs = getelementptr i8, ptr %i.m, i64 16
-  br i1 %.not205, label %rb_ary_ptr_use_start.exit251, label %._crit_edge289
+  br i1 %cond.fr, label %rb_ary_ptr_use_start.exit251, label %._crit_edge289
 
 bb.bf:                                            ; preds = %._crit_edge
   %i.gt = getelementptr i8, ptr %i.m, i64 16
   %i.gu = load i64, ptr %i.gt, align 8, !tbaa !14 ; 2 uses
   %.not205269 = icmp sgt i64 %i.gu, %spec.select212
   %spec.select213270 = tail call i64 @llvm.smin.i64(i64 %spec.select209, i64 %i.gu)
+  %cond.fr317 = freeze i1 %.not205269
   %i.gv = getelementptr i8, ptr %i.m, i64 32
   %i.gw = load ptr, ptr %i.gv, align 8, !tbaa !14
-  br i1 %.not205269, label %rb_ary_ptr_use_start.exit251, label %._crit_edge289
+  br i1 %cond.fr317, label %rb_ary_ptr_use_start.exit251, label %._crit_edge289
 
 rb_ary_ptr_use_start.exit251:                     ; preds = %bb.bf, %bb.be
   %.2272 = phi i64 [ %i.gr, %bb.be ], [ %spec.select213270, %bb.bf ] ; 4 uses

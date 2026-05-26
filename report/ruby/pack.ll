@@ -201,7 +201,7 @@ RSTRING_PTR.exit1144:                             ; preds = %bb.hi, %bb.hj
   br i1 %i.acc, label %.lr.ph1526, label %._crit_edge
 
 .lr.ph1526:                                       ; preds = %RSTRING_PTR.exit1144, %thread-pre-split.thread
-  %.381525 = phi ptr [ %i.adl, %thread-pre-split.thread ], [ %.07881675, %RSTRING_PTR.exit1144 ] ; 9 uses
+  %.381525 = phi ptr [ %i.adl, %thread-pre-split.thread ], [ %.07881675, %RSTRING_PTR.exit1144 ] ; 8 uses
   %.08811524 = phi i32 [ %.1882, %thread-pre-split.thread ], [ 0, %RSTRING_PTR.exit1144 ] ; 8 uses
   %.08841523 = phi ptr [ %.1885, %thread-pre-split.thread ], [ %i.acb, %RSTRING_PTR.exit1144 ] ; 10 uses
   %i.acd = load i8, ptr %.381525, align 1, !tbaa !15 ; 3 uses
@@ -209,7 +209,7 @@ RSTRING_PTR.exit1144:                             ; preds = %bb.hi, %bb.hj
   br i1 %i.ace, label %bb.hk, label %bb.hq
 
 bb.hk:                                            ; preds = %.lr.ph1526
-  %i.acf = getelementptr i8, ptr %.381525, i64 1  ; 5 uses
+  %i.acf = getelementptr i8, ptr %.381525, i64 1  ; 6 uses
   %i.acg = icmp eq ptr %i.acf, %i.w
   br i1 %i.acg, label %._crit_edge.loopexit, label %bb.hl
 
@@ -223,7 +223,9 @@ bb.hl:                                            ; preds = %bb.hk
 
 bb.hm:                                            ; preds = %bb.hl
   %i.acl = load i8, ptr %i.ach, align 1, !tbaa !15
-  %i.acm = icmp eq i8 %i.acl, 10
+  %.fr = freeze i8 %i.acl
+  %i.acm = icmp eq i8 %.fr, 10                    ; 2 uses
+  %spec.select1099 = select i1 %i.acm, ptr %i.ach, ptr %i.acf ; 2 uses
   br i1 %i.acm, label %thread-pre-split.thread, label %thread-pre-split.thread1956
 
 thread-pre-split:                                 ; preds = %bb.hl
@@ -231,6 +233,7 @@ thread-pre-split:                                 ; preds = %bb.hl
   br i1 %.not1038, label %thread-pre-split.thread, label %thread-pre-split.thread1956
 
 thread-pre-split.thread1956:                      ; preds = %bb.hm, %thread-pre-split
+  %.391959 = phi ptr [ %i.acf, %thread-pre-split ], [ %spec.select1099, %bb.hm ] ; 2 uses
   %i.acn = phi i8 [ %i.acj, %thread-pre-split ], [ 13, %bb.hm ]
   %i.aco = zext i8 %i.acn to i64
   %i.acp = getelementptr i8, ptr @ruby_digit36_to_number_table, i64 %i.aco
@@ -242,7 +245,7 @@ thread-pre-split.thread1956:                      ; preds = %bb.hm, %thread-pre-
   br i1 %i.acs, label %._crit_edge.loopexit, label %bb.hn
 
 bb.hn:                                            ; preds = %thread-pre-split.thread1956
-  %i.act = getelementptr i8, ptr %.381525, i64 2  ; 5 uses
+  %i.act = getelementptr i8, ptr %.391959, i64 1  ; 5 uses
   %i.acu = icmp eq ptr %i.act, %i.w
   br i1 %i.acu, label %._crit_edge.loopexit, label %bb.ho
 
@@ -278,7 +281,7 @@ bb.hq:                                            ; preds = %.lr.ph1526
 thread-pre-split.thread:                          ; preds = %bb.hm, %thread-pre-split, %bb.hp, %bb.hq
   %.1885 = phi ptr [ %i.adf, %bb.hp ], [ %.08841523, %thread-pre-split ], [ %i.adj, %bb.hq ], [ %.08841523, %bb.hm ] ; 2 uses
   %.1882 = phi i32 [ %i.adh, %bb.hp ], [ %.08811524, %thread-pre-split ], [ %i.adk, %bb.hq ], [ %.08811524, %bb.hm ] ; 2 uses
-  %.40 = phi ptr [ %i.act, %bb.hp ], [ %i.acf, %thread-pre-split ], [ %.381525, %bb.hq ], [ %i.ach, %bb.hm ]
+  %.40 = phi ptr [ %i.act, %bb.hp ], [ %i.acf, %thread-pre-split ], [ %.381525, %bb.hq ], [ %spec.select1099, %bb.hm ]
   %i.adl = getelementptr i8, ptr %.40, i64 1      ; 4 uses
   %i.adm = icmp ult ptr %i.adl, %i.w
   br i1 %i.adm, label %.lr.ph1526, label %._crit_edge.loopexit, !llvm.loop !76
@@ -287,7 +290,7 @@ thread-pre-split.thread:                          ; preds = %bb.hm, %thread-pre-
   %.0884.lcssa.ph = phi ptr [ %.1885, %thread-pre-split.thread ], [ %.08841523, %bb.hk ], [ %.08841523, %thread-pre-split.thread1956 ], [ %.08841523, %bb.hn ], [ %.08841523, %bb.ho ]
   %.0881.lcssa.ph = phi i32 [ %.1882, %thread-pre-split.thread ], [ %.08811524, %bb.hk ], [ %.08811524, %thread-pre-split.thread1956 ], [ %.08811524, %bb.hn ], [ %.08811524, %bb.ho ]
   %.38.lcssa.ph = phi ptr [ %i.adl, %thread-pre-split.thread ], [ %.381525, %bb.hk ], [ %.381525, %thread-pre-split.thread1956 ], [ %.381525, %bb.hn ], [ %.381525, %bb.ho ]
-  %.41.ph = phi ptr [ %i.adl, %thread-pre-split.thread ], [ %i.acf, %bb.hk ], [ %i.acf, %thread-pre-split.thread1956 ], [ %i.act, %bb.hn ], [ %i.act, %bb.ho ]
+  %.41.ph = phi ptr [ %i.adl, %thread-pre-split.thread ], [ %i.acf, %bb.hk ], [ %.391959, %thread-pre-split.thread1956 ], [ %i.act, %bb.hn ], [ %i.act, %bb.ho ]
   %.pre1866 = load i64, ptr %i.abw, align 8, !tbaa !13
   %.pre1869 = and i64 %.pre1866, 8192
   %i.adn = icmp ugt i32 %.0881.lcssa.ph, 127

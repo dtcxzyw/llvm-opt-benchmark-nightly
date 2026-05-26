@@ -201,8 +201,9 @@ _RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jL
   %.pre2.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i, align 8, !alias.scope !1906, !noalias !1883 ; 2 uses
   %.not.i3.i.i.i = icmp ne i64 %.pre2.i.i.i.i, %.pre.i2.i.i.i
   %or.cond.not.i.i.i.i = select i1 %i.ar, i1 true, i1 %.not.i3.i.i.i
+  %cond.fr.i = freeze i1 %or.cond.not.i.i.i.i
   %i.as = sub nuw i64 %.pre2.i.i.i.i, %.pre.i2.i.i.i
-  br i1 %or.cond.not.i.i.i.i, label %select.unfold.i, label %bb.n
+  br i1 %cond.fr.i, label %select.unfold.i, label %bb.n
 
 select.unfold.i:                                  ; preds = %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i, %_RNvXs_NtNtCsbvkFyIu7lgC_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i
   %.sroa.4.1.i.i.i = phi i64 [ %i.ao, %_RNvXs_NtNtCsbvkFyIu7lgC_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match.exit.i.i.i ], [ %i.as, %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i ]
@@ -277,10 +278,11 @@ _RNvMs4_NtCs6Po7BT7Nknu_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsgO8S
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i
   %.not.i3.i.i.us.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.promoted13.i.i.i
   %or.cond.not.i.i.i.us.i.i.i = select i1 %i.br, i1 true, i1 %.not.i3.i.i.us.i.i.i
+  %cond.fr.us.i.i.i = freeze i1 %or.cond.not.i.i.i.us.i.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1931)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1932)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1933)
-  br i1 %or.cond.not.i.i.i.us.i.i.i, label %._crit_edge.split.us.split.us.i.i.i, label %_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCsbvkFyIu7lgC_4core3str4iter5SplitcEE11spec_extendCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
+  br i1 %cond.fr.us.i.i.i, label %._crit_edge.split.us.split.us.i.i.i, label %_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCsbvkFyIu7lgC_4core3str4iter5SplitcEE11spec_extendCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
 
 ._crit_edge.split.us.split.us.i.i.i:              ; preds = %.lr.ph.split.us.i.i.i
   %.sroa.0.1.i.i.us.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.promoted13.i.i.i
@@ -371,7 +373,8 @@ _RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jL
   store i8 1, ptr %i.bc, align 1, !alias.scope !1941, !noalias !1924
   %.not.i3.i.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.lcssa111516.i.i.i
   %or.cond.not.i.i.i.i.i.i = select i1 %i.br, i1 true, i1 %.not.i3.i.i.i.i.i
-  br i1 %or.cond.not.i.i.i.i.i.i, label %select.unfold.i.i.i, label %_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCsbvkFyIu7lgC_4core3str4iter5SplitcEE11spec_extendCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
+  %cond.fr.i.i.i = freeze i1 %or.cond.not.i.i.i.i.i.i
+  br i1 %cond.fr.i.i.i, label %select.unfold.i.i.i, label %_RNvXNtNtCs6Po7BT7Nknu_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCsbvkFyIu7lgC_4core3str4iter5SplitcEE11spec_extendCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
 
 select.unfold.i.i.i:                              ; preds = %bb.m, %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i
   %i.ct = phi i64 [ %i.cs, %_RNvMsf_NtNtCsbvkFyIu7lgC_4core3str4iterINtB5_13SplitInternalcE7get_endCsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i ], [ %i.cn, %bb.m ]

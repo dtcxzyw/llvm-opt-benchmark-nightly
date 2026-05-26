@@ -201,14 +201,15 @@ bb.a:
 
 select.unfold:                                    ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !12   ; 2 uses
-  %.not.i.i = icmp eq ptr %i.d, null
-  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %i.d ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !12
+  %.fr = freeze ptr %i.d                          ; 2 uses
+  %.not.i.i = icmp eq ptr %.fr, null
+  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %.fr ; 2 uses
   tail call void @duckdb_je_edata_avail_remove(ptr noundef nonnull %0, ptr noundef nonnull %spec.select)
   br label %duckdb_je_edata_avail_any.exit
 
 duckdb_je_edata_avail_any.exit:                   ; preds = %bb.a, %select.unfold
-  %.1.i.i8 = phi ptr [ %spec.select, %select.unfold ], [ null, %bb.a ]
+  %.1.i.i8 = phi ptr [ null, %bb.a ], [ %spec.select, %select.unfold ]
   ret ptr %.1.i.i8
 }
 
@@ -611,14 +612,15 @@ bb.a:
 
 select.unfold:                                    ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !12   ; 2 uses
-  %.not.i.i = icmp eq ptr %i.d, null
-  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %i.d ; 2 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !12
+  %.fr = freeze ptr %i.d                          ; 2 uses
+  %.not.i.i = icmp eq ptr %.fr, null
+  %spec.select = select i1 %.not.i.i, ptr %i.a, ptr %.fr ; 2 uses
   tail call void @duckdb_je_edata_heap_remove(ptr noundef nonnull %0, ptr noundef nonnull %spec.select)
   br label %duckdb_je_edata_heap_any.exit
 
 duckdb_je_edata_heap_any.exit:                    ; preds = %bb.a, %select.unfold
-  %.1.i.i8 = phi ptr [ %spec.select, %select.unfold ], [ null, %bb.a ]
+  %.1.i.i8 = phi ptr [ null, %bb.a ], [ %spec.select, %select.unfold ]
   ret ptr %.1.i.i8
 }
 

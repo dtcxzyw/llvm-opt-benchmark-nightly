@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %bb.b
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !13
   %i.h = load ptr, ptr %1, align 8, !tbaa !13
   %i.i = icmp eq ptr %i.g, %i.h
-  br i1 %i.i, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
+  %cond.fr = freeze i1 %i.i
+  br i1 %cond.fr, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE4findIS8_EENSF_8iteratorERKT_.exit.thread9, label %_ZN4absl12lts_2025051218container_internal12raw_hash_setINS1_17FlatHashSetPolicyIPKN6google8protobuf14FileDescriptorEEENS1_6HashEqIS8_vE4HashENSB_2EqESaIS8_EE5eraseENSF_8iteratorE.exit
 
 bb.d:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -604,7 +605,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i
   %i.v = getelementptr inbounds nuw i8, ptr %.01521.i.i.i, i64 8
-  %i.w = load i8, ptr %i.v, align 1, !tbaa !12    ; 2 uses
+  %i.w = load i8, ptr %i.v, align 8, !tbaa !12    ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.s, i64 10
   %i.y = load i8, ptr %i.x, align 1, !tbaa !12
   %i.z = icmp eq i8 %i.w, %i.y
@@ -695,7 +696,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %.lr.ph.i.i.i48
   %i.bj = getelementptr inbounds nuw i8, ptr %.01521.i.i.i49, i64 8
-  %i.bk = load i8, ptr %i.bj, align 1, !tbaa !12  ; 2 uses
+  %i.bk = load i8, ptr %i.bj, align 8, !tbaa !12  ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bg, i64 10
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !12
   %i.bn = icmp eq i8 %i.bk, %i.bm

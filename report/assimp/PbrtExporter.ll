@@ -201,7 +201,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i: ; preds = %_ZNSt11ch
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i
   %.0.i.i.i8.i = phi i32 [ %i.nf, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i ], [ %.0.i6.i.i.i12.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i ]
-  %i.nh = icmp slt i32 %.0.i.i.i8.i, 0
+  %.0.i.i.i8.i.fr = freeze i32 %.0.i.i.i8.i
+  %i.nh = icmp slt i32 %.0.i.i.i8.i.fr, 0
   br i1 %i.nh, label %select.unfold, label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE6insertERKS5_.exit
 
 select.unfold:                                    ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i, %._crit_edge.thread.i
@@ -604,7 +605,8 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i369: ; preds = %_ZNSt1
 
 _ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i361: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i369, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i359
   %.0.i.i.i8.i362 = phi i32 [ %i.rw, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i6.i359 ], [ %.0.i6.i.i.i12.i372, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.thread.i.i.i9.i369 ]
-  %i.ry = icmp slt i32 %.0.i.i.i8.i362, 0
+  %.0.i.i.i8.i362.fr = freeze i32 %.0.i.i.i8.i362
+  %i.ry = icmp slt i32 %.0.i.i.i8.i362.fr, 0
   br i1 %i.ry, label %select.unfold395, label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE6insertERKS5_.exit271
 
 select.unfold395:                                 ; preds = %_ZNKSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit13.i361, %._crit_edge.thread.i373
@@ -1007,7 +1009,7 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit306: ; preds = %bb.b
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit292: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit290._crit_edge, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit274
   %i.rg = getelementptr inbounds nuw i8, ptr %1, i64 176
-  %i.rh = load i32, ptr %i.rg, align 4
+  %i.rh = load i32, ptr %i.rg, align 8
   %i.ri = icmp eq i32 %i.rh, 2
   br i1 %i.ri, label %bb.cd, label %bb.bw
 
@@ -1019,7 +1021,7 @@ bb.bw:                                            ; preds = %_ZStlsISt11char_tra
 
 bb.bx:                                            ; preds = %bb.bw
   %i.rm = getelementptr inbounds nuw i8, ptr %1, i64 184
-  %i.rn = load i32, ptr %i.rm, align 4
+  %i.rn = load i32, ptr %i.rm, align 8
   %i.ro = icmp eq i32 %i.rn, 2
   br i1 %i.ro, label %bb.cd, label %bb.by
 
@@ -1031,7 +1033,7 @@ bb.by:                                            ; preds = %bb.bx
 
 bb.bz:                                            ; preds = %bb.by
   %i.rs = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %i.rt = load i32, ptr %i.rs, align 4
+  %i.rt = load i32, ptr %i.rs, align 8
   %i.ru = icmp eq i32 %i.rt, 2
   br i1 %i.ru, label %bb.cd, label %bb.ca
 
@@ -1043,7 +1045,7 @@ bb.ca:                                            ; preds = %bb.bz
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ry = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.rz = load i32, ptr %i.ry, align 4
+  %i.rz = load i32, ptr %i.ry, align 8
   %i.sa = icmp eq i32 %i.rz, 2
   br i1 %i.sa, label %bb.cd, label %bb.cc
 

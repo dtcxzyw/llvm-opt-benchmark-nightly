@@ -201,7 +201,8 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i, i64 36
   %i.dd = load i32, ptr %i.dc, align 4, !tbaa !137
   %i.de = icmp slt i32 %i.dd, %.1141
-  br i1 %i.de, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertEOS1_.exit
+  %cond.fr.i.i = freeze i1 %i.de
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertEOS1_.exit
 
 select.unfold.i.i:                                ; preds = %bb.o, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.o ] ; 3 uses
@@ -381,7 +382,8 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge.
   %i.z = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i, i64 36
   %i.aa = load i32, ptr %i.z, align 4, !tbaa !137
   %i.ab = icmp slt i32 %i.aa, %i.q
-  br i1 %i.ab, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertEOS1_.exit
+  %cond.fr.i.i = freeze i1 %i.ab
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertEOS1_.exit
 
 select.unfold.i.i:                                ; preds = %bb.c, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.c ] ; 3 uses
@@ -553,7 +555,8 @@ bb.l:                                             ; preds = %bb.k, %._crit_edge.
   %i.ap = getelementptr inbounds nuw i8, ptr %.sroa.05.0.i.i.i, i64 36
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !137
   %i.ar = icmp slt i32 %i.aq, %.sroa.0.0.extract.trunc
-  br i1 %i.ar, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertERKS1_.exit
+  %cond.fr.i.i = freeze i1 %i.ar
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %_ZNSt3setIN10duckdb_re29RuneRangeENS0_13RuneRangeLessESaIS1_EE6insertERKS1_.exit
 
 select.unfold.i.i:                                ; preds = %bb.l, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.l ] ; 3 uses
@@ -956,7 +959,8 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %i.dt = load i32, ptr %i.ds, align 4, !tbaa !137
   %i.du = load i32, ptr %i.dj, align 4, !tbaa !140
   %i.dv = icmp slt i32 %i.dt, %i.du
-  br i1 %i.dv, label %select.unfold.i.i, label %bb.w
+  %cond.fr.i.i = freeze i1 %i.dv
+  br i1 %cond.fr.i.i, label %select.unfold.i.i, label %bb.w
 
 select.unfold.i.i:                                ; preds = %bb.u, %._crit_edge.thread.i.i.i
   %.sroa.4.0.i.ph.i.i = phi ptr [ %.019.lcssa29.i.i.i, %._crit_edge.thread.i.i.i ], [ %.019.lcssa28.i.i.i, %bb.u ] ; 3 uses
@@ -1359,7 +1363,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 32
-  %i.p = load i32, ptr %i.c, align 4, !tbaa !3
+  %i.p = load i32, ptr %i.c, align 8, !tbaa !3
   %i.q = load i32, ptr %i.o, align 4, !tbaa !3
   %i.r = icmp slt i32 %i.p, %i.q
   br label %.thread

@@ -201,7 +201,8 @@ bb.n:                                             ; preds = %bb.m
   %i.aw = getelementptr [8 x i8], ptr %i.av, i64 %i.at
   %i.ax = load i64, ptr %i.aw, align 8, !tbaa !11
   %i.ay = icmp eq i64 %i.ax, %i.ae
-  br i1 %i.ay, label %class_search_class_ancestor.exit, label %rbimpl_RB_TYPE_P_fastpath.exit25.thread
+  %cond.fr = freeze i1 %i.ay
+  br i1 %cond.fr, label %class_search_class_ancestor.exit, label %rbimpl_RB_TYPE_P_fastpath.exit25.thread
 
 rbimpl_RB_TYPE_P_fastpath.exit25.thread:          ; preds = %bb.m, %bb.n, %bb.l, %rbimpl_RB_TYPE_P_fastpath.exit25
   %i.az = tail call fastcc ptr @RCLASS_EXT_READABLE(i64 noundef %1)
@@ -604,7 +605,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.0.i = phi i64 [ %i.d, %bb.c ], [ %i.b, %bb.b ]
-  %i.e = and i64 %.0.i, -5
+  %.0.i.fr = freeze i64 %.0.i
+  %i.e = and i64 %.0.i.fr, -5
   %.not.i = icmp eq i64 %i.e, 0
   br i1 %.not.i, label %rb_equal.exit, label %rb_equal.exit.thread
 
@@ -1007,7 +1009,7 @@ rb_array_len.exit:                                ; preds = %RARRAY_AREF.exit.th
   br i1 %.not.i29, label %RSTRING_PTR.exit, label %RSTRING_PTR.exit.thread
 
 RSTRING_PTR.exit:                                 ; preds = %.critedge
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !34
+  %i.ak = load i8, ptr %i.aj, align 8, !tbaa !34
   %i.al = icmp eq i8 %i.ak, 45
   br i1 %i.al, label %RSTRING_PTR.exit31, label %bb.k
 

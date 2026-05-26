@@ -201,14 +201,15 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.n
-  %i.bg = load i32, ptr %i.bb, align 4, !tbaa !6  ; 2 uses
-  %i.bh = add i32 %i.bg, -1
+  %i.bg = load i32, ptr %i.bb, align 4, !tbaa !6
+  %.fr68 = freeze i32 %i.bg                       ; 2 uses
+  %i.bh = add i32 %.fr68, -1
   %switch.and.i = and i32 %i.bh, -3
   %switch.selectcmp.i = icmp eq i32 %switch.and.i, 0
   br i1 %switch.selectcmp.i, label %seize_thread.exit.thread60, label %bb.q
 
 bb.q:                                             ; preds = %bb.m, %bb.p
-  %i.bi = phi i32 [ %i.bc, %bb.m ], [ %i.bg, %bb.p ]
+  %i.bi = phi i32 [ %i.bc, %bb.m ], [ %.fr68, %bb.p ]
   %.not.i37 = icmp eq i64 %.02975, 0
   br i1 %.not.i37, label %detach_threads.exit, label %.lr.ph.i38
 

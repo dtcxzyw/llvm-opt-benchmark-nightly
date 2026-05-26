@@ -201,7 +201,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.an
 
 bb.ar:                                            ; preds = %bb.am
   %i.dq = getelementptr inbounds nuw i8, ptr %.0.i63, i64 8
-  %i.dr = load atomic i32, ptr %i.dq acquire, align 4
+  %i.dr = load atomic i32, ptr %i.dq acquire, align 8
   %i.ds = icmp eq i32 %i.dr, 2
   %.pre = load i64, ptr %.0.i63, align 8, !tbaa !22 ; 2 uses
   br i1 %i.ds, label %bb.as, label %bb.at
@@ -604,7 +604,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ah
   %i.co = getelementptr inbounds nuw i8, ptr %.0.i55, i64 8
-  %i.cp = load atomic i32, ptr %i.co acquire, align 4
+  %i.cp = load atomic i32, ptr %i.co acquire, align 8
   %i.cq = icmp eq i32 %i.cp, 2
   %.pre = load i64, ptr %.0.i55, align 8, !tbaa !22 ; 2 uses
   br i1 %i.cq, label %bb.ak, label %bb.al
@@ -1007,9 +1007,10 @@ bb.a:
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %.lr.ph.split
   %i.k = load i8, ptr %4, align 1, !tbaa !14
   %i.l = sext i8 %i.k to i32
-  %i.m = call ptr @memchr(ptr noundef %.sroa.2.0.copyload.i.i, i32 noundef %i.l, i64 noundef %.sroa.0.0.copyload.i.i) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.m, null
-  %i.n = ptrtoint ptr %i.m to i64
+  %i.m = call ptr @memchr(ptr noundef %.sroa.2.0.copyload.i.i, i32 noundef %i.l, i64 noundef %.sroa.0.0.copyload.i.i) #24
+  %.fr = freeze ptr %i.m                          ; 2 uses
+  %.not.i = icmp eq ptr %.fr, null
+  %i.n = ptrtoint ptr %.fr to i64
   %i.o = ptrtoint ptr %.sroa.2.0.copyload.i.i to i64
   %i.p = sub i64 %i.n, %i.o                       ; 6 uses
   %i.q = icmp eq i64 %i.p, -1
@@ -1412,7 +1413,7 @@ bb.m:                                             ; preds = %bb.b
 
 bb.n:                                             ; preds = %bb.m
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cj, i64 14
-  %i.cn = load i8, ptr %i.cm, align 1, !tbaa !14
+  %i.cn = load i8, ptr %i.cm, align 2, !tbaa !14
   %i.co = zext i8 %i.cn to i64                    ; 3 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.cj, i64 16 ; 2 uses
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cp, i64 %i.co
@@ -1815,7 +1816,7 @@ bb.p:                                             ; preds = %bb.a
   %i.cb = sext i8 %i.e to i64
   %i.cc = lshr i64 %i.cb, 1                       ; 2 uses
   store i64 %i.cc, ptr %i.b, align 8, !tbaa !102
-  %i.cd = load i8, ptr %1, align 1, !tbaa !14
+  %i.cd = load i8, ptr %1, align 8, !tbaa !14
   %i.ce = trunc i8 %i.cd to i1
   %i.cf = getelementptr inbounds nuw i8, ptr %1, i64 1
   %spec.select.i.i = select i1 %i.ce, ptr null, ptr %i.cf

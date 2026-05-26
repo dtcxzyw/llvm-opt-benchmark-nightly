@@ -201,7 +201,8 @@ bb.i:                                             ; preds = %_ZNK6hermes2vm10Nat
   %i.ba = and i64 %.sroa.0.0.copyload.i, 281474976710655
   %i.bb = inttoptr i64 %i.ba to ptr               ; 2 uses
   %i.bc = load i32, ptr %i.bb, align 4
-  %.mask.i.i.i.i.i.i.i.i.i = and i32 %i.bc, -16777216
+  %.fr = freeze i32 %i.bc
+  %.mask.i.i.i.i.i.i.i.i.i = and i32 %.fr, -16777216
   %i.bd = icmp eq i32 %.mask.i.i.i.i.i.i.i.i.i, 536870912
   br i1 %i.bd, label %_ZN6hermes2vm10dyn_vmcastINS0_7JSArrayEEEPT_NS0_11HermesValueE.exit, label %_ZNK6hermes2vm10NativeArgs6getArgEj.exit.thread
 

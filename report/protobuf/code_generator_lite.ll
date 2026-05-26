@@ -112,9 +112,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZNSt6vect
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.c
   %i.q = load ptr, ptr %i.e, align 8, !tbaa !28   ; 4 uses
-  %i.r = call ptr @memchr(ptr noundef %i.q, i32 noundef 61, i64 noundef %i.p) #16 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.r, null
-  %i.s = ptrtoint ptr %i.r to i64
+  %i.r = call ptr @memchr(ptr noundef %i.q, i32 noundef 61, i64 noundef %i.p) #16
+  %.fr = freeze ptr %i.r                          ; 2 uses
+  %.not.i.i = icmp eq ptr %.fr, null
+  %i.s = ptrtoint ptr %.fr to i64
   %i.t = ptrtoint ptr %i.q to i64
   %i.u = sub i64 %i.s, %i.t                       ; 4 uses
   %i.v = icmp eq i64 %i.u, -1

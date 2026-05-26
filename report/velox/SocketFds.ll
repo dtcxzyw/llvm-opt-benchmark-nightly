@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.w = add nsw i32 %i.n, -1
-  store i32 %i.w, ptr %i.k, align 4, !tbaa !7
+  store i32 %i.w, ptr %i.k, align 8, !tbaa !7
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i.i.i.i.i.i.i.i.i.i
 
 bb.h:                                             ; preds = %bb.f
@@ -319,7 +319,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load i8, ptr %i.b, align 8, !tbaa !14
-  %i.d = icmp eq i8 %i.c, 0
+  %.fr = freeze i8 %i.c
+  %i.d = icmp eq i8 %.fr, 0
   br i1 %i.d, label %_ZN6google12CheckNotNullIPSt4pairISt6vectorIN5folly4FileESaIS4_EElEEET_PKciSB_OS9_.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -469,7 +470,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.c = load i8, ptr %i.b, align 8, !tbaa !14
-  %i.d = icmp eq i8 %i.c, 1
+  %.fr = freeze i8 %i.c
+  %i.d = icmp eq i8 %.fr, 1
   br i1 %i.d, label %_ZSt6get_ifISt4pairISt6vectorISt10shared_ptrIKN5folly4FileEESaIS6_EElEJS0_IS1_IS4_SaIS4_EElES9_EENSt11add_pointerIT_E4typeEPSt7variantIJDpT0_EE.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b

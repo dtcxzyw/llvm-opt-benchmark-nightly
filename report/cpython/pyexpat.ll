@@ -201,7 +201,8 @@ bb.f:                                             ; preds = %bb.e
   br label %Py_DECREF.exit24
 
 Py_DECREF.exit24:                                 ; preds = %bb.d, %bb.e, %bb.f
-  %i.s = icmp slt i32 %i.o, 0
+  %.fr = freeze i32 %i.o
+  %i.s = icmp slt i32 %.fr, 0
   br i1 %i.s, label %select.unfold, label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.c, %bb.b
@@ -604,7 +605,8 @@ bb.ac:                                            ; preds = %bb.ab
 bb.ad:                                            ; preds = %bb.y
   %i.bp = icmp eq i32 %i.bj, 0
   %or.cond.i = or i1 %i.bh, %i.bp
-  br i1 %or.cond.i, label %bb.ae, label %get_parse_result.exit.i
+  %cond.fr.i = freeze i1 %or.cond.i
+  br i1 %cond.fr.i, label %bb.ae, label %get_parse_result.exit.i
 
 bb.ae:                                            ; preds = %bb.ad
   %i.bq = load ptr, ptr %i.a, align 8, !tbaa !19  ; 4 uses

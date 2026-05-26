@@ -36,7 +36,8 @@ bb.d:                                             ; preds = %bb.c
   %i.m = load i8, ptr %i.l, align 1
   %i.n = icmp ne i8 %i.m, -99
   %or.cond.i = select i1 %i.k, i1 true, i1 %i.n
-  br i1 %or.cond.i, label %ft_lzw_check_header.exit.thread, label %bb.e
+  %cond.fr = freeze i1 %or.cond.i
+  br i1 %cond.fr, label %ft_lzw_check_header.exit.thread, label %bb.e
 
 ft_lzw_check_header.exit.thread:                  ; preds = %bb.b, %bb.c, %bb.d
   %.0.i.ph = phi i32 [ %i.h, %bb.b ], [ %i.i, %bb.c ], [ 3, %bb.d ]
@@ -84,7 +85,8 @@ bb.h:                                             ; preds = %bb.g
   %i.ac = load i8, ptr %i.ab, align 1
   %i.ad = icmp ne i8 %i.ac, -99
   %or.cond.i.i = select i1 %i.aa, i1 true, i1 %i.ad
-  br i1 %or.cond.i.i, label %bb.i, label %bb.j
+  %cond.fr.i = freeze i1 %or.cond.i.i
+  br i1 %cond.fr.i, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %.0.i.ph.i = phi i32 [ %i.x, %bb.f ], [ %i.y, %bb.g ], [ 3, %bb.h ]
@@ -282,11 +284,12 @@ bb.i:                                             ; preds = %bb.j, %.preheader.i
 
 bb.j:                                             ; preds = %bb.i
   store ptr %i.as, ptr %i.au, align 8, !tbaa !22
-  %i.bi = tail call i64 @ft_lzwstate_io(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.as, i64 noundef 4096) ; 2 uses
+  %i.bi = tail call i64 @ft_lzwstate_io(ptr noundef nonnull %i.ar, ptr noundef nonnull %i.as, i64 noundef 4096)
+  %.fr.i = freeze i64 %i.bi                       ; 2 uses
   %i.bj = load ptr, ptr %i.au, align 8, !tbaa !22 ; 2 uses
-  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %i.bi ; 2 uses
+  %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.fr.i ; 2 uses
   store ptr %i.bk, ptr %i.at, align 8, !tbaa !21
-  %.not61.i = icmp eq i64 %i.bi, 0
+  %.not61.i = icmp eq i64 %.fr.i, 0
   br i1 %.not61.i, label %ft_lzw_file_io.exit, label %bb.i
 
 ft_lzw_file_io.exit:                              ; preds = %bb.f, %bb.i, %bb.j, %bb.c, %ft_lzw_file_skip_output.exit.i, %bb.h

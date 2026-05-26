@@ -201,7 +201,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.u = phi i8 [ %.pre81.i, %bb.e ], [ %i.o, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.v = icmp ult i8 %i.u, %i.t
-  br i1 %i.v, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_5ValueEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE17_M_insert_unique_IRKS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_ESt23_Rb_tree_const_iteratorIS5_EOT_RT0_.exit.i
+  %cond.fr = freeze i1 %i.v
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_5ValueEESt10_Select1stIS5_ESt4lessIS1_ESaIS5_EE17_M_insert_unique_IRKS5_NSB_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS5_ESt23_Rb_tree_const_iteratorIS5_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.h, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ]
@@ -297,7 +298,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.t = phi i8 [ %.pre81.i, %bb.e ], [ %i.n, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.u = icmp ult i8 %i.t, %i.s
-  br i1 %i.u, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_bESt10_Select1stIS4_ESt4lessIS1_ESaIS4_EE17_M_insert_unique_IRKS4_NSA_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_ESt23_Rb_tree_const_iteratorIS4_EOT_RT0_.exit.i
+  %cond.fr = freeze i1 %i.u
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_bESt10_Select1stIS4_ESt4lessIS1_ESaIS4_EE17_M_insert_unique_IRKS4_NSA_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS4_ESt23_Rb_tree_const_iteratorIS4_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.g, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ] ; 3 uses
@@ -700,7 +702,7 @@ bb.db:                                            ; preds = %bb.cz
 
 bb.dc:                                            ; preds = %bb.db
   %i.iz = add nsw i32 %i.iq, -1
-  store i32 %i.iz, ptr %i.in, align 4, !tbaa !3
+  store i32 %i.iz, ptr %i.in, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i.i
 
 bb.dd:                                            ; preds = %bb.db
@@ -1103,7 +1105,8 @@ bb.b:                                             ; preds = %._crit_edge.thread.
 bb.c:                                             ; preds = %bb.b, %._crit_edge.i.i.i
   %i.j = phi i64 [ %.pre.i.i, %bb.b ], [ %i.d, %._crit_edge.i.i.i ]
   %.019.lcssa28.i.i.i = phi ptr [ %.019.lcssa29.i.i.i, %bb.b ], [ %.02024.i.i.i, %._crit_edge.i.i.i ]
-  %i.k = icmp ult i64 %i.j, %1
+  %.fr = freeze i64 %i.j
+  %i.k = icmp ult i64 %.fr, %1
   br i1 %i.k, label %select.unfold.i.i, label %_ZNSt3mapImN6duckdb13ValidatorLineESt4lessImESaISt4pairIKmS1_EEE6insertEOS6_.exit
 
 select.unfold.i.i:                                ; preds = %bb.c, %._crit_edge.thread.i.i.i
@@ -1506,7 +1509,8 @@ bb.b:                                             ; preds = %._crit_edge.thread.
 bb.c:                                             ; preds = %bb.b, %._crit_edge.i.i.i.i
   %i.j = phi i64 [ %.pre.i.i.i, %bb.b ], [ %i.d, %._crit_edge.i.i.i.i ]
   %.019.lcssa28.i.i.i.i = phi ptr [ %.019.lcssa29.i.i.i.i, %bb.b ], [ %.02024.i.i.i.i, %._crit_edge.i.i.i.i ]
-  %i.k = icmp ult i64 %i.j, %1
+  %.fr.i = freeze i64 %i.j
+  %i.k = icmp ult i64 %.fr.i, %1
   br i1 %i.k, label %select.unfold.i.i.i, label %_ZN6duckdb11ThreadLines6InsertEmNS_13ValidatorLineE.exit
 
 select.unfold.i.i.i:                              ; preds = %bb.c, %._crit_edge.thread.i.i.i.i
@@ -1646,7 +1650,8 @@ bb.f:                                             ; preds = %bb.e, %._crit_edge.
   %i.u = phi i8 [ %.pre81.i, %bb.e ], [ %i.o, %._crit_edge.i.i ]
   %.019.lcssa28.i.i = phi ptr [ %.019.lcssa29.i.i, %bb.e ], [ %.02024.i.i, %._crit_edge.i.i ]
   %i.v = icmp ult i8 %i.u, %i.t
-  br i1 %i.v, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i
+  %cond.fr = freeze i1 %i.v
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt8_Rb_treeIN6duckdb13LogicalTypeIdESt4pairIKS1_NS0_9CSVOptionINS0_14StrpTimeFormatEEEESt10_Select1stIS7_ESt4lessIS1_ESaIS7_EE17_M_insert_unique_IRKS7_NSD_11_Alloc_nodeEEESt17_Rb_tree_iteratorIS7_ESt23_Rb_tree_const_iteratorIS7_EOT_RT0_.exit.i
 
 select.unfold:                                    ; preds = %bb.f, %._crit_edge.thread.i.i, %bb.b
   %.sroa.12.2.i.ph = phi ptr [ %.019.lcssa29.i.i, %._crit_edge.thread.i.i ], [ %i.h, %bb.b ], [ %.019.lcssa28.i.i, %bb.f ]
@@ -2049,7 +2054,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 32
-  %i.u = load i8, ptr %i.b, align 1, !tbaa !126
+  %i.u = load i8, ptr %i.b, align 8, !tbaa !126
   %i.v = load i8, ptr %i.t, align 1, !tbaa !126
   %i.w = icmp ult i8 %i.u, %i.v
   br label %.thread
@@ -2452,7 +2457,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 32
-  %i.t = load i8, ptr %i.b, align 1, !tbaa !62
+  %i.t = load i8, ptr %i.b, align 8, !tbaa !62
   %i.u = load i8, ptr %i.s, align 1, !tbaa !62
   %i.v = icmp ult i8 %i.t, %i.u
   br label %.thread

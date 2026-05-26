@@ -201,9 +201,10 @@ bb.p:                                             ; preds = %fb_ffs.exit46.i, %.
   %.not.i = icmp ule i64 %i.fm, %i.fk
   %or.cond.not79.i = select i1 %i.fl, i1 true, i1 %.not.i
   %i.fn = sub nuw i64 %i.fm, %i.fk
-  %.not34.i = icmp ult i64 %i.fn, %1
-  %or.cond77.i = select i1 %or.cond.not79.i, i1 true, i1 %.not34.i
-  br i1 %or.cond77.i, label %select.unfold.i, label %eset_fit_alignment.exit
+  %.fr.i = freeze i64 %i.fn
+  %.not34.i = icmp ult i64 %.fr.i, %1
+  %or.cond78.i = or i1 %or.cond.not79.i, %.not34.i
+  br i1 %or.cond78.i, label %select.unfold.i, label %eset_fit_alignment.exit
 
 select.unfold.i:                                  ; preds = %bb.p
   %i.fo = add nuw nsw i64 %i.ey, 1                ; 2 uses

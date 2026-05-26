@@ -201,7 +201,8 @@ bb.c:                                             ; preds = %_ZNSt8_Rb_treeI11ai
   %i.q = load ptr, ptr %i.p, align 8
   %i.r = icmp ult ptr %i.d, %i.q
   %i.s = select i1 %i.o, i1 %i.r, i1 false
-  br i1 %i.s, label %select.unfold, label %_ZNSt3mapI11aiLogStreamPN6Assimp9LogStreamENS1_5mpredESaISt4pairIKS0_S3_EEE4findERS6_.exit
+  %cond.fr = freeze i1 %i.s
+  br i1 %cond.fr, label %select.unfold, label %_ZNSt3mapI11aiLogStreamPN6Assimp9LogStreamENS1_5mpredESaISt4pairIKS0_S3_EEE4findERS6_.exit
 
 bb.d:                                             ; preds = %bb.l, %bb.f, %_ZNSt3mapI11aiLogStreamPN6Assimp9LogStreamENS1_5mpredESaISt4pairIKS0_S3_EEE4findERS6_.exit
   %i.t = landingpad { ptr, i32 }
@@ -604,7 +605,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ac = sext i32 %i.s to i64
   %i.ad = getelementptr inbounds i8, ptr %i.h, i64 %i.ac
-  %.pre.i.i.1.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.1.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.1.i
 
 bb.f:                                             ; preds = %bb.d
@@ -661,7 +662,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ay = sext i32 %i.ao to i64
   %i.az = getelementptr inbounds i8, ptr %i.h, i64 %i.ay
-  %.pre.i.i.2.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.2.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.2.i
 
 bb.l:                                             ; preds = %bb.j
@@ -718,7 +719,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bu = sext i32 %i.bk to i64
   %i.bv = getelementptr inbounds i8, ptr %i.h, i64 %i.bu
-  %.pre.i.i.3.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.3.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.3.i
 
 bb.r:                                             ; preds = %bb.p
@@ -775,7 +776,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cq = sext i32 %i.cg to i64
   %i.cr = getelementptr inbounds i8, ptr %i.h, i64 %i.cq
-  %.pre.i.i.4.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.4.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.4.i
 
 bb.x:                                             ; preds = %bb.v
@@ -832,7 +833,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.dm = sext i32 %i.dc to i64
   %i.dn = getelementptr inbounds i8, ptr %i.h, i64 %i.dm
-  %.pre.i.i.5.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.5.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.5.i
 
 bb.ad:                                            ; preds = %bb.ab
@@ -889,7 +890,7 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   %i.ei = sext i32 %i.dy to i64
   %i.ej = getelementptr inbounds i8, ptr %i.h, i64 %i.ei
-  %.pre.i.i.6.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.6.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.6.i
 
 bb.aj:                                            ; preds = %bb.ah
@@ -995,7 +996,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.ar
   %i.fv = sext i32 %i.fl to i64
   %i.fw = getelementptr inbounds i8, ptr %i.h, i64 %i.fv
-  %.pre.i.i.i = load i8, ptr %i.h, align 1
+  %.pre.i.i.i = load i8, ptr %i.h, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.i
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i.i.i: ; preds = %bb.at, %bb.as
@@ -1398,7 +1399,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.ad = sext i32 %i.q to i64
   %i.ae = getelementptr inbounds i8, ptr %i.n, i64 %i.ad
-  %.pre = load i8, ptr %i.n, align 1
+  %.pre = load i8, ptr %i.n, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit
 
 _ZL19stbi__refill_bufferP13stbi__context.exit:    ; preds = %bb.e, %bb.f
@@ -1474,7 +1475,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ah = sext i32 %i.x to i64
   %i.ai = getelementptr inbounds i8, ptr %i.m, i64 %i.ah
-  %.pre.i.i.1 = load i8, ptr %i.m, align 1
+  %.pre.i.i.1 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.1
 
 bb.f:                                             ; preds = %bb.d
@@ -1531,7 +1532,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.bd = sext i32 %i.at to i64
   %i.be = getelementptr inbounds i8, ptr %i.m, i64 %i.bd
-  %.pre.i.i.2 = load i8, ptr %i.m, align 1
+  %.pre.i.i.2 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.2
 
 bb.l:                                             ; preds = %bb.j
@@ -1588,7 +1589,7 @@ bb.p:                                             ; preds = %bb.o
 bb.q:                                             ; preds = %bb.p
   %i.bz = sext i32 %i.bp to i64
   %i.ca = getelementptr inbounds i8, ptr %i.m, i64 %i.bz
-  %.pre.i.i.3 = load i8, ptr %i.m, align 1
+  %.pre.i.i.3 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.3
 
 bb.r:                                             ; preds = %bb.p
@@ -1645,7 +1646,7 @@ bb.v:                                             ; preds = %bb.u
 bb.w:                                             ; preds = %bb.v
   %i.cv = sext i32 %i.cl to i64
   %i.cw = getelementptr inbounds i8, ptr %i.m, i64 %i.cv
-  %.pre.i.i.4 = load i8, ptr %i.m, align 1
+  %.pre.i.i.4 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.4
 
 bb.x:                                             ; preds = %bb.v
@@ -1702,7 +1703,7 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   %i.dr = sext i32 %i.dh to i64
   %i.ds = getelementptr inbounds i8, ptr %i.m, i64 %i.dr
-  %.pre.i.i.5 = load i8, ptr %i.m, align 1
+  %.pre.i.i.5 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.5
 
 bb.ad:                                            ; preds = %bb.ab
@@ -1759,7 +1760,7 @@ bb.ah:                                            ; preds = %bb.ag
 bb.ai:                                            ; preds = %bb.ah
   %i.en = sext i32 %i.ed to i64
   %i.eo = getelementptr inbounds i8, ptr %i.m, i64 %i.en
-  %.pre.i.i.6 = load i8, ptr %i.m, align 1
+  %.pre.i.i.6 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.6
 
 bb.aj:                                            ; preds = %bb.ah
@@ -1816,7 +1817,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   %i.fj = sext i32 %i.ez to i64
   %i.fk = getelementptr inbounds i8, ptr %i.m, i64 %i.fj
-  %.pre.i.i.7 = load i8, ptr %i.m, align 1
+  %.pre.i.i.7 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i.7
 
 bb.ap:                                            ; preds = %bb.an
@@ -1882,7 +1883,7 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.at
   %i.gf = sext i32 %i.fv to i64
   %i.gg = getelementptr inbounds i8, ptr %i.m, i64 %i.gf
-  %.pre.i.i = load i8, ptr %i.m, align 1
+  %.pre.i.i = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i.i
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i.i: ; preds = %bb.av, %bb.au
@@ -2075,7 +2076,7 @@ bb.bp:                                            ; preds = %bb.bo
 bb.bq:                                            ; preds = %bb.bo
   %i.ix = sext i32 %i.in to i64
   %i.iy = getelementptr inbounds i8, ptr %i.m, i64 %i.ix
-  %.pre.i309 = load i8, ptr %i.m, align 1
+  %.pre.i309 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i:  ; preds = %bb.bq, %bb.bp
@@ -2143,7 +2144,7 @@ bb.bw:                                            ; preds = %bb.bv
 bb.bx:                                            ; preds = %bb.bv
   %i.jy = sext i32 %i.jo to i64
   %i.jz = getelementptr inbounds i8, ptr %i.m, i64 %i.jy
-  %.pre.i311 = load i8, ptr %i.m, align 1
+  %.pre.i311 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i312
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i312: ; preds = %bb.bx, %bb.bw
@@ -2354,7 +2355,7 @@ bb.cz:                                            ; preds = %bb.cy
 bb.da:                                            ; preds = %bb.cy
   %i.mh = sext i32 %i.lx to i64
   %i.mi = getelementptr inbounds i8, ptr %i.m, i64 %i.mh
-  %.pre.i317 = load i8, ptr %i.m, align 1
+  %.pre.i317 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i318
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i318: ; preds = %bb.da, %bb.cz
@@ -2410,7 +2411,7 @@ bb.de:                                            ; preds = %bb.dd
 bb.df:                                            ; preds = %bb.dd
   %i.nf = sext i32 %i.mv to i64
   %i.ng = getelementptr inbounds i8, ptr %i.m, i64 %i.nf
-  %.pre.i323 = load i8, ptr %i.m, align 1
+  %.pre.i323 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i324
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i324: ; preds = %bb.df, %bb.de
@@ -2465,7 +2466,7 @@ bb.dj:                                            ; preds = %bb.di
 bb.dk:                                            ; preds = %bb.di
   %i.oc = sext i32 %i.ns to i64
   %i.od = getelementptr inbounds i8, ptr %i.m, i64 %i.oc
-  %.pre.i329 = load i8, ptr %i.m, align 1
+  %.pre.i329 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i330
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i330: ; preds = %bb.dk, %bb.dj
@@ -2589,7 +2590,7 @@ bb.dz:                                            ; preds = %bb.dy
 bb.ea:                                            ; preds = %bb.dy
   %i.pk = sext i32 %i.pa to i64
   %i.pl = getelementptr inbounds i8, ptr %i.m, i64 %i.pk
-  %.pre.i335 = load i8, ptr %i.m, align 1
+  %.pre.i335 = load i8, ptr %i.m, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i336
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i336: ; preds = %bb.ea, %bb.dz
@@ -2992,7 +2993,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.ad = sext i32 %i.q to i64
   %i.ae = getelementptr inbounds i8, ptr %i.n, i64 %i.ad
-  %.pre.i = load i8, ptr %i.n, align 1
+  %.pre.i = load i8, ptr %i.n, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i:  ; preds = %bb.f, %bb.e
@@ -3054,7 +3055,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.bi = sext i32 %i.av to i64
   %i.bj = getelementptr inbounds i8, ptr %i.as, i64 %i.bi
-  %.pre.i3 = load i8, ptr %i.as, align 1
+  %.pre.i3 = load i8, ptr %i.as, align 8
   br label %_ZL19stbi__refill_bufferP13stbi__context.exit.i4
 
 _ZL19stbi__refill_bufferP13stbi__context.exit.i4: ; preds = %bb.k, %bb.j
@@ -3457,7 +3458,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 32
-  %i.y = load i32, ptr %i.b, align 4
+  %i.y = load i32, ptr %i.b, align 8
   %i.z = load i32, ptr %i.x, align 4
   %i.aa = icmp ult i32 %i.y, %i.z
   br label %.thread

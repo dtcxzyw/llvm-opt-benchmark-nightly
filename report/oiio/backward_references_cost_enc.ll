@@ -201,7 +201,7 @@ VP8LFastLog2.exit24.i69.i.i:                      ; preds = %bb.z, %bb.y
 
 ConvertPopulationCountTableToBitEstimates.exit73.i.i: ; preds = %VP8LFastLog2.exit24.i69.i.i, %._crit_edge.thread.i72.i.i
   %i.gt = getelementptr inbounds nuw i8, ptr %i.s, i64 3080 ; 2 uses
-  %i.gu = load <32 x i32>, ptr %i.gt, align 4, !tbaa !3 ; 33 uses
+  %i.gu = load <32 x i32>, ptr %i.gt, align 8, !tbaa !3 ; 33 uses
   %i.gv = extractelement <32 x i32> %i.gu, i64 0
   %i.gw = extractelement <32 x i32> %i.gu, i64 1
   %i.gx = add i32 %i.gw, %i.gv
@@ -267,7 +267,7 @@ ConvertPopulationCountTableToBitEstimates.exit73.i.i: ; preds = %VP8LFastLog2.ex
   %i.jf = extractelement <32 x i32> %i.gu, i64 31
   %i.jg = add i32 %i.je, %i.jf
   %i.jh = getelementptr inbounds nuw i8, ptr %i.s, i64 3208
-  %i.ji = load <8 x i32>, ptr %i.jh, align 4, !tbaa !3 ; 9 uses
+  %i.ji = load <8 x i32>, ptr %i.jh, align 8, !tbaa !3 ; 9 uses
   %i.jj = extractelement <8 x i32> %i.ji, i64 0
   %i.jk = add i32 %i.jg, %i.jj
   %i.jl = icmp ne <8 x i32> %i.ji, zeroinitializer
@@ -670,8 +670,9 @@ bb.ar:                                            ; preds = %.loopexit158.i
   %i.pl = getelementptr inbounds [4 x i8], ptr %.val107.i, i64 %i.pk ; 2 uses
   %i.pm = load i32, ptr %i.pl, align 4, !tbaa !3
   %i.pn = icmp eq i32 %i.pm, %i.ph
+  %cond.fr.i.i = freeze i1 %i.pn
   %i.po = icmp sgt i32 %i.pj, -1
-  %or.cond.i.i = and i1 %i.po, %i.pn
+  %or.cond.i.i = and i1 %i.po, %cond.fr.i.i
   br i1 %or.cond.i.i, label %bb.as, label %.thread1.i.i
 
 bb.as:                                            ; preds = %bb.ar
@@ -770,8 +771,9 @@ bb.aw:                                            ; preds = %bb.av
   %i.ro = getelementptr inbounds [4 x i8], ptr %.val.i, i64 %i.rn ; 2 uses
   %i.rp = load i32, ptr %i.ro, align 4, !tbaa !3
   %i.rq = icmp eq i32 %i.rp, %i.rk
+  %cond.fr.i116.i = freeze i1 %i.rq
   %i.rr = icmp sgt i32 %i.rm, -1
-  %or.cond.i116.i = and i1 %i.rr, %i.rq
+  %or.cond.i116.i = and i1 %i.rr, %cond.fr.i116.i
   br i1 %or.cond.i116.i, label %bb.ax, label %.thread1.i117.i
 
 bb.ax:                                            ; preds = %bb.aw
@@ -1174,8 +1176,9 @@ bb.ce:                                            ; preds = %.lr.ph76.split.i
   %i.zs = getelementptr inbounds [4 x i8], ptr %.val.i34, i64 %i.zr ; 2 uses
   %i.zt = load i32, ptr %i.zs, align 4, !tbaa !3
   %i.zu = icmp eq i32 %i.zt, %i.zo
+  %cond.fr.i = freeze i1 %i.zu
   %i.zv = icmp sgt i32 %i.zq, -1
-  %or.cond.i35 = and i1 %i.zu, %i.zv
+  %or.cond.i35 = and i1 %i.zv, %cond.fr.i
   br i1 %or.cond.i35, label %bb.cf, label %.thread66.i
 
 .thread66.i:                                      ; preds = %bb.ce

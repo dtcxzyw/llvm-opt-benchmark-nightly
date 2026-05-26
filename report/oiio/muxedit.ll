@@ -201,14 +201,15 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not55, label %bb.k, label %.thread
 
 bb.k:                                             ; preds = %bb.j
-  %i.ak = call fastcc i32 @AddDataToChunkList(ptr noundef %4, i32 noundef 1, i32 noundef %i.p, ptr noundef %3) ; 2 uses
+  %i.ak = call fastcc i32 @AddDataToChunkList(ptr noundef %4, i32 noundef 1, i32 noundef %i.p, ptr noundef %3)
+  %.fr = freeze i32 %i.ak                         ; 2 uses
   %i.al = load ptr, ptr %4, align 8, !tbaa !12
   call void @WebPFree(ptr noundef %i.al) #5
-  %.not56 = icmp eq i32 %i.ak, 1
+  %.not56 = icmp eq i32 %.fr, 1
   br i1 %.not56, label %bb.l, label %.thread
 
 .thread:                                          ; preds = %bb.j, %bb.i, %bb.k
-  %.039.ph = phi i32 [ %i.ak, %bb.k ], [ -1, %bb.i ], [ %i.aj, %bb.j ]
+  %.039.ph = phi i32 [ %.fr, %bb.k ], [ -1, %bb.i ], [ %i.aj, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #5
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
   br label %bb.m

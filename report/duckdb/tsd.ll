@@ -88,8 +88,9 @@ atomic_store_u8.exit.i:                           ; preds = %malloc_mutex_lock.e
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 3 uses
   %i.n = load ptr, ptr @tsd_nominal_tsds.0, align 8, !tbaa !16
   %.not8.i = icmp eq ptr %i.m, %i.n
+  %cond.fr.i = freeze i1 %.not8.i
   %.not12.i = icmp eq ptr %i.m, null
-  %.not.i = or i1 %.not12.i, %.not8.i
+  %.not.i = select i1 %cond.fr.i, i1 true, i1 %.not12.i
   br i1 %.not.i, label %tsd_force_recompute.exit, label %atomic_store_u8.exit.i
 
 tsd_force_recompute.exit:                         ; preds = %atomic_store_u8.exit.i, %malloc_mutex_lock.exit.i
@@ -145,8 +146,9 @@ atomic_store_u8.exit.i:                           ; preds = %malloc_mutex_lock.e
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !20   ; 3 uses
   %i.n = load ptr, ptr @tsd_nominal_tsds.0, align 8, !tbaa !16
   %.not8.i = icmp eq ptr %i.m, %i.n
+  %cond.fr.i = freeze i1 %.not8.i
   %.not12.i = icmp eq ptr %i.m, null
-  %.not.i = or i1 %.not12.i, %.not8.i
+  %.not.i = select i1 %cond.fr.i, i1 true, i1 %.not12.i
   br i1 %.not.i, label %tsd_force_recompute.exit, label %atomic_store_u8.exit.i
 
 tsd_force_recompute.exit:                         ; preds = %atomic_store_u8.exit.i, %malloc_mutex_lock.exit.i
@@ -181,7 +183,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.e, label %atomic_exchange_u8.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = load i8, ptr %0, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.f = load i8, ptr %0, align 8, !tbaa !45, !range !46, !noundef !47
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %tsd_local_slow.exit.i, label %atomic_exchange_u8.exit
 
@@ -364,7 +366,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.az, label %atomic_exchange_u8.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ba = load i8, ptr %0, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.ba = load i8, ptr %0, align 8, !tbaa !45, !range !46, !noundef !47
   %i.bb = trunc nuw i8 %i.ba to i1
   br i1 %i.bb, label %tsd_local_slow.exit.i.i, label %atomic_exchange_u8.exit.i
 
@@ -425,7 +427,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.f, label %atomic_exchange_u8.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.g = load i8, ptr %0, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.g = load i8, ptr %0, align 8, !tbaa !45, !range !46, !noundef !47
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %tsd_local_slow.exit.i.i, label %atomic_exchange_u8.exit.i
 
@@ -474,7 +476,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.s, label %atomic_exchange_u8.exit.i34, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.t = load i8, ptr %0, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.t = load i8, ptr %0, align 8, !tbaa !45, !range !46, !noundef !47
   %i.u = trunc nuw i8 %i.t to i1
   br i1 %i.u, label %tsd_local_slow.exit.i.i36, label %atomic_exchange_u8.exit.i34
 
@@ -561,7 +563,7 @@ bb.v:                                             ; preds = %bb.u
 tsd_set.exit29:                                   ; preds = %bb.t, %bb.u
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 440
   tail call void @duckdb_je_rtree_ctx_data_init(ptr noundef nonnull %i.ao) #7
-  store i8 0, ptr %0, align 1, !tbaa !45
+  store i8 0, ptr %0, align 8, !tbaa !45
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.ap, align 1, !tbaa !44
   %i.aq = ptrtoint ptr %0 to i64
@@ -575,9 +577,9 @@ tsd_set.exit29:                                   ; preds = %bb.t, %bb.u
 
 bb.w:                                             ; preds = %bb.a
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 2 ; 2 uses
-  %i.au = load i8, ptr %i.at, align 1, !tbaa !44
+  %i.au = load i8, ptr %i.at, align 2, !tbaa !44
   %i.av = add i8 %i.au, 1                         ; 2 uses
-  store i8 %i.av, ptr %i.at, align 1, !tbaa !44
+  store i8 %i.av, ptr %i.at, align 2, !tbaa !44
   %i.aw = icmp ne i8 %i.av, -128
   %or.cond.not = select i1 %1, i1 %i.aw, i1 false
   br i1 %or.cond.not, label %bb.ah, label %bb.x
@@ -601,7 +603,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.bc, label %atomic_exchange_u8.exit.i41, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.bd = load i8, ptr %0, align 1, !tbaa !45, !range !46, !noundef !47
+  %i.bd = load i8, ptr %0, align 8, !tbaa !45, !range !46, !noundef !47
   %i.be = trunc nuw i8 %i.bd to i1
   br i1 %i.be, label %tsd_local_slow.exit.i.i43, label %atomic_exchange_u8.exit.i41
 
@@ -663,7 +665,7 @@ bb.ag:                                            ; preds = %bb.af
 tsd_set.exit:                                     ; preds = %bb.ae, %bb.af
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 440
   tail call void @duckdb_je_rtree_ctx_data_init(ptr noundef nonnull %i.bt) #7
-  store i8 0, ptr %0, align 1, !tbaa !45
+  store i8 0, ptr %0, align 8, !tbaa !45
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 1
   store i8 1, ptr %i.bu, align 1, !tbaa !44
   %i.bv = ptrtoint ptr %0 to i64

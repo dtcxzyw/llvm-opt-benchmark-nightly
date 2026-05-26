@@ -201,8 +201,9 @@ streamCompareID.exit:                             ; preds = %bb.n, %bb.l, %bb.m
   br label %bb.o
 
 bb.o:                                             ; preds = %streamCompareID.exit, %bb.k
-  %.0138 = phi i1 [ %i.bj, %bb.k ], [ %.0.i158, %streamCompareID.exit ] ; 3 uses
-  %or.cond = select i1 %.0138, i1 %i.an, i1 false
+  %.0138 = phi i1 [ %i.bj, %bb.k ], [ %.0.i158, %streamCompareID.exit ]
+  %cond.fr = freeze i1 %.0138                     ; 3 uses
+  %or.cond = select i1 %cond.fr, i1 %i.an, i1 false
   br i1 %or.cond, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
@@ -541,7 +542,7 @@ bb.av:                                            ; preds = %.critedge
   %.0124207 = phi ptr [ %.0124207.ph, %.loopexit.sink.split ], [ %i.au, %._crit_edge ], [ %.3127.ph, %thread-pre-split ] ; 3 uses
   %i.fg = add nsw i64 %.0132213, %.0120236        ; 3 uses
   %i.fh = icmp eq i64 %.0132213, %.0.i
-  %or.cond156 = select i1 %.0138, i1 %i.fh, i1 false
+  %or.cond156 = select i1 %cond.fr, i1 %i.fh, i1 false
   br i1 %or.cond156, label %bb.aw, label %bb.ax
 
 bb.aw:                                            ; preds = %.loopexit
@@ -610,7 +611,7 @@ lpGetIntegerIfValid.exit179:                      ; preds = %bb.ay, %bb.bb
   store i64 %i.gk, ptr %i.aq, align 8, !tbaa !15
   %i.gl = load ptr, ptr %i.ar, align 8, !tbaa !149
   call void @raxSetData(ptr noundef %i.gl, ptr noundef %i.gd) #18
-  br i1 %.0138, label %select.unfold, label %.thread194
+  br i1 %cond.fr, label %select.unfold, label %.thread194
 
 .thread194:                                       ; preds = %bb.q, %lpGetIntegerIfValid.exit179
   %.1121.ph = phi i64 [ %i.fg, %lpGetIntegerIfValid.exit179 ], [ %.0120236, %bb.q ]
@@ -1013,9 +1014,9 @@ bb.q:                                             ; preds = %lpGetIntegerIfValid
 
 bb.r:                                             ; preds = %bb.q
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %.sroa.0.0.copyload.i = load i64, ptr %i.bq, align 1
+  %.sroa.0.0.copyload.i = load i64, ptr %i.bq, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 1
+  %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8
   %i.br = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.i)
   store i64 %i.br, ptr %2, align 8, !tbaa !50
   %i.bs = call i64 @llvm.bswap.i64(i64 %.sroa.4.0.copyload.i)
@@ -1027,9 +1028,9 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.q
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !51
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %.sroa.0.0.copyload.i48 = load i64, ptr %i.bu, align 1
+  %.sroa.0.0.copyload.i48 = load i64, ptr %i.bu, align 8
   %.sroa.4.0..sroa_idx.i49 = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %.sroa.4.0.copyload.i50 = load i64, ptr %.sroa.4.0..sroa_idx.i49, align 1
+  %.sroa.4.0.copyload.i50 = load i64, ptr %.sroa.4.0..sroa_idx.i49, align 8
   %i.bv = call i64 @llvm.bswap.i64(i64 %.sroa.0.0.copyload.i48)
   store i64 %i.bv, ptr %3, align 8, !tbaa !50
   %i.bw = call i64 @llvm.bswap.i64(i64 %.sroa.4.0.copyload.i50)
@@ -1432,13 +1433,13 @@ bb.o:                                             ; preds = %bb.n, %bb.m
 bb.p:                                             ; preds = %bb.o
   %i.bb = tail call ptr @addReplyDeferredLen(ptr noundef nonnull %0) #18 ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 40 ; 5 uses
-  %15 = load ptr, ptr %i.bc, align 8, !tbaa !44
   %i.bd = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 5 uses
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !42 ; 2 uses
   %.not261347 = icmp eq ptr %i.be, null
   br i1 %.not261347, label %.thread324, label %.lr.ph353
 
 .lr.ph353:                                        ; preds = %bb.p
+  %15 = load ptr, ptr %i.bc, align 8, !tbaa !44
   %i.bf = getelementptr inbounds nuw i8, ptr %14, i64 8
   %i.bg = getelementptr inbounds nuw i8, ptr %12, i64 48
   %i.bh = getelementptr inbounds nuw i8, ptr %12, i64 648 ; 2 uses
@@ -1462,6 +1463,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bx = getelementptr inbounds nuw i8, ptr %i.d, i64 104
   %.not265 = icmp eq i64 %4, 0
   %i.by = getelementptr inbounds nuw i8, ptr %12, i64 128 ; 2 uses
+  %.fr = freeze ptr %15
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph353, %.thread
@@ -1767,7 +1769,7 @@ bb.ar:                                            ; preds = %bb.aq
   %.3233 = phi i64 [ %.0230350, %bb.r ], [ %.0230350, %bb.aq ], [ %i.fj, %bb.ar ]
   %.1218 = phi i64 [ %.0217351, %bb.r ], [ %i.fi, %bb.aq ], [ %i.fi, %bb.ar ] ; 2 uses
   call void @raxStop(ptr noundef nonnull %i.by) #18
-  %i.fk = icmp eq ptr %.0236348, %15
+  %i.fk = icmp eq ptr %.0236348, %.fr
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #18
   %.not261406 = icmp eq ptr %i.ca, null
   %.not261 = select i1 %i.fk, i1 true, i1 %.not261406
@@ -2170,7 +2172,8 @@ bb.bl:                                            ; preds = %bb.bj
   %i.gv = sext i32 %i.dx to i64
   %i.gw = getelementptr inbounds [16 x i8], ptr %.0309, i64 %i.gv
   %i.gx = call range(i32 -1, 1) i32 @streamGenericParseIDOrReply(ptr noundef nonnull %0, ptr noundef nonnull readonly %i.fk, ptr noundef %i.gw, i64 noundef 0, i32 noundef 1, ptr noundef null)
-  %.not369 = icmp eq i32 %i.gx, 0
+  %.fr = freeze i32 %i.gx
+  %.not369 = icmp eq i32 %.fr, 0
   br i1 %.not369, label %select.unfold, label %streamDecrID.exit.thread467
 
 select.unfold:                                    ; preds = %.tail521.thread, %bb.bi, %bb.ax, %bb.bl, %bb.ay, %bb.bf, %bb.bg, %bb.bh
@@ -2273,11 +2276,12 @@ bb.bt:                                            ; preds = %bb.br
   %i.id = sub nsw i64 %i.ib, %i.ic
   %i.ie = load i64, ptr %i.e, align 8, !tbaa !21
   %.not384 = icmp uge i64 %i.id, %i.ie
+  %8 = freeze i1 %.not384
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.bs, %bb.bp, %bb.bt, %bb.bo
   %.3336 = phi i64 [ %.0333599, %bb.bo ], [ %spec.select, %bb.bt ], [ %.0333599, %bb.bp ], [ %.0333599, %bb.bs ] ; 3 uses
-  %.2321 = phi i1 [ false, %bb.bo ], [ %.not384, %bb.bt ], [ false, %bb.bp ], [ false, %bb.bs ]
+  %.2321 = phi i1 [ false, %bb.bo ], [ %8, %bb.bt ], [ false, %bb.bp ], [ false, %bb.bs ]
   %i.if = load i64, ptr %i.hk, align 8, !tbaa !50
   %.not385 = icmp eq i64 %i.if, -1
   br i1 %.not385, label %bb.bu, label %bb.ca

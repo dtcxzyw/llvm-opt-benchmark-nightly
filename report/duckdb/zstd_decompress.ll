@@ -201,7 +201,8 @@ bb.i:                                             ; preds = %bb.h
   %i.ab = sub nuw i64 %.04274, %i.y               ; 3 uses
   %i.ac = add i64 %.075, 1                        ; 3 uses
   %i.ad = load i32, ptr %i.w, align 4, !tbaa !84
-  %.not53 = icmp eq i32 %i.ad, 0
+  %.fr = freeze i32 %i.ad
+  %.not53 = icmp eq i32 %.fr, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #16
   br i1 %.not53, label %bb.j, label %bb.k
 
@@ -604,8 +605,9 @@ bb.w:                                             ; preds = %bb.r
   %i.dl = ptrtoint ptr %.0122.i to i64
   %i.dm = sub i64 %i.dl, %i.dd
   %i.dn = load i8, ptr %i.cy, align 1, !tbaa !60
-  %i.do = load i32, ptr %i.u, align 4, !tbaa !97  ; 2 uses
-  %i.dp = zext i32 %i.do to i64                   ; 3 uses
+  %i.do = load i32, ptr %i.u, align 4, !tbaa !97
+  %.fr224.i = freeze i32 %i.do                    ; 2 uses
+  %i.dp = zext i32 %.fr224.i to i64               ; 3 uses
   %i.dq = icmp ult i64 %i.dm, %i.dp
   br i1 %i.dq, label %.thread171.i, label %bb.x
 
@@ -614,7 +616,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.dr, label %bb.y, label %_ZN11duckdb_zstdL17ZSTD_copyRawBlockEPvmPKvm.exit.thread164.i
 
 bb.y:                                             ; preds = %bb.x
-  %i.ds = icmp eq i32 %i.do, 0
+  %i.ds = icmp eq i32 %.fr224.i, 0
   br i1 %i.ds, label %_ZN11duckdb_zstdL17ZSTD_copyRawBlockEPvmPKvm.exit.thread.i, label %.thread171.i
 
 _ZN11duckdb_zstdL17ZSTD_copyRawBlockEPvmPKvm.exit.thread164.i: ; preds = %bb.x
@@ -643,7 +645,8 @@ bb.aa:                                            ; preds = %bb.z, %_ZN11duckdb_
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.cx ; 5 uses
   %i.eb = sub i64 %i.cz, %i.cx                    ; 5 uses
   %i.ec = load i32, ptr %i.x, align 4, !tbaa !84
-  %.not143.i = icmp eq i32 %i.ec, 0
+  %.fr.i = freeze i32 %i.ec
+  %.not143.i = icmp eq i32 %.fr.i, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #16
   br i1 %.not143.i, label %bb.ab, label %bb.ac
 
@@ -1046,7 +1049,7 @@ bb.aw:                                            ; preds = %bb.e
   %i.eq = getelementptr inbounds nuw i8, ptr %i.eo, i64 %i.ep
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.eq, ptr align 1 %3, i64 %4, i1 false)
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 95944
-  %.val = load i32, ptr %i.er, align 1, !tbaa !3
+  %.val = load i32, ptr %i.er, align 8, !tbaa !3
   %i.es = zext i32 %.val to i64
   %i.et = getelementptr inbounds nuw i8, ptr %0, i64 29920
   store i64 %i.es, ptr %i.et, align 8, !tbaa !93
@@ -1449,13 +1452,13 @@ _ZN11duckdb_zstd31ZSTD_decompressBegin_usingDDictEPNS_11ZSTD_DCtx_sEPKNS_12ZSTD_
   br i1 %i.ev, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %_ZN11duckdb_zstd31ZSTD_decompressBegin_usingDDictEPNS_11ZSTD_DCtx_sEPKNS_12ZSTD_DDict_sE.exit
-  %.val406 = load i32, ptr %i.al, align 1, !tbaa !3
+  %.val406 = load i32, ptr %i.al, align 4, !tbaa !3
   %i.ew = and i32 %.val406, -16
   %i.ex = icmp eq i32 %i.ew, 407710288
   br i1 %i.ex, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %.val405 = load i32, ptr %i.bj, align 1, !tbaa !3
+  %.val405 = load i32, ptr %i.bj, align 8, !tbaa !3
   %i.ey = zext i32 %.val405 to i64
   br label %bb.ak
 

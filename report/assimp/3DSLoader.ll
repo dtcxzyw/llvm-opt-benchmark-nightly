@@ -201,7 +201,7 @@ bb.ag:                                            ; preds = %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ef = add nsw i32 %i.dw, -1
-  store i32 %i.ef, ptr %i.dt, align 4
+  store i32 %i.ef, ptr %i.dt, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.ai:                                            ; preds = %bb.ag
@@ -604,8 +604,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.l, %bb.m
   %i.bk = load ptr, ptr %i.bj, align 8
   %i.bl = ptrtoint ptr %i.bi to i64
   %i.bm = ptrtoint ptr %i.bk to i64
-  %i.bn = sub i64 %i.bl, %i.bm                    ; 2 uses
-  %i.bo = and i64 %i.bn, 4294967295
+  %i.bn = sub i64 %i.bl, %i.bm
+  %.fr7 = freeze i64 %i.bn                        ; 2 uses
+  %i.bo = and i64 %.fr7, 4294967295
   %i.bp = icmp eq i64 %i.bo, 0
   br i1 %i.bp, label %.thread, label %bb.q
 
@@ -614,7 +615,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.l, %bb.m
   br label %.loopexit
 
 bb.q:                                             ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5
-  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %i.bn, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
+  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %.fr7, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.bq = and i64 %.pre-phi14, 4294967294
   %i.br = icmp samesign ult i64 %i.bq, 6
@@ -1017,7 +1018,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.r = add nsw i32 %i.i, -1
-  store i32 %i.r, ptr %i.f, align 4
+  store i32 %i.r, ptr %i.f, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.f
@@ -1420,8 +1421,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.s, %bb.t
   %i.ck = load ptr, ptr %i.cj, align 8
   %i.cl = ptrtoint ptr %i.ci to i64
   %i.cm = ptrtoint ptr %i.ck to i64
-  %i.cn = sub i64 %i.cl, %i.cm                    ; 2 uses
-  %i.co = and i64 %i.cn, 4294967295
+  %i.cn = sub i64 %i.cl, %i.cm
+  %.fr7 = freeze i64 %i.cn                        ; 2 uses
+  %i.co = and i64 %.fr7, 4294967295
   %i.cp = icmp eq i64 %i.co, 0
   br i1 %i.cp, label %.thread, label %bb.x
 
@@ -1430,7 +1432,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.s, %bb.t
   br label %.loopexit
 
 bb.x:                                             ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5
-  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %i.cn, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
+  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %.fr7, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.cq = and i64 %.pre-phi14, 4294967294
   %i.cr = icmp samesign ult i64 %i.cq, 6
@@ -1833,8 +1835,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit43: ; preds = %bb.at, %bb
   %i.gt = load ptr, ptr %i.gs, align 8
   %i.gu = ptrtoint ptr %i.gr to i64
   %i.gv = ptrtoint ptr %i.gt to i64
-  %i.gw = sub i64 %i.gu, %i.gv                    ; 2 uses
-  %i.gx = and i64 %i.gw, 4294967295
+  %i.gw = sub i64 %i.gu, %i.gv
+  %.fr45 = freeze i64 %i.gw                       ; 2 uses
+  %i.gx = and i64 %.fr45, 4294967295
   %i.gy = icmp eq i64 %i.gx, 0
   br i1 %i.gy, label %.thread, label %bb.ay
 
@@ -1843,7 +1846,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit43: ; preds = %bb.at, %bb
   br label %.loopexit
 
 bb.ay:                                            ; preds = %._crit_edge59, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit43
-  %.pre-phi67 = phi i64 [ %.pre66, %._crit_edge59 ], [ %i.gw, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit43 ]
+  %.pre-phi67 = phi i64 [ %.pre66, %._crit_edge59 ], [ %.fr45, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit43 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.gz = and i64 %.pre-phi67, 4294967294
   %i.ha = icmp samesign ult i64 %i.gz, 6
@@ -2010,8 +2013,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.k, %bb.l
   %i.bj = load ptr, ptr %i.bi, align 8
   %i.bk = ptrtoint ptr %i.bh to i64
   %i.bl = ptrtoint ptr %i.bj to i64
-  %i.bm = sub i64 %i.bk, %i.bl                    ; 2 uses
-  %i.bn = and i64 %i.bm, 4294967295
+  %i.bm = sub i64 %i.bk, %i.bl
+  %.fr7 = freeze i64 %i.bm                        ; 2 uses
+  %i.bn = and i64 %.fr7, 4294967295
   %i.bo = icmp eq i64 %i.bn, 0
   br i1 %i.bo, label %.thread, label %bb.p
 
@@ -2020,7 +2024,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5: ; preds = %bb.k, %bb.l
   br label %.loopexit
 
 bb.p:                                             ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5
-  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %i.bm, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
+  %.pre-phi14 = phi i64 [ %.pre13, %._crit_edge ], [ %.fr7, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit5 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.bp = and i64 %.pre-phi14, 4294967294
   %i.bq = icmp samesign ult i64 %i.bp, 6
@@ -2423,8 +2427,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit64: ; preds = %bb.cf, %bb
   %i.od = load ptr, ptr %i.oc, align 8
   %i.oe = ptrtoint ptr %i.ob to i64
   %i.of = ptrtoint ptr %i.od to i64
-  %i.og = sub i64 %i.oe, %i.of                    ; 2 uses
-  %i.oh = and i64 %i.og, 4294967295
+  %i.og = sub i64 %i.oe, %i.of
+  %.fr104 = freeze i64 %i.og                      ; 2 uses
+  %i.oh = and i64 %.fr104, 4294967295
   %i.oi = icmp eq i64 %i.oh, 0
   br i1 %i.oi, label %.thread, label %bb.ck
 
@@ -2433,7 +2438,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit64: ; preds = %bb.cf, %bb
   br label %.loopexit
 
 bb.ck:                                            ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit64
-  %.pre-phi130 = phi i64 [ %.pre129, %._crit_edge ], [ %i.og, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit64 ]
+  %.pre-phi130 = phi i64 [ %.pre129, %._crit_edge ], [ %.fr104, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit64 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   %i.oj = and i64 %.pre-phi130, 4294967294
   %i.ok = icmp samesign ult i64 %i.oj, 6
@@ -2836,8 +2841,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit55: ; preds = %bb.ay, %bb
   %i.ic = load ptr, ptr %i.ib, align 8
   %i.id = ptrtoint ptr %i.ia to i64
   %i.ie = ptrtoint ptr %i.ic to i64
-  %i.if = sub i64 %i.id, %i.ie                    ; 2 uses
-  %i.ig = and i64 %i.if, 4294967295
+  %i.if = sub i64 %i.id, %i.ie
+  %.fr58 = freeze i64 %i.if                       ; 2 uses
+  %i.ig = and i64 %.fr58, 4294967295
   %i.ih = icmp eq i64 %i.ig, 0
   br i1 %i.ih, label %.thread, label %bb.bd
 
@@ -2846,7 +2852,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit55: ; preds = %bb.ay, %bb
   br label %.loopexit
 
 bb.bd:                                            ; preds = %._crit_edge64, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit55
-  %.pre-phi72 = phi i64 [ %.pre71, %._crit_edge64 ], [ %i.if, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit55 ]
+  %.pre-phi72 = phi i64 [ %.pre71, %._crit_edge64 ], [ %.fr58, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit55 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.ii = and i64 %.pre-phi72, 4294967294
   %i.ij = icmp samesign ult i64 %i.ii, 6
@@ -3249,8 +3255,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit99: ; preds = %bb.db, %bb
   %i.rz = load ptr, ptr %i.ry, align 8
   %i.sa = ptrtoint ptr %i.rx to i64
   %i.sb = ptrtoint ptr %i.rz to i64
-  %i.sc = sub i64 %i.sa, %i.sb                    ; 2 uses
-  %i.sd = and i64 %i.sc, 4294967295
+  %i.sc = sub i64 %i.sa, %i.sb
+  %.fr114 = freeze i64 %i.sc                      ; 2 uses
+  %i.sd = and i64 %.fr114, 4294967295
   %i.se = icmp eq i64 %i.sd, 0
   br i1 %i.se, label %.thread, label %bb.dg
 
@@ -3259,7 +3266,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit99: ; preds = %bb.db, %bb
   br label %.loopexit115
 
 bb.dg:                                            ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit99
-  %.pre-phi133 = phi i64 [ %.pre132, %._crit_edge ], [ %i.sc, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit99 ]
+  %.pre-phi133 = phi i64 [ %.pre132, %._crit_edge ], [ %.fr114, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit99 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.sf = and i64 %.pre-phi133, 4294967294
   %i.sg = icmp samesign ult i64 %i.sf, 6
@@ -3662,8 +3669,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit31: ; preds = %bb.ar, %bb
   %i.he = load ptr, ptr %i.hd, align 8
   %i.hf = ptrtoint ptr %i.hc to i64
   %i.hg = ptrtoint ptr %i.he to i64
-  %i.hh = sub i64 %i.hf, %i.hg                    ; 2 uses
-  %i.hi = and i64 %i.hh, 4294967295
+  %i.hh = sub i64 %i.hf, %i.hg
+  %.fr33 = freeze i64 %i.hh                       ; 2 uses
+  %i.hi = and i64 %.fr33, 4294967295
   %i.hj = icmp eq i64 %i.hi, 0
   br i1 %i.hj, label %.thread, label %bb.aw
 
@@ -3672,7 +3680,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit31: ; preds = %bb.ar, %bb
   br label %.loopexit
 
 bb.aw:                                            ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit31
-  %.pre-phi40 = phi i64 [ %.pre39, %._crit_edge ], [ %i.hh, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit31 ]
+  %.pre-phi40 = phi i64 [ %.pre39, %._crit_edge ], [ %.fr33, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit31 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.hk = and i64 %.pre-phi40, 4294967294
   %i.hl = icmp samesign ult i64 %i.hk, 6
@@ -3897,8 +3905,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit8: ; preds = %bb.q, %bb.r
   %i.cl = load ptr, ptr %i.ck, align 8
   %i.cm = ptrtoint ptr %i.cj to i64
   %i.cn = ptrtoint ptr %i.cl to i64
-  %i.co = sub i64 %i.cm, %i.cn                    ; 2 uses
-  %i.cp = and i64 %i.co, 4294967295
+  %i.co = sub i64 %i.cm, %i.cn
+  %.fr10 = freeze i64 %i.co                       ; 2 uses
+  %i.cp = and i64 %.fr10, 4294967295
   %i.cq = icmp eq i64 %i.cp, 0
   br i1 %i.cq, label %.thread, label %bb.v
 
@@ -3907,7 +3916,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit8: ; preds = %bb.q, %bb.r
   br label %.loopexit
 
 bb.v:                                             ; preds = %._crit_edge, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit8
-  %.pre-phi17 = phi i64 [ %.pre16, %._crit_edge ], [ %i.co, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit8 ]
+  %.pre-phi17 = phi i64 [ %.pre16, %._crit_edge ], [ %.fr10, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit8 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.cr = and i64 %.pre-phi17, 4294967294
   %i.cs = icmp samesign ult i64 %i.cr, 6
@@ -4310,8 +4319,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit312: ; preds = %bb.hd, %b
   %i.afi = load ptr, ptr %i.afh, align 8
   %i.afj = ptrtoint ptr %i.afg to i64
   %i.afk = ptrtoint ptr %i.afi to i64
-  %i.afl = sub i64 %i.afj, %i.afk                 ; 2 uses
-  %i.afm = and i64 %i.afl, 4294967295
+  %i.afl = sub i64 %i.afj, %i.afk
+  %.fr393 = freeze i64 %i.afl                     ; 2 uses
+  %i.afm = and i64 %.fr393, 4294967295
   %i.afn = icmp eq i64 %i.afm, 0
   br i1 %i.afn, label %.thread, label %bb.hi
 
@@ -4320,7 +4330,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit312: ; preds = %bb.hd, %b
   br label %.loopexit
 
 bb.hi:                                            ; preds = %._crit_edge511, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit312
-  %.pre-phi523 = phi i64 [ %.pre522, %._crit_edge511 ], [ %i.afl, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit312 ]
+  %.pre-phi523 = phi i64 [ %.pre522, %._crit_edge511 ], [ %.fr393, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit312 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   %i.afo = and i64 %.pre-phi523, 4294967294
   %i.afp = icmp samesign ult i64 %i.afo, 6
@@ -4723,8 +4733,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit35: ; preds = %bb.ak, %bb
   %i.fg = load ptr, ptr %i.ff, align 8
   %i.fh = ptrtoint ptr %i.fe to i64
   %i.fi = ptrtoint ptr %i.fg to i64
-  %i.fj = sub i64 %i.fh, %i.fi                    ; 2 uses
-  %i.fk = and i64 %i.fj, 4294967295
+  %i.fj = sub i64 %i.fh, %i.fi
+  %.fr48 = freeze i64 %i.fj                       ; 2 uses
+  %i.fk = and i64 %.fr48, 4294967295
   %i.fl = icmp eq i64 %i.fk, 0
   br i1 %i.fl, label %.thread45, label %bb.ap
 
@@ -4733,7 +4744,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit35: ; preds = %bb.ak, %bb
   br label %.loopexit48
 
 bb.ap:                                            ; preds = %._crit_edge65, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit35
-  %.pre-phi73 = phi i64 [ %.pre72, %._crit_edge65 ], [ %i.fj, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit35 ]
+  %.pre-phi73 = phi i64 [ %.pre72, %._crit_edge65 ], [ %.fr48, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit35 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
   %i.fm = and i64 %.pre-phi73, 4294967294
   %i.fn = icmp samesign ult i64 %i.fm, 6
@@ -5136,8 +5147,9 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit38: ; preds = %bb.bo, %bb
   %i.hr = load ptr, ptr %i.hq, align 8
   %i.hs = ptrtoint ptr %i.hp to i64
   %i.ht = ptrtoint ptr %i.hr to i64
-  %i.hu = sub i64 %i.hs, %i.ht                    ; 2 uses
-  %i.hv = and i64 %i.hu, 4294967295
+  %i.hu = sub i64 %i.hs, %i.ht
+  %.fr40 = freeze i64 %i.hu                       ; 2 uses
+  %i.hv = and i64 %.fr40, 4294967295
   %i.hw = icmp eq i64 %i.hv, 0
   br i1 %i.hw, label %.thread, label %bb.bt
 
@@ -5146,7 +5158,7 @@ _ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit38: ; preds = %bb.bo, %bb
   br label %.loopexit
 
 bb.bt:                                            ; preds = %._crit_edge46, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit38
-  %.pre-phi54 = phi i64 [ %.pre53, %._crit_edge46 ], [ %i.hu, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit38 ]
+  %.pre-phi54 = phi i64 [ %.pre53, %._crit_edge46 ], [ %.fr40, %_ZN6Assimp12StreamReaderILb0ELb0EE12SetReadLimitEj.exit38 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   %i.hx = and i64 %.pre-phi54, 4294967294
   %i.hy = icmp samesign ult i64 %i.hx, 6
@@ -5549,7 +5561,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
-  store i32 %i.o, ptr %i.c, align 4
+  store i32 %i.o, ptr %i.c, align 8
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.f:                                             ; preds = %bb.d

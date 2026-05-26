@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 10) #17, !inline_history !58
-  %i.d = trunc i64 %i.c to i32                    ; 2 uses
+  %.fr14.i = freeze i64 %i.c
+  %i.d = trunc i64 %.fr14.i to i32                ; 2 uses
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %select.unfold.i, label %_ZL10getColumnsi.exit
 
@@ -236,7 +237,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = tail call i64 @__isoc23_strtol(ptr noundef nonnull %i.b, ptr noundef null, i32 noundef 10) #17, !inline_history !58
-  %i.d = trunc i64 %i.c to i32                    ; 2 uses
+  %.fr14.i = freeze i64 %i.c
+  %i.d = trunc i64 %.fr14.i to i32                ; 2 uses
   %i.e = icmp slt i32 %i.d, 1
   br i1 %i.e, label %select.unfold.i, label %_ZL10getColumnsi.exit
 

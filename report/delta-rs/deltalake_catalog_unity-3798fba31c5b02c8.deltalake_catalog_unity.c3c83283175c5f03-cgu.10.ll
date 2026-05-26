@@ -201,8 +201,9 @@ bb.q:                                             ; preds = %.split.i
   br i1 %spec.select.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %.noexc51
-  %i.bj = cmpxchg ptr %i.ba, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.bj, 1
+  %i.bj = cmpxchg ptr %i.ba, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.bj                 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
   br i1 %.sroa.18.0.in.i.i.i, label %.thread, label %bb.t
 
 bb.s:                                             ; preds = %.noexc51
@@ -216,7 +217,7 @@ bb.s:                                             ; preds = %.noexc51
           to label %.split.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit
 
 bb.t:                                             ; preds = %bb.r
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.bj, 0
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
   switch i64 %.sroa.01.0.i.i.i, label %.thread11 [
     i64 0, label %bb.u
     i64 1, label %.thread
@@ -619,8 +620,9 @@ bb.x:                                             ; preds = %.split.i
   br i1 %spec.select.i4, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.cm = cmpxchg ptr %i.cd, i64 0, i64 1 acq_rel acquire, align 8 ; 2 uses
-  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %i.cm, 1
+  %i.cm = cmpxchg ptr %i.cd, i64 0, i64 1 acq_rel acquire, align 8
+  %.fr = freeze { i64, i1 } %i.cm                 ; 2 uses
+  %.sroa.18.0.in.i.i.i = extractvalue { i64, i1 } %.fr, 1
   br i1 %.sroa.18.0.in.i.i.i, label %_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context10wait_until.exit.thread, label %_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context10wait_until.exit
 
 bb.z:                                             ; preds = %bb.x
@@ -631,7 +633,7 @@ bb.z:                                             ; preds = %bb.x
   br label %.split.i
 
 _RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context10wait_until.exit: ; preds = %bb.y
-  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %i.cm, 0
+  %.sroa.01.0.i.i.i = extractvalue { i64, i1 } %.fr, 0
   switch i64 %.sroa.01.0.i.i.i, label %_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context10wait_until.exit.thread6 [
     i64 0, label %bb.aa
     i64 1, label %_RNvMNtCshhQzAC5dGUF_17crossbeam_channel7contextNtB2_7Context10wait_until.exit.thread
@@ -1034,7 +1036,7 @@ bb.c:                                             ; preds = %_RNvMNtCslrv8JwANqS
   %i.z = sub i64 0, %i.y
   %i.aa = and i64 %.sroa.04.029.i.i, %i.z
   %i.ab = load ptr, ptr %i.s, align 8, !noalias !604, !nonnull !3, !noundef !3
-  %i.ac = load i64, ptr %i.t, align 8, !noalias !604, !noundef !3
+  %i.ac = load i64, ptr %i.t, align 16, !noalias !604, !noundef !3
   %i.ad = icmp ult i64 %i.x, %i.ac
   tail call void @llvm.assume(i1 %i.ad)
   %i.ae = getelementptr inbounds nuw [24 x i8], ptr %i.ab, i64 %i.x ; 4 uses
@@ -1082,12 +1084,12 @@ bb.f:                                             ; preds = %bb.d
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.loopexit.i.thread.i.i, %.noexc.i
   %.sroa.0.2.i.i = phi i32 [ %i.at, %.loopexit.i.thread.i.i ], [ %.sroa.0.02328.i.i, %.noexc.i ]
-  %i.au = load atomic i64, ptr %i.l monotonic, align 8, !noalias !604
+  %i.au = load atomic i64, ptr %i.l monotonic, align 16, !noalias !604
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i
 
 bb.g:                                             ; preds = %bb.d
   fence seq_cst
-  %i.av = load atomic i64, ptr %i.k monotonic, align 8, !noalias !604
+  %i.av = load atomic i64, ptr %i.k monotonic, align 16, !noalias !604
   %i.aw = load i64, ptr %i.r, align 8, !noalias !604, !noundef !3
   %i.ax = add i64 %i.aw, %i.av
   %i.ay = icmp eq i64 %i.ax, %.sroa.04.029.i.i
@@ -1101,7 +1103,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i: ; pre
   %i.az = icmp ult i32 %.sroa.0.02328.i.i, 7
   %i.ba = zext i1 %i.az to i32
   %spec.select.i.i = add nuw nsw i32 %.sroa.0.02328.i.i, %i.ba
-  %i.bb = load atomic i64, ptr %i.l monotonic, align 8, !noalias !604
+  %i.bb = load atomic i64, ptr %i.l monotonic, align 16, !noalias !604
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i
 
 bb.i:                                             ; preds = %bb.i, %bb.h
@@ -1504,7 +1506,7 @@ bb.c:                                             ; preds = %_RNvMNtCslrv8JwANqS
   %i.z = sub i64 0, %i.y
   %i.aa = and i64 %.sroa.04.029.i.i, %i.z
   %i.ab = load ptr, ptr %i.s, align 8, !noalias !695, !nonnull !3, !noundef !3
-  %i.ac = load i64, ptr %i.t, align 8, !noalias !695, !noundef !3
+  %i.ac = load i64, ptr %i.t, align 16, !noalias !695, !noundef !3
   %i.ad = icmp ult i64 %i.x, %i.ac
   tail call void @llvm.assume(i1 %i.ad)
   %i.ae = getelementptr inbounds nuw [48 x i8], ptr %i.ab, i64 %i.x ; 4 uses
@@ -1551,12 +1553,12 @@ bb.f:                                             ; preds = %bb.d
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.loopexit.i.thread.i.i, %.noexc.i
   %.sroa.0.2.i.i = phi i32 [ %i.as, %.loopexit.i.thread.i.i ], [ %.sroa.0.02328.i.i, %.noexc.i ]
-  %i.at = load atomic i64, ptr %i.l monotonic, align 8, !noalias !695
+  %i.at = load atomic i64, ptr %i.l monotonic, align 16, !noalias !695
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i
 
 bb.g:                                             ; preds = %bb.d
   fence seq_cst
-  %i.au = load atomic i64, ptr %i.k monotonic, align 8, !noalias !695
+  %i.au = load atomic i64, ptr %i.k monotonic, align 16, !noalias !695
   %i.av = load i64, ptr %i.r, align 8, !noalias !695, !noundef !3
   %i.aw = add i64 %i.av, %i.au
   %i.ax = icmp eq i64 %i.aw, %.sroa.04.029.i.i
@@ -1570,7 +1572,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i: ; pre
   %i.ay = icmp ult i32 %.sroa.0.02328.i.i, 7
   %i.az = zext i1 %i.ay to i32
   %spec.select.i.i = add nuw nsw i32 %.sroa.0.02328.i.i, %i.az
-  %i.ba = load atomic i64, ptr %i.l monotonic, align 8, !noalias !695
+  %i.ba = load atomic i64, ptr %i.l monotonic, align 16, !noalias !695
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i
 
 bb.i:                                             ; preds = %bb.i, %bb.h
@@ -1973,7 +1975,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %_RNvMsf_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcINtNtNtNtCs8CRAYtH5WmW_12futures_util6future6future6shared5InnerINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtB7_5boxed3BoxDNtNtNtB1N_6future6future6Futurep6OutputbNtNtB1N_6marker4SendEL_EEEE10try_unwrapCsgO8S5jLFugx_23deltalake_catalog_unity.exit.thread
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.6.020, i64 32
-  %i.x = load i8, ptr %i.w, align 1, !range !4, !alias.scope !806, !noundef !3
+  %i.x = load i8, ptr %i.w, align 8, !range !4, !alias.scope !806, !noundef !3
   %i.y = trunc nuw i8 %i.x to i1
   %i.z = atomicrmw sub ptr %.sroa.6.020, i64 1 release, align 8, !noalias !809
   %i.aa = icmp eq i64 %i.z, 1
@@ -2260,12 +2262,12 @@ bb.e:                                             ; preds = %bb.c
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.loopexit.i.thread.i.i, %.loopexit.i.i.i
   %.sroa.0.2.i.i = phi i32 [ %i.an, %.loopexit.i.thread.i.i ], [ %.sroa.0.023.i.i, %.loopexit.i.i.i ]
-  %i.ao = load atomic i64, ptr %i.j monotonic, align 8, !noalias !845
+  %i.ao = load atomic i64, ptr %i.j monotonic, align 16, !noalias !845
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.f:                                             ; preds = %bb.c
   fence seq_cst
-  %i.ap = load atomic i64, ptr %i.p monotonic, align 8, !noalias !845 ; 2 uses
+  %i.ap = load atomic i64, ptr %i.p monotonic, align 16, !noalias !845 ; 2 uses
   %i.aq = load i64, ptr %i.l, align 16, !noalias !845, !noundef !3 ; 2 uses
   %i.ar = xor i64 %i.aq, -1
   %i.as = and i64 %i.ap, %i.ar
@@ -2280,7 +2282,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i: ; pre
   %i.au = icmp ult i32 %.sroa.0.023.i.i, 7
   %i.av = zext i1 %i.au to i32
   %spec.select.i.i = add nuw nsw i32 %.sroa.0.023.i.i, %i.av
-  %i.aw = load atomic i64, ptr %i.j monotonic, align 8, !noalias !845
+  %i.aw = load atomic i64, ptr %i.j monotonic, align 16, !noalias !845
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.h:                                             ; preds = %bb.h, %bb.g
@@ -2683,7 +2685,7 @@ bb.bj:                                            ; preds = %bb.bh
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.gi, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(62) %.sroa.727.i, ptr noundef nonnull align 2 dereferenceable(62) %.sroa.5.0..sroa_idx.i.i, i64 62, i1 false), !noalias !860
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gi, i64 64
-  store atomic i8 1, ptr %i.hm release, align 1, !noalias !884
+  store atomic i8 1, ptr %i.hm release, align 8, !noalias !884
   br label %bb.bl
 
 bb.bk:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors4zero5InnerEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
@@ -2904,7 +2906,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.bj, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit.thread, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit
 
 _RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit: ; preds = %bb.n, %bb.o
-  %i.bk = load atomic i8, ptr %i.aw seq_cst, align 1
+  %i.bk = load atomic i8, ptr %i.aw seq_cst, align 8
   %.fr = freeze i8 %i.bk
   %.not = icmp eq i8 %.fr, 0
   br i1 %.not, label %_RNvMs_NtNtCshhQzAC5dGUF_17crossbeam_channel7flavors5arrayINtB4_7ChannelINtNtNtCs95DO3lnzZ3L_4moka6common10concurrent6ReadOpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEE3lenB2D_.exit, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit.thread
@@ -3035,12 +3037,12 @@ bb.e:                                             ; preds = %bb.c
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.loopexit.i.thread.i.i, %.loopexit.i.i.i
   %.sroa.0.2.i.i = phi i32 [ %i.am, %.loopexit.i.thread.i.i ], [ %.sroa.0.023.i.i, %.loopexit.i.i.i ]
-  %i.an = load atomic i64, ptr %i.i monotonic, align 8, !noalias !904
+  %i.an = load atomic i64, ptr %i.i monotonic, align 16, !noalias !904
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.f:                                             ; preds = %bb.c
   fence seq_cst
-  %i.ao = load atomic i64, ptr %i.o monotonic, align 8, !noalias !904 ; 2 uses
+  %i.ao = load atomic i64, ptr %i.o monotonic, align 16, !noalias !904 ; 2 uses
   %i.ap = load i64, ptr %i.k, align 16, !noalias !904, !noundef !3 ; 2 uses
   %i.aq = xor i64 %i.ap, -1
   %i.ar = and i64 %i.ao, %i.aq
@@ -3055,7 +3057,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i: ; pre
   %i.at = icmp ult i32 %.sroa.0.023.i.i, 7
   %i.au = zext i1 %i.at to i32
   %spec.select.i.i = add nuw nsw i32 %.sroa.0.023.i.i, %i.au
-  %i.av = load atomic i64, ptr %i.i monotonic, align 8, !noalias !904
+  %i.av = load atomic i64, ptr %i.i monotonic, align 16, !noalias !904
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.h:                                             ; preds = %bb.h, %bb.g
@@ -3458,7 +3460,7 @@ bb.bk:                                            ; preds = %bb.bi
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.gk, i64 1
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) %.sroa.727.i, ptr noundef nonnull align 1 dereferenceable(15) %.sroa.5.0..sroa_idx.i.i, i64 15, i1 false), !noalias !922
   %i.ho = getelementptr inbounds nuw i8, ptr %i.gk, i64 16
-  store atomic i8 1, ptr %i.ho release, align 1, !noalias !946
+  store atomic i8 1, ptr %i.ho release, align 8, !noalias !946
   br label %bb.bm
 
 bb.bl:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors4zero5InnerEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
@@ -3768,7 +3770,7 @@ bb.o:                                             ; preds = %bb.m
   br i1 %i.bj, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit.thread, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit
 
 _RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit: ; preds = %bb.n, %bb.o
-  %i.bk = load atomic i8, ptr %i.aw seq_cst, align 1
+  %i.bk = load atomic i8, ptr %i.aw seq_cst, align 8
   %.fr = freeze i8 %i.bk
   %.not = icmp eq i8 %.fr, 0
   br i1 %.not, label %_RNvMs_NtNtCshhQzAC5dGUF_17crossbeam_channel7flavors5arrayINtB4_7ChannelINtNtNtCs95DO3lnzZ3L_4moka6common10concurrent7WriteOpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEE3lenB2E_.exit, label %_RNvMNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors2atNtB2_7Channel8is_empty.exit.thread
@@ -3899,12 +3901,12 @@ bb.e:                                             ; preds = %bb.c
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.loopexit.i.thread.i.i, %.loopexit.i.i.i
   %.sroa.0.2.i.i = phi i32 [ %i.am, %.loopexit.i.thread.i.i ], [ %.sroa.0.023.i.i, %.loopexit.i.i.i ]
-  %i.an = load atomic i64, ptr %i.j monotonic, align 8, !noalias !980
+  %i.an = load atomic i64, ptr %i.j monotonic, align 16, !noalias !980
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.f:                                             ; preds = %bb.c
   fence seq_cst
-  %i.ao = load atomic i64, ptr %i.p monotonic, align 8, !noalias !980 ; 2 uses
+  %i.ao = load atomic i64, ptr %i.p monotonic, align 16, !noalias !980 ; 2 uses
   %i.ap = load i64, ptr %i.l, align 16, !noalias !980, !noundef !3 ; 2 uses
   %i.aq = xor i64 %i.ap, -1
   %i.ar = and i64 %i.ao, %i.aq
@@ -3919,7 +3921,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i: ; pre
   %i.at = icmp ult i32 %.sroa.0.023.i.i, 7
   %i.au = zext i1 %i.at to i32
   %spec.select.i.i = add nuw nsw i32 %.sroa.0.023.i.i, %i.au
-  %i.av = load atomic i64, ptr %i.j monotonic, align 8, !noalias !980
+  %i.av = load atomic i64, ptr %i.j monotonic, align 16, !noalias !980
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.backedge
 
 bb.h:                                             ; preds = %bb.h, %bb.g
@@ -4322,7 +4324,7 @@ bb.bj:                                            ; preds = %bb.bh
   %.sroa.5.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.gi, i64 2
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(38) %.sroa.727.i, ptr noundef nonnull align 2 dereferenceable(38) %.sroa.5.0..sroa_idx.i.i, i64 38, i1 false), !noalias !995
   %i.hm = getelementptr inbounds nuw i8, ptr %i.gi, i64 40
-  store atomic i8 1, ptr %i.hm release, align 1, !noalias !1019
+  store atomic i8 1, ptr %i.hm release, align 8, !noalias !1019
   br label %bb.bl
 
 bb.bk:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuardNtNtNtCshhQzAC5dGUF_17crossbeam_channel7flavors4zero5InnerEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i
@@ -4725,7 +4727,7 @@ bb.g:                                             ; preds = %_RNvMNtCslrv8JwANqS
   %i.bm = sub i64 0, %i.bl
   %i.bn = and i64 %.sroa.04.029.i.i.i, %i.bm
   %i.bo = load ptr, ptr %i.bb, align 8, !noalias !1063, !nonnull !3, !noundef !3
-  %i.bp = load i64, ptr %i.bc, align 8, !noalias !1063, !noundef !3
+  %i.bp = load i64, ptr %i.bc, align 16, !noalias !1063, !noundef !3
   %i.bq = icmp ult i64 %i.bk, %i.bp
   call void @llvm.assume(i1 %i.bq)
   %i.br = getelementptr inbounds nuw [72 x i8], ptr %i.bo, i64 %i.bk ; 5 uses
@@ -4773,12 +4775,12 @@ bb.j:                                             ; preds = %bb.h
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i.i: ; preds = %.loopexit.i.thread.i.i.i, %.noexc.i.i
   %.sroa.0.2.i.i.i = phi i32 [ %i.cg, %.loopexit.i.thread.i.i.i ], [ %.sroa.0.02328.i.i.i, %.noexc.i.i ]
-  %i.ch = load atomic i64, ptr %i.au monotonic, align 8, !noalias !1063
+  %i.ch = load atomic i64, ptr %i.au monotonic, align 16, !noalias !1063
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.i
 
 bb.k:                                             ; preds = %bb.h
   fence seq_cst
-  %i.ci = load atomic i64, ptr %.val8 monotonic, align 8, !noalias !1063
+  %i.ci = load atomic i64, ptr %.val8 monotonic, align 16, !noalias !1063
   %i.cj = load i64, ptr %i.ba, align 8, !noalias !1063, !noundef !3
   %i.ck = add i64 %i.cj, %i.ci
   %i.cl = icmp eq i64 %i.ck, %.sroa.04.029.i.i.i
@@ -4792,7 +4794,7 @@ _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit.i.i.i: ; p
   %i.cm = icmp ult i32 %.sroa.0.02328.i.i.i, 7
   %i.cn = zext i1 %i.cm to i32
   %spec.select.i.i.i = add nuw nsw i32 %.sroa.0.02328.i.i.i, %i.cn
-  %i.co = load atomic i64, ptr %i.au monotonic, align 8, !noalias !1063
+  %i.co = load atomic i64, ptr %i.au monotonic, align 16, !noalias !1063
   br label %_RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff4spin.exit17.i.i.i
 
 bb.m:                                             ; preds = %bb.m, %bb.l
@@ -4896,7 +4898,7 @@ bb.u:                                             ; preds = %bb.t
 
 _RNvMNtCslrv8JwANqSj_15crossbeam_utils7backoffNtB2_7Backoff6snooze.exit.i.i: ; preds = %.preheader.i.i.i, %bb.u
   %i.di = add nuw nsw i32 %.sroa.0.059.i.i, 1
-  %i.dj = load atomic i64, ptr %i.au monotonic, align 8, !noalias !1070 ; 2 uses
+  %i.dj = load atomic i64, ptr %i.au monotonic, align 16, !noalias !1070 ; 2 uses
   %i.dk = load i64, ptr %i.av, align 16, !noalias !1070, !noundef !3 ; 2 uses
   %i.dl = and i64 %i.dk, %i.dj
   %i.dm = icmp eq i64 %i.dl, 0
@@ -5075,7 +5077,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
 
 bb.ap:                                            ; preds = %_RINvMs2_NtNtCs2pqxYH9ZEk8_3std6thread5localINtB6_8LocalKeyINtNtCsbvkFyIu7lgC_4core4cell4CellINtNtBZ_6option6OptionNtNtCshhQzAC5dGUF_17crossbeam_channel7context7ContextEEE8try_withNCINvMB1Q_B1O_4withNCNvMs_NtNtB1S_7flavors5arrayINtB3h_7ChannelINtNtCs95DO3lnzZ3L_4moka6future13InterruptedOpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEE4send0uEs_0uEB5i_.exit.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCshhQzAC5dGUF_17crossbeam_channel7context7ContextEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.i.i.i.i.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCshhQzAC5dGUF_17crossbeam_channel7context7ContextECsgO8S5jLFugx_23deltalake_catalog_unity.exit19.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !1072
-  %i.er = load atomic i64, ptr %i.au monotonic, align 8, !noalias !1123 ; 2 uses
+  %i.er = load atomic i64, ptr %i.au monotonic, align 16, !noalias !1123 ; 2 uses
   %i.es = load i64, ptr %i.av, align 16, !noalias !1123, !noundef !3 ; 2 uses
   %i.et = and i64 %i.es, %i.er
   %i.eu = icmp eq i64 %i.et, 0

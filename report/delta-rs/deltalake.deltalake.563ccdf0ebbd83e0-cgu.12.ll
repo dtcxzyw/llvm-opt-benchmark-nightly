@@ -201,7 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw [40 x i8], ptr %i.e, i64 %.sroa.410.0.copyload ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.i = load atomic i8, ptr %i.h monotonic, align 1, !noalias !1828
-  %i.j = icmp eq i8 %i.i, 0
+  %.fr = freeze i8 %i.i
+  %i.j = icmp eq i8 %.fr, 0
   br i1 %i.j, label %select.unfold, label %_RNvMs2_CsgvKtmFgitAz_12thread_localINtB5_11ThreadLocalINtNtCsbvkFyIu7lgC_4core4cell7RefCellINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs2y6mmZ7bjoM_12tracing_core8metadata11LevelFilterEEE9get_innerCs7p2uQeJxui2_9deltalake.exit
 
 _RNvMs2_CsgvKtmFgitAz_12thread_localINtB5_11ThreadLocalINtNtCsbvkFyIu7lgC_4core4cell7RefCellINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs2y6mmZ7bjoM_12tracing_core8metadata11LevelFilterEEE9get_innerCs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.b, %select.unfold
@@ -604,20 +605,20 @@ bb.n:                                             ; preds = %tailrecurse
   %i.eq = load ptr, ptr %i.ep, align 8, !alias.scope !5690, !noalias !5693, !nonnull !4, !noundef !4
   tail call fastcc void @_RINvXs11_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB7_4ExprNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake(ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(112) %i.eq, ptr noalias noundef nonnull align 8 dereferenceable(72) %1) #47, !noalias !5690, !inline_history !5695
   %i.er = getelementptr inbounds nuw i8, ptr %.tr, i64 32
-  %i.es = load i8, ptr %i.er, align 8, !range !5, !alias.scope !5690, !noalias !5693, !noundef !4
+  %i.es = load i8, ptr %i.er, align 16, !range !5, !alias.scope !5690, !noalias !5693, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ay), !noalias !5696
   store i8 %i.es, ptr %i.ay, align 1, !noalias !5696
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ay, i64 noundef 1) #47, !noalias !5690
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ay), !noalias !5696
   %i.et = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %i.eu = load ptr, ptr %i.et, align 8, !alias.scope !5690, !noalias !5693, !nonnull !4, !noundef !4
+  %i.eu = load ptr, ptr %i.et, align 16, !alias.scope !5690, !noalias !5693, !nonnull !4, !noundef !4
   tail call fastcc void @_RINvXs11_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB7_4ExprNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake(ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(112) %i.eu, ptr noalias noundef nonnull align 8 dereferenceable(72) %1) #47, !noalias !5690, !inline_history !5695
   br label %tailrecurse.backedge.sink.split
 
 bb.o:                                             ; preds = %tailrecurse
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5699)
   %i.ev = getelementptr inbounds nuw i8, ptr %.tr, i64 32
-  %i.ew = load ptr, ptr %i.ev, align 8, !alias.scope !5699, !noalias !5702, !align !2181, !noundef !4 ; 2 uses
+  %i.ew = load ptr, ptr %i.ev, align 16, !alias.scope !5699, !noalias !5702, !align !2181, !noundef !4 ; 2 uses
   %i.ex = icmp ne ptr %i.ew, null                 ; 2 uses
   %i.ey = zext i1 %i.ex to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !5704
@@ -632,7 +633,7 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p, %bb.o
   %i.ez = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %i.fa = load ptr, ptr %i.ez, align 8, !alias.scope !5699, !noalias !5702, !nonnull !4, !noundef !4
+  %i.fa = load ptr, ptr %i.ez, align 16, !alias.scope !5699, !noalias !5702, !nonnull !4, !noundef !4
   %i.fb = getelementptr inbounds nuw i8, ptr %.tr, i64 24
   %i.fc = load i64, ptr %i.fb, align 8, !alias.scope !5699, !noalias !5702, !noundef !4 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aw), !noalias !5710
@@ -871,7 +872,7 @@ bb.y:                                             ; preds = %tailrecurse
 
 _RINvYNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprNtNtCsbvkFyIu7lgC_4core4hash4Hash10hash_sliceNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake.exit.i5: ; preds = %.lr.ph80, %bb.y
   %i.ja = getelementptr inbounds nuw i8, ptr %i.id, i64 208
-  %i.jb = load ptr, ptr %i.ja, align 8, !alias.scope !5827, !noalias !5830, !nonnull !4, !noundef !4 ; 2 uses
+  %i.jb = load ptr, ptr %i.ja, align 16, !alias.scope !5827, !noalias !5830, !nonnull !4, !noundef !4 ; 2 uses
   %i.jc = getelementptr inbounds nuw i8, ptr %i.id, i64 216
   %i.jd = load i64, ptr %i.jc, align 8, !alias.scope !5827, !noalias !5830, !noundef !4 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am), !noalias !5839
@@ -1274,7 +1275,7 @@ bb.c:                                             ; preds = %tailrecurse
 bb.d:                                             ; preds = %tailrecurse
   %i.p = getelementptr inbounds nuw i8, ptr %.tr, i64 2
   %i.q = getelementptr inbounds nuw i8, ptr %.tr, i64 1
-  %.val = load i8, ptr %i.p, align 1, !range !2683, !noundef !4
+  %.val = load i8, ptr %i.p, align 2, !range !2683, !noundef !4
   %i.r = zext nneg i8 %.val to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !6296
   store i64 %i.r, ptr %i.h, align 8, !noalias !6296
@@ -1677,7 +1678,7 @@ bb.t:                                             ; preds = %tailrecurse
 
 bb.u:                                             ; preds = %tailrecurse
   %i.gn = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %.val8 = load i8, ptr %i.gn, align 1, !range !7308, !noundef !4
+  %.val8 = load i8, ptr %i.gn, align 8, !range !7308, !noundef !4
   %i.go = zext nneg i8 %.val8 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bj), !noalias !7309
   store i64 %i.go, ptr %i.bj, align 8, !noalias !7309
@@ -1769,7 +1770,7 @@ bb.aa:                                            ; preds = %bb.y
   br label %.sink.split.i
 
 _RINvXsL_NtNtCs4lawaffTVVK_9sqlparser3ast5valueNtB6_13DateTimeFieldNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake.exit: ; preds = %bb.y, %.sink.split.i, %bb.z
-  %.val10 = load i8, ptr %i.hj, align 1, !range !5, !noundef !4
+  %.val10 = load i8, ptr %i.hj, align 8, !range !5, !noundef !4
   %i.hq = zext nneg i8 %.val10 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.be), !noalias !7354
   store i64 %i.hq, ptr %i.be, align 8, !noalias !7354
@@ -2172,7 +2173,7 @@ bb.h:                                             ; preds = %tailrecurse
 
 bb.i:                                             ; preds = %bb.h
   %i.at = getelementptr inbounds nuw i8, ptr %.tr, i64 8
-  %i.au = load i32, ptr %i.at, align 4, !alias.scope !10062, !noalias !10065, !noundef !4
+  %i.au = load i32, ptr %i.at, align 8, !alias.scope !10062, !noalias !10065, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !10072
   store i32 %i.au, ptr %i.e, align 4, !noalias !10072
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.e, i64 noundef 4) #47, !noalias !10062
@@ -2181,7 +2182,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   %i.av = getelementptr inbounds nuw i8, ptr %.tr, i64 8
-  %i.aw = load i32, ptr %i.av, align 4, !alias.scope !10062, !noalias !10065, !noundef !4
+  %i.aw = load i32, ptr %i.av, align 8, !alias.scope !10062, !noalias !10065, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !10075
   store i32 %i.aw, ptr %i.d, align 4, !noalias !10075
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.d, i64 noundef 4) #47, !noalias !10062
@@ -2190,7 +2191,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.h
   %i.ax = getelementptr inbounds nuw i8, ptr %.tr, i64 8
-  %i.ay = load i32, ptr %i.ax, align 4, !alias.scope !10062, !noalias !10065, !noundef !4
+  %i.ay = load i32, ptr %i.ax, align 8, !alias.scope !10062, !noalias !10065, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !10078
   store i32 %i.ay, ptr %i.c, align 4, !noalias !10078
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.c, i64 noundef 4) #47, !noalias !10062
@@ -2199,7 +2200,7 @@ bb.k:                                             ; preds = %bb.h
 
 bb.l:                                             ; preds = %bb.h
   %i.az = getelementptr inbounds nuw i8, ptr %.tr, i64 8
-  %i.ba = load i32, ptr %i.az, align 4, !alias.scope !10062, !noalias !10065, !noundef !4
+  %i.ba = load i32, ptr %i.az, align 8, !alias.scope !10062, !noalias !10065, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !10081
   store i32 %i.ba, ptr %i.b, align 4, !noalias !10081
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef 4) #47, !noalias !10062
@@ -2602,7 +2603,7 @@ bb.u:                                             ; preds = %tailrecurse
   %i.hh = getelementptr inbounds nuw i8, ptr %.tr, i64 8 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !10783)
   %i.hi = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %i.hj = load ptr, ptr %i.hi, align 8, !alias.scope !10783, !noalias !10786, !align !2181, !noundef !4 ; 2 uses
+  %i.hj = load ptr, ptr %i.hi, align 16, !alias.scope !10783, !noalias !10786, !align !2181, !noundef !4 ; 2 uses
   %i.hk = icmp ne ptr %i.hj, null                 ; 2 uses
   %i.hl = zext i1 %i.hk to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !10788
@@ -2658,7 +2659,7 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %i.hw = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %.val.i = load i8, ptr %i.hw, align 1, !range !5, !alias.scope !10799, !noalias !10802, !noundef !4
+  %.val.i = load i8, ptr %i.hw, align 8, !range !5, !alias.scope !10799, !noalias !10802, !noundef !4
   %i.hx = getelementptr inbounds nuw i8, ptr %.tr, i64 17
   %.val1.i = load i8, ptr %i.hx, align 1, !alias.scope !10799, !noalias !10802
   tail call fastcc void @_RINvXsx_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan9statementNtB6_16TransactionStartNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake(i8 %.val.i, i8 %.val1.i, ptr noalias noundef nonnull align 8 dereferenceable(72) %1) #47, !noalias !10799, !inline_history !10809
@@ -2666,7 +2667,7 @@ bb.aa:                                            ; preds = %bb.y
 
 bb.ab:                                            ; preds = %bb.y
   %i.hy = getelementptr inbounds nuw i8, ptr %.tr, i64 16
-  %.val2.i = load i8, ptr %i.hy, align 1, !range !5, !alias.scope !10799, !noalias !10802, !noundef !4
+  %.val2.i = load i8, ptr %i.hy, align 8, !range !5, !alias.scope !10799, !noalias !10802, !noundef !4
   %i.hz = getelementptr inbounds nuw i8, ptr %.tr, i64 17
   %.val3.i = load i8, ptr %i.hz, align 1, !alias.scope !10799, !noalias !10802
   tail call fastcc void @_RINvXsE_NtNtCs8VI8w5SIoU4_15datafusion_expr12logical_plan9statementNtB6_14TransactionEndNtNtCsbvkFyIu7lgC_4core4hash4Hash4hashNtNtNtCs2pqxYH9ZEk8_3std4hash6random13DefaultHasherECs7p2uQeJxui2_9deltalake(i8 %.val2.i, i8 %.val3.i, ptr noalias noundef nonnull align 8 dereferenceable(72) %1) #47, !noalias !10799, !inline_history !10809
@@ -3069,7 +3070,7 @@ bb.df:                                            ; preds = %bb.bc
 
 bb.dg:                                            ; preds = %bb.bi
   %i.ni = getelementptr inbounds nuw i8, ptr %.tr, i64 2
-  %i.nj = load i8, ptr %i.ni, align 1, !noundef !4
+  %i.nj = load i8, ptr %i.ni, align 2, !noundef !4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13947
   store i8 %i.nj, ptr %i.a, align 1, !noalias !13947
   call fastcc void @_RNvXs3_NtNtCsbvkFyIu7lgC_4core4hash3sipINtB5_6HasherNtB5_11Sip13RoundsENtB7_6Hasher5writeCs7p2uQeJxui2_9deltalake(ptr noalias noundef align 8 dereferenceable(72) %1, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.a, i64 noundef 1) #47
@@ -3472,8 +3473,8 @@ _RNvYNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4SortNtNtCsbvkFyIu7lgC_4core3cmp9Pa
 _RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4SortbENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit: ; preds = %_RNvYNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4SortNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.i
   %i.p = getelementptr inbounds nuw i8, ptr %i.c, i64 128
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 128
-  %.val.i = load i8, ptr %i.p, align 1, !range !5, !alias.scope !15820, !noalias !15823, !noundef !4
-  %.val1.i = load i8, ptr %i.q, align 1, !range !5, !alias.scope !15823, !noalias !15820, !noundef !4
+  %.val.i = load i8, ptr %i.p, align 16, !range !5, !alias.scope !15820, !noalias !15823, !noundef !4
+  %.val1.i = load i8, ptr %i.q, align 16, !range !5, !alias.scope !15823, !noalias !15820, !noundef !4
   %.not = icmp eq i8 %.val.i, %.val1.i
   br i1 %.not, label %bb.b, label %_RNvXs8_NtCsbvkFyIu7lgC_4core5tupleTNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4SortbENtNtB7_3cmp9PartialEq2neCs7p2uQeJxui2_9deltalake.exit.thread
 
@@ -3876,12 +3877,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 48 ; 2 uses
-  %i.h = load i8, ptr %i.g, align 1, !range !137, !noundef !4
+  %i.h = load i8, ptr %i.g, align 8, !range !137, !noundef !4
   %i.i = icmp eq i8 %i.h, 1
   br i1 %i.i, label %bb.d, label %bb.n
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %i.g, align 1
+  store i8 0, ptr %i.g, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.k = invoke noundef ptr @_RNvMs3_NtNtCskQDtHcQtBkN_5tokio4util11linked_listINtB5_10LinkedListINtNtB7_17idle_notified_set9ListEntryINtNtNtNtB9_7runtime4task4join10JoinHandleINtNtCsbvkFyIu7lgC_4core6result6ResultuNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEEEB13_E6removeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.j, ptr noundef nonnull %i.a)
           to label %bb.e unwind label %bb.p       ; 2 uses
@@ -3985,12 +3986,12 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val, i64 48 ; 2 uses
-  %i.h = load i8, ptr %i.g, align 1, !range !137, !noundef !4
+  %i.h = load i8, ptr %i.g, align 8, !range !137, !noundef !4
   %i.i = icmp eq i8 %i.h, 1
   br i1 %i.i, label %bb.d, label %bb.n
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %i.g, align 1
+  store i8 0, ptr %i.g, align 8
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.k = invoke noundef ptr @_RNvMs3_NtNtCskQDtHcQtBkN_5tokio4util11linked_listINtB5_10LinkedListINtNtB7_17idle_notified_set9ListEntryINtNtNtNtB9_7runtime4task4join10JoinHandleTjINtNtCsbvkFyIu7lgC_4core6result6ResultINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchENtNtCsjhHCjzi9uUI_17datafusion_common5error15DataFusionErrorEEEEB13_E6removeCs7p2uQeJxui2_9deltalake(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.j, ptr noundef nonnull %i.a)
           to label %bb.e unwind label %bb.p       ; 2 uses
@@ -4393,8 +4394,8 @@ bb.eg:                                            ; preds = %bb.ef
 _RNvXsH_NtNtCs4lawaffTVVK_9sqlparser3ast5valueNtB5_13DateTimeFieldNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit.thread526: ; preds = %bb.z, %bb.af, %bb.ag, %bb.aj, %bb.ak, %_RNvXsH_NtNtCs4lawaffTVVK_9sqlparser3ast5valueNtB5_13DateTimeFieldNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
   %i.wj = getelementptr inbounds nuw i8, ptr %.tr94216, i64 88
   %i.wk = getelementptr inbounds nuw i8, ptr %.tr215, i64 88
-  %.val78 = load i8, ptr %i.wk, align 1, !range !5, !noundef !4
-  %.val79 = load i8, ptr %i.wj, align 1, !range !5, !noundef !4
+  %.val78 = load i8, ptr %i.wk, align 8, !range !5, !noundef !4
+  %.val79 = load i8, ptr %i.wj, align 8, !range !5, !noundef !4
   %i.wl = icmp eq i8 %.val78, %.val79
   br i1 %i.wl, label %tailrecurse.backedge.sink.split, label %_RNvXs5h_NtCs4lawaffTVVK_9sqlparser3astNtB6_3MapNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -4797,33 +4798,33 @@ bb.x:                                             ; preds = %bb.w
 
 bb.y:                                             ; preds = %bb.x
   %i.dd = getelementptr inbounds nuw i8, ptr %.tr32, i64 8
-  %i.de = load i32, ptr %i.dd, align 4, !alias.scope !16459, !noalias !16462, !noundef !4
+  %i.de = load i32, ptr %i.dd, align 8, !alias.scope !16459, !noalias !16462, !noundef !4
   %i.df = getelementptr inbounds nuw i8, ptr %.tr1033, i64 8
-  %i.dg = load i32, ptr %i.df, align 4, !alias.scope !16462, !noalias !16459, !noundef !4
+  %i.dg = load i32, ptr %i.df, align 8, !alias.scope !16462, !noalias !16459, !noundef !4
   %i.dh = icmp eq i32 %i.de, %i.dg
   br label %_RNvXs9D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_20MatchRecognizeSymbolNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.z:                                             ; preds = %bb.x
   %i.di = getelementptr inbounds nuw i8, ptr %.tr32, i64 8
-  %i.dj = load i32, ptr %i.di, align 4, !alias.scope !16459, !noalias !16462, !noundef !4
+  %i.dj = load i32, ptr %i.di, align 8, !alias.scope !16459, !noalias !16462, !noundef !4
   %i.dk = getelementptr inbounds nuw i8, ptr %.tr1033, i64 8
-  %i.dl = load i32, ptr %i.dk, align 4, !alias.scope !16462, !noalias !16459, !noundef !4
+  %i.dl = load i32, ptr %i.dk, align 8, !alias.scope !16462, !noalias !16459, !noundef !4
   %i.dm = icmp eq i32 %i.dj, %i.dl
   br label %_RNvXs9D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_20MatchRecognizeSymbolNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.aa:                                            ; preds = %bb.x
   %i.dn = getelementptr inbounds nuw i8, ptr %.tr32, i64 8
-  %i.do = load i32, ptr %i.dn, align 4, !alias.scope !16459, !noalias !16462, !noundef !4
+  %i.do = load i32, ptr %i.dn, align 8, !alias.scope !16459, !noalias !16462, !noundef !4
   %i.dp = getelementptr inbounds nuw i8, ptr %.tr1033, i64 8
-  %i.dq = load i32, ptr %i.dp, align 4, !alias.scope !16462, !noalias !16459, !noundef !4
+  %i.dq = load i32, ptr %i.dp, align 8, !alias.scope !16462, !noalias !16459, !noundef !4
   %i.dr = icmp eq i32 %i.do, %i.dq
   br label %_RNvXs9D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_20MatchRecognizeSymbolNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
 bb.ab:                                            ; preds = %bb.x
   %i.ds = getelementptr inbounds nuw i8, ptr %.tr32, i64 8
-  %i.dt = load i32, ptr %i.ds, align 4, !alias.scope !16459, !noalias !16462, !noundef !4
+  %i.dt = load i32, ptr %i.ds, align 8, !alias.scope !16459, !noalias !16462, !noundef !4
   %i.du = getelementptr inbounds nuw i8, ptr %.tr1033, i64 8
-  %i.dv = load i32, ptr %i.du, align 4, !alias.scope !16462, !noalias !16459, !noundef !4
+  %i.dv = load i32, ptr %i.du, align 8, !alias.scope !16462, !noalias !16459, !noundef !4
   %i.dw = icmp eq i32 %i.dt, %i.dv
   br i1 %i.dw, label %bb.ac, label %_RNvXs9D_NtNtCs4lawaffTVVK_9sqlparser3ast5queryNtB6_20MatchRecognizeSymbolNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -5226,9 +5227,9 @@ bb.aa:                                            ; preds = %bb.e, %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.dg = getelementptr inbounds nuw i8, ptr %.tr1384, i64 16
-  %i.dh = load ptr, ptr %i.dg, align 8, !nonnull !4, !noundef !4
+  %i.dh = load ptr, ptr %i.dg, align 16, !nonnull !4, !noundef !4
   %i.di = getelementptr inbounds nuw i8, ptr %.tr83, i64 16
-  %i.dj = load ptr, ptr %i.di, align 8, !nonnull !4, !noundef !4
+  %i.dj = load ptr, ptr %i.di, align 16, !nonnull !4, !noundef !4
   %i.dk = tail call noundef zeroext i1 @_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6StringINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake(ptr noundef nonnull %i.dj, ptr noundef nonnull %i.dh, i64 noundef %i.dc)
   br label %_RNvXs2P_NtCs8VI8w5SIoU4_15datafusion_expr4exprNtB6_6ExistsNtNtCsbvkFyIu7lgC_4core3cmp9PartialEq2eq.exit
 
@@ -5631,8 +5632,8 @@ bb.yj:                                            ; preds = %bb.yi
   br i1 %i.cfl, label %bb.yk, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtNtCs4lawaffTVVK_9sqlparser3ast7helpers17stmt_data_loading23StageLoadSelectItemKindINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
 bb.yk:                                            ; preds = %bb.yj
-  %.val641 = load i8, ptr %i.ceq, align 1, !range !137, !noundef !4
-  %.val642 = load i8, ptr %i.cer, align 1, !range !137, !noundef !4
+  %.val641 = load i8, ptr %i.ceq, align 2, !range !137, !noundef !4
+  %.val642 = load i8, ptr %i.cer, align 2, !range !137, !noundef !4
   %i.cfm = icmp eq i8 %.val641, %.val642
   br i1 %i.cfm, label %bb.yl, label %_RNvXs2_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtNtNtCs4lawaffTVVK_9sqlparser3ast7helpers17stmt_data_loading23StageLoadSelectItemKindINtB5_14SlicePartialEqBC_E17equal_same_lengthCs7p2uQeJxui2_9deltalake.exit
 
