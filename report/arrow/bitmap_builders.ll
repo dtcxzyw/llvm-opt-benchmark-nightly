@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.n = add nsw i32 %i.e, -1
-  store i32 %i.n, ptr %i.b, align 4, !tbaa !3
+  store i32 %i.n, ptr %i.b, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i
 
 bb.f:                                             ; preds = %bb.d
@@ -313,7 +313,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.q = add nsw i32 %i.h, -1
-  store i32 %i.q, ptr %i.e, align 4, !tbaa !3
+  store i32 %i.q, ptr %i.e, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i
 
 bb.g:                                             ; preds = %bb.e
@@ -716,7 +716,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i, label %_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.thread
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i.thread: ; preds = %bb.c
-  store i32 2, ptr %i.e, align 4, !tbaa !3
+  store i32 2, ptr %i.e, align 8, !tbaa !3
   br label %bb.j
 
 _ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE15_M_add_ref_copyEv.exit.i: ; preds = %bb.c
@@ -753,7 +753,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.f
   %i.v = add nsw i32 %i.m, -1
-  store i32 %i.v, ptr %i.j, align 4, !tbaa !3
+  store i32 %i.v, ptr %i.j, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i
 
 bb.h:                                             ; preds = %bb.f
@@ -796,7 +796,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.ai = add nsw i32 %i.aa, -1
-  store i32 %i.ai, ptr %i.e, align 4, !tbaa !3
+  store i32 %i.ai, ptr %i.e, align 8, !tbaa !3
   br label %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i8
 
 bb.n:                                             ; preds = %bb.l

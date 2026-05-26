@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %i.af = trunc i64 %i.ac to i32                  ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !4058
   store i32 %i.ae, ptr %i.b, align 4, !noalias !4058
-  %i.ag = load i32, ptr %i.k, align 4, !noalias !4058, !noundef !4
+  %i.ag = load i32, ptr %i.k, align 8, !noalias !4058, !noundef !4
   %i.ah = icmp eq i32 %i.ag, %i.af
   br i1 %i.ah, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtNtCskQDtHcQtBkN_5tokio7runtime4task8NotifiedINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtNtNtB17_9scheduler12multi_thread6handle6HandleEEEECs9rVkZwOUgsI_13deltalake_aws.exit, label %.lr.ph.i
 
