@@ -201,7 +201,7 @@ bb.ck:                                            ; preds = %.noexc62.i, %.lr.ph
   %i.js = add i64 %.sroa.06.139.i.i.i.i, 54
   %i.jt = icmp uge i64 %i.js, %.val37.i
   %i.ju = trunc nuw i8 %.sroa.014.4.i.i.i.i to i1 ; 2 uses
-  %or.cond3.i.i.i.i = or i1 %i.jt, %i.ju
+  %or.cond3.i.i.i.i = select i1 %i.jt, i1 true, i1 %i.ju
   br i1 %or.cond3.i.i.i.i, label %._crit_edge.i.i.i.i, label %.lr.ph40.i.i.i.i
 
 bb.cl:                                            ; preds = %.lr.ph40.i.i.i.i
@@ -604,7 +604,7 @@ bb.bt:                                            ; preds = %bb.bs
   %i.er = load i64, ptr %5, align 8, !range !3153, !noundef !8 ; 2 uses
   %i.es = icmp ne i64 %i.er, -9223372036854775787
   %i.et = trunc nuw i8 %.sroa.037.6 to i1
-  %or.cond = and i1 %i.es, %i.et
+  %or.cond = select i1 %i.es, i1 %i.et, i1 false
   br i1 %or.cond, label %bb.bu, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs14kWLkQVSKO_14deltalake_core.exit174
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs14kWLkQVSKO_14deltalake_core.exit174: ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VechEECs14kWLkQVSKO_14deltalake_core.exit.i170, %bb.bx, %bb.bw, %bb.bt
@@ -1007,7 +1007,7 @@ bb.g:                                             ; preds = %bb.e
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.bm = load i8, ptr %i.bl, align 8, !range !466, !alias.scope !31206, !noalias !31209, !noundef !8
   %.not223.i = icmp eq i8 %i.bm, 2
-  %brmerge.i = or i1 %.not223.i, %i.bk
+  %brmerge.i = select i1 %.not223.i, i1 true, i1 %i.bk
   br i1 %brmerge.i, label %bb.aa, label %.split195.i
 
 bb.h:                                             ; preds = %bb.e

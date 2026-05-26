@@ -201,7 +201,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.kx = load ptr, ptr %5, align 8, !tbaa !564   ; 2 uses
   %i.ky = icmp eq ptr %i.kw, %i.kx
   %i.kz = trunc nuw i8 %.0139 to i1
-  %or.cond9 = or i1 %i.ky, %i.kz
+  %or.cond9 = select i1 %i.ky, i1 true, i1 %i.kz
   br i1 %or.cond9, label %.backedge.backedge, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ch

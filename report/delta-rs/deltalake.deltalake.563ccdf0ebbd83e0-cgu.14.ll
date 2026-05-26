@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.z
   %i.bh = load ptr, ptr %i.p, align 8, !alias.scope !7221, !noalias !7228, !noundef !12
   %i.bi = icmp ne ptr %i.bh, null
   %i.bj = trunc nuw i8 %.sroa.023.1.i to i1
-  %or.cond.i = and i1 %i.bi, %i.bj
+  %or.cond.i = select i1 %i.bi, i1 %i.bj, i1 false
   br i1 %or.cond.i, label %_RNvMsl_Cs7p2uQeJxui2_9deltalakeNtB5_13RawDeltaTable13is_deltatable.exit.thread39, label %_RNvMsl_Cs7p2uQeJxui2_9deltalakeNtB5_13RawDeltaTable13is_deltatable.exit.thread34
 
 _RNvMsl_Cs7p2uQeJxui2_9deltalakeNtB5_13RawDeltaTable13is_deltatable.exit.thread39: ; preds = %bb.ab
@@ -604,7 +604,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcN
   %i.ev = load i64, ptr %i.p, align 8, !range !62, !noalias !7671, !noundef !12
   %i.ew = icmp ne i64 %i.ev, -9223372036854775808
   %i.ex = trunc nuw i8 %.sroa.016.2.i to i1
-  %or.cond.i = and i1 %i.ew, %i.ex
+  %or.cond.i = select i1 %i.ew, i1 %i.ex, i1 false
   br i1 %or.cond.i, label %bb.bt, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECs7p2uQeJxui2_9deltalake.exit80.i
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtBL_6string6StringEECs7p2uQeJxui2_9deltalake.exit80.i: ; preds = %bb.bv, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtCsfYVtenZkBsn_12arrow_schema6schema6SchemaEECs7p2uQeJxui2_9deltalake.exit73.i, %bb.az

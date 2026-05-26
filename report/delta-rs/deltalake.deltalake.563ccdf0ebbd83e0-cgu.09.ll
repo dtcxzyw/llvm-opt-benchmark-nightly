@@ -201,7 +201,7 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs8VI8w5S
   %i.fu = load i64, ptr %6, align 16, !range !490, !noundef !4
   %i.fv = icmp ne i64 %i.fu, 37
   %i.fw = trunc nuw i8 %.sroa.051.0 to i1
-  %or.cond = and i1 %i.fv, %i.fw
+  %or.cond = select i1 %i.fv, i1 %i.fw, i1 false
   br i1 %or.cond, label %bb.bv, label %.thread268
 
 bb.bv:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtB4_6option6OptionNtNtCs8VI8w5SIoU4_15datafusion_expr4expr4ExprEECs7p2uQeJxui2_9deltalake.exit189, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs7p2uQeJxui2_9deltalake.exit202
@@ -604,7 +604,7 @@ bb.dw:                                            ; preds = %.noexc59.i.i.i, %.l
   %i.oz = add i64 %.sroa.06.139.i.i.i.i.i.i, 54
   %i.pa = icmp uge i64 %i.oz, %.val37.i.i.i
   %i.pb = trunc nuw i8 %.sroa.014.4.i.i.i.i.i.i to i1 ; 2 uses
-  %or.cond3.i.i.i.i.i.i = or i1 %i.pa, %i.pb
+  %or.cond3.i.i.i.i.i.i = select i1 %i.pa, i1 true, i1 %i.pb
   br i1 %or.cond3.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i, label %.lr.ph40.i.i.i.i.i.i
 
 bb.dx:                                            ; preds = %.lr.ph40.i.i.i.i.i.i
@@ -1007,7 +1007,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.ge = load i64, ptr %i.r, align 8, !range !9840, !noalias !11144, !noundef !4 ; 3 uses
   %i.gf = icmp ne i64 %i.ge, -9223372036854775790
   %i.gg = trunc nuw i8 %.sroa.0139.2.i to i1
-  %or.cond3.i = and i1 %i.gf, %i.gg
+  %or.cond3.i = select i1 %i.gf, i1 %i.gg, i1 false
   br i1 %or.cond3.i, label %bb.cj, label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ck, %bb.cj, %bb.ch
@@ -1410,7 +1410,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.bj = trunc nuw i8 %i.bi to i1
   %or.cond.i = select i1 %.not9.i, i1 %i.bj, i1 false
   %i.bk = trunc nuw i8 %i.be to i1
-  %or.cond79.i = or i1 %or.cond.i, %i.bk
+  %or.cond79.i = select i1 %or.cond.i, i1 true, i1 %i.bk
   br i1 %or.cond79.i, label %.invoke.i, label %bb.ah
 
 bb.ab:                                            ; preds = %.body57.i, %bb.ad
@@ -1813,7 +1813,7 @@ bb.z:                                             ; preds = %bb.y
   %i.cq = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   store i8 %i.q, ptr %i.cq, align 8, !noalias !13094
   %.not15.i = icmp ne ptr %i.cm, null
-  %brmerge.i = or i1 %.not15.i, %i.r
+  %brmerge.i = select i1 %.not15.i, i1 true, i1 %i.r
   br i1 %brmerge.i, label %.invoke.i, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
@@ -2216,7 +2216,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.bj = trunc nuw i8 %i.bi to i1
   %or.cond.i = select i1 %.not9.i, i1 %i.bj, i1 false
   %i.bk = trunc nuw i8 %i.be to i1
-  %or.cond79.i = or i1 %or.cond.i, %i.bk
+  %or.cond79.i = select i1 %or.cond.i, i1 true, i1 %i.bk
   br i1 %or.cond79.i, label %.invoke.i, label %bb.ah
 
 bb.ab:                                            ; preds = %.body57.i, %bb.ad

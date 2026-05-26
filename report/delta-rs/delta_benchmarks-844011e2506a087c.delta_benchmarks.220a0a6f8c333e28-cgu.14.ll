@@ -201,7 +201,7 @@ bb.fc:                                            ; preds = %.noexc59.i.i.i.i.i.
   %i.uj = add i64 %.sroa.06.139.i.i.i.i.i.i.i.i.i, 54
   %i.uk = icmp uge i64 %i.uj, %.val37.i.i.i.i.i.i
   %i.ul = trunc nuw i8 %.sroa.014.4.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
-  %or.cond3.i.i.i.i.i.i.i.i.i = or i1 %i.uk, %i.ul
+  %or.cond3.i.i.i.i.i.i.i.i.i = select i1 %i.uk, i1 true, i1 %i.ul
   br i1 %or.cond3.i.i.i.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph40.i.i.i.i.i.i.i.i.i
 
 bb.fd:                                            ; preds = %.lr.ph40.i.i.i.i.i.i.i.i.i
@@ -604,7 +604,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.bi = trunc nuw i8 %i.bh to i1
   %or.cond.i = select i1 %.not9.i, i1 %i.bi, i1 false
   %i.bj = trunc nuw i8 %i.bd to i1
-  %or.cond75.i = or i1 %or.cond.i, %i.bj
+  %or.cond75.i = select i1 %or.cond.i, i1 true, i1 %i.bj
   br i1 %or.cond75.i, label %.invoke.i, label %bb.ah
 
 bb.ab:                                            ; preds = %.body54.i, %bb.ad
@@ -1007,7 +1007,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.cl = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i8 %i.p, ptr %i.cl, align 8, !noalias !20342
   %.not15.i = icmp ne ptr %i.ch, null
-  %brmerge.i = or i1 %.not15.i, %i.q
+  %brmerge.i = select i1 %.not15.i, i1 true, i1 %i.q
   br i1 %brmerge.i, label %.invoke.i, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
@@ -1410,7 +1410,7 @@ bb.aa:                                            ; preds = %bb.y
   %i.bi = trunc nuw i8 %i.bh to i1
   %or.cond.i = select i1 %.not9.i, i1 %i.bi, i1 false
   %i.bj = trunc nuw i8 %i.bd to i1
-  %or.cond75.i = or i1 %or.cond.i, %i.bj
+  %or.cond75.i = select i1 %or.cond.i, i1 true, i1 %i.bj
   br i1 %or.cond75.i, label %.invoke.i, label %bb.ah
 
 bb.ab:                                            ; preds = %.body54.i, %bb.ad

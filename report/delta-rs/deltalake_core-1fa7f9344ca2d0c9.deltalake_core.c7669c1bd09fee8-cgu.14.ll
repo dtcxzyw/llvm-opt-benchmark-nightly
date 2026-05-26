@@ -201,7 +201,7 @@ bb.arq:                                           ; preds = %bb.arp
   call void @llvm.lifetime.end.p0(ptr nonnull %i.fc)
   %i.btc = icmp ne ptr %i.bry, null
   %i.btd = trunc nuw i8 %.sroa.04759.10 to i1
-  %or.cond5 = and i1 %i.btc, %i.btd
+  %or.cond5 = select i1 %i.btc, i1 %i.btd, i1 false
   br i1 %or.cond5, label %bb.ars, label %.thread7039
 
 .thread7039:                                      ; preds = %bb.arq
@@ -604,7 +604,7 @@ bb.s:                                             ; preds = %bb.t, %.lr.ph107.i
   %i.dq = add i64 %i.dp, %i.ay
   %i.dr = icmp uge i64 %i.dq, %3
   %i.ds = trunc nuw i8 %.sroa.014.4.i to i1       ; 2 uses
-  %or.cond3.i = or i1 %i.dr, %i.ds
+  %or.cond3.i = select i1 %i.dr, i1 true, i1 %i.ds
   br i1 %or.cond3.i, label %._crit_edge.i7, label %.lr.ph107.i
 
 bb.t:                                             ; preds = %.lr.ph107.i

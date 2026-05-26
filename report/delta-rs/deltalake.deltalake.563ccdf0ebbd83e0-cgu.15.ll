@@ -201,7 +201,7 @@ _RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7
   %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
   %i.u = icmp eq i64 %i.t, 0
   %i.v = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = or i1 %i.u, %i.v
+  %or.cond = select i1 %i.u, i1 true, i1 %i.v
   br i1 %or.cond, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
@@ -604,7 +604,7 @@ _RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7
   %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
   %i.u = icmp eq i64 %i.t, 0
   %i.v = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = or i1 %i.u, %i.v
+  %or.cond = select i1 %i.u, i1 true, i1 %i.v
   br i1 %or.cond, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
@@ -702,7 +702,7 @@ _RNCINvNtNtCsgbCypRs12E4_4pyo35types4list17try_new_from_iterQINtNtNtNtCsbvkFyIu7
   %.sink.i.i3.i = phi i64 [ 1, %bb.c ], [ 0, %bb.d ] ; 2 uses
   %i.u = icmp eq i64 %i.t, 0
   %i.v = trunc nuw i64 %.sink.i.i3.i to i1
-  %or.cond = or i1 %i.u, %i.v
+  %or.cond = select i1 %i.u, i1 true, i1 %i.v
   br i1 %or.cond, label %bb.f, label %bb.g
 
 ._crit_edge:                                      ; preds = %bb.g, %bb.a
