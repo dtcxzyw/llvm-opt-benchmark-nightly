@@ -201,6 +201,7 @@ begin_hunk_0
 @.str.207 = private unnamed_addr constant [2 x i8] c">\00", align 1
 @.str.208 = private unnamed_addr constant [11 x i8] c"*redacted*\00", align 1
 @.str.209 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
+@.str.210 = private unnamed_addr constant [2 x i8] c"*\00", align 1
 @.str.211 = private unnamed_addr constant [71 x i8] c"Cannot authenticate as an internal connection on non-cluster instances\00", align 1
 @.str.212 = private unnamed_addr constant [37 x i8] c"-WRONGPASS invalid internal password\00", align 1
 @switch.table.aclCommand = private unnamed_addr constant [5 x ptr] [ptr @.str.155, ptr @.str.156, ptr @.str.158, ptr @.str.157, ptr @.str.159], align 8
@@ -603,7 +604,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.f
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 2 uses
   %i.j = phi ptr [ getelementptr inbounds nuw (i8, ptr @ACLUserFlags, i64 8), %.lr.ph ], [ %i.t, %bb.f ]
   %.02941 = phi ptr [ %i.d, %.lr.ph ], [ %.1, %bb.f ] ; 2 uses
-  %i.k = load atomic i32, ptr %i.f seq_cst, align 4, !tbaa !118
+  %i.k = load atomic i32, ptr %i.f seq_cst, align 8, !tbaa !118
   %i.l = zext i32 %i.k to i64
   %i.m = load i64, ptr %i.j, align 8, !tbaa !151
   %i.n = and i64 %i.m, %i.l
@@ -874,7 +875,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.h = load atomic i32, ptr %i.g seq_cst, align 4, !tbaa !118
+  %i.h = load atomic i32, ptr %i.g seq_cst, align 8, !tbaa !118
   %i.i = and i32 %i.h, -4
   %i.j = or disjoint i32 %i.i, 1
   store atomic i32 %i.j, ptr %i.g monotonic, align 8
@@ -887,7 +888,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.m = load atomic i32, ptr %i.l seq_cst, align 4, !tbaa !118
+  %i.m = load atomic i32, ptr %i.l seq_cst, align 8, !tbaa !118
   %i.n = and i32 %i.m, -4
   %i.o = or disjoint i32 %i.n, 2
   store atomic i32 %i.o, ptr %i.l monotonic, align 8
@@ -900,7 +901,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.r = load atomic i32, ptr %i.q seq_cst, align 4, !tbaa !118
+  %i.r = load atomic i32, ptr %i.q seq_cst, align 8, !tbaa !118
   %i.s = and i32 %i.r, -25
   %i.t = or disjoint i32 %i.s, 16
   store atomic i32 %i.t, ptr %i.q monotonic, align 8
@@ -913,7 +914,7 @@ bb.l:                                             ; preds = %bb.j
 
 bb.m:                                             ; preds = %bb.l
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.w = load atomic i32, ptr %i.v seq_cst, align 4, !tbaa !118
+  %i.w = load atomic i32, ptr %i.v seq_cst, align 8, !tbaa !118
   %i.x = and i32 %i.w, -25
   %i.y = or disjoint i32 %i.x, 8
   store atomic i32 %i.y, ptr %i.v monotonic, align 8
@@ -926,7 +927,7 @@ bb.n:                                             ; preds = %bb.l
 
 bb.o:                                             ; preds = %bb.n
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ab = load atomic i32, ptr %i.aa seq_cst, align 4, !tbaa !118
+  %i.ab = load atomic i32, ptr %i.aa seq_cst, align 8, !tbaa !118
   %i.ac = or i32 %i.ab, 4
   store atomic i32 %i.ac, ptr %i.aa monotonic, align 8
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -941,7 +942,7 @@ bb.p:                                             ; preds = %bb.n
 
 bb.q:                                             ; preds = %bb.p
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.ah = load atomic i32, ptr %i.ag seq_cst, align 4, !tbaa !118
+  %i.ah = load atomic i32, ptr %i.ag seq_cst, align 8, !tbaa !118
   %i.ai = and i32 %i.ah, -5
   store atomic i32 %i.ai, ptr %i.ag monotonic, align 8
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -1022,7 +1023,7 @@ bb.x:                                             ; preds = %bb.v
 
 .thread:                                          ; preds = %bb.w, %bb.x
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.bj = load atomic i32, ptr %i.bi seq_cst, align 4, !tbaa !118
+  %i.bj = load atomic i32, ptr %i.bi seq_cst, align 8, !tbaa !118
   %i.bk = and i32 %i.bj, -5
   store atomic i32 %i.bk, ptr %i.bi monotonic, align 8
   br label %bb.bd
@@ -1425,18 +1426,13 @@ bb.e:                                             ; preds = %bb.d
 
 sub_0.i:                                          ; preds = %.lr.ph.i
   %i.z = getelementptr inbounds nuw i8, ptr %i.w, i64 8
-  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !39  ; 2 uses
-  %8 = load i8, ptr %i.aa, align 1
-  %.not32.i = icmp eq i8 %8, 42
-  br i1 %.not32.i, label %.tail.i, label %.tail.thread.i
+  %i.aa = load ptr, ptr %i.z, align 8, !tbaa !39
+  %8 = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.aa, ptr noundef nonnull dereferenceable(2) @.str.210) #29
+  %.fr.i = freeze i32 %8
+  %.not32.i = icmp eq i32 %.fr.i, 0
+  br i1 %.not32.i, label %ACLSelectorHasUnrestrictedKeyAccess.exit, label %.tail.thread.i
 
-.tail.i:                                          ; preds = %sub_0.i
-  %9 = getelementptr inbounds nuw i8, ptr %i.aa, i64 1
-  %10 = load i8, ptr %9, align 1
-  %11 = icmp eq i8 %10, 0
-  br i1 %11, label %ACLSelectorHasUnrestrictedKeyAccess.exit, label %.tail.thread.i
-
-.tail.thread.i:                                   ; preds = %.tail.i, %sub_0.i, %.lr.ph.i
+.tail.thread.i:                                   ; preds = %sub_0.i, %.lr.ph.i
   %i.ab = call ptr @listNext(ptr noundef nonnull %5) #25 ; 2 uses
   %.not26.i = icmp eq ptr %i.ab, null
   br i1 %.not26.i, label %ACLSelectorHasUnrestrictedKeyAccess.exit.thread20, label %.lr.ph.i
@@ -1445,7 +1441,7 @@ ACLSelectorHasUnrestrictedKeyAccess.exit.thread20: ; preds = %.tail.thread.i, %b
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %bb.f
 
-ACLSelectorHasUnrestrictedKeyAccess.exit:         ; preds = %.tail.i
+ACLSelectorHasUnrestrictedKeyAccess.exit:         ; preds = %sub_0.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   br label %.critedge
 

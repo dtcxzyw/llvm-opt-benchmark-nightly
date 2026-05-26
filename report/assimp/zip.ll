@@ -201,7 +201,8 @@ bb.n:                                             ; preds = %bb.m
   %.not53 = icmp eq i64 %i.bs, %i.r
   %.not54 = icmp eq i64 %i.cf, %i.t
   %or.cond = select i1 %.not53, i1 %.not54, i1 false
-  %spec.select = select i1 %or.cond, i32 -5, i32 0
+  %cond.fr = freeze i1 %or.cond
+  %spec.select = select i1 %cond.fr, i32 -5, i32 0
   br label %.thread58
 
 .thread58:                                        ; preds = %bb.j, %.split, %bb.k, %bb.i, %bb.h, %.split.us, %bb.n, %bb.m, %bb.d, %bb.a, %bb.b, %bb.c, %bb.f
@@ -604,7 +605,7 @@ bb.ax:                                            ; preds = %bb.av
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 44
   store i32 288, ptr %i.fu, align 4
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 32, ptr %i.fv, align 4
+  store i32 32, ptr %i.fv, align 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(32) %i.ab, i8 5, i64 32, i1 false)
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(144) %i.aa, i8 8, i64 144, i1 false)
   %scevgep = getelementptr i8, ptr %0, i64 7716
@@ -1007,7 +1008,7 @@ bb.ca:                                            ; preds = %._crit_edge1797, %b
   %i.qc = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.qd = load i32, ptr %i.qc, align 4            ; 2 uses
   %i.qe = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.qf = load i32, ptr %i.qe, align 4            ; 2 uses
+  %i.qf = load i32, ptr %i.qe, align 8            ; 2 uses
   %i.qg = add i32 %i.qf, %i.qd                    ; 2 uses
   %i.qh = icmp ult i32 %.38957, %i.qg
   br i1 %i.qh, label %bb.cb, label %bb.cv
@@ -1410,8 +1411,9 @@ bb.bf:                                            ; preds = %bb.be
 bb.bg:                                            ; preds = %bb.bf, %bb.be, %bb.bc
   store ptr %.3171392, ptr %i.a, align 8
   store i64 %.2177391, ptr %i.c, align 8
-  %i.ps = tail call fastcc i32 @tdefl_flush_block(ptr noundef %0, i32 noundef 0) ; 2 uses
-  %.not213 = icmp eq i32 %i.ps, 0
+  %i.ps = tail call fastcc i32 @tdefl_flush_block(ptr noundef %0, i32 noundef 0)
+  %.fr = freeze i32 %i.ps                         ; 2 uses
+  %.not213 = icmp eq i32 %.fr, 0
   br i1 %.not213, label %select.unfold.backedge, label %.thread259.loopexit
 
 select.unfold.backedge:                           ; preds = %bb.bg, %bb.bd, %bb.bf
@@ -1425,7 +1427,7 @@ select.unfold.backedge:                           ; preds = %bb.bg, %bb.bd, %bb.
   br label %.thread259
 
 .thread259.loopexit:                              ; preds = %bb.bg
-  %i.pt = icmp sgt i32 %i.ps, -1
+  %i.pt = icmp sgt i32 %.fr, -1
   %i.pu = zext i1 %i.pt to i32
   br label %.thread259
 
@@ -1828,19 +1830,17 @@ mz_zip_set_error.exit430:                         ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
-  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096) ; 2 uses
+  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096)
   %spec.select.i = add nsw i64 %i.j, -4096
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
-  %2 = sub nsw i64 4096, %i.j
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.b
-  %3 = phi i64 [ %i.ac, %bb.h ], [ %i.g, %bb.b ]  ; 2 uses
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %2, %bb.b ] ; 2 uses
-  %.044.i = phi i64 [ %i.af, %bb.h ], [ %spec.select.i, %bb.b ] ; 6 uses
-  %i.m = sub i64 %3, %.044.i                      ; 2 uses
-  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %i.g, %bb.b ], [ %.fr66.i, %bb.h ]
+  %.044.i = phi i64 [ %spec.select.i, %bb.b ], [ %i.af, %bb.h ] ; 6 uses
+  %i.m = sub i64 %indvars.iv.i.a, %.044.i         ; 2 uses
+  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 3 uses
   %i.n = load ptr, ptr %i.k, align 8
   %i.o = load ptr, ptr %i.l, align 8
   %i.p = call i64 %i.n(ptr noundef %i.o, i64 noundef %.044.i, ptr noundef nonnull %i.a, i64 noundef %spec.select5465.i) #36, !inline_history !22
@@ -1852,9 +1852,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %4 = add i64 %indvars.iv.i.a, %3
-  %umin.i = call i64 @llvm.umin.i64(i64 %4, i64 4096)
-  %i.r = add nuw nsw i64 %umin.i, 4294967292
+  %i.r = add nuw nsw i64 %spec.select5465.i, 4294967292
   %i.s = and i64 %i.r, 4294967295
   br label %bb.e
 
@@ -1883,11 +1881,11 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not53.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %.critedge.i
-  %i.ac = load i64, ptr %0, align 8               ; 2 uses
-  %i.ad = sub i64 %i.ac, %.044.i
+  %i.ac = load i64, ptr %0, align 8
+  %.fr66.i = freeze i64 %i.ac                     ; 2 uses
+  %i.ad = sub i64 %.fr66.i, %.044.i
   %i.ae = icmp ugt i64 %i.ad, 65556
   %i.af = add i64 %.044.i, -4093
-  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 4093
   br i1 %i.ae, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.c, %bb.h
@@ -2290,7 +2288,8 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
 zip_basename.exit:                                ; preds = %bb.w, %bb.y, %bb.z, %bb.aa
   %.2.i = phi ptr [ %i.cf, %bb.aa ], [ %.014.i, %bb.z ], [ %.014.i, %bb.y ], [ %.014.i, %bb.w ]
   %i.cg = call i32 @mz_zip_writer_add_file(ptr noundef nonnull %3, ptr noundef nonnull %.2.i, ptr noundef nonnull %i.ax, ptr noundef nonnull @.str.1, i16 noundef zeroext 0, i32 noundef 6, i32 noundef %.026)
-  %.not37 = icmp eq i32 %i.cg, 0
+  %.fr = freeze i32 %i.cg
+  %.not37 = icmp eq i32 %.fr, 0
   br i1 %.not37, label %.thread, label %bb.p
 
 .thread:                                          ; preds = %bb.p, %bb.q, %bb.r, %zip_basename.exit, %bb.o
@@ -2693,7 +2692,7 @@ bb.q:                                             ; preds = %bb.a
 
 bb.r:                                             ; preds = %bb.q
   %i.qj = getelementptr i8, ptr %0, i64 36966
-  %i.qk = load i8, ptr %i.qj, align 1
+  %i.qk = load i8, ptr %i.qj, align 2
   %.not.1.i = icmp eq i8 %i.qk, 0
   br i1 %.not.1.i, label %bb.s, label %bb.at
 
@@ -2705,7 +2704,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.qn = getelementptr i8, ptr %0, i64 36964
-  %i.qo = load i8, ptr %i.qn, align 1
+  %i.qo = load i8, ptr %i.qn, align 2
   %.not.3.i = icmp eq i8 %i.qo, 0
   br i1 %.not.3.i, label %bb.u, label %bb.at
 
@@ -2717,7 +2716,7 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.u
   %i.qr = getelementptr i8, ptr %0, i64 36962
-  %i.qs = load i8, ptr %i.qr, align 1
+  %i.qs = load i8, ptr %i.qr, align 2
   %.not.5.i = icmp eq i8 %i.qs, 0
   br i1 %.not.5.i, label %bb.w, label %bb.at
 
@@ -2729,7 +2728,7 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.qv = getelementptr i8, ptr %0, i64 36960
-  %i.qw = load i8, ptr %i.qv, align 1
+  %i.qw = load i8, ptr %i.qv, align 2
   %.not.7.i = icmp eq i8 %i.qw, 0
   br i1 %.not.7.i, label %bb.y, label %bb.at
 
@@ -2741,7 +2740,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.y
   %i.qz = getelementptr i8, ptr %0, i64 36958
-  %i.ra = load i8, ptr %i.qz, align 1
+  %i.ra = load i8, ptr %i.qz, align 2
   %.not.9.i = icmp eq i8 %i.ra, 0
   br i1 %.not.9.i, label %bb.aa, label %bb.at
 
@@ -2753,7 +2752,7 @@ bb.aa:                                            ; preds = %bb.z
 
 bb.ab:                                            ; preds = %bb.aa
   %i.rd = getelementptr i8, ptr %0, i64 36956
-  %i.re = load i8, ptr %i.rd, align 1
+  %i.re = load i8, ptr %i.rd, align 2
   %.not.11.i = icmp eq i8 %i.re, 0
   br i1 %.not.11.i, label %bb.ac, label %bb.at
 
@@ -2765,7 +2764,7 @@ bb.ac:                                            ; preds = %bb.ab
 
 bb.ad:                                            ; preds = %bb.ac
   %i.rh = getelementptr i8, ptr %0, i64 36954
-  %i.ri = load i8, ptr %i.rh, align 1
+  %i.ri = load i8, ptr %i.rh, align 2
   %.not.13.i = icmp eq i8 %i.ri, 0
   br i1 %.not.13.i, label %bb.ae, label %bb.at
 
@@ -2777,7 +2776,7 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.rl = getelementptr i8, ptr %0, i64 36952
-  %i.rm = load i8, ptr %i.rl, align 1
+  %i.rm = load i8, ptr %i.rl, align 2
   %.not.15.i = icmp eq i8 %i.rm, 0
   br i1 %.not.15.i, label %bb.ag, label %bb.at
 
@@ -2789,7 +2788,7 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   %i.rp = getelementptr i8, ptr %0, i64 36950
-  %i.rq = load i8, ptr %i.rp, align 1
+  %i.rq = load i8, ptr %i.rp, align 2
   %.not.17.i = icmp eq i8 %i.rq, 0
   br i1 %.not.17.i, label %bb.ai, label %bb.at
 
@@ -2801,7 +2800,7 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.rt = getelementptr i8, ptr %0, i64 36948
-  %i.ru = load i8, ptr %i.rt, align 1
+  %i.ru = load i8, ptr %i.rt, align 2
   %.not.19.i = icmp eq i8 %i.ru, 0
   br i1 %.not.19.i, label %bb.ak, label %bb.at
 
@@ -2813,7 +2812,7 @@ bb.ak:                                            ; preds = %bb.aj
 
 bb.al:                                            ; preds = %bb.ak
   %i.rx = getelementptr i8, ptr %0, i64 36946
-  %i.ry = load i8, ptr %i.rx, align 1
+  %i.ry = load i8, ptr %i.rx, align 2
   %.not.21.i = icmp eq i8 %i.ry, 0
   br i1 %.not.21.i, label %bb.am, label %bb.at
 
@@ -2825,7 +2824,7 @@ bb.am:                                            ; preds = %bb.al
 
 bb.an:                                            ; preds = %bb.am
   %i.sb = getelementptr i8, ptr %0, i64 36944
-  %i.sc = load i8, ptr %i.sb, align 1
+  %i.sc = load i8, ptr %i.sb, align 2
   %.not.23.i = icmp eq i8 %i.sc, 0
   br i1 %.not.23.i, label %bb.ao, label %bb.at
 
@@ -2837,7 +2836,7 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao
   %i.sf = getelementptr i8, ptr %0, i64 36942
-  %i.sg = load i8, ptr %i.sf, align 1
+  %i.sg = load i8, ptr %i.sf, align 2
   %.not.25.i = icmp eq i8 %i.sg, 0
   br i1 %.not.25.i, label %bb.aq, label %bb.at
 
@@ -2849,7 +2848,7 @@ bb.aq:                                            ; preds = %bb.ap
 
 bb.ar:                                            ; preds = %bb.aq
   %i.sj = getelementptr i8, ptr %0, i64 36940
-  %i.sk = load i8, ptr %i.sj, align 1
+  %i.sk = load i8, ptr %i.sj, align 2
   %.not.27.i = icmp eq i8 %i.sk, 0
   br i1 %.not.27.i, label %bb.as, label %bb.at
 
@@ -2869,7 +2868,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %bb.
 
 bb.au:                                            ; preds = %bb.at
   %i.sp = getelementptr i8, ptr %0, i64 36998
-  %i.sq = load i8, ptr %i.sp, align 1
+  %i.sq = load i8, ptr %i.sp, align 2
   %.not297.1.i = icmp eq i8 %i.sq, 0
   br i1 %.not297.1.i, label %bb.av, label %.lr.ph.i
 
@@ -2881,7 +2880,7 @@ bb.av:                                            ; preds = %bb.au
 
 bb.aw:                                            ; preds = %bb.av
   %i.st = getelementptr i8, ptr %0, i64 36996
-  %i.su = load i8, ptr %i.st, align 1
+  %i.su = load i8, ptr %i.st, align 2
   %.not297.3.i = icmp eq i8 %i.su, 0
   br i1 %.not297.3.i, label %bb.ax, label %.lr.ph.i
 
@@ -2893,7 +2892,7 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.sx = getelementptr i8, ptr %0, i64 36994
-  %i.sy = load i8, ptr %i.sx, align 1
+  %i.sy = load i8, ptr %i.sx, align 2
   %.not297.5.i = icmp eq i8 %i.sy, 0
   br i1 %.not297.5.i, label %bb.az, label %.lr.ph.i
 
@@ -2905,7 +2904,7 @@ bb.az:                                            ; preds = %bb.ay
 
 bb.ba:                                            ; preds = %bb.az
   %i.tb = getelementptr i8, ptr %0, i64 36992
-  %i.tc = load i8, ptr %i.tb, align 1
+  %i.tc = load i8, ptr %i.tb, align 2
   %.not297.7.i = icmp eq i8 %i.tc, 0
   br i1 %.not297.7.i, label %bb.bb, label %.lr.ph.i
 
@@ -2917,7 +2916,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.bb
   %i.tf = getelementptr i8, ptr %0, i64 36990
-  %i.tg = load i8, ptr %i.tf, align 1
+  %i.tg = load i8, ptr %i.tf, align 2
   %.not297.9.i = icmp eq i8 %i.tg, 0
   br i1 %.not297.9.i, label %bb.bd, label %.lr.ph.i
 
@@ -2929,7 +2928,7 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.tj = getelementptr i8, ptr %0, i64 36988
-  %i.tk = load i8, ptr %i.tj, align 1
+  %i.tk = load i8, ptr %i.tj, align 2
   %.not297.11.i = icmp eq i8 %i.tk, 0
   br i1 %.not297.11.i, label %bb.bf, label %.lr.ph.i
 
@@ -2941,7 +2940,7 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.bf
   %i.tn = getelementptr i8, ptr %0, i64 36986
-  %i.to = load i8, ptr %i.tn, align 1
+  %i.to = load i8, ptr %i.tn, align 2
   %.not297.13.i = icmp eq i8 %i.to, 0
   br i1 %.not297.13.i, label %bb.bh, label %.lr.ph.i
 
@@ -2953,7 +2952,7 @@ bb.bh:                                            ; preds = %bb.bg
 
 bb.bi:                                            ; preds = %bb.bh
   %i.tr = getelementptr i8, ptr %0, i64 36984
-  %i.ts = load i8, ptr %i.tr, align 1
+  %i.ts = load i8, ptr %i.tr, align 2
   %.not297.15.i = icmp eq i8 %i.ts, 0
   br i1 %.not297.15.i, label %bb.bj, label %.lr.ph.i
 
@@ -2965,7 +2964,7 @@ bb.bj:                                            ; preds = %bb.bi
 
 bb.bk:                                            ; preds = %bb.bj
   %i.tv = getelementptr i8, ptr %0, i64 36982
-  %i.tw = load i8, ptr %i.tv, align 1
+  %i.tw = load i8, ptr %i.tv, align 2
   %.not297.17.i = icmp eq i8 %i.tw, 0
   br i1 %.not297.17.i, label %bb.bl, label %.lr.ph.i
 
@@ -2977,7 +2976,7 @@ bb.bl:                                            ; preds = %bb.bk
 
 bb.bm:                                            ; preds = %bb.bl
   %i.tz = getelementptr i8, ptr %0, i64 36980
-  %i.ua = load i8, ptr %i.tz, align 1
+  %i.ua = load i8, ptr %i.tz, align 2
   %.not297.19.i = icmp eq i8 %i.ua, 0
   br i1 %.not297.19.i, label %bb.bn, label %.lr.ph.i
 
@@ -2989,7 +2988,7 @@ bb.bn:                                            ; preds = %bb.bm
 
 bb.bo:                                            ; preds = %bb.bn
   %i.ud = getelementptr i8, ptr %0, i64 36978
-  %i.ue = load i8, ptr %i.ud, align 1
+  %i.ue = load i8, ptr %i.ud, align 2
   %.not297.21.i = icmp eq i8 %i.ue, 0
   br i1 %.not297.21.i, label %bb.bp, label %.lr.ph.i
 
@@ -3001,7 +3000,7 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.bp
   %i.uh = getelementptr i8, ptr %0, i64 36976
-  %i.ui = load i8, ptr %i.uh, align 1
+  %i.ui = load i8, ptr %i.uh, align 2
   %.not297.23.i = icmp eq i8 %i.ui, 0
   br i1 %.not297.23.i, label %bb.br, label %.lr.ph.i
 
@@ -3013,7 +3012,7 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.br
   %i.ul = getelementptr i8, ptr %0, i64 36974
-  %i.um = load i8, ptr %i.ul, align 1
+  %i.um = load i8, ptr %i.ul, align 2
   %.not297.25.i = icmp eq i8 %i.um, 0
   br i1 %.not297.25.i, label %bb.bt, label %.lr.ph.i
 
@@ -3025,7 +3024,7 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bt
   %i.up = getelementptr i8, ptr %0, i64 36972
-  %i.uq = load i8, ptr %i.up, align 1
+  %i.uq = load i8, ptr %i.up, align 2
   %.not297.27.i = icmp eq i8 %i.uq, 0
   br i1 %.not297.27.i, label %bb.bv, label %.lr.ph.i
 
@@ -3428,13 +3427,13 @@ bb.dm:                                            ; preds = %.preheader319.i
 
 bb.dn:                                            ; preds = %bb.dm
   %i.adf = getelementptr inbounds nuw i8, ptr %0, i64 37272
-  %i.adg = load i8, ptr %i.adf, align 1
+  %i.adg = load i8, ptr %i.adf, align 8
   %.not304.2.i = icmp eq i8 %i.adg, 0
   br i1 %.not304.2.i, label %bb.do, label %bb.ea
 
 bb.do:                                            ; preds = %bb.dn
   %i.adh = getelementptr inbounds nuw i8, ptr %0, i64 37260
-  %i.adi = load i8, ptr %i.adh, align 1
+  %i.adi = load i8, ptr %i.adh, align 4
   %.not304.3.i = icmp eq i8 %i.adi, 0
   br i1 %.not304.3.i, label %bb.dp, label %bb.ea
 
@@ -3452,13 +3451,13 @@ bb.dq:                                            ; preds = %bb.dp
 
 bb.dr:                                            ; preds = %bb.dq
   %i.adn = getelementptr inbounds nuw i8, ptr %0, i64 37270
-  %i.ado = load i8, ptr %i.adn, align 1
+  %i.ado = load i8, ptr %i.adn, align 2
   %.not304.6.i = icmp eq i8 %i.ado, 0
   br i1 %.not304.6.i, label %bb.ds, label %bb.ea
 
 bb.ds:                                            ; preds = %bb.dr
   %i.adp = getelementptr inbounds nuw i8, ptr %0, i64 37262
-  %i.adq = load i8, ptr %i.adp, align 1
+  %i.adq = load i8, ptr %i.adp, align 2
   %.not304.7.i = icmp eq i8 %i.adq, 0
   br i1 %.not304.7.i, label %bb.dt, label %bb.ea
 
@@ -3476,13 +3475,13 @@ bb.du:                                            ; preds = %bb.dt
 
 bb.dv:                                            ; preds = %bb.du
   %i.adv = getelementptr inbounds nuw i8, ptr %0, i64 37268
-  %i.adw = load i8, ptr %i.adv, align 1
+  %i.adw = load i8, ptr %i.adv, align 4
   %.not304.10.i = icmp eq i8 %i.adw, 0
   br i1 %.not304.10.i, label %bb.dw, label %bb.ea
 
 bb.dw:                                            ; preds = %bb.dv
   %i.adx = getelementptr inbounds nuw i8, ptr %0, i64 37264
-  %i.ady = load i8, ptr %i.adx, align 1
+  %i.ady = load i8, ptr %i.adx, align 8
   %.not304.11.i = icmp eq i8 %i.ady, 0
   br i1 %.not304.11.i, label %bb.dx, label %bb.ea
 
@@ -3500,7 +3499,7 @@ bb.dy:                                            ; preds = %bb.dx
 
 bb.dz:                                            ; preds = %bb.dy
   %i.aed = getelementptr inbounds nuw i8, ptr %0, i64 37266
-  %i.aee = load i8, ptr %i.aed, align 1
+  %i.aee = load i8, ptr %i.aed, align 2
   %.not304.14.i = icmp eq i8 %i.aee, 0
   %spec.select481.i = select i1 %.not304.14.i, i32 3, i32 4
   br label %bb.ea

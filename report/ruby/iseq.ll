@@ -201,7 +201,8 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o
   %i.bk = icmp eq i64 %i.bb, %.lcssa.i73.i.i
-  br i1 %i.bk, label %select.unfold.i, label %bb.q
+  %cond.fr.i = freeze i1 %i.bk
+  br i1 %cond.fr.i, label %select.unfold.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
@@ -604,25 +605,17 @@ bb.e:                                             ; preds = %bb.a
   %i.l = load i64, ptr %i.k, align 8, !tbaa !274
   %i.m = trunc i64 %i.l to i1
   %i.n = getelementptr i8, ptr %i.j, i64 32       ; 2 uses
-  br i1 %i.m, label %RTYPEDDATA_GET_DATA.exit, label %bb.f
+  br i1 %i.m, label %rb_obj_write.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !276
-  br label %RTYPEDDATA_GET_DATA.exit
-
-RTYPEDDATA_GET_DATA.exit:                         ; preds = %bb.e, %bb.f
-  %1 = phi ptr [ %i.o, %bb.f ], [ %i.n, %bb.e ]
-  %2 = ptrtoint ptr %0 to i64                     ; 4 uses
-  store i64 %2, ptr %1, align 8, !tbaa !11
-  %3 = and i64 %2, 7
-  %.not24 = icmp eq i64 %3, 0
-  br i1 %.not24, label %4, label %rb_obj_write.exit
-
-4:                                                ; preds = %RTYPEDDATA_GET_DATA.exit
-  tail call void @rb_gc_writebarrier(i64 noundef %i.i, i64 noundef %2) #20
   br label %rb_obj_write.exit
 
-rb_obj_write.exit:                                ; preds = %RTYPEDDATA_GET_DATA.exit, %4
+rb_obj_write.exit:                                ; preds = %bb.e, %bb.f
+  %1 = phi ptr [ %i.o, %bb.f ], [ %i.n, %bb.e ]
+  %2 = ptrtoint ptr %0 to i64                     ; 3 uses
+  store i64 %2, ptr %1, align 8, !tbaa !11
+  tail call void @rb_gc_writebarrier(i64 noundef %i.i, i64 noundef %2) #20
   tail call void @rb_obj_freeze_inline(i64 noundef %i.i) #20
   %i.p = tail call i64 @rb_obj_set_shareable(i64 noundef %i.i) #20 ; 0 uses
   store i64 %i.i, ptr %i.a, align 8, !tbaa !11
@@ -1025,11 +1018,11 @@ RARRAY_AREF.exit.i.i.i:                           ; preds = %bb.f, %bb.e
 
 rb_iseq_path.exit.i:                              ; preds = %RARRAY_AREF.exit.i.i.i, %bb.d
   %.0.i.i.i = phi i64 [ %i.aj, %RARRAY_AREF.exit.i.i.i ], [ %i.z, %bb.d ]
-  %i.ak = load i32, ptr %i.x, align 4, !tbaa !285 ; 2 uses
+  %i.ak = load i32, ptr %i.x, align 8, !tbaa !285 ; 2 uses
   %i.al = getelementptr i8, ptr %.val, i64 100
   %i.am = load i32, ptr %i.al, align 4, !tbaa !286
   %i.an = getelementptr i8, ptr %.val, i64 104
-  %i.ao = load i32, ptr %i.an, align 4, !tbaa !287
+  %i.ao = load i32, ptr %i.an, align 8, !tbaa !287
   %i.ap = getelementptr i8, ptr %.val, i64 108
   %i.aq = load i32, ptr %i.ap, align 4, !tbaa !288
   %i.ar = tail call i64 (ptr, ...) @rb_sprintf(ptr noundef nonnull @.str.185, i64 noundef %i.v, i64 noundef %.0.i.i.i, i32 noundef %i.ak, i32 noundef %i.ak, i32 noundef %i.am, i32 noundef %i.ao, i32 noundef %i.aq) #20
