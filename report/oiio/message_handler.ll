@@ -201,17 +201,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN22photos_editing_formats8image_io7MessageESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.i = sdiv exact i64 %i.g, 40                  ; 3 uses
+  %i.i = sdiv exact i64 %i.g, 40                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   %i.j = add nsw i64 %.sroa.speculated.i, %i.i    ; 2 uses
-  %3 = icmp ult i64 %i.j, %i.i
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 230584300921369395)
-  %4 = select i1 %3, i64 230584300921369395, i64 %i.k ; 3 uses
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 230584300921369395) ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.f
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.j, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.n = mul nuw nsw i64 %4, 40                   ; 2 uses
+  %i.n = mul nuw nsw i64 %i.k, 40                 ; 2 uses
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #16 ; 6 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.m ; 4 uses
   %i.q = load i64, ptr %2, align 8
@@ -379,7 +377,7 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN22pho
 _ZNSt12_Vector_baseIN22photos_editing_formats8image_io7MessageESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN22photos_editing_formats8image_io7MessageESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit36, %bb.h
   store ptr %i.o, ptr %0, align 8, !tbaa !70
   store ptr %.0.lcssa.i.i.i35, ptr %i.b, align 8, !tbaa !73
-  %i.bt = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %4
+  %i.bt = getelementptr inbounds nuw [40 x i8], ptr %i.o, i64 %i.k
   store ptr %i.bt, ptr %i.bp, align 8, !tbaa !76
   ret void
 

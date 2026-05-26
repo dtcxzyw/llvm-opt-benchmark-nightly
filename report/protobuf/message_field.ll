@@ -201,19 +201,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 184                 ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 184                 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %5 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 50127021939428129)
-  %6 = select i1 %5, i64 50127021939428129, i64 %i.j ; 4 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 50127021939428129) ; 3 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp eq i64 %6, 0
+  %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit
-  %i.m = mul nuw nsw i64 %6, 184
+  %i.m = mul nuw nsw i64 %i.j, 184
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #28
   br label %_ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit
 
@@ -327,7 +325,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN6goog
 _ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit36, %bb.f
   store ptr %i.o, ptr %0, align 8, !tbaa !114
   store ptr %.0.lcssa.i.i.i35, ptr %i.a, align 8, !tbaa !115
-  %i.au = getelementptr inbounds nuw [184 x i8], ptr %i.o, i64 %6
+  %i.au = getelementptr inbounds nuw [184 x i8], ptr %i.o, i64 %i.j
   store ptr %i.au, ptr %i.aq, align 8, !tbaa !118
   ret void
 
@@ -340,7 +338,7 @@ bb.g:                                             ; preds = %_ZSt8_DestroyIPN6go
 _ZSt8_DestroyIPN6google8protobuf2io7Printer3SubES4_EvT_S6_RSaIT0_E.exit: ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.aw = extractvalue { ptr, i32 } %i.ac, 0
   %i.ax = call ptr @__cxa_begin_catch(ptr %i.aw) #24 ; 0 uses
-  %i.ay = mul nuw nsw i64 %6, 184
+  %i.ay = mul nuw nsw i64 %i.j, 184
   call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.ay) #25
   invoke void @__cxa_rethrow() #27
           to label %bb.j unwind label %bb.g
@@ -703,19 +701,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 184                 ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 184                 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %4 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 50127021939428129)
-  %5 = select i1 %4, i64 50127021939428129, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 50127021939428129) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp eq i64 %5, 0
+  %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE12_M_check_lenEmPKc.exit
-  %i.m = mul nuw nsw i64 %5, 184
+  %i.m = mul nuw nsw i64 %i.j, 184
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #28
   br label %_ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE11_M_allocateEm.exit
 
@@ -861,7 +857,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN6goog
 _ZNSt12_Vector_baseIN6google8protobuf2io7Printer3SubESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorIN6google8protobuf2io7Printer3SubESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit37, %bb.e
   store ptr %i.o, ptr %0, align 8, !tbaa !114
   store ptr %.0.lcssa.i.i.i36, ptr %i.a, align 8, !tbaa !115
-  %i.bg = getelementptr inbounds nuw [184 x i8], ptr %i.o, i64 %5
+  %i.bg = getelementptr inbounds nuw [184 x i8], ptr %i.o, i64 %i.j
   store ptr %i.bg, ptr %i.bc, align 8, !tbaa !118
   ret void
 }

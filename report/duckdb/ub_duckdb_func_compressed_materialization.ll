@@ -201,17 +201,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6duckdb20ExceptionFormatValueESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 6                   ; 3 uses
+  %i.h = ashr exact i64 %i.f, 6                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 144115188075855871)
-  %4 = select i1 %3, i64 144115188075855871, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 144115188075855871) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = shl nuw nsw i64 %4, 6
+  %i.m = shl nuw nsw i64 %i.j, 6
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #22 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 4 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %i.o, ptr noundef nonnull align 8 dereferenceable(64) %2, i64 32, i1 false)
@@ -361,7 +359,7 @@ _ZNSt12_Vector_baseIN6duckdb20ExceptionFormatValueESaIS1_EE13_M_deallocateEPS1_m
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.n, ptr %0, align 8, !tbaa !61
   store ptr %.0.lcssa.i.i.i.i25, ptr %i.a, align 8, !tbaa !64
-  %i.bl = getelementptr inbounds nuw [64 x i8], ptr %i.n, i64 %4
+  %i.bl = getelementptr inbounds nuw [64 x i8], ptr %i.n, i64 %i.j
   store ptr %i.bl, ptr %i.bk, align 8, !tbaa !193
   ret void
 }
@@ -764,19 +762,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6duckdb14ScalarFunctionESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 360                 ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 360                 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 25620477880152155)
-  %4 = select i1 %3, i64 25620477880152155, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 25620477880152155) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp eq i64 %4, 0
+  %.not.i = icmp eq i64 %i.i, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN6duckdb14ScalarFunctionESaIS1_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN6duckdb14ScalarFunctionESaIS1_EE12_M_check_lenEmPKc.exit
-  %i.m = mul nuw nsw i64 %4, 360
+  %i.m = mul nuw nsw i64 %i.j, 360
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #22
   br label %_ZNSt12_Vector_baseIN6duckdb14ScalarFunctionESaIS1_EE11_M_allocateEm.exit
 
@@ -851,7 +847,7 @@ _ZNSt12_Vector_baseIN6duckdb14ScalarFunctionESaIS1_EE13_M_deallocateEPS1_m.exit:
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.o, ptr %0, align 8, !tbaa !2016
   store ptr %i.ag, ptr %i.a, align 8, !tbaa !149
-  %i.al = getelementptr inbounds nuw [360 x i8], ptr %i.o, i64 %4
+  %i.al = getelementptr inbounds nuw [360 x i8], ptr %i.o, i64 %i.j
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !152
   ret void
 
@@ -1254,17 +1250,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN6duckdb11LogicalTypeESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 24                  ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 24                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 384307168202282325)
-  %4 = select i1 %3, i64 384307168202282325, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 384307168202282325) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = mul nuw nsw i64 %4, 24
+  %i.m = mul nuw nsw i64 %i.j, 24
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #22 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l
   tail call void @_ZN6duckdb11LogicalTypeC1EOS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.o, ptr noundef nonnull align 8 dereferenceable(24) %2) #21
@@ -1310,7 +1304,7 @@ _ZNSt12_Vector_baseIN6duckdb11LogicalTypeESaIS1_EE13_M_deallocateEPS1_m.exit: ; 
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.n, ptr %0, align 8, !tbaa !7
   store ptr %.0.lcssa.i.i.i.i21, ptr %i.a, align 8, !tbaa !12
-  %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %4
+  %i.v = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.j
   store ptr %i.v, ptr %i.u, align 8, !tbaa !11
   ret void
 }

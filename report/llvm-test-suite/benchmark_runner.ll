@@ -201,15 +201,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.n = ashr exact i64 %i.l, 5                   ; 3 uses
+  %i.n = ashr exact i64 %i.l, 5                   ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.n, i64 1)
   %i.o = add nsw i64 %.sroa.speculated.i.i.i.i, %i.n ; 2 uses
-  %3 = icmp ult i64 %i.o, %i.n
-  %i.p = tail call i64 @llvm.umin.i64(i64 %i.o, i64 288230376151711743)
-  %4 = select i1 %3, i64 288230376151711743, i64 %i.p ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %4, 0
+  %i.p = tail call i64 @llvm.umin.i64(i64 %i.o, i64 288230376151711743) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.o, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.q = shl nuw nsw i64 %4, 5
+  %i.q = shl nuw nsw i64 %i.p, 5
   %i.r = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.q) #26 ; 5 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.l ; 3 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.s, i8 0, i64 16, i1 false)
@@ -242,7 +240,7 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN9benc
 _ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE17_M_realloc_insertIJS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i.i: ; preds = %bb.e, %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit22.i.i.i
   store ptr %i.r, ptr %i.a, align 8, !tbaa !89
   store ptr %i.v, ptr %i.c, align 8, !tbaa !187
-  %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %4
+  %i.w = getelementptr inbounds nuw [32 x i8], ptr %i.r, i64 %i.p
   store ptr %i.w, ptr %i.e, align 8, !tbaa !90
   br label %_ZNSt6vectorIN9benchmark13MemoryManager6ResultESaIS2_EE9push_backEOS2_.exit
 
@@ -645,17 +643,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = sdiv exact i64 %i.f, 560                 ; 3 uses
+  %i.h = sdiv exact i64 %i.f, 560                 ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %3 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 16470307208669242)
-  %4 = select i1 %3, i64 16470307208669242, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 16470307208669242) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %4, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = mul nuw nsw i64 %4, 560                  ; 2 uses
+  %i.m = mul nuw nsw i64 %i.j, 560                ; 2 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #26 ; 5 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l
   invoke void @_ZN9benchmark17BenchmarkReporter3RunC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(560) %i.o, ptr noundef nonnull align 8 dereferenceable(560) %2)
@@ -679,7 +675,7 @@ bb.c:                                             ; preds = %_ZNSt16allocator_tr
 _ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt16allocator_traitsISaIN9benchmark17BenchmarkReporter3RunEEE9constructIS2_JRKS2_EEEvRS3_PT_DpOT0_.exit, %bb.c
   store ptr %i.n, ptr %0, align 8, !tbaa !94
   store ptr %i.r, ptr %i.a, align 8, !tbaa !95
-  %i.w = getelementptr inbounds nuw [560 x i8], ptr %i.n, i64 %4
+  %i.w = getelementptr inbounds nuw [560 x i8], ptr %i.n, i64 %i.j
   store ptr %i.w, ptr %i.s, align 8, !tbaa !96
   ret void
 

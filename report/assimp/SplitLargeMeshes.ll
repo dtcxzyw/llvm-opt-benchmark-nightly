@@ -201,15 +201,13 @@ bb.ae:                                            ; preds = %bb.ad
   unreachable
 
 _ZNKSt6vectorISt4pairIP6aiMeshjESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ad
-  %i.ky = ashr exact i64 %i.kw, 4                 ; 3 uses
+  %i.ky = ashr exact i64 %i.kw, 4                 ; 2 uses
   %.sroa.speculated.i.i.i160 = tail call i64 @llvm.umax.i64(i64 %i.ky, i64 1)
   %i.kz = add nsw i64 %.sroa.speculated.i.i.i160, %i.ky ; 2 uses
-  %4 = icmp ult i64 %i.kz, %i.ky
-  %i.la = tail call i64 @llvm.umin.i64(i64 %i.kz, i64 576460752303423487)
-  %5 = select i1 %4, i64 576460752303423487, i64 %i.la ; 3 uses
-  %.not.i.i.i161 = icmp ne i64 %5, 0
+  %i.la = tail call i64 @llvm.umin.i64(i64 %i.kz, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i161 = icmp ne i64 %i.kz, 0
   tail call void @llvm.assume(i1 %.not.i.i.i161)
-  %i.lb = shl nuw nsw i64 %5, 4
+  %i.lb = shl nuw nsw i64 %i.la, 4
   %i.lc = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.lb) #17 ; 5 uses
   %i.ld = getelementptr inbounds nuw i8, ptr %i.lc, i64 %i.kw ; 2 uses
   store ptr %i.ax, ptr %i.ld, align 8
@@ -240,7 +238,7 @@ bb.af:                                            ; preds = %_ZNSt6vectorISt4pai
 _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.af, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit33.i.i
   store ptr %i.lc, ptr %3, align 8
   store ptr %i.lh, ptr %i.aa, align 8
-  %i.li = getelementptr inbounds nuw [16 x i8], ptr %i.lc, i64 %5
+  %i.li = getelementptr inbounds nuw [16 x i8], ptr %i.lc, i64 %i.la
   store ptr %i.li, ptr %i.ab, align 8
   br label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit
 
@@ -643,15 +641,13 @@ bb.bh:                                            ; preds = %bb.bg
   unreachable
 
 _ZNKSt6vectorISt4pairIP6aiMeshjESaIS3_EE12_M_check_lenEmPKc.exit.i.i180: ; preds = %bb.bg
-  %i.sn = ashr exact i64 %i.sl, 4                 ; 3 uses
+  %i.sn = ashr exact i64 %i.sl, 4                 ; 2 uses
   %.sroa.speculated.i.i.i181 = tail call i64 @llvm.umax.i64(i64 %i.sn, i64 1)
   %i.so = add nsw i64 %.sroa.speculated.i.i.i181, %i.sn ; 2 uses
-  %6 = icmp ult i64 %i.so, %i.sn
-  %i.sp = tail call i64 @llvm.umin.i64(i64 %i.so, i64 576460752303423487)
-  %7 = select i1 %6, i64 576460752303423487, i64 %i.sp ; 3 uses
-  %.not.i.i.i182 = icmp ne i64 %7, 0
+  %i.sp = tail call i64 @llvm.umin.i64(i64 %i.so, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i182 = icmp ne i64 %i.so, 0
   tail call void @llvm.assume(i1 %.not.i.i.i182)
-  %i.sq = shl nuw nsw i64 %7, 4
+  %i.sq = shl nuw nsw i64 %i.sp, 4
   %i.sr = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sq) #17 ; 5 uses
   %i.ss = getelementptr inbounds nuw i8, ptr %i.sr, i64 %i.sl ; 2 uses
   store ptr %2, ptr %i.ss, align 8
@@ -682,7 +678,7 @@ bb.bi:                                            ; preds = %_ZNSt6vectorISt4pai
 _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i191: ; preds = %bb.bi, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit33.i.i188
   store ptr %i.sr, ptr %3, align 8
   store ptr %i.sw, ptr %i.sb, align 8
-  %i.sx = getelementptr inbounds nuw [16 x i8], ptr %i.sr, i64 %7
+  %i.sx = getelementptr inbounds nuw [16 x i8], ptr %i.sr, i64 %i.sp
   store ptr %i.sx, ptr %i.sd, align 8
   br label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit192
 
@@ -822,15 +818,13 @@ bb.h:                                             ; preds = %bb.g
   unreachable
 
 _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.g
-  %i.al = ashr exact i64 %i.aj, 2                 ; 3 uses
+  %i.al = ashr exact i64 %i.aj, 2                 ; 2 uses
   %.sroa.speculated.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.al, i64 1)
   %i.am = add nsw i64 %.sroa.speculated.i.i.i, %i.al ; 2 uses
-  %2 = icmp ult i64 %i.am, %i.al
-  %i.an = tail call i64 @llvm.umin.i64(i64 %i.am, i64 2305843009213693951)
-  %3 = select i1 %2, i64 2305843009213693951, i64 %i.an ; 3 uses
-  %.not.i.i.i = icmp ne i64 %3, 0
+  %i.an = tail call i64 @llvm.umin.i64(i64 %i.am, i64 2305843009213693951) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.am, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
-  %i.ao = shl nuw nsw i64 %3, 2
+  %i.ao = shl nuw nsw i64 %i.an, 2
   %i.ap = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ao) #17
           to label %.noexc34 unwind label %.loopexit ; 4 uses
 
@@ -854,7 +848,7 @@ bb.j:                                             ; preds = %_ZNSt6vectorIjSaIjE
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i: ; preds = %bb.j, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i
-  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %3
+  %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.ap, i64 %i.an
   br label %_ZNSt6vectorIjSaIjEE9push_backERKj.exit
 
 .loopexit:                                        ; preds = %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i
@@ -1257,15 +1251,13 @@ bb.cq:                                            ; preds = %bb.cp
   unreachable
 
 _ZNKSt6vectorI14aiVertexWeightSaIS0_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.cp
-  %i.tk = ashr exact i64 %i.ti, 3                 ; 3 uses
+  %i.tk = ashr exact i64 %i.ti, 3                 ; 2 uses
   %.sroa.speculated.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.tk, i64 1)
   %i.tl = add nsw i64 %.sroa.speculated.i.i.i.i, %i.tk ; 2 uses
-  %7 = icmp ult i64 %i.tl, %i.tk
-  %i.tm = call i64 @llvm.umin.i64(i64 %i.tl, i64 1152921504606846975)
-  %8 = select i1 %7, i64 1152921504606846975, i64 %i.tm ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %8, 0
+  %i.tm = call i64 @llvm.umin.i64(i64 %i.tl, i64 1152921504606846975) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.tl, 0
   call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.tn = shl nuw nsw i64 %8, 3
+  %i.tn = shl nuw nsw i64 %i.tm, 3
   %i.to = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.tn) #17
           to label %.noexc179 unwind label %.loopexit306 ; 8 uses
 
@@ -1347,7 +1339,7 @@ bb.cr:                                            ; preds = %_ZNSt6vectorI14aiVe
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i.i: ; preds = %bb.cr, %_ZNSt6vectorI14aiVertexWeightSaIS0_EE11_S_relocateEPS0_S3_S3_RS1_.exit22.i.i.i
   store ptr %i.to, ptr %.0115, align 8
   store ptr %i.ug, ptr %i.sz, align 8
-  %i.uh = getelementptr inbounds nuw [8 x i8], ptr %i.to, i64 %8
+  %i.uh = getelementptr inbounds nuw [8 x i8], ptr %i.to, i64 %i.tm
   store ptr %i.uh, ptr %i.tb, align 8
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE9push_backEOS0_.exit
 
@@ -1595,15 +1587,13 @@ bb.df:                                            ; preds = %bb.de
   unreachable
 
 _ZNKSt6vectorISt4pairIP6aiMeshjESaIS3_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.de
-  %i.xz = ashr exact i64 %i.xx, 4                 ; 3 uses
+  %i.xz = ashr exact i64 %i.xx, 4                 ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.xz, i64 1)
   %i.ya = add nsw i64 %.sroa.speculated.i.i.i, %i.xz ; 2 uses
-  %9 = icmp ult i64 %i.ya, %i.xz
-  %i.yb = call i64 @llvm.umin.i64(i64 %i.ya, i64 576460752303423487)
-  %10 = select i1 %9, i64 576460752303423487, i64 %i.yb ; 3 uses
-  %.not.i.i.i184 = icmp ne i64 %10, 0
+  %i.yb = call i64 @llvm.umin.i64(i64 %i.ya, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i184 = icmp ne i64 %i.ya, 0
   call void @llvm.assume(i1 %.not.i.i.i184)
-  %i.yc = shl nuw nsw i64 %10, 4
+  %i.yc = shl nuw nsw i64 %i.yb, 4
   %i.yd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.yc) #17
           to label %.noexc186 unwind label %.loopexit319 ; 5 uses
 
@@ -1637,7 +1627,7 @@ bb.dg:                                            ; preds = %_ZNSt6vectorISt4pai
 _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i: ; preds = %bb.dg, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit33.i.i
   store ptr %i.yd, ptr %3, align 8
   store ptr %i.yi, ptr %i.aj, align 8
-  %i.yj = getelementptr inbounds nuw [16 x i8], ptr %i.yd, i64 %10
+  %i.yj = getelementptr inbounds nuw [16 x i8], ptr %i.yd, i64 %i.yb
   store ptr %i.yj, ptr %i.ak, align 8
   br label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit
 
@@ -1861,15 +1851,13 @@ bb.ec:                                            ; preds = %bb.eb
   unreachable
 
 _ZNKSt6vectorISt4pairIP6aiMeshjESaIS3_EE12_M_check_lenEmPKc.exit.i.i195: ; preds = %bb.eb
-  %i.abc = ashr exact i64 %i.aba, 4               ; 3 uses
+  %i.abc = ashr exact i64 %i.aba, 4               ; 2 uses
   %.sroa.speculated.i.i.i196 = tail call i64 @llvm.umax.i64(i64 %i.abc, i64 1)
   %i.abd = add nsw i64 %.sroa.speculated.i.i.i196, %i.abc ; 2 uses
-  %11 = icmp ult i64 %i.abd, %i.abc
-  %i.abe = tail call i64 @llvm.umin.i64(i64 %i.abd, i64 576460752303423487)
-  %12 = select i1 %11, i64 576460752303423487, i64 %i.abe ; 3 uses
-  %.not.i.i.i197 = icmp ne i64 %12, 0
+  %i.abe = tail call i64 @llvm.umin.i64(i64 %i.abd, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i197 = icmp ne i64 %i.abd, 0
   tail call void @llvm.assume(i1 %.not.i.i.i197)
-  %i.abf = shl nuw nsw i64 %12, 4
+  %i.abf = shl nuw nsw i64 %i.abe, 4
   %i.abg = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.abf) #17 ; 5 uses
   %i.abh = getelementptr inbounds nuw i8, ptr %i.abg, i64 %i.aba ; 2 uses
   store ptr %2, ptr %i.abh, align 8
@@ -1900,7 +1888,7 @@ bb.ed:                                            ; preds = %_ZNSt6vectorISt4pai
 _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i206: ; preds = %bb.ed, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit33.i.i203
   store ptr %i.abg, ptr %3, align 8
   store ptr %i.abl, ptr %i.aaq, align 8
-  %i.abm = getelementptr inbounds nuw [16 x i8], ptr %i.abg, i64 %12
+  %i.abm = getelementptr inbounds nuw [16 x i8], ptr %i.abg, i64 %i.abe
   store ptr %i.abm, ptr %i.aas, align 8
   br label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit207
 
@@ -2303,17 +2291,15 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorI6aiFaceSaIS0_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.h = ashr exact i64 %i.f, 4                   ; 3 uses
+  %i.h = ashr exact i64 %i.f, 4                   ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.h, i64 1)
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
-  %2 = icmp ult i64 %i.i, %i.h
-  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487)
-  %3 = select i1 %2, i64 576460752303423487, i64 %i.j ; 3 uses
+  %i.j = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487) ; 2 uses
   %i.k = ptrtoint ptr %1 to i64
   %i.l = sub i64 %i.k, %i.e
-  %.not.i = icmp ne i64 %3, 0
+  %.not.i = icmp ne i64 %i.i, 0
   tail call void @llvm.assume(i1 %.not.i)
-  %i.m = shl nuw nsw i64 %3, 4                    ; 2 uses
+  %i.m = shl nuw nsw i64 %i.j, 4                  ; 2 uses
   %i.n = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.m) #17 ; 7 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.l ; 2 uses
   store i32 0, ptr %i.o, align 8
@@ -2362,7 +2348,7 @@ bb.d:                                             ; preds = %_ZSt8_DestroyIP6aiF
 _ZNSt12_Vector_baseI6aiFaceSaIS0_EE13_M_deallocateEPS0_m.exit: ; preds = %_ZSt8_DestroyIP6aiFaceEvT_S2_.exit, %bb.d
   store ptr %i.n, ptr %0, align 8
   store ptr %i.s, ptr %i.a, align 8
-  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %3
+  %i.ab = getelementptr inbounds nuw [16 x i8], ptr %i.n, i64 %i.j
   store ptr %i.ab, ptr %i.x, align 8
   ret void
 

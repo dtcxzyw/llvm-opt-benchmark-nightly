@@ -201,15 +201,13 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _ZNKSt6vectorIN17duckdb_libpgquery17PGSimplifiedTokenESaIS1_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.n
-  %i.x = ashr exact i64 %i.v, 3                   ; 3 uses
+  %i.x = ashr exact i64 %i.v, 3                   ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.x, i64 1)
   %i.y = add nsw i64 %.sroa.speculated.i.i.i, %i.x ; 2 uses
-  %4 = icmp ult i64 %i.y, %i.x
-  %i.z = call i64 @llvm.umin.i64(i64 %i.y, i64 1152921504606846975)
-  %5 = select i1 %4, i64 1152921504606846975, i64 %i.z ; 3 uses
-  %.not.i.i.i = icmp ne i64 %5, 0
+  %i.z = call i64 @llvm.umin.i64(i64 %i.y, i64 1152921504606846975) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.y, 0
   call void @llvm.assume(i1 %.not.i.i.i)
-  %i.aa = shl nuw nsw i64 %5, 3
+  %i.aa = shl nuw nsw i64 %i.z, 3
   %i.ab = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #17
           to label %.noexc17 unwind label %.loopexit ; 4 uses
 
@@ -237,7 +235,7 @@ bb.q:                                             ; preds = %_ZNSt6vectorIN17duc
 
 _ZNSt6vectorIN17duckdb_libpgquery17PGSimplifiedTokenESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i: ; preds = %bb.q, %_ZNSt6vectorIN17duckdb_libpgquery17PGSimplifiedTokenESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i
   store ptr %i.ae, ptr %i.d, align 8, !tbaa !41
-  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %5
+  %i.af = getelementptr inbounds nuw [8 x i8], ptr %i.ab, i64 %i.z
   store ptr %i.af, ptr %i.e, align 8, !tbaa !38
   br label %_ZNSt6vectorIN17duckdb_libpgquery17PGSimplifiedTokenESaIS1_EE9push_backERKS1_.exit
 
@@ -444,19 +442,17 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
-  %i.i = sdiv exact i64 %i.g, 40                  ; 3 uses
+  %i.i = sdiv exact i64 %i.g, 40                  ; 2 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.i, i64 1)
   %i.j = add nsw i64 %.sroa.speculated.i, %i.i    ; 2 uses
-  %3 = icmp ult i64 %i.j, %i.i
-  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 230584300921369395)
-  %4 = select i1 %3, i64 230584300921369395, i64 %i.k ; 3 uses
+  %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 230584300921369395) ; 2 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.f
-  %.not.i = icmp eq i64 %4, 0
+  %.not.i = icmp eq i64 %i.j, 0
   br i1 %.not.i, label %_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit
-  %i.n = mul nuw nsw i64 %4, 40
+  %i.n = mul nuw nsw i64 %i.k, 40
   %i.o = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #17
   br label %_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit
 
@@ -625,7 +621,7 @@ _ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE13_M_deallocateEPS1_m
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %i.p, ptr %0, align 8, !tbaa !36
   store ptr %.0.lcssa.i.i.i.i35, ptr %i.b, align 8, !tbaa !29
-  %i.br = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %4
+  %i.br = getelementptr inbounds nuw [40 x i8], ptr %i.p, i64 %i.k
   store ptr %i.br, ptr %i.bq, align 8, !tbaa !32
   ret void
 

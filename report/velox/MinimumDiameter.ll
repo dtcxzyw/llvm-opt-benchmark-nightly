@@ -201,15 +201,13 @@ bb.e:                                             ; preds = %bb.d
   unreachable
 
 _ZNKSt6vectorIPKN4geos4geom10CoordinateESaIS4_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.d
-  %i.r = ashr exact i64 %i.p, 3                   ; 3 uses
+  %i.r = ashr exact i64 %i.p, 3                   ; 2 uses
   %.sroa.speculated.i.i.i = call i64 @llvm.umax.i64(i64 %i.r, i64 1)
   %i.s = add nsw i64 %.sroa.speculated.i.i.i, %i.r ; 2 uses
-  %2 = icmp ult i64 %i.s, %i.r
-  %i.t = call i64 @llvm.umin.i64(i64 %i.s, i64 1152921504606846975)
-  %3 = select i1 %2, i64 1152921504606846975, i64 %i.t ; 3 uses
-  %.not.i.i.i = icmp ne i64 %3, 0
+  %i.t = call i64 @llvm.umin.i64(i64 %i.s, i64 1152921504606846975) ; 2 uses
+  %.not.i.i.i = icmp ne i64 %i.s, 0
   call void @llvm.assume(i1 %.not.i.i.i)
-  %i.u = shl nuw nsw i64 %3, 3
+  %i.u = shl nuw nsw i64 %i.t, 3
   %i.v = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #22 ; 4 uses
   %i.w = getelementptr inbounds i8, ptr %i.v, i64 %i.p ; 2 uses
   %i.x = load ptr, ptr %i.a, align 8, !tbaa !113
@@ -233,7 +231,7 @@ bb.g:                                             ; preds = %_ZNSt6vectorIPKN4ge
 _ZNSt6vectorIPKN4geos4geom10CoordinateESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.g, %_ZNSt6vectorIPKN4geos4geom10CoordinateESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
   store ptr %i.v, ptr %i.f, align 8, !tbaa !66
   store ptr %i.z, ptr %i.g, align 8, !tbaa !124
-  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %3
+  %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.t
   store ptr %i.aa, ptr %i.i, align 8, !tbaa !125
   br label %_ZNSt6vectorIPKN4geos4geom10CoordinateESaIS4_EE9push_backERKS4_.exit
 

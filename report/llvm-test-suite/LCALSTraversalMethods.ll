@@ -201,15 +201,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.r = ashr exact i64 %i.p, 4                   ; 3 uses
+  %i.r = ashr exact i64 %i.p, 4                   ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.r, i64 1)
   %i.s = add nsw i64 %.sroa.speculated.i.i.i.i, %i.r ; 2 uses
-  %2 = icmp ult i64 %i.s, %i.r
-  %i.t = tail call i64 @llvm.umin.i64(i64 %i.s, i64 576460752303423487)
-  %3 = select i1 %2, i64 576460752303423487, i64 %i.t ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %3, 0
+  %i.t = tail call i64 @llvm.umin.i64(i64 %i.s, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.s, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.u = shl nuw nsw i64 %3, 4
+  %i.u = shl nuw nsw i64 %i.t, 4
   %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #14 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.p ; 2 uses
   store i32 0, ptr %i.w, align 8, !tbaa !24
@@ -244,7 +242,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__g
   %.pre = phi i32 [ %.pre.pre, %bb.e ], [ %i.d, %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i ]
   store ptr %i.v, ptr %i.f, align 8, !tbaa !12
   store ptr %i.z, ptr %i.g, align 8, !tbaa !8
-  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %3
+  %i.aa = getelementptr inbounds nuw [16 x i8], ptr %i.v, i64 %i.t
   store ptr %i.aa, ptr %i.i, align 8, !tbaa !23
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit
 
@@ -302,15 +300,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.u = ashr exact i64 %i.s, 4                   ; 3 uses
+  %i.u = ashr exact i64 %i.s, 4                   ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.u, i64 1)
   %i.v = add nsw i64 %.sroa.speculated.i.i.i.i, %i.u ; 2 uses
-  %2 = icmp ult i64 %i.v, %i.u
-  %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 576460752303423487)
-  %3 = select i1 %2, i64 576460752303423487, i64 %i.w ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %3, 0
+  %i.w = tail call i64 @llvm.umin.i64(i64 %i.v, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.v, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.x = shl nuw nsw i64 %3, 4
+  %i.x = shl nuw nsw i64 %i.w, 4
   %i.y = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #14 ; 5 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 %i.s ; 2 uses
   store i32 1, ptr %i.z, align 8, !tbaa !24
@@ -347,7 +343,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__g
   %.pre = phi i32 [ %.pre.pre, %bb.e ], [ %i.d, %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i ]
   store ptr %i.y, ptr %i.i, align 8, !tbaa !12
   store ptr %i.ac, ptr %i.j, align 8, !tbaa !8
-  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %3
+  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %i.y, i64 %i.w
   store ptr %i.ad, ptr %i.l, align 8, !tbaa !23
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit
 
@@ -403,15 +399,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.o = ashr exact i64 %i.m, 4                   ; 3 uses
+  %i.o = ashr exact i64 %i.m, 4                   ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.o, i64 1)
   %i.p = add nsw i64 %.sroa.speculated.i.i.i.i, %i.o ; 2 uses
-  %3 = icmp ult i64 %i.p, %i.o
-  %i.q = tail call i64 @llvm.umin.i64(i64 %i.p, i64 576460752303423487)
-  %4 = select i1 %3, i64 576460752303423487, i64 %i.q ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %4, 0
+  %i.q = tail call i64 @llvm.umin.i64(i64 %i.p, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.p, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.r = shl nuw nsw i64 %4, 4
+  %i.r = shl nuw nsw i64 %i.q, 4
   %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #14 ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.m ; 2 uses
   store i32 0, ptr %i.t, align 8, !tbaa !24
@@ -446,7 +440,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__g
   %.pre = phi i32 [ %.pre.pre, %bb.e ], [ %2, %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i ]
   store ptr %i.s, ptr %i.c, align 8, !tbaa !12
   store ptr %i.w, ptr %i.d, align 8, !tbaa !8
-  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %4
+  %i.x = getelementptr inbounds nuw [16 x i8], ptr %i.s, i64 %i.q
   store ptr %i.x, ptr %i.f, align 8, !tbaa !23
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit
 
@@ -499,15 +493,13 @@ bb.d:                                             ; preds = %bb.c
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
-  %i.p = ashr exact i64 %i.n, 4                   ; 3 uses
+  %i.p = ashr exact i64 %i.n, 4                   ; 2 uses
   %.sroa.speculated.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.p, i64 1)
   %i.q = add nsw i64 %.sroa.speculated.i.i.i.i, %i.p ; 2 uses
-  %4 = icmp ult i64 %i.q, %i.p
-  %i.r = tail call i64 @llvm.umin.i64(i64 %i.q, i64 576460752303423487)
-  %5 = select i1 %4, i64 576460752303423487, i64 %i.r ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %5, 0
+  %i.r = tail call i64 @llvm.umin.i64(i64 %i.q, i64 576460752303423487) ; 2 uses
+  %.not.i.i.i.i = icmp ne i64 %i.q, 0
   tail call void @llvm.assume(i1 %.not.i.i.i.i)
-  %i.s = shl nuw nsw i64 %5, 4
+  %i.s = shl nuw nsw i64 %i.r, 4
   %i.t = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.s) #14 ; 5 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 %i.n ; 2 uses
   store i32 1, ptr %i.u, align 8, !tbaa !24
@@ -544,7 +536,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__g
   %.pre = phi i32 [ %.pre.pre, %bb.e ], [ %2, %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i ]
   store ptr %i.t, ptr %i.d, align 8, !tbaa !12
   store ptr %i.x, ptr %i.e, align 8, !tbaa !8
-  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %5
+  %i.y = getelementptr inbounds nuw [16 x i8], ptr %i.t, i64 %i.r
   store ptr %i.y, ptr %i.g, align 8, !tbaa !23
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit
 
