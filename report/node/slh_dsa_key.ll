@@ -37,12 +37,12 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @ossl_slh_dsa_key_new(ptr noundef %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call ptr @ossl_slh_dsa_params_get(ptr noundef %2) #8 ; 4 uses
+  %i.a = tail call ptr @ossl_slh_dsa_params_get(ptr noundef %2) #7 ; 4 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.n, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 208, ptr noundef nonnull @.str, i32 noundef 107) #8 ; 20 uses
+  %i.c = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 208, ptr noundef nonnull @.str, i32 noundef 107) #7 ; 20 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.n, label %bb.c
 
@@ -60,7 +60,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.f = tail call ptr @CRYPTO_strdup(ptr noundef nonnull %1, ptr noundef nonnull @.str, i32 noundef 112) #8 ; 3 uses
+  %i.f = tail call ptr @CRYPTO_strdup(ptr noundef nonnull %1, ptr noundef nonnull @.str, i32 noundef 112) #7 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 144
   store ptr %i.f, ptr %i.g, align 8, !tbaa !20
   %i.h = icmp eq ptr %i.f, null
@@ -75,7 +75,7 @@ bb.e:                                             ; preds = %._crit_edge, %bb.d
   %.not.i = icmp eq i32 %i.k, 0                   ; 3 uses
   %i.n = select i1 %.not.i, ptr @.str.9, ptr @.str.8
   %i.o = getelementptr inbounds nuw i8, ptr %i.c, i64 144
-  %i.p = tail call ptr @EVP_MD_fetch(ptr noundef %0, ptr noundef nonnull %i.n, ptr noundef %i.i) #8 ; 6 uses
+  %i.p = tail call ptr @EVP_MD_fetch(ptr noundef %0, ptr noundef nonnull %i.n, ptr noundef %i.i) #7 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 184 ; 3 uses
   store ptr %i.p, ptr %i.q, align 8, !tbaa !25
   %i.r = icmp eq ptr %i.p, null
@@ -94,7 +94,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = tail call ptr @EVP_MD_fetch(ptr noundef %0, ptr noundef nonnull @.str.10, ptr noundef %i.i) #8 ; 3 uses
+  %i.u = tail call ptr @EVP_MD_fetch(ptr noundef %0, ptr noundef nonnull @.str.10, ptr noundef %i.i) #7 ; 3 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.c, i64 192
   store ptr %i.u, ptr %i.v, align 8, !tbaa !26
   %i.w = icmp eq ptr %i.u, null
@@ -102,7 +102,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.i, %bb.h
   %i.x = phi ptr [ %i.u, %bb.i ], [ %i.p, %bb.h ]
-  %i.y = tail call ptr @EVP_MAC_fetch(ptr noundef %0, ptr noundef nonnull @.str.11, ptr noundef %i.i) #8 ; 2 uses
+  %i.y = tail call ptr @EVP_MAC_fetch(ptr noundef %0, ptr noundef nonnull @.str.11, ptr noundef %i.i) #7 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.c, i64 200
   store ptr %i.y, ptr %i.z, align 8, !tbaa !27
   %i.aa = icmp eq ptr %i.y, null
@@ -110,40 +110,40 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %i.ab = phi ptr [ %i.x, %bb.j ], [ null, %bb.i ] ; 2 uses
-  tail call void @CRYPTO_free(ptr noundef %i.i, ptr noundef nonnull @.str, i32 noundef 25) #8
+  tail call void @CRYPTO_free(ptr noundef %i.i, ptr noundef nonnull @.str, i32 noundef 25) #7
   %i.ac = getelementptr inbounds nuw i8, ptr %i.c, i64 192
   %.not.i.i = icmp eq ptr %i.ab, %i.p
   br i1 %.not.i.i, label %slh_dsa_key_hash_cleanup.exit.i, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @EVP_MD_free(ptr noundef %i.ab) #8
+  tail call void @EVP_MD_free(ptr noundef %i.ab) #7
   %.pre.i.i = load ptr, ptr %i.q, align 8, !tbaa !25
   br label %slh_dsa_key_hash_cleanup.exit.i
 
 slh_dsa_key_hash_cleanup.exit.i:                  ; preds = %bb.l, %bb.k
   %i.ad = phi ptr [ %.pre.i.i, %bb.l ], [ %i.p, %bb.k ]
   store ptr null, ptr %i.ac, align 8, !tbaa !26
-  tail call void @EVP_MD_free(ptr noundef %i.ad) #8
+  tail call void @EVP_MD_free(ptr noundef %i.ad) #7
   %i.ae = getelementptr inbounds nuw i8, ptr %i.c, i64 200
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !27
-  tail call void @EVP_MAC_free(ptr noundef %i.af) #8
+  tail call void @EVP_MAC_free(ptr noundef %i.af) #7
   store ptr null, ptr %i.q, align 8, !tbaa !25
   %.pre26 = load ptr, ptr %i.o, align 8, !tbaa !20
   br label %slh_dsa_key_hash_init.exit.thread
 
 slh_dsa_key_hash_init.exit:                       ; preds = %bb.f, %bb.j
   %i.ag = zext i1 %.not.i to i32
-  %i.ah = tail call ptr @ossl_slh_get_adrs_fn(i32 noundef %i.ag) #8
+  %i.ah = tail call ptr @ossl_slh_get_adrs_fn(i32 noundef %i.ag) #7
   %i.ai = getelementptr inbounds nuw i8, ptr %i.c, i64 168
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !28
-  %i.aj = tail call ptr @ossl_slh_get_hash_fn(i32 noundef %i.k) #8
+  %i.aj = tail call ptr @ossl_slh_get_hash_fn(i32 noundef %i.k) #7
   %i.ak = getelementptr inbounds nuw i8, ptr %i.c, i64 176
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !29
   br label %bb.n
 
 slh_dsa_key_hash_init.exit.thread:                ; preds = %bb.e, %slh_dsa_key_hash_cleanup.exit.i, %bb.d
   %i.al = phi ptr [ %i.i, %bb.e ], [ %.pre26, %slh_dsa_key_hash_cleanup.exit.i ], [ null, %bb.d ]
-  tail call void @CRYPTO_free(ptr noundef %i.al, ptr noundef nonnull @.str, i32 noundef 25) #8
+  tail call void @CRYPTO_free(ptr noundef %i.al, ptr noundef nonnull @.str, i32 noundef 25) #7
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 192 ; 2 uses
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !26 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %i.c, i64 184 ; 2 uses
@@ -152,18 +152,18 @@ slh_dsa_key_hash_init.exit.thread:                ; preds = %bb.e, %slh_dsa_key_
   br i1 %.not.i.i20, label %ossl_slh_dsa_key_free.exit, label %bb.m
 
 bb.m:                                             ; preds = %slh_dsa_key_hash_init.exit.thread
-  tail call void @EVP_MD_free(ptr noundef %i.an) #8
+  tail call void @EVP_MD_free(ptr noundef %i.an) #7
   br label %ossl_slh_dsa_key_free.exit
 
 ossl_slh_dsa_key_free.exit:                       ; preds = %slh_dsa_key_hash_init.exit.thread, %bb.m
   store ptr null, ptr %i.am, align 8, !tbaa !26
-  tail call void @EVP_MD_free(ptr noundef %i.ap) #8
+  tail call void @EVP_MD_free(ptr noundef %i.ap) #7
   %i.aq = getelementptr inbounds nuw i8, ptr %i.c, i64 200
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !27
-  tail call void @EVP_MAC_free(ptr noundef %i.ar) #8
+  tail call void @EVP_MAC_free(ptr noundef %i.ar) #7
   store ptr null, ptr %i.ao, align 8, !tbaa !25
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.c, i64 noundef 64) #8
-  tail call void @CRYPTO_free(ptr noundef nonnull %i.c, ptr noundef nonnull @.str, i32 noundef 135) #8
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.c, i64 noundef 64) #7
+  tail call void @CRYPTO_free(ptr noundef nonnull %i.c, ptr noundef nonnull @.str, i32 noundef 135) #7
   br label %bb.n
 
 bb.n:                                             ; preds = %slh_dsa_key_hash_init.exit, %bb.b, %bb.a, %ossl_slh_dsa_key_free.exit
@@ -189,7 +189,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !20
-  tail call void @CRYPTO_free(ptr noundef %i.c, ptr noundef nonnull @.str, i32 noundef 25) #8
+  tail call void @CRYPTO_free(ptr noundef %i.c, ptr noundef nonnull @.str, i32 noundef 25) #7
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !26   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 3 uses
@@ -198,20 +198,20 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %slh_dsa_key_hash_cleanup.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @EVP_MD_free(ptr noundef %i.e) #8
+  tail call void @EVP_MD_free(ptr noundef %i.e) #7
   %.pre.i = load ptr, ptr %i.f, align 8, !tbaa !25
   br label %slh_dsa_key_hash_cleanup.exit
 
 slh_dsa_key_hash_cleanup.exit:                    ; preds = %bb.b, %bb.c
   %i.h = phi ptr [ %.pre.i, %bb.c ], [ %i.g, %bb.b ]
   store ptr null, ptr %i.d, align 8, !tbaa !26
-  tail call void @EVP_MD_free(ptr noundef %i.h) #8
+  tail call void @EVP_MD_free(ptr noundef %i.h) #7
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 200
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !27
-  tail call void @EVP_MAC_free(ptr noundef %i.j) #8
+  tail call void @EVP_MAC_free(ptr noundef %i.j) #7
   store ptr null, ptr %i.f, align 8, !tbaa !25
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 64) #8
-  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 135) #8
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 64) #7
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 135) #7
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %slh_dsa_key_hash_cleanup.exit
@@ -232,7 +232,7 @@ bb.a:
   br i1 %i.a, label %bb.r, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 208, ptr noundef nonnull @.str, i32 noundef 153) #8 ; 15 uses
+  %i.b = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 208, ptr noundef nonnull @.str, i32 noundef 153) #7 ; 15 uses
   %.not = icmp eq ptr %i.b, null
   br i1 %.not, label %bb.r, label %bb.c
 
@@ -256,7 +256,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not10.i, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = tail call i32 @EVP_MD_up_ref(ptr noundef nonnull %i.g) #8 ; 0 uses
+  %i.j = tail call i32 @EVP_MD_up_ref(ptr noundef nonnull %i.g) #7 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
@@ -266,7 +266,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
   br i1 %.not11.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.m = tail call i32 @EVP_MD_up_ref(ptr noundef nonnull %i.l) #8 ; 0 uses
+  %i.m = tail call i32 @EVP_MD_up_ref(ptr noundef nonnull %i.l) #7 ; 0 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -276,7 +276,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %.not12.i, label %slh_dsa_key_hash_dup.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.p = tail call i32 @EVP_MAC_up_ref(ptr noundef nonnull %i.o) #8 ; 0 uses
+  %i.p = tail call i32 @EVP_MAC_up_ref(ptr noundef nonnull %i.o) #7 ; 0 uses
   br label %slh_dsa_key_hash_dup.exit
 
 slh_dsa_key_hash_dup.exit:                        ; preds = %bb.h, %bb.i
@@ -286,7 +286,7 @@ slh_dsa_key_hash_dup.exit:                        ; preds = %bb.h, %bb.i
   br i1 %.not26, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %slh_dsa_key_hash_dup.exit
-  %i.s = tail call ptr @CRYPTO_strdup(ptr noundef nonnull %i.r, ptr noundef nonnull @.str, i32 noundef 161) #8 ; 2 uses
+  %i.s = tail call ptr @CRYPTO_strdup(ptr noundef nonnull %i.r, ptr noundef nonnull @.str, i32 noundef 161) #7 ; 2 uses
   store ptr %i.s, ptr %i.c, align 8, !tbaa !20
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.p, label %bb.k
@@ -325,7 +325,7 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.j
-  tail call void @CRYPTO_free(ptr noundef null, ptr noundef nonnull @.str, i32 noundef 25) #8
+  tail call void @CRYPTO_free(ptr noundef null, ptr noundef nonnull @.str, i32 noundef 25) #7
   %i.ah = getelementptr inbounds nuw i8, ptr %i.b, i64 192 ; 2 uses
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !26 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.b, i64 184 ; 3 uses
@@ -334,20 +334,20 @@ bb.p:                                             ; preds = %bb.j
   br i1 %.not.i.i, label %ossl_slh_dsa_key_free.exit, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @EVP_MD_free(ptr noundef %i.ai) #8
+  tail call void @EVP_MD_free(ptr noundef %i.ai) #7
   %.pre.i.i = load ptr, ptr %i.aj, align 8, !tbaa !25
   br label %ossl_slh_dsa_key_free.exit
 
 ossl_slh_dsa_key_free.exit:                       ; preds = %bb.p, %bb.q
   %i.al = phi ptr [ %.pre.i.i, %bb.q ], [ %i.ak, %bb.p ]
   store ptr null, ptr %i.ah, align 8, !tbaa !26
-  tail call void @EVP_MD_free(ptr noundef %i.al) #8
+  tail call void @EVP_MD_free(ptr noundef %i.al) #7
   %i.am = getelementptr inbounds nuw i8, ptr %i.b, i64 200
   %i.an = load ptr, ptr %i.am, align 8, !tbaa !27
-  tail call void @EVP_MAC_free(ptr noundef %i.an) #8
+  tail call void @EVP_MAC_free(ptr noundef %i.an) #7
   store ptr null, ptr %i.aj, align 8, !tbaa !25
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.b, i64 noundef 64) #8
-  tail call void @CRYPTO_free(ptr noundef nonnull %i.b, ptr noundef nonnull @.str, i32 noundef 135) #8
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %i.b, i64 noundef 64) #7
+  tail call void @CRYPTO_free(ptr noundef nonnull %i.b, ptr noundef nonnull @.str, i32 noundef 135) #7
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.b, %bb.n, %bb.o, %bb.k, %bb.a, %ossl_slh_dsa_key_free.exit
@@ -358,7 +358,7 @@ bb.r:                                             ; preds = %bb.b, %bb.n, %bb.o,
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_key_equal(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
@@ -481,7 +481,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.f, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.i = tail call ptr @ossl_slh_dsa_hash_ctx_new(ptr noundef nonnull %0) #8 ; 4 uses
+  %i.i = tail call ptr @ossl_slh_dsa_hash_ctx_new(ptr noundef nonnull %0) #7 ; 4 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.f, label %bb.d
 
@@ -489,21 +489,21 @@ bb.d:                                             ; preds = %bb.c
   %i.k = load ptr, ptr %i.i, align 8, !tbaa !43   ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 168
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !28   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 160 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !19   ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %i.q = load i32, ptr %i.p, align 8, !tbaa !41
   %i.r = zext i32 %i.q to i64                     ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.s = getelementptr inbounds nuw i8, ptr %i.m, i64 72
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !48
-  call void %i.t(ptr noundef nonnull %i.a) #8, !inline_history !50
+  call void %i.t(ptr noundef nonnull %i.a) #7, !inline_history !50
   %i.u = load ptr, ptr %i.m, align 8, !tbaa !51
   %i.v = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.w = load i32, ptr %i.v, align 8, !tbaa !52
   %i.x = add i32 %i.w, -1
-  call void %i.u(ptr noundef nonnull %i.a, i32 noundef %i.x) #8, !inline_history !50
+  call void %i.u(ptr noundef nonnull %i.a, i32 noundef %i.x) #7, !inline_history !50
   %i.y = getelementptr inbounds nuw i8, ptr %i.o, i64 28
   %i.z = load i32, ptr %i.y, align 4, !tbaa !53
   %i.aa = load ptr, ptr %i.n, align 8, !tbaa !19
@@ -512,7 +512,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ad = shl i32 %i.ac, 1
   %i.ae = zext i32 %i.ad to i64
   %i.af = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.ae
-  %i.ag = call i32 @ossl_slh_xmss_node(ptr noundef nonnull %i.i, ptr noundef nonnull %i.k, i32 noundef 0, i32 noundef %i.z, ptr noundef %i.af, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.r) #8
+  %i.ag = call i32 @ossl_slh_xmss_node(ptr noundef nonnull %i.i, ptr noundef nonnull %i.k, i32 noundef 0, i32 noundef %i.z, ptr noundef %i.af, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, i64 noundef %i.r) #7
   %.not21.i = icmp eq i32 %i.ag, 0
   br i1 %.not21.i, label %slh_dsa_compute_pk_root.exit, label %bb.e
 
@@ -531,9 +531,9 @@ bb.e:                                             ; preds = %bb.d
 
 slh_dsa_compute_pk_root.exit:                     ; preds = %bb.d, %bb.e
   %.in.i = phi i32 [ 0, %bb.d ], [ %i.ap, %bb.e ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
-  call void @ossl_slh_dsa_hash_ctx_free(ptr noundef nonnull %i.i) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @ossl_slh_dsa_hash_ctx_free(ptr noundef nonnull %i.i) #7
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.a, %bb.b, %slh_dsa_compute_pk_root.exit
@@ -557,7 +557,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.b, align 8, !tbaa !40
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 128) #8
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 128) #7
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -569,9 +569,9 @@ define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_key_fromdata(ptr noundef %0, 
 bb.a:
   %i.a = alloca i64, align 8                      ; 7 uses
   %i.b = alloca ptr, align 8                      ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   store i64 0, ptr %i.a, align 8, !tbaa !54
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.c = icmp eq ptr %0, null
   br i1 %i.c, label %ossl_slh_dsa_key_reset.exit, label %bb.b
 
@@ -587,13 +587,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = tail call ptr @OSSL_PARAM_locate_const(ptr noundef %1, ptr noundef nonnull @.str.1) #8 ; 2 uses
+  %i.k = tail call ptr @OSSL_PARAM_locate_const(ptr noundef %1, ptr noundef nonnull @.str.1) #7 ; 2 uses
   %.not29 = icmp eq ptr %i.k, null
   br i1 %.not29, label %bb.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   store ptr %0, ptr %i.b, align 8, !tbaa !55
-  %i.l = call i32 @OSSL_PARAM_get_octet_string(ptr noundef nonnull %i.k, ptr noundef nonnull %i.b, i64 noundef %i.i, ptr noundef nonnull %i.a) #8
+  %i.l = call i32 @OSSL_PARAM_get_octet_string(ptr noundef nonnull %i.k, ptr noundef nonnull %i.b, i64 noundef %i.i, ptr noundef nonnull %i.a) #7
   %.not30 = icmp eq i32 %i.l, 0
   br i1 %.not30, label %ossl_slh_dsa_key_reset.exit, label %bb.e
 
@@ -632,12 +632,12 @@ bb.i:                                             ; preds = %bb.c, %bb.h, %bb.b
   %i.ab = zext i32 %i.aa to i64
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 %i.ab
   store ptr %i.ac, ptr %i.b, align 8, !tbaa !55
-  %i.ad = call ptr @OSSL_PARAM_locate_const(ptr noundef %1, ptr noundef nonnull @.str.2) #8 ; 2 uses
+  %i.ad = call ptr @OSSL_PARAM_locate_const(ptr noundef %1, ptr noundef nonnull @.str.2) #7 ; 2 uses
   %i.ae = icmp eq ptr %i.ad, null
   br i1 %i.ae, label %bb.l, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.af = call i32 @OSSL_PARAM_get_octet_string(ptr noundef nonnull %i.ad, ptr noundef nonnull %i.b, i64 noundef %i.j, ptr noundef nonnull %i.a) #8
+  %i.af = call i32 @OSSL_PARAM_get_octet_string(ptr noundef nonnull %i.ad, ptr noundef nonnull %i.b, i64 noundef %i.j, ptr noundef nonnull %i.a) #7
   %.not32 = icmp ne i32 %i.af, 0
   %i.ag = load i64, ptr %i.a, align 8
   %.not33 = icmp eq i64 %i.ag, %i.j
@@ -660,18 +660,18 @@ bb.l:                                             ; preds = %bb.i, %bb.j, %bb.g
 
 bb.m:                                             ; preds = %bb.l
   store i32 0, ptr %i.ak, align 8, !tbaa !40
-  call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 128) #8
+  call void @OPENSSL_cleanse(ptr noundef nonnull %0, i64 noundef 128) #7
   br label %ossl_slh_dsa_key_reset.exit
 
 ossl_slh_dsa_key_reset.exit:                      ; preds = %bb.m, %bb.l, %bb.d, %bb.a, %bb.k, %bb.f
   %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.f ], [ 0, %bb.d ], [ 1, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   ret i32 %.0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i64 0, 4294967293) i64 @ossl_slh_dsa_key_get_priv_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local range(i64 0, 4294967293) i64 @ossl_slh_dsa_key_get_priv_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -714,12 +714,12 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.a
-  %i.n = tail call i32 @RAND_priv_bytes_ex(ptr noundef %2, ptr noundef nonnull %1, i64 noundef %i.g, i32 noundef 0) #8
+  %i.n = tail call i32 @RAND_priv_bytes_ex(ptr noundef %2, ptr noundef nonnull %1, i64 noundef %i.g, i32 noundef 0) #7
   %i.o = icmp slt i32 %i.n, 1
   br i1 %i.o, label %bb.h, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = tail call i32 @RAND_bytes_ex(ptr noundef %2, ptr noundef nonnull %i.j, i64 noundef %i.f, i32 noundef 0) #8
+  %i.p = tail call i32 @RAND_bytes_ex(ptr noundef %2, ptr noundef nonnull %i.j, i64 noundef %i.f, i32 noundef 0) #7
   %i.q = icmp slt i32 %i.p, 1
   br i1 %i.q, label %bb.h, label %bb.f
 
@@ -727,7 +727,7 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   %i.r = load ptr, ptr %0, align 8, !tbaa !43     ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 168
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !28   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 160 ; 2 uses
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !19   ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
@@ -735,12 +735,12 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   %i.y = zext i32 %i.x to i64
   %i.z = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !48
-  call void %i.aa(ptr noundef nonnull %i.a) #8, !inline_history !50
+  call void %i.aa(ptr noundef nonnull %i.a) #7, !inline_history !50
   %i.ab = load ptr, ptr %i.t, align 8, !tbaa !51
   %i.ac = getelementptr inbounds nuw i8, ptr %i.v, i64 24
   %i.ad = load i32, ptr %i.ac, align 8, !tbaa !52
   %i.ae = add i32 %i.ad, -1
-  call void %i.ab(ptr noundef nonnull %i.a, i32 noundef %i.ae) #8, !inline_history !50
+  call void %i.ab(ptr noundef nonnull %i.a, i32 noundef %i.ae) #7, !inline_history !50
   %i.af = load ptr, ptr %i.b, align 8, !tbaa !19
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.ah = load i32, ptr %i.ag, align 8, !tbaa !41
@@ -755,9 +755,9 @@ bb.f:                                             ; preds = %bb.e, %bb.c
   %i.aq = shl i32 %i.ap, 1
   %i.ar = zext i32 %i.aq to i64
   %i.as = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.ar
-  %i.at = call i32 @ossl_slh_xmss_node(ptr noundef nonnull %0, ptr noundef nonnull %i.r, i32 noundef 0, i32 noundef %i.am, ptr noundef %i.as, ptr noundef nonnull %i.a, ptr noundef nonnull %i.ak, i64 noundef %i.y) #8
+  %i.at = call i32 @ossl_slh_xmss_node(ptr noundef nonnull %0, ptr noundef nonnull %i.r, i32 noundef 0, i32 noundef %i.am, ptr noundef %i.as, ptr noundef nonnull %i.a, ptr noundef nonnull %i.ak, i64 noundef %i.y) #7
   %.not21.i = icmp eq i32 %i.at, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
   br i1 %.not21.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -772,7 +772,7 @@ bb.h:                                             ; preds = %bb.f, %bb.d, %bb.e,
   store ptr null, ptr %i.aw, align 8, !tbaa !39
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 152
   store i32 0, ptr %i.ax, align 8, !tbaa !40
-  call void @OPENSSL_cleanse(ptr noundef nonnull %1, i64 noundef %i.g) #8
+  call void @OPENSSL_cleanse(ptr noundef nonnull %1, i64 noundef %i.g) #7
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
@@ -790,7 +790,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !56
-  %i.d = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.c, ptr noundef %1) #8
+  %i.d = tail call i32 @OPENSSL_strcasecmp(ptr noundef %i.c, ptr noundef %1) #7
   %i.e = icmp eq i32 %i.d, 0
   %i.f = zext i1 %i.e to i32
   ret i32 %i.f
@@ -807,7 +807,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i64 0, 4294967295) i64 @ossl_slh_dsa_key_get_pub_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local range(i64 0, 4294967295) i64 @ossl_slh_dsa_key_get_pub_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -829,7 +829,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i64 0, 4294967296) i64 @ossl_slh_dsa_key_get_n(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local range(i64 0, 4294967296) i64 @ossl_slh_dsa_key_get_n(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -840,7 +840,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i64 0, 4294967296) i64 @ossl_slh_dsa_key_get_sig_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local range(i64 0, 4294967296) i64 @ossl_slh_dsa_key_get_sig_len(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -851,7 +851,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @ossl_slh_dsa_key_get_name(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local ptr @ossl_slh_dsa_key_get_name(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -860,7 +860,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local i32 @ossl_slh_dsa_key_get_type(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local i32 @ossl_slh_dsa_key_get_type(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -870,7 +870,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_set_priv(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #6 {
+define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_set_priv(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -901,7 +901,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_set_pub(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #6 {
+define dso_local range(i32 0, 2) i32 @ossl_slh_dsa_set_pub(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19
@@ -935,9 +935,9 @@ bb.a:
   br i1 %or.cond, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @ERR_new() #8
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 486, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #8
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 786690, ptr noundef null) #8
+  tail call void @ERR_new() #7
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 486, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #7
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 786690, ptr noundef null) #7
   br label %bb.m
 
 bb.c:                                             ; preds = %bb.a
@@ -950,9 +950,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @ERR_new() #8
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 492, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #8
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 128, ptr noundef nonnull @.str.3, ptr noundef %i.e) #8
+  tail call void @ERR_new() #7
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 492, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #7
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 128, ptr noundef nonnull @.str.3, ptr noundef %i.e) #7
   br label %bb.m
 
 bb.e:                                             ; preds = %bb.c
@@ -967,13 +967,13 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @ERR_new() #8
-  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 499, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #8
-  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 128, ptr noundef nonnull @.str.3, ptr noundef %i.e) #8
+  tail call void @ERR_new() #7
+  tail call void @ERR_set_debug(ptr noundef nonnull @.str, i32 noundef 499, ptr noundef nonnull @__func__.ossl_slh_dsa_key_to_text) #7
+  tail call void (i32, i32, ptr, ...) @ERR_set_error(i32 noundef 57, i32 noundef 128, ptr noundef nonnull @.str.3, ptr noundef %i.e) #7
   br label %bb.m
 
 bb.h:                                             ; preds = %bb.f
-  %i.l = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.4, ptr noundef %i.e) #8
+  %i.l = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.4, ptr noundef %i.e) #7
   %i.m = icmp slt i32 %i.l, 1
   br i1 %i.m, label %bb.m, label %bb.i
 
@@ -986,7 +986,7 @@ bb.i:                                             ; preds = %bb.h
   %i.r = load i32, ptr %i.q, align 8, !tbaa !41
   %i.s = shl i32 %i.r, 2
   %i.t = zext i32 %i.s to i64
-  %i.u = tail call i32 @ossl_bio_print_labeled_buf(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, ptr noundef %i.o, i64 noundef %i.t) #8
+  %i.u = tail call i32 @ossl_bio_print_labeled_buf(ptr noundef nonnull %0, ptr noundef nonnull @.str.5, ptr noundef %i.o, i64 noundef %i.t) #7
   %.not23 = icmp eq i32 %i.u, 0
   br i1 %.not23, label %bb.m, label %bb.l
 
@@ -996,7 +996,7 @@ bb.j:                                             ; preds = %bb.e
   br i1 %.not22, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.w = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.6, ptr noundef %i.e) #8
+  %i.w = tail call i32 (ptr, ptr, ...) @BIO_printf(ptr noundef nonnull %0, ptr noundef nonnull @.str.6, ptr noundef %i.e) #7
   %i.x = icmp slt i32 %i.w, 1
   br i1 %i.x, label %bb.m, label %bb.l
 
@@ -1007,7 +1007,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k, %bb.i
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !41
   %i.ac = shl i32 %i.ab, 1
   %i.ad = zext i32 %i.ac to i64
-  %i.ae = tail call i32 @ossl_bio_print_labeled_buf(ptr noundef nonnull %0, ptr noundef nonnull @.str.7, ptr noundef %i.y, i64 noundef %i.ad) #8
+  %i.ae = tail call i32 @ossl_bio_print_labeled_buf(ptr noundef nonnull %0, ptr noundef nonnull @.str.7, ptr noundef %i.y, i64 noundef %i.ad) #7
   %.not24 = icmp ne i32 %i.ae, 0
   %. = zext i1 %.not24 to i32
   br label %bb.m
@@ -1045,18 +1045,17 @@ declare i32 @EVP_MAC_up_ref(ptr noundef) local_unnamed_addr #3
 
 declare i32 @ossl_slh_xmss_node(ptr noundef, ptr noundef, i32 noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #3
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #7
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #6
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #8 = { nounwind }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

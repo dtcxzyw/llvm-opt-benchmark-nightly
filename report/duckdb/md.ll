@@ -62,7 +62,7 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.d, %bb.f, %bb.e
   %i.g = load ptr, ptr %i.d, align 8, !tbaa !11
-  tail call void @free(ptr noundef %i.g) #11
+  tail call void @free(ptr noundef %i.g) #10
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.c
@@ -169,7 +169,7 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call noalias dereferenceable_or_null(92) ptr @calloc(i64 noundef 1, i64 noundef 92) #12 ; 3 uses
+  %i.f = tail call noalias dereferenceable_or_null(92) ptr @calloc(i64 noundef 1, i64 noundef 92) #11 ; 3 uses
   store ptr %i.f, ptr %i.c, align 8, !tbaa !11
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %mbedtls_md_free.exit, label %bb.d
@@ -179,7 +179,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.b
-  %i.h = tail call noalias dereferenceable_or_null(104) ptr @calloc(i64 noundef 1, i64 noundef 104) #12 ; 3 uses
+  %i.h = tail call noalias dereferenceable_or_null(104) ptr @calloc(i64 noundef 1, i64 noundef 104) #11 ; 3 uses
   store ptr %i.h, ptr %i.c, align 8, !tbaa !11
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %mbedtls_md_free.exit, label %bb.f
@@ -196,7 +196,7 @@ bb.h:                                             ; preds = %bb.g
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 5
   %i.k = load i8, ptr %i.j, align 1, !tbaa !16
   %i.l = zext i8 %i.k to i64
-  %i.m = tail call noalias ptr @calloc(i64 noundef 2, i64 noundef %i.l) #12 ; 2 uses
+  %i.m = tail call noalias ptr @calloc(i64 noundef 2, i64 noundef %i.l) #11 ; 2 uses
   store ptr %i.m, ptr %i.d, align 8, !tbaa !15
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.i, label %mbedtls_md_free.exit
@@ -228,7 +228,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
   %i.s = load ptr, ptr %i.c, align 8, !tbaa !11
-  tail call void @free(ptr noundef %i.s) #11
+  tail call void @free(ptr noundef %i.s) #10
   %.pre = load ptr, ptr %i.d, align 8, !tbaa !15  ; 2 uses
   %.not14.i = icmp eq ptr %.pre, null
   br i1 %.not14.i, label %.thread, label %bb.o
@@ -442,14 +442,14 @@ bb.a:
   ret ptr @_ZL17supported_digests
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
-define hidden ptr @mbedtls_md_info_from_string(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #8 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define hidden ptr @mbedtls_md_info_from_string(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.b, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.a
-  %i.b = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(7) @.str, ptr noundef nonnull dereferenceable(1) %0) #13
+  %i.b = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(7) @.str, ptr noundef nonnull dereferenceable(1) %0) #12
   %.not10 = icmp eq i32 %i.b, 0
   %_ZL19mbedtls_sha256_info..i = select i1 %.not10, ptr @_ZL19mbedtls_sha256_info, ptr null
   br label %bb.b
@@ -460,13 +460,13 @@ bb.b:                                             ; preds = %bb.a, %.preheader.p
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.start.p0(ptr captures(none)) #9
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #8
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #10
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.lifetime.end.p0(ptr captures(none)) #9
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden ptr @mbedtls_md_get_name(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #7 {
@@ -504,7 +504,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define hidden i32 @mbedtls_md_hmac_starts(ptr noundef readonly captures(address_is_null) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %bb.u, label %bb.b
 
@@ -907,7 +907,7 @@ mbedtls_md_update.exit56:                         ; preds = %_ZL11mbedtls_xorPhP
 
 bb.u:                                             ; preds = %bb.a, %bb.b, %bb.c, %mbedtls_md_update.exit56
   %.0 = phi i32 [ %.032, %mbedtls_md_update.exit56 ], [ -20736, %bb.c ], [ -20736, %bb.b ], [ -20736, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.0
 }
 
@@ -956,7 +956,7 @@ mbedtls_md_update.exit:                           ; preds = %bb.f, %bb.e, %bb.d,
 define hidden i32 @mbedtls_md_hmac_finish(ptr noundef readonly captures(address_is_null) %0, ptr noundef %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca [32 x i8], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %mbedtls_md_finish.exit.thread, label %bb.b
 
@@ -1071,7 +1071,7 @@ bb.o:                                             ; preds = %bb.n
 
 mbedtls_md_finish.exit.thread:                    ; preds = %bb.k, %bb.g, %bb.h, %bb.d, %bb.n, %mbedtls_md_update.exit, %mbedtls_md_starts.exit, %mbedtls_md_finish.exit, %bb.a, %bb.b, %bb.c, %bb.o
   %.0 = phi i32 [ %i.ar, %bb.o ], [ -20736, %bb.a ], [ %.0.i, %mbedtls_md_finish.exit ], [ %.0.i28, %mbedtls_md_starts.exit ], [ %.0.i29, %mbedtls_md_update.exit ], [ -20736, %bb.c ], [ -20736, %bb.b ], [ %i.aq, %bb.n ], [ -20736, %bb.g ], [ -20736, %bb.d ], [ -20736, %bb.h ], [ -20736, %bb.k ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.0
 }
 
@@ -1148,7 +1148,7 @@ mbedtls_md_update.exit:                           ; preds = %bb.d, %bb.i, %bb.h,
 define hidden i32 @mbedtls_md_hmac(ptr noundef %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, i64 noundef %4, ptr noundef %5) local_unnamed_addr #3 {
 bb.a:
   %6 = alloca %struct.mbedtls_md_context_t, align 8 ; 15 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #10
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %mbedtls_md_free.exit, label %bb.b
 
@@ -1231,7 +1231,7 @@ bb.m:                                             ; preds = %bb.k
 
 bb.n:                                             ; preds = %bb.m, %bb.l, %bb.k
   %i.u = load ptr, ptr %i.r, align 8, !tbaa !11
-  call void @free(ptr noundef %i.u) #11
+  call void @free(ptr noundef %i.u) #10
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.n, %bb.j
@@ -1255,7 +1255,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
 
 mbedtls_md_free.exit:                             ; preds = %bb.d, %bb.q, %mbedtls_md_hmac_update.exit.thread, %bb.a
   %.08 = phi i32 [ -20736, %bb.a ], [ %.0.ph, %mbedtls_md_hmac_update.exit.thread ], [ %.0.ph, %bb.q ], [ -20736, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #10
   ret i32 %.08
 }
 
@@ -1267,12 +1267,11 @@ attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #5 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroed") allocsize(0,1) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #10 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nounwind }
-attributes #12 = { nounwind allocsize(0,1) }
-attributes #13 = { nounwind willreturn memory(read) }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nounwind }
+attributes #11 = { nounwind allocsize(0,1) }
+attributes #12 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

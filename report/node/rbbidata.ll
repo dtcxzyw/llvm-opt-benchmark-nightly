@@ -119,7 +119,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 %i.w
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.z = load i32, ptr %i.y, align 4
-  %i.aa = tail call ptr @ucptrie_openFromBinary_78(i32 noundef 0, i32 noundef -1, ptr noundef nonnull %i.x, i32 noundef %i.z, ptr noundef null, ptr noundef nonnull %2) #11 ; 2 uses
+  %i.aa = tail call ptr @ucptrie_openFromBinary_78(i32 noundef 0, i32 noundef -1, ptr noundef nonnull %i.x, i32 noundef %i.z, ptr noundef null, ptr noundef nonnull %2) #10 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 48
   store ptr %i.aa, ptr %i.ab, align 8
   %i.ac = load i32, ptr %2, align 4
@@ -127,7 +127,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %i.ad, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i
-  %i.ae = tail call i32 @ucptrie_getValueWidth_78(ptr noundef %i.aa) #11
+  %i.ae = tail call i32 @ucptrie_getValueWidth_78(ptr noundef %i.aa) #10
   %i.af = and i32 %i.ae, -3
   %or.cond = icmp eq i32 %i.af, 0
   br i1 %or.cond, label %bb.l, label %bb.k
@@ -144,14 +144,14 @@ bb.l:                                             ; preds = %bb.j
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 %i.aj ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 24
   store ptr %i.ak, ptr %i.al, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
   %i.am = getelementptr inbounds nuw i8, ptr %i.ag, i64 44
   %i.an = load i32, ptr %i.am, align 4
-  call void @_ZN6icu_7813UnicodeString8fromUTF8ENS_11StringPieceE(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::UnicodeString") align 8 %3, ptr nonnull %i.ak, i32 %i.an) #11
+  call void @_ZN6icu_7813UnicodeString8fromUTF8ENS_11StringPieceE(ptr dead_on_unwind nonnull writable sret(%"class.icu_78::UnicodeString") align 8 %3, ptr nonnull %i.ak, i32 %i.an) #10
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.ap = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ao, ptr noundef nonnull align 8 dereferenceable(64) %3) #11 ; 0 uses
-  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  %i.ap = call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeStringaSEOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ao, ptr noundef nonnull align 8 dereferenceable(64) %3) #10 ; 0 uses
+  call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %3) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
   %i.aq = load ptr, ptr %0, align 8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 48
   %i.as = load i32, ptr %i.ar, align 4
@@ -311,7 +311,7 @@ define dso_local void @_ZN6icu_7815RBBIDataWrapperD2Ev(ptr noundef nonnull align
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @ucptrie_close_78(ptr noundef %i.b) #11
+  tail call void @ucptrie_close_78(ptr noundef %i.b) #10
   store ptr null, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
@@ -319,7 +319,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @udata_close_78(ptr noundef nonnull %i.d) #11
+  tail call void @udata_close_78(ptr noundef nonnull %i.d) #10
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
@@ -330,12 +330,12 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr %0, align 8
-  tail call void @uprv_free_78(ptr noundef %i.g) #11
+  tail call void @uprv_free_78(ptr noundef %i.g) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 72
-  tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.h) #11
+  tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.h) #10
   ret void
 }
 
@@ -345,7 +345,7 @@ declare void @udata_close_78(ptr noundef) local_unnamed_addr #4
 
 declare void @uprv_free_78(ptr noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK6icu_7815RBBIDataWrappereqERKS0_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(137) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(137) %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
@@ -373,7 +373,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef i32 @_ZN6icu_7815RBBIDataWrapper8hashCodeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(137) %0) local_unnamed_addr #7 align 2 {
+define dso_local noundef i32 @_ZN6icu_7815RBBIDataWrapper8hashCodeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(137) %0) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 20
@@ -392,7 +392,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8
-  tail call void @ucptrie_close_78(ptr noundef %i.d) #11
+  tail call void @ucptrie_close_78(ptr noundef %i.d) #10
   store ptr null, ptr %i.c, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.f = load ptr, ptr %i.e, align 8              ; 2 uses
@@ -400,7 +400,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @udata_close_78(ptr noundef nonnull %i.f) #11
+  tail call void @udata_close_78(ptr noundef nonnull %i.f) #10
   br label %_ZN6icu_7815RBBIDataWrapperD2Ev.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -411,13 +411,13 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.d
   %i.i = load ptr, ptr %0, align 8
-  tail call void @uprv_free_78(ptr noundef %i.i) #11
+  tail call void @uprv_free_78(ptr noundef %i.i) #10
   br label %_ZN6icu_7815RBBIDataWrapperD2Ev.exit
 
 _ZN6icu_7815RBBIDataWrapperD2Ev.exit:             ; preds = %bb.c, %bb.d, %bb.e
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 72
-  tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.j) #11
-  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %0) #11
+  tail call void @_ZN6icu_7813UnicodeStringD1Ev(ptr noundef nonnull align 8 dereferenceable(64) %i.j) #10
+  tail call void @_ZN6icu_787UMemorydlEPv(ptr noundef nonnull %0) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6icu_7815RBBIDataWrapperD2Ev.exit, %bb.a
@@ -436,14 +436,14 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6icu_7815RBBIDataWrapper19getRuleSourceStringEv(ptr noundef nonnull readnone align 8 captures(ret: address, provenance) dereferenceable(137) %0) local_unnamed_addr #8 align 2 {
+define dso_local noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6icu_7815RBBIDataWrapper19getRuleSourceStringEv(ptr noundef nonnull readnone align 8 captures(ret: address, provenance) dereferenceable(137) %0) local_unnamed_addr #7 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local void @_ZN6icu_7815RBBIDataWrapper9printDataEv(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(137) %0) local_unnamed_addr #8 align 2 {
+define dso_local void @_ZN6icu_7815RBBIDataWrapper9printDataEv(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(137) %0) local_unnamed_addr #7 align 2 {
 bb.a:
   ret void
 }
@@ -518,18 +518,18 @@ bb.i:                                             ; preds = %bb.h
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.ag = load i8, ptr %i.af, align 2
   %i.ah = zext i8 %i.ag to i32
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef %i.x, i32 noundef %i.y, i32 noundef %i.ab, i32 noundef %i.ae, i32 noundef %i.ah) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef %i.x, i32 noundef %i.y, i32 noundef %i.ab, i32 noundef %i.ae, i32 noundef %i.ah) #10
   store i32 16, ptr %4, align 4
   br label %bb.af
 
 bb.j:                                             ; preds = %bb.i
-  %i.ai = tail call i32 @udata_swapDataHeader_78(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %2, ptr noundef %3, ptr noundef nonnull %4) #11 ; 2 uses
+  %i.ai = tail call i32 @udata_swapDataHeader_78(ptr noundef nonnull %0, ptr noundef nonnull %1, i32 noundef %2, ptr noundef %3, ptr noundef nonnull %4) #10 ; 2 uses
   %i.aj = sext i32 %i.ai to i64                   ; 2 uses
   %i.ak = getelementptr inbounds i8, ptr %1, i64 %i.aj ; 19 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 18 uses
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = load i32, ptr %i.ak, align 4
-  %i.ao = tail call noundef i32 %i.am(i32 noundef %i.an) #11
+  %i.ao = tail call noundef i32 %i.am(i32 noundef %i.an) #10
   %.not190 = icmp eq i32 %i.ao, 45472
   br i1 %.not190, label %bb.k, label %bb.m
 
@@ -543,19 +543,19 @@ bb.l:                                             ; preds = %bb.k
   %i.ar = load ptr, ptr %i.al, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.ak, i64 8 ; 2 uses
   %i.at = load i32, ptr %i.as, align 4
-  %i.au = tail call noundef i32 %i.ar(i32 noundef %i.at) #11
+  %i.au = tail call noundef i32 %i.ar(i32 noundef %i.at) #10
   %i.av = icmp ult i32 %i.au, 80
   br i1 %i.av, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str.1) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str.1) #10
   store i32 16, ptr %4, align 4
   br label %bb.af
 
 bb.n:                                             ; preds = %bb.l
   %i.aw = load ptr, ptr %i.al, align 8
   %i.ax = load i32, ptr %i.as, align 4
-  %i.ay = tail call noundef i32 %i.aw(i32 noundef %i.ax) #11 ; 3 uses
+  %i.ay = tail call noundef i32 %i.aw(i32 noundef %i.ax) #10 ; 3 uses
   %i.az = add nsw i32 %i.ay, %i.ai                ; 3 uses
   %i.ba = icmp slt i32 %2, 0
   br i1 %i.ba, label %bb.af, label %bb.o
@@ -565,7 +565,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bb, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i32 noundef %i.ay) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef nonnull %0, ptr noundef nonnull @.str.2, i32 noundef %i.ay) #10
   store i32 8, ptr %4, align 4
   br label %bb.af
 
@@ -583,11 +583,11 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %i.be = load ptr, ptr %i.al, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.bg = load i32, ptr %i.bf, align 4
-  %i.bh = tail call noundef i32 %i.be(i32 noundef %i.bg) #11
+  %i.bh = tail call noundef i32 %i.be(i32 noundef %i.bg) #10
   %i.bi = load ptr, ptr %i.al, align 8
   %i.bj = getelementptr inbounds nuw i8, ptr %i.ak, i64 20
   %i.bk = load i32, ptr %i.bj, align 4
-  %i.bl = tail call noundef i32 %i.bi(i32 noundef %i.bk) #11 ; 3 uses
+  %i.bl = tail call noundef i32 %i.bi(i32 noundef %i.bk) #10 ; 3 uses
   %i.bm = icmp sgt i32 %i.bl, 0
   br i1 %i.bm, label %bb.t, label %bb.x
 
@@ -597,11 +597,11 @@ bb.t:                                             ; preds = %bb.s
   %i.bp = load ptr, ptr %i.al, align 8
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bo, i64 16
   %i.br = load i32, ptr %i.bq, align 4
-  %i.bs = tail call noundef i32 %i.bp(i32 noundef %i.br) #11
+  %i.bs = tail call noundef i32 %i.bp(i32 noundef %i.br) #10
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.bu = load ptr, ptr %i.bt, align 8
   %i.bv = getelementptr inbounds i8, ptr %i.bc, i64 %i.bn ; 3 uses
-  %i.bw = tail call noundef i32 %i.bu(ptr noundef nonnull %0, ptr noundef nonnull %i.bo, i32 noundef 20, ptr noundef %i.bv, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.bw = tail call noundef i32 %i.bu(ptr noundef nonnull %0, ptr noundef nonnull %i.bo, i32 noundef 20, ptr noundef %i.bv, ptr noundef nonnull %4) #10 ; 0 uses
   %i.bx = and i32 %i.bs, 4
   %.not193 = icmp eq i32 %i.bx, 0
   br i1 %.not193, label %bb.w, label %bb.u
@@ -623,18 +623,18 @@ bb.w:                                             ; preds = %bb.t
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bo, i64 20
   %i.cf = add nsw i32 %i.bl, -20
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bv, i64 20
-  %i.ch = tail call noundef i32 %i.cd(ptr noundef nonnull %0, ptr noundef nonnull %i.ce, i32 noundef %i.cf, ptr noundef nonnull %i.cg, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.ch = tail call noundef i32 %i.cd(ptr noundef nonnull %0, ptr noundef nonnull %i.ce, i32 noundef %i.cf, ptr noundef nonnull %i.cg, ptr noundef nonnull %4) #10 ; 0 uses
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.s
   %i.ci = load ptr, ptr %i.al, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ak, i64 24
   %i.ck = load i32, ptr %i.cj, align 4
-  %i.cl = tail call noundef i32 %i.ci(i32 noundef %i.ck) #11
+  %i.cl = tail call noundef i32 %i.ci(i32 noundef %i.ck) #10
   %i.cm = load ptr, ptr %i.al, align 8
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ak, i64 28
   %i.co = load i32, ptr %i.cn, align 4
-  %i.cp = tail call noundef i32 %i.cm(i32 noundef %i.co) #11 ; 3 uses
+  %i.cp = tail call noundef i32 %i.cm(i32 noundef %i.co) #10 ; 3 uses
   %i.cq = icmp sgt i32 %i.cp, 0
   br i1 %i.cq, label %bb.y, label %bb.ac
 
@@ -644,11 +644,11 @@ bb.y:                                             ; preds = %bb.x
   %i.ct = load ptr, ptr %i.al, align 8
   %i.cu = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %i.cv = load i32, ptr %i.cu, align 4
-  %i.cw = tail call noundef i32 %i.ct(i32 noundef %i.cv) #11
+  %i.cw = tail call noundef i32 %i.ct(i32 noundef %i.cv) #10
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.cy = load ptr, ptr %i.cx, align 8
   %i.cz = getelementptr inbounds i8, ptr %i.bc, i64 %i.cr ; 3 uses
-  %i.da = tail call noundef i32 %i.cy(ptr noundef nonnull %0, ptr noundef nonnull %i.cs, i32 noundef 20, ptr noundef %i.cz, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.da = tail call noundef i32 %i.cy(ptr noundef nonnull %0, ptr noundef nonnull %i.cs, i32 noundef 20, ptr noundef %i.cz, ptr noundef nonnull %4) #10 ; 0 uses
   %i.db = and i32 %i.cw, 4
   %.not194 = icmp eq i32 %i.db, 0
   br i1 %.not194, label %bb.ab, label %bb.z
@@ -670,44 +670,44 @@ bb.ab:                                            ; preds = %bb.y
   %i.di = getelementptr inbounds nuw i8, ptr %i.cs, i64 20
   %i.dj = add nsw i32 %i.cp, -20
   %i.dk = getelementptr inbounds nuw i8, ptr %i.cz, i64 20
-  %i.dl = tail call noundef i32 %i.dh(ptr noundef nonnull %0, ptr noundef nonnull %i.di, i32 noundef %i.dj, ptr noundef nonnull %i.dk, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.dl = tail call noundef i32 %i.dh(ptr noundef nonnull %0, ptr noundef nonnull %i.di, i32 noundef %i.dj, ptr noundef nonnull %i.dk, ptr noundef nonnull %4) #10 ; 0 uses
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa, %bb.z, %bb.x
   %i.dm = load ptr, ptr %i.al, align 8
   %i.dn = getelementptr inbounds nuw i8, ptr %i.ak, i64 32 ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4
-  %i.dp = tail call noundef i32 %i.dm(i32 noundef %i.do) #11
+  %i.dp = tail call noundef i32 %i.dm(i32 noundef %i.do) #10
   %i.dq = zext i32 %i.dp to i64
   %i.dr = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.dq
   %i.ds = load ptr, ptr %i.al, align 8
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ak, i64 36
   %i.du = load i32, ptr %i.dt, align 4
-  %i.dv = tail call noundef i32 %i.ds(i32 noundef %i.du) #11
+  %i.dv = tail call noundef i32 %i.ds(i32 noundef %i.du) #10
   %i.dw = load ptr, ptr %i.al, align 8
   %i.dx = load i32, ptr %i.dn, align 4
-  %i.dy = tail call noundef i32 %i.dw(i32 noundef %i.dx) #11
+  %i.dy = tail call noundef i32 %i.dw(i32 noundef %i.dx) #10
   %i.dz = zext i32 %i.dy to i64
   %i.ea = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.dz
-  %i.eb = tail call i32 @ucptrie_swap_78(ptr noundef nonnull %0, ptr noundef nonnull %i.dr, i32 noundef %i.dv, ptr noundef %i.ea, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.eb = tail call i32 @ucptrie_swap_78(ptr noundef nonnull %0, ptr noundef nonnull %i.dr, i32 noundef %i.dv, ptr noundef %i.ea, ptr noundef nonnull %4) #10 ; 0 uses
   br i1 %.not192, label %bb.ae, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ec = load ptr, ptr %i.al, align 8
   %i.ed = getelementptr inbounds nuw i8, ptr %i.ak, i64 40 ; 2 uses
   %i.ee = load i32, ptr %i.ed, align 4
-  %i.ef = tail call noundef i32 %i.ec(i32 noundef %i.ee) #11
+  %i.ef = tail call noundef i32 %i.ec(i32 noundef %i.ee) #10
   %i.eg = zext i32 %i.ef to i64
   %i.eh = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.eg
   %i.ei = load ptr, ptr %i.al, align 8
   %i.ej = load i32, ptr %i.ed, align 4
-  %i.ek = tail call noundef i32 %i.ei(i32 noundef %i.ej) #11
+  %i.ek = tail call noundef i32 %i.ei(i32 noundef %i.ej) #10
   %i.el = zext i32 %i.ek to i64
   %i.em = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.el
   %i.en = load ptr, ptr %i.al, align 8
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ak, i64 44
   %i.ep = load i32, ptr %i.eo, align 4
-  %i.eq = tail call noundef i32 %i.en(i32 noundef %i.ep) #11
+  %i.eq = tail call noundef i32 %i.en(i32 noundef %i.ep) #10
   %i.er = zext i32 %i.eq to i64
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.eh, ptr nonnull align 1 %i.em, i64 %i.er, i1 false)
   br label %bb.ae
@@ -718,24 +718,24 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.eu = load ptr, ptr %i.al, align 8
   %i.ev = getelementptr inbounds nuw i8, ptr %i.ak, i64 48 ; 2 uses
   %i.ew = load i32, ptr %i.ev, align 4
-  %i.ex = tail call noundef i32 %i.eu(i32 noundef %i.ew) #11
+  %i.ex = tail call noundef i32 %i.eu(i32 noundef %i.ew) #10
   %i.ey = zext i32 %i.ex to i64
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.ey
   %i.fa = load ptr, ptr %i.al, align 8
   %i.fb = getelementptr inbounds nuw i8, ptr %i.ak, i64 52
   %i.fc = load i32, ptr %i.fb, align 4
-  %i.fd = tail call noundef i32 %i.fa(i32 noundef %i.fc) #11
+  %i.fd = tail call noundef i32 %i.fa(i32 noundef %i.fc) #10
   %i.fe = load ptr, ptr %i.al, align 8
   %i.ff = load i32, ptr %i.ev, align 4
-  %i.fg = tail call noundef i32 %i.fe(i32 noundef %i.ff) #11
+  %i.fg = tail call noundef i32 %i.fe(i32 noundef %i.ff) #10
   %i.fh = zext i32 %i.fg to i64
   %i.fi = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.fh
-  %i.fj = tail call noundef i32 %i.et(ptr noundef nonnull %0, ptr noundef nonnull %i.ez, i32 noundef %i.fd, ptr noundef %i.fi, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.fj = tail call noundef i32 %i.et(ptr noundef nonnull %0, ptr noundef nonnull %i.ez, i32 noundef %i.fd, ptr noundef %i.fi, ptr noundef nonnull %4) #10 ; 0 uses
   %i.fk = load ptr, ptr %i.es, align 8
-  %i.fl = tail call noundef i32 %i.fk(ptr noundef nonnull %0, ptr noundef nonnull %i.ak, i32 noundef 80, ptr noundef %i.bc, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.fl = tail call noundef i32 %i.fk(ptr noundef nonnull %0, ptr noundef nonnull %i.ak, i32 noundef 80, ptr noundef %i.bc, ptr noundef nonnull %4) #10 ; 0 uses
   %i.fm = load ptr, ptr %i.es, align 8
   %i.fn = getelementptr inbounds nuw i8, ptr %i.bc, i64 4 ; 2 uses
-  %i.fo = tail call noundef i32 %i.fm(ptr noundef nonnull %0, ptr noundef nonnull %i.fn, i32 noundef 4, ptr noundef nonnull %i.fn, ptr noundef nonnull %4) #11 ; 0 uses
+  %i.fo = tail call noundef i32 %i.fm(ptr noundef nonnull %0, ptr noundef nonnull %i.fn, i32 noundef 4, ptr noundef nonnull %i.fn, ptr noundef nonnull %4) #10 ; 0 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %._crit_edge, %bb.p, %bb.ae, %bb.n, %bb.m, %bb.a, %bb.b, %bb.e
@@ -748,15 +748,15 @@ declare void @udata_printError_78(ptr noundef, ptr noundef, ...) local_unnamed_a
 declare i32 @udata_swapDataHeader_78(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #2
 
 declare i32 @ucptrie_swap_78(ptr noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef) local_unnamed_addr #4
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #9
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -764,12 +764,11 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #11 = { nounwind }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

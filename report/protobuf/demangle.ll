@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.j
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   store ptr %0, ptr %3, align 8, !tbaa !8
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 8
   store ptr %1, ptr %i.g, align 8, !tbaa !13
@@ -268,7 +268,7 @@ bb.i:                                             ; preds = %_ZN4absl12lts_20250
 
 _ZN4absl12lts_2025051218debugging_internalL24ParseTopLevelMangledNameEPNS1_5StateE.exit.thread: ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.i
   %i.aa = phi i1 [ %spec.select, %bb.i ], [ false, %bb.d ], [ false, %bb.e ], [ false, %bb.f ], [ false, %bb.g ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.j
 
 bb.j:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internalL24ParseTopLevelMangledNameEPNS1_5StateE.exit.thread, %bb.c
@@ -293,7 +293,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i64 0, ptr %i.c, align 8, !tbaa !21
   store i8 0, ptr %i.b, align 8, !tbaa !7
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i32 0, ptr %i.a, align 4, !tbaa !3
   %i.d = invoke ptr @__cxa_demangle(ptr noundef %1, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.a)
           to label %bb.b unwind label %bb.d       ; 4 uses
@@ -308,7 +308,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #13 ; 2 uses
+  %i.j = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.d) #12 ; 2 uses
   %i.k = icmp ult i64 %i.i, %i.j
   br i1 %i.k, label %.invoke, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i
 
@@ -317,13 +317,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit unwind label %bb.d ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i
-  call void @free(ptr noundef nonnull %i.d) #13
+  call void @free(ptr noundef nonnull %i.d) #12
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit12
 
 bb.d:                                             ; preds = %.invoke, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i9, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i, %bb.a
   %i.m = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.n = load ptr, ptr %0, align 8, !tbaa !24     ; 2 uses
   %i.o = icmp eq ptr %i.n, %i.b
   br i1 %i.o, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -331,19 +331,19 @@ bb.d:                                             ; preds = %.invoke, %_ZNKSt7__
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %bb.d
   %i.p = load i64, ptr %i.b, align 8, !tbaa !7
   %i.q = add i64 %i.p, 1
-  call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.q) #14
+  call void @_ZdlPvm(ptr noundef %i.n, i64 noundef %i.q) #13
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   resume { ptr, i32 } %i.m
 
 bb.e:                                             ; preds = %bb.b
-  %i.r = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #13 ; 2 uses
+  %i.r = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #12 ; 2 uses
   %i.s = icmp ult i64 %i.i, %i.r
   br i1 %i.s, label %.invoke, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i9
 
 .invoke:                                          ; preds = %bb.c, %bb.e
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.295) #15
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.295) #14
           to label %.cont unwind label %bb.d
 
 .cont:                                            ; preds = %.invoke
@@ -354,7 +354,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.ex
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit12 unwind label %bb.d ; 0 uses
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit12: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE15_M_check_lengthEmmPKc.exit.i9, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret void
 }
 
@@ -365,7 +365,7 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -439,7 +439,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL13ParseEncodingEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.0.i48 = alloca { i32, i32, i32 }, align 8 ; 5 uses
@@ -842,7 +842,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL9ParseNameEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -1154,7 +1154,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   resume { ptr, i32 } %.pn
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL21ParseBareFunctionTypeEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -1333,7 +1333,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseSubstitutionEPNS1_5StateEb(ptr noundef captures(none) %0, i1 noundef zeroext %1) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -1608,7 +1608,7 @@ _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit: ;
   ret i1 %.2
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseTemplateArgsEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.0.i = alloca { i32, i32, i32 }, align 8  ; 5 uses
@@ -1827,7 +1827,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseUnscopedNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -1978,7 +1978,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseCVQualifiersEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -2184,7 +2184,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL11ParsePrefixEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -2587,7 +2587,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL15ParseSourceNameEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL15ParseSourceNameEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 6 uses
@@ -2765,7 +2765,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi(ptr noundef captures(none) %0, ptr noundef writeonly captures(address_is_null) %1) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi(ptr noundef captures(none) %0, ptr noundef writeonly captures(address_is_null) %1) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 5 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 7 uses
@@ -2856,7 +2856,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) unnamed_addr #7 {
+define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4
@@ -2994,7 +2994,7 @@ _ZN4absl12lts_2025051218debugging_internalL6AppendEPNS1_5StateEPKcm.exit19: ; pr
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL14ParseCharClassEPNS1_5StateEPKc(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL14ParseCharClassEPNS1_5StateEPKc(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 3 uses
@@ -3047,7 +3047,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL18ParseTemplateParamEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -3370,7 +3370,7 @@ _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit: ;
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL13ParseDecltypeEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -3497,7 +3497,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL20ParseUnnamedTypeNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [20 x i8], align 16               ; 7 uses
@@ -3645,18 +3645,18 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not.i, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit
 
 _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread: ; preds = %bb.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   br label %_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread
 
 _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit: ; preds = %bb.l
   tail call fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef nonnull %0, ptr noundef nonnull @.str.247, i64 noundef 14)
   %.pre = load i32, ptr %.sroa.6.0..sroa_idx, align 4
   %i.bk = icmp sgt i32 %.pre, -1
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   br i1 %i.bk, label %_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread, label %bb.m
 
 _ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread: ; preds = %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread, %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit38
 
 bb.m:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit
@@ -3736,7 +3736,7 @@ bb.s:                                             ; preds = %.loopexit.i.i
 
 _ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit: ; preds = %.loopexit.i.i, %bb.s
   %.pr = load i32, ptr %.sroa.6.0..sroa_idx, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %.not.i36 = icmp sgt i32 %.pr, -1
   br i1 %.not.i36, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit38, label %bb.t
 
@@ -3980,7 +3980,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL15ParseExpressionEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 32 uses
@@ -4383,7 +4383,7 @@ bb.cl:                                            ; preds = %bb.ck
 
 bb.cm:                                            ; preds = %bb.cd, %bb.cf, %bb.ce
   store i32 %i.jg, ptr %i.b, align 4, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i32 -1, ptr %i.a, align 4, !tbaa !3
   %i.jz = invoke fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseOperatorNameEPNS1_5StateEPi(ptr noundef nonnull %0, ptr noundef nonnull %i.a)
           to label %bb.cn unwind label %bb.cv
@@ -4426,15 +4426,15 @@ bb.cu:                                            ; preds = %bb.ct
 bb.cv:                                            ; preds = %bb.ct, %.thread, %bb.cp, %bb.cm
   %i.kg = landingpad { ptr, i32 }
           cleanup
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %.loopexit.split-lp
 
 .critedge153:                                     ; preds = %bb.cu, %bb.cs, %bb.cq, %bb.cn
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.cx
 
 bb.cw:                                            ; preds = %bb.cu
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.fu
 
 bb.cx:                                            ; preds = %.critedge153, %bb.ch, %bb.cl
@@ -4837,7 +4837,7 @@ bb.fv:                                            ; preds = %.loopexit.split-lp,
   resume { ptr, i32 } %.pn.pn
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL16ParseExprPrimaryEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -5167,7 +5167,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL9ParseTypeEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -5570,7 +5570,7 @@ _ZN4absl12lts_2025051218debugging_internalL19ParseThreeCharTokenEPNS1_5StateEPKc
 
 bb.av:                                            ; preds = %bb.ar, %bb.au, %bb.at, %bb.as
   store i32 %.pre-phi, ptr %i.b, align 4, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i32 0, ptr %i.a, align 4, !tbaa !3
   %i.eo = call fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi(ptr noundef nonnull %0, ptr noundef nonnull %i.a), !inline_history !53
   br i1 %i.eo, label %bb.aw, label %bb.az
@@ -5591,7 +5591,7 @@ bb.ay:                                            ; preds = %bb.aw
   br i1 %i.er, label %.thread139, label %bb.az
 
 .thread139:                                       ; preds = %bb.ax, %bb.ay
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.es = load i32, ptr %i.b, align 4, !tbaa !17
   %i.et = add nsw i32 %i.es, -1
   store i32 %i.et, ptr %i.b, align 4, !tbaa !17
@@ -5599,7 +5599,7 @@ bb.ay:                                            ; preds = %bb.aw
 
 bb.az:                                            ; preds = %bb.ay, %bb.av
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.j, ptr noundef nonnull align 4 dereferenceable(16) %3, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %i.eu = load i32, ptr %i.b, align 4, !tbaa !17
   br label %.sink.split201
 
@@ -6002,7 +6002,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL18ParseFunctionParamEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -6403,7 +6403,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL21ParseBracedExpressionEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 7 uses
@@ -6599,7 +6599,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL16ParseInitializerEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -6790,7 +6790,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL17ParseOperatorNameEPNS1_5StateEPi(ptr noundef %0, ptr noundef writeonly captures(address_is_null) %1) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -7193,7 +7193,7 @@ _ZN4absl12lts_2025051218debugging_internalL24AtLeastNumCharsRemainingEPKcm.exit:
   ret i1 %.2
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL16ParseTemplateArgEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 7 uses
@@ -7443,7 +7443,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL19ParseUnresolvedNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -7846,7 +7846,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL16ParseRequirementEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 7 uses
@@ -8067,7 +8067,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL30ParseExprCastValueAndTrailingEEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL30ParseExprCastValueAndTrailingEEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 9 uses
@@ -8319,7 +8319,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL18ParseClassEnumTypeEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -8450,7 +8450,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL26ParseTemplateTemplateParamEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 4 uses
@@ -8580,10 +8580,10 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi(ptr noundef captures(none) %0, i32 noundef %1) unnamed_addr #9 {
+define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi(ptr noundef captures(none) %0, i32 noundef %1) unnamed_addr #8 {
 bb.a:
   %i.a = alloca [20 x i8], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.c = load i32, ptr %i.b, align 4
   %.not = icmp sgt i32 %i.c, -1
@@ -8664,11 +8664,11 @@ bb.h:                                             ; preds = %.loopexit.i
   br label %_ZN4absl12lts_2025051218debugging_internalL6AppendEPNS1_5StateEPKcm.exit
 
 _ZN4absl12lts_2025051218debugging_internalL6AppendEPNS1_5StateEPKcm.exit: ; preds = %bb.h, %.loopexit.i, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret void
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL22ParseTemplateParamDeclEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 8 uses
@@ -8960,7 +8960,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL18ParseDiscriminatorEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc void @_ZN4absl12lts_2025051218debugging_internalL18ParseDiscriminatorEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 8 uses
@@ -9127,7 +9127,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret void
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL23ParseBaseUnresolvedNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 6 uses
@@ -9295,7 +9295,7 @@ bb.p:                                             ; preds = %bb.i, %bb.d
   resume { ptr, i32 } %.pn
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL29ParseUnresolvedQualifierLevelEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -9369,7 +9369,7 @@ bb.j:                                             ; preds = %bb.g, %bb.d
   resume { ptr, i32 } %.pn
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL20ParseLocalNameSuffixEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [20 x i8], align 16               ; 7 uses
@@ -9502,13 +9502,13 @@ _ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi.exit: ; 
   br i1 %.not.i, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit
 
 _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread: ; preds = %_ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   br label %_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread
 
 _ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit: ; preds = %_ZN4absl12lts_2025051218debugging_internalL11ParseNumberEPNS1_5StateEPi.exit
   tail call fastcc void @_ZN4absl12lts_2025051218debugging_internalL21MaybeAppendWithLengthEPNS1_5StateEPKcm(ptr noundef nonnull %0, ptr noundef nonnull @.str.251, i64 noundef 15)
   %.pr = load i32, ptr %i.be, align 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %.not.i48 = icmp sgt i32 %.pr, -1
   br i1 %.not.i48, label %_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread, label %bb.j
 
@@ -9587,12 +9587,12 @@ bb.p:                                             ; preds = %.loopexit.i.i
   br label %_ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit
 
 _ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit.thread: ; preds = %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit.thread, %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit52
 
 _ZN4absl12lts_2025051218debugging_internalL18MaybeAppendDecimalEPNS1_5StateEi.exit: ; preds = %.loopexit.i.i, %bb.p
   %.pr69 = load i32, ptr %i.be, align 4
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %.not.i50 = icmp sgt i32 %.pr69, -1
   br i1 %.not.i50, label %_ZN4absl12lts_2025051218debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit52, label %bb.q
 
@@ -9766,7 +9766,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL10ParseSeqIdEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL10ParseSeqIdEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 3 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 3 uses
@@ -9827,7 +9827,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
   ret i1 %.1
 }
 
-; Function Attrs: mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL20ParseUnqualifiedNameEPNS1_5StateE(ptr noundef %0) unnamed_addr #6 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
@@ -10230,7 +10230,7 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL15ParseCallOffsetEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #8 personality ptr @__gxx_personality_v0 {
+define internal fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL15ParseCallOffsetEPNS1_5StateE(ptr noundef captures(none) %0) unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"struct.absl::lts_20250512::debugging_internal::ParseState", align 4 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 13 uses
@@ -10530,32 +10530,31 @@ _ZNK4absl12lts_2025051218debugging_internal12_GLOBAL__N_115ComplexityGuard12IsTo
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #10
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
 
 declare noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef, i64 noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #11
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #10
 
 ; Function Attrs: noreturn
-declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #12
+declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nounwind }
-attributes #14 = { builtin nounwind }
-attributes #15 = { noreturn }
+attributes #6 = { mustprogress nofree nosync memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nounwind }
+attributes #13 = { builtin nounwind }
+attributes #14 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

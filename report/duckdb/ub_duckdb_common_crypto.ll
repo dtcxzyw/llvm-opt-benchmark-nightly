@@ -201,7 +201,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 define void @_ZN6duckdb10MD5Context9FinishHexEPc(ptr noundef nonnull align 4 captures(none) dereferenceable(88) %0, ptr noundef %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !3    ; 2 uses
   %i.d = lshr i32 %i.c, 3
@@ -240,7 +240,7 @@ _ZN6duckdb10MD5Context6FinishEPh.exit:            ; preds = %_ZN6duckdbL11ByteRe
   tail call fastcc void @_ZN6duckdbL12MD5TransformEPjPKj(ptr noundef nonnull align 4 dereferenceable(88) %0, ptr noundef %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, ptr noundef nonnull align 4 dereferenceable(88) %0, i64 16, i1 false)
   call void @_ZN14duckdb_mbedtls14MbedTlsWrapper8ToBase16EPcS1_m(ptr noundef nonnull %i.a, ptr noundef %1, i64 noundef 16)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
 }
 
@@ -252,8 +252,8 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
   %i.b = alloca [16 x i8], align 16               ; 4 uses
   %i.c = alloca [32 x i8], align 16               ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.e = load i32, ptr %i.d, align 4, !tbaa !3    ; 2 uses
   %i.f = lshr i32 %i.e, 3
@@ -292,10 +292,10 @@ _ZN6duckdb10MD5Context9FinishHexEPc.exit:         ; preds = %_ZN6duckdbL11ByteRe
   tail call fastcc void @_ZN6duckdbL12MD5TransformEPjPKj(ptr noundef nonnull align 4 dereferenceable(88) %1, ptr noundef %i.h)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.b, ptr noundef nonnull align 4 dereferenceable(88) %1, i64 16, i1 false)
   call void @_ZN14duckdb_mbedtls14MbedTlsWrapper8ToBase16EPcS1_m(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, i64 noundef 16)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store ptr %i.v, ptr %0, align 8, !tbaa !10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i64 32, ptr %i.a, align 8, !tbaa !14
   %i.w = call noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) ; 2 uses
   store ptr %i.w, ptr %0, align 8, !tbaa !16
@@ -307,17 +307,17 @@ _ZN6duckdb10MD5Context9FinishHexEPc.exit:         ; preds = %_ZN6duckdbL11ByteRe
   %i.z = load ptr, ptr %0, align 8, !tbaa !16
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.x
   store i8 0, ptr %i.aa, align 1, !tbaa !9
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #9
   ret void
 }
 
 declare i32 @__gxx_personality_v0(...)
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define void @_ZN6duckdb10MD5Context3AddEPKc(ptr noundef nonnull align 4 captures(none) dereferenceable(88) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #7 align 2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define void @_ZN6duckdb10MD5Context3AddEPKc(ptr noundef nonnull align 4 captures(none) dereferenceable(88) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #1 align 2 {
 bb.a:
-  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #11 ; 6 uses
+  %i.a = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #10 ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = load i32, ptr %i.b, align 4, !tbaa !3    ; 3 uses
   %i.d = trunc i64 %i.a to i32
@@ -389,13 +389,13 @@ _ZN6duckdb10MD5Context9MD5UpdateEPKhm.exit:       ; preds = %.thread.i, %._crit_
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #8
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #7
 
 declare noundef ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm(ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #9
+declare i32 @llvm.fshl.i32(i32, i32, i32) #8
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -404,11 +404,10 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind willreturn memory(read) }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nounwind }
+attributes #10 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

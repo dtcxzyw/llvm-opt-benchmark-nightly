@@ -40,19 +40,19 @@ bb.a:
   ret i32 0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef i32 @gs_make_rotation(double noundef %0, ptr noundef writeonly captures(none) initializes((0, 96)) %1) local_unnamed_addr #2 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local noundef i32 @gs_make_rotation(double noundef %0, ptr noundef writeonly captures(none) initializes((0, 96)) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = fmul double %0, f0x3F91DF46A2529D39
   %i.b = fptrunc double %i.a to float
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(96) @gs_identity_matrix, i64 96, i1 false), !tbaa.struct !8
   %i.c = fpext float %i.b to double               ; 2 uses
-  %i.d = tail call double @cos(double noundef %i.c) #7, !tbaa !4
+  %i.d = tail call double @cos(double noundef %i.c) #6, !tbaa !4
   %i.e = fptrunc double %i.d to float             ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   store float %i.e, ptr %i.f, align 8, !tbaa !17
   store float %i.e, ptr %1, align 8, !tbaa !16
-  %i.g = tail call double @sin(double noundef %i.c) #7, !tbaa !4
+  %i.g = tail call double @sin(double noundef %i.c) #6, !tbaa !4
   %i.h = fptrunc double %i.g to float             ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 16
   store float %i.h, ptr %i.i, align 8, !tbaa !18
@@ -65,17 +65,17 @@ bb.a:
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #3
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @cos(double noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sin(double noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @gs_matrix_multiply(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) initializes((0, 4), (16, 20), (32, 36), (64, 68)) %2) local_unnamed_addr #4 {
+define dso_local noundef i32 @gs_matrix_multiply(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) initializes((0, 4), (16, 20), (32, 36), (64, 68)) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = alloca float, align 8                    ; 4 uses
   %i.b = alloca float, align 8                    ; 4 uses
@@ -201,10 +201,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fmuladd.f32(float, float, float) #5
+declare float @llvm.fmuladd.f32(float, float, float) #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 -23, 1) i32 @gs_matrix_invert(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #4 {
+define dso_local range(i32 -23, 1) i32 @gs_matrix_invert(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(none) %1) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -306,8 +306,8 @@ bb.f:                                             ; preds = %.sink.split, %bb.e,
   ret i32 %.1
 }
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite, errnomem: write) uwtable
-define dso_local noundef i32 @gs_matrix_rotate(ptr noundef readonly captures(none) %0, double noundef %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #6 {
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
+define dso_local noundef i32 @gs_matrix_rotate(ptr noundef readonly captures(none) %0, double noundef %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = tail call double @llvm.fabs.f64(double %1)
   %or.cond = fcmp ugt double %i.a, 3.600000e+02
@@ -346,9 +346,9 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.h = fmul double %1, f0x3F91DF46A2529D39
   %i.i = fptrunc double %i.h to float
   %i.j = fpext float %i.i to double               ; 2 uses
-  %i.k = tail call double @sin(double noundef %i.j) #7, !tbaa !4
+  %i.k = tail call double @sin(double noundef %i.j) #6, !tbaa !4
   %i.l = fptrunc double %i.k to float
-  %i.m = tail call double @cos(double noundef %i.j) #7, !tbaa !4
+  %i.m = tail call double @cos(double noundef %i.j) #6, !tbaa !4
   %i.n = fptrunc double %i.m to float
   br label %._crit_edge
 
@@ -391,7 +391,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @gs_point_transform(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) initializes((0, 8)) %3) local_unnamed_addr #4 {
+define dso_local noundef i32 @gs_point_transform(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) initializes((0, 8)) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = load float, ptr %2, align 8, !tbaa !16
   %i.b = fpext float %i.a to double
@@ -449,10 +449,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #5
+declare double @llvm.fmuladd.f64(double, double, double) #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 -23, 1) i32 @gs_point_transform_inverse(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3) local_unnamed_addr #4 {
+define dso_local range(i32 -23, 1) i32 @gs_point_transform_inverse(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !11   ; 2 uses
@@ -554,7 +554,7 @@ gs_point_transform.exit:                          ; preds = %bb.c, %bb.f, %bb.g,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @gs_distance_transform(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) initializes((0, 8)) %3) local_unnamed_addr #4 {
+define dso_local noundef i32 @gs_distance_transform(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) initializes((0, 8)) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = load float, ptr %2, align 8, !tbaa !16
   %i.b = fpext float %i.a to double
@@ -606,7 +606,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 -23, 1) i32 @gs_distance_transform_inverse(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3) local_unnamed_addr #4 {
+define dso_local range(i32 -23, 1) i32 @gs_distance_transform_inverse(double noundef %0, double noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -673,7 +673,7 @@ bb.d:                                             ; preds = %.sink.split, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 -23, 1) i32 @gs_bbox_transform_inverse(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #4 {
+define dso_local range(i32 -23, 1) i32 @gs_bbox_transform_inverse(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #3 {
 bb.a:
   %i.a = load float, ptr %0, align 4, !tbaa !23   ; 3 uses
   %i.b = fpext float %i.a to double               ; 3 uses
@@ -854,7 +854,7 @@ gs_point_transform_inverse.exit:                  ; preds = %bb.b, %bb.h
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @gs_point_transform2fixed(ptr noundef readonly captures(none) %0, double noundef %1, double noundef %2, ptr noundef writeonly captures(none) initializes((0, 16)) %3) local_unnamed_addr #4 {
+define dso_local noundef i32 @gs_point_transform2fixed(ptr noundef readonly captures(none) %0, double noundef %1, double noundef %2, ptr noundef writeonly captures(none) initializes((0, 16)) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = load float, ptr %0, align 8, !tbaa !28
   %i.b = fpext float %i.a to double
@@ -916,7 +916,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local noundef i32 @gs_distance_transform2fixed(ptr noundef readonly captures(none) %0, double noundef %1, double noundef %2, ptr noundef writeonly captures(none) initializes((0, 16)) %3) local_unnamed_addr #4 {
+define dso_local noundef i32 @gs_distance_transform2fixed(ptr noundef readonly captures(none) %0, double noundef %1, double noundef %2, ptr noundef writeonly captures(none) initializes((0, 16)) %3) local_unnamed_addr #3 {
 bb.a:
   %i.a = load float, ptr %0, align 8, !tbaa !28
   %i.b = fpext float %i.a to double
@@ -972,19 +972,18 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fabs.f64(double) #5
+declare double @llvm.fabs.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i1 @llvm.is.fpclass.f32(float, i32 immarg) #5
+declare i1 @llvm.is.fpclass.f32(float, i32 immarg) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #6 = { nofree norecurse nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nounwind }
+attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

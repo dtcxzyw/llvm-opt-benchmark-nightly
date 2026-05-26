@@ -42,7 +42,7 @@ bb.b:                                             ; preds = %bb.a
   %i.q = sext i32 %i.j to i64
   %i.r = sext i32 %i.p to i64
   %i.s = load ptr, ptr @upb_alloc_global, align 8, !tbaa !18
-  %i.t = tail call ptr %i.s(ptr noundef nonnull @upb_alloc_global, ptr noundef %.pre, i64 noundef range(i64 -2147483648, 2147483648) %i.q, i64 noundef range(i64 -2147483648, 2147483648) %i.r, ptr noundef null) #8, !inline_history !20 ; 3 uses
+  %i.t = tail call ptr %i.s(ptr noundef nonnull @upb_alloc_global, ptr noundef %.pre, i64 noundef range(i64 -2147483648, 2147483648) %i.q, i64 noundef range(i64 -2147483648, 2147483648) %i.r, ptr noundef null) #7, !inline_history !20 ; 3 uses
   store ptr %i.t, ptr %0, align 8, !tbaa !17
   %.not.not.i = icmp eq ptr %i.t, null
   br i1 %.not.not.i, label %_upb_mapsorter_resize.exit, label %._crit_edge.i
@@ -112,7 +112,7 @@ bb.f:                                             ; preds = %._crit_edge
 
 bb.g:                                             ; preds = %._crit_edge, %bb.f
   %i.as = phi ptr [ %i.ar, %bb.f ], [ @_upb_mapsorter_intkeys, %._crit_edge ]
-  tail call void @qsort(ptr noundef %i.an, i64 noundef %i.ao, i64 noundef 8, ptr noundef %i.as) #8
+  tail call void @qsort(ptr noundef %i.an, i64 noundef %i.ao, i64 noundef 8, ptr noundef %i.as) #7
   br label %_upb_mapsorter_resize.exit
 
 _upb_mapsorter_resize.exit:                       ; preds = %bb.b, %bb.g
@@ -210,7 +210,7 @@ bb.b:                                             ; preds = %._crit_edge
   %i.ac = sext i32 %i.u to i64
   %i.ad = sext i32 %i.aa to i64
   %i.ae = load ptr, ptr @upb_alloc_global, align 8, !tbaa !18
-  %i.af = tail call ptr %i.ae(ptr noundef nonnull @upb_alloc_global, ptr noundef %i.ab, i64 noundef range(i64 -2147483648, 2147483648) %i.ac, i64 noundef range(i64 -2147483648, 2147483648) %i.ad, ptr noundef null) #8, !inline_history !20 ; 2 uses
+  %i.af = tail call ptr %i.ae(ptr noundef nonnull @upb_alloc_global, ptr noundef %i.ab, i64 noundef range(i64 -2147483648, 2147483648) %i.ac, i64 noundef range(i64 -2147483648, 2147483648) %i.ad, ptr noundef null) #7, !inline_history !20 ; 2 uses
   store ptr %i.af, ptr %0, align 8, !tbaa !17
   %.not.not.i = icmp eq ptr %i.af, null
   br i1 %.not.not.i, label %_upb_mapsorter_resize.exit.thread, label %._crit_edge.i
@@ -297,7 +297,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 ._crit_edge36:                                    ; preds = %._crit_edge36.loopexit, %bb.c
   %i.ba = phi ptr [ %.pre, %._crit_edge36.loopexit ], [ %.pre39, %bb.c ]
   %i.bb = getelementptr inbounds [8 x i8], ptr %i.ba, i64 %i.ao
-  tail call void @qsort(ptr noundef %i.bb, i64 noundef %.025.lcssa, i64 noundef 8, ptr noundef nonnull @_upb_mapsorter_cmpext) #8
+  tail call void @qsort(ptr noundef %i.bb, i64 noundef %.025.lcssa, i64 noundef 8, ptr noundef nonnull @_upb_mapsorter_cmpext) #7
   br label %_upb_mapsorter_resize.exit.thread
 
 bb.g:                                             ; preds = %bb.o, %.lr.ph35.new
@@ -485,8 +485,8 @@ bb.a:
   ret i32 %i.g
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i32 -2147483647, -2147483648) i32 @_upb_mapsorter_cmpstr(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1) #4 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define internal range(i32 -2147483647, -2147483648) i32 @_upb_mapsorter_cmpstr(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1) #2 {
 bb.a:
   %.val = load ptr, ptr %0, align 8, !tbaa !32
   %.val6 = load ptr, ptr %1, align 8, !tbaa !32
@@ -503,7 +503,7 @@ bb.a:
   %i.i = load i32, ptr %i.c, align 4, !tbaa !3
   %i.j = zext i32 %i.i to i64                     ; 2 uses
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.j, i64 %i.h)
-  %i.l = tail call i32 @memcmp(ptr noundef nonnull %i.d, ptr noundef nonnull %i.f, i64 noundef %i.k) #9 ; 2 uses
+  %i.l = tail call i32 @memcmp(ptr noundef nonnull %i.d, ptr noundef nonnull %i.f, i64 noundef %i.k) #8 ; 2 uses
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -520,43 +520,42 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   ret i32 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #5
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @memcmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #6
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #6
+declare range(i32 -1, 2) i32 @llvm.scmp.i32.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #6
+declare range(i32 -1, 2) i32 @llvm.scmp.i32.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #6
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #6
+declare i64 @llvm.umin.i64(i64, i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #6
+declare range(i32 -1, 2) i32 @llvm.ucmp.i32.i8(i8, i8) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #6
+declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #8 = { nounwind }
-attributes #9 = { nounwind willreturn memory(read) }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #7 = { nounwind }
+attributes #8 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

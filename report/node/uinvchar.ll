@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %.lr.ph
 
 bb.f:                                             ; preds = %bb.e, %.lr.ph
   %i.t = sub nsw i32 %2, %.042
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, i32 noundef %i.t) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str, i32 noundef %2, i32 noundef %i.t) #10
   br label %.loopexit.sink.split
 
 bb.g:                                             ; preds = %bb.e
@@ -281,7 +281,7 @@ bb.f:                                             ; preds = %.lr.ph
 
 bb.g:                                             ; preds = %bb.f, %.lr.ph
   %i.t = sub nsw i32 %2, %.047
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.1, i32 noundef %2, i32 noundef %i.t) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.1, i32 noundef %2, i32 noundef %i.t) #10
   store i32 10, ptr %4, align 4
   br label %._crit_edge.thread
 
@@ -367,7 +367,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.v = sub nsw i32 %2, %.050
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.2, i32 noundef %2, i32 noundef %i.v) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.2, i32 noundef %2, i32 noundef %i.v) #10
   br label %.loopexit.sink.split
 
 bb.h:                                             ; preds = %bb.f, %.lr.ph
@@ -450,7 +450,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.v = sub nsw i32 %2, %.054
-  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.3, i32 noundef %2, i32 noundef %i.v) #11
+  tail call void (ptr, ptr, ...) @udata_printError_78(ptr noundef %0, ptr noundef nonnull @.str.3, i32 noundef %2, i32 noundef %i.v) #10
   store i32 10, ptr %4, align 4
   br label %._crit_edge.thread
 
@@ -509,7 +509,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #12
+  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #11
   %i.g = trunc i64 %i.f to i32
   br label %bb.d
 
@@ -519,7 +519,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = tail call i32 @u_strlen_78(ptr noundef nonnull %3) #11
+  %i.i = tail call i32 @u_strlen_78(ptr noundef nonnull %3) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -594,7 +594,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   ret i32 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #6
 
 declare i32 @u_strlen_78(ptr noundef) local_unnamed_addr #3
@@ -616,7 +616,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #12
+  %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #11
   %i.g = trunc i64 %i.f to i32
   br label %bb.d
 
@@ -626,7 +626,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.h, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.i = tail call i32 @u_strlen_78(ptr noundef nonnull %3) #11
+  %i.i = tail call i32 @u_strlen_78(ptr noundef nonnull %3) #10
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -818,14 +818,14 @@ bb.a:
   ret i8 %i.c
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define dso_local noundef ptr @uprv_aestrncpy_78(ptr noundef returned writeonly captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #7 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define dso_local noundef ptr @uprv_aestrncpy_78(ptr noundef returned writeonly captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i32 %2, -1
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #12
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #11
   %i.c = trunc i64 %i.b to i32
   %i.d = add i32 %i.c, 1
   br label %bb.c
@@ -871,14 +871,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret ptr %0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define dso_local noundef ptr @uprv_eastrncpy_78(ptr noundef returned writeonly captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #7 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define dso_local noundef ptr @uprv_eastrncpy_78(ptr noundef returned writeonly captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i32 %2, -1
   br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #12
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #11
   %i.c = trunc i64 %i.b to i32
   %i.d = add i32 %i.c, 1
   br label %bb.c
@@ -926,14 +926,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret ptr %0
 }
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #8
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare ptr @memchr(ptr, i32, i64) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #9
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -941,13 +941,12 @@ attributes #2 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nounwind }
-attributes #12 = { nounwind willreturn memory(read) }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { nounwind }
+attributes #11 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

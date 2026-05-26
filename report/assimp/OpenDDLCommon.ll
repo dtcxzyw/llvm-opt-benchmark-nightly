@@ -33,9 +33,9 @@ bb.a:                                             ; preds = %_ZN10ODDLParser4Tex
   store i64 %2, ptr %i.b, align 8
   %i.c = add i64 %2, 1                            ; 2 uses
   store i64 %i.c, ptr %0, align 8
-  %i.d = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.c) #12 ; 3 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.c) #11 ; 3 uses
   store ptr %i.d, ptr %i.a, align 8
-  %i.e = tail call ptr @strncpy(ptr noundef nonnull %i.d, ptr noundef readonly %1, i64 noundef %2) #13 ; 0 uses
+  %i.e = tail call ptr @strncpy(ptr noundef nonnull %i.d, ptr noundef readonly %1, i64 noundef %2) #12 ; 0 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 %2
   store i8 0, ptr %i.f, align 1
   br label %_ZN10ODDLParser4Text3setEPKcm.exit
@@ -53,7 +53,7 @@ bb.a:
   br i1 %i.c, label %_ZN10ODDLParser4Text5clearEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #13
   br label %_ZN10ODDLParser4Text5clearEv.exit
 
 _ZN10ODDLParser4Text5clearEv.exit:                ; preds = %bb.a, %bb.b
@@ -66,9 +66,9 @@ bb.c:                                             ; preds = %_ZN10ODDLParser4Tex
   store i64 %2, ptr %i.d, align 8
   %i.e = add i64 %2, 1                            ; 2 uses
   store i64 %i.e, ptr %0, align 8
-  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #12 ; 3 uses
+  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #11 ; 3 uses
   store ptr %i.f, ptr %i.a, align 8
-  %i.g = tail call ptr @strncpy(ptr noundef nonnull %i.f, ptr noundef %1, i64 noundef %2) #13 ; 0 uses
+  %i.g = tail call ptr @strncpy(ptr noundef nonnull %i.f, ptr noundef %1, i64 noundef %2) #12 ; 0 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %2
   store i8 0, ptr %i.h, align 1
   br label %bb.d
@@ -86,7 +86,7 @@ bb.a:
   br i1 %i.c, label %_ZN10ODDLParser4Text5clearEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #13
   br label %_ZN10ODDLParser4Text5clearEv.exit
 
 _ZN10ODDLParser4Text5clearEv.exit:                ; preds = %bb.a, %bb.b
@@ -102,7 +102,7 @@ bb.a:
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -118,10 +118,10 @@ declare void @_ZdaPv(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nobuiltin allocsize(0)
 declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: readwrite)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare ptr @strncpy(ptr noalias noundef returned writeonly, ptr noalias noundef readonly captures(none), i64 noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZNK10ODDLParser4TexteqERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -135,7 +135,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = load ptr, ptr %1, align 8
-  %i.h = tail call i32 @strncmp(ptr noundef %i.f, ptr noundef %i.g, i64 noundef %i.b) #15
+  %i.h = tail call i32 @strncmp(ptr noundef %i.f, ptr noundef %i.g, i64 noundef %i.b) #14
   %i.i = icmp eq i32 %i.h, 0
   br label %bb.c
 
@@ -144,10 +144,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #6
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZNK10ODDLParser4TexteqERKS0_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -162,7 +162,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.h = load ptr, ptr %i.g, align 8
-  %i.i = tail call i32 @strncmp(ptr noundef %i.f, ptr noundef %i.h, i64 noundef %i.b) #15
+  %i.i = tail call i32 @strncmp(ptr noundef %i.f, ptr noundef %i.h, i64 noundef %i.b) #14
   %i.j = icmp eq i32 %i.i, 0
   br label %bb.c
 
@@ -195,11 +195,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %_ZN10ODDLParser4TextD2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_ZdaPv(ptr noundef nonnull %i.e) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.e) #13
   br label %_ZN10ODDLParser4TextD2Ev.exit
 
 _ZN10ODDLParser4TextD2Ev.exit:                    ; preds = %bb.b, %bb.c
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 24) #13
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN10ODDLParser4TextD2Ev.exit, %bb.a
@@ -214,7 +214,7 @@ define hidden void @_ZN10ODDLParser4NameC2ERKS0_(ptr noundef nonnull writeonly a
 bb.a:
   %i.a = load i32, ptr %1, align 8
   store i32 %i.a, ptr %0, align 8
-  %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12 ; 6 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11 ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -230,13 +230,13 @@ bb.b:                                             ; preds = %bb.a
   store i64 %i.h, ptr %i.i, align 8
   %i.j = add i64 %i.h, 1                          ; 2 uses
   store i64 %i.j, ptr %i.b, align 8
-  %i.k = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #12
+  %i.k = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #11
           to label %.noexc unwind label %bb.c     ; 3 uses
 
 .noexc:                                           ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store ptr %i.k, ptr %i.l, align 8
-  %i.m = tail call ptr @strncpy(ptr noundef nonnull %i.k, ptr noundef readonly %i.f, i64 noundef %i.h) #13 ; 0 uses
+  %i.m = tail call ptr @strncpy(ptr noundef nonnull %i.k, ptr noundef readonly %i.f, i64 noundef %i.h) #12 ; 0 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 %i.h
   store i8 0, ptr %i.n, align 1
   br label %_ZN10ODDLParser4TextC2EPKcm.exit
@@ -249,7 +249,7 @@ _ZN10ODDLParser4TextC2EPKcm.exit:                 ; preds = %.noexc, %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.p = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 24) #13
   resume { ptr, i32 } %i.p
 }
 
@@ -276,7 +276,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = icmp ugt i64 %1, 2305843009213693951
   %i.c = shl nuw i64 %1, 3
   %i.d = select i1 %i.b, i64 -1, i64 %i.c
-  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #12
+  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #11
   store ptr %i.e, ptr %i.a, align 8
   %xtraiter = and i64 %1, 3                       ; 3 uses
   %i.f = icmp ult i64 %1, 4
@@ -356,7 +356,7 @@ bb.a:
   %i.b = icmp ugt i64 %i.a, 2305843009213693951
   %i.c = shl i64 %i.a, 3
   %i.d = select i1 %i.b, i64 -1, i64 %i.c
-  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #12
+  %i.e = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.d) #11
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store ptr %i.e, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -364,13 +364,13 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
   %.011 = phi i64 [ 0, %.lr.ph ], [ %i.ad, %bb.e ] ; 3 uses
-  %i.h = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #12 ; 4 uses
+  %i.h = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #11 ; 4 uses
   %i.i = load ptr, ptr %i.g, align 8
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %.011
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %i.l = load i32, ptr %i.k, align 8
   store i32 %i.l, ptr %i.h, align 8
-  %i.m = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #12
+  %i.m = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11
           to label %.noexc unwind label %bb.f     ; 6 uses
 
 .noexc:                                           ; preds = %bb.b
@@ -389,13 +389,13 @@ bb.c:                                             ; preds = %.noexc
   store i64 %i.s, ptr %i.t, align 8
   %i.u = add i64 %i.s, 1                          ; 2 uses
   store i64 %i.u, ptr %i.m, align 8
-  %i.v = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.u) #12
+  %i.v = invoke noalias noundef nonnull ptr @_Znam(i64 noundef %i.u) #11
           to label %.noexc.i unwind label %bb.d   ; 3 uses
 
 .noexc.i:                                         ; preds = %bb.c
   %i.w = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store ptr %i.v, ptr %i.w, align 8
-  %i.x = tail call ptr @strncpy(ptr noundef nonnull %i.v, ptr noundef readonly %i.q, i64 noundef %i.s) #13 ; 0 uses
+  %i.x = tail call ptr @strncpy(ptr noundef nonnull %i.v, ptr noundef readonly %i.q, i64 noundef %i.s) #12 ; 0 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.s
   store i8 0, ptr %i.y, align 1
   br label %bb.e
@@ -403,7 +403,7 @@ bb.c:                                             ; preds = %.noexc
 bb.d:                                             ; preds = %bb.c
   %i.z = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef 24) #13
   br label %.body
 
 bb.e:                                             ; preds = %.noexc.i, %.noexc
@@ -424,7 +424,7 @@ bb.f:                                             ; preds = %bb.b
 
 .body:                                            ; preds = %bb.d, %bb.f
   %eh.lpad-body = phi { ptr, i32 } [ %i.ag, %bb.f ], [ %i.z, %bb.d ]
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.h, i64 noundef 16) #13
   resume { ptr, i32 } %eh.lpad-body
 
 .loopexit:                                        ; preds = %bb.e, %bb.a
@@ -471,15 +471,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.p, label %_ZN10ODDLParser4TextD2Ev.exit.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZdaPv(ptr noundef nonnull %i.o) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.o) #13
   br label %_ZN10ODDLParser4TextD2Ev.exit.i
 
 _ZN10ODDLParser4TextD2Ev.exit.i:                  ; preds = %bb.e, %bb.d
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef 24) #13
   br label %_ZN10ODDLParser4NameD2Ev.exit
 
 _ZN10ODDLParser4NameD2Ev.exit:                    ; preds = %bb.c, %_ZN10ODDLParser4TextD2Ev.exit.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 16) #13
   %.pre = load i64, ptr %0, align 8
   br label %bb.f
 
@@ -490,7 +490,7 @@ bb.f:                                             ; preds = %bb.b, %_ZN10ODDLPar
   br i1 %i.s, label %bb.b, label %._crit_edge, !llvm.loop !8
 
 bb.g:                                             ; preds = %._crit_edge
-  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge
@@ -498,7 +498,7 @@ bb.h:                                             ; preds = %bb.g, %._crit_edge
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef i64 @_ZN10ODDLParser9Reference11sizeInBytesEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #8 align 2 {
+define hidden noundef i64 @_ZN10ODDLParser9Reference11sizeInBytesEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 5 uses
   %i.b = icmp eq i64 %i.a, 0
@@ -605,11 +605,11 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %_ZN10ODDLParser4TextD2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #13
   br label %_ZN10ODDLParser4TextD2Ev.exit
 
 _ZN10ODDLParser4TextD2Ev.exit:                    ; preds = %bb.b, %bb.c
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 24) #13
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN10ODDLParser4TextD2Ev.exit, %bb.a
@@ -619,8 +619,8 @@ bb.d:                                             ; preds = %_ZN10ODDLParser4Tex
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  tail call void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.g) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 32) #14
+  tail call void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.g) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 32) #13
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -667,15 +667,15 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.y, label %_ZN10ODDLParser4TextD2Ev.exit.i.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @_ZdaPv(ptr noundef nonnull %i.x) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.x) #13
   br label %_ZN10ODDLParser4TextD2Ev.exit.i.i
 
 _ZN10ODDLParser4TextD2Ev.exit.i.i:                ; preds = %bb.k, %bb.j
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.u, i64 noundef 24) #13
   br label %_ZN10ODDLParser4NameD2Ev.exit.i
 
 _ZN10ODDLParser4NameD2Ev.exit.i:                  ; preds = %_ZN10ODDLParser4TextD2Ev.exit.i.i, %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.r, i64 noundef 16) #13
   %.pre.i = load i64, ptr %i.i, align 8
   br label %bb.l
 
@@ -686,11 +686,11 @@ bb.l:                                             ; preds = %_ZN10ODDLParser4Nam
   br i1 %i.ab, label %bb.h, label %._crit_edge.i, !llvm.loop !8
 
 bb.m:                                             ; preds = %._crit_edge.i
-  tail call void @_ZdaPv(ptr noundef nonnull %i.m) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.m) #13
   br label %_ZN10ODDLParser9ReferenceD2Ev.exit
 
 _ZN10ODDLParser9ReferenceD2Ev.exit:               ; preds = %._crit_edge.i, %bb.m
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.i, i64 noundef 16) #13
   br label %bb.n
 
 bb.n:                                             ; preds = %_ZN10ODDLParser9ReferenceD2Ev.exit, %bb.f
@@ -703,13 +703,13 @@ common.ret17:                                     ; preds = %bb.n, %bb.o
   ret void
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @_ZN10ODDLParser8PropertyD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.ad) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ad, i64 noundef 32) #14
+  tail call void @_ZN10ODDLParser8PropertyD2Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.ad) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ad, i64 noundef 32) #13
   br label %common.ret17
 }
 
 ; Function Attrs: nounwind
-declare void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32)) unnamed_addr #9
+declare void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32)) unnamed_addr #8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_ZN10ODDLParser13DataArrayListC2Ev(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(40) initializes((0, 40)) %0) unnamed_addr #7 align 2 {
@@ -727,8 +727,8 @@ bb.a:
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.b) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 32) #14
+  tail call void @_ZN10ODDLParser5ValueD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.b) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 32) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -738,8 +738,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZN10ODDLParser13DataArrayListD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.e) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef 40) #14
+  tail call void @_ZN10ODDLParser13DataArrayListD2Ev(ptr noundef nonnull align 8 dead_on_return(40) dereferenceable(40) %i.e) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.e, i64 noundef 40) #13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -786,15 +786,15 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.w, label %_ZN10ODDLParser4TextD2Ev.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZdaPv(ptr noundef nonnull %i.v) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.v) #13
   br label %_ZN10ODDLParser4TextD2Ev.exit.i.i
 
 _ZN10ODDLParser4TextD2Ev.exit.i.i:                ; preds = %bb.j, %bb.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef 24) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.s, i64 noundef 24) #13
   br label %_ZN10ODDLParser4NameD2Ev.exit.i
 
 _ZN10ODDLParser4NameD2Ev.exit.i:                  ; preds = %_ZN10ODDLParser4TextD2Ev.exit.i.i, %bb.h
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.p, i64 noundef 16) #13
   %.pre.i = load i64, ptr %i.g, align 8
   br label %bb.k
 
@@ -805,11 +805,11 @@ bb.k:                                             ; preds = %_ZN10ODDLParser4Nam
   br i1 %i.z, label %bb.g, label %._crit_edge.i, !llvm.loop !8
 
 bb.l:                                             ; preds = %._crit_edge.i
-  tail call void @_ZdaPv(ptr noundef nonnull %i.k) #14
+  tail call void @_ZdaPv(ptr noundef nonnull %i.k) #13
   br label %_ZN10ODDLParser9ReferenceD2Ev.exit
 
 _ZN10ODDLParser9ReferenceD2Ev.exit:               ; preds = %._crit_edge.i, %bb.l
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 16) #14
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef 16) #13
   br label %bb.m
 
 bb.m:                                             ; preds = %_ZN10ODDLParser9ReferenceD2Ev.exit, %bb.e
@@ -817,7 +817,7 @@ bb.m:                                             ; preds = %_ZN10ODDLParser9Ref
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef i64 @_ZN10ODDLParser13DataArrayList4sizeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #8 align 2 {
+define hidden noundef i64 @_ZN10ODDLParser13DataArrayList4sizeEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0) local_unnamed_addr #5 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
@@ -860,8 +860,8 @@ bb.a:
   br i1 %i.b, label %_ZN10ODDLParser7Context5clearEv.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %i.a) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 136) #14
+  tail call void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %i.a) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 136) #13
   br label %_ZN10ODDLParser7Context5clearEv.exit
 
 _ZN10ODDLParser7Context5clearEv.exit:             ; preds = %bb.a, %bb.b
@@ -876,8 +876,8 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %i.a) #13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 136) #14
+  tail call void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136) %i.a) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 136) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -886,30 +886,29 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: nounwind
-declare void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136)) unnamed_addr #9
+declare void @_ZN10ODDLParser7DDLNodeD1Ev(ptr noundef nonnull align 8 dead_on_return(136) dereferenceable(136)) unnamed_addr #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #11
+declare void @llvm.assume(i1 noundef) #10
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #12 = { builtin allocsize(0) }
-attributes #13 = { nounwind }
-attributes #14 = { builtin nounwind }
-attributes #15 = { nounwind willreturn memory(read) }
+attributes #8 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #11 = { builtin allocsize(0) }
+attributes #12 = { nounwind }
+attributes #13 = { builtin nounwind }
+attributes #14 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

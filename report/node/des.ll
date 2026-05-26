@@ -47,7 +47,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @mbedtls_platform_zeroize(ptr noundef nonnull %0, i64 noundef 128) #12
+  tail call void @mbedtls_platform_zeroize(ptr noundef nonnull %0, i64 noundef 128) #11
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -70,7 +70,7 @@ bb.a:
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @mbedtls_platform_zeroize(ptr noundef nonnull %0, i64 noundef 384) #12
+  tail call void @mbedtls_platform_zeroize(ptr noundef nonnull %0, i64 noundef 384) #11
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -231,8 +231,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   ret i32 %.06
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
-define range(i32 0, 2) i32 @mbedtls_des_key_check_weak(ptr noundef readonly captures(none) %0) local_unnamed_addr #7 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
+define range(i32 0, 2) i32 @mbedtls_des_key_check_weak(ptr noundef readonly captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = load i64, ptr %0, align 1
   %i.b = icmp ne i64 72340172838076673, %i.a
@@ -352,7 +352,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n,
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @mbedtls_des_setkey(ptr noundef writeonly captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #8 {
+define void @mbedtls_des_setkey(ptr noundef writeonly captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   %.0.copyload.i100 = load i32, ptr %1, align 1
   %i.a = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i100) ; 4 uses
@@ -641,17 +641,17 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #9
+declare i32 @llvm.bswap.i32(i32) #8
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef i32 @mbedtls_des_setkey_enc(ptr noundef writeonly captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #8 {
+define noundef i32 @mbedtls_des_setkey_enc(ptr noundef writeonly captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   tail call void @mbedtls_des_setkey(ptr noundef %0, ptr noundef %1)
   ret i32 0
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef i32 @mbedtls_des_setkey_dec(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #8 {
+define noundef i32 @mbedtls_des_setkey_dec(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   tail call void @mbedtls_des_setkey(ptr noundef %0, ptr noundef %1)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
@@ -692,7 +692,7 @@ bb.a:
 define noundef i32 @mbedtls_des3_set2key_enc(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #2 {
 des3_set2key.exit:
   %i.a = alloca [96 x i32], align 16              ; 84 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   tail call void @mbedtls_des_setkey(ptr noundef %0, ptr noundef readonly %1)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1014,8 +1014,8 @@ des3_set2key.exit:
   store i32 %i.hd, ptr %i.ho, align 8, !tbaa !4
   %i.hp = getelementptr inbounds nuw i8, ptr %i.a, i64 380
   store i32 %i.hg, ptr %i.hp, align 4, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 0
 }
 
@@ -1023,7 +1023,7 @@ des3_set2key.exit:
 define noundef i32 @mbedtls_des3_set2key_dec(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #2 {
 des3_set2key.exit:
   %i.a = alloca [96 x i32], align 16              ; 84 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.a, ptr noundef readonly %1)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1345,8 +1345,8 @@ des3_set2key.exit:
   store i32 %i.hd, ptr %i.ho, align 4, !tbaa !4
   %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 380
   store i32 %i.hg, ptr %i.hp, align 4, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 0
 }
 
@@ -1354,7 +1354,7 @@ des3_set2key.exit:
 define noundef i32 @mbedtls_des3_set3key_enc(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #2 {
 des3_set3key.exit:
   %i.a = alloca [96 x i32], align 16              ; 52 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   tail call void @mbedtls_des_setkey(ptr noundef %0, ptr noundef readonly %1)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1552,8 +1552,8 @@ des3_set3key.exit:
   %i.ep = getelementptr inbounds nuw i8, ptr %i.a, i64 376
   %i.eq = load <2 x i32>, ptr %0, align 4, !tbaa !4
   store <2 x i32> %i.eq, ptr %i.ep, align 8, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 0
 }
 
@@ -1561,7 +1561,7 @@ des3_set3key.exit:
 define noundef i32 @mbedtls_des3_set3key_dec(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #2 {
 des3_set3key.exit:
   %i.a = alloca [96 x i32], align 16              ; 53 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.a, ptr noundef readonly %1)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -1759,13 +1759,13 @@ des3_set3key.exit:
   %i.ep = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.eq = load <2 x i32>, ptr %i.a, align 16, !tbaa !4
   store <2 x i32> %i.eq, ptr %i.ep, align 4, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 0
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef i32 @mbedtls_des_crypt_ecb(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #8 {
+define noundef i32 @mbedtls_des_crypt_ecb(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #7 {
 bb.a:
   %.0.copyload.i110 = load i32, ptr %1, align 1
   %i.a = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i110) ; 2 uses
@@ -1959,7 +1959,7 @@ bb.c:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define range(i32 -50, 1) i32 @mbedtls_des_crypt_cbc(ptr noundef readonly captures(none) %0, i32 noundef %1, i64 noundef %2, ptr noundef captures(none) %3, ptr noundef readonly captures(none) %4, ptr noundef captures(none) %5) local_unnamed_addr #8 {
+define range(i32 -50, 1) i32 @mbedtls_des_crypt_cbc(ptr noundef readonly captures(none) %0, i32 noundef %1, i64 noundef %2, ptr noundef captures(none) %3, ptr noundef readonly captures(none) %4, ptr noundef captures(none) %5) local_unnamed_addr #7 {
 bb.a:
   %i.a = and i64 %2, 7
   %.not = icmp eq i64 %i.a, 0
@@ -2020,7 +2020,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef i32 @mbedtls_des3_crypt_ecb(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #8 {
+define noundef i32 @mbedtls_des3_crypt_ecb(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, ptr noundef writeonly captures(none) %2) local_unnamed_addr #7 {
 bb.a:
   %.0.copyload.i180 = load i32, ptr %1, align 1
   %i.a = tail call i32 @llvm.bswap.i32(i32 %.0.copyload.i180) ; 2 uses
@@ -2423,7 +2423,7 @@ bb.c:                                             ; preds = %.preheader
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define range(i32 -50, 1) i32 @mbedtls_des3_crypt_cbc(ptr noundef readonly captures(none) %0, i32 noundef %1, i64 noundef %2, ptr noundef captures(none) %3, ptr noundef readonly captures(none) %4, ptr noundef captures(none) %5) local_unnamed_addr #8 {
+define range(i32 -50, 1) i32 @mbedtls_des3_crypt_cbc(ptr noundef readonly captures(none) %0, i32 noundef %1, i64 noundef %2, ptr noundef captures(none) %3, ptr noundef readonly captures(none) %4, ptr noundef captures(none) %5) local_unnamed_addr #7 {
 bb.a:
   %i.a = and i64 %2, 7
   %.not = icmp eq i64 %i.a, 0
@@ -2497,9 +2497,9 @@ bb.a:
   %1 = alloca %struct.mbedtls_des_context, align 16 ; 22 uses
   %2 = alloca %struct.mbedtls_des3_context, align 16 ; 219 uses
   %i.i = alloca [8 x i8], align 8                 ; 29 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #11
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(128) %1, i8 0, i64 128, i1 false)
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(384) %2, i8 0, i64 384, i1 false)
   %.not76 = icmp eq i32 %0, 0                     ; 6 uses
@@ -2776,7 +2776,7 @@ bb.e:                                             ; preds = %bb.c
   br label %.split.us.preheader
 
 vector.ph:                                        ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.h, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.l, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   %wide.vec = load <4 x i32>, ptr %i.fj, align 16, !tbaa !4
@@ -2850,12 +2850,12 @@ vector.ph:                                        ; preds = %bb.c
   %wide.vec187.7 = load <4 x i32>, ptr %i.hf, align 16, !tbaa !4
   store <4 x i32> %wide.vec187.7, ptr %i.hh, align 16, !tbaa !4
   store <4 x i32> %interleaved.vec.7, ptr %i.hi, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.h, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.h, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #11
   br label %.split.preheader
 
 vector.ph192:                                     ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %2, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.n, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   %wide.vec195 = load <4 x i32>, ptr %i.dj, align 16, !tbaa !4
@@ -2929,12 +2929,12 @@ vector.ph192:                                     ; preds = %bb.c
   %wide.vec207.7 = load <4 x i32>, ptr %i.ff, align 16, !tbaa !4
   store <4 x i32> %wide.vec207.7, ptr %i.fh, align 16, !tbaa !4
   store <4 x i32> %interleaved.vec200.7, ptr %i.fi, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.g, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.g, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #11
   br label %.split.preheader
 
 vector.ph214:                                     ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.f, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.l, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.m, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 16))
@@ -3010,12 +3010,12 @@ vector.ph214:                                     ; preds = %bb.c
   %wide.vec229.7 = load <4 x i32>, ptr %i.f, align 16, !tbaa !4
   %interleaved.vec234.7 = shufflevector <4 x i32> %wide.vec229.7, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x i32> %interleaved.vec234.7, ptr %i.di, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.f, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.f, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
   br label %.split.preheader
 
 vector.ph237:                                     ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %2, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.j, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.k, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 16))
@@ -3091,8 +3091,8 @@ vector.ph237:                                     ; preds = %bb.c
   %wide.vec252.7 = load <4 x i32>, ptr %2, align 16, !tbaa !4
   %interleaved.vec257.7 = shufflevector <4 x i32> %wide.vec252.7, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x i32> %interleaved.vec257.7, ptr %i.bo, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.e, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.e, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #11
   br label %.split.preheader
 
 .split.preheader:                                 ; preds = %vector.ph, %vector.ph192, %vector.ph214, %vector.ph237
@@ -3389,7 +3389,7 @@ bb.n:                                             ; preds = %bb.m, %.backedge
   ]
 
 vector.ph260:                                     ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.d, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.l, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   %wide.vec263 = load <4 x i32>, ptr %i.oi, align 16, !tbaa !4
@@ -3463,12 +3463,12 @@ vector.ph260:                                     ; preds = %bb.n
   %wide.vec275.7 = load <4 x i32>, ptr %i.qe, align 16, !tbaa !4
   store <4 x i32> %wide.vec275.7, ptr %i.qg, align 16, !tbaa !4
   store <4 x i32> %interleaved.vec268.7, ptr %i.qh, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.d, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.d, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
   br label %.lr.ph.i104.preheader.preheader
 
 vector.ph282:                                     ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %2, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.it, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   %wide.vec285 = load <4 x i32>, ptr %i.mi, align 16, !tbaa !4
@@ -3542,15 +3542,15 @@ vector.ph282:                                     ; preds = %bb.n
   %wide.vec297.7 = load <4 x i32>, ptr %i.oe, align 16, !tbaa !4
   store <4 x i32> %wide.vec297.7, ptr %i.og, align 16, !tbaa !4
   store <4 x i32> %interleaved.vec290.7, ptr %i.oh, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.c, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.c, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
   br label %.preheader46.i114.preheader.preheader
 
 .preheader46.i114.preheader.preheader:            ; preds = %vector.ph327, %vector.ph282
   br label %.preheader46.i114.preheader
 
 vector.ph304:                                     ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.b, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.l, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.is, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 16))
@@ -3626,15 +3626,15 @@ vector.ph304:                                     ; preds = %bb.n
   %wide.vec319.7 = load <4 x i32>, ptr %i.b, align 16, !tbaa !4
   %interleaved.vec324.7 = shufflevector <4 x i32> %wide.vec319.7, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x i32> %interleaved.vec324.7, ptr %i.mh, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.b, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.b, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
   br label %.lr.ph.i104.preheader.preheader
 
 .lr.ph.i104.preheader.preheader:                  ; preds = %vector.ph260, %vector.ph304
   br label %.lr.ph.i104.preheader
 
 vector.ph327:                                     ; preds = %bb.n
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   call void @mbedtls_des_setkey(ptr noundef nonnull %2, ptr noundef nonnull readonly @des3_test_keys)
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.ir, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 8))
   call void @mbedtls_des_setkey(ptr noundef nonnull %i.k, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @des3_test_keys, i64 16))
@@ -3710,8 +3710,8 @@ vector.ph327:                                     ; preds = %bb.n
   %wide.vec342.7 = load <4 x i32>, ptr %2, align 16, !tbaa !4
   %interleaved.vec347.7 = shufflevector <4 x i32> %wide.vec342.7, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
   store <4 x i32> %interleaved.vec347.7, ptr %i.kn, align 16, !tbaa !4
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %i.a, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %.preheader46.i114.preheader.preheader
 
 .preheader46.i.preheader.us.preheader:            ; preds = %bb.n
@@ -3844,11 +3844,11 @@ bb.r:                                             ; preds = %.thread166
 
 .loopexit:                                        ; preds = %bb.q, %bb.o, %bb.p, %bb.h, %bb.i, %bb.r
   %.not84 = phi i32 [ 1, %bb.i ], [ 0, %bb.r ], [ 1, %bb.h ], [ 1, %bb.p ], [ 1, %bb.o ], [ 0, %bb.q ]
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %1, i64 noundef 128) #12
-  call void @mbedtls_platform_zeroize(ptr noundef nonnull %2, i64 noundef 384) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #12
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %1, i64 noundef 128) #11
+  call void @mbedtls_platform_zeroize(ptr noundef nonnull %2, i64 noundef 384) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   ret i32 %.not84
 
 default.unreachable:                              ; preds = %bb.c
@@ -3859,16 +3859,16 @@ default.unreachable125:                           ; preds = %bb.n
 }
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #10
+declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #9
+declare i32 @llvm.fshl.i32(i32, i32, i32) #8
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #11
+declare noundef i32 @putchar(i32 noundef) local_unnamed_addr #10
 
 ; Function Attrs: nofree nounwind
-declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #11
+declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_addr #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -3877,12 +3877,11 @@ attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protect
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nofree nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nofree nounwind }
-attributes #12 = { nounwind }
+attributes #7 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nofree nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nofree nounwind }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

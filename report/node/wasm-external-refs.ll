@@ -201,7 +201,7 @@ bb.a:
   %i.b = add i64 %0, 8
   %i.c = inttoptr i64 %i.b to ptr
   %.0.copyload.i4 = load double, ptr %i.c, align 1
-  %i.d = tail call noundef double @_ZN2v88internal4math3powEdd(double noundef %.0.copyload.i, double noundef %.0.copyload.i4) #15
+  %i.d = tail call noundef double @_ZN2v88internal4math3powEdd(double noundef %.0.copyload.i, double noundef %.0.copyload.i4) #14
   store double %i.d, ptr %i.a, align 1
   ret void
 }
@@ -604,7 +604,7 @@ _ZN2v88internal4wasm24simd_float_round_wrapperINS0_7Float16ETnPFT_S4_EXadL_ZNS1_
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(errnomem: write) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
 define hidden i16 @_ZN2v88internal4wasm8f16_sqrtENS0_7Float16E(i16 %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = zext i16 %0 to i32                       ; 2 uses
@@ -624,7 +624,7 @@ bb.a:
   %i.m = and i32 %.signext.i.i, -2147483648
   %i.n = or i32 %i.m, %i.l
   %i.o = bitcast i32 %i.n to float
-  %i.p = tail call noundef float @sqrtf(float noundef %i.o) #15 ; 2 uses
+  %i.p = tail call noundef float @sqrtf(float noundef %i.o) #14 ; 2 uses
   %i.q = tail call float @llvm.fabs.f32(float %i.p)
   %i.r = fmul float %i.q, f0x77800000
   %i.s = fmul float %i.r, f0x08800000
@@ -650,8 +650,8 @@ bb.a:
   ret i16 %i.ak
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN2v88internal4wasm18f16x8_sqrt_wrapperEm(i64 noundef %0) local_unnamed_addr #8 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define hidden void @_ZN2v88internal4wasm18f16x8_sqrt_wrapperEm(i64 noundef %0) local_unnamed_addr #6 {
 bb.a:
   br label %bb.b
 
@@ -678,7 +678,7 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %i.q = and i32 %.signext.i.i.i.i, -2147483648
   %i.r = or i32 %i.q, %i.p
   %i.s = bitcast i32 %i.r to float
-  %i.t = tail call noundef float @sqrtf(float noundef %i.s) #15 ; 2 uses
+  %i.t = tail call noundef float @sqrtf(float noundef %i.s) #14 ; 2 uses
   %i.u = tail call float @llvm.fabs.f32(float %i.t)
   %i.v = fmul float %i.u, f0x77800000
   %i.w = fmul float %i.v, f0x08800000
@@ -1081,7 +1081,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal4wasm18array_copy_wrapperEmjmjj(i64 noundef %0, i32 noundef %1, i64 noundef %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #4 {
@@ -1133,11 +1133,11 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.g, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZN2v88internal4Heap9MoveRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #15
+  tail call void @_ZN2v88internal4Heap9MoveRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #14
   br label %_ZN2v88internal7MemMoveEPvPKvm.exit
 
 bb.h:                                             ; preds = %bb.f
-  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #15
+  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %0, i64 %i.v, i64 %i.z, i32 noundef %4, i32 noundef 4) #14
   br label %_ZN2v88internal7MemMoveEPvPKvm.exit
 
 _ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit: ; preds = %bb.e
@@ -1388,7 +1388,7 @@ _ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88: ; preds = %_ZNK2
   br i1 %i.p, label %bb.d, label %bb.c, !prof !22
 
 bb.c:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #16
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #15
   unreachable
 
 bb.d:                                             ; preds = %_ZNK2v88internal4wasm13ValueTypeBase15value_kind_sizeEv.exit88
@@ -1404,7 +1404,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.v, label %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #16
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #15
   unreachable
 
 bb.g:                                             ; preds = %bb.d
@@ -1503,7 +1503,7 @@ bb.o:                                             ; preds = %_ZNK2v88internal4wa
   br label %bb.s
 
 _ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit.thread: ; preds = %bb.g, %bb.g, %bb.g
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #16
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str.2) #15
   unreachable
 
 default.unreachable111:                           ; preds = %_ZNK2v88internal4wasm13ValueTypeBase4kindEv.exit
@@ -1546,7 +1546,7 @@ bb.r:                                             ; preds = %bb.q
   %i.av = getelementptr inbounds i8, ptr %i.m, i64 %i.o
   %i.aw = ptrtoint ptr %i.av to i64
   %i.ax = getelementptr inbounds nuw i8, ptr %i.au, i64 55464
-  tail call void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS0_4HeapENS0_6TaggedINS0_10HeapObjectEEET_S9_(ptr noundef nonnull %i.ax, i64 %0, i64 %i.l, i64 %i.aw) #15
+  tail call void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS0_4HeapENS0_6TaggedINS0_10HeapObjectEEET_S9_(ptr noundef nonnull %i.ax, i64 %0, i64 %i.l, i64 %i.aw) #14
   br label %bb.s
 
 bb.s:                                             ; preds = %.thread105, %.thread104, %.thread103, %.thread, %bb.q, %bb.r, %bb.o
@@ -1554,14 +1554,14 @@ bb.s:                                             ; preds = %.thread105, %.threa
 }
 
 ; Function Attrs: noreturn
-declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #10
+declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #9
 
 declare void @_ZN2v88internal12WriteBarrier8ForRangeINS0_14FullObjectSlotEEEvPNS0_4HeapENS0_6TaggedINS0_10HeapObjectEEET_S9_(ptr noundef, i64, i64, i64) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef double @_ZN2v88internal4wasm18flat_string_to_f64Em(i64 noundef %0) local_unnamed_addr #4 {
 bb.a:
-  %i.a = tail call noundef double @_ZN2v88internal18FlatStringToDoubleENS0_6TaggedINS0_6StringEEENS0_14ConversionFlagEd(i64 %0, i32 noundef 2, double noundef +qnan) #15
+  %i.a = tail call noundef double @_ZN2v88internal18FlatStringToDoubleENS0_6TaggedINS0_6StringEEENS0_14ConversionFlagEd(i64 %0, i32 noundef 2, double noundef +qnan) #14
   ret double %i.a
 }
 
@@ -1572,7 +1572,7 @@ define hidden void @_ZN2v88internal4wasm11start_stackEPNS0_7IsolateEPNS1_11Stack
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #15
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
   ret void
 }
 
@@ -1583,7 +1583,7 @@ define hidden void @_ZN2v88internal4wasm13suspend_stackEPNS0_7IsolateEPNS1_11Sta
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE1ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #15
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE1ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
   ret void
 }
 
@@ -1613,7 +1613,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #15
+  tail call void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -1625,14 +1625,14 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not.i.i.i, label %bb.g, label %bb.f, !prof !22
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #15
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64 %5, i64 %i.c, i64 %.sroa.0.0.copyload.i) #14
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.e, %bb.f
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.n = load ptr, ptr %i.m, align 8
   store i64 %5, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.n, i64 noundef %2, i64 noundef %3, i64 noundef %4) #15
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE2ELS5_1EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.n, i64 noundef %2, i64 noundef %3, i64 noundef %4) #14
   ret void
 }
 
@@ -1641,8 +1641,8 @@ define hidden void @_ZN2v88internal4wasm12return_stackEPNS0_7IsolateEPNS1_11Stac
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8
-  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE3ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef 0, i64 noundef 0, i64 noundef 0) #15
-  tail call void @_ZN2v88internal7Isolate15RetireWasmStackEPNS0_4wasm11StackMemoryE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1) #15
+  tail call void @_ZN2v88internal7Isolate12SwitchStacksILNS0_4wasm10JumpBuffer10StackStateE3ELS5_2EEEvPNS3_11StackMemoryES7_mmm(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1, ptr noundef %i.b, i64 noundef 0, i64 noundef 0, i64 noundef 0) #14
+  tail call void @_ZN2v88internal7Isolate15RetireWasmStackEPNS0_4wasm11StackMemoryE(ptr noundef nonnull align 8 dereferenceable(64320) %0, ptr noundef %1) #14
   ret void
 }
 
@@ -1658,7 +1658,7 @@ bb.a:
   %i.c = load i64, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.e = load i64, ptr %i.d, align 8
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.e) #15
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.e) #14
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 552
   store i64 %i.c, ptr %i.f, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
@@ -1685,7 +1685,7 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !24
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.7) #16
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.7) #15
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -1695,7 +1695,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not11, label %bb.d, label %bb.e, !prof !24
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.8) #16
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.8) #15
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -1703,7 +1703,7 @@ bb.e:                                             ; preds = %bb.c
   store i8 0, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.d) #15
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.f, i64 noundef %i.d) #14
   ret void
 }
 
@@ -1721,7 +1721,7 @@ bb.a:
   store i64 %i.e, ptr %.sroa.4.0..sroa_idx.i, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 536
   %i.h = load i64, ptr %i.g, align 8
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.h) #15
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.a, i64 noundef %i.h) #14
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 448
   store i8 1, ptr %i.i, align 8
   ret i64 %i.e
@@ -1737,9 +1737,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 448
   store i8 0, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.f = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #15
+  %i.f = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
   %i.g = ptrtoint ptr %i.f to i64
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i64 noundef %i.g) #15
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.e, i64 noundef %i.g) #14
   ret void
 }
 
@@ -1749,15 +1749,15 @@ declare noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef no
 define hidden noundef i64 @_ZN2v88internal4wasm10grow_stackEPNS0_7IsolateEPvmmm(ptr noundef %0, ptr noundef readonly captures(none) %1, i64 noundef %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #4 {
 bb.a:
   %5 = alloca %"class.v8::internal::StackLimitCheck", align 8 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   store ptr %0, ptr %5, align 8
-  %i.a = call noundef zeroext i1 @_ZNK2v88internal15StackLimitCheck17WasmHasOverflowedEm(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %3) #15
+  %i.a = call noundef zeroext i1 @_ZNK2v88internal15StackLimitCheck17WasmHasOverflowedEm(ptr noundef nonnull align 8 dereferenceable(8) %5, i64 noundef %3) #14
   br i1 %i.a, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.c = load ptr, ptr %i.b, align 8              ; 4 uses
-  %i.d = call noundef zeroext i1 @_ZN2v88internal7Isolate16IsOnCentralStackEv(ptr noundef nonnull align 8 dereferenceable(64320) %0) #15
+  %i.d = call noundef zeroext i1 @_ZN2v88internal7Isolate16IsOnCentralStackEv(ptr noundef nonnull align 8 dereferenceable(64320) %0) #14
   br i1 %i.d, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -1766,7 +1766,7 @@ bb.c:                                             ; preds = %bb.b
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = select i1 %i.g, i64 20480, i64 40960
   %i.i = add i64 %i.e, %i.h
-  %i.j = call noundef zeroext i1 @_ZN2v88internal4wasm11StackMemory4GrowEmm(ptr noundef nonnull align 8 dereferenceable(136) %i.c, i64 noundef %4, i64 noundef %i.i) #15
+  %i.j = call noundef zeroext i1 @_ZN2v88internal4wasm11StackMemory4GrowEmm(ptr noundef nonnull align 8 dereferenceable(136) %i.c, i64 noundef %4, i64 noundef %i.i) #14
   br i1 %i.j, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -1783,14 +1783,14 @@ bb.d:                                             ; preds = %bb.c
   %i.s = inttoptr i64 %i.r to ptr
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.s, ptr align 1 %1, i64 %2, i1 false)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.u = call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.c) #15
+  %i.u = call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.c) #14
   %i.v = ptrtoint ptr %i.u to i64
-  call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i64 noundef %i.v) #15
+  call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.t, i64 noundef %i.v) #14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.a, %bb.b, %bb.c, %bb.d
   %.2 = phi i64 [ 0, %bb.c ], [ 0, %bb.b ], [ %i.r, %bb.d ], [ 0, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   ret i64 %.2
 }
 
@@ -1811,11 +1811,11 @@ bb.a:
   br i1 %i.e, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noundef i64 @_ZN2v88internal4wasm11StackMemory6ShrinkEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #15
+  %i.f = tail call noundef i64 @_ZN2v88internal4wasm11StackMemory6ShrinkEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.h = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #15
+  %i.h = tail call noundef ptr @_ZNK2v88internal4wasm11StackMemory7jslimitEv(ptr noundef nonnull align 8 dereferenceable(136) %i.b) #14
   %i.i = ptrtoint ptr %i.h to i64
-  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 noundef %i.i) #15
+  tail call void @_ZN2v88internal10StackGuard30SetStackLimitForStackSwitchingEm(ptr noundef nonnull align 8 dereferenceable(64) %i.g, i64 noundef %i.i) #14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1826,7 +1826,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare noundef i64 @_ZN2v88internal4wasm11StackMemory6ShrinkEv(ptr noundef nonnull align 8 dereferenceable(136)) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef i64 @_ZN2v88internal4wasm11load_old_fpEPNS0_7IsolateE(ptr noundef readonly captures(none) %0) local_unnamed_addr #11 {
+define hidden noundef i64 @_ZN2v88internal4wasm11load_old_fpEPNS0_7IsolateE(ptr noundef readonly captures(none) %0) local_unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 55296
   %i.b = load ptr, ptr %i.a, align 8              ; 2 uses
@@ -1850,27 +1850,27 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #1
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #12
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare float @sqrtf(float noundef) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #13
+declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #12
 
 declare void @_ZN2v88internal12WriteBarrier10SharedSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64, i64, i64) local_unnamed_addr #5
 
 declare void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_13TrustedObjectEEENS0_14FullObjectSlotES4_(i64, i64, i64) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @ceilf(float noundef) local_unnamed_addr #14
+declare float @ceilf(float noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @floorf(float noundef) local_unnamed_addr #14
+declare float @floorf(float noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @truncf(float noundef) local_unnamed_addr #14
+declare float @truncf(float noundef) local_unnamed_addr #13
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(none)
-declare float @nearbyintf(float noundef) local_unnamed_addr #14
+declare float @nearbyintf(float noundef) local_unnamed_addr #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.fshl.i32(i32, i32, i32) #1
@@ -1897,16 +1897,15 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #4 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nounwind willreturn memory(errnomem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { nounwind }
-attributes #16 = { noreturn nounwind }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #9 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(none) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #14 = { nounwind }
+attributes #15 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

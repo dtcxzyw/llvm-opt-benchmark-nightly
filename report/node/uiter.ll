@@ -34,7 +34,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i32 @u_strlen_78(ptr noundef nonnull %1) #13
+  %i.d = tail call i32 @u_strlen_78(ptr noundef nonnull %1) #12
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
@@ -92,7 +92,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZL14utf16BE_strlenPKc.exit
 
 bb.f:                                             ; preds = %.thread
-  %i.g = tail call i32 @u_strlen_78(ptr noundef nonnull %1) #13
+  %i.g = tail call i32 @u_strlen_78(ptr noundef nonnull %1) #12
   br label %_ZL14utf16BE_strlenPKc.exit
 
 .preheader.i:                                     ; preds = %.thread, %.critedge.i
@@ -173,7 +173,7 @@ bb.c:                                             ; preds = %bb.b
   %i.a = load ptr, ptr %1, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.c = load ptr, ptr %i.b, align 8
-  %i.d = tail call noundef i32 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1) #13, !inline_history !7 ; 2 uses
+  %i.d = tail call noundef i32 %i.c(ptr noundef nonnull align 8 dereferenceable(8) %1) #12, !inline_history !7 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 %i.d, ptr %i.e, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -188,8 +188,8 @@ bb.e:                                             ; preds = %bb.c, %bb.d, %bb.a
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @uiter_setUTF8_78(ptr noundef writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #4 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define dso_local void @uiter_setUTF8_78(ptr noundef writeonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.g, label %bb.b
@@ -207,7 +207,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.c, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.d = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #14
+  %i.d = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #13
   %i.e = trunc i64 %i.d to i32
   br label %bb.e
 
@@ -229,15 +229,15 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.a
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #5
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local i32 @uiter_current32_78(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #13 ; 7 uses
+  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #12 ; 7 uses
   %i.d = and i32 %i.c, -2048
   %i.e = icmp eq i32 %i.d, 55296
   br i1 %i.e, label %bb.b, label %bb.f
@@ -250,9 +250,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef i32 %i.i(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #13 ; 0 uses
+  %i.j = tail call noundef i32 %i.i(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #12 ; 0 uses
   %i.k = load ptr, ptr %i.a, align 8
-  %i.l = tail call noundef i32 %i.k(ptr noundef nonnull %0) #13 ; 2 uses
+  %i.l = tail call noundef i32 %i.k(ptr noundef nonnull %0) #12 ; 2 uses
   %i.m = and i32 %i.l, -1024
   %i.n = icmp eq i32 %i.m, 56320
   %i.o = shl nuw nsw i32 %i.c, 10
@@ -260,13 +260,13 @@ bb.c:                                             ; preds = %bb.b
   %i.q = add nuw nsw i32 %i.p, %i.l
   %.0 = select i1 %i.n, i32 %i.q, i32 %i.c
   %i.r = load ptr, ptr %i.h, align 8
-  %i.s = tail call noundef i32 %i.r(ptr noundef nonnull %0, i32 noundef -1, i32 noundef 1) #13 ; 0 uses
+  %i.s = tail call noundef i32 %i.r(ptr noundef nonnull %0, i32 noundef -1, i32 noundef 1) #12 ; 0 uses
   br label %bb.f
 
 bb.d:                                             ; preds = %bb.b
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.u = load ptr, ptr %i.t, align 8
-  %i.v = tail call noundef i32 %i.u(ptr noundef nonnull %0) #13 ; 3 uses
+  %i.v = tail call noundef i32 %i.u(ptr noundef nonnull %0) #12 ; 3 uses
   %i.w = and i32 %i.v, -1024
   %i.x = icmp eq i32 %i.w, 55296
   %i.y = shl nuw nsw i32 %i.v, 10
@@ -279,7 +279,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ad = load ptr, ptr %i.ac, align 8
-  %i.ae = tail call noundef i32 %i.ad(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #13 ; 0 uses
+  %i.ae = tail call noundef i32 %i.ad(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #12 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d, %bb.a
@@ -298,14 +298,14 @@ define dso_local i32 @uiter_next32_78(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #13 ; 5 uses
+  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #12 ; 5 uses
   %i.d = and i32 %i.c, -1024
   %i.e = icmp eq i32 %i.d, 55296
   br i1 %i.e, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.a, align 8
-  %i.g = tail call noundef i32 %i.f(ptr noundef nonnull %0) #13 ; 3 uses
+  %i.g = tail call noundef i32 %i.f(ptr noundef nonnull %0) #12 ; 3 uses
   %i.h = and i32 %i.g, -1024
   %i.i = icmp eq i32 %i.h, 56320
   br i1 %i.i, label %bb.c, label %bb.d
@@ -323,7 +323,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call noundef i32 %i.o(ptr noundef nonnull %0, i32 noundef -1, i32 noundef 1) #13 ; 0 uses
+  %i.p = tail call noundef i32 %i.o(ptr noundef nonnull %0, i32 noundef -1, i32 noundef 1) #12 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d, %bb.a
@@ -336,14 +336,14 @@ define dso_local i32 @uiter_previous32_78(ptr noundef %0) local_unnamed_addr #0 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
-  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #13 ; 5 uses
+  %i.c = tail call noundef i32 %i.b(ptr noundef %0) #12 ; 5 uses
   %i.d = and i32 %i.c, -1024
   %i.e = icmp eq i32 %i.d, 56320
   br i1 %i.e, label %bb.b, label %bb.f
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %i.a, align 8
-  %i.g = tail call noundef i32 %i.f(ptr noundef nonnull %0) #13 ; 3 uses
+  %i.g = tail call noundef i32 %i.f(ptr noundef nonnull %0) #12 ; 3 uses
   %i.h = and i32 %i.g, -1024
   %i.i = icmp eq i32 %i.h, 55296
   br i1 %i.i, label %bb.c, label %bb.d
@@ -361,7 +361,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call noundef i32 %i.o(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #13 ; 0 uses
+  %i.p = tail call noundef i32 %i.o(ptr noundef nonnull %0, i32 noundef 1, i32 noundef 1) #12 ; 0 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d, %bb.a
@@ -382,7 +382,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call noundef i32 %i.c(ptr noundef nonnull %0) #13
+  %i.e = tail call noundef i32 %i.c(ptr noundef nonnull %0) #12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
@@ -420,7 +420,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  tail call void %i.f(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %2) #13
+  tail call void %i.f(ptr noundef nonnull %0, i32 noundef %1, ptr noundef nonnull %2) #12
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.d, %bb.g, %bb.f, %bb.a, %bb.b
@@ -428,7 +428,7 @@ bb.h:                                             ; preds = %bb.d, %bb.g, %bb.f,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef i32 @_ZL22stringIteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef readonly captures(none) %0, i32 noundef %1) #6 {
+define internal noundef i32 @_ZL22stringIteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef readonly captures(none) %0, i32 noundef %1) #5 {
 bb.a:
   switch i32 %1, label %bb.f [
     i32 3, label %bb.g
@@ -526,7 +526,7 @@ bb.i:                                             ; preds = %bb.a, %bb.h
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef signext range(i8 0, 2) i8 @_ZL21stringIteratorHasNextP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef signext range(i8 0, 2) i8 @_ZL21stringIteratorHasNextP13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8
@@ -538,7 +538,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef signext range(i8 0, 2) i8 @_ZL25stringIteratorHasPreviousP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef signext range(i8 0, 2) i8 @_ZL25stringIteratorHasPreviousP13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8
@@ -550,7 +550,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL21stringIteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #7 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL21stringIteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -573,7 +573,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL18stringIteratorNextP13UCharIterator(ptr noundef captures(none) %0) #8 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL18stringIteratorNextP13UCharIterator(ptr noundef captures(none) %0) #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
@@ -598,7 +598,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL22stringIteratorPreviousP13UCharIterator(ptr noundef captures(none) %0) #8 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL22stringIteratorPreviousP13UCharIterator(ptr noundef captures(none) %0) #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -623,7 +623,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef i32 @_ZL22stringIteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef i32 @_ZL22stringIteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8
@@ -675,44 +675,44 @@ bb.i:                                             ; preds = %bb.d, %bb.h, %bb.g,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZL12noopGetIndexP13UCharIterator19UCharIteratorOrigin(ptr readnone captures(none) %0, i32 %1) #9 {
+define internal noundef i32 @_ZL12noopGetIndexP13UCharIterator19UCharIteratorOrigin(ptr readnone captures(none) %0, i32 %1) #8 {
 bb.a:
   ret i32 0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZL8noopMoveP13UCharIteratori19UCharIteratorOrigin(ptr readnone captures(none) %0, i32 %1, i32 %2) #9 {
+define internal noundef i32 @_ZL8noopMoveP13UCharIteratori19UCharIteratorOrigin(ptr readnone captures(none) %0, i32 %1, i32 %2) #8 {
 bb.a:
   ret i32 0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef signext i8 @_ZL11noopHasNextP13UCharIterator(ptr readnone captures(none) %0) #9 {
+define internal noundef signext i8 @_ZL11noopHasNextP13UCharIterator(ptr readnone captures(none) %0) #8 {
 bb.a:
   ret i8 0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZL11noopCurrentP13UCharIterator(ptr readnone captures(none) %0) #9 {
+define internal noundef i32 @_ZL11noopCurrentP13UCharIterator(ptr readnone captures(none) %0) #8 {
 bb.a:
   ret i32 -1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define internal noundef i32 @_ZL12noopGetStatePK13UCharIterator(ptr readnone captures(none) %0) #9 {
+define internal noundef i32 @_ZL12noopGetStatePK13UCharIterator(ptr readnone captures(none) %0) #8 {
 bb.a:
   ret i32 -1
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define internal void @_ZL12noopSetStateP13UCharIteratorjP10UErrorCode(ptr readnone captures(none) %0, i32 %1, ptr noundef writeonly captures(none) initializes((0, 4)) %2) #10 {
+define internal void @_ZL12noopSetStateP13UCharIteratorjP10UErrorCode(ptr readnone captures(none) %0, i32 %1, ptr noundef writeonly captures(none) initializes((0, 4)) %2) #9 {
 bb.a:
   store i32 16, ptr %2, align 4
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL22utf16BEIteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #7 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL22utf16BEIteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -741,7 +741,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL19utf16BEIteratorNextP13UCharIterator(ptr noundef captures(none) %0) #8 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL19utf16BEIteratorNextP13UCharIterator(ptr noundef captures(none) %0) #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 3 uses
@@ -772,7 +772,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL23utf16BEIteratorPreviousP13UCharIterator(ptr noundef captures(none) %0) #8 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL23utf16BEIteratorPreviousP13UCharIterator(ptr noundef captures(none) %0) #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -803,7 +803,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef i32 @_ZL25characterIteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef readonly captures(none) %0, i32 noundef %1) #7 {
+define internal noundef i32 @_ZL25characterIteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef readonly captures(none) %0, i32 noundef %1) #6 {
 bb.a:
   switch i32 %1, label %bb.f [
     i32 3, label %bb.g
@@ -861,7 +861,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 120
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef zeroext i16 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef %1) #13 ; 0 uses
+  %i.e = tail call noundef zeroext i16 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a, i32 noundef %1) #12 ; 0 uses
   %i.f = load ptr, ptr %0, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.h = load i32, ptr %i.g, align 4
@@ -872,7 +872,7 @@ bb.c:                                             ; preds = %bb.a, %bb.a, %bb.a
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 192
   %i.l = load ptr, ptr %i.k, align 8
-  %i.m = tail call noundef i32 %i.l(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i32 noundef %1, i32 noundef %2) #13
+  %i.m = tail call noundef i32 %i.l(ptr noundef nonnull align 8 dereferenceable(24) %i.i, i32 noundef %1, i32 noundef %2) #12
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
@@ -883,7 +883,7 @@ bb.d:                                             ; preds = %bb.a
   %i.r = load ptr, ptr %i.n, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 120
   %i.t = load ptr, ptr %i.s, align 8
-  %i.u = tail call noundef zeroext i16 %i.t(ptr noundef nonnull align 8 dereferenceable(24) %i.n, i32 noundef %i.q) #13 ; 0 uses
+  %i.u = tail call noundef zeroext i16 %i.t(ptr noundef nonnull align 8 dereferenceable(24) %i.n, i32 noundef %i.q) #12 ; 0 uses
   %i.v = load ptr, ptr %0, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 12
   %i.x = load i32, ptr %i.w, align 4
@@ -901,7 +901,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #13
+  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #12
   ret i8 %i.e
 }
 
@@ -912,7 +912,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #13
+  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #12
   ret i8 %i.e
 }
 
@@ -923,7 +923,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 136
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef zeroext i16 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #13 ; 2 uses
+  %i.e = tail call noundef zeroext i16 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #12 ; 2 uses
   %i.f = zext i16 %i.e to i32                     ; 2 uses
   %.not = icmp eq i16 %i.e, -1
   br i1 %.not, label %bb.b, label %bb.c
@@ -933,7 +933,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 56
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = tail call noundef signext i8 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g) #13
+  %i.k = tail call noundef signext i8 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g) #12
   %.not4 = icmp eq i8 %i.k, 0
   %spec.select = select i1 %.not4, i32 -1, i32 %i.f
   br label %bb.c
@@ -950,7 +950,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 56
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #13
+  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(8) %i.a) #12
   %.not = icmp eq i8 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -959,7 +959,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 40
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f) #13
+  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f) #12
   %i.k = zext i16 %i.j to i32
   br label %bb.c
 
@@ -975,7 +975,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 184
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #13
+  %i.e = tail call noundef signext i8 %i.d(ptr noundef nonnull align 8 dereferenceable(24) %i.a) #12
   %.not = icmp eq i8 %i.e, 0
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -984,7 +984,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 168
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(24) %i.f) #13
+  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(24) %i.f) #12
   %i.k = zext i16 %i.j to i32
   br label %bb.c
 
@@ -994,7 +994,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef i32 @_ZL25characterIteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #7 {
+define internal noundef i32 @_ZL25characterIteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 12
@@ -1046,7 +1046,7 @@ bb.i:                                             ; preds = %bb.g
   %i.m = load ptr, ptr %i.e, align 8
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 120
   %i.o = load ptr, ptr %i.n, align 8
-  %i.p = tail call noundef zeroext i16 %i.o(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i32 noundef %1) #13 ; 0 uses
+  %i.p = tail call noundef zeroext i16 %i.o(ptr noundef nonnull align 8 dereferenceable(24) %i.e, i32 noundef %1) #12 ; 0 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.e, %bb.i, %bb.h, %bb.a, %bb.b
@@ -1068,7 +1068,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 72
   %i.i = load ptr, ptr %i.h, align 8
-  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.b) #13, !inline_history !8
+  %i.j = tail call noundef zeroext i16 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.b) #12, !inline_history !8
   %i.k = zext i16 %i.j to i32
   br label %bb.c
 
@@ -1094,7 +1094,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 72
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = tail call noundef zeroext i16 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.b) #13, !inline_history !8
+  %i.k = tail call noundef zeroext i16 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.b) #12, !inline_history !8
   %i.l = zext i16 %i.k to i32
   br label %bb.c
 
@@ -1120,7 +1120,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.f, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 72
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = tail call noundef zeroext i16 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.g) #13, !inline_history !8
+  %i.k = tail call noundef zeroext i16 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.f, i32 noundef %i.g) #12, !inline_history !8
   %i.l = zext i16 %i.k to i32
   br label %bb.c
 
@@ -1130,7 +1130,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef i32 @_ZL20utf8IteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef captures(none) %0, i32 noundef %1) #11 {
+define internal noundef i32 @_ZL20utf8IteratorGetIndexP13UCharIterator19UCharIteratorOrigin(ptr noundef captures(none) %0, i32 noundef %1) #10 {
 bb.a:
   switch i32 %1, label %bb.ba [
     i32 3, label %bb.bb
@@ -1533,7 +1533,7 @@ bb.bb:                                            ; preds = %bb.t, %._crit_edge2
 define internal noundef i32 @_ZL16utf8IteratorMoveP13UCharIteratori19UCharIteratorOrigin(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   switch i32 %2, label %bb.bc [
     i32 3, label %bb.g
     i32 0, label %bb.g
@@ -1931,7 +1931,7 @@ bb.au:                                            ; preds = %bb.at, %bb.as
 
 bb.av:                                            ; preds = %.lr.ph
   %i.fl = zext i8 %i.fj to i32
-  %i.fm = call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.bg, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef %i.fl, i8 noundef signext -3) #13 ; 2 uses
+  %i.fm = call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.bg, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef %i.fl, i8 noundef signext -3) #12 ; 2 uses
   %i.fn = icmp slt i32 %i.fm, 65536
   br i1 %i.fn, label %.thread193, label %bb.aw
 
@@ -1985,12 +1985,12 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %bb.ba, %.critedge, %bb.p, %bb.a, %bb.f, %bb.bb, %bb.az, %bb.t, %bb.r, %bb.j, %bb.h
   %.0142 = phi i32 [ -2, %bb.f ], [ 0, %bb.h ], [ %i.u, %bb.j ], [ -1, %bb.a ], [ %.8, %bb.az ], [ %i.fz, %bb.bb ], [ -2, %.critedge ], [ %i.ao, %bb.p ], [ 0, %bb.r ], [ %spec.select, %bb.t ], [ -2, %bb.ba ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.0142
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef signext range(i8 0, 2) i8 @_ZL19utf8IteratorHasNextP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef signext range(i8 0, 2) i8 @_ZL19utf8IteratorHasNextP13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4
@@ -2012,7 +2012,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef signext range(i8 0, 2) i8 @_ZL23utf8IteratorHasPreviousP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef signext range(i8 0, 2) i8 @_ZL23utf8IteratorHasPreviousP13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4
@@ -2022,7 +2022,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL19utf8IteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #7 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL19utf8IteratorCurrentP13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -2166,7 +2166,7 @@ bb.r:                                             ; preds = %bb.q
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal noundef range(i32 -1, 65536) i32 @_ZL16utf8IteratorNextP13UCharIterator(ptr noundef captures(none) %0) #8 {
+define internal noundef range(i32 -1, 65536) i32 @_ZL16utf8IteratorNextP13UCharIterator(ptr noundef captures(none) %0) #7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 3 uses
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -2418,7 +2418,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.v, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.w = tail call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.p, i32 noundef 0, ptr noundef nonnull %i.m, i32 noundef %i.u, i8 noundef signext -3) #13
+  %i.w = tail call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.p, i32 noundef 0, ptr noundef nonnull %i.m, i32 noundef %i.u, i8 noundef signext -3) #12
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -2467,7 +2467,7 @@ bb.n:                                             ; preds = %bb.e, %bb.m, %bb.l,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define internal noundef i32 @_ZL20utf8IteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #6 {
+define internal noundef i32 @_ZL20utf8IteratorGetStatePK13UCharIterator(ptr noundef readonly captures(none) %0) #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.b = load i32, ptr %i.a, align 4
@@ -2513,7 +2513,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.l, label %bb.o, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   %i.m = lshr i32 %1, 1                           ; 4 uses
   %i.n = trunc i32 %1 to i1
   %i.o = and i32 %1, -7
@@ -2554,7 +2554,7 @@ bb.k:                                             ; preds = %bb.i
 
 bb.l:                                             ; preds = %bb.k
   %i.aa = zext i8 %i.y to i32
-  %i.ab = call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.u, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef %i.aa, i8 noundef signext -3) #13 ; 2 uses
+  %i.ab = call i32 @utf8_prevCharSafeBody_78(ptr noundef nonnull %i.u, i32 noundef 0, ptr noundef nonnull %i.a, i32 noundef %i.aa, i8 noundef signext -3) #12 ; 2 uses
   %i.ac = icmp slt i32 %i.ab, 65536
   br i1 %i.ac, label %.thread, label %bb.m
 
@@ -2567,7 +2567,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.thread, %bb.m, %bb.j, %bb.h
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.d, %bb.e, %bb.n, %bb.a, %bb.b
@@ -2577,23 +2577,22 @@ bb.o:                                             ; preds = %bb.d, %bb.e, %bb.n,
 declare i32 @utf8_prevCharSafeBody_78(ptr noundef, i32 noundef, ptr noundef, i32 noundef, i8 noundef signext) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #12
+declare i32 @llvm.smin.i32(i32, i32) #11
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nounwind }
-attributes #14 = { nounwind willreturn memory(read) }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nounwind }
+attributes #13 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

@@ -76,8 +76,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.s, label %.thread, label %bb.s
 
 bb.k:                                             ; preds = %bb.h, %bb.g, %bb.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
-  %i.t = call i32 @WebPGetFeaturesInternal(ptr noundef nonnull %i.b, i64 noundef %i.e, ptr noundef nonnull %4, i32 noundef 528) #12 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  %i.t = call i32 @WebPGetFeaturesInternal(ptr noundef nonnull %i.b, i64 noundef %i.e, ptr noundef nonnull %4, i32 noundef 528) #11 ; 2 uses
   %.not.i55 = icmp eq i32 %i.t, 0
   br i1 %.not.i55, label %bb.m, label %bb.l
 
@@ -87,8 +87,8 @@ bb.l:                                             ; preds = %bb.k
   br label %CreateRawImageDemuxer.exit.thread
 
 bb.m:                                             ; preds = %bb.k
-  %i.w = call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 104) #12 ; 18 uses
-  %i.x = call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #12 ; 11 uses
+  %i.w = call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 104) #11 ; 18 uses
+  %i.x = call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #11 ; 11 uses
   %i.y = icmp eq ptr %i.w, null
   %i.z = icmp eq ptr %i.x, null
   %or.cond.i56 = select i1 %i.y, i1 true, i1 %i.z
@@ -147,13 +147,13 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not9.i.i, label %AddFrame.exit.thread.i, label %bb.p
 
 AddFrame.exit.thread.i:                           ; preds = %bb.o, %bb.m
-  call void @WebPSafeFree(ptr noundef %i.w) #12
-  call void @WebPSafeFree(ptr noundef %i.x) #12
+  call void @WebPSafeFree(ptr noundef %i.w) #11
+  call void @WebPSafeFree(ptr noundef %i.x) #11
   br label %CreateRawImageDemuxer.exit.thread
 
 CreateRawImageDemuxer.exit.thread:                ; preds = %bb.l, %AddFrame.exit.thread.i
   %.1.i.ph = phi i32 [ -1, %AddFrame.exit.thread.i ], [ %i.v, %bb.l ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br label %ReadHeader.exit
 
 bb.p:                                             ; preds = %bb.o, %bb.n
@@ -172,7 +172,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   store i32 %i.bc, ptr %i.ba, align 8, !tbaa !42
   %i.bd = getelementptr inbounds nuw i8, ptr %i.w, i64 68
   store i32 1, ptr %i.bd, align 4, !tbaa !43
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br i1 %.not, label %bb.ad, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
@@ -196,7 +196,7 @@ bb.s:                                             ; preds = %bb.j
 .thread:                                          ; preds = %bb.j, %bb.s
   %i.bg = phi i1 [ %i.be, %bb.s ], [ false, %bb.j ]
   %.sroa.12.1.ph110 = phi i64 [ %i.e, %bb.s ], [ %i.r, %bb.j ] ; 2 uses
-  %i.bh = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 104) #12 ; 16 uses
+  %i.bh = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 104) #11 ; 16 uses
   %i.bi = icmp eq ptr %i.bh, null
   br i1 %i.bi, label %bb.ad, label %bb.t
 
@@ -230,7 +230,7 @@ bb.t:                                             ; preds = %.thread
 bb.u:                                             ; preds = %bb.z, %bb.y, %bb.t
   %.lcssa = phi ptr [ @ParseSingleImage, %bb.t ], [ @ParseSingleImage, %bb.y ], [ @ParseVP8X, %bb.z ]
   %.035113.lcssa = phi ptr [ @kMasterChunks, %bb.t ], [ getelementptr inbounds nuw (i8, ptr @kMasterChunks, i64 24), %bb.y ], [ getelementptr inbounds nuw (i8, ptr @kMasterChunks, i64 48), %bb.z ]
-  %i.bt = tail call i32 %.lcssa(ptr noundef nonnull %i.bh) #12 ; 3 uses
+  %i.bt = tail call i32 %.lcssa(ptr noundef nonnull %i.bh) #11 ; 3 uses
   %i.bu = icmp eq i32 %i.bt, 0
   br i1 %i.bu, label %bb.v, label %bb.w
 
@@ -248,7 +248,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 bb.x:                                             ; preds = %bb.w
   %i.bw = getelementptr inbounds nuw i8, ptr %.035113.lcssa, i64 16
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !44
-  %i.by = tail call i32 %i.bx(ptr noundef nonnull %i.bh) #12
+  %i.by = tail call i32 %i.bx(ptr noundef nonnull %i.bh) #11
   %.not51 = icmp eq i32 %i.by, 0
   br i1 %.not51, label %.critedge, label %.loopexit
 
@@ -312,7 +312,7 @@ bb.b:                                             ; preds = %bb.a
   %.01216 = phi ptr [ %i.e, %.lr.ph ], [ %i.c, %bb.b ] ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.01216, i64 72
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !39   ; 2 uses
-  tail call void @WebPSafeFree(ptr noundef nonnull %.01216) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %.01216) #11
   %.not = icmp eq ptr %i.e, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !47
 
@@ -326,12 +326,12 @@ bb.b:                                             ; preds = %bb.a
   %.018 = phi ptr [ %i.i, %.lr.ph20 ], [ %i.g, %._crit_edge ] ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.018, i64 16
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !50   ; 2 uses
-  tail call void @WebPSafeFree(ptr noundef nonnull %.018) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %.018) #11
   %.not14 = icmp eq ptr %i.i, null
   br i1 %.not14, label %._crit_edge21, label %.lr.ph20, !llvm.loop !52
 
 ._crit_edge21:                                    ; preds = %.lr.ph20, %._crit_edge
-  tail call void @WebPSafeFree(ptr noundef nonnull %0) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %0) #11
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %._crit_edge21
@@ -711,8 +711,8 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define range(i32 0, 2) i32 @WebPDemuxGetChunk(ptr noundef %0, ptr noundef readonly captures(address_is_null) %1, i32 noundef %2, ptr noundef captures(address_is_null) %3) local_unnamed_addr #7 {
+; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define range(i32 0, 2) i32 @WebPDemuxGetChunk(ptr noundef %0, ptr noundef readonly captures(address_is_null) %1, i32 noundef %2, ptr noundef captures(address_is_null) %3) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq ptr %3, null
   br i1 %i.a, label %bb.c, label %bb.b
@@ -729,8 +729,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i32 %.0
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc range(i32 0, 2) i32 @SetChunk(ptr noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr noundef nonnull captures(none) %2) unnamed_addr #7 {
+; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc range(i32 0, 2) i32 @SetChunk(ptr noundef readonly captures(address_is_null) %0, i32 noundef %1, ptr noundef nonnull captures(none) %2) unnamed_addr #5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !67   ; 3 uses
@@ -827,8 +827,8 @@ ChunkCount.exit.thread:                           ; preds = %bb.b, %bb.c, %Chunk
   ret i32 %.0
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define range(i32 0, 2) i32 @WebPDemuxNextChunk(ptr noundef captures(address_is_null) %0) local_unnamed_addr #8 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define range(i32 0, 2) i32 @WebPDemuxNextChunk(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -847,8 +847,8 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i32 %.0
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define range(i32 0, 2) i32 @WebPDemuxPrevChunk(ptr noundef captures(address_is_null) %0) local_unnamed_addr #8 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define range(i32 0, 2) i32 @WebPDemuxPrevChunk(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.d, label %bb.b
@@ -903,7 +903,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.p, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #12 ; 11 uses
+  %i.i = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #11 ; 11 uses
   %i.j = icmp eq ptr %i.i, null
   br i1 %i.j, label %bb.p, label %bb.e
 
@@ -988,7 +988,7 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   br label %bb.p
 
 AddFrame.exit.thread:                             ; preds = %bb.n, %bb.e
-  tail call void @WebPSafeFree(ptr noundef nonnull %i.i) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %i.i) #11
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %AddFrame.exit.thread, %bb.d, %bb.c, %bb.b, %bb.a
@@ -997,7 +997,7 @@ bb.p:                                             ; preds = %bb.o, %AddFrame.exi
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i32 0, 2) i32 @IsValidSimpleFormat(ptr noundef readonly captures(none) %0) #9 {
+define internal range(i32 0, 2) i32 @IsValidSimpleFormat(ptr noundef readonly captures(none) %0) #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !46   ; 3 uses
@@ -1146,7 +1146,7 @@ bb.i:                                             ; preds = %bb.g, %bb.f, %bb.e,
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i32 0, 2) i32 @IsValidExtendedFormat(ptr noundef readonly captures(none) %0) #10 {
+define internal range(i32 0, 2) i32 @IsValidExtendedFormat(ptr noundef readonly captures(none) %0) #9 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.b = load i32, ptr %i.a, align 8, !tbaa !42   ; 2 uses
@@ -1419,8 +1419,8 @@ bb.h:                                             ; preds = %bb.g, %bb.d
   br i1 %i.ah, label %bb.i, label %bb.l
 
 bb.i:                                             ; preds = %bb.h
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
-  %i.ai = call i32 @WebPGetFeaturesInternal(ptr noundef nonnull %i.s, i64 noundef %i.ab, ptr noundef nonnull %4, i32 noundef 528) #12 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  %i.ai = call i32 @WebPGetFeaturesInternal(ptr noundef nonnull %i.s, i64 noundef %i.ab, ptr noundef nonnull %4, i32 noundef 528) #11 ; 2 uses
   %i.aj = icmp eq i32 %i.ai, 7
   %or.cond = select i1 %i.ad, i1 %i.aj, i1 false
   br i1 %or.cond, label %.thread, label %bb.j
@@ -1431,7 +1431,7 @@ bb.j:                                             ; preds = %bb.i
 
 .thread:                                          ; preds = %bb.i, %bb.j
   %.1.ph = phi i32 [ 2, %bb.j ], [ 1, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   br label %.critedge
 
 bb.k:                                             ; preds = %bb.j
@@ -1450,7 +1450,7 @@ bb.k:                                             ; preds = %bb.j
   %i.aq = load i64, ptr %2, align 8, !tbaa !78
   %i.ar = add i64 %i.aq, %spec.select112          ; 2 uses
   store i64 %i.ar, ptr %2, align 8, !tbaa !78
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   %.pre = load i64, ptr %i.g, align 8, !tbaa !79
   br label %bb.m
 
@@ -1596,7 +1596,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.as, label %ParseAnimationFrame.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
-  %i.at = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #12 ; 14 uses
+  %i.at = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 80) #11 ; 14 uses
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %ParseAnimationFrame.exit, label %NewFrame.exit.i
 
@@ -1684,7 +1684,7 @@ NewFrame.exit.i:                                  ; preds = %bb.n
   br i1 %i.dc, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %NewFrame.exit.i
-  tail call void @WebPSafeFree(ptr noundef nonnull %i.at) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %i.at) #11
   br label %ParseAnimationFrame.exit
 
 bb.p:                                             ; preds = %NewFrame.exit.i
@@ -1734,7 +1734,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 .thread.i:                                        ; preds = %bb.t, %bb.r, %bb.q, %bb.p
   %.1.ph.i = phi i32 [ %spec.select.i, %bb.q ], [ 2, %bb.p ], [ %i.df, %bb.r ], [ 2, %bb.t ]
-  tail call void @WebPSafeFree(ptr noundef nonnull %i.at) #12
+  tail call void @WebPSafeFree(ptr noundef nonnull %i.at) #11
   br label %ParseAnimationFrame.exit
 
 bb.v:                                             ; preds = %bb.d
@@ -1770,7 +1770,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %.not61, label %.thread104, label %.thread76
 
 .thread76:                                        ; preds = %.thread, %bb.y
-  %i.eb = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 24) #12 ; 5 uses
+  %i.eb = tail call ptr @WebPSafeCalloc(i64 noundef 1, i64 noundef 24) #11 ; 5 uses
   %i.ec = icmp eq ptr %i.eb, null
   br i1 %i.ec, label %.thread81, label %StoreChunk.exit
 
@@ -1816,10 +1816,10 @@ bb.z:                                             ; preds = %ParseAnimationFrame
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #11
+declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #11
+declare { i32, i1 } @llvm.umul.with.overflow.i32(i32, i32) #10
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1828,12 +1828,11 @@ attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #7 = { nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nounwind }
+attributes #7 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

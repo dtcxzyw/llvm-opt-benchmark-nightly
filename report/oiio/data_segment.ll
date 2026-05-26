@@ -24,7 +24,7 @@ target triple = "x86_64-pc-linux-gnu"
 define void @_ZN22photos_editing_formats8image_io11DataSegment6CreateERKNS0_9DataRangeEPKhNS1_23BufferDispositionPolicyE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %4 = alloca %"struct.std::default_delete", align 1 ; 3 uses
-  %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #11 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #10 ; 6 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(28) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !7
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %2, ptr %i.b, align 8, !tbaa !10
@@ -34,16 +34,16 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   store ptr null, ptr %i.d, align 8, !tbaa !22
-  %i.e = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11
+  %i.e = invoke noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #10
           to label %_ZNSt10shared_ptrIN22photos_editing_formats8image_io11DataSegmentEEC2IS2_St14default_deleteIS2_EvEEPT_T0_.exit unwind label %bb.b ; 5 uses
 
 bb.b:                                             ; preds = %bb.a
   %i.f = landingpad { ptr, i32 }
           catch ptr null
   %i.g = extractvalue { ptr, i32 } %i.f, 0
-  %i.h = tail call ptr @__cxa_begin_catch(ptr %i.g) #12 ; 0 uses
+  %i.h = tail call ptr @__cxa_begin_catch(ptr %i.g) #11 ; 0 uses
   call void @_ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_(ptr noundef nonnull align 1 dereferenceable(1) %4, ptr noundef nonnull %i.a)
-  invoke void @__cxa_rethrow() #13
+  invoke void @__cxa_rethrow() #12
           to label %bb.f unwind label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -59,7 +59,7 @@ bb.e:                                             ; preds = %bb.c
   %i.j = landingpad { ptr, i32 }
           catch ptr null
   %i.k = extractvalue { ptr, i32 } %i.j, 0
-  call void @__clang_call_terminate(ptr %i.k) #14
+  call void @__clang_call_terminate(ptr %i.k) #13
   unreachable
 
 bb.f:                                             ; preds = %bb.b
@@ -86,7 +86,7 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i64 @_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, i64 noundef %1, i8 noundef zeroext %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !30     ; 3 uses
@@ -105,7 +105,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds i8, ptr %i.h, i64 %i.i
   %i.k = zext i8 %2 to i32
   %i.l = sub nuw i64 %i.c, %1
-  %i.m = tail call noundef ptr @memchr(ptr noundef %i.j, i32 noundef %i.k, i64 noundef %i.l) #15 ; 2 uses
+  %i.m = tail call noundef ptr @memchr(ptr noundef %i.j, i32 noundef %i.k, i64 noundef %i.l) #14 ; 2 uses
   %.not = icmp eq ptr %i.m, null
   br i1 %.not, label %bb.d, label %bb.c
 
@@ -124,13 +124,13 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #4
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare noundef ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #4
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i64 @_ZNK22photos_editing_formats8image_io11DataSegment4FindEmPKcm(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(28) %0, i64 noundef %1, ptr noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = load i64, ptr %0, align 8, !tbaa !30     ; 4 uses
@@ -155,7 +155,7 @@ bb.b:                                             ; preds = %.lr.ph, %.thread
   %i.k = sub nuw i64 %i.c, %.02638
   %i.l = sub nuw i64 %.02638, %i.a
   %i.m = getelementptr inbounds nuw i8, ptr %i.h, i64 %i.l
-  %i.n = tail call noundef ptr @memchr(ptr noundef %i.m, i32 noundef %i.i, i64 noundef %i.k) #15 ; 3 uses
+  %i.n = tail call noundef ptr @memchr(ptr noundef %i.m, i32 noundef %i.i, i64 noundef %i.k) #14 ; 3 uses
   %.not = icmp eq ptr %i.n, null
   br i1 %.not, label %.thread, label %bb.c
 
@@ -167,7 +167,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not29, label %.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = tail call i32 @strncmp(ptr noundef nonnull %i.n, ptr noundef nonnull %2, i64 noundef %3) #15
+  %i.q = tail call i32 @strncmp(ptr noundef nonnull %i.n, ptr noundef nonnull %2, i64 noundef %3) #14
   %.not30.not = icmp eq i32 %i.q, 0
   br i1 %.not30.not, label %.thread33, label %.thread
 
@@ -183,11 +183,11 @@ bb.d:                                             ; preds = %bb.c
   ret i64 %.6
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define range(i16 0, 512) i16 @_ZN22photos_editing_formats8image_io11DataSegment16GetValidatedByteEmPKS1_S3_(i64 noundef %0, ptr noundef readonly captures(address_is_null) %1, ptr noundef readonly captures(address_is_null) %2) local_unnamed_addr #6 align 2 {
+define range(i16 0, 512) i16 @_ZN22photos_editing_formats8image_io11DataSegment16GetValidatedByteEmPKS1_S3_(i64 noundef %0, ptr noundef readonly captures(address_is_null) %1, ptr noundef readonly captures(address_is_null) %2) local_unnamed_addr #3 align 2 {
 bb.a:
   %.not16 = icmp eq ptr %1, null
   br i1 %.not16, label %bb.c, label %bb.b
@@ -231,7 +231,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
   ret i16 %.sroa.0.3
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define noundef i64 @_ZN22photos_editing_formats8image_io11DataSegment4FindEmhPKS1_S3_(i64 noundef %0, i8 noundef zeroext %1, ptr noundef readonly captures(address_is_null) %2, ptr noundef readonly captures(address_is_null) %3) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = icmp ne ptr %2, null                     ; 2 uses
@@ -262,7 +262,7 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds i8, ptr %i.m, i64 %i.n
   %i.p = zext i8 %1 to i32                        ; 2 uses
   %i.q = sub nuw i64 %i.d, %0
-  %i.r = tail call noundef ptr @memchr(ptr noundef %i.o, i32 noundef %i.p, i64 noundef %i.q) #15 ; 2 uses
+  %i.r = tail call noundef ptr @memchr(ptr noundef %i.o, i32 noundef %i.p, i64 noundef %i.q) #14 ; 2 uses
   %.not.i = icmp eq ptr %i.r, null
   br i1 %.not.i, label %_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh.exit.thread, label %_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh.exit
 
@@ -283,7 +283,7 @@ bb.e:                                             ; preds = %_ZNK22photos_editin
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !10  ; 2 uses
   %i.ab = sub nuw i64 %i.x, %i.d
-  %i.ac = tail call noundef ptr @memchr(ptr noundef %i.aa, i32 noundef %i.p, i64 noundef %i.ab) #15 ; 2 uses
+  %i.ac = tail call noundef ptr @memchr(ptr noundef %i.aa, i32 noundef %i.p, i64 noundef %i.ab) #14 ; 2 uses
   %.not.i31 = icmp eq ptr %i.ac, null
   br i1 %.not.i31, label %_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh.exit32, label %bb.f
 
@@ -309,7 +309,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ao = getelementptr inbounds i8, ptr %i.am, i64 %i.an
   %i.ap = zext i8 %1 to i32
   %i.aq = sub nuw i64 %i.ah, %0
-  %i.ar = tail call noundef ptr @memchr(ptr noundef %i.ao, i32 noundef %i.ap, i64 noundef %i.aq) #15 ; 2 uses
+  %i.ar = tail call noundef ptr @memchr(ptr noundef %i.ao, i32 noundef %i.ap, i64 noundef %i.aq) #14 ; 2 uses
   %.not.i35 = icmp eq ptr %i.ar, null
   br i1 %.not.i35, label %_ZNK22photos_editing_formats8image_io11DataSegment4FindEmh.exit32, label %bb.i
 
@@ -350,7 +350,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare ptr @__cxa_begin_catch(ptr) local_unnamed_addr
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1) local_unnamed_addr #7 align 2 {
+define linkonce_odr void @_ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef %1) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.e, label %bb.b
@@ -368,11 +368,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZdaPv(ptr noundef nonnull %i.f) #16
+  tail call void @_ZdaPv(ptr noundef nonnull %i.f) #15
   br label %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit
 
 _ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit: ; preds = %bb.b, %bb.c, %bb.d
-  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 32) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %1, i64 noundef 32) #15
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit, %bb.a
@@ -384,31 +384,31 @@ declare void @__cxa_rethrow() local_unnamed_addr
 declare void @__cxa_end_catch() local_unnamed_addr
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #8 {
+define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #7 {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #12 ; 0 uses
-  tail call void @_ZSt9terminatev() #14
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #11 ; 0 uses
+  tail call void @_ZSt9terminatev() #13
   unreachable
 }
 
 ; Function Attrs: cold nofree noreturn
-declare void @_ZSt9terminatev() local_unnamed_addr #9
+declare void @_ZSt9terminatev() local_unnamed_addr #8
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #7 align 2 {
+define linkonce_odr void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #6 align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #7 align 2 {
+define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EED0Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #6 align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #15
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_disposeEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !35   ; 4 uses
@@ -428,11 +428,11 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.i, label %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZdaPv(ptr noundef nonnull %i.h) #16
+  tail call void @_ZdaPv(ptr noundef nonnull %i.h) #15
   br label %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit.i
 
 _ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit.i: ; preds = %bb.d, %bb.c, %bb.b
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 32) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 32) #15
   br label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_.exit
 
 _ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_.exit: ; preds = %bb.a, %_ZN22photos_editing_formats8image_io11DataSegmentD2Ev.exit.i
@@ -440,14 +440,14 @@ _ZNKSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEEclEPS2_.
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 _ZNSt15__allocated_ptrISaISt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS3_ESaIvELN9__gnu_cxx12_Lock_policyE2EEEED2Ev.exit:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #15
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr noundef ptr @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr noundef ptr @_ZNSt19_Sp_counted_deleterIPN22photos_editing_formats8image_io11DataSegmentESt14default_deleteIS2_ESaIvELN9__gnu_cxx12_Lock_policyE2EE14_M_get_deleterERKSt9type_info(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(16) %1) unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 3 uses
@@ -460,7 +460,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not.i, label %_ZNKSt9type_infoeqERKS_.exit.thread3, label %_ZNKSt9type_infoeqERKS_.exit
 
 _ZNKSt9type_infoeqERKS_.exit:                     ; preds = %bb.b
-  %i.e = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(69) @_ZTSSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEE) #12
+  %i.e = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(69) @_ZTSSt14default_deleteIN22photos_editing_formats8image_io11DataSegmentEE) #11
   %i.f = icmp eq i32 %i.e, 0
   br i1 %i.f, label %_ZNKSt9type_infoeqERKS_.exit.thread, label %_ZNKSt9type_infoeqERKS_.exit.thread3
 
@@ -473,32 +473,31 @@ _ZNKSt9type_infoeqERKS_.exit.thread3:             ; preds = %bb.b, %_ZNKSt9type_
   ret ptr %i.h
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #5
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdaPv(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #10
+declare i64 @llvm.umax.i64(i64, i64) #9
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #5 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { cold nofree noreturn }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { builtin allocsize(0) }
-attributes #12 = { nounwind }
-attributes #13 = { noreturn }
-attributes #14 = { noreturn nounwind }
-attributes #15 = { nounwind willreturn memory(read) }
-attributes #16 = { builtin nounwind }
+attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { cold nofree noreturn }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { nounwind }
+attributes #12 = { noreturn }
+attributes #13 = { noreturn nounwind }
+attributes #14 = { nounwind willreturn memory(read) }
+attributes #15 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

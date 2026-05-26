@@ -31,7 +31,7 @@ bb.e:                                             ; preds = %bb.b
   %i.e = landingpad { ptr, i32 }
           catch ptr null
   %i.f = extractvalue { ptr, i32 } %i.e, 0
-  tail call void @__clang_call_terminate(ptr %i.f) #10
+  tail call void @__clang_call_terminate(ptr %i.f) #9
   unreachable
 }
 
@@ -42,8 +42,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #2 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #11 ; 0 uses
-  tail call void @_ZSt9terminatev() #10
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #10 ; 0 uses
+  tail call void @_ZSt9terminatev() #9
   unreachable
 }
 
@@ -68,7 +68,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.b = landingpad { ptr, i32 }
           catch ptr null
   %i.c = extractvalue { ptr, i32 } %i.b, 0
-  tail call void @__clang_call_terminate(ptr %i.c) #10
+  tail call void @__clang_call_terminate(ptr %i.c) #9
   unreachable
 
 _ZN4absl12lts_2025051220StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %.lr.ph
@@ -98,7 +98,7 @@ bb.c:                                             ; preds = %bb.b
   %i.b = landingpad { ptr, i32 }
           catch ptr null
   %i.c = extractvalue { ptr, i32 } %i.b, 0
-  tail call void @__clang_call_terminate(ptr %i.c) #10
+  tail call void @__clang_call_terminate(ptr %i.c) #9
   unreachable
 
 _ZN4absl12lts_2025051216EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %bb.b
@@ -110,7 +110,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20250
   ret i1 %i.e
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2025051221StrContainsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEEc(i64 %0, ptr %1, i8 noundef signext %2) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [3 x i8], align 1                 ; 7 uses
@@ -128,7 +128,7 @@ bb.b:                                             ; preds = %bb.a
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b
   %i.h = sext i8 %2 to i32
-  %i.i = tail call ptr @memchr(ptr noundef %1, i32 noundef %i.h, i64 noundef %0) #11 ; 2 uses
+  %i.i = tail call ptr @memchr(ptr noundef %1, i32 noundef %i.h, i64 noundef %0) #10 ; 2 uses
   %.not.i.i = icmp ne ptr %i.i, null
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = ptrtoint ptr %1 to i64
@@ -138,13 +138,13 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b
   br label %_ZN4absl12lts_2025051211StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i8 %i.f, ptr %i.a, align 1, !tbaa !9
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   store i8 %i.d, ptr %i.o, align 1, !tbaa !9
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 2
   store i8 0, ptr %i.p, align 1, !tbaa !9
-  %i.q = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #11 ; 2 uses
+  %i.q = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #10 ; 2 uses
   %.not.i.i7 = icmp ne i64 %i.q, 0
   %i.r = icmp ne i64 %0, 0
   %or.cond15.i.i = select i1 %.not.i.i7, i1 %i.r, i1 false
@@ -155,7 +155,7 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i8:    ; preds = %bb.c, %bb.d
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.01116.i.i
   %i.t = load i8, ptr %i.s, align 1, !tbaa !9
   %i.u = sext i8 %i.t to i32
-  %i.v = call ptr @memchr(ptr noundef nonnull %i.a, i32 noundef %i.u, i64 noundef %i.q) #11
+  %i.v = call ptr @memchr(ptr noundef nonnull %i.a, i32 noundef %i.u, i64 noundef %i.q) #10
   %.not13.not.i.i = icmp eq ptr %i.v, null
   br i1 %.not13.not.i.i, label %bb.d, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit
 
@@ -171,7 +171,7 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit: ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit, %bb.c
   %.2.i.i = phi i1 [ false, %bb.c ], [ %i.x, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit.loopexit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %_ZN4absl12lts_2025051211StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit
 
 _ZN4absl12lts_2025051211StrContainsESt17basic_string_viewIcSt11char_traitsIcEEc.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i, %bb.b, %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEPKcm.exit
@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = landingpad { ptr, i32 }
           catch ptr null
   %i.e = extractvalue { ptr, i32 } %i.d, 0
-  tail call void @__clang_call_terminate(ptr %i.e) #10
+  tail call void @__clang_call_terminate(ptr %i.e) #9
   unreachable
 
 _ZN4absl12lts_2025051216EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_.exit: ; preds = %bb.b
@@ -214,7 +214,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20250
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define { i64, ptr } @_ZN4absl12lts_2025051223FindLongestCommonPrefixESt17basic_string_viewIcSt11char_traitsIcEES4_(i64 %0, ptr %1, i64 %2, ptr readonly captures(none) %3) local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
+define { i64, ptr } @_ZN4absl12lts_2025051223FindLongestCommonPrefixESt17basic_string_viewIcSt11char_traitsIcEES4_(i64 %0, ptr %1, i64 %2, ptr readonly captures(none) %3) local_unnamed_addr #4 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0) ; 7 uses
   %i.a = icmp ult i64 %.sroa.speculated, 8
@@ -302,7 +302,7 @@ bb.i:                                             ; preds = %bb.g, %bb.e, %bb.c,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define { i64, ptr } @_ZN4absl12lts_2025051223FindLongestCommonSuffixESt17basic_string_viewIcSt11char_traitsIcEES4_(i64 %0, ptr %1, i64 %2, ptr readonly captures(none) %3) local_unnamed_addr #6 {
+define { i64, ptr } @_ZN4absl12lts_2025051223FindLongestCommonSuffixESt17basic_string_viewIcSt11char_traitsIcEES4_(i64 %0, ptr %1, i64 %2, ptr readonly captures(none) %3) local_unnamed_addr #4 {
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %0) ; 4 uses
   %i.a = icmp eq i64 %.sroa.speculated, 0
@@ -339,30 +339,29 @@ bb.d:                                             ; preds = %bb.c
   ret { i64, ptr } %.fca.1.insert
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #7
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #6
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #7
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.cttz.i64(i64, i1 immarg) #8
+declare i64 @llvm.cttz.i64(i64, i1 immarg) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #9
+declare i64 @llvm.umin.i64(i64, i64) #8
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { cold nofree noreturn }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { noreturn nounwind }
-attributes #11 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { noreturn nounwind }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

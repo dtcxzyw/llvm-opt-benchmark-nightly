@@ -130,10 +130,10 @@ bb.a:
   ret ptr %0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local ptr @uprv_decContextSetStatusFromString_78(ptr noundef captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #3 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define dso_local ptr @uprv_decContextSetStatusFromString_78(ptr noundef captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str) #7
+  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str) #6
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -145,7 +145,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.ab
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(17) @.str.1) #7
+  %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(17) @.str.1) #6
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.d, label %bb.e
 
@@ -157,7 +157,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ab
 
 bb.e:                                             ; preds = %bb.c
-  %i.k = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(20) @.str.2) #7
+  %i.k = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(20) @.str.2) #6
   %i.l = icmp eq i32 %i.k, 0
   br i1 %i.l, label %bb.f, label %bb.g
 
@@ -169,7 +169,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.ab
 
 bb.g:                                             ; preds = %bb.e
-  %i.p = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(19) @.str.3) #7
+  %i.p = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(19) @.str.3) #6
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.h, label %bb.i
 
@@ -181,7 +181,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ab
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.4) #7
+  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.4) #6
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %bb.j, label %bb.k
 
@@ -193,7 +193,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.ab
 
 bb.k:                                             ; preds = %bb.i
-  %i.z = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(21) @.str.5) #7
+  %i.z = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(21) @.str.5) #6
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %bb.l, label %bb.m
 
@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.ab
 
 bb.m:                                             ; preds = %bb.k
-  %i.ae = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(16) @.str.6) #7
+  %i.ae = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(16) @.str.6) #6
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %bb.n, label %bb.o
 
@@ -217,7 +217,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.ab
 
 bb.o:                                             ; preds = %bb.m
-  %i.aj = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str.7) #7
+  %i.aj = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str.7) #6
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.p, label %bb.q
 
@@ -229,7 +229,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.ab
 
 bb.q:                                             ; preds = %bb.o
-  %i.ao = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.8) #7
+  %i.ao = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.8) #6
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %bb.r, label %bb.s
 
@@ -241,7 +241,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.ab
 
 bb.s:                                             ; preds = %bb.q
-  %i.at = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.9) #7
+  %i.at = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.9) #6
   %i.au = icmp eq i32 %i.at, 0
   br i1 %i.au, label %bb.t, label %bb.u
 
@@ -253,7 +253,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.ab
 
 bb.u:                                             ; preds = %bb.s
-  %i.ay = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.10) #7
+  %i.ay = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.10) #6
   %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %bb.v, label %bb.w
 
@@ -265,7 +265,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ab
 
 bb.w:                                             ; preds = %bb.u
-  %i.bd = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.11) #7
+  %i.bd = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.11) #6
   %i.be = icmp eq i32 %i.bd, 0
   br i1 %i.be, label %bb.x, label %bb.y
 
@@ -277,7 +277,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.ab
 
 bb.y:                                             ; preds = %bb.w
-  %i.bi = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.12) #7
+  %i.bi = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.12) #6
   %i.bj = icmp eq i32 %i.bi, 0
   br i1 %i.bj, label %bb.z, label %bb.aa
 
@@ -289,7 +289,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
-  %i.bn = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.13) #7
+  %i.bn = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.13) #6
   %i.bo = icmp eq i32 %i.bn, 0
   %. = select i1 %i.bo, ptr %0, ptr null
   br label %bb.ab
@@ -299,13 +299,13 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.x
   ret ptr %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #4
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local ptr @uprv_decContextSetStatusFromStringQuiet_78(ptr noundef captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #3 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define dso_local ptr @uprv_decContextSetStatusFromStringQuiet_78(ptr noundef captures(ret: address, provenance) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str) #7
+  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str) #6
   %i.b = icmp eq i32 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.c
 
@@ -317,7 +317,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.ab
 
 bb.c:                                             ; preds = %bb.a
-  %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(17) @.str.1) #7
+  %i.f = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(17) @.str.1) #6
   %i.g = icmp eq i32 %i.f, 0
   br i1 %i.g, label %bb.d, label %bb.e
 
@@ -329,7 +329,7 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.ab
 
 bb.e:                                             ; preds = %bb.c
-  %i.k = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(20) @.str.2) #7
+  %i.k = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(20) @.str.2) #6
   %i.l = icmp eq i32 %i.k, 0
   br i1 %i.l, label %bb.f, label %bb.g
 
@@ -341,7 +341,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.ab
 
 bb.g:                                             ; preds = %bb.e
-  %i.p = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(19) @.str.3) #7
+  %i.p = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(19) @.str.3) #6
   %i.q = icmp eq i32 %i.p, 0
   br i1 %i.q, label %bb.h, label %bb.i
 
@@ -353,7 +353,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.ab
 
 bb.i:                                             ; preds = %bb.g
-  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.4) #7
+  %i.u = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.4) #6
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %bb.j, label %bb.k
 
@@ -365,7 +365,7 @@ bb.j:                                             ; preds = %bb.i
   br label %bb.ab
 
 bb.k:                                             ; preds = %bb.i
-  %i.z = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(21) @.str.5) #7
+  %i.z = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(21) @.str.5) #6
   %i.aa = icmp eq i32 %i.z, 0
   br i1 %i.aa, label %bb.l, label %bb.m
 
@@ -377,7 +377,7 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.ab
 
 bb.m:                                             ; preds = %bb.k
-  %i.ae = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(16) @.str.6) #7
+  %i.ae = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(16) @.str.6) #6
   %i.af = icmp eq i32 %i.ae, 0
   br i1 %i.af, label %bb.n, label %bb.o
 
@@ -389,7 +389,7 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.ab
 
 bb.o:                                             ; preds = %bb.m
-  %i.aj = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str.7) #7
+  %i.aj = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(18) @.str.7) #6
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %bb.p, label %bb.q
 
@@ -401,7 +401,7 @@ bb.p:                                             ; preds = %bb.o
   br label %bb.ab
 
 bb.q:                                             ; preds = %bb.o
-  %i.ao = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.8) #7
+  %i.ao = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.8) #6
   %i.ap = icmp eq i32 %i.ao, 0
   br i1 %i.ap, label %bb.r, label %bb.s
 
@@ -413,7 +413,7 @@ bb.r:                                             ; preds = %bb.q
   br label %bb.ab
 
 bb.s:                                             ; preds = %bb.q
-  %i.at = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.9) #7
+  %i.at = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.9) #6
   %i.au = icmp eq i32 %i.at, 0
   br i1 %i.au, label %bb.t, label %bb.u
 
@@ -425,7 +425,7 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.ab
 
 bb.u:                                             ; preds = %bb.s
-  %i.ay = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.10) #7
+  %i.ay = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(8) @.str.10) #6
   %i.az = icmp eq i32 %i.ay, 0
   br i1 %i.az, label %bb.v, label %bb.w
 
@@ -437,7 +437,7 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.ab
 
 bb.w:                                             ; preds = %bb.u
-  %i.bd = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.11) #7
+  %i.bd = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.11) #6
   %i.be = icmp eq i32 %i.bd, 0
   br i1 %i.be, label %bb.x, label %bb.y
 
@@ -449,7 +449,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.ab
 
 bb.y:                                             ; preds = %bb.w
-  %i.bi = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.12) #7
+  %i.bi = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.12) #6
   %i.bj = icmp eq i32 %i.bi, 0
   br i1 %i.bj, label %bb.z, label %bb.aa
 
@@ -461,7 +461,7 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.y
-  %i.bn = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.13) #7
+  %i.bn = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(10) @.str.13) #6
   %i.bo = icmp eq i32 %i.bn, 0
   %. = select i1 %i.bo, ptr %0, ptr null
   br label %bb.ab
@@ -551,7 +551,7 @@ bb.p:                                             ; preds = %bb.a, %bb.o, %bb.n,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local range(i32 0, 2) i32 @uprv_decContextTestSavedStatus_78(i32 noundef %0, i32 noundef %1) local_unnamed_addr #5 {
+define dso_local range(i32 0, 2) i32 @uprv_decContextTestSavedStatus_78(i32 noundef %0, i32 noundef %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = and i32 %1, %0
   %i.b = icmp ne i32 %i.a, 0
@@ -579,16 +579,15 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #6
+declare i32 @llvm.fshl.i32(i32, i32, i32) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind willreturn memory(read) }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

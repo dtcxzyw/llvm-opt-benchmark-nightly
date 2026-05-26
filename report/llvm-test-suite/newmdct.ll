@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@mdct_sub48.init = internal unnamed_addr global i32 0, align 4
+@mdct_sub48.init = internal unnamed_addr global i1 false, align 4
 @sb_sample = internal global [2 x [2 x [18 x [32 x double]]]] zeroinitializer, align 16
 @win = internal unnamed_addr global [4 x [36 x double]] zeroinitializer, align 16
 @ca.0 = internal unnamed_addr global double 0.000000e+00, align 16
@@ -29,18 +29,15 @@ target triple = "x86_64-pc-linux-gnu"
 @mm = internal unnamed_addr global [16 x [31 x double]] zeroinitializer, align 16
 @cos_s = internal unnamed_addr global [6 x [6 x double]] zeroinitializer, align 16
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @mdct_sub48(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef %2, ptr noundef captures(none) %3, ptr noundef readonly captures(none) %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = load i32, ptr @mdct_sub48.init, align 4, !tbaa !4
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %bb.b, label %bb.c
+  %.b = load i1, ptr @mdct_sub48.init, align 4
+  br i1 %.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @mdct_init48()
-  %7 = load i32, ptr @mdct_sub48.init, align 4, !tbaa !4
-  %8 = add nsw i32 %7, 1
-  store i32 %8, ptr @mdct_sub48.init, align 4, !tbaa !4
+  store i1 true, ptr @mdct_sub48.init, align 4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -283,7 +280,7 @@ bb.i:                                             ; preds = %bb.h
   %i.fp = fsub float %i.fk, %i.fa
   %i.fq = fpext float %i.fp to double
   %i.fr = fdiv double %i.fo, %i.fq
-  %i.fs = tail call double @cos(double noundef %i.fr) #7, !tbaa !4 ; 18 uses
+  %i.fs = tail call double @cos(double noundef %i.fr) #6, !tbaa !4 ; 18 uses
   %invariant.gep = getelementptr [8 x i8], ptr %i.ct, i64 %indvars.iv ; 19 uses
   %i.ft = load double, ptr %invariant.gep, align 8, !tbaa !15
   %i.fu = fmul double %i.fs, %i.ft
@@ -374,7 +371,7 @@ bb.j:                                             ; preds = %.loopexit217
   %i.hj = fsub float %i.he, %i.fc
   %i.hk = fpext float %i.hj to double
   %i.hl = fdiv double %i.hi, %i.hk
-  %i.hm = tail call double @cos(double noundef %i.hl) #7, !tbaa !4 ; 18 uses
+  %i.hm = tail call double @cos(double noundef %i.hl) #6, !tbaa !4 ; 18 uses
   %invariant.gep226 = getelementptr [8 x i8], ptr %i.ct, i64 %indvars.iv ; 19 uses
   %i.hn = load double, ptr %invariant.gep226, align 8, !tbaa !15
   %i.ho = fmul double %i.hm, %i.hn
@@ -777,7 +774,7 @@ bb.p:                                             ; preds = %._crit_edge
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @mdct_init48() local_unnamed_addr #2 {
 .preheader204:
   %i.a = alloca [31 x double], align 16           ; 21 uses
@@ -867,81 +864,81 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.n = sitofp i32 %i.m to double
   %i.o = fmul nnan double %i.n, f0x3F9657184AE74487 ; 18 uses
   %i.p = fmul nnan double %i.o, 3.800000e+01
-  %i.q = tail call double @cos(double noundef %i.p) #7, !tbaa !4
+  %i.q = tail call double @cos(double noundef %i.p) #6, !tbaa !4
   %i.r = fmul nnan double %i.o, 4.200000e+01
-  %i.s = tail call double @cos(double noundef %i.r) #7, !tbaa !4
+  %i.s = tail call double @cos(double noundef %i.r) #6, !tbaa !4
   %i.t = getelementptr inbounds nuw i8, ptr %.0184, i64 16
   %i.u = insertelement <2 x double> poison, double %i.q, i64 0
   %i.v = insertelement <2 x double> %i.u, double %i.s, i64 1
   %i.w = fmul <2 x double> %i.v, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.w, ptr %.0184, align 8, !tbaa !15
   %i.x = fmul nnan double %i.o, 4.600000e+01
-  %i.y = tail call double @cos(double noundef %i.x) #7, !tbaa !4
+  %i.y = tail call double @cos(double noundef %i.x) #6, !tbaa !4
   %i.z = fmul nnan double %i.o, 5.000000e+01
-  %i.aa = tail call double @cos(double noundef %i.z) #7, !tbaa !4
+  %i.aa = tail call double @cos(double noundef %i.z) #6, !tbaa !4
   %i.ab = getelementptr inbounds nuw i8, ptr %.0184, i64 32
   %i.ac = insertelement <2 x double> poison, double %i.y, i64 0
   %i.ad = insertelement <2 x double> %i.ac, double %i.aa, i64 1
   %i.ae = fmul <2 x double> %i.ad, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.ae, ptr %i.t, align 8, !tbaa !15
   %i.af = fmul nnan double %i.o, 5.400000e+01
-  %i.ag = tail call double @cos(double noundef %i.af) #7, !tbaa !4
+  %i.ag = tail call double @cos(double noundef %i.af) #6, !tbaa !4
   %i.ah = fmul nnan double %i.o, 5.800000e+01
-  %i.ai = tail call double @cos(double noundef %i.ah) #7, !tbaa !4
+  %i.ai = tail call double @cos(double noundef %i.ah) #6, !tbaa !4
   %i.aj = getelementptr inbounds nuw i8, ptr %.0184, i64 48
   %i.ak = insertelement <2 x double> poison, double %i.ag, i64 0
   %i.al = insertelement <2 x double> %i.ak, double %i.ai, i64 1
   %i.am = fmul <2 x double> %i.al, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.am, ptr %i.ab, align 8, !tbaa !15
   %i.an = fmul nnan double %i.o, 6.200000e+01
-  %i.ao = tail call double @cos(double noundef %i.an) #7, !tbaa !4
+  %i.ao = tail call double @cos(double noundef %i.an) #6, !tbaa !4
   %i.ap = fmul nnan double %i.o, 6.600000e+01
-  %i.aq = tail call double @cos(double noundef %i.ap) #7, !tbaa !4
+  %i.aq = tail call double @cos(double noundef %i.ap) #6, !tbaa !4
   %i.ar = getelementptr inbounds nuw i8, ptr %.0184, i64 64
   %i.as = insertelement <2 x double> poison, double %i.ao, i64 0
   %i.at = insertelement <2 x double> %i.as, double %i.aq, i64 1
   %i.au = fmul <2 x double> %i.at, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.au, ptr %i.aj, align 8, !tbaa !15
   %i.av = fmul nnan double %i.o, 7.000000e+01
-  %i.aw = tail call double @cos(double noundef %i.av) #7, !tbaa !4
+  %i.aw = tail call double @cos(double noundef %i.av) #6, !tbaa !4
   %i.ax = fmul nnan double %i.o, 1.100000e+02
-  %i.ay = tail call double @cos(double noundef %i.ax) #7, !tbaa !4
+  %i.ay = tail call double @cos(double noundef %i.ax) #6, !tbaa !4
   %i.az = getelementptr inbounds nuw i8, ptr %.0184, i64 80
   %i.ba = insertelement <2 x double> poison, double %i.aw, i64 0
   %i.bb = insertelement <2 x double> %i.ba, double %i.ay, i64 1
   %i.bc = fmul <2 x double> %i.bb, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.bc, ptr %i.ar, align 8, !tbaa !15
   %i.bd = fmul nnan double %i.o, 1.140000e+02
-  %i.be = tail call double @cos(double noundef %i.bd) #7, !tbaa !4
+  %i.be = tail call double @cos(double noundef %i.bd) #6, !tbaa !4
   %i.bf = fmul nnan double %i.o, 1.180000e+02
-  %i.bg = tail call double @cos(double noundef %i.bf) #7, !tbaa !4
+  %i.bg = tail call double @cos(double noundef %i.bf) #6, !tbaa !4
   %i.bh = getelementptr inbounds nuw i8, ptr %.0184, i64 96
   %i.bi = insertelement <2 x double> poison, double %i.be, i64 0
   %i.bj = insertelement <2 x double> %i.bi, double %i.bg, i64 1
   %i.bk = fmul <2 x double> %i.bj, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.bk, ptr %i.az, align 8, !tbaa !15
   %i.bl = fmul nnan double %i.o, 1.220000e+02
-  %i.bm = tail call double @cos(double noundef %i.bl) #7, !tbaa !4
+  %i.bm = tail call double @cos(double noundef %i.bl) #6, !tbaa !4
   %i.bn = fmul nnan double %i.o, 1.260000e+02
-  %i.bo = tail call double @cos(double noundef %i.bn) #7, !tbaa !4
+  %i.bo = tail call double @cos(double noundef %i.bn) #6, !tbaa !4
   %i.bp = getelementptr inbounds nuw i8, ptr %.0184, i64 112
   %i.bq = insertelement <2 x double> poison, double %i.bm, i64 0
   %i.br = insertelement <2 x double> %i.bq, double %i.bo, i64 1
   %i.bs = fmul <2 x double> %i.br, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.bs, ptr %i.bh, align 8, !tbaa !15
   %i.bt = fmul nnan double %i.o, 1.300000e+02
-  %i.bu = tail call double @cos(double noundef %i.bt) #7, !tbaa !4
+  %i.bu = tail call double @cos(double noundef %i.bt) #6, !tbaa !4
   %i.bv = fmul nnan double %i.o, 1.340000e+02
-  %i.bw = tail call double @cos(double noundef %i.bv) #7, !tbaa !4
+  %i.bw = tail call double @cos(double noundef %i.bv) #6, !tbaa !4
   %i.bx = getelementptr inbounds nuw i8, ptr %.0184, i64 128
   %i.by = insertelement <2 x double> poison, double %i.bu, i64 0
   %i.bz = insertelement <2 x double> %i.by, double %i.bw, i64 1
   %i.ca = fmul <2 x double> %i.bz, splat (double f0x3FBC71C71C71C71C)
   store <2 x double> %i.ca, ptr %i.bp, align 8, !tbaa !15
   %i.cb = fmul nnan double %i.o, 1.380000e+02
-  %i.cc = tail call double @cos(double noundef %i.cb) #7, !tbaa !4
+  %i.cc = tail call double @cos(double noundef %i.cb) #6, !tbaa !4
   %i.cd = fmul nnan double %i.o, 1.420000e+02
-  %i.ce = tail call double @cos(double noundef %i.cd) #7, !tbaa !4
+  %i.ce = tail call double @cos(double noundef %i.cd) #6, !tbaa !4
   %i.cf = getelementptr inbounds nuw i8, ptr %.0184, i64 144 ; 2 uses
   %i.cg = insertelement <2 x double> poison, double %i.cc, i64 0
   %i.ch = insertelement <2 x double> %i.cg, double %i.ce, i64 1
@@ -980,7 +977,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   store <2 x double> <double f0xBFBA477C4665D2F0, double f0xBFA5C53B3ED424C1>, ptr %i.cu, align 8, !tbaa !15
   store <2 x double> <double f0x3FA5C53B3ED424D4, double f0xBFBA477C4665D2E6>, ptr %i.cv, align 8, !tbaa !15
   %i.cw = load double, ptr getelementptr inbounds nuw (i8, ptr @enwindow, i64 1984), align 16, !tbaa !15 ; 12 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.cx = load double, ptr @enwindow, align 16, !tbaa !15 ; 3 uses
   %i.cy = fdiv double %i.cx, %i.cw
   %i.cz = getelementptr inbounds nuw i8, ptr %i.a, i64 120
@@ -1169,13 +1166,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.hk = uitofp nneg i32 %i.hj to double
   %i.hl = fmul nnan double %i.hk, f0x400921FB54442D18
   %i.hm = fmul nnan double %i.hl, 1.562500e-02
-  %i.hn = tail call double @cos(double noundef %i.hm) #7, !tbaa !4
+  %i.hn = tail call double @cos(double noundef %i.hm) #6, !tbaa !4
   %.tr = trunc i64 %i.hi to i32
   %i.ho = shl i32 %.tr, 1
   %i.hp = uitofp nneg i32 %i.ho to double
   %i.hq = fmul nnan double %i.hp, f0x400921FB54442D18
   %i.hr = fmul nnan double %i.hq, 1.562500e-02
-  %i.hs = tail call double @cos(double noundef %i.hr) #7, !tbaa !4
+  %i.hs = tail call double @cos(double noundef %i.hr) #6, !tbaa !4
   %i.ht = getelementptr inbounds nuw i8, ptr %.4179243, i64 16
   %i.hu = insertelement <2 x double> poison, double %i.hn, i64 0
   %i.hv = insertelement <2 x double> %i.hu, double %i.hs, i64 1
@@ -1186,13 +1183,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.hz = uitofp nneg i32 %i.hy to double
   %i.ia = fmul nnan double %i.hz, f0x400921FB54442D18
   %i.ib = fmul nnan double %i.ia, 1.562500e-02
-  %i.ic = tail call double @cos(double noundef %i.ib) #7, !tbaa !4
+  %i.ic = tail call double @cos(double noundef %i.ib) #6, !tbaa !4
   %.tr302 = trunc i64 %i.hi to i32
   %i.id = shl i32 %.tr302, 2
   %i.ie = uitofp nneg i32 %i.id to double
   %i.if = fmul nnan double %i.ie, f0x400921FB54442D18
   %i.ig = fmul nnan double %i.if, 1.562500e-02
-  %i.ih = tail call double @cos(double noundef %i.ig) #7, !tbaa !4
+  %i.ih = tail call double @cos(double noundef %i.ig) #6, !tbaa !4
   %i.ii = getelementptr inbounds nuw i8, ptr %.4179243, i64 32
   %i.ij = insertelement <2 x double> poison, double %i.ic, i64 0
   %i.ik = insertelement <2 x double> %i.ij, double %i.ih, i64 1
@@ -1203,13 +1200,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.io = uitofp nneg i32 %i.in to double
   %i.ip = fmul nnan double %i.io, f0x400921FB54442D18
   %i.iq = fmul nnan double %i.ip, 1.562500e-02
-  %i.ir = tail call double @cos(double noundef %i.iq) #7, !tbaa !4
+  %i.ir = tail call double @cos(double noundef %i.iq) #6, !tbaa !4
   %i.is = trunc i64 %i.hi to i32
   %i.it = mul i32 %i.is, 6
   %i.iu = uitofp nneg i32 %i.it to double
   %i.iv = fmul nnan double %i.iu, f0x400921FB54442D18
   %i.iw = fmul nnan double %i.iv, 1.562500e-02
-  %i.ix = tail call double @cos(double noundef %i.iw) #7, !tbaa !4
+  %i.ix = tail call double @cos(double noundef %i.iw) #6, !tbaa !4
   %i.iy = getelementptr inbounds nuw i8, ptr %.4179243, i64 48
   %i.iz = insertelement <2 x double> poison, double %i.ir, i64 0
   %i.ja = insertelement <2 x double> %i.iz, double %i.ix, i64 1
@@ -1220,13 +1217,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.je = uitofp nneg i32 %i.jd to double
   %i.jf = fmul nnan double %i.je, f0x400921FB54442D18
   %i.jg = fmul nnan double %i.jf, 1.562500e-02
-  %i.jh = tail call double @cos(double noundef %i.jg) #7, !tbaa !4
+  %i.jh = tail call double @cos(double noundef %i.jg) #6, !tbaa !4
   %.tr303 = trunc i64 %i.hi to i32
   %i.ji = shl i32 %.tr303, 3
   %i.jj = uitofp nneg i32 %i.ji to double
   %i.jk = fmul nnan double %i.jj, f0x400921FB54442D18
   %i.jl = fmul nnan double %i.jk, 1.562500e-02
-  %i.jm = tail call double @cos(double noundef %i.jl) #7, !tbaa !4
+  %i.jm = tail call double @cos(double noundef %i.jl) #6, !tbaa !4
   %i.jn = getelementptr inbounds nuw i8, ptr %.4179243, i64 64
   %i.jo = insertelement <2 x double> poison, double %i.jh, i64 0
   %i.jp = insertelement <2 x double> %i.jo, double %i.jm, i64 1
@@ -1237,13 +1234,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.jt = uitofp nneg i32 %i.js to double
   %i.ju = fmul nnan double %i.jt, f0x400921FB54442D18
   %i.jv = fmul nnan double %i.ju, 1.562500e-02
-  %i.jw = tail call double @cos(double noundef %i.jv) #7, !tbaa !4
+  %i.jw = tail call double @cos(double noundef %i.jv) #6, !tbaa !4
   %i.jx = trunc i64 %i.hi to i32
   %i.jy = mul i32 %i.jx, 10
   %i.jz = uitofp nneg i32 %i.jy to double
   %i.ka = fmul nnan double %i.jz, f0x400921FB54442D18
   %i.kb = fmul nnan double %i.ka, 1.562500e-02
-  %i.kc = tail call double @cos(double noundef %i.kb) #7, !tbaa !4
+  %i.kc = tail call double @cos(double noundef %i.kb) #6, !tbaa !4
   %i.kd = getelementptr inbounds nuw i8, ptr %.4179243, i64 80
   %i.ke = insertelement <2 x double> poison, double %i.jw, i64 0
   %i.kf = insertelement <2 x double> %i.ke, double %i.kc, i64 1
@@ -1254,13 +1251,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.kj = uitofp nneg i32 %i.ki to double
   %i.kk = fmul nnan double %i.kj, f0x400921FB54442D18
   %i.kl = fmul nnan double %i.kk, 1.562500e-02
-  %i.km = tail call double @cos(double noundef %i.kl) #7, !tbaa !4
+  %i.km = tail call double @cos(double noundef %i.kl) #6, !tbaa !4
   %i.kn = trunc i64 %i.hi to i32
   %i.ko = mul i32 %i.kn, 12
   %i.kp = uitofp nneg i32 %i.ko to double
   %i.kq = fmul nnan double %i.kp, f0x400921FB54442D18
   %i.kr = fmul nnan double %i.kq, 1.562500e-02
-  %i.ks = tail call double @cos(double noundef %i.kr) #7, !tbaa !4
+  %i.ks = tail call double @cos(double noundef %i.kr) #6, !tbaa !4
   %i.kt = getelementptr inbounds nuw i8, ptr %.4179243, i64 96
   %i.ku = insertelement <2 x double> poison, double %i.km, i64 0
   %i.kv = insertelement <2 x double> %i.ku, double %i.ks, i64 1
@@ -1271,13 +1268,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.kz = uitofp nneg i32 %i.ky to double
   %i.la = fmul nnan double %i.kz, f0x400921FB54442D18
   %i.lb = fmul nnan double %i.la, 1.562500e-02
-  %i.lc = tail call double @cos(double noundef %i.lb) #7, !tbaa !4
+  %i.lc = tail call double @cos(double noundef %i.lb) #6, !tbaa !4
   %i.ld = trunc i64 %i.hi to i32
   %i.le = mul i32 %i.ld, 14
   %i.lf = uitofp nneg i32 %i.le to double
   %i.lg = fmul nnan double %i.lf, f0x400921FB54442D18
   %i.lh = fmul nnan double %i.lg, 1.562500e-02
-  %i.li = tail call double @cos(double noundef %i.lh) #7, !tbaa !4
+  %i.li = tail call double @cos(double noundef %i.lh) #6, !tbaa !4
   %i.lj = getelementptr inbounds nuw i8, ptr %.4179243, i64 112
   %i.lk = insertelement <2 x double> poison, double %i.lc, i64 0
   %i.ll = insertelement <2 x double> %i.lk, double %i.li, i64 1
@@ -1288,13 +1285,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.lp = uitofp nneg i32 %i.lo to double
   %i.lq = fmul nnan double %i.lp, f0x400921FB54442D18
   %i.lr = fmul nnan double %i.lq, 1.562500e-02
-  %i.ls = tail call double @cos(double noundef %i.lr) #7, !tbaa !4
+  %i.ls = tail call double @cos(double noundef %i.lr) #6, !tbaa !4
   %.tr304 = trunc i64 %i.hi to i32
   %i.lt = shl i32 %.tr304, 4
   %i.lu = uitofp nneg i32 %i.lt to double
   %i.lv = fmul nnan double %i.lu, f0x400921FB54442D18
   %i.lw = fmul nnan double %i.lv, 1.562500e-02
-  %i.lx = tail call double @cos(double noundef %i.lw) #7, !tbaa !4
+  %i.lx = tail call double @cos(double noundef %i.lw) #6, !tbaa !4
   %i.ly = getelementptr inbounds nuw i8, ptr %.4179243, i64 128
   %i.lz = insertelement <2 x double> poison, double %i.ls, i64 0
   %i.ma = insertelement <2 x double> %i.lz, double %i.lx, i64 1
@@ -1305,13 +1302,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.me = uitofp nneg i32 %i.md to double
   %i.mf = fmul nnan double %i.me, f0x400921FB54442D18
   %i.mg = fmul nnan double %i.mf, 1.562500e-02
-  %i.mh = tail call double @cos(double noundef %i.mg) #7, !tbaa !4
+  %i.mh = tail call double @cos(double noundef %i.mg) #6, !tbaa !4
   %i.mi = trunc i64 %i.hi to i32
   %i.mj = mul i32 %i.mi, 18
   %i.mk = uitofp nneg i32 %i.mj to double
   %i.ml = fmul nnan double %i.mk, f0x400921FB54442D18
   %i.mm = fmul nnan double %i.ml, 1.562500e-02
-  %i.mn = tail call double @cos(double noundef %i.mm) #7, !tbaa !4
+  %i.mn = tail call double @cos(double noundef %i.mm) #6, !tbaa !4
   %i.mo = getelementptr inbounds nuw i8, ptr %.4179243, i64 144
   %i.mp = insertelement <2 x double> poison, double %i.mh, i64 0
   %i.mq = insertelement <2 x double> %i.mp, double %i.mn, i64 1
@@ -1322,7 +1319,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.mu = uitofp nneg i32 %i.mt to double
   %i.mv = fmul nnan double %i.mu, f0x400921FB54442D18
   %i.mw = fmul nnan double %i.mv, 1.562500e-02
-  %i.mx = tail call double @cos(double noundef %i.mw) #7, !tbaa !4
+  %i.mx = tail call double @cos(double noundef %i.mw) #6, !tbaa !4
   %i.my = fmul double %i.mx, %i.gu
   %i.mz = getelementptr inbounds nuw i8, ptr %.4179243, i64 152
   store double %i.my, ptr %i.mo, align 8, !tbaa !15
@@ -1331,13 +1328,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.nc = uitofp nneg i32 %i.nb to double
   %i.nd = fmul nnan double %i.nc, f0x400921FB54442D18
   %i.ne = fmul nnan double %i.nd, 1.562500e-02
-  %i.nf = tail call double @cos(double noundef %i.ne) #7, !tbaa !4
+  %i.nf = tail call double @cos(double noundef %i.ne) #6, !tbaa !4
   %i.ng = trunc i64 %i.hi to i32
   %i.nh = mul i32 %i.ng, 21
   %i.ni = uitofp nneg i32 %i.nh to double
   %i.nj = fmul nnan double %i.ni, f0x400921FB54442D18
   %i.nk = fmul nnan double %i.nj, 1.562500e-02
-  %i.nl = tail call double @cos(double noundef %i.nk) #7, !tbaa !4
+  %i.nl = tail call double @cos(double noundef %i.nk) #6, !tbaa !4
   %i.nm = getelementptr inbounds nuw i8, ptr %.4179243, i64 168
   %i.nn = insertelement <2 x double> poison, double %i.nf, i64 0
   %i.no = insertelement <2 x double> %i.nn, double %i.nl, i64 1
@@ -1348,13 +1345,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.ns = uitofp nneg i32 %i.nr to double
   %i.nt = fmul nnan double %i.ns, f0x400921FB54442D18
   %i.nu = fmul nnan double %i.nt, 1.562500e-02
-  %i.nv = tail call double @cos(double noundef %i.nu) #7, !tbaa !4
+  %i.nv = tail call double @cos(double noundef %i.nu) #6, !tbaa !4
   %i.nw = trunc i64 %i.hi to i32
   %i.nx = mul i32 %i.nw, 23
   %i.ny = uitofp nneg i32 %i.nx to double
   %i.nz = fmul nnan double %i.ny, f0x400921FB54442D18
   %i.oa = fmul nnan double %i.nz, 1.562500e-02
-  %i.ob = tail call double @cos(double noundef %i.oa) #7, !tbaa !4
+  %i.ob = tail call double @cos(double noundef %i.oa) #6, !tbaa !4
   %i.oc = getelementptr inbounds nuw i8, ptr %.4179243, i64 184
   %i.od = insertelement <2 x double> poison, double %i.nv, i64 0
   %i.oe = insertelement <2 x double> %i.od, double %i.ob, i64 1
@@ -1365,13 +1362,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.oi = uitofp nneg i32 %i.oh to double
   %i.oj = fmul nnan double %i.oi, f0x400921FB54442D18
   %i.ok = fmul nnan double %i.oj, 1.562500e-02
-  %i.ol = tail call double @cos(double noundef %i.ok) #7, !tbaa !4
+  %i.ol = tail call double @cos(double noundef %i.ok) #6, !tbaa !4
   %i.om = trunc i64 %i.hi to i32
   %i.on = mul i32 %i.om, 25
   %i.oo = uitofp nneg i32 %i.on to double
   %i.op = fmul nnan double %i.oo, f0x400921FB54442D18
   %i.oq = fmul nnan double %i.op, 1.562500e-02
-  %i.or = tail call double @cos(double noundef %i.oq) #7, !tbaa !4
+  %i.or = tail call double @cos(double noundef %i.oq) #6, !tbaa !4
   %i.os = getelementptr inbounds nuw i8, ptr %.4179243, i64 200
   %i.ot = insertelement <2 x double> poison, double %i.ol, i64 0
   %i.ou = insertelement <2 x double> %i.ot, double %i.or, i64 1
@@ -1382,13 +1379,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.oy = uitofp nneg i32 %i.ox to double
   %i.oz = fmul nnan double %i.oy, f0x400921FB54442D18
   %i.pa = fmul nnan double %i.oz, 1.562500e-02
-  %i.pb = tail call double @cos(double noundef %i.pa) #7, !tbaa !4
+  %i.pb = tail call double @cos(double noundef %i.pa) #6, !tbaa !4
   %i.pc = trunc i64 %i.hi to i32
   %i.pd = mul i32 %i.pc, 27
   %i.pe = uitofp nneg i32 %i.pd to double
   %i.pf = fmul nnan double %i.pe, f0x400921FB54442D18
   %i.pg = fmul nnan double %i.pf, 1.562500e-02
-  %i.ph = tail call double @cos(double noundef %i.pg) #7, !tbaa !4
+  %i.ph = tail call double @cos(double noundef %i.pg) #6, !tbaa !4
   %i.pi = getelementptr inbounds nuw i8, ptr %.4179243, i64 216
   %i.pj = insertelement <2 x double> poison, double %i.pb, i64 0
   %i.pk = insertelement <2 x double> %i.pj, double %i.ph, i64 1
@@ -1399,13 +1396,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.po = uitofp nneg i32 %i.pn to double
   %i.pp = fmul nnan double %i.po, f0x400921FB54442D18
   %i.pq = fmul nnan double %i.pp, 1.562500e-02
-  %i.pr = tail call double @cos(double noundef %i.pq) #7, !tbaa !4
+  %i.pr = tail call double @cos(double noundef %i.pq) #6, !tbaa !4
   %i.ps = trunc i64 %i.hi to i32
   %i.pt = mul i32 %i.ps, 29
   %i.pu = uitofp nneg i32 %i.pt to double
   %i.pv = fmul nnan double %i.pu, f0x400921FB54442D18
   %i.pw = fmul nnan double %i.pv, 1.562500e-02
-  %i.px = tail call double @cos(double noundef %i.pw) #7, !tbaa !4
+  %i.px = tail call double @cos(double noundef %i.pw) #6, !tbaa !4
   %i.py = getelementptr inbounds nuw i8, ptr %.4179243, i64 232
   %i.pz = insertelement <2 x double> poison, double %i.pr, i64 0
   %i.qa = insertelement <2 x double> %i.pz, double %i.px, i64 1
@@ -1416,13 +1413,13 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   %i.qe = uitofp nneg i32 %i.qd to double
   %i.qf = fmul nnan double %i.qe, f0x400921FB54442D18
   %i.qg = fmul nnan double %i.qf, 1.562500e-02
-  %i.qh = tail call double @cos(double noundef %i.qg) #7, !tbaa !4
+  %i.qh = tail call double @cos(double noundef %i.qg) #6, !tbaa !4
   %i.qi = trunc i64 %i.hi to i32
   %i.qj = mul i32 %i.qi, 31
   %i.qk = uitofp nneg i32 %i.qj to double
   %i.ql = fmul nnan double %i.qk, f0x400921FB54442D18
   %i.qm = fmul nnan double %i.ql, 1.562500e-02
-  %i.qn = tail call double @cos(double noundef %i.qm) #7, !tbaa !4
+  %i.qn = tail call double @cos(double noundef %i.qm) #6, !tbaa !4
   %i.qo = getelementptr inbounds nuw i8, ptr %.4179243, i64 248
   %i.qp = insertelement <2 x double> poison, double %i.qh, i64 0
   %i.qq = insertelement <2 x double> %i.qp, double %i.qn, i64 1
@@ -1433,7 +1430,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
   br i1 %.not305, label %.preheader194, label %.preheader195, !llvm.loop !36
 
 .preheader194:                                    ; preds = %.preheader195
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   %i.qs = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @win, i64 128), align 16, !tbaa !15
   %i.qt = load <2 x double>, ptr getelementptr inbounds nuw (i8, ptr @win, i64 72), align 8, !tbaa !15
   %i.qu = shufflevector <2 x double> %i.qt, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -1727,7 +1724,7 @@ define dso_local void @mdct_init48() local_unnamed_addr #2 {
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @window_subband(ptr noundef readonly %0, ptr noundef writeonly captures(none) %1) unnamed_addr #3 {
+define internal fastcc void @window_subband(ptr noundef readonly %0, ptr noundef writeonly captures(none) %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 510
   %i.b = load i16, ptr %i.a, align 2, !tbaa !37
@@ -2130,35 +2127,34 @@ middle.block:                                     ; preds = %vector.body, %scala
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #4
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @cos(double noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #6
+declare double @llvm.fmuladd.f64(double, double, double) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #6
+declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #6
+declare <4 x double> @llvm.fmuladd.v4f64(<4 x double>, <4 x double>, <4 x double>) #5
 
-attributes #0 = { nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { nofree norecurse nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { nounwind }
+attributes #2 = { nofree norecurse nosync nounwind memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

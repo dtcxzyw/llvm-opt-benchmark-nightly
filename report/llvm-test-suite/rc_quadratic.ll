@@ -130,13 +130,13 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 5128
   %i.f = load i32, ptr %i.e, align 8, !tbaa !29
   %i.g = udiv i32 %i.c, %i.f
-  %i.h = tail call noalias dereferenceable_or_null(1600) ptr @malloc(i64 noundef 1600) #20 ; 3 uses
+  %i.h = tail call noalias dereferenceable_or_null(1600) ptr @malloc(i64 noundef 1600) #19 ; 3 uses
   store ptr %i.h, ptr %0, align 8, !tbaa !8
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @no_mem_exit(ptr noundef nonnull @.str) #21
+  tail call void @no_mem_exit(ptr noundef nonnull @.str) #20
   %.pre = load ptr, ptr %0, align 8, !tbaa !8
   br label %bb.c
 
@@ -184,47 +184,47 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.ah = getelementptr inbounds nuw i8, ptr %i.j, i64 68
   store i32 %i.ag, ptr %i.ah, align 4, !tbaa !51
   %i.ai = sext i32 %i.g to i64                    ; 4 uses
-  %i.aj = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #22 ; 2 uses
+  %i.aj = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #21 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.j, i64 1472
   store ptr %i.aj, ptr %i.ak, align 8, !tbaa !52
   %i.al = icmp eq ptr %i.aj, null
   br i1 %i.al, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #21
+  tail call void @no_mem_exit(ptr noundef nonnull @.str.1) #20
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %i.am = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #22 ; 2 uses
+  %i.am = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #21 ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.j, i64 1480
   store ptr %i.am, ptr %i.an, align 8, !tbaa !53
   %i.ao = icmp eq ptr %i.am, null
   br i1 %i.ao, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @no_mem_exit(ptr noundef nonnull @.str.2) #21
+  tail call void @no_mem_exit(ptr noundef nonnull @.str.2) #20
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.ap = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #22 ; 2 uses
+  %i.ap = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #21 ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.j, i64 1488
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !54
   %i.ar = icmp eq ptr %i.ap, null
   br i1 %i.ar, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @no_mem_exit(ptr noundef nonnull @.str.3) #21
+  tail call void @no_mem_exit(ptr noundef nonnull @.str.3) #20
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.as = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #22 ; 2 uses
+  %i.as = tail call noalias ptr @calloc(i64 noundef %i.ai, i64 noundef 8) #21 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.j, i64 1496
   store ptr %i.as, ptr %i.at, align 8, !tbaa !55
   %i.au = icmp eq ptr %i.as, null
   br i1 %i.au, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @no_mem_exit(ptr noundef nonnull @.str.4) #21
+  tail call void @no_mem_exit(ptr noundef nonnull @.str.4) #20
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -298,7 +298,7 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @free(ptr noundef nonnull %i.c) #21
+  tail call void @free(ptr noundef nonnull %i.c) #20
   %i.d = load ptr, ptr %0, align 8, !tbaa !8
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 1472
   store ptr null, ptr %i.e, align 8, !tbaa !52
@@ -313,7 +313,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %.not19, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @free(ptr noundef nonnull %i.h) #21
+  tail call void @free(ptr noundef nonnull %i.h) #20
   %i.i = load ptr, ptr %0, align 8, !tbaa !8
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 1480
   store ptr null, ptr %i.j, align 8, !tbaa !53
@@ -328,7 +328,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not20, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @free(ptr noundef nonnull %i.m) #21
+  tail call void @free(ptr noundef nonnull %i.m) #20
   %i.n = load ptr, ptr %0, align 8, !tbaa !8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 1488
   store ptr null, ptr %i.o, align 8, !tbaa !54
@@ -343,7 +343,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %.not21, label %.thread, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @free(ptr noundef nonnull %i.r) #21
+  tail call void @free(ptr noundef nonnull %i.r) #20
   %i.s = load ptr, ptr %0, align 8, !tbaa !8
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 1496
   store ptr null, ptr %i.t, align 8, !tbaa !55
@@ -353,7 +353,7 @@ bb.h:                                             ; preds = %bb.g
 
 .thread:                                          ; preds = %bb.g, %bb.h
   %i.u = phi ptr [ %.pr, %bb.h ], [ %i.p, %bb.g ]
-  tail call void @free(ptr noundef nonnull %i.u) #21
+  tail call void @free(ptr noundef nonnull %i.u) #20
   store ptr null, ptr %0, align 8, !tbaa !8
   br label %bb.i
 
@@ -756,7 +756,7 @@ bb.ad:                                            ; preds = %bb.ab
   br i1 %or.cond.i, label %bb.af, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.gk = tail call double @sqrt(double noundef %i.gh) #21, !tbaa !4
+  %i.gk = tail call double @sqrt(double noundef %i.gh) #20, !tbaa !4
   %i.gl = fneg double %i.fz
   %i.gm = tail call double @llvm.fmuladd.f64(double %i.gl, double %i.fe, double %i.gk) ; 2 uses
   %i.gn = fcmp ugt double %i.gm, 0.000000e+00
@@ -776,7 +776,7 @@ updateModelQPFrame.exit:                          ; preds = %bb.af, %bb.ag
   %.0.in.in.i = phi double [ %i.go, %bb.af ], [ %i.gr, %bb.ag ]
   %.0.in.i = fptrunc double %.0.in.in.i to float
   %.0.i = fpext float %.0.in.i to double
-  %i.gs = tail call i32 @Qstep2QP(double noundef %.0.i) #21
+  %i.gs = tail call i32 @Qstep2QP(double noundef %.0.i) #20
   %i.gt = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.gv = load i32, ptr %i.gu, align 4, !tbaa !51
@@ -1179,7 +1179,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %or.cond.i, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.cx = tail call double @sqrt(double noundef %i.cu) #21, !tbaa !4
+  %i.cx = tail call double @sqrt(double noundef %i.cu) #20, !tbaa !4
   %i.cy = fneg double %i.cm
   %i.cz = tail call double @llvm.fmuladd.f64(double %i.cy, double %i.br, double %i.cx) ; 2 uses
   %i.da = fcmp ugt double %i.cz, 0.000000e+00
@@ -1199,7 +1199,7 @@ updateModelQPFrame.exit:                          ; preds = %bb.r, %bb.s
   %.0.in.in.i = phi double [ %i.db, %bb.r ], [ %i.de, %bb.s ]
   %.0.in.i = fptrunc double %.0.in.in.i to float
   %.0.i = fpext float %.0.in.i to double
-  %i.df = tail call i32 @Qstep2QP(double noundef %.0.i) #21
+  %i.df = tail call i32 @Qstep2QP(double noundef %.0.i) #20
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !51
@@ -1602,7 +1602,7 @@ bb.aa:                                            ; preds = %bb.y
   br i1 %or.cond.i, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.fl = tail call double @sqrt(double noundef %i.fi) #21, !tbaa !4
+  %i.fl = tail call double @sqrt(double noundef %i.fi) #20, !tbaa !4
   %i.fm = fneg double %i.fa
   %i.fn = tail call double @llvm.fmuladd.f64(double %i.fm, double %i.ef, double %i.fl) ; 2 uses
   %i.fo = fcmp ugt double %i.fn, 0.000000e+00
@@ -1622,7 +1622,7 @@ updateModelQPFrame.exit:                          ; preds = %bb.ac, %bb.ad
   %.0.in.in.i = phi double [ %i.fp, %bb.ac ], [ %i.fs, %bb.ad ]
   %.0.in.i = fptrunc double %.0.in.in.i to float
   %.0.i = fpext float %.0.in.i to double
-  %i.ft = tail call i32 @Qstep2QP(double noundef %.0.i) #21
+  %i.ft = tail call i32 @Qstep2QP(double noundef %.0.i) #20
   %i.fu = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.fv = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.fw = load i32, ptr %i.fv, align 4, !tbaa !51
@@ -2025,7 +2025,7 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %bb.w
   br i1 %or.cond.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.dl = tail call double @sqrt(double noundef %i.di) #21, !tbaa !4
+  %i.dl = tail call double @sqrt(double noundef %i.di) #20, !tbaa !4
   %i.dm = fneg double %i.da
   %i.dn = tail call double @llvm.fmuladd.f64(double %i.dm, double %i.cb, double %i.dl) ; 2 uses
   %i.do = fcmp ugt double %i.dn, 0.000000e+00
@@ -2045,7 +2045,7 @@ updateModelQPFrame.exit:                          ; preds = %bb.z, %bb.aa
   %.0.in.in.i = phi double [ %i.dp, %bb.z ], [ %i.ds, %bb.aa ]
   %.0.in.i = fptrunc double %.0.in.in.i to float
   %.0.i = fpext float %.0.in.i to double
-  %i.dt = tail call i32 @Qstep2QP(double noundef %.0.i) #21
+  %i.dt = tail call i32 @Qstep2QP(double noundef %.0.i) #20
   %i.du = getelementptr inbounds nuw i8, ptr %0, i64 1344 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.dw = load i32, ptr %i.dv, align 4, !tbaa !51 ; 2 uses
@@ -2448,7 +2448,7 @@ bb.a:
   br label %bb.m
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 2096
   %i.f = load i32, ptr %i.e, align 8, !tbaa !63   ; 6 uses
   %i.g = add nsw i32 %i.f, 1                      ; 2 uses
@@ -2497,8 +2497,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   %i.t = load ptr, ptr @stderr, align 8, !tbaa !130
-  %i.u = tail call i64 @fwrite(ptr nonnull @.str.5, i64 72, i64 1, ptr %i.t) #23 ; 0 uses
-  tail call void @exit(i32 noundef 1) #24
+  %i.u = tail call i64 @fwrite(ptr nonnull @.str.5, i64 72, i64 1, ptr %i.t) #22 ; 0 uses
+  tail call void @exit(i32 noundef 1) #23
   unreachable
 
 bb.f:                                             ; preds = %bb.c
@@ -2715,7 +2715,7 @@ bb.l:                                             ; preds = %._crit_edge140
   %i.dj = add i32 %.pre155, %i.di
   %i.dk = getelementptr inbounds nuw i8, ptr %i.w, i64 136
   store i32 %i.dj, ptr %i.dk, align 8, !tbaa !145
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #20
   br label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge156, %._crit_edge140._crit_edge
@@ -3118,7 +3118,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %i.p = tail call double @ComputeFrameMAD() #21
+  %i.p = tail call double @ComputeFrameMAD() #20
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1400
   store double %i.p, ptr %i.q, align 8, !tbaa !36
   %i.r = load ptr, ptr @generic_RC, align 8, !tbaa !8 ; 2 uses
@@ -3362,7 +3362,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.e
   %i.fl = icmp slt i32 %.0116, 2
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.fn = load i32, ptr %i.fm, align 8, !tbaa !44
-  %i.fo = tail call double @QP2Qstep(i32 noundef %i.fn) #21 ; 2 uses
+  %i.fo = tail call double @QP2Qstep(i32 noundef %i.fn) #20 ; 2 uses
   store double %i.fo, ptr %i.ch, align 8, !tbaa !77
   %i.fp = load ptr, ptr @img, align 8, !tbaa !8   ; 2 uses
   %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 15404
@@ -3493,13 +3493,13 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph.new
 .thread152:                                       ; preds = %._crit_edge
   %i.ii = uitofp nneg i32 %i.gt to double
   %i.ij = fdiv double %.lcssa, %i.ii
-  %i.ik = tail call double @sqrt(double noundef %i.ij) #21, !tbaa !4
+  %i.ik = tail call double @sqrt(double noundef %i.ij) #20, !tbaa !4
   br label %.lr.ph137.preheader
 
 bb.r:                                             ; preds = %bb.p
   %i.il = sitofp i32 %i.gt to double
   %i.im = fdiv double 0.000000e+00, %i.il
-  %i.in = tail call double @sqrt(double noundef %i.im) #21, !tbaa !4 ; 0 uses
+  %i.in = tail call double @sqrt(double noundef %i.im) #20, !tbaa !4 ; 0 uses
   br label %._crit_edge138
 
 .lr.ph137.preheader:                              ; preds = %._crit_edge, %.thread152
@@ -3902,14 +3902,14 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sqrt(double noundef) local_unnamed_addr #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #11
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @updateMADModel(ptr noundef captures(none) %0) local_unnamed_addr #16 {
+; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local void @updateMADModel(ptr noundef captures(none) %0) local_unnamed_addr #12 {
 bb.a:
   %i.a = load ptr, ptr @generic_RC, align 8, !tbaa !8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 36
@@ -4204,13 +4204,13 @@ bb.n:                                             ; preds = %bb.n, %.lr.ph.new
 .thread105:                                       ; preds = %._crit_edge
   %i.fm = uitofp nneg i32 %i.dz to double
   %i.fn = fdiv double %.lcssa, %i.fm
-  %i.fo = tail call double @sqrt(double noundef %i.fn) #21, !tbaa !4
+  %i.fo = tail call double @sqrt(double noundef %i.fn) #20, !tbaa !4
   br label %.lr.ph91.preheader
 
 bb.o:                                             ; preds = %bb.m
   %i.fp = sitofp i32 %i.dz to double
   %i.fq = fdiv double 0.000000e+00, %i.fp
-  %i.fr = tail call double @sqrt(double noundef %i.fq) #21, !tbaa !4 ; 0 uses
+  %i.fr = tail call double @sqrt(double noundef %i.fq) #20, !tbaa !4 ; 0 uses
   br label %._crit_edge92
 
 .lr.ph91.preheader:                               ; preds = %._crit_edge, %.thread105
@@ -4613,7 +4613,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @updateQPInterlace(ptr noundef captures(none) %0) local_unnamed_addr #17 {
+define dso_local void @updateQPInterlace(ptr noundef captures(none) %0) local_unnamed_addr #16 {
 bb.a:
   %i.a = load ptr, ptr @generic_RC, align 8, !tbaa !8 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -4715,7 +4715,7 @@ bb.a:
   br i1 %or.cond, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.p = tail call double @sqrt(double noundef %i.m) #21, !tbaa !4
+  %i.p = tail call double @sqrt(double noundef %i.m) #20, !tbaa !4
   %i.q = fneg double %i.d
   %i.r = tail call double @llvm.fmuladd.f64(double %i.q, double %i.b, double %i.p) ; 2 uses
   %i.s = fcmp ugt double %i.r, 0.000000e+00
@@ -4735,7 +4735,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %.0.in.in = phi double [ %i.t, %bb.c ], [ %i.w, %bb.d ]
   %.0.in = fptrunc double %.0.in.in to float
   %.0 = fpext float %.0.in to double
-  %i.x = tail call i32 @Qstep2QP(double noundef %.0) #21
+  %i.x = tail call i32 @Qstep2QP(double noundef %.0) #20
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 1344
   store i32 %i.x, ptr %i.y, align 8, !tbaa !44
   ret void
@@ -5138,7 +5138,7 @@ bb.a:
   br i1 %or.cond, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.am = tail call double @sqrt(double noundef %i.aj) #21, !tbaa !4
+  %i.am = tail call double @sqrt(double noundef %i.aj) #20, !tbaa !4
   %i.an = fneg double %i.ab
   %i.ao = tail call double @llvm.fmuladd.f64(double %i.an, double %i.e, double %i.am) ; 2 uses
   %i.ap = fcmp ugt double %i.ao, 0.000000e+00
@@ -5155,7 +5155,7 @@ bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   %i.as = fdiv double %i.ar, %.sink65
   %.0.in = fptrunc double %i.as to float
   %.0 = fpext float %.0.in to double
-  %i.at = tail call i32 @Qstep2QP(double noundef %.0) #21
+  %i.at = tail call i32 @Qstep2QP(double noundef %.0) #20
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1344
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 1440
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !85 ; 2 uses
@@ -5304,7 +5304,7 @@ bb.l:                                             ; preds = %bb.g, %bb.j, %bb.k,
 declare i32 @Qstep2QP(double noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree nounwind
-declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #18
+declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.floor.f32(float) #11
@@ -5325,7 +5325,7 @@ declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double
 declare <2 x double> @llvm.floor.v2f64(<2 x double>) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #19
+declare void @llvm.assume(i1 noundef) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #11
@@ -5348,16 +5348,15 @@ attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind specu
 attributes #12 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #16 = { nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { nofree nounwind }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #20 = { nounwind allocsize(0) }
-attributes #21 = { nounwind }
-attributes #22 = { nounwind allocsize(0,1) }
-attributes #23 = { cold }
-attributes #24 = { cold noreturn nounwind }
+attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #17 = { nofree nounwind }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #19 = { nounwind allocsize(0) }
+attributes #20 = { nounwind }
+attributes #21 = { nounwind allocsize(0,1) }
+attributes #22 = { cold }
+attributes #23 = { cold noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

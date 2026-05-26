@@ -199,7 +199,7 @@ bb.h:                                             ; preds = %bb.g
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.aw = phi i32 [ %i.ap, %bb.h ], [ %i.at, %bb.g ] ; 3 uses
+  %i.aw = phi i32 [ %i.ap, %bb.h ], [ %i.at, %bb.g ] ; 4 uses
   %i.ax = icmp sgt i32 %i.au, 0                   ; 2 uses
   br i1 %i.ax, label %.preheader969.lr.ph, label %.preheader968
 
@@ -217,7 +217,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br label %.lr.ph
 
 .preheader968:                                    ; preds = %.split.loop.exit1556, %bb.i
-  %i.bc = icmp sgt i32 %i.aw, 0                   ; 2 uses
+  %i.bc = icmp sgt i32 %i.aw, 0                   ; 3 uses
   br i1 %i.bc, label %.preheader967.lr.ph, label %.preheader966
 
 .preheader967.lr.ph:                              ; preds = %.preheader968
@@ -471,28 +471,28 @@ scalar.ph1609:                                    ; preds = %scalar.ph1609.prehe
   %i.ek = load i32, ptr %i.ej, align 8, !tbaa !38
   %i.el = icmp eq i32 %i.ek, 1
   %or.cond1161 = and i1 %i.el, %i.bc
-  br i1 %or.cond1161, label %.lr.ph1011, label %.loopexit964
+  br i1 %or.cond1161, label %.lr.ph1013.preheader, label %.loopexit964
 
-.lr.ph1011:                                       ; preds = %._crit_edge1009, %.lr.ph1011
-  %indvars.iv1258 = phi i64 [ %indvars.iv.next1259, %.lr.ph1011 ], [ 0, %._crit_edge1009 ] ; 2 uses
+.lr.ph1013.preheader:                             ; preds = %._crit_edge1009
+  %wide.trip.count1263 = zext nneg i32 %i.aw to i64
+  br label %.lr.ph1011
+
+.lr.ph1011:                                       ; preds = %.lr.ph1013.preheader, %.lr.ph1011
+  %indvars.iv1258 = phi i64 [ 0, %.lr.ph1013.preheader ], [ %indvars.iv.next1259, %.lr.ph1011 ] ; 2 uses
   %i.em = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv1258 ; 2 uses
   %i.en = load double, ptr %i.em, align 8, !tbaa !19
   %i.eo = fmul double %i.en, f0x3FCD791C5F888823
   %i.ep = tail call double @exp(double noundef %i.eo) #11, !tbaa !4
   store double %i.ep, ptr %i.em, align 8, !tbaa !19
   %indvars.iv.next1259 = add nuw nsw i64 %indvars.iv1258, 1 ; 2 uses
-  %11 = load i32, ptr @L3psycho_anal.npart_s, align 4, !tbaa !4 ; 2 uses
-  %12 = sext i32 %11 to i64
-  %13 = icmp slt i64 %indvars.iv.next1259, %12
-  br i1 %13, label %.lr.ph1011, label %.loopexit964, !llvm.loop !39
+  %exitcond1264.not = icmp eq i64 %indvars.iv.next1259, %wide.trip.count1263
+  br i1 %exitcond1264.not, label %.lr.ph1025.preheader, label %.lr.ph1011, !llvm.loop !39
 
-.loopexit964:                                     ; preds = %.lr.ph1011, %._crit_edge1009
-  %14 = phi i32 [ %i.aw, %._crit_edge1009 ], [ %11, %.lr.ph1011 ] ; 2 uses
-  %15 = icmp sgt i32 %14, 0
-  br i1 %15, label %.lr.ph1025.preheader, label %._crit_edge1026
+.loopexit964:                                     ; preds = %._crit_edge1009
+  br i1 %i.bc, label %.lr.ph1025.preheader, label %._crit_edge1026
 
-.lr.ph1025.preheader:                             ; preds = %.loopexit964
-  %wide.trip.count1278 = zext nneg i32 %14 to i64
+.lr.ph1025.preheader:                             ; preds = %.lr.ph1011, %.loopexit964
+  %wide.trip.count1278 = zext nneg i32 %i.aw to i64
   br label %.lr.ph1025
 
 .lr.ph1025:                                       ; preds = %.lr.ph1025.preheader, %._crit_edge1022
@@ -895,13 +895,14 @@ begin_hunk_1_@L3psycho_anal:bb.a
 ._crit_edge1069:                                  ; preds = %._crit_edge1063, %.preheader954
   %i.yh = getelementptr inbounds nuw [8 x i8], ptr @L3psycho_anal.pe, i64 %indvars.iv1393 ; 2 uses
   store double 0.000000e+00, ptr %i.yh, align 8, !tbaa !19
-  %i.yi = load i32, ptr @L3psycho_anal.npart_l, align 4, !tbaa !4
+  %i.yi = load i32, ptr @L3psycho_anal.npart_l, align 4, !tbaa !4 ; 2 uses
   %i.yj = icmp sgt i32 %i.yi, 0
   br i1 %i.yj, label %.lr.ph1081, label %._crit_edge1082
 
 .lr.ph1081:                                       ; preds = %._crit_edge1069
   %i.yk = getelementptr inbounds nuw [504 x i8], ptr @L3psycho_anal.nb_1, i64 %indvars.iv1393
   %i.yl = getelementptr inbounds nuw [504 x i8], ptr @L3psycho_anal.nb_2, i64 %indvars.iv1393
+  %wide.trip.count1342 = zext nneg i32 %i.yi to i64
   br label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph1081, %bb.aq
@@ -1036,10 +1037,8 @@ bb.ap:                                            ; preds = %._crit_edge1076.thr
 bb.aq:                                            ; preds = %bb.ap, %._crit_edge1076.thread
   %i.abd = phi double [ %i.abc, %bb.ap ], [ %i.ym, %._crit_edge1076.thread ] ; 2 uses
   %indvars.iv.next1336 = add nuw nsw i64 %indvars.iv1335, 1 ; 2 uses
-  %16 = load i32, ptr @L3psycho_anal.npart_l, align 4, !tbaa !4
-  %17 = sext i32 %16 to i64
-  %18 = icmp slt i64 %indvars.iv.next1336, %17
-  br i1 %18, label %bb.al, label %._crit_edge1082, !llvm.loop !66
+  %exitcond1343.not = icmp eq i64 %indvars.iv.next1336, %wide.trip.count1342
+  br i1 %exitcond1343.not, label %._crit_edge1082, label %bb.al, !llvm.loop !66
 
 ._crit_edge1082:                                  ; preds = %bb.aq, %._crit_edge1069
   %i.abe = phi double [ 0.000000e+00, %._crit_edge1069 ], [ %i.abd, %bb.aq ] ; 2 uses
@@ -1442,7 +1441,7 @@ bb.an:                                            ; preds = %.loopexit
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @exp(double noundef) local_unnamed_addr #7
 
 declare void @init_fft() local_unnamed_addr #8
@@ -1460,10 +1459,10 @@ declare float @llvm.fmuladd.f32(float, float, float) #5
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #5
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @log(double noundef) local_unnamed_addr #7
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @log10(double noundef) local_unnamed_addr #7
 
 ; Function Attrs: cold nofree noreturn nounwind
@@ -1508,7 +1507,7 @@ attributes #3 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-prot
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nofree nounwind }

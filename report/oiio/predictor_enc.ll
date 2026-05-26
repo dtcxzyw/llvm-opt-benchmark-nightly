@@ -17,7 +17,7 @@ target triple = "x86_64-pc-linux-gnu"
 @VP8LCollectColorBlueTransforms = external local_unnamed_addr global ptr, align 8
 @VP8LTransformColor = external local_unnamed_addr global ptr, align 8
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden void @VP8LOptimizeSampling(ptr noundef captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, ptr noundef writeonly captures(none) initializes((0, 4)) %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = shl nuw i32 1, %3                        ; 2 uses
@@ -307,8 +307,8 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not, label %.thread, label %.lr.ph, !llvm.loop !17
 
 bb.c:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   %.not84107 = icmp sgt i32 %2, %3
   br i1 %.not84107, label %._crit_edge112, label %.lr.ph111
 
@@ -384,7 +384,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph111.ne
 
 ._crit_edge112:                                   ; preds = %._crit_edge112.loopexit, %bb.c
   %.080.lcssa = phi i64 [ 0, %bb.c ], [ %i.ba, %._crit_edge112.loopexit ]
-  %i.bb = tail call ptr @WebPSafeMalloc(i64 noundef %.080.lcssa, i64 noundef 4) #11 ; 6 uses
+  %i.bb = tail call ptr @WebPSafeMalloc(i64 noundef %.080.lcssa, i64 noundef 4) #10 ; 6 uses
   %i.bc = icmp eq ptr %i.bb, null
   br i1 %i.bc, label %bb.bs, label %bb.e
 
@@ -472,7 +472,7 @@ bb.e:                                             ; preds = %._crit_edge112
   %i.ct = shl i32 %i.cr, 10
   %i.cu = mul i32 %i.cr, 15374
   %i.cv = sext i32 %i.cu to i64
-  %i.cw = tail call ptr @WebPSafeCalloc(i64 noundef %i.cv, i64 noundef 4) #11 ; 11 uses
+  %i.cw = tail call ptr @WebPSafeCalloc(i64 noundef %i.cv, i64 noundef 4) #10 ; 11 uses
   %i.cx = sext i32 %i.cs to i64
   %i.cy = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.cx ; 3 uses
   %i.cz = sext i32 %i.ct to i64
@@ -529,7 +529,7 @@ bb.f:                                             ; preds = %bb.bo, %.lr.ph.i
   %i.ed = icmp slt i32 %i.cj, %i.dx
   %i.ee = zext i1 %i.ed to i32
   %i.ef = add nsw i32 %i.ec, %i.ee                ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   %i.eg = icmp sgt i32 %i.du, 0                   ; 4 uses
   %i.eh = icmp sgt i32 %i.dw, 0
   %i.ei = sext i32 %i.eb to i64                   ; 10 uses
@@ -813,7 +813,7 @@ bb.n:                                             ; preds = %.split.us.i.i
   br label %ComputeResidualsForTile.exit.i
 
 ComputeResidualsForTile.exit.i:                   ; preds = %._crit_edge127.us.i.split.i.split.us, %._crit_edge127.us.i.split.i.split.us126, %._crit_edge127.us.i.split.us.us.i, %.split.split.us.preheader.i.i, %.split.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   %i.io = icmp eq i32 %.0151187.i, %i.do          ; 4 uses
   %i.ip = sub i32 2147483646, %.0145190.i
   %i.iq = icmp eq i32 %.0150188.i, %i.dp
@@ -956,7 +956,7 @@ bb.ab:                                            ; preds = %bb.z
 PredictionCostBias.exit.i.i.i:                    ; preds = %bb.ab, %bb.aa
   %i.lg = phi i64 [ %i.le, %bb.aa ], [ %.neg.i18.i.i.i.i, %bb.ab ]
   %i.lh = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.li = call i64 %i.lh(ptr noundef nonnull %gep.i.i, ptr noundef nonnull %i.ja) #11, !inline_history !32
+  %i.li = call i64 %i.lh(ptr noundef nonnull %gep.i.i, ptr noundef nonnull %i.ja) #10, !inline_history !32
   %i.lj = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 1024 ; 4 uses
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !3
   %i.ll = zext i32 %i.lk to i64
@@ -1031,7 +1031,7 @@ bb.aj:                                            ; preds = %bb.ah
 PredictionCostBias.exit.1.i.i.i:                  ; preds = %bb.aj, %bb.ai
   %i.ml = phi i64 [ %i.mk, %bb.aj ], [ %.neg.i18.i.1.i.i.i, %bb.ai ]
   %i.mm = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.mn = call i64 %i.mm(ptr noundef nonnull %i.lj, ptr noundef nonnull %i.kb) #11, !inline_history !32
+  %i.mn = call i64 %i.mm(ptr noundef nonnull %i.lj, ptr noundef nonnull %i.kb) #10, !inline_history !32
   %i.mo = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 2048 ; 4 uses
   %i.mp = load i32, ptr %i.mo, align 4, !tbaa !3
   %i.mq = zext i32 %i.mp to i64
@@ -1106,7 +1106,7 @@ bb.ar:                                            ; preds = %bb.ap
 PredictionCostBias.exit.2.i.i.i:                  ; preds = %bb.ar, %bb.aq
   %i.nq = phi i64 [ %i.np, %bb.ar ], [ %.neg.i18.i.2.i.i.i, %bb.aq ]
   %i.nr = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.ns = call i64 %i.nr(ptr noundef nonnull %i.mo, ptr noundef nonnull %i.kc) #11, !inline_history !32
+  %i.ns = call i64 %i.nr(ptr noundef nonnull %i.mo, ptr noundef nonnull %i.kc) #10, !inline_history !32
   %i.nt = getelementptr inbounds nuw i8, ptr %gep.i.i, i64 3072 ; 4 uses
   %i.nu = load i32, ptr %i.nt, align 4, !tbaa !3
   %i.nv = zext i32 %i.nu to i64
@@ -1181,7 +1181,7 @@ bb.az:                                            ; preds = %bb.ax
 PredictionCostSpatialHistogram.exit.i.i:          ; preds = %bb.az, %bb.ay
   %i.ov = phi i64 [ %i.ou, %bb.az ], [ %.neg.i18.i.3.i.i.i, %bb.ay ]
   %i.ow = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.ox = call i64 %i.ow(ptr noundef nonnull %i.nt, ptr noundef nonnull %i.kd) #11, !inline_history !32
+  %i.ox = call i64 %i.ow(ptr noundef nonnull %i.nt, ptr noundef nonnull %i.kd) #10, !inline_history !32
   %i.oy = add nsw i64 %i.lg, %i.ml
   %i.oz = add i64 %i.li, %i.mn
   %i.pa = add nsw i64 %i.oy, %i.nq
@@ -1209,7 +1209,7 @@ GetBestPredictorForTile.exit.i:                   ; preds = %PredictionCostSpati
   %i.pm = sext i32 %i.pl to i64
   %i.pn = getelementptr inbounds [4 x i8], ptr %i.da, i64 %i.pm
   %i.po = load ptr, ptr @VP8LAddVectorEq, align 8, !tbaa !31
-  call void %i.po(ptr noundef %.143.i.i, ptr noundef nonnull %i.ja, i32 noundef 1024) #11, !inline_history !34
+  call void %i.po(ptr noundef %.143.i.i, ptr noundef nonnull %i.ja, i32 noundef 1024) #10, !inline_history !34
   %i.pp = shl nuw nsw i32 %.145.i.i, 8
   %i.pq = add nuw nsw i32 %i.pp, -16777216
   %i.pr = mul nsw i32 %i.ix, %i.it
@@ -1245,7 +1245,7 @@ bb.bb:                                            ; preds = %bb.ba
   %i.qf = mul i32 %i.qc, 14336
   %i.qg = sext i32 %i.qf to i64
   %i.qh = getelementptr inbounds [4 x i8], ptr %i.cw, i64 %i.qg
-  call void %i.qe(ptr noundef %invariant.gep.i166.i, ptr noundef nonnull %i.qh, i32 noundef 14336) #11, !inline_history !35
+  call void %i.qe(ptr noundef %invariant.gep.i166.i, ptr noundef nonnull %i.qh, i32 noundef 14336) #10, !inline_history !35
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
@@ -1320,12 +1320,12 @@ bb.bm:                                            ; preds = %bb.bl
   %i.re = mul i32 %i.rc, %12
   %i.rf = udiv i32 %i.re, %i.cp
   %i.rg = add i32 %i.rf, %i.db
-  %i.rh = call i32 @WebPReportProgress(ptr noundef %11, i32 noundef %i.rg, ptr noundef nonnull %13) #11
+  %i.rh = call i32 @WebPReportProgress(ptr noundef %11, i32 noundef %i.rg, ptr noundef nonnull %13) #10
   %.not163.i = icmp eq i32 %i.rh, 0
   br i1 %.not163.i, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
-  call void @WebPSafeFree(ptr noundef nonnull %i.cw) #11
+  call void @WebPSafeFree(ptr noundef nonnull %i.cw) #10
   br label %GetBestPredictorsAndSubSampling.exit
 
 bb.bo:                                            ; preds = %bb.bm, %bb.bl
@@ -1346,21 +1346,21 @@ bb.bo:                                            ; preds = %bb.bm, %bb.bl
   %i.rn = mul i32 %.2193.i, 14
   %i.ro = zext i32 %i.rn to i64
   %i.rp = getelementptr inbounds nuw [4 x i8], ptr %i.da, i64 %i.ro
-  %i.rq = call i64 %i.rm(ptr noundef nonnull %i.rp, i32 noundef 14) #11, !inline_history !35
+  %i.rq = call i64 %i.rm(ptr noundef nonnull %i.rp, i32 noundef 14) #10, !inline_history !35
   %i.rr = load ptr, ptr @VP8LShannonEntropy, align 8, !tbaa !31
-  %i.rs = call i64 %i.rr(ptr noundef nonnull %i.rl, i32 noundef 256) #11, !inline_history !35
+  %i.rs = call i64 %i.rr(ptr noundef nonnull %i.rl, i32 noundef 256) #10, !inline_history !35
   %i.rt = add i64 %i.rs, %i.rq
   %i.ru = load ptr, ptr @VP8LShannonEntropy, align 8, !tbaa !31
   %i.rv = getelementptr inbounds nuw i8, ptr %i.rl, i64 1024
-  %i.rw = call i64 %i.ru(ptr noundef nonnull %i.rv, i32 noundef 256) #11, !inline_history !35
+  %i.rw = call i64 %i.ru(ptr noundef nonnull %i.rv, i32 noundef 256) #10, !inline_history !35
   %i.rx = add i64 %i.rt, %i.rw
   %i.ry = load ptr, ptr @VP8LShannonEntropy, align 8, !tbaa !31
   %i.rz = getelementptr inbounds nuw i8, ptr %i.rl, i64 2048
-  %i.sa = call i64 %i.ry(ptr noundef nonnull %i.rz, i32 noundef 256) #11, !inline_history !35
+  %i.sa = call i64 %i.ry(ptr noundef nonnull %i.rz, i32 noundef 256) #10, !inline_history !35
   %i.sb = add i64 %i.rx, %i.sa
   %i.sc = load ptr, ptr @VP8LShannonEntropy, align 8, !tbaa !31
   %i.sd = getelementptr inbounds nuw i8, ptr %i.rl, i64 3072
-  %i.se = call i64 %i.sc(ptr noundef nonnull %i.sd, i32 noundef 256) #11, !inline_history !35
+  %i.se = call i64 %i.sc(ptr noundef nonnull %i.sd, i32 noundef 256) #10, !inline_history !35
   %i.sf = add i64 %i.sb, %i.se                    ; 2 uses
   %i.sg = icmp slt i64 %i.sf, %.0139194.i
   br i1 %i.sg, label %bb.bp, label %bb.bq
@@ -1381,7 +1381,7 @@ bb.bq:                                            ; preds = %bb.bp, %.preheader.
   br i1 %.not.i, label %bb.br, label %.preheader.i, !llvm.loop !37
 
 bb.br:                                            ; preds = %bb.bq
-  call void @WebPSafeFree(ptr noundef nonnull %i.cw) #11
+  call void @WebPSafeFree(ptr noundef nonnull %i.cw) #10
   %i.sm = load i32, ptr %14, align 4, !tbaa !3
   call void @VP8LOptimizeSampling(ptr noundef %.188, i32 noundef %0, i32 noundef %1, i32 noundef %i.sm, i32 noundef 9, ptr noundef nonnull %14)
   br label %GetBestPredictorsAndSubSampling.exit
@@ -1393,12 +1393,12 @@ GetBestPredictorsAndSubSampling.exit:             ; preds = %bb.bn, %bb.br
   br i1 %i.sn, label %GetBestPredictorsAndSubSampling.exit.thread, label %bb.bt
 
 GetBestPredictorsAndSubSampling.exit.thread:      ; preds = %._crit_edge117, %GetBestPredictorsAndSubSampling.exit
-  call void @WebPSafeFree(ptr noundef nonnull %i.bb) #11
+  call void @WebPSafeFree(ptr noundef nonnull %i.bb) #10
   br label %bb.bs
 
 bb.bs:                                            ; preds = %._crit_edge112, %GetBestPredictorsAndSubSampling.exit.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   br label %bb.by
 
 bb.bt:                                            ; preds = %GetBestPredictorsAndSubSampling.exit
@@ -1411,9 +1411,9 @@ bb.bt:                                            ; preds = %GetBestPredictorsAn
   %i.su = zext i32 %i.st to i64
   %i.sv = shl nuw nsw i64 %i.su, 2
   call void @llvm.memcpy.p0.p0.i64(ptr align 4 %7, ptr align 4 %.2.ph, i64 %i.sv, i1 false)
-  call void @WebPSafeFree(ptr noundef nonnull %i.bb) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
+  call void @WebPSafeFree(ptr noundef nonnull %i.bb) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   %.pre = load i32, ptr %14, align 4, !tbaa !3    ; 4 uses
   %.pre154 = shl nuw i32 1, %.pre                 ; 2 uses
   %.pre156 = add i32 %.pre154, %i.ck
@@ -1442,11 +1442,11 @@ bb.bt:                                            ; preds = %GetBestPredictorsAn
   %i.tk = shl nsw i64 %i.tj, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 4 %6, ptr align 4 %5, i64 %i.tk, i1 false)
   %i.tl = load ptr, ptr @VP8LPredictorsSub, align 16, !tbaa !31
-  tail call void %i.tl(ptr noundef %6, ptr noundef null, i32 noundef 1, ptr noundef %5) #11, !inline_history !38
+  tail call void %i.tl(ptr noundef %6, ptr noundef null, i32 noundef 1, ptr noundef %5) #10, !inline_history !38
   %i.tm = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.tn = load ptr, ptr getelementptr inbounds nuw (i8, ptr @VP8LPredictorsSub, i64 8), align 8, !tbaa !31
   %i.to = getelementptr inbounds nuw i8, ptr %6, i64 4
-  tail call void %i.tn(ptr noundef nonnull %i.to, ptr noundef null, i32 noundef %i.h, ptr noundef nonnull %i.tm) #11, !inline_history !38
+  tail call void %i.tn(ptr noundef nonnull %i.to, ptr noundef null, i32 noundef %i.h, ptr noundef nonnull %i.tm) #10, !inline_history !38
   %exitcond.peel.not.i = icmp eq i32 %1, 1
   br i1 %exitcond.peel.not.i, label %CopyImageWithPrediction.exit, label %PredictBatch.exit.i.preheader
 
@@ -1602,12 +1602,12 @@ PredictBatch.exit.i:                              ; preds = %PredictBatch.exit.i
   %i.wa = shl nsw i64 %i.vz, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %.07288.i, ptr align 4 %i.vv, i64 %i.wa, i1 false)
   %i.wb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @VP8LPredictorsSub, i64 16), align 16, !tbaa !31
-  tail call void %i.wb(ptr noundef nonnull %.07288.i, ptr noundef nonnull %.07387.i, i32 noundef 1, ptr noundef %i.vv) #11, !inline_history !38
+  tail call void %i.wb(ptr noundef nonnull %.07288.i, ptr noundef nonnull %.07387.i, i32 noundef 1, ptr noundef %i.vv) #10, !inline_history !38
   %i.wc = getelementptr inbounds nuw i8, ptr %i.vv, i64 4
   %i.wd = load ptr, ptr getelementptr inbounds nuw (i8, ptr @VP8LPredictorsSub, i64 88), align 8, !tbaa !31
   %i.we = getelementptr inbounds nuw i8, ptr %.07288.i, i64 4
   %i.wf = getelementptr inbounds nuw i8, ptr %.07387.i, i64 4
-  tail call void %i.wd(ptr noundef nonnull %i.we, ptr noundef nonnull %i.wf, i32 noundef %i.h, ptr noundef nonnull %i.wc) #11, !inline_history !38
+  tail call void %i.wd(ptr noundef nonnull %i.we, ptr noundef nonnull %i.wf, i32 noundef %i.h, ptr noundef nonnull %i.wc) #10, !inline_history !38
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.tf
   br i1 %exitcond.not.i, label %CopyImageWithPrediction.exit, label %PredictBatch.exit.i, !llvm.loop !41
 
@@ -1632,7 +1632,7 @@ PredictBatch.exit.loopexit.us.i.epil.preheader:   ; preds = %CopyImageWithPredic
 
 CopyImageWithPrediction.exit:                     ; preds = %PredictBatch.exit.i, %PredictBatch.exit.loopexit.us.i.epil.preheader, %CopyImageWithPrediction.exit.loopexit241.unr-lcssa, %PredictBatch.exit.loopexit.us.us95.i, %.PredictBatch.exit.loopexit_crit_edge.us.us.i, %.thread, %bb.bt, %.lr.ph89.i.thread
   %i.wn = add nsw i32 %i.d, %12
-  %i.wo = call i32 @WebPReportProgress(ptr noundef %11, i32 noundef %i.wn, ptr noundef nonnull %13) #11
+  %i.wo = call i32 @WebPReportProgress(ptr noundef %11, i32 noundef %i.wn, ptr noundef nonnull %13) #10
   br label %bb.by
 
 bb.by:                                            ; preds = %bb.bs, %CopyImageWithPrediction.exit
@@ -1662,9 +1662,9 @@ bb.a:
   %i.g = add i32 %i.d, %1
   %i.h = lshr i32 %i.g, %2                        ; 5 uses
   %i.i = load i32, ptr %8, align 4, !tbaa !3      ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.b, i8 0, i64 1024, i1 false)
   %i.j = icmp sgt i32 %i.h, 0
   br i1 %i.j, label %.preheader.lr.ph, label %._crit_edge193
@@ -1809,7 +1809,7 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph.i.us
   %.01415.i.us = phi ptr [ %i.bb, %.lr.ph.i.us ], [ %i.be, %bb.d ] ; 2 uses
   %i.bc = add nsw i32 %.016.i.us, -1
   %i.bd = load ptr, ptr @VP8LTransformColor, align 8, !tbaa !31
-  call void %i.bd(ptr noundef nonnull %10, ptr noundef %.01415.i.us, i32 noundef %i.ay) #11, !inline_history !43
+  call void %i.bd(ptr noundef nonnull %10, ptr noundef %.01415.i.us, i32 noundef %i.ay) #10, !inline_history !43
   %i.be = getelementptr inbounds [4 x i8], ptr %.01415.i.us, i64 %i.l
   %i.bf = icmp samesign ugt i32 %.016.i.us, 1
   br i1 %i.bf, label %bb.d, label %CopyTileWithColorTransform.exit.us, !llvm.loop !44
@@ -1927,7 +1927,7 @@ bb.n:                                             ; preds = %._crit_edge180.us
   %i.cx = mul i32 %7, %i.cw
   %i.cy = sdiv i32 %i.cx, %i.h
   %i.cz = add nsw i32 %i.cy, %i.i
-  %i.da = call i32 @WebPReportProgress(ptr noundef %6, i32 noundef %i.cz, ptr noundef nonnull %8) #11
+  %i.da = call i32 @WebPReportProgress(ptr noundef %6, i32 noundef %i.cz, ptr noundef nonnull %8) #10
   %.not.us = icmp eq i32 %i.da, 0
   br i1 %.not.us, label %.loopexit, label %bb.n
 
@@ -1941,7 +1941,7 @@ bb.o:                                             ; preds = %.preheader
   %i.dc = mul nsw i32 %.0102192, %7
   %i.dd = sdiv i32 %i.dc, %i.h
   %i.de = add nsw i32 %i.dd, %i.i
-  %i.df = tail call i32 @WebPReportProgress(ptr noundef %6, i32 noundef %i.de, ptr noundef nonnull %8) #11
+  %i.df = tail call i32 @WebPReportProgress(ptr noundef %6, i32 noundef %i.de, ptr noundef nonnull %8) #10
   %.not = icmp eq i32 %i.df, 0
   br i1 %.not, label %.loopexit, label %bb.o
 
@@ -1951,8 +1951,8 @@ bb.o:                                             ; preds = %.preheader
 
 .loopexit:                                        ; preds = %.preheader, %._crit_edge180.us, %._crit_edge193
   %.0 = phi i32 [ 1, %._crit_edge193 ], [ 0, %._crit_edge180.us ], [ 0, %.preheader ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   ret i32 %.0
 }
 
@@ -1980,12 +1980,12 @@ bb.a:
   %i.p = getelementptr inbounds [4 x i8], ptr %10, i64 %i.o
   %i.q = sext i32 %i.g to i64
   %i.r = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.q ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.d, i8 0, i64 1024, i1 false)
   %i.s = load ptr, ptr @VP8LCollectColorRedTransforms, align 8, !tbaa !31
-  call void %i.s(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef 0, ptr noundef nonnull %i.d) #11, !inline_history !49
+  call void %i.s(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef 0, ptr noundef nonnull %i.d) #10, !inline_history !49
   %i.t = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.u = call i64 %i.t(ptr noundef nonnull %i.d, ptr noundef nonnull %8) #11, !inline_history !50
+  %i.u = call i64 %i.t(ptr noundef nonnull %i.d, ptr noundef nonnull %8) #10, !inline_history !50
   %i.v = load i32, ptr %i.d, align 16, !tbaa !3
   %i.w = zext i32 %i.v to i64
   %i.x = mul nuw nsw i64 %i.w, 25165824
@@ -2064,7 +2064,7 @@ GetPredictionCostCrossColorRed.exit.i:            ; preds = %bb.i, %bb.h
   %i.ba = zext nneg i24 %i.az to i32
   %i.bb = and i24 %4, 255                         ; 2 uses
   %i.bc = zext nneg i24 %i.bb to i32
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
   %i.bd = icmp sgt i32 %i.at, -4
   br i1 %i.bd, label %.lr.ph72.preheader.i, label %GetBestGreenToRed.exit
 
@@ -2093,12 +2093,12 @@ bb.j:                                             ; preds = %GetPredictionCostCr
   %.04066.i = phi i32 [ %i.bm, %.lr.ph.i ], [ %i.dd, %GetPredictionCostCrossColorRed.exit62.i ] ; 2 uses
   %.14265.i = phi i64 [ %.04169.i, %.lr.ph.i ], [ %spec.select.i, %GetPredictionCostCrossColorRed.exit62.i ] ; 2 uses
   %i.bo = add nsw i32 %.04066.i, %.167.i          ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.c, i8 0, i64 1024, i1 false)
   %i.bp = load ptr, ptr @VP8LCollectColorRedTransforms, align 8, !tbaa !31
-  call void %i.bp(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef %i.bo, ptr noundef nonnull %i.c) #11, !inline_history !49
+  call void %i.bp(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef %i.bo, ptr noundef nonnull %i.c) #10, !inline_history !49
   %i.bq = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.br = call i64 %i.bq(ptr noundef nonnull %i.c, ptr noundef nonnull %8) #11, !inline_history !50
+  %i.br = call i64 %i.bq(ptr noundef nonnull %i.c, ptr noundef nonnull %8) #10, !inline_history !50
   %i.bs = load i32, ptr %i.c, align 16, !tbaa !3
   %i.bt = zext i32 %i.bs to i64
   %i.bu = mul nuw nsw i64 %i.bt, 25165824
@@ -2182,7 +2182,7 @@ GetPredictionCostCrossColorRed.exit62.i:          ; preds = %bb.r, %bb.q
   %i.da = icmp eq i32 %i.bo, 0
   %i.db = add nsw i64 %.1.i61.i, -25165824
   %.2.i.i = select i1 %i.da, i64 %i.db, i64 %.1.i61.i ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
   %i.dc = icmp slt i64 %.2.i.i, %.14265.i
   %spec.select.i = call i64 @llvm.smin.i64(i64 %.2.i.i, i64 %.14265.i) ; 2 uses
   %spec.select46.i = select i1 %i.dc, i32 %i.bo, i32 %.167.i ; 3 uses
@@ -2201,12 +2201,12 @@ GetPredictionCostCrossColorRed.exit62.i:          ; preds = %bb.r, %bb.q
 
 GetBestGreenToRed.exit:                           ; preds = %GetPredictionCostCrossColorRed.exit.i, %._crit_edge73.loopexit.i
   %.0.lcssa.i = phi i8 [ 0, %GetPredictionCostCrossColorRed.exit.i ], [ %i.df, %._crit_edge73.loopexit.i ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.a, i8 0, i64 1024, i1 false)
   %i.dg = load ptr, ptr @VP8LCollectColorBlueTransforms, align 8, !tbaa !31
-  call void %i.dg(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.a) #11, !inline_history !53
+  call void %i.dg(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.a) #10, !inline_history !53
   %i.dh = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.di = call i64 %i.dh(ptr noundef nonnull %i.a, ptr noundef nonnull %9) #11, !inline_history !54
+  %i.di = call i64 %i.dh(ptr noundef nonnull %i.a, ptr noundef nonnull %9) #10, !inline_history !54
   %i.dj = load i32, ptr %i.a, align 16, !tbaa !3
   %i.dk = zext i32 %i.dj to i64
   %i.dl = mul nuw nsw i64 %i.dk, 25165824
@@ -2305,7 +2305,7 @@ GetPredictionCostCrossColorBlue.exit:             ; preds = %bb.y, %bb.z
   %i.ez = icmp eq i24 %.sroa.2.0.extract.shift.i, 0
   %i.fa = select i1 %i.ez, i64 -75497472, i64 -50331648
   %i.fb = add i64 %i.fa, %.2.i58
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
   br label %bb.ab
 
 bb.aa:                                            ; preds = %bb.al
@@ -2341,12 +2341,12 @@ bb.ac:                                            ; preds = %GetPredictionCostCr
   %i.fp = sext i8 %i.fo to i32
   %i.fq = mul nsw i32 %i.fp, %i.fg
   %i.fr = add nsw i32 %i.fq, %.16174.i            ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1024) %i.b, i8 0, i64 1024, i1 false)
   %i.fs = load ptr, ptr @VP8LCollectColorBlueTransforms, align 8, !tbaa !31
-  call void %i.fs(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef %i.fm, i32 noundef %i.fr, ptr noundef nonnull %i.b) #11, !inline_history !57
+  call void %i.fs(ptr noundef %i.r, i32 noundef %6, i32 noundef %i.l, i32 noundef %i.m, i32 noundef %i.fm, i32 noundef %i.fr, ptr noundef nonnull %i.b) #10, !inline_history !57
   %i.ft = load ptr, ptr @VP8LCombinedShannonEntropy, align 8, !tbaa !31
-  %i.fu = call i64 %i.ft(ptr noundef nonnull %i.b, ptr noundef nonnull %9) #11, !inline_history !58
+  %i.fu = call i64 %i.ft(ptr noundef nonnull %i.b, ptr noundef nonnull %9) #10, !inline_history !58
   %i.fv = load i32, ptr %i.b, align 16, !tbaa !3
   %i.fw = zext i32 %i.fv to i64
   %i.fx = mul nuw nsw i64 %i.fw, 25165824
@@ -2440,7 +2440,7 @@ GetPredictionCostCrossColorBlue.exit.i:           ; preds = %bb.ak, %bb.aj
   %i.hk = icmp eq i32 %i.fr, 0
   %i.hl = add nsw i64 %.4.i.i, -25165824
   %.5.i.i = select i1 %i.hk, i64 %i.hl, i64 %.4.i.i ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   %i.hm = icmp slt i64 %.5.i.i, %.16773.i         ; 2 uses
   %.268.i = call i64 @llvm.smin.i64(i64 %.5.i.i, i64 %.16773.i) ; 2 uses
   %.262.i = select i1 %i.hm, i32 %i.fr, i32 %.16174.i ; 4 uses
@@ -2476,7 +2476,7 @@ GetBestGreenRedToBlue.exit:                       ; preds = %bb.aa, %bb.al
 declare ptr @WebPSafeCalloc(i64 noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @MaxDiffsForRow(i32 noundef %0, i32 noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3, i32 noundef %4) unnamed_addr #5 {
+define internal fastcc void @MaxDiffsForRow(i32 noundef %0, i32 noundef %1, ptr noundef readonly captures(none) %2, ptr noundef writeonly captures(none) %3, i32 noundef %4) unnamed_addr #0 {
 bb.a:
   %i.a = icmp slt i32 %0, 3
   br i1 %i.a, label %.loopexit, label %bb.b
@@ -2644,7 +2644,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
 }
 
 ; Function Attrs: inlinehint nounwind uwtable
-define internal fastcc void @GetResidual(i32 noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef readonly captures(none) %4, i32 noundef range(i32 -2147483648, 256) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, i32 noundef %11, ptr noundef %12) unnamed_addr #6 {
+define internal fastcc void @GetResidual(i32 noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef readonly captures(none) %4, i32 noundef range(i32 -2147483648, 256) %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, i32 noundef %10, i32 noundef %11, ptr noundef %12) unnamed_addr #5 {
 bb.a:
   %.not = icmp eq i32 %10, 0
   br i1 %.not, label %bb.j, label %bb.b
@@ -2660,12 +2660,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.d = load ptr, ptr @VP8LPredictorsSub, align 16, !tbaa !31
-  tail call void %i.d(ptr noundef %3, ptr noundef null, i32 noundef 1, ptr noundef %12) #11, !inline_history !61
+  tail call void %i.d(ptr noundef %3, ptr noundef null, i32 noundef 1, ptr noundef %12) #10, !inline_history !61
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
   %i.e = load ptr, ptr getelementptr inbounds nuw (i8, ptr @VP8LPredictorsSub, i64 16), align 16, !tbaa !31
-  tail call void %i.e(ptr noundef %3, ptr noundef %2, i32 noundef 1, ptr noundef %12) #11, !inline_history !61
+  tail call void %i.e(ptr noundef %3, ptr noundef %2, i32 noundef 1, ptr noundef %12) #10, !inline_history !61
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
@@ -2684,7 +2684,7 @@ bb.h:                                             ; preds = %bb.g
   %i.i = load ptr, ptr getelementptr inbounds nuw (i8, ptr @VP8LPredictorsSub, i64 8), align 8, !tbaa !31
   %i.j = sext i32 %.021.i to i64
   %i.k = getelementptr inbounds [4 x i8], ptr %3, i64 %i.j
-  tail call void %i.i(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef %.022.i, ptr noundef %.0.i) #11, !inline_history !61
+  tail call void %i.i(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef %.022.i, ptr noundef %.0.i) #10, !inline_history !61
   br label %PredictBatch.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -2694,7 +2694,7 @@ bb.i:                                             ; preds = %bb.g
   %i.o = sext i32 %.021.i to i64                  ; 2 uses
   %i.p = getelementptr inbounds [4 x i8], ptr %3, i64 %i.o
   %i.q = getelementptr inbounds [4 x i8], ptr %2, i64 %i.o
-  tail call void %i.n(ptr noundef nonnull %i.p, ptr noundef nonnull %i.q, i32 noundef %.022.i, ptr noundef %.0.i) #11, !inline_history !61
+  tail call void %i.n(ptr noundef nonnull %i.p, ptr noundef nonnull %i.q, i32 noundef %.022.i, ptr noundef %.0.i) #10, !inline_history !61
   br label %PredictBatch.exit
 
 bb.j:                                             ; preds = %bb.a
@@ -2777,7 +2777,7 @@ bb.n:                                             ; preds = %.lr.ph.split.split.
   %i.ba = getelementptr [4 x i8], ptr %3, i64 %indvars.iv106
   %i.bb = getelementptr i8, ptr %i.ba, i64 -4
   %i.bc = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv106
-  %i.bd = tail call i32 %i.t(ptr noundef %i.bb, ptr noundef nonnull %i.bc) #11
+  %i.bd = tail call i32 %i.t(ptr noundef %i.bb, ptr noundef nonnull %i.bc) #10
   br label %.thread.us86
 
 bb.o:                                             ; preds = %.lr.ph.split.split.us
@@ -2837,7 +2837,7 @@ bb.s:                                             ; preds = %.lr.ph.split.split.
   %i.bx = getelementptr [4 x i8], ptr %3, i64 %indvars.iv101
   %i.by = getelementptr i8, ptr %i.bx, i64 -4
   %i.bz = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv101
-  %i.ca = tail call i32 %i.t(ptr noundef %i.by, ptr noundef nonnull %i.bz) #11
+  %i.ca = tail call i32 %i.t(ptr noundef %i.by, ptr noundef nonnull %i.bz) #10
   br label %.thread.us92
 
 bb.t:                                             ; preds = %.lr.ph.split.split.split.us
@@ -2894,7 +2894,7 @@ bb.x:                                             ; preds = %.lr.ph.split.split.
   %i.cv = getelementptr [4 x i8], ptr %3, i64 %indvars.iv
   %i.cw = getelementptr i8, ptr %i.cv, i64 -4
   %i.cx = getelementptr inbounds [4 x i8], ptr %2, i64 %indvars.iv
-  %i.cy = tail call i32 %i.t(ptr noundef %i.cw, ptr noundef nonnull %i.cx) #11 ; 11 uses
+  %i.cy = tail call i32 %i.t(ptr noundef %i.cw, ptr noundef nonnull %i.cx) #10 ; 11 uses
   %i.cz = icmp eq i64 %indvars.iv, %sext
   br i1 %i.cz, label %bb.al, label %bb.y
 
@@ -3162,38 +3162,37 @@ PredictBatch.exit:                                ; preds = %bb.ao, %bb.w, %bb.r
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.abs.i32(i32, i1 immarg) #7
+declare i32 @llvm.abs.i32(i32, i1 immarg) #6
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #9
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #9
+declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umax.i32(i32, i32) #9
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #9
+declare i32 @llvm.umax.i32(i32, i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.smin.i64(i64, i64) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #9
 
-attributes #0 = { nofree norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { inlinehint nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nounwind }
+attributes #5 = { inlinehint nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

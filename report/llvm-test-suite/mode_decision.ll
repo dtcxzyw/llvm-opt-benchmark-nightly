@@ -201,24 +201,24 @@ define dso_local void @fast_mode_intra_decision(ptr noundef writeonly captures(n
 bb.a:
   %2 = alloca %struct.pix_pos, align 4            ; 4 uses
   %3 = alloca [2 x %struct.pix_pos], align 16     ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.a = load ptr, ptr @getNeighbour, align 8, !tbaa !18
   %i.b = load ptr, ptr @img, align 8, !tbaa !18
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %i.d = load i32, ptr %i.c, align 4, !tbaa !19
-  call void %i.a(i32 noundef %i.d, i32 noundef -1, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %3) #15
+  call void %i.a(i32 noundef %i.d, i32 noundef -1, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %3) #14
   %i.e = load ptr, ptr @getNeighbour, align 8, !tbaa !18
   %i.f = load ptr, ptr @img, align 8, !tbaa !18
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 12
   %i.h = load i32, ptr %i.g, align 4, !tbaa !19
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  call void %i.e(i32 noundef %i.h, i32 noundef -1, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.i) #15
+  call void %i.e(i32 noundef %i.h, i32 noundef -1, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.i) #14
   %i.j = load ptr, ptr @getNeighbour, align 8, !tbaa !18
   %i.k = load ptr, ptr @img, align 8, !tbaa !18
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 12
   %i.m = load i32, ptr %i.l, align 4, !tbaa !19
-  call void %i.j(i32 noundef %i.m, i32 noundef 0, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %2) #15
+  call void %i.j(i32 noundef %i.m, i32 noundef 0, i32 noundef -1, i32 noundef 0, ptr noundef nonnull %2) #14
   %i.n = fmul double %1, f0x3F65555555555555
   %i.o = load ptr, ptr @img, align 8, !tbaa !18   ; 12 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 164
@@ -621,8 +621,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #14
   ret void
 }
 
@@ -1025,7 +1025,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not94, label %bb.r, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.z = tail call i32 @CheckReliabilityOfRef(i32 noundef %1, i32 noundef 0, i32 noundef %i.r, i32 noundef %2) #15
+  %i.z = tail call i32 @CheckReliabilityOfRef(i32 noundef %1, i32 noundef 0, i32 noundef %i.r, i32 noundef %2) #14
   %.not95 = icmp eq i32 %i.z, 0
   br i1 %.not95, label %bb.r, label %._crit_edge
 
@@ -1250,7 +1250,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.ej = sext i8 %i.ei to i16
   %i.ek = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.el = load i32, ptr %i.ek, align 8, !tbaa !4
-  %i.em = tail call i32 @BIDPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext %i.eh, i16 noundef signext %i.ej, i32 noundef %i.el) #15
+  %i.em = tail call i32 @BIDPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext %i.eh, i16 noundef signext %i.ej, i32 noundef %i.el) #14
   %i.en = load i32, ptr %i.ef, align 4, !tbaa !4
   %i.eo = add nsw i32 %i.en, %i.em
   store i32 %i.eo, ptr %i.ef, align 4, !tbaa !4
@@ -1334,7 +1334,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.go = sext i8 %i.gn to i16
   %i.gp = getelementptr inbounds nuw i8, ptr %3, i64 40
   %i.gq = load i32, ptr %i.gp, align 8, !tbaa !4
-  %i.gr = tail call i32 @BIDPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext %i.gl, i16 noundef signext %i.go, i32 noundef %i.gq) #15
+  %i.gr = tail call i32 @BIDPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext %i.gl, i16 noundef signext %i.go, i32 noundef %i.gq) #14
   %i.gs = load i32, ptr %i.gj, align 4, !tbaa !4
   %i.gt = add nsw i32 %i.gs, %i.gr
   store i32 %i.gt, ptr %i.gj, align 4, !tbaa !4
@@ -1399,7 +1399,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.ia = load i32, ptr %i.hz, align 8, !tbaa !4
   %i.ib = and i32 %0, 1
   %i.ic = xor i32 %i.ib, 1
-  %i.id = tail call i32 @BPredPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext 0, i16 noundef signext 0, i32 noundef %i.ia, i32 noundef %i.ic) #15
+  %i.id = tail call i32 @BPredPartitionCost(i32 noundef %2, i32 noundef %1, i16 noundef signext 0, i16 noundef signext 0, i32 noundef %i.ia, i32 noundef %i.ic) #14
   %i.ie = load i32, ptr %i.hy, align 4, !tbaa !4
   %i.if = add nsw i32 %i.ie, %i.id
   store i32 %i.if, ptr %i.hy, align 4, !tbaa !4
@@ -1683,7 +1683,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b,
   %i.q = phi i32 [ 0, %bb.a ], [ 1, %bb.d ], [ 1, %bb.b ], [ %i.p, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 472 ; 7 uses
   store i32 %i.q, ptr %i.r, align 8, !tbaa !124
-  tail call void @SetModesAndRefframeForBlocks(i32 noundef %0) #15
+  tail call void @SetModesAndRefframeForBlocks(i32 noundef %0) #14
   %i.s = load ptr, ptr @img, align 8, !tbaa !18
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 15256
   store i32 0, ptr %i.t, align 8, !tbaa !125
@@ -1725,7 +1725,7 @@ bb.i:                                             ; preds = %bb.h, %bb.h, %bb.h,
   br label %bb.j
 
 bb.j:                                             ; preds = %.backedge, %bb.i
-  %i.al = tail call i32 @RDCost_for_macroblocks(double noundef %i.ac, i32 noundef %0, ptr noundef %3, ptr noundef %4, i32 noundef %5) #15
+  %i.al = tail call i32 @RDCost_for_macroblocks(double noundef %i.ac, i32 noundef %0, ptr noundef %3, ptr noundef %4, i32 noundef %5) #14
   %.not65 = icmp eq i32 %i.al, 0
   %.pre = load ptr, ptr @input, align 8, !tbaa !18 ; 2 uses
   br i1 %.not65, label %bb.r, label %bb.k
@@ -1756,7 +1756,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %.sink.split, %bb.k
-  tail call void @store_macroblock_parameters(i32 noundef %0) #15
+  tail call void @store_macroblock_parameters(i32 noundef %0) #14
   %i.aw = load ptr, ptr @input, align 8, !tbaa !18 ; 6 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 4168
   %i.ay = load i32, ptr %i.ax, align 8, !tbaa !112
@@ -1855,7 +1855,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.bz = load ptr, ptr @img, align 8, !tbaa !18
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 15256
   store i32 1, ptr %i.ca, align 8, !tbaa !125
-  %i.cb = tail call i32 @RDCost_for_macroblocks(double noundef %i.ac, i32 noundef 0, ptr noundef %3, ptr noundef %4, i32 noundef %5) #15
+  %i.cb = tail call i32 @RDCost_for_macroblocks(double noundef %i.ac, i32 noundef 0, ptr noundef %3, ptr noundef %4, i32 noundef %5) #14
   %.not73 = icmp eq i32 %i.cb, 0
   br i1 %.not73, label %bb.ag, label %bb.ad
 
@@ -1876,7 +1876,7 @@ bb.ae:                                            ; preds = %bb.ad
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  tail call void @store_macroblock_parameters(i32 noundef 0) #15
+  tail call void @store_macroblock_parameters(i32 noundef 0) #14
   br label %bb.ag
 
 bb.ag:                                            ; preds = %bb.h, %.loopexit, %bb.z, %bb.aa, %bb.ab, %bb.af, %bb.ac
@@ -1901,16 +1901,16 @@ bb.a:
   %i.g = alloca i16, align 2                      ; 3 uses
   %i.h = alloca i8, align 1                       ; 9 uses
   %i.i = alloca [2 x i8], align 2                 ; 10 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #14
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.c, ptr noundef nonnull align 16 dereferenceable(20) @__const.submacroblock_mode_decision.bmcost, i64 20, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #14
   store i32 0, ptr %i.d, align 4, !tbaa !4
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #14
   %.not = icmp eq i32 %10, 0                      ; 11 uses
   %i.j = select i1 %.not, i64 5, i64 2
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #14
   %i.k = load ptr, ptr @img, align 8              ; 2 uses
   %.in.v = select i1 %.not, i64 14176, i64 14184
   %.in = getelementptr inbounds nuw i8, ptr %i.k, i64 %.in.v
@@ -1920,10 +1920,10 @@ bb.a:
   %.in347.v = select i1 %.not, i64 14192, i64 14200
   %.in347 = getelementptr inbounds nuw i8, ptr %i.k, i64 %.in347.v
   %i.o = load ptr, ptr %.in347, align 8, !tbaa !113 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #14
   store i8 0, ptr %i.h, align 1, !tbaa !115
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #14
   store i16 -256, ptr %i.i, align 2
   %i.p = shl i32 %6, 2                            ; 6 uses
   %i.q = and i32 %i.p, -8                         ; 4 uses
@@ -1938,7 +1938,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = load ptr, ptr @cs_cm, align 8, !tbaa !18
-  tail call void @store_coding_state(ptr noundef %i.u) #15
+  tail call void @store_coding_state(ptr noundef %i.u) #14
   %.not348 = icmp eq i16 %5, 0                    ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 54
@@ -2070,7 +2070,7 @@ bb.h:                                             ; preds = %bb.g, %bb.g
 
 bb.i:                                             ; preds = %bb.h
   store i32 0, ptr %i.b, align 4, !tbaa !4
-  %i.dc = call i32 @GetDirectCost8x8(i32 noundef %6, ptr noundef nonnull %i.b) #15 ; 6 uses
+  %i.dc = call i32 @GetDirectCost8x8(i32 noundef %6, ptr noundef nonnull %i.b) #14 ; 6 uses
   %i.dd = icmp eq i32 %i.dc, 2147483647
   br i1 %i.dd, label %bb.k, label %bb.j
 
@@ -2196,7 +2196,7 @@ bb.v:                                             ; preds = %bb.t
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.fg = phi i32 [ %i.an, %bb.u ], [ %i.ff, %bb.v ]
   store i32 %i.fg, ptr %i.ap, align 8, !tbaa !4
-  call void @PartitionMotionSearch(i32 noundef %i.co, i32 noundef %6, ptr noundef nonnull %i.f) #15
+  call void @PartitionMotionSearch(i32 noundef %i.co, i32 noundef %6, ptr noundef nonnull %i.f) #14
   store i32 2147483647, ptr %i.c, align 16, !tbaa !4
   call void @list_prediction_cost(i32 noundef 0, i32 noundef %6, i32 noundef %i.co, ptr noundef nonnull byval(%struct.RD_PARAMS) align 8 %0, ptr noundef nonnull %i.c, ptr noundef nonnull %i.i)
   %i.fh = load ptr, ptr @img, align 8, !tbaa !18  ; 2 uses
@@ -2480,7 +2480,7 @@ bb.ao:                                            ; preds = %.loopexit382
   %i.lu = sext i8 %i.lo to i16
   %i.lv = load i8, ptr %i.ah, align 1, !tbaa !115
   %i.lw = sext i8 %i.lv to i16
-  %i.lx = call double @RDCost_for_8x8blocks(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, double noundef %i.az, i32 noundef %6, i32 noundef %i.co, i16 noundef signext %i.lt, i16 noundef signext %i.lu, i16 noundef signext %i.lw) #15
+  %i.lx = call double @RDCost_for_8x8blocks(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, double noundef %i.az, i32 noundef %6, i32 noundef %i.co, i16 noundef signext %i.lt, i16 noundef signext %i.lu, i16 noundef signext %i.lw) #14
   br label %bb.at
 
 bb.ap:                                            ; preds = %.loopexit382
@@ -2503,7 +2503,7 @@ bb.aq:                                            ; preds = %bb.ap
 bb.ar:                                            ; preds = %bb.aq
   %i.mi = sext i8 %i.lz to i32
   %i.mj = load ptr, ptr @refbits, align 8, !tbaa !78
-  %i.mk = call i32 @B8Mode2Value(i32 noundef %i.co, i32 noundef %i.mi) #15
+  %i.mk = call i32 @B8Mode2Value(i32 noundef %i.co, i32 noundef %i.mi) #14
   %i.ml = sext i32 %i.mk to i64
   %i.mm = getelementptr inbounds [4 x i8], ptr %i.mj, i64 %i.ml
   %i.mn = load i32, ptr %i.mm, align 4, !tbaa !4
@@ -2906,7 +2906,7 @@ bb.br:                                            ; preds = %.lr.ph, %bb.br
 
 bb.bs:                                            ; preds = %.loopexit378
   %i.yq = load ptr, ptr @cs_b8, align 8, !tbaa !18
-  call void @store_coding_state(ptr noundef %i.yq) #15
+  call void @store_coding_state(ptr noundef %i.yq) #14
   br label %bb.bt
 
 bb.bt:                                            ; preds = %.loopexit378, %bb.bs, %bb.av, %bb.au
@@ -2914,7 +2914,7 @@ bb.bt:                                            ; preds = %.loopexit378, %bb.b
   %.1334 = phi i32 [ %i.na, %bb.bs ], [ %i.na, %.loopexit378 ], [ %.0333401, %bb.au ], [ %.0333401, %bb.av ]
   %.1 = phi double [ %.1321, %bb.bs ], [ %.1321, %.loopexit378 ], [ %.0403, %bb.au ], [ %.0403, %bb.av ]
   %i.yr = load ptr, ptr @cs_cm, align 8, !tbaa !18
-  call void @reset_coding_state(ptr noundef %i.yr) #15
+  call void @reset_coding_state(ptr noundef %i.yr) #14
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.d, %bb.f, %bb.bt
@@ -2969,7 +2969,7 @@ bb.bw:                                            ; preds = %bb.bv
   %i.zj = sext i8 %i.zi to i16
   %i.zk = load i8, ptr %i.bh, align 1, !tbaa !115
   %i.zl = sext i8 %i.zk to i16
-  %i.zm = call i32 @LumaResidualCoding8x8(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, i32 noundef %6, i16 noundef signext %.0325, i32 noundef %i.zf, i32 noundef %i.zh, i16 noundef signext %i.zj, i16 noundef signext %i.zl) #15
+  %i.zm = call i32 @LumaResidualCoding8x8(ptr noundef nonnull %i.e, ptr noundef nonnull %i.a, i32 noundef %6, i16 noundef signext %.0325, i32 noundef %i.zf, i32 noundef %i.zh, i16 noundef signext %i.zj, i16 noundef signext %i.zl) #14
   %i.zn = load i32, ptr @cbp_blk8x8, align 4, !tbaa !4
   %i.zo = and i32 %i.zn, %i.bm
   %i.zp = load i64, ptr %i.a, align 8, !tbaa !133
@@ -3225,7 +3225,7 @@ bb.cg:                                            ; preds = %bb.cb
   %i.agn = sext i8 %i.agm to i32
   %i.ago = load i8, ptr %i.bd, align 1, !tbaa !115
   %i.agp = sext i8 %i.ago to i32
-  call void @StoreNewMotionVectorsBlock8x8(i32 noundef 0, i32 noundef %6, i32 noundef %i.agj, i32 noundef %i.agl, i32 noundef %i.agn, i32 noundef %i.agp, i32 noundef %i.yt) #15
+  call void @StoreNewMotionVectorsBlock8x8(i32 noundef 0, i32 noundef %6, i32 noundef %i.agj, i32 noundef %i.agl, i32 noundef %i.agn, i32 noundef %i.agp, i32 noundef %i.yt) #14
   br label %.loopexit372
 
 .loopexit372:                                     ; preds = %bb.cf, %bb.cg
@@ -3237,12 +3237,12 @@ bb.cg:                                            ; preds = %bb.cb
   %i.agv = sext i8 %i.agu to i32
   %i.agw = load i8, ptr %i.bh, align 1, !tbaa !115
   %i.agx = sext i8 %i.agw to i32
-  call void @SetRefAndMotionVectors(i32 noundef %6, i32 noundef %i.agr, i32 noundef %i.agt, i32 noundef %i.agv, i32 noundef %i.agx) #15
+  call void @SetRefAndMotionVectors(i32 noundef %6, i32 noundef %i.agr, i32 noundef %i.agt, i32 noundef %i.agv, i32 noundef %i.agx) #14
   br i1 %i.br, label %bb.ch, label %bb.ci
 
 bb.ch:                                            ; preds = %.loopexit372
   %i.agy = load ptr, ptr @cs_b8, align 8, !tbaa !18
-  call void @reset_coding_state(ptr noundef %i.agy) #15
+  call void @reset_coding_state(ptr noundef %i.agy) #14
   br label %bb.ci
 
 .critedge:                                        ; preds = %bb.cc
@@ -3254,7 +3254,7 @@ bb.ch:                                            ; preds = %.loopexit372
   %i.ahe = sext i8 %i.ahd to i32
   %i.ahf = load i8, ptr %i.bh, align 1, !tbaa !115
   %i.ahg = sext i8 %i.ahf to i32
-  call void @SetRefAndMotionVectors(i32 noundef %6, i32 noundef %i.aha, i32 noundef %i.ahc, i32 noundef %i.ahe, i32 noundef %i.ahg) #15
+  call void @SetRefAndMotionVectors(i32 noundef %6, i32 noundef %i.aha, i32 noundef %i.ahc, i32 noundef %i.ahe, i32 noundef %i.ahg) #14
   br label %bb.ci
 
 bb.ci:                                            ; preds = %.critedge, %bb.ch, %.loopexit372
@@ -3350,15 +3350,15 @@ bb.cm:                                            ; preds = %.lr.ph418, %bb.cm
   br i1 %i.ajl, label %bb.cm, label %.loopexit, !llvm.loop !161
 
 .loopexit:                                        ; preds = %bb.cm, %bb.cl, %bb.ck, %bb.ci
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret void
 }
 
@@ -3386,7 +3386,7 @@ declare void @StoreNewMotionVectorsBlock8x8(i32 noundef, i32 noundef, i32 nounde
 
 declare void @SetRefAndMotionVectors(i32 noundef, i32 noundef, i32 noundef, i32 noundef, i32 noundef) local_unnamed_addr #5
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @get_initial_mb16x16_cost() local_unnamed_addr #9 {
 bb.a:
   %i.a = load ptr, ptr @img, align 8, !tbaa !18   ; 7 uses
@@ -3464,7 +3464,7 @@ bb.g:                                             ; preds = %.thread7, %bb.f
   %i.au = load double, ptr %i.at, align 8, !tbaa !86
   %i.av = fmul double %i.au, 5.120000e+02
   %i.aw = fdiv double %i.ai, %i.av
-  %i.ax = tail call double @sqrt(double noundef %i.aw) #15, !tbaa !4
+  %i.ax = tail call double @sqrt(double noundef %i.aw) #14, !tbaa !4
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
@@ -3473,11 +3473,11 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   ret void
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sqrt(double noundef) local_unnamed_addr #10
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @adjust_mb16x16_cost(i32 noundef %0) local_unnamed_addr #11 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local void @adjust_mb16x16_cost(i32 noundef %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = sitofp i32 %0 to double                  ; 2 uses
   store double %i.a, ptr @mb16x16_cost, align 8, !tbaa !86
@@ -3507,7 +3507,7 @@ bb.b:                                             ; preds = %bb.a
   %i.u = load double, ptr %i.t, align 8, !tbaa !86
   %i.v = fmul double %i.u, 5.120000e+02
   %i.w = fdiv double %i.h, %i.v
-  %i.x = tail call double @sqrt(double noundef %i.w) #15, !tbaa !4
+  %i.x = tail call double @sqrt(double noundef %i.w) #14, !tbaa !4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -3517,25 +3517,25 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.abs.i32(i32, i1 immarg) #12
+declare i32 @llvm.abs.i32(i32, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #13
+declare i32 @llvm.smin.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #13
+declare i32 @llvm.smax.i32(i32, i32) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i8 @llvm.smin.i8(i8, i8) #13
+declare i8 @llvm.smin.i8(i8, i8) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x i32> @llvm.abs.v16i32(<16 x i32>, i1 immarg) #12
+declare <16 x i32> @llvm.abs.v16i32(<16 x i32>, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v16i64(<16 x i64>) #13
+declare i64 @llvm.vector.reduce.add.v16i64(<16 x i64>) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.assume(i1 noundef) #13
 
 attributes #0 = { nofree norecurse nosync nounwind memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -3546,13 +3546,12 @@ attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #9 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #15 = { nounwind }
+attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

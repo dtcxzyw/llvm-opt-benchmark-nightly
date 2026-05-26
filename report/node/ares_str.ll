@@ -5,14 +5,14 @@ target triple = "x86_64-pc-linux-gnu"
 
 @ares_tolower_lookup = internal unnamed_addr constant [256 x i8] c"\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\0F\10\11\12\13\14\15\16\17\18\19\1A\1B\1C\1D\1E\1F !\22#$%&'()*+,-./0123456789:;<=>?@abcdefghijklmnopqrstuvwxyz[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\7F\80\81\82\83\84\85\86\87\88\89\8A\8B\8C\8D\8E\8F\90\91\92\93\94\95\96\97\98\99\9A\9B\9C\9D\9E\9F\A0\A1\A2\A3\A4\A5\A6\A7\A8\A9\AA\AB\AC\AD\AE\AF\B0\B1\B2\B3\B4\B5\B6\B7\B8\B9\BA\BB\BC\BD\BE\BF\C0\C1\C2\C3\C4\C5\C6\C7\C8\C9\CA\CB\CC\CD\CE\CF\D0\D1\D2\D3\D4\D5\D6\D7\D8\D9\DA\DB\DC\DD\DE\DF\E0\E1\E2\E3\E4\E5\E6\E7\E8\E9\EA\EB\EC\ED\EE\EF\F0\F1\F2\F3\F4\F5\F6\F7\F8\F9\FA\FB\FC\FD\FE\FF", align 16
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i64 @ares_strnlen(ptr noundef %0, i64 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call ptr @memchr(ptr noundef nonnull %0, i32 noundef 0, i64 noundef %1) #14 ; 2 uses
+  %i.b = tail call ptr @memchr(ptr noundef nonnull %0, i32 noundef 0, i64 noundef %1) #13 ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.d, label %bb.c
 
@@ -27,17 +27,17 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   ret i64 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i64 @ares_strlen(ptr noundef readonly captures(address_is_null) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #14
+  %i.b = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %0) #13
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -45,7 +45,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   ret i64 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
@@ -55,13 +55,13 @@ bb.a:
   br i1 %i.a, label %bb.f, label %ares_strlen.exit
 
 ares_strlen.exit:                                 ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #14 ; 5 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #13 ; 5 uses
   %i.c = icmp eq i64 %i.b, -1
   br i1 %i.c, label %bb.f, label %bb.b
 
 bb.b:                                             ; preds = %ares_strlen.exit
   %i.d = add nuw i64 %i.b, 1
-  %i.e = tail call ptr @ares_malloc(i64 noundef %i.d) #15 ; 4 uses
+  %i.e = tail call ptr @ares_malloc(i64 noundef %i.d) #14 ; 4 uses
   %i.f = icmp eq ptr %i.e, null
   br i1 %i.f, label %bb.f, label %bb.c
 
@@ -88,7 +88,7 @@ declare ptr @ares_malloc(i64 noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #4
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local range(i64 0, -1) i64 @ares_strcpy(ptr noundef writeonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #5 {
 bb.a:
   %i.a = icmp eq ptr %0, null
@@ -101,7 +101,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.c, label %ares_strlen.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #14
+  %i.d = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %1) #13
   br label %ares_strlen.exit
 
 ares_strlen.exit:                                 ; preds = %bb.b, %bb.c
@@ -190,14 +190,14 @@ bb.c:                                             ; preds = %.lr.ph
   ret i32 %.017
 }
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @ares_str_rtrim(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.c, label %ares_strlen.exit
 
 ares_strlen.exit:                                 ; preds = %bb.a
-  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #14 ; 2 uses
+  %i.b = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #13 ; 2 uses
   %.not20 = icmp eq i64 %i.b, 0
   br i1 %.not20, label %._crit_edge, label %.lr.ph
 
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.a, %._crit_edge
   ret void
 }
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @ares_str_ltrim(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = icmp eq ptr %0, null
@@ -259,7 +259,7 @@ bb.a:
   br i1 %i.f, label %bb.c, label %ares_strlen.exit
 
 ares_strlen.exit:                                 ; preds = %.critedge
-  %i.g = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #14 ; 2 uses
+  %i.g = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #13 ; 2 uses
   %.not32 = icmp eq i64 %.0, %i.g
   br i1 %.not32, label %ares_strlen.exit._crit_edge, label %bb.b
 
@@ -281,7 +281,7 @@ bb.c:                                             ; preds = %.critedge, %bb.a, %
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #4
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @ares_str_trim(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = icmp eq ptr %0, null
@@ -310,7 +310,7 @@ bb.a:
   br i1 %i.f, label %ares_strlen.exit.i2, label %ares_strlen.exit.i
 
 ares_strlen.exit.i:                               ; preds = %.critedge.i
-  %i.g = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #14 ; 2 uses
+  %i.g = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #13 ; 2 uses
   %.not32.i = icmp eq i64 %.0.i, %i.g
   br i1 %.not32.i, label %ares_strlen.exit._crit_edge.i, label %bb.b
 
@@ -326,7 +326,7 @@ ares_strlen.exit._crit_edge.i:                    ; preds = %bb.b, %ares_strlen.
   br label %ares_strlen.exit.i2
 
 ares_strlen.exit.i2:                              ; preds = %.critedge.i, %ares_strlen.exit._crit_edge.i
-  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #14 ; 2 uses
+  %i.j = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #13 ; 2 uses
   %.not20.i = icmp eq i64 %i.j, 0
   br i1 %.not20.i, label %._crit_edge.i, label %.lr.ph.i
 
@@ -369,7 +369,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @ares_str_lower(ptr noundef captures(address_is_null) %0) local_unnamed_addr #9 {
+define dso_local void @ares_str_lower(ptr noundef captures(address_is_null) %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %.loopexit, label %.preheader
@@ -397,8 +397,8 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local ptr @ares_memmem(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #10 {
+; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local ptr @ares_memmem(ptr noundef %0, i64 noundef %1, ptr noundef readonly captures(address_is_null) %2, i64 noundef %3) local_unnamed_addr #9 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   %i.b = icmp eq ptr %2, null
@@ -412,7 +412,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a
   %i.e = load i8, ptr %2, align 1, !tbaa !12
   %i.f = zext i8 %i.e to i32                      ; 2 uses
-  %i.g = tail call ptr @memchr(ptr noundef nonnull %0, i32 noundef %i.f, i64 noundef %1) #14 ; 2 uses
+  %i.g = tail call ptr @memchr(ptr noundef nonnull %0, i32 noundef %i.f, i64 noundef %1) #13 ; 2 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %.loopexit, label %.lr.ph
 
@@ -435,7 +435,7 @@ bb.b:                                             ; preds = %.lr.ph
 bb.c:                                             ; preds = %bb.b
   %i.o = getelementptr inbounds nuw i8, ptr %i.i, i64 1 ; 2 uses
   %i.p = add i64 %i.l, -1                         ; 2 uses
-  %i.q = tail call ptr @memchr(ptr noundef nonnull %i.o, i32 noundef %i.f, i64 noundef %i.p) #14 ; 2 uses
+  %i.q = tail call ptr @memchr(ptr noundef nonnull %i.o, i32 noundef %i.f, i64 noundef %i.p) #13 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.loopexit, label %.lr.ph
 
@@ -444,7 +444,7 @@ bb.c:                                             ; preds = %bb.b
   ret ptr %.0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local range(i32 0, 2) i32 @ares_memeq(ptr noundef readonly captures(none) %0, ptr noundef readonly captures(none) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %bcmp = tail call i32 @bcmp(ptr %0, ptr %1, i64 %2)
@@ -557,7 +557,7 @@ bb.b:                                             ; preds = %.lr.ph
   ret i32 %.010
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i32 @ares_strcmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
@@ -588,7 +588,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #14
+  %i.i = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %0, ptr noundef nonnull dereferenceable(1) %1) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a, %bb.f
@@ -596,10 +596,10 @@ bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a,
   ret i32 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local i32 @ares_strncmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
@@ -634,7 +634,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = tail call i32 @strncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #14
+  %i.j = tail call i32 @strncmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.d, %bb.b, %bb.a, %bb.g
@@ -642,11 +642,11 @@ bb.h:                                             ; preds = %bb.f, %bb.d, %bb.b,
   ret i32 %.0
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @strncmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
-define dso_local i32 @ares_strcasecmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
+define dso_local i32 @ares_strcasecmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #10 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = icmp eq ptr %1, null                     ; 2 uses
@@ -676,7 +676,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = tail call i32 @strcasecmp(ptr noundef %0, ptr noundef %1) #14
+  %i.i = tail call i32 @strcasecmp(ptr noundef %0, ptr noundef %1) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a, %bb.f
@@ -685,10 +685,10 @@ bb.g:                                             ; preds = %bb.e, %bb.c, %bb.a,
 }
 
 ; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(read)
-declare i32 @strcasecmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #12
+declare i32 @strcasecmp(ptr noundef captures(none), ptr noundef captures(none)) local_unnamed_addr #11
 
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
-define dso_local i32 @ares_strncasecmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #11 {
+define dso_local i32 @ares_strncasecmp(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #10 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
   br i1 %i.a, label %bb.h, label %bb.b
@@ -722,7 +722,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = tail call i32 @strncasecmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #14
+  %i.j = tail call i32 @strncasecmp(ptr noundef %0, ptr noundef %1, i64 noundef %2) #13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.d, %bb.b, %bb.a, %bb.g
@@ -731,10 +731,10 @@ bb.h:                                             ; preds = %bb.f, %bb.d, %bb.b,
 }
 
 ; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(read)
-declare i32 @strncasecmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #12
+declare i32 @strncasecmp(ptr noundef captures(none), ptr noundef captures(none), i64 noundef) local_unnamed_addr #11
 
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
-define dso_local range(i32 0, 2) i32 @ares_strcaseeq(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #11 {
+define dso_local range(i32 0, 2) i32 @ares_strcaseeq(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #10 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = icmp eq ptr %1, null                     ; 2 uses
@@ -764,7 +764,7 @@ bb.e:                                             ; preds = %bb.d
   br label %ares_strcasecmp.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = tail call i32 @strcasecmp(ptr noundef readonly %0, ptr noundef readonly %1) #14
+  %i.i = tail call i32 @strcasecmp(ptr noundef readonly %0, ptr noundef readonly %1) #13
   br label %ares_strcasecmp.exit
 
 ares_strcasecmp.exit:                             ; preds = %bb.a, %bb.c, %bb.e, %bb.f
@@ -775,7 +775,7 @@ ares_strcasecmp.exit:                             ; preds = %bb.a, %bb.c, %bb.e,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read) uwtable
-define dso_local range(i32 0, 2) i32 @ares_strcaseeq_max(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #11 {
+define dso_local range(i32 0, 2) i32 @ares_strcaseeq_max(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #10 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
   br i1 %i.a, label %ares_strncasecmp.exit, label %bb.b
@@ -809,7 +809,7 @@ bb.f:                                             ; preds = %bb.e
   br label %ares_strncasecmp.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = tail call i32 @strncasecmp(ptr noundef readonly %0, ptr noundef readonly %1, i64 noundef %2) #14
+  %i.j = tail call i32 @strncasecmp(ptr noundef readonly %0, ptr noundef readonly %1, i64 noundef %2) #13
   br label %ares_strncasecmp.exit
 
 ares_strncasecmp.exit:                            ; preds = %bb.a, %bb.b, %bb.d, %bb.f, %bb.g
@@ -819,7 +819,7 @@ ares_strncasecmp.exit:                            ; preds = %bb.a, %bb.b, %bb.d,
   ret i32 %i.l
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local range(i32 0, 2) i32 @ares_streq(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
@@ -850,7 +850,7 @@ bb.e:                                             ; preds = %bb.d
   br label %ares_strcmp.exit
 
 bb.f:                                             ; preds = %bb.d
-  %i.i = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %0, ptr noundef nonnull readonly dereferenceable(1) %1) #14
+  %i.i = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %0, ptr noundef nonnull readonly dereferenceable(1) %1) #13
   br label %ares_strcmp.exit
 
 ares_strcmp.exit:                                 ; preds = %bb.a, %bb.c, %bb.e, %bb.f
@@ -860,7 +860,7 @@ ares_strcmp.exit:                                 ; preds = %bb.a, %bb.c, %bb.e,
   ret i32 %i.k
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local range(i32 0, 2) i32 @ares_streq_max(ptr noundef readonly captures(address_is_null) %0, ptr noundef readonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = icmp eq i64 %2, 0
@@ -895,7 +895,7 @@ bb.f:                                             ; preds = %bb.e
   br label %ares_strncmp.exit
 
 bb.g:                                             ; preds = %bb.e
-  %i.j = tail call i32 @strncmp(ptr noundef readonly %0, ptr noundef readonly %1, i64 noundef %2) #14
+  %i.j = tail call i32 @strncmp(ptr noundef readonly %0, ptr noundef readonly %1, i64 noundef %2) #13
   br label %ares_strncmp.exit
 
 ares_strncmp.exit:                                ; preds = %bb.a, %bb.b, %bb.d, %bb.f, %bb.g
@@ -929,7 +929,7 @@ bb.c:                                             ; preds = %bb.b
 .lr.ph26:                                         ; preds = %.preheader, %.lr.ph26
   %i.c = phi ptr [ %i.f, %.lr.ph26 ], [ %i.b, %.preheader ]
   %.025 = phi i64 [ %i.d, %.lr.ph26 ], [ 0, %.preheader ]
-  tail call void %2(ptr noundef nonnull %i.c) #15
+  tail call void %2(ptr noundef nonnull %i.c) #14
   %i.d = add i64 %.025, 1                         ; 2 uses
   %i.e = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.d
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !22   ; 2 uses
@@ -940,13 +940,13 @@ bb.c:                                             ; preds = %bb.b
   %.123 = phi i64 [ %i.i, %.lr.ph ], [ 0, %bb.c ] ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %.123
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !22
-  tail call void %2(ptr noundef %i.h) #15
+  tail call void %2(ptr noundef %i.h) #14
   %i.i = add nuw i64 %.123, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.i, %1
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !25
 
 .loopexit:                                        ; preds = %.lr.ph26, %.lr.ph, %bb.c, %.preheader, %bb.b
-  tail call void @ares_free(ptr noundef nonnull %0) #15
+  tail call void @ares_free(ptr noundef nonnull %0) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %.loopexit
@@ -955,25 +955,24 @@ bb.d:                                             ; preds = %bb.a, %.loopexit
 
 declare void @ares_free(ptr noundef) local_unnamed_addr #3
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #13
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #12
 
-attributes #0 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #5 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree norecurse nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree norecurse nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nofree norecurse nounwind willreturn memory(read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { mustprogress nocallback nofree nounwind willreturn memory(read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #14 = { nounwind willreturn memory(read) }
-attributes #15 = { nounwind }
+attributes #9 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nofree norecurse nounwind willreturn memory(read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { mustprogress nocallback nofree nounwind willreturn memory(read) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #13 = { nounwind willreturn memory(read) }
+attributes #14 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6}
 !llvm.ident = !{!7}

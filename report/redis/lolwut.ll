@@ -14,9 +14,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @lolwutUnstableCommand(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @sdsnew(ptr noundef nonnull @.str) #14
-  %i.b = tail call ptr @sdscat(ptr noundef %i.a, ptr noundef nonnull @.str.1) #14
-  %i.c = tail call ptr @sdscatlen(ptr noundef %i.b, ptr noundef nonnull @.str.2, i64 noundef 1) #14 ; 7 uses
+  %i.a = tail call ptr @sdsnew(ptr noundef nonnull @.str) #13
+  %i.b = tail call ptr @sdscat(ptr noundef %i.a, ptr noundef nonnull @.str.1) #13
+  %i.c = tail call ptr @sdscatlen(ptr noundef %i.b, ptr noundef nonnull @.str.2, i64 noundef 1) #13 ; 7 uses
   %i.d = getelementptr i8, ptr %i.c, i64 -1
   %.val.i = load i8, ptr %i.d, align 1, !tbaa !13 ; 2 uses
   %i.e = and i8 %.val.i, 7
@@ -58,8 +58,8 @@ bb.f:                                             ; preds = %bb.a
 
 sdslen.exit:                                      ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f
   %.0.i = phi i64 [ %i.r, %bb.f ], [ %i.g, %bb.b ], [ %i.j, %bb.c ], [ %i.m, %bb.d ], [ %i.p, %bb.e ], [ 0, %bb.a ]
-  tail call void @addReplyVerbatim(ptr noundef %0, ptr noundef nonnull %i.c, i64 noundef %.0.i, ptr noundef nonnull @.str.3) #14
-  tail call void @sdsfree(ptr noundef nonnull %i.c) #14
+  tail call void @addReplyVerbatim(ptr noundef %0, ptr noundef nonnull %i.c, i64 noundef %.0.i, ptr noundef nonnull @.str.3) #13
+  tail call void @sdsfree(ptr noundef nonnull %i.c) #13
   ret void
 }
 
@@ -84,7 +84,7 @@ define dso_local void @lolwutCommand(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [64 x i8], align 16               ; 7 uses
   %i.b = alloca i64, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 5 uses
   %i.d = load i32, ptr %i.c, align 8, !tbaa !18
   %i.e = icmp sgt i32 %i.d, 2
@@ -99,29 +99,29 @@ bb.b:                                             ; preds = %bb.a
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !44
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !45
-  %i.l = tail call i32 @strcasecmp(ptr noundef %i.k, ptr noundef nonnull @.str.4) #15
+  %i.l = tail call i32 @strcasecmp(ptr noundef %i.k, ptr noundef nonnull @.str.4) #14
   %.not = icmp eq i32 %i.l, 0
   br i1 %.not, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !44
-  %i.o = call i32 @getLongFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.n, ptr noundef nonnull %i.b, ptr noundef null) #14
+  %i.o = call i32 @getLongFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.n, ptr noundef nonnull %i.b, ptr noundef null) #13
   %.not32 = icmp eq i32 %i.o, 0
   br i1 %.not32, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
   %i.p = load i64, ptr %i.b, align 8, !tbaa !16
   %i.q = trunc i64 %i.p to i32
-  %i.r = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 64, ptr noundef nonnull @.str.5, i32 noundef %i.q) #14 ; 0 uses
+  %i.r = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef nonnull dereferenceable(1) %i.a, i64 noundef 64, ptr noundef nonnull @.str.5, i32 noundef %i.q) #13 ; 0 uses
   %i.s = load ptr, ptr %i.f, align 8, !tbaa !43
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store ptr %i.t, ptr %i.f, align 8, !tbaa !43
   %i.u = load i32, ptr %i.c, align 8, !tbaa !18
   %i.v = add nsw i32 %i.u, -2
   store i32 %i.v, ptr %i.c, align 8, !tbaa !18
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
@@ -158,7 +158,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ad, label %bb.j, label %.thread70
 
 bb.j:                                             ; preds = %bb.i, %bb.g
-  call void @lolwut5Command(ptr noundef nonnull %0) #14
+  call void @lolwut5Command(ptr noundef nonnull %0) #13
   br label %bb.s
 
 bb.k:                                             ; preds = %bb.e
@@ -172,7 +172,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not34, label %.thread70, label %bb.m
 
 bb.m:                                             ; preds = %bb.g, %bb.l
-  call void @lolwut6Command(ptr noundef nonnull %0) #14
+  call void @lolwut6Command(ptr noundef nonnull %0) #13
   br label %bb.s
 
 bb.n:                                             ; preds = %bb.e
@@ -196,7 +196,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %i.an, label %bb.r, label %.thread70
 
 bb.r:                                             ; preds = %bb.q, %bb.o
-  call void @lolwut8Command(ptr noundef nonnull %0) #14
+  call void @lolwut8Command(ptr noundef nonnull %0) #13
   br label %bb.s
 
 .thread70:                                        ; preds = %bb.e, %bb.k, %bb.l, %bb.h, %bb.i, %bb.f, %bb.n, %bb.o, %bb.q, %bb.p
@@ -218,11 +218,11 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 .critedge:                                        ; preds = %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.s, %bb.t, %.critedge
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret void
 }
 
@@ -243,14 +243,14 @@ declare void @lolwut8Command(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define dso_local noalias noundef ptr @lwCreateCanvas(i32 noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(16) ptr @zmalloc(i64 noundef 16) #16 ; 4 uses
+  %i.a = tail call noalias dereferenceable_or_null(16) ptr @zmalloc(i64 noundef 16) #15 ; 4 uses
   store i32 %0, ptr %i.a, align 8, !tbaa !47
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
   store i32 %1, ptr %i.b, align 4, !tbaa !49
   %i.c = sext i32 %0 to i64
   %i.d = sext i32 %1 to i64
   %i.e = mul nsw i64 %i.d, %i.c                   ; 2 uses
-  %i.f = tail call noalias ptr @zmalloc(i64 noundef %i.e) #16 ; 2 uses
+  %i.f = tail call noalias ptr @zmalloc(i64 noundef %i.e) #15 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr %i.f, ptr %i.g, align 8, !tbaa !50
   %i.h = trunc i32 %2 to i8
@@ -269,8 +269,8 @@ define dso_local void @lwFreeCanvas(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !50
-  tail call void @zfree(ptr noundef %i.b) #14
-  tail call void @zfree(ptr noundef %0) #14
+  tail call void @zfree(ptr noundef %i.b) #13
+  tail call void @zfree(ptr noundef %0) #13
   ret void
 }
 
@@ -418,8 +418,8 @@ bb.g:                                             ; preds = %lwDrawPixel.exit
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #10
 
-; Function Attrs: nofree norecurse nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local void @lwDrawSquare(ptr noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, float noundef %3, float noundef %4, i32 noundef %5) local_unnamed_addr #11 {
+; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define dso_local void @lwDrawSquare(ptr noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, float noundef %3, float noundef %4, i32 noundef %5) local_unnamed_addr #9 {
 lwDrawLine.exit.preheader:
   %i.a = fpext float %3 to double
   %i.b = fdiv double %i.a, f0x3FF6A09E667A35E6
@@ -432,44 +432,44 @@ lwDrawLine.exit.preheader:
   %i.i = sitofp i32 %2 to double                  ; 4 uses
   %.022 = fptrunc double %i.f to float
   %i.j = fpext float %.022 to double              ; 3 uses
-  %i.k = tail call double @sin(double noundef %i.j) #14, !tbaa !9
+  %i.k = tail call double @sin(double noundef %i.j) #13, !tbaa !9
   %i.l = tail call double @llvm.fmuladd.f64(double %i.k, double %i.g, double %i.h)
   %i.m = tail call double @llvm.round.f64(double %i.l)
   %i.n = fptosi double %i.m to i32                ; 6 uses
-  %i.o = tail call double @cos(double noundef %i.j) #14, !tbaa !9
+  %i.o = tail call double @cos(double noundef %i.j) #13, !tbaa !9
   %i.p = tail call double @llvm.fmuladd.f64(double %i.o, double %i.g, double %i.i)
   %i.q = tail call double @llvm.round.f64(double %i.p)
   %i.r = fptosi double %i.q to i32                ; 6 uses
   %i.s = fadd double %i.j, f0x3FF921FB54442D18
   %.022.1 = fptrunc double %i.s to float
   %i.t = fpext float %.022.1 to double            ; 3 uses
-  %i.u = tail call double @sin(double noundef %i.t) #14, !tbaa !9
+  %i.u = tail call double @sin(double noundef %i.t) #13, !tbaa !9
   %i.v = tail call double @llvm.fmuladd.f64(double %i.u, double %i.g, double %i.h)
   %i.w = tail call double @llvm.round.f64(double %i.v)
   %i.x = fptosi double %i.w to i32                ; 6 uses
-  %i.y = tail call double @cos(double noundef %i.t) #14, !tbaa !9
+  %i.y = tail call double @cos(double noundef %i.t) #13, !tbaa !9
   %i.z = tail call double @llvm.fmuladd.f64(double %i.y, double %i.g, double %i.i)
   %i.aa = tail call double @llvm.round.f64(double %i.z)
   %i.ab = fptosi double %i.aa to i32              ; 6 uses
   %i.ac = fadd double %i.t, f0x3FF921FB54442D18
   %.022.2 = fptrunc double %i.ac to float
   %i.ad = fpext float %.022.2 to double           ; 3 uses
-  %i.ae = tail call double @sin(double noundef %i.ad) #14, !tbaa !9
+  %i.ae = tail call double @sin(double noundef %i.ad) #13, !tbaa !9
   %i.af = tail call double @llvm.fmuladd.f64(double %i.ae, double %i.g, double %i.h)
   %i.ag = tail call double @llvm.round.f64(double %i.af)
   %i.ah = fptosi double %i.ag to i32              ; 6 uses
-  %i.ai = tail call double @cos(double noundef %i.ad) #14, !tbaa !9
+  %i.ai = tail call double @cos(double noundef %i.ad) #13, !tbaa !9
   %i.aj = tail call double @llvm.fmuladd.f64(double %i.ai, double %i.g, double %i.i)
   %i.ak = tail call double @llvm.round.f64(double %i.aj)
   %i.al = fptosi double %i.ak to i32              ; 6 uses
   %i.am = fadd double %i.ad, f0x3FF921FB54442D18
   %.022.3 = fptrunc double %i.am to float
   %i.an = fpext float %.022.3 to double           ; 2 uses
-  %i.ao = tail call double @sin(double noundef %i.an) #14, !tbaa !9
+  %i.ao = tail call double @sin(double noundef %i.an) #13, !tbaa !9
   %i.ap = tail call double @llvm.fmuladd.f64(double %i.ao, double %i.g, double %i.h)
   %i.aq = tail call double @llvm.round.f64(double %i.ap)
   %i.ar = fptosi double %i.aq to i32              ; 6 uses
-  %i.as = tail call double @cos(double noundef %i.an) #14, !tbaa !9
+  %i.as = tail call double @cos(double noundef %i.an) #13, !tbaa !9
   %i.at = tail call double @llvm.fmuladd.f64(double %i.as, double %i.g, double %i.i)
   %i.au = tail call double @llvm.round.f64(double %i.at)
   %i.av = fptosi double %i.au to i32              ; 6 uses
@@ -724,19 +724,19 @@ bb.t:                                             ; preds = %lwDrawPixel.exit.i
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.round.f64(double) #12
+declare double @llvm.round.f64(double) #11
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #13
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #12
-
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #13
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @sin(double noundef) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.round.f32(float) #12
+declare double @llvm.fmuladd.f64(double, double, double) #11
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
+declare double @cos(double noundef) local_unnamed_addr #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare float @llvm.round.f32(float) #11
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -749,12 +749,11 @@ attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { nofree norecurse nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { mustprogress nocallback nofree nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { nounwind }
-attributes #15 = { nounwind willreturn memory(read) }
-attributes #16 = { nounwind allocsize(0) }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #13 = { nounwind }
+attributes #14 = { nounwind willreturn memory(read) }
+attributes #15 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}

@@ -43,7 +43,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.k, label %bb.e, label %bb.bm
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   %i.p = load i64, ptr %i.m, align 8, !tbaa !19
   %i.q = add nsw i64 %i.p, 1                      ; 11 uses
   %i.r = load i64, ptr %i.n, align 8, !tbaa !20   ; 11 uses
@@ -62,7 +62,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.y = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #16
+  %i.y = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #15
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -255,7 +255,7 @@ bb.ac:                                            ; preds = %.loopexit.i.i
   br i1 %.not120.i.i, label %.thread.thread.i.i, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cl = tail call ptr @__ctype_b_loc() #17
+  %i.cl = tail call ptr @__ctype_b_loc() #16
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !42 ; 3 uses
   %i.cn = and i32 %.0109.i.i, 255
   %i.co = zext nneg i32 %i.cn to i64
@@ -274,7 +274,7 @@ bb.ae:                                            ; preds = %.loopexit.i.i
   br i1 %.old2.not.i.i, label %bb.ag, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %bb.ae
-  %.pre142.i.i = tail call ptr @__ctype_b_loc() #17
+  %.pre142.i.i = tail call ptr @__ctype_b_loc() #16
   %.pre.i = load ptr, ptr %.pre142.i.i, align 8, !tbaa !42
   br label %bb.af
 
@@ -297,7 +297,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   br i1 %.not124.i.i, label %.thread.i.i, label %..thread130_crit_edge.i.i
 
 ..thread130_crit_edge.i.i:                        ; preds = %bb.ag
-  %.pre.i.i = tail call ptr @__ctype_b_loc() #17
+  %.pre.i.i = tail call ptr @__ctype_b_loc() #16
   %.pre138.i.i = and i32 %.0109.i.i, 255
   %.pre140.i.i = zext nneg i32 %.pre138.i.i to i64
   %.pre247.i = load ptr, ptr %.pre.i.i, align 8, !tbaa !42 ; 2 uses
@@ -363,7 +363,7 @@ sfast.exit.i:                                     ; preds = %.thread.thread.i.i
 
 bb.al:                                            ; preds = %sfast.exit.i
   %i.du = load ptr, ptr %i.as, align 8, !tbaa !35
-  call void @free(ptr noundef %i.du) #15
+  call void @free(ptr noundef %i.du) #14
   %i.dv = load ptr, ptr %i.at, align 8, !tbaa !36
   br label %.loopexit189.sink.split.i
 
@@ -420,7 +420,7 @@ bb.aq:                                            ; preds = %bb.ap, %._crit_edge
 bb.ar:                                            ; preds = %bb.aq
   %i.en = shl i64 %i.em, 4
   %i.eo = add i64 %i.en, 16
-  %i.ep = call noalias ptr @malloc(i64 noundef %i.eo) #18 ; 3 uses
+  %i.ep = call noalias ptr @malloc(i64 noundef %i.eo) #17 ; 3 uses
   store ptr %i.ep, ptr %i.as, align 8, !tbaa !35
   %i.eq = icmp eq ptr %i.ep, null
   br i1 %i.eq, label %smatcher.exit, label %.preheader187.i
@@ -462,7 +462,7 @@ bb.at:                                            ; preds = %._crit_edge228.i
 bb.au:                                            ; preds = %bb.at
   %i.fc = shl i64 %i.ey, 3
   %i.fd = add i64 %i.fc, 8
-  %i.fe = call noalias ptr @malloc(i64 noundef %i.fd) #18 ; 2 uses
+  %i.fe = call noalias ptr @malloc(i64 noundef %i.fd) #17 ; 2 uses
   store ptr %i.fe, ptr %i.at, align 8, !tbaa !36
   br label %bb.av
 
@@ -601,7 +601,7 @@ bb.bj:                                            ; preds = %.epil.preheader237
   br i1 %.not171.i, label %bb.bl, label %bb.bk
 
 bb.bk:                                            ; preds = %.thread185.i
-  call void @free(ptr noundef nonnull %i.gm) #15
+  call void @free(ptr noundef nonnull %i.gm) #14
   br label %bb.bl
 
 bb.bl:                                            ; preds = %bb.bk, %.thread185.i
@@ -612,16 +612,16 @@ bb.bl:                                            ; preds = %bb.bk, %.thread185.
 .loopexit189.sink.split.i:                        ; preds = %bb.av, %bb.bl, %bb.al
   %.sink.i = phi ptr [ %i.gn, %bb.bl ], [ %i.dv, %bb.al ], [ %i.er, %bb.av ]
   %.0139.ph.i = phi i32 [ 0, %bb.bl ], [ 1, %bb.al ], [ 12, %bb.av ]
-  call void @free(ptr noundef %.sink.i) #15
+  call void @free(ptr noundef %.sink.i) #14
   br label %smatcher.exit
 
 smatcher.exit:                                    ; preds = %bb.ar, %bb.h, %._crit_edge.i, %bb.bl, %.loopexit189.sink.split.i
   %.0139.i = phi i32 [ 0, %bb.bl ], [ 16, %bb.h ], [ %.0139.ph.i, %.loopexit189.sink.split.i ], [ 1, %._crit_edge.i ], [ 12, %bb.ar ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   br label %bb.dw
 
 bb.bm:                                            ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.go = load i64, ptr %i.m, align 8, !tbaa !19
   %i.gp = add nsw i64 %i.go, 1                    ; 11 uses
   %i.gq = load i64, ptr %i.n, align 8, !tbaa !20  ; 11 uses
@@ -640,7 +640,7 @@ bb.bn:                                            ; preds = %bb.bm
   br label %bb.bp
 
 bb.bo:                                            ; preds = %bb.bm
-  %i.gx = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #16
+  %i.gx = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #15
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo, %bb.bn
@@ -714,7 +714,7 @@ bb.bv:                                            ; preds = %._crit_edge.i23, %b
   %i.hv = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 2 uses
   store ptr %.0.i22, ptr %i.hv, align 8, !tbaa !61
   %i.hw = shl nsw i64 %i.j, 2
-  %i.hx = tail call noalias ptr @malloc(i64 noundef %i.hw) #18 ; 6 uses
+  %i.hx = tail call noalias ptr @malloc(i64 noundef %i.hw) #17 ; 6 uses
   %i.hy = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
   store ptr %i.hx, ptr %i.hy, align 8, !tbaa !62
   %i.hz = icmp eq ptr %i.hx, null
@@ -871,7 +871,7 @@ bb.cl:                                            ; preds = %.loopexit.i.i28
   br i1 %.not129.i.i, label %.thread.thread.i.i34, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
-  %i.km = tail call ptr @__ctype_b_loc() #17
+  %i.km = tail call ptr @__ctype_b_loc() #16
   %i.kn = load ptr, ptr %i.km, align 8, !tbaa !42 ; 3 uses
   %i.ko = and i32 %.0118.i.i, 255
   %i.kp = zext nneg i32 %i.ko to i64
@@ -890,7 +890,7 @@ bb.cn:                                            ; preds = %.loopexit.i.i28
   br i1 %.old2.not.i.i45, label %bb.cp, label %._crit_edge.i.i46
 
 ._crit_edge.i.i46:                                ; preds = %bb.cn
-  %.pre152.i.i = tail call ptr @__ctype_b_loc() #17
+  %.pre152.i.i = tail call ptr @__ctype_b_loc() #16
   %.pre.i47 = load ptr, ptr %.pre152.i.i, align 8, !tbaa !42
   br label %bb.co
 
@@ -913,7 +913,7 @@ bb.cp:                                            ; preds = %bb.co, %bb.cn
   br i1 %.not133.i.i, label %.thread.i.i32, label %..thread140_crit_edge.i.i
 
 ..thread140_crit_edge.i.i:                        ; preds = %bb.cp
-  %.pre.i.i43 = tail call ptr @__ctype_b_loc() #17
+  %.pre.i.i43 = tail call ptr @__ctype_b_loc() #16
   %.pre148.i.i = and i32 %.0118.i.i, 255
   %.pre150.i.i = zext nneg i32 %.pre148.i.i to i64
   %.pre263.i = load ptr, ptr %.pre.i.i43, align 8, !tbaa !42 ; 2 uses
@@ -990,7 +990,7 @@ lfast.exit.i:                                     ; preds = %.thread.thread.i.i3
 
 bb.cu:                                            ; preds = %lfast.exit.i
   %i.me = load ptr, ptr %i.hr, align 8, !tbaa !57
-  call void @free(ptr noundef %i.me) #15
+  call void @free(ptr noundef %i.me) #14
   %i.mf = load ptr, ptr %i.hs, align 8, !tbaa !58
   br label %.sink.split.sink.split.i
 
@@ -1035,7 +1035,7 @@ bb.cz:                                            ; preds = %bb.cy, %._crit_edge
 bb.da:                                            ; preds = %bb.cz
   %i.mq = shl i64 %i.mp, 4
   %i.mr = add i64 %i.mq, 16
-  %i.ms = call noalias ptr @malloc(i64 noundef %i.mr) #18 ; 3 uses
+  %i.ms = call noalias ptr @malloc(i64 noundef %i.mr) #17 ; 3 uses
   store ptr %i.ms, ptr %i.hr, align 8, !tbaa !57
   %i.mt = icmp eq ptr %i.ms, null
   br i1 %i.mt, label %.sink.split.i, label %.preheader208.i
@@ -1081,7 +1081,7 @@ bb.dd:                                            ; preds = %bb.db, %._crit_edge
 bb.de:                                            ; preds = %bb.dd
   %i.nh = shl i64 %i.nd, 3
   %i.ni = add i64 %i.nh, 8
-  %i.nj = call noalias ptr @malloc(i64 noundef %i.ni) #18 ; 2 uses
+  %i.nj = call noalias ptr @malloc(i64 noundef %i.ni) #17 ; 2 uses
   store ptr %i.nj, ptr %i.hs, align 8, !tbaa !58
   br label %bb.df
 
@@ -1225,7 +1225,7 @@ bb.dt:                                            ; preds = %.epil.preheader
   br i1 %.not192.i, label %bb.dv, label %bb.du
 
 bb.du:                                            ; preds = %.thread206.i
-  call void @free(ptr noundef nonnull %i.ov) #15
+  call void @free(ptr noundef nonnull %i.ov) #14
   br label %bb.dv
 
 bb.dv:                                            ; preds = %bb.du, %.thread206.i
@@ -1236,18 +1236,18 @@ bb.dv:                                            ; preds = %bb.du, %.thread206.
 .sink.split.sink.split.i:                         ; preds = %bb.df, %bb.dv, %bb.cu
   %.sink.i39 = phi ptr [ %i.ow, %bb.dv ], [ %i.mf, %bb.cu ], [ %i.mu, %bb.df ]
   %.0160.ph.ph.i = phi i32 [ 0, %bb.dv ], [ 1, %bb.cu ], [ 12, %bb.df ]
-  call void @free(ptr noundef %.sink.i39) #15
+  call void @free(ptr noundef %.sink.i39) #14
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.da, %.sink.split.sink.split.i, %bb.dv
   %.0160.ph.i = phi i32 [ 0, %bb.dv ], [ %.0160.ph.ph.i, %.sink.split.sink.split.i ], [ 12, %bb.da ]
   %i.ox = load ptr, ptr %i.hy, align 8, !tbaa !62
-  call void @free(ptr noundef %i.ox) #15
+  call void @free(ptr noundef %i.ox) #14
   br label %lmatcher.exit
 
 lmatcher.exit:                                    ; preds = %bb.bp, %._crit_edge.i23, %bb.bv, %.sink.split.i
   %.0160.i = phi i32 [ 12, %bb.bv ], [ 16, %bb.bp ], [ 1, %._crit_edge.i23 ], [ %.0160.ph.i, %.sink.split.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %bb.dw
 
 bb.dw:                                            ; preds = %bb.c, %bb.a, %bb.b, %lmatcher.exit, %smatcher.exit
@@ -1261,7 +1261,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i64 @strlen(ptr noundef captures(none)) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite)
@@ -1383,7 +1383,7 @@ bb.o:                                             ; preds = %.loopexit
   br i1 %.not114, label %.thread.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.an = tail call ptr @__ctype_b_loc() #17      ; 3 uses
+  %i.an = tail call ptr @__ctype_b_loc() #16      ; 3 uses
   %i.ao = load ptr, ptr %i.an, align 8, !tbaa !42
   %i.ap = and i32 %.0106, 255
   %i.aq = zext nneg i32 %i.ap to i64              ; 2 uses
@@ -1402,7 +1402,7 @@ bb.q:                                             ; preds = %.loopexit
   br i1 %.old2.not, label %bb.s, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.q
-  %.pre136 = tail call ptr @__ctype_b_loc() #17
+  %.pre136 = tail call ptr @__ctype_b_loc() #16
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge, %bb.p
@@ -1425,7 +1425,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not118, label %.thread, label %..thread124_crit_edge
 
 ..thread124_crit_edge:                            ; preds = %bb.s
-  %.pre = tail call ptr @__ctype_b_loc() #17
+  %.pre = tail call ptr @__ctype_b_loc() #16
   %.pre132 = and i32 %.0106, 255
   %.pre134 = zext nneg i32 %.pre132 to i64
   br label %.thread124
@@ -1686,8 +1686,8 @@ bb.n:                                             ; preds = %bb.g, %bb.f, %bb.d,
   ret ptr %.0145.lcssa
 }
 
-; Function Attrs: nofree nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc ptr @sbackref(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6) unnamed_addr #7 {
+; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc ptr @sbackref(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -1872,7 +1872,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   br i1 %i.bp, label %bb.y, label %.loopexit
 
 bb.y:                                             ; preds = %bb.x
-  %i.bq = tail call ptr @__ctype_b_loc() #17
+  %i.bq = tail call ptr @__ctype_b_loc() #16
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !42
   %i.bs = getelementptr inbounds i8, ptr %.0234343, i64 -1
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !26  ; 2 uses
@@ -1891,7 +1891,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.ca, label %bb.z, label %.loopexit
 
 bb.z:                                             ; preds = %._crit_edge414
-  %i.cb = tail call ptr @__ctype_b_loc() #17
+  %i.cb = tail call ptr @__ctype_b_loc() #16
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !42
   %i.cd = load i8, ptr %.0234343, align 1, !tbaa !26 ; 2 uses
   %i.ce = zext i8 %i.cd to i64
@@ -1930,7 +1930,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not253, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.cs = tail call ptr @__ctype_b_loc() #17
+  %i.cs = tail call ptr @__ctype_b_loc() #16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !42
   %i.cu = zext i8 %i.co to i64
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr %i.ct, i64 %i.cu
@@ -1947,7 +1947,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.da, label %bb.ah, label %.loopexit
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.db = tail call ptr @__ctype_b_loc() #17
+  %i.db = tail call ptr @__ctype_b_loc() #16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !42
   %i.dd = getelementptr inbounds i8, ptr %.0234343, i64 -1
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !26  ; 2 uses
@@ -2194,7 +2194,7 @@ bb.bc:                                            ; preds = %bb.bb
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i64 @sstep(ptr noundef readonly captures(none) %0, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3, i32 noundef range(i32 -128, 135) %4, i64 noundef %5) unnamed_addr #8 {
+define internal fastcc i64 @sstep(ptr noundef readonly captures(none) %0, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %1, i64 noundef %2, i64 noundef %3, i32 noundef range(i32 -128, 135) %4, i64 noundef %5) unnamed_addr #7 {
 bb.a:
   %.not131 = icmp eq i64 %1, %2
   br i1 %.not131, label %._crit_edge137, label %.lr.ph136
@@ -2458,13 +2458,13 @@ bb.ad:                                            ; preds = %bb.r, %bb.s, %bb.v,
 }
 
 ; Function Attrs: mustprogress nofree nosync nounwind willreturn memory(none)
-declare ptr @__ctype_b_loc() local_unnamed_addr #9
+declare ptr @__ctype_b_loc() local_unnamed_addr #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
-; Function Attrs: nofree nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc ptr @lslow(ptr noundef nonnull readonly captures(none) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, ptr noundef readnone captures(address) %2, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %3, i64 noundef %4) unnamed_addr #7 {
+; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc ptr @lslow(ptr noundef nonnull readonly captures(none) %0, ptr noundef readonly captures(address, ret: address, provenance) %1, ptr noundef readnone captures(address) %2, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %3, i64 noundef %4) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !63   ; 13 uses
@@ -2599,7 +2599,7 @@ bb.o:                                             ; preds = %.loopexit
   br i1 %.not120, label %.thread.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ba = tail call ptr @__ctype_b_loc() #17      ; 3 uses
+  %i.ba = tail call ptr @__ctype_b_loc() #16      ; 3 uses
   %i.bb = load ptr, ptr %i.ba, align 8, !tbaa !42
   %i.bc = and i32 %.0113, 255
   %i.bd = zext nneg i32 %i.bc to i64              ; 2 uses
@@ -2618,7 +2618,7 @@ bb.q:                                             ; preds = %.loopexit
   br i1 %.old2.not, label %bb.s, label %._crit_edge140
 
 ._crit_edge140:                                   ; preds = %bb.q
-  %.pre146 = tail call ptr @__ctype_b_loc() #17
+  %.pre146 = tail call ptr @__ctype_b_loc() #16
   br label %bb.r
 
 bb.r:                                             ; preds = %._crit_edge140, %bb.p
@@ -2641,7 +2641,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %.not124, label %.thread, label %..thread130_crit_edge
 
 ..thread130_crit_edge:                            ; preds = %bb.s
-  %.pre141 = tail call ptr @__ctype_b_loc() #17
+  %.pre141 = tail call ptr @__ctype_b_loc() #16
   %.pre142 = and i32 %.0113, 255
   %.pre144 = zext nneg i32 %.pre142 to i64
   br label %.thread130
@@ -2717,8 +2717,8 @@ bb.x:                                             ; preds = %.thread.thread
   ret ptr %spec.select127
 }
 
-; Function Attrs: nofree nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc ptr @ldissect(ptr noundef nonnull %0, ptr noundef %1, ptr noundef readnone captures(address) %2, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %3, i64 noundef %4) unnamed_addr #7 {
+; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc ptr @ldissect(ptr noundef nonnull %0, ptr noundef %1, ptr noundef readnone captures(address) %2, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %3, i64 noundef %4) unnamed_addr #6 {
 bb.a:
   %i.a = icmp slt i64 %3, %4
   br i1 %i.a, label %.lr.ph171, label %._crit_edge172
@@ -2917,8 +2917,8 @@ bb.n:                                             ; preds = %bb.g, %bb.f, %bb.d,
   ret ptr %.0145.lcssa
 }
 
-; Function Attrs: nofree nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc ptr @lbackref(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6) unnamed_addr #7 {
+; Function Attrs: nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+define internal fastcc ptr @lbackref(ptr noundef nonnull %0, ptr noundef %1, ptr noundef nonnull %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, i32 noundef %6) unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -3103,7 +3103,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
   br i1 %i.bp, label %bb.y, label %.loopexit
 
 bb.y:                                             ; preds = %bb.x
-  %i.bq = tail call ptr @__ctype_b_loc() #17
+  %i.bq = tail call ptr @__ctype_b_loc() #16
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !42
   %i.bs = getelementptr inbounds i8, ptr %.0234343, i64 -1
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !26  ; 2 uses
@@ -3122,7 +3122,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.ca, label %bb.z, label %.loopexit
 
 bb.z:                                             ; preds = %._crit_edge414
-  %i.cb = tail call ptr @__ctype_b_loc() #17
+  %i.cb = tail call ptr @__ctype_b_loc() #16
   %i.cc = load ptr, ptr %i.cb, align 8, !tbaa !42
   %i.cd = load i8, ptr %.0234343, align 1, !tbaa !26 ; 2 uses
   %i.ce = zext i8 %i.cd to i64
@@ -3161,7 +3161,7 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not253, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %i.cs = tail call ptr @__ctype_b_loc() #17
+  %i.cs = tail call ptr @__ctype_b_loc() #16
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !42
   %i.cu = zext i8 %i.co to i64
   %i.cv = getelementptr inbounds nuw [2 x i8], ptr %i.ct, i64 %i.cu
@@ -3178,7 +3178,7 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae, %bb.
   br i1 %i.da, label %bb.ah, label %.loopexit
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.db = tail call ptr @__ctype_b_loc() #17
+  %i.db = tail call ptr @__ctype_b_loc() #16
   %i.dc = load ptr, ptr %i.db, align 8, !tbaa !42
   %i.dd = getelementptr inbounds i8, ptr %.0234343, i64 -1
   %i.de = load i8, ptr %i.dd, align 1, !tbaa !26  ; 2 uses
@@ -3422,7 +3422,7 @@ bb.bc:                                            ; preds = %bb.bb
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef ptr @lstep(ptr noundef readonly captures(none) %0, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %1, i64 noundef %2, ptr noundef readonly captures(none) %3, i32 noundef range(i32 -128, 135) %4, ptr noundef returned captures(ret: address, provenance) %5) unnamed_addr #11 {
+define internal fastcc noundef ptr @lstep(ptr noundef readonly captures(none) %0, i64 noundef range(i64 -9223372036854775807, -9223372036854775808) %1, i64 noundef %2, ptr noundef readonly captures(none) %3, i32 noundef range(i32 -128, 135) %4, ptr noundef returned captures(ret: address, provenance) %5) unnamed_addr #10 {
 bb.a:
   %.not149 = icmp eq i64 %1, %2
   br i1 %.not149, label %._crit_edge154, label %.lr.ph153
@@ -3745,34 +3745,33 @@ bb.ad:                                            ; preds = %bb.r, %bb.s, %bb.v,
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #12
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #13
+declare i64 @llvm.umax.i64(i64, i64) #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.assume(i1 noundef) #13
 
 attributes #0 = { nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #2 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nofree nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #11 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #15 = { nounwind }
-attributes #16 = { nounwind willreturn memory(read) }
-attributes #17 = { nounwind willreturn memory(none) }
-attributes #18 = { nounwind allocsize(0) }
+attributes #7 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree nosync nounwind willreturn memory(none) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { nounwind }
+attributes #15 = { nounwind willreturn memory(read) }
+attributes #16 = { nounwind willreturn memory(none) }
+attributes #17 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

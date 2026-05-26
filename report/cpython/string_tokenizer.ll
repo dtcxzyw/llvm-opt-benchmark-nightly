@@ -8,14 +8,14 @@ target triple = "x86_64-pc-linux-gnu"
 define hidden ptr @_PyTokenizer_FromString(ptr noundef %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [2 x ptr], align 16               ; 7 uses
-  %i.b = tail call ptr @_PyTokenizer_tok_new() #10 ; 25 uses
+  %i.b = tail call ptr @_PyTokenizer_tok_new() #9 ; 25 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.ag, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.d = tail call ptr @_PyTokenizer_translate_newlines(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef nonnull %i.b) #10 ; 3 uses
+  %i.d = tail call ptr @_PyTokenizer_translate_newlines(ptr noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef nonnull %i.b) #9 ; 3 uses
   %i.e = getelementptr i8, ptr %i.b, i64 2832     ; 3 uses
   store ptr %i.d, ptr %i.e, align 8, !tbaa !11
   %i.f = icmp eq ptr %i.d, null
@@ -26,12 +26,12 @@ bb.c:                                             ; preds = %bb.b
   store ptr null, ptr %i.g, align 8, !tbaa !17
   %i.h = getelementptr i8, ptr %i.b, i64 2824     ; 3 uses
   store ptr %i.d, ptr %i.h, align 8, !tbaa !18
-  %i.i = tail call i32 @_PyTokenizer_check_bom(ptr noundef nonnull @buf_getc, ptr noundef nonnull @buf_ungetc, ptr noundef nonnull @buf_setreadl, ptr noundef nonnull %i.b) #10
+  %i.i = tail call i32 @_PyTokenizer_check_bom(ptr noundef nonnull @buf_getc, ptr noundef nonnull @buf_ungetc, ptr noundef nonnull @buf_setreadl, ptr noundef nonnull %i.b) #9
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #10
+  %i.j = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #9
   br label %decode_str.exit
 
 bb.e:                                             ; preds = %bb.c
@@ -41,16 +41,16 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not87.i, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = tail call ptr @_PyTokenizer_translate_into_utf8(ptr noundef %i.k, ptr noundef nonnull %i.l) #10 ; 3 uses
+  %i.m = tail call ptr @_PyTokenizer_translate_into_utf8(ptr noundef %i.k, ptr noundef nonnull %i.l) #9 ; 3 uses
   %i.n = icmp eq ptr %i.m, null
   br i1 %i.n, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.o = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #10
+  %i.o = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #9
   br label %decode_str.exit
 
 bb.h:                                             ; preds = %bb.f
-  %i.p = tail call ptr @PyBytes_AsString(ptr noundef nonnull %i.m) #10
+  %i.p = tail call ptr @PyBytes_AsString(ptr noundef nonnull %i.m) #9
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.e
@@ -91,7 +91,7 @@ bb.n:                                             ; preds = %bb.m
   %i.w = ptrtoint ptr %i.u to i64                 ; 2 uses
   %i.x = ptrtoint ptr %.062.i to i64
   %i.y = sub i64 %i.w, %i.x
-  %i.z = tail call i32 @_PyTokenizer_check_coding_spec(ptr noundef %.062.i, i64 noundef %i.y, ptr noundef nonnull %i.b, ptr noundef nonnull @buf_setreadl) #10
+  %i.z = tail call i32 @_PyTokenizer_check_coding_spec(ptr noundef %.062.i, i64 noundef %i.y, ptr noundef nonnull %i.b, ptr noundef nonnull @buf_setreadl) #9
   %.not90.i = icmp eq i32 %i.z, 0
   br i1 %.not90.i, label %decode_str.exit.thread, label %bb.o
 
@@ -119,7 +119,7 @@ bb.q:                                             ; preds = %bb.p
   %i.ai = getelementptr i8, ptr %i.u, i64 1
   %i.aj = ptrtoint ptr %i.ag to i64
   %i.ak = sub i64 %i.aj, %i.w
-  %i.al = tail call i32 @_PyTokenizer_check_coding_spec(ptr noundef %i.ai, i64 noundef %i.ak, ptr noundef nonnull %i.b, ptr noundef nonnull @buf_setreadl) #10
+  %i.al = tail call i32 @_PyTokenizer_check_coding_spec(ptr noundef %i.ai, i64 noundef %i.ak, ptr noundef nonnull %i.b, ptr noundef nonnull @buf_setreadl) #9
   %.not91.i = icmp eq i32 %i.al, 0
   br i1 %.not91.i, label %decode_str.exit.thread, label %bb.r
 
@@ -131,12 +131,12 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %.thread100.i
   %i.am = phi ptr [ %i.aa, %.thread100.i ], [ %.pr.pre.i, %bb.r ]
-  %i.an = tail call ptr @_PyTokenizer_translate_into_utf8(ptr noundef %.062.i, ptr noundef nonnull %i.am) #10 ; 3 uses
+  %i.an = tail call ptr @_PyTokenizer_translate_into_utf8(ptr noundef %.062.i, ptr noundef nonnull %i.am) #9 ; 3 uses
   %i.ao = icmp eq ptr %i.an, null
   br i1 %i.ao, label %bb.t, label %.thread102.i
 
 bb.t:                                             ; preds = %bb.s
-  %i.ap = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #10
+  %i.ap = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #9
   br label %decode_str.exit
 
 .thread102.i:                                     ; preds = %bb.s
@@ -148,12 +148,12 @@ bb.t:                                             ; preds = %bb.s
   br label %bb.u
 
 bb.u:                                             ; preds = %.sink.split.i, %bb.r
-  %i.ar = tail call i32 @_PyTokenizer_ensure_utf8(ptr noundef %.062.i, ptr noundef nonnull %i.b, i32 noundef 1) #10
+  %i.ar = tail call i32 @_PyTokenizer_ensure_utf8(ptr noundef %.062.i, ptr noundef nonnull %i.b, i32 noundef 1) #9
   %.not93.i = icmp eq i32 %i.ar, 0
   br i1 %.not93.i, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
-  %i.as = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #10
+  %i.as = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #9
   br label %decode_str.exit
 
 bb.w:                                             ; preds = %bb.u
@@ -163,7 +163,7 @@ bb.w:                                             ; preds = %bb.u
 bb.x:                                             ; preds = %bb.w, %.thread102.i
   %.163107.i = phi ptr [ %i.aq, %.thread102.i ], [ %.062.i, %bb.w ]
   %.176106.i = phi ptr [ %i.an, %.thread102.i ], [ %.075.i, %bb.w ] ; 6 uses
-  %i.at = tail call ptr @_PyTokenizer_translate_newlines(ptr noundef %.163107.i, i32 noundef %1, i32 noundef %2, ptr noundef nonnull %i.b) #10 ; 5 uses
+  %i.at = tail call ptr @_PyTokenizer_translate_newlines(ptr noundef %.163107.i, i32 noundef %1, i32 noundef %2, ptr noundef nonnull %i.b) #9 ; 5 uses
   %.not95.i = icmp eq ptr %i.at, null
   br i1 %.not95.i, label %bb.y, label %bb.ab
 
@@ -179,12 +179,12 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.aw, label %bb.aa, label %Py_DECREF.exit.i
 
 bb.aa:                                            ; preds = %bb.z
-  tail call void @_Py_Dealloc(ptr noundef nonnull %.176106.i) #10
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.176106.i) #9
   br label %Py_DECREF.exit.i
 
 bb.ab:                                            ; preds = %bb.x
   %i.ax = load ptr, ptr %i.e, align 8, !tbaa !11
-  tail call void @PyMem_Free(ptr noundef %i.ax) #10
+  tail call void @PyMem_Free(ptr noundef %i.ax) #9
   store ptr %i.at, ptr %i.e, align 8, !tbaa !11
   %i.ay = load i32, ptr %.176106.i, align 8, !tbaa !19 ; 2 uses
   %.not.i.i = icmp sgt i32 %i.ay, -1
@@ -197,11 +197,11 @@ bb.ac:                                            ; preds = %bb.ab
   br i1 %i.ba, label %bb.ad, label %Py_DECREF.exit.thread.i
 
 bb.ad:                                            ; preds = %bb.ac
-  tail call void @_Py_Dealloc(ptr noundef nonnull %.176106.i) #10
+  tail call void @_Py_Dealloc(ptr noundef nonnull %.176106.i) #9
   br label %Py_DECREF.exit.thread.i
 
 Py_DECREF.exit.i:                                 ; preds = %bb.aa, %bb.z, %bb.y
-  %i.bb = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #10
+  %i.bb = tail call ptr @_PyTokenizer_error_ret(ptr noundef nonnull %i.b) #9
   br label %decode_str.exit
 
 Py_DECREF.exit.thread.i:                          ; preds = %bb.ad, %bb.ac, %bb.ab, %bb.w
@@ -212,17 +212,17 @@ Py_DECREF.exit.thread.i:                          ; preds = %bb.ad, %bb.ac, %bb.
   br label %decode_str.exit
 
 decode_str.exit.thread:                           ; preds = %bb.n, %bb.b, %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   br label %bb.ae
 
 decode_str.exit:                                  ; preds = %bb.d, %bb.g, %bb.t, %bb.v, %Py_DECREF.exit.i, %Py_DECREF.exit.thread.i
   %.1.i = phi ptr [ %i.j, %bb.d ], [ %i.o, %bb.g ], [ %i.ap, %bb.t ], [ %.3.i, %Py_DECREF.exit.thread.i ], [ %i.bb, %Py_DECREF.exit.i ], [ %i.as, %bb.v ] ; 5 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   %i.bd = icmp eq ptr %.1.i, null
   br i1 %i.bd, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %decode_str.exit.thread, %decode_str.exit
-  tail call void @_PyTokenizer_Free(ptr noundef nonnull %i.b) #10
+  tail call void @_PyTokenizer_Free(ptr noundef nonnull %i.b) #9
   br label %bb.ag
 
 bb.af:                                            ; preds = %decode_str.exit
@@ -249,12 +249,12 @@ declare ptr @_PyTokenizer_tok_new() local_unnamed_addr #2
 
 declare void @_PyTokenizer_Free(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal range(i32 0, 2) i32 @tok_underflow_string(ptr noundef captures(none) %0) #3 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !24   ; 3 uses
-  %i.c = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.b, i32 noundef 10) #11 ; 2 uses
+  %i.c = tail call ptr @strchr(ptr noundef nonnull dereferenceable(1) %i.b, i32 noundef 10) #10 ; 2 uses
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -314,7 +314,7 @@ declare ptr @_PyTokenizer_translate_newlines(ptr noundef, i32 noundef, i32 nound
 declare i32 @_PyTokenizer_check_bom(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define internal range(i32 0, 256) i32 @buf_getc(ptr noundef captures(none) %0) #5 {
+define internal range(i32 0, 256) i32 @buf_getc(ptr noundef captures(none) %0) #3 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 2824       ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18   ; 2 uses
@@ -326,7 +326,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define internal void @buf_ungetc(i32 %0, ptr noundef captures(none) %1) #6 {
+define internal void @buf_ungetc(i32 %0, ptr noundef captures(none) %1) #5 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 2824       ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18
@@ -336,7 +336,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define internal noundef i32 @buf_setreadl(ptr noundef writeonly captures(none) initializes((2816, 2824)) %0, ptr noundef %1) #7 {
+define internal noundef i32 @buf_setreadl(ptr noundef writeonly captures(none) initializes((2816, 2824)) %0, ptr noundef %1) #6 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 2816
   store ptr %1, ptr %i.a, align 8, !tbaa !17
@@ -357,24 +357,23 @@ declare void @PyMem_Free(ptr noundef) local_unnamed_addr #2
 
 declare void @_Py_Dealloc(ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
-declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #8
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare ptr @strchr(ptr noundef, i32 noundef) local_unnamed_addr #7
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i64 @strlen(ptr captures(none)) local_unnamed_addr #9
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i64 @strlen(ptr captures(none)) local_unnamed_addr #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #10 = { nounwind }
-attributes #11 = { nounwind willreturn memory(read) }
+attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #9 = { nounwind }
+attributes #10 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

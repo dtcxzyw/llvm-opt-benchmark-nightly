@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %.lr.ph
 .loopexit.sink.split:                             ; preds = %bb.d, %bb.c, %bb.b
   %.0.lcssa.sink.shrunk = phi i32 [ %i.e, %bb.b ], [ 0, %bb.c ], [ %.1, %bb.d ]
   %.0.lcssa.sink = zext i32 %.0.lcssa.sink.shrunk to i64
-  %i.n = tail call ptr @PyBool_FromLong(i64 noundef %.0.lcssa.sink) #15
+  %i.n = tail call ptr @PyBool_FromLong(i64 noundef %.0.lcssa.sink) #14
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %.loopexit.sink.split, %bb.a
@@ -255,7 +255,7 @@ bb.d:                                             ; preds = %.lr.ph
 .loopexit.sink.split:                             ; preds = %bb.d, %bb.c, %bb.b
   %.0.lcssa.sink.shrunk = phi i32 [ %i.e, %bb.b ], [ 0, %bb.c ], [ %.1, %bb.d ]
   %.0.lcssa.sink = zext i32 %.0.lcssa.sink.shrunk to i64
-  %i.o = tail call ptr @PyBool_FromLong(i64 noundef %.0.lcssa.sink) #15
+  %i.o = tail call ptr @PyBool_FromLong(i64 noundef %.0.lcssa.sink) #14
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.lr.ph, %.loopexit.sink.split, %bb.a
@@ -324,7 +324,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f, %bb.d
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.c
   %.020.lcssa = phi i64 [ 0, %bb.c ], [ %i.o, %._crit_edge.loopexit ]
-  %i.p = tail call ptr @PyBool_FromLong(i64 noundef %.020.lcssa) #15
+  %i.p = tail call ptr @PyBool_FromLong(i64 noundef %.020.lcssa) #14
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %bb.f, %bb.a, %bb.b, %._crit_edge
@@ -727,16 +727,16 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  %i.f = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.e, ptr noundef nonnull @.str) #15 ; 0 uses
+  %i.f = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.e, ptr noundef nonnull @.str) #14 ; 0 uses
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = tail call ptr @PyBytesWriter_Create(i64 noundef 256) #15 ; 3 uses
+  %i.g = tail call ptr @PyBytesWriter_Create(i64 noundef 256) #14 ; 3 uses
   %.not21 = icmp eq ptr %i.g, null
   br i1 %.not21, label %bb.d, label %vector.ph
 
 vector.ph:                                        ; preds = %bb.c
-  %i.h = tail call ptr @PyBytesWriter_GetData(ptr noundef nonnull %i.g) #15 ; 17 uses
+  %i.h = tail call ptr @PyBytesWriter_GetData(ptr noundef nonnull %i.g) #14 ; 17 uses
   %i.i = getelementptr i8, ptr %i.h, i64 16
   store <16 x i8> <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>, ptr %i.h, align 1, !tbaa !11
   store <16 x i8> <i8 16, i8 17, i8 18, i8 19, i8 20, i8 21, i8 22, i8 23, i8 24, i8 25, i8 26, i8 27, i8 28, i8 29, i8 30, i8 31>, ptr %i.i, align 1, !tbaa !11
@@ -789,7 +789,7 @@ vector.ph:                                        ; preds = %bb.c
   br i1 %i.aj, label %.lr.ph, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %.lr.ph, %vector.ph
-  %i.ak = tail call ptr @PyBytesWriter_Finish(ptr noundef nonnull %i.g) #15
+  %i.ak = tail call ptr @PyBytesWriter_Finish(ptr noundef nonnull %i.g) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge, %bb.c, %bb.b
@@ -813,7 +813,7 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #15
+  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -826,9 +826,9 @@ define internal fastcc i64 @find_internal(ptr noundef %0, i64 noundef %1, ptr no
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %6 = alloca %struct.Py_buffer, align 8          ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
-  %i.b = tail call i32 @PyObject_CheckBuffer(ptr noundef %2) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
+  %i.b = tail call i32 @PyObject_CheckBuffer(ptr noundef %2) #14
   %.not.i = icmp eq i32 %i.b, 0
   br i1 %.not.i, label %bb.b, label %parse_args_finds_byte.exit
 
@@ -850,16 +850,16 @@ _PyIndex_Check.exit.thread.i:                     ; preds = %_PyIndex_Check.exit
   %i.g = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !35
   %i.h = getelementptr i8, ptr %.val14.i, i64 24
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !50
-  %i.j = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.g, ptr noundef nonnull @.str.10, ptr noundef %i.i) #15 ; 0 uses
+  %i.j = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.g, ptr noundef nonnull @.str.10, ptr noundef %i.i) #14 ; 0 uses
   br label %parse_args_finds_byte.exit.thread
 
 bb.c:                                             ; preds = %_PyIndex_Check.exit.i
-  %i.k = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %2, ptr noundef null) #15 ; 3 uses
+  %i.k = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %2, ptr noundef null) #14 ; 3 uses
   %i.l = icmp eq i64 %i.k, -1
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = tail call ptr @PyErr_Occurred() #15
+  %i.m = tail call ptr @PyErr_Occurred() #14
   %.not13.i = icmp eq ptr %i.m, null
   br i1 %.not13.i, label %.thread.i, label %parse_args_finds_byte.exit.thread
 
@@ -869,7 +869,7 @@ bb.e:                                             ; preds = %bb.c
 
 .thread.i:                                        ; preds = %bb.e, %bb.d
   %i.n = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  tail call void @PyErr_SetString(ptr noundef %i.n, ptr noundef nonnull @.str.7) #15
+  tail call void @PyErr_SetString(ptr noundef %i.n, ptr noundef nonnull @.str.7) #14
   br label %parse_args_finds_byte.exit.thread
 
 parse_args_finds_byte.exit.thread13:              ; preds = %bb.e
@@ -882,7 +882,7 @@ parse_args_finds_byte.exit:                       ; preds = %bb.a
   br i1 %.not57, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %parse_args_finds_byte.exit
-  %i.p = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %6, i32 noundef 0) #15
+  %i.p = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %6, i32 noundef 0) #14
   %.not58 = icmp eq i32 %i.p, 0
   br i1 %.not58, label %bb.g, label %parse_args_finds_byte.exit.thread
 
@@ -939,7 +939,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   %i.ah = sext i8 %i.ad to i32
-  %i.ai = call ptr @memchr(ptr noundef %i.ac, i32 noundef %i.ah, i64 noundef %i.y) #16 ; 2 uses
+  %i.ai = call ptr @memchr(ptr noundef %i.ac, i32 noundef %i.ah, i64 noundef %i.y) #15 ; 2 uses
   %.not.i60 = icmp eq ptr %i.ai, null
   br i1 %.not.i60, label %stringlib_find_slice.exit, label %stringlib_find_char.exit
 
@@ -960,7 +960,7 @@ bb.q:                                             ; preds = %bb.m
 
 bb.r:                                             ; preds = %bb.q
   %i.an = sext i8 %i.ad to i32
-  %i.ao = call ptr @memrchr(ptr noundef %i.ac, i32 noundef %i.an, i64 noundef %i.y) #16 ; 2 uses
+  %i.ao = call ptr @memrchr(ptr noundef %i.ac, i32 noundef %i.an, i64 noundef %i.y) #15 ; 2 uses
   %.not.i62 = icmp eq ptr %i.ao, null
   br i1 %.not.i62, label %stringlib_find_slice.exit, label %stringlib_find_char.exit
 
@@ -1150,13 +1150,13 @@ stringlib_find_slice.exit:                        ; preds = %bb.ae, %bb.aa, %bb.
   br i1 %.not5717, label %parse_args_finds_byte.exit.thread, label %bb.ag
 
 bb.ag:                                            ; preds = %stringlib_find_slice.exit
-  call void @PyBuffer_Release(ptr noundef nonnull %6) #15
+  call void @PyBuffer_Release(ptr noundef nonnull %6) #14
   br label %parse_args_finds_byte.exit.thread
 
 parse_args_finds_byte.exit.thread:                ; preds = %bb.d, %.thread.i, %_PyIndex_Check.exit.thread.i, %stringlib_find_slice.exit, %bb.ag, %bb.f
   %.047 = phi i64 [ %.1, %stringlib_find_slice.exit ], [ -2, %bb.f ], [ %.1, %bb.ag ], [ -2, %_PyIndex_Check.exit.thread.i ], [ -2, %.thread.i ], [ -2, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret i64 %.047
 }
 
@@ -1173,11 +1173,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  tail call void @PyErr_SetString(ptr noundef %i.b, ptr noundef nonnull @.str.3) #15
+  tail call void @PyErr_SetString(ptr noundef %i.b, ptr noundef nonnull @.str.3) #14
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #15
+  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
@@ -1195,7 +1195,7 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #15
+  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1214,11 +1214,11 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  tail call void @PyErr_SetString(ptr noundef %i.b, ptr noundef nonnull @.str.3) #15
+  tail call void @PyErr_SetString(ptr noundef %i.b, ptr noundef nonnull @.str.3) #14
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #15
+  %i.c = tail call ptr @PyLong_FromSsize_t(i64 noundef %i.a) #14
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
@@ -1231,9 +1231,9 @@ define hidden ptr @_Py_bytes_count(ptr noundef %0, i64 noundef %1, ptr noundef %
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %5 = alloca %struct.Py_buffer, align 8          ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
-  %i.b = tail call i32 @PyObject_CheckBuffer(ptr noundef %2) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
+  %i.b = tail call i32 @PyObject_CheckBuffer(ptr noundef %2) #14
   %.not.i = icmp eq i32 %i.b, 0
   br i1 %.not.i, label %bb.b, label %parse_args_finds_byte.exit
 
@@ -1255,16 +1255,16 @@ _PyIndex_Check.exit.thread.i:                     ; preds = %_PyIndex_Check.exit
   %i.g = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !35
   %i.h = getelementptr i8, ptr %.val14.i, i64 24
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !50
-  %i.j = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.g, ptr noundef nonnull @.str.10, ptr noundef %i.i) #15 ; 0 uses
+  %i.j = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.g, ptr noundef nonnull @.str.10, ptr noundef %i.i) #14 ; 0 uses
   br label %parse_args_finds_byte.exit.thread
 
 bb.c:                                             ; preds = %_PyIndex_Check.exit.i
-  %i.k = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %2, ptr noundef null) #15 ; 3 uses
+  %i.k = tail call i64 @PyNumber_AsSsize_t(ptr noundef nonnull %2, ptr noundef null) #14 ; 3 uses
   %i.l = icmp eq i64 %i.k, -1
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.m = tail call ptr @PyErr_Occurred() #15
+  %i.m = tail call ptr @PyErr_Occurred() #14
   %.not13.i = icmp eq ptr %i.m, null
   br i1 %.not13.i, label %.thread.i, label %parse_args_finds_byte.exit.thread
 
@@ -1274,7 +1274,7 @@ bb.e:                                             ; preds = %bb.c
 
 .thread.i:                                        ; preds = %bb.e, %bb.d
   %i.n = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  tail call void @PyErr_SetString(ptr noundef %i.n, ptr noundef nonnull @.str.7) #15
+  tail call void @PyErr_SetString(ptr noundef %i.n, ptr noundef nonnull @.str.7) #14
   br label %parse_args_finds_byte.exit.thread
 
 parse_args_finds_byte.exit.thread38:              ; preds = %bb.e
@@ -1287,7 +1287,7 @@ parse_args_finds_byte.exit:                       ; preds = %bb.a
   br i1 %.not28, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %parse_args_finds_byte.exit
-  %i.p = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %5, i32 noundef 0) #15
+  %i.p = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %5, i32 noundef 0) #14
   %.not29 = icmp eq i32 %i.p, 0
   br i1 %.not29, label %bb.g, label %parse_args_finds_byte.exit.thread
 
@@ -1339,17 +1339,17 @@ bb.n:                                             ; preds = %bb.l
 
 stringlib_count.exit:                             ; preds = %bb.k, %bb.m, %bb.n
   %.0.i = phi i64 [ 0, %bb.k ], [ %i.ac, %bb.m ], [ %..i, %bb.n ]
-  %i.ae = call ptr @PyLong_FromSsize_t(i64 noundef %.0.i) #15 ; 2 uses
+  %i.ae = call ptr @PyLong_FromSsize_t(i64 noundef %.0.i) #14 ; 2 uses
   br i1 %.not2842, label %parse_args_finds_byte.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %stringlib_count.exit
-  call void @PyBuffer_Release(ptr noundef nonnull %5) #15
+  call void @PyBuffer_Release(ptr noundef nonnull %5) #14
   br label %parse_args_finds_byte.exit.thread
 
 parse_args_finds_byte.exit.thread:                ; preds = %bb.d, %.thread.i, %_PyIndex_Check.exit.thread.i, %stringlib_count.exit, %bb.o, %bb.f
   %.0 = phi ptr [ %i.ae, %stringlib_count.exit ], [ null, %bb.f ], [ %i.ae, %bb.o ], [ null, %_PyIndex_Check.exit.thread.i ], [ null, %.thread.i ], [ null, %bb.d ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret ptr %.0
 }
 
@@ -1361,19 +1361,19 @@ declare void @PyBuffer_Release(ptr noundef) local_unnamed_addr #3
 define hidden range(i32 -1, 2) i32 @_Py_bytes_contains(ptr noundef %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %struct.Py_buffer, align 8          ; 6 uses
-  %i.a = tail call i64 @PyNumber_AsSsize_t(ptr noundef %2, ptr noundef null) #15 ; 3 uses
+  %i.a = tail call i64 @PyNumber_AsSsize_t(ptr noundef %2, ptr noundef null) #14 ; 3 uses
   %i.b = icmp eq i64 %i.a, -1
   br i1 %i.b, label %bb.b, label %bb.g
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call ptr @PyErr_Occurred() #15
+  %i.c = tail call ptr @PyErr_Occurred() #14
   %.not = icmp eq ptr %i.c, null
   br i1 %.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #15
-  tail call void @PyErr_Clear() #15
-  %i.d = call i32 @PyObject_GetBuffer(ptr noundef %2, ptr noundef nonnull %3, i32 noundef 0) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
+  tail call void @PyErr_Clear() #14
+  %i.d = call i32 @PyObject_GetBuffer(ptr noundef %2, ptr noundef nonnull %3, i32 noundef 0) #14
   %.not13 = icmp eq i32 %i.d, 0
   br i1 %.not13, label %bb.d, label %bb.f
 
@@ -1392,12 +1392,12 @@ bb.e:                                             ; preds = %bb.d
 
 stringlib_find.exit:                              ; preds = %bb.d, %bb.e
   %.010.i = phi i32 [ %i.k, %bb.e ], [ 1, %bb.d ]
-  call void @PyBuffer_Release(ptr noundef nonnull %3) #15
+  call void @PyBuffer_Release(ptr noundef nonnull %3) #14
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %stringlib_find.exit
   %.0 = phi i32 [ %.010.i, %stringlib_find.exit ], [ -1, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.a
@@ -1406,12 +1406,12 @@ bb.g:                                             ; preds = %bb.a
 
 .thread:                                          ; preds = %bb.b, %bb.g
   %i.l = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !35
-  tail call void @PyErr_SetString(ptr noundef %i.l, ptr noundef nonnull @.str.7) #15
+  tail call void @PyErr_SetString(ptr noundef %i.l, ptr noundef nonnull @.str.7) #14
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.m = trunc nuw nsw i64 %i.a to i32
-  %i.n = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.m, i64 noundef %1) #16
+  %i.n = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.m, i64 noundef %1) #15
   %i.o = icmp ne ptr %i.n, null
   %i.p = zext i1 %i.o to i32
   br label %bb.i
@@ -1427,7 +1427,7 @@ declare ptr @PyErr_Occurred() local_unnamed_addr #3
 
 declare void @PyErr_Clear() local_unnamed_addr #3
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #6
 
 ; Function Attrs: nounwind uwtable
@@ -1480,7 +1480,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.o = load ptr, ptr @PyExc_TypeError, align 8, !tbaa !35
-  %i.p = tail call i32 @PyErr_ExceptionMatches(ptr noundef %i.o) #15
+  %i.p = tail call i32 @PyErr_ExceptionMatches(ptr noundef %i.o) #14
   %.not29 = icmp eq i32 %i.p, 0
   br i1 %.not29, label %.loopexit, label %bb.e
 
@@ -1489,12 +1489,12 @@ bb.e:                                             ; preds = %bb.d
   %.val = load ptr, ptr %i.a, align 8, !tbaa !38
   %i.r = getelementptr i8, ptr %.val, i64 24
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !50
-  %i.t = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.q, ptr noundef nonnull @.str.11, ptr noundef %2, ptr noundef %i.s) #15 ; 0 uses
+  %i.t = tail call ptr (ptr, ptr, ...) @PyErr_Format(ptr noundef %i.q, ptr noundef nonnull @.str.11, ptr noundef %2, ptr noundef %i.s) #14 ; 0 uses
   br label %.loopexit
 
 bb.f:                                             ; preds = %bb.c
   %i.u = zext nneg i32 %i.m to i64
-  %i.v = tail call ptr @PyBool_FromLong(i64 noundef %i.u) #15
+  %i.v = tail call ptr @PyBool_FromLong(i64 noundef %i.u) #14
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %.lr.ph, %.preheader, %bb.f, %bb.e, %bb.d
@@ -1554,10 +1554,10 @@ stringlib_find_max_char.exit:                     ; preds = %.thread31.i, %bb.e,
   ret ptr %i.k
 }
 
-; Function Attrs: mustprogress nocallback nofree nounwind willreturn memory(argmem: read)
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare ptr @memrchr(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr #6
 
-; Function Attrs: inlinehint nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: inlinehint nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @fastsearch(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 1, 0) %3, i64 noundef range(i64 9223372036854775807, 0) %4, i32 noundef range(i32 0, 3) %5) unnamed_addr #7 {
 bb.a:
   %i.a = icmp slt i64 %1, %3
@@ -1589,7 +1589,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   %i.g = sext i8 %i.c to i32
-  %i.h = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.g, i64 noundef %1) #16 ; 2 uses
+  %i.h = tail call ptr @memchr(ptr noundef %0, i32 noundef %i.g, i64 noundef %1) #15 ; 2 uses
   %.not.i = icmp eq ptr %i.h, null
   br i1 %.not.i, label %stringlib_find_char.exit, label %bb.g
 
@@ -1623,7 +1623,7 @@ bb.j:                                             ; preds = %bb.d
 
 bb.k:                                             ; preds = %bb.j
   %i.t = sext i8 %i.r to i32
-  %i.u = tail call ptr @memrchr(ptr noundef %0, i32 noundef %i.t, i64 noundef %1) #16 ; 2 uses
+  %i.u = tail call ptr @memrchr(ptr noundef %0, i32 noundef %i.t, i64 noundef %1) #15 ; 2 uses
   %.not.i68 = icmp eq ptr %i.u, null
   br i1 %.not.i68, label %stringlib_find_char.exit, label %bb.l
 
@@ -2026,22 +2026,22 @@ stringlib_find_char.exit:                         ; preds = %bb.ad, %._crit_edge
   ret i64 %.0
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @stringlib__two_way_find(ptr noundef readonly %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3) unnamed_addr #8 {
 bb.a:
   %4 = alloca %struct.stringlib__pre, align 8     ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   call fastcc void @stringlib__preprocess(ptr noundef %2, i64 noundef %3, ptr noundef %4)
   %i.a = call fastcc i64 @stringlib__two_way(ptr noundef %0, i64 noundef %1, ptr noundef %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   ret i64 %i.a
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @stringlib__two_way_count(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3, i64 noundef %4) unnamed_addr #8 {
 bb.a:
   %5 = alloca %struct.stringlib__pre, align 8     ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   call fastcc void @stringlib__preprocess(ptr noundef %2, i64 noundef %3, ptr noundef %5)
   %i.a = call fastcc i64 @stringlib__two_way(ptr noundef %0, i64 noundef %1, ptr noundef %5) ; 2 uses
   %i.b = icmp eq i64 %i.a, -1
@@ -2070,11 +2070,11 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph38, %.lr.ph, %.lr.ph.preheader, %bb.a
   %.1.ph = phi i64 [ 0, %bb.a ], [ %4, %.lr.ph.preheader ], [ %4, %.lr.ph ], [ %i.f, %.lr.ph38 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   ret i64 %.1.ph
 }
 
-; Function Attrs: nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define internal fastcc i64 @stringlib_adaptive_find(ptr noundef %0, i64 noundef range(i64 2500, -9223372036854775808) %1, ptr noundef %2, i64 noundef range(i64 6, -9223372036854775808) %3, i64 noundef range(i64 9223372036854775807, 0) %4, i32 noundef range(i32 0, 2) %5) unnamed_addr #8 {
 .lr.ph.preheader:
   %6 = alloca %struct.stringlib__pre, align 8     ; 5 uses
@@ -2270,10 +2270,10 @@ bb.l:                                             ; preds = %bb.c
   br i1 %.not124, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %.split.us
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #14
   call fastcc void @stringlib__preprocess(ptr noundef nonnull %2, i64 noundef range(i64 6, -9223372036854775808) %3, ptr noundef %7)
   %i.bx = call fastcc i64 @stringlib__two_way(ptr noundef readonly %i.bv, i64 noundef %i.bw, ptr noundef %7) ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #14
   %i.by = icmp eq i64 %i.bx, -1
   %i.bz = add i64 %i.bx, %.092148.us
   %i.ca = select i1 %i.by, i64 -1, i64 %i.bz
@@ -2281,7 +2281,7 @@ bb.m:                                             ; preds = %.split.us
 
 bb.n:                                             ; preds = %.split.us
   %i.cb = sub i64 %4, %.0100147.us                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   call fastcc void @stringlib__preprocess(ptr noundef nonnull %2, i64 noundef range(i64 6, -9223372036854775808) %3, ptr noundef %6)
   %i.cc = call fastcc i64 @stringlib__two_way(ptr noundef %i.bv, i64 noundef %i.bw, ptr noundef %6) ; 2 uses
   %i.cd = icmp eq i64 %i.cc, -1
@@ -2310,7 +2310,7 @@ bb.n:                                             ; preds = %.split.us
 
 stringlib__two_way_count.exit:                    ; preds = %.lr.ph250, %.lr.ph.i, %.lr.ph.i.preheader, %bb.n
   %.1.ph.i = phi i64 [ 0, %bb.n ], [ %i.cb, %.lr.ph.i.preheader ], [ %i.cb, %.lr.ph.i ], [ %i.ch, %.lr.ph250 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   %i.cp = add i64 %.1.ph.i, %.0100147.us
   br label %.thread.thread
 
@@ -2325,8 +2325,8 @@ stringlib__two_way_count.exit:                    ; preds = %.lr.ph250, %.lr.ph.
   ret i64 %i.cs
 }
 
-; Function Attrs: nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @stringlib__preprocess(ptr noundef %0, i64 noundef range(i64 6, -9223372036854775808) %1, ptr noundef nonnull writeonly captures(none) initializes((0, 16)) %2) unnamed_addr #9 {
+; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
+define internal fastcc void @stringlib__preprocess(ptr noundef %0, i64 noundef range(i64 6, -9223372036854775808) %1, ptr noundef nonnull writeonly captures(none) initializes((0, 16)) %2) unnamed_addr #4 {
 bb.a:
   store ptr %0, ptr %2, align 8, !tbaa !74
   %i.a = getelementptr i8, ptr %2, i64 8
@@ -2501,7 +2501,7 @@ bb.n:                                             ; preds = %.lr.ph62, %bb.n
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc i64 @stringlib__two_way(ptr noundef %0, i64 noundef %1, ptr noundef nonnull readonly captures(none) %2) unnamed_addr #10 {
+define internal fastcc i64 @stringlib__two_way(ptr noundef %0, i64 noundef %1, ptr noundef nonnull readonly captures(none) %2) unnamed_addr #9 {
 bb.a:
   %i.a = getelementptr i8, ptr %2, i64 8
   %i.b = load i64, ptr %i.a, align 8, !tbaa !76
@@ -2815,7 +2815,7 @@ declare i32 @PyObject_CheckBuffer(ptr noundef) local_unnamed_addr #3
 define internal fastcc range(i32 -1, 2) i32 @tailmatch(ptr noundef readonly captures(none) %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i32 noundef range(i32 -1, 2) %5) unnamed_addr #2 {
 bb.a:
   %6 = alloca %struct.Py_buffer, align 8          ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #14
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %6, i8 0, i64 80, i1 false)
   %i.a = getelementptr i8, ptr %2, i64 8
   %.val = load ptr, ptr %i.a, align 8, !tbaa !38
@@ -2832,7 +2832,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
-  %i.e = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %6, i32 noundef 0) #15
+  %i.e = call i32 @PyObject_GetBuffer(ptr noundef nonnull %2, ptr noundef nonnull %6, i32 noundef 0) #14
   %.not47 = icmp eq i32 %i.e, 0
   br i1 %.not47, label %bb.d, label %bb.o
 
@@ -2899,49 +2899,49 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %bb.j,
 
 .sink.split:                                      ; preds = %bb.m, %bb.n
   %.038.ph = phi i32 [ 0, %bb.n ], [ 1, %bb.m ]
-  call void @PyBuffer_Release(ptr noundef nonnull %6) #15
+  call void @PyBuffer_Release(ptr noundef nonnull %6) #14
   br label %bb.o
 
 bb.o:                                             ; preds = %.sink.split, %bb.c
   %.038 = phi i32 [ -1, %bb.c ], [ %.038.ph, %.sink.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #15
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #14
   ret i32 %.038
 }
 
 declare i32 @PyErr_ExceptionMatches(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #12
+declare i64 @llvm.smax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.sadd.sat.i64(i64, i64) #12
+declare i64 @llvm.sadd.sat.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #12
+declare i64 @llvm.smin.i64(i64, i64) #11
 
-; Function Attrs: nocallback nofree nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #13
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #12
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+declare void @llvm.assume(i1 noundef) #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #12
+declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #12
+declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x i64> @llvm.smin.v2i64(<2 x i64>, <2 x i64>) #12
+declare <2 x i64> @llvm.smin.v2i64(<2 x i64>, <2 x i64>) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.vector.reduce.smin.v2i64(<2 x i64>) #12
+declare i64 @llvm.vector.reduce.smin.v2i64(<2 x i64>) #11
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -2949,17 +2949,16 @@ attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { inlinehint nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nocallback nofree nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { inlinehint nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nofree norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nounwind willreturn memory(argmem: read) }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #15 = { nounwind }
-attributes #16 = { nounwind willreturn memory(read) }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { inlinehint nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { nounwind }
+attributes #15 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}
