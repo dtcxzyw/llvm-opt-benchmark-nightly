@@ -201,7 +201,7 @@ bb.f:                                             ; preds = %bb.b, %bb.e
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden double @w2c_hermes_cbrt(ptr readnone captures(none) %0, double noundef %1) #3 {
 bb.a:
-  %i.a = bitcast double %1 to i64                 ; 2 uses
+  %i.a = bitcast double %1 to i64
   %i.b = lshr i64 %i.a, 32
   %i.c = trunc nuw i64 %i.b to i32
   %i.d = and i32 %i.c, 2147483647                 ; 3 uses
@@ -217,8 +217,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = fmul double %1, f0x4350000000000000
-  %i.i = bitcast double %i.h to i64               ; 2 uses
+  %i.h = fmul double %1, f0x4350000000000000      ; 2 uses
+  %i.i = bitcast double %i.h to i64
   %i.j = lshr i64 %i.i, 32
   %i.k = trunc nuw i64 %i.j to i32
   %i.l = and i32 %i.k, 2147483647                 ; 2 uses
@@ -226,16 +226,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not, label %bb.f, label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %.0127 = phi i64 [ %i.i, %bb.d ], [ %i.a, %bb.c ]
+  %2 = phi double [ %i.h, %bb.d ], [ %1, %bb.c ]
   %.0126 = phi i32 [ 696219795, %bb.d ], [ 715094163, %bb.c ]
   %.0124 = phi i32 [ %i.l, %bb.d ], [ %i.d, %bb.c ]
-  %2 = and i64 %.0127, -9223372036854775808
   %i.m = udiv i32 %.0124, 3
   %i.n = add nuw nsw i32 %i.m, %.0126
   %i.o = zext nneg i32 %i.n to i64
   %i.p = shl nuw nsw i64 %i.o, 32
-  %3 = or disjoint i64 %i.p, %2
-  %4 = bitcast i64 %3 to double                   ; 4 uses
+  %3 = bitcast i64 %i.p to double
+  %4 = tail call double @llvm.copysign.f64(double %3, double %2) ; 4 uses
   %i.q = fmul double %4, %4
   %i.r = fdiv double %4, %1
   %i.s = fmul double %i.q, %i.r                   ; 6 uses
@@ -249,7 +248,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.aa = fmul double %i.s, %i.z
   %i.ab = fadd double %i.aa, f0x3FFE03E60F61E692
   %i.ac = fadd double %i.x, %i.ab
-  %i.ad = fmul double %i.ac, %4
+  %i.ad = fmul double %4, %i.ac
   %i.ae = bitcast double %i.ad to i64
   %i.af = and i64 %i.ae, -1073741824
   %i.ag = add i64 %i.af, 2147483648
