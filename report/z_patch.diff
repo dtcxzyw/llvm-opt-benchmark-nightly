@@ -1,0 +1,108 @@
+diff --git a/llvm/lib/Analysis/ValueTracking.cpp b/llvm/lib/Analysis/ValueTracking.cpp
+index 3be0db5ad9c7e..8d37a5ffe1195 100644
+--- a/llvm/lib/Analysis/ValueTracking.cpp
++++ b/llvm/lib/Analysis/ValueTracking.cpp
+@@ -10552,6 +10552,16 @@ void llvm::findValuesAffectedByCondition(
+         AddAffected(A);
+         if (IsAssume)
+           AddAffected(B);
++        auto AddShiftedNotMaskAffected = [&](Value *MaybeShiftedNot,
++                                             Value *Other) {
++          if (match(Other, m_Zero()) &&
++              match(MaybeShiftedNot, m_LShr(m_Not(m_Value(X)), m_Value())))
++            AddAffected(X);
++        };
++        // ((~X) >>_u Y) == 0 can imply facts about X that depend on Y.
++        AddShiftedNotMaskAffected(A, B);
++        if (IsAssume)
++          AddShiftedNotMaskAffected(B, A);
+         if (HasRHSC) {
+           Value *Y;
+           // (X << C) or (X >>_s C) or (X >>_u C).
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+index 3547a79df1355..c45af52f7a2d4 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineShifts.cpp
+@@ -11,6 +11,7 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "InstCombineInternal.h"
++#include "llvm/Analysis/AssumptionCache.h"
+ #include "llvm/Analysis/InstructionSimplify.h"
+ #include "llvm/IR/IntrinsicInst.h"
+ #include "llvm/IR/PatternMatch.h"
+@@ -1018,6 +1019,48 @@ Instruction *InstCombinerImpl::FoldShiftByConstant(Value *Op0, Constant *C1,
+   return nullptr;
+ }
+ 
++static bool isAssumedZeroShiftedNotOfMask(Value *Cond, Value *Mask,
++                                          Value *ShAmt, unsigned Depth = 0) {
++  if (Depth == MaxAnalysisRecursionDepth)
++    return false;
++
++  Value *A, *B;
++  if (match(Cond, m_LogicalAnd(m_Value(A), m_Value(B))))
++    return isAssumedZeroShiftedNotOfMask(A, Mask, ShAmt, Depth + 1) ||
++           isAssumedZeroShiftedNotOfMask(B, Mask, ShAmt, Depth + 1);
++
++  CmpPredicate Pred;
++  Value *LHS, *RHS;
++  if (!match(Cond, m_ICmp(Pred, m_Value(LHS), m_Value(RHS))) ||
++      Pred != ICmpInst::ICMP_EQ)
++    return false;
++
++  auto IsMatchingShiftedNot = [Mask, ShAmt](Value *V) {
++    return match(V, m_LShr(m_Not(m_Specific(Mask)), m_Specific(ShAmt)));
++  };
++
++  return (match(RHS, m_Zero()) && IsMatchingShiftedNot(LHS)) ||
++         (match(LHS, m_Zero()) && IsMatchingShiftedNot(RHS));
++}
++
++static bool isMaskKnownToPreserveRightShiftInput(Value *Mask, Value *ShAmt,
++                                                 const SimplifyQuery &Q) {
++  if (!Q.AC || !Q.CxtI || Q.isUndefValue(ShAmt))
++    return false;
++
++  for (AssumptionCache::ResultElem &Elem : Q.AC->assumptionsFor(Mask)) {
++    if (!Elem.Assume || Elem.Index != AssumptionCache::ExprResultIdx)
++      continue;
++
++    auto *Assume = cast<AssumeInst>(Elem.Assume);
++    if (isValidAssumeForContext(Assume, Q) &&
++        isAssumedZeroShiftedNotOfMask(Assume->getArgOperand(0), Mask, ShAmt))
++      return true;
++  }
++
++  return false;
++}
++
+ // Tries to perform
+ //    (lshr (add (zext X), (zext Y)), K)
+ //      -> (icmp ult (add X, Y), X)
+@@ -1402,6 +1445,17 @@ Instruction *InstCombinerImpl::visitLShr(BinaryOperator &I) {
+   const APInt *C;
+   unsigned BitWidth = Ty->getScalarSizeInBits();
+ 
++  // If an assume tells us that all zero bits of the mask are below the shift
++  // amount, the mask cannot affect the result of the right shift.
++  Value *And0, *And1;
++  const SimplifyQuery Q = SQ.getWithInstruction(&I);
++  if (match(Op0, m_And(m_Value(And0), m_Value(And1)))) {
++    if (isMaskKnownToPreserveRightShiftInput(And1, Op1, Q))
++      return BinaryOperator::CreateLShr(And0, Op1);
++    if (isMaskKnownToPreserveRightShiftInput(And0, Op1, Q))
++      return BinaryOperator::CreateLShr(And1, Op1);
++  }
++
+   // (iN (~X) u>> (N - 1)) --> zext (X > -1)
+   if (match(Op0, m_OneUse(m_Not(m_Value(X)))) &&
+       match(Op1, m_SpecificIntAllowPoison(BitWidth - 1)))
+@@ -1709,7 +1763,6 @@ Instruction *InstCombinerImpl::visitLShr(BinaryOperator &I) {
+     }
+   }
+ 
+-  const SimplifyQuery Q = SQ.getWithInstruction(&I);
+   if (setShiftFlags(I, Q))
+     return &I;
+ 
