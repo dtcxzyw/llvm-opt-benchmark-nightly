@@ -116,18 +116,20 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.m
-  %.not.i = icmp ne i32 %1, 0
-  %.neg184.i = sext i1 %.not.i to i64             ; 2 uses
+  %.not.i = icmp ne i32 %1, 0                     ; 2 uses
+  %.neg184.i = sext i1 %.not.i to i64
   %spec.select.neg.i = sub i64 %.neg184.i, %0     ; 2 uses
   %i.ad = udiv i64 %spec.select.neg.i, %2
   %.neg.i = sub i64 0, %i.ad
-  %i.ae = urem i64 %spec.select.neg.i, %2
-  %.neg177.pn.i.a = sub nsw i64 %.neg184.i, %i.ae
+  %i.ae = urem i64 %spec.select.neg.i, %2         ; 2 uses
+  %.neg177.pn.i.a = sub nsw i64 0, %i.ae
+  %5 = xor i64 %i.ae, -1
+  %.neg177.pn.i = select i1 %.not.i, i64 %5, i64 %.neg177.pn.i.a
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.n, %bb.p, %bb.o, %bb.k, %bb.i, %bb.g, %bb.e
   %.0 = phi i64 [ %i.g, %bb.e ], [ %i.l, %bb.g ], [ %i.q, %bb.i ], [ %i.v, %bb.k ], [ %.neg.i, %bb.p ], [ %i.ab, %bb.o ], [ %0, %bb.n ]
-  %.sink185.i = phi i64 [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ %.neg177.pn.i.a, %bb.p ], [ %i.ac, %bb.o ], [ 0, %bb.n ]
+  %.sink185.i = phi i64 [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ %.neg177.pn.i, %bb.p ], [ %i.ac, %bb.o ], [ 0, %bb.n ]
   %.sink.i = phi i32 [ %i.h, %bb.e ], [ %i.m, %bb.g ], [ %i.r, %bb.i ], [ %i.w, %bb.k ], [ %1, %bb.p ], [ %1, %bb.o ], [ %1, %bb.n ]
   store i64 %.sink185.i, ptr %4, align 4
   %.sroa.451.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -530,15 +532,17 @@ bb.o:                                             ; preds = %bb.n
   br label %bb.q
 
 bb.p:                                             ; preds = %bb.m
-  %.not.i = icmp ne i32 %.sroa.26.0.copyload, 0
-  %.neg184.i = sext i1 %.not.i to i64             ; 2 uses
+  %.not.i = icmp ne i32 %.sroa.26.0.copyload, 0   ; 2 uses
+  %.neg184.i = sext i1 %.not.i to i64
   %spec.select.neg.i = sub i64 %.neg184.i, %.sroa.05.0.copyload
-  %i.m = urem i64 %spec.select.neg.i, %1
-  %.neg177.pn.i.a = sub nsw i64 %.neg184.i, %i.m
+  %i.m = urem i64 %spec.select.neg.i, %1          ; 2 uses
+  %.neg177.pn.i.a = sub nsw i64 0, %i.m
+  %3 = xor i64 %i.m, -1
+  %.neg177.pn.i = select i1 %.not.i, i64 %3, i64 %.neg177.pn.i.a
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.n, %bb.p, %bb.o, %bb.k, %bb.i, %bb.g, %bb.e
-  %.sink185.i = phi i64 [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ %.neg177.pn.i.a, %bb.p ], [ %i.l, %bb.o ], [ 0, %bb.n ]
+  %.sink185.i = phi i64 [ 0, %bb.e ], [ 0, %bb.g ], [ 0, %bb.i ], [ 0, %bb.k ], [ %.neg177.pn.i, %bb.p ], [ %i.l, %bb.o ], [ 0, %bb.n ]
   %.sink.i = phi i32 [ %i.d, %bb.e ], [ %i.e, %bb.g ], [ %i.f, %bb.i ], [ %i.g, %bb.k ], [ %.sroa.26.0.copyload, %bb.p ], [ %.sroa.26.0.copyload, %bb.o ], [ %.sroa.26.0.copyload, %bb.n ]
   store i64 %.sink185.i, ptr %0, align 4
   store i32 %.sink.i, ptr %.sroa.26.0..sroa_idx, align 4, !tbaa !3

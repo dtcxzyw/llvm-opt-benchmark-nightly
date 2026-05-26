@@ -201,10 +201,11 @@ bb.m:                                             ; preds = %bb.k, %bb.j
   store i32 1, ptr %10, align 16
   %i.bj = getelementptr inbounds nuw i8, ptr %10, i64 9 ; 2 uses
   store i8 4, ptr %i.bj, align 1
-  %i.bk = load i32, ptr %2, align 4
-  %.lobit = ashr i8 %i.g, 7
-  %12 = sext i8 %.lobit to i32
-  %spec.select296 = sub i32 %12, %i.bk
+  %i.bk = load i32, ptr %2, align 4               ; 2 uses
+  %12 = sub nsw i32 0, %i.bk
+  %13 = xor i32 %i.bk, -1
+  %.not213299 = icmp slt i8 %i.g, 0
+  %spec.select296 = select i1 %.not213299, i32 %13, i32 %12
   store i32 %spec.select296, ptr %i.bi, align 4
   %i.bl = call fastcc noundef i32 @_ZL10decComparePK9decNumberS1_h(ptr noundef nonnull %10, ptr noundef nonnull %1, i8 noundef zeroext 1) ; 2 uses
   %i.bm = icmp eq i32 %i.bl, -2147483648

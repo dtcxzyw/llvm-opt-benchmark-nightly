@@ -154,7 +154,7 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi10EmEEiPKcS4_iPT0_Pb.exit:
   %.2.lcssa79.i = phi ptr [ %.1.lcssa.i, %.critedge2.i ], [ %.260.i, %.lr.ph62.i ], [ %scevgep71.i, %bb.f ]
   %i.al = ptrtoint ptr %.2.lcssa79.i to i64
   %i.am = sub i64 %i.al, %.pre-phi                ; 2 uses
-  %i.an = trunc i64 %i.am to i32                  ; 3 uses
+  %i.an = trunc i64 %i.am to i32                  ; 4 uses
   %sext = shl i64 %i.am, 32
   %i.ao = ashr exact i64 %sext, 32
   %i.ap = getelementptr inbounds i8, ptr %.0.lcssa, i64 %i.ao ; 5 uses
@@ -162,8 +162,9 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi10EmEEiPKcS4_iPT0_Pb.exit:
   br i1 %i.aq, label %bb.ac, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi10EmEEiPKcS4_iPT0_Pb.exit
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.an, i32 19)
-  %.089.a = sub nsw i32 19, %4                    ; 2 uses
+  %4 = icmp sgt i32 %i.an, 19
+  %.089.a = sub nsw i32 19, %i.an
+  %.089 = select i1 %4, i32 0, i32 %.089.a        ; 2 uses
   %i.ar = tail call i32 @llvm.smax.i32(i32 %i.an, i32 19)
   %.083 = add nsw i32 %i.ar, -19                  ; 4 uses
   %i.as = icmp ult ptr %i.ap, %2
@@ -245,7 +246,7 @@ bb.l:                                             ; preds = %.lr.ph.split.i112
   %.pre-phi172 = phi i64 [ %.pre171, %.critedge.i114.loopexit ], [ %i.bd, %bb.k ], [ %.pre173, %.thread193 ] ; 3 uses
   %.038.lcssa.i115 = phi ptr [ %.038.lcssa.i115.ph, %.critedge.i114.loopexit ], [ %.1.lcssa, %bb.k ], [ %i.av, %.thread193 ] ; 5 uses
   %i.bn = sub i64 %i.b, %.pre-phi172
-  %i.bo = zext nneg i32 %.089.a to i64            ; 2 uses
+  %i.bo = zext nneg i32 %.089 to i64              ; 2 uses
   %i.bp = icmp sgt i64 %i.bn, %i.bo
   %i.bq = getelementptr inbounds nuw i8, ptr %.038.lcssa.i115, i64 %i.bo
   %i.br = select i1 %i.bp, ptr %i.bq, ptr %2      ; 3 uses
@@ -324,7 +325,7 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi10EmEEiPKcS4_iPT0_Pb.exit1
   %i.cn = ashr exact i64 %sext157, 32
   %i.co = getelementptr inbounds i8, ptr %.2202, i64 %i.cn
   %i.cp = icmp slt i32 %i.cm, 50000000
-  %.089. = tail call i32 @llvm.smin.i32(i32 %.089.a, i32 %i.cm)
+  %.089. = tail call i32 @llvm.smin.i32(i32 %.089, i32 %i.cm)
   %.386 = sub nsw i32 %.285201, %.089.
   br i1 %i.cp, label %bb.o, label %bb.ac
 
@@ -727,7 +728,7 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi16EmEEiPKcS4_iPT0_Pb.exit:
   %.2.lcssa80.i = phi ptr [ %.1.lcssa.i, %.critedge2.i ], [ %.260.i, %.lr.ph62.i ], [ %scevgep71.i, %bb.f ]
   %i.ao = ptrtoint ptr %.2.lcssa80.i to i64
   %i.ap = sub i64 %i.ao, %.pre-phi                ; 2 uses
-  %i.aq = trunc i64 %i.ap to i32                  ; 3 uses
+  %i.aq = trunc i64 %i.ap to i32                  ; 4 uses
   %sext = shl i64 %i.ap, 32
   %i.ar = ashr exact i64 %sext, 32
   %i.as = getelementptr inbounds i8, ptr %.0.lcssa, i64 %i.ar ; 5 uses
@@ -735,8 +736,9 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi16EmEEiPKcS4_iPT0_Pb.exit:
   br i1 %i.at, label %bb.aa, label %bb.g
 
 bb.g:                                             ; preds = %_ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi16EmEEiPKcS4_iPT0_Pb.exit
-  %4 = tail call i32 @llvm.smin.i32(i32 %i.aq, i32 15)
-  %.087.a = sub nsw i32 15, %4                    ; 2 uses
+  %4 = icmp sgt i32 %i.aq, 15
+  %.087.a = sub nsw i32 15, %i.aq
+  %.087 = select i1 %4, i32 0, i32 %.087.a        ; 2 uses
   %i.au = tail call i32 @llvm.smax.i32(i32 %i.aq, i32 15)
   %.081 = add nsw i32 %i.au, -15                  ; 4 uses
   %i.av = icmp ult ptr %i.as, %2
@@ -818,7 +820,7 @@ bb.l:                                             ; preds = %.lr.ph.split.i110
   %.pre-phi173 = phi i64 [ %.pre172, %.critedge.i112.loopexit ], [ %i.bg, %bb.k ], [ %.pre174, %.thread196 ] ; 3 uses
   %.038.lcssa.i113 = phi ptr [ %.038.lcssa.i113.ph, %.critedge.i112.loopexit ], [ %.1.lcssa, %bb.k ], [ %i.ay, %.thread196 ] ; 5 uses
   %i.bq = sub i64 %i.b, %.pre-phi173
-  %i.br = zext nneg i32 %.087.a to i64            ; 2 uses
+  %i.br = zext nneg i32 %.087 to i64              ; 2 uses
   %i.bs = icmp sgt i64 %i.bq, %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %.038.lcssa.i113, i64 %i.br
   %i.bu = select i1 %i.bs, ptr %i.bt, ptr %2      ; 3 uses
@@ -900,7 +902,7 @@ _ZN4absl12lts_2025051212_GLOBAL__N_113ConsumeDigitsILi16EmEEiPKcS4_iPT0_Pb.exit1
   %i.ct = ashr exact i64 %sext158, 32
   %i.cu = getelementptr inbounds i8, ptr %.2205, i64 %i.ct
   %i.cv = icmp slt i32 %i.cs, 12500000
-  %.087. = tail call i32 @llvm.smin.i32(i32 %.087.a, i32 %i.cs)
+  %.087. = tail call i32 @llvm.smin.i32(i32 %.087, i32 %i.cs)
   %.384 = sub nsw i32 %.283204, %.087.
   br i1 %i.cv, label %bb.o, label %bb.aa
 
@@ -1010,10 +1012,10 @@ declare noundef i32 @_ZN4absl12lts_2025051216strings_internal10memcasecmpEPKcS3_
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #4
+declare i32 @llvm.smax.i32(i32, i32) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.smin.i32(i32, i32) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

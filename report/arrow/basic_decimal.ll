@@ -201,13 +201,16 @@ _ZNK5arrow14BasicDecimal646DivideERKS0_PS0_S3_.exit: ; preds = %bb.a, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow15BasicDecimal1286NegateEv(ptr noundef nonnull returned align 8 captures(ret: address, provenance) dereferenceable(16) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %1 = load <2 x i64>, ptr %0, align 8, !tbaa !9
-  %i.a = load i64, ptr %0, align 8, !tbaa !9
-  %2 = icmp ne i64 %i.a, 0
-  %3 = sext i1 %2 to i64
-  %4 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %3, i64 1
-  %5 = sub <2 x i64> %4, %1
-  store <2 x i64> %5, ptr %0, align 8
+  %1 = load i64, ptr %0, align 8, !tbaa !9        ; 2 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.a = load i64, ptr %2, align 8, !tbaa !9      ; 2 uses
+  %3 = xor i64 %i.a, -1
+  %4 = icmp eq i64 %1, 0
+  %5 = sub i64 0, %i.a
+  %6 = sub i64 0, %1
+  %.sroa.6.0 = select i1 %4, i64 %5, i64 %3
+  store i64 %6, ptr %0, align 8
+  store i64 %.sroa.6.0, ptr %2, align 8
   ret ptr %0
 }
 
@@ -215,17 +218,18 @@ bb.a:
 define noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow15BasicDecimal1283AbsEv(ptr noundef nonnull returned align 8 captures(ret: address, provenance) dereferenceable(16) %0) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 3 uses
   %i.c = icmp slt i64 %i.b, 0
   br i1 %i.c, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.thread
 
 _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit:      ; preds = %bb.a
   %i.d = load i64, ptr %0, align 8, !tbaa !9      ; 2 uses
-  %1 = icmp ne i64 %i.d, 0
-  %i.e = sub i64 0, %i.d
-  %2 = sext i1 %1 to i64
-  %.sroa.6.0.i = sub i64 %2, %i.b
-  store i64 %i.e, ptr %0, align 8
+  %1 = xor i64 %i.b, -1
+  %2 = icmp eq i64 %i.d, 0
+  %i.e = sub i64 0, %i.b
+  %3 = sub i64 0, %i.d
+  %.sroa.6.0.i = select i1 %2, i64 %i.e, i64 %1
+  store i64 %3, ptr %0, align 8
   store i64 %.sroa.6.0.i, ptr %i.a, align 8
   br label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.thread
 
@@ -263,14 +267,21 @@ define { i64, i64 } @_ZN5arrow15BasicDecimal1283AbsERKS0_(ptr noundef nonnull re
 _ZN5arrow15BasicDecimal1283AbsEv.exit.a:
   %.sroa.0.0.copyload1 = load i64, ptr %0, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 3 uses
-  %i.a = icmp slt i64 %.sroa.6.0.copyload, 0      ; 2 uses
-  %1 = icmp ne i64 %.sroa.0.0.copyload1, 0
-  %2 = sub i64 0, %.sroa.0.0.copyload1
-  %3 = sext i1 %1 to i64
-  %.sroa.6.0.i.i = sub i64 %3, %.sroa.6.0.copyload
-  %.sroa.6.0 = select i1 %i.a, i64 %.sroa.6.0.i.i, i64 %.sroa.6.0.copyload
-  %.sroa.0.0 = select i1 %i.a, i64 %2, i64 %.sroa.0.0.copyload1
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8 ; 4 uses
+  %i.a = icmp slt i64 %.sroa.6.0.copyload, 0
+  br i1 %i.a, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i, label %_ZN5arrow15BasicDecimal1283AbsEv.exit
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i:    ; preds = %_ZN5arrow15BasicDecimal1283AbsEv.exit.a
+  %1 = xor i64 %.sroa.6.0.copyload, -1
+  %2 = icmp eq i64 %.sroa.0.0.copyload1, 0
+  %3 = sub i64 0, %.sroa.6.0.copyload
+  %4 = sub i64 0, %.sroa.0.0.copyload1
+  %.sroa.6.0.i.i = select i1 %2, i64 %3, i64 %1
+  br label %_ZN5arrow15BasicDecimal1283AbsEv.exit
+
+_ZN5arrow15BasicDecimal1283AbsEv.exit:            ; preds = %_ZN5arrow15BasicDecimal1283AbsEv.exit.a, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i
+  %.sroa.6.0 = phi i64 [ %.sroa.6.0.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i ], [ %.sroa.6.0.copyload, %_ZN5arrow15BasicDecimal1283AbsEv.exit.a ]
+  %.sroa.0.0 = phi i64 [ %4, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i ], [ %.sroa.0.0.copyload1, %_ZN5arrow15BasicDecimal1283AbsEv.exit.a ]
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.6.0, 1
   ret { i64, i64 } %.fca.1.insert
@@ -278,17 +289,23 @@ _ZN5arrow15BasicDecimal1283AbsEv.exit.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK5arrow15BasicDecimal12815FitsInPrecisionEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef %1) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
   %.sroa.0.0.copyload1.i = load i64, ptr %0, align 8 ; 3 uses
   %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 3 uses
-  %2 = icmp slt i64 %.sroa.6.0.copyload.i, 0      ; 2 uses
-  %3 = icmp ne i64 %.sroa.0.0.copyload1.i, 0
-  %4 = sub i64 0, %.sroa.0.0.copyload1.i
-  %5 = sext i1 %3 to i64
-  %.sroa.6.0.i.i.i = sub i64 %5, %.sroa.6.0.copyload.i
-  %.sroa.6.0.i = select i1 %2, i64 %.sroa.6.0.i.i.i, i64 %.sroa.6.0.copyload.i ; 2 uses
-  %.sroa.0.0.i = select i1 %2, i64 %4, i64 %.sroa.0.0.copyload1.i
+  %.sroa.6.0.copyload.i = load i64, ptr %.sroa.6.0..sroa_idx.i, align 8 ; 4 uses
+  %3 = icmp slt i64 %.sroa.6.0.copyload.i, 0
+  br i1 %3, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i, label %bb.a
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i:  ; preds = %2
+  %4 = xor i64 %.sroa.6.0.copyload.i, -1
+  %5 = icmp eq i64 %.sroa.0.0.copyload1.i, 0
+  %6 = sub i64 0, %.sroa.6.0.copyload.i
+  %7 = sub i64 0, %.sroa.0.0.copyload1.i
+  %.sroa.6.0.i.i.i = select i1 %5, i64 %6, i64 %4
+  br label %bb.a
+
+bb.a:                                             ; preds = %2, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i
+  %.sroa.6.0.i = phi i64 [ %.sroa.6.0.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i ], [ %.sroa.6.0.copyload.i, %2 ] ; 2 uses
+  %.sroa.0.0.i = phi i64 [ %7, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i ], [ %.sroa.0.0.copyload1.i, %2 ]
   %i.a = sext i32 %1 to i64
   %i.b = getelementptr inbounds [16 x i8], ptr @_ZN5arrowL22kDecimal128PowersOfTenE, i64 %i.a ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
@@ -376,14 +393,7 @@ bb.a:
   %.val100.i = load i64, ptr %0, align 8          ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val101.i = load i64, ptr %i.g, align 8        ; 5 uses
-  %i.h = icmp slt i64 %.val101.i, 0               ; 4 uses
-  %4 = icmp ne i64 %.val100.i, 0
-  %5 = sub i64 0, %.val100.i
-  %6 = sext i1 %4 to i64
-  %.sroa.6.0.i.i.i.i.i = sub i64 %6, %.val101.i
-  %.sroa.6.0.i.i.i = select i1 %i.h, i64 %.sroa.6.0.i.i.i.i.i, i64 %.val101.i ; 5 uses
-  %.sroa.0.0.i.i.i = select i1 %i.h, i64 %5, i64 %.val100.i ; 9 uses
-  %.not.i.i.not = icmp eq i64 %.sroa.6.0.i.i.i, 0 ; 2 uses
+  %i.h = icmp slt i64 %.val101.i, 0
   %.0.i.sroa.gep.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %.0.i.sroa.gep4.i = getelementptr inbounds nuw i8, ptr %i.b, i64 12 ; 3 uses
   %.0.i.sroa.gep5.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
@@ -399,36 +409,57 @@ bb.a:
   %.0.i.i.sroa.gep49 = getelementptr inbounds nuw i8, ptr %i.b, i64 12
   %.0.i.i.sroa.gep50 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.0.i.i.sroa.gep51 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  br i1 %.not.i.i.not, label %bb.e, label %bb.b
+  br i1 %i.h, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i
 
-bb.b:                                             ; preds = %bb.a
-  %i.i = icmp ugt i64 %.sroa.6.0.i.i.i, 4294967295
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i: ; preds = %bb.a
+  %4 = xor i64 %.val101.i, -1
+  %5 = icmp eq i64 %.val100.i, 0
+  %6 = sub i64 0, %.val100.i
+  br i1 %5, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i: ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i
+  %7 = sub i64 0, %.val101.i
+  br label %bb.b
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i:    ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i, %bb.a
+  %.sroa.6.0.i.i.i = phi i64 [ %4, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %.val101.i, %bb.a ] ; 2 uses
+  %.sroa.0.0.i.i.i = phi i64 [ %6, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %.val100.i, %bb.a ] ; 6 uses
+  %.lobit.i.i = lshr i64 %.val101.i, 63
+  %8 = trunc nuw nsw i64 %.lobit.i.i to i8        ; 4 uses
+  %.not.i.i = icmp eq i64 %.sroa.6.0.i.i.i, 0
+  br i1 %.not.i.i, label %bb.e, label %bb.b
+
+bb.b:                                             ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i
+  %.022.i = phi i8 [ 1, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i ], [ %8, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i ] ; 2 uses
+  %.sroa.0.0.i8.i.i = phi i64 [ 0, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i ], [ %.sroa.0.0.i.i.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i ] ; 4 uses
+  %.sroa.6.0.i7.i.i = phi i64 [ %7, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i.i ], [ %.sroa.6.0.i.i.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i ] ; 4 uses
+  %i.i = icmp ugt i64 %.sroa.6.0.i7.i.i, 4294967295
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = lshr i64 %.sroa.6.0.i.i.i, 32
+  %i.j = lshr i64 %.sroa.6.0.i7.i.i, 32
   %i.k = trunc nuw i64 %i.j to i32
   store i32 %i.k, ptr %i.f, align 4, !tbaa !3
-  %i.l = trunc i64 %.sroa.6.0.i.i.i to i32
+  %i.l = trunc i64 %.sroa.6.0.i7.i.i to i32
   store i32 %i.l, ptr %.0.i.sroa.gep5.i, align 8, !tbaa !3
-  %i.m = lshr i64 %.sroa.0.0.i.i.i, 32
+  %i.m = lshr i64 %.sroa.0.0.i8.i.i, 32
   %i.n = trunc nuw i64 %i.m to i32
   store i32 %i.n, ptr %.0.i.sroa.gep4.i, align 4, !tbaa !3
-  %i.o = trunc i64 %.sroa.0.0.i.i.i to i32        ; 2 uses
+  %i.o = trunc i64 %.sroa.0.0.i8.i.i to i32       ; 2 uses
   store i32 %i.o, ptr %.0.i.sroa.gep.i, align 16, !tbaa !3
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.p = trunc nuw i64 %.sroa.6.0.i.i.i to i32
+  %i.p = trunc nuw i64 %.sroa.6.0.i7.i.i to i32
   store i32 %i.p, ptr %i.f, align 4, !tbaa !3
-  %i.q = lshr i64 %.sroa.0.0.i.i.i, 32
+  %i.q = lshr i64 %.sroa.0.0.i8.i.i, 32
   %i.r = trunc nuw i64 %i.q to i32
   store i32 %i.r, ptr %.0.i.sroa.gep5.i, align 8, !tbaa !3
-  %i.s = trunc i64 %.sroa.0.0.i.i.i to i32        ; 2 uses
+  %i.s = trunc i64 %.sroa.0.0.i8.i.i to i32       ; 2 uses
   store i32 %i.s, ptr %.0.i.sroa.gep4.i, align 4, !tbaa !3
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
 
-bb.e:                                             ; preds = %bb.a
+bb.e:                                             ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i.i
   %i.t = icmp ugt i64 %.sroa.0.0.i.i.i, 4294967295
   br i1 %i.t, label %bb.f, label %bb.g
 
@@ -450,63 +481,79 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
 
 _ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i: ; preds = %bb.h, %bb.g, %bb.f, %bb.d, %bb.c
-  %i.z = phi i32 [ %i.o, %bb.c ], [ %i.s, %bb.d ], [ %i.w, %bb.f ], [ %i.y, %bb.h ], [ 0, %bb.g ]
-  %.0.i.sroa.phi.i = phi ptr [ %.0.i.sroa.gep.i, %bb.c ], [ %.0.i.sroa.gep4.i, %bb.d ], [ %.0.i.sroa.gep5.i, %bb.f ], [ %i.f, %bb.h ], [ %i.b, %bb.g ] ; 5 uses
-  %.0.i.sroa.phi14.i = phi ptr [ %.0.i.sroa.gep15.i, %bb.c ], [ %.0.i.sroa.gep16.i, %bb.d ], [ %.0.i.sroa.gep17.i, %bb.f ], [ %.0.i.sroa.gep18.i, %bb.h ], [ %i.a, %bb.g ] ; 2 uses
-  %i.aa = phi i1 [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.g ] ; 3 uses
-  %i.ab = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ true, %bb.g ] ; 3 uses
-  %.not.i.i.i = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ true, %bb.h ], [ false, %bb.g ] ; 3 uses
-  %i.ac = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ true, %bb.h ], [ false, %bb.g ] ; 2 uses
-  %min.iters.check25 = phi i1 [ false, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ true, %bb.h ], [ true, %bb.g ]
-  %.0.i.i.sroa.phi = phi ptr [ %.0.i.i.sroa.gep, %bb.c ], [ %.0.i.i.sroa.gep43, %bb.d ], [ %.0.i.i.sroa.gep44, %bb.f ], [ %.0.i.i.sroa.gep45, %bb.h ], [ %i.b, %bb.g ] ; 2 uses
-  %.0.i.i.sroa.phi47 = phi ptr [ %.0.i.i.sroa.gep48, %bb.c ], [ %.0.i.i.sroa.gep49, %bb.d ], [ %.0.i.i.sroa.gep50, %bb.f ], [ %.0.i.i.sroa.gep51, %bb.h ], [ %i.b, %bb.g ]
-  %exitcond.not.i.i.2 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.f ], [ false, %bb.h ], [ false, %bb.g ]
-  %exitcond.not.i.i.3 = phi i1 [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.g ]
-  %i.ad = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ false, %bb.h ], [ false, %bb.g ]
-  %.0.i.i = phi i64 [ 4, %bb.c ], [ 3, %bb.d ], [ 2, %bb.f ], [ 1, %bb.h ], [ 0, %bb.g ] ; 10 uses
+  %i.z = phi i32 [ %i.o, %bb.c ], [ %i.s, %bb.d ], [ %i.w, %bb.f ], [ 0, %bb.g ], [ %i.y, %bb.h ]
+  %.123.i = phi i8 [ %.022.i, %bb.c ], [ %.022.i, %bb.d ], [ %8, %bb.f ], [ %8, %bb.g ], [ %8, %bb.h ] ; 4 uses
+  %.0.i.sroa.phi.i = phi ptr [ %.0.i.sroa.gep.i, %bb.c ], [ %.0.i.sroa.gep4.i, %bb.d ], [ %.0.i.sroa.gep5.i, %bb.f ], [ %i.b, %bb.g ], [ %i.f, %bb.h ] ; 5 uses
+  %.0.i.sroa.phi14.i = phi ptr [ %.0.i.sroa.gep15.i, %bb.c ], [ %.0.i.sroa.gep16.i, %bb.d ], [ %.0.i.sroa.gep17.i, %bb.f ], [ %i.a, %bb.g ], [ %.0.i.sroa.gep18.i, %bb.h ] ; 2 uses
+  %i.aa = phi i1 [ true, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ] ; 3 uses
+  %i.ab = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ true, %bb.g ], [ false, %bb.h ] ; 3 uses
+  %.not.i.i.i = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ false, %bb.f ], [ false, %bb.g ], [ true, %bb.h ] ; 3 uses
+  %i.ac = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ false, %bb.g ], [ true, %bb.h ] ; 2 uses
+  %min.iters.check25 = phi i1 [ false, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ true, %bb.g ], [ true, %bb.h ]
+  %.0.i.i.sroa.phi = phi ptr [ %.0.i.i.sroa.gep, %bb.c ], [ %.0.i.i.sroa.gep43, %bb.d ], [ %.0.i.i.sroa.gep44, %bb.f ], [ %i.b, %bb.g ], [ %.0.i.i.sroa.gep45, %bb.h ] ; 2 uses
+  %.0.i.i.sroa.phi47 = phi ptr [ %.0.i.i.sroa.gep48, %bb.c ], [ %.0.i.i.sroa.gep49, %bb.d ], [ %.0.i.i.sroa.gep50, %bb.f ], [ %i.b, %bb.g ], [ %.0.i.i.sroa.gep51, %bb.h ]
+  %exitcond.not.i.i.2 = phi i1 [ false, %bb.c ], [ false, %bb.d ], [ true, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
+  %exitcond.not.i.i.3 = phi i1 [ false, %bb.c ], [ true, %bb.d ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
+  %i.ad = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ true, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
+  %9 = phi i1 [ true, %bb.c ], [ true, %bb.d ], [ false, %bb.f ], [ false, %bb.g ], [ false, %bb.h ]
+  %.0.i.i = phi i64 [ 4, %bb.c ], [ 3, %bb.d ], [ 2, %bb.f ], [ 0, %bb.g ], [ 1, %bb.h ] ; 10 uses
   %i.ae = add nuw nsw i64 %.0.i.i, 1              ; 3 uses
-  %i.af = icmp slt i64 %.val4, 0                  ; 2 uses
-  %7 = icmp ne i64 %.val, 0
-  %8 = sub i64 0, %.val
-  %9 = sext i1 %7 to i64
-  %.sroa.6.0.i.i.i.i102.i = sub i64 %9, %.val4
-  %.sroa.6.0.i.i103.i = select i1 %i.af, i64 %.sroa.6.0.i.i.i.i102.i, i64 %.val4 ; 5 uses
-  %.sroa.0.0.i.i104.i = select i1 %i.af, i64 %8, i64 %.val ; 9 uses
-  %.not.i106.i.not.not = icmp eq i64 %.sroa.6.0.i.i103.i, 0 ; 3 uses
-  br i1 %.not.i106.i.not.not, label %bb.l, label %bb.i
+  %i.af = icmp slt i64 %.val4, 0
+  br i1 %i.af, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i
 
-bb.i:                                             ; preds = %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
-  %i.ag = icmp ugt i64 %.sroa.6.0.i.i103.i, 4294967295
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i: ; preds = %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
+  %10 = xor i64 %.val4, -1
+  %11 = icmp eq i64 %.val, 0
+  %12 = sub i64 0, %.val
+  br i1 %11, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i: ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i
+  %13 = sub i64 0, %.val4
+  br label %bb.i
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i: ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i, %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
+  %.sroa.6.0.i.i103.i = phi i64 [ %10, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i ], [ %.val4, %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i ] ; 2 uses
+  %.sroa.0.0.i.i104.i = phi i64 [ %12, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i110.i ], [ %.val, %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i ] ; 6 uses
+  %.lobit.i105.i = lshr i64 %.val4, 63
+  %14 = trunc nuw nsw i64 %.lobit.i105.i to i8    ; 4 uses
+  %.not.i106.i = icmp eq i64 %.sroa.6.0.i.i103.i, 0
+  br i1 %.not.i106.i, label %bb.l, label %bb.i
+
+bb.i:                                             ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i
+  %.020.i = phi i8 [ 1, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i ], [ %14, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i ] ; 2 uses
+  %.sroa.0.0.i8.i107.i = phi i64 [ 0, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i ], [ %.sroa.0.0.i.i104.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i ] ; 4 uses
+  %.sroa.6.0.i7.i108.i = phi i64 [ %13, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.thread.i111.i ], [ %.sroa.6.0.i.i103.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i ] ; 4 uses
+  %i.ag = icmp ugt i64 %.sroa.6.0.i7.i108.i, 4294967295
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
   br i1 %i.ag, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %bb.i
-  %i.ai = lshr i64 %.sroa.6.0.i.i103.i, 32
+  %i.ai = lshr i64 %.sroa.6.0.i7.i108.i, 32
   %i.aj = trunc nuw i64 %i.ai to i32              ; 2 uses
   store i32 %i.aj, ptr %i.c, align 16, !tbaa !3
-  %i.ak = trunc i64 %.sroa.6.0.i.i103.i to i32    ; 2 uses
+  %i.ak = trunc i64 %.sroa.6.0.i7.i108.i to i32   ; 2 uses
   store i32 %i.ak, ptr %i.ah, align 4, !tbaa !3
-  %i.al = lshr i64 %.sroa.0.0.i.i104.i, 32
+  %i.al = lshr i64 %.sroa.0.0.i8.i107.i, 32
   %i.am = trunc nuw i64 %i.al to i32
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 %i.am, ptr %i.an, align 8, !tbaa !3
-  %i.ao = trunc i64 %.sroa.0.0.i.i104.i to i32
+  %i.ao = trunc i64 %.sroa.0.0.i8.i107.i to i32
   %i.ap = getelementptr inbounds nuw i8, ptr %i.c, i64 12
   store i32 %i.ao, ptr %i.ap, align 4, !tbaa !3
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
 bb.k:                                             ; preds = %bb.i
-  %i.aq = trunc nuw i64 %.sroa.6.0.i.i103.i to i32 ; 2 uses
+  %i.aq = trunc nuw i64 %.sroa.6.0.i7.i108.i to i32 ; 2 uses
   store i32 %i.aq, ptr %i.c, align 16, !tbaa !3
-  %i.ar = lshr i64 %.sroa.0.0.i.i104.i, 32
+  %i.ar = lshr i64 %.sroa.0.0.i8.i107.i, 32
   %i.as = trunc nuw i64 %i.ar to i32              ; 2 uses
   store i32 %i.as, ptr %i.ah, align 4, !tbaa !3
-  %i.at = trunc i64 %.sroa.0.0.i.i104.i to i32
+  %i.at = trunc i64 %.sroa.0.0.i8.i107.i to i32
   %i.au = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i32 %i.at, ptr %i.au, align 8, !tbaa !3
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
-bb.l:                                             ; preds = %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit.i
+bb.l:                                             ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i102.i
   %i.av = icmp ugt i64 %.sroa.0.0.i.i104.i, 4294967295
   br i1 %i.av, label %bb.m, label %bb.n
 
@@ -529,12 +576,14 @@ bb.o:                                             ; preds = %bb.n
   br label %_ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i
 
 _ZN5arrowL11FillInArrayERKNS_15BasicDecimal128EPjRb.exit108.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.k, %bb.j
-  %i.bc = phi i32 [ %i.ak, %bb.j ], [ %i.as, %bb.k ], [ %i.ay, %bb.m ], [ undef, %bb.o ], [ undef, %bb.n ]
-  %i.bd = phi i32 [ %i.aj, %bb.j ], [ %i.aq, %bb.k ], [ %i.ax, %bb.m ], [ %i.bb, %bb.o ], [ undef, %bb.n ] ; 7 uses
-  %i.be = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ true, %bb.o ], [ false, %bb.n ]
-  %i.bf = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ false, %bb.o ], [ false, %bb.n ] ; 2 uses
-  %i.bg = phi i1 [ true, %bb.j ], [ false, %bb.k ], [ false, %bb.m ], [ false, %bb.o ], [ false, %bb.n ] ; 2 uses
-  %.0.i107.i = phi i64 [ 4, %bb.j ], [ 3, %bb.k ], [ 2, %bb.m ], [ 1, %bb.o ], [ 0, %bb.n ] ; 10 uses
+  %i.bc = phi i32 [ %i.ak, %bb.j ], [ %i.as, %bb.k ], [ %i.ay, %bb.m ], [ undef, %bb.n ], [ undef, %bb.o ]
+  %i.bd = phi i32 [ %i.aj, %bb.j ], [ %i.aq, %bb.k ], [ %i.ax, %bb.m ], [ undef, %bb.n ], [ %i.bb, %bb.o ] ; 7 uses
+  %.121.i = phi i8 [ %.020.i, %bb.j ], [ %.020.i, %bb.k ], [ %14, %bb.m ], [ %14, %bb.n ], [ %14, %bb.o ] ; 2 uses
+  %i.be = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ false, %bb.n ], [ true, %bb.o ]
+  %i.bf = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ true, %bb.m ], [ false, %bb.n ], [ false, %bb.o ] ; 2 uses
+  %15 = phi i1 [ true, %bb.j ], [ true, %bb.k ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ] ; 2 uses
+  %i.bg = phi i1 [ true, %bb.j ], [ false, %bb.k ], [ false, %bb.m ], [ false, %bb.n ], [ false, %bb.o ] ; 2 uses
+  %.0.i107.i = phi i64 [ 4, %bb.j ], [ 3, %bb.k ], [ 2, %bb.m ], [ 0, %bb.n ], [ 1, %bb.o ] ; 10 uses
   %.not.not.i = icmp samesign ult i64 %.0.i.i, %.0.i107.i
   br i1 %.not.not.i, label %bb.p, label %bb.q
 
@@ -561,6 +610,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u, %bb.r
   %.lcssa42 = phi i64 [ %i.bl, %bb.r ], [ %i.cw, %bb.u ], [ %i.df, %bb.v ], [ %i.do, %bb.w ], [ %i.dx, %bb.x ]
+  %16 = trunc nuw i8 %.123.i to i1
   br i1 %i.aa, label %.lr.ph.preheader.i.i.i.i, label %._crit_edge.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i:                         ; preds = %bb.s
@@ -671,36 +721,39 @@ bb.y:                                             ; preds = %.lr.ph36.i.i.i.i, %
   %.sroa.0.i.0.i.i = phi i64 [ %i.cf, %.preheader.i.thread28.i.i.i ], [ %i.cd, %bb.t ], [ %i.cd, %.lr.ph36.i.i.i.i ], [ %i.by, %._crit_edge.i.i.i.i ]
   %.sink.i.i.i = phi i64 [ %i.ck, %.preheader.i.thread28.i.i.i ], [ 0, %bb.t ], [ %i.cm, %.lr.ph36.i.i.i.i ], [ 0, %._crit_edge.i.i.i.i ]
   store i64 %.sroa.0.i.0.i.i, ptr %2, align 8
-  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 %.sink.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
   store i64 %.lcssa42, ptr %3, align 8
-  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i64 0, ptr %.sroa.4.0..sroa_idx.i.i, align 8
-  %10 = xor i64 %.val101.i, %.val4
-  %11 = icmp slt i64 %10, 0
-  br i1 %11, label %bb.z, label %bb.aa
+  %.not51.i = icmp eq i8 %.121.i, %.123.i
+  br i1 %.not51.i, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %12 = load <2 x i64>, ptr %2, align 8, !tbaa !9
-  %i.dy = load i64, ptr %2, align 8, !tbaa !9
-  %13 = icmp ne i64 %i.dy, 0
-  %14 = sext i1 %13 to i64
-  %15 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %14, i64 1
-  %16 = sub <2 x i64> %15, %12
-  store <2 x i64> %16, ptr %2, align 8
+  %17 = load i64, ptr %2, align 8, !tbaa !9       ; 2 uses
+  %i.dy = load i64, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !tbaa !9 ; 2 uses
+  %18 = xor i64 %i.dy, -1
+  %19 = icmp eq i64 %17, 0
+  %20 = sub i64 0, %i.dy
+  %21 = sub i64 0, %17
+  %.sroa.6.0.i.i.i.i = select i1 %19, i64 %20, i64 %18
+  store i64 %21, ptr %2, align 8
+  store i64 %.sroa.6.0.i.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  br i1 %i.h, label %bb.ab, label %_ZN5arrowL12SingleDivideINS_15BasicDecimal128EEENS_13DecimalStatusEPKjljPT_bbS6_.exit.i
+  br i1 %16, label %bb.ab, label %_ZN5arrowL12SingleDivideINS_15BasicDecimal128EEENS_13DecimalStatusEPKjljPT_bbS6_.exit.i
 
 bb.ab:                                            ; preds = %bb.aa
-  %17 = load <2 x i64>, ptr %3, align 8, !tbaa !9
-  %i.dz = load i64, ptr %3, align 8, !tbaa !9
-  %18 = icmp ne i64 %i.dz, 0
-  %19 = sext i1 %18 to i64
-  %20 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %19, i64 1
-  %21 = sub <2 x i64> %20, %17
-  store <2 x i64> %21, ptr %3, align 8
+  %22 = load i64, ptr %3, align 8, !tbaa !9       ; 2 uses
+  %i.dz = load i64, ptr %.sroa.4.0..sroa_idx.i.i, align 8, !tbaa !9 ; 2 uses
+  %23 = xor i64 %i.dz, -1
+  %24 = icmp eq i64 %22, 0
+  %25 = sub i64 0, %i.dz
+  %26 = sub i64 0, %22
+  %.sroa.6.0.i4.i.i.i = select i1 %24, i64 %25, i64 %23
+  store i64 %26, ptr %3, align 8
+  store i64 %.sroa.6.0.i4.i.i.i, ptr %.sroa.4.0..sroa_idx.i.i, align 8
   br label %_ZN5arrowL12SingleDivideINS_15BasicDecimal128EEENS_13DecimalStatusEPKjljPT_bbS6_.exit.i
 
 _ZN5arrowL12SingleDivideINS_15BasicDecimal128EEENS_13DecimalStatusEPKjljPT_bbS6_.exit.i: ; preds = %bb.ab, %bb.aa, %.lr.ph.preheader.i.i.i.i
@@ -892,7 +945,7 @@ bb.ad:                                            ; preds = %.lr.ph.i122.i
   %i.gy = shl i32 %i.gx, %i.gj
   %i.gz = or disjoint i32 %i.gy, %i.gv
   store i32 %i.gz, ptr %i.gt, align 4, !tbaa !3
-  br i1 %.not.i.i.not, label %._crit_edge.i121.i, label %bb.ae
+  br i1 %9, label %bb.ae, label %._crit_edge.i121.i
 
 bb.ae:                                            ; preds = %bb.ad
   %.0.i123.i.2 = add nsw i64 %.0.i.i, -2          ; 2 uses
@@ -1068,7 +1121,7 @@ bb.an:                                            ; preds = %.lr.ph.i
   %i.ku = icmp ult i32 %i.kq, %i.kr
   %i.kv = zext i1 %i.ku to i64
   %spec.select.i.1 = add nuw nsw i64 %i.kt, %i.kv ; 2 uses
-  br i1 %.not.i106.i.not.not, label %._crit_edge.i, label %bb.ao
+  br i1 %15, label %bb.ao, label %._crit_edge.i
 
 bb.ao:                                            ; preds = %bb.an
   %i.kw = load i32, ptr %i.fz, align 4, !tbaa !3
@@ -1135,7 +1188,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.mk = trunc i64 %i.mj to i32
   store i32 %i.mk, ptr %i.mf, align 4, !tbaa !3
   %i.ml = lshr i64 %i.mj, 32                      ; 2 uses
-  br i1 %.not.i106.i.not.not, label %._crit_edge31.i, label %.lr.ph30.i.2
+  br i1 %15, label %.lr.ph30.i.2, label %._crit_edge31.i
 
 .lr.ph30.i.2:                                     ; preds = %.lr.ph30.i.1
   %i.mm = load i32, ptr %i.gg, align 4, !tbaa !3
@@ -1176,7 +1229,7 @@ bb.aq:                                            ; preds = %.lr.ph36.i.i.i, %.p
   %.sroa.0.i.0.i = phi i64 [ %i.if, %.lr.ph36.preheader.i.i.i ], [ %i.in, %.preheader.i.thread28.i.i ], [ %i.il, %bb.ag ], [ %i.il, %.lr.ph36.i.i.i ]
   %.sink.i.i = phi i64 [ 0, %.lr.ph36.preheader.i.i.i ], [ %i.is, %.preheader.i.thread28.i.i ], [ 0, %bb.ag ], [ %i.iu, %.lr.ph36.i.i.i ]
   store i64 %.sroa.0.i.0.i, ptr %2, align 8
-  %.sroa.4.0..sroa_idx.i126.i = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %.sroa.4.0..sroa_idx.i126.i = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 %.sink.i.i, ptr %.sroa.4.0..sroa_idx.i126.i, align 8
   br i1 %i.aa, label %.lr.ph.preheader.i.i144.i, label %._crit_edge.i.i130.i
 
@@ -1219,33 +1272,37 @@ bb.as:                                            ; preds = %.lr.ph36.i.i133.i, 
   %.sroa.0.i129.0.i = phi i64 [ %i.np, %.preheader.i.thread28.i136.i ], [ %i.np, %bb.ar ], [ %i.np, %.lr.ph36.i.i133.i ], [ %i.nk, %._crit_edge.i.i130.i ]
   %.sink.i138.i = phi i64 [ %i.nu, %.preheader.i.thread28.i136.i ], [ 0, %bb.ar ], [ %i.nw, %.lr.ph36.i.i133.i ], [ 0, %._crit_edge.i.i130.i ]
   store i64 %.sroa.0.i129.0.i, ptr %3, align 8
-  %.sroa.4.0..sroa_idx.i140.i = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.4.0..sroa_idx.i140.i = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   store i64 %.sink.i138.i, ptr %.sroa.4.0..sroa_idx.i140.i, align 8
-  %22 = xor i64 %.val101.i, %.val4
-  %23 = icmp slt i64 %22, 0
-  br i1 %23, label %bb.at, label %bb.au
+  %27 = trunc nuw i8 %.123.i to i1
+  %.not52.i = icmp eq i8 %.121.i, %.123.i
+  br i1 %.not52.i, label %bb.au, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
-  %24 = load <2 x i64>, ptr %2, align 8, !tbaa !9
-  %i.ny = load i64, ptr %2, align 8, !tbaa !9
-  %25 = icmp ne i64 %i.ny, 0
-  %26 = sext i1 %25 to i64
-  %27 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %26, i64 1
-  %28 = sub <2 x i64> %27, %24
-  store <2 x i64> %28, ptr %2, align 8
+  %28 = load i64, ptr %2, align 8, !tbaa !9       ; 2 uses
+  %i.ny = load i64, ptr %.sroa.4.0..sroa_idx.i126.i, align 8, !tbaa !9 ; 2 uses
+  %29 = xor i64 %i.ny, -1
+  %30 = icmp eq i64 %28, 0
+  %31 = sub i64 0, %i.ny
+  %32 = sub i64 0, %28
+  %.sroa.6.0.i.i153.i = select i1 %30, i64 %31, i64 %29
+  store i64 %32, ptr %2, align 8
+  store i64 %.sroa.6.0.i.i153.i, ptr %.sroa.4.0..sroa_idx.i126.i, align 8
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
-  br i1 %i.h, label %bb.av, label %_ZN5arrowL14BuildFromArrayEPNS_15BasicDecimal128EPKjl.exit.i
+  br i1 %27, label %bb.av, label %_ZN5arrowL14BuildFromArrayEPNS_15BasicDecimal128EPKjl.exit.i
 
 bb.av:                                            ; preds = %bb.au
-  %29 = load <2 x i64>, ptr %3, align 8, !tbaa !9
-  %i.nz = load i64, ptr %3, align 8, !tbaa !9
-  %30 = icmp ne i64 %i.nz, 0
-  %31 = sext i1 %30 to i64
-  %32 = insertelement <2 x i64> <i64 0, i64 poison>, i64 %31, i64 1
-  %33 = sub <2 x i64> %32, %29
-  store <2 x i64> %33, ptr %3, align 8
+  %33 = load i64, ptr %3, align 8, !tbaa !9       ; 2 uses
+  %i.nz = load i64, ptr %.sroa.4.0..sroa_idx.i140.i, align 8, !tbaa !9 ; 2 uses
+  %34 = xor i64 %i.nz, -1
+  %35 = icmp eq i64 %33, 0
+  %36 = sub i64 0, %i.nz
+  %37 = sub i64 0, %33
+  %.sroa.6.0.i4.i.i = select i1 %35, i64 %36, i64 %34
+  store i64 %37, ptr %3, align 8
+  store i64 %.sroa.6.0.i4.i.i, ptr %.sroa.4.0..sroa_idx.i140.i, align 8
   br label %_ZN5arrowL14BuildFromArrayEPNS_15BasicDecimal128EPKjl.exit.i
 
 _ZN5arrowL14BuildFromArrayEPNS_15BasicDecimal128EPKjl.exit.i: ; preds = %bb.av, %bb.au, %.lr.ph.preheader.i.i144.i, %.lr.ph.preheader.i.i.i
@@ -1392,52 +1449,66 @@ bb.h:                                             ; preds = %bb.g, %bb.a
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef nonnull align 8 dereferenceable(16) ptr @_ZN5arrow15BasicDecimal128mLERKS0_(ptr noundef nonnull returned align 8 captures(ret: address, provenance) dereferenceable(16) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
-  %3 = load i64, ptr %2, align 8, !tbaa !9        ; 4 uses
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %5 = load i64, ptr %4, align 8, !tbaa !9        ; 4 uses
-  %6 = xor i64 %5, %3
-  %isneg = icmp sgt i64 %6, -1
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
+  %4 = load i64, ptr %3, align 8, !tbaa !9        ; 5 uses
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %6 = load i64, ptr %5, align 8, !tbaa !9        ; 5 uses
+  %7 = xor i64 %6, %4
+  %isneg = icmp sgt i64 %7, -1
   %.sroa.0.0.copyload1.i = load i64, ptr %0, align 8 ; 3 uses
-  %7 = icmp slt i64 %3, 0                         ; 2 uses
-  %8 = icmp ne i64 %.sroa.0.0.copyload1.i, 0
-  %9 = sub i64 0, %.sroa.0.0.copyload1.i
-  %10 = sext i1 %8 to i64
-  %.sroa.6.0.i.i.i = sub i64 %10, %3
-  %.sroa.6.0.i = select i1 %7, i64 %.sroa.6.0.i.i.i, i64 %3
-  %.sroa.0.0.i = select i1 %7, i64 %9, i64 %.sroa.0.0.copyload1.i
+  %8 = icmp slt i64 %4, 0
+  br i1 %8, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i:  ; preds = %2
+  %9 = xor i64 %4, -1
+  %10 = icmp eq i64 %.sroa.0.0.copyload1.i, 0
+  %11 = sub i64 0, %4
+  %12 = sub i64 0, %.sroa.0.0.copyload1.i
+  %.sroa.6.0.i.i.i = select i1 %10, i64 %11, i64 %9
+  br label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit:        ; preds = %2, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i
+  %.sroa.6.0.i = phi i64 [ %.sroa.6.0.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i ], [ %4, %2 ]
+  %.sroa.0.0.i = phi i64 [ %12, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i ], [ %.sroa.0.0.copyload1.i, %2 ]
   %.sroa.0.0.copyload1.i9 = load i64, ptr %1, align 8 ; 3 uses
-  %11 = icmp slt i64 %5, 0                        ; 2 uses
-  %12 = icmp ne i64 %.sroa.0.0.copyload1.i9, 0
-  %13 = sub i64 0, %.sroa.0.0.copyload1.i9
-  %14 = sext i1 %12 to i64
-  %.sroa.6.0.i.i.i12 = sub i64 %14, %5
-  %.sroa.6.0.i13 = select i1 %11, i64 %.sroa.6.0.i.i.i12, i64 %5
-  %.sroa.0.0.i14 = select i1 %11, i64 %13, i64 %.sroa.0.0.copyload1.i9
+  %13 = icmp slt i64 %6, 0
+  br i1 %13, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16, label %bb.a
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16: ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit
+  %14 = xor i64 %6, -1
+  %15 = icmp eq i64 %.sroa.0.0.copyload1.i9, 0
+  %16 = sub i64 0, %6
+  %17 = sub i64 0, %.sroa.0.0.copyload1.i9
+  %.sroa.6.0.i.i.i17 = select i1 %15, i64 %16, i64 %14
+  br label %bb.a
+
+bb.a:                                             ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16
+  %.sroa.6.0.i12 = phi i64 [ %.sroa.6.0.i.i.i17, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16 ], [ %6, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit ]
+  %.sroa.0.0.i13 = phi i64 [ %17, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16 ], [ %.sroa.0.0.copyload1.i9, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit ]
   %i.a = sext i64 %.sroa.6.0.i to i128
   %i.b = shl nsw i128 %i.a, 64
   %i.c = zext i64 %.sroa.0.0.i to i128
   %i.d = or disjoint i128 %i.b, %i.c
-  %i.e = sext i64 %.sroa.6.0.i13 to i128
+  %i.e = sext i64 %.sroa.6.0.i12 to i128
   %i.f = shl nsw i128 %i.e, 64
-  %i.g = zext i64 %.sroa.0.0.i14 to i128
+  %i.g = zext i64 %.sroa.0.0.i13 to i128
   %i.h = or disjoint i128 %i.f, %i.g
   %i.i = mul i128 %i.h, %i.d                      ; 2 uses
   %i.j = lshr i128 %i.i, 64
-  %i.k = trunc nuw i128 %i.j to i64               ; 2 uses
+  %i.k = trunc nuw i128 %i.j to i64               ; 3 uses
   %i.l = trunc i128 %i.i to i64                   ; 3 uses
   store i64 %i.l, ptr %0, align 8
-  store i64 %i.k, ptr %2, align 8
+  store i64 %i.k, ptr %3, align 8
   br i1 %isneg, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %15 = icmp ne i64 %i.l, 0
-  %i.m = sub i64 0, %i.l
-  %16 = sext i1 %15 to i64
-  %.sroa.6.0.i17 = sub i64 %16, %i.k
-  store i64 %i.m, ptr %0, align 8
-  store i64 %.sroa.6.0.i17, ptr %2, align 8
+  %18 = xor i64 %i.k, -1
+  %19 = icmp eq i64 %i.l, 0
+  %i.m = sub i64 0, %i.k
+  %20 = sub i64 0, %i.l
+  %.sroa.6.0.i19 = select i1 %19, i64 %i.m, i64 %18
+  store i64 %20, ptr %0, align 8
+  store i64 %.sroa.6.0.i19, ptr %3, align 8
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -1523,13 +1594,14 @@ _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit:      ; preds = %bb.a, %bb.b, %bb.c
 define { i64, i64 } @_ZN5arrowngERKNS_15BasicDecimal128E(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !9
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !9    ; 2 uses
   %i.c = load i64, ptr %0, align 8, !tbaa !9      ; 2 uses
-  %1 = icmp ne i64 %i.c, 0
-  %i.d = sub i64 0, %i.c
-  %2 = sext i1 %1 to i64
-  %.sroa.6.0.i = sub i64 %2, %i.b
-  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %i.d, 0
+  %1 = xor i64 %i.b, -1
+  %2 = icmp eq i64 %i.c, 0
+  %i.d = sub i64 0, %i.b
+  %3 = sub i64 0, %i.c
+  %.sroa.6.0.i = select i1 %2, i64 %i.d, i64 %1
+  %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %3, 0
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.6.0.i, 1
   ret { i64, i64 } %.fca.1.insert
 }
@@ -1587,47 +1659,67 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZN5arrowmlERKNS_15BasicDecimal128ES2_(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #6 personality ptr @__gxx_personality_v0 {
-_ZN5arrow15BasicDecimal128mLERKS0_.exit.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = load i64, ptr %2, align 8, !tbaa !9        ; 4 uses
-  %4 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %6 = load i64, ptr %5, align 8, !tbaa !9        ; 4 uses
-  %7 = xor i64 %6, %3
-  %isneg.i = icmp sgt i64 %7, -1                  ; 2 uses
-  %8 = icmp slt i64 %3, 0                         ; 2 uses
-  %9 = icmp ne i64 %4, 0
-  %10 = sub i64 0, %4
-  %11 = sext i1 %9 to i64
-  %.sroa.6.0.i.i.i.i = sub i64 %11, %3
-  %.sroa.6.0.i.i = select i1 %8, i64 %.sroa.6.0.i.i.i.i, i64 %3
-  %.sroa.0.0.i.i = select i1 %8, i64 %10, i64 %4
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %4 = load i64, ptr %3, align 8, !tbaa !9        ; 5 uses
+  %5 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %7 = load i64, ptr %6, align 8, !tbaa !9        ; 5 uses
+  %8 = xor i64 %7, %4
+  %isneg.i = icmp sgt i64 %8, -1
+  %9 = icmp slt i64 %4, 0
+  br i1 %9, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i, label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i: ; preds = %2
+  %10 = xor i64 %4, -1
+  %11 = icmp eq i64 %5, 0
+  %12 = sub i64 0, %4
+  %13 = sub i64 0, %5
+  %.sroa.6.0.i.i.i.i = select i1 %11, i64 %12, i64 %10
+  br label %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i
+
+_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i:      ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i, %2
+  %.sroa.6.0.i.i = phi i64 [ %.sroa.6.0.i.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i ], [ %4, %2 ]
+  %.sroa.0.0.i.i = phi i64 [ %13, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i ], [ %5, %2 ]
   %.sroa.0.0.copyload1.i9.i = load i64, ptr %1, align 8 ; 3 uses
-  %12 = icmp slt i64 %6, 0                        ; 2 uses
-  %13 = icmp ne i64 %.sroa.0.0.copyload1.i9.i, 0
-  %14 = sub i64 0, %.sroa.0.0.copyload1.i9.i
-  %15 = sext i1 %13 to i64
-  %.sroa.6.0.i.i.i12.i = sub i64 %15, %6
-  %.sroa.6.0.i13.i = select i1 %12, i64 %.sroa.6.0.i.i.i12.i, i64 %6
-  %.sroa.0.0.i14.i = select i1 %12, i64 %14, i64 %.sroa.0.0.copyload1.i9.i
+  %14 = icmp slt i64 %7, 0
+  br i1 %14, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i, label %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i: ; preds = %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i
+  %15 = xor i64 %7, -1
+  %16 = icmp eq i64 %.sroa.0.0.copyload1.i9.i, 0
+  %17 = sub i64 0, %7
+  %18 = sub i64 0, %.sroa.0.0.copyload1.i9.i
+  %.sroa.6.0.i.i.i17.i = select i1 %16, i64 %17, i64 %15
+  br label %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a
+
+_ZN5arrow15BasicDecimal128mLERKS0_.exit.a:        ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i
+  %.sroa.6.0.i12.i = phi i64 [ %.sroa.6.0.i.i.i17.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i ], [ %7, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i ]
+  %.sroa.0.0.i13.i = phi i64 [ %18, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i16.i ], [ %.sroa.0.0.copyload1.i9.i, %_ZN5arrow15BasicDecimal1283AbsERKS0_.exit.i ]
   %i.a = sext i64 %.sroa.6.0.i.i to i128
   %i.b = shl nsw i128 %i.a, 64
   %i.c = zext i64 %.sroa.0.0.i.i to i128
   %i.d = or disjoint i128 %i.b, %i.c
-  %i.e = sext i64 %.sroa.6.0.i13.i to i128
+  %i.e = sext i64 %.sroa.6.0.i12.i to i128
   %i.f = shl nsw i128 %i.e, 64
-  %i.g = zext i64 %.sroa.0.0.i14.i to i128
+  %i.g = zext i64 %.sroa.0.0.i13.i to i128
   %i.h = or disjoint i128 %i.f, %i.g
   %i.i = mul i128 %i.h, %i.d                      ; 2 uses
   %i.j = lshr i128 %i.i, 64
-  %i.k = trunc nuw i128 %i.j to i64               ; 2 uses
+  %i.k = trunc nuw i128 %i.j to i64               ; 3 uses
   %i.l = trunc i128 %i.i to i64                   ; 3 uses
-  %16 = icmp ne i64 %i.l, 0
-  %17 = sub i64 0, %i.l
-  %18 = sext i1 %16 to i64
-  %.sroa.6.0.i17.i = sub i64 %18, %i.k
-  %.sroa.5.0 = select i1 %isneg.i, i64 %i.k, i64 %.sroa.6.0.i17.i
-  %.sroa.0.0 = select i1 %isneg.i, i64 %i.l, i64 %17
+  br i1 %isneg.i, label %_ZN5arrow15BasicDecimal128mLERKS0_.exit, label %19
+
+19:                                               ; preds = %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a
+  %20 = xor i64 %i.k, -1
+  %21 = icmp eq i64 %i.l, 0
+  %22 = sub i64 0, %i.k
+  %23 = sub i64 0, %i.l
+  %.sroa.6.0.i19.i = select i1 %21, i64 %22, i64 %20
+  br label %_ZN5arrow15BasicDecimal128mLERKS0_.exit
+
+_ZN5arrow15BasicDecimal128mLERKS0_.exit:          ; preds = %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a, %19
+  %.sroa.5.0 = phi i64 [ %i.k, %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a ], [ %.sroa.6.0.i19.i, %19 ]
+  %.sroa.0.0 = phi i64 [ %i.l, %_ZN5arrow15BasicDecimal128mLERKS0_.exit.a ], [ %23, %19 ]
   %.fca.0.insert = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %.fca.1.insert = insertvalue { i64, i64 } %.fca.0.insert, i64 %.sroa.5.0, 1
   ret { i64, i64 } %.fca.1.insert
@@ -1803,8 +1895,11 @@ bb.c:                                             ; preds = %bb.a
   %i.c = tail call i32 @llvm.abs.i32(i32 %i.b, i1 true)
   %i.d = zext nneg i32 %i.c to i64
   %i.e = getelementptr inbounds nuw [16 x i8], ptr @_ZN5arrowL22kDecimal128PowersOfTenE, i64 %i.d ; 3 uses
+  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
   %i.f = icmp slt i32 %i.b, 0
-  br i1 %i.f, label %bb.d, label %bb.e
+  br i1 %i.f, label %bb.d, label %6
 
 bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
@@ -1822,22 +1917,26 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
   br i1 %.not9.i.i.i.i.i.i.i.not, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread17, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread, !prof !26
 
-bb.e:                                             ; preds = %bb.c
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
-  %.sroa.0.0.copyload = load i64, ptr %i.e, align 16
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %7 = load i64, ptr %6, align 8, !tbaa !9        ; 4 uses
-  %8 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
-  %9 = xor i64 %.sroa.4.0.copyload, %7
-  %isneg.i.i.i = icmp sgt i64 %9, -1              ; 2 uses
-  %10 = icmp slt i64 %7, 0                        ; 2 uses
-  %11 = icmp ne i64 %8, 0
-  %12 = sub i64 0, %8
-  %13 = sext i1 %11 to i64
-  %.sroa.6.0.i.i.i.i.i.i = sub i64 %13, %7
-  %.sroa.6.0.i.i.i.i = select i1 %10, i64 %.sroa.6.0.i.i.i.i.i.i, i64 %7
-  %.sroa.0.0.i.i.i.i = select i1 %10, i64 %12, i64 %8
+6:                                                ; preds = %bb.c
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %8 = load i64, ptr %7, align 8, !tbaa !9        ; 5 uses
+  %9 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
+  %10 = xor i64 %.sroa.4.0.copyload, %8
+  %isneg.i.i.i = icmp sgt i64 %10, -1
+  %11 = icmp slt i64 %8, 0
+  br i1 %11, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i, label %bb.e
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i: ; preds = %6
+  %12 = xor i64 %8, -1
+  %13 = icmp eq i64 %9, 0
+  %14 = sub i64 0, %8
+  %15 = sub i64 0, %9
+  %.sroa.6.0.i.i.i.i.i.i = select i1 %13, i64 %14, i64 %12
+  br label %bb.e
+
+bb.e:                                             ; preds = %6, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i
+  %.sroa.6.0.i.i.i.i = phi i64 [ %.sroa.6.0.i.i.i.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i ], [ %8, %6 ]
+  %.sroa.0.0.i.i.i.i = phi i64 [ %15, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i.i ], [ %9, %6 ]
   %i.l = sext i64 %.sroa.6.0.i.i.i.i to i128
   %i.m = shl nsw i128 %i.l, 64
   %i.n = zext i64 %.sroa.0.0.i.i.i.i to i128
@@ -1848,35 +1947,42 @@ bb.e:                                             ; preds = %bb.c
   %i.s = or disjoint i128 %i.q, %i.r
   %i.t = mul i128 %i.s, %i.o                      ; 2 uses
   %i.u = lshr i128 %i.t, 64
-  %i.v = trunc nuw i128 %i.u to i64               ; 2 uses
+  %i.v = trunc nuw i128 %i.u to i64               ; 3 uses
   %i.w = trunc i128 %i.t to i64                   ; 3 uses
-  %14 = icmp ne i64 %i.w, 0
-  %15 = sub i64 0, %i.w
-  %16 = sext i1 %14 to i64
-  %.sroa.6.0.i17.i.i.i = sub i64 %16, %i.v
-  %.sroa.5.0.i.i = select i1 %isneg.i.i.i, i64 %i.v, i64 %.sroa.6.0.i17.i.i.i ; 5 uses
-  %.sroa.0.0.i.i = select i1 %isneg.i.i.i, i64 %i.w, i64 %15 ; 3 uses
+  br i1 %isneg.i.i.i, label %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit.i, label %16
+
+16:                                               ; preds = %bb.e
+  %17 = xor i64 %i.v, -1
+  %18 = icmp eq i64 %i.w, 0
+  %19 = sub i64 0, %i.v
+  %20 = sub i64 0, %i.w
+  %.sroa.6.0.i19.i.i.i = select i1 %18, i64 %19, i64 %17
+  br label %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit.i
+
+_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit.i:    ; preds = %16, %bb.e
+  %.sroa.5.0.i.i = phi i64 [ %i.v, %bb.e ], [ %.sroa.6.0.i19.i.i.i, %16 ] ; 5 uses
+  %.sroa.0.0.i.i = phi i64 [ %i.w, %bb.e ], [ %20, %16 ] ; 3 uses
   store i64 %.sroa.0.0.i.i, ptr %3, align 8
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   store i64 %.sroa.5.0.i.i, ptr %.sroa.4.0..sroa_idx.i, align 8
-  %17 = load i64, ptr %6, align 8, !tbaa !9       ; 5 uses
-  %18 = icmp slt i64 %17, 0
-  br i1 %18, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i, label %bb.f
+  %21 = load i64, ptr %7, align 8, !tbaa !9       ; 5 uses
+  %22 = icmp slt i64 %21, 0
+  br i1 %22, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.x = icmp slt i64 %.sroa.5.0.i.i, %17
+bb.f:                                             ; preds = %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit.i
+  %i.x = icmp slt i64 %.sroa.5.0.i.i, %21
   br i1 %i.x, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread, label %bb.h
 
-_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i:    ; preds = %bb.e
-  %i.y = icmp slt i64 %17, %.sroa.5.0.i.i
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i:    ; preds = %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit.i
+  %i.y = icmp slt i64 %21, %.sroa.5.0.i.i
   br i1 %i.y, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread, label %bb.g
 
 bb.g:                                             ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i
-  %i.z = icmp eq i64 %17, %.sroa.5.0.i.i
+  %i.z = icmp eq i64 %21, %.sroa.5.0.i.i
   br i1 %i.z, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread17
 
 bb.h:                                             ; preds = %bb.f
-  %i.aa = icmp eq i64 %.sroa.5.0.i.i, %17
+  %i.aa = icmp eq i64 %.sroa.5.0.i.i, %21
   br i1 %i.aa, label %bb.i, label %_ZN5arrowL25RescaleWouldCauseDataLossINS_15BasicDecimal128EEEbRKT_iS4_PS2_.exit.thread17
 
 bb.i:                                             ; preds = %bb.h
@@ -1946,42 +2052,55 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define { i64, i64 } @_ZNK5arrow15BasicDecimal12815IncreaseScaleByEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, i32 noundef %1) local_unnamed_addr #6 align 2 personality ptr @__gxx_personality_v0 {
-bb.a:
-  %2 = sext i32 %1 to i64
-  %3 = getelementptr inbounds [16 x i8], ptr @_ZN5arrowL22kDecimal128PowersOfTenE, i64 %2 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = load i64, ptr %4, align 8, !tbaa !9        ; 4 uses
-  %6 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = load i64, ptr %7, align 8, !tbaa !9        ; 2 uses
-  %9 = xor i64 %8, %5
-  %isneg.i.i = icmp sgt i64 %9, -1                ; 2 uses
-  %10 = icmp slt i64 %5, 0                        ; 2 uses
-  %11 = icmp ne i64 %6, 0
-  %12 = sub i64 0, %6
-  %13 = sext i1 %11 to i64
-  %.sroa.6.0.i.i.i.i.i = sub i64 %13, %5
-  %.sroa.6.0.i.i.i = select i1 %10, i64 %.sroa.6.0.i.i.i.i.i, i64 %5
-  %.sroa.0.0.i.i.i = select i1 %10, i64 %12, i64 %6
-  %.sroa.0.0.copyload1.i9.i.i = load i64, ptr %3, align 16
+  %3 = sext i32 %1 to i64
+  %4 = getelementptr inbounds [16 x i8], ptr @_ZN5arrowL22kDecimal128PowersOfTenE, i64 %3 ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %6 = load i64, ptr %5, align 8, !tbaa !9        ; 5 uses
+  %7 = load i64, ptr %0, align 8, !tbaa !9        ; 3 uses
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %9 = load i64, ptr %8, align 8, !tbaa !9        ; 2 uses
+  %10 = xor i64 %9, %6
+  %isneg.i.i = icmp sgt i64 %10, -1
+  %11 = icmp slt i64 %6, 0
+  br i1 %11, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i, label %bb.a
+
+_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i: ; preds = %2
+  %12 = xor i64 %6, -1
+  %13 = icmp eq i64 %7, 0
+  %14 = sub i64 0, %6
+  %15 = sub i64 0, %7
+  %.sroa.6.0.i.i.i.i.i = select i1 %13, i64 %14, i64 %12
+  br label %bb.a
+
+bb.a:                                             ; preds = %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i, %2
+  %.sroa.6.0.i.i.i = phi i64 [ %.sroa.6.0.i.i.i.i.i, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %6, %2 ]
+  %.sroa.0.0.i.i.i = phi i64 [ %15, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i.i.i.i ], [ %7, %2 ]
+  %.sroa.0.0.copyload1.i9.i.i = load i64, ptr %4, align 16
   %i.a = sext i64 %.sroa.6.0.i.i.i to i128
   %i.b = shl nsw i128 %i.a, 64
   %i.c = zext i64 %.sroa.0.0.i.i.i to i128
   %i.d = or disjoint i128 %i.b, %i.c
-  %i.e = sext i64 %8 to i128
+  %i.e = sext i64 %9 to i128
   %i.f = shl nsw i128 %i.e, 64
   %i.g = zext i64 %.sroa.0.0.copyload1.i9.i.i to i128
   %i.h = or disjoint i128 %i.f, %i.g
-  %i.i = mul i128 %i.d, %i.h                      ; 2 uses
+  %i.i = mul i128 %i.h, %i.d                      ; 2 uses
   %i.j = lshr i128 %i.i, 64
-  %i.k = trunc nuw i128 %i.j to i64               ; 2 uses
+  %i.k = trunc nuw i128 %i.j to i64               ; 3 uses
   %i.l = trunc i128 %i.i to i64                   ; 3 uses
-  %14 = icmp ne i64 %i.l, 0
-  %15 = sub i64 0, %i.l
-  %16 = sext i1 %14 to i64
-  %.sroa.6.0.i17.i.i = sub i64 %16, %i.k
-  %.sroa.5.0.i = select i1 %isneg.i.i, i64 %i.k, i64 %.sroa.6.0.i17.i.i
-  %.sroa.0.0.i = select i1 %isneg.i.i, i64 %i.l, i64 %15
+  br i1 %isneg.i.i, label %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit, label %16
+
+16:                                               ; preds = %bb.a
+  %17 = xor i64 %i.k, -1
+  %18 = icmp eq i64 %i.l, 0
+  %19 = sub i64 0, %i.k
+  %20 = sub i64 0, %i.l
+  %.sroa.6.0.i19.i.i = select i1 %18, i64 %19, i64 %17
+  br label %_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit
+
+_ZN5arrowmlERKNS_15BasicDecimal128ES2_.exit:      ; preds = %bb.a, %16
+  %.sroa.5.0.i = phi i64 [ %i.k, %bb.a ], [ %.sroa.6.0.i19.i.i, %16 ]
+  %.sroa.0.0.i = phi i64 [ %i.l, %bb.a ], [ %20, %16 ]
   %.fca.0.insert.i = insertvalue { i64, i64 } poison, i64 %.sroa.0.0.i, 0
   %.fca.1.insert.i = insertvalue { i64, i64 } %.fca.0.insert.i, i64 %.sroa.5.0.i, 1
   ret { i64, i64 } %.fca.1.insert.i
@@ -2014,17 +2133,18 @@ bb.d:                                             ; preds = %bb.c
   %.sroa.46.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.sroa.46.0.copyload = load i64, ptr %.sroa.46.0..sroa_idx, align 8 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.g = load i64, ptr %i.f, align 8, !tbaa !9    ; 3 uses
+  %i.g = load i64, ptr %i.f, align 8, !tbaa !9    ; 4 uses
   %i.h = icmp slt i64 %i.g, 0
   br i1 %i.h, label %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i, label %_ZN5arrow15BasicDecimal1283AbsEv.exit
 
 _ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i:    ; preds = %bb.d
   %i.i = load i64, ptr %4, align 8, !tbaa !9      ; 2 uses
-  %5 = icmp ne i64 %i.i, 0
-  %i.j = sub i64 0, %i.i
-  %6 = sext i1 %5 to i64
-  %.sroa.6.0.i.i = sub i64 %6, %i.g
-  store i64 %i.j, ptr %4, align 8
+  %5 = xor i64 %i.g, -1
+  %6 = icmp eq i64 %i.i, 0
+  %i.j = sub i64 0, %i.g
+  %7 = sub i64 0, %i.i
+  %.sroa.6.0.i.i = select i1 %6, i64 %i.j, i64 %5
+  store i64 %7, ptr %4, align 8
   br label %_ZN5arrow15BasicDecimal1283AbsEv.exit
 
 _ZN5arrow15BasicDecimal1283AbsEv.exit:            ; preds = %bb.d, %_ZN5arrowltERKNS_15BasicDecimal128ES2_.exit.i
