@@ -201,9 +201,9 @@ bb.z:                                             ; preds = %bb.y
 
 .lr.ph.preheader.3.i:                             ; preds = %._crit_edge102.2.i, %.lr.ph.2.4.i, %.lr.ph.2.3.i, %.lr.ph.2.2.i, %.lr.ph.2.1.i, %.lr.ph.preheader.2.i
   %i.hv = getelementptr inbounds nuw i8, ptr %i.fe, i64 64
-  %i.hw = load i32, ptr %i.hv, align 4, !tbaa !4
+  %i.hw = load i32, ptr %i.hv, align 4, !tbaa !4  ; 5 uses
   %i.hx = getelementptr inbounds nuw i8, ptr %i.fg, i64 64 ; 2 uses
-  %i.hy = load i32, ptr %i.hx, align 4, !tbaa !4
+  %i.hy = load i32, ptr %i.hx, align 4, !tbaa !4  ; 2 uses
   %.not.3.i = icmp eq i32 %i.hw, %i.hy
   br i1 %.not.3.i, label %.lr.ph.3.1.i, label %._crit_edge.3.thread.i
 
@@ -244,155 +244,135 @@ bb.z:                                             ; preds = %bb.y
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %scevgep116.3.i, i8 -1, i64 20, i1 false), !tbaa !4
   %i.ip = getelementptr inbounds nuw i8, ptr %i.fd, i64 12
   store i32 1, ptr %i.ip, align 4, !tbaa !4
+  %.pre243 = load i32, ptr %i.hx, align 4, !tbaa !4
   br label %._crit_edge.3.thread.i
 
 ._crit_edge.3.thread.i:                           ; preds = %._crit_edge102.3.i, %.lr.ph.3.4.i, %.lr.ph.3.3.i, %.lr.ph.3.2.i, %.lr.ph.3.1.i, %.lr.ph.preheader.3.i
+  %6 = phi i32 [ %.pre243, %._crit_edge102.3.i ], [ %i.hw, %.lr.ph.3.4.i ], [ %i.hw, %.lr.ph.3.3.i ], [ %i.hw, %.lr.ph.3.2.i ], [ %i.hw, %.lr.ph.3.1.i ], [ %i.hy, %.lr.ph.preheader.3.i ] ; 2 uses
   %i.iq = load i32, ptr %i.fg, align 4, !tbaa !4  ; 2 uses
   %i.ir = icmp sgt i32 %i.iq, -1
-  %spec.select.i = tail call i32 @llvm.smax.i32(i32 %i.iq, i32 0) ; 2 uses
   %i.is = zext i1 %i.ir to i32
   %i.it = getelementptr inbounds nuw i8, ptr %i.fg, i64 4
   %i.iu = load i32, ptr %i.it, align 4, !tbaa !4  ; 2 uses
-  %i.iv = icmp sgt i32 %i.iu, -1                  ; 2 uses
-  %spec.select.1.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.i, i32 %i.iu)
+  %i.iv = icmp sgt i32 %i.iu, -1
+  %spec.select.1.i.a = tail call i32 @llvm.smax.i32(i32 %i.iq, i32 %i.iu)
   %i.iw = zext i1 %i.iv to i32
   %.180.1.i = add nuw nsw i32 %i.iw, %i.is
-  %.173.1.i = select i1 %i.iv, i32 %spec.select.1.i.a, i32 %spec.select.i ; 2 uses
   %i.ix = getelementptr inbounds nuw i8, ptr %i.fg, i64 8
   %i.iy = load i32, ptr %i.ix, align 4, !tbaa !4  ; 2 uses
-  %i.iz = icmp sgt i32 %i.iy, -1                  ; 2 uses
-  %spec.select.2.i.a = tail call i32 @llvm.smax.i32(i32 %.173.1.i, i32 %i.iy)
+  %i.iz = icmp sgt i32 %i.iy, -1
+  %spec.select.2.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.1.i.a, i32 %i.iy)
   %i.ja = zext i1 %i.iz to i32
   %.180.2.i = add nuw nsw i32 %.180.1.i, %i.ja
-  %.173.2.i = select i1 %i.iz, i32 %spec.select.2.i.a, i32 %.173.1.i ; 2 uses
   %i.jb = getelementptr inbounds nuw i8, ptr %i.fg, i64 12
   %i.jc = load i32, ptr %i.jb, align 4, !tbaa !4  ; 2 uses
-  %i.jd = icmp sgt i32 %i.jc, -1                  ; 2 uses
-  %spec.select.3.i.a = tail call i32 @llvm.smax.i32(i32 %.173.2.i, i32 %i.jc)
+  %i.jd = icmp sgt i32 %i.jc, -1
+  %spec.select.3.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.2.i.a, i32 %i.jc)
   %i.je = zext i1 %i.jd to i32
   %.180.3.i = add nuw nsw i32 %.180.2.i, %i.je
-  %.173.3.i = select i1 %i.jd, i32 %spec.select.3.i.a, i32 %.173.2.i ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.fg, i64 16
   %i.jg = load i32, ptr %i.jf, align 4, !tbaa !4  ; 2 uses
-  %i.jh = icmp sgt i32 %i.jg, -1                  ; 2 uses
-  %spec.select.4.i.a = tail call i32 @llvm.smax.i32(i32 %.173.3.i, i32 %i.jg)
+  %i.jh = icmp sgt i32 %i.jg, -1
+  %spec.select.4.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.3.i.a, i32 %i.jg)
   %i.ji = zext i1 %i.jh to i32
   %.180.4.i = add nuw nsw i32 %.180.3.i, %i.ji
-  %.173.4.i = select i1 %i.jh, i32 %spec.select.4.i.a, i32 %.173.3.i ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.fg, i64 20
   %i.jk = load i32, ptr %i.jj, align 4, !tbaa !4  ; 2 uses
-  %i.jl = icmp sgt i32 %i.jk, -1                  ; 2 uses
-  %spec.select.5.i.a = tail call i32 @llvm.smax.i32(i32 %.173.4.i, i32 %i.jk)
+  %i.jl = icmp sgt i32 %i.jk, -1
+  %spec.select.5.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.4.i.a, i32 %i.jk)
   %i.jm = zext i1 %i.jl to i32
   %.180.5.i = add nuw nsw i32 %.180.4.i, %i.jm
-  %.173.5.i = select i1 %i.jl, i32 %spec.select.5.i.a, i32 %.173.4.i ; 2 uses
   %i.jn = load i32, ptr %i.gh, align 4, !tbaa !4  ; 2 uses
-  %i.jo = icmp sgt i32 %i.jn, -1                  ; 2 uses
-  %spec.select.6.i.a = tail call i32 @llvm.smax.i32(i32 %.173.5.i, i32 %i.jn)
+  %i.jo = icmp sgt i32 %i.jn, -1
+  %spec.select.6.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.5.i.a, i32 %i.jn)
   %i.jp = zext i1 %i.jo to i32
   %.180.6.i = add nuw nsw i32 %.180.5.i, %i.jp
-  %.173.6.i = select i1 %i.jo, i32 %spec.select.6.i.a, i32 %.173.5.i ; 2 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.fg, i64 28
   %i.jr = load i32, ptr %i.jq, align 4, !tbaa !4  ; 2 uses
-  %i.js = icmp sgt i32 %i.jr, -1                  ; 2 uses
-  %spec.select.7.i.a = tail call i32 @llvm.smax.i32(i32 %.173.6.i, i32 %i.jr)
+  %i.js = icmp sgt i32 %i.jr, -1
+  %spec.select.7.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.6.i.a, i32 %i.jr)
   %i.jt = zext i1 %i.js to i32
   %.180.7.i = add nuw nsw i32 %.180.6.i, %i.jt
-  %.173.7.i = select i1 %i.js, i32 %spec.select.7.i.a, i32 %.173.6.i ; 2 uses
   %i.ju = getelementptr inbounds nuw i8, ptr %i.fg, i64 32
   %i.jv = load i32, ptr %i.ju, align 4, !tbaa !4  ; 2 uses
-  %i.jw = icmp sgt i32 %i.jv, -1                  ; 2 uses
-  %spec.select.8.i.a = tail call i32 @llvm.smax.i32(i32 %.173.7.i, i32 %i.jv)
+  %i.jw = icmp sgt i32 %i.jv, -1
+  %spec.select.8.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.7.i.a, i32 %i.jv)
   %i.jx = zext i1 %i.jw to i32
   %.180.8.i = add nuw nsw i32 %.180.7.i, %i.jx
-  %.173.8.i = select i1 %i.jw, i32 %spec.select.8.i.a, i32 %.173.7.i ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %i.fg, i64 36
   %i.jz = load i32, ptr %i.jy, align 4, !tbaa !4  ; 2 uses
-  %i.ka = icmp sgt i32 %i.jz, -1                  ; 2 uses
-  %spec.select.9.i.a = tail call i32 @llvm.smax.i32(i32 %.173.8.i, i32 %i.jz)
+  %i.ka = icmp sgt i32 %i.jz, -1
+  %spec.select.9.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select.8.i.a, i32 %i.jz)
   %i.kb = zext i1 %i.ka to i32
   %.180.9.i = add nuw nsw i32 %.180.8.i, %i.kb
-  %.173.9.i = select i1 %i.ka, i32 %spec.select.9.i.a, i32 %.173.8.i ; 2 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.fg, i64 40
   %i.kd = load i32, ptr %i.kc, align 4, !tbaa !4  ; 2 uses
-  %i.ke = icmp sgt i32 %i.kd, -1                  ; 2 uses
-  %spec.select.10.i = tail call i32 @llvm.smax.i32(i32 %.173.9.i, i32 %i.kd)
+  %i.ke = icmp sgt i32 %i.kd, -1
+  %spec.select.10.i = tail call i32 @llvm.smax.i32(i32 %spec.select.9.i.a, i32 %i.kd) ; 5 uses
   %i.kf = zext i1 %i.ke to i32
   %.180.10.i = add nuw nsw i32 %.180.9.i, %i.kf   ; 12 uses
-  %.173.10.i = select i1 %i.ke, i32 %spec.select.10.i, i32 %.173.9.i ; 5 uses
   %i.kg = load i32, ptr %i.hc, align 4, !tbaa !4  ; 2 uses
   %i.kh = icmp sgt i32 %i.kg, -1
-  %spec.select86.i = tail call i32 @llvm.smax.i32(i32 %i.kg, i32 0) ; 2 uses
   %i.ki = zext i1 %i.kh to i32
   %i.kj = getelementptr inbounds nuw i8, ptr %i.fg, i64 48
   %i.kk = load i32, ptr %i.kj, align 4, !tbaa !4  ; 2 uses
-  %i.kl = icmp sgt i32 %i.kk, -1                  ; 2 uses
-  %spec.select86.1.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.i, i32 %i.kk)
-  %.182.1.i = select i1 %i.kl, i32 %spec.select86.1.i.a, i32 %spec.select86.i ; 2 uses
+  %i.kl = icmp sgt i32 %i.kk, -1
+  %spec.select86.1.i.a = tail call i32 @llvm.smax.i32(i32 %i.kg, i32 %i.kk)
   %i.km = zext i1 %i.kl to i32
   %.178.1.i = add nuw nsw i32 %i.km, %i.ki
   %i.kn = getelementptr inbounds nuw i8, ptr %i.fg, i64 52
   %i.ko = load i32, ptr %i.kn, align 4, !tbaa !4  ; 2 uses
-  %i.kp = icmp sgt i32 %i.ko, -1                  ; 2 uses
-  %spec.select86.2.i.a = tail call i32 @llvm.smax.i32(i32 %.182.1.i, i32 %i.ko)
-  %.182.2.i = select i1 %i.kp, i32 %spec.select86.2.i.a, i32 %.182.1.i ; 2 uses
+  %i.kp = icmp sgt i32 %i.ko, -1
+  %spec.select86.2.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.1.i.a, i32 %i.ko)
   %i.kq = zext i1 %i.kp to i32
   %.178.2.i = add nuw nsw i32 %.178.1.i, %i.kq
   %i.kr = getelementptr inbounds nuw i8, ptr %i.fg, i64 56
   %i.ks = load i32, ptr %i.kr, align 4, !tbaa !4  ; 2 uses
-  %i.kt = icmp sgt i32 %i.ks, -1                  ; 2 uses
-  %spec.select86.3.i.a = tail call i32 @llvm.smax.i32(i32 %.182.2.i, i32 %i.ks)
-  %.182.3.i = select i1 %i.kt, i32 %spec.select86.3.i.a, i32 %.182.2.i ; 2 uses
+  %i.kt = icmp sgt i32 %i.ks, -1
+  %spec.select86.3.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.2.i.a, i32 %i.ks)
   %i.ku = zext i1 %i.kt to i32
   %.178.3.i = add nuw nsw i32 %.178.2.i, %i.ku
   %i.kv = getelementptr inbounds nuw i8, ptr %i.fg, i64 60
   %i.kw = load i32, ptr %i.kv, align 4, !tbaa !4  ; 2 uses
-  %i.kx = icmp sgt i32 %i.kw, -1                  ; 2 uses
-  %spec.select86.4.i.a = tail call i32 @llvm.smax.i32(i32 %.182.3.i, i32 %i.kw)
-  %.182.4.i = select i1 %i.kx, i32 %spec.select86.4.i.a, i32 %.182.3.i ; 2 uses
+  %i.kx = icmp sgt i32 %i.kw, -1
+  %spec.select86.4.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.3.i.a, i32 %i.kw)
   %i.ky = zext i1 %i.kx to i32
   %.178.4.i = add nuw nsw i32 %.178.3.i, %i.ky
-  %6 = load i32, ptr %i.hx, align 4, !tbaa !4     ; 2 uses
-  %i.kz = icmp sgt i32 %6, -1                     ; 2 uses
-  %spec.select86.5.i.a = tail call i32 @llvm.smax.i32(i32 %.182.4.i, i32 %6)
-  %.182.5.i = select i1 %i.kz, i32 %spec.select86.5.i.a, i32 %.182.4.i ; 2 uses
+  %i.kz = icmp sgt i32 %6, -1
+  %spec.select86.5.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.4.i.a, i32 %6)
   %i.la = zext i1 %i.kz to i32
   %.178.5.i = add nuw nsw i32 %.178.4.i, %i.la
   %i.lb = getelementptr inbounds nuw i8, ptr %i.fg, i64 68
   %i.lc = load i32, ptr %i.lb, align 4, !tbaa !4  ; 2 uses
-  %i.ld = icmp sgt i32 %i.lc, -1                  ; 2 uses
-  %spec.select86.6.i.a = tail call i32 @llvm.smax.i32(i32 %.182.5.i, i32 %i.lc)
-  %.182.6.i = select i1 %i.ld, i32 %spec.select86.6.i.a, i32 %.182.5.i ; 2 uses
+  %i.ld = icmp sgt i32 %i.lc, -1
+  %spec.select86.6.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.5.i.a, i32 %i.lc)
   %i.le = zext i1 %i.ld to i32
   %.178.6.i = add nuw nsw i32 %.178.5.i, %i.le
   %i.lf = getelementptr inbounds nuw i8, ptr %i.fg, i64 72
   %i.lg = load i32, ptr %i.lf, align 4, !tbaa !4  ; 2 uses
-  %i.lh = icmp sgt i32 %i.lg, -1                  ; 2 uses
-  %spec.select86.7.i.a = tail call i32 @llvm.smax.i32(i32 %.182.6.i, i32 %i.lg)
-  %.182.7.i = select i1 %i.lh, i32 %spec.select86.7.i.a, i32 %.182.6.i ; 2 uses
+  %i.lh = icmp sgt i32 %i.lg, -1
+  %spec.select86.7.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.6.i.a, i32 %i.lg)
   %i.li = zext i1 %i.lh to i32
   %.178.7.i = add nuw nsw i32 %.178.6.i, %i.li
   %i.lj = getelementptr inbounds nuw i8, ptr %i.fg, i64 76
   %i.lk = load i32, ptr %i.lj, align 4, !tbaa !4  ; 2 uses
-  %i.ll = icmp sgt i32 %i.lk, -1                  ; 2 uses
-  %spec.select86.8.i.a = tail call i32 @llvm.smax.i32(i32 %.182.7.i, i32 %i.lk)
-  %.182.8.i = select i1 %i.ll, i32 %spec.select86.8.i.a, i32 %.182.7.i ; 2 uses
+  %i.ll = icmp sgt i32 %i.lk, -1
+  %spec.select86.8.i.a = tail call i32 @llvm.smax.i32(i32 %spec.select86.7.i.a, i32 %i.lk)
   %i.lm = zext i1 %i.ll to i32
   %.178.8.i = add nuw nsw i32 %.178.7.i, %i.lm
   %i.ln = getelementptr inbounds nuw i8, ptr %i.fg, i64 80
   %i.lo = load i32, ptr %i.ln, align 4, !tbaa !4  ; 2 uses
-  %i.lp = icmp sgt i32 %i.lo, -1                  ; 2 uses
-  %spec.select86.9.i = tail call i32 @llvm.smax.i32(i32 %.182.8.i, i32 %i.lo)
-  %.182.9.i = select i1 %i.lp, i32 %spec.select86.9.i, i32 %.182.8.i ; 15 uses
+  %i.lp = icmp sgt i32 %i.lo, -1
+  %spec.select86.9.i = tail call i32 @llvm.smax.i32(i32 %spec.select86.8.i.a, i32 %i.lo) ; 15 uses
   %i.lq = zext i1 %i.lp to i32
   %.178.9.i = add nuw nsw i32 %.178.8.i, %i.lq    ; 16 uses
   %i.lr = getelementptr inbounds nuw i8, ptr %i.ep, i64 76 ; 30 uses
   %i.ls = getelementptr inbounds nuw i8, ptr %i.ep, i64 16 ; 15 uses
-  %7 = icmp eq i32 %.173.10.i, 0
+  %7 = icmp slt i32 %spec.select.10.i, 1
   br i1 %7, label %bb.aa, label %bb.ah
 
 bb.aa:                                            ; preds = %._crit_edge.3.thread.i
-  %8 = icmp samesign ult i32 %.182.9.i, 2
+  %8 = icmp slt i32 %spec.select86.9.i, 2
   br i1 %8, label %bb.ab, label %bb.ad
 
 bb.ab:                                            ; preds = %bb.aa
@@ -406,7 +386,7 @@ bb.ac:                                            ; preds = %bb.ab
   br label %.thread147.i
 
 bb.ad:                                            ; preds = %bb.aa
-  %i.lv = icmp samesign ult i32 %.182.9.i, 4
+  %i.lv = icmp samesign ult i32 %spec.select86.9.i, 4
   br i1 %i.lv, label %..thread147.i_crit_edge, label %bb.af
 
 ..thread147.i_crit_edge:                          ; preds = %bb.ad
@@ -425,7 +405,7 @@ bb.ae:                                            ; preds = %.thread147.i
   br label %.thread151.i
 
 bb.af:                                            ; preds = %bb.ad
-  %i.lz = icmp samesign ult i32 %.182.9.i, 8
+  %i.lz = icmp samesign ult i32 %spec.select86.9.i, 8
   br i1 %i.lz, label %..thread151.i_crit_edge, label %scfsi_calc.exit
 
 ..thread151.i_crit_edge:                          ; preds = %bb.af
@@ -444,11 +424,11 @@ bb.ag:                                            ; preds = %.thread151.i
   br label %.thread153.i
 
 bb.ah:                                            ; preds = %._crit_edge.3.thread.i
-  %i.md = icmp samesign ult i32 %.173.10.i, 8
+  %i.md = icmp samesign ult i32 %spec.select.10.i, 8
   br i1 %i.md, label %.thread153.i, label %.thread170.thread.i
 
 .thread153.i:                                     ; preds = %bb.ah, %bb.ag, %.thread151.i
-  %9 = icmp eq i32 %.182.9.i, 0
+  %9 = icmp slt i32 %spec.select86.9.i, 1
   br i1 %9, label %bb.ai, label %bb.ak
 
 bb.ai:                                            ; preds = %.thread153.i
@@ -463,11 +443,11 @@ bb.aj:                                            ; preds = %bb.ai
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %.thread153.i
-  %10 = icmp samesign ult i32 %.173.10.i, 2
+  %10 = icmp slt i32 %spec.select.10.i, 2
   br i1 %10, label %bb.al, label %bb.as
 
 bb.al:                                            ; preds = %bb.ak
-  %11 = icmp samesign ult i32 %.182.9.i, 2
+  %11 = icmp slt i32 %spec.select86.9.i, 2
   br i1 %11, label %bb.am, label %bb.ao
 
 bb.am:                                            ; preds = %bb.al
@@ -482,7 +462,7 @@ bb.an:                                            ; preds = %bb.am
   br label %.thread158.i
 
 bb.ao:                                            ; preds = %bb.al
-  %i.mk = icmp samesign ult i32 %.182.9.i, 4
+  %i.mk = icmp samesign ult i32 %spec.select86.9.i, 4
   br i1 %i.mk, label %..thread158.i_crit_edge, label %bb.aq
 
 ..thread158.i_crit_edge:                          ; preds = %bb.ao
@@ -502,7 +482,7 @@ bb.ap:                                            ; preds = %.thread158.i
   br label %.thread162.i
 
 bb.aq:                                            ; preds = %bb.ao
-  %i.mp = icmp samesign ult i32 %.182.9.i, 8
+  %i.mp = icmp samesign ult i32 %spec.select86.9.i, 8
   br i1 %i.mp, label %..thread162.i_crit_edge, label %scfsi_calc.exit
 
 ..thread162.i_crit_edge:                          ; preds = %bb.aq
@@ -522,11 +502,11 @@ bb.ar:                                            ; preds = %.thread162.i
   br label %.thread164.i
 
 bb.as:                                            ; preds = %bb.ak
-  %i.mu = icmp samesign ult i32 %.173.10.i, 4
+  %i.mu = icmp samesign ult i32 %spec.select.10.i, 4
   br i1 %i.mu, label %.thread164.i, label %.thread170.i
 
 .thread164.i:                                     ; preds = %bb.as, %bb.ar, %.thread162.i
-  %12 = icmp samesign ult i32 %.182.9.i, 2
+  %12 = icmp slt i32 %spec.select86.9.i, 2
   br i1 %12, label %bb.at, label %bb.av
 
 bb.at:                                            ; preds = %.thread164.i
@@ -542,7 +522,7 @@ bb.au:                                            ; preds = %bb.at
   br label %.thread167.i
 
 bb.av:                                            ; preds = %.thread164.i
-  %i.mz = icmp samesign ult i32 %.182.9.i, 4
+  %i.mz = icmp samesign ult i32 %spec.select86.9.i, 4
   br i1 %i.mz, label %..thread167.i_crit_edge, label %bb.ax
 
 ..thread167.i_crit_edge:                          ; preds = %bb.av
@@ -562,7 +542,7 @@ bb.aw:                                            ; preds = %.thread167.i
   br label %.thread172.i
 
 bb.ax:                                            ; preds = %bb.av
-  %i.ne = icmp samesign ult i32 %.182.9.i, 8
+  %i.ne = icmp samesign ult i32 %spec.select86.9.i, 8
   br i1 %i.ne, label %..thread172.i_crit_edge, label %scfsi_calc.exit
 
 ..thread172.i_crit_edge:                          ; preds = %bb.ax
@@ -583,7 +563,7 @@ bb.ay:                                            ; preds = %.thread172.i
   br label %.thread170.i
 
 .thread170.i:                                     ; preds = %.thread172.i, %bb.ay, %bb.as
-  %13 = icmp samesign ult i32 %.182.9.i, 2
+  %13 = icmp slt i32 %spec.select86.9.i, 2
   br i1 %13, label %bb.az, label %bb.bb
 
 bb.az:                                            ; preds = %.thread170.i
@@ -599,7 +579,7 @@ bb.ba:                                            ; preds = %bb.az
   br label %.thread176.i
 
 bb.bb:                                            ; preds = %.thread170.i
-  %i.no = icmp samesign ult i32 %.182.9.i, 4
+  %i.no = icmp samesign ult i32 %spec.select86.9.i, 4
   br i1 %i.no, label %..thread176.i_crit_edge, label %bb.bd
 
 ..thread176.i_crit_edge:                          ; preds = %bb.bb
@@ -621,7 +601,7 @@ bb.bc:                                            ; preds = %.thread176.i
   br label %.thread180.i
 
 bb.bd:                                            ; preds = %bb.bb
-  %i.nt = icmp samesign ult i32 %.182.9.i, 8
+  %i.nt = icmp samesign ult i32 %spec.select86.9.i, 8
   br i1 %i.nt, label %..thread180.i_crit_edge, label %scfsi_calc.exit
 
 ..thread180.i_crit_edge:                          ; preds = %bb.bd
@@ -641,11 +621,11 @@ bb.be:                                            ; preds = %.thread180.i
   br label %.thread182.i
 
 .thread170.thread.i:                              ; preds = %bb.ah
-  %i.ny = icmp samesign ult i32 %.173.10.i, 16
+  %i.ny = icmp samesign ult i32 %spec.select.10.i, 16
   br i1 %i.ny, label %.thread182.i, label %scfsi_calc.exit
 
-.thread182.i:                                     ; preds = %.thread180.i, %bb.be, %.thread170.thread.i
-  %14 = icmp samesign ult i32 %.182.9.i, 4
+.thread182.i:                                     ; preds = %.thread170.thread.i, %bb.be, %.thread180.i
+  %14 = icmp slt i32 %spec.select86.9.i, 4
   br i1 %14, label %bb.bf, label %bb.bh
 
 bb.bf:                                            ; preds = %.thread182.i
@@ -662,7 +642,7 @@ bb.bg:                                            ; preds = %bb.bf
   br label %.thread184.i
 
 bb.bh:                                            ; preds = %.thread182.i
-  %i.oe = icmp samesign ult i32 %.182.9.i, 8
+  %i.oe = icmp samesign ult i32 %spec.select86.9.i, 8
   br i1 %i.oe, label %..thread184.i_crit_edge, label %scfsi_calc.exit
 
 ..thread184.i_crit_edge:                          ; preds = %bb.bh
@@ -683,7 +663,7 @@ bb.bi:                                            ; preds = %.thread184.i
   store i32 15, ptr %i.ls, align 8, !tbaa !77
   br label %scfsi_calc.exit
 
-scfsi_calc.exit:                                  ; preds = %bb.af, %bb.aq, %bb.ax, %bb.bd, %bb.bi, %.thread184.i, %bb.bh, %.thread170.thread.i, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
+scfsi_calc.exit:                                  ; preds = %bb.bd, %bb.ax, %bb.aq, %bb.af, %bb.bi, %.thread184.i, %bb.bh, %.thread170.thread.i, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u
   %i.oj = load i32, ptr %i.ce, align 4, !tbaa !64
   %i.ok = load i32, ptr %i.e, align 8, !tbaa !52
   %i.ol = add i32 %i.ok, %i.oj

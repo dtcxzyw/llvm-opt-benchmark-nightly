@@ -201,16 +201,14 @@ bb.ei:                                            ; preds = %bb.eh
   br label %bb.ej
 
 bb.ej:                                            ; preds = %bb.ei, %bb.eh
-  %.sroa.013.2.3.i = phi i64 [ %..i.3.i, %bb.ei ], [ %.sroa.013.2.2.i, %bb.eh ] ; 2 uses
+  %.sroa.013.2.3.i = phi i64 [ %..i.3.i, %bb.ei ], [ %.sroa.013.2.2.i, %bb.eh ]
   %i.ux = getelementptr inbounds nuw i8, ptr %0, i64 1528
-  %i.uy = load i64, ptr %i.ux, align 8            ; 2 uses
-  %.not45.i = icmp eq i64 %i.uy, -1
+  %i.uy = load i64, ptr %i.ux, align 8
   %..i39.i = call i64 @llvm.umin.i64(i64 %.sroa.013.2.3.i, i64 %i.uy)
-  %.sroa.013.3.i = select i1 %.not45.i, i64 %.sroa.013.2.3.i, i64 %..i39.i
   %i.uz = getelementptr inbounds nuw i8, ptr %0, i64 216
   %i.va = load ptr, ptr %i.uz, align 8, !tbaa !107
   %i.vb = call i64 @ossl_quic_tx_packetiser_get_deadline(ptr noundef %i.va) #12
-  %..i40.i = call i64 @llvm.umin.i64(i64 %.sroa.013.3.i, i64 %i.vb) ; 3 uses
+  %..i40.i = call i64 @llvm.umin.i64(i64 %..i39.i, i64 %i.vb) ; 3 uses
   %.val.i103 = load i64, ptr %i.h, align 8        ; 2 uses
   %i.vc = and i64 %.val.i103, 6
   %narrow.i.not.i = icmp eq i64 %i.vc, 2

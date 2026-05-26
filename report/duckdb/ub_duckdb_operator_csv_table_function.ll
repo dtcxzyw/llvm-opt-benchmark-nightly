@@ -201,19 +201,17 @@ _ZN6duckdb13SnifferResultD2Ev.exit:               ; preds = %_ZSt8_DestroyIPN6du
   call void @_ZN6duckdb10CSVSnifferD2Ev(ptr noundef nonnull align 8 dead_on_return(680) dereferenceable(680) %11) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
   %i.eg = getelementptr inbounds nuw i8, ptr %3, i64 608
-  %i.eh = load i64, ptr %i.eg, align 8, !tbaa !739 ; 2 uses
-  %24 = icmp eq i64 %i.eh, -1
+  %i.eh = load i64, ptr %i.eg, align 8, !tbaa !739
   %i.ei = getelementptr inbounds nuw i8, ptr %10, i64 8 ; 2 uses
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !740
   %i.ek = load ptr, ptr %10, align 8, !tbaa !743
   %i.el = ptrtoint ptr %i.ej to i64
   %i.em = ptrtoint ptr %i.ek to i64
   %i.en = sub i64 %i.el, %i.em
-  %i.eo = sdiv exact i64 %i.en, 48                ; 2 uses
-  %spec.select240 = call i64 @llvm.umin.i64(i64 %i.eo, i64 %i.eh)
-  %25 = select i1 %24, i64 %i.eo, i64 %spec.select240 ; 2 uses
+  %i.eo = sdiv exact i64 %i.en, 48
+  %spec.select240 = call i64 @llvm.umin.i64(i64 %i.eo, i64 %i.eh) ; 2 uses
   %i.ep = icmp ult i64 %i.dr, %i.l
-  %i.eq = icmp ugt i64 %25, 1
+  %i.eq = icmp ugt i64 %spec.select240, 1
   %i.er = select i1 %i.ep, i1 %i.eq, i1 false
   br i1 %i.er, label %.lr.ph, label %._crit_edge
 
@@ -616,7 +614,7 @@ _ZN6duckdb10shared_ptrINS_16CSVBufferManagerELb1EED2Ev.exit188: ; preds = %_ZN6d
   call void @_ZN6duckdb16CSVReaderOptionsD2Ev(ptr noundef nonnull align 8 dead_on_return(1033) dereferenceable(1033) %15) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   %i.kp = icmp ult i64 %i.jk, %i.l
-  %i.kq = icmp ult i64 %i.jn, %25
+  %i.kq = icmp ult i64 %i.jn, %spec.select240
   %i.kr = select i1 %i.kp, i1 %i.kq, i1 false
   br i1 %i.kr, label %bb.bf, label %._crit_edge, !llvm.loop !763
 

@@ -201,7 +201,7 @@ bb.g:                                             ; preds = %bb.a
 
 bb.h:                                             ; preds = %.lr.ph, %.backedge
   %i.am = phi ptr [ %.pre, %.lr.ph ], [ %i.cx, %.backedge ] ; 6 uses
-  %i.an = phi i64 [ %i.ac, %.lr.ph ], [ %i.cy, %.backedge ] ; 9 uses
+  %i.an = phi i64 [ %i.ac, %.lr.ph ], [ %i.cy, %.backedge ] ; 8 uses
   %i.ao = load ptr, ptr %7, align 8, !tbaa !109   ; 2 uses
   %i.ap = load i64, ptr %i.af, align 8, !tbaa !106 ; 2 uses
   %i.aq = call i64 @llvm.usub.sat.i64(i64 %i.an, i64 %i.ag) ; 3 uses
@@ -315,7 +315,8 @@ bb.o:                                             ; preds = %bb.g
 _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit47.thread, %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit47, %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit
   %.1 = phi i64 [ %i.bg, %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit ], [ %i.bg, %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit47 ], [ %spec.select, %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE12find_last_ofES4_m.exit47.thread ] ; 2 uses
   %i.cb = icmp eq i64 %.1, -1
-  %spec.select35 = select i1 %i.cb, i64 %i.ag, i64 %.1 ; 5 uses
+  %spec.select35 = select i1 %i.cb, i64 %i.ag, i64 %.1
+  %spec.select35.fr = freeze i64 %spec.select35   ; 4 uses
   %i.cc = load ptr, ptr %6, align 8, !tbaa !95
   %i.cd = getelementptr i8, ptr %i.cc, i64 -24
   %i.ce = load i64, ptr %i.cd, align 8
@@ -326,13 +327,10 @@ _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ;
   br i1 %i.ci, label %bb.p, label %_ZN11OpenImageIO4v3_1lsERSoRKNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit
 
 bb.p:                                             ; preds = %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
-  %.not.i.not = icmp eq i64 %i.an, 0              ; 2 uses
+  %.not.i.not = icmp eq i64 %i.an, 0
   %.sroa.069.0 = select i1 %.not.i.not, ptr null, ptr %i.am
-  %11 = icmp eq i64 %spec.select35, -1
-  %i.cj = call i64 @llvm.umin.i64(i64 %spec.select35, i64 %i.an)
-  %.0.i = select i1 %11, i64 %i.an, i64 %i.cj
-  %.sroa.6.0 = select i1 %.not.i.not, i64 0, i64 %.0.i
-  %i.ck = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef %.sroa.069.0, i64 noundef %.sroa.6.0)
+  %i.cj = call i64 @llvm.umin.i64(i64 %spec.select35.fr, i64 %i.an)
+  %i.ck = invoke noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5writeEPKcl(ptr noundef nonnull align 8 dereferenceable(8) %6, ptr noundef %.sroa.069.0, i64 noundef %i.cj)
           to label %_ZN11OpenImageIO4v3_1lsERSoRKNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit unwind label %bb.ac ; 0 uses
 
 _ZN11OpenImageIO4v3_1lsERSoRKNS0_17basic_string_viewIcSt11char_traitsIcEEE.exit: ; preds = %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit, %bb.p
@@ -365,13 +363,13 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #13
   %i.ct = load i64, ptr %i.ab, align 8, !tbaa !82, !noalias !226 ; 2 uses
-  %.not.i52 = icmp ult i64 %spec.select35, %i.ct
+  %.not.i52 = icmp ult i64 %spec.select35.fr, %i.ct
   br i1 %.not.i52, label %bb.q, label %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit55
 
 bb.q:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %i.cu = sub nuw i64 %i.ct, %spec.select35
+  %i.cu = sub nuw i64 %i.ct, %spec.select35.fr
   %i.cv = load ptr, ptr %1, align 8, !tbaa !79, !noalias !226
-  %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %spec.select35
+  %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 %spec.select35.fr
   br label %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit55
 
 _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit55: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.q
@@ -774,7 +772,7 @@ bb.h:                                             ; preds = %.lr.ph
   %i.j = sext i1 %i.i to i32
   %.1.v = select i1 %i.g, i32 1, i32 %i.j
   %.1 = add nsw i32 %.1.v, %.03137                ; 2 uses
-  %i.k = add i64 %.0203038, 1                     ; 5 uses
+  %i.k = add i64 %.0203038, 1                     ; 4 uses
   %.not23 = icmp eq i32 %.1, 0
   br i1 %.not23, label %.critedge24, label %bb.h, !llvm.loop !402
 
@@ -792,7 +790,7 @@ bb.i:                                             ; preds = %.critedge24
   br label %bb.j
 
 bb.j:                                             ; preds = %.critedge24, %bb.i
-  %i.n = phi i64 [ %i.c, %.critedge24 ], [ %.pre, %bb.i ] ; 5 uses
+  %i.n = phi i64 [ %i.c, %.critedge24 ], [ %.pre, %bb.i ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !403)
   %.not.i.not = icmp eq i64 %i.n, 0
   br i1 %.not.i.not, label %bb.k, label %bb.l
@@ -802,13 +800,11 @@ bb.k:                                             ; preds = %bb.j
   br label %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
 
 bb.l:                                             ; preds = %bb.j
-  %3 = icmp eq i64 %i.k, -1
   %i.o = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.n)
-  %.0.i = select i1 %3, i64 %i.n, i64 %i.o
   %i.p = load ptr, ptr %1, align 8, !tbaa !79, !noalias !403
   store ptr %i.p, ptr %0, align 8, !tbaa !79, !alias.scope !403
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.0.i, ptr %i.q, align 8, !tbaa !82, !alias.scope !403
+  store i64 %i.o, ptr %i.q, align 8, !tbaa !82, !alias.scope !403
   br label %_ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit
 
 _ZNK11OpenImageIO4v3_117basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.k, %bb.l
