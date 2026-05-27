@@ -201,14 +201,12 @@ _ZN6google8protobuf14DescriptorPool18DeferredValidation11CreateProtoEv.exit: ; p
 tailrecurse.i:                                    ; preds = %_ZN6google8protobuf14DescriptorPool18DeferredValidation11CreateProtoEv.exit, %.thread.i
   %.tr.i = phi ptr [ %i.aq, %.thread.i ], [ %0, %_ZN6google8protobuf14DescriptorPool18DeferredValidation11CreateProtoEv.exit ] ; 2 uses
   %i.ab = call ptr @memchr(ptr noundef %.sroa.24.0.copyload, i32 noundef 46, i64 noundef %.sroa.03.0.copyload) #40, !inline_history !272 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.ab, null
-  %7 = ptrtoint ptr %i.ab to i64
-  %8 = sub i64 %7, %i.aa                          ; 2 uses
-  %.not3538.i = icmp eq i64 %8, -1
-  %.not35.i = select i1 %.not.i.i, i1 true, i1 %.not3538.i
-  br i1 %.not35.i, label %.thread.i, label %.lr.ph.i
+  %.not3538.i = icmp eq ptr %i.ab, null
+  br i1 %.not3538.i, label %.thread.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %tailrecurse.i
+  %7 = ptrtoint ptr %i.ab to i64
+  %8 = sub i64 %7, %i.aa
   %i.ac = getelementptr inbounds nuw i8, ptr %.tr.i, i64 56
   br label %bb.j
 
@@ -611,14 +609,12 @@ bb.a:
 tailrecurse:                                      ; preds = %bb.a, %.thread
   %.tr = phi ptr [ %i.q, %.thread ], [ %0, %bb.a ] ; 2 uses
   %i.b = tail call ptr @memchr(ptr noundef %2, i32 noundef 46, i64 noundef %1) #40 ; 2 uses
-  %.not.i = icmp eq ptr %i.b, null
-  %3 = ptrtoint ptr %i.b to i64
-  %4 = sub i64 %3, %i.a                           ; 2 uses
-  %.not3538 = icmp eq i64 %4, -1
-  %.not35 = select i1 %.not.i, i1 true, i1 %.not3538
-  br i1 %.not35, label %.thread, label %.lr.ph
+  %.not3538 = icmp eq ptr %i.b, null
+  br i1 %.not3538, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %tailrecurse
+  %3 = ptrtoint ptr %i.b to i64
+  %4 = sub i64 %3, %i.a
   %i.c = getelementptr inbounds nuw i8, ptr %.tr, i64 56
   br label %bb.b
 
@@ -1021,15 +1017,13 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE6substrEmm.exit: ; preds = %bb.b
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b
   %i.k = tail call ptr @memchr(ptr noundef nonnull %2, i32 noundef 46, i64 noundef %1) #40 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.k, null
-  %11 = ptrtoint ptr %i.k to i64
-  %12 = ptrtoint ptr %2 to i64
-  %13 = sub i64 %11, %12                          ; 2 uses
-  %i.l = icmp eq i64 %13, -1
-  %or.cond = select i1 %.not.i.i, i1 true, i1 %i.l
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %bb.c
+  %i.l = icmp eq ptr %i.k, null
+  br i1 %i.l, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
+  %11 = ptrtoint ptr %i.k to i64
+  %12 = ptrtoint ptr %2 to i64
+  %13 = sub i64 %11, %12
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %13)
   br label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE13find_first_ofEcm.exit.thread
 

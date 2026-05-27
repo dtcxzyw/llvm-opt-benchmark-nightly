@@ -201,10 +201,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %.not.i = icmp eq ptr %i.b, null
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %2 to i64
-  %i.e = sub i64 %i.c, %i.d                       ; 5 uses
-  %5 = icmp eq i64 %i.e, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %5
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
+  %i.e = sub i64 %i.c, %i.d                       ; 4 uses
+  br i1 %.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses

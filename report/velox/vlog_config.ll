@@ -201,16 +201,14 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.thread: ; preds = %
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE5rfindEcm.exit.thread
   %i.i = tail call ptr @memchr(ptr noundef %.sroa.7.0, i32 noundef 46, i64 noundef %.sroa.064.0) #19 ; 2 uses
-  %.not.i51 = icmp eq ptr %i.i, null
+  %.not.i51 = icmp eq ptr %i.i, null              ; 2 uses
   %i.j = ptrtoint ptr %i.i to i64
   %i.k = ptrtoint ptr %.sroa.7.0 to i64
-  %i.l = sub i64 %i.j, %i.k                       ; 3 uses
-  %.not42 = icmp eq i64 %i.l, -1
-  %or.cond = select i1 %.not.i51, i1 true, i1 %.not42 ; 2 uses
+  %i.l = sub i64 %i.j, %i.k                       ; 2 uses
   %.neg = sub i64 %0, %.sroa.064.0
   %i.m = add i64 %.neg, %i.l
-  %.sroa.057.0 = select i1 %or.cond, i64 %.sroa.064.0, i64 %i.l ; 4 uses
-  %.sroa.061.0 = select i1 %or.cond, i64 %0, i64 %i.m ; 3 uses
+  %.sroa.057.0 = select i1 %.not.i51, i64 %.sroa.064.0, i64 %i.l ; 4 uses
+  %.sroa.061.0 = select i1 %.not.i51, i64 %0, i64 %i.m ; 3 uses
   %.not.i.i = icmp ult i64 %.sroa.057.0, 4
   br i1 %.not.i.i, label %.lr.ph.preheader, label %_ZN4absl12lts_202401168EndsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i
 

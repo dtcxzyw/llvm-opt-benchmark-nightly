@@ -201,13 +201,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %21 = ptrtoint ptr %i.c to i64
-  %22 = ptrtoint ptr %2 to i64
-  %23 = sub i64 %21, %22                          ; 5 uses
-  %.not = icmp eq i64 %23, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcS7_EEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -215,6 +210,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %21 = ptrtoint ptr %i.c to i64
+  %22 = ptrtoint ptr %2 to i64
+  %23 = sub i64 %21, %22                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %23)
@@ -225,7 +223,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 1 dereferenceable(1) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  %i.e = add nuw i64 %23, 1                       ; 3 uses
+  %i.e = add i64 %23, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -628,13 +626,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %20 = ptrtoint ptr %i.d to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIPKcJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES8_St17basic_string_viewIcS6_EOT_DpOT0_E20error_and_abort_args) #24
@@ -642,6 +635,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.d to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -652,7 +648,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.f = add nuw i64 %22, 1                       ; 3 uses
+  %i.f = add i64 %22, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -1055,13 +1051,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %19 = ptrtoint ptr %i.c to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJEEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -1069,6 +1060,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.c to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -1079,7 +1073,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.e = add nuw i64 %21, 1                       ; 3 uses
+  %i.e = add i64 %21, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -1474,10 +1468,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %.not.i = icmp eq ptr %i.b, null
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %2 to i64
-  %i.e = sub i64 %i.c, %i.d                       ; 5 uses
-  %5 = icmp eq i64 %i.e, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %5
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
+  %i.e = sub i64 %i.c, %i.d                       ; 4 uses
+  br i1 %.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses
@@ -1701,13 +1693,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %19 = ptrtoint ptr %i.d to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIPKcJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS6_EOT_DpOT0_E20error_and_abort_args) #24
@@ -1715,6 +1702,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.d to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -1725,7 +1715,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.f = add nuw i64 %21, 1                       ; 3 uses
+  %i.f = add i64 %21, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -2093,13 +2083,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %19 = ptrtoint ptr %i.c to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRKiJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS6_EOT_DpOT0_E20error_and_abort_args) #24
@@ -2107,6 +2092,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.c to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -2117,7 +2105,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.e = add nuw i64 %21, 1                       ; 3 uses
+  %i.e = add i64 %21, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -2520,13 +2508,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %23 = ptrtoint ptr %i.c to i64
-  %24 = ptrtoint ptr %2 to i64
-  %25 = sub i64 %23, %24                          ; 5 uses
-  %.not = icmp eq i64 %25, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJS1_S1_S1_S1_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -2534,6 +2517,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %23 = ptrtoint ptr %i.c to i64
+  %24 = ptrtoint ptr %2 to i64
+  %25 = sub i64 %23, %24                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %25)
@@ -2544,7 +2530,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %10, ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull align 1 dereferenceable(1) %12)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
-  %i.e = add nuw i64 %25, 1                       ; 3 uses
+  %i.e = add i64 %25, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -2947,13 +2933,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %22 = ptrtoint ptr %i.c to i64
-  %23 = ptrtoint ptr %2 to i64
-  %24 = sub i64 %22, %23                          ; 5 uses
-  %.not = icmp eq i64 %24, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJS1_S1_S1_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -2961,6 +2942,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %22 = ptrtoint ptr %i.c to i64
+  %23 = ptrtoint ptr %2 to i64
+  %24 = sub i64 %22, %23                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %24)
@@ -2971,7 +2955,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %9, ptr noundef nonnull align 8 dereferenceable(16) %10, ptr noundef nonnull align 1 dereferenceable(1) %11)
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
-  %i.e = add nuw i64 %24, 1                       ; 3 uses
+  %i.e = add i64 %24, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -3374,13 +3358,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %21 = ptrtoint ptr %i.c to i64
-  %22 = ptrtoint ptr %2 to i64
-  %23 = sub i64 %21, %22                          ; 5 uses
-  %.not = icmp eq i64 %23, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJS1_S1_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -3388,6 +3367,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %21 = ptrtoint ptr %i.c to i64
+  %22 = ptrtoint ptr %2 to i64
+  %23 = sub i64 %21, %22                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %23)
@@ -3398,7 +3380,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 1 dereferenceable(1) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  %i.e = add nuw i64 %23, 1                       ; 3 uses
+  %i.e = add i64 %23, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -3748,13 +3730,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJS1_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -3762,6 +3739,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -3772,7 +3752,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -4122,13 +4102,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %19 = ptrtoint ptr %i.c to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -4136,6 +4111,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.c to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -4146,7 +4124,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.e = add nuw i64 %21, 1                       ; 3 uses
+  %i.e = add i64 %21, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -4526,13 +4504,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRKjJRjEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS7_EOT_DpOT0_E20error_and_abort_args) #24
@@ -4540,6 +4513,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -4550,7 +4526,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -4953,13 +4929,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRjJRmEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS6_EOT_DpOT0_E20error_and_abort_args) #24
@@ -4967,6 +4938,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -4977,7 +4951,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -5327,13 +5301,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %19 = ptrtoint ptr %i.c to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRmJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS5_EOT_DpOT0_E20error_and_abort_args) #24
@@ -5341,6 +5310,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.c to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -5351,7 +5323,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.e = add nuw i64 %21, 1                       ; 3 uses
+  %i.e = add i64 %21, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -5754,13 +5726,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJS7_EEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -5768,6 +5735,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -5778,7 +5748,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -6181,13 +6151,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %21 = ptrtoint ptr %i.d to i64
-  %22 = ptrtoint ptr %2 to i64
-  %23 = sub i64 %21, %22                          ; 5 uses
-  %.not = icmp eq i64 %23, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIPKcJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES2_EEES8_St17basic_string_viewIcS6_EOT_DpOT0_E20error_and_abort_args) #24
@@ -6195,6 +6160,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %21 = ptrtoint ptr %i.d to i64
+  %22 = ptrtoint ptr %2 to i64
+  %23 = sub i64 %21, %22                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %23)
@@ -6205,7 +6173,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 1 dereferenceable(1) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  %i.f = add nuw i64 %23, 1                       ; 3 uses
+  %i.f = add i64 %23, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -6543,13 +6511,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJPKcEEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -6557,6 +6520,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -6567,7 +6533,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -6970,13 +6936,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %20 = ptrtoint ptr %i.d to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRPKcJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEES9_St17basic_string_viewIcS7_EOT_DpOT0_E20error_and_abort_args) #24
@@ -6984,6 +6945,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.d to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -6994,7 +6958,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.f = add nuw i64 %22, 1                       ; 3 uses
+  %i.f = add i64 %22, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -7362,13 +7326,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %20 = ptrtoint ptr %i.c to i64
-  %21 = ptrtoint ptr %2 to i64
-  %22 = sub i64 %20, %21                          ; 5 uses
-  %.not = icmp eq i64 %22, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJRPKcEEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -7376,6 +7335,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %20 = ptrtoint ptr %i.c to i64
+  %21 = ptrtoint ptr %2 to i64
+  %22 = sub i64 %20, %21                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %22)
@@ -7386,7 +7348,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %7, ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(1) %9)
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
-  %i.e = add nuw i64 %22, 1                       ; 3 uses
+  %i.e = add i64 %22, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -7789,13 +7751,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %19 = ptrtoint ptr %i.d to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRPKcJEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS7_EOT_DpOT0_E20error_and_abort_args) #24
@@ -7803,6 +7760,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.d to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -7813,7 +7773,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #24
-  %i.f = add nuw i64 %21, 1                       ; 3 uses
+  %i.f = add i64 %21, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -8212,13 +8172,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %26 = ptrtoint ptr %i.d to i64
-  %27 = ptrtoint ptr %2 to i64
-  %28 = sub i64 %26, %27                          ; 5 uses
-  %.not = icmp eq i64 %28, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRPKcJRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES3_RjSB_SB_SB_SB_EEES9_St17basic_string_viewIcS7_EOT_DpOT0_E20error_and_abort_args) #24
@@ -8226,6 +8181,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %26 = ptrtoint ptr %i.d to i64
+  %27 = ptrtoint ptr %2 to i64
+  %28 = sub i64 %26, %27                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %28)
@@ -8236,7 +8194,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %13, ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull align 1 dereferenceable(1) %15)
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
-  %i.f = add nuw i64 %28, 1                       ; 3 uses
+  %i.f = add i64 %28, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -8574,13 +8532,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %25 = ptrtoint ptr %i.c to i64
-  %26 = ptrtoint ptr %2 to i64
-  %27 = sub i64 %25, %26                          ; 5 uses
-  %.not = icmp eq i64 %27, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJRPKcRjSB_SB_SB_SB_EEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -8588,6 +8541,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %25 = ptrtoint ptr %i.c to i64
+  %26 = ptrtoint ptr %2 to i64
+  %27 = sub i64 %25, %26                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %27)
@@ -8598,7 +8554,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull align 8 dereferenceable(16) %13, ptr noundef nonnull align 1 dereferenceable(1) %14)
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
-  %i.e = add nuw i64 %27, 1                       ; 3 uses
+  %i.e = add i64 %27, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -9001,13 +8957,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.d = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %24 = ptrtoint ptr %i.d to i64
-  %25 = ptrtoint ptr %2 to i64
-  %26 = sub i64 %24, %25                          ; 5 uses
-  %.not = icmp eq i64 %26, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRPKcJRjS4_S4_S4_S4_EEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt17basic_string_viewIcS8_EOT_DpOT0_E20error_and_abort_args) #24
@@ -9015,6 +8966,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %24 = ptrtoint ptr %i.d to i64
+  %25 = ptrtoint ptr %2 to i64
+  %26 = sub i64 %24, %25                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %26)
@@ -9025,7 +8979,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %11, ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 1 dereferenceable(1) %13)
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #24
-  %i.f = add nuw i64 %26, 1                       ; 3 uses
+  %i.f = add i64 %26, 1                           ; 3 uses
   %i.g = icmp ult i64 %i.f, %1
   br i1 %i.g, label %.lr.ph, label %.critedge
 
@@ -9393,13 +9347,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #24 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %21 = ptrtoint ptr %i.c to i64
-  %22 = ptrtoint ptr %2 to i64
-  %23 = sub i64 %21, %22                          ; 5 uses
-  %.not = icmp eq i64 %23, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !214
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !214
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplIRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJRS6_S9_EEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #24
@@ -9407,6 +9356,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %21 = ptrtoint ptr %i.c to i64
+  %22 = ptrtoint ptr %2 to i64
+  %23 = sub i64 %21, %22                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %23)
@@ -9417,7 +9369,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %8, ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull align 1 dereferenceable(1) %10)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
-  %i.e = add nuw i64 %23, 1                       ; 3 uses
+  %i.e = add i64 %23, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 

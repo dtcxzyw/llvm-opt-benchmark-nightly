@@ -201,11 +201,9 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %_ZNK3ada14url_aggre
   %.not.i20 = icmp eq ptr %i.ce, null
   %i.cf = ptrtoint ptr %i.ce to i64
   %i.cg = ptrtoint ptr %i.cd to i64               ; 2 uses
-  %i.ch = sub i64 %i.cf, %i.cg                    ; 4 uses
-  %.not = icmp eq i64 %i.ch, -1
+  %i.ch = sub i64 %i.cf, %i.cg                    ; 3 uses
   %.not13 = icmp eq i64 %i.ch, %.sroa.speculated.i.i
-  %4 = or i1 %.not, %.not13
-  %or.cond66 = select i1 %.not.i20, i1 true, i1 %4
+  %or.cond66 = select i1 %.not.i20, i1 true, i1 %.not13
   br i1 %or.cond66, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread.thread, label %bb.n
 
 bb.n:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i

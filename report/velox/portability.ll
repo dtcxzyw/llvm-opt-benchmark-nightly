@@ -21,23 +21,18 @@ bb.a:
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load ptr, ptr %0, align 8, !tbaa !13     ; 3 uses
+  %i.d = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !tbaa !14
   %.not = icmp eq i8 %i.e, 32
   br i1 %.not, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit: ; preds = %bb.b
-  %i.f = tail call ptr @memchr(ptr noundef nonnull %i.d, i32 noundef 47, i64 noundef %i.b) #5 ; 2 uses
-  %.not.i = icmp eq ptr %i.f, null
-  %1 = ptrtoint ptr %i.f to i64
-  %2 = ptrtoint ptr %i.d to i64
-  %3 = sub i64 %1, %2
-  %i.g = icmp eq i64 %3, -1
-  %4 = select i1 %.not.i, i1 true, i1 %i.g
+  %i.f = tail call ptr @memchr(ptr noundef nonnull %i.d, i32 noundef 47, i64 noundef %i.b) #5
+  %i.g = icmp eq ptr %i.f, null
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit, %bb.b, %bb.a
-  %i.h = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ %4, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit ]
+  %i.h = phi i1 [ false, %bb.b ], [ false, %bb.a ], [ %i.g, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit ]
   ret i1 %i.h
 }
 
@@ -310,18 +305,13 @@ bb.b:                                             ; preds = %_ZSteqIcSt11char_tr
   br i1 %.not, label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.b
-  %i.l = load ptr, ptr %0, align 8, !tbaa !13     ; 2 uses
-  %i.m = tail call ptr @memchr(ptr noundef %i.l, i32 noundef 46, i64 noundef %i.k) #5 ; 2 uses
-  %.not.i = icmp eq ptr %i.m, null
-  %1 = ptrtoint ptr %i.m to i64
-  %2 = ptrtoint ptr %i.l to i64
-  %3 = sub i64 %1, %2
-  %i.n = icmp eq i64 %3, -1
-  %4 = select i1 %.not.i, i1 true, i1 %i.n
+  %i.l = load ptr, ptr %0, align 8, !tbaa !13
+  %i.m = tail call ptr @memchr(ptr noundef %i.l, i32 noundef 46, i64 noundef %i.k) #5
+  %i.n = icmp eq ptr %i.m, null
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
 _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.b, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5.thread7, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
-  %i.o = phi i1 [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5 ], [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5.thread7 ], [ %4, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ], [ true, %bb.b ]
+  %i.o = phi i1 [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5 ], [ true, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit ], [ false, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit5.thread7 ], [ %i.n, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ], [ true, %bb.b ]
   ret i1 %i.o
 }
 

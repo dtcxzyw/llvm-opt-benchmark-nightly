@@ -201,19 +201,17 @@ bb.a:
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit: ; preds = %bb.a
   %i.b = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #26 ; 2 uses
-  %.not.i = icmp eq ptr %i.b, null
-  %4 = ptrtoint ptr %i.b to i64
-  %5 = ptrtoint ptr %2 to i64
-  %6 = sub i64 %4, %5                             ; 2 uses
-  %i.c = icmp eq i64 %6, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %i.c
-  br i1 %or.cond, label %.thread, label %bb.b
+  %i.c = icmp eq ptr %i.b, null
+  br i1 %i.c, label %.thread, label %bb.b
 
 .thread:                                          ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit, %bb.a
   tail call void @_ZN3ada14href_from_fileB5cxx11ESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i64 %1, ptr %2) #26
   br label %bb.v
 
 bb.b:                                             ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit
+  %4 = ptrtoint ptr %i.b to i64
+  %5 = ptrtoint ptr %2 to i64
+  %6 = sub i64 %4, %5
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #26
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 10 uses
   store ptr %i.d, ptr %3, align 8
@@ -339,10 +337,8 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit16: ; preds = %_ZNKSt
   %.not.i14 = icmp eq ptr %i.aj, null
   %i.ak = ptrtoint ptr %i.aj to i64
   %i.al = ptrtoint ptr %i.ag to i64
-  %i.am = sub i64 %i.ak, %i.al                    ; 2 uses
-  %.not = icmp eq i64 %i.am, -1
-  %or.cond43 = select i1 %.not.i14, i1 true, i1 %.not
-  br i1 %or.cond43, label %.thread41, label %bb.c, !llvm.loop !62
+  %i.am = sub i64 %i.ak, %i.al
+  br i1 %.not.i14, label %.thread41, label %bb.c, !llvm.loop !62
 
 .thread41:                                        ; preds = %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit16
   %i.an = load i64, ptr %i.e, align 8             ; 2 uses
@@ -745,13 +741,8 @@ bb.a:
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %i.c = tail call ptr @memchr(ptr noundef %2, i32 noundef 37, i64 noundef %1) #26 ; 2 uses
-  %.not.i = icmp eq ptr %i.c, null
-  %19 = ptrtoint ptr %i.c to i64
-  %20 = ptrtoint ptr %2 to i64
-  %21 = sub i64 %19, %20                          ; 5 uses
-  %.not = icmp eq i64 %21, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not, !prof !199
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !199
+  %.not = icmp eq ptr %i.c, null
+  br i1 %.not, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.b, !prof !199
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
   tail call void @_ZN4node6AssertERKNS_13AssertionInfoE(ptr noundef nonnull align 8 dereferenceable(24) @_ZZN4node11SPrintFImplINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEJEEES6_St17basic_string_viewIcS4_EOT_DpOT0_E20error_and_abort_args) #26
@@ -759,6 +750,9 @@ _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_
   unreachable
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
+  %19 = ptrtoint ptr %i.c to i64
+  %20 = ptrtoint ptr %2 to i64
+  %21 = sub i64 %19, %20                          ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #26
   %.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %21)
@@ -769,7 +763,7 @@ bb.b:                                             ; preds = %_ZNSt11char_traitsI
   call void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ISt17basic_string_viewIcS2_EvEERKT_RKS3_(ptr noundef nonnull align 8 dereferenceable(32) %6, ptr noundef nonnull align 8 dereferenceable(16) %7, ptr noundef nonnull align 1 dereferenceable(1) %8)
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #26
-  %i.e = add nuw i64 %21, 1                       ; 3 uses
+  %i.e = add i64 %21, 1                           ; 3 uses
   %i.f = icmp ult i64 %i.e, %1
   br i1 %i.f, label %.lr.ph, label %.critedge
 
@@ -1172,10 +1166,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
   %.not.i = icmp eq ptr %i.b, null
   %i.c = ptrtoint ptr %i.b to i64
   %i.d = ptrtoint ptr %2 to i64
-  %i.e = sub i64 %i.c, %i.d                       ; 5 uses
-  %5 = icmp eq i64 %i.e, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %5
-  br i1 %or.cond, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
+  %i.e = sub i64 %i.c, %i.d                       ; 4 uses
+  br i1 %.not.i, label %_ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread, label %bb.j
 
 _ZNKSt17basic_string_viewIcSt11char_traitsIcEE4findEcm.exit.thread: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 5 uses

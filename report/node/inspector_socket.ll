@@ -201,15 +201,10 @@ _ZN4node9inspector12_GLOBAL__N_18TrimPortERKNSt7__cxx1112basic_stringIcSt11char_
   br i1 %i.bm, label %_ZN4node17StringEqualNoCaseEPKcS1_.exit.i, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i:   ; preds = %_ZN4node9inspector12_GLOBAL__N_18TrimPortERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.i
-  %.val2.i = load ptr, ptr %2, align 8            ; 7 uses
-  %i.bn = call ptr @memchr(ptr noundef %.val2.i, i32 noundef 0, i64 noundef %i.bl) #22 ; 2 uses
-  %.not.i.i4.i = icmp eq ptr %i.bn, null
-  %3 = ptrtoint ptr %i.bn to i64
-  %4 = ptrtoint ptr %.val2.i to i64               ; 2 uses
-  %5 = sub i64 %3, %4
-  %.not.i.i27 = icmp eq i64 %5, -1
-  %or.cond.i.i = or i1 %.not.i.i4.i, %.not.i.i27
-  br i1 %or.cond.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i.i, label %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.i
+  %.val2.i = load ptr, ptr %2, align 8            ; 6 uses
+  %i.bn = call ptr @memchr(ptr noundef %.val2.i, i32 noundef 0, i64 noundef %i.bl) #22
+  %.not.i.i27 = icmp eq ptr %i.bn, null
+  br i1 %.not.i.i27, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i.i, label %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i.i: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i.i
   %i.bo = icmp ugt i64 %i.bl, 3
@@ -232,13 +227,9 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.bv, label %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit20.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit20.i.i: ; preds = %bb.ad
-  %i.bw = call ptr @memchr(ptr noundef nonnull %.val2.i, i32 noundef 37, i64 noundef %i.bl) #22 ; 2 uses
-  %.not.i18.i.i = icmp eq ptr %i.bw, null
-  %6 = ptrtoint ptr %i.bw to i64
-  %7 = sub i64 %6, %4
-  %.not135.i.i = icmp eq i64 %7, -1
-  %.not13.i.i = or i1 %.not.i18.i.i, %.not135.i.i
-  br i1 %.not13.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPcET0_T_SD_SC_.exit.i.i, label %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.i
+  %i.bw = call ptr @memchr(ptr noundef nonnull %.val2.i, i32 noundef 37, i64 noundef %i.bl) #22
+  %.not135.i.i = icmp eq ptr %i.bw, null
+  br i1 %.not135.i.i, label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPcET0_T_SD_SC_.exit.i.i, label %_ZN4node9inspector12_GLOBAL__N_111IsIPAddressERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE.exit.thread.i
 
 _ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEPcET0_T_SD_SC_.exit.i.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit20.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22

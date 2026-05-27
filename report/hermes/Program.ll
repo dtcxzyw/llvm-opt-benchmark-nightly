@@ -201,14 +201,9 @@ bb.a:
   br i1 %.not45, label %_ZNK4llvh9StringRef4findEcm.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 47, i64 noundef %2) #27 ; 2 uses
-  %.not.i = icmp eq ptr %i.d, null
-  %15 = ptrtoint ptr %i.d to i64
-  %16 = ptrtoint ptr %1 to i64
-  %17 = sub i64 %15, %16
-  %.not = icmp eq i64 %17, -1
-  %or.cond = select i1 %.not.i, i1 true, i1 %.not
-  br i1 %or.cond, label %_ZNK4llvh9StringRef4findEcm.exit.thread, label %bb.c
+  %i.d = tail call noundef ptr @memchr(ptr noundef %1, i32 noundef 47, i64 noundef %2) #27
+  %.not = icmp eq ptr %i.d, null
+  br i1 %.not, label %_ZNK4llvh9StringRef4findEcm.exit.thread, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23

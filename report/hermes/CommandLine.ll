@@ -201,21 +201,22 @@ _ZN4llvh9StringRefC2EPKc.exit52:                  ; preds = %bb.h, %bb.g, %bb.d,
   %i.al = load i16, ptr %i.d, align 4
   %i.am = and i16 %i.al, 512
   %.not.i61 = icmp eq i16 %i.am, 0
-  br i1 %.not.i61, label %.thread.i, label %bb.l
+  br i1 %.not.i61, label %.thread.i, label %14
 
-bb.l:                                             ; preds = %.thread
-  %.not96.i.a = icmp eq i64 %.sroa.29.0.copyload, 0
+14:                                               ; preds = %.thread
+  %.not96.i = icmp eq i64 %.sroa.29.0.copyload, 0
+  br i1 %.not96.i, label %.thread.i, label %bb.l
+
+bb.l:                                             ; preds = %14
+  %15 = tail call noundef ptr @memchr(ptr noundef %.sroa.08.0.copyload, i32 noundef 44, i64 noundef %.sroa.29.0.copyload) #32 ; 2 uses
+  %.not96.i.a = icmp eq ptr %15, null
   br i1 %.not96.i.a, label %.thread.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %14 = tail call noundef ptr @memchr(ptr noundef %.sroa.08.0.copyload, i32 noundef 44, i64 noundef %.sroa.29.0.copyload) #32 ; 2 uses
-  %.not.i34.i = icmp eq ptr %14, null
-  %i.an = ptrtoint ptr %14 to i64
+  %i.an = ptrtoint ptr %15 to i64
   %i.ao = ptrtoint ptr %.sroa.08.0.copyload to i64
-  %i.ap = sub i64 %i.an, %i.ao                    ; 2 uses
-  %.not27.not100.i = icmp eq i64 %i.ap, -1
-  %or.cond.i = select i1 %.not.i34.i, i1 true, i1 %.not27.not100.i
-  br i1 %or.cond.i, label %.thread.i, label %.lr.ph.i
+  %i.ap = sub i64 %i.an, %i.ao
+  br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.m, %bb.o
   %.025103.i = phi i64 [ %i.ba, %bb.o ], [ %i.ap, %bb.m ] ; 2 uses
@@ -241,14 +242,12 @@ bb.o:                                             ; preds = %bb.n
   %.not.i.i = icmp eq ptr %i.ax, null
   %i.ay = ptrtoint ptr %i.ax to i64
   %i.az = ptrtoint ptr %i.av to i64
-  %i.ba = sub i64 %i.ay, %i.az                    ; 2 uses
-  %.not27.not.i = icmp eq i64 %i.ba, -1
-  %or.cond111.i = select i1 %.not.i.i, i1 true, i1 %.not27.not.i
-  br i1 %or.cond111.i, label %.thread.i, label %.lr.ph.i, !llvm.loop !401
+  %i.ba = sub i64 %i.ay, %i.az
+  br i1 %.not.i.i, label %.thread.i, label %.lr.ph.i, !llvm.loop !401
 
-.thread.i:                                        ; preds = %bb.o, %bb.n, %bb.m, %bb.l, %.thread
-  %.sroa.017.1.i = phi ptr [ %.sroa.08.0.copyload, %.thread ], [ %.sroa.08.0.copyload, %bb.m ], [ %.sroa.08.0.copyload, %bb.l ], [ %i.av, %bb.n ], [ %i.av, %bb.o ]
-  %.sroa.419.1.i = phi i64 [ %.sroa.29.0.copyload, %.thread ], [ %.sroa.29.0.copyload, %bb.m ], [ 0, %bb.l ], [ %i.aw, %bb.o ], [ 0, %bb.n ]
+.thread.i:                                        ; preds = %bb.o, %bb.n, %bb.l, %14, %.thread
+  %.sroa.017.1.i = phi ptr [ %.sroa.08.0.copyload, %.thread ], [ %.sroa.08.0.copyload, %bb.l ], [ %.sroa.08.0.copyload, %14 ], [ %i.av, %bb.n ], [ %i.av, %bb.o ]
+  %.sroa.419.1.i = phi i64 [ %.sroa.29.0.copyload, %.thread ], [ %.sroa.29.0.copyload, %bb.l ], [ 0, %14 ], [ %i.aw, %bb.o ], [ 0, %bb.n ]
   %i.bb = load ptr, ptr %0, align 8, !tbaa !7
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 80
   %i.bd = load ptr, ptr %i.bc, align 8
@@ -264,21 +263,22 @@ bb.q:                                             ; preds = %bb.p
   %i.bg = load i16, ptr %i.d, align 4
   %i.bh = and i16 %i.bg, 512
   %.not.i62 = icmp eq i16 %i.bh, 0
-  br i1 %.not.i62, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %bb.r
+  br i1 %.not.i62, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %16
 
-bb.r:                                             ; preds = %bb.q
-  %.not96.i63.a = icmp eq i64 %.promoted124, 0
+16:                                               ; preds = %bb.q
+  %.not96.i63 = icmp eq i64 %.promoted124, 0
+  br i1 %.not96.i63, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %bb.r
+
+bb.r:                                             ; preds = %16
+  %17 = tail call noundef ptr @memchr(ptr noundef nonnull %.promoted, i32 noundef 44, i64 noundef %.promoted124) #32 ; 2 uses
+  %.not96.i63.a = icmp eq ptr %17, null
   br i1 %.not96.i63.a, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %15 = tail call noundef ptr @memchr(ptr noundef nonnull %.promoted, i32 noundef 44, i64 noundef %.promoted124) #32 ; 2 uses
-  %.not.i34.i64 = icmp eq ptr %15, null
-  %i.bi = ptrtoint ptr %15 to i64
+  %i.bi = ptrtoint ptr %17 to i64
   %i.bj = ptrtoint ptr %.promoted to i64
-  %i.bk = sub i64 %i.bi, %i.bj                    ; 2 uses
-  %.not27.not100.i65 = icmp eq i64 %i.bk, -1
-  %or.cond.i66 = or i1 %.not.i34.i64, %.not27.not100.i65
-  br i1 %or.cond.i66, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %.lr.ph.i67
+  %i.bk = sub i64 %i.bi, %i.bj
+  br label %.lr.ph.i67
 
 .lr.ph.i67:                                       ; preds = %bb.s, %bb.u
   %.025103.i68 = phi i64 [ %i.bv, %bb.u ], [ %i.bk, %bb.s ] ; 2 uses
@@ -304,14 +304,12 @@ bb.u:                                             ; preds = %bb.t
   %.not.i.i74 = icmp eq ptr %i.bs, null
   %i.bt = ptrtoint ptr %i.bs to i64
   %i.bu = ptrtoint ptr %i.bq to i64
-  %i.bv = sub i64 %i.bt, %i.bu                    ; 2 uses
-  %.not27.not.i75 = icmp eq i64 %i.bv, -1
-  %or.cond111.i76 = select i1 %.not.i.i74, i1 true, i1 %.not27.not.i75
-  br i1 %or.cond111.i76, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %.lr.ph.i67, !llvm.loop !401
+  %i.bv = sub i64 %i.bt, %i.bu
+  br i1 %.not.i.i74, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81, label %.lr.ph.i67, !llvm.loop !401
 
-_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81: ; preds = %bb.t, %bb.u, %bb.q, %bb.r, %bb.s
-  %.sroa.017.1.i78 = phi ptr [ %.promoted, %bb.q ], [ %.promoted, %bb.s ], [ %.promoted, %bb.r ], [ %i.bq, %bb.u ], [ %i.bq, %bb.t ]
-  %.sroa.419.1.i79 = phi i64 [ %.promoted124, %bb.q ], [ %.promoted124, %bb.s ], [ 0, %bb.r ], [ 0, %bb.t ], [ %i.br, %bb.u ]
+_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit81: ; preds = %bb.t, %bb.u, %bb.q, %16, %bb.r
+  %.sroa.017.1.i78 = phi ptr [ %.promoted, %bb.q ], [ %.promoted, %bb.r ], [ %.promoted, %16 ], [ %i.bq, %bb.u ], [ %i.bq, %bb.t ]
+  %.sroa.419.1.i79 = phi i64 [ %.promoted124, %bb.q ], [ %.promoted124, %bb.r ], [ 0, %16 ], [ 0, %bb.t ], [ %i.br, %bb.u ]
   %i.bw = load ptr, ptr %0, align 8, !tbaa !7
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 80
   %i.by = load ptr, ptr %i.bx, align 8
@@ -360,21 +358,22 @@ _ZN4llvh9StringRefC2EPKc.exit:                    ; preds = %bb.x
   %i.cl = load i16, ptr %i.d, align 4
   %i.cm = and i16 %i.cl, 512
   %.not.i82 = icmp eq i16 %i.cm, 0
-  br i1 %.not.i82, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %bb.y
+  br i1 %.not.i82, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %18
 
-bb.y:                                             ; preds = %_ZN4llvh9StringRefC2EPKc.exit
-  %.not96.i83 = icmp eq i64 %i.ck, 0
+18:                                               ; preds = %_ZN4llvh9StringRefC2EPKc.exit
+  %.not96.i79 = icmp eq i64 %i.ck, 0
+  br i1 %.not96.i79, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %bb.y
+
+bb.y:                                             ; preds = %18
+  %19 = tail call noundef ptr @memchr(ptr noundef nonnull %i.cj, i32 noundef 44, i64 noundef %i.ck) #32 ; 2 uses
+  %.not96.i83 = icmp eq ptr %19, null
   br i1 %.not96.i83, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %16 = tail call noundef ptr @memchr(ptr noundef nonnull %i.cj, i32 noundef 44, i64 noundef %i.ck) #32 ; 2 uses
-  %.not.i34.i84 = icmp eq ptr %16, null
-  %i.cn = ptrtoint ptr %16 to i64
+  %i.cn = ptrtoint ptr %19 to i64
   %i.co = ptrtoint ptr %i.cj to i64
-  %i.cp = sub i64 %i.cn, %i.co                    ; 2 uses
-  %.not27.not100.i85 = icmp eq i64 %i.cp, -1
-  %or.cond.i86 = or i1 %.not.i34.i84, %.not27.not100.i85
-  br i1 %or.cond.i86, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %.lr.ph.i87
+  %i.cp = sub i64 %i.cn, %i.co
+  br label %.lr.ph.i87
 
 .lr.ph.i87:                                       ; preds = %bb.z, %bb.ab
   %.025103.i88 = phi i64 [ %i.da, %bb.ab ], [ %i.cp, %bb.z ] ; 2 uses
@@ -400,14 +399,12 @@ bb.ab:                                            ; preds = %bb.aa
   %.not.i.i94 = icmp eq ptr %i.cx, null
   %i.cy = ptrtoint ptr %i.cx to i64
   %i.cz = ptrtoint ptr %i.cv to i64
-  %i.da = sub i64 %i.cy, %i.cz                    ; 2 uses
-  %.not27.not.i95 = icmp eq i64 %i.da, -1
-  %or.cond111.i96 = select i1 %.not.i.i94, i1 true, i1 %.not27.not.i95
-  br i1 %or.cond111.i96, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %.lr.ph.i87, !llvm.loop !401
+  %i.da = sub i64 %i.cy, %i.cz
+  br i1 %.not.i.i94, label %_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101, label %.lr.ph.i87, !llvm.loop !401
 
-_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101: ; preds = %bb.aa, %bb.ab, %bb.x, %_ZN4llvh9StringRefC2EPKc.exit, %bb.y, %bb.z
-  %.sroa.017.1.i98 = phi ptr [ %i.cj, %_ZN4llvh9StringRefC2EPKc.exit ], [ %i.cj, %bb.z ], [ %i.cj, %bb.y ], [ null, %bb.x ], [ %i.cv, %bb.ab ], [ %i.cv, %bb.aa ]
-  %.sroa.419.1.i99 = phi i64 [ %i.ck, %_ZN4llvh9StringRefC2EPKc.exit ], [ %i.ck, %bb.z ], [ 0, %bb.y ], [ 0, %bb.x ], [ 0, %bb.aa ], [ %i.cw, %bb.ab ]
+_ZL29CommaSeparateAndAddOccurrencePN4llvh2cl6OptionEjNS_9StringRefES3_b.exit101: ; preds = %bb.aa, %bb.ab, %bb.x, %_ZN4llvh9StringRefC2EPKc.exit, %18, %bb.y
+  %.sroa.017.1.i98 = phi ptr [ %i.cj, %_ZN4llvh9StringRefC2EPKc.exit ], [ %i.cj, %bb.y ], [ %i.cj, %18 ], [ null, %bb.x ], [ %i.cv, %bb.ab ], [ %i.cv, %bb.aa ]
+  %.sroa.419.1.i99 = phi i64 [ %i.ck, %_ZN4llvh9StringRefC2EPKc.exit ], [ %i.ck, %bb.y ], [ 0, %18 ], [ 0, %bb.x ], [ 0, %bb.aa ], [ %i.cw, %bb.ab ]
   %i.db = load ptr, ptr %0, align 8, !tbaa !7
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 80
   %i.dd = load ptr, ptr %i.dc, align 8

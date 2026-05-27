@@ -201,18 +201,13 @@ bb.a:
   br i1 %.not12, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit, label %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i:       ; preds = %bb.a
-  %i.f = load ptr, ptr %1, align 8                ; 2 uses
-  %i.g = tail call ptr @memchr(ptr noundef %i.f, i32 noundef 58, i64 noundef %i.e) #20 ; 2 uses
-  %.not.i = icmp eq ptr %i.g, null
-  %4 = ptrtoint ptr %i.g to i64
-  %5 = ptrtoint ptr %i.f to i64
-  %6 = sub i64 %4, %5
-  %i.h = icmp eq i64 %6, -1
-  %7 = select i1 %.not.i, i1 true, i1 %i.h
+  %i.f = load ptr, ptr %1, align 8
+  %i.g = tail call ptr @memchr(ptr noundef %i.f, i32 noundef 58, i64 noundef %i.e) #20
+  %i.h = icmp eq ptr %i.g, null
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit: ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i, %bb.a
-  %.1.i = phi i1 [ %7, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ], [ true, %bb.a ]
+  %.1.i = phi i1 [ %i.h, %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i ], [ true, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #20
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 112 ; 4 uses
   call void @_ZNSt8ios_baseC2Ev(ptr noundef nonnull align 8 dereferenceable(264) %i.i) #20

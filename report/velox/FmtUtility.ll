@@ -201,10 +201,8 @@ _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %_ZNKSt17basic_strin
   %.not.i.i = icmp eq ptr %i.h, null
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %.sroa.11.046.i to i64      ; 3 uses
-  %i.k = sub i64 %i.i, %i.j                       ; 6 uses
-  %6 = icmp eq i64 %i.k, -1
-  %or.cond.i = or i1 %.not.i.i, %6
-  br i1 %or.cond.i, label %"_ZNK5folly35format_string_for_each_named_arg_fnclIcSt11char_traitsIcEZNKS_35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS4_7optionsESt17basic_string_viewIcS3_EE3$_0EEvRKNS0_7optionsES8_IT_T0_ET1_.exit.loopexit", label %bb.b
+  %i.k = sub i64 %i.i, %i.j                       ; 5 uses
+  br i1 %.not.i.i, label %"_ZNK5folly35format_string_for_each_named_arg_fnclIcSt11char_traitsIcEZNKS_35fmt_vformat_mangle_format_string_fnclB5cxx11ERKNS4_7optionsESt17basic_string_viewIcS3_EE3$_0EEvRKNS0_7optionsES8_IT_T0_ET1_.exit.loopexit", label %bb.b
 
 bb.b:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   %i.l = add nuw i64 %i.k, 1                      ; 5 uses

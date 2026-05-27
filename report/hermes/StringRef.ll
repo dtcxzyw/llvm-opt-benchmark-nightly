@@ -201,10 +201,8 @@ bb.b:                                             ; preds = %.lr.ph.split.us
   %.not.i.us = icmp eq ptr %i.g, null
   %i.h = ptrtoint ptr %i.g to i64
   %i.i = ptrtoint ptr %.sroa.030.0110.us to i64
-  %i.j = sub i64 %i.h, %i.i                       ; 3 uses
-  %5 = icmp eq i64 %i.j, -1
-  %or.cond98.us = select i1 %.not.i.us, i1 true, i1 %5
-  br i1 %or.cond98.us, label %.thread.thread137, label %bb.c
+  %i.j = sub i64 %i.h, %i.i                       ; 2 uses
+  br i1 %.not.i.us, label %.thread.thread137, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %.not102.us = icmp eq ptr %i.g, %.sroa.030.0110.us
@@ -251,10 +249,8 @@ bb.e:                                             ; preds = %.lr.ph.split
   %.not.i = icmp eq ptr %i.y, null
   %i.z = ptrtoint ptr %i.y to i64
   %i.aa = ptrtoint ptr %.sroa.030.0110 to i64
-  %i.ab = sub i64 %i.z, %i.aa                     ; 3 uses
-  %6 = icmp eq i64 %i.ab, -1
-  %or.cond98 = select i1 %.not.i, i1 true, i1 %6
-  br i1 %or.cond98, label %.thread.thread137, label %bb.f
+  %i.ab = sub i64 %i.z, %i.aa                     ; 2 uses
+  br i1 %.not.i, label %.thread.thread137, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %.not121 = icmp eq ptr %i.y, %.sroa.030.0110

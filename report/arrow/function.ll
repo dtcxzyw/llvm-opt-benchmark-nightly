@@ -201,16 +201,11 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8.i.i: ; preds = %
 
 _ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i:     ; preds = %bb.b, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  %.val = load ptr, ptr %i.b, align 8             ; 3 uses
+  %.val = load ptr, ptr %i.b, align 8             ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !229)
-  %i.ai = tail call ptr @memchr(ptr noundef %.val, i32 noundef 10, i64 noundef %i.d) #21, !noalias !229 ; 2 uses
-  %.not.i.i = icmp eq ptr %i.ai, null
-  %6 = ptrtoint ptr %i.ai to i64
-  %7 = ptrtoint ptr %.val to i64
-  %8 = sub i64 %6, %7
-  %.not.i = icmp eq i64 %8, -1
-  %or.cond.i = or i1 %.not.i.i, %.not.i
-  br i1 %or.cond.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i, label %bb.f
+  %i.ai = tail call ptr @memchr(ptr noundef readonly %.val, i32 noundef 10, i64 noundef %i.d) #21, !noalias !229
+  %.not.i = icmp eq ptr %i.ai, null
+  br i1 %.not.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE4findEcm.exit.thread.i, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt11char_traitsIcE4findEPKcmRS1_.exit.i.i
   call void @_ZN5arrow6Status8FromArgsIJRA27_KcEEES0_NS_10StatusCodeEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.arrow::Status") align 8 %4, i8 noundef signext 4, ptr noundef nonnull align 1 dereferenceable(27) @.str.18)
@@ -613,7 +608,7 @@ begin_hunk_1_@llvm.umax.i64
 !244 = distinct !{!244, !245, !"_ZN5arrow6Status2OKEv: argument 0"}
 !245 = distinct !{!245, !"_ZN5arrow6Status2OKEv"}
 !246 = !{!"branch_weights", !"expected", i32 2145337238, i32 2146410}
-!247 = !{!"branch_weights", !"expected", i32 2146022262, i32 1461386}
+!247 = !{!"branch_weights", !"expected", i32 2146060122, i32 1423526}
 !248 = !{!249}
 !249 = distinct !{!249, !250, !"_ZN5arrow6Status2OKEv: argument 0"}
 !250 = distinct !{!250, !"_ZN5arrow6Status2OKEv"}
