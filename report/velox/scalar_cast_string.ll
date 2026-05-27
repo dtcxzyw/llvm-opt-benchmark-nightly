@@ -201,14 +201,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ] ; 2 uses
   %i.djw = icmp eq i8 %.0782, 0
   br i1 %i.djw, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2784 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2784 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2303, i1 false)
   %i.djx = urem i16 %.lhs.trunc2784, 100          ; 2 uses
   %.zext2785 = zext nneg i16 %i.djx to i32
   %i.djy = icmp samesign ult i16 %i.djx, 10
@@ -248,6 +246,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1484 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
+  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #27
   store i8 37, ptr %i.fs, align 1, !tbaa !26
   store i8 %.0782, ptr %i.il, align 1, !tbaa !26
@@ -650,14 +649,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0783, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2786 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2786 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2305, i1 false)
   %i.dka = urem i16 %.lhs.trunc2786, 100          ; 2 uses
   %.zext2787 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -697,6 +694,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1486 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
+  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #27
   store i8 37, ptr %i.fs, align 1, !tbaa !26
   store i8 %.0783, ptr %i.im, align 1, !tbaa !26
@@ -1099,14 +1097,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0783, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2786 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2786 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2305, i1 false)
   %i.dka = urem i16 %.lhs.trunc2786, 100          ; 2 uses
   %.zext2787 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -1146,6 +1142,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1486 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
+  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #27
   store i8 37, ptr %i.fs, align 1, !tbaa !26
   store i8 %.0783, ptr %i.im, align 1, !tbaa !26
@@ -1548,14 +1545,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2305 = phi i16 [ %.sroa.0.0.copyload.i2305.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304_crit_edge ], [ %.sroa.0.0.copyload.i2302, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0783, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2786 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2786 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2305, i1 false)
   %i.dka = urem i16 %.lhs.trunc2786, 100          ; 2 uses
   %.zext2787 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -1595,6 +1590,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1486 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2304
+  %20 = sext i16 %.sroa.0.0.copyload.i2305 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #27
   store i8 37, ptr %i.fs, align 1, !tbaa !26
   store i8 %.0783, ptr %i.im, align 1, !tbaa !26

@@ -201,14 +201,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ] ; 2 uses
   %i.djw = icmp eq i8 %.0782, 0
   br i1 %i.djw, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2784 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2784 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2303, i1 false)
   %i.djx = urem i16 %.lhs.trunc2784, 100          ; 2 uses
   %.zext2785 = zext nneg i16 %i.djx to i32
   %i.djy = icmp samesign ult i16 %i.djx, 10
@@ -248,6 +246,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1484 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
+  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #23
   store i8 37, ptr %i.fs, align 1, !tbaa !60
   store i8 %.0782, ptr %i.il, align 1, !tbaa !60
@@ -650,9 +649,6 @@ declare void @_ZNSt9basic_iosIcSt11char_traitsIcEE5imbueERKSt6locale(ptr dead_on
 
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSt6locale7classicEv() local_unnamed_addr #3
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.abs.i32(i32, i1 immarg) #16
-
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr noundef nonnull align 8 dereferenceable(8) ptr @_ZN14arrow_vendored4datelsIcSt11char_traitsIcEEERSt13basic_ostreamIT_T0_ES8_RKNS0_8hh_mm_ssINSt6chrono8durationIlSt5ratioILl1ELl1EEEEEE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(33) %1) local_unnamed_addr #0 comdat {
 bb.a:
@@ -908,7 +904,7 @@ declare void @_ZNSt6localeC1ERKS_(ptr noundef nonnull align 8 dereferenceable(8)
 declare void @_ZNKSt5ctypeIcE13_M_widen_initEv(ptr noundef nonnull align 8 dereferenceable(570)) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(read)
-declare noundef i32 @_ZSt19uncaught_exceptionsv() local_unnamed_addr #17
+declare noundef i32 @_ZSt19uncaught_exceptionsv() local_unnamed_addr #16
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr void @_ZN14arrow_vendored4date6detail12save_istreamIcSt11char_traitsIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(48) dereferenceable(48) %0) unnamed_addr #2 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -1311,14 +1307,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0782, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2784 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2784 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2303, i1 false)
   %i.dka = urem i16 %.lhs.trunc2784, 100          ; 2 uses
   %.zext2785 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -1358,6 +1352,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1484 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
+  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #23
   store i8 37, ptr %i.fs, align 1, !tbaa !60
   store i8 %.0782, ptr %i.im, align 1, !tbaa !60
@@ -1760,14 +1755,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0782, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2784 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2784 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2303, i1 false)
   %i.dka = urem i16 %.lhs.trunc2784, 100          ; 2 uses
   %.zext2785 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -1807,6 +1800,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1484 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
+  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #23
   store i8 37, ptr %i.fs, align 1, !tbaa !60
   store i8 %.0782, ptr %i.im, align 1, !tbaa !60
@@ -2209,14 +2203,12 @@ bb.add:                                           ; preds = %bb.adc
   br label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
 
 _ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302: ; preds = %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge, %bb.adc
-  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ]
-  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32 ; 2 uses
+  %.sroa.0.0.copyload.i2303 = phi i16 [ %.sroa.0.0.copyload.i2303.pre, %._ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302_crit_edge ], [ %.sroa.0.0.copyload.i2300, %bb.adc ] ; 2 uses
   %i.djz = icmp eq i8 %.0782, 0
   br i1 %i.djz, label %bb.ade, label %bb.adk
 
 bb.ade:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
-  %21 = call i32 @llvm.abs.i32(i32 %20, i1 true)
-  %.lhs.trunc2784 = trunc nuw i32 %21 to i16
+  %.lhs.trunc2784 = call i16 @llvm.abs.i16(i16 %.sroa.0.0.copyload.i2303, i1 false)
   %i.dka = urem i16 %.lhs.trunc2784, 100          ; 2 uses
   %.zext2785 = zext nneg i16 %i.dka to i32
   %i.dkb = icmp samesign ult i16 %i.dka, 10
@@ -2256,6 +2248,7 @@ bb.adj:                                           ; preds = %_ZStlsISt11char_tra
           to label %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit1484 unwind label %bb.adi ; 0 uses
 
 bb.adk:                                           ; preds = %_ZNSt9basic_iosIcSt11char_traitsIcEE8setstateESt12_Ios_Iostate.exit2302
+  %20 = sext i16 %.sroa.0.0.copyload.i2303 to i32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.fs) #23
   store i8 37, ptr %i.fs, align 1, !tbaa !60
   store i8 %.0782, ptr %i.im, align 1, !tbaa !60
@@ -2658,7 +2651,7 @@ _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_.exit14.i.i.i: ; preds
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFN5arrow6StatusERKNS0_5ArrayES4_S4_EZNS0_24MakeUnifiedDiffFormatterERKNS0_8DataTypeEPSoE3$_0E10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation"(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #18 align 2 personality ptr @__gxx_personality_v0 {
+define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFN5arrow6StatusERKNS0_5ArrayES4_S4_EZNS0_24MakeUnifiedDiffFormatterERKNS0_8DataTypeEPSoE3$_0E10_M_managerERSt9_Any_dataRKSC_St18_Manager_operation"(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i32 noundef %2) #17 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   switch i32 %2, label %"_ZNSt14_Function_base13_Base_managerIZN5arrow24MakeUnifiedDiffFormatterERKNS1_8DataTypeEPSoE3$_0E10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation.exit" [
     i32 0, label %bb.b
@@ -3061,31 +3054,31 @@ _ZNSt14_Function_base13_Base_managerIN5arrow20UnifiedDiffFormatterEE10_M_destroy
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #19
+declare void @llvm.assume(i1 noundef) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #20
+declare i64 @llvm.umin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #21
+declare void @llvm.experimental.noalias.scope.decl(metadata) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #20
+declare i64 @llvm.smin.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #20
+declare i64 @llvm.smax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #22
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #20
+declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.abs.i64(i64, i1 immarg) #16
+declare i64 @llvm.abs.i64(i64, i1 immarg) #22
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.abs.i16(i16, i1 immarg) #16
+declare i16 @llvm.abs.i16(i16, i1 immarg) #22
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -3103,13 +3096,13 @@ attributes #12 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector
 attributes #13 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #16 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #20 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #21 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #22 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #16 = { mustprogress nofree nounwind willreturn memory(read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #17 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #19 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #20 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #21 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #22 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #23 = { nounwind }
 attributes #24 = { builtin allocsize(0) }
 attributes #25 = { builtin nounwind }
