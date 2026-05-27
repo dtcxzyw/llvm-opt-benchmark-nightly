@@ -1,0 +1,135 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+index 58605a5da3de8..41145115baf94 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineSelect.cpp
+@@ -42,6 +42,7 @@
+ #include "llvm/Support/Casting.h"
+ #include "llvm/Support/ErrorHandling.h"
+ #include "llvm/Support/KnownBits.h"
++#include "llvm/Analysis/TargetLibraryInfo.h"
+ #include "llvm/Transforms/InstCombine/InstCombiner.h"
+ #include <cassert>
+ #include <optional>
+@@ -4463,6 +4464,113 @@ static Value *foldSelectBitTest(SelectInst &Sel, Value *CondVal, Value *TrueVal,
+   return nullptr;
+ }
+ 
++static Value *getNullCheckedPointer(Value *V) {
++  auto *Cmp = dyn_cast<ICmpInst>(V);
++  if (!Cmp || Cmp->getPredicate() != ICmpInst::ICMP_EQ)
++    return nullptr;
++
++  Value *LHS = Cmp->getOperand(0);
++  Value *RHS = Cmp->getOperand(1);
++
++  if (isa<ConstantPointerNull>(LHS))
++    return RHS;
++  if (isa<ConstantPointerNull>(RHS))
++    return LHS;
++
++  return nullptr;
++}
++
++static bool isMemChrCallWithBase(Value *P, Value *Base,
++                                 const TargetLibraryInfo &TLI) {
++  P = P->stripPointerCastsSameRepresentation();
++  Base = Base->stripPointerCastsSameRepresentation();
++
++  auto *CB = dyn_cast<CallBase>(P);
++  if (!CB)
++    return false;
++
++  Function *Callee = CB->getCalledFunction();
++  if (!Callee)
++    return false;
++
++  LibFunc LF;
++  if (!TLI.getLibFunc(*Callee, LF) || LF != LibFunc_memchr)
++    return false;
++
++  if (!TLI.has(LF))
++    return false;
++
++  if (CB->arg_size() < 3)
++    return false;
++
++  Value *MemChrBase = CB->getArgOperand(0)->stripPointerCastsSameRepresentation();
++  return MemChrBase == Base;
++}
++
++static bool isMemChrResultNPosCheck(Value *V, Value *CheckedPtr,
++                                    const TargetLibraryInfo &TLI) {
++  auto *Cmp = dyn_cast<ICmpInst>(V);
++  if (!Cmp || Cmp->getPredicate() != ICmpInst::ICMP_EQ)
++    return false;
++
++  Value *Idx;
++  if (match(Cmp->getOperand(0), m_AllOnes()))
++    Idx = Cmp->getOperand(1);
++  else if (match(Cmp->getOperand(1), m_AllOnes()))
++    Idx = Cmp->getOperand(0);
++  else
++    return false;
++
++  auto *Sub = dyn_cast<BinaryOperator>(Idx);
++  if (!Sub || Sub->getOpcode() != Instruction::Sub)
++    return false;
++
++  auto *PToI = dyn_cast<PtrToIntOperator>(Sub->getOperand(0));
++  auto *BaseToI = dyn_cast<PtrToIntOperator>(Sub->getOperand(1));
++  if (!PToI || !BaseToI)
++    return false;
++
++  Value *P = PToI->getPointerOperand()->stripPointerCastsSameRepresentation();
++  Value *Base = BaseToI->getPointerOperand()->stripPointerCastsSameRepresentation();
++
++  if (P != CheckedPtr->stripPointerCastsSameRepresentation())
++    return false;
++
++  return isMemChrCallWithBase(P, Base, TLI);
++}
++
++static Value *foldMemChrNPosSelect(SelectInst &SI,
++                                   const TargetLibraryInfo &TLI) {
++  if (!SI.getType()->isIntegerTy(1))
++    return nullptr;
++
++  // Match:
++  //
++  //   %p = memchr(%base, ...)
++  //   %isnull = icmp eq ptr %p, null
++  //   %idx = ptrtoint(%p) - ptrtoint(%base)
++  //   %isnpos = icmp eq i64 %idx, -1
++  //   %cond = select i1 %isnull, i1 true, i1 %isnpos
++  //
++  // Since a non-null memchr result points inside the searched range, the
++  // offset from the base cannot be -1. Therefore:
++  //
++  //   select %isnull, true, %isnpos  ->  %isnull
++
++  Value *CheckedPtr = getNullCheckedPointer(SI.getCondition());
++  if (!CheckedPtr)
++    return nullptr;
++
++  if (!match(SI.getTrueValue(), m_One()))
++    return nullptr;
++
++  if (!isMemChrResultNPosCheck(SI.getFalseValue(), CheckedPtr, TLI))
++    return nullptr;
++
++  return SI.getCondition();
++}
++
++
+ /// This function makes the following folds:
+ /// select C, (sub 0, X), (xor X, -1)
+ ///   -> sub (sext !C), X
+@@ -5319,5 +5427,8 @@ Instruction *InstCombinerImpl::visitSelectInst(SelectInst &SI) {
+     return CallInst::Create(Scmp, {CmpLHS, ConstantInt::get(SI.getType(), 0)});
+   }
+ 
++  if (Value *V = foldMemChrNPosSelect(SI, TLI))
++    return replaceInstUsesWith(SI, V);
++
+   return nullptr;
+ }
