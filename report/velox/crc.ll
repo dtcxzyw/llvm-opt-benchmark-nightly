@@ -157,32 +157,39 @@ bb.a:
   br label %iter.check155
 
 iter.check155:                                    ; preds = %.split.us.preheader, %.split.2
-  %i.bt = phi i32 [ %.sink64, %.split.us.preheader ], [ %.pre95, %.split.2 ] ; 13 uses
+  %i.bt = phi i32 [ %.sink64, %.split.us.preheader ], [ %.pre95, %.split.2 ] ; 12 uses
   %i.bu = phi i32 [ %.sink65, %.split.us.preheader ], [ %.pre81, %.split.2 ] ; 8 uses
-  %i.bv = phi i32 [ %.sink66, %.split.us.preheader ], [ %.pre75, %.split.2 ] ; 5 uses
-  %i.bw = phi i32 [ %.sink68, %.split.us.preheader ], [ %.pre73, %.split.2 ] ; 4 uses
-  %i.bx = phi i32 [ %.sink67, %.split.us.preheader ], [ %.sink131, %.split.2 ] ; 4 uses
+  %i.bv = phi i32 [ %.sink66, %.split.us.preheader ], [ %.pre75, %.split.2 ] ; 4 uses
+  %i.bw = phi i32 [ %.sink68, %.split.us.preheader ], [ %.pre73, %.split.2 ] ; 3 uses
+  %i.bx = phi i32 [ %.sink67, %.split.us.preheader ], [ %.sink131, %.split.2 ] ; 3 uses
   %i.by = getelementptr inbounds nuw i8, ptr %i.ad, i64 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
-  %4 = xor i32 %i.bw, %i.bx                       ; 5 uses
+  %4 = insertelement <4 x i32> poison, i32 %i.bw, i64 0 ; 2 uses
+  %5 = insertelement <4 x i32> %4, i32 %i.bx, i64 1
+  %6 = shufflevector <4 x i32> %5, <4 x i32> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
+  %7 = insertelement <4 x i32> %4, i32 %i.bv, i64 1
+  %8 = insertelement <4 x i32> %7, i32 %i.bu, i64 3
+  %9 = shufflevector <4 x i32> %8, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  %10 = xor <4 x i32> %6, %9                      ; 6 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.ad, i64 12
-  store i32 %4, ptr %i.ca, align 4, !tbaa !3
+  %11 = extractelement <4 x i32> %10, i64 0       ; 3 uses
+  store i32 %11, ptr %i.ca, align 4, !tbaa !3
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
-  %5 = xor i32 %i.bw, %i.bv                       ; 4 uses
   %i.cc = getelementptr inbounds nuw i8, ptr %i.ad, i64 20
-  store i32 %5, ptr %i.cc, align 4, !tbaa !3
-  %6 = xor i32 %i.bx, %i.bv                       ; 4 uses
+  %12 = extractelement <4 x i32> %10, i64 1       ; 3 uses
+  store i32 %12, ptr %i.cc, align 4, !tbaa !3
   %i.cd = getelementptr inbounds nuw i8, ptr %i.ad, i64 24
-  store i32 %6, ptr %i.cd, align 4, !tbaa !3
+  %13 = extractelement <4 x i32> %10, i64 2       ; 3 uses
+  store i32 %13, ptr %i.cd, align 4, !tbaa !3
   %i.ce = getelementptr inbounds nuw i8, ptr %i.ad, i64 28
   %i.cf = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
-  %7 = xor i32 %i.bw, %i.bu                       ; 3 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.ad, i64 36
-  store i32 %7, ptr %8, align 4, !tbaa !3
+  %14 = getelementptr inbounds nuw i8, ptr %i.ad, i64 36
+  %15 = extractelement <4 x i32> %10, i64 3       ; 2 uses
+  store i32 %15, ptr %14, align 4, !tbaa !3
   %i.cg = xor i32 %i.bx, %i.bu                    ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
   store i32 %i.cg, ptr %i.ch, align 4, !tbaa !3
-  %i.ci = xor i32 %4, %i.bu                       ; 3 uses
+  %i.ci = xor i32 %11, %i.bu                      ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ad, i64 44
   store i32 %i.ci, ptr %i.cj, align 4, !tbaa !3
   %i.ck = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
@@ -200,7 +207,7 @@ iter.check155:                                    ; preds = %.split.us.preheader
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ad, i64 88
   %i.cw = getelementptr inbounds nuw i8, ptr %i.ad, i64 92
   %i.cx = getelementptr inbounds nuw i8, ptr %i.ad, i64 96
-  %i.cy = xor i32 %7, %i.bt                       ; 2 uses
+  %i.cy = xor i32 %15, %i.bt                      ; 2 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %i.ad, i64 100
   store i32 %i.cy, ptr %i.cz, align 4, !tbaa !3
   %i.da = xor i32 %i.cg, %i.bt                    ; 2 uses
@@ -225,57 +232,60 @@ iter.check155:                                    ; preds = %.split.us.preheader
   %i.dr = getelementptr inbounds nuw i8, ptr %i.ad, i64 168
   %i.ds = getelementptr inbounds nuw i8, ptr %i.ad, i64 172
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ad, i64 176
-  %i.du = load i32, ptr %i.co, align 4, !tbaa !3  ; 3 uses
-  %i.dv = load i32, ptr %i.di, align 4, !tbaa !3  ; 15 uses
-  %9 = xor i32 %4, %i.bt                          ; 2 uses
-  %10 = xor i32 %i.bx, %i.bt                      ; 2 uses
-  %i.dw = xor i32 %i.bw, %i.bt                    ; 2 uses
-  %i.dx = xor i32 %6, %i.bu                       ; 3 uses
-  %i.dy = xor i32 %5, %i.bu                       ; 3 uses
+  %i.du = load i32, ptr %i.di, align 4, !tbaa !3  ; 15 uses
+  %i.dv = load i32, ptr %i.co, align 4, !tbaa !3  ; 3 uses
+  %16 = shufflevector <4 x i32> %10, <4 x i32> poison, <4 x i32> <i32 poison, i32 poison, i32 poison, i32 0>
+  %17 = insertelement <4 x i32> %16, i32 %i.dv, i64 0
+  %18 = insertelement <4 x i32> %17, i32 %i.bw, i64 1
+  %19 = insertelement <4 x i32> %18, i32 %i.bx, i64 2
+  %20 = insertelement <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>, i32 %i.bt, i64 1
+  %21 = shufflevector <4 x i32> %20, <4 x i32> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %22 = xor <4 x i32> %19, %21                    ; 3 uses
+  %i.dw = xor i32 %i.bw, %i.bt
+  %i.dx = xor i32 %13, %i.bu                      ; 3 uses
+  %i.dy = xor i32 %12, %i.bu                      ; 3 uses
   %i.dz = xor i32 %i.bv, %i.bu                    ; 3 uses
   store i32 %i.dz, ptr %i.ck, align 4, !tbaa !3
   store i32 %i.dy, ptr %i.cl, align 4, !tbaa !3
   store i32 %i.dx, ptr %i.cm, align 4, !tbaa !3
   store i32 %i.dw, ptr %i.cp, align 4, !tbaa !3
-  store i32 %10, ptr %i.cq, align 4, !tbaa !3
-  store i32 %9, ptr %i.cr, align 4, !tbaa !3
-  %11 = xor i32 %i.dz, %i.bt                      ; 2 uses
-  store i32 %11, ptr %i.de, align 4, !tbaa !3
-  %i.ea = xor i32 %i.dy, %i.bt                    ; 2 uses
-  store i32 %i.ea, ptr %i.df, align 4, !tbaa !3
-  %i.eb = xor i32 %i.dx, %i.du                    ; 2 uses
-  store i32 %i.eb, ptr %i.dg, align 4, !tbaa !3
-  %i.ec = xor i32 %i.dj, %i.dv
-  store i32 %i.ec, ptr %i.dk, align 4, !tbaa !3
-  %12 = insertelement <8 x i32> %i.dq, i32 %i.dv, i64 2 ; 2 uses
-  %13 = insertelement <8 x i32> %12, i32 %i.do, i64 3
-  %i.ed = insertelement <8 x i32> %13, i32 %4, i64 4
-  %i.ee = insertelement <8 x i32> %i.ed, i32 %5, i64 5
-  %14 = insertelement <8 x i32> %i.ee, i32 %6, i64 6
-  %15 = insertelement <8 x i32> %14, i32 %7, i64 7
-  %i.ef = shufflevector <8 x i32> %12, <8 x i32> poison, <2 x i32> <i32 poison, i32 2>
-  %i.eg = xor i32 %i.cg, %i.dv
+  %23 = extractelement <4 x i32> %22, i64 2
+  store i32 %23, ptr %i.cq, align 4, !tbaa !3
+  %24 = extractelement <4 x i32> %22, i64 3
+  store i32 %24, ptr %i.cr, align 4, !tbaa !3
+  %i.ea = xor i32 %i.dz, %i.bt                    ; 2 uses
+  store i32 %i.ea, ptr %i.de, align 4, !tbaa !3
+  %i.eb = xor i32 %i.dy, %i.bt                    ; 2 uses
+  store i32 %i.eb, ptr %i.df, align 4, !tbaa !3
+  %i.ec = xor i32 %i.dx, %i.dv                    ; 2 uses
+  store i32 %i.ec, ptr %i.dg, align 4, !tbaa !3
+  %25 = xor i32 %i.dj, %i.du
+  store i32 %25, ptr %i.dk, align 4, !tbaa !3
+  %i.ed = insertelement <8 x i32> %i.dq, i32 %i.du, i64 2 ; 2 uses
+  %i.ee = insertelement <8 x i32> %i.ed, i32 %i.do, i64 3
+  %26 = shufflevector <4 x i32> %10, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %27 = shufflevector <8 x i32> %i.ee, <8 x i32> %26, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.ef = shufflevector <8 x i32> %i.ed, <8 x i32> poison, <2 x i32> <i32 poison, i32 2>
+  %i.eg = xor i32 %i.cg, %i.du
   store i32 %i.eg, ptr %i.dr, align 4, !tbaa !3
-  %i.eh = xor i32 %i.ci, %i.dv
+  %i.eh = xor i32 %i.ci, %i.du
   store i32 %i.eh, ptr %i.ds, align 4, !tbaa !3
-  %16 = insertelement <8 x i32> poison, i32 %i.dz, i64 0
-  %17 = insertelement <8 x i32> %16, i32 %i.dy, i64 1
-  %i.ei = insertelement <8 x i32> %17, i32 %i.dx, i64 2
-  %i.ej = insertelement <8 x i32> %i.ei, i32 %i.dv, i64 3
-  %i.ek = insertelement <8 x i32> %i.ej, i32 %i.du, i64 4
-  %i.el = insertelement <8 x i32> %i.ek, i32 %i.dw, i64 5
-  %18 = insertelement <8 x i32> %i.el, i32 %10, i64 6
-  %19 = insertelement <8 x i32> %18, i32 %9, i64 7
-  %i.em = insertelement <8 x i32> poison, i32 %i.dv, i64 0
-  %i.en = xor i32 %i.cs, %i.dv
+  %i.ei = insertelement <8 x i32> poison, i32 %i.dz, i64 0
+  %i.ej = insertelement <8 x i32> %i.ei, i32 %i.dy, i64 1
+  %i.ek = insertelement <8 x i32> %i.ej, i32 %i.dx, i64 2
+  %i.el = insertelement <8 x i32> %i.ek, i32 %i.du, i64 3
+  %28 = shufflevector <4 x i32> %22, <4 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %29 = shufflevector <8 x i32> %i.el, <8 x i32> %28, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.em = insertelement <8 x i32> poison, i32 %i.du, i64 0
+  %i.en = xor i32 %i.cs, %i.du
   %i.eo = getelementptr inbounds nuw i8, ptr %i.ad, i64 208
   store i32 %i.en, ptr %i.eo, align 4, !tbaa !3
   %i.ep = getelementptr inbounds nuw i8, ptr %i.ad, i64 212
-  %i.eq = xor i32 %4, %i.bv                       ; 4 uses
+  %i.eq = xor i32 %11, %i.bv                      ; 4 uses
   %i.er = xor i32 %i.bu, %i.bt                    ; 2 uses
   %i.es = xor i32 %i.eq, %i.bt                    ; 2 uses
-  %i.et = xor i32 %6, %i.bt                       ; 2 uses
-  %i.eu = xor i32 %5, %i.bt                       ; 2 uses
+  %i.et = xor i32 %13, %i.bt                      ; 2 uses
+  %i.eu = xor i32 %12, %i.bt                      ; 2 uses
   store i32 %i.eu, ptr %i.cu, align 4, !tbaa !3
   store i32 %i.et, ptr %i.cv, align 4, !tbaa !3
   store i32 %i.er, ptr %i.cx, align 4, !tbaa !3
@@ -283,44 +293,44 @@ iter.check155:                                    ; preds = %.split.us.preheader
   store i32 %i.es, ptr %i.cw, align 4, !tbaa !3
   %i.ev = xor i32 %i.eq, %i.bu                    ; 3 uses
   store i32 %i.ev, ptr %i.cn, align 4, !tbaa !3
-  %i.ew = xor i32 %i.ev, %i.du                    ; 2 uses
+  %i.ew = xor i32 %i.ev, %i.dv                    ; 2 uses
   store i32 %i.ew, ptr %i.dh, align 4, !tbaa !3
   %i.ex = insertelement <2 x i32> %i.ef, i32 %i.eq, i64 0
-  %20 = shufflevector <8 x i32> %15, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 6, i32 2, i32 3, i32 7>
-  %21 = shufflevector <2 x i32> %i.ex, <2 x i32> poison, <8 x i32> <i32 1, i32 1, i32 1, i32 1, i32 1, i32 0, i32 1, i32 1>
-  %22 = xor <8 x i32> %20, %21
-  store <8 x i32> %22, ptr %i.dm, align 4, !tbaa !3
+  %30 = shufflevector <2 x i32> %i.ex, <2 x i32> poison, <8 x i32> <i32 1, i32 1, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1>
+  %31 = xor <8 x i32> %27, %30
+  %32 = shufflevector <8 x i32> %31, <8 x i32> poison, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 6, i32 2, i32 3, i32 7>
+  store <8 x i32> %32, ptr %i.dm, align 4, !tbaa !3
   %i.ey = insertelement <8 x i32> %i.em, i32 %i.ev, i64 1
   %i.ez = shufflevector <8 x i32> %i.ey, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 1, i32 0, i32 0, i32 0, i32 0>
-  %i.fa = xor <8 x i32> %19, %i.ez
+  %i.fa = xor <8 x i32> %29, %i.ez
   store <8 x i32> %i.fa, ptr %i.dt, align 4, !tbaa !3
   %i.fb = insertelement <4 x i32> poison, i32 %i.eu, i64 0
   %i.fc = insertelement <4 x i32> %i.fb, i32 %i.et, i64 1
   %i.fd = insertelement <4 x i32> %i.fc, i32 %i.es, i64 2
   %i.fe = insertelement <4 x i32> %i.fd, i32 %i.er, i64 3
-  %i.ff = insertelement <4 x i32> poison, i32 %i.dv, i64 0
+  %i.ff = insertelement <4 x i32> poison, i32 %i.du, i64 0
   %i.fg = shufflevector <4 x i32> %i.ff, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.fh = xor <4 x i32> %i.fe, %i.fg
   store <4 x i32> %i.fh, ptr %i.ep, align 4, !tbaa !3
-  %i.fi = xor i32 %i.cy, %i.dv
+  %i.fi = xor i32 %i.cy, %i.du
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ad, i64 228
   store i32 %i.fi, ptr %i.fj, align 4, !tbaa !3
-  %i.fk = xor i32 %i.da, %i.dv
+  %i.fk = xor i32 %i.da, %i.du
   %i.fl = getelementptr inbounds nuw i8, ptr %i.ad, i64 232
   store i32 %i.fk, ptr %i.fl, align 4, !tbaa !3
-  %i.fm = xor i32 %i.dc, %i.dv
+  %i.fm = xor i32 %i.dc, %i.du
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ad, i64 236
   store i32 %i.fm, ptr %i.fn, align 4, !tbaa !3
-  %i.fo = xor i32 %11, %i.dv
+  %i.fo = xor i32 %i.ea, %i.du
   %i.fp = getelementptr inbounds nuw i8, ptr %i.ad, i64 240
   store i32 %i.fo, ptr %i.fp, align 4, !tbaa !3
-  %i.fq = xor i32 %i.ea, %i.dv
+  %i.fq = xor i32 %i.eb, %i.du
   %i.fr = getelementptr inbounds nuw i8, ptr %i.ad, i64 244
   store i32 %i.fq, ptr %i.fr, align 4, !tbaa !3
-  %i.fs = xor i32 %i.eb, %i.dv
+  %i.fs = xor i32 %i.ec, %i.du
   %i.ft = getelementptr inbounds nuw i8, ptr %i.ad, i64 248
   store i32 %i.fs, ptr %i.ft, align 4, !tbaa !3
-  %i.fu = xor i32 %i.ew, %i.dv
+  %i.fu = xor i32 %i.ew, %i.du
   %i.fv = getelementptr inbounds nuw i8, ptr %i.ad, i64 252
   store i32 %i.fu, ptr %i.fv, align 4, !tbaa !3
   %i.fw = getelementptr inbounds nuw i8, ptr %i.ad, i64 256 ; 8 uses
