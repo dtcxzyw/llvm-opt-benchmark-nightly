@@ -201,7 +201,7 @@ bb.bs:                                            ; preds = %.peel.next.i.i.i
 
 bb.bt:                                            ; preds = %bb.bq
   %gepdiff.i.i = sub nsw i64 %i.ie, %i.hn
-  %i.it = load i64, ptr %i.dd, align 8, !tbaa !79 ; 7 uses
+  %i.it = load i64, ptr %i.dd, align 8, !tbaa !79 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !5
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -237,30 +237,21 @@ bb.bx:                                            ; preds = %bb.bw
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %i.c, ptr nonnull align 2 %i.je, i64 %i.jf, i1 false)
   %invariant.gep.i.i.i = getelementptr i8, ptr %i.c, i64 %i.jf
   %gep.7.i.i.i = getelementptr i8, ptr %invariant.gep.i.i.i, i64 -8 ; 2 uses
-  %4 = lshr i64 %i.it, 8
-  %5 = lshr i64 %i.it, 16
-  %6 = lshr i64 %i.it, 24
-  %7 = lshr i64 %i.it, 32
-  %8 = lshr i64 %i.it, 40
   %i.jg = insertelement <2 x i64> poison, i64 %i.it, i64 0
-  %i.jh = shufflevector <2 x i64> %i.jg, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.ji = lshr <2 x i64> %i.jh, <i64 56, i64 48>
-  %9 = trunc i64 %i.it to i8
-  %10 = trunc i64 %4 to i8
-  %11 = trunc i64 %5 to i8
-  %12 = trunc i64 %6 to i8
-  %13 = trunc i64 %7 to i8
-  %14 = trunc i64 %8 to i8
-  %i.jj = trunc <2 x i64> %i.ji to <2 x i8>
+  %i.jh = shufflevector <2 x i64> %i.jg, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.ji = lshr <2 x i64> %i.jh, <i64 40, i64 32>
+  %4 = lshr <2 x i64> %i.jh, <i64 56, i64 48>
+  %5 = insertelement <4 x i64> poison, i64 %i.it, i64 0
+  %6 = shufflevector <4 x i64> %5, <4 x i64> poison, <4 x i32> zeroinitializer
+  %7 = lshr <4 x i64> %6, <i64 24, i64 16, i64 8, i64 0>
+  %8 = trunc <4 x i64> %7 to <4 x i8>
+  %9 = trunc <2 x i64> %i.ji to <2 x i8>
+  %i.jj = trunc <2 x i64> %4 to <2 x i8>
   %i.jk = load <8 x i8>, ptr %gep.7.i.i.i, align 1, !tbaa !90
-  %15 = shufflevector <2 x i8> %i.jj, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %16 = insertelement <8 x i8> %15, i8 %14, i64 2
-  %17 = insertelement <8 x i8> %16, i8 %13, i64 3
-  %18 = insertelement <8 x i8> %17, i8 %12, i64 4
-  %19 = insertelement <8 x i8> %18, i8 %11, i64 5
-  %20 = insertelement <8 x i8> %19, i8 %10, i64 6
-  %21 = insertelement <8 x i8> %20, i8 %9, i64 7
-  %i.jl = xor <8 x i8> %i.jk, %21
+  %10 = shufflevector <2 x i8> %i.jj, <2 x i8> %9, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %11 = shufflevector <4 x i8> %8, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %12 = shufflevector <8 x i8> %10, <8 x i8> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.jl = xor <8 x i8> %i.jk, %12
   store <8 x i8> %i.jl, ptr %gep.7.i.i.i, align 1, !tbaa !90
   %i.jm = call i32 @EVP_CipherInit_ex(ptr noundef nonnull %i.jb, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 1) #10
   %.not48.i.i.i = icmp eq i32 %i.jm, 1

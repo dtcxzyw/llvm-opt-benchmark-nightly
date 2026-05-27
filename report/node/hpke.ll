@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !54   ; 8 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !54   ; 3 uses
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
@@ -246,30 +246,21 @@ bb.m:                                             ; preds = %bb.k
   %i.w = load <4 x i8>, ptr %i.r, align 1, !tbaa !60
   store <4 x i8> %i.w, ptr %i.a, align 4, !tbaa !60
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  %7 = lshr i64 %i.l, 8
-  %8 = lshr i64 %i.l, 16
-  %9 = lshr i64 %i.l, 24
-  %10 = lshr i64 %i.l, 32
-  %11 = lshr i64 %i.l, 40
   %i.y = insertelement <2 x i64> poison, i64 %i.l, i64 0
-  %i.z = shufflevector <2 x i64> %i.y, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.aa = lshr <2 x i64> %i.z, <i64 56, i64 48>
-  %12 = trunc i64 %i.l to i8
-  %13 = trunc i64 %7 to i8
-  %14 = trunc i64 %8 to i8
-  %15 = trunc i64 %9 to i8
-  %16 = trunc i64 %10 to i8
-  %17 = trunc i64 %11 to i8
-  %i.ab = trunc <2 x i64> %i.aa to <2 x i8>
+  %i.z = shufflevector <2 x i64> %i.y, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.aa = lshr <2 x i64> %i.z, <i64 40, i64 32>
+  %7 = lshr <2 x i64> %i.z, <i64 56, i64 48>
+  %8 = insertelement <4 x i64> poison, i64 %i.l, i64 0
+  %9 = shufflevector <4 x i64> %8, <4 x i64> poison, <4 x i32> zeroinitializer
+  %10 = lshr <4 x i64> %9, <i64 24, i64 16, i64 8, i64 0>
+  %11 = trunc <4 x i64> %10 to <4 x i8>
+  %12 = trunc <2 x i64> %i.aa to <2 x i8>
+  %i.ab = trunc <2 x i64> %7 to <2 x i8>
   %i.ac = load <8 x i8>, ptr %i.x, align 1, !tbaa !60
-  %18 = shufflevector <2 x i8> %i.ab, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %19 = insertelement <8 x i8> %18, i8 %17, i64 2
-  %20 = insertelement <8 x i8> %19, i8 %16, i64 3
-  %21 = insertelement <8 x i8> %20, i8 %15, i64 4
-  %22 = insertelement <8 x i8> %21, i8 %14, i64 5
-  %23 = insertelement <8 x i8> %22, i8 %13, i64 6
-  %24 = insertelement <8 x i8> %23, i8 %12, i64 7
-  %i.ad = xor <8 x i8> %i.ac, %24
+  %13 = shufflevector <2 x i8> %i.ab, <2 x i8> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <4 x i8> %11, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %15 = shufflevector <8 x i8> %13, <8 x i8> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.ad = xor <8 x i8> %i.ac, %15
   store <8 x i8> %i.ad, ptr %i.v, align 4, !tbaa !60
   %i.ae = call fastcc i32 @hpke_aead_enc(ptr noundef %0, ptr noundef %i.a, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %1, ptr noundef %2)
   %.not32.not = icmp eq i32 %i.ae, 0
@@ -505,7 +496,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
-  %i.l = load i64, ptr %i.k, align 8, !tbaa !54   ; 8 uses
+  %i.l = load i64, ptr %i.k, align 8, !tbaa !54   ; 3 uses
   %i.m = icmp eq i64 %i.l, -1
   br i1 %i.m, label %bb.g, label %bb.h
 
@@ -550,30 +541,21 @@ bb.m:                                             ; preds = %bb.k
   %i.w = load <4 x i8>, ptr %i.r, align 1, !tbaa !60
   store <4 x i8> %i.w, ptr %i.a, align 4, !tbaa !60
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  %7 = lshr i64 %i.l, 8
-  %8 = lshr i64 %i.l, 16
-  %9 = lshr i64 %i.l, 24
-  %10 = lshr i64 %i.l, 32
-  %11 = lshr i64 %i.l, 40
   %i.y = insertelement <2 x i64> poison, i64 %i.l, i64 0
-  %i.z = shufflevector <2 x i64> %i.y, <2 x i64> poison, <2 x i32> zeroinitializer
-  %i.aa = lshr <2 x i64> %i.z, <i64 56, i64 48>
-  %12 = trunc i64 %i.l to i8
-  %13 = trunc i64 %7 to i8
-  %14 = trunc i64 %8 to i8
-  %15 = trunc i64 %9 to i8
-  %16 = trunc i64 %10 to i8
-  %17 = trunc i64 %11 to i8
-  %i.ab = trunc <2 x i64> %i.aa to <2 x i8>
+  %i.z = shufflevector <2 x i64> %i.y, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
+  %i.aa = lshr <2 x i64> %i.z, <i64 40, i64 32>
+  %7 = lshr <2 x i64> %i.z, <i64 56, i64 48>
+  %8 = insertelement <4 x i64> poison, i64 %i.l, i64 0
+  %9 = shufflevector <4 x i64> %8, <4 x i64> poison, <4 x i32> zeroinitializer
+  %10 = lshr <4 x i64> %9, <i64 24, i64 16, i64 8, i64 0>
+  %11 = trunc <4 x i64> %10 to <4 x i8>
+  %12 = trunc <2 x i64> %i.aa to <2 x i8>
+  %i.ab = trunc <2 x i64> %7 to <2 x i8>
   %i.ac = load <8 x i8>, ptr %i.x, align 1, !tbaa !60
-  %18 = shufflevector <2 x i8> %i.ab, <2 x i8> poison, <8 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %19 = insertelement <8 x i8> %18, i8 %17, i64 2
-  %20 = insertelement <8 x i8> %19, i8 %16, i64 3
-  %21 = insertelement <8 x i8> %20, i8 %15, i64 4
-  %22 = insertelement <8 x i8> %21, i8 %14, i64 5
-  %23 = insertelement <8 x i8> %22, i8 %13, i64 6
-  %24 = insertelement <8 x i8> %23, i8 %12, i64 7
-  %i.ad = xor <8 x i8> %i.ac, %24
+  %13 = shufflevector <2 x i8> %i.ab, <2 x i8> %12, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %14 = shufflevector <4 x i8> %11, <4 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison>
+  %15 = shufflevector <8 x i8> %13, <8 x i8> %14, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11>
+  %i.ad = xor <8 x i8> %i.ac, %15
   store <8 x i8> %i.ad, ptr %i.v, align 4, !tbaa !60
   %i.ae = call fastcc i32 @hpke_aead_dec(ptr noundef %0, ptr noundef %i.a, ptr noundef %3, i64 noundef %4, ptr noundef %5, i64 noundef %6, ptr noundef %1, ptr noundef %2)
   %.not32.not = icmp eq i32 %i.ae, 0

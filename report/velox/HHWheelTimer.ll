@@ -201,61 +201,53 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.p = insertelement <2 x ptr> poison, ptr %i.n, i64 0
   %i.q = insertelement <2 x ptr> %i.p, ptr %i.o, i64 1
   %i.r = getelementptr i8, <2 x ptr> %i.q, <2 x i64> <i64 248, i64 264>
-  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 248
-  %6 = getelementptr i8, ptr %0, i64 %i.m
-  %i.s = getelementptr i8, ptr %6, i64 280
+  %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 248
   %i.t = getelementptr i8, ptr %0, i64 %i.m
-  %i.u = getelementptr i8, ptr %i.t, i64 296
-  %7 = shufflevector <2 x ptr> %i.r, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %8 = insertelement <4 x ptr> %7, ptr %i.s, i64 2
-  %9 = insertelement <4 x ptr> %8, ptr %i.u, i64 3
+  %i.u = getelementptr i8, ptr %0, i64 %i.m
+  %5 = insertelement <2 x ptr> poison, ptr %i.t, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.u, i64 1
+  %7 = getelementptr i8, <2 x ptr> %6, <2 x i64> <i64 280, i64 296>
   %i.v = getelementptr i8, ptr %0, i64 %i.m       ; 2 uses
   %i.w = getelementptr i8, ptr %0, i64 %i.m
   %i.x = insertelement <2 x ptr> poison, ptr %i.v, i64 0
   %i.y = insertelement <2 x ptr> %i.x, ptr %i.w, i64 1
   %i.z = getelementptr i8, <2 x ptr> %i.y, <2 x i64> <i64 312, i64 328>
-  %10 = getelementptr i8, ptr %i.v, i64 312
-  %11 = getelementptr i8, ptr %0, i64 %i.m
-  %i.aa = getelementptr i8, ptr %11, i64 344
+  %i.aa = getelementptr i8, ptr %i.v, i64 312
   %i.ab = getelementptr i8, ptr %0, i64 %i.m
-  %i.ac = getelementptr i8, ptr %i.ab, i64 360
-  %12 = shufflevector <2 x ptr> %i.z, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %13 = insertelement <4 x ptr> %12, ptr %i.aa, i64 2
-  %14 = insertelement <4 x ptr> %13, ptr %i.ac, i64 3
+  %i.ac = getelementptr i8, ptr %0, i64 %i.m
+  %8 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.ac, i64 1
+  %10 = getelementptr i8, <2 x ptr> %9, <2 x i64> <i64 344, i64 360>
   %i.ad = getelementptr i8, ptr %0, i64 %i.m      ; 2 uses
   %i.ae = getelementptr i8, ptr %0, i64 %i.m
   %i.af = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
   %i.ag = insertelement <2 x ptr> %i.af, ptr %i.ae, i64 1
   %i.ah = getelementptr i8, <2 x ptr> %i.ag, <2 x i64> <i64 376, i64 392>
-  %15 = getelementptr i8, ptr %i.ad, i64 376
-  %16 = getelementptr i8, ptr %0, i64 %i.m
-  %i.ai = getelementptr i8, ptr %16, i64 408
+  %i.ai = getelementptr i8, ptr %i.ad, i64 376
   %i.aj = getelementptr i8, ptr %0, i64 %i.m
-  %i.ak = getelementptr i8, ptr %i.aj, i64 424
-  %17 = shufflevector <2 x ptr> %i.ah, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %18 = insertelement <4 x ptr> %17, ptr %i.ai, i64 2
-  %19 = insertelement <4 x ptr> %18, ptr %i.ak, i64 3
+  %i.ak = getelementptr i8, ptr %0, i64 %i.m
+  %11 = insertelement <2 x ptr> poison, ptr %i.aj, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.ak, i64 1
+  %13 = getelementptr i8, <2 x ptr> %12, <2 x i64> <i64 408, i64 424>
   %i.al = getelementptr i8, ptr %0, i64 %i.m      ; 2 uses
   %i.am = getelementptr i8, ptr %0, i64 %i.m
   %i.an = insertelement <2 x ptr> poison, ptr %i.al, i64 0
   %i.ao = insertelement <2 x ptr> %i.an, ptr %i.am, i64 1
   %i.ap = getelementptr i8, <2 x ptr> %i.ao, <2 x i64> <i64 440, i64 456>
-  %20 = getelementptr i8, ptr %i.al, i64 440
-  %21 = getelementptr i8, ptr %0, i64 %i.m
-  %i.aq = getelementptr i8, ptr %21, i64 472
+  %i.aq = getelementptr i8, ptr %i.al, i64 440
   %i.ar = getelementptr i8, ptr %0, i64 %i.m
-  %i.as = getelementptr i8, ptr %i.ar, i64 488
-  %22 = shufflevector <2 x ptr> %i.ap, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %23 = insertelement <4 x ptr> %22, ptr %i.aq, i64 2
-  %24 = insertelement <4 x ptr> %23, ptr %i.as, i64 3
-  %interleaved.vec = shufflevector <4 x ptr> %9, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec, ptr %5, align 8, !tbaa !2390
-  %interleaved.vec36 = shufflevector <4 x ptr> %14, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec36, ptr %10, align 8, !tbaa !2390
-  %interleaved.vec37 = shufflevector <4 x ptr> %19, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec37, ptr %15, align 8, !tbaa !2390
-  %interleaved.vec38 = shufflevector <4 x ptr> %24, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec38, ptr %20, align 8, !tbaa !2390
+  %i.as = getelementptr i8, ptr %0, i64 %i.m
+  %14 = insertelement <2 x ptr> poison, ptr %i.ar, i64 0
+  %15 = insertelement <2 x ptr> %14, ptr %i.as, i64 1
+  %16 = getelementptr i8, <2 x ptr> %15, <2 x i64> <i64 472, i64 488>
+  %interleaved.vec = shufflevector <2 x ptr> %i.r, <2 x ptr> %7, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec, ptr %i.s, align 8, !tbaa !2390
+  %interleaved.vec36 = shufflevector <2 x ptr> %i.z, <2 x ptr> %10, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec36, ptr %i.aa, align 8, !tbaa !2390
+  %interleaved.vec37 = shufflevector <2 x ptr> %i.ah, <2 x ptr> %13, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec37, ptr %i.ai, align 8, !tbaa !2390
+  %interleaved.vec38 = shufflevector <2 x ptr> %i.ap, <2 x ptr> %16, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec38, ptr %i.aq, align 8, !tbaa !2390
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.at = icmp eq i64 %index.next, 1024
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !2391
@@ -341,61 +333,53 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = insertelement <2 x ptr> poison, ptr %i.l, i64 0
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.m, i64 1
   %i.p = getelementptr inbounds nuw i8, <2 x ptr> %i.o, <2 x i64> <i64 8, i64 24>
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  %6 = shufflevector <2 x ptr> %i.p, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %7 = insertelement <4 x ptr> %6, ptr %i.q, i64 2
-  %8 = insertelement <4 x ptr> %7, ptr %i.s, i64 3
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %4 = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.s, i64 1
+  %6 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 40, i64 56>
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.v = insertelement <2 x ptr> poison, ptr %i.t, i64 0
   %i.w = insertelement <2 x ptr> %i.v, ptr %i.u, i64 1
   %i.x = getelementptr inbounds nuw i8, <2 x ptr> %i.w, <2 x i64> <i64 72, i64 88>
-  %9 = getelementptr inbounds nuw i8, ptr %i.t, i64 72
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.y = getelementptr inbounds nuw i8, ptr %10, i64 104
+  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 120
-  %11 = shufflevector <2 x ptr> %i.x, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %12 = insertelement <4 x ptr> %11, ptr %i.y, i64 2
-  %13 = insertelement <4 x ptr> %12, ptr %i.aa, i64 3
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %7 = insertelement <2 x ptr> poison, ptr %i.z, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.aa, i64 1
+  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 104, i64 120>
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.ad = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
   %i.ae = insertelement <2 x ptr> %i.ad, ptr %i.ac, i64 1
   %i.af = getelementptr inbounds nuw i8, <2 x ptr> %i.ae, <2 x i64> <i64 136, i64 152>
-  %14 = getelementptr inbounds nuw i8, ptr %i.ab, i64 136
-  %15 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ag = getelementptr inbounds nuw i8, ptr %15, i64 168
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 136
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 184
-  %16 = shufflevector <2 x ptr> %i.af, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %17 = insertelement <4 x ptr> %16, ptr %i.ag, i64 2
-  %18 = insertelement <4 x ptr> %17, ptr %i.ai, i64 3
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %10 = insertelement <2 x ptr> poison, ptr %i.ah, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %i.ai, i64 1
+  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 168, i64 184>
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.al = insertelement <2 x ptr> poison, ptr %i.aj, i64 0
   %i.am = insertelement <2 x ptr> %i.al, ptr %i.ak, i64 1
   %i.an = getelementptr inbounds nuw i8, <2 x ptr> %i.am, <2 x i64> <i64 200, i64 216>
-  %19 = getelementptr inbounds nuw i8, ptr %i.aj, i64 200
-  %20 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ao = getelementptr inbounds nuw i8, ptr %20, i64 232
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 200
   %i.ap = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 248
-  %21 = shufflevector <2 x ptr> %i.an, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %22 = insertelement <4 x ptr> %21, ptr %i.ao, i64 2
-  %23 = insertelement <4 x ptr> %22, ptr %i.aq, i64 3
-  %interleaved.vec = shufflevector <4 x ptr> %8, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec, ptr %4, align 8, !tbaa !2390, !noalias !2394
-  %interleaved.vec144 = shufflevector <4 x ptr> %13, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec144, ptr %9, align 8, !tbaa !2390, !noalias !2394
-  %interleaved.vec145 = shufflevector <4 x ptr> %18, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec145, ptr %14, align 8, !tbaa !2390, !noalias !2394
-  %interleaved.vec146 = shufflevector <4 x ptr> %23, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec146, ptr %19, align 8, !tbaa !2390, !noalias !2394
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %13 = insertelement <2 x ptr> poison, ptr %i.ap, i64 0
+  %14 = insertelement <2 x ptr> %13, ptr %i.aq, i64 1
+  %15 = getelementptr inbounds nuw i8, <2 x ptr> %14, <2 x i64> <i64 232, i64 248>
+  %interleaved.vec = shufflevector <2 x ptr> %i.p, <2 x ptr> %6, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec, ptr %i.q, align 8, !tbaa !2390, !noalias !2394
+  %interleaved.vec144 = shufflevector <2 x ptr> %i.x, <2 x ptr> %9, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec144, ptr %i.y, align 8, !tbaa !2390, !noalias !2394
+  %interleaved.vec145 = shufflevector <2 x ptr> %i.af, <2 x ptr> %12, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec145, ptr %i.ag, align 8, !tbaa !2390, !noalias !2394
+  %interleaved.vec146 = shufflevector <2 x ptr> %i.an, <2 x ptr> %15, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec146, ptr %i.ao, align 8, !tbaa !2390, !noalias !2394
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ar = icmp eq i64 %index.next, %n.vec
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !2397
@@ -423,16 +407,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ax = insertelement <2 x ptr> poison, ptr %i.av, i64 0
   %i.ay = insertelement <2 x ptr> %i.ax, ptr %i.aw, i64 1
   %i.az = getelementptr inbounds nuw i8, <2 x ptr> %i.ay, <2 x i64> <i64 8, i64 24>
-  %24 = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  %25 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
-  %i.ba = getelementptr inbounds nuw i8, ptr %25, i64 40
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 56
-  %26 = shufflevector <2 x ptr> %i.az, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %27 = insertelement <4 x ptr> %26, ptr %i.ba, i64 2
-  %28 = insertelement <4 x ptr> %27, ptr %i.bc, i64 3
-  %interleaved.vec150 = shufflevector <4 x ptr> %28, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec150, ptr %24, align 8, !tbaa !2390, !noalias !2394
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
+  %16 = insertelement <2 x ptr> poison, ptr %i.bb, i64 0
+  %17 = insertelement <2 x ptr> %16, ptr %i.bc, i64 1
+  %18 = getelementptr inbounds nuw i8, <2 x ptr> %17, <2 x i64> <i64 40, i64 56>
+  %interleaved.vec150 = shufflevector <2 x ptr> %i.az, <2 x ptr> %18, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec150, ptr %i.ba, align 8, !tbaa !2390, !noalias !2394
   %index.next151 = add nuw i64 %index149, 4       ; 2 uses
   %i.bd = icmp eq i64 %index.next151, %n.vec148
   br i1 %i.bd, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !2399
@@ -835,61 +817,53 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.p = insertelement <2 x ptr> poison, ptr %i.n, i64 0
   %i.q = insertelement <2 x ptr> %i.p, ptr %i.o, i64 1
   %i.r = getelementptr i8, <2 x ptr> %i.q, <2 x i64> <i64 248, i64 264>
-  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 248
-  %6 = getelementptr i8, ptr %0, i64 %i.m
-  %i.s = getelementptr i8, ptr %6, i64 280
+  %i.s = getelementptr inbounds nuw i8, ptr %i.n, i64 248
   %i.t = getelementptr i8, ptr %0, i64 %i.m
-  %i.u = getelementptr i8, ptr %i.t, i64 296
-  %7 = shufflevector <2 x ptr> %i.r, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %8 = insertelement <4 x ptr> %7, ptr %i.s, i64 2
-  %9 = insertelement <4 x ptr> %8, ptr %i.u, i64 3
+  %i.u = getelementptr i8, ptr %0, i64 %i.m
+  %5 = insertelement <2 x ptr> poison, ptr %i.t, i64 0
+  %6 = insertelement <2 x ptr> %5, ptr %i.u, i64 1
+  %7 = getelementptr i8, <2 x ptr> %6, <2 x i64> <i64 280, i64 296>
   %i.v = getelementptr i8, ptr %0, i64 %i.m       ; 2 uses
   %i.w = getelementptr i8, ptr %0, i64 %i.m
   %i.x = insertelement <2 x ptr> poison, ptr %i.v, i64 0
   %i.y = insertelement <2 x ptr> %i.x, ptr %i.w, i64 1
   %i.z = getelementptr i8, <2 x ptr> %i.y, <2 x i64> <i64 312, i64 328>
-  %10 = getelementptr i8, ptr %i.v, i64 312
-  %11 = getelementptr i8, ptr %0, i64 %i.m
-  %i.aa = getelementptr i8, ptr %11, i64 344
+  %i.aa = getelementptr i8, ptr %i.v, i64 312
   %i.ab = getelementptr i8, ptr %0, i64 %i.m
-  %i.ac = getelementptr i8, ptr %i.ab, i64 360
-  %12 = shufflevector <2 x ptr> %i.z, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %13 = insertelement <4 x ptr> %12, ptr %i.aa, i64 2
-  %14 = insertelement <4 x ptr> %13, ptr %i.ac, i64 3
+  %i.ac = getelementptr i8, ptr %0, i64 %i.m
+  %8 = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
+  %9 = insertelement <2 x ptr> %8, ptr %i.ac, i64 1
+  %10 = getelementptr i8, <2 x ptr> %9, <2 x i64> <i64 344, i64 360>
   %i.ad = getelementptr i8, ptr %0, i64 %i.m      ; 2 uses
   %i.ae = getelementptr i8, ptr %0, i64 %i.m
   %i.af = insertelement <2 x ptr> poison, ptr %i.ad, i64 0
   %i.ag = insertelement <2 x ptr> %i.af, ptr %i.ae, i64 1
   %i.ah = getelementptr i8, <2 x ptr> %i.ag, <2 x i64> <i64 376, i64 392>
-  %15 = getelementptr i8, ptr %i.ad, i64 376
-  %16 = getelementptr i8, ptr %0, i64 %i.m
-  %i.ai = getelementptr i8, ptr %16, i64 408
+  %i.ai = getelementptr i8, ptr %i.ad, i64 376
   %i.aj = getelementptr i8, ptr %0, i64 %i.m
-  %i.ak = getelementptr i8, ptr %i.aj, i64 424
-  %17 = shufflevector <2 x ptr> %i.ah, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %18 = insertelement <4 x ptr> %17, ptr %i.ai, i64 2
-  %19 = insertelement <4 x ptr> %18, ptr %i.ak, i64 3
+  %i.ak = getelementptr i8, ptr %0, i64 %i.m
+  %11 = insertelement <2 x ptr> poison, ptr %i.aj, i64 0
+  %12 = insertelement <2 x ptr> %11, ptr %i.ak, i64 1
+  %13 = getelementptr i8, <2 x ptr> %12, <2 x i64> <i64 408, i64 424>
   %i.al = getelementptr i8, ptr %0, i64 %i.m      ; 2 uses
   %i.am = getelementptr i8, ptr %0, i64 %i.m
   %i.an = insertelement <2 x ptr> poison, ptr %i.al, i64 0
   %i.ao = insertelement <2 x ptr> %i.an, ptr %i.am, i64 1
   %i.ap = getelementptr i8, <2 x ptr> %i.ao, <2 x i64> <i64 440, i64 456>
-  %20 = getelementptr i8, ptr %i.al, i64 440
-  %21 = getelementptr i8, ptr %0, i64 %i.m
-  %i.aq = getelementptr i8, ptr %21, i64 472
+  %i.aq = getelementptr i8, ptr %i.al, i64 440
   %i.ar = getelementptr i8, ptr %0, i64 %i.m
-  %i.as = getelementptr i8, ptr %i.ar, i64 488
-  %22 = shufflevector <2 x ptr> %i.ap, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %23 = insertelement <4 x ptr> %22, ptr %i.aq, i64 2
-  %24 = insertelement <4 x ptr> %23, ptr %i.as, i64 3
-  %interleaved.vec = shufflevector <4 x ptr> %9, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec, ptr %5, align 8, !tbaa !2390
-  %interleaved.vec36 = shufflevector <4 x ptr> %14, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec36, ptr %10, align 8, !tbaa !2390
-  %interleaved.vec37 = shufflevector <4 x ptr> %19, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec37, ptr %15, align 8, !tbaa !2390
-  %interleaved.vec38 = shufflevector <4 x ptr> %24, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec38, ptr %20, align 8, !tbaa !2390
+  %i.as = getelementptr i8, ptr %0, i64 %i.m
+  %14 = insertelement <2 x ptr> poison, ptr %i.ar, i64 0
+  %15 = insertelement <2 x ptr> %14, ptr %i.as, i64 1
+  %16 = getelementptr i8, <2 x ptr> %15, <2 x i64> <i64 472, i64 488>
+  %interleaved.vec = shufflevector <2 x ptr> %i.r, <2 x ptr> %7, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec, ptr %i.s, align 8, !tbaa !2390
+  %interleaved.vec36 = shufflevector <2 x ptr> %i.z, <2 x ptr> %10, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec36, ptr %i.aa, align 8, !tbaa !2390
+  %interleaved.vec37 = shufflevector <2 x ptr> %i.ah, <2 x ptr> %13, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec37, ptr %i.ai, align 8, !tbaa !2390
+  %interleaved.vec38 = shufflevector <2 x ptr> %i.ap, <2 x ptr> %16, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec38, ptr %i.aq, align 8, !tbaa !2390
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.at = icmp eq i64 %index.next, 1024
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !2433
@@ -964,61 +938,53 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.n = insertelement <2 x ptr> poison, ptr %i.l, i64 0
   %i.o = insertelement <2 x ptr> %i.n, ptr %i.m, i64 1
   %i.p = getelementptr inbounds nuw i8, <2 x ptr> %i.o, <2 x i64> <i64 8, i64 24>
-  %4 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  %5 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  %6 = shufflevector <2 x ptr> %i.p, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %7 = insertelement <4 x ptr> %6, ptr %i.q, i64 2
-  %8 = insertelement <4 x ptr> %7, ptr %i.s, i64 3
+  %i.s = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %4 = insertelement <2 x ptr> poison, ptr %i.r, i64 0
+  %5 = insertelement <2 x ptr> %4, ptr %i.s, i64 1
+  %6 = getelementptr inbounds nuw i8, <2 x ptr> %5, <2 x i64> <i64 40, i64 56>
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.v = insertelement <2 x ptr> poison, ptr %i.t, i64 0
   %i.w = insertelement <2 x ptr> %i.v, ptr %i.u, i64 1
   %i.x = getelementptr inbounds nuw i8, <2 x ptr> %i.w, <2 x i64> <i64 72, i64 88>
-  %9 = getelementptr inbounds nuw i8, ptr %i.t, i64 72
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.y = getelementptr inbounds nuw i8, ptr %10, i64 104
+  %i.y = getelementptr inbounds nuw i8, ptr %i.t, i64 72
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 120
-  %11 = shufflevector <2 x ptr> %i.x, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %12 = insertelement <4 x ptr> %11, ptr %i.y, i64 2
-  %13 = insertelement <4 x ptr> %12, ptr %i.aa, i64 3
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %7 = insertelement <2 x ptr> poison, ptr %i.z, i64 0
+  %8 = insertelement <2 x ptr> %7, ptr %i.aa, i64 1
+  %9 = getelementptr inbounds nuw i8, <2 x ptr> %8, <2 x i64> <i64 104, i64 120>
   %i.ab = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.ad = insertelement <2 x ptr> poison, ptr %i.ab, i64 0
   %i.ae = insertelement <2 x ptr> %i.ad, ptr %i.ac, i64 1
   %i.af = getelementptr inbounds nuw i8, <2 x ptr> %i.ae, <2 x i64> <i64 136, i64 152>
-  %14 = getelementptr inbounds nuw i8, ptr %i.ab, i64 136
-  %15 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ag = getelementptr inbounds nuw i8, ptr %15, i64 168
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.ab, i64 136
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 184
-  %16 = shufflevector <2 x ptr> %i.af, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %17 = insertelement <4 x ptr> %16, ptr %i.ag, i64 2
-  %18 = insertelement <4 x ptr> %17, ptr %i.ai, i64 3
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %10 = insertelement <2 x ptr> poison, ptr %i.ah, i64 0
+  %11 = insertelement <2 x ptr> %10, ptr %i.ai, i64 1
+  %12 = getelementptr inbounds nuw i8, <2 x ptr> %11, <2 x i64> <i64 168, i64 184>
   %i.aj = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
   %i.al = insertelement <2 x ptr> poison, ptr %i.aj, i64 0
   %i.am = insertelement <2 x ptr> %i.al, ptr %i.ak, i64 1
   %i.an = getelementptr inbounds nuw i8, <2 x ptr> %i.am, <2 x i64> <i64 200, i64 216>
-  %19 = getelementptr inbounds nuw i8, ptr %i.aj, i64 200
-  %20 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.ao = getelementptr inbounds nuw i8, ptr %20, i64 232
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.aj, i64 200
   %i.ap = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 248
-  %21 = shufflevector <2 x ptr> %i.an, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %22 = insertelement <4 x ptr> %21, ptr %i.ao, i64 2
-  %23 = insertelement <4 x ptr> %22, ptr %i.aq, i64 3
-  %interleaved.vec = shufflevector <4 x ptr> %8, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec, ptr %4, align 8, !tbaa !2390, !noalias !2434
-  %interleaved.vec144 = shufflevector <4 x ptr> %13, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec144, ptr %9, align 8, !tbaa !2390, !noalias !2434
-  %interleaved.vec145 = shufflevector <4 x ptr> %18, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec145, ptr %14, align 8, !tbaa !2390, !noalias !2434
-  %interleaved.vec146 = shufflevector <4 x ptr> %23, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec146, ptr %19, align 8, !tbaa !2390, !noalias !2434
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.k
+  %13 = insertelement <2 x ptr> poison, ptr %i.ap, i64 0
+  %14 = insertelement <2 x ptr> %13, ptr %i.aq, i64 1
+  %15 = getelementptr inbounds nuw i8, <2 x ptr> %14, <2 x i64> <i64 232, i64 248>
+  %interleaved.vec = shufflevector <2 x ptr> %i.p, <2 x ptr> %6, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec, ptr %i.q, align 8, !tbaa !2390, !noalias !2434
+  %interleaved.vec144 = shufflevector <2 x ptr> %i.x, <2 x ptr> %9, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec144, ptr %i.y, align 8, !tbaa !2390, !noalias !2434
+  %interleaved.vec145 = shufflevector <2 x ptr> %i.af, <2 x ptr> %12, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec145, ptr %i.ag, align 8, !tbaa !2390, !noalias !2434
+  %interleaved.vec146 = shufflevector <2 x ptr> %i.an, <2 x ptr> %15, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec146, ptr %i.ao, align 8, !tbaa !2390, !noalias !2434
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.ar = icmp eq i64 %index.next, %n.vec
   br i1 %i.ar, label %middle.block, label %vector.body, !llvm.loop !2437
@@ -1046,16 +1012,14 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.ax = insertelement <2 x ptr> poison, ptr %i.av, i64 0
   %i.ay = insertelement <2 x ptr> %i.ax, ptr %i.aw, i64 1
   %i.az = getelementptr inbounds nuw i8, <2 x ptr> %i.ay, <2 x i64> <i64 8, i64 24>
-  %24 = getelementptr inbounds nuw i8, ptr %i.av, i64 8
-  %25 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
-  %i.ba = getelementptr inbounds nuw i8, ptr %25, i64 40
+  %i.ba = getelementptr inbounds nuw i8, ptr %i.av, i64 8
   %i.bb = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 56
-  %26 = shufflevector <2 x ptr> %i.az, <2 x ptr> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %27 = insertelement <4 x ptr> %26, ptr %i.ba, i64 2
-  %28 = insertelement <4 x ptr> %27, ptr %i.bc, i64 3
-  %interleaved.vec150 = shufflevector <4 x ptr> %28, <4 x ptr> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
-  store <8 x ptr> %interleaved.vec150, ptr %24, align 8, !tbaa !2390, !noalias !2434
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.au
+  %16 = insertelement <2 x ptr> poison, ptr %i.bb, i64 0
+  %17 = insertelement <2 x ptr> %16, ptr %i.bc, i64 1
+  %18 = getelementptr inbounds nuw i8, <2 x ptr> %17, <2 x i64> <i64 40, i64 56>
+  %interleaved.vec150 = shufflevector <2 x ptr> %i.az, <2 x ptr> %18, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
+  store <8 x ptr> %interleaved.vec150, ptr %i.ba, align 8, !tbaa !2390, !noalias !2434
   %index.next151 = add nuw i64 %index149, 4       ; 2 uses
   %i.bd = icmp eq i64 %index.next151, %n.vec148
   br i1 %i.bd, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !2438
