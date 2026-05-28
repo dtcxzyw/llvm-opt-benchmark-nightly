@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %_ZN5folly4coro15Sha
   %i.k = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !50   ; 2 uses
   %i.m = load ptr, ptr %i.l, align 8
-  invoke fastcc void %i.m(ptr nonnull %i.l)
+  invoke void %i.m(ptr nonnull %i.l)
           to label %_ZN5folly4coro15SharedMutexFair15LockAwaiterBase6resumeEv.exit.i unwind label %bb.f, !llvm.loop !52, !inline_history !53
 
 bb.f:                                             ; preds = %bb.e
@@ -399,7 +399,7 @@ bb.b:                                             ; preds = %_ZN5folly4coro15Sha
   %i.c = getelementptr inbounds nuw i8, ptr %.0, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !50   ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8
-  invoke fastcc void %i.e(ptr nonnull %i.d)
+  invoke void %i.e(ptr nonnull %i.d)
           to label %_ZN5folly4coro15SharedMutexFair15LockAwaiterBase6resumeEv.exit unwind label %bb.c, !llvm.loop !52, !inline_history !53
 
 bb.c:                                             ; preds = %bb.b
@@ -554,7 +554,7 @@ bb.p:                                             ; preds = %_ZN5folly4coro15Sha
   %i.al = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !50 ; 2 uses
   %i.an = load ptr, ptr %i.am, align 8
-  invoke fastcc void %i.an(ptr nonnull %i.am)
+  invoke void %i.an(ptr nonnull %i.am)
           to label %_ZN5folly4coro15SharedMutexFair15LockAwaiterBase6resumeEv.exit.i unwind label %bb.q, !llvm.loop !52, !inline_history !53
 
 bb.q:                                             ; preds = %bb.p
@@ -699,7 +699,7 @@ bb.k:                                             ; preds = %_ZN5folly4coro15Sha
   %i.ai = getelementptr inbounds nuw i8, ptr %.0.i, i64 16
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !50 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8
-  invoke fastcc void %i.ak(ptr nonnull %i.aj)
+  invoke void %i.ak(ptr nonnull %i.aj)
           to label %_ZN5folly4coro15SharedMutexFair15LockAwaiterBase6resumeEv.exit.i unwind label %bb.l, !llvm.loop !52, !inline_history !53
 
 bb.l:                                             ; preds = %bb.k

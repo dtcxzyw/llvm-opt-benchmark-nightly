@@ -201,7 +201,7 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.d
   %i.h = load ptr, ptr %i.g, align 8
-  invoke fastcc void %i.h(ptr nonnull %i.g)
+  invoke void %i.h(ptr nonnull %i.g)
           to label %_ZN5folly4coro23ExtendedCoroutineHandle6resumeEv.exit unwind label %bb.g, !inline_history !320
 
 _ZN5folly4coro23ExtendedCoroutineHandle6resumeEv.exit: ; preds = %bb.f, %bb.e
@@ -354,7 +354,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !321  ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
-  tail call fastcc void %i.c(ptr nonnull %i.b), !inline_history !322
+  tail call void %i.c(ptr nonnull %i.b), !inline_history !322
   ret void
 }
 
@@ -757,7 +757,7 @@ declare void @_ZN5folly15SharedMutexImplILb1EvSt6atomicNS_24SharedMutexPolicyDef
 declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.resume(ptr noundef nonnull align 8 dereferenceable(104) initializes((0, 8)) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
 CoroEnd:
   %.reload.addr13 = getelementptr inbounds nuw i8, ptr %0, i64 97
   store ptr null, ptr %0, align 8
@@ -766,7 +766,7 @@ CoroEnd:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy(ptr noundef nonnull align 8 captures(none) dereferenceable(104) initializes((16, 24)) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5folly4coro6detail12ViaCoroutineILb0EE10createImplEv.destroy(ptr noundef nonnull align 8 captures(none) dereferenceable(104) initializes((16, 24)) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %.reload.addr14 = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN5folly4coro6detail23ViaCoroutinePromiseBaseE, i64 16), ptr %.reload.addr14, align 8, !tbaa !117
@@ -856,7 +856,7 @@ CoroEnd:                                          ; preds = %_ZN5folly4coro6deta
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @_ZN5folly6fibers13SemaphoreBase14co_wait_commonEl.resume(ptr noundef nonnull align 16 dereferenceable(320) %0) #0 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5folly6fibers13SemaphoreBase14co_wait_commonEl.resume(ptr noundef nonnull align 16 dereferenceable(320) %0) #0 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %i.a = alloca i32, align 4                      ; 4 uses
   %1 = alloca %"struct.folly::OperationCancelled", align 8 ; 5 uses
@@ -1055,7 +1055,7 @@ bb.k:                                             ; preds = %AfterCoroSave81
 bb.l:                                             ; preds = %bb.k
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   %i.be = load ptr, ptr %i.bd, align 8
-  invoke fastcc void %i.be(ptr nonnull %i.bc)
+  invoke void %i.be(ptr nonnull %i.bc)
           to label %.from.110 unwind label %bb.m, !inline_history !486
 
 bb.m:                                             ; preds = %bb.l
@@ -1074,7 +1074,7 @@ bb.n:                                             ; preds = %AfterCoroSuspend83
   store i64 0, ptr %.reload.addr133, align 16, !tbaa !54
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 8
   %i.bj = load ptr, ptr %i.bi, align 8
-  invoke fastcc void %i.bj(ptr nonnull %i.bh)
+  invoke void %i.bj(ptr nonnull %i.bh)
           to label %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit unwind label %bb.o, !inline_history !486
 
 bb.o:                                             ; preds = %bb.n
@@ -1092,7 +1092,7 @@ _ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit: 
 bb.p:                                             ; preds = %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit
   %i.bm = getelementptr inbounds nuw i8, ptr %.pr, i64 8
   %i.bn = load ptr, ptr %i.bm, align 8
-  invoke fastcc void %i.bn(ptr nonnull %.pr)
+  invoke void %i.bn(ptr nonnull %.pr)
           to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS_6fibers5BatonEED2Ev.exit unwind label %bb.q, !inline_history !486
 
 bb.q:                                             ; preds = %bb.p
@@ -1163,7 +1163,7 @@ bb.y:                                             ; preds = %bb.v, %bb.w, %bb.x
   store i2 -2, ptr %index.addr, align 8
   %i.cf = call ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter13await_suspendINS1_11TaskPromiseIvEEEENSt7__n486116coroutine_handleIvEENS8_IT_EE(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr139, ptr nonnull %0) #5 ; 2 uses
   %i.cg = load ptr, ptr %i.cf, align 8
-  musttail call fastcc void %i.cg(ptr nonnull %i.cf)
+  musttail call void %i.cg(ptr nonnull %i.cf)
   ret void
 
 bb.z:                                             ; preds = %bb.u
@@ -1214,7 +1214,7 @@ bb.ad:                                            ; preds = %.from.110, %.from.1
   store i2 -1, ptr %index.addr, align 8
   %i.co = call ptr @_ZN5folly4coro6detail15TaskPromiseBase12FinalAwaiter13await_suspendINS1_11TaskPromiseIvEEEENSt7__n486116coroutine_handleIvEENS8_IT_EE(ptr noundef nonnull align 1 dereferenceable(1) %.reload.addr140, ptr nonnull %0) #5 ; 2 uses
   %i.cp = load ptr, ptr %i.co, align 8
-  musttail call fastcc void %i.cp(ptr nonnull %i.co)
+  musttail call void %i.cp(ptr nonnull %i.co)
   ret void
 
 ._crit_edge:                                      ; preds = %bb.a, %._crit_edge.from.
@@ -1264,7 +1264,7 @@ unreachable:                                      ; preds = %resume.entry
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define internal fastcc void @_ZN5folly6fibers13SemaphoreBase14co_wait_commonEl.destroy(ptr noundef nonnull align 16 dereferenceable(320) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
+define internal void @_ZN5folly6fibers13SemaphoreBase14co_wait_commonEl.destroy(ptr noundef nonnull align 16 dereferenceable(320) %0) #12 align 2 personality ptr @__gxx_personality_v0 {
 resume.entry:
   %.reload.addr131 = getelementptr inbounds nuw i8, ptr %0, i64 112
   %.reload.addr134 = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
@@ -1286,7 +1286,7 @@ _ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit: 
 bb.a:                                             ; preds = %_ZN5folly4coro17ViaIfAsyncAwaiterILb1ERNS_6fibers5BatonEE12await_resumeEv.exit
   %i.a = getelementptr inbounds nuw i8, ptr %.pr, i64 8
   %i.b = load ptr, ptr %i.a, align 8
-  invoke fastcc void %i.b(ptr nonnull %.pr)
+  invoke void %i.b(ptr nonnull %.pr)
           to label %_ZN5folly4coro29StackAwareViaIfAsyncAwaitableIRNS_6fibers5BatonEED2Ev.exit unwind label %bb.b, !inline_history !486
 
 bb.b:                                             ; preds = %bb.a

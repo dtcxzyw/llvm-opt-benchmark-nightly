@@ -201,7 +201,7 @@ bb.a:
   store ptr %2, ptr %i.c, align 8, !tbaa !28
   store atomic ptr %1, ptr %2 release, align 8
   %i.d = load ptr, ptr %0, align 8
-  invoke fastcc void %i.d(ptr nonnull %0)
+  invoke void %i.d(ptr nonnull %0)
           to label %_ZNKSt7__n486116coroutine_handleIvE6resumeEv.exit unwind label %bb.b, !inline_history !30
 
 _ZNKSt7__n486116coroutine_handleIvE6resumeEv.exit: ; preds = %bb.a
