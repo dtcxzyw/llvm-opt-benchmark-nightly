@@ -201,15 +201,14 @@ bb.f:                                             ; preds = %bb.a, %bb.c, %bb.e,
 
 ; Function Attrs: uwtable
 define dso_local noundef ptr @_ZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftBodyWorldInfoRK9btVector3S4_i(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(16) %2, i32 noundef %3) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
-  %5 = add i32 %3, 3                              ; 5 uses
-  %6 = icmp sgt i32 %3, -3
-  br i1 %6, label %.lr.ph.i, label %._crit_edge
-
-.lr.ph.i:                                         ; preds = %4
-  %i.a = zext nneg i32 %5 to i64
+.lr.ph.i:
+  %4 = add i32 %3, 3                              ; 5 uses
+  %5 = icmp sgt i32 %3, -3                        ; 2 uses
+  tail call void @llvm.assume(i1 %5)
+  %i.a = zext nneg i32 %4 to i64
   %i.b = shl nuw nsw i64 %i.a, 4
-  %i.c = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.b, i32 noundef 16) ; 3 uses
-  %i.d = uitofp nneg i32 %5 to float
+  %i.c = tail call noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef %i.b, i32 noundef 16) ; 5 uses
+  %i.d = uitofp nneg i32 %4 to float
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %._crit_edge.i, %.lr.ph.i
@@ -244,8 +243,8 @@ define dso_local noundef ptr @_ZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftB
   %.sroa.6.0..0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.030.i, i64 12
   store float 0.000000e+00, ptr %.sroa.6.0..0.sroa_idx.i, align 4, !tbaa !84
   %i.r = add nuw nsw i32 %.01729.i, 1             ; 2 uses
-  %exitcond.not.i14 = icmp eq i32 %i.r, %5
-  br i1 %exitcond.not.i14, label %.lr.ph, label %.preheader.i
+  %exitcond.not.i14 = icmp eq i32 %i.r, %4
+  br i1 %exitcond.not.i14, label %_ZZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftBodyWorldInfoRK9btVector3S4_iEN10Hammersley8GenerateEPS2_i.exit, label %.preheader.i
 
 .lr.ph.i13:                                       ; preds = %.preheader.i, %.lr.ph.i13
   %.01828.i = phi i32 [ %i.v, %.lr.ph.i13 ], [ %.01729.i, %.preheader.i ] ; 2 uses
@@ -260,22 +259,24 @@ define dso_local noundef ptr @_ZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftB
   %.not.i = icmp eq i32 %i.v, 0
   br i1 %.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i13
 
-.lr.ph:                                           ; preds = %._crit_edge.i
+_ZZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftBodyWorldInfoRK9btVector3S4_iEN10Hammersley8GenerateEPS2_i.exit: ; preds = %._crit_edge.i
+  br i1 %5, label %.lr.ph, label %._crit_edge
+
+.lr.ph:                                           ; preds = %_ZZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftBodyWorldInfoRK9btVector3S4_iEN10Hammersley8GenerateEPS2_i.exit
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %smax = tail call i32 @llvm.smax.i32(i32 %5, i32 1)
+  %smax = tail call i32 @llvm.smax.i32(i32 %4, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %bb.a
 
-._crit_edge:                                      ; preds = %bb.a, %4
-  %.sroa.1332.24563 = phi ptr [ null, %4 ], [ %i.c, %bb.a ] ; 3 uses
-  %i.y = invoke noundef ptr @_ZN17btSoftBodyHelpers20CreateFromConvexHullER19btSoftBodyWorldInfoPK9btVector3i(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %.sroa.1332.24563, i32 noundef %5)
+._crit_edge:                                      ; preds = %bb.a, %_ZZN17btSoftBodyHelpers15CreateEllipsoidER19btSoftBodyWorldInfoRK9btVector3S4_iEN10Hammersley8GenerateEPS2_i.exit
+  %i.y = invoke noundef ptr @_ZN17btSoftBodyHelpers20CreateFromConvexHullER19btSoftBodyWorldInfoPK9btVector3i(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull %i.c, i32 noundef %4)
           to label %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit unwind label %.thread
 
 .thread:                                          ; preds = %._crit_edge
   %i.z = landingpad { ptr, i32 }
           cleanup
-  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %.sroa.1332.24563)
+  invoke void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.c)
           to label %_ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit25 unwind label %bb.b
 
 bb.a:                                             ; preds = %.lr.ph, %bb.a
@@ -300,7 +301,7 @@ bb.a:                                             ; preds = %.lr.ph, %bb.a
   br i1 %exitcond.not, label %._crit_edge, label %bb.a
 
 _ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit:   ; preds = %._crit_edge
-  tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %.sroa.1332.24563)
+  tail call void @_Z21btAlignedFreeInternalPv(ptr noundef nonnull %i.c)
   ret ptr %i.y
 
 _ZN20btAlignedObjectArrayI9btVector3ED2Ev.exit25: ; preds = %.thread
@@ -703,11 +704,11 @@ declare float @llvm.sqrt.f32(float) #15
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #15
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #15

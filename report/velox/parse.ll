@@ -201,8 +201,7 @@ bb.a:
   %0 = alloca %"class.re2::CharClassBuilder", align 8 ; 12 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #33
   call void @_ZN3re216CharClassBuilderC1Ev(ptr noundef nonnull align 8 dereferenceable(64) %0)
-  %i.a = load i32, ptr @_ZN3re218num_unicode_groupsE, align 4, !tbaa !3 ; 2 uses
-  %1 = icmp sgt i32 %i.a, 0
+  %i.a = load i32, ptr @_ZN3re218num_unicode_groupsE, align 4, !tbaa !3
   %wide.trip.count.i = zext nneg i32 %i.a to i64  ; 2 uses
   br label %bb.c
 
@@ -215,27 +214,28 @@ bb.c:                                             ; preds = %bb.a, %_ZN3re2L9Add
   %.08.ptr = getelementptr inbounds nuw i8, ptr @constinit, i64 %.08.idx4
   %i.c = load ptr, ptr %.08.ptr, align 8, !tbaa !17 ; 2 uses
   %i.d = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #33 ; 3 uses
-  br i1 %1, label %.lr.ph.preheader.i, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit
+  %1 = icmp eq i64 %i.d, 0
+  br i1 %1, label %.lr.ph.preheader.i, label %.lr.ph.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.c
-  %i.e = icmp eq i64 %i.d, 0
-  br i1 %i.e, label %.lr.ph.i.us, label %.lr.ph.i
+  %2 = load ptr, ptr @_ZN3re214unicode_groupsE, align 8, !tbaa !173
+  %char0 = load i8, ptr %2, align 1
+  %i.e = icmp eq i8 %char0, 0
+  br i1 %i.e, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %.lr.ph.i.us
 
-.lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i, %2
-  %indvars.iv.i.us = phi i64 [ %indvars.iv.next.i.us, %2 ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
-  %i.f = getelementptr inbounds nuw [48 x i8], ptr @_ZN3re214unicode_groupsE, i64 %indvars.iv.i.us ; 2 uses
+.lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i, %.lr.ph.i.us
+  %indvars.iv.i.us = phi i64 [ %indvars.iv.next.i.us, %.lr.ph.i.us ], [ 0, %.lr.ph.preheader.i ]
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 3 uses
+  %exitcond.not.i.us = icmp ne i64 %indvars.iv.next.i.us, %wide.trip.count.i
+  call void @llvm.assume(i1 %exitcond.not.i.us)
+  %i.f = getelementptr inbounds nuw [48 x i8], ptr @_ZN3re214unicode_groupsE, i64 %indvars.iv.next.i.us ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !173
   %char0.a = load i8, ptr %i.g, align 1
   %i.h = icmp eq i8 %char0.a, 0
-  br i1 %i.h, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %2
+  br i1 %i.h, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %.lr.ph.i.us
 
-2:                                                ; preds = %.lr.ph.i.us
-  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
-  %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
-  br i1 %exitcond.not.i.us, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %.lr.ph.i.us, !llvm.loop !177
-
-.lr.ph.i:                                         ; preds = %.lr.ph.preheader.i, %bb.d
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %.lr.ph.preheader.i ] ; 2 uses
+.lr.ph.i:                                         ; preds = %bb.c, %bb.d
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.d ], [ 0, %bb.c ] ; 2 uses
   %i.i = getelementptr inbounds nuw [48 x i8], ptr @_ZN3re214unicode_groupsE, i64 %indvars.iv.i ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !173  ; 2 uses
   %i.k = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.j) #33
@@ -249,28 +249,29 @@ _ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i: ; preds = %.lr.ph.i
 
 bb.d:                                             ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit, label %.lr.ph.i, !llvm.loop !177
+  %exitcond.not.i = icmp ne i64 %indvars.iv.next.i, %wide.trip.count.i
+  call void @llvm.assume(i1 %exitcond.not.i)
+  br label %.lr.ph.i
 
-_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit: ; preds = %bb.d, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %2, %.lr.ph.i.us, %bb.c
-  %3 = phi ptr [ null, %bb.c ], [ null, %2 ], [ %i.f, %.lr.ph.i.us ], [ null, %bb.d ], [ %i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ] ; 4 uses
-  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
+_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit: ; preds = %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i, %.lr.ph.i.us, %.lr.ph.preheader.i
+  %.us-phi = phi ptr [ %i.f, %.lr.ph.i.us ], [ @_ZN3re214unicode_groupsE, %.lr.ph.preheader.i ], [ %i.i, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i.i ] ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.us-phi, i64 24 ; 2 uses
   %i.o = load i32, ptr %i.n, align 8, !tbaa !182
   %i.p = icmp sgt i32 %i.o, 0
   br i1 %i.p, label %.lr.ph85.i, label %.preheader.i
 
 .lr.ph85.i:                                       ; preds = %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit
-  %i.q = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %i.q = getelementptr inbounds nuw i8, ptr %.us-phi, i64 16
   br label %bb.e
 
 .preheader.i:                                     ; preds = %.noexc, %_ZN3re2L11LookupGroupESt17basic_string_viewIcSt11char_traitsIcEEPKNS_6UGroupEi.exit
-  %i.r = getelementptr inbounds nuw i8, ptr %3, i64 40 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %.us-phi, i64 40 ; 2 uses
   %i.s = load i32, ptr %i.r, align 8, !tbaa !184
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.lr.ph87.i, label %_ZN3re2L9AddUGroupEPNS_16CharClassBuilderEPKNS_6UGroupEiNS_6Regexp10ParseFlagsE.exit
 
 .lr.ph87.i:                                       ; preds = %.preheader.i
-  %i.u = getelementptr inbounds nuw i8, ptr %3, i64 32
+  %i.u = getelementptr inbounds nuw i8, ptr %.us-phi, i64 32
   br label %bb.h
 
 bb.e:                                             ; preds = %.noexc, %.lr.ph85.i

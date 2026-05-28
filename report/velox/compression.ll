@@ -201,8 +201,6 @@ bb.q:                                             ; preds = %bb.p
     i32 4, label %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74
     i32 5, label %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit56
     i32 6, label %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit62
-    i32 3, label %bb.x
-    i32 8, label %bb.x
   ]
 
 _ZN5arrow4util5Codec24SupportsCompressionLevelENS_11Compression4typeE.exit: ; preds = %bb.q
@@ -263,7 +261,7 @@ _ZN5arrow6StatusD2Ev.exit46:                      ; preds = %_ZN5arrow6Status7In
   br label %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EED2Ev.exit86
 
 _ZN5arrow4util5Codec24SupportsCompressionLevelENS_11Compression4typeE.exit.thread: ; preds = %bb.p
-  switch i32 %1, label %bb.x [
+  switch i32 %1, label %unreachable [
     i32 0, label %bb.u
     i32 1, label %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit
     i32 2, label %bb.v
@@ -333,8 +331,11 @@ _ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   br label %bb.x
 
-bb.x:                                             ; preds = %bb.q, %bb.q, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit50, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit56, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit62, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit68, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74, %_ZN5arrow4util5Codec24SupportsCompressionLevelENS_11Compression4typeE.exit.thread
-  %.sroa.090.0 = phi ptr [ null, %_ZN5arrow4util5Codec24SupportsCompressionLevelENS_11Compression4typeE.exit.thread ], [ %i.bp, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit ], [ %i.bw, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit50 ], [ %i.ca, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74 ], [ %i.bx, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit56 ], [ %i.by, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit62 ], [ %i.bz, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit68 ], [ null, %bb.q ], [ null, %bb.q ] ; 7 uses
+unreachable:                                      ; preds = %_ZN5arrow4util5Codec24SupportsCompressionLevelENS_11Compression4typeE.exit.thread
+  unreachable
+
+bb.x:                                             ; preds = %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit50, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit56, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit62, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit68, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74
+  %.sroa.090.0 = phi ptr [ %i.bz, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit68 ], [ %i.bp, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit ], [ %i.bw, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit50 ], [ %i.ca, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit74 ], [ %i.bx, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit56 ], [ %i.by, %_ZNSt10unique_ptrIN5arrow4util5CodecESt14default_deleteIS2_EEaSEOS5_.exit62 ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #22
   %i.cb = load ptr, ptr %.sroa.090.0, align 8, !tbaa !46

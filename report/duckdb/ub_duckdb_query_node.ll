@@ -201,7 +201,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_9QueryNodeESt14default_deleteIS2_ELb1EEES
   store ptr %i.y, ptr %i.v, align 8, !tbaa !295
   store ptr %i.y, ptr %i.w, align 8, !tbaa !315
   %i.z = invoke noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #23
-          to label %.lr.ph.i.i.i.i.i.i.i29.preheader unwind label %bb.j ; 5 uses
+          to label %.lr.ph.i.i.i.i.i.i.i29.preheader unwind label %bb.j ; 6 uses
 
 .lr.ph.i.i.i.i.i.i.i29.preheader:                 ; preds = %_ZNKSt6vectorIN6duckdb10unique_ptrINS0_9QueryNodeESt14default_deleteIS2_ELb1EEESaIS5_EE12_M_check_lenEmPKc.exit.i.i.i25
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -213,7 +213,7 @@ _ZNKSt6vectorIN6duckdb10unique_ptrINS0_9QueryNodeESt14default_deleteIS2_ELb1EEES
   %i.ac = load i64, ptr %i.x, align 8, !tbaa !80, !alias.scope !332, !noalias !329
   store i64 %i.ac, ptr %i.z, align 8, !tbaa !80, !alias.scope !329, !noalias !332
   store ptr null, ptr %i.x, align 8, !tbaa !80, !alias.scope !332, !noalias !329
-  %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 16
+  %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 16 ; 2 uses
   tail call void @_ZdlPv(ptr noundef nonnull %i.x) #21
   store ptr %i.z, ptr %i.h, align 8, !tbaa !296
   store ptr %i.ad, ptr %i.v, align 8, !tbaa !295
@@ -282,7 +282,7 @@ bb.q:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %bb.y
 
 bb.r:                                             ; preds = %bb.l
-  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 136
+  %i.an = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 144
   store ptr %i.i, ptr %i.h, align 8, !tbaa !296
   store ptr %i.k, ptr %i.an, align 8, !tbaa !295
@@ -290,14 +290,15 @@ bb.r:                                             ; preds = %bb.l
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !315
   store ptr %i.aq, ptr %i.ao, align 8, !tbaa !315
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
+  %.pre = load ptr, ptr %i.an, align 8, !tbaa !295
+  %.pre60 = load ptr, ptr %i.h, align 8, !tbaa !296
   br label %_ZNSt6vectorIN6duckdb10unique_ptrINS0_9QueryNodeESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit39
 
 _ZNSt6vectorIN6duckdb10unique_ptrINS0_9QueryNodeESt14default_deleteIS2_ELb1EEESaIS5_EE9push_backEOS5_.exit39: ; preds = %bb.r, %.lr.ph.i.i.i.i.i.i.i29.preheader
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %13 = load ptr, ptr %12, align 8, !tbaa !295
-  %14 = load ptr, ptr %i.h, align 8, !tbaa !296
+  %12 = phi ptr [ %.pre60, %bb.r ], [ %i.z, %.lr.ph.i.i.i.i.i.i.i29.preheader ]
+  %13 = phi ptr [ %.pre, %bb.r ], [ %i.ad, %.lr.ph.i.i.i.i.i.i.i29.preheader ]
   %i.ar = ptrtoint ptr %13 to i64
-  %i.as = ptrtoint ptr %14 to i64
+  %i.as = ptrtoint ptr %12 to i64
   %i.at = sub i64 %i.ar, %i.as
   %i.au = icmp ult i64 %i.at, 9
   br i1 %i.au, label %bb.s, label %bb.x
