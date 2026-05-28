@@ -26,7 +26,7 @@ define hidden noalias noundef ptr @_ZN2v88internal12trap_handler17CreateHandlerD
 bb.a:
   %i.a = shl i64 %2, 2                            ; 2 uses
   %i.b = add i64 %i.a, 24
-  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #13 ; 6 uses
+  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #14 ; 6 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %bb.d, label %bb.b
 
@@ -66,7 +66,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::trap_handler::MetadataLock", align 1 ; 4 uses
   %i.a = shl i64 %2, 2                            ; 2 uses
   %i.b = add i64 %i.a, 24
-  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #13 ; 8 uses
+  %i.c = tail call noalias ptr @malloc(i64 noundef %i.b) #14 ; 8 uses
   %i.d = icmp eq ptr %i.c, null
   br i1 %i.d, label %_ZN2v88internal12trap_handler17CreateHandlerDataEmmmPKNS1_24ProtectedInstructionDataE.exit, label %bb.b
 
@@ -85,7 +85,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 _ZN2v88internal12trap_handler17CreateHandlerDataEmmmPKNS1_24ProtectedInstructionDataE.exit: ; preds = %bb.a
-  tail call void @abort() #14
+  tail call void @abort() #15
   unreachable
 
 bb.d:                                             ; preds = %bb.b, %bb.c
@@ -99,26 +99,26 @@ _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i: ; preds =
   br i1 %i.j, label %bb.e, label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i: ; preds = %bb.d
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   %i.k = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E) ; 2 uses
   %i.l = load i8, ptr %i.k, align 1, !range !5, !noundef !6
   %i.m = trunc nuw i8 %i.l to i1
   br i1 %i.m, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !7
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !7
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !8
   unreachable
 
 bb.f:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i, %bb.f
   %i.n = phi ptr [ %i.k, %bb.f ], [ %i.h, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i ]
   store i8 1, ptr %i.n, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #15
-  call void @_ZN2v88internal12trap_handler12MetadataLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #16
+  call void @_ZN2v88internal12trap_handler12MetadataLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #16
   %i.o = load i64, ptr @_ZN12_GLOBAL__N_115gNextCodeObjectE, align 8 ; 7 uses
   %i.p = load i64, ptr @_ZN2v88internal12trap_handler15gNumCodeObjectsE, align 8
   %i.q = icmp eq i64 %i.o, %i.p
@@ -133,19 +133,19 @@ bb.g:                                             ; preds = %_ZN2v88internal12tr
   br i1 %.not30, label %.thread, label %bb.h
 
 .thread:                                          ; preds = %bb.g
-  call void @free(ptr noundef nonnull %i.c) #15
+  call void @free(ptr noundef nonnull %i.c) #16
   br label %bb.n
 
 bb.h:                                             ; preds = %bb.g
   %i.t = load ptr, ptr @_ZN2v88internal12trap_handler12gCodeObjectsE, align 8
   %i.u = shl nuw nsw i64 %spec.store.select, 4
-  %i.v = call ptr @realloc(ptr noundef %i.t, i64 noundef %i.u) #16 ; 3 uses
+  %i.v = call ptr @realloc(ptr noundef %i.t, i64 noundef %i.u) #17 ; 3 uses
   store ptr %i.v, ptr @_ZN2v88internal12trap_handler12gCodeObjectsE, align 8
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  call void @abort() #14
+  call void @abort() #15
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -225,17 +225,17 @@ bb.l:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  call void @free(ptr noundef nonnull %i.c) #15
+  call void @free(ptr noundef nonnull %i.c) #16
   br label %bb.n
 
 bb.n:                                             ; preds = %.thread, %bb.m, %bb.l
   %.1 = phi i32 [ %i.be, %bb.l ], [ -1, %bb.m ], [ -1, %.thread ]
-  call void @_ZN2v88internal12trap_handler12MetadataLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #15
+  call void @_ZN2v88internal12trap_handler12MetadataLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %4) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #16
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.n, %bb.o
@@ -279,26 +279,26 @@ _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i: ; preds =
   br i1 %i.d, label %bb.c, label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i: ; preds = %bb.b
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   %i.e = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E) ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !range !5, !noundef !6
   %i.g = trunc nuw i8 %i.f to i1
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !7
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !7
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !8
   unreachable
 
 bb.d:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i, %bb.d
   %i.h = phi ptr [ %i.e, %bb.d ], [ %i.b, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i ]
   store i8 1, ptr %i.h, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
-  call void @_ZN2v88internal12trap_handler12MetadataLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #16
+  call void @_ZN2v88internal12trap_handler12MetadataLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #16
   %i.i = load ptr, ptr @_ZN2v88internal12trap_handler12gCodeObjectsE, align 8
   %i.j = sext i32 %0 to i64                       ; 3 uses
   %i.k = getelementptr inbounds [16 x i8], ptr %i.i, i64 %i.j ; 2 uses
@@ -310,18 +310,18 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88in
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i64 %i.m, ptr %i.p, align 8
   store i64 %i.j, ptr @_ZN12_GLOBAL__N_115gNextCodeObjectE, align 8
-  call void @_ZN2v88internal12trap_handler12MetadataLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
+  call void @_ZN2v88internal12trap_handler12MetadataLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %1) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #16
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.e
 
 bb.e:                                             ; preds = %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
-  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit, %bb.e
   %i.q = call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E)
   store i8 0, ptr %i.q, align 1
-  call void @free(ptr noundef %i.l) #15
+  call void @free(ptr noundef %i.l) #16
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.a, %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
@@ -342,27 +342,27 @@ _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i: ; preds =
   br i1 %i.c, label %bb.b, label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i: ; preds = %bb.a
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   %i.d = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E) ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !range !5, !noundef !6
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !7
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !7
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !8
   unreachable
 
 bb.c:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i, %bb.c
   %i.g = phi ptr [ %i.d, %bb.c ], [ %i.a, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i ]
   store i8 1, ptr %i.g, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #15
-  %i.h = call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #13 ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
+  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #16
+  %i.h = call noalias dereferenceable_or_null(24) ptr @malloc(i64 noundef 24) #14 ; 5 uses
   %i.i = icmp ne ptr %i.h, null                   ; 2 uses
   br i1 %i.i, label %bb.d, label %bb.e
 
@@ -377,12 +377,12 @@ bb.d:                                             ; preds = %_ZN2v88internal12tr
   br label %bb.e
 
 bb.e:                                             ; preds = %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit, %bb.d
-  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.e, %bb.f
@@ -410,26 +410,26 @@ _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i: ; preds =
   br i1 %i.c, label %bb.b, label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i: ; preds = %bb.a
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   %i.d = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E) ; 2 uses
   %i.e = load i8, ptr %i.d, align 1, !range !5, !noundef !6
   %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !7
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !7
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !8
   unreachable
 
 bb.c:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i, %bb.c
   %i.g = phi ptr [ %i.d, %bb.c ], [ %i.a, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i ]
   store i8 1, ptr %i.g, align 1
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #15
-  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #15
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
+  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockC1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #16
   %.01220 = load ptr, ptr @_ZN2v88internal12trap_handler19gSandboxRecordsHeadE, align 8 ; 4 uses
   %.not21 = icmp eq ptr %.01220, null
   br i1 %.not21, label %.critedge, label %.lr.ph.preheader
@@ -452,8 +452,8 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88in
   br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !13
 
 .critedge:                                        ; preds = %.lr.ph31, %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
-  call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !14
-  call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !15
+  call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !14
+  call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !15
   unreachable
 
 .lr.ph._crit_edge:                                ; preds = %.lr.ph, %.lr.ph.preheader
@@ -465,8 +465,8 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88in
   br i1 %i.o, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph._crit_edge
-  call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !16
-  call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !17
+  call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !16
+  call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !17
   unreachable
 
 bb.e:                                             ; preds = %.lr.ph._crit_edge
@@ -485,13 +485,13 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  call void @free(ptr noundef nonnull %.01223.lcssa) #15
-  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #15
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
+  call void @free(ptr noundef nonnull %.01223.lcssa) #16
+  call void @_ZN2v88internal12trap_handler18SandboxRecordsLockD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %2) #16
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.h, %bb.i
@@ -500,7 +500,7 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.h, %bb.i
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef i64 @_ZN2v88internal12trap_handler21GetRecoveredTrapCountEv() local_unnamed_addr #10 {
 bb.a:
   %i.a = load atomic i64, ptr @_ZN2v88internal12trap_handler19gRecoveredTrapCountE monotonic, align 8
@@ -515,8 +515,8 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !18
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !19
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !18
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !19
   unreachable
 
 bb.c:                                             ; preds = %bb.a
@@ -530,19 +530,19 @@ _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i: ; preds =
   br i1 %i.e, label %bb.d, label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i: ; preds = %bb.c
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   %i.f = tail call noundef align 1 ptr @llvm.threadlocal.address.p0(ptr align 1 @_ZN2v88internal12trap_handler16TrapHandlerGuard10is_active_E) ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !range !5, !noundef !6
   %i.h = trunc nuw i8 %i.g to i1
   br i1 %i.h, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i, %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i
-  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !7
-  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #15, !srcloc !8
+  tail call void asm sideeffect "int3", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !7
+  tail call void asm sideeffect "ud2", "~{dirflag},~{fpsr},~{flags}"() #16, !srcloc !8
   unreachable
 
 bb.e:                                             ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.thread.i
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88internal12trap_handler16TrapHandlerGuard10is_active_E.exit.i, %bb.e
@@ -551,7 +551,7 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit: ; preds = %_ZTWN2v88in
   br i1 %0, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %_ZN2v88internal12trap_handler16TrapHandlerGuardC2Ev.exit
-  %i.j = tail call noundef zeroext i1 @_ZN2v88internal12trap_handler26RegisterDefaultTrapHandlerEv() #15 ; 2 uses
+  %i.j = tail call noundef zeroext i1 @_ZN2v88internal12trap_handler26RegisterDefaultTrapHandlerEv() #16 ; 2 uses
   %i.k = zext i1 %i.j to i8
   br label %bb.g
 
@@ -562,7 +562,7 @@ bb.g:                                             ; preds = %_ZN2v88internal12tr
   br i1 %.not.i.i, label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #15
+  tail call void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #16
   br label %_ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit
 
 _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.g, %bb.h
@@ -573,8 +573,8 @@ _ZN2v88internal12trap_handler16TrapHandlerGuardD2Ev.exit: ; preds = %bb.g, %bb.h
 
 declare noundef zeroext i1 @_ZN2v88internal12trap_handler26RegisterDefaultTrapHandlerEv() local_unnamed_addr #5
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN2v88internal12trap_handler13SetLandingPadEm(i64 noundef %0) local_unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define hidden void @_ZN2v88internal12trap_handler13SetLandingPadEm(i64 noundef %0) local_unnamed_addr #11 {
 bb.a:
   store atomic i64 %0, ptr @_ZN2v88internal12trap_handler11gLandingPadE seq_cst, align 8
   ret void
@@ -583,10 +583,10 @@ bb.a:
 declare extern_weak void @_ZTHN2v88internal12trap_handler16TrapHandlerGuard10is_active_E() #5
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #11
+declare nonnull ptr @llvm.threadlocal.address.p0(ptr nonnull) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i64 @llvm.umin.i64(i64, i64) #13
 
 attributes #0 = { mustprogress nofree nounwind willreturn memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -598,13 +598,14 @@ attributes #6 = { mustprogress nounwind willreturn allockind("free") memory(argm
 attributes #7 = { mustprogress nounwind willreturn allockind("realloc") allocsize(1) memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nounwind allocsize(0) }
-attributes #14 = { noreturn nounwind }
-attributes #15 = { nounwind }
-attributes #16 = { nounwind allocsize(1) }
+attributes #10 = { mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { mustprogress norecurse nounwind willreturn uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #14 = { nounwind allocsize(0) }
+attributes #15 = { noreturn nounwind }
+attributes #16 = { nounwind }
+attributes #17 = { nounwind allocsize(1) }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

@@ -8,15 +8,15 @@ target triple = "x86_64-pc-linux-gnu"
 
 @g_max_block_size = internal unnamed_addr global i64 32768, align 8
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define hidden void @upb_Arena_SetMaxBlockSize(i64 noundef %0) local_unnamed_addr #0 {
 bb.a:
   store atomic i64 %0, ptr @g_max_block_size monotonic, align 8
   ret void
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden i64 @upb_Arena_SpaceAllocated(ptr noundef readonly captures(none) %0, ptr noundef writeonly captures(address_is_null) %1) local_unnamed_addr #1 {
+; Function Attrs: norecurse nounwind uwtable
+define hidden i64 @upb_Arena_SpaceAllocated(ptr noundef captures(none) %0, ptr noundef writeonly captures(address_is_null) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -76,7 +76,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: norecurse nounwind uwtable
 define hidden i32 @upb_Arena_DebugRefCount(ptr noundef captures(none) %0) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
@@ -200,7 +200,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.g,
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 0, ptr %i.ah, align 8, !tbaa !25
   %i.ai = load ptr, ptr %i.ag, align 8, !tbaa !27
-  %i.aj = call ptr %i.ai(ptr noundef nonnull %i.ag, ptr noundef null, i64 noundef 0, i64 noundef %.pre-phi, ptr noundef nonnull %i.ah) #10, !inline_history !29 ; 10 uses
+  %i.aj = call ptr %i.ai(ptr noundef nonnull %i.ag, ptr noundef null, i64 noundef 0, i64 noundef %.pre-phi, ptr noundef nonnull %i.ah) #11, !inline_history !29 ; 10 uses
   %.not.i = icmp eq ptr %i.aj, null
   %i.ak = load i64, ptr %i.ah, align 8
   %i.al = call i64 @llvm.umax.i64(i64 %i.ak, i64 %.pre-phi) ; 6 uses
@@ -334,7 +334,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   store i64 0, ptr %i.f, align 8, !tbaa !25
   %i.g = load ptr, ptr %0, align 8, !tbaa !27
-  %i.h = call ptr %i.g(ptr noundef nonnull %0, ptr noundef null, i64 noundef 0, i64 noundef %i.e, ptr noundef nonnull %i.f) #10, !inline_history !29 ; 16 uses
+  %i.h = call ptr %i.g(ptr noundef nonnull %0, ptr noundef null, i64 noundef 0, i64 noundef %i.e, ptr noundef nonnull %i.f) #11, !inline_history !29 ; 16 uses
   %.not.i = icmp eq ptr %i.h, null
   %i.i = load i64, ptr %i.f, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
@@ -441,7 +441,7 @@ bb.c:                                             ; preds = %.lr.ph22
 
 bb.d:                                             ; preds = %.lr.ph22
   %i.z = load ptr, ptr %i.o, align 8, !tbaa !27
-  %i.aa = tail call ptr %i.z(ptr noundef nonnull %i.o, ptr noundef nonnull %.021.i20, i64 noundef range(i64 1, 0) %i.v, i64 noundef 0, ptr noundef null) #10, !inline_history !49 ; 0 uses
+  %i.aa = tail call ptr %i.z(ptr noundef nonnull %i.o, ptr noundef nonnull %.021.i20, i64 noundef range(i64 1, 0) %i.v, i64 noundef 0, ptr noundef null) #11, !inline_history !49 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -453,7 +453,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %.not26.i, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge23
-  tail call void %i.s(ptr noundef %i.o) #10, !inline_history !51
+  tail call void %i.s(ptr noundef %i.o) #11, !inline_history !51
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %._crit_edge23
@@ -472,8 +472,8 @@ _upb_Arena_DoFree.exit:                           ; preds = %bb.h, %bb.g, %.preh
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_upb_Arena_UpdateParentTail(ptr noundef captures(none) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #4 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define hidden void @_upb_Arena_UpdateParentTail(ptr noundef captures(none) %0, ptr noundef captures(none) %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.b = load atomic i64, ptr %i.a acquire, align 8
@@ -499,7 +499,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: norecurse nounwind uwtable
 define hidden noundef zeroext i1 @upb_Arena_Fuse(ptr noundef %0, ptr noundef %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %0, %1
@@ -698,7 +698,7 @@ _upb_Arena_FixupRefs.exit.thread:                 ; preds = %_upb_Arena_DoFuse.e
   ret i1 %.3
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: norecurse nounwind uwtable
 define hidden noundef zeroext i1 @upb_Arena_IsFused(ptr noundef captures(address) %0, ptr noundef captures(address) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = icmp eq ptr %0, %1
@@ -811,7 +811,7 @@ _upb_Arena_FindRoot.exit37:                       ; preds = %.lr.ph.i35, %bb.f, 
   ret i1 %.3
 }
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: norecurse nounwind uwtable
 define hidden noundef zeroext i1 @upb_Arena_IncRefFor(ptr noundef captures(none) %0, ptr noundef readnone captures(none) %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -977,8 +977,8 @@ bb.a:
   ret ptr %i.c
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_upb_Arena_SwapIn_dont_copy_me__upb_internal_use_only(ptr noundef writeonly captures(none) initializes((0, 40)) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #4 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden void @_upb_Arena_SwapIn_dont_copy_me__upb_internal_use_only(ptr noundef captures(none) initializes((0, 40)) %0, ptr noundef captures(none) %1) local_unnamed_addr #7 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -988,10 +988,10 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_upb_Arena_SwapOut_dont_copy_me__upb_internal_use_only(ptr noundef writeonly captures(none) initializes((0, 40)) %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #4 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+define hidden void @_upb_Arena_SwapOut_dont_copy_me__upb_internal_use_only(ptr noundef captures(none) initializes((0, 40)) %0, ptr noundef captures(none) %1) local_unnamed_addr #7 {
 bb.a:
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull readonly align 8 dereferenceable(40) %1, i64 40, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, i64 40, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.b = load atomic i64, ptr %i.a monotonic, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -1000,7 +1000,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden zeroext i1 @_upb_Arena_WasLastAlloc(ptr noundef readonly captures(none) %0, ptr noundef readnone captures(address) %1, i64 noundef %2) local_unnamed_addr #7 {
+define hidden zeroext i1 @_upb_Arena_WasLastAlloc(ptr noundef readonly captures(none) %0, ptr noundef readnone captures(address) %1, i64 noundef %2) local_unnamed_addr #8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !17   ; 2 uses
@@ -1041,28 +1041,29 @@ bb.c:                                             ; preds = %.critedge
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
+declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #9
+declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #9
+declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #9
+declare i64 @llvm.usub.sat.i64(i64, i64) #10
 
-attributes #0 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nounwind }
+attributes #7 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

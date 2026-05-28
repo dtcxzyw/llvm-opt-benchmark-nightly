@@ -201,7 +201,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noundef %1, ptr readnone captures(none) %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr noundef %1, ptr readnone captures(none) %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"class.absl::lts_20250512::log_internal::LogMessageFatal", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 9
@@ -604,7 +604,7 @@ bb.c:                                             ; preds = %bb.a
   %.01927.i.i = phi ptr [ %i.ag, %.lr.ph29.i.i ], [ %.val3, %.preheader23.i.i ] ; 3 uses
   %i.y = load i32, ptr %.01927.i.i, align 8, !tbaa !109
   %i.z = getelementptr inbounds nuw i8, ptr %.01927.i.i, i64 8
-  %i.aa = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.z, ptr noundef %1, ptr nonnull poison, i32 noundef %i.y, ptr noundef %i.x, ptr noundef %3) ; 3 uses
+  %i.aa = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef %1, ptr nonnull poison, i32 noundef %i.y, ptr noundef %i.x, ptr noundef %3) ; 3 uses
   store ptr %i.aa, ptr %i.a, align 8, !tbaa !396
   %i.ab = getelementptr inbounds nuw i8, ptr %.128.i.i, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.128.i.i, i64 18
@@ -623,7 +623,7 @@ bb.c:                                             ; preds = %bb.a
   %.12032.i.i = phi ptr [ %i.am, %.lr.ph33.i.i ], [ %.019.lcssa.i.i, %.preheader.i.i ] ; 3 uses
   %i.aj = load i32, ptr %.12032.i.i, align 8, !tbaa !109
   %i.ak = getelementptr inbounds nuw i8, ptr %.12032.i.i, i64 8
-  %i.al = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ak, ptr noundef %1, ptr nonnull poison, i32 noundef %i.aj, ptr noundef %i.ai, ptr noundef %3) ; 3 uses
+  %i.al = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef %1, ptr nonnull poison, i32 noundef %i.aj, ptr noundef %i.ai, ptr noundef %3) ; 3 uses
   store ptr %i.al, ptr %i.a, align 8, !tbaa !396
   %i.am = getelementptr inbounds nuw i8, ptr %.12032.i.i, i64 32 ; 2 uses
   %.not21.i.i = icmp eq ptr %i.am, %i.m
@@ -709,7 +709,7 @@ bb.c:                                             ; preds = %bb.a
   %.01927.i.i = phi ptr [ %i.ag, %.lr.ph29.i.i ], [ %.val4, %.preheader23.i.i ] ; 3 uses
   %i.y = load i32, ptr %.01927.i.i, align 8, !tbaa !109
   %i.z = getelementptr inbounds nuw i8, ptr %.01927.i.i, i64 8
-  %i.aa = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.z, ptr noundef %1, ptr nonnull poison, i32 noundef %i.y, ptr noundef %i.x, ptr noundef %3) ; 3 uses
+  %i.aa = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.z, ptr noundef %1, ptr nonnull poison, i32 noundef %i.y, ptr noundef %i.x, ptr noundef %3) ; 3 uses
   store ptr %i.aa, ptr %i.a, align 8, !tbaa !396
   %i.ab = getelementptr inbounds nuw i8, ptr %.128.i.i, i64 8 ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.128.i.i, i64 18
@@ -728,7 +728,7 @@ bb.c:                                             ; preds = %bb.a
   %.12032.i.i = phi ptr [ %i.am, %.lr.ph33.i.i ], [ %.019.lcssa.i.i, %.preheader.i.i ] ; 3 uses
   %i.aj = load i32, ptr %.12032.i.i, align 8, !tbaa !109
   %i.ak = getelementptr inbounds nuw i8, ptr %.12032.i.i, i64 8
-  %i.al = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.ak, ptr noundef %1, ptr nonnull poison, i32 noundef %i.aj, ptr noundef %i.ai, ptr noundef %3) ; 3 uses
+  %i.al = call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.ak, ptr noundef %1, ptr nonnull poison, i32 noundef %i.aj, ptr noundef %i.ai, ptr noundef %3) ; 3 uses
   store ptr %i.al, ptr %i.a, align 8, !tbaa !396
   %i.am = getelementptr inbounds nuw i8, ptr %.12032.i.i, i64 32 ; 2 uses
   %.not21.i.i = icmp eq ptr %i.am, %i.m
@@ -1131,7 +1131,7 @@ bb.f:                                             ; preds = %bb.d, %bb.c
 declare noundef ptr @_ZN6google8protobuf8internal14WireFormatLite18InternalWriteGroupEiRKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamE(i32 noundef, ptr noundef nonnull align 8 dereferenceable(16), ptr noundef, ptr noundef) local_unnamed_addr #15
 
 ; Function Attrs: mustprogress uwtable
-define noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, ptr noundef %1, ptr readnone captures(none) %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
+define noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr noundef %1, ptr readnone captures(none) %2, i32 noundef %3, ptr noundef %4, ptr noundef %5) local_unnamed_addr #3 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %6 = alloca %"class.absl::lts_20250512::log_internal::LogMessage", align 8 ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1534,7 +1534,7 @@ declare { ptr, i8 } @_ZN6google8protobuf8internal18EpsCopyInputStream12DoneFallb
 declare { ptr, i32 } @_ZN6google8protobuf8internal15ReadTagFallbackEPKcj(ptr noundef, i32 noundef) local_unnamed_addr #15
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_25_InternalSerializeAllImplEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0NS2_8PrefetchEEEvT_SV_T0_T1_"(ptr readonly captures(address) %0, i32 %1, ptr readnone captures(address) %2, i32 %3, ptr noundef readonly byval(%class.anon.43) align 8 captures(none) %4) unnamed_addr #3 align 2 {
+define internal fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_25_InternalSerializeAllImplEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0NS2_8PrefetchEEEvT_SV_T0_T1_"(ptr captures(address) %0, i32 %1, ptr readnone captures(address) %2, i32 %3, ptr noundef readonly byval(%class.anon.43) align 8 captures(none) %4) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = icmp ne ptr %0, %2
   %i.b = icmp ne i32 %1, %3
@@ -1551,11 +1551,9 @@ bb.a:
 
 .lr.ph113:                                        ; preds = %.preheader93
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !500
-  %6 = load ptr, ptr %4, align 8, !tbaa !504, !nonnull !30, !align !468 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !505
-  %.pre = load ptr, ptr %6, align 8, !tbaa !396
+  %i.g = load ptr, ptr %4, align 8, !tbaa !500
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !396
   br label %bb.e
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit
@@ -1631,7 +1629,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
   %.not3.i = select i1 %i.ao, i1 true, i1 %i.ap
   %i.aq = icmp samesign ult i32 %.0106, 15
   %i.ar = select i1 %.not3.i, i1 %i.aq, i1 false
-  br i1 %i.ar, label %.lr.ph, label %.preheader93, !llvm.loop !506
+  br i1 %i.ar, label %.lr.ph, label %.preheader93, !llvm.loop !504
 
 .preheader:                                       ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38, %.preheader93
   %.sroa.072.0.lcssa = phi ptr [ %0, %.preheader93 ], [ %.sroa.072.2, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38 ] ; 2 uses
@@ -1643,11 +1641,9 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
 
 .lr.ph119:                                        ; preds = %.preheader
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %7 = load ptr, ptr %i.au, align 8, !tbaa !500
-  %8 = load ptr, ptr %4, align 8, !tbaa !504, !nonnull !30, !align !468 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !505
-  %.pre132 = load ptr, ptr %8, align 8, !tbaa !396
+  %i.aw = load ptr, ptr %4, align 8, !tbaa !500
+  %.pre132 = load ptr, ptr %i.aw, align 8, !tbaa !396
   br label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph113, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38
@@ -1662,8 +1658,11 @@ bb.e:                                             ; preds = %.lr.ph113, %_ZN4abs
   %i.bb = getelementptr inbounds nuw [32 x i8], ptr %i.ba, i64 %i.az ; 2 uses
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !172
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  %i.be = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.bd, ptr noundef %5, ptr poison, i32 noundef %i.bc, ptr noundef %i.ax, ptr noundef %i.g) ; 2 uses
-  store ptr %i.be, ptr %6, align 8, !tbaa !396
+  %5 = load ptr, ptr %i.e, align 8, !tbaa !505
+  %6 = load ptr, ptr %i.f, align 8, !tbaa !506
+  %i.be = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef %5, ptr poison, i32 noundef %i.bc, ptr noundef %i.ax, ptr noundef %6) ; 2 uses
+  %7 = load ptr, ptr %4, align 8, !tbaa !500, !nonnull !30, !align !468
+  store ptr %i.be, ptr %7, align 8, !tbaa !396
   %i.bf = and i32 %.sroa.11.1111, 255
   %i.bg = zext nneg i32 %i.bf to i64
   %i.bh = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.1112, i64 %i.bg ; 2 uses
@@ -1795,8 +1794,11 @@ bb.l:                                             ; preds = %.lr.ph119, %_ZN4abs
   %i.dp = getelementptr inbounds nuw [32 x i8], ptr %i.do, i64 %i.dn ; 2 uses
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !172
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
-  %i.ds = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.dr, ptr noundef %7, ptr poison, i32 noundef %i.dq, ptr noundef %i.dl, ptr noundef %i.aw) ; 2 uses
-  store ptr %i.ds, ptr %8, align 8, !tbaa !396
+  %8 = load ptr, ptr %i.au, align 8, !tbaa !505
+  %9 = load ptr, ptr %i.av, align 8, !tbaa !506
+  %i.ds = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension44InternalSerializeFieldWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.dr, ptr noundef %8, ptr poison, i32 noundef %i.dq, ptr noundef %i.dl, ptr noundef %9) ; 2 uses
+  %10 = load ptr, ptr %4, align 8, !tbaa !500, !nonnull !30, !align !468
+  store ptr %i.ds, ptr %10, align 8, !tbaa !396
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.072.1117, i64 11
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !13
   %.not.i.i43 = icmp eq i8 %i.du, 0
@@ -1860,7 +1862,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
 }
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_49InternalSerializeMessageSetWithCachedSizesToArrayEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0NS2_8PrefetchEEEvT_SV_T0_T1_"(ptr readonly captures(address) %0, i32 %1, ptr readnone captures(address) %2, i32 %3, ptr noundef readonly byval(%class.anon.44) align 8 captures(none) %4) unnamed_addr #3 align 2 {
+define internal fastcc void @"_ZN6google8protobuf8internal12ExtensionSet19ForEachPrefetchImplIN4absl12lts_2025051218container_internal14btree_iteratorINS6_10btree_nodeINS6_10map_paramsIiNS2_9ExtensionESt4lessIiESaISt4pairIKiSA_EELi256ELb0EEEEERSF_PSF_EEZNKS2_49InternalSerializeMessageSetWithCachedSizesToArrayEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0NS2_8PrefetchEEEvT_SV_T0_T1_"(ptr captures(address) %0, i32 %1, ptr readnone captures(address) %2, i32 %3, ptr noundef readonly byval(%class.anon.44) align 8 captures(none) %4) unnamed_addr #3 align 2 {
 bb.a:
   %i.a = icmp ne ptr %0, %2
   %i.b = icmp ne i32 %1, %3
@@ -1877,11 +1879,9 @@ bb.a:
 
 .lr.ph113:                                        ; preds = %.preheader93
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %5 = load ptr, ptr %i.e, align 8, !tbaa !509
-  %6 = load ptr, ptr %4, align 8, !tbaa !511, !nonnull !30, !align !468 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !512
-  %.pre = load ptr, ptr %6, align 8, !tbaa !396
+  %i.g = load ptr, ptr %4, align 8, !tbaa !509
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !396
   br label %bb.e
 
 .lr.ph:                                           ; preds = %bb.a, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit
@@ -1957,7 +1957,7 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
   %.not3.i = select i1 %i.ao, i1 true, i1 %i.ap
   %i.aq = icmp samesign ult i32 %.0106, 15
   %i.ar = select i1 %.not3.i, i1 %i.aq, i1 false
-  br i1 %i.ar, label %.lr.ph, label %.preheader93, !llvm.loop !513
+  br i1 %i.ar, label %.lr.ph, label %.preheader93, !llvm.loop !511
 
 .preheader:                                       ; preds = %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38, %.preheader93
   %.sroa.072.0.lcssa = phi ptr [ %0, %.preheader93 ], [ %.sroa.072.2, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38 ] ; 2 uses
@@ -1969,11 +1969,9 @@ _ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_
 
 .lr.ph119:                                        ; preds = %.preheader
   %i.au = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %7 = load ptr, ptr %i.au, align 8, !tbaa !509
-  %8 = load ptr, ptr %4, align 8, !tbaa !511, !nonnull !30, !align !468 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %4, i64 16
-  %i.aw = load ptr, ptr %i.av, align 8, !tbaa !512
-  %.pre132 = load ptr, ptr %8, align 8, !tbaa !396
+  %i.aw = load ptr, ptr %4, align 8, !tbaa !509
+  %.pre132 = load ptr, ptr %i.aw, align 8, !tbaa !396
   br label %bb.l
 
 bb.e:                                             ; preds = %.lr.ph113, %_ZN4absl12lts_2025051218container_internal14btree_iteratorINS1_10btree_nodeINS1_10map_paramsIiN6google8protobuf8internal12ExtensionSet9ExtensionESt4lessIiESaISt4pairIKiS9_EELi256ELb0EEEEERSE_PSE_EppEv.exit38
@@ -1988,8 +1986,11 @@ bb.e:                                             ; preds = %.lr.ph113, %_ZN4abs
   %i.bb = getelementptr inbounds nuw [32 x i8], ptr %i.ba, i64 %i.az ; 2 uses
   %i.bc = load i32, ptr %i.bb, align 8, !tbaa !172
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
-  %i.be = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.bd, ptr noundef %5, ptr poison, i32 noundef %i.bc, ptr noundef %i.ax, ptr noundef %i.g) ; 2 uses
-  store ptr %i.be, ptr %6, align 8, !tbaa !396
+  %5 = load ptr, ptr %i.e, align 8, !tbaa !512
+  %6 = load ptr, ptr %i.f, align 8, !tbaa !513
+  %i.be = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef %5, ptr poison, i32 noundef %i.bc, ptr noundef %i.ax, ptr noundef %6) ; 2 uses
+  %7 = load ptr, ptr %4, align 8, !tbaa !509, !nonnull !30, !align !468
+  store ptr %i.be, ptr %7, align 8, !tbaa !396
   %i.bf = and i32 %.sroa.11.1111, 255
   %i.bg = zext nneg i32 %i.bf to i64
   %i.bh = getelementptr inbounds nuw [32 x i8], ptr %.sroa.0.1112, i64 %i.bg ; 2 uses
@@ -2121,8 +2122,11 @@ bb.l:                                             ; preds = %.lr.ph119, %_ZN4abs
   %i.dp = getelementptr inbounds nuw [32 x i8], ptr %i.do, i64 %i.dn ; 2 uses
   %i.dq = load i32, ptr %i.dp, align 8, !tbaa !172
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dp, i64 8
-  %i.ds = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull readonly align 8 dereferenceable(24) %i.dr, ptr noundef %7, ptr poison, i32 noundef %i.dq, ptr noundef %i.dl, ptr noundef %i.aw) ; 2 uses
-  store ptr %i.ds, ptr %8, align 8, !tbaa !396
+  %8 = load ptr, ptr %i.au, align 8, !tbaa !512
+  %9 = load ptr, ptr %i.av, align 8, !tbaa !513
+  %i.ds = tail call noundef ptr @_ZNK6google8protobuf8internal12ExtensionSet9Extension53InternalSerializeMessageSetItemWithCachedSizesToArrayEPKNS0_11MessageLiteEPKS2_iPhPNS0_2io19EpsCopyOutputStreamE(ptr noundef nonnull align 8 dereferenceable(24) %i.dr, ptr noundef %8, ptr poison, i32 noundef %i.dq, ptr noundef %i.dl, ptr noundef %9) ; 2 uses
+  %10 = load ptr, ptr %4, align 8, !tbaa !509, !nonnull !30, !align !468
+  store ptr %i.ds, ptr %10, align 8, !tbaa !396
   %i.dt = getelementptr inbounds nuw i8, ptr %.sroa.072.1117, i64 11
   %i.du = load i8, ptr %i.dt, align 1, !tbaa !13
   %.not.i.i43 = icmp eq i8 %i.du, 0
@@ -2525,20 +2529,20 @@ begin_hunk_4_@llvm.vector.reduce.add.v4i32
 !497 = !{!"p1 _ZTSN6google8protobuf8internal16InternalMetadataE", !10, i64 0}
 !498 = distinct !{null, null}
 !499 = distinct !{!499, !37}
-!500 = !{!501, !9, i64 8}
+!500 = !{!501, !502, i64 0}
 !501 = !{!"_ZTSZNK6google8protobuf8internal12ExtensionSet25_InternalSerializeAllImplEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0", !502, i64 0, !9, i64 8, !503, i64 16, !474, i64 24}
 !502 = !{!"p2 omnipotent char", !198, i64 0}
 !503 = !{!"p1 _ZTSN6google8protobuf2io19EpsCopyOutputStreamE", !10, i64 0}
-!504 = !{!501, !502, i64 0}
-!505 = !{!501, !503, i64 16}
-!506 = distinct !{!506, !37}
+!504 = distinct !{!504, !37}
+!505 = !{!501, !9, i64 8}
+!506 = !{!501, !503, i64 16}
 !507 = distinct !{!507, !37}
 !508 = distinct !{!508, !37}
-!509 = !{!510, !9, i64 8}
+!509 = !{!510, !502, i64 0}
 !510 = !{!"_ZTSZNK6google8protobuf8internal12ExtensionSet49InternalSerializeMessageSetWithCachedSizesToArrayEPKNS0_11MessageLiteEPhPNS0_2io19EpsCopyOutputStreamEE3$_0", !502, i64 0, !9, i64 8, !503, i64 16, !474, i64 24}
-!511 = !{!510, !502, i64 0}
-!512 = !{!510, !503, i64 16}
-!513 = distinct !{!513, !37}
+!511 = distinct !{!511, !37}
+!512 = !{!510, !9, i64 8}
+!513 = !{!510, !503, i64 16}
 !514 = distinct !{!514, !37}
 !515 = distinct !{!515, !37}
 !516 = distinct !{!516, !37}

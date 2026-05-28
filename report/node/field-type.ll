@@ -34,7 +34,7 @@ bb.a:
   br i1 %i.e, label %bb.b, label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %0) #5
+  %i.f = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %0) #6
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a, %bb.b
@@ -58,7 +58,7 @@ bb.a:
   br i1 %i.e, label %bb.b, label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %0) #5
+  %i.f = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %0) #6
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a, %bb.b
@@ -89,7 +89,7 @@ bb.a:
   br i1 %i.f, label %bb.b, label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %1) #5
+  %i.g = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %1) #6
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a, %bb.b
@@ -102,7 +102,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a
   ret ptr %.0.i
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal7IsClassENS0_6TaggedINS0_9FieldTypeEEE(i64 %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = trunc i64 %0 to i1
@@ -135,8 +135,8 @@ bb.a:
   ret ptr %0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef zeroext i1 @_ZN2v88internal9FieldType9NowStableENS0_6TaggedIS1_EE(i64 %0) local_unnamed_addr #2 align 2 {
+; Function Attrs: mustprogress norecurse nounwind uwtable
+define hidden noundef zeroext i1 @_ZN2v88internal9FieldType9NowStableENS0_6TaggedIS1_EE(i64 %0) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = trunc i64 %0 to i1
   br i1 %i.a, label %_ZN2v88internal7IsClassENS0_6TaggedINS0_9FieldTypeEEE.exit, label %_ZN2v88internal7IsClassENS0_6TaggedINS0_9FieldTypeEEE.exit.thread
@@ -183,7 +183,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal9FieldType6EqualsENS0_6TaggedIS1_EES3_(i64 %0, i64 %1) local_unnamed_addr #2 align 2 {
 bb.a:
   switch i64 %0, label %bb.d [
@@ -236,7 +236,7 @@ _ZN2v88internal7IsClassENS0_6TaggedINS0_9FieldTypeEEE.exit11.thread: ; preds = %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden noundef zeroext i1 @_ZN2v88internal9FieldType5NowIsENS0_6TaggedIS1_EENS0_12DirectHandleIS1_EE(i64 %0, ptr readonly captures(none) %1) local_unnamed_addr #3 align 2 {
+define hidden noundef zeroext i1 @_ZN2v88internal9FieldType5NowIsENS0_6TaggedIS1_EENS0_12DirectHandleIS1_EE(i64 %0, ptr readonly captures(none) %1) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = load i64, ptr %1, align 8                ; 3 uses
   %i.b = icmp eq i64 %i.a, 4294967296
@@ -264,25 +264,25 @@ bb.a:
   ]
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str, i64 noundef 3) #5 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str, i64 noundef 3) #6 ; 0 uses
   br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
-  %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.1, i64 noundef 4) #5 ; 0 uses
+  %i.b = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.1, i64 noundef 4) #6 ; 0 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
-  %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.2, i64 noundef 6) #5 ; 0 uses
+  %i.c = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.2, i64 noundef 6) #6 ; 0 uses
   %i.d = inttoptr i64 %0 to ptr
-  %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIPKvEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.d) #5
-  %i.f = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull @.str.3, i64 noundef 1) #5 ; 0 uses
+  %i.e = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIPKvEERSoT_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.d) #6
+  %i.f = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %i.e, ptr noundef nonnull @.str.3, i64 noundef 1) #6 ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.c, %bb.d, %bb.b
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal9FieldType11NowContainsENS0_6TaggedIS1_EENS2_INS0_6ObjectEEE(i64 %0, i64 %1) local_unnamed_addr #2 align 2 {
 bb.a:
   switch i64 %0, label %bb.b [
@@ -309,18 +309,19 @@ bb.d:                                             ; preds = %bb.a, %.fold.split,
   ret i1 %.0
 }
 
-declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef, i64 noundef) local_unnamed_addr #4
+declare noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef, i64 noundef) local_unnamed_addr #5
 
-declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIPKvEERSoT_(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef) local_unnamed_addr #4
+declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertIPKvEERSoT_(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef) local_unnamed_addr #5
 
-declare noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef) local_unnamed_addr #4
+declare noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef) local_unnamed_addr #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #2 = { mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress norecurse nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

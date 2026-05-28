@@ -90,7 +90,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.131 = phi i32 [ %.03041, %bb.d ], [ %i.p, %bb.e ]
   %i.w = sext i32 %.042 to i64
   %i.x = getelementptr inbounds i8, ptr %1, i64 %i.w
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %0, ptr noundef %i.x, i32 noundef %.032, i32 noundef %.033) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %0, ptr noundef %i.x, i32 noundef %.032, i32 noundef %.033) #13
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.b
@@ -100,7 +100,7 @@ bb.g:                                             ; preds = %bb.b
   %i.ab = load i32, ptr %i.aa, align 4            ; 2 uses
   %i.ac = sext i32 %.042 to i64
   %i.ad = getelementptr inbounds i8, ptr %1, i64 %i.ac
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.g, ptr noundef %i.ad, i32 noundef 0, i32 noundef %i.ab) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.g, ptr noundef %i.ad, i32 noundef 0, i32 noundef %i.ab) #13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -167,7 +167,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.131 = phi i32 [ %.03041, %bb.d ], [ %i.p, %bb.e ]
   %i.w = sext i32 %.042 to i64
   %i.x = getelementptr inbounds [2 x i8], ptr %1, i64 %i.w
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %0, ptr noundef %i.x, i32 noundef %.032, i32 noundef %.033) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %0, ptr noundef %i.x, i32 noundef %.032, i32 noundef %.033) #13
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.b
@@ -177,7 +177,7 @@ bb.g:                                             ; preds = %bb.b
   %i.ab = load i32, ptr %i.aa, align 4            ; 2 uses
   %i.ac = sext i32 %.042 to i64
   %i.ad = getelementptr inbounds [2 x i8], ptr %1, i64 %i.ac
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.g, ptr noundef %i.ad, i32 noundef 0, i32 noundef %i.ab) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.g, ptr noundef %i.ad, i32 noundef 0, i32 noundef %i.ab) #13
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
@@ -191,7 +191,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 
 declare void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64, ptr noundef, i32 noundef, i32 noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define hidden noundef i32 @_ZN2v88internal25StringBuilderConcatLengthEiNS0_6TaggedINS0_10FixedArrayEEEiPb(i32 noundef %0, i64 %1, i32 noundef %2, ptr noundef captures(none) %3) local_unnamed_addr #2 {
 bb.a:
   %.not75109 = icmp sgt i32 %2, 0
@@ -302,7 +302,7 @@ bb.l:                                             ; preds = %bb.k
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal17FixedArrayBuilderC2EPNS0_7IsolateEi(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(13) initializes((0, 13)) %0, ptr noundef nonnull %1, i32 noundef %2) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %2, i8 noundef zeroext 0) #12
+  %i.a = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %2, i8 noundef zeroext 0) #13
   store ptr %i.a, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 0, ptr %i.b, align 8
@@ -386,7 +386,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.sroa.speculated = tail call i32 @llvm.smax.i32(i32 %2, i32 16)
-  %i.m = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %.sroa.speculated, i8 noundef zeroext 0) #12
+  %i.m = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %.sroa.speculated, i8 noundef zeroext 0) #13
   br label %.sink.split
 
 .preheader:                                       ; preds = %bb.b, %.preheader
@@ -396,7 +396,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.o, label %.preheader, label %bb.d, !llvm.loop !11
 
 bb.d:                                             ; preds = %.preheader
-  %i.p = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %i.n, i8 noundef zeroext 0) #12 ; 3 uses
+  %i.p = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %1, i32 noundef %i.n, i8 noundef zeroext 0) #13 ; 3 uses
   %i.q = load i32, ptr %i.h, align 8              ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %.sink.split, label %bb.e
@@ -408,7 +408,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = add i64 %i.u, 15
   %i.w = add i64 %i.t, 15
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 55464
-  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.x, i64 %i.u, i64 %i.v, i64 %i.w, i32 noundef %i.q, i32 noundef 4) #12
+  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.x, i64 %i.u, i64 %i.v, i64 %i.w, i32 noundef %i.q, i32 noundef 4) #13
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.e, %bb.d, %bb.c
@@ -458,14 +458,14 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not39.i.i.i.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %i.j, i64 noundef %i.k, i64 %1) #12
+  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %i.j, i64 noundef %i.k, i64 %1) #13
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
   br i1 %.not.i.i.i.i.i, label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit, label %bb.f, !prof !12
 
 bb.f:                                             ; preds = %bb.e
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.j, i64 %i.k, i64 %1) #12
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.j, i64 %i.k, i64 %1) #13
   br label %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
 
 _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit: ; preds = %bb.a, %bb.e, %bb.f
@@ -477,7 +477,7 @@ _ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16H
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable
 define hidden void @_ZN2v88internal17FixedArrayBuilder3AddENS0_6TaggedINS0_3SmiEEE(ptr noundef nonnull align 8 captures(none) dereferenceable(13) %0, i64 %1) local_unnamed_addr #2 align 2 {
 bb.a:
   %.sroa.0.0.copyload.i = load ptr, ptr %0, align 8
@@ -518,7 +518,7 @@ bb.a:
   %i.b = ptrtoint ptr %1 to i64
   %i.c = add i64 %i.b, -55464
   %i.d = inttoptr i64 %i.c to ptr
-  %i.e = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %3, i8 noundef zeroext 0) #12
+  %i.e = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %3, i8 noundef zeroext 0) #13
   store ptr %i.e, ptr %i.a, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i32 0, ptr %i.f, align 8
@@ -572,7 +572,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %.sroa.speculated.i = tail call i32 @llvm.smax.i32(i32 %1, i32 16)
-  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %.sroa.speculated.i, i8 noundef zeroext 0) #12
+  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %.sroa.speculated.i, i8 noundef zeroext 0) #13
   br label %.sink.split.i
 
 .preheader.i:                                     ; preds = %bb.b, %.preheader.i
@@ -582,7 +582,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.t, label %.preheader.i, label %bb.d, !llvm.loop !11
 
 bb.d:                                             ; preds = %.preheader.i
-  %i.u = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %i.s, i8 noundef zeroext 0) #12 ; 3 uses
+  %i.u = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %i.s, i8 noundef zeroext 0) #13 ; 3 uses
   %i.v = load i32, ptr %i.m, align 8              ; 2 uses
   %i.w = icmp eq i32 %i.v, 0
   br i1 %i.w, label %.sink.split.i, label %bb.e
@@ -594,7 +594,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aa = add i64 %i.z, 15
   %i.ab = add i64 %i.y, 15
   %i.ac = getelementptr inbounds nuw i8, ptr %i.e, i64 55464
-  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %i.z, i64 %i.aa, i64 %i.ab, i32 noundef %i.v, i32 noundef 4) #12
+  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.ac, i64 %i.z, i64 %i.aa, i64 %i.ab, i32 noundef %i.v, i32 noundef 4) #13
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.e, %bb.d, %bb.c
@@ -669,7 +669,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.o, label %bb.c, label %.preheader.i.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef 16, i8 noundef zeroext 0) #12
+  %i.p = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef 16, i8 noundef zeroext 0) #13
   br label %.sink.split.i.i
 
 .preheader.i.i:                                   ; preds = %bb.b, %.preheader.i.i
@@ -679,7 +679,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not3, label %bb.d, label %.preheader.i.i, !llvm.loop !11
 
 bb.d:                                             ; preds = %.preheader.i.i
-  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %i.q, i8 noundef zeroext 0) #12 ; 3 uses
+  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE22NewFixedArrayWithHolesEiNS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.e, i32 noundef %i.q, i8 noundef zeroext 0) #13 ; 3 uses
   %i.s = load i32, ptr %i.m, align 8              ; 2 uses
   %i.t = icmp eq i32 %i.s, 0
   br i1 %i.t, label %.sink.split.i.i, label %bb.e
@@ -691,7 +691,7 @@ bb.e:                                             ; preds = %bb.d
   %i.x = add i64 %i.w, 15
   %i.y = add i64 %i.v, 15
   %i.z = getelementptr inbounds nuw i8, ptr %i.e, i64 55464
-  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.z, i64 %i.w, i64 %i.x, i64 %i.y, i32 noundef %i.s, i32 noundef 4) #12
+  tail call void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6TaggedINS0_10HeapObjectEEET_S7_iNS0_16WriteBarrierModeE(ptr noundef nonnull align 8 dereferenceable(2992) %i.z, i64 %i.w, i64 %i.x, i64 %i.y, i32 noundef %i.s, i32 noundef 4) #13
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %bb.e, %bb.d, %bb.c
@@ -737,14 +737,14 @@ bb.g:                                             ; preds = %bb.f
   br i1 %.not39.i.i.i.i.i.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %i.ah, i64 noundef %i.ai, i64 %i.ac) #12
+  tail call void @_ZN2v88internal12WriteBarrier40CombinedGenerationalAndSharedBarrierSlowENS0_6TaggedINS0_10HeapObjectEEEmS4_(i64 %i.ah, i64 noundef %i.ai, i64 %i.ac) #13
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   br i1 %.not.i.i.i.i.i.i, label %_ZN2v88internal17FixedArrayBuilder3AddENS0_6TaggedINS0_6ObjectEEE.exit, label %bb.j, !prof !12
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.ah, i64 %i.ai, i64 %i.ac) #12
+  tail call void @_ZN2v88internal12WriteBarrier11MarkingSlowENS0_6TaggedINS0_10HeapObjectEEENS0_18FullHeapObjectSlotES4_(i64 %i.ah, i64 %i.ai, i64 %i.ac) #13
   br label %_ZN2v88internal17FixedArrayBuilder3AddENS0_6TaggedINS0_6ObjectEEE.exit
 
 _ZN2v88internal17FixedArrayBuilder3AddENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v88internal24ReplacementStringBuilder14EnsureCapacityEi.exit, %bb.i, %bb.j
@@ -782,7 +782,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.d, label %bb.m
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %i.n, i8 noundef zeroext 0, i8 0) #12 ; 4 uses
+  %i.o = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %i.n, i8 noundef zeroext 0, i8 0) #13 ; 4 uses
   %.not73 = icmp eq ptr %i.o, null
   br i1 %.not73, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread65, label %bb.e
 
@@ -844,7 +844,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.131.i = phi i32 [ %.03041.i, %bb.h ], [ %i.an, %bb.i ]
   %i.au = sext i32 %.042.i to i64
   %i.av = getelementptr inbounds i8, ptr %i.s, i64 %i.au
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.v, ptr noundef nonnull %i.av, i32 noundef %.032.i, i32 noundef %.033.i) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.v, ptr noundef nonnull %i.av, i32 noundef %.032.i, i32 noundef %.033.i) #13
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.f
@@ -854,7 +854,7 @@ bb.k:                                             ; preds = %bb.f
   %i.az = load i32, ptr %i.ay, align 4            ; 2 uses
   %i.ba = sext i32 %.042.i to i64
   %i.bb = getelementptr inbounds i8, ptr %i.s, i64 %i.ba
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ae, ptr noundef nonnull %i.bb, i32 noundef 0, i32 noundef %i.az) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ae, ptr noundef nonnull %i.bb, i32 noundef 0, i32 noundef %i.az) #13
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
@@ -866,7 +866,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %i.bd, label %bb.f, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread65, !llvm.loop !5
 
 bb.m:                                             ; preds = %bb.c
-  %i.be = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawTwoByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %i.n, i8 noundef zeroext 0, i8 0) #12 ; 4 uses
+  %i.be = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawTwoByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.d, i32 noundef %i.n, i8 noundef zeroext 0, i8 0) #13 ; 4 uses
   %.not = icmp eq ptr %i.be, null
   br i1 %.not, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit.thread65, label %bb.n
 
@@ -928,7 +928,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   %.131.i30 = phi i32 [ %.03041.i24, %bb.q ], [ %i.cd, %bb.r ]
   %i.ck = sext i32 %.042.i23 to i64
   %i.cl = getelementptr inbounds [2 x i8], ptr %i.bi, i64 %i.ck
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.bl, ptr noundef nonnull %i.cl, i32 noundef %.032.i29, i32 noundef %.033.i28) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.bl, ptr noundef nonnull %i.cl, i32 noundef %.032.i29, i32 noundef %.033.i28) #13
   br label %bb.u
 
 bb.t:                                             ; preds = %bb.o
@@ -938,7 +938,7 @@ bb.t:                                             ; preds = %bb.o
   %i.cp = load i32, ptr %i.co, align 4            ; 2 uses
   %i.cq = sext i32 %.042.i23 to i64
   %i.cr = getelementptr inbounds [2 x i8], ptr %i.bi, i64 %i.cq
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.bu, ptr noundef nonnull %i.cr, i32 noundef 0, i32 noundef %i.cp) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.bu, ptr noundef nonnull %i.cr, i32 noundef 0, i32 noundef %i.cp) #13
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s
@@ -984,7 +984,7 @@ bb.a:
   br i1 %i.l, label %bb.b, label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, !prof !13
 
 bb.b:                                             ; preds = %bb.a
-  %i.m = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %1) #12
+  %i.m = tail call noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef nonnull %1) #13
   br label %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
 
 _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a, %bb.b
@@ -997,12 +997,12 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.a
   store ptr %.0.i, ptr %i.e, align 8
   %i.q = load ptr, ptr %0, align 8
   %i.r = load i32, ptr %i.c, align 8
-  %i.s = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.q, i32 noundef %i.r, i8 noundef zeroext 0, i8 0) #12 ; 2 uses
+  %i.s = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.q, i32 noundef %i.r, i8 noundef zeroext 0, i8 0) #13 ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.c, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit, !prof !13
 
 bb.c:                                             ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit: ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit
@@ -1066,7 +1066,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.q = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr nonnull %.sroa.0.0.copyload.i9, ptr nonnull %1, i8 noundef zeroext 0) #12 ; 2 uses
+  %i.q = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.n, ptr nonnull %.sroa.0.0.copyload.i9, ptr nonnull %1, i8 noundef zeroext 0) #13 ; 2 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %bb.d, label %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge, !prof !13
 
@@ -1075,7 +1075,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge, %bb.b
@@ -1117,7 +1117,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.o, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %.sroa.0.0.copyload.i, i8 noundef zeroext 0) #12 ; 2 uses
+  %i.r = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.o, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %.sroa.0.0.copyload.i, i8 noundef zeroext 0) #13 ; 2 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %bb.d, label %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i, !prof !13
 
@@ -1126,7 +1126,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit: ; preds = %bb.b, %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i
@@ -1153,21 +1153,21 @@ bb.f:                                             ; preds = %bb.e, %_ZN2v88inter
   br i1 %i.ac, label %bb.g, label %bb.i
 
 bb.g:                                             ; preds = %bb.f
-  %i.ae = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, i32 noundef %i.z, i8 noundef zeroext 0, i8 0) #12 ; 2 uses
+  %i.ae = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawOneByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, i32 noundef %i.z, i8 noundef zeroext 0, i8 0) #13 ; 2 uses
   %i.af = icmp eq ptr %i.ae, null
   br i1 %i.af, label %bb.h, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit, !prof !13
 
 bb.h:                                             ; preds = %bb.g
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 bb.i:                                             ; preds = %bb.f
-  %i.ag = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawTwoByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, i32 noundef %i.z, i8 noundef zeroext 0, i8 0) #12 ; 2 uses
+  %i.ag = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE19NewRawTwoByteStringEjNS0_14AllocationTypeENS0_14AllocationHintE(ptr noundef nonnull align 1 dereferenceable(1) %i.ad, i32 noundef %i.z, i8 noundef zeroext 0, i8 0) #13 ; 2 uses
   %i.ah = icmp eq ptr %i.ag, null
   br i1 %i.ah, label %bb.j, label %_ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit, !prof !13
 
 bb.j:                                             ; preds = %bb.i
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZNK2v88internal11MaybeHandleINS0_16SeqOneByteStringEE5CheckEv.exit: ; preds = %bb.i, %bb.g
@@ -1188,7 +1188,7 @@ bb.a:
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.d = load i32, ptr %i.c, align 4
-  %i.e = tail call ptr @_ZN2v88internal9SeqString8TruncateEPNS0_7IsolateENS0_6HandleIS1_EEj(ptr noundef %i.a, ptr %.sroa.0.0.copyload.i.i, i32 noundef %i.d) #12
+  %i.e = tail call ptr @_ZN2v88internal9SeqString8TruncateEPNS0_7IsolateENS0_6HandleIS1_EEj(ptr noundef %i.a, ptr %.sroa.0.0.copyload.i.i, i32 noundef %i.d) #13
   %i.f = load i64, ptr %i.e, align 8
   %i.g = load ptr, ptr %i.b, align 8
   store i64 %i.f, ptr %i.g, align 8
@@ -1217,7 +1217,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.x = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.u, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %.sroa.0.0.copyload.i10, i8 noundef zeroext 0) #12 ; 2 uses
+  %i.x = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.u, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %.sroa.0.0.copyload.i10, i8 noundef zeroext 0) #13 ; 2 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %bb.d, label %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i, !prof !13
 
@@ -1226,7 +1226,7 @@ bb.c:                                             ; preds = %bb.a
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.d:                                             ; preds = %bb.c
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit: ; preds = %bb.b, %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i
@@ -1241,9 +1241,9 @@ _ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6St
   br i1 %i.ad, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
-  %i.af = tail call ptr @_ZN2v88internal7Factory27NewInvalidStringLengthErrorEv(ptr noundef nonnull align 1 dereferenceable(1) %i.ae) #12
+  %i.af = tail call ptr @_ZN2v88internal7Factory27NewInvalidStringLengthErrorEv(ptr noundef nonnull align 1 dereferenceable(1) %i.ae) #13
   %i.ag = load i64, ptr %i.af, align 8
-  %i.ah = tail call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %i.ae, i64 %i.ag, ptr noundef null) #12 ; 0 uses
+  %i.ah = tail call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %i.ae, i64 %i.ag, ptr noundef null) #13 ; 0 uses
   br label %_ZN2v88internal7Factory17InternalizeStringINS0_6StringEQsr3stdE16is_convertible_vINS0_6HandleIT_EENS4_IS3_EEEEES7_S6_.exit
 
 bb.f:                                             ; preds = %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
@@ -1282,7 +1282,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bc, label %_ZNK2v88internal7Isolate20shared_space_isolateEv.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  tail call void @_ZSt27__throw_bad_optional_accessv() #14
+  tail call void @_ZSt27__throw_bad_optional_accessv() #15
   unreachable
 
 _ZNK2v88internal7Isolate20shared_space_isolateEv.exit.i.i: ; preds = %bb.i
@@ -1294,7 +1294,7 @@ _ZNK2v88internal7Isolate12string_tableEv.exit.i:  ; preds = %_ZNK2v88internal7Is
   %.pn.i.i = phi ptr [ %i.be, %_ZNK2v88internal7Isolate20shared_space_isolateEv.exit.i.i ], [ %i.ae, %bb.h ]
   %.in.i.i = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 58464
   %i.bf = load ptr, ptr %.in.i.i, align 8
-  %i.bg = tail call ptr @_ZN2v88internal11StringTable12LookupStringEPNS0_7IsolateENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, ptr noundef nonnull align 1 dereferenceable(1) %i.ae, ptr nonnull %.sroa.0.0.copyload.i9) #12
+  %i.bg = tail call ptr @_ZN2v88internal11StringTable12LookupStringEPNS0_7IsolateENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull align 8 dereferenceable(24) %i.bf, ptr noundef nonnull align 1 dereferenceable(1) %i.ae, ptr nonnull %.sroa.0.0.copyload.i9) #13
   br label %_ZN2v88internal7Factory17InternalizeStringINS0_6StringEQsr3stdE16is_convertible_vINS0_6HandleIT_EENS4_IS3_EEEEES7_S6_.exit
 
 _ZN2v88internal7Factory17InternalizeStringINS0_6StringEQsr3stdE16is_convertible_vINS0_6HandleIT_EENS4_IS3_EEEEES7_S6_.exit: ; preds = %bb.f, %_ZNK2v88internal7Isolate12string_tableEv.exit.i, %bb.g, %bb.e
@@ -1306,8 +1306,8 @@ declare i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15Mess
 
 declare ptr @_ZN2v88internal7Factory27NewInvalidStringLengthErrorEv(ptr noundef nonnull align 1 dereferenceable(1)) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
-define hidden noundef zeroext i1 @_ZN2v88internal24IncrementalStringBuilder15CanAppendByCopyENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr readonly captures(none) %1) local_unnamed_addr #2 align 2 {
+; Function Attrs: mustprogress norecurse nounwind uwtable
+define hidden noundef zeroext i1 @_ZN2v88internal24IncrementalStringBuilder15CanAppendByCopyENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %0, ptr readonly captures(none) %1) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8
@@ -1401,12 +1401,12 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.q = getelementptr inbounds i8, ptr %i.i, i64 %i.l
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.d, ptr noundef nonnull %i.q, i32 noundef 0, i32 noundef %i.p) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.d, ptr noundef nonnull %i.q, i32 noundef 0, i32 noundef %i.p) #13
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds [2 x i8], ptr %i.i, i64 %i.l
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.d, ptr noundef nonnull %i.r, i32 noundef 0, i32 noundef %i.p) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.d, ptr noundef nonnull %i.r, i32 noundef 0, i32 noundef %i.p) #13
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
@@ -1512,12 +1512,12 @@ bb.d:                                             ; preds = %_ZN2v88internal24In
 
 bb.e:                                             ; preds = %bb.d
   %i.au = getelementptr inbounds i8, ptr %i.as, i64 %i.at
-  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ab, ptr noundef nonnull %i.au, i32 noundef 0, i32 noundef %i.af) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatIhEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ab, ptr noundef nonnull %i.au, i32 noundef 0, i32 noundef %i.af) #13
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
   %i.av = getelementptr inbounds [2 x i8], ptr %i.as, i64 %i.at
-  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ab, ptr noundef nonnull %i.av, i32 noundef 0, i32 noundef %i.af) #12
+  tail call void @_ZN2v88internal6String11WriteToFlatItEEvNS0_6TaggedIS1_EEPT_jj(i64 %i.ab, ptr noundef nonnull %i.av, i32 noundef 0, i32 noundef %i.af) #13
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -1543,7 +1543,7 @@ _ZN2v88internal24IncrementalStringBuilder15CanAppendByCopyENS0_12DirectHandleINS
   %.sroa.0.0.copyload.i.i = load ptr, ptr %i.bg, align 8
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.bi = load i32, ptr %i.bh, align 4
-  %i.bj = tail call ptr @_ZN2v88internal9SeqString8TruncateEPNS0_7IsolateENS0_6HandleIS1_EEj(ptr noundef %i.bf, ptr %.sroa.0.0.copyload.i.i, i32 noundef %i.bi) #12
+  %i.bj = tail call ptr @_ZN2v88internal9SeqString8TruncateEPNS0_7IsolateENS0_6HandleIS1_EEj(ptr noundef %i.bf, ptr %.sroa.0.0.copyload.i.i, i32 noundef %i.bi) #13
   %i.bk = load i64, ptr %i.bj, align 8
   %i.bl = load ptr, ptr %i.bg, align 8
   store i64 %i.bk, ptr %i.bl, align 8
@@ -1574,7 +1574,7 @@ bb.i:                                             ; preds = %_ZN2v88internal24In
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.j:                                             ; preds = %_ZN2v88internal24IncrementalStringBuilder15CanAppendByCopyENS0_12DirectHandleINS0_6StringEEE.exit.thread
-  %i.cd = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.ca, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %1, i8 noundef zeroext 0) #12 ; 2 uses
+  %i.cd = tail call ptr @_ZN2v88internal11FactoryBaseINS0_7FactoryEE13NewConsStringINS0_6HandleEQsr3stdE16is_convertible_vITL0__INS0_6StringEENS0_12DirectHandleIS7_EEEEENT_IS7_E9MaybeTypeESC_SC_NS0_14AllocationTypeE(ptr noundef nonnull align 1 dereferenceable(1) %i.ca, ptr nonnull %.sroa.0.0.copyload.i9.i, ptr nonnull %1, i8 noundef zeroext 0) #13 ; 2 uses
   %i.ce = icmp eq ptr %i.cd, null
   br i1 %i.ce, label %bb.k, label %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i, !prof !13
 
@@ -1583,7 +1583,7 @@ bb.j:                                             ; preds = %_ZN2v88internal24In
   br label %_ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit
 
 bb.k:                                             ; preds = %bb.j
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
   unreachable
 
 _ZN2v88internal24IncrementalStringBuilder10AccumulateENS0_12DirectHandleINS0_6StringEEE.exit: ; preds = %bb.i, %._ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit_crit_edge.i
@@ -1608,38 +1608,39 @@ declare void @_ZN2v88internal4Heap9CopyRangeINS0_14FullObjectSlotEEEvNS0_6Tagged
 declare noundef ptr @_ZN2v88internal11HandleScope6ExtendEPNS0_7IsolateE(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: noreturn
-declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #8
+declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #9
 
 declare ptr @_ZN2v88internal11StringTable12LookupStringEPNS0_7IsolateENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull align 8 dereferenceable(24), ptr noundef, ptr) local_unnamed_addr #1
 
 ; Function Attrs: inlinehint mustprogress noreturn nounwind uwtable
-define linkonce_odr dso_local void @_ZSt27__throw_bad_optional_accessv() local_unnamed_addr #9 comdat {
+define linkonce_odr dso_local void @_ZSt27__throw_bad_optional_accessv() local_unnamed_addr #10 comdat {
 bb.a:
-  tail call void @abort() #13
+  tail call void @abort() #14
   unreachable
 }
 
 ; Function Attrs: cold nofree noreturn nounwind
-declare void @abort() local_unnamed_addr #10
+declare void @abort() local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #11
+declare i32 @llvm.smax.i32(i32, i32) #12
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { mustprogress norecurse nounwind memory(readwrite, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { inlinehint mustprogress noreturn nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { cold nofree noreturn nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nounwind }
-attributes #13 = { noreturn nounwind }
-attributes #14 = { noreturn }
+attributes #8 = { mustprogress norecurse nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { inlinehint mustprogress noreturn nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { cold nofree noreturn nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
+attributes #15 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

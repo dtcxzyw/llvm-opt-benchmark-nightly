@@ -24,13 +24,13 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.e, !prof !11
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #6
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #7
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !12)
-  %i.d = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #7
+  %i.d = invoke noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #8
           to label %bb.d unwind label %bb.f       ; 4 uses
 
 bb.d:                                             ; preds = %bb.c
@@ -39,7 +39,7 @@ bb.d:                                             ; preds = %bb.c
   store ptr @_ZZN5folly3f146detail20getF14EmptyTagVectorEvE8instance, ptr %i.e, align 8, !tbaa !15, !noalias !12
   store ptr %i.d, ptr @_ZZN5folly16exception_tracer6detail10getMetaMapEvE4meta.0, align 8, !tbaa !24, !alias.scope !12
   store ptr %i.d, ptr @__folly_smart_exception_store, align 8, !tbaa !26
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #6
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #7
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
@@ -49,7 +49,7 @@ bb.e:                                             ; preds = %bb.d, %bb.b, %bb.a
 bb.f:                                             ; preds = %bb.c
   %i.g = landingpad { ptr, i32 }
           cleanup
-  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #6
+  tail call void @__cxa_guard_abort(ptr nonnull @_ZGVZN5folly16exception_tracer6detail10getMetaMapEvE4meta) #7
   resume { ptr, i32 } %i.g
 }
 
@@ -70,7 +70,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define noundef zeroext i1 @_ZN5folly16exception_tracer6detail33isSmartExceptionTracerHookEnabledEv() local_unnamed_addr #4 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZN5folly16exception_tracer6detailL11hookEnabledE.0 monotonic, align 1, !range !28, !noundef !29
@@ -78,8 +78,8 @@ bb.a:
   ret i1 %i.b
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define void @_ZN5folly16exception_tracer6detail34setSmartExceptionTracerHookEnabledEb(i1 noundef zeroext %0) local_unnamed_addr #4 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define void @_ZN5folly16exception_tracer6detail34setSmartExceptionTracerHookEnabledEb(i1 noundef zeroext %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = zext i1 %0 to i8
   store atomic i8 %i.a, ptr @_ZN5folly16exception_tracer6detailL11hookEnabledE.0 seq_cst, align 1
@@ -93,16 +93,17 @@ declare void @_ZN5folly15SharedMutexImplILb1EvSt6atomicNS_24SharedMutexPolicyDef
 declare void @_ZN5folly15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEE25wakeRegisteredWaitersImplERjj(ptr noundef nonnull align 4 dereferenceable(4), ptr noundef nonnull align 4 dereferenceable(4), i32 noundef) #0 align 2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #5
+declare void @llvm.experimental.noalias.scope.decl(metadata) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }
 attributes #2 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #6 = { nounwind }
-attributes #7 = { builtin allocsize(0) }
+attributes #4 = { mustprogress norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #5 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #7 = { nounwind }
+attributes #8 = { builtin allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}
