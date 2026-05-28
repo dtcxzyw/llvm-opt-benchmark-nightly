@@ -201,24 +201,14 @@ vector.body347:                                   ; preds = %vector.body347, %ve
   %i.na = getelementptr inbounds nuw [4 x i8], ptr %.0150, i64 %i.my
   %i.nb = getelementptr inbounds nuw [4 x i8], ptr %.0150, i64 %i.mz
   %i.nc = getelementptr inbounds nuw i8, ptr %i.nb, i64 16
-  %wide.vec = load <4 x i32>, ptr %i.na, align 4, !tbaa !3 ; 2 uses
-  %strided.vec = shufflevector <4 x i32> %wide.vec, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec349 = shufflevector <4 x i32> %wide.vec, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec350 = load <4 x i32>, ptr %i.nc, align 4, !tbaa !3 ; 2 uses
-  %strided.vec351 = shufflevector <4 x i32> %wide.vec350, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec352 = shufflevector <4 x i32> %wide.vec350, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %6 = zext <2 x i32> %strided.vec349 to <2 x i64>
-  %7 = zext <2 x i32> %strided.vec352 to <2 x i64>
-  %8 = shl nuw <2 x i64> %6, splat (i64 32)
-  %9 = shl nuw <2 x i64> %7, splat (i64 32)
-  %10 = zext <2 x i32> %strided.vec to <2 x i64>
-  %11 = zext <2 x i32> %strided.vec351 to <2 x i64>
-  %12 = or disjoint <2 x i64> %8, %10
-  %13 = or disjoint <2 x i64> %9, %11
+  %wide.vec = load <4 x i32>, ptr %i.na, align 4, !tbaa !3
+  %6 = freeze <4 x i32> %wide.vec
+  %wide.vec350 = load <4 x i32>, ptr %i.nc, align 4, !tbaa !3
+  %7 = freeze <4 x i32> %wide.vec350
   %i.nd = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %index348 ; 2 uses
   %i.ne = getelementptr inbounds nuw i8, ptr %i.nd, i64 16
-  store <2 x i64> %12, ptr %i.nd, align 8, !tbaa !10
-  store <2 x i64> %13, ptr %i.ne, align 8, !tbaa !10
+  store <4 x i32> %6, ptr %i.nd, align 8, !tbaa !10
+  store <4 x i32> %7, ptr %i.ne, align 8, !tbaa !10
   %index.next353 = add nuw i64 %index348, 4       ; 2 uses
   %i.nf = icmp eq i64 %index.next353, %n.vec346
   br i1 %i.nf, label %middle.block354, label %vector.body347, !llvm.loop !456
@@ -319,24 +309,14 @@ vector.body365:                                   ; preds = %vector.body365, %ve
   %i.pe = getelementptr inbounds nuw [4 x i8], ptr %.0149, i64 %i.pc
   %i.pf = getelementptr inbounds nuw [4 x i8], ptr %.0149, i64 %i.pd
   %i.pg = getelementptr inbounds nuw i8, ptr %i.pf, i64 16
-  %wide.vec367 = load <4 x i32>, ptr %i.pe, align 4, !tbaa !3 ; 2 uses
-  %strided.vec368 = shufflevector <4 x i32> %wide.vec367, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec369 = shufflevector <4 x i32> %wide.vec367, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec370 = load <4 x i32>, ptr %i.pg, align 4, !tbaa !3 ; 2 uses
-  %strided.vec371 = shufflevector <4 x i32> %wide.vec370, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec372 = shufflevector <4 x i32> %wide.vec370, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %14 = zext <2 x i32> %strided.vec369 to <2 x i64>
-  %15 = zext <2 x i32> %strided.vec372 to <2 x i64>
-  %16 = shl nuw <2 x i64> %14, splat (i64 32)
-  %17 = shl nuw <2 x i64> %15, splat (i64 32)
-  %18 = zext <2 x i32> %strided.vec368 to <2 x i64>
-  %19 = zext <2 x i32> %strided.vec371 to <2 x i64>
-  %20 = or disjoint <2 x i64> %16, %18
-  %21 = or disjoint <2 x i64> %17, %19
+  %wide.vec367 = load <4 x i32>, ptr %i.pe, align 4, !tbaa !3
+  %8 = freeze <4 x i32> %wide.vec367
+  %wide.vec370 = load <4 x i32>, ptr %i.pg, align 4, !tbaa !3
+  %9 = freeze <4 x i32> %wide.vec370
   %i.ph = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %index366 ; 2 uses
   %i.pi = getelementptr inbounds nuw i8, ptr %i.ph, i64 16
-  store <2 x i64> %20, ptr %i.ph, align 8, !tbaa !10
-  store <2 x i64> %21, ptr %i.pi, align 8, !tbaa !10
+  store <4 x i32> %8, ptr %i.ph, align 8, !tbaa !10
+  store <4 x i32> %9, ptr %i.pi, align 8, !tbaa !10
   %index.next373 = add nuw i64 %index366, 4       ; 2 uses
   %i.pj = icmp eq i64 %index.next373, %n.vec364
   br i1 %i.pj, label %middle.block374, label %vector.body365, !llvm.loop !458

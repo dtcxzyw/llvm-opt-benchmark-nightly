@@ -201,12 +201,11 @@ bb.a:
   %i.ae = add nuw nsw <4 x i32> %i.ad, %i.x
   %i.af = add nuw nsw <4 x i32> %i.ae, %i.v
   %i.ag = add nuw nsw <4 x i32> %i.af, %i.aa
-  %i.ah = add nuw nsw <4 x i32> %i.ag, %i.y       ; 2 uses
-  %2 = bitcast <4 x i32> %i.ah to <8 x i16>
-  %i.ai = and <4 x i32> %i.ah, splat (i32 65535)
-  %3 = shufflevector <8 x i16> %2, <8 x i16> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  %4 = zext <4 x i16> %3 to <4 x i32>
-  %i.aj = add nuw nsw <4 x i32> %i.ai, %4
+  %i.ah = add nuw nsw <4 x i32> %i.ag, %i.y
+  %.fr = freeze <4 x i32> %i.ah                   ; 2 uses
+  %i.ai = and <4 x i32> %.fr, splat (i32 65535)
+  %2 = lshr <4 x i32> %.fr, splat (i32 16)
+  %i.aj = add nuw nsw <4 x i32> %i.ai, %2
   store <4 x i32> %i.aj, ptr %1, align 4, !tbaa !3
   ret void
 }

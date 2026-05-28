@@ -201,163 +201,83 @@ bb.a:
 define void @_ZN18duckdb_fastpforlib8internal14__fastunpack64EPKjPm(ptr noalias noundef readonly captures(none) %0, ptr noalias noundef writeonly captures(none) %1) local_unnamed_addr #5 {
 vector.ph:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %wide.vec = load <4 x i32>, ptr %0, align 4, !tbaa !3 ; 2 uses
-  %strided.vec = shufflevector <4 x i32> %wide.vec, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11 = shufflevector <4 x i32> %wide.vec, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12 = load <4 x i32>, ptr %i.a, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13 = shufflevector <4 x i32> %wide.vec12, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14 = shufflevector <4 x i32> %wide.vec12, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %2 = zext <2 x i32> %strided.vec to <2 x i64>
-  %3 = zext <2 x i32> %strided.vec13 to <2 x i64>
-  %4 = zext <2 x i32> %strided.vec11 to <2 x i64>
-  %5 = zext <2 x i32> %strided.vec14 to <2 x i64>
-  %6 = shl nuw <2 x i64> %4, splat (i64 32)
-  %7 = shl nuw <2 x i64> %5, splat (i64 32)
-  %8 = or disjoint <2 x i64> %6, %2
-  %9 = or disjoint <2 x i64> %7, %3
+  %wide.vec = load <4 x i32>, ptr %0, align 4, !tbaa !3
+  %2 = freeze <4 x i32> %wide.vec
+  %wide.vec12 = load <4 x i32>, ptr %i.a, align 4, !tbaa !3
+  %3 = freeze <4 x i32> %wide.vec12
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
-  store <2 x i64> %8, ptr %1, align 8, !tbaa !9
-  store <2 x i64> %9, ptr %i.b, align 8, !tbaa !9
+  store <4 x i32> %2, ptr %1, align 8, !tbaa !9
+  store <4 x i32> %3, ptr %i.b, align 8, !tbaa !9
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %wide.vec.1 = load <4 x i32>, ptr %i.c, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.1 = shufflevector <4 x i32> %wide.vec.1, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.1 = shufflevector <4 x i32> %wide.vec.1, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.1 = load <4 x i32>, ptr %i.d, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.1 = shufflevector <4 x i32> %wide.vec12.1, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.1 = shufflevector <4 x i32> %wide.vec12.1, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %10 = zext <2 x i32> %strided.vec.1 to <2 x i64>
-  %11 = zext <2 x i32> %strided.vec13.1 to <2 x i64>
+  %wide.vec.1 = load <4 x i32>, ptr %i.c, align 4, !tbaa !3
+  %4 = freeze <4 x i32> %wide.vec.1
+  %wide.vec12.1 = load <4 x i32>, ptr %i.d, align 4, !tbaa !3
+  %5 = freeze <4 x i32> %wide.vec12.1
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %12 = zext <2 x i32> %strided.vec11.1 to <2 x i64>
-  %13 = zext <2 x i32> %strided.vec14.1 to <2 x i64>
-  %14 = shl nuw <2 x i64> %12, splat (i64 32)
-  %15 = shl nuw <2 x i64> %13, splat (i64 32)
-  %16 = or disjoint <2 x i64> %14, %10
-  %17 = or disjoint <2 x i64> %15, %11
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
-  store <2 x i64> %16, ptr %i.e, align 8, !tbaa !9
-  store <2 x i64> %17, ptr %i.f, align 8, !tbaa !9
+  store <4 x i32> %4, ptr %i.e, align 8, !tbaa !9
+  store <4 x i32> %5, ptr %i.f, align 8, !tbaa !9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 80
-  %wide.vec.2 = load <4 x i32>, ptr %i.g, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.2 = shufflevector <4 x i32> %wide.vec.2, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.2 = shufflevector <4 x i32> %wide.vec.2, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.2 = load <4 x i32>, ptr %i.h, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.2 = shufflevector <4 x i32> %wide.vec12.2, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.2 = shufflevector <4 x i32> %wide.vec12.2, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %18 = zext <2 x i32> %strided.vec.2 to <2 x i64>
-  %19 = zext <2 x i32> %strided.vec13.2 to <2 x i64>
+  %wide.vec.2 = load <4 x i32>, ptr %i.g, align 4, !tbaa !3
+  %6 = freeze <4 x i32> %wide.vec.2
+  %wide.vec12.2 = load <4 x i32>, ptr %i.h, align 4, !tbaa !3
+  %7 = freeze <4 x i32> %wide.vec12.2
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %20 = zext <2 x i32> %strided.vec11.2 to <2 x i64>
-  %21 = zext <2 x i32> %strided.vec14.2 to <2 x i64>
-  %22 = shl nuw <2 x i64> %20, splat (i64 32)
-  %23 = shl nuw <2 x i64> %21, splat (i64 32)
-  %24 = or disjoint <2 x i64> %22, %18
-  %25 = or disjoint <2 x i64> %23, %19
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 80
-  store <2 x i64> %24, ptr %i.i, align 8, !tbaa !9
-  store <2 x i64> %25, ptr %i.j, align 8, !tbaa !9
+  store <4 x i32> %6, ptr %i.i, align 8, !tbaa !9
+  store <4 x i32> %7, ptr %i.j, align 8, !tbaa !9
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %wide.vec.3 = load <4 x i32>, ptr %i.k, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.3 = shufflevector <4 x i32> %wide.vec.3, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.3 = shufflevector <4 x i32> %wide.vec.3, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.3 = load <4 x i32>, ptr %i.l, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.3 = shufflevector <4 x i32> %wide.vec12.3, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.3 = shufflevector <4 x i32> %wide.vec12.3, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %26 = zext <2 x i32> %strided.vec.3 to <2 x i64>
-  %27 = zext <2 x i32> %strided.vec13.3 to <2 x i64>
+  %wide.vec.3 = load <4 x i32>, ptr %i.k, align 4, !tbaa !3
+  %8 = freeze <4 x i32> %wide.vec.3
+  %wide.vec12.3 = load <4 x i32>, ptr %i.l, align 4, !tbaa !3
+  %9 = freeze <4 x i32> %wide.vec12.3
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %28 = zext <2 x i32> %strided.vec11.3 to <2 x i64>
-  %29 = zext <2 x i32> %strided.vec14.3 to <2 x i64>
-  %30 = shl nuw <2 x i64> %28, splat (i64 32)
-  %31 = shl nuw <2 x i64> %29, splat (i64 32)
-  %32 = or disjoint <2 x i64> %30, %26
-  %33 = or disjoint <2 x i64> %31, %27
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 112
-  store <2 x i64> %32, ptr %i.m, align 8, !tbaa !9
-  store <2 x i64> %33, ptr %i.n, align 8, !tbaa !9
+  store <4 x i32> %8, ptr %i.m, align 8, !tbaa !9
+  store <4 x i32> %9, ptr %i.n, align 8, !tbaa !9
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 128
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %wide.vec.4 = load <4 x i32>, ptr %i.o, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.4 = shufflevector <4 x i32> %wide.vec.4, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.4 = shufflevector <4 x i32> %wide.vec.4, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.4 = load <4 x i32>, ptr %i.p, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.4 = shufflevector <4 x i32> %wide.vec12.4, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.4 = shufflevector <4 x i32> %wide.vec12.4, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %34 = zext <2 x i32> %strided.vec.4 to <2 x i64>
-  %35 = zext <2 x i32> %strided.vec13.4 to <2 x i64>
+  %wide.vec.4 = load <4 x i32>, ptr %i.o, align 4, !tbaa !3
+  %10 = freeze <4 x i32> %wide.vec.4
+  %wide.vec12.4 = load <4 x i32>, ptr %i.p, align 4, !tbaa !3
+  %11 = freeze <4 x i32> %wide.vec12.4
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %36 = zext <2 x i32> %strided.vec11.4 to <2 x i64>
-  %37 = zext <2 x i32> %strided.vec14.4 to <2 x i64>
-  %38 = shl nuw <2 x i64> %36, splat (i64 32)
-  %39 = shl nuw <2 x i64> %37, splat (i64 32)
-  %40 = or disjoint <2 x i64> %38, %34
-  %41 = or disjoint <2 x i64> %39, %35
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 144
-  store <2 x i64> %40, ptr %i.q, align 8, !tbaa !9
-  store <2 x i64> %41, ptr %i.r, align 8, !tbaa !9
+  store <4 x i32> %10, ptr %i.q, align 8, !tbaa !9
+  store <4 x i32> %11, ptr %i.r, align 8, !tbaa !9
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 176
-  %wide.vec.5 = load <4 x i32>, ptr %i.s, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.5 = shufflevector <4 x i32> %wide.vec.5, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.5 = shufflevector <4 x i32> %wide.vec.5, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.5 = load <4 x i32>, ptr %i.t, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.5 = shufflevector <4 x i32> %wide.vec12.5, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.5 = shufflevector <4 x i32> %wide.vec12.5, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %42 = zext <2 x i32> %strided.vec.5 to <2 x i64>
-  %43 = zext <2 x i32> %strided.vec13.5 to <2 x i64>
+  %wide.vec.5 = load <4 x i32>, ptr %i.s, align 4, !tbaa !3
+  %12 = freeze <4 x i32> %wide.vec.5
+  %wide.vec12.5 = load <4 x i32>, ptr %i.t, align 4, !tbaa !3
+  %13 = freeze <4 x i32> %wide.vec12.5
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %44 = zext <2 x i32> %strided.vec11.5 to <2 x i64>
-  %45 = zext <2 x i32> %strided.vec14.5 to <2 x i64>
-  %46 = shl nuw <2 x i64> %44, splat (i64 32)
-  %47 = shl nuw <2 x i64> %45, splat (i64 32)
-  %48 = or disjoint <2 x i64> %46, %42
-  %49 = or disjoint <2 x i64> %47, %43
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 176
-  store <2 x i64> %48, ptr %i.u, align 8, !tbaa !9
-  store <2 x i64> %49, ptr %i.v, align 8, !tbaa !9
+  store <4 x i32> %12, ptr %i.u, align 8, !tbaa !9
+  store <4 x i32> %13, ptr %i.v, align 8, !tbaa !9
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %wide.vec.6 = load <4 x i32>, ptr %i.w, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.6 = shufflevector <4 x i32> %wide.vec.6, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.6 = shufflevector <4 x i32> %wide.vec.6, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.6 = load <4 x i32>, ptr %i.x, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.6 = shufflevector <4 x i32> %wide.vec12.6, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.6 = shufflevector <4 x i32> %wide.vec12.6, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %50 = zext <2 x i32> %strided.vec.6 to <2 x i64>
-  %51 = zext <2 x i32> %strided.vec13.6 to <2 x i64>
+  %wide.vec.6 = load <4 x i32>, ptr %i.w, align 4, !tbaa !3
+  %14 = freeze <4 x i32> %wide.vec.6
+  %wide.vec12.6 = load <4 x i32>, ptr %i.x, align 4, !tbaa !3
+  %15 = freeze <4 x i32> %wide.vec12.6
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %52 = zext <2 x i32> %strided.vec11.6 to <2 x i64>
-  %53 = zext <2 x i32> %strided.vec14.6 to <2 x i64>
-  %54 = shl nuw <2 x i64> %52, splat (i64 32)
-  %55 = shl nuw <2 x i64> %53, splat (i64 32)
-  %56 = or disjoint <2 x i64> %54, %50
-  %57 = or disjoint <2 x i64> %55, %51
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 208
-  store <2 x i64> %56, ptr %i.y, align 8, !tbaa !9
-  store <2 x i64> %57, ptr %i.z, align 8, !tbaa !9
+  store <4 x i32> %14, ptr %i.y, align 8, !tbaa !9
+  store <4 x i32> %15, ptr %i.z, align 8, !tbaa !9
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 240
-  %wide.vec.7 = load <4 x i32>, ptr %i.aa, align 4, !tbaa !3 ; 2 uses
-  %strided.vec.7 = shufflevector <4 x i32> %wide.vec.7, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec11.7 = shufflevector <4 x i32> %wide.vec.7, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %wide.vec12.7 = load <4 x i32>, ptr %i.ab, align 4, !tbaa !3 ; 2 uses
-  %strided.vec13.7 = shufflevector <4 x i32> %wide.vec12.7, <4 x i32> poison, <2 x i32> <i32 0, i32 2>
-  %strided.vec14.7 = shufflevector <4 x i32> %wide.vec12.7, <4 x i32> poison, <2 x i32> <i32 1, i32 3>
-  %58 = zext <2 x i32> %strided.vec.7 to <2 x i64>
-  %59 = zext <2 x i32> %strided.vec13.7 to <2 x i64>
+  %wide.vec.7 = load <4 x i32>, ptr %i.aa, align 4, !tbaa !3
+  %16 = freeze <4 x i32> %wide.vec.7
+  %wide.vec12.7 = load <4 x i32>, ptr %i.ab, align 4, !tbaa !3
+  %17 = freeze <4 x i32> %wide.vec12.7
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 224
-  %60 = zext <2 x i32> %strided.vec11.7 to <2 x i64>
-  %61 = zext <2 x i32> %strided.vec14.7 to <2 x i64>
-  %62 = shl nuw <2 x i64> %60, splat (i64 32)
-  %63 = shl nuw <2 x i64> %61, splat (i64 32)
-  %64 = or disjoint <2 x i64> %62, %58
-  %65 = or disjoint <2 x i64> %63, %59
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 240
-  store <2 x i64> %64, ptr %i.ac, align 8, !tbaa !9
-  store <2 x i64> %65, ptr %i.ad, align 8, !tbaa !9
+  store <4 x i32> %16, ptr %i.ac, align 8, !tbaa !9
+  store <4 x i32> %17, ptr %i.ad, align 8, !tbaa !9
   ret void
 }
 
