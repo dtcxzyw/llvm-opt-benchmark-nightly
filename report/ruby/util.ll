@@ -201,8 +201,8 @@ Balloc.exit.thread:                               ; preds = %bb.a, %bb.u
   ret ptr %i.a
 }
 
-; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define internal fastcc ptr @pow5mult(ptr noundef captures(address, ret: address, provenance) %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #15 {
+; Function Attrs: nounwind sspstrong uwtable
+define internal fastcc ptr @pow5mult(ptr noundef captures(address, ret: address, provenance) %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #2 {
 bb.a:
   %i.a = and i32 %1, 3                            ; 2 uses
   %.not = icmp eq i32 %i.a, 0
@@ -327,7 +327,7 @@ Bclear.exit41:                                    ; preds = %bb.j, %Bclear.exit4
 }
 
 ; Function Attrs: nofree nounwind sspstrong memory(readwrite, argmem: read, target_mem: none) uwtable
-define internal fastcc noundef ptr @mult(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) unnamed_addr #16 {
+define internal fastcc noundef ptr @mult(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) unnamed_addr #15 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 24
   %i.b = load i32, ptr %i.a, align 8, !tbaa !7
@@ -497,7 +497,7 @@ Balloc.exit.thread:                               ; preds = %._crit_edge98, %bb.
 }
 
 ; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @lshift(ptr noundef %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #15 {
+define internal fastcc noundef ptr @lshift(ptr noundef %0, i32 noundef range(i32 1, -2147483648) %1) unnamed_addr #16 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64                   ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 24         ; 4 uses
@@ -626,7 +626,7 @@ Bclear.exit:                                      ; preds = %Bclear.exit.sink.sp
 }
 
 ; Function Attrs: nofree nounwind sspstrong memory(readwrite, argmem: read, target_mem: none) uwtable
-define internal fastcc noalias noundef ptr @diff(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) unnamed_addr #16 {
+define internal fastcc noalias noundef ptr @diff(ptr noundef readonly captures(address) %0, ptr noundef readonly captures(address) %1) unnamed_addr #15 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 20
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49
@@ -777,8 +777,8 @@ Balloc.exit.thread:                               ; preds = %bb.g, %cmp.exit, %b
   ret ptr %.046
 }
 
-; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define hidden noundef ptr @ruby_dtoa(double noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef writeonly captures(none) %3, ptr noundef writeonly captures(none) initializes((0, 4)) %4, ptr noundef writeonly captures(address_is_null) %5) local_unnamed_addr #15 {
+; Function Attrs: nounwind sspstrong uwtable
+define hidden noundef ptr @ruby_dtoa(double noundef %0, i32 noundef %1, i32 noundef %2, ptr noundef writeonly captures(none) %3, ptr noundef writeonly captures(none) initializes((0, 4)) %4, ptr noundef writeonly captures(address_is_null) %5) local_unnamed_addr #2 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 6 uses
@@ -1181,7 +1181,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind sspstrong memory(readwrite, target_mem: none) uwtable
-define internal fastcc noundef ptr @multadd(ptr noundef captures(ret: address, provenance) %0, i32 noundef %1, i32 noundef range(i32 -176, 80) %2) unnamed_addr #15 {
+define internal fastcc noundef ptr @multadd(ptr noundef captures(ret: address, provenance) %0, i32 noundef %1, i32 noundef range(i32 -176, 80) %2) unnamed_addr #16 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 20         ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !49   ; 5 uses
@@ -1584,8 +1584,8 @@ attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn mem
 attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
 attributes #13 = { mustprogress nofree nounwind sspstrong willreturn memory(write, argmem: none, inaccessiblemem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { mustprogress nofree nounwind sspstrong willreturn memory(readwrite, argmem: write, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #15 = { nounwind sspstrong memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #16 = { nofree nounwind sspstrong memory(readwrite, argmem: read, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #15 = { nofree nounwind sspstrong memory(readwrite, argmem: read, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { nounwind sspstrong memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #17 = { nofree nounwind sspstrong memory(write, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { mustprogress nofree norecurse nosync nounwind sspstrong willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

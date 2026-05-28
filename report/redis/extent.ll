@@ -31,7 +31,7 @@ target triple = "x86_64-pc-linux-gnu"
 @je_ehooks_default_extent_hooks = external constant %struct.extent_hooks_s, align 8
 @je_tsd_tls = external thread_local(initialexec) global %struct.tsd_s, align 8
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden i64 @je_extent_sn_next(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 atomic_fetch_add_zu.exit:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 62232
@@ -161,7 +161,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not.i.i44, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = tail call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef readonly %2, ptr noundef nonnull %.0334.i, i64 noundef %i.ar, i64 noundef %i.aw) ; 2 uses
+  %i.ay = tail call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef %2, ptr noundef nonnull %.0334.i, i64 noundef %i.ar, i64 noundef %i.aw) ; 2 uses
   %i.az = icmp eq ptr %i.ay, null
   br i1 %i.az, label %.thread38.i, label %bb.l
 
@@ -172,7 +172,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   br i1 %.not46.i.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.ba = tail call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef readonly %2, ptr noundef nonnull %.043.i, i64 noundef %5, i64 noundef %i.ax) ; 2 uses
+  %i.ba = tail call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef %2, ptr noundef nonnull %.043.i, i64 noundef %5, i64 noundef %i.ax) ; 2 uses
   %i.bb = icmp eq ptr %i.ba, null
   br i1 %i.bb, label %extent_split_interior.exit.i, label %bb.n
 
@@ -240,13 +240,13 @@ bb.r:                                             ; preds = %extent_split_interi
   br i1 %i.bu, label %bb.s, label %extents_abandon_vm.exit.i
 
 bb.s:                                             ; preds = %.thread38.i
-  %i.bv = tail call fastcc zeroext i1 @extent_purge_lazy_impl(ptr noundef %0, ptr noundef readonly %2, ptr noundef nonnull %.1142841.i, i64 noundef 0, i64 noundef %i.bn)
+  %i.bv = tail call fastcc zeroext i1 @extent_purge_lazy_impl(ptr noundef %0, ptr noundef %2, ptr noundef nonnull %.1142841.i, i64 noundef 0, i64 noundef %i.bn)
   br i1 %i.bv, label %bb.t, label %extents_abandon_vm.exit.i
 
 bb.t:                                             ; preds = %bb.s
   %.val.i.i = load i64, ptr %i.bm, align 8, !tbaa !40
   %i.bw = and i64 %.val.i.i, -4096
-  %i.bx = tail call fastcc zeroext i1 @extent_purge_forced_impl(ptr noundef %0, ptr noundef readonly %2, ptr noundef nonnull %.1142841.i, i64 noundef 0, i64 noundef %i.bw) ; 0 uses
+  %i.bx = tail call fastcc zeroext i1 @extent_purge_forced_impl(ptr noundef %0, ptr noundef %2, ptr noundef nonnull %.1142841.i, i64 noundef 0, i64 noundef %i.bw) ; 0 uses
   br label %extents_abandon_vm.exit.i
 
 extents_abandon_vm.exit.i:                        ; preds = %bb.t, %bb.s, %.thread38.i
@@ -302,7 +302,7 @@ bb.z:                                             ; preds = %bb.y
   %i.co = getelementptr i8, ptr %.043.i, i64 16
   %.val17.i = load i64, ptr %i.co, align 8, !tbaa !40
   %i.cp = and i64 %.val17.i, -4096
-  %i.cq = tail call fastcc zeroext i1 @extent_commit_impl(ptr noundef %0, ptr noundef readonly %2, ptr noundef nonnull %.043.i, i64 noundef 0, i64 noundef %i.cp) ; 2 uses
+  %i.cq = tail call fastcc zeroext i1 @extent_commit_impl(ptr noundef %0, ptr noundef %2, ptr noundef nonnull %.043.i, i64 noundef 0, i64 noundef %i.cp) ; 2 uses
   %.not.i50 = xor i1 %7, true
   %brmerge.i = or i1 %i.cq, %.not.i50
   br i1 %brmerge.i, label %je_extent_commit_zero.exit, label %bb.ab
@@ -615,7 +615,7 @@ bb.x:                                             ; preds = %bb.w
   br i1 %.not.i.i32.i, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  %i.db = call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef nonnull readonly %2, ptr noundef nonnull %i.al, i64 noundef %i.cv, i64 noundef %i.cz) ; 2 uses
+  %i.db = call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef nonnull %2, ptr noundef nonnull %i.al, i64 noundef %i.cv, i64 noundef %i.cz) ; 2 uses
   %i.dc = icmp eq ptr %i.db, null
   br i1 %i.dc, label %.thread134.i.i, label %bb.z
 
@@ -626,7 +626,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br i1 %.not46.i.i.i, label %bb.ab, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.dd = call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef nonnull readonly %2, ptr noundef nonnull %.0148.i.i, i64 noundef %5, i64 noundef %i.da) ; 2 uses
+  %i.dd = call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef nonnull %2, ptr noundef nonnull %.0148.i.i, i64 noundef %5, i64 noundef %i.da) ; 2 uses
   %i.de = icmp eq ptr %i.dd, null
   br i1 %i.de, label %extent_split_interior.exit.i.i, label %bb.ab
 
@@ -778,7 +778,7 @@ bb.at:                                            ; preds = %extent_alloc_retain
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @je_extent_alloc_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5, i1 noundef zeroext %6, ptr noundef %7, i1 zeroext %8) local_unnamed_addr #1 {
+define hidden ptr @je_extent_alloc_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5, i1 noundef zeroext %6, ptr noundef %7, i1 zeroext %8) local_unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = zext i1 %6 to i8
@@ -977,7 +977,7 @@ bb.e:                                             ; preds = %malloc_mutex_lock.e
   br i1 %i.p, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = tail call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef null)
+  %i.q = tail call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef nonnull %4, ptr noundef null)
   br label %bb.l
 
 bb.g:                                             ; preds = %bb.e
@@ -992,7 +992,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.i, %bb.h
   %.033 = phi ptr [ %4, %bb.h ], [ %i.t, %bb.i ]
-  %i.t = call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, ptr noundef nonnull %3, ptr noundef %.033, ptr noundef nonnull %i.a) ; 4 uses
+  %i.t = call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef %.033, ptr noundef nonnull %i.a) ; 4 uses
   %i.u = load i8, ptr %i.a, align 1, !tbaa !11, !range !42, !noundef !43
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %bb.i, label %atomic_load_zu.exit, !llvm.loop !65
@@ -1064,7 +1064,7 @@ bb.m:                                             ; preds = %bb.k, %bb.l
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @je_ecache_evict(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #1 {
+define hidden ptr @je_ecache_evict(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 64 ; 2 uses
@@ -1141,7 +1141,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = load ptr, ptr %i.r, align 8, !tbaa !22
   tail call void @je_emap_update_edata_state(ptr noundef %0, ptr noundef %i.ab, ptr noundef nonnull %.033, i32 noundef 0) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %i.ac = call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef readonly %2, ptr noundef nonnull %3, ptr noundef nonnull %.033, ptr noundef nonnull %i.a) ; 2 uses
+  %i.ac = call fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly %1, ptr noundef %2, ptr noundef nonnull %3, ptr noundef nonnull %.033, ptr noundef nonnull %i.a) ; 2 uses
   %i.ad = load ptr, ptr %i.r, align 8, !tbaa !22
   %i.ae = load i32, ptr %i.s, align 8, !tbaa !39
   tail call void @je_emap_update_edata_state(ptr noundef %0, ptr noundef %i.ad, ptr noundef %i.ac, i32 noundef %i.ae) #9
@@ -1544,7 +1544,7 @@ bb.ak:                                            ; preds = %extent_dalloc_wrapp
 declare ptr @je_edata_cache_get(ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden zeroext i1 @je_extent_decommit_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
+define hidden zeroext i1 @je_extent_decommit_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = getelementptr i8, ptr %2, i64 8
@@ -1755,14 +1755,14 @@ ehooks_destroy.exit:                              ; preds = %bb.c, %bb.d, %tsd_f
 declare void @je_san_unguard_pages_pre_destroy(ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden zeroext i1 @je_extent_commit_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
+define hidden zeroext i1 @je_extent_commit_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc zeroext i1 @extent_commit_impl(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4)
   ret i1 %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc zeroext i1 @extent_commit_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
+define internal fastcc zeroext i1 @extent_commit_impl(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = getelementptr i8, ptr %2, i64 8
@@ -1861,14 +1861,14 @@ ehooks_commit.exit:                               ; preds = %bb.a, %bb.b, %tsd_f
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden zeroext i1 @je_extent_purge_lazy_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
+define hidden zeroext i1 @je_extent_purge_lazy_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc zeroext i1 @extent_purge_lazy_impl(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4)
   ret i1 %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc zeroext i1 @extent_purge_lazy_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
+define internal fastcc zeroext i1 @extent_purge_lazy_impl(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = getelementptr i8, ptr %2, i64 8
@@ -1959,14 +1959,14 @@ ehooks_purge_lazy.exit:                           ; preds = %bb.a, %bb.b, %tsd_f
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden zeroext i1 @je_extent_purge_forced_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
+define hidden zeroext i1 @je_extent_purge_forced_wrapper(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc zeroext i1 @extent_purge_forced_impl(ptr noundef %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4)
   ret i1 %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc zeroext i1 @extent_purge_forced_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
+define internal fastcc zeroext i1 @extent_purge_forced_impl(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3, i64 noundef %4) unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   %i.a = icmp eq ptr %0, null                     ; 2 uses
   %i.b = getelementptr i8, ptr %2, i64 8
@@ -2057,14 +2057,14 @@ ehooks_purge_forced.exit:                         ; preds = %bb.a, %bb.b, %tsd_f
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden ptr @je_extent_split_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5, i1 noundef zeroext %6) local_unnamed_addr #1 {
+define hidden ptr @je_extent_split_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5, i1 noundef zeroext %6) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, i64 noundef %4, i64 noundef %5)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
+define internal fastcc ptr @extent_split_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, i64 noundef %4, i64 noundef %5) unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit46:
   %6 = alloca %struct.emap_prepare_s, align 8     ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
@@ -2219,14 +2219,14 @@ bb.n:                                             ; preds = %bb.m, %bb.a, %ehook
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden noundef zeroext i1 @je_extent_merge_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #1 {
+define hidden noundef zeroext i1 @je_extent_merge_wrapper(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, ptr noundef %4) local_unnamed_addr #1 {
 bb.a:
   %i.a = tail call fastcc zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4)
   ret i1 %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc noundef zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4) unnamed_addr #1 {
+define internal fastcc noundef zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, ptr noundef %4) unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit41:
   %5 = alloca %struct.emap_prepare_s, align 8     ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 58384 ; 2 uses
@@ -2377,7 +2377,7 @@ ehooks_merge.exit.thread:                         ; preds = %bb.b, %bb.i, %bb.a,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden zeroext i1 @je_extent_commit_zero(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i1 noundef zeroext %5) local_unnamed_addr #1 {
+define hidden zeroext i1 @je_extent_commit_zero(ptr noundef %0, ptr noundef captures(none) %1, ptr noundef captures(none) %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i1 noundef zeroext %5) local_unnamed_addr #1 {
 tsdn_witness_tsdp_get.exit:
   br i1 %3, label %bb.a, label %bb.c
 
@@ -2462,7 +2462,7 @@ declare void @je_emap_release_edata(ptr noundef, ptr noundef, ptr noundef, i32 n
 declare ptr @je_eset_fit(ptr noundef, i64 noundef, i64 noundef, i1 noundef zeroext, i32 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc void @extents_abandon_vm(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef readonly captures(none) %3, ptr noundef %4) unnamed_addr #1 {
+define internal fastcc void @extents_abandon_vm(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef readonly captures(none) %3, ptr noundef %4) unnamed_addr #1 {
 atomic_fetch_add_zu.exit:
   %i.a = getelementptr i8, ptr %4, i64 16         ; 2 uses
   %.val16 = load i64, ptr %i.a, align 8, !tbaa !40
@@ -2494,7 +2494,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b, %atomi
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef writeonly captures(none) %5) unnamed_addr #1 {
+define internal fastcc ptr @extent_try_coalesce_impl(ptr noundef %0, ptr noundef readonly captures(none) %1, ptr noundef captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef writeonly captures(none) %5) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 58384 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %3, i64 19424 ; 4 uses
@@ -2515,7 +2515,7 @@ bb.b:                                             ; preds = %.outer, %extent_coa
 
 bb.c:                                             ; preds = %bb.b
   tail call void @je_eset_remove(ptr noundef nonnull %i.c, ptr noundef nonnull %i.g) #9
-  %i.h = tail call fastcc zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef readonly %2, ptr noundef %.036.ph, ptr noundef nonnull %i.g)
+  %i.h = tail call fastcc zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef %2, ptr noundef %.036.ph, ptr noundef nonnull %i.g)
   br i1 %i.h, label %extent_coalesce.exit.thread, label %extent_coalesce.exit
 
 extent_coalesce.exit.thread:                      ; preds = %bb.c
@@ -2545,7 +2545,7 @@ bb.d:                                             ; preds = %extent_coalesce.exi
 
 bb.e:                                             ; preds = %bb.d
   tail call void @je_eset_remove(ptr noundef nonnull %i.c, ptr noundef nonnull %i.p) #9
-  %i.q = tail call fastcc zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef readonly %2, ptr noundef nonnull %i.p, ptr noundef %.036.ph)
+  %i.q = tail call fastcc zeroext i1 @extent_merge_impl(ptr noundef %0, ptr noundef nonnull readonly %1, ptr noundef %2, ptr noundef nonnull %i.p, ptr noundef %.036.ph)
   br i1 %i.q, label %extent_coalesce.exit51.thread, label %extent_coalesce.exit51
 
 extent_coalesce.exit51.thread:                    ; preds = %bb.e
@@ -2639,7 +2639,7 @@ declare i64 @llvm.umin.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #8
 
-attributes #0 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

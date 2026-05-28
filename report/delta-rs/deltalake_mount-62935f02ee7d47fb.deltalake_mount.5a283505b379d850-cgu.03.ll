@@ -201,8 +201,8 @@ bb.l:                                             ; preds = %bb.k
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB27_6future6future6Futurep6OutputINtNtB27_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB27_6marker4SendEL_EEEE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #1 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB27_6future6future6Futurep6OutputINtNtB27_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB27_6marker4SendEL_EEEE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -461,8 +461,8 @@ bb.k:                                             ; preds = %bb.b
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage7runtime21DeltaIOStorageBackendINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_EEB47_13delete_stream00EE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #1 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage7runtime21DeltaIOStorageBackendINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_EEB47_13delete_stream00EE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -720,8 +720,8 @@ bb.k:                                             ; preds = %bb.b
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCs7JU2D1aBbVY_15deltalake_mount4file23MountFileStorageBackendNtCsjyY8HP3IvQ6_12object_store11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allB2d_(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #1 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCs7JU2D1aBbVY_15deltalake_mount4file23MountFileStorageBackendNtCsjyY8HP3IvQ6_12object_store11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allB2d_(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -979,8 +979,8 @@ bb.k:                                             ; preds = %bb.b
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store5local15LocalFileSystemNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #1 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store5local15LocalFileSystemNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs7JU2D1aBbVY_15deltalake_mount(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -1383,7 +1383,7 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #12
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #1 = { nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #1 = { norecurse nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #2 = { nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { cold minsize noinline noreturn nounwind nonlazybind optsize uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

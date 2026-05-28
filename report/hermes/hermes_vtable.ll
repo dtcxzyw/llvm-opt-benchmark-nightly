@@ -201,7 +201,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal ptr @_ZN12_GLOBAL__N_116clone_propnameidEP16HermesABIRuntime19HermesABIPropNameID(ptr readnone captures(none) %0, ptr returned captures(ret: address, provenance) %1) #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -209,7 +209,7 @@ bb.a:
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal ptr @_ZN12_GLOBAL__N_112clone_stringEP16HermesABIRuntime15HermesABIString(ptr readnone captures(none) %0, ptr returned captures(ret: address, provenance) %1) #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -217,7 +217,7 @@ bb.a:
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal ptr @_ZN12_GLOBAL__N_112clone_symbolEP16HermesABIRuntime15HermesABISymbol(ptr readnone captures(none) %0, ptr returned captures(ret: address, provenance) %1) #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -225,7 +225,7 @@ bb.a:
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal ptr @_ZN12_GLOBAL__N_112clone_objectEP16HermesABIRuntime15HermesABIObject(ptr readnone captures(none) %0, ptr returned captures(ret: address, provenance) %1) #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -233,7 +233,7 @@ bb.a:
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal ptr @_ZN12_GLOBAL__N_112clone_bigintEP16HermesABIRuntime15HermesABIBigInt(ptr readnone captures(none) %0, ptr returned captures(ret: address, provenance) %1) #11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -636,7 +636,7 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax
   br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !526
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @_ZN12_GLOBAL__N_112ManagedValueIN6hermes2vm17PinnedHermesValueEE10invalidateEP23HermesABIManagedPointer(ptr noundef captures(none) %0) #11 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1039,7 +1039,7 @@ bb.ay:                                            ; preds = %bb.aw, %bb.ax
   br i1 %.not, label %._crit_edge.loopexit, label %bb.b, !llvm.loop !697
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal void @_ZN12_GLOBAL__N_112ManagedValueIN6hermes2vm8WeakRootINS2_8JSObjectEEEE10invalidateEP23HermesABIManagedPointer(ptr noundef captures(none) %0) #11 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1442,7 +1442,7 @@ attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #8 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #10 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

@@ -201,7 +201,7 @@ _Py_atomic_compare_exchange_uint8.exit.thread:    ; preds = %_Py_atomic_compare_
 declare void @_PyParkingLot_Unpark(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define internal void @mutex_unpark(ptr noundef writeonly captures(none) %0, ptr noundef captures(address_is_null) %1, i32 noundef %2) #0 {
+define internal void @mutex_unpark(ptr noundef captures(none) %0, ptr noundef captures(address_is_null) %1, i32 noundef %2) #0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %.not = icmp eq ptr %1, null
@@ -337,8 +337,8 @@ declare void @_Py_FatalErrorFunc(ptr noundef, ptr noundef) local_unnamed_addr #4
 
 declare void @_PySemaphore_Wakeup(ptr noundef) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 0, 2) i32 @_PyEvent_IsSet(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define dso_local range(i32 0, 2) i32 @_PyEvent_IsSet(ptr noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = load atomic i8, ptr %0 seq_cst, align 1
   %i.b = icmp eq i8 %i.a, 1
@@ -512,7 +512,7 @@ unlock_once.exit:                                 ; preds = %.backedge, %bb.e, %
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 0, 2) i32 @_PyRecursiveMutex_IsLockedByCurrentThread(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local range(i32 0, 2) i32 @_PyRecursiveMutex_IsLockedByCurrentThread(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call i64 @PyThread_get_thread_ident_ex() #8
   %i.b = getelementptr i8, ptr %0, i64 8
@@ -915,7 +915,7 @@ bb.f:                                             ; preds = %bb.d
   br label %bb.b
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define dso_local void @_PySeqLock_AbandonWrite(ptr noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = load atomic i32, ptr %0 monotonic, align 4
@@ -924,7 +924,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define dso_local void @_PySeqLock_UnlockWrite(ptr noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = load atomic i32, ptr %0 monotonic, align 4
@@ -934,7 +934,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 0, -1) i32 @_PySeqLock_BeginRead(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+define dso_local range(i32 0, -1) i32 @_PySeqLock_BeginRead(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load atomic i32, ptr %0 acquire, align 4 ; 2 uses
   %i.b = and i32 %i.a, 1
@@ -954,7 +954,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 0, 2) i32 @_PySeqLock_EndRead(ptr noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local range(i32 0, 2) i32 @_PySeqLock_EndRead(ptr noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   fence acquire
   %i.a = load atomic i32, ptr %0 monotonic, align 4
@@ -1034,8 +1034,8 @@ _PyMutex_TryUnlock.exit:                          ; preds = %bb.c, %bb.b
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local range(i32 0, 2) i32 @PyMutex_IsLocked(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define dso_local range(i32 0, 2) i32 @PyMutex_IsLocked(ptr noundef captures(none) %0) local_unnamed_addr #5 {
 bb.a:
   %i.a = load atomic i8, ptr %0 seq_cst, align 1
   %i.b = and i8 %i.a, 1
@@ -1051,7 +1051,7 @@ attributes #1 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #8 = { nounwind }

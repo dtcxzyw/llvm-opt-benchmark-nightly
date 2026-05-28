@@ -201,7 +201,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_19CDLWriterD2Ev.exit: ; preds = %bb.a, %bb.c, 
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_19CDLWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -604,7 +604,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_111GammaWriterD2Ev.exit: ; preds = %bb.a, %bb.
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_111GammaWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -1007,7 +1007,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_122ExposureContrastWriterD2Ev.exit: ; preds = 
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_122ExposureContrastWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1410,7 +1410,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_119FixedFunctionWriterD2Ev.exit: ; preds = %bb
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_119FixedFunctionWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -1813,7 +1813,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_120GradingPrimaryWriterD2Ev.exit: ; preds = %b
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_120GradingPrimaryWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -2216,7 +2216,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_121GradingRGBCurveWriterD2Ev.exit: ; preds = %
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_121GradingRGBCurveWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -2619,7 +2619,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_121GradingHueCurveWriterD2Ev.exit: ; preds = %
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_121GradingHueCurveWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -3022,7 +3022,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_117GradingToneWriterD2Ev.exit: ; preds = %bb.a
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_117GradingToneWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -3425,7 +3425,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_19LogWriterD2Ev.exit: ; preds = %bb.a, %bb.c, 
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_19LogWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -3828,7 +3828,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_111Lut1DWriterD2Ev.exit: ; preds = %bb.a, %bb.
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_111Lut1DWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -4231,7 +4231,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_111Lut3DWriterD2Ev.exit: ; preds = %bb.a, %bb.
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_111Lut3DWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -4634,7 +4634,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_112MatrixWriterD2Ev.exit: ; preds = %bb.a, %bb
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_112MatrixWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(56) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -5037,7 +5037,7 @@ _ZN16OpenColorIO_v2_512_GLOBAL__N_111RangeWriterD2Ev.exit: ; preds = %bb.a, %bb.
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind uwtable
 define internal void @_ZNK16OpenColorIO_v2_512_GLOBAL__N_111RangeWriter5getOpEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::shared_ptr.28") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(40) %1) unnamed_addr #16 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
@@ -5440,7 +5440,7 @@ attributes #12 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "n
 attributes #13 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #14 = { cold nofree noreturn }
 attributes #15 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #16 = { mustprogress nofree norecurse nounwind memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #16 = { mustprogress norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #17 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

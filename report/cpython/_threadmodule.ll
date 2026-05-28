@@ -201,7 +201,7 @@ _thread_lock_release_impl.exit:                   ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @_thread_lock_locked_lock(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @_thread_lock_locked_lock(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i8, ptr %i.a seq_cst, align 1
@@ -212,7 +212,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @_thread_lock_locked(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @_thread_lock_locked(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i8, ptr %i.a seq_cst, align 1
@@ -608,7 +608,7 @@ _thread_RLock_release_impl.exit:                  ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @_thread_RLock_locked(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @_thread_RLock_locked(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i8, ptr %i.a seq_cst, align 1

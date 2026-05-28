@@ -201,7 +201,7 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit8:           ; preds = %bb.d, %bb.e
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6duckdb13SecretManager33ThrowOnSettingChangeIfInitializedEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(344) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN6duckdb13SecretManager33ThrowOnSettingChangeIfInitializedEv(ptr noundef nonnull align 8 captures(none) dereferenceable(344) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
   %2 = alloca %"class.std::allocator.0", align 1  ; 5 uses

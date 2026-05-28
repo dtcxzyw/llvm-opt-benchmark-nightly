@@ -201,8 +201,8 @@ _RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4c
   br i1 %.not, label %.loopexit, label %.lr.ph
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB2w_(ptr noundef nonnull readonly align 16 captures(none) %0) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB2w_(ptr noundef nonnull align 16 captures(none) %0) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3088
   %i.b = load atomic i64, ptr %i.a acquire, align 16
@@ -297,8 +297,8 @@ _RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4c
   br i1 %.not, label %.loopexit, label %.lr.ph
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB2w_(ptr dead_on_unwind noalias noundef writable writeonly sret([96 x i8]) align 16 captures(none) dereferenceable(96) initializes((0, 8)) %0, ptr noundef nonnull readonly align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB2w_(ptr dead_on_unwind noalias noundef writable writeonly sret([96 x i8]) align 16 captures(none) dereferenceable(96) initializes((0, 8)) %0, ptr noundef nonnull align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
 bb.a:
   %i.a = and i64 %2, 31                           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 3088
@@ -330,7 +330,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
 define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE5writeB2w_(ptr noundef nonnull align 16 captures(none) %0, i64 noundef %1, ptr noalias noundef readonly align 16 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = and i64 %1, 31                           ; 2 uses
@@ -356,8 +356,8 @@ bb.a:
   ret ptr %i.g
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB2p_(ptr noundef nonnull readonly align 16 captures(none) %0) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB2p_(ptr noundef nonnull align 16 captures(none) %0) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3088
   %i.b = load atomic i64, ptr %i.a acquire, align 16
@@ -452,8 +452,8 @@ _RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4c
   br i1 %.not, label %.loopexit, label %.lr.ph
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB2p_(ptr dead_on_unwind noalias noundef writable writeonly sret([96 x i8]) align 16 captures(none) dereferenceable(96) initializes((0, 8)) %0, ptr noundef nonnull readonly align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB2p_(ptr dead_on_unwind noalias noundef writable writeonly sret([96 x i8]) align 16 captures(none) dereferenceable(96) initializes((0, 8)) %0, ptr noundef nonnull align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
 bb.a:
   %i.a = and i64 %2, 31                           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 3088
@@ -485,7 +485,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
 define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultNtNtCs8ulvy0Wg6Ot_12delta_kernel4scan12ScanMetadataNtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE5writeB2p_(ptr noundef nonnull align 16 captures(none) %0, i64 noundef %1, ptr noalias noundef readonly align 16 captures(none) dead_on_return dereferenceable(96) %2) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = and i64 %1, 31                           ; 2 uses
@@ -511,8 +511,8 @@ bb.a:
   ret ptr %i.g
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtBZ_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB33_(ptr noundef nonnull readonly align 16 captures(none) %0) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtBZ_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE22observed_tail_positionB33_(ptr noundef nonnull align 16 captures(none) %0) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4112
   %i.b = load atomic i64, ptr %i.a acquire, align 16
@@ -607,8 +607,8 @@ _RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4c
   br i1 %.not, label %.loopexit, label %.lr.ph
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtBZ_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB33_(ptr dead_on_unwind noalias noundef writable writeonly sret([128 x i8]) align 16 captures(none) dereferenceable(128) initializes((112, 120)) %0, ptr noundef nonnull readonly align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtBZ_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE4readB33_(ptr dead_on_unwind noalias noundef writable writeonly sret([128 x i8]) align 16 captures(none) dereferenceable(128) initializes((112, 120)) %0, ptr noundef nonnull align 16 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
 bb.a:
   %i.a = and i64 %2, 31                           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 4112
@@ -641,7 +641,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
 define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockINtNtCsbvkFyIu7lgC_4core6result6ResultTNtCseo6ZV82fEK1_3url3UrlINtNtBZ_6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEENtNtCs14kWLkQVSKO_14deltalake_core6errors15DeltaTableErrorEE5writeB33_(ptr noundef nonnull align 16 captures(none) %0, i64 noundef %1, ptr noalias noundef readonly align 16 captures(none) dead_on_return dereferenceable(128) %2) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = and i64 %1, 31                           ; 2 uses
@@ -667,8 +667,8 @@ bb.a:
   ret ptr %i.g
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE22observed_tail_positionCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden { i64, i64 } @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE22observed_tail_positionCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #10 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1296
   %i.b = load atomic i64, ptr %i.a acquire, align 8
@@ -763,8 +763,8 @@ _RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11a
   br i1 %.not, label %.loopexit, label %.lr.ph
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE4readCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) initializes((0, 8)) %0, ptr noundef nonnull readonly align 8 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE4readCs14kWLkQVSKO_14deltalake_core(ptr dead_on_unwind noalias noundef writable writeonly sret([40 x i8]) align 8 captures(none) dereferenceable(40) initializes((0, 8)) %0, ptr noundef nonnull align 8 captures(none) %1, i64 noundef %2) unnamed_addr #10 {
 bb.a:
   %i.a = and i64 %2, 31                           ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 1296
@@ -796,7 +796,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
 define hidden void @_RNvMNtNtNtCskQDtHcQtBkN_5tokio4sync4mpsc5blockINtB2_5BlockNtNtCs1N9T06jgEdt_11arrow_array12record_batch11RecordBatchE5writeCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0, i64 noundef %1, ptr noalias noundef readonly align 8 captures(none) dead_on_return dereferenceable(40) %2) unnamed_addr #10 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = and i64 %1, 31                           ; 2 uses
@@ -1199,7 +1199,7 @@ attributes #6 = { mustprogress nofree norecurse nosync nounwind nonlazybind will
 attributes #7 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #8 = { nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #9 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #10 = { mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #10 = { mustprogress norecurse nounwind nonlazybind willreturn uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #11 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #12 = { nofree norecurse nosync nounwind nonlazybind memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { noinline nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

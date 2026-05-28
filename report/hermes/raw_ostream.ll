@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   ret ptr @_ZZN4llvh4errsEvE1S
 }
 
-; Function Attrs: mustprogress nofree nounwind uwtable
-define hidden noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh5nullsEv() local_unnamed_addr #11 {
+; Function Attrs: mustprogress nounwind uwtable
+define hidden noundef nonnull align 8 dereferenceable(36) ptr @_ZN4llvh5nullsEv() local_unnamed_addr #4 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN4llvh5nullsEvE1S acquire, align 8
   %i.b = icmp eq i8 %i.a, 0

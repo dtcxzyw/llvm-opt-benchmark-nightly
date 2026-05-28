@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN6hermes2vm9CardTable25dirtyCardsForAddressRangeEPKvS3_(ptr noundef nonnull align 1 dereferenceable(16384) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 511
@@ -73,8 +73,8 @@ _ZN6hermes2vm9CardTable10dirtyRangeEmm.exit:      ; preds = %.lr.ph.i.i.prol.loo
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define hidden void @_ZN6hermes2vm9CardTable10dirtyRangeEmm(ptr noundef nonnull writeonly align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
+define hidden void @_ZN6hermes2vm9CardTable10dirtyRangeEmm(ptr noundef nonnull align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp ult i64 %1, %2
   br i1 %i.a, label %.lr.ph.i.preheader, label %_ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE.exit
@@ -134,8 +134,8 @@ _ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE.exit: ; preds = %
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define hidden { i64, i8 } @_ZNK6hermes2vm9CardTable22findNextCardWithStatusENS1_10CardStatusEmm(ptr noundef nonnull readonly align 1 captures(none) dereferenceable(16384) %0, i8 noundef signext %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
+define hidden { i64, i8 } @_ZNK6hermes2vm9CardTable22findNextCardWithStatusENS1_10CardStatusEmm(ptr noundef nonnull align 1 captures(none) dereferenceable(16384) %0, i8 noundef signext %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp ult i64 %2, %3
   br i1 %i.a, label %.lr.ph, label %._crit_edge
@@ -160,8 +160,8 @@ bb.b:                                             ; preds = %.lr.ph
   ret { i64, i8 } %.fca.1.insert
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define hidden void @_ZN6hermes2vm9CardTable5clearEv(ptr noundef nonnull writeonly align 1 captures(none) dereferenceable(16384) %0) local_unnamed_addr #0 align 2 {
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
+define hidden void @_ZN6hermes2vm9CardTable5clearEv(ptr noundef nonnull align 1 captures(none) dereferenceable(16384) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   br label %.lr.ph.i.i
 
@@ -198,8 +198,8 @@ _ZN6hermes2vm9CardTable10cleanRangeEmm.exit:      ; preds = %.lr.ph.i.i
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define hidden void @_ZN6hermes2vm9CardTable10cleanRangeEmm(ptr noundef nonnull writeonly align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
+define hidden void @_ZN6hermes2vm9CardTable10cleanRangeEmm(ptr noundef nonnull align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp ult i64 %1, %2
   br i1 %i.a, label %.lr.ph.i.preheader, label %_ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE.exit
@@ -259,7 +259,7 @@ _ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE.exit: ; preds = %
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
 define hidden void @_ZN6hermes2vm9CardTable21updateAfterCompactionEPKv(ptr noundef nonnull align 1 dereferenceable(16384) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 511
@@ -391,8 +391,8 @@ _ZN6hermes2vm9CardTable10cleanRangeEmm.exit:      ; preds = %.lr.ph.i.i4.prol.lo
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable
-define hidden void @_ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE(ptr noundef nonnull writeonly align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2, i8 noundef signext %3) local_unnamed_addr #0 align 2 {
+; Function Attrs: mustprogress norecurse nounwind memory(argmem: readwrite) uwtable
+define hidden void @_ZN6hermes2vm9CardTable17cleanOrDirtyRangeEmmNS1_10CardStatusE(ptr noundef nonnull align 1 captures(none) dereferenceable(16384) %0, i64 noundef %1, i64 noundef %2, i8 noundef signext %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = icmp ult i64 %1, %2
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
@@ -558,7 +558,7 @@ declare noundef zeroext i1 @_ZN6hermes8oscompat10vm_protectEPvmNS0_11ProtectMode
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5
 
-attributes #0 = { mustprogress nofree norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { mustprogress norecurse nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

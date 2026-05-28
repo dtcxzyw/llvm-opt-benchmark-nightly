@@ -201,8 +201,8 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB27_6future6future6Futurep6OutputINtNtB27_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB27_6marker4SendEL_EEEE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperINtNtCsbvkFyIu7lgC_4core3pin3PinINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtNtB27_6future6future6Futurep6OutputINtNtB27_6result6ResultNtNtCs9Ct3XQYJhun_5bytes5bytes5BytesNtCsjyY8HP3IvQ6_12object_store5ErrorENtNtB27_6marker4SendEL_EEEE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -605,8 +605,8 @@ bb.j:                                             ; preds = %bb.i
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvMs0_NtNtNtCs14kWLkQVSKO_14deltalake_core10operations5write6writerNtB2e_11DeltaWriter5close000EE28atomic_load_head_and_len_allB2k_(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvMs0_NtNtNtCs14kWLkQVSKO_14deltalake_core10operations5write6writerNtB2e_11DeltaWriter5close000EE28atomic_load_head_and_len_allB2k_(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -904,8 +904,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default10filesystem15read_files_impl000EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default10filesystem15read_files_impl000EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -1203,8 +1203,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default4json20read_json_files_impl000EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNCNvNtNtNtCs8ulvy0Wg6Ot_12delta_kernel6engine7default4json20read_json_files_impl000EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -1502,8 +1502,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtCsjyY8HP3IvQ6_12object_store6prefix11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB2e_11ObjectStoreEL_EEB3z_13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtCsjyY8HP3IvQ6_12object_store6prefix11PrefixStoreINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtB2e_11ObjectStoreEL_EEB3z_13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -1801,8 +1801,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage7runtime21DeltaIOStorageBackendINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_EEB47_13delete_stream00EE28atomic_load_head_and_len_allB2i_(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYINtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage7runtime21DeltaIOStorageBackendINtNtCs6Po7BT7Nknu_5alloc4sync3ArcDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_EEB47_13delete_stream00EE28atomic_load_head_and_len_allB2i_(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -2100,8 +2100,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store3gcp18GoogleCloudStorageNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store3gcp18GoogleCloudStorageNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -2399,8 +2399,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store4http9HttpStoreNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store4http9HttpStoreNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -2698,8 +2698,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store5local15LocalFileSystemNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store5local15LocalFileSystemNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -2997,8 +2997,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store6memory8InMemoryNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtB7_15futures_ordered12OrderWrapperNCNCNvYNtNtCsjyY8HP3IvQ6_12object_store6memory8InMemoryNtB2d_11ObjectStore13delete_stream00EE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -3296,8 +3296,8 @@ bb.o:                                             ; preds = %bb.f
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtNtB9_6future5ready5ReadyINtNtCsbvkFyIu7lgC_4core6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorEEE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedINtNtNtB9_6future5ready5ReadyINtNtCsbvkFyIu7lgC_4core6result6ResultuNtCsjyY8HP3IvQ6_12object_store5ErrorEEE28atomic_load_head_and_len_allCs14kWLkQVSKO_14deltalake_core(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -3598,8 +3598,8 @@ bb.p:                                             ; preds = %bb.g
   unreachable
 }
 
-; Function Attrs: nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedNCINvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize4util18flatten_join_errorTINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtNtB1A_6kernel6models6ActionENtB1w_14PartialMetricsENtNtB1A_6errors15DeltaTableErrorINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtCsbvkFyIu7lgC_4core6result6ResultB2O_B4f_EEE0E28atomic_load_head_and_len_allB1A_(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #14 {
+; Function Attrs: norecurse nounwind nonlazybind uwtable
+define hidden { ptr, i64 } @_RNvMs4_NtNtCs8CRAYtH5WmW_12futures_util6stream17futures_unorderedINtB5_16FuturesUnorderedNCINvNtNtNtCs14kWLkQVSKO_14deltalake_core10operations8optimize4util18flatten_join_errorTINtNtCs6Po7BT7Nknu_5alloc3vec3VecNtNtNtB1A_6kernel6models6ActionENtB1w_14PartialMetricsENtNtB1A_6errors15DeltaTableErrorINtNtNtNtCskQDtHcQtBkN_5tokio7runtime4task4join10JoinHandleINtNtCsbvkFyIu7lgC_4core6result6ResultB2O_B4f_EEE0E28atomic_load_head_and_len_allB1A_(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #14 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load atomic ptr, ptr %i.a acquire, align 8 ; 4 uses
@@ -4002,7 +4002,7 @@ attributes #10 = { nounwind nonlazybind memory(read, argmem: readwrite, inaccess
 attributes #11 = { inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #12 = { inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: readwrite, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #13 = { inlinehint nofree norecurse nosync nounwind nonlazybind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #14 = { nofree norecurse nounwind nonlazybind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #14 = { norecurse nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #15 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #16 = { noinline nounwind nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #17 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

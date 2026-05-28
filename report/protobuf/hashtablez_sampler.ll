@@ -201,7 +201,7 @@ _ZN4absl12lts_2025051218container_internal23GlobalHashtablezSamplerEv.exit: ; pr
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4absl12lts_2025051218container_internal16RecordRehashSlowEPNS1_14HashtablezInfoEm(ptr noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = lshr i64 %1, 4
@@ -216,7 +216,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4absl12lts_2025051218container_internal21RecordReservationSlowEPNS1_14HashtablezInfoEm(ptr noundef captures(none) %0, i64 noundef %1) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
@@ -226,16 +226,16 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN4absl12lts_2025051218container_internal28RecordClearedReservationSlowEPNS1_14HashtablezInfoE(ptr noundef writeonly captures(none) %0) local_unnamed_addr #6 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+define void @_ZN4absl12lts_2025051218container_internal28RecordClearedReservationSlowEPNS1_14HashtablezInfoE(ptr noundef captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
   store atomic i64 0, ptr %i.a monotonic, align 8
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define void @_ZN4absl12lts_2025051218container_internal24RecordStorageChangedSlowEPNS1_14HashtablezInfoEmm(ptr noundef writeonly captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #6 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+define void @_ZN4absl12lts_2025051218container_internal24RecordStorageChangedSlowEPNS1_14HashtablezInfoEmm(ptr noundef captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   store atomic i64 %1, ptr %i.a monotonic, align 8
@@ -255,7 +255,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4absl12lts_2025051218container_internal16RecordInsertSlowEPNS1_14HashtablezInfoEmm(ptr noundef captures(none) %0, i64 noundef %1, i64 noundef %2) local_unnamed_addr #6 {
 bb.a:
   %i.a = lshr i64 %2, 4                           ; 2 uses
@@ -276,7 +276,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4absl12lts_2025051218container_internal15RecordEraseSlowEPNS1_14HashtablezInfoE(ptr noundef captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -288,14 +288,14 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define void @_ZN4absl12lts_2025051218container_internal27SetHashtablezConfigListenerEPFvvE(ptr noundef %0) local_unnamed_addr #7 {
 bb.a:
   store atomic ptr %0, ptr @_ZN4absl12lts_2025051218container_internal12_GLOBAL__N_128g_hashtablez_config_listenerE.0 release, align 8
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define noundef zeroext i1 @_ZN4absl12lts_2025051218container_internal19IsHashtablezEnabledEv() local_unnamed_addr #7 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZN4absl12lts_2025051218container_internal12_GLOBAL__N_120g_hashtablez_enabledE.0 acquire, align 1, !range !43, !noundef !44
@@ -320,7 +320,7 @@ _ZN4absl12lts_2025051218container_internal12_GLOBAL__N_131TriggerHashtablezConfi
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define void @_ZN4absl12lts_2025051218container_internal28SetHashtablezEnabledInternalEb(i1 noundef zeroext %0) local_unnamed_addr #7 {
 bb.a:
   %i.a = zext i1 %0 to i8
@@ -328,7 +328,7 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define noundef i32 @_ZN4absl12lts_2025051218container_internal28GetHashtablezSampleParameterEv() local_unnamed_addr #7 {
 bb.a:
   %i.a = load atomic i32, ptr @_ZN4absl12lts_2025051218container_internal12_GLOBAL__N_129g_hashtablez_sample_parameterE.0 acquire, align 4
@@ -731,8 +731,8 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { cold nofree noreturn }
 attributes #10 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

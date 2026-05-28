@@ -201,7 +201,7 @@ Py_DECREF.exit:                                   ; preds = %bb.d, %bb.c, %bb.b,
 declare i32 @_PyObject_VisitType(ptr noundef, ptr noundef, ptr noundef) #1
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_repr(ptr noundef readonly captures(none) %0) #0 {
+define internal ptr @sock_repr(ptr noundef captures(none) %0) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16         ; 2 uses
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -604,7 +604,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_fileno(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @sock_fileno(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -614,7 +614,7 @@ bb.a:
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_getpeername(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @sock_getpeername(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %2 = alloca %union.sock_addr, align 8           ; 5 uses
   %i.a = alloca i32, align 4                      ; 5 uses
@@ -695,7 +695,7 @@ bb.k:                                             ; preds = %getsockaddrlen.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_getsockname(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal ptr @sock_getsockname(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %2 = alloca %union.sock_addr, align 8           ; 5 uses
   %i.a = alloca i32, align 4                      ; 5 uses
@@ -776,7 +776,7 @@ bb.k:                                             ; preds = %getsockaddrlen.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_getsockopt(ptr noundef readonly captures(none) %0, ptr noundef %1) #0 {
+define internal ptr @sock_getsockopt(ptr noundef captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 6 uses
@@ -913,7 +913,7 @@ bb.s:                                             ; preds = %bb.q, %bb.r, %bb.o,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_listen(ptr noundef readonly captures(none) %0, ptr noundef %1) #0 {
+define internal ptr @sock_listen(ptr noundef captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
@@ -1316,7 +1316,7 @@ sock_gettimeout_impl.exit:                        ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_setsockopt(ptr noundef readonly captures(none) %0, ptr noundef %1) #0 {
+define internal ptr @sock_setsockopt(ptr noundef captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 7 uses
   %i.b = alloca i32, align 4                      ; 7 uses
@@ -1479,7 +1479,7 @@ bb.v:                                             ; preds = %bb.t, %bb.q, %bb.l,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal ptr @sock_shutdown(ptr noundef readonly captures(none) %0, ptr noundef %1) #0 {
+define internal ptr @sock_shutdown(ptr noundef captures(none) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = tail call i32 @PyLong_AsInt(ptr noundef %1) #11 ; 2 uses
   %i.b = icmp eq i32 %i.a, -1
@@ -1882,7 +1882,7 @@ bb.z:                                             ; preds = %bb.c, %._crit_edge,
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_accept_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_accept_impl(ptr noundef captures(none) %0, ptr noundef captures(none) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !136
@@ -2254,7 +2254,7 @@ declare i32 @accept4(i32 noundef, ptr, ptr noundef, i32 noundef) local_unnamed_a
 declare i32 @accept(i32 noundef, ptr, ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 0, 2) i32 @getsockaddrarg(ptr noundef readonly captures(none) %0, ptr noundef %1, ptr noundef nonnull %2, ptr noundef nonnull writeonly captures(none) %3, ptr noundef %4) unnamed_addr #0 {
+define internal fastcc range(i32 0, 2) i32 @getsockaddrarg(ptr noundef captures(none) %0, ptr noundef %1, ptr noundef nonnull %2, ptr noundef nonnull writeonly captures(none) %3, ptr noundef %4) unnamed_addr #0 {
 bb.a:
   %5 = alloca %struct.Py_buffer, align 8          ; 6 uses
   %i.a = alloca i32, align 4                      ; 4 uses
@@ -2657,7 +2657,7 @@ bb.m:                                             ; preds = %bb.f, %bb.i, %bb.c,
 declare i32 @connect(i32 noundef, ptr, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_connect_impl(ptr noundef readonly captures(none) %0, ptr readnone captures(none) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_connect_impl(ptr noundef captures(none) %0, ptr readnone captures(none) %1) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = alloca i32, align 4                      ; 4 uses
@@ -2710,7 +2710,7 @@ declare ptr @PyBytesWriter_FinishWithSize(ptr noundef, i64 noundef) local_unname
 declare i32 @listen(i32 noundef, i32 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_recv_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((24, 32)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_recv_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((24, 32)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -2824,7 +2824,7 @@ bb.k:                                             ; preds = %getsockaddrlen.exit
 }
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_recvfrom_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((40, 48)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_recvfrom_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((40, 48)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 32         ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !216
@@ -2857,7 +2857,7 @@ declare i32 @_PyArg_CheckPositional(ptr noundef, i64 noundef, i64 noundef, i64 n
 declare i32 @PyLong_AsInt(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_send_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((24, 32)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_send_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((24, 32)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -2879,7 +2879,7 @@ declare i64 @send(i32 noundef, ptr noundef, i64 noundef, i32 noundef) local_unna
 declare i64 @PyTuple_Size(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_sendto_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((32, 40)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_sendto_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((32, 40)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -3282,7 +3282,7 @@ declare ptr @PyMem_Malloc(i64 noundef) local_unnamed_addr #1
 declare ptr @PyErr_NoMemory() local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_recvmsg_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((16, 24)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_recvmsg_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((16, 24)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4
@@ -3429,7 +3429,7 @@ Py_XDECREF.exit:                                  ; preds = %bb.m, %.loopexit, %
 declare ptr @PySequence_Tuple(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal range(i32 0, 2) i32 @sock_sendmsg_impl(ptr noundef readonly captures(none) %0, ptr noundef captures(none) initializes((16, 24)) %1) #0 {
+define internal range(i32 0, 2) i32 @sock_sendmsg_impl(ptr noundef captures(none) %0, ptr noundef captures(none) initializes((16, 24)) %1) #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load atomic i32, ptr %i.a monotonic, align 4

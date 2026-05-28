@@ -201,7 +201,7 @@ bb.u:                                             ; preds = %Py_DECREF.exit46, %
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local range(i32 -1, 1) i32 @_Py_Instrument(ptr noundef %0, ptr noundef readonly captures(none) %1) local_unnamed_addr #4 {
+define dso_local range(i32 -1, 1) i32 @_Py_Instrument(ptr noundef %0, ptr noundef captures(none) %1) local_unnamed_addr #4 {
 bb.a:
   %i.a = load atomic i64, ptr %1 monotonic, align 8
   %i.b = and i64 %i.a, 4294967295
@@ -211,7 +211,7 @@ bb.a:
   br i1 %i.e, label %instrument_lock_held.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %0, ptr noundef nonnull readonly %1)
+  %i.f = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %0, ptr noundef nonnull %1)
   br label %instrument_lock_held.exit
 
 instrument_lock_held.exit:                        ; preds = %bb.a, %bb.b
@@ -387,7 +387,7 @@ bb.h:                                             ; preds = %.lr.ph.i
   br i1 %i.cx, label %instrument_lock_held.exit.thread.i, label %instrument_lock_held.exit.i
 
 instrument_lock_held.exit.i:                      ; preds = %bb.h
-  %i.cy = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.cs, ptr noundef nonnull readonly %i.d)
+  %i.cy = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.cs, ptr noundef nonnull %i.d)
   %.not23.i = icmp eq i32 %i.cy, 0
   br i1 %.not23.i, label %instrument_lock_held.exit.thread.i, label %.loopexit.i
 
@@ -632,7 +632,7 @@ bb.j:                                             ; preds = %allocate_instrument
 }
 
 ; Function Attrs: nounwind uwtable
-define internal fastcc range(i32 -1, 1) i32 @force_instrument_lock_held(ptr noundef %0, ptr noundef readonly captures(none) %1) unnamed_addr #4 {
+define internal fastcc range(i32 -1, 1) i32 @force_instrument_lock_held(ptr noundef %0, ptr noundef captures(none) %1) unnamed_addr #4 {
 bb.a:
   %2 = alloca %struct._line_offsets, align 8      ; 4 uses
   %3 = alloca %struct._line_offsets, align 8      ; 6 uses
@@ -1035,7 +1035,7 @@ bb.k:                                             ; preds = %.lr.ph.i
   br i1 %i.bl, label %instrument_lock_held.exit.thread.i, label %instrument_lock_held.exit.i
 
 instrument_lock_held.exit.i:                      ; preds = %bb.k
-  %i.bm = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.bg, ptr noundef nonnull readonly %i.b)
+  %i.bm = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.b)
   %.not23.i = icmp eq i32 %i.bm, 0
   br i1 %.not23.i, label %instrument_lock_held.exit.thread.i, label %.loopexit.i
 
@@ -1438,7 +1438,7 @@ declare i32 @PyObject_SetAttrString(ptr noundef, ptr noundef, ptr noundef) local
 
 declare ptr @_PyNamespace_New(ptr noundef) local_unnamed_addr #5
 
-; Function Attrs: nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef i32 @PyMonitoring_EnterScope(ptr noundef writeonly captures(none) %0, ptr noundef captures(none) %1, ptr noundef readonly captures(none) %2, i64 noundef %3) local_unnamed_addr #7 {
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_Py_tss_interp)
@@ -1841,7 +1841,7 @@ bb.e:                                             ; preds = %.lr.ph.i.i
   br i1 %i.bd, label %instrument_lock_held.exit.thread.i.i, label %instrument_lock_held.exit.i.i
 
 instrument_lock_held.exit.i.i:                    ; preds = %bb.e
-  %i.be = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.ay, ptr noundef nonnull readonly %i.d)
+  %i.be = tail call fastcc i32 @force_instrument_lock_held(ptr noundef nonnull %i.ay, ptr noundef nonnull %i.d)
   %.not23.i.i = icmp eq i32 %i.be, 0
   br i1 %.not23.i.i, label %instrument_lock_held.exit.thread.i.i, label %.loopexit.i.i
 
@@ -2244,7 +2244,7 @@ attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #4 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nofree norecurse nosync nounwind memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }

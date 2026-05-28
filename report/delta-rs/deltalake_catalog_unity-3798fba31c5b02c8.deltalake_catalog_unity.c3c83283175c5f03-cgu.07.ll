@@ -201,8 +201,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvMs2_NtNtCslrv8JwANqSj_15crossbeam_utils6atomic11atomic_cellINtB5_10AtomicCellyE5storeCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull writeonly align 8 captures(none) %0, i64 noundef %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden void @_RNvMs2_NtNtCslrv8JwANqSj_15crossbeam_utils6atomic11atomic_cellINtB5_10AtomicCellyE5storeCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull align 8 captures(none) %0, i64 noundef %1) unnamed_addr #2 personality ptr @rust_eh_personality {
 bb.a:
   store atomic i64 %1, ptr %0 release, align 8
   ret void
@@ -349,8 +349,8 @@ bb.n:                                             ; preds = %_RINvNtCsbvkFyIu7lg
   resume { ptr, i32 } %.pn
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden noundef i64 @_RNvMs4_NtNtCslrv8JwANqSj_15crossbeam_utils6atomic11atomic_cellINtB5_10AtomicCellyE4loadCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull readonly align 8 captures(none) %0) unnamed_addr #2 {
+; Function Attrs: mustprogress norecurse nounwind nonlazybind willreturn uwtable
+define hidden noundef i64 @_RNvMs4_NtNtCslrv8JwANqSj_15crossbeam_utils6atomic11atomic_cellINtB5_10AtomicCellyE4loadCsgO8S5jLFugx_23deltalake_catalog_unity(ptr noundef nonnull align 8 captures(none) %0) unnamed_addr #2 {
 bb.a:
   %i.a = load atomic i64, ptr %0 acquire, align 8
   ret i64 %i.a
@@ -753,7 +753,7 @@ declare i64 @llvm.umin.i64(i64, i64) #13
 
 attributes #0 = { nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #1 = { inlinehint nonlazybind uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
-attributes #2 = { mustprogress nofree norecurse nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
+attributes #2 = { mustprogress norecurse nounwind nonlazybind willreturn uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }
 attributes #5 = { inlinehint nofree norecurse nosync nounwind nonlazybind memory(argmem: readwrite, inaccessiblemem: write) uwtable "probe-stack"="inline-asm" "target-cpu"="x86-64" }

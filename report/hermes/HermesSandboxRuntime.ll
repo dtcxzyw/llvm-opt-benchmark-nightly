@@ -201,8 +201,8 @@ _ZNSt13random_deviceD2Ev.exit7:                   ; preds = %bb.h
 
 declare i32 @__gxx_personality_v0(...)
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
-define hidden range(i32 0, 2) i32 @w2c_hermes__import_test_timeout(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
+define hidden range(i32 0, 2) i32 @w2c_hermes__import_test_timeout(ptr noundef captures(none) %0) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1029
@@ -211,7 +211,7 @@ bb.a:
   ret i32 %i.c
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
 define hidden range(i32 0, 2) i32 @w2c_hermes__import_test_and_clear_timeout(ptr noundef captures(none) %0) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 bb.a:
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %0) ]
@@ -614,7 +614,7 @@ declare void @_ZN8facebook3jsi7Runtime18setRuntimeDataImplERKNS0_4UUIDEPKvPFvS6_
 
 declare noundef ptr @_ZN8facebook3jsi7Runtime18getRuntimeDataImplERKNS0_4UUIDE(ptr noundef nonnull align 8 dereferenceable(8), ptr noundef nonnull align 8 dereferenceable(16)) unnamed_addr #9
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl11cloneSymbolEPKN8facebook3jsi7Runtime12PointerValueE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef returned captures(address_is_null, ret: address, provenance) %1) unnamed_addr #17 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
@@ -629,7 +629,7 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl5cloneEPKN8facebook3jsi7Runtime12Poin
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl11cloneBigIntEPKN8facebook3jsi7Runtime12PointerValueE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef returned captures(address_is_null, ret: address, provenance) %1) unnamed_addr #17 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
@@ -644,7 +644,7 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl5cloneEPKN8facebook3jsi7Runtime12Poin
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl11cloneStringEPKN8facebook3jsi7Runtime12PointerValueE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef returned captures(address_is_null, ret: address, provenance) %1) unnamed_addr #17 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
@@ -659,7 +659,7 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl5cloneEPKN8facebook3jsi7Runtime12Poin
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl11cloneObjectEPKN8facebook3jsi7Runtime12PointerValueE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef returned captures(address_is_null, ret: address, provenance) %1) unnamed_addr #17 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
@@ -674,7 +674,7 @@ _ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl5cloneEPKN8facebook3jsi7Runtime12Poin
   ret ptr %1
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
 define internal noundef ptr @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl15clonePropNameIDEPKN8facebook3jsi7Runtime12PointerValueE(ptr nonnull readnone align 8 captures(none) %0, ptr noundef returned captures(address_is_null, ret: address, provenance) %1) unnamed_addr #17 align 2 {
 bb.a:
   %.not.i = icmp eq ptr %1, null
@@ -1077,8 +1077,8 @@ _ZN12_GLOBAL__N_19LIFOAllocIcED2Ev.exit30:        ; preds = %_ZN12_GLOBAL__N_110
   resume { ptr, i32 } %.pn
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define internal void @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl19asyncTriggerTimeoutEv(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(1038) %0) unnamed_addr #17 align 2 {
+; Function Attrs: mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+define internal void @_ZN12_GLOBAL__N_124HermesSandboxRuntimeImpl19asyncTriggerTimeoutEv(ptr noundef nonnull align 8 captures(none) dereferenceable(1038) %0) unnamed_addr #17 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1037
   store atomic i8 1, ptr %i.a monotonic, align 1
@@ -1481,7 +1481,7 @@ attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { cold mustprogress nofree noreturn nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { cold nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1493,7 +1493,7 @@ attributes #13 = { cold nofree noreturn }
 attributes #14 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #17 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #17 = { mustprogress norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #18 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #19 = { cold noreturn nounwind memory(inaccessiblemem: write) }
 attributes #20 = { nounwind memory(none) }
