@@ -41,7 +41,7 @@ $_ZZN2v88internal12RegisterNameENS0_8RegisterEE5Names = comdat any
 
 @_ZN2v88internal21RegisterConfigurationC1ENS0_12AliasingKindEiiiiiiiiPKiS4_S4_ = hidden unnamed_addr alias void (ptr, i32, i32, i32, i32, i32, i32, i32, i32, i32, ptr, ptr, ptr), ptr @_ZN2v88internal21RegisterConfigurationC2ENS0_12AliasingKindEiiiiiiiiPKiS4_S4_
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef nonnull ptr @_ZN2v88internal21RegisterConfiguration7DefaultEv() local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object acquire, align 8
@@ -49,13 +49,13 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEv.exit, !prof !5
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call fastcc void @_ZN2v84base11LeakyObjectINS_8internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationEEC2IJEEEDpOT_()
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   br label %_ZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEv.exit
 
 _ZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEv.exit: ; preds = %bb.a, %bb.b, %bb.c
@@ -63,14 +63,14 @@ _ZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEv.exit: ; preds =
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noundef nonnull ptr @_ZN2v88internal21RegisterConfiguration24RestrictGeneralRegistersENS0_11RegListBaseINS0_8RegisterEEE(i16 %0) local_unnamed_addr #1 align 2 {
+define hidden noundef nonnull ptr @_ZN2v88internal21RegisterConfiguration24RestrictGeneralRegistersENS0_11RegListBaseINS0_8RegisterEEE(i16 %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = tail call range(i16 0, 17) i16 @llvm.ctpop.i16(i16 %0) ; 3 uses
   %i.b = zext nneg i16 %i.a to i64                ; 4 uses
   %i.c = shl nuw nsw i64 %i.b, 2
-  %i.d = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.c) #14 ; 8 uses
+  %i.d = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.c) #13 ; 8 uses
   %i.e = shl nuw nsw i64 %i.b, 3
-  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #14 ; 2 uses
+  %i.f = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.e) #13 ; 2 uses
   %i.g = zext i16 %0 to i32
   br label %bb.b
 
@@ -82,13 +82,13 @@ bb.b:                                             ; preds = %bb.i, %bb.a
   br i1 %i.i, label %bb.c, label %_ZN2v88internal21RegisterConfiguration7DefaultEv.exit, !prof !5
 
 bb.c:                                             ; preds = %bb.b
-  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   %.not.i.i = icmp eq i32 %i.j, 0
   br i1 %.not.i.i, label %_ZN2v88internal21RegisterConfiguration7DefaultEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call fastcc void @_ZN2v84base11LeakyObjectINS_8internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationEEC2IJEEEDpOT_()
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   br label %_ZN2v88internal21RegisterConfiguration7DefaultEv.exit
 
 _ZN2v88internal21RegisterConfiguration7DefaultEv.exit: ; preds = %bb.b, %bb.c, %bb.d
@@ -99,7 +99,7 @@ _ZN2v88internal21RegisterConfiguration7DefaultEv.exit: ; preds = %bb.b, %bb.c, %
 
 bb.e:                                             ; preds = %_ZN2v88internal21RegisterConfiguration7DefaultEv.exit
   %i.n = zext nneg i16 %i.a to i32
-  %i.o = tail call noalias noundef nonnull dereferenceable(496) ptr @_Znwm(i64 noundef 496) #14 ; 39 uses
+  %i.o = tail call noalias noundef nonnull dereferenceable(496) ptr @_Znwm(i64 noundef 496) #13 ; 39 uses
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN2v88internal21RegisterConfigurationE, i64 16), ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   store i32 16, ptr %i.p, align 8
@@ -253,13 +253,13 @@ bb.f:                                             ; preds = %_ZN2v88internal21Re
   br i1 %i.cc, label %bb.g, label %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit, !prof !5
 
 bb.g:                                             ; preds = %bb.f
-  %i.cd = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  %i.cd = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   %.not.i.i19 = icmp eq i32 %i.cd, 0
   br i1 %.not.i.i19, label %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   tail call fastcc void @_ZN2v84base11LeakyObjectINS_8internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationEEC2IJEEEDpOT_()
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #13
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object) #12
   br label %_ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit
 
 _ZNK2v88internal11RegListBaseINS0_8RegisterEE3hasES2_.exit: ; preds = %bb.f, %bb.g, %bb.h
@@ -297,13 +297,13 @@ bb.i:                                             ; preds = %_ZN2v88internal12Re
 }
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #2
+declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #2
+declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN2v88internal21RegisterConfigurationC2ENS0_12AliasingKindEiiiiiiiiPKiS4_S4_(ptr noundef nonnull align 8 captures(none) dereferenceable(476) initializes((0, 68), (72, 80), (208, 216), (472, 476)) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef readonly captures(none) %12) unnamed_addr #3 align 2 {
+define hidden void @_ZN2v88internal21RegisterConfigurationC2ENS0_12AliasingKindEiiiiiiiiPKiS4_S4_(ptr noundef nonnull align 8 captures(none) dereferenceable(476) initializes((0, 68), (72, 80), (208, 216), (472, 476)) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, i32 noundef %6, i32 noundef %7, i32 noundef %8, i32 noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef readonly captures(none) %12) unnamed_addr #2 align 2 {
 bb.a:
   %i.a = ptrtoaddr ptr %12 to i64
   %i.b = ptrtoaddr ptr %0 to i64
@@ -706,7 +706,7 @@ bb.o:                                             ; preds = %bb.o, %.epil.prehea
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define hidden noundef range(i32 0, -2147483647) i32 @_ZNK2v88internal21RegisterConfiguration10GetAliasesENS0_21MachineRepresentationEiS2_Pi(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(476) %0, i8 noundef zeroext %1, i32 noundef %2, i8 noundef zeroext %3, ptr noundef writeonly captures(none) %4) local_unnamed_addr #4 align 2 {
+define hidden noundef range(i32 0, -2147483647) i32 @_ZNK2v88internal21RegisterConfiguration10GetAliasesENS0_21MachineRepresentationEiS2_Pi(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(476) %0, i8 noundef zeroext %1, i32 noundef %2, i8 noundef zeroext %3, ptr noundef writeonly captures(none) %4) local_unnamed_addr #3 align 2 {
 bb.a:
   %i.a = icmp eq i8 %1, %3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -744,7 +744,7 @@ bb.g:                                             ; preds = %bb.f, %bb.d, %bb.e,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(476) %0, i8 noundef zeroext %1, i32 noundef %2, i8 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #5 align 2 {
+define hidden noundef zeroext i1 @_ZNK2v88internal21RegisterConfiguration10AreAliasesENS0_21MachineRepresentationEiS2_i(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(476) %0, i8 noundef zeroext %1, i32 noundef %2, i8 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #4 align 2 {
 bb.a:
   %i.a = icmp eq i8 %1, %3
   br i1 %i.a, label %bb.b, label %bb.c
@@ -777,23 +777,23 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2v88internal21RegisterConfigurationD2Ev(ptr noundef nonnull align 8 dead_on_return(476) dereferenceable(476) %0) unnamed_addr #1 comdat align 2 {
+define linkonce_odr hidden void @_ZN2v88internal21RegisterConfigurationD2Ev(ptr noundef nonnull align 8 dead_on_return(476) dereferenceable(476) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2v88internal21RegisterConfigurationD0Ev(ptr noundef nonnull align 8 dead_on_return(476) dereferenceable(476) %0) unnamed_addr #1 comdat align 2 {
+define linkonce_odr hidden void @_ZN2v88internal21RegisterConfigurationD0Ev(ptr noundef nonnull align 8 dead_on_return(476) dereferenceable(476) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 480) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 480) #14
   ret void
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #6
+declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc void @_ZN2v84base11LeakyObjectINS_8internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationEEC2IJEEEDpOT_() unnamed_addr #7 align 2 {
+define internal fastcc void @_ZN2v84base11LeakyObjectINS_8internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationEEC2IJEEEDpOT_() unnamed_addr #6 align 2 {
 bb.a:
   store ptr @_ZN2v88internal12_GLOBAL__N_124kAllocatableGeneralCodesE, ptr getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object, i64 72), align 8
   store ptr @_ZN2v88internal12_GLOBAL__N_123kAllocatableDoubleCodesE, ptr getelementptr inbounds nuw (i8, ptr @_ZZN2v88internal12_GLOBAL__N_131GetDefaultRegisterConfigurationEvE6object, i64 208), align 8
@@ -827,23 +827,23 @@ bb.a:
 }
 
 ; Function Attrs: nofree nounwind
-declare void @__cxa_guard_release(ptr) local_unnamed_addr #6
+declare void @__cxa_guard_release(ptr) local_unnamed_addr #5
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define internal void @_ZN2v88internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationD0Ev(ptr noundef nonnull align 8 dereferenceable(476) %0) unnamed_addr #8 align 2 {
+define internal void @_ZN2v88internal12_GLOBAL__N_132ArchDefaultRegisterConfigurationD0Ev(ptr noundef nonnull align 8 dereferenceable(476) %0) unnamed_addr #7 align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 480) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 480) #14
   ret void
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #9
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #9
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define internal void @_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD2Ev(ptr noundef nonnull align 8 captures(none) dereferenceable(496) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
+define internal void @_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD2Ev(ptr noundef nonnull align 8 captures(none) dereferenceable(496) initializes((0, 8)) %0) unnamed_addr #7 align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 488
@@ -852,7 +852,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i
 
 _ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i: ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #15
+  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #14
   br label %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i
@@ -862,7 +862,7 @@ _ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.a, %_ZNK
   br i1 %.not.i1, label %_ZNSt10unique_ptrIA_iSt14default_deleteIS0_EED2Ev.exit, label %_ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i
 
 _ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i: ; preds = %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit
-  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #15
+  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #14
   br label %_ZNSt10unique_ptrIA_iSt14default_deleteIS0_EED2Ev.exit
 
 _ZNSt10unique_ptrIA_iSt14default_deleteIS0_EED2Ev.exit: ; preds = %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit, %_ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i
@@ -870,7 +870,7 @@ _ZNSt10unique_ptrIA_iSt14default_deleteIS0_EED2Ev.exit: ; preds = %_ZNSt10unique
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define internal void @_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD0Ev(ptr noundef nonnull align 8 dereferenceable(496) initializes((0, 8)) %0) unnamed_addr #8 align 2 {
+define internal void @_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD0Ev(ptr noundef nonnull align 8 dereferenceable(496) initializes((0, 8)) %0) unnamed_addr #7 align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 16) (i8, ptr @_ZTVN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 488
@@ -879,7 +879,7 @@ bb.a:
   br i1 %.not.i.i, label %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i, label %_ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i.i
 
 _ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #15, !inline_history !39
+  tail call void @_ZdaPv(ptr noundef nonnull %i.b) #14, !inline_history !39
   br label %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i
 
 _ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIA_PKcEclIS1_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS2_EE5valueEvE4typeEPS6_.exit.i.i, %bb.a
@@ -889,45 +889,44 @@ _ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14d
   br i1 %.not.i1.i, label %_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD2Ev.exit, label %_ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i
 
 _ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i: ; preds = %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i
-  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #15, !inline_history !39
+  tail call void @_ZdaPv(ptr noundef nonnull %i.d) #14, !inline_history !39
   br label %_ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD2Ev.exit
 
 _ZN2v88internal12_GLOBAL__N_131RestrictedRegisterConfigurationD2Ev.exit: ; preds = %_ZNSt10unique_ptrIA_PKcSt14default_deleteIS2_EED2Ev.exit.i, %_ZNKSt14default_deleteIA_iEclIiEENSt9enable_ifIXsr14is_convertibleIPA_T_PS0_EE5valueEvE4typeEPS4_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 496) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 496) #14
   ret void
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdaPv(ptr noundef) local_unnamed_addr #9
+declare void @_ZdaPv(ptr noundef) local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i16 @llvm.ctpop.i16(i16) #11
+declare i16 @llvm.ctpop.i16(i16) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #11
+declare i32 @llvm.smin.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #11
+declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #10
 
-attributes #0 = { mustprogress nofree nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nofree nounwind }
-attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nounwind }
-attributes #14 = { builtin nounwind allocsize(0) }
-attributes #15 = { builtin nounwind }
+attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nofree nounwind }
+attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { inlinehint mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #12 = { nounwind }
+attributes #13 = { builtin nounwind allocsize(0) }
+attributes #14 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}

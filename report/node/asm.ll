@@ -101,7 +101,7 @@ $_ZN3fmt3v1112format_facetISt6localeE2idE = comdat any
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF6Binary11disassembleEmm(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, i64 noundef %2, i64 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !4
   ret void
 }
@@ -109,7 +109,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF6Binary11disassembleEm(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, i64 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !7
   ret void
 }
@@ -117,7 +117,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF6Binary11disassembleERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !10
   ret void
 }
@@ -125,7 +125,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF6Binary11disassembleEPKhmm(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, ptr noundef readnone captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !13
   ret void
 }
@@ -133,7 +133,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4LIEF6Binary8assembleEmRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERNS_8assembly15AssemblerConfigE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.46") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, i64 noundef %2, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(32) %3, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(12) %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   ret void
 }
@@ -144,7 +144,7 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4LIEF6Binary8assembleEmRKN4llvm6MCInstE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.46") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, i64 noundef %2, ptr noundef nonnull readnone align 1 captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   ret void
 }
@@ -152,7 +152,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4LIEF6Binary8assembleEmRKSt6vectorIN4llvm6MCInstESaIS3_EE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::vector.46") align 8 captures(none) initializes((0, 24)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(88) %1, i64 noundef %2, ptr noundef nonnull readnone align 1 captures(none) %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   ret void
 }
@@ -172,7 +172,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF4COFF6Binary11disassembleERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(160) %1, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(32) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !16
   ret void
 }
@@ -180,7 +180,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF4COFF6Binary11disassembleERKNS0_6SymbolE(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(160) %1, ptr noundef nonnull readnone align 1 captures(none) %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !19
   ret void
 }
@@ -188,7 +188,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK4LIEF4COFF6Binary11disassembleEPKhmm(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(160) %1, ptr noundef readnone captures(none) %2, i64 noundef %3, i64 noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #9 ; 0 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false), !alias.scope !22
   ret void
 }
@@ -240,7 +240,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EEaSEOS6_.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i.i.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i.i.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EEaSEOS6_.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EEaSEOS6_.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i.i.i.i
@@ -274,7 +274,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7details13InstructionItESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7details13InstructionItEEclEPS3_.exit.i
@@ -307,7 +307,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7details11InstructionESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7details11InstructionESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7details11InstructionESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i
@@ -324,11 +324,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF8assembly11InstructionD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !25
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10, !inline_history !25
   br label %_ZN4LIEF8assembly11InstructionD2Ev.exit
 
 _ZN4LIEF8assembly11InstructionD2Ev.exit:          ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7details11InstructionEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #10
   ret void
 }
 
@@ -347,22 +347,22 @@ bb.a:
   ret i64 0
 }
 
-; Function Attrs: mustprogress nofree nounwind uwtable
-define hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZNK4LIEF8assembly11Instruction3rawEv(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress nounwind uwtable
+define hidden noundef nonnull align 8 dereferenceable(24) ptr @_ZNK4LIEF8assembly11Instruction3rawEv(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZNK4LIEF8assembly11Instruction3rawEvE5empty acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.d, !prof !26
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4LIEF8assembly11Instruction3rawEvE5empty) #10
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4LIEF8assembly11Instruction3rawEvE5empty) #9
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZZNK4LIEF8assembly11Instruction3rawEvE5empty, i8 0, i64 24, i1 false)
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIhSaIhEED2Ev, ptr nonnull @_ZZNK4LIEF8assembly11Instruction3rawEvE5empty, ptr nonnull @__dso_handle) #10 ; 0 uses
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4LIEF8assembly11Instruction3rawEvE5empty) #10
+  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorIhSaIhEED2Ev, ptr nonnull @_ZZNK4LIEF8assembly11Instruction3rawEvE5empty, ptr nonnull @__dso_handle) #9 ; 0 uses
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4LIEF8assembly11Instruction3rawEvE5empty) #9
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -370,7 +370,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #7
+declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIhSaIhEED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #0 comdat align 2 {
@@ -385,7 +385,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = ptrtoint ptr %i.c to i64
   %i.e = ptrtoint ptr %i.a to i64
   %i.f = sub i64 %i.d, %i.e
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %i.f) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef %i.f) #10
   br label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit
 
 _ZNSt12_Vector_baseIhSaIhEED2Ev.exit:             ; preds = %bb.a, %bb.b
@@ -393,10 +393,10 @@ _ZNSt12_Vector_baseIhSaIhEED2Ev.exit:             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #7
+declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #6
 
 ; Function Attrs: nofree nounwind
-declare void @__cxa_guard_release(ptr) local_unnamed_addr #7
+declare void @__cxa_guard_release(ptr) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_ZNK4LIEF8assembly11Instruction8mnemonicB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(16) %1) local_unnamed_addr #3 align 2 {
@@ -583,7 +583,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7details6EngineESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7details6EngineEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7details6EngineEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7details6EngineESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7details6EngineESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7details6EngineEEclEPS3_.exit.i
@@ -783,7 +783,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i.i.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i.i.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i.i.i.i
@@ -817,7 +817,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly3x867details9OperandItESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly3x867details9OperandItEEclEPS4_.exit.i
@@ -834,7 +834,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details7OperandESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly3x867details7OperandESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly3x867details7OperandESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i
@@ -851,11 +851,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF8assembly3x867OperandD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !36
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10, !inline_history !36
   br label %_ZN4LIEF8assembly3x867OperandD2Ev.exit
 
 _ZN4LIEF8assembly3x867OperandD2Ev.exit:           ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly3x867details7OperandEEclEPS4_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #10
   ret void
 }
 
@@ -1005,7 +1005,7 @@ bb.a:
   br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i.i.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i.i.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EEaSEOS7_.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i.i.i.i
@@ -1039,7 +1039,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7aarch647details9OperandItESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details9OperandItEEclEPS4_.exit.i
@@ -1056,7 +1056,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details7OperandESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10
   br label %_ZNSt10unique_ptrIN4LIEF8assembly7aarch647details7OperandESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF8assembly7aarch647details7OperandESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i
@@ -1073,11 +1073,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF8assembly7aarch647OperandD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !37
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #10, !inline_history !37
   br label %_ZN4LIEF8assembly7aarch647OperandD2Ev.exit
 
 _ZN4LIEF8assembly7aarch647OperandD2Ev.exit:       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF8assembly7aarch647details7OperandEEclEPS4_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #10
   ret void
 }
 
@@ -1169,7 +1169,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal void @__cxx_global_var_init() #8 section ".text.startup" comdat($_ZN3fmt3v1112format_facetISt6localeE2idE) {
+define internal void @__cxx_global_var_init() #7 section ".text.startup" comdat($_ZN3fmt3v1112format_facetISt6localeE2idE) {
 bb.a:
   %i.a = load i8, ptr @_ZGVN3fmt3v1112format_facetISt6localeE2idE, align 8
   %i.b = icmp eq i8 %i.a, 0
@@ -1183,7 +1183,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret void
 }
 
-declare noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef) local_unnamed_addr #9
+declare noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef) local_unnamed_addr #8
 
 attributes #0 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
@@ -1191,12 +1191,11 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nofree nounwind }
-attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nounwind }
-attributes #11 = { builtin nounwind }
+attributes #6 = { nofree nounwind }
+attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nounwind }
+attributes #10 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

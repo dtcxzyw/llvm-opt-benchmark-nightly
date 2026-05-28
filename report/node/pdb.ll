@@ -201,7 +201,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN4LIEF3pdb9DebugInfo9from_fileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind noalias writable writeonly sret(%"class.std::unique_ptr.80") align 8 captures(none) initializes((0, 8)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(32) %1) local_unnamed_addr #2 align 2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #11 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
   store ptr null, ptr %0, align 8
   ret void
 }
@@ -215,7 +215,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN4LIEF3pdb6is_pdbERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #11 ; 0 uses
+  %i.a = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.2) #10 ; 0 uses
   ret i1 false
 }
 
@@ -236,7 +236,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details15CompilationUnitESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details15CompilationUnitEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details15CompilationUnitEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details15CompilationUnitESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details15CompilationUnitESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details15CompilationUnitEEclEPS3_.exit.i
@@ -265,22 +265,22 @@ define hidden void @_ZNK4LIEF3pdb15CompilationUnit15object_filenameB5cxx11Ev(ptr
   ret void
 }
 
-; Function Attrs: mustprogress nofree nounwind uwtable
-define hidden { ptr, ptr } @_ZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11Ev(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #4 align 2 {
+; Function Attrs: mustprogress nounwind uwtable
+define hidden { ptr, ptr } @_ZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11Ev(ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #2 align 2 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11 acquire, align 8
   %i.b = icmp eq i8 %i.a, 0
   br i1 %i.b, label %bb.b, label %bb.d, !prof !19
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11) #11
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11) #10
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) @_ZZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11, i8 0, i64 24, i1 false)
-  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev, ptr nonnull @_ZZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11, ptr nonnull @__dso_handle) #11 ; 0 uses
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11) #11
+  %i.d = tail call i32 @__cxa_atexit(ptr nonnull @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev, ptr nonnull @_ZZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11, ptr nonnull @__dso_handle) #10 ; 0 uses
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZNK4LIEF3pdb15CompilationUnit7sourcesB5cxx11EvE5emptyB5cxx11) #10
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -292,7 +292,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #5
+declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #2 comdat align 2 {
@@ -313,7 +313,7 @@ bb.a:
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i: ; preds = %.lr.ph.i.i
   %i.g = load i64, ptr %i.e, align 8
   %i.h = add i64 %i.g, 1
-  tail call void @_ZdlPvm(ptr noundef %i.d, i64 noundef %i.h) #12
+  tail call void @_ZdlPvm(ptr noundef %i.d, i64 noundef %i.h) #11
   br label %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
 
 _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i: ; preds = %.lr.ph.i.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i
@@ -336,7 +336,7 @@ bb.b:                                             ; preds = %_ZSt8_DestroyIPNSt7
   %i.m = ptrtoint ptr %i.l to i64
   %i.n = ptrtoint ptr %i.j to i64
   %i.o = sub i64 %i.m, %i.n
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.j, i64 noundef %i.o) #11
   br label %_ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit
 
 _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvT_S7_.exit, %bb.b
@@ -344,10 +344,10 @@ _ZNSt12_Vector_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #5
+declare i32 @__cxa_atexit(ptr, ptr, ptr) local_unnamed_addr #4
 
 ; Function Attrs: nofree nounwind
-declare void @__cxa_guard_release(ptr) local_unnamed_addr #5
+declare void @__cxa_guard_release(ptr) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define hidden void @_ZNK4LIEF3pdb15CompilationUnit9functionsEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.LIEF::iterator_range.103") align 8 captures(none) initializes((0, 16)) %0, ptr noundef nonnull readnone align 8 captures(none) dereferenceable(8) %1) local_unnamed_addr #0 align 2 {
@@ -392,7 +392,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details17CompilationUnitItESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details17CompilationUnitItEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details17CompilationUnitItEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details17CompilationUnitItESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details17CompilationUnitItESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details17CompilationUnitItEEclEPS3_.exit.i
@@ -452,7 +452,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details12PublicSymbolESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details12PublicSymbolEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details12PublicSymbolEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details12PublicSymbolESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details12PublicSymbolESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details12PublicSymbolEEclEPS3_.exit.i
@@ -488,7 +488,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details14PublicSymbolItESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details14PublicSymbolItEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details14PublicSymbolItEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details14PublicSymbolItESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details14PublicSymbolItESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details14PublicSymbolItEEclEPS3_.exit.i
@@ -581,7 +581,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details8FunctionESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details8FunctionEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details8FunctionEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details8FunctionESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details8FunctionESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details8FunctionEEclEPS3_.exit.i
@@ -617,7 +617,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details10FunctionItESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details10FunctionItEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details10FunctionItEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details10FunctionItESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details10FunctionItESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details10FunctionItEEclEPS3_.exit.i
@@ -724,7 +724,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details4TypeESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details4TypeESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details4TypeESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i
@@ -741,16 +741,16 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #6
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define hidden void @_ZN4LIEF3pdb4TypeC2ESt10unique_ptrINS0_7details4TypeESt14default_deleteIS4_EE(ptr noundef nonnull writeonly align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr noundef captures(none) %1) unnamed_addr #3 align 2 {
@@ -792,7 +792,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details6TypeItESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details6TypeItEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details6TypeItEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details6TypeItESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details6TypeItESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details6TypeItEEclEPS3_.exit.i
@@ -828,11 +828,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -846,11 +846,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -864,11 +864,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -924,11 +924,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -942,11 +942,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -960,11 +960,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -978,11 +978,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -996,11 +996,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1014,11 +1014,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1039,11 +1039,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1064,11 +1064,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1082,11 +1082,11 @@ bb.a:
   br i1 %.not.i.i, label %_ZN4LIEF3pdb4TypeD2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #12, !inline_history !27
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.b, i64 noundef 1) #11, !inline_history !27
   br label %_ZN4LIEF3pdb4TypeD2Ev.exit
 
 _ZN4LIEF3pdb4TypeD2Ev.exit:                       ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details4TypeEEclEPS3_.exit.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1128,7 +1128,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details11AttributeItESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb5types7details11AttributeItEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb5types7details11AttributeItEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details11AttributeItESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb5types7details11AttributeItESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb5types7details11AttributeItEEclEPS4_.exit.i
@@ -1186,7 +1186,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details9AttributeESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb5types7details9AttributeEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb5types7details9AttributeEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details9AttributeESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb5types7details9AttributeESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb5types7details9AttributeEEclEPS4_.exit.i
@@ -1231,7 +1231,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details8MethodItESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb5types7details8MethodItEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb5types7details8MethodItEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details8MethodItESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb5types7details8MethodItESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb5types7details8MethodItEEclEPS4_.exit.i
@@ -1276,7 +1276,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details6MethodESt14default_deleteIS4_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb5types7details6MethodEEclEPS4_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb5types7details6MethodEEclEPS4_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb5types7details6MethodESt14default_deleteIS4_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb5types7details6MethodESt14default_deleteIS4_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb5types7details6MethodEEclEPS4_.exit.i
@@ -1298,7 +1298,7 @@ bb.a:
   br i1 %.not.i, label %_ZNSt10unique_ptrIN4LIEF3pdb7details13BuildMetadataESt14default_deleteIS3_EED2Ev.exit, label %_ZNKSt14default_deleteIN4LIEF3pdb7details13BuildMetadataEEclEPS3_.exit.i
 
 _ZNKSt14default_deleteIN4LIEF3pdb7details13BuildMetadataEEclEPS3_.exit.i: ; preds = %bb.a
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 1) #11
   br label %_ZNSt10unique_ptrIN4LIEF3pdb7details13BuildMetadataESt14default_deleteIS3_EED2Ev.exit
 
 _ZNSt10unique_ptrIN4LIEF3pdb7details13BuildMetadataESt14default_deleteIS3_EED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteIN4LIEF3pdb7details13BuildMetadataEEclEPS3_.exit.i
@@ -1368,7 +1368,7 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define hidden noundef nonnull ptr @_ZN4LIEF3pdb9to_stringENS0_13BuildMetadata3CPUE(i16 noundef zeroext %0) local_unnamed_addr #1 {
@@ -1383,13 +1383,13 @@ bb.a:
 }
 
 ; Function Attrs: nounwind
-declare void @_ZN4LIEF9DebugInfoD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #8
+declare void @_ZN4LIEF9DebugInfoD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16)) unnamed_addr #7
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN4LIEF3pdb9DebugInfoD0Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #2 comdat align 2 {
 bb.a:
-  tail call void @_ZN4LIEF9DebugInfoD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #11
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #12
+  tail call void @_ZN4LIEF9DebugInfoD2Ev(ptr noundef nonnull align 8 dereferenceable(16) %0) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 16) #11
   ret void
 }
 
@@ -1400,7 +1400,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define internal void @__cxx_global_var_init() #9 section ".text.startup" comdat($_ZN3fmt3v1112format_facetISt6localeE2idE) {
+define internal void @__cxx_global_var_init() #8 section ".text.startup" comdat($_ZN3fmt3v1112format_facetISt6localeE2idE) {
 bb.a:
   %i.a = load i8, ptr @_ZGVN3fmt3v1112format_facetISt6localeE2idE, align 8
   %i.b = icmp eq i8 %i.a, 0
@@ -1414,21 +1414,20 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret void
 }
 
-declare noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef) local_unnamed_addr #10
+declare noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef) local_unnamed_addr #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { mustprogress nofree nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nofree nounwind }
-attributes #6 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nounwind }
-attributes #12 = { builtin nounwind }
+attributes #4 = { nofree nounwind }
+attributes #5 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nounwind }
+attributes #11 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

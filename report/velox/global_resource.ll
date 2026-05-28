@@ -80,7 +80,7 @@ $_ZTSN5boost9container3pmr24null_memory_resource_impE = comdat any
 @llvm.global_ctors = appending global [2 x { i32, ptr, ptr }] [{ i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE }, { i32, ptr, ptr } { i32 65535, ptr @__cxx_global_var_init.1, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE }]
 @llvm.used = appending global [2 x ptr] [ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE, ptr @_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE], section "llvm.metadata"
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define noundef nonnull ptr @_ZN5boost9container3pmr19new_delete_resourceEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj acquire, align 8
@@ -88,12 +88,12 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   br label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit
 
 _ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEv.exit: ; preds = %bb.c, %bb.b, %bb.a
@@ -102,7 +102,7 @@ _ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8i
 
 declare i32 @__gxx_personality_v0(...)
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define noundef nonnull ptr @_ZN5boost9container3pmr20null_memory_resourceEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj acquire, align 8
@@ -110,19 +110,19 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
   br label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit
 
 _ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEv.exit: ; preds = %bb.c, %bb.b, %bb.a
   ret ptr @_ZZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj
 }
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define noundef nonnull align 8 dereferenceable(8) ptr @_ZN5boost9container3pmr32default_memory_resource_instanceEv() local_unnamed_addr #0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance acquire, align 8
@@ -130,14 +130,14 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.d, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #9
+  %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
   store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
@@ -150,7 +150,7 @@ declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #1
 ; Function Attrs: nofree nounwind
 declare void @__cxa_guard_release(ptr) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @_ZN5boost9container3pmr20set_default_resourceEPNS1_15memory_resourceE(ptr noundef %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %.not = icmp eq ptr %0, null
@@ -162,12 +162,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %_ZN5boost9container3pmr19new_delete_resourceEv.exit, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   %.not.i.i = icmp eq i32 %i.c, 0
   br i1 %.not.i.i, label %_ZN5boost9container3pmr19new_delete_resourceEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   br label %_ZN5boost9container3pmr19new_delete_resourceEv.exit
 
 _ZN5boost9container3pmr19new_delete_resourceEv.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
@@ -177,14 +177,14 @@ _ZN5boost9container3pmr19new_delete_resourceEv.exit: ; preds = %bb.d, %bb.c, %bb
   br i1 %i.f, label %bb.e, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !7
 
 bb.e:                                             ; preds = %_ZN5boost9container3pmr19new_delete_resourceEv.exit
-  %i.g = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  %i.g = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   %.not.i = icmp eq i32 %i.g, 0
   br i1 %.not.i, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.h = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #9
+  %i.h = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
   store ptr %i.h, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit
 
 _ZN5boost9container3pmr32default_memory_resource_instanceEv.exit: ; preds = %_ZN5boost9container3pmr19new_delete_resourceEv.exit, %bb.e, %bb.f
@@ -192,7 +192,7 @@ _ZN5boost9container3pmr32default_memory_resource_instanceEv.exit: ; preds = %_ZN
   ret ptr %i.i
 }
 
-; Function Attrs: mustprogress nofree nounwind uwtable
+; Function Attrs: mustprogress nounwind uwtable
 define noundef ptr @_ZN5boost9container3pmr20get_default_resourceEv() local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = load atomic i8, ptr @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance acquire, align 8
@@ -200,14 +200,14 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, !prof !7
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #9
+  %i.d = tail call noundef ptr @_ZN5boost9container3pmr19new_delete_resourceEv() #8
   store ptr %i.d, ptr @_ZZN5boost9container3pmr32default_memory_resource_instanceEvE8instance, align 8, !tbaa !8
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3pmr32default_memory_resource_instanceEvE8instance) #8
   br label %_ZN5boost9container3pmr32default_memory_resource_instanceEv.exit
 
 _ZN5boost9container3pmr32default_memory_resource_instanceEv.exit: ; preds = %bb.a, %bb.b, %bb.c
@@ -215,7 +215,7 @@ _ZN5boost9container3pmr32default_memory_resource_instanceEv.exit: ; preds = %bb.
   ret ptr %i.e
 }
 
-; Function Attrs: nofree nounwind uwtable
+; Function Attrs: nounwind uwtable
 define internal void @__cxx_global_var_init() #2 section ".text.startup" comdat($_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE) {
 bb.a:
   %i.a = load i8, ptr @_ZGVN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE13create_objectE, align 8
@@ -229,19 +229,19 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   %.not.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE8instanceEvE3obj) #8
   br label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit
 
 _ZN5boost9container3dtl17singleton_defaultINS0_3pmr23new_delete_resource_impEE14object_creatorC2Ev.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
   ret void
 }
 
-; Function Attrs: nofree nounwind uwtable
+; Function Attrs: nounwind uwtable
 define internal void @__cxx_global_var_init.1() #2 section ".text.startup" comdat($_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE) {
 bb.a:
   %i.a = load i8, ptr @_ZGVN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE13create_objectE, align 8
@@ -255,12 +255,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit, !prof !7
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #9
+  %i.e = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
   %.not.i.i = icmp eq i32 %i.e, 0
   br i1 %.not.i.i, label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #9
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE8instanceEvE3obj) #8
   br label %_ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit
 
 _ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE14object_creatorC2Ev.exit: ; preds = %bb.d, %bb.c, %bb.b, %bb.a
@@ -268,27 +268,27 @@ _ZN5boost9container3dtl17singleton_defaultINS0_3pmr24null_memory_resource_impEE1
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5boost9container3pmr23new_delete_resource_impD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #3 comdat align 2 {
+define linkonce_odr void @_ZN5boost9container3pmr23new_delete_resource_impD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #9
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef ptr @_ZN5boost9container3pmr23new_delete_resource_imp11do_allocateEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #4 comdat align 2 {
+define linkonce_odr noundef ptr @_ZN5boost9container3pmr23new_delete_resource_imp11do_allocateEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #3 comdat align 2 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %1) #11
+  %i.a = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %1) #10
   ret ptr %i.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5boost9container3pmr23new_delete_resource_imp13do_deallocateEPvmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #3 comdat align 2 {
+define linkonce_odr void @_ZN5boost9container3pmr23new_delete_resource_imp13do_deallocateEPvmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_ZdaPv(ptr noundef nonnull %1) #10
+  tail call void @_ZdaPv(ptr noundef nonnull %1) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -296,51 +296,51 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr noundef zeroext i1 @_ZNK5boost9container3pmr23new_delete_resource_imp11do_is_equalERKNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #3 comdat align 2 {
+define linkonce_odr noundef zeroext i1 @_ZNK5boost9container3pmr23new_delete_resource_imp11do_is_equalERKNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = icmp eq ptr %1, %0
   ret i1 %i.a
 }
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #5
+declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #4
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #6
+declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nobuiltin nounwind
-declare void @_ZdaPv(ptr noundef) local_unnamed_addr #5
+declare void @_ZdaPv(ptr noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5boost9container3pmr15memory_resourceD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #3 comdat align 2 {
+define linkonce_odr void @_ZN5boost9container3pmr15memory_resourceD2Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5boost9container3pmr24null_memory_resource_impD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #3 comdat align 2 {
+define linkonce_odr void @_ZN5boost9container3pmr24null_memory_resource_impD0Ev(ptr noundef nonnull align 8 dereferenceable(8) %0) unnamed_addr #0 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #10
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #9
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr noundef ptr @_ZN5boost9container3pmr24null_memory_resource_imp11do_allocateEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #4 comdat align 2 {
+define linkonce_odr noundef ptr @_ZN5boost9container3pmr24null_memory_resource_imp11do_allocateEmm(ptr noundef nonnull align 8 dereferenceable(8) %0, i64 noundef %1, i64 noundef %2) unnamed_addr #3 comdat align 2 {
 bb.a:
-  %i.a = tail call ptr @__cxa_allocate_exception(i64 8) #9 ; 2 uses
+  %i.a = tail call ptr @__cxa_allocate_exception(i64 8) #8 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.a, align 8, !tbaa !12
-  tail call void @__cxa_throw(ptr nonnull %i.a, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #12
+  tail call void @__cxa_throw(ptr nonnull %i.a, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #11
   unreachable
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN5boost9container3pmr24null_memory_resource_imp13do_deallocateEPvmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #3 comdat align 2 {
+define linkonce_odr void @_ZN5boost9container3pmr24null_memory_resource_imp13do_deallocateEPvmm(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef %1, i64 noundef %2, i64 noundef %3) unnamed_addr #0 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr noundef zeroext i1 @_ZNK5boost9container3pmr24null_memory_resource_imp11do_is_equalERKNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #3 comdat align 2 {
+define linkonce_odr noundef zeroext i1 @_ZNK5boost9container3pmr24null_memory_resource_imp11do_is_equalERKNS1_15memory_resourceE(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(8) %1) unnamed_addr #0 comdat align 2 {
 bb.a:
   %i.a = icmp eq ptr %1, %0
   ret i1 %i.a
@@ -349,24 +349,23 @@ bb.a:
 declare ptr @__cxa_allocate_exception(i64) local_unnamed_addr
 
 ; Function Attrs: nounwind
-declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #7
+declare void @_ZNSt9bad_allocD1Ev(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #6
 
 ; Function Attrs: cold noreturn
-declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #8
+declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #7
 
-attributes #0 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { nofree nounwind }
-attributes #2 = { nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #4 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #7 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #8 = { cold noreturn }
-attributes #9 = { nounwind }
-attributes #10 = { builtin nounwind }
-attributes #11 = { builtin allocsize(0) }
-attributes #12 = { noreturn }
+attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #3 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #5 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #6 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #7 = { cold noreturn }
+attributes #8 = { nounwind }
+attributes #9 = { builtin nounwind }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

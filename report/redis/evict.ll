@@ -33,7 +33,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 0, 16777216) i32 @getLRUClock() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @mstime() #13
+  %i.a = tail call i64 @mstime() #12
   %i.b = sdiv i64 %i.a, 1000
   %i.c = trunc i64 %i.b to i32
   %i.d = and i32 %i.c, 16777215
@@ -74,114 +74,114 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @evictionPoolAlloc() local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(512) ptr @zmalloc(i64 noundef 512) #14 ; 49 uses
+  %i.a = tail call noalias dereferenceable_or_null(512) ptr @zmalloc(i64 noundef 512) #13 ; 49 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
-  %i.b = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.b = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %i.b, ptr %i.c, align 8, !tbaa !47
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   store i32 0, ptr %i.d, align 8, !tbaa !49
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
-  %i.f = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.f = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 48
   store ptr %i.f, ptr %i.g, align 8, !tbaa !47
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store i32 0, ptr %i.h, align 8, !tbaa !49
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
-  %i.j = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.j = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.k = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   store ptr %i.j, ptr %i.k, align 8, !tbaa !47
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 88
   store i32 0, ptr %i.l, align 8, !tbaa !49
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 96
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i8 0, i64 16, i1 false)
-  %i.n = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.n = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.o = getelementptr inbounds nuw i8, ptr %i.a, i64 112
   store ptr %i.n, ptr %i.o, align 8, !tbaa !47
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   store i32 0, ptr %i.p, align 8, !tbaa !49
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 128
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.q, i8 0, i64 16, i1 false)
-  %i.r = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.r = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   store ptr %i.r, ptr %i.s, align 8, !tbaa !47
   %i.t = getelementptr inbounds nuw i8, ptr %i.a, i64 152
   store i32 0, ptr %i.t, align 8, !tbaa !49
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 160
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.u, i8 0, i64 16, i1 false)
-  %i.v = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.v = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 176
   store ptr %i.v, ptr %i.w, align 8, !tbaa !47
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 184
   store i32 0, ptr %i.x, align 8, !tbaa !49
   %i.y = getelementptr inbounds nuw i8, ptr %i.a, i64 192
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.y, i8 0, i64 16, i1 false)
-  %i.z = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.z = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 208
   store ptr %i.z, ptr %i.aa, align 8, !tbaa !47
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 216
   store i32 0, ptr %i.ab, align 8, !tbaa !49
   %i.ac = getelementptr inbounds nuw i8, ptr %i.a, i64 224
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ac, i8 0, i64 16, i1 false)
-  %i.ad = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.ad = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.ae = getelementptr inbounds nuw i8, ptr %i.a, i64 240
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !47
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 248
   store i32 0, ptr %i.af, align 8, !tbaa !49
   %i.ag = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ag, i8 0, i64 16, i1 false)
-  %i.ah = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.ah = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.ai = getelementptr inbounds nuw i8, ptr %i.a, i64 272
   store ptr %i.ah, ptr %i.ai, align 8, !tbaa !47
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 280
   store i32 0, ptr %i.aj, align 8, !tbaa !49
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 288
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ak, i8 0, i64 16, i1 false)
-  %i.al = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.al = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.am = getelementptr inbounds nuw i8, ptr %i.a, i64 304
   store ptr %i.al, ptr %i.am, align 8, !tbaa !47
   %i.an = getelementptr inbounds nuw i8, ptr %i.a, i64 312
   store i32 0, ptr %i.an, align 8, !tbaa !49
   %i.ao = getelementptr inbounds nuw i8, ptr %i.a, i64 320
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ao, i8 0, i64 16, i1 false)
-  %i.ap = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.ap = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.aq = getelementptr inbounds nuw i8, ptr %i.a, i64 336
   store ptr %i.ap, ptr %i.aq, align 8, !tbaa !47
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 344
   store i32 0, ptr %i.ar, align 8, !tbaa !49
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 352
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.as, i8 0, i64 16, i1 false)
-  %i.at = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.at = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.au = getelementptr inbounds nuw i8, ptr %i.a, i64 368
   store ptr %i.at, ptr %i.au, align 8, !tbaa !47
   %i.av = getelementptr inbounds nuw i8, ptr %i.a, i64 376
   store i32 0, ptr %i.av, align 8, !tbaa !49
   %i.aw = getelementptr inbounds nuw i8, ptr %i.a, i64 384
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i8 0, i64 16, i1 false)
-  %i.ax = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.ax = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.ay = getelementptr inbounds nuw i8, ptr %i.a, i64 400
   store ptr %i.ax, ptr %i.ay, align 8, !tbaa !47
   %i.az = getelementptr inbounds nuw i8, ptr %i.a, i64 408
   store i32 0, ptr %i.az, align 8, !tbaa !49
   %i.ba = getelementptr inbounds nuw i8, ptr %i.a, i64 416
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ba, i8 0, i64 16, i1 false)
-  %i.bb = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.bb = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 432
   store ptr %i.bb, ptr %i.bc, align 8, !tbaa !47
   %i.bd = getelementptr inbounds nuw i8, ptr %i.a, i64 440
   store i32 0, ptr %i.bd, align 8, !tbaa !49
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 448
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.be, i8 0, i64 16, i1 false)
-  %i.bf = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.bf = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 464
   store ptr %i.bf, ptr %i.bg, align 8, !tbaa !47
   %i.bh = getelementptr inbounds nuw i8, ptr %i.a, i64 472
   store i32 0, ptr %i.bh, align 8, !tbaa !49
   %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 480
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.bi, i8 0, i64 16, i1 false)
-  %i.bj = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #13
+  %i.bj = tail call ptr @sdsnewlen(ptr noundef null, i64 noundef 255) #12
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 496
   store ptr %i.bj, ptr %i.bk, align 8, !tbaa !47
   %i.bl = getelementptr inbounds nuw i8, ptr %i.a, i64 504
@@ -201,13 +201,13 @@ bb.a:
   %i.a = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7772), align 4, !tbaa !52
   %i.b = zext i32 %i.a to i64
   %i.c = alloca ptr, i64 %i.b, align 16           ; 2 uses
-  %i.d = tail call i32 @kvstoreGetFairRandomDictIndex(ptr noundef %1, ptr noundef nonnull @randomEvictionShouldSkipDictIndex, i32 noundef 1, i32 noundef 0) #13 ; 3 uses
+  %i.d = tail call i32 @kvstoreGetFairRandomDictIndex(ptr noundef %1, ptr noundef nonnull @randomEvictionShouldSkipDictIndex, i32 noundef 1, i32 noundef 0) #12 ; 3 uses
   %i.e = icmp eq i32 %i.d, -1
   br i1 %i.e, label %.loopexit90, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7772), align 4, !tbaa !52
-  %i.g = call i32 @kvstoreDictGetSomeKeys(ptr noundef %1, i32 noundef %i.d, ptr noundef nonnull %i.c, i32 noundef %i.f) #13 ; 4 uses
+  %i.g = call i32 @kvstoreDictGetSomeKeys(ptr noundef %1, i32 noundef %i.d, ptr noundef nonnull %i.c, i32 noundef %i.f) #12 ; 4 uses
   %i.h = icmp sgt i32 %i.g, 0
   br i1 %i.h, label %.lr.ph, label %.loopexit90
 
@@ -254,8 +254,8 @@ bb.c:                                             ; preds = %.lr.ph, %bb.bg
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.bg ] ; 2 uses
   %i.ar = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv
   %i.as = load ptr, ptr %i.ar, align 8, !tbaa !53
-  %i.at = call ptr @dictGetKey(ptr noundef %i.as) #13 ; 4 uses
-  %i.au = call ptr @kvobjGetKey(ptr noundef %i.at) #13 ; 7 uses
+  %i.at = call ptr @dictGetKey(ptr noundef %i.as) #12 ; 4 uses
+  %i.au = call ptr @kvobjGetKey(ptr noundef %i.at) #12 ; 7 uses
   %i.av = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7768), align 8, !tbaa !55 ; 3 uses
   %i.aw = and i32 %i.av, 9
   %.not = icmp eq i32 %i.aw, 0
@@ -317,13 +317,13 @@ bb.h:                                             ; preds = %bb.e
   br i1 %i.bu, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  %i.bv = call i64 @kvobjGetExpire(ptr noundef %i.at) #13
+  %i.bv = call i64 @kvobjGetExpire(ptr noundef %i.at) #12
   %i.bw = xor i64 %i.bv, -1
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.h
-  call void (ptr, i32, ptr, ...) @_serverPanic(ptr noundef nonnull @.str, i32 noundef 167, ptr noundef nonnull @.str.1) #13
-  call void @abort() #15
+  call void (ptr, i32, ptr, ...) @_serverPanic(ptr noundef nonnull @.str, i32 noundef 167, ptr noundef nonnull @.str.1) #12
+  call void @abort() #14
   unreachable
 
 bb.k:                                             ; preds = %LFUDecrAndReturn.exit, %bb.i, %bb.d
@@ -525,7 +525,7 @@ bb.aq:                                            ; preds = %.loopexit
   br i1 %.not83, label %bb.as, label %bb.ar
 
 bb.ar:                                            ; preds = %.loopexit.thread
-  call void @sdsfree(ptr noundef %i.bx) #13
+  call void @sdsfree(ptr noundef %i.bx) #12
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %.loopexit.thread
@@ -591,7 +591,7 @@ sdslen.exit:                                      ; preds = %bb.au, %bb.av, %bb.
   br i1 %i.fe, label %bb.az, label %sdslen.exit.thread
 
 bb.az:                                            ; preds = %sdslen.exit
-  %i.ff = call ptr @sdsdup(ptr noundef nonnull %i.au) #13
+  %i.ff = call ptr @sdsdup(ptr noundef nonnull %i.au) #12
   %i.fg = sext i32 %.1 to i64
   br label %bb.bf
 
@@ -681,7 +681,7 @@ declare i32 @kvstoreGetFairRandomDictIndex(ptr noundef, ptr noundef, i32 noundef
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @randomEvictionShouldSkipDictIndex(i32 noundef %0) #0 {
 bb.a:
-  %i.a = tail call i32 @clusterCanAccessKeysInSlot(i32 noundef %0) #13
+  %i.a = tail call i32 @clusterCanAccessKeysInSlot(i32 noundef %0) #12
   %.not = icmp eq i32 %i.a, 0
   %i.b = zext i1 %.not to i32
   ret i32 %i.b
@@ -691,7 +691,7 @@ declare i32 @kvstoreDictGetSomeKeys(ptr noundef, i32 noundef, ptr noundef, i32 n
 
 declare ptr @kvobjGetKey(ptr noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define dso_local range(i64 0, 256) i64 @LFUDecrAndReturn(ptr noundef readonly captures(none) %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
@@ -743,8 +743,8 @@ declare ptr @sdsdup(ptr noundef) local_unnamed_addr #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #3
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local range(i64 0, 65536) i64 @LFUGetTimeInMinutes() local_unnamed_addr #8 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define dso_local range(i64 0, 65536) i64 @LFUGetTimeInMinutes() local_unnamed_addr #6 {
 bb.a:
   %i.a = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8040) seq_cst, align 8, !tbaa !57
   %i.b = sdiv i64 %i.a, 60
@@ -752,8 +752,8 @@ bb.a:
   ret i64 %i.c
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local i64 @LFUTimeElapsed(i64 noundef %0) local_unnamed_addr #8 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define dso_local i64 @LFUTimeElapsed(i64 noundef %0) local_unnamed_addr #6 {
 bb.a:
   %i.a = load atomic i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8040) seq_cst, align 8, !tbaa !57
   %i.b = sdiv i64 %i.a, 60
@@ -773,7 +773,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = zext i8 %0 to i32
-  %i.c = tail call i32 @rand() #13
+  %i.c = tail call i32 @rand() #12
   %i.d = sitofp i32 %i.c to double
   %i.e = fdiv double %i.d, f0x41DFFFFFFFC00000
   %i.f = add nsw i32 %i.b, -5
@@ -795,10 +795,10 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nounwind
-declare i32 @rand() local_unnamed_addr #9
+declare i32 @rand() local_unnamed_addr #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fmuladd.f64(double, double, double) #10
+declare double @llvm.fmuladd.f64(double, double, double) #9
 
 ; Function Attrs: nounwind uwtable
 define dso_local i64 @freeMemoryGetNotCountedMemory() local_unnamed_addr #0 {
@@ -818,7 +818,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.1 = phi i64 [ %spec.select, %bb.b ], [ 0, %bb.a ]
-  %i.h = tail call i64 @asmGetMigrateOutputBufferSize() #13
+  %i.h = tail call i64 @asmGetMigrateOutputBufferSize() #12
   %i.i = add i64 %i.h, %.1                        ; 2 uses
   %i.j = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6668), align 4, !tbaa !73
   %.not = icmp eq i32 %i.j, 0
@@ -885,7 +885,7 @@ declare i64 @asmGetMigrateOutputBufferSize() local_unnamed_addr #1
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @getMaxmemoryState(ptr noundef writeonly captures(address_is_null) %0, ptr noundef writeonly captures(address_is_null) %1, ptr noundef writeonly captures(address_is_null) %2, ptr noundef writeonly captures(address_is_null) %3) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i64 @zmalloc_used_memory() #13 ; 4 uses
+  %i.a = tail call i64 @zmalloc_used_memory() #12 ; 4 uses
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -928,7 +928,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.1.i = phi i64 [ %spec.select.i, %bb.h ], [ 0, %bb.g ]
-  %i.l = tail call i64 @asmGetMigrateOutputBufferSize() #13
+  %i.l = tail call i64 @asmGetMigrateOutputBufferSize() #12
   %i.m = add i64 %i.l, %.1.i                      ; 2 uses
   %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6668), align 4, !tbaa !73
   %.not.i = icmp eq i32 %i.n, 0
@@ -1036,7 +1036,7 @@ bb.a:
   br i1 %.not, label %bb.l, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i64 @zmalloc_used_memory() #13 ; 2 uses
+  %i.b = tail call i64 @zmalloc_used_memory() #12 ; 2 uses
   %i.c = add i64 %i.b, %0
   %i.d = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7752), align 8, !tbaa !75
   %.not9 = icmp ugt i64 %i.c, %i.d
@@ -1058,7 +1058,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %.1.i = phi i64 [ %spec.select.i, %bb.d ], [ 0, %bb.c ]
-  %i.l = tail call i64 @asmGetMigrateOutputBufferSize() #13
+  %i.l = tail call i64 @asmGetMigrateOutputBufferSize() #12
   %i.m = add i64 %i.l, %.1.i                      ; 2 uses
   %i.n = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 6668), align 4, !tbaa !73
   %.not.i = icmp eq i32 %i.n, 0
@@ -1138,7 +1138,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   store i1 true, ptr @isEvictionProcRunning, align 4
   %i.a = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 88), align 8, !tbaa !78
-  %i.b = tail call i64 @aeCreateTimeEvent(ptr noundef %i.a, i64 noundef 0, ptr noundef nonnull @evictionTimeProc, ptr noundef null, ptr noundef null) #13 ; 0 uses
+  %i.b = tail call i64 @aeCreateTimeEvent(ptr noundef %i.a, i64 noundef 0, ptr noundef nonnull @evictionTimeProc, ptr noundef null, ptr noundef null) #12 ; 0 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -1169,7 +1169,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 3 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = alloca i64, align 8                      ; 5 uses
-  %i.d = tail call i32 @isInsideYieldingLongCommand() #13
+  %i.d = tail call i32 @isInsideYieldingLongCommand() #12
   %.not.i = icmp eq i32 %i.d, 0
   br i1 %.not.i, label %bb.b, label %isSafeToPerformEvictions.exit.thread
 
@@ -1199,13 +1199,13 @@ bb.e:                                             ; preds = %bb.d
   br i1 %or.cond8.not.i, label %isSafeToPerformEvictions.exit.thread, label %isSafeToPerformEvictions.exit
 
 isSafeToPerformEvictions.exit:                    ; preds = %bb.d, %bb.e
-  %i.n = tail call i32 @isPausedActionsWithUpdate(i32 noundef 8) #13
+  %i.n = tail call i32 @isPausedActionsWithUpdate(i32 noundef 8) #12
   %.not7.i.not = icmp eq i32 %i.n, 0
   br i1 %.not7.i.not, label %bb.f, label %isSafeToPerformEvictions.exit.thread
 
 bb.f:                                             ; preds = %isSafeToPerformEvictions.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.o = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 1480), align 8, !tbaa !96
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 40
   %i.q = load i64, ptr %i.p, align 8, !tbaa !97
@@ -1224,8 +1224,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.w, label %bb.j, label %bb.i, !prof !100
 
 bb.i:                                             ; preds = %bb.h
-  call void @_serverAssert(ptr noundef nonnull @.str.5, ptr noundef nonnull @.str, i32 noundef 492) #13
-  call void @abort() #15
+  call void @_serverAssert(ptr noundef nonnull @.str.5, ptr noundef nonnull @.str, i32 noundef 492) #12
+  call void @abort() #14
   unreachable
 
 bb.j:                                             ; preds = %bb.h
@@ -1233,8 +1233,8 @@ bb.j:                                             ; preds = %bb.h
   br i1 %i.x, label %bb.l, label %bb.k, !prof !100
 
 bb.k:                                             ; preds = %bb.j
-  call void @_serverAssert(ptr noundef nonnull @.str.6, ptr noundef nonnull @.str, i32 noundef 493) #13
-  call void @abort() #15
+  call void @_serverAssert(ptr noundef nonnull @.str.6, ptr noundef nonnull @.str, i32 noundef 493) #12
+  call void @abort() #14
   unreachable
 
 bb.l:                                             ; preds = %bb.j
@@ -1253,7 +1253,7 @@ bb.n:                                             ; preds = %bb.l
 bb.o:                                             ; preds = %bb.n
   %i.aa = uitofp nneg i32 %i.v to double
   %i.ab = fadd double %i.aa, -1.000000e+01
-  %i.ac = call double @pow(double noundef 1.150000e+00, double noundef %i.ab) #13, !tbaa !9
+  %i.ac = call double @pow(double noundef 1.150000e+00, double noundef %i.ab) #12, !tbaa !9
   %i.ad = fmul double %i.ac, 5.000000e+02
   %i.ae = fptoui double %i.ad to i64
   br label %evictionTimeLimitUs.exit
@@ -1265,13 +1265,13 @@ evictionTimeLimitUs.exit:                         ; preds = %bb.m, %bb.n, %bb.o
   br i1 %.not154, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %evictionTimeLimitUs.exit
-  %i.ag = call i64 @mstime() #13
+  %i.ag = call i64 @mstime() #12
   br label %bb.q
 
 bb.q:                                             ; preds = %evictionTimeLimitUs.exit, %bb.p
   %.0110 = phi i64 [ %i.ag, %bb.p ], [ 0, %evictionTimeLimitUs.exit ]
   %i.ah = load ptr, ptr @getMonotonicUs, align 8, !tbaa !102
-  %i.ai = call i64 %i.ah() #13, !inline_history !103 ; 2 uses
+  %i.ai = call i64 %i.ah() #12, !inline_history !103 ; 2 uses
   %i.aj = load i32, ptr getelementptr inbounds nuw (i8, ptr @server, i64 7080), align 8, !tbaa !104
   %i.ak = icmp eq i32 %i.aj, 0
   br i1 %i.ak, label %.preheader236, label %bb.r, !prof !100
@@ -1287,8 +1287,8 @@ bb.q:                                             ; preds = %evictionTimeLimitUs
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  call void @_serverAssert(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str, i32 noundef 564) #13
-  call void @abort() #15
+  call void @_serverAssert(ptr noundef nonnull @.str.2, ptr noundef nonnull @.str, i32 noundef 564) #12
+  call void @abort() #14
   unreachable
 
 bb.s:                                             ; preds = %.lr.ph258, %bb.ar
@@ -1324,13 +1324,13 @@ bb.t:                                             ; preds = %bb.s
   %.0113.in.idx = select i1 %.not172, i64 8, i64 0
   %.0113.in = getelementptr inbounds nuw i8, ptr %i.aw, i64 %.0113.in.idx
   %.0113 = load ptr, ptr %.0113.in, align 8, !tbaa !107 ; 3 uses
-  %i.az = call i64 @kvstoreSize(ptr noundef %.0113) #13 ; 3 uses
+  %i.az = call i64 @kvstoreSize(ptr noundef %.0113) #12 ; 3 uses
   %i.ba = icmp eq i64 %i.az, 0
   br i1 %i.ba, label %.loopexit, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph250
   %i.bb = add i64 %i.az, %.0118248                ; 3 uses
-  %i.bc = call i32 @kvstoreNumNonEmptyDicts(ptr noundef %.0113) #13 ; 2 uses
+  %i.bc = call i32 @kvstoreNumNonEmptyDicts(ptr noundef %.0113) #12 ; 2 uses
   %.not173330 = icmp eq i32 %i.bc, 0
   br i1 %.not173330, label %.loopexit, label %.lr.ph335
 
@@ -1396,7 +1396,7 @@ bb.w:                                             ; preds = %.preheader
   %.0106 = load ptr, ptr %.0106.in, align 8, !tbaa !107
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bs, i64 28
   %i.ce = load i32, ptr %i.cd, align 4, !tbaa !67
-  %i.cf = call ptr @kvstoreDictFind(ptr noundef %.0106, i32 noundef %i.ce, ptr noundef nonnull %i.bu) #13 ; 2 uses
+  %i.cf = call ptr @kvstoreDictFind(ptr noundef %.0106, i32 noundef %i.ce, ptr noundef nonnull %i.bu) #12 ; 2 uses
   %i.cg = load ptr, ptr %i.bt, align 8, !tbaa !58 ; 2 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %i.bs, i64 16
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !47
@@ -1404,7 +1404,7 @@ bb.w:                                             ; preds = %.preheader
   br i1 %.not159, label %bb.y, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  call void @sdsfree(ptr noundef %i.cg) #13
+  call void @sdsfree(ptr noundef %i.cg) #12
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
@@ -1413,8 +1413,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   br i1 %.not160, label %.thread, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.cj = call ptr @dictGetKey(ptr noundef nonnull %i.cf) #13
-  %i.ck = call ptr @kvobjGetKey(ptr noundef %i.cj) #13
+  %i.cj = call ptr @dictGetKey(ptr noundef nonnull %i.cf) #12
+  %i.ck = call ptr @kvobjGetKey(ptr noundef %i.cj) #12
   br label %.loopexit233
 
 .thread:                                          ; preds = %bb.y, %.preheader
@@ -1455,12 +1455,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.aa
   %.0105.in.idx = select i1 %i.cw, i64 0, i64 8
   %.0105.in = getelementptr inbounds nuw i8, ptr %i.cu, i64 %.0105.in.idx
   %.0105 = load ptr, ptr %.0105.in, align 8, !tbaa !107 ; 2 uses
-  %i.cx = call i32 @kvstoreGetFairRandomDictIndex(ptr noundef %.0105, ptr noundef nonnull @randomEvictionShouldSkipDictIndex, i32 noundef 16, i32 noundef 0) #13 ; 2 uses
+  %i.cx = call i32 @kvstoreGetFairRandomDictIndex(ptr noundef %.0105, ptr noundef nonnull @randomEvictionShouldSkipDictIndex, i32 noundef 16, i32 noundef 0) #12 ; 2 uses
   %i.cy = icmp eq i32 %i.cx, -1
   br i1 %i.cy, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.lr.ph
-  %i.cz = call ptr @kvstoreDictGetRandomKey(ptr noundef %.0105, i32 noundef %i.cx) #13 ; 2 uses
+  %i.cz = call ptr @kvstoreDictGetRandomKey(ptr noundef %.0105, i32 noundef %i.cx) #12 ; 2 uses
   %.not155 = icmp eq ptr %i.cz, null
   br i1 %.not155, label %bb.ad, label %bb.ae
 
@@ -1471,8 +1471,8 @@ bb.ad:                                            ; preds = %.lr.ph, %bb.ac
   br i1 %i.dc, label %.lr.ph, label %.thread222, !llvm.loop !111
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.dd = call ptr @dictGetKey(ptr noundef nonnull %i.cz) #13
-  %i.de = call ptr @kvobjGetKey(ptr noundef %i.dd) #13 ; 2 uses
+  %i.dd = call ptr @dictGetKey(ptr noundef nonnull %i.cz) #12
+  %i.de = call ptr @kvobjGetKey(ptr noundef %i.dd) #12 ; 2 uses
   %.not161 = icmp eq ptr %i.de, null
   br i1 %.not161, label %.thread222, label %.thread207
 
@@ -1484,10 +1484,10 @@ bb.ae:                                            ; preds = %bb.ac
   %.pre-phi = phi i64 [ %.pre278, %.thread207.loopexit ], [ %i.ct, %bb.ae ]
   %.9212 = phi i32 [ %.5, %.thread207.loopexit ], [ %i.cr, %bb.ae ]
   %.9138211 = phi ptr [ %.5134, %.thread207.loopexit ], [ %i.de, %bb.ae ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %i.df = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 64), align 8, !tbaa !106
   %i.dg = getelementptr inbounds [96 x i8], ptr %i.df, i64 %.pre-phi
-  call void @enterExecutionUnit(i32 noundef 1, i64 noundef 0) #13
+  call void @enterExecutionUnit(i32 noundef 1, i64 noundef 0) #12
   %i.dh = getelementptr i8, ptr %.9138211, i64 -1
   %.val.i = load i8, ptr %i.dh, align 1, !tbaa !60 ; 2 uses
   %i.di = and i8 %.val.i, 7
@@ -1529,11 +1529,11 @@ bb.aj:                                            ; preds = %.thread207
 
 sdslen.exit:                                      ; preds = %.thread207, %bb.af, %bb.ag, %bb.ah, %bb.ai, %bb.aj
   %.0.i185 = phi i64 [ %i.dv, %bb.aj ], [ %i.dk, %bb.af ], [ %i.dn, %bb.ag ], [ %i.dq, %bb.ah ], [ %i.dt, %bb.ai ], [ 0, %.thread207 ]
-  %i.dw = call ptr @createStringObject(ptr noundef nonnull %.9138211, i64 noundef %.0.i185) #13 ; 2 uses
-  call void @deleteEvictedKeyAndPropagate(ptr noundef %i.dg, ptr noundef %i.dw, ptr noundef nonnull %i.c) #13
-  call void @decrRefCount(ptr noundef %i.dw) #13
-  call void @exitExecutionUnit() #13
-  call void @postExecutionUnitOperations() #13
+  %i.dw = call ptr @createStringObject(ptr noundef nonnull %.9138211, i64 noundef %.0.i185) #12 ; 2 uses
+  call void @deleteEvictedKeyAndPropagate(ptr noundef %i.dg, ptr noundef %i.dw, ptr noundef nonnull %i.c) #12
+  call void @decrRefCount(ptr noundef %i.dw) #12
+  call void @exitExecutionUnit() #12
+  call void @postExecutionUnitOperations() #12
   %i.dx = load i64, ptr %i.c, align 8, !tbaa !112
   %i.dy = add nsw i64 %i.dx, %.0103256            ; 2 uses
   %i.dz = add nuw nsw i32 %.0101257, 1            ; 2 uses
@@ -1545,7 +1545,7 @@ bb.ak:                                            ; preds = %sdslen.exit
   br i1 %.not162, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  call void @flushSlavesOutputBuffers() #13
+  call void @flushSlavesOutputBuffers() #12
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
@@ -1560,7 +1560,7 @@ bb.an:                                            ; preds = %bb.am
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.ef = load ptr, ptr @getMonotonicUs, align 8, !tbaa !102
-  %i.eg = call i64 %i.ef() #13, !inline_history !114
+  %i.eg = call i64 %i.ef() #12, !inline_history !114
   %i.eh = sub i64 %i.eg, %i.ai
   %i.ei = icmp ugt i64 %i.eh, %.0.i184
   br i1 %i.ei, label %bb.ap, label %bb.ar
@@ -1572,15 +1572,15 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap
   store i1 true, ptr @isEvictionProcRunning, align 4
   %i.ej = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 88), align 8, !tbaa !78
-  %i.ek = call i64 @aeCreateTimeEvent(ptr noundef %i.ej, i64 noundef 0, ptr noundef nonnull @evictionTimeProc, ptr noundef null, ptr noundef null) #13, !inline_history !115 ; 0 uses
+  %i.ek = call i64 @aeCreateTimeEvent(ptr noundef %i.ej, i64 noundef 0, ptr noundef nonnull @evictionTimeProc, ptr noundef null, ptr noundef null) #12, !inline_history !115 ; 0 uses
   br label %.thread220
 
 .thread220:                                       ; preds = %bb.an, %bb.ap, %bb.aq
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   br label %.loopexit237
 
 bb.ar:                                            ; preds = %bb.ao, %sdslen.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
   %i.el = load i64, ptr %i.b, align 8, !tbaa !63
   %i.em = icmp slt i64 %i.dy, %i.el
   br i1 %i.em, label %bb.s, label %.loopexit237
@@ -1596,12 +1596,12 @@ bb.ar:                                            ; preds = %bb.ao, %sdslen.exit
   br i1 %.not164, label %bb.at, label %bb.as
 
 bb.as:                                            ; preds = %.thread222
-  %i.ep = call i64 @mstime() #13
+  %i.ep = call i64 @mstime() #12
   br label %bb.at
 
 bb.at:                                            ; preds = %.thread222, %bb.as
   %.0 = phi i64 [ %i.ep, %bb.as ], [ 0, %.thread222 ]
-  %i.eq = call i64 @bioPendingJobsOfType(i32 noundef 2) #13
+  %i.eq = call i64 @bioPendingJobsOfType(i32 noundef 2) #12
   %.not165259 = icmp eq i64 %i.eq, 0
   br i1 %.not165259, label %.critedge, label %.lr.ph261
 
@@ -1612,7 +1612,7 @@ bb.at:                                            ; preds = %.thread222, %bb.as
 
 bb.au:                                            ; preds = %.lr.ph261, %bb.aw
   %i.et = load ptr, ptr @getMonotonicUs, align 8, !tbaa !102
-  %i.eu = call i64 %i.et() #13, !inline_history !114
+  %i.eu = call i64 %i.et() #12, !inline_history !114
   %i.ev = sub i64 %i.eu, %i.ai
   %i.ew = icmp ult i64 %i.ev, %.0.i184
   br i1 %i.ew, label %bb.av, label %.critedge
@@ -1623,8 +1623,8 @@ bb.av:                                            ; preds = %bb.au
   br i1 %i.ey, label %.critedge, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
-  %i.ez = call i32 @usleep(i32 noundef %i.es) #13 ; 0 uses
-  %i.fa = call i64 @bioPendingJobsOfType(i32 noundef 2) #13
+  %i.ez = call i32 @usleep(i32 noundef %i.es) #12 ; 0 uses
+  %i.fa = call i64 @bioPendingJobsOfType(i32 noundef 2) #12
   %.not165 = icmp eq i64 %i.fa, 0
   br i1 %.not165, label %.critedge, label %bb.au, !llvm.loop !116
 
@@ -1635,7 +1635,7 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %.not166, label %.thread307, label %bb.ax
 
 bb.ax:                                            ; preds = %.critedge
-  %i.fc = call i64 @mstime() #13
+  %i.fc = call i64 @mstime() #12
   %i.fd = sub nsw i64 %i.fc, %.0                  ; 2 uses
   %.pre = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8384), align 8, !tbaa !101 ; 3 uses
   %.not167 = icmp eq i64 %.pre, 0
@@ -1644,7 +1644,7 @@ bb.ax:                                            ; preds = %.critedge
   br i1 %or.cond180, label %bb.az, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
-  call void @latencyAddSample(ptr noundef nonnull @.str.3, i64 noundef %i.fd) #13
+  call void @latencyAddSample(ptr noundef nonnull @.str.3, i64 noundef %i.fd) #12
   br label %thread-pre-split
 
 thread-pre-split:                                 ; preds = %.loopexit237, %bb.ay
@@ -1659,7 +1659,7 @@ bb.az:                                            ; preds = %thread-pre-split, %
   br i1 %.not169, label %.thread307, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.ff = call i64 @mstime() #13
+  %i.ff = call i64 @mstime() #12
   %i.fg = sub nsw i64 %i.ff, %.0110               ; 2 uses
   %.pre277 = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8384), align 8, !tbaa !101 ; 2 uses
   %.not170 = icmp eq i64 %.pre277, 0
@@ -1668,7 +1668,7 @@ bb.ba:                                            ; preds = %bb.az
   br i1 %or.cond181, label %.thread307, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  call void @latencyAddSample(ptr noundef nonnull @.str.4, i64 noundef %i.fg) #13
+  call void @latencyAddSample(ptr noundef nonnull @.str.4, i64 noundef %i.fg) #12
   br label %.thread307
 
 .thread307:                                       ; preds = %.critedge, %bb.az, %bb.ba, %bb.bb
@@ -1684,7 +1684,7 @@ bb.bb:                                            ; preds = %bb.ba
 
 bb.bc:                                            ; preds = %.thread224
   %i.fj = load ptr, ptr @getMonotonicUs, align 8, !tbaa !102
-  %i.fk = call i64 %i.fj() #13, !inline_history !103
+  %i.fk = call i64 %i.fj() #12, !inline_history !103
   br label %.sink.split
 
 .thread229:                                       ; preds = %bb.f, %.thread307
@@ -1694,7 +1694,7 @@ bb.bc:                                            ; preds = %.thread224
 
 bb.bd:                                            ; preds = %.thread229
   %i.fm = load ptr, ptr @getMonotonicUs, align 8, !tbaa !102
-  %i.fn = call i64 %i.fm() #13, !inline_history !114
+  %i.fn = call i64 %i.fm() #12, !inline_history !114
   %i.fo = sub i64 %i.fn, %i.fl
   %i.fp = load i64, ptr getelementptr inbounds nuw (i8, ptr @server, i64 2632), align 8, !tbaa !118
   %i.fq = add i64 %i.fo, %i.fp
@@ -1709,8 +1709,8 @@ bb.bd:                                            ; preds = %.thread229
 
 bb.be:                                            ; preds = %.sink.split, %.thread224, %.thread229
   %.3123227 = phi i32 [ 0, %.thread229 ], [ %.3123228, %.thread224 ], [ %.3123227.ph, %.sink.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %isSafeToPerformEvictions.exit.thread
 
 isSafeToPerformEvictions.exit.thread:             ; preds = %bb.b, %bb.c, %bb.a, %bb.e, %isSafeToPerformEvictions.exit, %bb.be
@@ -1757,16 +1757,16 @@ declare i32 @isInsideYieldingLongCommand() local_unnamed_addr #1
 declare i32 @isPausedActionsWithUpdate(i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @pow(double noundef, double noundef) local_unnamed_addr #11
+declare double @pow(double noundef, double noundef) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.usub.sat.i64(i64, i64) #10
+declare i64 @llvm.usub.sat.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #10
+declare i64 @llvm.umin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #12
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1774,16 +1774,15 @@ attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: read, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress norecurse nounwind willreturn uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { cold nofree noreturn nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #11 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #13 = { nounwind }
-attributes #14 = { nounwind allocsize(0) }
-attributes #15 = { noreturn nounwind }
+attributes #8 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #12 = { nounwind }
+attributes #13 = { nounwind allocsize(0) }
+attributes #14 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5, !6, !7}
 !llvm.ident = !{!8}

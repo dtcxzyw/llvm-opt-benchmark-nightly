@@ -4,7 +4,7 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
 define hidden i64 @_Py_qsbr_advance(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = atomicrmw add ptr %0, i64 2 seq_cst, align 8
@@ -12,15 +12,15 @@ bb.a:
   ret i64 %i.b
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden i64 @_Py_qsbr_shared_next(ptr noundef readonly captures(none) %0) local_unnamed_addr #0 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define hidden i64 @_Py_qsbr_shared_next(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = load atomic i64, ptr %0 acquire, align 8
   %i.b = add i64 %i.a, 2
   ret i64 %i.b
 }
 
-; Function Attrs: nofree norecurse nounwind uwtable
+; Function Attrs: norecurse nounwind uwtable
 define hidden zeroext i1 @_Py_qsbr_poll(ptr noundef readonly captures(none) %0, i64 noundef %1) local_unnamed_addr #1 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -116,8 +116,8 @@ bb.d:                                             ; preds = %bb.a, %qsbr_poll_sc
   ret i1 %.0
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_Py_qsbr_attach(ptr noundef captures(none) %0) local_unnamed_addr #2 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define hidden void @_Py_qsbr_attach(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !11
@@ -126,15 +126,15 @@ bb.a:
   ret void
 }
 
-; Function Attrs: mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_Py_qsbr_detach(ptr noundef writeonly captures(none) %0) local_unnamed_addr #0 {
+; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
+define hidden void @_Py_qsbr_detach(ptr noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   store atomic i64 0, ptr %0 release, align 8
   ret void
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden range(i64 -144115188075855872, 144115188075855872) i64 @_Py_qsbr_reserve(ptr noundef %0) local_unnamed_addr #3 {
+define hidden range(i64 -144115188075855872, 144115188075855872) i64 @_Py_qsbr_reserve(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 10872      ; 2 uses
   %i.b = getelementptr i8, ptr %0, i64 10912      ; 4 uses
@@ -143,7 +143,7 @@ bb.a:
   br i1 %i.d, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.b) #10
+  tail call void @PyMutex_Lock(ptr noundef %i.b) #9
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -164,14 +164,14 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br label %bb.q
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @_PyEval_StopTheWorld(ptr noundef nonnull %0) #10
+  tail call void @_PyEval_StopTheWorld(ptr noundef nonnull %0) #9
   %i.l = getelementptr i8, ptr %0, i64 10904      ; 3 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !23
   %i.n = shl i64 %i.m, 1
   %spec.store.select.i = tail call i64 @llvm.smax.i64(i64 %i.n, i64 8) ; 3 uses
   %i.o = shl i64 %spec.store.select.i, 6
   %i.p = or disjoint i64 %i.o, 63
-  %i.q = tail call ptr @PyMem_RawCalloc(i64 noundef 1, i64 noundef %i.p) #10 ; 3 uses
+  %i.q = tail call ptr @PyMem_RawCalloc(i64 noundef 1, i64 noundef %i.p) #9 ; 3 uses
   %i.r = icmp eq ptr %i.q, null
   br i1 %i.r, label %.thread20, label %bb.d
 
@@ -259,13 +259,13 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %.not.i.i.1, label %bb.o, label %bb.f, !llvm.loop !53
 
 bb.o:                                             ; preds = %bb.n
-  tail call void @PyMem_RawFree(ptr noundef %i.x) #10
+  tail call void @PyMem_RawFree(ptr noundef %i.x) #9
   %i.ax = load ptr, ptr %i.e, align 8, !tbaa !26  ; 5 uses
   %i.ay = icmp eq ptr %i.ax, null
   br i1 %i.ay, label %.thread20, label %bb.p
 
 .thread20:                                        ; preds = %bb.c, %bb.o
-  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #10
+  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #9
   br label %bb.r
 
 bb.p:                                             ; preds = %bb.o
@@ -277,7 +277,7 @@ bb.p:                                             ; preds = %bb.o
   store ptr %i.a, ptr %i.bb, align 8, !tbaa !11
   %i.bc = getelementptr i8, ptr %i.ax, i64 49
   store i8 1, ptr %i.bc, align 1, !tbaa !28
-  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #10
+  tail call void @_PyEval_StartTheWorld(ptr noundef nonnull %0) #9
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.p, %.thread
@@ -297,19 +297,19 @@ bb.r:                                             ; preds = %.thread20, %bb.q
   br i1 %i.bk, label %_PyMutex_Unlock.exit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  tail call void @PyMutex_Unlock(ptr noundef %i.b) #10
+  tail call void @PyMutex_Unlock(ptr noundef %i.b) #9
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %bb.r, %bb.s
   ret i64 %.0
 }
 
-declare void @_PyEval_StopTheWorld(ptr noundef) local_unnamed_addr #4
+declare void @_PyEval_StopTheWorld(ptr noundef) local_unnamed_addr #3
 
-declare void @_PyEval_StartTheWorld(ptr noundef) local_unnamed_addr #4
+declare void @_PyEval_StartTheWorld(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nounwind uwtable
-define hidden void @_Py_qsbr_register(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #3 {
+define hidden void @_Py_qsbr_register(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %1, i64 10912      ; 4 uses
   %i.b = cmpxchg ptr %i.a, i8 0, i8 1 seq_cst seq_cst, align 1
@@ -317,7 +317,7 @@ bb.a:
   br i1 %i.c, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.a) #10
+  tail call void @PyMutex_Lock(ptr noundef %i.a) #9
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -333,7 +333,7 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br i1 %i.j, label %_PyMutex_Unlock.exit, label %bb.c
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @PyMutex_Unlock(ptr noundef %i.a) #10
+  tail call void @PyMutex_Unlock(ptr noundef %i.a) #9
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit, %bb.c
@@ -341,7 +341,7 @@ _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @_Py_qsbr_unregister(ptr noundef captures(none) %0) local_unnamed_addr #3 {
+define hidden void @_Py_qsbr_unregister(ptr noundef captures(none) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !119  ; 2 uses
@@ -351,7 +351,7 @@ bb.a:
   br i1 %i.e, label %_PyMutex_Lock.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @PyMutex_Lock(ptr noundef %i.c) #10
+  tail call void @PyMutex_Lock(ptr noundef %i.c) #9
   br label %_PyMutex_Lock.exit
 
 _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
@@ -372,7 +372,7 @@ _PyMutex_Lock.exit:                               ; preds = %bb.a, %bb.b
   br i1 %i.n, label %_PyMutex_Unlock.exit, label %bb.c
 
 bb.c:                                             ; preds = %_PyMutex_Lock.exit
-  tail call void @PyMutex_Unlock(ptr noundef %i.c) #10
+  tail call void @PyMutex_Unlock(ptr noundef %i.c) #9
   br label %_PyMutex_Unlock.exit
 
 _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit, %bb.c
@@ -380,11 +380,11 @@ _PyMutex_Unlock.exit:                             ; preds = %_PyMutex_Lock.exit,
 }
 
 ; Function Attrs: nounwind uwtable
-define hidden void @_Py_qsbr_fini(ptr noundef captures(none) initializes((10888, 10896), (10904, 10912), (10920, 10928)) %0) local_unnamed_addr #3 {
+define hidden void @_Py_qsbr_fini(ptr noundef captures(none) initializes((10888, 10896), (10904, 10912), (10920, 10928)) %0) local_unnamed_addr #2 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 10896
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !29
-  tail call void @PyMem_RawFree(ptr noundef %i.b) #10
+  tail call void @PyMem_RawFree(ptr noundef %i.b) #9
   %i.c = getelementptr i8, ptr %0, i64 10888
   %i.d = getelementptr i8, ptr %0, i64 10920
   store ptr null, ptr %i.d, align 8, !tbaa !26
@@ -392,10 +392,10 @@ bb.a:
   ret void
 }
 
-declare void @PyMem_RawFree(ptr noundef) local_unnamed_addr #4
+declare void @PyMem_RawFree(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_Py_qsbr_after_fork(ptr noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define hidden void @_Py_qsbr_after_fork(ptr noundef readonly captures(none) %0) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 1024
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !31   ; 4 uses
@@ -503,35 +503,34 @@ bb.j:                                             ; preds = %bb.i, %bb.h, %bb.g
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.d, !llvm.loop !120
 }
 
-declare void @PyMutex_Lock(ptr noundef) local_unnamed_addr #4
+declare void @PyMutex_Lock(ptr noundef) local_unnamed_addr #3
 
-declare ptr @PyMem_RawCalloc(i64 noundef, i64 noundef) local_unnamed_addr #4
+declare ptr @PyMem_RawCalloc(i64 noundef, i64 noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #6
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #5
 
-declare void @PyMutex_Unlock(ptr noundef) local_unnamed_addr #4
+declare void @PyMutex_Unlock(ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smax.i64(i64, i64) #8
+declare i64 @llvm.smax.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
+declare void @llvm.assume(i1 noundef) #8
 
-attributes #0 = { mustprogress nofree norecurse nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { nofree norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
+attributes #0 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { norecurse nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

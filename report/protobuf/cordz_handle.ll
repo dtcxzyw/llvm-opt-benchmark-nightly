@@ -38,13 +38,13 @@ bb.a:
   br i1 %i.e, label %bb.b, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.a, %bb.b, %bb.c
@@ -71,7 +71,7 @@ bb.g:                                             ; preds = %bb.f
   %i.i = landingpad { ptr, i32 }
           catch ptr null
   %i.j = extractvalue { ptr, i32 } %i.i, 0
-  tail call void @__clang_call_terminate(ptr %i.j) #15
+  tail call void @__clang_call_terminate(ptr %i.j) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.f, %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
@@ -87,13 +87,13 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.c, %bb.b, %bb.a
@@ -144,7 +144,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.r, label %bb.h, label %_ZNKSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.h:                                             ; preds = %bb.g
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #16
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #15
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.h
@@ -160,7 +160,7 @@ _ZNKSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE12_M_che
   %.not.i.i.i = icmp ne i64 %i.w, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.x = shl nuw nsw i64 %i.w, 3
-  %i.y = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #17
+  %i.y = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.x) #16
           to label %.noexc11 unwind label %.loopexit ; 4 uses
 
 .noexc11:                                         ; preds = %_ZNKSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE12_M_check_lenEmPKc.exit.i.i
@@ -178,7 +178,7 @@ _ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE11_S_relo
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.021.064, i64 noundef %i.q) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.021.064, i64 noundef %i.q) #17
   br label %_ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i
 
 _ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE17_M_realloc_insertIJRKS4_EEEvN9__gnu_cxx17__normal_iteratorIPS4_S6_EEDpOT_.exit.i: ; preds = %bb.j, %_ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit16.i.i
@@ -242,7 +242,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ai = landingpad { ptr, i32 }
           catch ptr null
   %i.aj = extractvalue { ptr, i32 } %i.ai, 0
-  tail call void @__clang_call_terminate(ptr %i.aj) #15
+  tail call void @__clang_call_terminate(ptr %i.aj) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit._crit_edge: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit, %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader
@@ -253,7 +253,7 @@ bb.m:                                             ; preds = %_ZN4absl12lts_20250
   %i.ak = ptrtoint ptr %.sroa.11.131 to i64
   %i.al = ptrtoint ptr %.sroa.021.135 to i64
   %i.am = sub i64 %i.ak, %i.al
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.021.135, i64 noundef %i.am) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.021.135, i64 noundef %i.am) #17
   br label %_ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EED2Ev.exit
 
 .lr.ph69:                                         ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit.preheader, %_ZN4absl12lts_202505129MutexLockD2Ev.exit
@@ -266,7 +266,7 @@ bb.n:                                             ; preds = %.lr.ph69
   %i.ap = load ptr, ptr %i.an, align 8, !tbaa !7
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
   %i.ar = load ptr, ptr %i.aq, align 8
-  tail call void %i.ar(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.an) #14
+  tail call void %i.ar(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %i.an) #13
   br label %_ZN4absl12lts_202505129MutexLockD2Ev.exit
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.n, %.lr.ph69
@@ -290,7 +290,7 @@ _ZNSt6vectorIPN4absl12lts_2025051213cord_internal11CordzHandleESaIS4_EED2Ev.exit
 bb.o:                                             ; preds = %.loopexit.split-lp, %.loopexit
   %lpad.phi = phi { ptr, i32 } [ %lpad.loopexit, %.loopexit ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp ]
   %i.at = extractvalue { ptr, i32 } %lpad.phi, 0
-  tail call void @__clang_call_terminate(ptr %i.at) #15
+  tail call void @__clang_call_terminate(ptr %i.at) #14
   unreachable
 }
 
@@ -299,8 +299,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #2 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #14 ; 0 uses
-  tail call void @_ZSt9terminatev() #15
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
+  tail call void @_ZSt9terminatev() #14
   unreachable
 }
 
@@ -312,16 +312,16 @@ declare void @_ZSt9terminatev() local_unnamed_addr #3
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN4absl12lts_2025051213cord_internal11CordzHandleD0Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) unnamed_addr #1 align 2 {
 bb.a:
-  tail call void @_ZN4absl12lts_2025051213cord_internal11CordzHandleD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 32) #18
+  tail call void @_ZN4absl12lts_2025051213cord_internal11CordzHandleD1Ev(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 32) #17
   ret void
 }
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nofree nounwind uwtable
-define noundef zeroext i1 @_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #5 align 2 personality ptr @__gxx_personality_v0 {
+; Function Attrs: mustprogress nounwind uwtable
+define noundef zeroext i1 @_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i8, ptr %i.a, align 8, !tbaa !9, !range !17, !noundef !18
@@ -334,13 +334,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.b, %bb.c, %bb.d
@@ -365,13 +365,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.b, label %bb.c, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.b, %bb.c, %bb.d
@@ -386,13 +386,13 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20250
   br i1 %i.h, label %bb.f, label %_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv.exit, !prof !14
 
 bb.f:                                             ; preds = %bb.e
-  %i.i = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.i = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i.i = icmp eq i32 %i.i, 0
   br i1 %.not.i.i, label %_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv.exit
 
 _ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv.exit: ; preds = %bb.e, %bb.f, %bb.g
@@ -419,7 +419,7 @@ bb.j:                                             ; preds = %bb.i
   %i.o = landingpad { ptr, i32 }
           catch ptr null
   %i.p = extractvalue { ptr, i32 } %i.o, 0
-  tail call void @__clang_call_terminate(ptr %i.p) #15
+  tail call void @__clang_call_terminate(ptr %i.p) #14
   unreachable
 
 .critedge:                                        ; preds = %bb.h
@@ -430,14 +430,14 @@ bb.k:                                             ; preds = %.critedge
   %i.q = landingpad { ptr, i32 }
           catch ptr null
   %i.r = extractvalue { ptr, i32 } %i.q, 0
-  tail call void @__clang_call_terminate(ptr %i.r) #15
+  tail call void @__clang_call_terminate(ptr %i.r) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit15:      ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, %.critedge, %_ZNK4absl12lts_2025051213cord_internal11CordzHandle12SafeToDeleteEv.exit
   %i.s = load ptr, ptr %0, align 8, !tbaa !7
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8
-  tail call void %i.u(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #14
+  tail call void %i.u(ptr noundef nonnull align 8 dead_on_return(32) dereferenceable(32) %0) #13
   br label %_ZN4absl12lts_202505129MutexLockD2Ev.exit
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %bb.i, %_ZN4absl12lts_202505129MutexLockD2Ev.exit15, %bb.a
@@ -453,13 +453,13 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.c = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.c, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.c, %bb.b, %bb.a
@@ -489,7 +489,7 @@ bb.d:                                             ; preds = %._crit_edge
   %i.g = landingpad { ptr, i32 }
           catch ptr null
   %i.h = extractvalue { ptr, i32 } %i.g, 0
-  tail call void @__clang_call_terminate(ptr %i.h) #15
+  tail call void @__clang_call_terminate(ptr %i.h) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %._crit_edge
@@ -524,7 +524,7 @@ bb.h:                                             ; preds = %bb.f
 
 bb.i:                                             ; preds = %bb.h
   store ptr %i.l, ptr %0, align 8
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #16
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #15
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.i
@@ -540,7 +540,7 @@ _ZNKSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE12_M_ch
   %.not.i.i.i = icmp ne i64 %i.v, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.w = shl nuw nsw i64 %i.v, 3
-  %i.x = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #17
+  %i.x = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #16
           to label %.noexc10 unwind label %.loopexit ; 4 uses
 
 .noexc10:                                         ; preds = %_ZNKSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE12_M_check_lenEmPKc.exit.i.i
@@ -559,7 +559,7 @@ _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_rel
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.k
 
 bb.k:                                             ; preds = %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.p) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.p) #17
   br label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.k, %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i
@@ -597,7 +597,7 @@ bb.m:                                             ; preds = %bb.l
   %i.ah = landingpad { ptr, i32 }
           catch ptr null
   %i.ai = extractvalue { ptr, i32 } %i.ah, 0
-  tail call void @__clang_call_terminate(ptr %i.ai) #15
+  tail call void @__clang_call_terminate(ptr %i.ai) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit11:      ; preds = %bb.e, %bb.l
@@ -612,7 +612,7 @@ bb.n:                                             ; preds = %_ZN4absl12lts_20250
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = ptrtoint ptr %i.aj to i64
   %i.ao = sub i64 %i.am, %i.an
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef %i.ao) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef %i.ao) #17
   br label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EED2Ev.exit
 
 _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EED2Ev.exit: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit11, %bb.n
@@ -643,13 +643,13 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.i, label %bb.e, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.j = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.j, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.d, %bb.e, %bb.f
@@ -685,7 +685,7 @@ bb.i:                                             ; preds = %.loopexit
   %i.q = landingpad { ptr, i32 }
           catch ptr null
   %i.r = extractvalue { ptr, i32 } %i.q, 0
-  tail call void @__clang_call_terminate(ptr %i.r) #15
+  tail call void @__clang_call_terminate(ptr %i.r) #14
   unreachable
 
 _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %.loopexit, %bb.c, %bb.b, %bb.a
@@ -708,13 +708,13 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.e, label %bb.c, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, !prof !14
 
 bb.c:                                             ; preds = %bb.b
-  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  %i.f = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   %.not.i = icmp eq i32 %i.f, 0
   br i1 %.not.i, label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) @_ZZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue, i8 0, i64 16, i1 false)
-  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #14
+  tail call void @__cxa_guard_release(ptr nonnull @_ZGVZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEvE12global_queue) #13
   br label %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
 
 _ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit: ; preds = %bb.d, %bb.c, %bb.b
@@ -743,7 +743,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20250
   %i.i = landingpad { ptr, i32 }
           catch ptr null
   %i.j = extractvalue { ptr, i32 } %i.i, 0
-  tail call void @__clang_call_terminate(ptr %i.j) #15
+  tail call void @__clang_call_terminate(ptr %i.j) #14
   unreachable
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2025051213cord_internal12_GLOBAL__N_111GlobalQueueEv.exit
@@ -781,7 +781,7 @@ bb.j:                                             ; preds = %bb.h
 
 bb.k:                                             ; preds = %bb.j
   store ptr %i.l, ptr %0, align 8
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #16
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #15
           to label %.noexc unwind label %.loopexit.split-lp
 
 .noexc:                                           ; preds = %bb.k
@@ -797,7 +797,7 @@ _ZNKSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE12_M_ch
   %.not.i.i.i = icmp ne i64 %i.aa, 0
   tail call void @llvm.assume(i1 %.not.i.i.i)
   %i.ab = shl nuw nsw i64 %i.aa, 3
-  %i.ac = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #17
+  %i.ac = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ab) #16
           to label %.noexc11 unwind label %.loopexit ; 4 uses
 
 .noexc11:                                         ; preds = %_ZNKSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE12_M_check_lenEmPKc.exit.i.i
@@ -816,7 +816,7 @@ _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_rel
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, label %bb.m
 
 bb.m:                                             ; preds = %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.u) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.l, i64 noundef %i.u) #17
   br label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i
 
 _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i: ; preds = %bb.m, %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE11_S_relocateEPS5_S8_S8_RS6_.exit16.i.i
@@ -845,7 +845,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ah = landingpad { ptr, i32 }
           catch ptr null
   %i.ai = extractvalue { ptr, i32 } %i.ah, 0
-  tail call void @__clang_call_terminate(ptr %i.ai) #15
+  tail call void @__clang_call_terminate(ptr %i.ai) #14
   unreachable
 
 _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE9push_backERKS5_.exit: ; preds = %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EE17_M_realloc_insertIJRKS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i, %bb.i, %bb.g
@@ -867,7 +867,7 @@ bb.p:                                             ; preds = %_ZN4absl12lts_20250
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = ptrtoint ptr %i.ak to i64
   %i.ap = sub i64 %i.an, %i.ao
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ap) #18
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ap) #17
   br label %_ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EED2Ev.exit
 
 _ZNSt6vectorIPKN4absl12lts_2025051213cord_internal11CordzHandleESaIS5_EED2Ev.exit: ; preds = %_ZN4absl12lts_202505129MutexLockD2Ev.exit12, %bb.p
@@ -878,55 +878,54 @@ _ZN4absl12lts_202505129MutexLockD2Ev.exit:        ; preds = %_ZN4absl12lts_20250
 }
 
 ; Function Attrs: nofree nounwind
-declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #6
+declare i32 @__cxa_guard_acquire(ptr) local_unnamed_addr #5
 
 ; Function Attrs: nofree nounwind
-declare void @__cxa_guard_release(ptr) local_unnamed_addr #6
+declare void @__cxa_guard_release(ptr) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
-declare void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #8
+declare void @_ZN4absl12lts_202505125Mutex4LockEv(ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #7
 
-declare void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #8
+declare void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8)) local_unnamed_addr #7
 
 ; Function Attrs: noreturn
-declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #9
+declare void @_ZSt20__throw_length_errorPKc(ptr noundef) local_unnamed_addr #8
 
 ; Function Attrs: nobuiltin allocsize(0)
-declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #10
+declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #11
+declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #12
+declare i64 @llvm.umax.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #12
+declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #13
+declare void @llvm.assume(i1 noundef) #12
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { cold nofree noreturn }
 attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #6 = { nofree nounwind }
-attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #8 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
-attributes #12 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #13 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #14 = { nounwind }
-attributes #15 = { noreturn nounwind }
-attributes #16 = { noreturn }
-attributes #17 = { builtin allocsize(0) }
-attributes #18 = { builtin nounwind }
+attributes #5 = { nofree nounwind }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #13 = { nounwind }
+attributes #14 = { noreturn nounwind }
+attributes #15 = { noreturn }
+attributes #16 = { builtin allocsize(0) }
+attributes #17 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

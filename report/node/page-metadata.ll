@@ -23,10 +23,10 @@ bb.a:
   store ptr %i.b, ptr %9, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %6, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.a, ptr noundef nonnull align 8 dereferenceable(16) %i.c, i64 16, i1 false)
-  tail call void @_ZN2v88internal13VirtualMemory5ResetEv(ptr noundef nonnull align 8 dereferenceable(24) %6) #11
-  call void @_ZN2v88internal19MutablePageMetadataC2EPNS0_4HeapEPNS0_9BaseSpaceEmmmNS0_13VirtualMemoryENS0_8PageSizeENS0_13ExecutabilityE(ptr noundef nonnull align 8 dereferenceable(4448) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr noundef nonnull %9, i32 noundef 0, i32 noundef %7) #11
-  call void @_ZN2v88internal13VirtualMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %9) #11
-  %i.d = call i64 @_ZNK2v88internal19MutablePageMetadata19ComputeInitialFlagsENS0_13ExecutabilityE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i32 noundef %7) #11 ; 2 uses
+  tail call void @_ZN2v88internal13VirtualMemory5ResetEv(ptr noundef nonnull align 8 dereferenceable(24) %6) #10
+  call void @_ZN2v88internal19MutablePageMetadataC2EPNS0_4HeapEPNS0_9BaseSpaceEmmmNS0_13VirtualMemoryENS0_8PageSizeENS0_13ExecutabilityE(ptr noundef nonnull align 8 dereferenceable(4448) %0, ptr noundef %1, ptr noundef %2, i64 noundef %3, i64 noundef %4, i64 noundef %5, ptr noundef nonnull %9, i32 noundef 0, i32 noundef %7) #10
+  call void @_ZN2v88internal13VirtualMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %9) #10
+  %i.d = call i64 @_ZNK2v88internal19MutablePageMetadata19ComputeInitialFlagsENS0_13ExecutabilityE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i32 noundef %7) #10 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 328
   store i64 %i.d, ptr %i.e, align 8
   store i64 %i.d, ptr %8, align 8
@@ -56,7 +56,7 @@ bb.a:
   %i.h = icmp slt i32 %i.f, 0
   %i.i = shl nsw i64 %i.g, 3
   %i.j = select i1 %i.h, i64 -1, i64 %i.i         ; 2 uses
-  %i.k = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #12 ; 2 uses
+  %i.k = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.j) #11 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.k, i8 0, i64 %i.j, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
   store ptr %i.k, ptr %i.l, align 8
@@ -73,7 +73,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph ], [ 0, %bb.a ] ; 3 uses
-  %i.r = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #12 ; 3 uses
+  %i.r = tail call noalias noundef nonnull dereferenceable(32) ptr @_Znwm(i64 noundef 32) #11 ; 3 uses
   store i32 -1, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %i.s, i8 0, i64 28, i1 false)
@@ -100,8 +100,8 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nobuiltin allocsize(0)
 declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN2v88internal12PageMetadata28InitializeFreeListCategoriesEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #6 align 2 {
+; Function Attrs: mustprogress norecurse nounwind uwtable
+define hidden void @_ZN2v88internal12PageMetadata28InitializeFreeListCategoriesEv(ptr noundef nonnull align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = load atomic ptr, ptr %i.a seq_cst, align 8
@@ -173,7 +173,7 @@ bb.a:
   br i1 %.not8, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef 32) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef 32) #12
   %i.n = load ptr, ptr %i.a, align 8
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv
   store ptr null, ptr %i.o, align 8
@@ -191,7 +191,7 @@ bb.c:                                             ; preds = %.lr.ph, %bb.b
   br i1 %.not7.not, label %.lr.ph, label %._crit_edge, !llvm.loop !8
 
 bb.d:                                             ; preds = %._crit_edge
-  tail call void @_ZdaPv(ptr noundef nonnull %i.i) #13
+  tail call void @_ZdaPv(ptr noundef nonnull %i.i) #12
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %._crit_edge
@@ -231,12 +231,12 @@ bb.a:
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 72
   %i.p = load i32, ptr %i.o, align 8
-  tail call void @_ZN2v88internal19MutablePageMetadata25SetOldGenerationPageFlagsENS0_11MarkingModeE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i32 noundef %i.p) #11
+  tail call void @_ZN2v88internal19MutablePageMetadata25SetOldGenerationPageFlagsENS0_11MarkingModeE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i32 noundef %i.p) #10
   %i.q = load ptr, ptr %i.e, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 120
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = tail call noundef ptr %i.s(ptr noundef nonnull align 8 dereferenceable(152) %i.e, ptr noundef nonnull %0) #11 ; 2 uses
-  tail call void @_ZN2v88internal8OldSpace15AddPromotedPageEPNS0_12PageMetadataENS0_8FreeModeE(ptr noundef nonnull align 8 dereferenceable(152) %i.e, ptr noundef %i.t, i32 noundef %1) #11
+  %i.t = tail call noundef ptr %i.s(ptr noundef nonnull align 8 dereferenceable(152) %i.e, ptr noundef nonnull %0) #10 ; 2 uses
+  tail call void @_ZN2v88internal8OldSpace15AddPromotedPageEPNS0_12PageMetadataENS0_8FreeModeE(ptr noundef nonnull align 8 dereferenceable(152) %i.e, ptr noundef %i.t, i32 noundef %1) #10
   ret ptr %i.t
 }
 
@@ -244,8 +244,8 @@ declare void @_ZN2v88internal19MutablePageMetadata25SetOldGenerationPageFlagsENS
 
 declare void @_ZN2v88internal8OldSpace15AddPromotedPageEPNS0_12PageMetadataENS0_8FreeModeE(ptr noundef nonnull align 8 dereferenceable(152), ptr noundef, i32 noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef i64 @_ZN2v88internal12PageMetadata19AvailableInFreeListEv(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #8 align 2 {
+; Function Attrs: mustprogress norecurse nounwind uwtable
+define hidden noundef i64 @_ZN2v88internal12PageMetadata19AvailableInFreeListEv(ptr noundef nonnull align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #6 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.b = load atomic ptr, ptr %i.a seq_cst, align 8
@@ -296,7 +296,7 @@ bb.a:
   %i.e = load atomic ptr, ptr %i.d seq_cst, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void @_ZN2v88internal8FreeList18EvictFreeListItemsEPNS0_12PageMetadataE(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull %0) #11
+  tail call void @_ZN2v88internal8FreeList18EvictFreeListItemsEPNS0_12PageMetadataE(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull %0) #10
   ret void
 }
 
@@ -469,7 +469,7 @@ _ZN2v88internal13MarkingBitmap8SetRangeILNS0_10AccessModeE0EEEvjj.exit: ; preds 
   %i.bv = load ptr, ptr %i.bu, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 128
   %i.bx = load ptr, ptr %i.bw, align 8
-  tail call void %i.bx(ptr noundef nonnull align 8 dereferenceable(88) %i.bu, i64 noundef %i.bq) #11
+  tail call void %i.bx(ptr noundef nonnull align 8 dereferenceable(88) %i.bu, i64 noundef %i.bq) #10
   ret void
 }
 
@@ -643,7 +643,7 @@ _ZN2v88internal13MarkingBitmap10ClearRangeILNS0_10AccessModeE0EEEvjj.exit: ; pre
   %i.bx = load ptr, ptr %i.bw, align 8
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 136
   %i.bz = load ptr, ptr %i.by, align 8
-  tail call void %i.bz(ptr noundef nonnull align 8 dereferenceable(88) %i.bw, i64 noundef %i.bs) #11
+  tail call void %i.bz(ptr noundef nonnull align 8 dereferenceable(88) %i.bw, i64 noundef %i.bs) #10
   ret void
 }
 
@@ -654,12 +654,12 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8
   %i.c = or i32 %i.b, 128
   store i32 %i.c, ptr %i.a, align 8
-  tail call void @_ZN2v88internal19MutablePageMetadata22SetFlagMaybeExecutableENS0_11MemoryChunk4FlagE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i64 noundef 512) #11
+  tail call void @_ZN2v88internal19MutablePageMetadata22SetFlagMaybeExecutableENS0_11MemoryChunk4FlagE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i64 noundef 512) #10
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.e = load atomic ptr, ptr %i.d seq_cst, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void @_ZN2v88internal8FreeList18EvictFreeListItemsEPNS0_12PageMetadataE(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull %0) #11
+  tail call void @_ZN2v88internal8FreeList18EvictFreeListItemsEPNS0_12PageMetadataE(ptr noundef nonnull align 8 dereferenceable(48) %i.g, ptr noundef nonnull %0) #10
   ret void
 }
 
@@ -675,13 +675,13 @@ bb.a:
   br i1 %.not, label %bb.b, label %bb.c, !prof !16
 
 bb.b:                                             ; preds = %bb.a
-  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #14
+  tail call void (ptr, ...) @_Z8V8_FatalPKcz(ptr noundef nonnull @.str, ptr noundef nonnull @.str.1) #13
   unreachable
 
 bb.c:                                             ; preds = %bb.a
   %i.d = and i32 %i.b, -385
   store i32 %i.d, ptr %i.a, align 8
-  tail call void @_ZN2v88internal19MutablePageMetadata24ClearFlagMaybeExecutableENS0_11MemoryChunk4FlagE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i64 noundef 512) #11
+  tail call void @_ZN2v88internal19MutablePageMetadata24ClearFlagMaybeExecutableENS0_11MemoryChunk4FlagE(ptr noundef nonnull align 8 dereferenceable(4448) %0, i64 noundef 512) #10
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.f = load atomic ptr, ptr %i.e seq_cst, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 80
@@ -721,12 +721,12 @@ _ZN2v88internal12PageMetadata28InitializeFreeListCategoriesEv.exit: ; preds = %b
 }
 
 ; Function Attrs: noreturn
-declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #9
+declare void @_Z8V8_FatalPKcz(ptr noundef, ...) local_unnamed_addr #8
 
 declare void @_ZN2v88internal19MutablePageMetadata24ClearFlagMaybeExecutableENS0_11MemoryChunk4FlagE(ptr noundef nonnull align 8 dereferenceable(4448), i64 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN2v88internal12PageMetadata15AbortEvacuationEv(ptr noundef nonnull align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #10 align 2 {
+define hidden void @_ZN2v88internal12PageMetadata15AbortEvacuationEv(ptr noundef nonnull align 8 captures(none) dereferenceable(4448) %0) local_unnamed_addr #9 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i32, ptr %i.a, align 8
@@ -743,15 +743,14 @@ attributes #2 = { nounwind "frame-pointer"="all" "no-trapping-math"="true" "stac
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nobuiltin allocsize(0) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { mustprogress nofree norecurse nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #6 = { mustprogress norecurse nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin nounwind "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { mustprogress nofree norecurse nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #11 = { nounwind }
-attributes #12 = { builtin nounwind allocsize(0) }
-attributes #13 = { builtin nounwind }
-attributes #14 = { noreturn nounwind }
+attributes #8 = { noreturn "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nounwind }
+attributes #11 = { builtin nounwind allocsize(0) }
+attributes #12 = { builtin nounwind }
+attributes #13 = { noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
