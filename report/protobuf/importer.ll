@@ -201,37 +201,31 @@ _ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_ch
   %i.l = select i1 %i.j, i64 144115188075855871, i64 %i.k ; 3 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i.a = icmp eq i64 %i.l, 0
-  br i1 %.not.i.a, label %_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_M_allocateEm.exit, label %3
+  %.not.i = icmp ne i64 %i.l, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %3 = shl nuw nsw i64 %i.l, 6
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #34 ; 5 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.n ; 7 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 3 uses
+  store ptr %6, ptr %5, align 8, !tbaa !54
+  %7 = load ptr, ptr %2, align 8, !tbaa !49       ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
+  %.not.i.a = icmp eq ptr %7, %8
+  br i1 %.not.i.a, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
-3:                                                ; preds = %_ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_check_lenEmPKc.exit
-  %4 = shl nuw nsw i64 %i.l, 6
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #34
-  br label %_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_check_lenEmPKc.exit, %3
-  %6 = phi ptr [ %5, %3 ], [ null, %_ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.n ; 7 uses
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 3 uses
-  store ptr %8, ptr %7, align 8, !tbaa !54
-  %9 = load ptr, ptr %2, align 8, !tbaa !49       ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
-  %11 = icmp eq ptr %9, %10
-  br i1 %11, label %bb.c, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
-
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_M_allocateEm.exit
+bb.c:                                             ; preds = %_ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_check_lenEmPKc.exit
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !53   ; 3 uses
   %i.q = icmp ult i64 %i.p, 16
   tail call void @llvm.assume(i1 %i.q)
   %i.r = add nuw nsw i64 %i.p, 1
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %8, ptr noundef nonnull align 8 dereferenceable(1) %10, i64 %i.r, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %6, ptr noundef nonnull align 8 dereferenceable(1) %8, i64 %i.r, i1 false)
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i
 
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_M_allocateEm.exit
-  store ptr %9, ptr %7, align 8, !tbaa !49
-  %i.s = load i64, ptr %10, align 8, !tbaa !47
-  store i64 %i.s, ptr %8, align 8, !tbaa !47
+_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: ; preds = %_ZNKSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE12_M_check_lenEmPKc.exit
+  store ptr %7, ptr %5, align 8, !tbaa !49
+  %i.s = load i64, ptr %8, align 8, !tbaa !47
+  store i64 %i.s, ptr %6, align 8, !tbaa !47
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.pre = load i64, ptr %.phi.trans.insert, align 8, !tbaa !53
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i
@@ -239,14 +233,14 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.c
   %i.t = phi i64 [ %.pre, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %i.p, %bb.c ]
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.v = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8
   store i64 %i.t, ptr %i.v, align 8, !tbaa !53
-  store ptr %10, ptr %2, align 8, !tbaa !49
+  store ptr %8, ptr %2, align 8, !tbaa !49
   store i64 0, ptr %i.u, align 8, !tbaa !53
-  store i8 0, ptr %10, align 8, !tbaa !47
-  %i.w = getelementptr inbounds nuw i8, ptr %7, i64 32 ; 2 uses
+  store i8 0, ptr %8, align 8, !tbaa !47
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %7, i64 48 ; 3 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 3 uses
   store ptr %i.y, ptr %i.w, align 8, !tbaa !54
   %i.z = load ptr, ptr %i.x, align 8, !tbaa !49   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 5 uses
@@ -273,7 +267,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i3.i:
 _ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit: ; preds = %bb.d, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i3.i
   %i.ah = phi i64 [ %i.ad, %bb.d ], [ %.pre38, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i3.i ]
   %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 40
-  %i.aj = getelementptr inbounds nuw i8, ptr %7, i64 40
+  %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 40
   store i64 %i.ah, ptr %i.aj, align 8, !tbaa !53
   store ptr %i.aa, ptr %i.x, align 8, !tbaa !49
   store i64 0, ptr %i.ai, align 8, !tbaa !53
@@ -282,7 +276,7 @@ _ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit: ; preds = %bb.
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.bl, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %6, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit ] ; 8 uses
+  %.012.i.i.i = phi ptr [ %i.bl, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %4, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit ] ; 8 uses
   %.0911.i.i.i = phi ptr [ %i.bk, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit ] ; 12 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !224)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !227)
@@ -358,7 +352,7 @@ _ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i, !llvm.loop !230
 
 _ZNSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit: ; preds = %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %6, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit ], [ %i.bl, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %4, %_ZN6google8protobuf8compiler14DiskSourceTree7MappingC2EOS3_.exit ], [ %i.bl, %_ZSt19__relocate_object_aIN6google8protobuf8compiler14DiskSourceTree7MappingES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.bm = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 64 ; 2 uses
   %.not10.i.i.i16 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i16, label %_ZNSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit30, label %.lr.ph.i.i.i17
@@ -453,9 +447,9 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN6goog
   br label %_ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE13_M_deallocateEPS4_m.exit
 
 _ZNSt12_Vector_baseIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorIN6google8protobuf8compiler14DiskSourceTree7MappingESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit30, %bb.i
-  store ptr %6, ptr %0, align 8, !tbaa !150
+  store ptr %4, ptr %0, align 8, !tbaa !150
   store ptr %.0.lcssa.i.i.i29, ptr %i.a, align 8, !tbaa !153
-  %i.ct = getelementptr inbounds nuw [64 x i8], ptr %6, i64 %i.l
+  %i.ct = getelementptr inbounds nuw [64 x i8], ptr %4, i64 %i.l
   store ptr %i.ct, ptr %i.cp, align 8, !tbaa !156
   ret void
 }

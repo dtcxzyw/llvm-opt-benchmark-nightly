@@ -201,18 +201,15 @@ _ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8face
   %i.et = add nsw i64 %.sroa.speculated.i.i.i, %i.er ; 2 uses
   %i.eu = icmp ult i64 %i.et, %i.er
   %i.ev = call i64 @llvm.umin.i64(i64 %i.et, i64 82351536043346212)
-  %i.ew = select i1 %i.eu, i64 82351536043346212, i64 %i.ev ; 4 uses
-  %.not.i.i.i = icmp eq i64 %i.ew, 0
-  br i1 %.not.i.i.i, label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_M_allocateEm.exit.i.i, label %35
+  %i.ew = select i1 %i.eu, i64 82351536043346212, i64 %i.ev ; 3 uses
+  %.not.i.i.i = icmp ne i64 %i.ew, 0
+  call void @llvm.assume(i1 %.not.i.i.i)
+  %35 = mul nuw nsw i64 %i.ew, 112                ; 2 uses
+  %36 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %35) #49
+          to label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_M_allocateEm.exit.i.i unwind label %.loopexit291 ; 6 uses
 
-35:                                               ; preds = %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12_M_check_lenEmPKc.exit.i.i
-  %36 = mul nuw nsw i64 %i.ew, 112
-  %37 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %36) #49
-          to label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_M_allocateEm.exit.i.i unwind label %.loopexit291
-
-_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_M_allocateEm.exit.i.i: ; preds = %35, %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12_M_check_lenEmPKc.exit.i.i
-  %38 = phi ptr [ null, %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12_M_check_lenEmPKc.exit.i.i ], [ %37, %35 ] ; 6 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %38, i64 %i.eo ; 12 uses
+_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_M_allocateEm.exit.i.i: ; preds = %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12_M_check_lenEmPKc.exit.i.i
+  %i.ex = getelementptr inbounds nuw i8, ptr %36, i64 %i.eo ; 12 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %i.ex, i64 16 ; 3 uses
   store ptr %i.ey, ptr %i.ex, align 8, !tbaa !118
   %i.ez = load ptr, ptr %30, align 8, !tbaa !102  ; 2 uses
@@ -331,7 +328,7 @@ _ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcE
   br i1 %i.es, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit, label %.lr.ph.i.i.i169
 
 .lr.ph.i.i.i169:                                  ; preds = %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i
-  %.03.i.i.i = phi ptr [ %i.je, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i ], [ %38, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i ] ; 13 uses
+  %.03.i.i.i = phi ptr [ %i.je, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i ], [ %36, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i ] ; 13 uses
   %.092.i.i.i = phi ptr [ %i.jd, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i ], [ %.val.i.i, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i ] ; 19 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !2486)
   call void @llvm.experimental.noalias.scope.decl(metadata !2489)
@@ -534,7 +531,7 @@ _ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcES
   br i1 %.not.i.i.i172, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit, label %.lr.ph.i.i.i169, !llvm.loop !2492
 
 _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit: ; preds = %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i
-  %.0.lcssa.i.i.i = phi ptr [ %38, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i ], [ %i.je, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %36, %_ZNSt16allocator_traitsISaISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEEEE9constructISB_JRS6_SA_EEEvRSC_PT_DpOT0_.exit.i.i ], [ %i.je, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESB_SaISB_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.jf = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 112
   %.not.i31.i.i = icmp eq ptr %.val.i.i, null
   br i1 %.not.i31.i.i, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE17_M_realloc_insertIJRS6_SA_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i, label %bb.az
@@ -566,8 +563,7 @@ _ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
   %lpad.phi298 = phi { ptr, i32 } [ %lpad.loopexit296, %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE13_M_deallocateEPSB_m.exit33.i.i.loopexit ], [ %lpad.loopexit.split-lp297, %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE13_M_deallocateEPSB_m.exit33.i.i.loopexit.split-lp ]
   %i.jk = extractvalue { ptr, i32 } %lpad.phi298, 0
   %i.jl = call ptr @__cxa_begin_catch(ptr %i.jk) #38 ; 0 uses
-  %39 = mul nuw nsw i64 %i.ew, 112
-  call void @_ZdlPvm(ptr noundef nonnull %38, i64 noundef %39) #47
+  call void @_ZdlPvm(ptr noundef nonnull %36, i64 noundef %35) #47
   invoke void @__cxa_rethrow() #46
           to label %bb.bc unwind label %bb.ba
 
@@ -582,9 +578,9 @@ bb.bc:                                            ; preds = %_ZNSt12_Vector_base
   unreachable
 
 _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE17_M_realloc_insertIJRS6_SA_EEEvN9__gnu_cxx17__normal_iteratorIPSB_SD_EEDpOT_.exit.i: ; preds = %bb.az, %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE11_S_relocateEPSB_SE_SE_RSC_.exit
-  store ptr %38, ptr %29, align 8, !tbaa !2485
+  store ptr %36, ptr %29, align 8, !tbaa !2485
   store ptr %i.jf, ptr %i.ai, align 8, !tbaa !2481
-  %i.jo = getelementptr inbounds nuw [112 x i8], ptr %38, i64 %i.ew
+  %i.jo = getelementptr inbounds nuw [112 x i8], ptr %36, i64 %i.ew
   store ptr %i.jo, ptr %i.aj, align 8, !tbaa !2484
   %.pre613 = load i8, ptr %i.ap, align 8, !tbaa !224, !range !110
   br label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12emplace_backIJRS6_SA_EEERSB_DpOT_.exit
@@ -987,7 +983,7 @@ bb.fo:                                            ; preds = %_ZNSt8optionalINSt7
           cleanup
   br label %bb.fp
 
-.loopexit291:                                     ; preds = %35, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i182
+.loopexit291:                                     ; preds = %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8facebook5velox12_GLOBAL__N_16AsJsonEESaISB_EE12_M_check_lenEmPKc.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i182
   %lpad.loopexit293 = landingpad { ptr, i32 }
           cleanup
   br label %.body49

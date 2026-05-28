@@ -201,7 +201,7 @@ _ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit: ; pred
 
 bb.l:                                             ; preds = %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit, %bb.i
   %.sroa.078.0 = phi ptr [ %.0.i.i, %_ZN2v88internal6HandleINS0_3MapEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit ], [ null, %bb.i ] ; 3 uses
-  switch i8 %.sroa.3.0.copyload, label %bb.q [
+  switch i8 %.sroa.3.0.copyload, label %unreachable [
     i8 2, label %bb.m
     i8 3, label %bb.n
     i8 1, label %bb.o
@@ -225,8 +225,11 @@ bb.p:                                             ; preds = %bb.l
   %i.ce = tail call ptr @_ZN2v88internal16CreateContRefMapEPNS0_7IsolateENS0_4wasm18CanonicalTypeIndexE(ptr noundef nonnull %0, i32 %.sroa.02.0.copyload.i) #22
   br label %bb.q
 
-bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m, %bb.l
-  %.sroa.072.0 = phi ptr [ null, %bb.l ], [ %i.ca, %bb.m ], [ %i.cb, %bb.n ], [ %i.cd, %bb.o ], [ %i.ce, %bb.p ] ; 2 uses
+unreachable:                                      ; preds = %bb.l
+  unreachable
+
+bb.q:                                             ; preds = %bb.p, %bb.o, %bb.n, %bb.m
+  %.sroa.072.0 = phi ptr [ %i.ce, %bb.p ], [ %i.ca, %bb.m ], [ %i.cb, %bb.n ], [ %i.cd, %bb.o ] ; 2 uses
   %i.cf = load i64, ptr %.0.i.i55, align 8
   %i.cg = add i64 %i.cf, -1                       ; 3 uses
   %i.ch = inttoptr i64 %i.cg to ptr
@@ -629,26 +632,20 @@ _ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.ex
   %i.cm = icmp ult i64 %i.cl, %i.cj
   %i.cn = tail call i64 @llvm.umin.i64(i64 %i.cl, i64 9223372036854775807)
   %i.co = select i1 %i.cm, i64 9223372036854775807, i64 %i.cn ; 3 uses
-  %.not.i.i.i.i = icmp eq i64 %i.co, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN2v88internal4wasm15WellKnownImportESaIS3_EE11_M_allocateEm.exit.i.i.i, label %15
+  %.not.i.i.i.i = icmp ne i64 %i.co, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %15 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.co) #24 ; 4 uses
+  %16 = getelementptr inbounds nuw i8, ptr %15, i64 %i.cj ; 2 uses
+  store i8 %i.bv, ptr %16, align 1
+  %17 = icmp sgt i64 %i.cj, 0
+  br i1 %17, label %bb.n, label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-15:                                               ; preds = %_ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %16 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.co) #24
-  br label %_ZNSt12_Vector_baseIN2v88internal4wasm15WellKnownImportESaIS3_EE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIN2v88internal4wasm15WellKnownImportESaIS3_EE11_M_allocateEm.exit.i.i.i: ; preds = %15, %_ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %17 = phi ptr [ %16, %15 ], [ null, %_ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %i.cj ; 2 uses
-  store i8 %i.bv, ptr %18, align 1
-  %19 = icmp sgt i64 %i.cj, 0
-  br i1 %19, label %bb.n, label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-
-bb.n:                                             ; preds = %_ZNSt12_Vector_baseIN2v88internal4wasm15WellKnownImportESaIS3_EE11_M_allocateEm.exit.i.i.i
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %17, ptr align 1 %i.cg, i64 %i.cj, i1 false)
+bb.n:                                             ; preds = %_ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %15, ptr align 1 %i.cg, i64 %i.cj, i1 false)
   br label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.n, %_ZNSt12_Vector_baseIN2v88internal4wasm15WellKnownImportESaIS3_EE11_M_allocateEm.exit.i.i.i
-  %i.cp = getelementptr inbounds nuw i8, ptr %18, i64 1
+_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.n, %_ZNKSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
+  %i.cp = getelementptr inbounds nuw i8, ptr %16, i64 1
   %.not.i17.i.i.i = icmp eq ptr %i.cg, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.o
 
@@ -657,9 +654,9 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN2v88i
   br label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.o, %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  store ptr %17, ptr %i.bz, align 8
+  store ptr %15, ptr %i.bz, align 8
   store ptr %i.cp, ptr %i.ca, align 8
-  %i.cq = getelementptr inbounds nuw i8, ptr %17, i64 %i.co
+  %i.cq = getelementptr inbounds nuw i8, ptr %15, i64 %i.co
   store ptr %i.cq, ptr %i.cc, align 8
   br label %_ZNSt6vectorIN2v88internal4wasm15WellKnownImportESaIS3_EE9push_backEOS3_.exit
 

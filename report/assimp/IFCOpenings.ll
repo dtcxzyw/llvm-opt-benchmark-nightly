@@ -201,32 +201,26 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.43) #24
   unreachable
 
-_ZNKSt6vectorIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE11_M_allocateEm.exit: ; preds = %bb.a
   %5 = sdiv exact i64 %i.f, 104                   ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   %6 = add nsw i64 %.sroa.speculated.i, %5        ; 2 uses
   %7 = icmp ult i64 %6, %5
   %8 = tail call i64 @llvm.umin.i64(i64 %6, i64 88686269585142075)
-  %9 = select i1 %7, i64 88686269585142075, i64 %8 ; 4 uses
+  %9 = select i1 %7, i64 88686269585142075, i64 %8 ; 3 uses
   %10 = ptrtoint ptr %1 to i64
   %11 = sub i64 %10, %i.e
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE11_M_allocateEm.exit, label %12
-
-12:                                               ; preds = %_ZNKSt6vectorIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE12_M_check_lenEmPKc.exit
-  %13 = mul nuw nsw i64 %9, 104
-  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #25
-  br label %_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE12_M_check_lenEmPKc.exit, %12
-  %15 = phi ptr [ %14, %12 ], [ null, %_ZNKSt6vectorIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 %11 ; 15 uses
+  %.not.i = icmp ne i64 %9, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %12 = mul nuw nsw i64 %9, 104                   ; 2 uses
+  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #25 ; 8 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %13, i64 %11 ; 15 uses
   %i.i = load i8, ptr %4, align 1, !range !143, !noundef !144
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.k = load ptr, ptr %i.j, align 8              ; 3 uses
@@ -297,7 +291,7 @@ _ZNSt15__new_allocatorI10aiVector2tIdEE8allocateEmPKv.exit.i.i.i.i.i: ; preds = 
   store ptr null, ptr %i.af, align 8
   %i.ag = getelementptr inbounds nuw i8, ptr %i.h, i64 96
   store i8 %i.i, ptr %i.ag, align 8
-  %i.ah = invoke noundef ptr @_ZSt16__do_uninit_copyIPKN6Assimp3IFC22ProjectedWindowContourEPS2_ET0_T_S7_S6_(ptr noundef %i.c, ptr noundef %1, ptr noundef nonnull %15)
+  %i.ah = invoke noundef ptr @_ZSt16__do_uninit_copyIPKN6Assimp3IFC22ProjectedWindowContourEPS2_ET0_T_S7_S6_(ptr noundef %i.c, ptr noundef %1, ptr noundef nonnull %13)
           to label %_ZSt34__uninitialized_move_if_noexcept_aIPN6Assimp3IFC22ProjectedWindowContourES3_SaIS2_EET0_T_S6_S5_RT1_.exit unwind label %bb.g
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN6Assimp3IFC22ProjectedWindowContourES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %.loopexit
@@ -360,9 +354,9 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPN6As
   br label %_ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN6Assimp3IFC22ProjectedWindowContourESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZSt8_DestroyIPN6Assimp3IFC22ProjectedWindowContourEEvT_S4_.exit, %bb.f
-  store ptr %15, ptr %0, align 8
+  store ptr %13, ptr %0, align 8
   store ptr %i.aj, ptr %i.a, align 8
-  %i.bf = getelementptr inbounds nuw [104 x i8], ptr %15, i64 %9
+  %i.bf = getelementptr inbounds nuw [104 x i8], ptr %13, i64 %9
   store ptr %i.bf, ptr %i.bb, align 8
   ret void
 
@@ -375,12 +369,12 @@ bb.g:                                             ; preds = %.loopexit
   br label %bb.j
 
 bb.h:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6Assimp3IFC22ProjectedWindowContourES3_SaIS2_EET0_T_S6_S5_RT1_.exit, %_ZNSt15__new_allocatorI10aiVector2tIdEE8allocateEmPKv.exit.i.i.i.i.i, %.noexc.i.i.i
-  %.0.ph = phi ptr [ %15, %.noexc.i.i.i ], [ %15, %_ZNSt15__new_allocatorI10aiVector2tIdEE8allocateEmPKv.exit.i.i.i.i.i ], [ %i.ai, %_ZSt34__uninitialized_move_if_noexcept_aIPN6Assimp3IFC22ProjectedWindowContourES3_SaIS2_EET0_T_S6_S5_RT1_.exit ]
+  %.0.ph = phi ptr [ %13, %.noexc.i.i.i ], [ %13, %_ZNSt15__new_allocatorI10aiVector2tIdEE8allocateEmPKv.exit.i.i.i.i.i ], [ %i.ai, %_ZSt34__uninitialized_move_if_noexcept_aIPN6Assimp3IFC22ProjectedWindowContourES3_SaIS2_EET0_T_S6_S5_RT1_.exit ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           catch ptr null
   %i.bi = extractvalue { ptr, i32 } %lpad.thr_comm, 0
   %i.bj = tail call ptr @__cxa_begin_catch(ptr %i.bi) #27 ; 0 uses
-  invoke void @_ZSt8_DestroyIPN6Assimp3IFC22ProjectedWindowContourEEvT_S4_(ptr noundef nonnull %15, ptr noundef nonnull %.0.ph)
+  invoke void @_ZSt8_DestroyIPN6Assimp3IFC22ProjectedWindowContourEEvT_S4_(ptr noundef nonnull %13, ptr noundef nonnull %.0.ph)
           to label %bb.j unwind label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %bb.j
@@ -390,8 +384,7 @@ bb.i:                                             ; preds = %bb.h, %bb.j
           to label %bb.k unwind label %bb.l
 
 bb.j:                                             ; preds = %bb.g, %bb.h
-  %16 = mul nuw nsw i64 %9, 104
-  tail call void @_ZdlPvm(ptr noundef nonnull %15, i64 noundef %16) #26
+  tail call void @_ZdlPvm(ptr noundef nonnull %13, i64 noundef %12) #26
   invoke void @__cxa_rethrow() #24
           to label %bb.m unwind label %bb.i
 

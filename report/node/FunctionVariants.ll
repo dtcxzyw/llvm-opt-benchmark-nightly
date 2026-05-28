@@ -201,25 +201,19 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.ad
   %i.fi = icmp ult i64 %i.fh, %i.ff
   %i.fj = call i64 @llvm.umin.i64(i64 %i.fh, i64 9223372036854775807)
   %i.fk = select i1 %i.fi, i64 9223372036854775807, i64 %i.fj ; 3 uses
-  %.not.i.i.i.i23 = icmp eq i64 %i.fk, 0
-  br i1 %.not.i.i.i.i23, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i, label %17
+  %.not.i.i.i.i23 = icmp ne i64 %i.fk, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i23)
+  %17 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fk) #28 ; 4 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 %i.ff ; 2 uses
+  store i8 %i.fc, ptr %18, align 1
+  %19 = icmp sgt i64 %i.ff, 0
+  br i1 %19, label %bb.af, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-17:                                               ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %18 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fk) #28
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %17, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
-  %19 = phi ptr [ %18, %17 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 %i.ff ; 2 uses
-  store i8 %i.fc, ptr %20, align 1
-  %21 = icmp sgt i64 %i.ff, 0
-  br i1 %21, label %bb.af, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-
-bb.af:                                            ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %19, ptr align 1 %.sroa.074.0120, i64 %i.ff, i1 false)
+bb.af:                                            ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %17, ptr align 1 %.sroa.074.0120, i64 %i.ff, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.af, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.af, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i.i
   %.not.i17.i.i.i = icmp eq ptr %.sroa.074.0120, null
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i, label %bb.ag
 
@@ -228,13 +222,13 @@ bb.ag:                                            ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i: ; preds = %bb.ag, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i.i
-  %i.fl = getelementptr inbounds nuw i8, ptr %19, i64 %i.fk
+  %i.fl = getelementptr inbounds nuw i8, ptr %17, i64 %i.fk
   br label %_ZNSt6vectorIhSaIhEE9push_backEOh.exit
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit:           ; preds = %bb.ac, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i
   %.sroa.1280.1 = phi ptr [ %i.fl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.1280.0118, %bb.ac ] ; 2 uses
-  %.pn = phi ptr [ %20, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.777.0119, %bb.ac ]
-  %.sroa.074.1 = phi ptr [ %19, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.074.0120, %bb.ac ] ; 5 uses
+  %.pn = phi ptr [ %18, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.777.0119, %bb.ac ]
+  %.sroa.074.1 = phi ptr [ %17, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i ], [ %.sroa.074.0120, %bb.ac ] ; 5 uses
   %.sroa.777.1 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 2 uses
   switch i32 %i.fb, label %bb.cv [
     i32 3145728, label %_ZN4LIEF5MachOL11pretty_nameENS0_16FunctionVariants17RuntimeTableEntry5FLAGSE.exit

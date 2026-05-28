@@ -201,18 +201,16 @@ bb.ag:                                            ; preds = %_ZN6icu_7812_GLOBAL
   %i.fq = load i32, ptr %i.ab, align 8            ; 2 uses
   %i.fr = icmp slt i32 %i.eb, %i.fq
   %or.cond.i235 = select i1 %.not.i234, i1 %i.fr, i1 false
-  br i1 %or.cond.i235, label %bb.ah, label %6
+  br i1 %or.cond.i235, label %bb.ah, label %bb.ai
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fs = sext i32 %i.fo to i64
   %i.ft = getelementptr inbounds [16 x i8], ptr %i.ey, i64 %i.fs
   br label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer3getEi.exit239
 
-6:                                                ; preds = %bb.ag
+bb.ai:                                            ; preds = %bb.ag
   %.not12.i236 = icmp eq i32 %i.eb, %i.fq
-  br i1 %.not12.i236, label %bb.ai, label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer3getEi.exit239
-
-bb.ai:                                            ; preds = %6
+  call void @llvm.assume(i1 %.not12.i236)
   %i.fu = add nsw i32 %i.eb, 1                    ; 2 uses
   store i32 %i.fu, ptr %i.ab, align 8
   %i.fv = sub nsw i32 %i.fu, %i.fp
@@ -243,8 +241,8 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #14
   br label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer3getEi.exit239
 
-_ZN6icu_7812_GLOBAL__N_19CEIBuffer3getEi.exit239: ; preds = %bb.ah, %6, %bb.ak
-  %.0.i237 = phi ptr [ %i.ft, %bb.ah ], [ %i.gi, %bb.ak ], [ null, %6 ] ; 5 uses
+_ZN6icu_7812_GLOBAL__N_19CEIBuffer3getEi.exit239: ; preds = %bb.ah, %bb.ak
+  %.0.i237 = phi ptr [ %i.ft, %bb.ah ], [ %i.gi, %bb.ak ] ; 5 uses
   %i.gj = getelementptr inbounds nuw i8, ptr %.0.i237, i64 8
   %i.gk = load i32, ptr %i.gj, align 8            ; 3 uses
   %i.gl = getelementptr inbounds nuw i8, ptr %.0.i237, i64 12
@@ -647,7 +645,7 @@ bb.at:                                            ; preds = %bb.as
   %i.im = load i32, ptr %i.ci, align 8            ; 2 uses
   %i.in = icmp sle i32 %.3, %i.im
   %or.cond.i247 = select i1 %.not.i246, i1 %i.in, i1 false
-  br i1 %or.cond.i247, label %bb.au, label %6
+  br i1 %or.cond.i247, label %bb.au, label %bb.av
 
 bb.au:                                            ; preds = %bb.at
   %i.io = load ptr, ptr %i.ck, align 8
@@ -655,11 +653,9 @@ bb.au:                                            ; preds = %bb.at
   %i.iq = getelementptr inbounds nuw [16 x i8], ptr %i.io, i64 %i.ip
   br label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer11getPreviousEi.exit251
 
-6:                                                ; preds = %bb.at
+bb.av:                                            ; preds = %bb.at
   %.not12.i248 = icmp eq i32 %i.ii, %i.im
-  br i1 %.not12.i248, label %bb.av, label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer11getPreviousEi.exit251
-
-bb.av:                                            ; preds = %6
+  call void @llvm.assume(i1 %.not12.i248)
   store i32 %.3, ptr %i.ci, align 8
   %i.ir = sub nsw i32 %.3, %i.il
   %.not13.i250 = icmp slt i32 %i.ir, %i.ij
@@ -690,8 +686,8 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   br label %_ZN6icu_7812_GLOBAL__N_19CEIBuffer11getPreviousEi.exit251
 
-_ZN6icu_7812_GLOBAL__N_19CEIBuffer11getPreviousEi.exit251: ; preds = %bb.au, %6, %bb.ax
-  %.0.i249 = phi ptr [ %i.iq, %bb.au ], [ %i.jf, %bb.ax ], [ null, %6 ] ; 4 uses
+_ZN6icu_7812_GLOBAL__N_19CEIBuffer11getPreviousEi.exit251: ; preds = %bb.au, %bb.ax
+  %.0.i249 = phi ptr [ %i.iq, %bb.au ], [ %i.jf, %bb.ax ] ; 4 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %.0.i249, i64 8
   %i.jh = load i32, ptr %i.jg, align 8            ; 13 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %.0.i249, i64 12

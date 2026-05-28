@@ -201,12 +201,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 .loopexit:                                        ; preds = %bb.f, %.critedge.i
   %i.aa = tail call ptr @dup_str(ptr noundef nonnull %2, ptr noundef %3) #25
   tail call void (ptr, ...) @d_fail(ptr noundef nonnull @.str.3, ptr noundef %i.aa, i32 noundef %6) #25
-  br label %find_pass.exit
+  unreachable
 
-find_pass.exit:                                   ; preds = %bb.e, %.loopexit
-  %.0.i36 = phi ptr [ null, %.loopexit ], [ %i.u, %bb.e ]
+find_pass.exit:                                   ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 112 ; 6 uses
-  %i.ac = getelementptr inbounds nuw i8, ptr %.0.i36, i64 16 ; 4 uses
+  %i.ac = getelementptr inbounds nuw i8, ptr %i.u, i64 16 ; 4 uses
   %i.ad = load i32, ptr %i.ab, align 8, !tbaa !98 ; 2 uses
   %i.ae = load i32, ptr %i.ac, align 8, !tbaa !97 ; 2 uses
   %.not3140 = icmp ugt i32 %i.ad, %i.ae

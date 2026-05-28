@@ -201,33 +201,26 @@ declare void @_ZN8facebook5velox6detail14veloxCheckFailINS0_14VeloxUserErrorERKN
 ; Function Attrs: mustprogress uwtable
 define void @_ZNK8facebook5velox3row13UnsafeRowFast18serializedRowSizesERKN5folly5RangeIPKiEEPPi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(224) %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %1, ptr noundef readonly captures(none) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"class.std::shared_ptr", align 8   ; 9 uses
+  %3 = alloca %"class.std::shared_ptr", align 8   ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !77   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !115)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !118)
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !15, !noalias !121 ; 2 uses
-  %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i.i, label %4
-
-4:                                                ; preds = %bb.a
-  %5 = tail call ptr @__dynamic_cast(ptr nonnull %i.d, ptr nonnull @_ZTIN8facebook5velox4TypeE, ptr nonnull @_ZTIN8facebook5velox7RowTypeE, i64 0) #28, !noalias !121 ; 4 uses
-  %.not.not.i.i = icmp eq ptr %5, null
-  br i1 %.not.not.i.i, label %_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i.i, label %6
-
-6:                                                ; preds = %4
+  %4 = load ptr, ptr %i.c, align 8, !tbaa !15, !noalias !121, !nonnull !85, !noundef !85
+  %5 = tail call ptr @__dynamic_cast(ptr nonnull %4, ptr nonnull @_ZTIN8facebook5velox4TypeE, ptr nonnull @_ZTIN8facebook5velox7RowTypeE, i64 0) #28, !noalias !121 ; 4 uses
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %5) ]
   store ptr %5, ptr %3, align 8, !tbaa !7, !alias.scope !121
-  %7 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %9 = load ptr, ptr %8, align 8, !tbaa !122, !noalias !121 ; 3 uses
-  store ptr %9, ptr %7, align 8, !tbaa !122, !alias.scope !121
-  %.not.i.i.i.i.i = icmp eq ptr %9, null
-  br i1 %.not.i.i.i.i.i, label %_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit, label %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
+  %i.d = load ptr, ptr %7, align 8, !tbaa !122, !noalias !121 ; 3 uses
+  store ptr %i.d, ptr %6, align 8, !tbaa !122, !alias.scope !121
+  %i.e = icmp eq ptr %i.d, null
+  br i1 %i.e, label %_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit, label %bb.b
 
-bb.b:                                             ; preds = %6
-  %i.f = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 3 uses
+bb.b:                                             ; preds = %bb.a
+  %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 3 uses
   %i.g = load i8, ptr @__libc_single_threaded, align 1, !tbaa !111, !noalias !121
   %.not.i.i.i.i.i.i = icmp eq i8 %i.g, 0
   br i1 %.not.i.i.i.i.i.i, label %bb.d, label %bb.c
@@ -243,12 +236,8 @@ bb.d:                                             ; preds = %bb.b
   %.pre = load ptr, ptr %3, align 8, !tbaa !7
   br label %_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit
 
-_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i.i: ; preds = %4, %bb.a
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %3, i8 0, i64 16, i1 false), !alias.scope !121
-  br label %_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit
-
-_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit: ; preds = %6, %bb.c, %bb.d, %_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i.i
-  %.pre.i = phi ptr [ %5, %6 ], [ %5, %bb.c ], [ %.pre, %bb.d ], [ null, %_ZNSt10shared_ptrIKN8facebook5velox7RowTypeEEC2IKNS1_4TypeEEERKS_IT_EPS3_.exit.i.i ] ; 2 uses
+_ZN8facebook5velox9asRowTypeERKSt10shared_ptrIKNS0_4TypeEE.exit: ; preds = %bb.a, %bb.c, %bb.d
+  %.pre.i = phi ptr [ %5, %bb.a ], [ %5, %bb.c ], [ %.pre, %bb.d ] ; 2 uses
   %i.k = getelementptr inbounds nuw i8, ptr %.pre.i, i64 48 ; 2 uses
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !13   ; 4 uses
   %i.m = getelementptr inbounds nuw i8, ptr %.pre.i, i64 56 ; 2 uses

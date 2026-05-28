@@ -201,46 +201,38 @@ bb.c:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.n = load i64, ptr %i.m, align 8              ; 2 uses
   %.not = icmp eq i64 %i.n, 0
-  br i1 %.not, label %1, label %bb.d
+  br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 63904
   %i.p = load ptr, ptr %i.o, align 8
   %i.q = tail call noundef i32 @_ZN2v88internal21CancelableTaskManager8TryAbortEm(ptr noundef nonnull align 8 dereferenceable(81) %i.p, i64 noundef %i.n) #20 ; 0 uses
-  br label %1
+  br label %bb.e
 
-1:                                                ; preds = %bb.d, %bb.c
-  %2 = load ptr, ptr %i.a, align 8                ; 2 uses
-  %3 = load ptr, ptr %i.c, align 8                ; 2 uses
-  %4 = icmp eq ptr %3, null
-  br i1 %4, label %_ZN2v88internal6detail20AsyncWaiterQueueNodeINS0_18JSAtomicsConditionEE16GetNativeContextEv.exit, label %bb.e
-
-bb.e:                                             ; preds = %1
-  %i.r = load i64, ptr %3, align 8
-  %i.s = ptrtoint ptr %2 to i64
+bb.e:                                             ; preds = %bb.d, %bb.c
+  %1 = load ptr, ptr %i.a, align 8                ; 2 uses
+  %2 = load ptr, ptr %i.c, align 8, !nonnull !15, !noundef !15
+  %i.r = load i64, ptr %2, align 8
+  %i.s = ptrtoint ptr %1 to i64
   %i.t = add i64 %i.s, 560
   %i.u = inttoptr i64 %i.t to ptr                 ; 3 uses
   %i.v = load ptr, ptr %i.u, align 8              ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = icmp eq ptr %i.v, %i.x
-  br i1 %i.y, label %bb.f, label %_ZN2v89LocalBaseINS_7ContextEE3NewEPNS_7IsolateEm.exit.i, !prof !13
+  br i1 %i.y, label %bb.f, label %_ZN2v88internal6detail20AsyncWaiterQueueNodeINS0_18JSAtomicsConditionEE16GetNativeContextEv.exit, !prof !13
 
 bb.f:                                             ; preds = %bb.e
-  %i.z = tail call noundef ptr @_ZN2v811HandleScope6ExtendEPNS_7IsolateE(ptr noundef %2) #20
-  br label %_ZN2v89LocalBaseINS_7ContextEE3NewEPNS_7IsolateEm.exit.i
-
-_ZN2v89LocalBaseINS_7ContextEE3NewEPNS_7IsolateEm.exit.i: ; preds = %bb.f, %bb.e
-  %.0.i.i.i = phi ptr [ %i.z, %bb.f ], [ %i.v, %bb.e ] ; 3 uses
-  %5 = ptrtoint ptr %.0.i.i.i to i64
-  %6 = add i64 %5, 8
-  %7 = inttoptr i64 %6 to ptr
-  store ptr %7, ptr %i.u, align 8
-  store i64 %i.r, ptr %.0.i.i.i, align 8
+  %i.z = tail call noundef ptr @_ZN2v811HandleScope6ExtendEPNS_7IsolateE(ptr noundef %1) #20
   br label %_ZN2v88internal6detail20AsyncWaiterQueueNodeINS0_18JSAtomicsConditionEE16GetNativeContextEv.exit
 
-_ZN2v88internal6detail20AsyncWaiterQueueNodeINS0_18JSAtomicsConditionEE16GetNativeContextEv.exit: ; preds = %1, %_ZN2v89LocalBaseINS_7ContextEE3NewEPNS_7IsolateEm.exit.i
-  %.sroa.03.0.i = phi ptr [ %.0.i.i.i, %_ZN2v89LocalBaseINS_7ContextEE3NewEPNS_7IsolateEm.exit.i ], [ null, %1 ] ; 2 uses
+_ZN2v88internal6detail20AsyncWaiterQueueNodeINS0_18JSAtomicsConditionEE16GetNativeContextEv.exit: ; preds = %bb.f, %bb.e
+  %.sroa.03.0.i = phi ptr [ %i.z, %bb.f ], [ %i.v, %bb.e ] ; 4 uses
+  %3 = ptrtoint ptr %.sroa.03.0.i to i64
+  %4 = add i64 %3, 8
+  %5 = inttoptr i64 %4 to ptr
+  store ptr %5, ptr %i.u, align 8
+  store i64 %i.r, ptr %.sroa.03.0.i, align 8
   tail call void @_ZN2v87Context5EnterEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.03.0.i) #20
   %i.aa = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 80

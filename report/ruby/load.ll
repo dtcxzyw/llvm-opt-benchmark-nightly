@@ -201,33 +201,24 @@ bb.a:
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !50
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 3 uses
   store ptr %i.i, ptr %i.j, align 8, !tbaa !51
-  %i.k = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 48
-  %.0.1.val.a = load ptr, ptr %i.k, align 8, !tbaa !52 ; 3 uses
-  %.not.i.i = icmp eq ptr %.0.1.val.a, null
-  br i1 %.not.i.i, label %rb_ec_ractor_ptr.exit.i, label %4
-
-4:                                                ; preds = %bb.a
-  %5 = getelementptr i8, ptr %.0.1.val.a, i64 32
-  %6 = load ptr, ptr %5, align 8, !tbaa !53
-  %7 = getelementptr i8, ptr %.0.1.val.a, i64 24
+  %4 = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 48
+  %.0.1.val = load ptr, ptr %4, align 8, !tbaa !52, !nonnull !34, !noundef !34 ; 2 uses
+  %5 = getelementptr i8, ptr %.0.1.val, i64 32
+  %6 = load ptr, ptr %5, align 8, !tbaa !53       ; 2 uses
+  %7 = getelementptr i8, ptr %.0.1.val, i64 24
   %8 = load ptr, ptr %7, align 8, !tbaa !72
-  br label %rb_ec_ractor_ptr.exit.i
+  %i.k = getelementptr i8, ptr %6, i64 88
+  %.0.1.val.a = load ptr, ptr %i.k, align 8, !tbaa !73
+  %.not.i.i = icmp eq ptr %.0.1.val.a, %8
+  br i1 %.not.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit
 
-rb_ec_ractor_ptr.exit.i:                          ; preds = %4, %bb.a
-  %.0.i2.i = phi ptr [ %6, %4 ], [ null, %bb.a ]  ; 2 uses
-  %.0.i7.i = phi ptr [ %8, %4 ], [ null, %bb.a ]
-  %9 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %9, align 8, !tbaa !73
-  %10 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %10, label %bb.b, label %rb_ec_vm_lock_rec.exit
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.l = getelementptr i8, ptr %.0.i2.i, i64 96
+bb.b:                                             ; preds = %bb.a
+  %i.l = getelementptr i8, ptr %6, i64 96
   %i.m = load i32, ptr %i.l, align 8, !tbaa !91
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.b
-  %.0.i = phi i32 [ %i.m, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.a, %bb.b
+  %.0.i = phi i32 [ %i.m, %bb.b ], [ 0, %bb.a ]
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 68
   store i32 %.0.i, ptr %i.n, align 4, !tbaa !92
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
@@ -309,32 +300,23 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.b, i64 68
   %i.f = load i32, ptr %i.e, align 4, !tbaa !92   ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 48
-  %.val.i.a = load ptr, ptr %i.g, align 8, !tbaa !52 ; 3 uses
-  %.not.i.i.i = icmp eq ptr %.val.i.a, null
-  br i1 %.not.i.i.i, label %rb_ec_ractor_ptr.exit.i.i, label %1
+  %.val.i = load ptr, ptr %i.g, align 8, !tbaa !52, !nonnull !34, !noundef !34 ; 2 uses
+  %1 = getelementptr i8, ptr %.val.i, i64 32
+  %2 = load ptr, ptr %1, align 8, !tbaa !53       ; 2 uses
+  %3 = getelementptr i8, ptr %.val.i, i64 24
+  %4 = load ptr, ptr %3, align 8, !tbaa !72
+  %5 = getelementptr i8, ptr %2, i64 88
+  %.val.i.a = load ptr, ptr %5, align 8, !tbaa !73
+  %.not.i.i.i = icmp eq ptr %.val.i.a, %4
+  br i1 %.not.i.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr i8, ptr %.val.i.a, i64 32
-  %3 = load ptr, ptr %2, align 8, !tbaa !53
-  %4 = getelementptr i8, ptr %.val.i.a, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !72
-  br label %rb_ec_ractor_ptr.exit.i.i
-
-rb_ec_ractor_ptr.exit.i.i:                        ; preds = %1, %bb.a
-  %.0.i2.i.i = phi ptr [ %3, %1 ], [ null, %bb.a ] ; 2 uses
-  %.0.i7.i.i = phi ptr [ %5, %1 ], [ null, %bb.a ]
-  %6 = getelementptr i8, ptr %.0.i2.i.i, i64 88
-  %.val5.i.i = load ptr, ptr %6, align 8, !tbaa !73
-  %7 = icmp eq ptr %.val5.i.i, %.0.i7.i.i
-  br i1 %7, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i.i
-  %i.h = getelementptr i8, ptr %.0.i2.i.i, i64 96
+bb.b:                                             ; preds = %bb.a
+  %i.h = getelementptr i8, ptr %2, i64 96
   %i.i = load i32, ptr %i.h, align 8, !tbaa !91
   br label %rb_ec_vm_lock_rec.exit.i
 
-rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %rb_ec_ractor_ptr.exit.i.i
-  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i.i ] ; 2 uses
+rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %bb.a
+  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.not.i = icmp eq i32 %.0.i.i, %i.f
   br i1 %.not.i, label %rb_ec_vm_lock_rec_check.exit, label %bb.c
 
@@ -737,32 +719,23 @@ bb.a:
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !50
   %i.z = getelementptr inbounds nuw i8, ptr %4, i64 56 ; 2 uses
   store ptr %i.y, ptr %i.z, align 8, !tbaa !51
-  %.0.14.val.a = load ptr, ptr %i.j, align 8, !tbaa !52 ; 3 uses
-  %.not.i.i = icmp eq ptr %.0.14.val.a, null
-  br i1 %.not.i.i, label %rb_ec_ractor_ptr.exit.i, label %5
+  %.0.14.val = load ptr, ptr %i.j, align 8, !tbaa !52, !nonnull !34, !noundef !34 ; 2 uses
+  %5 = getelementptr i8, ptr %.0.14.val, i64 32
+  %6 = load ptr, ptr %5, align 8, !tbaa !53       ; 2 uses
+  %7 = getelementptr i8, ptr %.0.14.val, i64 24
+  %8 = load ptr, ptr %7, align 8, !tbaa !72
+  %9 = getelementptr i8, ptr %6, i64 88
+  %.0.14.val.a = load ptr, ptr %9, align 8, !tbaa !73
+  %.not.i.i = icmp eq ptr %.0.14.val.a, %8
+  br i1 %.not.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit
 
-5:                                                ; preds = %bb.a
-  %6 = getelementptr i8, ptr %.0.14.val.a, i64 32
-  %7 = load ptr, ptr %6, align 8, !tbaa !53
-  %8 = getelementptr i8, ptr %.0.14.val.a, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !72
-  br label %rb_ec_ractor_ptr.exit.i
-
-rb_ec_ractor_ptr.exit.i:                          ; preds = %5, %bb.a
-  %.0.i2.i = phi ptr [ %7, %5 ], [ null, %bb.a ]  ; 2 uses
-  %.0.i7.i = phi ptr [ %9, %5 ], [ null, %bb.a ]
-  %10 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %10, align 8, !tbaa !73
-  %11 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %11, label %bb.b, label %rb_ec_vm_lock_rec.exit
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.aa = getelementptr i8, ptr %.0.i2.i, i64 96
+bb.b:                                             ; preds = %bb.a
+  %i.aa = getelementptr i8, ptr %6, i64 96
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !91
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.b
-  %.0.i = phi i32 [ %i.ab, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.a, %bb.b
+  %.0.i = phi i32 [ %i.ab, %bb.b ], [ 0, %bb.a ]
   %i.ac = getelementptr inbounds nuw i8, ptr %4, i64 68
   store i32 %.0.i, ptr %i.ac, align 4, !tbaa !92
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
@@ -1165,32 +1138,23 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !50
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 56 ; 2 uses
   store ptr %i.v, ptr %i.w, align 8, !tbaa !51
-  %.0.1.val = load ptr, ptr %i.d, align 8, !tbaa !52 ; 3 uses
-  %.not.i.i = icmp eq ptr %.0.1.val, null
-  br i1 %.not.i.i, label %rb_ec_ractor_ptr.exit.i, label %4
+  %.0.1.val = load ptr, ptr %i.d, align 8, !tbaa !52, !nonnull !34, !noundef !34 ; 2 uses
+  %4 = getelementptr i8, ptr %.0.1.val, i64 32
+  %5 = load ptr, ptr %4, align 8, !tbaa !53       ; 2 uses
+  %6 = getelementptr i8, ptr %.0.1.val, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !72
+  %8 = getelementptr i8, ptr %5, i64 88
+  %.val5.i = load ptr, ptr %8, align 8, !tbaa !73
+  %.not.i.i = icmp eq ptr %.val5.i, %7
+  br i1 %.not.i.i, label %bb.f, label %rb_ec_vm_lock_rec.exit
 
-4:                                                ; preds = %bb.e
-  %5 = getelementptr i8, ptr %.0.1.val, i64 32
-  %6 = load ptr, ptr %5, align 8, !tbaa !53
-  %7 = getelementptr i8, ptr %.0.1.val, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !72
-  br label %rb_ec_ractor_ptr.exit.i
-
-rb_ec_ractor_ptr.exit.i:                          ; preds = %4, %bb.e
-  %.0.i2.i = phi ptr [ %6, %4 ], [ null, %bb.e ]  ; 2 uses
-  %.0.i7.i = phi ptr [ %8, %4 ], [ null, %bb.e ]
-  %9 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %9, align 8, !tbaa !73
-  %10 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %10, label %bb.f, label %rb_ec_vm_lock_rec.exit
-
-bb.f:                                             ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.x = getelementptr i8, ptr %.0.i2.i, i64 96
+bb.f:                                             ; preds = %bb.e
+  %i.x = getelementptr i8, ptr %5, i64 96
   %i.y = load i32, ptr %i.x, align 8, !tbaa !91
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.f
-  %.0.i = phi i32 [ %i.y, %bb.f ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.e, %bb.f
+  %.0.i = phi i32 [ %i.y, %bb.f ], [ 0, %bb.e ]
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 68
   store i32 %.0.i, ptr %i.z, align 4, !tbaa !92
   %i.aa = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses

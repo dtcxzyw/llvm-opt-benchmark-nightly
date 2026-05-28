@@ -201,25 +201,19 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.l
   %i.bz = icmp ult i64 %i.by, %i.bw
   %i.ca = call i64 @llvm.umin.i64(i64 %i.by, i64 9223372036854775807)
   %i.cb = select i1 %i.bz, i64 9223372036854775807, i64 %i.ca ; 3 uses
-  %.not.i.i.i9 = icmp eq i64 %i.cb, 0
-  br i1 %.not.i.i.i9, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i, label %3
+  %.not.i.i.i9 = icmp ne i64 %i.cb, 0
+  call void @llvm.assume(i1 %.not.i.i.i9)
+  %3 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cb) #22 ; 4 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %i.bw ; 2 uses
+  store i8 %storemerge37, ptr %4, align 1, !tbaa !7
+  %5 = icmp sgt i64 %i.bw, 0
+  br i1 %5, label %bb.n, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
-3:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %4 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.cb) #22
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i: ; preds = %3, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
-  %5 = phi ptr [ %4, %3 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i ] ; 4 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %i.bw ; 2 uses
-  store i8 %storemerge37, ptr %6, align 1, !tbaa !7
-  %7 = icmp sgt i64 %i.bw, 0
-  br i1 %7, label %bb.n, label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
-
-bb.n:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %5, ptr align 1 %.sroa.0.036, i64 %i.bw, i1 false)
+bb.n:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %3, ptr align 1 %.sroa.0.036, i64 %i.bw, i1 false)
   br label %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
 
-_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i: ; preds = %bb.n, %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i
+_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i: ; preds = %bb.n, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit.i.i
   %.not.i17.i.i = icmp eq ptr %.sroa.0.036, null
   br i1 %.not.i17.i.i, label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i, label %bb.o
 
@@ -228,13 +222,13 @@ bb.o:                                             ; preds = %_ZNSt6vectorIhSaIhE
   br label %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i
 
 _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i: ; preds = %bb.o, %_ZNSt6vectorIhSaIhEE11_S_relocateEPhS2_S2_RS0_.exit16.i.i
-  %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 %i.cb
+  %i.cc = getelementptr inbounds nuw i8, ptr %3, i64 %i.cb
   br label %_ZNSt6vectorIhSaIhEE9push_backERKh.exit
 
 _ZNSt6vectorIhSaIhEE9push_backERKh.exit:          ; preds = %bb.k, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i
-  %.pn = phi ptr [ %6, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %.sroa.13.034, %bb.k ] ; 2 uses
+  %.pn = phi ptr [ %4, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %.sroa.13.034, %bb.k ] ; 2 uses
   %.sroa.23.1 = phi ptr [ %i.cc, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %.sroa.23.035, %bb.k ] ; 5 uses
-  %.sroa.0.1 = phi ptr [ %5, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %.sroa.0.036, %bb.k ] ; 10 uses
+  %.sroa.0.1 = phi ptr [ %3, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJRKhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i ], [ %.sroa.0.036, %bb.k ] ; 10 uses
   %.sroa.13.1 = getelementptr inbounds nuw i8, ptr %.pn, i64 1 ; 7 uses
   %i.cd = call { i64, i8 } @_ZN6hermes4inst15getInstMetaDataENS0_6OpCodeE(i8 noundef zeroext %storemerge37) #18
   %.fca.0.extract = extractvalue { i64, i8 } %i.cd, 0

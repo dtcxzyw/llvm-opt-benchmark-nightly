@@ -201,33 +201,25 @@ bb.d:                                             ; preds = %_ZNKSt7__cxx1112bas
   store ptr %i.y, ptr %i.v, align 8
   store i64 0, ptr %i.ag, align 8
   store i8 0, ptr %i.y, align 8
-  %i.ai = icmp ult i32 %3, 17
-  br i1 %i.ai, label %switch.lookup, label %_ZN6Assimp3FBX12FBXConverter22NameTransformationCompENS1_18TransformationCompE.exit
-
-switch.lookup:                                    ; preds = %bb.d
   %7 = zext nneg i32 %3 to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZN6Assimp3FBX12FBXConverter27NameTransformationChainNodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_18TransformationCompE, i64 %7
-  %switch.load = load ptr, ptr %switch.gep, align 8
-  br label %_ZN6Assimp3FBX12FBXConverter22NameTransformationCompENS1_18TransformationCompE.exit
-
-_ZN6Assimp3FBX12FBXConverter22NameTransformationCompENS1_18TransformationCompE.exit: ; preds = %bb.d, %switch.lookup
-  %.0.i = phi ptr [ %switch.load, %switch.lookup ], [ null, %bb.d ] ; 2 uses
+  %switch.load = load ptr, ptr %switch.gep, align 8 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !123)
-  %8 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %.0.i) #27, !noalias !123 ; 2 uses
+  %8 = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %switch.load) #27, !noalias !123 ; 2 uses
   %9 = load i64, ptr %i.ah, align 8, !noalias !123
   %10 = sub i64 4611686018427387903, %9
-  %11 = icmp ult i64 %10, %8
-  br i1 %11, label %bb.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i16
+  %i.ai = icmp ult i64 %10, %8
+  br i1 %i.ai, label %bb.e, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i16
 
-bb.e:                                             ; preds = %_ZN6Assimp3FBX12FBXConverter22NameTransformationCompENS1_18TransformationCompE.exit
+bb.e:                                             ; preds = %bb.d
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.225) #31
           to label %.noexc20 unwind label %bb.j
 
 .noexc20:                                         ; preds = %bb.e
   unreachable
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i16: ; preds = %_ZN6Assimp3FBX12FBXConverter22NameTransformationCompENS1_18TransformationCompE.exit
-  %i.aj = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull %.0.i, i64 noundef %8)
+_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i16: ; preds = %bb.d
+  %i.aj = invoke noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEPKcm(ptr noundef nonnull align 8 dereferenceable(32) %4, ptr noundef nonnull %switch.load, i64 noundef %8)
           to label %.noexc21 unwind label %bb.j   ; 6 uses
 
 .noexc21:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i16
@@ -630,18 +622,19 @@ bb.az:                                            ; preds = %bb.ax, %bb.cz
   %.0116303 = phi i32 [ 0, %bb.ax ], [ %.2118, %bb.cz ] ; 2 uses
   %i.fj = trunc nuw nsw i64 %.0114306 to i32      ; 2 uses
   %i.fk = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %.0114306
-  %i.fl = load ptr, ptr %i.fk, align 8            ; 4 uses
+  %i.fl = load ptr, ptr %i.fk, align 8            ; 2 uses
   %.not261 = icmp eq ptr %i.fl, %i.f
   br i1 %.not261, label %bb.cz, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %i.fm = or i32 %.0115304, %.0116303             ; 5 uses
+  %i.fm = or i32 %.0115304, %.0116303             ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #27
   invoke void @_ZN6Assimp3FBX12FBXConverter27NameTransformationChainNodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS1_18TransformationCompE(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %12, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(32) %2, i32 noundef %i.fj)
           to label %bb.bb unwind label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  switch i32 %i.fj, label %bb.cj [
+  %15 = getelementptr inbounds nuw i8, ptr %i.fl, i64 64 ; 5 uses
+  switch i32 %i.fj, label %unreachable [
     i32 7, label %bb.bd
     i32 6, label %bb.bd
     i32 8, label %bb.bd
@@ -662,7 +655,6 @@ bb.bc:                                            ; preds = %bb.ba
   br label %bb.dc
 
 bb.bd:                                            ; preds = %bb.bb, %bb.bb, %bb.bb, %bb.bb
-  %15 = getelementptr inbounds nuw i8, ptr %i.fl, i64 64
   %i.fo = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter24GenerateRotationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr noundef nonnull align 8 dereferenceable(208) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8)
           to label %bb.cj unwind label %.loopexit
 
@@ -677,8 +669,7 @@ bb.bd:                                            ; preds = %bb.bb, %bb.bb, %bb.
   br label %bb.cy
 
 bb.be:                                            ; preds = %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb, %bb.bb
-  %16 = getelementptr inbounds nuw i8, ptr %i.fl, i64 64 ; 3 uses
-  %i.fp = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext false)
+  %i.fp = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext false)
           to label %bb.bf unwind label %.loopexit ; 3 uses
 
 bb.bf:                                            ; preds = %bb.be
@@ -693,7 +684,7 @@ bb.bg:                                            ; preds = %bb.bf
           to label %bb.bh unwind label %bb.bm
 
 bb.bh:                                            ; preds = %bb.bg
-  %i.fq = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %13, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext true)
+  %i.fq = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %13, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext true)
           to label %bb.bi unwind label %.loopexit268 ; 7 uses
 
 bb.bi:                                            ; preds = %bb.bh
@@ -840,7 +831,7 @@ bb.bu:                                            ; preds = %bb.bf
           to label %bb.bv unwind label %bb.ca
 
 bb.bv:                                            ; preds = %bb.bu
-  %i.hf = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %14, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext true)
+  %i.hf = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter27GenerateTranslationNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_b(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %14, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8, i1 noundef zeroext true)
           to label %bb.bw unwind label %.loopexit263 ; 7 uses
 
 bb.bw:                                            ; preds = %bb.bv
@@ -980,13 +971,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210: ; preds = %_Z
   br label %bb.cj
 
 bb.ci:                                            ; preds = %bb.bb, %bb.bb
-  %17 = getelementptr inbounds nuw i8, ptr %i.fl, i64 64
-  %i.is = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter23GenerateScalingNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %17, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8)
+  %i.is = invoke noundef ptr @_ZN6Assimp3FBX12FBXConverter23GenerateScalingNodeAnimERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS0_5ModelERKSt6vectorIPKNS0_18AnimationCurveNodeESaISG_EERKSt3mapISG_PKNS0_14AnimationLayerESt4lessISG_ESaISt4pairIKSG_SO_EEEllRdSY_(ptr noundef nonnull align 8 dereferenceable(529) %0, ptr noundef nonnull align 8 dereferenceable(32) %12, ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(24) %15, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 noundef %5, i64 noundef %6, ptr noundef nonnull align 8 dereferenceable(8) %7, ptr noundef nonnull align 8 dereferenceable(8) %8)
           to label %bb.cj unwind label %.loopexit
 
-bb.cj:                                            ; preds = %bb.ci, %bb.bd, %bb.bf, %bb.bb, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210
-  %.0258 = phi ptr [ null, %bb.bb ], [ %i.fo, %bb.bd ], [ %i.fp, %bb.bf ], [ %i.fp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194 ], [ %i.fp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210 ], [ %i.is, %bb.ci ] ; 9 uses
-  %.1117 = phi i32 [ %i.fm, %bb.bb ], [ %i.fm, %bb.bd ], [ %i.fm, %bb.bf ], [ %i.ha, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194 ], [ poison, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210 ], [ %i.fm, %bb.ci ]
+unreachable:                                      ; preds = %bb.bb
+  unreachable
+
+bb.cj:                                            ; preds = %bb.ci, %bb.bd, %bb.bf, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210
+  %.0258 = phi ptr [ %i.is, %bb.ci ], [ %i.fo, %bb.bd ], [ %i.fp, %bb.bf ], [ %i.fp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194 ], [ %i.fp, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210 ] ; 9 uses
+  %.1117 = phi i32 [ %i.fm, %bb.ci ], [ %i.fm, %bb.bd ], [ %i.fm, %bb.bf ], [ %i.ha, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit194 ], [ poison, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit210 ]
   %i.it = getelementptr inbounds nuw i8, ptr %.0258, i64 1028
   %i.iu = load i32, ptr %i.it, align 4
   %i.iv = icmp eq i32 %i.iu, 0

@@ -201,15 +201,12 @@ bb.o:                                             ; preds = %._crit_edge.i155, %
   br i1 %.not6287.i, label %select_column.exit, label %.lr.ph92.i
 
 .lr.ph92.i:                                       ; preds = %.loopexit.i
-  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %i.am, label %.lr.ph92.split.us.i, label %.lr.ph92.split.preheader.i
-
-.lr.ph92.split.preheader.i:                       ; preds = %.lr.ph92.i
-  %.pre.i = load i32, ptr %i.bo, align 8, !tbaa !49
-  %.pre98.i = load ptr, ptr %i.bp, align 8, !tbaa !50
-  br label %.lr.ph92.split.i
+  %.pre99.i = load i32, ptr %i.bo, align 8, !tbaa !49 ; 2 uses
+  %.pre100.i = load ptr, ptr %i.bp, align 8, !tbaa !50 ; 2 uses
+  br i1 %i.am, label %.lr.ph92.split.us.i, label %.lr.ph92.split.i
 
 .lr.ph92.split.us.i:                              ; preds = %.lr.ph92.i, %bb.r
   %.15090.us.i = phi ptr [ %.150.us.i, %bb.r ], [ %.15086.i, %.lr.ph92.i ] ; 2 uses
@@ -218,24 +215,14 @@ bb.o:                                             ; preds = %._crit_edge.i155, %
   %i.br = getelementptr inbounds nuw i8, ptr %.15090.us.i, i64 4
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !42 ; 3 uses
   %i.bt = icmp sgt i32 %i.bs, -1
-  br i1 %i.bt, label %7, label %15
-
-7:                                                ; preds = %.lr.ph92.split.us.i
-  %8 = load i32, ptr %i.bo, align 8, !tbaa !49
-  %9 = icmp slt i32 %i.bs, %8
-  br i1 %9, label %10, label %15
-
-10:                                               ; preds = %7
-  %11 = load ptr, ptr %i.bp, align 8, !tbaa !50
-  %12 = zext nneg i32 %i.bs to i64
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %12
-  %14 = load ptr, ptr %13, align 8, !tbaa !30
-  br label %15
-
-15:                                               ; preds = %10, %7, %.lr.ph92.split.us.i
-  %16 = phi ptr [ %14, %10 ], [ null, %7 ], [ null, %.lr.ph92.split.us.i ] ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 16
-  %.15279.us.i = load ptr, ptr %17, align 8, !tbaa !44 ; 2 uses
+  call void @llvm.assume(i1 %i.bt)
+  %7 = icmp slt i32 %i.bs, %.pre99.i
+  call void @llvm.assume(i1 %7)
+  %8 = zext nneg i32 %i.bs to i64
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %.pre100.i, i64 %8
+  %10 = load ptr, ptr %9, align 8, !tbaa !30      ; 2 uses
+  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16
+  %.15279.us.i = load ptr, ptr %11, align 8, !tbaa !44 ; 2 uses
   %.not6380.us.i = icmp eq ptr %.15279.us.i, null
   br i1 %.not6380.us.i, label %._crit_edge85.us.i, label %.lr.ph84.us.i
 
@@ -261,13 +248,13 @@ bb.p:                                             ; preds = %.lr.ph84.us.i, %bb.
   %.not63.us.i = icmp eq ptr %.152.us.i, null
   br i1 %.not63.us.i, label %._crit_edge85.us.i, label %bb.p
 
-._crit_edge85.us.i:                               ; preds = %bb.p, %15
-  %.048.lcssa.us.i = phi double [ 0.000000e+00, %15 ], [ %i.cf, %bb.p ] ; 2 uses
+._crit_edge85.us.i:                               ; preds = %bb.p, %.lr.ph92.split.us.i
+  %.048.lcssa.us.i = phi double [ 0.000000e+00, %.lr.ph92.split.us.i ], [ %i.cf, %bb.p ] ; 2 uses
   %i.ch = fcmp ogt double %.048.lcssa.us.i, %.04688.us.i
   br i1 %i.ch, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %._crit_edge85.us.i
-  %i.ci = load i32, ptr %16, align 8, !tbaa !31
+  %i.ci = load i32, ptr %10, align 8, !tbaa !31
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %._crit_edge85.us.i
@@ -278,23 +265,23 @@ bb.r:                                             ; preds = %bb.q, %._crit_edge8
   %.not62.us.i = icmp eq ptr %.150.us.i, null
   br i1 %.not62.us.i, label %select_column.exit, label %.lr.ph92.split.us.i
 
-.lr.ph84.us.i:                                    ; preds = %15
+.lr.ph84.us.i:                                    ; preds = %.lr.ph92.split.us.i
   %i.ck = load i32, ptr %i.bq, align 8, !tbaa !47
   %i.cl = load ptr, ptr %0, align 8, !tbaa !48
   br label %bb.p
 
-.lr.ph92.split.i:                                 ; preds = %._crit_edge85.i, %.lr.ph92.split.preheader.i
-  %.15090.i = phi ptr [ %.150.i, %._crit_edge85.i ], [ %.15086.i, %.lr.ph92.split.preheader.i ] ; 2 uses
-  %.089.i = phi i32 [ %.1.i, %._crit_edge85.i ], [ -1, %.lr.ph92.split.preheader.i ]
-  %.04688.i = phi double [ %.147.i, %._crit_edge85.i ], [ -1.000000e+00, %.lr.ph92.split.preheader.i ] ; 2 uses
+.lr.ph92.split.i:                                 ; preds = %.lr.ph92.i, %._crit_edge85.i
+  %.15090.i = phi ptr [ %.150.i, %._crit_edge85.i ], [ %.15086.i, %.lr.ph92.i ] ; 2 uses
+  %.089.i = phi i32 [ %.1.i, %._crit_edge85.i ], [ -1, %.lr.ph92.i ]
+  %.04688.i = phi double [ %.147.i, %._crit_edge85.i ], [ -1.000000e+00, %.lr.ph92.i ] ; 2 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %.15090.i, i64 4
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !42 ; 3 uses
   %i.co = icmp sgt i32 %i.cn, -1
   call void @llvm.assume(i1 %i.co)
-  %i.cp = icmp slt i32 %i.cn, %.pre.i
+  %i.cp = icmp slt i32 %i.cn, %.pre99.i
   call void @llvm.assume(i1 %i.cp)
   %i.cq = zext nneg i32 %i.cn to i64
-  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %.pre98.i, i64 %i.cq
+  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %.pre100.i, i64 %i.cq
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !30 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cs, i64 16
   %.15279.i = load ptr, ptr %i.ct, align 8, !tbaa !44 ; 2 uses

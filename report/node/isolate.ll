@@ -201,7 +201,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55: ; preds = %bb.c
   %i.n = inttoptr i64 %i.m to ptr
   %i.o = load atomic volatile i16, ptr %i.n monotonic, align 2
   %i.p = icmp ugt i16 %i.o, 299
-  br i1 %i.p, label %5, label %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55.thread
+  br i1 %i.p, label %bb.d, label %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55.thread
 
 _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55.thread: ; preds = %bb.c, %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55
   %i.q = tail call ptr @_ZN2v88internal7Factory12NewTypeErrorENS0_15MessageTemplateENS_4base6VectorIKNS0_12DirectHandleINS0_6ObjectEEEEE(ptr noundef nonnull align 1 dereferenceable(1) %0, i32 noundef 116, ptr null, i64 0) #46
@@ -209,12 +209,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55.thread: ; preds 
   %i.s = tail call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %0, i64 %i.r, ptr noundef null) ; 0 uses
   br label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
-5:                                                ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55
-  %6 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 17), align 1, !range !13, !noundef !14
-  %7 = trunc nuw i8 %6 to i1
-  br i1 %7, label %bb.d, label %.critedge
-
-bb.d:                                             ; preds = %5
+bb.d:                                             ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit55
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 7800 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #46
   %.pre.pre.i = load i64, ptr %i.t, align 8
@@ -322,9 +317,9 @@ _ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EEN
   %.not189 = icmp eq ptr %i.bm, null
   br i1 %.not189, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %.critedge
 
-.critedge:                                        ; preds = %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit, %5
-  %.sroa.094.0 = phi ptr [ null, %5 ], [ %i.bl, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread ], [ %i.bm, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit ] ; 4 uses
-  %i.bn = load i64, ptr %.sroa.094.0, align 8     ; 3 uses
+.critedge:                                        ; preds = %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread
+  %.sroa.07.0.i172 = phi ptr [ %i.bl, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit.thread ], [ %i.bm, %_ZN2v88internal10JSReceiver11GetPropertyEPNS0_7IsolateENS0_12DirectHandleIS1_EENS4_INS0_4NameEEE.exit ] ; 4 uses
+  %i.bn = load i64, ptr %.sroa.07.0.i172, align 8 ; 3 uses
   %i.bo = load ptr, ptr @_ZN2v88internal12IsolateGroup22default_isolate_group_E, align 8
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 10624
   %i.bq = load ptr, ptr %i.bp, align 8
@@ -354,7 +349,7 @@ _ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit.thread: ; preds = 
   br label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 bb.i:                                             ; preds = %_ZN2v88internal12IsJSReceiverENS0_6TaggedINS0_6ObjectEEE.exit
-  %i.cf = call ptr @_ZN2v88internal14KeyAccumulator7GetKeysEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS0_17KeyCollectionModeENS0_14PropertyFilterENS0_17GetKeysConversionEbb(ptr noundef nonnull %0, ptr nonnull %.sroa.094.0, i32 noundef 0, i32 noundef 18, i32 noundef 0, i1 noundef zeroext false, i1 noundef zeroext false) #46 ; 4 uses
+  %i.cf = call ptr @_ZN2v88internal14KeyAccumulator7GetKeysEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS0_17KeyCollectionModeENS0_14PropertyFilterENS0_17GetKeysConversionEbb(ptr noundef nonnull %0, ptr nonnull %.sroa.07.0.i172, i32 noundef 0, i32 noundef 18, i32 noundef 0, i1 noundef zeroext false, i1 noundef zeroext false) #46 ; 4 uses
   %.not190 = icmp eq ptr %i.cf, null
   br i1 %.not190, label %_ZNK2v88internal11MaybeHandleINS0_6ObjectEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit, label %bb.j
 
@@ -412,7 +407,7 @@ _ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit: ; preds = %bb.k
   %i.di = load ptr, ptr %3, align 8
   %i.dj = load i64, ptr %i.cw, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #46
-  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull %0, ptr nonnull %.sroa.094.0, ptr %i.di, i64 noundef %i.dj, ptr nonnull %.sroa.094.0, i32 noundef 3)
+  call void @_ZN2v88internal14LookupIteratorC2EPNS0_7IsolateENS0_12DirectHandleINS0_5UnionIJNS0_3SmiENS0_10HeapNumberENS0_6BigIntENS0_6StringENS0_6SymbolENS0_7BooleanENS0_4NullENS0_9UndefinedENS0_10JSReceiverEEEEEENS4_INS0_4NameEEEmSG_NS1_13ConfigurationE(ptr noundef nonnull align 8 dereferenceable(88) %2, ptr noundef nonnull %0, ptr nonnull %.sroa.07.0.i172, ptr %i.di, i64 noundef %i.dj, ptr nonnull %.sroa.07.0.i172, i32 noundef 3)
   %i.dk = call ptr @_ZN2v88internal6Object11GetPropertyEPNS0_14LookupIteratorEb(ptr noundef nonnull %2, i1 noundef zeroext false) #46 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #46
   call void @llvm.lifetime.end.p0(ptr nonnull %3)

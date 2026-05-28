@@ -201,9 +201,8 @@ bb.b:                                             ; preds = %bb.a
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.q
   %i.f = phi ptr [ %.pre33, %.lr.ph.preheader ], [ %i.cf, %bb.q ] ; 6 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.q ] ; 2 uses
-  %1 = phi i32 [ %i.e, %.lr.ph.preheader ], [ %i.cg, %bb.q ]
-  %.02729 = phi i32 [ undef, %.lr.ph.preheader ], [ %.1, %bb.q ] ; 4 uses
-  store i32 %1, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !95
+  %.02729 = phi i32 [ %i.e, %.lr.ph.preheader ], [ %i.cg, %bb.q ]
+  store i32 %.02729, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !95
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr @pocs_in_dpb, i64 %indvars.iv.next
   %i.h = load i32, ptr %i.g, align 4, !tbaa !4
@@ -259,55 +258,43 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %.0.i = phi i32 [ %i.x, %bb.e ], [ %i.al, %bb.f ], [ 0, %bb.d ]
   %i.am = load ptr, ptr @dpb, align 8             ; 4 uses
-  %i.an = zext i32 %i.ai to i64
-  %indvars.iv.next.i41 = add nsw i64 %i.an, -1    ; 2 uses
-  %indvars.i42 = trunc i64 %indvars.iv.next.i41 to i32 ; 2 uses
-  %2 = icmp sgt i32 %indvars.i42, -1
-  br i1 %2, label %.lr.ph46, label %get_pic_from_dpb.exit
+  %i.an = zext i32 %i.ai to i64                   ; 2 uses
+  br label %.lr.ph46
 
-3:                                                ; preds = %.lr.ph46
-  %indvars.iv.next.i = add nsw i64 %indvars.iv.next.i43, -1 ; 2 uses
+.lr.ph46:                                         ; preds = %.lr.ph46, %bb.g
+  %indvar = phi i64 [ %indvar.next, %.lr.ph46 ], [ 0, %bb.g ] ; 2 uses
+  %indvars.iv.next.i43 = phi i64 [ %indvars.iv.next.i, %.lr.ph46 ], [ %i.an, %bb.g ]
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.next.i43, -1 ; 3 uses
   %indvars.i = trunc i64 %indvars.iv.next.i to i32 ; 2 uses
-  %4 = icmp sgt i32 %indvars.i, -1
-  br i1 %4, label %.lr.ph46, label %get_pic_from_dpb.exit, !llvm.loop !140
-
-.lr.ph46:                                         ; preds = %bb.g, %3
-  %indvars.i44 = phi i32 [ %indvars.i, %3 ], [ %indvars.i42, %bb.g ]
-  %indvars.iv.next.i43 = phi i64 [ %indvars.iv.next.i, %3 ], [ %indvars.iv.next.i41, %bb.g ] ; 2 uses
-  %i.ao = and i64 %indvars.iv.next.i43, 2147483647
+  %1 = icmp sgt i32 %indvars.i, -1
+  tail call void @llvm.assume(i1 %1)
+  %i.ao = and i64 %indvars.iv.next.i, 2147483647
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %i.ao
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !100 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 40
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !141
   %i.at = icmp eq i32 %i.as, %.0.i
-  br i1 %i.at, label %5, label %3, !llvm.loop !140
+  %indvar.next = add i64 %indvar, 1
+  br i1 %i.at, label %get_pic_from_dpb.exit, label %.lr.ph46, !llvm.loop !140
 
-5:                                                ; preds = %.lr.ph46
-  %6 = getelementptr inbounds nuw i8, ptr %i.aq, i64 48
-  %7 = load ptr, ptr %6, align 8, !tbaa !103
-  br label %get_pic_from_dpb.exit
-
-get_pic_from_dpb.exit:                            ; preds = %3, %bb.g, %5
-  %.2 = phi i32 [ %indvars.i44, %5 ], [ %.02729, %bb.g ], [ %.02729, %3 ] ; 3 uses
-  %.011.i = phi ptr [ %7, %5 ], [ null, %bb.g ], [ null, %3 ] ; 2 uses
-  %i.au = add i32 %.2, 1                          ; 4 uses
+get_pic_from_dpb.exit:                            ; preds = %.lr.ph46
+  %2 = getelementptr inbounds nuw i8, ptr %i.aq, i64 48
+  %3 = load ptr, ptr %2, align 8, !tbaa !103      ; 2 uses
+  %i.au = add nuw i32 %indvars.i, 1               ; 3 uses
   store i32 %i.au, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 28), align 4, !tbaa !95
-  %i.av = getelementptr inbounds nuw i8, ptr %.011.i, i64 316824
+  %i.av = getelementptr inbounds nuw i8, ptr %3, i64 316824
   %i.aw = load i32, ptr %i.av, align 8, !tbaa !88
   %i.ax = add i32 %i.aw, 1
   %i.ay = getelementptr inbounds nuw i8, ptr %i.y, i64 6076
   store i32 %i.ax, ptr %i.ay, align 4, !tbaa !121
-  %.not8.i = icmp eq i32 %i.au, 0
-  br i1 %.not8.i, label %update_ref_list_for_concealment.exit, label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %get_pic_from_dpb.exit
-  %8 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 8), align 8 ; 3 uses
+  %4 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 8), align 8 ; 3 uses
   %wide.trip.count.i = zext i32 %i.au to i64      ; 2 uses
   %xtraiter = and i64 %wide.trip.count.i, 1
-  %9 = icmp eq i32 %.2, 0
-  br i1 %9, label %.epil.preheader, label %.lr.ph.i.new
+  %5 = add nsw i64 %i.an, -1
+  %.not8.i = icmp eq i64 %indvar, %5
+  br i1 %.not8.i, label %.epil.preheader, label %.lr.ph.i.new
 
-.lr.ph.i.new:                                     ; preds = %.lr.ph.i
+.lr.ph.i.new:                                     ; preds = %get_pic_from_dpb.exit
   %unroll_iter = and i64 %wide.trip.count.i, 4294967294
   br label %bb.h
 
@@ -325,7 +312,7 @@ bb.h:                                             ; preds = %bb.l, %.lr.ph.i.new
 bb.i:                                             ; preds = %bb.h
   %i.bd = add i32 %.07.i, 1
   %i.be = zext i32 %.07.i to i64
-  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.be
+  %i.bf = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.be
   store ptr %i.ba, ptr %i.bf, align 8, !tbaa !100
   br label %bb.j
 
@@ -342,7 +329,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j
   %i.bl = add i32 %.1.i, 1
   %i.bm = zext i32 %.1.i to i64
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bm
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bm
   store ptr %i.bi, ptr %i.bn, align 8, !tbaa !100
   br label %bb.l
 
@@ -357,9 +344,9 @@ update_ref_list_for_concealment.exit.loopexit.unr-lcssa: ; preds = %bb.l
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %update_ref_list_for_concealment.exit, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %update_ref_list_for_concealment.exit.loopexit.unr-lcssa, %.lr.ph.i
-  %indvars.iv.i25.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i26.1, %update_ref_list_for_concealment.exit.loopexit.unr-lcssa ]
-  %.07.i.epil.init = phi i32 [ 0, %.lr.ph.i ], [ %.1.i.1, %update_ref_list_for_concealment.exit.loopexit.unr-lcssa ]
+.epil.preheader:                                  ; preds = %update_ref_list_for_concealment.exit.loopexit.unr-lcssa, %get_pic_from_dpb.exit
+  %indvars.iv.i25.epil.init = phi i64 [ 0, %get_pic_from_dpb.exit ], [ %indvars.iv.next.i26.1, %update_ref_list_for_concealment.exit.loopexit.unr-lcssa ]
+  %.07.i.epil.init = phi i32 [ 0, %get_pic_from_dpb.exit ], [ %.1.i.1, %update_ref_list_for_concealment.exit.loopexit.unr-lcssa ]
   %lcmp.mod49 = trunc i32 %i.au to i1
   tail call void @llvm.assume(i1 %lcmp.mod49)
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv.i25.epil.init
@@ -371,18 +358,18 @@ update_ref_list_for_concealment.exit.loopexit.unr-lcssa: ; preds = %bb.l
 
 bb.m:                                             ; preds = %.epil.preheader
   %i.bs = zext i32 %.07.i.epil.init to i64
-  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %i.bs
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %i.bs
   store ptr %i.bp, ptr %i.bt, align 8, !tbaa !100
   br label %update_ref_list_for_concealment.exit
 
-update_ref_list_for_concealment.exit:             ; preds = %update_ref_list_for_concealment.exit.loopexit.unr-lcssa, %bb.m, %.epil.preheader, %get_pic_from_dpb.exit
+update_ref_list_for_concealment.exit:             ; preds = %.epil.preheader, %bb.m, %update_ref_list_for_concealment.exit.loopexit.unr-lcssa
   %i.bu = load ptr, ptr @active_pps, align 8, !tbaa !112
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 1112
   %i.bw = load i32, ptr %i.bv, align 8, !tbaa !113
   store i32 %i.bw, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 32), align 8, !tbaa !115
   %i.bx = getelementptr inbounds nuw i8, ptr %i.y, i64 6084
   store i32 1, ptr %i.bx, align 4, !tbaa !106
-  tail call fastcc void @copy_to_conceal(ptr noundef %.011.i, ptr noundef %i.w, ptr noundef %i.y)
+  tail call fastcc void @copy_to_conceal(ptr noundef %3, ptr noundef %i.w, ptr noundef %i.y)
   %i.by = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef 24) #25 ; 6 uses
   %i.bz = icmp eq ptr %i.by, null
   %.pre = load ptr, ptr @img, align 8, !tbaa !14
@@ -414,8 +401,7 @@ add_node.exit:                                    ; preds = %bb.o, %bb.p
   br label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph, %add_node.exit, %bb.c
-  %i.cf = phi ptr [ %.pre, %add_node.exit ], [ %i.y, %bb.c ], [ %i.f, %.lr.ph ]
-  %.1 = phi i32 [ %.2, %add_node.exit ], [ %.02729, %bb.c ], [ %.02729, %.lr.ph ]
+  %i.cf = phi ptr [ %i.f, %.lr.ph ], [ %.pre, %add_node.exit ], [ %i.y, %bb.c ]
   %i.cg = load i32, ptr getelementptr inbounds nuw (i8, ptr @dpb, i64 24), align 8, !tbaa !151 ; 2 uses
   %i.ch = sub i32 %i.cg, %0
   %i.ci = zext i32 %i.ch to i64

@@ -201,13 +201,13 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775752
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #16
   unreachable
 
-_ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit: ; preds = %bb.a
   %2 = sdiv exact i64 %i.f, 152                   ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %2, i64 1)
   %3 = add nsw i64 %.sroa.speculated.i, %2        ; 2 uses
@@ -216,17 +216,11 @@ _ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmP
   %6 = select i1 %4, i64 60680079189834051, i64 %5 ; 3 uses
   %7 = ptrtoint ptr %1 to i64
   %8 = sub i64 %7, %i.e
-  %.not.i = icmp eq i64 %6, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit, label %9
-
-9:                                                ; preds = %_ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmPKc.exit
-  %10 = mul nuw nsw i64 %6, 152
-  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #15
-  br label %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmPKc.exit, %9
-  %12 = phi ptr [ %11, %9 ], [ null, %_ZNKSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %12, i64 %8 ; 4 uses
+  %.not.i = icmp ne i64 %6, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %9 = mul nuw nsw i64 %6, 152
+  %10 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %9) #15 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %10, i64 %8 ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.i, i8 0, i64 16, i1 false)
   store ptr %i.i, ptr %i.h, align 8
@@ -238,7 +232,7 @@ _ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_alloca
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ay, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %12, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit ] ; 14 uses
+  %.012.i.i.i = phi ptr [ %i.ay, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %10, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit ] ; 14 uses
   %.0911.i.i.i = phi ptr [ %i.ax, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit ] ; 17 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !26)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !29)
@@ -320,7 +314,7 @@ _ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvP
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !32
 
 _ZNSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit
-  %.0.lcssa.i.i.i = phi ptr [ %12, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit ], [ %i.ay, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %10, %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_M_allocateEm.exit ], [ %i.ay, %_ZSt19__relocate_object_aIN5cppgc14HeapStatistics15SpaceStatisticsES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.az = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 152 ; 2 uses
   %.not10.i.i.i15 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i15, label %_ZNSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit25, label %.lr.ph.i.i.i16
@@ -421,9 +415,9 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN5cppg
   br label %_ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN5cppgc14HeapStatistics15SpaceStatisticsESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit25, %bb.e
-  store ptr %12, ptr %0, align 8
+  store ptr %10, ptr %0, align 8
   store ptr %.0.lcssa.i.i.i24, ptr %i.a, align 8
-  %i.cs = getelementptr inbounds nuw [152 x i8], ptr %12, i64 %6
+  %i.cs = getelementptr inbounds nuw [152 x i8], ptr %10, i64 %6
   store ptr %i.cs, ptr %i.co, align 8
   ret void
 }

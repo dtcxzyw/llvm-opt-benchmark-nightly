@@ -201,22 +201,14 @@ bb.a:
   %i.i = or i1 %or.cond.i, %i.h
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
-  br i1 %i.i, label %1, label %bb.e
+  br i1 %i.i, label %_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit, label %bb.e
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 208
-  %3 = load ptr, ptr %2, align 8                  ; 2 uses
-  %4 = icmp eq ptr %3, null
-  br i1 %4, label %_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %7 = load ptr, ptr %6, align 8
-  br label %_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit
-
-_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit: ; preds = %1, %5
-  %.0.i.i = phi ptr [ %7, %5 ], [ null, %1 ]      ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 40
+_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit: ; preds = %bb.a
+  %1 = getelementptr inbounds nuw i8, ptr %i.k, i64 208
+  %2 = load ptr, ptr %1, align 8, !nonnull !6, !noundef !6
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %4 = load ptr, ptr %3, align 8                  ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %4, i64 40
   %i.m = load i16, ptr %i.l, align 8
   %i.n = and i16 %i.m, 896
   %i.o = icmp eq i16 %i.n, 256
@@ -224,7 +216,7 @@ _ZNK2v88internal16DeclarationScope20generator_object_varEv.exit: ; preds = %1, %
 
 bb.b:                                             ; preds = %_ZNK2v88internal16DeclarationScope20generator_object_varEv.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.q = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 32
+  %i.q = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.r = load i32, ptr %i.q, align 8
   %i.s = tail call i32 @_ZNK2v88internal11interpreter20BytecodeArrayBuilder5LocalEi(ptr noundef nonnull align 8 dereferenceable(480) %i.p, i32 noundef %i.r) #21
   br label %.sink.split

@@ -201,33 +201,25 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 6 uses
   store i64 %1, ptr %i.a, align 8, !tbaa !82
   %i.e = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !77
+  %5 = load ptr, ptr %i.e, align 8, !tbaa !77
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.f = load ptr, ptr %6, align 8, !tbaa !104, !nonnull !40, !noundef !40 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.0.val, i64 32
+  %8 = load i64, ptr %7, align 8, !tbaa !98
+  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 9
+  %10 = load i8, ptr %9, align 1, !tbaa !181, !range !75, !noundef !40
+  %11 = trunc nuw i8 %10 to i1
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !104  ; 3 uses
-  %.not.i.i = icmp eq ptr %i.h, null
-  br i1 %.not.i.i, label %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit, label %5
-
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %.0.val, i64 32
-  %7 = load i64, ptr %6, align 8, !tbaa !98
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 9
-  %9 = load i8, ptr %8, align 1, !tbaa !181, !range !75, !noundef !40
-  %10 = trunc nuw i8 %9 to i1
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %12 = load ptr, ptr %11, align 8
-  %13 = select i1 %10, ptr %12, ptr null, !prof !182
-  %14 = getelementptr inbounds [4 x i8], ptr %13, i64 %7
-  br label %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit
-
-_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit:     ; preds = %bb.a, %5
-  %.0.i.i = phi ptr [ %14, %5 ], [ null, %bb.a ]  ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8
+  %12 = select i1 %11, ptr %i.h, ptr null, !prof !182
+  %13 = getelementptr inbounds [4 x i8], ptr %12, i64 %8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %15 = load i32, ptr %.0.i.i, align 4, !tbaa !3  ; 3 uses
-  store i32 %15, ptr %i.b, align 4, !tbaa !3
-  %16 = icmp slt i32 %15, 0
-  br i1 %16, label %bb.b, label %bb.e
+  %14 = load i32, ptr %13, align 4, !tbaa !3      ; 3 uses
+  store i32 %14, ptr %i.b, align 4, !tbaa !3
+  %15 = icmp slt i32 %14, 0
+  br i1 %15, label %bb.b, label %bb.e
 
-bb.b:                                             ; preds = %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit
+bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18, !noalias !1596
   call void @_ZN5arrow8internal12JoinToStringIJRA59_KcRiEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull align 1 dereferenceable(59) @.str.36, ptr noundef nonnull align 4 dereferenceable(4) %i.b), !noalias !1596
   invoke void @_ZN5arrow6StatusC1ENS_10StatusCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i8 noundef signext 4, ptr noundef nonnull align 8 dereferenceable(32) %4)
@@ -271,7 +263,7 @@ _ZN5arrow6Status7InvalidIJRA59_KcRiEEES0_DpOT_.exit: ; preds = %bb.c, %_ZNKSt7__
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18, !noalias !1596
   br label %bb.n
 
-bb.e:                                             ; preds = %_ZNK5arrow9ArrayData9GetValuesIiEEPKT_i.exit
+bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
   %i.t = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
   %i.u = load i64, ptr %i.t, align 8, !tbaa !53   ; 2 uses
@@ -280,9 +272,9 @@ bb.e:                                             ; preds = %_ZNK5arrow9ArrayDat
 
 .lr.ph:                                           ; preds = %bb.e, %bb.m
   %storemerge4 = phi i64 [ %i.ax, %bb.m ], [ 1, %bb.e ] ; 5 uses
-  %i.v = phi i32 [ %i.x, %bb.m ], [ %15, %bb.e ]
+  %i.v = phi i32 [ %i.x, %bb.m ], [ %14, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
-  %i.w = getelementptr inbounds nuw [4 x i8], ptr %.0.i.i, i64 %storemerge4
+  %i.w = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %storemerge4
   %i.x = load i32, ptr %i.w, align 4, !tbaa !3    ; 5 uses
   store i32 %i.x, ptr %i.d, align 4, !tbaa !3
   %i.y = icmp slt i32 %i.x, %i.v
@@ -685,33 +677,25 @@ bb.a:
   %i.d = alloca i64, align 8                      ; 6 uses
   store i64 %1, ptr %i.a, align 8, !tbaa !82
   %i.e = getelementptr inbounds nuw i8, ptr %.0.val, i64 40
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !77
+  %5 = load ptr, ptr %i.e, align 8, !tbaa !77
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %i.f = load ptr, ptr %6, align 8, !tbaa !104, !nonnull !40, !noundef !40 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %.0.val, i64 32
+  %8 = load i64, ptr %7, align 8, !tbaa !98
+  %9 = getelementptr inbounds nuw i8, ptr %i.f, i64 9
+  %10 = load i8, ptr %9, align 1, !tbaa !181, !range !75, !noundef !40
+  %11 = trunc nuw i8 %10 to i1
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !104  ; 3 uses
-  %.not.i.i = icmp eq ptr %i.h, null
-  br i1 %.not.i.i, label %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit, label %5
-
-5:                                                ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %.0.val, i64 32
-  %7 = load i64, ptr %6, align 8, !tbaa !98
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 9
-  %9 = load i8, ptr %8, align 1, !tbaa !181, !range !75, !noundef !40
-  %10 = trunc nuw i8 %9 to i1
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %12 = load ptr, ptr %11, align 8
-  %13 = select i1 %10, ptr %12, ptr null, !prof !182
-  %14 = getelementptr inbounds [8 x i8], ptr %13, i64 %7
-  br label %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit
-
-_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit:     ; preds = %bb.a, %5
-  %.0.i.i = phi ptr [ %14, %5 ], [ null, %bb.a ]  ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8
+  %12 = select i1 %11, ptr %i.h, ptr null, !prof !182
+  %13 = getelementptr inbounds [8 x i8], ptr %12, i64 %8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #18
-  %15 = load i64, ptr %.0.i.i, align 8, !tbaa !82 ; 3 uses
-  store i64 %15, ptr %i.b, align 8, !tbaa !82
-  %16 = icmp slt i64 %15, 0
-  br i1 %16, label %bb.b, label %bb.e
+  %14 = load i64, ptr %13, align 8, !tbaa !82     ; 3 uses
+  store i64 %14, ptr %i.b, align 8, !tbaa !82
+  %15 = icmp slt i64 %14, 0
+  br i1 %15, label %bb.b, label %bb.e
 
-bb.b:                                             ; preds = %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit
+bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18, !noalias !1681
   call void @_ZN5arrow8internal12JoinToStringIJRA59_KcRlEEENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEDpOT_(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %4, ptr noundef nonnull align 1 dereferenceable(59) @.str.36, ptr noundef nonnull align 8 dereferenceable(8) %i.b), !noalias !1681
   invoke void @_ZN5arrow6StatusC1ENS_10StatusCodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(8) %0, i8 noundef signext 4, ptr noundef nonnull align 8 dereferenceable(32) %4)
@@ -755,7 +739,7 @@ _ZN5arrow6Status7InvalidIJRA59_KcRlEEES0_DpOT_.exit: ; preds = %bb.c, %_ZNKSt7__
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18, !noalias !1681
   br label %bb.n
 
-bb.e:                                             ; preds = %_ZNK5arrow9ArrayData9GetValuesIlEEPKT_i.exit
+bb.e:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #18
   %i.t = getelementptr inbounds nuw i8, ptr %.0.val, i64 16
   %i.u = load i64, ptr %i.t, align 8, !tbaa !53   ; 2 uses
@@ -765,9 +749,9 @@ bb.e:                                             ; preds = %_ZNK5arrow9ArrayDat
 
 .lr.ph:                                           ; preds = %bb.e, %bb.m
   %storemerge2 = phi i64 [ %i.aw, %bb.m ], [ 1, %bb.e ] ; 3 uses
-  %i.v = phi i64 [ %i.x, %bb.m ], [ %15, %bb.e ]
+  %i.v = phi i64 [ %i.x, %bb.m ], [ %14, %bb.e ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #18
-  %i.w = getelementptr inbounds nuw [8 x i8], ptr %.0.i.i, i64 %storemerge2
+  %i.w = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %storemerge2
   %i.x = load i64, ptr %i.w, align 8, !tbaa !82   ; 5 uses
   store i64 %i.x, ptr %i.d, align 8, !tbaa !82
   %i.y = icmp slt i64 %i.x, %i.v

@@ -201,29 +201,18 @@ PyStgInfo_FromObject.exit:                        ; preds = %PyStgInfo_FromObjec
   %i.be = getelementptr i8, ptr %i.bd, i64 56
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !68 ; 2 uses
   %i.bg = load ptr, ptr %i.az, align 8, !tbaa !41
-  %i.bh = tail call i32 @PyObject_IsInstance(ptr noundef %i.bf, ptr noundef %i.bg) #17
-  %.not.i.i123 = icmp eq i32 %i.bh, 0
-  br i1 %.not.i.i123, label %PyStgInfo_FromType.exit, label %2
+  %i.bh = tail call i32 @PyObject_IsInstance(ptr noundef %i.bf, ptr noundef %i.bg) #17 ; 0 uses
+  %2 = load ptr, ptr %i.az, align 8, !tbaa !41
+  %3 = tail call ptr @PyObject_GetTypeData(ptr noundef %i.bf, ptr noundef %2) #17
+  %4 = getelementptr i8, ptr %3, i64 72           ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !59
+  %6 = tail call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.119) #17
+  %7 = getelementptr i8, ptr %6, i64 24
+  %8 = load ptr, ptr %7, align 8, !tbaa !183
+  %.not.i.i123 = icmp eq ptr %5, %8
+  br i1 %.not.i.i123, label %bb.r, label %bb.x
 
-2:                                                ; preds = %PyStgInfo_FromObject.exit
-  %3 = load ptr, ptr %i.az, align 8, !tbaa !41
-  %4 = tail call ptr @PyObject_GetTypeData(ptr noundef %i.bf, ptr noundef %3) #17 ; 2 uses
-  %5 = load i32, ptr %4, align 8, !tbaa !42
-  %.not8.i.i124 = icmp eq i32 %5, 0
-  %spec.select = select i1 %.not8.i.i124, ptr null, ptr %4
-  br label %PyStgInfo_FromType.exit
-
-PyStgInfo_FromType.exit:                          ; preds = %2, %PyStgInfo_FromObject.exit
-  %.0 = phi ptr [ null, %PyStgInfo_FromObject.exit ], [ %spec.select, %2 ]
-  %6 = getelementptr i8, ptr %.0, i64 72          ; 2 uses
-  %7 = load ptr, ptr %6, align 8, !tbaa !59
-  %8 = tail call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.119) #17
-  %9 = getelementptr i8, ptr %8, i64 24
-  %10 = load ptr, ptr %9, align 8, !tbaa !183
-  %11 = icmp eq ptr %7, %10
-  br i1 %11, label %bb.r, label %bb.x
-
-bb.r:                                             ; preds = %PyStgInfo_FromType.exit
+bb.r:                                             ; preds = %PyStgInfo_FromObject.exit
   %i.bi = icmp slt i64 %.0100, 1
   br i1 %i.bi, label %bb.s, label %bb.t
 
@@ -326,8 +315,8 @@ iter.check.new:                                   ; preds = %iter.check
   tail call void @PyMem_Free(ptr noundef nonnull %i.bq) #17
   br label %Py_DECREF.exit
 
-bb.x:                                             ; preds = %PyStgInfo_FromType.exit
-  %i.cx = load ptr, ptr %6, align 8, !tbaa !59
+bb.x:                                             ; preds = %PyStgInfo_FromObject.exit
+  %i.cx = load ptr, ptr %4, align 8, !tbaa !59
   %i.cy = tail call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.120) #17
   %i.cz = getelementptr i8, ptr %i.cy, i64 24
   %i.da = load ptr, ptr %i.cz, align 8, !tbaa !183
@@ -519,53 +508,42 @@ bb.c:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 16, !tbaa !51
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !55   ; 2 uses
   %i.f = icmp eq ptr %i.e, null
-  br i1 %i.f, label %bb.d, label %3
+  br i1 %i.f, label %bb.d, label %PyStgInfo_FromObject.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !32
   tail call void @PyErr_SetString(ptr noundef %i.g, ptr noundef nonnull @.str.176) #17, !inline_history !223
   br label %Pointer_ass_item_lock_held.exit
 
-3:                                                ; preds = %bb.c
-  %4 = getelementptr i8, ptr %0, i64 8            ; 3 uses
-  %.val20.i = load ptr, ptr %4, align 8, !tbaa !15
-  %5 = getelementptr i8, ptr %.val20.i, i64 8
-  %.val.i = load ptr, ptr %5, align 8, !tbaa !15
-  %6 = tail call ptr @PyType_GetModuleByDef(ptr noundef %.val.i, ptr noundef nonnull @_ctypesmodule) #17, !inline_history !224
-  %7 = getelementptr i8, ptr %6, i64 24
-  %.val.i.i = load ptr, ptr %7, align 8, !tbaa !72 ; 3 uses
-  %.val21.i = load ptr, ptr %4, align 8, !tbaa !15 ; 2 uses
-  %8 = getelementptr i8, ptr %.val.i.i, i64 40    ; 4 uses
-  %9 = load ptr, ptr %8, align 8, !tbaa !41
-  %10 = tail call i32 @PyObject_IsInstance(ptr noundef %.val21.i, ptr noundef %9) #17, !inline_history !223
-  %.not.i.i.i = icmp eq i32 %10, 0
-  br i1 %.not.i.i.i, label %PyStgInfo_FromObject.exit.i, label %11
-
-11:                                               ; preds = %3
-  %12 = load ptr, ptr %8, align 8, !tbaa !41
-  %13 = tail call ptr @PyObject_GetTypeData(ptr noundef %.val21.i, ptr noundef %12) #17, !inline_history !223 ; 2 uses
-  %14 = load i32, ptr %13, align 8, !tbaa !42
-  %.not8.i.i.i = icmp eq i32 %14, 0
-  %spec.select.i = select i1 %.not8.i.i.i, ptr null, ptr %13
-  br label %PyStgInfo_FromObject.exit.i
-
-PyStgInfo_FromObject.exit.i:                      ; preds = %11, %3
-  %.029.i = phi ptr [ null, %3 ], [ %spec.select.i, %11 ] ; 2 uses
-  %i.h = getelementptr i8, ptr %.029.i, i64 56
+PyStgInfo_FromObject.exit.i:                      ; preds = %bb.c
+  %3 = getelementptr i8, ptr %0, i64 8            ; 3 uses
+  %.val20.i = load ptr, ptr %3, align 8, !tbaa !15
+  %4 = getelementptr i8, ptr %.val20.i, i64 8
+  %.val.i = load ptr, ptr %4, align 8, !tbaa !15
+  %5 = tail call ptr @PyType_GetModuleByDef(ptr noundef %.val.i, ptr noundef nonnull @_ctypesmodule) #17, !inline_history !224
+  %6 = getelementptr i8, ptr %5, i64 24
+  %.val.i.i = load ptr, ptr %6, align 8, !tbaa !72 ; 3 uses
+  %.val21.i = load ptr, ptr %3, align 8, !tbaa !15 ; 2 uses
+  %7 = getelementptr i8, ptr %.val.i.i, i64 40    ; 4 uses
+  %8 = load ptr, ptr %7, align 8, !tbaa !41
+  %9 = tail call i32 @PyObject_IsInstance(ptr noundef %.val21.i, ptr noundef %8) #17, !inline_history !223 ; 0 uses
+  %10 = load ptr, ptr %7, align 8, !tbaa !41
+  %11 = tail call ptr @PyObject_GetTypeData(ptr noundef %.val21.i, ptr noundef %10) #17, !inline_history !223 ; 2 uses
+  %i.h = getelementptr i8, ptr %11, i64 56
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !68   ; 3 uses
-  %i.j = load ptr, ptr %8, align 8, !tbaa !41
+  %i.j = load ptr, ptr %7, align 8, !tbaa !41
   %i.k = tail call i32 @PyObject_IsInstance(ptr noundef %i.i, ptr noundef %i.j) #17, !inline_history !223 ; 0 uses
-  %i.l = load ptr, ptr %8, align 8, !tbaa !41
+  %i.l = load ptr, ptr %7, align 8, !tbaa !41
   %i.m = tail call ptr @PyObject_GetTypeData(ptr noundef %i.i, ptr noundef %i.l) #17, !inline_history !223
   %i.n = getelementptr i8, ptr %i.m, i64 8
   %i.o = load i64, ptr %i.n, align 8, !tbaa !49   ; 2 uses
   %i.p = mul i64 %i.o, %1
-  %i.q = getelementptr i8, ptr %.029.i, i64 64
+  %i.q = getelementptr i8, ptr %11, i64 64
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !61
   %i.s = getelementptr i8, ptr %i.e, i64 %i.p
   %i.t = getelementptr i8, ptr %.val.i.i, i64 96
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !60   ; 2 uses
-  %.val.i25.i = load ptr, ptr %4, align 8, !tbaa !15 ; 2 uses
+  %.val.i25.i = load ptr, ptr %3, align 8, !tbaa !15 ; 2 uses
   %.not.i.i26.i = icmp eq ptr %.val.i25.i, %i.u
   br i1 %.not.i.i26.i, label %PyObject_TypeCheck.exit.thread.i.i, label %PyObject_TypeCheck.exit.i.i
 
@@ -855,48 +833,37 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !51
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !55   ; 2 uses
   %i.d = icmp eq ptr %i.c, null
-  br i1 %i.d, label %bb.b, label %2
+  br i1 %i.d, label %bb.b, label %PyStgInfo_FromObject.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr @PyExc_ValueError, align 8, !tbaa !32
   tail call void @PyErr_SetString(ptr noundef %i.e, ptr noundef nonnull @.str.176) #17
   br label %bb.c
 
-2:                                                ; preds = %bb.a
-  %3 = getelementptr i8, ptr %0, i64 8            ; 2 uses
-  %.val17 = load ptr, ptr %3, align 8, !tbaa !15
-  %4 = getelementptr i8, ptr %.val17, i64 8
-  %.val = load ptr, ptr %4, align 8, !tbaa !15
-  %5 = tail call ptr @PyType_GetModuleByDef(ptr noundef %.val, ptr noundef nonnull @_ctypesmodule) #17, !inline_history !101
-  %6 = getelementptr i8, ptr %5, i64 24
-  %.val.i = load ptr, ptr %6, align 8, !tbaa !72  ; 2 uses
-  %.val18 = load ptr, ptr %3, align 8, !tbaa !15  ; 2 uses
-  %7 = getelementptr i8, ptr %.val.i, i64 40      ; 4 uses
-  %8 = load ptr, ptr %7, align 8, !tbaa !41
-  %9 = tail call i32 @PyObject_IsInstance(ptr noundef %.val18, ptr noundef %8) #17
-  %.not.i.i = icmp eq i32 %9, 0
-  br i1 %.not.i.i, label %PyStgInfo_FromObject.exit, label %10
-
-10:                                               ; preds = %2
-  %11 = load ptr, ptr %7, align 8, !tbaa !41
-  %12 = tail call ptr @PyObject_GetTypeData(ptr noundef %.val18, ptr noundef %11) #17 ; 2 uses
-  %13 = load i32, ptr %12, align 8, !tbaa !42
-  %.not8.i.i = icmp eq i32 %13, 0
-  %spec.select = select i1 %.not8.i.i, ptr null, ptr %12
-  br label %PyStgInfo_FromObject.exit
-
-PyStgInfo_FromObject.exit:                        ; preds = %10, %2
-  %.024 = phi ptr [ null, %2 ], [ %spec.select, %10 ] ; 2 uses
-  %i.f = getelementptr i8, ptr %.024, i64 56
+PyStgInfo_FromObject.exit:                        ; preds = %bb.a
+  %2 = getelementptr i8, ptr %0, i64 8            ; 2 uses
+  %.val17 = load ptr, ptr %2, align 8, !tbaa !15
+  %3 = getelementptr i8, ptr %.val17, i64 8
+  %.val = load ptr, ptr %3, align 8, !tbaa !15
+  %4 = tail call ptr @PyType_GetModuleByDef(ptr noundef %.val, ptr noundef nonnull @_ctypesmodule) #17, !inline_history !101
+  %5 = getelementptr i8, ptr %4, i64 24
+  %.val.i = load ptr, ptr %5, align 8, !tbaa !72  ; 2 uses
+  %.val18 = load ptr, ptr %2, align 8, !tbaa !15  ; 2 uses
+  %6 = getelementptr i8, ptr %.val.i, i64 40      ; 4 uses
+  %7 = load ptr, ptr %6, align 8, !tbaa !41
+  %8 = tail call i32 @PyObject_IsInstance(ptr noundef %.val18, ptr noundef %7) #17 ; 0 uses
+  %9 = load ptr, ptr %6, align 8, !tbaa !41
+  %10 = tail call ptr @PyObject_GetTypeData(ptr noundef %.val18, ptr noundef %9) #17 ; 2 uses
+  %i.f = getelementptr i8, ptr %10, i64 56
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !68   ; 3 uses
-  %i.h = load ptr, ptr %7, align 8, !tbaa !41
+  %i.h = load ptr, ptr %6, align 8, !tbaa !41
   %i.i = tail call i32 @PyObject_IsInstance(ptr noundef %i.g, ptr noundef %i.h) #17 ; 0 uses
-  %i.j = load ptr, ptr %7, align 8, !tbaa !41
+  %i.j = load ptr, ptr %6, align 8, !tbaa !41
   %i.k = tail call ptr @PyObject_GetTypeData(ptr noundef %i.g, ptr noundef %i.j) #17
   %i.l = getelementptr i8, ptr %i.k, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !49   ; 2 uses
   %i.n = mul i64 %i.m, %1
-  %i.o = getelementptr i8, ptr %.024, i64 72
+  %i.o = getelementptr i8, ptr %10, i64 72
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !59
   %i.q = getelementptr i8, ptr %i.c, i64 %i.n
   %i.r = tail call ptr @PyCData_get(ptr noundef nonnull %.val.i, ptr noundef %i.g, ptr noundef %i.p, ptr noundef nonnull %0, i64 noundef %1, i64 noundef %i.m, ptr noundef %i.q)
@@ -1041,29 +1008,18 @@ PyStgInfo_FromObject.exit.i:                      ; preds = %bb.g
   %i.ad = getelementptr i8, ptr %i.ac, i64 56
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !68 ; 2 uses
   %i.af = load ptr, ptr %i.y, align 8, !tbaa !41
-  %i.ag = call i32 @PyObject_IsInstance(ptr noundef %i.ae, ptr noundef %i.af) #17, !inline_history !231
-  %.not.i.i94.i = icmp eq i32 %i.ag, 0
-  br i1 %.not.i.i94.i, label %PyStgInfo_FromType.exit.i, label %2
+  %i.ag = call i32 @PyObject_IsInstance(ptr noundef %i.ae, ptr noundef %i.af) #17, !inline_history !231 ; 0 uses
+  %2 = load ptr, ptr %i.y, align 8, !tbaa !41
+  %3 = call ptr @PyObject_GetTypeData(ptr noundef %i.ae, ptr noundef %2) #17, !inline_history !231
+  %4 = getelementptr i8, ptr %3, i64 72           ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !59
+  %6 = call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.119) #17, !inline_history !231
+  %7 = getelementptr i8, ptr %6, i64 24
+  %8 = load ptr, ptr %7, align 8, !tbaa !183
+  %.not.i.i94.i = icmp eq ptr %5, %8
+  br i1 %.not.i.i94.i, label %bb.h, label %bb.n
 
-2:                                                ; preds = %PyStgInfo_FromObject.exit.i
-  %3 = load ptr, ptr %i.y, align 8, !tbaa !41
-  %4 = call ptr @PyObject_GetTypeData(ptr noundef %i.ae, ptr noundef %3) #17, !inline_history !231 ; 2 uses
-  %5 = load i32, ptr %4, align 8, !tbaa !42
-  %.not8.i.i95.i = icmp eq i32 %5, 0
-  %spec.select.i = select i1 %.not8.i.i95.i, ptr null, ptr %4
-  br label %PyStgInfo_FromType.exit.i
-
-PyStgInfo_FromType.exit.i:                        ; preds = %2, %PyStgInfo_FromObject.exit.i
-  %.0.i = phi ptr [ null, %PyStgInfo_FromObject.exit.i ], [ %spec.select.i, %2 ]
-  %6 = getelementptr i8, ptr %.0.i, i64 72        ; 2 uses
-  %7 = load ptr, ptr %6, align 8, !tbaa !59
-  %8 = call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.119) #17, !inline_history !231
-  %9 = getelementptr i8, ptr %8, i64 24
-  %10 = load ptr, ptr %9, align 8, !tbaa !183
-  %11 = icmp eq ptr %7, %10
-  br i1 %11, label %bb.h, label %bb.n
-
-bb.h:                                             ; preds = %PyStgInfo_FromType.exit.i
+bb.h:                                             ; preds = %PyStgInfo_FromObject.exit.i
   %i.ah = getelementptr i8, ptr %0, i64 16
   %i.ai = load ptr, ptr %i.ah, align 16, !tbaa !51 ; 6 uses
   %i.aj = icmp slt i64 %i.t, 1
@@ -1170,8 +1126,8 @@ bb.m:                                             ; preds = %bb.l
   call void @PyMem_Free(ptr noundef nonnull %i.aq) #17, !inline_history !231
   br label %Py_DECREF.exit.thread.i
 
-bb.n:                                             ; preds = %PyStgInfo_FromType.exit.i
-  %i.ca = load ptr, ptr %6, align 8, !tbaa !59
+bb.n:                                             ; preds = %PyStgInfo_FromObject.exit.i
+  %i.ca = load ptr, ptr %4, align 8, !tbaa !59
   %i.cb = call ptr @_ctypes_get_fielddesc(ptr noundef nonnull @.str.120) #17, !inline_history !231
   %i.cc = getelementptr i8, ptr %i.cb, i64 24
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !183

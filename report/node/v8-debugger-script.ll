@@ -201,16 +201,13 @@ declare void @_ZNK2v85debug12ScriptSource12WasmBytecodeEv(ptr dead_on_unwind wri
 
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZNK12v8_inspector16V8DebuggerScript15getDebugSymbolsEv(ptr dead_on_unwind noalias writable sret(%"class.std::vector") align 8 %0, ptr noundef nonnull readonly align 8 captures(none) dereferenceable(304) %1) local_unnamed_addr #0 align 2 {
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 288
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %5 = load ptr, ptr %4, align 8                  ; 2 uses
-  %6 = load ptr, ptr %3, align 8                  ; 2 uses
-  %7 = icmp eq ptr %6, null
-  br i1 %7, label %_ZNK12v8_inspector16V8DebuggerScript6scriptEv.exit, label %bb.a
-
-bb.a:                                             ; preds = %2
-  %i.a = load i64, ptr %6, align 8
-  %i.b = ptrtoint ptr %5 to i64
+bb.a:
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 288
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 88
+  %4 = load ptr, ptr %3, align 8                  ; 2 uses
+  %5 = load ptr, ptr %2, align 8, !nonnull !11, !noundef !11
+  %i.a = load i64, ptr %5, align 8
+  %i.b = ptrtoint ptr %4 to i64
   %i.c = add i64 %i.b, 560
   %i.d = inttoptr i64 %i.c to ptr                 ; 3 uses
   %i.e = load ptr, ptr %i.d, align 8              ; 2 uses
@@ -220,29 +217,25 @@ bb.a:                                             ; preds = %2
   br i1 %i.h, label %bb.b, label %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i, !prof !8
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = tail call noundef ptr @_ZN2v811HandleScope6ExtendEPNS_7IsolateE(ptr noundef %5) #10
+  %i.i = tail call noundef ptr @_ZN2v811HandleScope6ExtendEPNS_7IsolateE(ptr noundef %4) #10
   br label %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i
 
 _ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i: ; preds = %bb.b, %bb.a
-  %.0.i.i.i = phi ptr [ %i.i, %bb.b ], [ %i.e, %bb.a ] ; 3 uses
+  %.0.i.i.i = phi ptr [ %i.i, %bb.b ], [ %i.e, %bb.a ] ; 4 uses
   %i.j = ptrtoint ptr %.0.i.i.i to i64
   %i.k = add i64 %i.j, 8
   %i.l = inttoptr i64 %i.k to ptr
   store ptr %i.l, ptr %i.d, align 8
   store i64 %i.a, ptr %.0.i.i.i, align 8
-  br label %_ZNK12v8_inspector16V8DebuggerScript6scriptEv.exit
+  %6 = tail call noundef zeroext i1 @_ZNK2v85debug6Script6IsWasmEv(ptr noundef nonnull align 1 dereferenceable(1) %.0.i.i.i) #10
+  br i1 %6, label %bb.d, label %bb.c
 
-_ZNK12v8_inspector16V8DebuggerScript6scriptEv.exit: ; preds = %2, %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i
-  %.sroa.02.0.i = phi ptr [ %.0.i.i.i, %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i ], [ null, %2 ] ; 2 uses
-  %8 = tail call noundef zeroext i1 @_ZNK2v85debug6Script6IsWasmEv(ptr noundef nonnull align 1 dereferenceable(1) %.sroa.02.0.i) #10
-  br i1 %8, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %_ZNK12v8_inspector16V8DebuggerScript6scriptEv.exit
+bb.c:                                             ; preds = %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   br label %bb.e
 
-bb.d:                                             ; preds = %_ZNK12v8_inspector16V8DebuggerScript6scriptEv.exit
-  %i.m = tail call noundef ptr @_ZN2v85debug10WasmScript4CastEPNS0_6ScriptE(ptr noundef nonnull %.sroa.02.0.i) #10
+bb.d:                                             ; preds = %_ZN2v89LocalBaseINS_5debug6ScriptEE3NewEPNS_7IsolateEm.exit.i
+  %i.m = tail call noundef ptr @_ZN2v85debug10WasmScript4CastEPNS0_6ScriptE(ptr noundef nonnull %.0.i.i.i) #10
   tail call void @_ZNK2v85debug10WasmScript15GetDebugSymbolsEv(ptr dead_on_unwind writable sret(%"class.std::vector") align 8 %0, ptr noundef nonnull align 1 dereferenceable(1) %i.m) #10
   br label %bb.e
 

@@ -201,8 +201,8 @@ bb.c:                                             ; preds = %.lr.ph652, %_ZNSt6v
 
 ._crit_edge649:                                   ; preds = %bb.d, %bb.c
   %i.eh = getelementptr inbounds nuw i8, ptr %i.dk, i64 104
-  %i.ei = load ptr, ptr %i.eh, align 8            ; 6 uses
-  %i.ej = icmp eq ptr %i.ei, null                 ; 2 uses
+  %i.ei = load ptr, ptr %i.eh, align 8            ; 7 uses
+  %i.ej = icmp eq ptr %i.ei, null
   br i1 %i.ej, label %.thread571, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph648, %bb.d
@@ -242,7 +242,7 @@ bb.e:                                             ; preds = %._crit_edge649
     i8 1, label %bb.n
     i8 2, label %bb.ab
     i8 3, label %bb.ba
-    i8 4, label %31
+    i8 4, label %bb.bo
   ]
 
 bb.f:                                             ; preds = %.thread571
@@ -645,16 +645,10 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRifEEEvN9__gnu_cxx17__
           cleanup
   br label %bb.cy
 
-31:                                               ; preds = %.thread571
-  br i1 %i.ej, label %bb.bo, label %32
-
-32:                                               ; preds = %31
-  %33 = call ptr @__dynamic_cast(ptr nonnull %i.ei, ptr nonnull @_ZTIN3pmx17PmxVertexSkinningE, ptr nonnull @_ZTIN3pmx21PmxVertexSkinningQDEFE, i64 0) #22
-  br label %bb.bo
-
-bb.bo:                                            ; preds = %31, %32
-  %34 = phi ptr [ %33, %32 ], [ null, %31 ]       ; 8 uses
-  %i.ya = getelementptr inbounds nuw i8, ptr %34, i64 8 ; 2 uses
+bb.bo:                                            ; preds = %.thread571
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ei) ]
+  %31 = call ptr @__dynamic_cast(ptr nonnull %i.ei, ptr nonnull @_ZTIN3pmx17PmxVertexSkinningE, ptr nonnull @_ZTIN3pmx21PmxVertexSkinningQDEFE, i64 0) #22 ; 8 uses
+  %i.ya = getelementptr inbounds nuw i8, ptr %31, i64 8 ; 2 uses
   %i.yb = load ptr, ptr %i.cm, align 8            ; 2 uses
   %.not10.i.i.i.i398 = icmp eq ptr %i.yb, null
   br i1 %.not10.i.i.i.i398, label %.critedge.i409, label %.lr.ph.i.i.i.i399
@@ -703,7 +697,7 @@ bb.bq:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.br:                                            ; preds = %.noexc411, %bb.bq
   %.sroa.06.0.i408 = phi ptr [ %i.yj, %.noexc411 ], [ %.19.i.i.i.i402, %bb.bq ] ; 3 uses
   %i.yk = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 40 ; 2 uses
-  %i.yl = getelementptr inbounds nuw i8, ptr %34, i64 24 ; 2 uses
+  %i.yl = getelementptr inbounds nuw i8, ptr %31, i64 24 ; 2 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 48 ; 4 uses
   %i.yn = load ptr, ptr %i.ym, align 8            ; 6 uses
   %i.yo = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i408, i64 56 ; 2 uses
@@ -835,7 +829,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit428
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit428: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i425, %bb.bs
-  %i.aad = getelementptr inbounds nuw i8, ptr %34, i64 12 ; 2 uses
+  %i.aad = getelementptr inbounds nuw i8, ptr %31, i64 12 ; 2 uses
   %i.aae = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i429 = icmp eq ptr %i.aae, null
   br i1 %.not10.i.i.i.i429, label %.critedge.i440, label %.lr.ph.i.i.i.i430
@@ -884,7 +878,7 @@ bb.bw:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.bx:                                            ; preds = %.noexc442, %bb.bw
   %.sroa.06.0.i439 = phi ptr [ %i.aam, %.noexc442 ], [ %.19.i.i.i.i433, %bb.bw ] ; 3 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 40 ; 2 uses
-  %i.aao = getelementptr inbounds nuw i8, ptr %34, i64 28 ; 2 uses
+  %i.aao = getelementptr inbounds nuw i8, ptr %31, i64 28 ; 2 uses
   %i.aap = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 48 ; 4 uses
   %i.aaq = load ptr, ptr %i.aap, align 8          ; 6 uses
   %i.aar = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i439, i64 56 ; 2 uses
@@ -1009,7 +1003,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit459
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit459: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i456, %bb.by
-  %i.acg = getelementptr inbounds nuw i8, ptr %34, i64 16 ; 2 uses
+  %i.acg = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
   %i.ach = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i460 = icmp eq ptr %i.ach, null
   br i1 %.not10.i.i.i.i460, label %.critedge.i471, label %.lr.ph.i.i.i.i461
@@ -1058,7 +1052,7 @@ bb.cc:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.cd:                                            ; preds = %.noexc473, %bb.cc
   %.sroa.06.0.i470 = phi ptr [ %i.acp, %.noexc473 ], [ %.19.i.i.i.i464, %bb.cc ] ; 3 uses
   %i.acq = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 40 ; 2 uses
-  %i.acr = getelementptr inbounds nuw i8, ptr %34, i64 32 ; 2 uses
+  %i.acr = getelementptr inbounds nuw i8, ptr %31, i64 32 ; 2 uses
   %i.acs = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 48 ; 4 uses
   %i.act = load ptr, ptr %i.acs, align 8          ; 6 uses
   %i.acu = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i470, i64 56 ; 2 uses
@@ -1183,7 +1177,7 @@ _ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17_
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit490
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE12emplace_backIJRiRfEEERS0_DpOT_.exit490: ; preds = %_ZNSt6vectorI14aiVertexWeightSaIS0_EE17_M_realloc_insertIJRiRfEEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i487, %bb.ce
-  %i.aej = getelementptr inbounds nuw i8, ptr %34, i64 20 ; 2 uses
+  %i.aej = getelementptr inbounds nuw i8, ptr %31, i64 20 ; 2 uses
   %i.aek = load ptr, ptr %i.cm, align 8           ; 2 uses
   %.not10.i.i.i.i491 = icmp eq ptr %i.aek, null
   br i1 %.not10.i.i.i.i491, label %.critedge.i502, label %.lr.ph.i.i.i.i492
@@ -1232,7 +1226,7 @@ bb.ci:                                            ; preds = %_ZNSt3mapIiSt6vecto
 bb.cj:                                            ; preds = %.noexc504, %bb.ci
   %.sroa.06.0.i501 = phi ptr [ %i.aes, %.noexc504 ], [ %.19.i.i.i.i495, %bb.ci ] ; 3 uses
   %i.aet = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 40 ; 2 uses
-  %i.aeu = getelementptr inbounds nuw i8, ptr %34, i64 36 ; 2 uses
+  %i.aeu = getelementptr inbounds nuw i8, ptr %31, i64 36 ; 2 uses
   %i.aev = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 48 ; 4 uses
   %i.aew = load ptr, ptr %i.aev, align 8          ; 6 uses
   %i.aex = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i501, i64 56 ; 2 uses

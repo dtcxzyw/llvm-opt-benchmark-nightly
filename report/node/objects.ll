@@ -201,17 +201,12 @@ _ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit: ; preds = %_ZN2v8
   %i.asj = load atomic volatile i64, ptr %i.arv monotonic, align 8
   %i.ask = add i64 %i.asj, 11
   %i.asl = inttoptr i64 %i.ask to ptr
-  %i.asm = load atomic volatile i16, ptr %i.asl monotonic, align 2
-  %6 = add i16 %i.asm, -2065
-  %7 = icmp ult i16 %6, 17
-  br i1 %7, label %8, label %_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit
-
-8:                                                ; preds = %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit
-  %9 = call ptr @_ZN2v88internal10JSFunction7GetNameEPNS0_7IsolateENS0_12DirectHandleIS1_EE(ptr noundef nonnull %0, ptr nonnull %i.arr) #28
+  %i.asm = load atomic volatile i16, ptr %i.asl monotonic, align 2 ; 0 uses
+  %6 = call ptr @_ZN2v88internal10JSFunction7GetNameEPNS0_7IsolateENS0_12DirectHandleIS1_EE(ptr noundef nonnull %0, ptr nonnull %i.arr) #28
   br label %_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit
 
-_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %bb.cy, %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit, %8
-  %.sroa.0206.0 = phi ptr [ null, %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit ], [ %9, %8 ], [ %i.ash, %bb.cy ] ; 2 uses
+_ZNK2v88internal11MaybeHandleINS0_6StringEE5CheckEv.exit: ; preds = %bb.cy, %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit
+  %.sroa.0206.0 = phi ptr [ %6, %_ZN2v88internal12IsJSFunctionENS0_6TaggedINS0_6ObjectEEE.exit ], [ %i.ash, %bb.cy ] ; 2 uses
   %i.asn = load i64, ptr %.sroa.0206.0, align 8
   %i.aso = add i64 %i.asn, -1
   %i.asp = inttoptr i64 %i.aso to ptr

@@ -201,29 +201,20 @@ bb.a:
   %i.i = sub i64 %i.g, %.fr                       ; 2 uses
   %i.j = trunc i64 %i.i to i32
   %i.k = icmp sgt i32 %i.j, 0
-  br i1 %i.k, label %2, label %bb.b
+  br i1 %i.k, label %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit, label %bb.b
 
-2:                                                ; preds = %bb.a
-  %3 = and i64 %i.i, 2147483647                   ; 5 uses
-  %.not.i.i.i.i = icmp eq i64 %3, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit, label %.noexc
-
-.noexc:                                           ; preds = %2
-  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #18 ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %3
-  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %4, i8 -1, i64 %3, i1 false)
-  %6 = ptrtoint ptr %5 to i64
-  br label %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit
-
-_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit:            ; preds = %.noexc, %2
-  %.sroa.12.0 = phi i64 [ %6, %.noexc ], [ 0, %2 ] ; 2 uses
-  %.sroa.020.0 = phi ptr [ %4, %.noexc ], [ null, %2 ] ; 5 uses
+_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit:            ; preds = %bb.a
+  %2 = and i64 %i.i, 2147483647                   ; 6 uses
+  %.not.i.i.i.i = icmp ne i64 %2, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %3 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %2) #18 ; 4 uses
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %3, i8 -1, i64 %2, i1 false)
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 2072
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !46   ; 2 uses
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !23
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.p = load ptr, ptr %i.o, align 8
-  %i.q = invoke noundef i64 %i.p(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull %.sroa.020.0, i64 noundef %3)
+  %i.q = invoke noundef i64 %i.p(ptr noundef nonnull align 8 dereferenceable(16) %i.m, ptr noundef nonnull %3, i64 noundef %2)
           to label %_ZNSt6vectorIhSaIhEED2Ev.exit unwind label %_ZNSt6vectorIhSaIhEED2Ev.exit19
 
 _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit
@@ -231,17 +222,13 @@ _ZNSt6vectorIhSaIhEED2Ev.exit:                    ; preds = %_ZNSt6vectorIhSaIhE
   %i.s = add i64 %i.r, %i.q                       ; 2 uses
   store i64 %i.s, ptr %i.a, align 8, !tbaa !25
   %.not = icmp eq i64 %i.s, %i.h
-  %7 = ptrtoint ptr %.sroa.020.0 to i64
-  %8 = sub i64 %.sroa.12.0, %7
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.020.0, i64 noundef %8) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %2) #16
   br i1 %.not, label %bb.b, label %bb.c
 
 _ZNSt6vectorIhSaIhEED2Ev.exit19:                  ; preds = %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit
   %i.t = landingpad { ptr, i32 }
           cleanup
-  %9 = ptrtoint ptr %.sroa.020.0 to i64
-  %10 = sub i64 %.sroa.12.0, %9
-  tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.020.0, i64 noundef %10) #16
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %2) #16
   resume { ptr, i32 } %i.t
 
 bb.b:                                             ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit, %bb.a

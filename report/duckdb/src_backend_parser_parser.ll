@@ -201,13 +201,13 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775800
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.489) #16
   unreachable
 
-_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit: ; preds = %bb.a
   %3 = sdiv exact i64 %i.g, 40                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %3, i64 1)
   %4 = add nsw i64 %.sroa.speculated.i, %3        ; 2 uses
@@ -216,17 +216,11 @@ _ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit: ;
   %7 = select i1 %5, i64 230584300921369395, i64 %6 ; 3 uses
   %8 = ptrtoint ptr %1 to i64
   %9 = sub i64 %8, %i.f
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit
-  %11 = mul nuw nsw i64 %7, 40
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #17
-  br label %_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit, %10
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %13, i64 %9 ; 7 uses
+  %.not.i = icmp ne i64 %7, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %10 = mul nuw nsw i64 %7, 40
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #17 ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %11, i64 %9 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 3 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !19
   %i.k = load ptr, ptr %2, align 8, !tbaa !25     ; 2 uses
@@ -279,7 +273,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   br i1 %.not10.i.i.i.i, label %_ZNSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.e, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i
-  %.012.i.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %13, %bb.e ] ; 6 uses
+  %.012.i.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %11, %bb.e ] ; 6 uses
   %.0911.i.i.i.i = phi ptr [ %i.ao, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i ], [ %i.d, %bb.e ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !51)
   call void @llvm.experimental.noalias.scope.decl(metadata !54)
@@ -325,7 +319,7 @@ _ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i.i, !llvm.loop !57
 
 _ZNSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i, %bb.e
-  %.0.lcssa.i.i.i.i = phi ptr [ %13, %bb.e ], [ %i.ap, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i ]
+  %.0.lcssa.i.i.i.i = phi ptr [ %11, %bb.e ], [ %i.ap, %_ZSt19__relocate_object_aIN17duckdb_libpgquery9PGKeywordES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i, i64 40 ; 2 uses
   %.not10.i.i.i.i26 = icmp eq ptr %1, %i.c
   br i1 %.not10.i.i.i.i26, label %_ZNSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit36, label %.lr.ph.i.i.i.i27
@@ -387,9 +381,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN17duc
 
 _ZNSt12_Vector_baseIN17duckdb_libpgquery9PGKeywordESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIN17duckdb_libpgquery9PGKeywordESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit36, %bb.h
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %13, ptr %0, align 8, !tbaa !36
+  store ptr %11, ptr %0, align 8, !tbaa !36
   store ptr %.0.lcssa.i.i.i.i35, ptr %i.b, align 8, !tbaa !29
-  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %13, i64 %7
+  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %11, i64 %7
   store ptr %i.bj, ptr %i.bi, align 8, !tbaa !32
   ret void
 
@@ -404,7 +398,7 @@ bb.j:                                             ; preds = %.noexc.i.i
           catch ptr null
   %i.bm = extractvalue { ptr, i32 } %i.bl, 0
   %i.bn = call ptr @__cxa_begin_catch(ptr %i.bm) #14 ; 0 uses
-  call void @_ZdlPv(ptr noundef nonnull %13) #15
+  call void @_ZdlPv(ptr noundef nonnull %11) #15
   invoke void @__cxa_rethrow() #16
           to label %bb.m unwind label %bb.i
 

@@ -201,13 +201,13 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775776
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.26) #28
   unreachable
 
-_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit: ; preds = %bb.a
   %4 = sdiv exact i64 %i.g, 48                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
   %5 = add nsw i64 %.sroa.speculated.i, %4        ; 2 uses
@@ -216,17 +216,11 @@ _ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13ge
   %8 = select i1 %6, i64 192153584101141162, i64 %7 ; 3 uses
   %9 = ptrtoint ptr %1 to i64
   %10 = sub i64 %9, %i.f
-  %.not.i = icmp eq i64 %8, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit, label %11
-
-11:                                               ; preds = %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit
-  %12 = mul nuw nsw i64 %8, 48
-  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #25
-  br label %_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit, %11
-  %14 = phi ptr [ %13, %11 ], [ null, %_ZNKSt6vectorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapES_S6_blmdSaNS8_14adl_serializerES_IhSaIhEEEEESaISF_EE12_M_check_lenEmPKc.exit ] ; 9 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %14, i64 %10 ; 9 uses
+  %.not.i = icmp ne i64 %8, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %11 = mul nuw nsw i64 %8, 48
+  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #25 ; 9 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %12, i64 %10 ; 9 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 4 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !12
   %i.k = load ptr, ptr %2, align 8, !tbaa !54     ; 2 uses
@@ -287,7 +281,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %.body.thread
 
 _ZNSt16allocator_traitsISaISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEE9constructISG_JRS7_RSF_EEEvRSH_PT_DpOT0_.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
-  %i.aa = invoke noundef ptr @_ZSt16__do_uninit_copyIPKSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEPSG_ET0_T_SL_SK_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %14)
+  %i.aa = invoke noundef ptr @_ZSt16__do_uninit_copyIPKSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEPSG_ET0_T_SL_SK_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %12)
           to label %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit unwind label %bb.g
 
 _ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit: ; preds = %_ZNSt16allocator_traitsISaISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEE9constructISG_JRS7_RSF_EEEvRSH_PT_DpOT0_.exit
@@ -329,14 +323,14 @@ bb.f:                                             ; preds = %_ZSt8_DestroyIPSt4p
 
 _ZNSt12_Vector_baseISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESaISG_EE13_M_deallocateEPSG_m.exit: ; preds = %_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_.exit, %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %14, ptr %0, align 8, !tbaa !86
+  store ptr %12, ptr %0, align 8, !tbaa !86
   store ptr %i.ac, ptr %i.b, align 8, !tbaa !83
-  %i.al = getelementptr inbounds nuw [48 x i8], ptr %14, i64 %8
+  %i.al = getelementptr inbounds nuw [48 x i8], ptr %12, i64 %8
   store ptr %i.al, ptr %i.ak, align 8, !tbaa !88
   ret void
 
 .body.thread46:                                   ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit, %.noexc.i.i
-  %.0.ph = phi ptr [ %14, %.noexc.i.i ], [ %i.ab, %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit ]
+  %.0.ph = phi ptr [ %12, %.noexc.i.i ], [ %i.ab, %_ZSt34__uninitialized_move_if_noexcept_aIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEESH_SaISG_EET0_T_SK_SJ_RT1_.exit ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           catch ptr null
   br label %.body.thread
@@ -351,10 +345,10 @@ bb.g:                                             ; preds = %_ZNSt16allocator_tr
 
 .body.thread:                                     ; preds = %bb.e, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i, %.body.thread46
   %lpad.thr_comm.sink = phi { ptr, i32 } [ %lpad.thr_comm, %.body.thread46 ], [ %i.x, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %i.x, %bb.e ]
-  %.0.lpad-body44 = phi ptr [ %.0.ph, %.body.thread46 ], [ %14, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %14, %bb.e ]
+  %.0.lpad-body44 = phi ptr [ %.0.ph, %.body.thread46 ], [ %12, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i ], [ %12, %bb.e ]
   %i.ao = extractvalue { ptr, i32 } %lpad.thr_comm.sink, 0
   %i.ap = call ptr @__cxa_begin_catch(ptr %i.ao) #24 ; 0 uses
-  invoke void @_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_(ptr noundef nonnull %14, ptr noundef nonnull %.0.lpad-body44)
+  invoke void @_ZSt8_DestroyIPSt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN13geos_nlohmann10basic_jsonINS8_11ordered_mapESt6vectorS6_blmdSaNS8_14adl_serializerESB_IhSaIhEEEEEEvT_SI_(ptr noundef nonnull %12, ptr noundef nonnull %.0.lpad-body44)
           to label %bb.i unwind label %bb.h
 
 bb.h:                                             ; preds = %.body.thread, %bb.i
@@ -364,7 +358,7 @@ bb.h:                                             ; preds = %.body.thread, %bb.i
           to label %bb.j unwind label %bb.k
 
 bb.i:                                             ; preds = %bb.g, %.body.thread
-  call void @_ZdlPv(ptr noundef nonnull %14) #26
+  call void @_ZdlPv(ptr noundef nonnull %12) #26
   invoke void @__cxa_rethrow() #28
           to label %bb.l unwind label %bb.h
 

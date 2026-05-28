@@ -201,39 +201,28 @@ _ZN5arrow6StatusD2Ev.exit45:                      ; preds = %_ZNSt12__shared_ptr
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 40
   %i.cf = load i32, ptr %i.ce, align 8, !tbaa !256
   %i.cg = icmp eq i32 %i.cf, 29
-  br i1 %i.cg, label %11, label %_ZNSt10shared_ptrIN5arrow8DataTypeEEaSERKS2_.exit
+  br i1 %i.cg, label %_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i, label %_ZNSt10shared_ptrIN5arrow8DataTypeEEaSERKS2_.exit
 
-11:                                               ; preds = %_ZN5arrow6StatusD2Ev.exit45
+_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i: ; preds = %_ZN5arrow6StatusD2Ev.exit45
   call void @llvm.lifetime.start.p0(ptr nonnull %9) #24
-  %12 = load ptr, ptr %5, align 8, !tbaa !250
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 88
+  %11 = load ptr, ptr %5, align 8, !tbaa !250
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 88
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %14 = load ptr, ptr %i.a, align 8, !tbaa !108, !noalias !839 ; 3 uses
-  %15 = load i32, ptr %14, align 4, !tbaa !3, !noalias !839
-  %16 = sext i32 %15 to i64
-  %17 = sub nsw i64 0, %16
-  %18 = getelementptr inbounds i8, ptr %14, i64 %17 ; 2 uses
-  %19 = load i16, ptr %18, align 2, !tbaa !120, !noalias !839
-  %20 = icmp ugt i16 %19, 8
-  br i1 %20, label %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i, label %_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i
-
-_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i: ; preds = %11
-  %21 = getelementptr inbounds nuw i8, ptr %18, i64 8
-  %22 = load i16, ptr %21, align 2, !tbaa !120, !noalias !839 ; 2 uses
-  %.not.i.i.i.i47 = icmp eq i16 %22, 0
-  br i1 %.not.i.i.i.i47, label %_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i, label %23
-
-23:                                               ; preds = %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i
-  %24 = zext i16 %22 to i64
-  %25 = getelementptr inbounds nuw i8, ptr %14, i64 %24 ; 2 uses
-  %26 = load i32, ptr %25, align 4, !tbaa !3, !noalias !839
-  %27 = zext i32 %26 to i64
-  %28 = getelementptr inbounds nuw i8, ptr %25, i64 %27
-  br label %_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i
-
-_ZNK5arrow3ipc7feather3fbs6CTable7columnsEv.exit.i: ; preds = %23, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i, %11
-  %29 = phi ptr [ %28, %23 ], [ null, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i.i ], [ null, %11 ]
-  %i.ch = getelementptr inbounds nuw i8, ptr %29, i64 4
+  %13 = load ptr, ptr %i.a, align 8, !tbaa !108, !noalias !839 ; 3 uses
+  %14 = load i32, ptr %13, align 4, !tbaa !3, !noalias !839
+  %15 = sext i32 %14 to i64
+  %16 = sub nsw i64 0, %15
+  %17 = getelementptr inbounds i8, ptr %13, i64 %16
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 8
+  %19 = load i16, ptr %18, align 2, !tbaa !120, !noalias !839 ; 2 uses
+  %.not.i.i.i.i46 = icmp ne i16 %19, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i46)
+  %20 = zext i16 %19 to i64
+  %21 = getelementptr inbounds nuw i8, ptr %13, i64 %20 ; 2 uses
+  %22 = load i32, ptr %21, align 4, !tbaa !3, !noalias !839
+  %23 = zext i32 %22 to i64
+  %24 = getelementptr inbounds nuw i8, ptr %21, i64 %23
+  %i.ch = getelementptr inbounds nuw i8, ptr %24, i64 4
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 %i.s ; 2 uses
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !3, !noalias !839
   %i.ck = zext i32 %i.cj to i64
@@ -335,7 +324,7 @@ bb.u:                                             ; preds = %_ZNK22arrow_vendore
 
 _ZNK5arrow3ipc7feather3fbs16CategoryMetadata6levelsEv.exit.i: ; preds = %bb.u, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i10.i, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i
   %i.ej = phi ptr [ %i.ei, %bb.u ], [ null, %_ZNK22arrow_vendored_private11flatbuffers5Table22GetOptionalFieldOffsetEt.exit.i.i.i10.i ], [ null, %_ZNSt10shared_ptrIN5arrow8DataTypeEEC2ERKS2_.exit.i ]
-  invoke fastcc void @_ZN5arrow3ipc7feather12_GLOBAL__N_18ReaderV110LoadValuesESt10shared_ptrINS_8DataTypeEEPKNS1_3fbs14PrimitiveArrayENS7_12TypeMetadataEPKvPS4_INS_9ArrayDataEE(ptr dead_on_unwind noalias nonnull writable align 8 %9, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef %4, ptr noundef %i.ej, ptr noundef nonnull %13)
+  invoke fastcc void @_ZN5arrow3ipc7feather12_GLOBAL__N_18ReaderV110LoadValuesESt10shared_ptrINS_8DataTypeEEPKNS1_3fbs14PrimitiveArrayENS7_12TypeMetadataEPKvPS4_INS_9ArrayDataEE(ptr dead_on_unwind noalias nonnull writable align 8 %9, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef %4, ptr noundef %i.ej, ptr noundef nonnull %12)
           to label %bb.v unwind label %bb.ac
 
 bb.v:                                             ; preds = %_ZNK5arrow3ipc7feather3fbs16CategoryMetadata6levelsEv.exit.i

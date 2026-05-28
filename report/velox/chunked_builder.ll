@@ -201,32 +201,26 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775776
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #27
   unreachable
 
-_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_M_allocateEm.exit: ; preds = %bb.a
   %4 = sdiv exact i64 %i.g, 48                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %4, i64 1)
   %5 = add nsw i64 %.sroa.speculated.i, %4        ; 2 uses
   %6 = icmp ult i64 %5, %4
   %7 = tail call i64 @llvm.umin.i64(i64 %5, i64 192153584101141162)
-  %8 = select i1 %6, i64 192153584101141162, i64 %7 ; 4 uses
+  %8 = select i1 %6, i64 192153584101141162, i64 %7 ; 3 uses
   %9 = ptrtoint ptr %1 to i64
   %10 = sub i64 %9, %i.f
-  %.not.i = icmp eq i64 %8, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_M_allocateEm.exit, label %11
-
-11:                                               ; preds = %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE12_M_check_lenEmPKc.exit
-  %12 = mul nuw nsw i64 %8, 48
-  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #24
-  br label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE12_M_check_lenEmPKc.exit, %11
-  %14 = phi ptr [ %13, %11 ], [ null, %_ZNKSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %14, i64 %10 ; 7 uses
+  %.not.i = icmp ne i64 %8, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %11 = mul nuw nsw i64 %8, 48                    ; 2 uses
+  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #24 ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %12, i64 %10 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 3 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !43
   %i.k = load ptr, ptr %2, align 8, !tbaa !46     ; 2 uses
@@ -281,7 +275,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   br i1 %.not10.i.i.i, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_S_relocateEPSC_SF_SF_RSD_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.aq, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i ], [ %14, %bb.e ] ; 6 uses
+  %.012.i.i.i = phi ptr [ %i.aq, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i ], [ %12, %bb.e ] ; 6 uses
   %.0911.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.d, %bb.e ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !184)
   call void @llvm.experimental.noalias.scope.decl(metadata !187)
@@ -330,7 +324,7 @@ _ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcES
   br i1 %.not.i.i.i, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_S_relocateEPSC_SF_SF_RSD_.exit, label %.lr.ph.i.i.i, !llvm.loop !190
 
 _ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_S_relocateEPSC_SF_SF_RSD_.exit: ; preds = %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i, %bb.e
-  %.0.lcssa.i.i.i = phi ptr [ %14, %bb.e ], [ %i.aq, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %12, %bb.e ], [ %i.aq, %_ZSt19__relocate_object_aISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESC_SaISC_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.ar = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 48 ; 2 uses
   %.not10.i.i.i27 = icmp eq ptr %1, %i.c
   br i1 %.not10.i.i.i27, label %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_S_relocateEPSC_SF_SF_RSD_.exit37, label %.lr.ph.i.i.i28
@@ -398,9 +392,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorISt4pai
   br label %_ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE13_M_deallocateEPSC_m.exit
 
 _ZNSt12_Vector_baseISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE13_M_deallocateEPSC_m.exit: ; preds = %_ZNSt6vectorISt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt10shared_ptrIN5arrow4json19ChunkedArrayBuilderEEESaISC_EE11_S_relocateEPSC_SF_SF_RSD_.exit37, %bb.h
-  store ptr %14, ptr %0, align 8, !tbaa !65
+  store ptr %12, ptr %0, align 8, !tbaa !65
   store ptr %.0.lcssa.i.i.i36, ptr %i.b, align 8, !tbaa !39
-  %i.bo = getelementptr inbounds nuw [48 x i8], ptr %14, i64 %8
+  %i.bo = getelementptr inbounds nuw [48 x i8], ptr %12, i64 %8
   store ptr %i.bo, ptr %i.bk, align 8, !tbaa !42
   ret void
 
@@ -415,8 +409,7 @@ bb.j:                                             ; preds = %.noexc.i.i
           catch ptr null
   %i.br = extractvalue { ptr, i32 } %i.bq, 0
   %i.bs = call ptr @__cxa_begin_catch(ptr %i.br) #23 ; 0 uses
-  %15 = mul nuw nsw i64 %8, 48
-  call void @_ZdlPvm(ptr noundef nonnull %14, i64 noundef %15) #25
+  call void @_ZdlPvm(ptr noundef nonnull %12, i64 noundef %11) #25
   invoke void @__cxa_rethrow() #27
           to label %bb.m unwind label %bb.i
 

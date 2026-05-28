@@ -201,49 +201,36 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %i.i = load ptr, ptr %i.h, align 8              ; 4 uses
+  %i.i = load ptr, ptr %i.h, align 8              ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %i.l = ptrtoint ptr %i.k to i64
   %i.m = ptrtoint ptr %i.i to i64
-  %i.n = sub i64 %i.l, %i.m                       ; 5 uses
+  %i.n = sub i64 %i.l, %i.m                       ; 6 uses
   %i.o = icmp slt i64 %i.n, 0
-  br i1 %i.o, label %bb.d, label %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i
+  br i1 %i.o, label %bb.d, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.171) #24, !noalias !28
   unreachable
 
-_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i: ; preds = %bb.c
-  %.not.i.i.i.i = icmp eq ptr %i.k, %i.i
-  br i1 %.not.i.i.i.i, label %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i
-  %16 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25, !noalias !28 ; 5 uses
-  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %i.n ; 2 uses
+_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i: ; preds = %bb.c
+  %.not.i.i.i.i = icmp ne ptr %i.k, %i.i
+  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %16 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.n) #25, !noalias !28 ; 4 uses
   %.not.i = icmp eq i64 %i.n, 1
-  br i1 %.not.i, label %18, label %bb.e, !prof !31
+  br i1 %.not.i, label %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit, label %bb.e, !prof !31
 
 bb.e:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %16, ptr align 1 %i.i, i64 %i.n, i1 false), !noalias !28
   br label %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit
 
-18:                                               ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i
-  %19 = load i8, ptr %i.i, align 1, !noalias !28
-  store i8 %19, ptr %16, align 1, !noalias !28
-  br label %_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit
-
-_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit: ; preds = %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i, %bb.e, %18
-  %.sroa.9.0 = phi ptr [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i ], [ %17, %18 ], [ %17, %bb.e ]
-  %.sroa.076.0 = phi ptr [ null, %_ZNSt6vectorIhSaIhEE17_S_check_init_lenEmRKS0_.exit.i.i.i ], [ %16, %18 ], [ %16, %bb.e ] ; 4 uses
-  store i8 49, ptr %.sroa.076.0, align 1
+_ZN4LIEF9as_vectorIhEESt6vectorIT_SaIS2_EEN3tcb4spanIKS2_Lm18446744073709551615EEE.exit: ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit.i.i.i, %bb.e
+  store i8 49, ptr %16, align 1
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.q = load i32, ptr %i.p, align 8              ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
-  %20 = ptrtoint ptr %.sroa.9.0 to i64
-  %21 = ptrtoint ptr %.sroa.076.0 to i64
-  %22 = sub i64 %20, %21                          ; 2 uses
-  call void @_ZN4LIEF2PE9Signature4hashEPKhmNS0_10ALGORITHMSE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.56") align 8 %3, ptr noundef nonnull %.sroa.076.0, i64 noundef %22, i32 noundef %i.q)
+  call void @_ZN4LIEF2PE9Signature4hashEPKhmNS0_10ALGORITHMSE(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.56") align 8 %3, ptr noundef nonnull %16, i64 noundef %i.n, i32 noundef %i.q)
   %i.r = tail call noundef nonnull align 8 dereferenceable(16) ptr @_ZN4LIEF7logging6Logger8instanceEPKc(ptr noundef nonnull @.str.58) #23 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #23
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #23
@@ -549,7 +536,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIhSaIhE
 
 _ZNSt6vectorIhSaIhEED2Ev.exit73:                  ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit69, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #23
-  call void @_ZdlPvm(ptr noundef nonnull %.sroa.076.0, i64 noundef %22) #26
+  call void @_ZdlPvm(ptr noundef nonnull %16, i64 noundef %i.n) #26
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZNSt6vectorIhSaIhEED2Ev.exit73, %bb.b

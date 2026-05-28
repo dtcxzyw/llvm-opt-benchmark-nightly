@@ -201,35 +201,29 @@ _ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS
   %i.h = add nsw i64 %.sroa.speculated.i, %i.f    ; 2 uses
   %i.i = icmp ult i64 %i.h, %i.f
   %i.j = tail call i64 @llvm.umin.i64(i64 %i.h, i64 230584300921369395)
-  %i.k = select i1 %i.i, i64 230584300921369395, i64 %i.j ; 4 uses
+  %i.k = select i1 %i.i, i64 230584300921369395, i64 %i.j ; 3 uses
   %i.l = ptrtoint ptr %1 to i64
   %i.m = sub i64 %i.l, %i.c
-  %.not.i.a = icmp eq i64 %i.k, 0
-  br i1 %.not.i.a, label %_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_M_allocateEm.exit, label %2
-
-2:                                                ; preds = %_ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE12_M_check_lenEmPKc.exit
-  %3 = mul nuw nsw i64 %i.k, 40
-  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #22
-  br label %_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE12_M_check_lenEmPKc.exit, %2
-  %5 = phi ptr [ %4, %2 ], [ null, %_ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 %i.m ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 3 uses
-  store ptr %7, ptr %6, align 8, !tbaa !43
-  %8 = icmp eq ptr %.0.val, null
-  %9 = icmp ne i64 %.8.val, 0
-  %or.cond.i.i.i.i.i = and i1 %8, %9
+  %.not.i = icmp ne i64 %i.k, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %2 = mul nuw nsw i64 %i.k, 40                   ; 2 uses
+  %3 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %2) #22 ; 6 uses
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 %i.m ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
+  store ptr %5, ptr %4, align 8, !tbaa !43
+  %.not.i.a = icmp eq ptr %.0.val, null
+  %6 = icmp ne i64 %.8.val, 0
+  %or.cond.i.i.i.i.i = and i1 %.not.i.a, %6
   br i1 %or.cond.i.i.i.i.i, label %.noexc.i.i, label %bb.c
 
-.noexc.i.i:                                       ; preds = %_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_M_allocateEm.exit
+.noexc.i.i:                                       ; preds = %_ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE12_M_check_lenEmPKc.exit
   invoke void @_ZSt19__throw_logic_errorPKc(ptr noundef nonnull @.str.6) #23
           to label %.noexc unwind label %bb.m
 
 .noexc:                                           ; preds = %.noexc.i.i
   unreachable
 
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_M_allocateEm.exit
+bb.c:                                             ; preds = %_ZNKSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE12_M_check_lenEmPKc.exit
   %i.n = icmp ugt i64 %.8.val, 15
   br i1 %i.n, label %bb.d, label %._crit_edge.i.i.i.i.i.i
 
@@ -261,12 +255,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i
           to label %.noexc38 unwind label %bb.m   ; 2 uses
 
 .noexc38:                                         ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i.i.i
-  store ptr %i.r, ptr %6, align 8, !tbaa !36
-  store i64 %.8.val, ptr %7, align 8, !tbaa !27
+  store ptr %i.r, ptr %4, align 8, !tbaa !36
+  store i64 %.8.val, ptr %5, align 8, !tbaa !27
   br label %._crit_edge.i.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i.i:                          ; preds = %.noexc38, %bb.c
-  %i.s = phi ptr [ %i.r, %.noexc38 ], [ %7, %bb.c ] ; 3 uses
+  %i.s = phi ptr [ %i.r, %.noexc38 ], [ %5, %bb.c ] ; 3 uses
   switch i64 %.8.val, label %bb.g [
     i64 1, label %bb.f
     i64 0, label %bb.h
@@ -282,20 +276,20 @@ bb.g:                                             ; preds = %._crit_edge.i.i.i.i
   br label %bb.h
 
 bb.h:                                             ; preds = %._crit_edge.i.i.i.i.i.i, %bb.f, %bb.g
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 8
   store i64 %.8.val, ptr %i.u, align 8, !tbaa !37
   %i.v = getelementptr inbounds nuw i8, ptr %i.s, i64 %.8.val
   store i8 0, ptr %i.v, align 1, !tbaa !27
   %i.w = and i8 %.0.val1, 1
-  %i.x = getelementptr inbounds nuw i8, ptr %6, i64 32
+  %i.x = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i8 %i.w, ptr %i.x, align 8, !tbaa !28
-  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 36
+  %i.y = getelementptr inbounds nuw i8, ptr %4, i64 36
   store i32 %.0.val3, ptr %i.y, align 4, !tbaa !38
   %.not1.i.i.i = icmp eq ptr %.val32, %1
   br i1 %.not1.i.i.i, label %_ZNSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.h, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i
-  %.03.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %5, %bb.h ] ; 6 uses
+  %.03.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %3, %bb.h ] ; 6 uses
   %.092.i.i.i = phi ptr [ %i.ao, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ], [ %.val32, %bb.h ] ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !97)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !100)
@@ -341,7 +335,7 @@ _ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VMod
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit, label %.lr.ph.i.i.i, !llvm.loop !103
 
 _ZNSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit: ; preds = %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i, %bb.h
-  %.0.lcssa.i.i.i = phi ptr [ %5, %bb.h ], [ %i.ap, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %3, %bb.h ], [ %i.ap, %_ZSt19__relocate_object_aIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoES4_SaIS4_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 40 ; 2 uses
   %.not1.i.i.i39 = icmp eq ptr %1, %.val33
   br i1 %.not1.i.i.i39, label %_ZNSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit49, label %.lr.ph.i.i.i40
@@ -406,9 +400,9 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN4absl
   br label %_ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE13_M_deallocateEPS4_m.exit
 
 _ZNSt12_Vector_baseIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE13_M_deallocateEPS4_m.exit: ; preds = %_ZNSt6vectorIN4absl12lts_2024011612log_internal12_GLOBAL__N_111VModuleInfoESaIS4_EE11_S_relocateEPS4_S7_S7_RS5_.exit49, %bb.k
-  store ptr %5, ptr %0, align 8, !tbaa !39
+  store ptr %3, ptr %0, align 8, !tbaa !39
   store ptr %.0.lcssa.i.i.i48, ptr %i.a, align 8, !tbaa !41
-  %i.bm = getelementptr inbounds nuw [40 x i8], ptr %5, i64 %i.k
+  %i.bm = getelementptr inbounds nuw [40 x i8], ptr %3, i64 %i.k
   store ptr %i.bm, ptr %i.bi, align 8, !tbaa !42
   ret void
 
@@ -423,8 +417,7 @@ bb.m:                                             ; preds = %_ZNSt7__cxx1112basi
           catch ptr null
   %i.bp = extractvalue { ptr, i32 } %i.bo, 0
   %i.bq = tail call ptr @__cxa_begin_catch(ptr %i.bp) #19 ; 0 uses
-  %10 = mul nuw nsw i64 %i.k, 40
-  tail call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %10) #24
+  tail call void @_ZdlPvm(ptr noundef nonnull %3, i64 noundef %2) #24
   invoke void @__cxa_rethrow() #23
           to label %bb.p unwind label %bb.l
 

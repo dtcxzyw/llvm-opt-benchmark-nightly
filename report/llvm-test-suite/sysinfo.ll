@@ -201,32 +201,26 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 3 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775776
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.44) #28
   unreachable
 
-_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit: ; preds = %bb.a
   %3 = sdiv exact i64 %i.g, 48                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %3, i64 1)
   %4 = add nsw i64 %.sroa.speculated.i, %3        ; 2 uses
   %5 = icmp ult i64 %4, %3
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 192153584101141162)
-  %7 = select i1 %5, i64 192153584101141162, i64 %6 ; 4 uses
+  %7 = select i1 %5, i64 192153584101141162, i64 %6 ; 3 uses
   %8 = ptrtoint ptr %1 to i64
   %9 = sub i64 %8, %i.f
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit
-  %11 = mul nuw nsw i64 %7, 48
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #25
-  br label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit, %10
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %13, i64 %9 ; 7 uses
+  %.not.i = icmp ne i64 %7, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %10 = mul nuw nsw i64 %7, 48                    ; 2 uses
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #25 ; 6 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %11, i64 %9 ; 7 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 3 uses
   store ptr %i.j, ptr %i.i, align 8, !tbaa !12
   %i.k = load ptr, ptr %2, align 8, !tbaa !50     ; 2 uses
@@ -278,7 +272,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %._cri
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.e, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.an, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %13, %bb.e ] ; 6 uses
+  %.012.i.i.i = phi ptr [ %i.an, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %11, %bb.e ] ; 6 uses
   %.0911.i.i.i = phi ptr [ %i.am, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.d, %bb.e ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !173)
   call void @llvm.experimental.noalias.scope.decl(metadata !176)
@@ -323,7 +317,7 @@ _ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !179
 
 _ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i, %bb.e
-  %.0.lcssa.i.i.i = phi ptr [ %13, %bb.e ], [ %i.an, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %11, %bb.e ], [ %i.an, %_ZSt19__relocate_object_aIN9benchmark7CPUInfo9CacheInfoES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.ao = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 48 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.c
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit36, label %.lr.ph.i.i.i27
@@ -387,9 +381,9 @@ bb.h:                                             ; preds = %_ZNSt6vectorIN9benc
   br label %_ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN9benchmark7CPUInfo9CacheInfoESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN9benchmark7CPUInfo9CacheInfoESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit36, %bb.h
-  store ptr %13, ptr %0, align 8, !tbaa !116
+  store ptr %11, ptr %0, align 8, !tbaa !116
   store ptr %.0.lcssa.i.i.i35, ptr %i.b, align 8, !tbaa !107
-  %i.bj = getelementptr inbounds nuw [48 x i8], ptr %13, i64 %7
+  %i.bj = getelementptr inbounds nuw [48 x i8], ptr %11, i64 %7
   store ptr %i.bj, ptr %i.bf, align 8, !tbaa !108
   ret void
 
@@ -404,8 +398,7 @@ bb.j:                                             ; preds = %.noexc.i.i
           catch ptr null
   %i.bm = extractvalue { ptr, i32 } %i.bl, 0
   %i.bn = call ptr @__cxa_begin_catch(ptr %i.bm) #24 ; 0 uses
-  %14 = mul nuw nsw i64 %7, 48
-  call void @_ZdlPvm(ptr noundef nonnull %13, i64 noundef %14) #26
+  call void @_ZdlPvm(ptr noundef nonnull %11, i64 noundef %10) #26
   invoke void @__cxa_rethrow() #28
           to label %bb.m unwind label %bb.i
 

@@ -201,24 +201,18 @@ declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #12
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden void @_ZN2v88internal24CpuProfileJSONSerializer22SerializePositionTicksEPKNS_14CpuProfileNodeEi(ptr noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr noundef %1, i32 noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
-  %3 = sext i32 %2 to i64                         ; 3 uses
   %i.a = icmp slt i32 %2, 0
-  br i1 %i.a, label %bb.b, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
+  br i1 %i.a, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.85) #27
   unreachable
 
-_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i: ; preds = %bb.a
-  %.not.i.i.i.i = icmp eq i32 %2, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit.thread, label %bb.c
-
-_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit.thread: ; preds = %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  %4 = tail call noundef zeroext i1 @_ZNK2v814CpuProfileNode12GetLineTicksEPNS0_8LineTickEj(ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull null, i32 noundef %2) #30 ; 0 uses
-  unreachable
-
-bb.c:                                             ; preds = %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EE17_S_check_init_lenEmRKS3_.exit.i
-  %i.b = mul nuw nsw i64 %3, 12
+bb.c:                                             ; preds = %bb.a
+  %3 = zext nneg i32 %2 to i64                    ; 2 uses
+  %.not.i.i.i.i = icmp ne i32 %2, 0
+  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.b = mul nuw nsw i64 %3, 12                   ; 2 uses
   %i.c = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.b) #28 ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.c, i8 0, i64 12, i1 false)
   %i.d = add nsw i64 %3, -1                       ; 2 uses
@@ -395,8 +389,7 @@ _ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12: ; preds = %bb.r, %bb
   br i1 %exitcond.not, label %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit, label %bb.e, !llvm.loop !116
 
 _ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EED2Ev.exit: ; preds = %_ZN2v88internal18OutputStreamWriter12AddCharacterEc.exit12, %_ZNSt6vectorIN2v814CpuProfileNode8LineTickESaIS2_EEC2EmRKS3_.exit
-  %.idx = mul nuw nsw i64 %3, 12
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %.idx) #29
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef %i.b) #29
   ret void
 }
 

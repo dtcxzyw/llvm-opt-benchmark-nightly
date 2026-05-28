@@ -201,33 +201,26 @@ bb.d:                                             ; preds = %bb.c, %rb_ec_ractor
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal i64 @ractor_local_value_store_if_absent(ptr noundef %0, i64 %1, i64 noundef %2) #0 {
-  %4 = alloca %struct.ractor_local_storage_store_data, align 8 ; 7 uses
-  %5 = alloca i64, align 8                        ; 4 uses
-  %6 = getelementptr i8, ptr %0, i64 48
-  %.val = load ptr, ptr %6, align 8, !tbaa !11    ; 2 uses
-  %.not.i = icmp eq ptr %.val, null
-  br i1 %.not.i, label %rb_ec_ractor_ptr.exit, label %7
-
-7:                                                ; preds = %3
-  %8 = getelementptr i8, ptr %.val, i64 24
-  %9 = load ptr, ptr %8, align 8, !tbaa !26
-  br label %rb_ec_ractor_ptr.exit
-
-rb_ec_ractor_ptr.exit:                            ; preds = %3, %7
-  %.0.i = phi ptr [ %9, %7 ], [ null, %3 ]        ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
-  store ptr %0, ptr %4, align 8, !tbaa !218
-  %i.a = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.b = getelementptr i8, ptr %.0.i, i64 392     ; 2 uses
+rb_ec_ractor_ptr.exit:
+  %3 = alloca %struct.ractor_local_storage_store_data, align 8 ; 7 uses
+  %4 = alloca i64, align 8                        ; 4 uses
+  %5 = getelementptr i8, ptr %0, i64 48
+  %.val = load ptr, ptr %5, align 8, !tbaa !11, !nonnull !25, !noundef !25
+  %6 = getelementptr i8, ptr %.val, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !26       ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
+  store ptr %0, ptr %3, align 8, !tbaa !218
+  %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
+  %i.b = getelementptr i8, ptr %7, i64 392        ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !217  ; 3 uses
   store ptr %i.c, ptr %i.a, align 8, !tbaa !220
-  %i.d = getelementptr inbounds nuw i8, ptr %4, i64 16
+  %i.d = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.e = tail call i64 @rb_to_symbol(i64 noundef %2) #21
   %i.f = tail call i64 @rb_sym2id(i64 noundef %i.e) #21 ; 2 uses
   store i64 %i.f, ptr %i.d, align 8, !tbaa !221
-  %i.g = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %i.g = getelementptr inbounds nuw i8, ptr %3, i64 24
   store i64 %2, ptr %i.g, align 8, !tbaa !222
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #21
   %i.h = icmp eq ptr %i.c, null
   br i1 %i.h, label %bb.a, label %bb.b
 
@@ -238,16 +231,16 @@ bb.a:                                             ; preds = %rb_ec_ractor_ptr.ex
   br label %bb.d
 
 bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit
-  %i.j = call i32 @rb_id_table_lookup(ptr noundef nonnull %i.c, i64 noundef %i.f, ptr noundef nonnull %5) #21
+  %i.j = call i32 @rb_id_table_lookup(ptr noundef nonnull %i.c, i64 noundef %i.f, ptr noundef nonnull %4) #21
   %.not = icmp eq i32 %i.j, 0
   br i1 %.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = load i64, ptr %5, align 8, !tbaa !57
+  %i.k = load i64, ptr %4, align 8, !tbaa !57
   br label %bb.g
 
 bb.d:                                             ; preds = %bb.b, %bb.a
-  %i.l = getelementptr i8, ptr %.0.i, i64 400     ; 2 uses
+  %i.l = getelementptr i8, ptr %7, i64 400        ; 2 uses
   %i.m = load i64, ptr %i.l, align 8, !tbaa !223  ; 2 uses
   %.not10 = icmp eq i64 %i.m, 0
   br i1 %.not10, label %bb.e, label %bb.f
@@ -259,14 +252,14 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = phi i64 [ %i.n, %bb.e ], [ %i.m, %bb.d ]
-  %i.p = ptrtoint ptr %4 to i64
+  %i.p = ptrtoint ptr %3 to i64
   %i.q = call i64 @rb_mutex_synchronize(i64 noundef %i.o, ptr noundef nonnull @ractor_local_value_store_i, i64 noundef %i.p) #21
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.c
   %.0 = phi i64 [ %i.q, %bb.f ], [ %i.k, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #21
   ret i64 %.0
 }
 

@@ -201,22 +201,19 @@ _ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; p
   %i.bl = icmp ult i64 %i.bk, %i.bi
   %i.bm = call i64 @llvm.umin.i64(i64 %i.bk, i64 9223372036854775807)
   %i.bn = select i1 %i.bl, i64 9223372036854775807, i64 %i.bm ; 3 uses
-  %.not.i.i.i.i = icmp eq i64 %i.bn, 0
-  br i1 %.not.i.i.i.i, label %_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i, label %11
+  %.not.i.i.i.i = icmp ne i64 %i.bn, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %11 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bn) #28
+          to label %_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i unwind label %.loopexit ; 4 uses
 
-11:                                               ; preds = %_ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  %12 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bn) #28
-          to label %_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i unwind label %.loopexit
-
-_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds = %11, %_ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
-  %13 = phi ptr [ null, %_ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i ], [ %12, %11 ] ; 4 uses
-  %i.bo = getelementptr inbounds nuw i8, ptr %13, i64 %i.bi ; 2 uses
+_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i: ; preds = %_ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
+  %i.bo = getelementptr inbounds nuw i8, ptr %11, i64 %i.bi ; 2 uses
   store i8 %i.bb, ptr %i.bo, align 1, !tbaa !437
   %i.bp = icmp sgt i64 %i.bi, 0
   br i1 %i.bp, label %bb.q, label %_ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
 
 bb.q:                                             ; preds = %_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %13, ptr align 1 %i.bf, i64 %i.bi, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %11, ptr align 1 %i.bf, i64 %i.bi, i1 false)
   br label %_ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
 
 _ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i: ; preds = %bb.q, %_ZNSt12_Vector_baseIN6duckdb12PhysicalTypeESaIS1_EE11_M_allocateEm.exit.i.i.i
@@ -229,9 +226,9 @@ bb.r:                                             ; preds = %_ZNSt6vectorIN6duck
   br label %_ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i: ; preds = %bb.r, %_ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit16.i.i.i
-  store ptr %13, ptr %i.c, align 8, !tbaa !438
+  store ptr %11, ptr %i.c, align 8, !tbaa !438
   store ptr %i.bq, ptr %i.ao, align 8, !tbaa !435
-  %i.br = getelementptr inbounds nuw i8, ptr %13, i64 %i.bn
+  %i.br = getelementptr inbounds nuw i8, ptr %11, i64 %i.bn
   store ptr %i.br, ptr %i.ap, align 8, !tbaa !436
   br label %_ZNSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE9push_backEOS1_.exit
 
@@ -599,7 +596,7 @@ bb.ai:                                            ; preds = %bb.ah
   %.not = icmp eq ptr %i.fn, %i.an
   br i1 %.not, label %._crit_edge, label %bb.l
 
-.loopexit:                                        ; preds = %bb.l, %11
+.loopexit:                                        ; preds = %bb.l, %_ZNKSt6vectorIN6duckdb12PhysicalTypeESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.ap

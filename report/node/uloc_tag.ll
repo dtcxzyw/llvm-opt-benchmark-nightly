@@ -201,34 +201,30 @@ bb.dj:                                            ; preds = %_ZN12_GLOBAL__N_119
   %.052313.i = phi i32 [ 0, %.lr.ph.i95 ], [ %i.adz, %_ZN12_GLOBAL__N_119_addExtensionToListEPPNS_18ExtensionListEntryES1_b.exit.thread.i ] ; 6 uses
   %.0179312.i = phi i8 [ 0, %.lr.ph.i95 ], [ %.2.i, %_ZN12_GLOBAL__N_119_addExtensionToListEPPNS_18ExtensionListEntryES1_b.exit.thread.i ] ; 4 uses
   %.0181304.i = phi ptr [ null, %.lr.ph.i95 ], [ %.1182.i, %_ZN12_GLOBAL__N_119_addExtensionToListEPPNS_18ExtensionListEntryES1_b.exit.thread.i ] ; 13 uses
-  %.0710.i.i = load ptr, ptr %i.lt, align 8       ; 5 uses
-  %.not11.i.i = icmp eq ptr %.0710.i.i, null
-  br i1 %.not11.i.i, label %_ZN12_GLOBAL__N_123ultag_getExtensionValueEPKNS_12ULanguageTagEi.exit.i, label %.lr.ph.i62.i.preheader
-
-.lr.ph.i62.i.preheader:                           ; preds = %bb.dj
-  %14 = icmp eq i32 %.052313.i, 0
-  br i1 %14, label %.lr.ph.i62.i._crit_edge, label %.lr.ph688
+  %.0710.i.i = load ptr, ptr %i.lt, align 8, !nonnull !34, !noundef !34 ; 4 uses
+  %.not11.i.i = icmp eq i32 %.052313.i, 0
+  br i1 %.not11.i.i, label %.lr.ph.i62.i._crit_edge, label %.lr.ph688
 
 .lr.ph.i62.i:                                     ; preds = %.lr.ph688
   %i.na = add nuw nsw i32 %.012.i.i687, 1         ; 2 uses
   %i.nb = icmp eq i32 %i.na, %.052313.i
   br i1 %i.nb, label %.lr.ph.i62.i._crit_edge, label %.lr.ph688, !llvm.loop !62
 
-.lr.ph.i62.i._crit_edge:                          ; preds = %.lr.ph.i62.i, %.lr.ph.i62.i.preheader
-  %.0713.i.i.lcssa = phi ptr [ %.0710.i.i, %.lr.ph.i62.i.preheader ], [ %.07.i63.i, %.lr.ph.i62.i ]
+.lr.ph.i62.i._crit_edge:                          ; preds = %.lr.ph.i62.i, %bb.dj
+  %.0713.i.i.lcssa = phi ptr [ %.0710.i.i, %bb.dj ], [ %.07.i63.i, %.lr.ph.i62.i ]
   %i.nc = load ptr, ptr %.0713.i.i.lcssa, align 8
   br label %_ZN12_GLOBAL__N_121ultag_getExtensionKeyEPKNS_12ULanguageTagEi.exit.i
 
-.lr.ph688:                                        ; preds = %.lr.ph.i62.i.preheader, %.lr.ph.i62.i
-  %.012.i.i687 = phi i32 [ %i.na, %.lr.ph.i62.i ], [ 0, %.lr.ph.i62.i.preheader ]
-  %.0713.i.i686 = phi ptr [ %.07.i63.i, %.lr.ph.i62.i ], [ %.0710.i.i, %.lr.ph.i62.i.preheader ]
+.lr.ph688:                                        ; preds = %bb.dj, %.lr.ph.i62.i
+  %.012.i.i687 = phi i32 [ %i.na, %.lr.ph.i62.i ], [ 0, %bb.dj ]
+  %.0713.i.i686 = phi ptr [ %.07.i63.i, %.lr.ph.i62.i ], [ %.0710.i.i, %bb.dj ]
   %i.nd = getelementptr inbounds nuw i8, ptr %.0713.i.i686, i64 16
   %.07.i63.i = load ptr, ptr %i.nd, align 8       ; 3 uses
   %.not.i.i96 = icmp eq ptr %.07.i63.i, null
   br i1 %.not.i.i96, label %_ZN12_GLOBAL__N_121ultag_getExtensionKeyEPKNS_12ULanguageTagEi.exit.i, label %.lr.ph.i62.i, !llvm.loop !62
 
 _ZN12_GLOBAL__N_121ultag_getExtensionKeyEPKNS_12ULanguageTagEi.exit.i: ; preds = %.lr.ph688, %.lr.ph.i62.i._crit_edge
-  %.08.i.i = phi ptr [ %i.nc, %.lr.ph.i62.i._crit_edge ], [ null, %.lr.ph688 ] ; 2 uses
+  %.08.i.i = phi ptr [ %i.nc, %.lr.ph.i62.i._crit_edge ], [ null, %.lr.ph688 ] ; 4 uses
   %i.ne = icmp eq i32 %.052313.i, 0
   br i1 %i.ne, label %.lr.ph.i66.i._crit_edge, label %.lr.ph692
 
@@ -251,10 +247,9 @@ _ZN12_GLOBAL__N_121ultag_getExtensionKeyEPKNS_12ULanguageTagEi.exit.i: ; preds =
   %.not.i70.i = icmp eq ptr %.07.i69.i, null
   br i1 %.not.i70.i, label %_ZN12_GLOBAL__N_123ultag_getExtensionValueEPKNS_12ULanguageTagEi.exit.i, label %.lr.ph.i66.i, !llvm.loop !63
 
-_ZN12_GLOBAL__N_123ultag_getExtensionValueEPKNS_12ULanguageTagEi.exit.i: ; preds = %.lr.ph692, %.lr.ph.i66.i._crit_edge, %bb.dj
-  %.08.i203.i = phi ptr [ %.08.i.i, %.lr.ph.i66.i._crit_edge ], [ null, %bb.dj ], [ %.08.i.i, %.lr.ph692 ] ; 4 uses
-  %.08.i71.i = phi ptr [ %i.ni, %.lr.ph.i66.i._crit_edge ], [ null, %bb.dj ], [ null, %.lr.ph692 ] ; 3 uses
-  %i.nk = load i8, ptr %.08.i203.i, align 1
+_ZN12_GLOBAL__N_123ultag_getExtensionValueEPKNS_12ULanguageTagEi.exit.i: ; preds = %.lr.ph692, %.lr.ph.i66.i._crit_edge
+  %.08.i71.i = phi ptr [ %i.ni, %.lr.ph.i66.i._crit_edge ], [ null, %.lr.ph692 ] ; 3 uses
+  %i.nk = load i8, ptr %.08.i.i, align 1
   %i.nl = icmp eq i8 %i.nk, 117
   br i1 %i.nl, label %_ZN12_GLOBAL__N_121ultag_getVariantsSizeEPKNS_12ULanguageTagE.exit.i, label %bb.hm
 
@@ -657,7 +652,7 @@ bb.hu:                                            ; preds = %bb.ht
   %.val8.i.i = load ptr, ptr %i.mb, align 8
   %i.adj = getelementptr inbounds [8 x i8], ptr %.val8.i.i, i64 %i.adi
   store ptr %i.ada, ptr %i.adj, align 8
-  store ptr %.08.i203.i, ptr %i.ada, align 8
+  store ptr %.08.i.i, ptr %i.ada, align 8
   %i.adk = getelementptr inbounds nuw i8, ptr %i.ada, i64 8
   store ptr %.08.i71.i, ptr %i.adk, align 8
   %i.adl = icmp eq ptr %.0181304.i, null
@@ -665,13 +660,13 @@ bb.hu:                                            ; preds = %bb.ht
 
 .preheader.i85.i:                                 ; preds = %bb.hu
   %i.adm = load ptr, ptr %.0181304.i, align 8
-  %i.adn = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.08.i203.i, ptr noundef nonnull dereferenceable(1) %i.adm) #11 ; 2 uses
+  %i.adn = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.08.i.i, ptr noundef nonnull dereferenceable(1) %i.adm) #11 ; 2 uses
   %i.ado = icmp slt i32 %i.adn, 0
   br i1 %i.ado, label %_ZN12_GLOBAL__N_119_addExtensionToListEPPNS_18ExtensionListEntryES1_b.exit.thread.sink.split.i, label %.thread.i86.i
 
 bb.hv:                                            ; preds = %.thread.thread61.i.i
   %i.adp = load ptr, ptr %i.adv, align 8
-  %i.adq = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.08.i203.i, ptr noundef nonnull dereferenceable(1) %i.adp) #11 ; 2 uses
+  %i.adq = call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %.08.i.i, ptr noundef nonnull dereferenceable(1) %i.adp) #11 ; 2 uses
   %i.adr = icmp slt i32 %i.adq, 0
   br i1 %i.adr, label %_ZN12_GLOBAL__N_119_addExtensionToListEPPNS_18ExtensionListEntryES1_b.exit.thread.sink.split.sink.split.i, label %.thread.i86.i, !llvm.loop !68
 

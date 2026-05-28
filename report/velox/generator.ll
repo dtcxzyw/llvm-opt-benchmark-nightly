@@ -201,38 +201,32 @@ _ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.l = select i1 %i.j, i64 384307168202282325, i64 %i.k ; 3 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i.a = icmp eq i64 %i.l, 0
-  br i1 %.not.i.a, label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit, label %5
+  %.not.i = icmp ne i64 %i.l, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %5 = mul nuw nsw i64 %i.l, 24
+  %6 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #23 ; 5 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.n ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %9 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  %10 = load i8, ptr %9, align 8, !tbaa !1373     ; 2 uses
+  %.not.i.a = icmp eq i8 %10, 0
+  br i1 %.not.i.a, label %_ZN5arrow5DatumC2EOS0_.exit, label %.sink.split.i.i.i.i.i.i.i.i
 
-5:                                                ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit
-  %6 = mul nuw nsw i64 %i.l, 24
-  %7 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #23
-  br label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit, %5
-  %8 = phi ptr [ %7, %5 ], [ null, %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 %i.n ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %12 = load i8, ptr %11, align 8, !tbaa !1373    ; 2 uses
-  %13 = icmp eq i8 %12, 0
-  br i1 %13, label %_ZN5arrow5DatumC2EOS0_.exit, label %.sink.split.i.i.i.i.i.i.i.i
-
-.sink.split.i.i.i.i.i.i.i.i:                      ; preds = %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit
+.sink.split.i.i.i.i.i.i.i.i:                      ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.p = load <2 x ptr>, ptr %2, align 8, !tbaa !18
   store ptr null, ptr %i.o, align 8, !tbaa !14
-  store <2 x ptr> %i.p, ptr %9, align 8, !tbaa !18
+  store <2 x ptr> %i.p, ptr %7, align 8, !tbaa !18
   store ptr null, ptr %2, align 8, !tbaa !18
   br label %_ZN5arrow5DatumC2EOS0_.exit
 
-_ZN5arrow5DatumC2EOS0_.exit:                      ; preds = %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit, %.sink.split.i.i.i.i.i.i.i.i
-  store i8 %12, ptr %10, align 8, !tbaa !1373
+_ZN5arrow5DatumC2EOS0_.exit:                      ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit, %.sink.split.i.i.i.i.i.i.i.i
+  store i8 %10, ptr %8, align 8, !tbaa !1373
   %.not11.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not11.i.i.i, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN5arrow5DatumC2EOS0_.exit, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
-  %.013.i.i.i = phi ptr [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %8, %_ZN5arrow5DatumC2EOS0_.exit ] ; 3 uses
+  %.013.i.i.i = phi ptr [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %6, %_ZN5arrow5DatumC2EOS0_.exit ] ; 3 uses
   %.0912.i.i.i = phi ptr [ %i.y, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZN5arrow5DatumC2EOS0_.exit ] ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1463)
   call void @llvm.experimental.noalias.scope.decl(metadata !1466)
@@ -271,7 +265,7 @@ _ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i: ; pr
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !1448
 
 _ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i, %_ZN5arrow5DatumC2EOS0_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %8, %_ZN5arrow5DatumC2EOS0_.exit ], [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %6, %_ZN5arrow5DatumC2EOS0_.exit ], [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 24 ; 2 uses
   %.not11.i.i.i16 = icmp eq ptr %1, %i.b
   br i1 %.not11.i.i.i16, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit25, label %.lr.ph.i.i.i17
@@ -329,9 +323,9 @@ bb.e:                                             ; preds = %_ZNSt6vectorIN5arro
   br label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE13_M_deallocateEPS1_m.exit
 
 _ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit25, %bb.e
-  store ptr %8, ptr %0, align 8, !tbaa !1376
+  store ptr %6, ptr %0, align 8, !tbaa !1376
   store ptr %.0.lcssa.i.i.i24, ptr %i.a, align 8, !tbaa !1369
-  %i.ap = getelementptr inbounds nuw [24 x i8], ptr %8, i64 %i.l
+  %i.ap = getelementptr inbounds nuw [24 x i8], ptr %6, i64 %i.l
   store ptr %i.ap, ptr %i.al, align 8, !tbaa !1372
   ret void
 }

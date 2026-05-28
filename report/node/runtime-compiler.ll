@@ -201,32 +201,23 @@ _ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit: ;
   %i.m = inttoptr i64 %i.l to ptr                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   call void @_ZN2v88internal18StackFrameIteratorC1EPNS0_7IsolateE(ptr noundef nonnull align 8 dereferenceable(128) %3, ptr noundef nonnull %2) #14
-  %i.n = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 2 uses
-  %i.o = load ptr, ptr %i.n, align 8
-  %i.p = icmp eq ptr %i.o, null
-  br i1 %i.p, label %_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit, label %5
-
-5:                                                ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 96
   call void @_ZN2v88internal28JavaScriptStackFrameIterator7AdvanceEv(ptr noundef nonnull align 8 dereferenceable(128) %3) #14
-  %.pre = load ptr, ptr %i.n, align 8
-  br label %_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit
+  %.pre = load ptr, ptr %5, align 8               ; 6 uses
+  %6 = load i64, ptr %i.m, align 8
+  %7 = load ptr, ptr %.pre, align 8
+  %i.n = getelementptr inbounds nuw i8, ptr %7, i64 88
+  %i.o = load ptr, ptr %i.n, align 8
+  %8 = call i64 %i.o(ptr noundef nonnull align 8 dereferenceable(80) %.pre) #14, !inline_history !23
+  %i.p = icmp eq i64 %6, %8
+  br i1 %i.p, label %bb.e, label %bb.c
 
-_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit: ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit, %5
-  %6 = phi ptr [ null, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit ], [ %.pre, %5 ] ; 6 uses
-  %7 = load i64, ptr %i.m, align 8
-  %8 = load ptr, ptr %6, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 88
-  %10 = load ptr, ptr %9, align 8
-  %11 = call i64 %10(ptr noundef nonnull align 8 dereferenceable(80) %6) #14, !inline_history !23
-  %.not20 = icmp eq i64 %7, %11
-  br i1 %.not20, label %bb.e, label %bb.c
-
-bb.c:                                             ; preds = %_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit
+bb.c:                                             ; preds = %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
-  %i.q = load ptr, ptr %6, align 8
+  %i.q = load ptr, ptr %.pre, align 8
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 88
   %i.s = load ptr, ptr %i.r, align 8
-  %i.t = call i64 %i.s(ptr noundef nonnull align 8 dereferenceable(80) %6) #14, !inline_history !23
+  %i.t = call i64 %i.s(ptr noundef nonnull align 8 dereferenceable(80) %.pre) #14, !inline_history !23
   store i64 %i.t, ptr %4, align 8
   %i.u = call noundef zeroext i1 @_ZNK2v88internal10JSFunction20ActiveTierIsTurbofanENS0_17IsolateForSandboxE(ptr noundef nonnull align 8 dereferenceable(8) %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
@@ -235,14 +226,14 @@ bb.c:                                             ; preds = %_ZN2v88internal28Ja
 bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 58640
   %i.w = load ptr, ptr %i.v, align 8
-  %i.x = load ptr, ptr %6, align 8
+  %i.x = load ptr, ptr %.pre, align 8
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 88
   %i.z = load ptr, ptr %i.y, align 8
-  %i.aa = call i64 %i.z(ptr noundef nonnull align 8 dereferenceable(80) %6) #14, !inline_history !23
+  %i.aa = call i64 %i.z(ptr noundef nonnull align 8 dereferenceable(80) %.pre) #14, !inline_history !23
   call void @_ZN2v88internal14TieringManager27MarkForTurboFanOptimizationENS0_6TaggedINS0_10JSFunctionEEE(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i64 %i.aa) #14
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %_ZN2v88internal28JavaScriptStackFrameIteratorC2EPNS0_7IsolateE.exit
+bb.e:                                             ; preds = %bb.d, %bb.c, %_ZNK2v88internal9ArgumentsILNS0_13ArgumentsTypeE0EE17address_of_arg_atEi.exit
   %i.ab = call fastcc i64 @_ZN2v88internal12_GLOBAL__N_129CompileOptimizedOSRFromMaglevEPNS0_7IsolateENS0_12DirectHandleINS0_10JSFunctionEEENS0_14BytecodeOffsetE(ptr noundef nonnull %2, ptr nonnull %i.m, i32 %i.j)
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   store ptr %i.b, ptr %i.a, align 8

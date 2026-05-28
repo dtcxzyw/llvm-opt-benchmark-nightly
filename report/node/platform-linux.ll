@@ -201,13 +201,13 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.9) #21
   unreachable
 
-_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit: ; preds = %bb.a
   %5 = sdiv exact i64 %i.f, 56                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   %6 = add nsw i64 %.sroa.speculated.i, %5        ; 2 uses
@@ -216,17 +216,11 @@ _ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exi
   %9 = select i1 %7, i64 164703072086692425, i64 %8 ; 3 uses
   %10 = ptrtoint ptr %1 to i64
   %11 = sub i64 %10, %i.e
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit, label %12
-
-12:                                               ; preds = %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit
-  %13 = mul nuw nsw i64 %9, 56
-  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #19
-  br label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit, %12
-  %15 = phi ptr [ %14, %12 ], [ null, %_ZNKSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 %11 ; 7 uses
+  %.not.i = icmp ne i64 %9, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %12 = mul nuw nsw i64 %9, 56
+  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #19 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %13, i64 %11 ; 7 uses
   %i.i = load i64, ptr %3, align 8
   %i.j = load i64, ptr %4, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 3 uses
@@ -291,7 +285,7 @@ _ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stri
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %15, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 6 uses
+  %.012.i.i.i = phi ptr [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %13, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 6 uses
   %.0911.i.i.i = phi ptr [ %i.ao, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ] ; 8 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
@@ -336,7 +330,7 @@ _ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i, !llvm.loop !42
 
 _ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit
-  %.0.lcssa.i.i.i = phi ptr [ %15, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ], [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %13, %_ZSt12construct_atIN2v84base2OS20SharedLibraryAddressEJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERmRKmEEDTgsnwcvPvLi0E_T_pispclsr3stdE7declvalIT0_EEEEPSG_DpOSH_.exit ], [ %i.ap, %_ZSt19__relocate_object_aIN2v84base2OS20SharedLibraryAddressES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 56 ; 2 uses
   %.not10.i.i.i18 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i18, label %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, label %.lr.ph.i.i.i19
@@ -400,9 +394,9 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN2v84b
   br label %_ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseIN2v84base2OS20SharedLibraryAddressESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN2v84base2OS20SharedLibraryAddressESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, %bb.k
-  store ptr %15, ptr %0, align 8
+  store ptr %13, ptr %0, align 8
   store ptr %.0.lcssa.i.i.i27, ptr %i.a, align 8
-  %i.bl = getelementptr inbounds nuw [56 x i8], ptr %15, i64 %9
+  %i.bl = getelementptr inbounds nuw [56 x i8], ptr %13, i64 %9
   store ptr %i.bl, ptr %i.bh, align 8
   ret void
 }

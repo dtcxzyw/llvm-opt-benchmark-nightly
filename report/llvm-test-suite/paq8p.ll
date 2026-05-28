@@ -201,21 +201,15 @@ bb.br:                                            ; preds = %bb.aa, %bb.z, %bb.y
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN13RunContextMapC2Ei(ptr noundef nonnull align 8 dereferenceable(40) %0, i32 noundef %1) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
-  %3 = sdiv i32 %1, 4                             ; 2 uses
-  %4 = shl nsw i32 %3, 2                          ; 3 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 %4, ptr %5, align 4, !tbaa !159
-  store i32 %4, ptr %0, align 8, !tbaa !161
-  %6 = icmp slt i32 %1, 4
-  br i1 %6, label %7, label %bb.a
-
-7:                                                ; preds = %2
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %8, i8 0, i64 16, i1 false)
-  br label %_ZN2BHILi4EEC2Ei.exit
-
-bb.a:                                             ; preds = %2
-  %narrow.i.i.i = add nuw i32 %4, 64              ; 2 uses
+bb.a:
+  %2 = lshr i32 %1, 2
+  %3 = and i32 %1, 2147483644                     ; 3 uses
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  store i32 %3, ptr %4, align 4, !tbaa !159
+  store i32 %3, ptr %0, align 8, !tbaa !161
+  %5 = icmp sgt i32 %1, 3
+  tail call void @llvm.assume(i1 %5)
+  %narrow.i.i.i = add nuw i32 %3, 64              ; 2 uses
   %i.a = load i32, ptr @programChecker, align 8, !tbaa !15
   %i.b = add nsw i32 %i.a, %narrow.i.i.i          ; 3 uses
   store i32 %i.b, ptr @programChecker, align 8, !tbaa !15
@@ -233,40 +227,36 @@ _ZN14ProgramChecker5allocEi.exit.i.i.i:           ; preds = %bb.b, %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.f, ptr %i.g, align 8, !tbaa !162
   %.not.i.i.i = icmp eq ptr %i.f, null
-  br i1 %.not.i.i.i, label %bb.c, label %9
+  br i1 %.not.i.i.i, label %bb.c, label %_ZN2BHILi4EEC2Ei.exit
 
 bb.c:                                             ; preds = %_ZN14ProgramChecker5allocEi.exit.i.i.i
   tail call void @_Z4quitPKc(ptr noundef nonnull @.str.59)
   unreachable
 
-9:                                                ; preds = %_ZN14ProgramChecker5allocEi.exit.i.i.i
-  %10 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
-  %11 = ptrtoint ptr %i.f to i64
-  %12 = and i64 %11, 63
-  %13 = sub nsw i64 0, %12
-  %14 = getelementptr inbounds i8, ptr %10, i64 %13 ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %14, ptr %15, align 8, !tbaa !163
-  br label %_ZN2BHILi4EEC2Ei.exit
-
-_ZN2BHILi4EEC2Ei.exit:                            ; preds = %7, %9
-  %16 = phi ptr [ null, %7 ], [ %14, %9 ]         ; 19 uses
+_ZN2BHILi4EEC2Ei.exit:                            ; preds = %_ZN14ProgramChecker5allocEi.exit.i.i.i
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 64
+  %7 = ptrtoint ptr %i.f to i64
+  %8 = and i64 %7, 63
+  %9 = sub nsw i64 0, %8
+  %10 = getelementptr inbounds i8, ptr %6, i64 %9 ; 20 uses
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store ptr %10, ptr %11, align 8, !tbaa !163
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.i = add nsw i32 %3, -1
+  %i.i = add nsw i32 %2, -1
   store i32 %i.i, ptr %i.h, align 8, !tbaa !238
-  %i.j = getelementptr i8, ptr %16, i64 2         ; 2 uses
+  %i.j = getelementptr i8, ptr %10, i64 2         ; 2 uses
   %i.k = load i8, ptr %i.j, align 1, !tbaa !11
   %i.l = icmp eq i8 %i.k, 0
   br i1 %i.l, label %.loopexit.i, label %bb.d
 
 bb.d:                                             ; preds = %_ZN2BHILi4EEC2Ei.exit
-  %i.m = load i16, ptr %16, align 2, !tbaa !33
+  %i.m = load i16, ptr %10, align 2, !tbaa !33
   %i.n = icmp eq i16 %i.m, 0
   br i1 %i.n, label %bb.u, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = getelementptr i8, ptr %16, i64 4         ; 4 uses
-  %i.p = getelementptr i8, ptr %16, i64 6
+  %i.o = getelementptr i8, ptr %10, i64 4         ; 4 uses
+  %i.p = getelementptr i8, ptr %10, i64 6
   %i.q = load i8, ptr %i.p, align 2, !tbaa !11
   %i.r = icmp eq i8 %i.q, 0
   br i1 %i.r, label %.loopexit.thread48.i, label %bb.f
@@ -277,8 +267,8 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.t, label %.loopexit.thread.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.u = getelementptr i8, ptr %16, i64 8         ; 3 uses
-  %i.v = getelementptr i8, ptr %16, i64 10
+  %i.u = getelementptr i8, ptr %10, i64 8         ; 3 uses
+  %i.v = getelementptr i8, ptr %10, i64 10
   %i.w = load i8, ptr %i.v, align 2, !tbaa !11
   %i.x = icmp eq i8 %i.w, 0
   br i1 %i.x, label %.loopexit.thread48.i, label %bb.h
@@ -289,8 +279,8 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.z, label %.loopexit.thread.i, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.aa = getelementptr i8, ptr %16, i64 12       ; 3 uses
-  %i.ab = getelementptr i8, ptr %16, i64 14
+  %i.aa = getelementptr i8, ptr %10, i64 12       ; 3 uses
+  %i.ab = getelementptr i8, ptr %10, i64 14
   %i.ac = load i8, ptr %i.ab, align 2, !tbaa !11
   %i.ad = icmp eq i8 %i.ac, 0
   br i1 %i.ad, label %.loopexit.thread48.i, label %bb.j
@@ -301,8 +291,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.af, label %.loopexit.thread.i, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ag = getelementptr i8, ptr %16, i64 16       ; 3 uses
-  %i.ah = getelementptr i8, ptr %16, i64 18
+  %i.ag = getelementptr i8, ptr %10, i64 16       ; 3 uses
+  %i.ah = getelementptr i8, ptr %10, i64 18
   %i.ai = load i8, ptr %i.ah, align 2, !tbaa !11
   %i.aj = icmp eq i8 %i.ai, 0
   br i1 %i.aj, label %.loopexit.thread48.i, label %bb.l
@@ -313,8 +303,8 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.al, label %.loopexit.thread.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.am = getelementptr i8, ptr %16, i64 20       ; 3 uses
-  %i.an = getelementptr i8, ptr %16, i64 22
+  %i.am = getelementptr i8, ptr %10, i64 20       ; 3 uses
+  %i.an = getelementptr i8, ptr %10, i64 22
   %i.ao = load i8, ptr %i.an, align 2, !tbaa !11
   %i.ap = icmp eq i8 %i.ao, 0
   br i1 %i.ap, label %.loopexit.thread48.i, label %bb.n
@@ -325,8 +315,8 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.ar, label %.loopexit.thread.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.as = getelementptr i8, ptr %16, i64 24       ; 3 uses
-  %i.at = getelementptr i8, ptr %16, i64 26
+  %i.as = getelementptr i8, ptr %10, i64 24       ; 3 uses
+  %i.at = getelementptr i8, ptr %10, i64 26
   %i.au = load i8, ptr %i.at, align 2, !tbaa !11  ; 2 uses
   %i.av = icmp eq i8 %i.au, 0
   br i1 %i.av, label %.loopexit.thread48.i, label %bb.p
@@ -337,8 +327,8 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ax, label %.loopexit.thread.i, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %i.ay = getelementptr i8, ptr %16, i64 28       ; 3 uses
-  %i.az = getelementptr i8, ptr %16, i64 30
+  %i.ay = getelementptr i8, ptr %10, i64 28       ; 3 uses
+  %i.az = getelementptr i8, ptr %10, i64 30
   %i.ba = load i8, ptr %i.az, align 2, !tbaa !11  ; 2 uses
   %i.bb = icmp eq i8 %i.ba, 0
   br i1 %i.bb, label %.loopexit.thread48.i, label %bb.r
@@ -355,7 +345,7 @@ bb.r:                                             ; preds = %bb.q
   br label %.loopexit.thread.i
 
 .loopexit.i:                                      ; preds = %_ZN2BHILi4EEC2Ei.exit
-  store i16 0, ptr %16, align 2, !tbaa !33
+  store i16 0, ptr %10, align 2, !tbaa !33
   br label %bb.u
 
 bb.s:                                             ; preds = %bb.r
@@ -374,8 +364,8 @@ bb.s:                                             ; preds = %bb.r
 bb.t:                                             ; preds = %.loopexit.thread.i, %bb.s
   %i.bh = phi i32 [ %i.bg, %.loopexit.thread.i ], [ 0, %bb.s ]
   %.1.i = phi i64 [ %.03642.i, %.loopexit.thread.i ], [ %spec.select.i, %bb.s ]
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.o, ptr nonnull align 1 %16, i64 %.1.i, i1 false)
-  store i32 %i.bh, ptr %16, align 2
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.o, ptr nonnull align 1 %10, i64 %.1.i, i1 false)
+  store i32 %i.bh, ptr %10, align 2
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %.loopexit.i, %bb.d
@@ -778,6 +768,9 @@ declare i16 @llvm.abs.i16(i16, i1 immarg) #18
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i8 @llvm.fshl.i8(i8, i8, i8) #21
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #37
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #21
 
@@ -792,9 +785,6 @@ declare <8 x i32> @llvm.smax.v8i32(<8 x i32>, <8 x i32>) #21
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i32> @llvm.smin.v8i32(<8 x i32>, <8 x i32>) #21
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #37
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #21

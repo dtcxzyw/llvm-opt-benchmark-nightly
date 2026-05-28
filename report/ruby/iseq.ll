@@ -201,22 +201,12 @@ bb.bl:                                            ; preds = %bb.bi
 
 bb.bm:                                            ; preds = %bb.bl
   %i.gx = call zeroext i1 @rb_gc_checking_shareable() #20
-  br i1 %i.gx, label %bb.bu, label %2
+  br i1 %i.gx, label %bb.bu, label %ISEQ_COMPILE_DATA.exit
 
-2:                                                ; preds = %bb.bm
-  %3 = load i64, ptr %0, align 8, !tbaa !101
-  %4 = and i64 %3, 262144
-  %.not.i123 = icmp eq i64 %4, 0
-  br i1 %.not.i123, label %ISEQ_COMPILE_DATA.exit, label %5
-
-5:                                                ; preds = %2
-  %6 = getelementptr i8, ptr %0, i64 24
-  %7 = load ptr, ptr %6, align 8, !tbaa !90
-  br label %ISEQ_COMPILE_DATA.exit
-
-ISEQ_COMPILE_DATA.exit:                           ; preds = %2, %5
-  %.0.i = phi ptr [ %7, %5 ], [ null, %2 ]        ; 3 uses
-  %i.gy = getelementptr i8, ptr %.0.i, i64 104
+ISEQ_COMPILE_DATA.exit:                           ; preds = %bb.bm
+  %2 = getelementptr i8, ptr %0, i64 24           ; 2 uses
+  %3 = load ptr, ptr %2, align 8, !tbaa !90       ; 3 uses
+  %i.gy = getelementptr i8, ptr %3, i64 104
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !112
   call void @rb_iseq_mark_and_move_insn_storage(ptr noundef %i.gz) #20
   br i1 %1, label %bb.bn, label %bb.bo
@@ -229,8 +219,7 @@ bb.bn:                                            ; preds = %ISEQ_COMPILE_DATA.e
 
 bb.bo:                                            ; preds = %ISEQ_COMPILE_DATA.exit, %bb.bn
   %i.hb = phi ptr [ %.val.val, %bb.bn ], [ null, %ISEQ_COMPILE_DATA.exit ] ; 4 uses
-  %8 = getelementptr i8, ptr %0, i64 24
-  %i.hc = load ptr, ptr %8, align 8, !tbaa !90    ; 4 uses
+  %i.hc = load ptr, ptr %2, align 8, !tbaa !90    ; 4 uses
   %i.hd = getelementptr i8, ptr %i.hc, i64 16
   %i.he = load i32, ptr %i.hd, align 8, !tbaa !148
   %i.hf = getelementptr i8, ptr %i.hc, i64 24
@@ -361,8 +350,8 @@ iseq_scan_bits.exit28.i:                          ; preds = %bb.bt, %.lr.ph.spli
   br i1 %exitcond.not.i130, label %rb_iseq_mark_and_move_each_compile_data_value.exit, label %.lr.ph.split.i, !llvm.loop !153
 
 rb_iseq_mark_and_move_each_compile_data_value.exit: ; preds = %iseq_scan_bits.exit28.i, %iseq_scan_bits.exit28.us.i, %bb.br, %.lr.ph.split.us.i.i136, %bb.bo, %.preheader.i
-  call void @rb_gc_mark_and_move(ptr noundef %.0.i) #20
-  %i.iv = getelementptr i8, ptr %.0.i, i64 8
+  call void @rb_gc_mark_and_move(ptr noundef %3) #20
+  %i.iv = getelementptr i8, ptr %3, i64 8
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.bk, %rb_iseq_mark_and_move_each_compile_data_value.exit
@@ -765,27 +754,21 @@ declare i64 @rb_iseq_compile_node(ptr noundef, ptr noundef) local_unnamed_addr #
 
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc void @finish_iseq_build(ptr noundef %0) unnamed_addr #0 {
-  %2 = alloca i64, align 8                        ; 3 uses
-  %3 = load i64, ptr %0, align 8, !tbaa !101      ; 2 uses
-  %4 = and i64 %3, 262144
-  %.not.i = icmp eq i64 %4, 0
-  br i1 %.not.i, label %bb.a, label %5
-
-5:                                                ; preds = %1
-  %6 = getelementptr i8, ptr %0, i64 24
-  %7 = load ptr, ptr %6, align 8, !tbaa !90
-  br label %bb.a
-
-bb.a:                                             ; preds = %5, %1
-  %.0.i = phi ptr [ %7, %5 ], [ null, %1 ]        ; 5 uses
+bb.a:
+  %1 = alloca i64, align 8                        ; 3 uses
+  %2 = load i64, ptr %0, align 8, !tbaa !101      ; 2 uses
+  %3 = and i64 %2, 262144
+  %.not.i = icmp ne i64 %3, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %4 = getelementptr i8, ptr %0, i64 24           ; 2 uses
+  %5 = load ptr, ptr %4, align 8, !tbaa !90       ; 5 uses
   %i.a = getelementptr i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !18
-  %i.c = load i64, ptr %.0.i, align 8, !tbaa !271 ; 3 uses
-  %i.d = and i64 %3, -262145
+  %i.c = load i64, ptr %5, align 8, !tbaa !271    ; 3 uses
+  %i.d = and i64 %2, -262145
   store i64 %i.d, ptr %0, align 8, !tbaa !101
-  %8 = getelementptr i8, ptr %0, i64 24
-  store ptr null, ptr %8, align 8, !tbaa !90
-  %i.e = getelementptr i8, ptr %.0.i, i64 88
+  store ptr null, ptr %4, align 8, !tbaa !90
+  %i.e = getelementptr i8, ptr %5, i64 88
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !102  ; 2 uses
   %.not4.i.i = icmp eq ptr %i.f, null
   br i1 %.not4.i.i, label %free_arena.exit.i, label %.lr.ph.i.i
@@ -798,7 +781,7 @@ bb.a:                                             ; preds = %5, %1
   br i1 %.not.i.i, label %free_arena.exit.i, label %.lr.ph.i.i, !llvm.loop !111
 
 free_arena.exit.i:                                ; preds = %.lr.ph.i.i, %bb.a
-  %i.h = getelementptr i8, ptr %.0.i, i64 104
+  %i.h = getelementptr i8, ptr %5, i64 104
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !112  ; 2 uses
   %.not4.i8.i = icmp eq ptr %i.i, null
   br i1 %.not4.i8.i, label %free_arena.exit12.i, label %.lr.ph.i9.i
@@ -811,7 +794,7 @@ free_arena.exit.i:                                ; preds = %.lr.ph.i.i, %bb.a
   br i1 %.not.i11.i, label %free_arena.exit12.i, label %.lr.ph.i9.i, !llvm.loop !111
 
 free_arena.exit12.i:                              ; preds = %.lr.ph.i9.i, %free_arena.exit.i
-  %i.k = getelementptr i8, ptr %.0.i, i64 160
+  %i.k = getelementptr i8, ptr %5, i64 160
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !113  ; 2 uses
   %.not7.i = icmp eq ptr %i.l, null
   br i1 %.not7.i, label %compile_data_free.exit, label %bb.b
@@ -821,13 +804,13 @@ bb.b:                                             ; preds = %free_arena.exit12.i
   br label %compile_data_free.exit
 
 compile_data_free.exit:                           ; preds = %free_arena.exit12.i, %bb.b
-  tail call void @ruby_xfree(ptr noundef nonnull %.0.i) #20
+  tail call void @ruby_xfree(ptr noundef nonnull %5) #20
   %i.m = and i64 %i.c, -5
   %.not = icmp eq i64 %i.m, 0
   br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %compile_data_free.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #20
+  call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
   %i.n = getelementptr i8, ptr %i.b, i64 64
   %i.o = load i64, ptr %i.n, align 8, !tbaa !269  ; 4 uses
   %i.p = icmp ne i64 %i.o, 0
@@ -862,7 +845,7 @@ RARRAY_AREF.exit.i:                               ; preds = %bb.e, %bb.d
 
 pathobj_path.exit:                                ; preds = %bb.c, %RARRAY_AREF.exit.i
   %.0.i13 = phi i64 [ %i.y, %RARRAY_AREF.exit.i ], [ %i.o, %bb.c ]
-  store i64 %.0.i13, ptr %2, align 8, !tbaa !11
+  store i64 %.0.i13, ptr %1, align 8, !tbaa !11
   %i.z = icmp eq i64 %i.c, 20
   br i1 %i.z, label %bb.f, label %bb.g
 
@@ -874,7 +857,7 @@ bb.f:                                             ; preds = %pathobj_path.exit
 bb.g:                                             ; preds = %bb.f, %pathobj_path.exit
   %.0 = phi i64 [ %i.ab, %bb.f ], [ %i.c, %pathobj_path.exit ] ; 2 uses
   %i.ac = tail call fastcc i64 @rbimpl_intern_const(ptr noundef @finish_iseq_build.rbimpl_id, ptr noundef @.str.111) #25
-  %i.ad = call i64 @rb_funcallv(i64 noundef %.0, i64 noundef %i.ac, i32 noundef 1, ptr noundef nonnull %2) #20 ; 0 uses
+  %i.ad = call i64 @rb_funcallv(i64 noundef %.0, i64 noundef %i.ac, i32 noundef 1, ptr noundef nonnull %1) #20 ; 0 uses
   call void @rb_exc_raise(i64 noundef %.0) #22
   unreachable
 
@@ -1277,13 +1260,8 @@ bb.ca:                                            ; preds = %bb.bz, %RARRAY_AREF
   %i.rl = getelementptr i8, ptr %.val, i64 128
   %i.rm = load i32, ptr %i.rl, align 8, !tbaa !154
   %i.rn = load ptr, ptr %i.rk, align 8, !tbaa !83 ; 2 uses
-  switch i32 %i.rm, label %bb.cb [
-    i32 0, label %get_insn_info.exit
-    i32 1, label %1
-  ]
-
-1:                                                ; preds = %bb.ca
-  br label %get_insn_info.exit
+  %cond = icmp eq i32 %i.rm, 1
+  br i1 %cond, label %get_insn_info.exit, label %bb.cb
 
 bb.cb:                                            ; preds = %bb.ca
   %i.ro = getelementptr i8, ptr %.val, i64 136
@@ -1350,8 +1328,8 @@ succ_index_lookup.exit.i.i:                       ; preds = %bb.cf, %bb.cc
   %i.th = getelementptr [12 x i8], ptr %i.rn, i64 %i.tg
   br label %get_insn_info.exit
 
-get_insn_info.exit:                               ; preds = %bb.ca, %1, %succ_index_lookup.exit.i.i
-  %.0.i.i533 = phi ptr [ %i.th, %succ_index_lookup.exit.i.i ], [ %i.rn, %1 ], [ null, %bb.ca ] ; 6 uses
+get_insn_info.exit:                               ; preds = %bb.ca, %succ_index_lookup.exit.i.i
+  %.0.i.i533 = phi ptr [ %i.th, %succ_index_lookup.exit.i.i ], [ %i.rn, %bb.ca ] ; 6 uses
   %i.ti = getelementptr i8, ptr %.0.i.i533, i64 4
   %i.tj = load i32, ptr %i.ti, align 4, !tbaa !295
   %i.tk = sext i32 %i.tj to i64

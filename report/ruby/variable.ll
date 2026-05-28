@@ -201,7 +201,7 @@ bb.k:                                             ; preds = %bb.j
 .thread100:                                       ; preds = %.thread, %rb_check_frozen_inline.exit, %bb.k, %bb.j
   %.06499103 = phi i64 [ %i.ae, %bb.k ], [ %i.ae, %bb.j ], [ %0, %rb_check_frozen_inline.exit ], [ %i.af, %.thread ] ; 2 uses
   %.165 = phi i64 [ %i.ah, %bb.k ], [ %i.ae, %bb.j ], [ %0, %rb_check_frozen_inline.exit ], [ %i.af, %.thread ] ; 10 uses
-  %i.ai = inttoptr i64 %.165 to ptr               ; 8 uses
+  %i.ai = inttoptr i64 %.165 to ptr               ; 7 uses
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !20
   %i.ak = lshr i64 %i.aj, 32
   %i.al = trunc nuw i64 %i.ak to i32              ; 2 uses
@@ -209,7 +209,7 @@ bb.k:                                             ; preds = %bb.j
   %i.am = call i32 @rb_shape_transition_remove_ivar(i64 noundef %.165, i64 noundef %1, ptr noundef nonnull %i.b) #26 ; 6 uses
   %i.an = and i32 %i.am, 134217728
   %.not104 = icmp eq i32 %i.an, 0
-  br i1 %.not104, label %3, label %bb.l, !prof !97
+  br i1 %.not104, label %bb.t, label %bb.l, !prof !97
 
 bb.l:                                             ; preds = %.thread100
   %i.ao = and i32 %i.al, 134217728
@@ -255,27 +255,25 @@ bb.s:                                             ; preds = %bb.r, %rb_imemo_fie
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #26
   br label %bb.aa
 
-3:                                                ; preds = %.thread100
-  %4 = icmp eq i32 %i.am, %i.al
-  br i1 %4, label %bb.ah, label %bb.t
-
-bb.t:                                             ; preds = %3
-  %.not.i78.a = icmp eq i64 %.165, 0
-  br i1 %.not.i78.a, label %rb_imemo_fields_ptr.exit, label %bb.u
+bb.t:                                             ; preds = %.thread100
+  %.not.i78.a = icmp eq i32 %i.am, %i.al
+  br i1 %.not.i78.a, label %bb.ah, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
+  %.not.i78 = icmp ne i64 %.165, 0
+  call void @llvm.assume(i1 %.not.i78)
   %i.aw = load i64, ptr %i.ai, align 8, !tbaa !20
   %i.ax = and i64 %i.aw, 65536
   %.not5.i = icmp eq i64 %i.ax, 0
-  %i.ay = getelementptr i8, ptr %i.ai, i64 16     ; 2 uses
+  %i.ay = getelementptr i8, ptr %i.ai, i64 16     ; 3 uses
   br i1 %.not5.i, label %rb_imemo_fields_ptr.exit, label %bb.v, !prof !97
 
 bb.v:                                             ; preds = %bb.u
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !42
   br label %rb_imemo_fields_ptr.exit
 
-rb_imemo_fields_ptr.exit:                         ; preds = %bb.t, %bb.u, %bb.v
-  %.0.i79 = phi ptr [ %i.az, %bb.v ], [ null, %bb.t ], [ %i.ay, %bb.u ] ; 3 uses
+rb_imemo_fields_ptr.exit:                         ; preds = %bb.u, %bb.v
+  %.0.i79 = phi ptr [ %i.az, %bb.v ], [ %i.ay, %bb.u ] ; 3 uses
   %i.ba = load i32, ptr %i.b, align 4, !tbaa !7
   %i.bb = and i32 %i.ba, 524287
   %i.bc = load ptr, ptr @rb_shape_tree, align 8, !tbaa !113 ; 2 uses
@@ -334,8 +332,7 @@ rb_imemo_fields_ptr.exit83:                       ; preds = %bb.y
   store i64 %i.cg, ptr %i.ai, align 8, !tbaa !20
   %i.ch = zext i16 %i.bp to i64
   %i.ci = shl nuw nsw i64 %i.ch, 3
-  %5 = getelementptr i8, ptr %i.ai, i64 16
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %5, ptr noundef nonnull readonly align 1 %.0.i79, i64 noundef range(i64 1, 0) %i.ci, i1 noundef false) #26
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.ay, ptr noundef nonnull readonly align 1 %.0.i79, i64 noundef range(i64 1, 0) %i.ci, i1 noundef false) #26
   call void @ruby_xfree(ptr noundef nonnull %.0.i79) #26
   br label %bb.aa
 
@@ -415,8 +412,8 @@ RCLASS_WRITABLE_SET_FIELDS_OBJ.exit:              ; preds = %bb.af, %RCLASS_EXT_
   %i.dc = load i64, ptr %i.a, align 8, !tbaa !16
   br label %bb.ah
 
-bb.ah:                                            ; preds = %3, %RCLASS_WRITABLE_SET_FIELDS_OBJ.exit
-  %.0 = phi i64 [ %i.dc, %RCLASS_WRITABLE_SET_FIELDS_OBJ.exit ], [ %2, %3 ]
+bb.ah:                                            ; preds = %bb.t, %RCLASS_WRITABLE_SET_FIELDS_OBJ.exit
+  %.0 = phi i64 [ %i.dc, %RCLASS_WRITABLE_SET_FIELDS_OBJ.exit ], [ %2, %bb.t ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #26
   br label %bb.ai
 

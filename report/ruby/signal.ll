@@ -201,34 +201,25 @@ bb.b:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 2 uses
   store ptr %i.n, ptr %i.o, align 8, !tbaa !78
   %i.p = getelementptr i8, ptr %.0..0..0..0..0..0..i, i64 48
-  %.0.1.val.a = load ptr, ptr %i.p, align 8, !tbaa !22 ; 3 uses
-  %.not.i.i = icmp eq ptr %.0.1.val.a, null
-  br i1 %.not.i.i, label %rb_ec_ractor_ptr.exit.i, label %3
+  %.0.1.val = load ptr, ptr %i.p, align 8, !tbaa !22, !nonnull !79, !noundef !79 ; 2 uses
+  %3 = getelementptr i8, ptr %.0.1.val, i64 32
+  %4 = load ptr, ptr %3, align 8, !tbaa !80       ; 2 uses
+  %5 = getelementptr i8, ptr %.0.1.val, i64 24
+  %6 = load ptr, ptr %5, align 8, !tbaa !94
+  %7 = getelementptr i8, ptr %4, i64 88
+  %.0.1.val.a = load ptr, ptr %7, align 8, !tbaa !95
+  %.not.i.i = icmp eq ptr %.0.1.val.a, %6
+  br i1 %.not.i.i, label %bb.c, label %rb_ec_vm_lock_rec.exit
 
-3:                                                ; preds = %bb.b
-  %4 = getelementptr i8, ptr %.0.1.val.a, i64 32
-  %5 = load ptr, ptr %4, align 8, !tbaa !79
-  %6 = getelementptr i8, ptr %.0.1.val.a, i64 24
-  %7 = load ptr, ptr %6, align 8, !tbaa !93
-  br label %rb_ec_ractor_ptr.exit.i
-
-rb_ec_ractor_ptr.exit.i:                          ; preds = %3, %bb.b
-  %.0.i2.i = phi ptr [ %5, %3 ], [ null, %bb.b ]  ; 2 uses
-  %.0.i7.i = phi ptr [ %7, %3 ], [ null, %bb.b ]
-  %8 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %8, align 8, !tbaa !94
-  %9 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %9, label %bb.c, label %rb_ec_vm_lock_rec.exit
-
-bb.c:                                             ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.q = getelementptr i8, ptr %.0.i2.i, i64 96
-  %i.r = load i32, ptr %i.q, align 8, !tbaa !95
+bb.c:                                             ; preds = %bb.b
+  %i.q = getelementptr i8, ptr %4, i64 96
+  %i.r = load i32, ptr %i.q, align 8, !tbaa !96
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.c
-  %.0.i = phi i32 [ %i.r, %bb.c ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.b, %bb.c
+  %.0.i = phi i32 [ %i.r, %bb.c ], [ 0, %bb.b ]
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 68
-  store i32 %.0.i, ptr %i.s, align 4, !tbaa !96
+  store i32 %.0.i, ptr %i.s, align 4, !tbaa !97
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.u = tail call ptr @llvm.frameaddress.p0(i32 0)
   store ptr %i.u, ptr %i.t, align 8
@@ -237,7 +228,7 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
   store ptr %i.v, ptr %i.w, align 8
   %i.x = call i32 @llvm.eh.sjlj.setjmp(ptr nonnull %i.t)
   %.not = icmp eq i32 %i.x, 0                     ; 2 uses
-  br i1 %.not, label %bb.e, label %bb.d, !prof !97
+  br i1 %.not, label %bb.e, label %bb.d, !prof !98
 
 bb.d:                                             ; preds = %rb_ec_vm_lock_rec.exit
   %.0..0..0..0.2 = load volatile ptr, ptr %i.d, align 8, !tbaa !20
@@ -640,7 +631,7 @@ bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #16
   %i.cs = icmp eq ptr %.0.i.i93, inttoptr (i64 1 to ptr)
   %i.ct = select i1 %i.cs, ptr null, ptr %.0.i.i93
-  store ptr %i.ct, ptr @default_sigbus_handler, align 8, !tbaa !98
+  store ptr %i.ct, ptr @default_sigbus_handler, align 8, !tbaa !99
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #16
   %i.cu = getelementptr inbounds nuw i8, ptr %19, i64 8
@@ -668,7 +659,7 @@ bb.t:                                             ; preds = %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #16
   %i.db = icmp eq ptr %.0.i.i99, inttoptr (i64 1 to ptr)
   %i.dc = select i1 %i.db, ptr null, ptr %.0.i.i99
-  store ptr %i.dc, ptr @default_sigill_handler, align 8, !tbaa !98
+  store ptr %i.dc, ptr @default_sigill_handler, align 8, !tbaa !99
   %i.dd = load i32, ptr @rb_sigaltstack_size_value, align 4, !tbaa !7 ; 2 uses
   %.not.i = icmp eq i32 %i.dd, 0
   br i1 %.not.i, label %bb.u, label %bb.v
@@ -710,7 +701,7 @@ rb_allocate_sigaltstack.exit:                     ; preds = %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #16
   %i.dr = load ptr, ptr @ruby_current_vm_ptr, align 8, !tbaa !11
   %i.ds = getelementptr i8, ptr %i.dr, i64 488
-  store ptr %i.dq, ptr %i.ds, align 8, !tbaa !99
+  store ptr %i.dq, ptr %i.ds, align 8, !tbaa !100
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #16
   %i.dt = getelementptr inbounds nuw i8, ptr %15, i64 8
@@ -738,7 +729,7 @@ bb.y:                                             ; preds = %rb_allocate_sigalts
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #16
   %i.eb = icmp eq ptr %.0.i.i106, inttoptr (i64 1 to ptr)
   %i.ec = select i1 %i.eb, ptr null, ptr %.0.i.i106
-  store ptr %i.ec, ptr @default_sigsegv_handler, align 8, !tbaa !98
+  store ptr %i.ec, ptr @default_sigsegv_handler, align 8, !tbaa !99
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #16
   %i.ed = getelementptr inbounds nuw i8, ptr %13, i64 8
@@ -760,7 +751,7 @@ install_sighandler_core.exit115.thread:           ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #16
   %i.ek = icmp eq ptr %.0.i.i112, inttoptr (i64 1 to ptr)
   %i.el = select i1 %i.ek, ptr null, ptr %.0.i.i112
-  store ptr %i.el, ptr @default_sigabrt_handler, align 8, !tbaa !98
+  store ptr %i.el, ptr @default_sigabrt_handler, align 8, !tbaa !99
   br label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
@@ -1163,7 +1154,7 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.h = tail call i64 @rb_hash_aset(i64 noundef %i.a, i64 noundef %i.b, i64 noundef %i.g) #16 ; 0 uses
   %i.i = getelementptr i8, ptr %.05, i64 12       ; 2 uses
   %i.j = icmp ult ptr %i.i, getelementptr inbounds nuw (i8, ptr @siglist, i64 408)
-  br i1 %i.j, label %bb.b, label %bb.c, !llvm.loop !100
+  br i1 %i.j, label %bb.b, label %bb.c, !llvm.loop !101
 
 bb.c:                                             ; preds = %bb.b
   ret i64 %i.a
@@ -1376,7 +1367,7 @@ define internal void @sigbus(i32 noundef %0, ptr noundef readonly captures(none)
 bb.a:
   tail call fastcc void @check_reserved_signal_(ptr noundef nonnull @.str.40, i64 noundef 3)
   %i.a = getelementptr i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !101
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !102
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -1385,14 +1376,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 120
-  %.val = load i64, ptr %i.g, align 8, !tbaa !103
+  %.val = load i64, ptr %i.g, align 8, !tbaa !104
   %i.h = getelementptr i8, ptr %2, i64 160
-  %.val7 = load i64, ptr %i.h, align 8, !tbaa !103
+  %.val7 = load i64, ptr %i.h, align 8, !tbaa !104
   tail call fastcc void @check_stack_overflow(i32 noundef %0, i64 noundef %i.f, i64 %.val, i64 %.val7)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.i = load ptr, ptr @default_sigbus_handler, align 8, !tbaa !98
+  %i.i = load ptr, ptr @default_sigbus_handler, align 8, !tbaa !99
   %i.j = getelementptr i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !59
   tail call void (ptr, i32, ptr, ptr, ...) @rb_bug_for_fatal_signal(ptr noundef %i.i, i32 noundef %0, ptr noundef %2, ptr noundef nonnull @.str.41, ptr noundef %i.k) #18
@@ -1404,7 +1395,7 @@ define internal void @sigill(i32 noundef %0, ptr noundef readonly captures(none)
 bb.a:
   tail call fastcc void @check_reserved_signal_(ptr noundef nonnull @.str.42, i64 noundef 3)
   %i.a = getelementptr i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !101
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !102
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -1413,14 +1404,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 120
-  %.val = load i64, ptr %i.g, align 8, !tbaa !103
+  %.val = load i64, ptr %i.g, align 8, !tbaa !104
   %i.h = getelementptr i8, ptr %2, i64 160
-  %.val7 = load i64, ptr %i.h, align 8, !tbaa !103
+  %.val7 = load i64, ptr %i.h, align 8, !tbaa !104
   tail call fastcc void @check_stack_overflow(i32 noundef %0, i64 noundef %i.f, i64 %.val, i64 %.val7)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.i = load ptr, ptr @default_sigill_handler, align 8, !tbaa !98
+  %i.i = load ptr, ptr @default_sigill_handler, align 8, !tbaa !99
   %i.j = getelementptr i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !59
   tail call void (ptr, i32, ptr, ptr, ...) @rb_bug_for_fatal_signal(ptr noundef %i.i, i32 noundef %0, ptr noundef %2, ptr noundef nonnull @.str.43, ptr noundef %i.k) #18
@@ -1432,7 +1423,7 @@ define internal void @sigsegv(i32 noundef %0, ptr noundef readonly captures(none
 bb.a:
   tail call fastcc void @check_reserved_signal_(ptr noundef nonnull @.str.44, i64 noundef 4)
   %i.a = getelementptr i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !101
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !102
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -1441,14 +1432,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 120
-  %.val = load i64, ptr %i.g, align 8, !tbaa !103
+  %.val = load i64, ptr %i.g, align 8, !tbaa !104
   %i.h = getelementptr i8, ptr %2, i64 160
-  %.val7 = load i64, ptr %i.h, align 8, !tbaa !103
+  %.val7 = load i64, ptr %i.h, align 8, !tbaa !104
   tail call fastcc void @check_stack_overflow(i32 noundef %0, i64 noundef %i.f, i64 %.val, i64 %.val7)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.i = load ptr, ptr @default_sigsegv_handler, align 8, !tbaa !98
+  %i.i = load ptr, ptr @default_sigsegv_handler, align 8, !tbaa !99
   %i.j = getelementptr i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !59
   tail call void (ptr, i32, ptr, ptr, ...) @rb_bug_for_fatal_signal(ptr noundef %i.i, i32 noundef %0, ptr noundef %2, ptr noundef nonnull @.str.45, ptr noundef %i.k) #18
@@ -1460,7 +1451,7 @@ define internal void @sigabrt(i32 noundef %0, ptr noundef readonly captures(none
 bb.a:
   tail call fastcc void @check_reserved_signal_(ptr noundef nonnull @.str.46, i64 noundef 4)
   %i.a = getelementptr i8, ptr %1, i64 8
-  %i.b = load i32, ptr %i.a, align 8, !tbaa !101
+  %i.b = load i32, ptr %i.a, align 8, !tbaa !102
   %i.c = icmp eq i32 %i.b, 0
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -1469,14 +1460,14 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !59
   %i.f = ptrtoint ptr %i.e to i64
   %i.g = getelementptr i8, ptr %2, i64 120
-  %.val = load i64, ptr %i.g, align 8, !tbaa !103
+  %.val = load i64, ptr %i.g, align 8, !tbaa !104
   %i.h = getelementptr i8, ptr %2, i64 160
-  %.val7 = load i64, ptr %i.h, align 8, !tbaa !103
+  %.val7 = load i64, ptr %i.h, align 8, !tbaa !104
   tail call fastcc void @check_stack_overflow(i32 noundef %0, i64 noundef %i.f, i64 %.val, i64 %.val7)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %i.i = load ptr, ptr @default_sigabrt_handler, align 8, !tbaa !98
+  %i.i = load ptr, ptr @default_sigabrt_handler, align 8, !tbaa !99
   %i.j = getelementptr i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !59
   tail call void (ptr, i32, ptr, ptr, ...) @rb_bug_for_fatal_signal(ptr noundef %i.i, i32 noundef %0, ptr noundef %2, ptr noundef nonnull @.str.47, ptr noundef %i.k) #18
@@ -1562,34 +1553,25 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !74   ; 3 uses
   store i32 0, ptr %i.c, align 8, !tbaa !74
   %i.e = getelementptr i8, ptr %i.b, i64 68
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !96   ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !97   ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 48
-  %.val.i.a = load ptr, ptr %i.g, align 8, !tbaa !22 ; 3 uses
-  %.not.i.i.i = icmp eq ptr %.val.i.a, null
-  br i1 %.not.i.i.i, label %rb_ec_ractor_ptr.exit.i.i, label %1
+  %.val.i = load ptr, ptr %i.g, align 8, !tbaa !22, !nonnull !79, !noundef !79 ; 2 uses
+  %1 = getelementptr i8, ptr %.val.i, i64 32
+  %2 = load ptr, ptr %1, align 8, !tbaa !80       ; 2 uses
+  %3 = getelementptr i8, ptr %.val.i, i64 24
+  %4 = load ptr, ptr %3, align 8, !tbaa !94
+  %5 = getelementptr i8, ptr %2, i64 88
+  %.val.i.a = load ptr, ptr %5, align 8, !tbaa !95
+  %.not.i.i.i = icmp eq ptr %.val.i.a, %4
+  br i1 %.not.i.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr i8, ptr %.val.i.a, i64 32
-  %3 = load ptr, ptr %2, align 8, !tbaa !79
-  %4 = getelementptr i8, ptr %.val.i.a, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !93
-  br label %rb_ec_ractor_ptr.exit.i.i
-
-rb_ec_ractor_ptr.exit.i.i:                        ; preds = %1, %bb.a
-  %.0.i2.i.i = phi ptr [ %3, %1 ], [ null, %bb.a ] ; 2 uses
-  %.0.i7.i.i = phi ptr [ %5, %1 ], [ null, %bb.a ]
-  %6 = getelementptr i8, ptr %.0.i2.i.i, i64 88
-  %.val5.i.i = load ptr, ptr %6, align 8, !tbaa !94
-  %7 = icmp eq ptr %.val5.i.i, %.0.i7.i.i
-  br i1 %7, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i.i
-  %i.h = getelementptr i8, ptr %.0.i2.i.i, i64 96
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !95
+bb.b:                                             ; preds = %bb.a
+  %i.h = getelementptr i8, ptr %2, i64 96
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !96
   br label %rb_ec_vm_lock_rec.exit.i
 
-rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %rb_ec_ractor_ptr.exit.i.i
-  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i.i ] ; 2 uses
+rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %bb.a
+  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.not.i = icmp eq i32 %.0.i.i, %i.f
   br i1 %.not.i, label %rb_ec_vm_lock_rec_check.exit, label %bb.c
 
@@ -1731,20 +1713,20 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = inttoptr i64 %i.b to ptr                 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #16
-  store ptr %0, ptr %2, align 16, !tbaa !98
+  store ptr %0, ptr %2, align 16, !tbaa !99
   %.sroa.26.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 %1, ptr %.sroa.26.0..sroa_idx, align 8, !tbaa !16
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 16
-  store ptr @check_reserved_signal_.msg1, ptr %i.d, align 16, !tbaa !98
+  store ptr @check_reserved_signal_.msg1, ptr %i.d, align 16, !tbaa !99
   %.sroa.24.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
   store i64 13, ptr %.sroa.24.0..sroa_idx, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.f = tail call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.c) #24
-  store ptr %i.c, ptr %i.e, align 16, !tbaa !98
+  store ptr %i.c, ptr %i.e, align 16, !tbaa !99
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 40
   store i64 %i.f, ptr %.sroa.22.0..sroa_idx, align 8, !tbaa !16
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48
-  store ptr @check_reserved_signal_.msg2, ptr %i.g, align 16, !tbaa !98
+  store ptr @check_reserved_signal_.msg2, ptr %i.g, align 16, !tbaa !99
   %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 56
   store i64 9, ptr %.sroa.2.0..sroa_idx, align 8, !tbaa !16
   %i.h = call i64 @writev(i32 noundef 2, ptr noundef nonnull %2, i32 noundef 4) #16 ; 0 uses
@@ -2147,29 +2129,30 @@ attributes #28 = { noreturn }
 !76 = !{!75, !17, i64 0}
 !77 = !{!23, !26, i64 24}
 !78 = !{!75, !26, i64 56}
-!79 = !{!80, !12, i64 32}
-!80 = !{!"rb_thread_struct", !38, i64 0, !17, i64 16, !40, i64 24, !12, i64 32, !81, i64 40, !21, i64 48, !82, i64 56, !42, i64 208, !8, i64 212, !17, i64 216, !87, i64 224, !17, i64 232, !17, i64 240, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !9, i64 249, !8, i64 252, !13, i64 256, !17, i64 264, !17, i64 272, !17, i64 280, !17, i64 288, !9, i64 296, !88, i64 336, !17, i64 352, !89, i64 360, !37, i64 368, !90, i64 384, !9, i64 392, !8, i64 416, !27, i64 424, !17, i64 432, !8, i64 440, !17, i64 448, !91, i64 456, !92, i64 464}
-!81 = !{!"p1 _ZTS16rb_native_thread", !13, i64 0}
-!82 = !{!"rb_thread_sched_item", !83, i64 0, !84, i64 80, !8, i64 128, !42, i64 132, !42, i64 133, !13, i64 136, !86, i64 144}
-!83 = !{!"", !38, i64 0, !38, i64 16, !38, i64 32, !38, i64 48, !38, i64 64}
-!84 = !{!"rb_thread_sched_waiting", !8, i64 0, !85, i64 8, !38, i64 32}
-!85 = !{!"", !17, i64 0, !8, i64 8, !8, i64 12, !8, i64 16}
-!86 = !{!"p1 _ZTS17coroutine_context", !13, i64 0}
-!87 = !{!"p1 _ZTS15rb_calling_info", !13, i64 0}
-!88 = !{!"rb_unblock_callback", !13, i64 0, !13, i64 8}
-!89 = !{!"p1 _ZTS15rb_mutex_struct", !13, i64 0}
-!90 = !{!"p1 _ZTS15rb_waiting_list", !13, i64 0}
-!91 = !{!"any p2 pointer", !13, i64 0}
-!92 = !{!"rb_ext_config", !42, i64 0}
-!93 = !{!80, !40, i64 24}
-!94 = !{!35, !40, i64 88}
-!95 = !{!35, !8, i64 96}
-!96 = !{!75, !8, i64 68}
-!97 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!98 = !{!13, !13, i64 0}
-!99 = !{!35, !13, i64 488}
-!100 = distinct !{!100, !19}
-!101 = !{!102, !8, i64 8}
-!102 = !{!"", !8, i64 0, !8, i64 4, !8, i64 8, !8, i64 12, !9, i64 16}
-!103 = !{!29, !29, i64 0}
+!79 = !{}
+!80 = !{!81, !12, i64 32}
+!81 = !{!"rb_thread_struct", !38, i64 0, !17, i64 16, !40, i64 24, !12, i64 32, !82, i64 40, !21, i64 48, !83, i64 56, !42, i64 208, !8, i64 212, !17, i64 216, !88, i64 224, !17, i64 232, !17, i64 240, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !8, i64 248, !9, i64 249, !8, i64 252, !13, i64 256, !17, i64 264, !17, i64 272, !17, i64 280, !17, i64 288, !9, i64 296, !89, i64 336, !17, i64 352, !90, i64 360, !37, i64 368, !91, i64 384, !9, i64 392, !8, i64 416, !27, i64 424, !17, i64 432, !8, i64 440, !17, i64 448, !92, i64 456, !93, i64 464}
+!82 = !{!"p1 _ZTS16rb_native_thread", !13, i64 0}
+!83 = !{!"rb_thread_sched_item", !84, i64 0, !85, i64 80, !8, i64 128, !42, i64 132, !42, i64 133, !13, i64 136, !87, i64 144}
+!84 = !{!"", !38, i64 0, !38, i64 16, !38, i64 32, !38, i64 48, !38, i64 64}
+!85 = !{!"rb_thread_sched_waiting", !8, i64 0, !86, i64 8, !38, i64 32}
+!86 = !{!"", !17, i64 0, !8, i64 8, !8, i64 12, !8, i64 16}
+!87 = !{!"p1 _ZTS17coroutine_context", !13, i64 0}
+!88 = !{!"p1 _ZTS15rb_calling_info", !13, i64 0}
+!89 = !{!"rb_unblock_callback", !13, i64 0, !13, i64 8}
+!90 = !{!"p1 _ZTS15rb_mutex_struct", !13, i64 0}
+!91 = !{!"p1 _ZTS15rb_waiting_list", !13, i64 0}
+!92 = !{!"any p2 pointer", !13, i64 0}
+!93 = !{!"rb_ext_config", !42, i64 0}
+!94 = !{!81, !40, i64 24}
+!95 = !{!35, !40, i64 88}
+!96 = !{!35, !8, i64 96}
+!97 = !{!75, !8, i64 68}
+!98 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!99 = !{!13, !13, i64 0}
+!100 = !{!35, !13, i64 488}
+!101 = distinct !{!101, !19}
+!102 = !{!103, !8, i64 8}
+!103 = !{!"", !8, i64 0, !8, i64 4, !8, i64 8, !8, i64 12, !9, i64 16}
+!104 = !{!29, !29, i64 0}
 end_hunk_3

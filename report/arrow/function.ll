@@ -201,37 +201,31 @@ _ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 384307168202282325)
-  %i.l = select i1 %i.j, i64 384307168202282325, i64 %i.k ; 4 uses
+  %i.l = select i1 %i.j, i64 384307168202282325, i64 %i.k ; 3 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp eq i64 %i.l, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit, label %6
-
-6:                                                ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit
-  %7 = mul nuw nsw i64 %i.l, 24
-  %8 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %7) #25
-  br label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit, %6
-  %9 = phi ptr [ %8, %6 ], [ null, %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 %i.n ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 2 uses
-  store i8 -1, ptr %11, align 8, !tbaa !356
+  %.not.i = icmp ne i64 %i.l, 0
+  tail call void @llvm.assume(i1 %.not.i)
+  %6 = mul nuw nsw i64 %i.l, 24                   ; 2 uses
+  %7 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %6) #25 ; 6 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.n ; 3 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
+  store i8 -1, ptr %9, align 8, !tbaa !356
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
-  store ptr %10, ptr %5, align 8, !tbaa !358
+  store ptr %8, ptr %5, align 8, !tbaa !358
   invoke void @_ZSt10__do_visitINSt8__detail9__variant20__variant_idx_cookieEZNS1_15_Copy_ctor_baseILb0EJN5arrow5Datum5EmptyESt10shared_ptrINS4_6ScalarEES7_INS4_9ArrayDataEES7_INS4_12ChunkedArrayEES7_INS4_11RecordBatchEES7_INS4_5TableEEEEC1ERKSI_EUlOT_T0_E_JRKSt7variantIJS6_S9_SB_SD_SF_SH_EEEEDcOSN_DpOT1_(ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(24) %2)
           to label %bb.c unwind label %_ZSt8_DestroyIPN5arrow5DatumES1_EvT_S3_RSaIT0_E.exit
 
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit
+bb.c:                                             ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.p = load i8, ptr %i.o, align 8, !tbaa !356
-  store i8 %i.p, ptr %11, align 8, !tbaa !356
+  store i8 %i.p, ptr %9, align 8, !tbaa !356
   %.not11.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not11.i.i.i, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i
-  %.013.i.i.i = phi ptr [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %9, %bb.c ] ; 3 uses
+  %.013.i.i.i = phi ptr [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %7, %bb.c ] ; 3 uses
   %.0912.i.i.i = phi ptr [ %i.y, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %bb.c ] ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !625)
   call void @llvm.experimental.noalias.scope.decl(metadata !628)
@@ -270,7 +264,7 @@ _ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i: ; pr
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit, label %.lr.ph.i.i.i, !llvm.loop !631
 
 _ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit: ; preds = %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i, %bb.c
-  %.0.lcssa.i.i.i = phi ptr [ %9, %bb.c ], [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %7, %bb.c ], [ %i.z, %_ZSt19__relocate_object_aIN5arrow5DatumES1_SaIS1_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.aa = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 24 ; 2 uses
   %.not11.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not11.i.i.i26, label %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit35, label %.lr.ph.i.i.i27
@@ -328,9 +322,9 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN5arro
   br label %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE13_M_deallocateEPS1_m.exit
 
 _ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZNSt6vectorIN5arrow5DatumESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit35, %bb.f
-  store ptr %9, ptr %0, align 8, !tbaa !173
+  store ptr %7, ptr %0, align 8, !tbaa !173
   store ptr %.0.lcssa.i.i.i34, ptr %i.a, align 8, !tbaa !170
-  %i.ap = getelementptr inbounds nuw [24 x i8], ptr %9, i64 %i.l
+  %i.ap = getelementptr inbounds nuw [24 x i8], ptr %7, i64 %i.l
   store ptr %i.ap, ptr %i.al, align 8, !tbaa !174
   ret void
 
@@ -340,15 +334,14 @@ bb.g:                                             ; preds = %_ZSt8_DestroyIPN5ar
   invoke void @__cxa_end_catch()
           to label %bb.h unwind label %bb.i
 
-_ZSt8_DestroyIPN5arrow5DatumES1_EvT_S3_RSaIT0_E.exit: ; preds = %_ZNSt12_Vector_baseIN5arrow5DatumESaIS1_EE11_M_allocateEm.exit
+_ZSt8_DestroyIPN5arrow5DatumES1_EvT_S3_RSaIT0_E.exit: ; preds = %_ZNKSt6vectorIN5arrow5DatumESaIS1_EE12_M_check_lenEmPKc.exit
   %i.ar = landingpad { ptr, i32 }
           catch ptr null
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  call void @_ZNSt8__detail9__variant16_Variant_storageILb0EJN5arrow5Datum5EmptyESt10shared_ptrINS2_6ScalarEES5_INS2_9ArrayDataEES5_INS2_12ChunkedArrayEES5_INS2_11RecordBatchEES5_INS2_5TableEEEED2Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(24) %10) #21
+  call void @_ZNSt8__detail9__variant16_Variant_storageILb0EJN5arrow5Datum5EmptyESt10shared_ptrINS2_6ScalarEES5_INS2_9ArrayDataEES5_INS2_12ChunkedArrayEES5_INS2_11RecordBatchEES5_INS2_5TableEEEED2Ev(ptr noundef nonnull align 8 dead_on_return(17) dereferenceable(24) %8) #21
   %i.as = extractvalue { ptr, i32 } %i.ar, 0
   %i.at = call ptr @__cxa_begin_catch(ptr %i.as) #21 ; 0 uses
-  %12 = mul nuw nsw i64 %i.l, 24
-  call void @_ZdlPvm(ptr noundef nonnull %9, i64 noundef %12) #22
+  call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %6) #22
   invoke void @__cxa_rethrow() #24
           to label %bb.j unwind label %bb.g
 

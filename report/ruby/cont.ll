@@ -201,35 +201,26 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !89
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 56 ; 3 uses
   store ptr %i.q, ptr %i.r, align 8, !tbaa !129
-  %i.s = getelementptr i8, ptr %i.n, i64 48
-  %.0.14.val.a = load ptr, ptr %i.s, align 8, !tbaa !67 ; 3 uses
-  %.not.i.i = icmp eq ptr %.0.14.val.a, null
-  br i1 %.not.i.i, label %rb_ec_ractor_ptr.exit.i, label %3
-
-3:                                                ; preds = %bb.c
-  %4 = getelementptr i8, ptr %.0.14.val.a, i64 32
-  %5 = load ptr, ptr %4, align 8, !tbaa !130
-  %6 = getelementptr i8, ptr %.0.14.val.a, i64 24
+  %3 = getelementptr i8, ptr %i.n, i64 48
+  %.0.14.val = load ptr, ptr %3, align 8, !tbaa !67, !nonnull !130, !noundef !130 ; 2 uses
+  %4 = getelementptr i8, ptr %.0.14.val, i64 32
+  %5 = load ptr, ptr %4, align 8, !tbaa !131      ; 2 uses
+  %6 = getelementptr i8, ptr %.0.14.val, i64 24
   %7 = load ptr, ptr %6, align 8, !tbaa !109
-  br label %rb_ec_ractor_ptr.exit.i
+  %i.s = getelementptr i8, ptr %5, i64 88
+  %.0.14.val.a = load ptr, ptr %i.s, align 8, !tbaa !132
+  %.not.i.i = icmp eq ptr %.0.14.val.a, %7
+  br i1 %.not.i.i, label %bb.d, label %rb_ec_vm_lock_rec.exit
 
-rb_ec_ractor_ptr.exit.i:                          ; preds = %3, %bb.c
-  %.0.i2.i = phi ptr [ %5, %3 ], [ null, %bb.c ]  ; 2 uses
-  %.0.i7.i = phi ptr [ %7, %3 ], [ null, %bb.c ]
-  %8 = getelementptr i8, ptr %.0.i2.i, i64 88
-  %.val5.i = load ptr, ptr %8, align 8, !tbaa !131
-  %9 = icmp eq ptr %.val5.i, %.0.i7.i
-  br i1 %9, label %bb.d, label %rb_ec_vm_lock_rec.exit
-
-bb.d:                                             ; preds = %rb_ec_ractor_ptr.exit.i
-  %i.t = getelementptr i8, ptr %.0.i2.i, i64 96
-  %i.u = load i32, ptr %i.t, align 8, !tbaa !147
+bb.d:                                             ; preds = %bb.c
+  %i.t = getelementptr i8, ptr %5, i64 96
+  %i.u = load i32, ptr %i.t, align 8, !tbaa !148
   br label %rb_ec_vm_lock_rec.exit
 
-rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.exit.i, %bb.d
-  %.0.i = phi i32 [ %i.u, %bb.d ], [ 0, %rb_ec_ractor_ptr.exit.i ]
+rb_ec_vm_lock_rec.exit:                           ; preds = %bb.c, %bb.d
+  %.0.i = phi i32 [ %i.u, %bb.d ], [ 0, %bb.c ]
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 68
-  store i32 %.0.i, ptr %i.v, align 4, !tbaa !148
+  store i32 %.0.i, ptr %i.v, align 4, !tbaa !149
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.x = tail call ptr @llvm.frameaddress.p0(i32 0)
   store ptr %i.x, ptr %i.w, align 8
@@ -238,14 +229,14 @@ rb_ec_vm_lock_rec.exit:                           ; preds = %rb_ec_ractor_ptr.ex
   store ptr %i.y, ptr %i.z, align 8
   %i.aa = call i32 @llvm.eh.sjlj.setjmp(ptr nonnull %i.w)
   %.not43 = icmp eq i32 %i.aa, 0
-  br i1 %.not43, label %bb.e, label %bb.j, !prof !149
+  br i1 %.not43, label %bb.e, label %bb.j, !prof !150
 
 bb.e:                                             ; preds = %rb_ec_vm_lock_rec.exit
   store ptr %2, ptr %i.p, align 8, !tbaa !89
   %.0..0..0..0.37 = load volatile ptr, ptr %i.a, align 8, !tbaa !95 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
   %i.ab = getelementptr i8, ptr %.0..0..0..0.37, i64 24 ; 3 uses
-  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !150 ; 2 uses
+  %i.ac = load i64, ptr %i.ab, align 8, !tbaa !151 ; 2 uses
   store i64 %i.ac, ptr %i.d, align 8, !tbaa !65
   %i.ad = getelementptr i8, ptr %.0..0..0..0.37, i64 528
   %i.ae = load i64, ptr %i.ad, align 8, !tbaa !122 ; 2 uses
@@ -253,7 +244,7 @@ bb.e:                                             ; preds = %rb_ec_vm_lock_rec.e
   %i.ag = getelementptr i8, ptr %i.af, i64 32
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !68
   %i.ai = getelementptr i8, ptr %.0..0..0..0.37, i64 4
-  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !151 ; 2 uses
+  %i.aj = load i32, ptr %i.ai, align 4, !tbaa !152 ; 2 uses
   %i.ak = icmp sgt i32 %i.aj, 1
   br i1 %i.ak, label %bb.f, label %rb_array_const_ptr.exit
 
@@ -275,35 +266,35 @@ bb.h:                                             ; preds = %bb.f
 
 rb_array_const_ptr.exit:                          ; preds = %bb.h, %bb.g, %bb.e
   %i.ar = phi ptr [ %i.d, %bb.e ], [ %i.ao, %bb.g ], [ %i.aq, %bb.h ]
-  store i64 4, ptr %i.ab, align 8, !tbaa !150
+  store i64 4, ptr %i.ab, align 8, !tbaa !151
   %.0..0..0..0.26 = load volatile ptr, ptr %i.b, align 8, !tbaa !96
   %i.as = getelementptr i8, ptr %.0..0..0..0.26, i64 48
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !70
   %i.au = getelementptr i8, ptr %i.at, i64 128
-  store i64 4, ptr %i.au, align 8, !tbaa !152
+  store i64 4, ptr %i.au, align 8, !tbaa !153
   %i.av = call ptr @rb_vm_proc_local_ep(i64 noundef %i.ae) #10
   %.0..0..0..0.27 = load volatile ptr, ptr %i.b, align 8, !tbaa !96
   %i.aw = getelementptr i8, ptr %.0..0..0..0.27, i64 48
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !70
   %i.ay = getelementptr i8, ptr %i.ax, i64 104
-  store ptr %i.av, ptr %i.ay, align 8, !tbaa !153
+  store ptr %i.av, ptr %i.ay, align 8, !tbaa !154
   %.0..0..0..0.28 = load volatile ptr, ptr %i.b, align 8, !tbaa !96
   %i.az = getelementptr i8, ptr %.0..0..0..0.28, i64 48
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !70
   %i.bb = getelementptr i8, ptr %i.ba, i64 112
-  store i64 0, ptr %i.bb, align 8, !tbaa !154
+  store i64 0, ptr %i.bb, align 8, !tbaa !155
   %.0..0..0..0.29 = load volatile ptr, ptr %i.b, align 8, !tbaa !96
   %i.bc = getelementptr i8, ptr %.0..0..0..0.29, i64 48
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !70
   %i.be = getelementptr i8, ptr %i.bd, i64 48
-  %.val = load ptr, ptr %i.be, align 8, !tbaa !67, !nonnull !155, !noundef !155
+  %.val = load ptr, ptr %i.be, align 8, !tbaa !67, !nonnull !130, !noundef !130
   %i.bf = getelementptr i8, ptr %.val, i64 24
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !109 ; 2 uses
   %i.bh = getelementptr i8, ptr %i.bg, i64 24
   %i.bi = load i32, ptr %i.bh, align 8, !tbaa !156
   %i.bj = and i32 %i.bi, 4096
   %.not44 = icmp eq i32 %i.bj, 0
-  br i1 %.not44, label %.thread47, label %bb.i, !prof !149
+  br i1 %.not44, label %.thread47, label %bb.i, !prof !150
 
 bb.i:                                             ; preds = %rb_array_const_ptr.exit
   %i.bk = getelementptr i8, ptr %i.bg, i64 16
@@ -342,7 +333,7 @@ bb.i:                                             ; preds = %rb_array_const_ptr.
   %i.ca = getelementptr i8, ptr %.0..0..0..0.37, i64 8
   %i.cb = load i32, ptr %i.ca, align 8, !tbaa !166
   %i.cc = call i64 @rb_vm_invoke_proc(ptr noundef %i.bz, ptr noundef %i.ah, i32 noundef %i.aj, ptr noundef %i.ar, i32 noundef %i.cb, i64 noundef 0) #10
-  store i64 %i.cc, ptr %i.ab, align 8, !tbaa !150
+  store i64 %i.cc, ptr %i.ab, align 8, !tbaa !151
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
   %i.cd = load ptr, ptr %i.r, align 8, !tbaa !129
   store ptr %i.cd, ptr %i.p, align 8, !tbaa !89
@@ -364,7 +355,7 @@ bb.j:                                             ; preds = %rb_ec_vm_lock_rec.e
   %i.ch = getelementptr i8, ptr %.0..0..0..0.33, i64 48
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !70
   %i.cj = getelementptr i8, ptr %i.ci, i64 128
-  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !152 ; 5 uses
+  %i.ck = load i64, ptr %i.cj, align 8, !tbaa !153 ; 5 uses
   switch i32 %i.ce, label %.critedge [
     i32 6, label %bb.m
     i32 8, label %bb.k
@@ -409,34 +400,25 @@ bb.a:
   %i.d = load i32, ptr %i.c, align 8, !tbaa !126  ; 3 uses
   store i32 0, ptr %i.c, align 8, !tbaa !126
   %i.e = getelementptr i8, ptr %i.b, i64 68
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !148  ; 2 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !149  ; 2 uses
   %i.g = getelementptr i8, ptr %0, i64 48
-  %.val.i.a = load ptr, ptr %i.g, align 8, !tbaa !67 ; 3 uses
-  %.not.i.i.i = icmp eq ptr %.val.i.a, null
-  br i1 %.not.i.i.i, label %rb_ec_ractor_ptr.exit.i.i, label %1
+  %.val.i = load ptr, ptr %i.g, align 8, !tbaa !67, !nonnull !130, !noundef !130 ; 2 uses
+  %1 = getelementptr i8, ptr %.val.i, i64 32
+  %2 = load ptr, ptr %1, align 8, !tbaa !131      ; 2 uses
+  %3 = getelementptr i8, ptr %.val.i, i64 24
+  %4 = load ptr, ptr %3, align 8, !tbaa !109
+  %5 = getelementptr i8, ptr %2, i64 88
+  %.val.i.a = load ptr, ptr %5, align 8, !tbaa !132
+  %.not.i.i.i = icmp eq ptr %.val.i.a, %4
+  br i1 %.not.i.i.i, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
 
-1:                                                ; preds = %bb.a
-  %2 = getelementptr i8, ptr %.val.i.a, i64 32
-  %3 = load ptr, ptr %2, align 8, !tbaa !130
-  %4 = getelementptr i8, ptr %.val.i.a, i64 24
-  %5 = load ptr, ptr %4, align 8, !tbaa !109
-  br label %rb_ec_ractor_ptr.exit.i.i
-
-rb_ec_ractor_ptr.exit.i.i:                        ; preds = %1, %bb.a
-  %.0.i2.i.i = phi ptr [ %3, %1 ], [ null, %bb.a ] ; 2 uses
-  %.0.i7.i.i = phi ptr [ %5, %1 ], [ null, %bb.a ]
-  %6 = getelementptr i8, ptr %.0.i2.i.i, i64 88
-  %.val5.i.i = load ptr, ptr %6, align 8, !tbaa !131
-  %7 = icmp eq ptr %.val5.i.i, %.0.i7.i.i
-  br i1 %7, label %bb.b, label %rb_ec_vm_lock_rec.exit.i
-
-bb.b:                                             ; preds = %rb_ec_ractor_ptr.exit.i.i
-  %i.h = getelementptr i8, ptr %.0.i2.i.i, i64 96
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !147
+bb.b:                                             ; preds = %bb.a
+  %i.h = getelementptr i8, ptr %2, i64 96
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !148
   br label %rb_ec_vm_lock_rec.exit.i
 
-rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %rb_ec_ractor_ptr.exit.i.i
-  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %rb_ec_ractor_ptr.exit.i.i ] ; 2 uses
+rb_ec_vm_lock_rec.exit.i:                         ; preds = %bb.b, %bb.a
+  %.0.i.i = phi i32 [ %i.i, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.not.i = icmp eq i32 %.0.i.i, %i.f
   br i1 %.not.i, label %rb_ec_vm_lock_rec_check.exit, label %bb.c
 
@@ -814,7 +796,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -960,9 +942,9 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.k
   %i.av = load ptr, ptr %i.j, align 8, !tbaa !171 ; 3 uses
   %i.aw = getelementptr i8, ptr %i.av, i64 4
-  store i32 -1, ptr %i.aw, align 4, !tbaa !151
+  store i32 -1, ptr %i.aw, align 4, !tbaa !152
   %i.ax = getelementptr i8, ptr %i.av, i64 24
-  store i64 %i.an, ptr %i.ax, align 8, !tbaa !150
+  store i64 %i.an, ptr %i.ax, align 8, !tbaa !151
   tail call fastcc void @fiber_setcontext(ptr noundef %i.av, ptr noundef nonnull %i.aq)
   unreachable
 
@@ -1075,7 +1057,7 @@ bb.t:                                             ; preds = %._crit_edge85
 
 bb.u:                                             ; preds = %bb.t, %._crit_edge85
   %i.cw = getelementptr i8, ptr %0, i64 4
-  store i32 %1, ptr %i.cw, align 4, !tbaa !151
+  store i32 %1, ptr %i.cw, align 4, !tbaa !152
   %i.cx = getelementptr i8, ptr %0, i64 8
   store i32 %3, ptr %i.cx, align 8, !tbaa !166
   switch i32 %1, label %bb.x [
@@ -1100,7 +1082,7 @@ bb.x:                                             ; preds = %bb.u
 make_passing_arg.exit69:                          ; preds = %bb.u, %bb.v, %bb.w, %bb.x
   %.0.i68 = phi i64 [ %i.db, %bb.x ], [ %i.cy, %bb.v ], [ %i.cz, %bb.w ], [ 4, %bb.u ]
   %i.dc = getelementptr i8, ptr %0, i64 24
-  store i64 %.0.i68, ptr %i.dc, align 8, !tbaa !150
+  store i64 %.0.i68, ptr %i.dc, align 8, !tbaa !151
   %i.dd = load ptr, ptr %i.x, align 8, !tbaa !70
   %i.de = getelementptr i8, ptr %i.dd, i64 40
   %i.df = load ptr, ptr %i.de, align 8, !tbaa !170 ; 2 uses
@@ -1157,7 +1139,7 @@ bb.ac:                                            ; preds = %rb_vm_lock_enter.ex
   %spec.store.select.i.i.i.i = call i64 @llvm.umin.i64(i64 %i.eb, i64 1024)
   %spec.select.i.i.i.i = call i64 @llvm.umax.i64(i64 %spec.store.select.i.i.i.i, i64 %i.dz)
   call fastcc void @fiber_pool_expand(ptr noundef nonnull %i.du, i64 noundef %spec.select.i.i.i.i)
-  %i.ec = load ptr, ptr %i.dw, align 8, !tbaa !194, !noalias !189, !nonnull !155, !noundef !155
+  %i.ec = load ptr, ptr %i.dw, align 8, !tbaa !194, !noalias !189, !nonnull !130, !noundef !130
   br label %fiber_pool_vacancy_pop.exit17.i.i.i.i
 
 fiber_pool_vacancy_pop.exit17.i.i.i.i:            ; preds = %bb.ac, %rb_vm_lock_enter.exit.i.i.i.i
@@ -1417,7 +1399,7 @@ bb.aq:                                            ; preds = %bb.ap, %fiber_curre
   %i.ix = xor i32 %i.iw, -1
   %i.iy = and i32 %i.iu, %i.ix
   %.not.i78 = icmp eq i32 %i.iy, 0
-  br i1 %.not.i78, label %rb_vm_check_ints.exit, label %bb.ar, !prof !149
+  br i1 %.not.i78, label %rb_vm_check_ints.exit, label %bb.ar, !prof !150
 
 bb.ar:                                            ; preds = %bb.aq
   %i.iz = getelementptr i8, ptr %i.is, i64 48
@@ -1429,14 +1411,14 @@ bb.ar:                                            ; preds = %bb.aq
 rb_vm_check_ints.exit:                            ; preds = %bb.aq, %bb.ar
   %i.jb = phi ptr [ %i.is, %bb.aq ], [ %.pre88, %bb.ar ] ; 4 uses
   %i.jc = getelementptr i8, ptr %i.jb, i64 48
-  %.val61 = load ptr, ptr %i.jc, align 8, !tbaa !67, !nonnull !155, !noundef !155
+  %.val61 = load ptr, ptr %i.jc, align 8, !tbaa !67, !nonnull !130, !noundef !130
   %i.jd = getelementptr i8, ptr %.val61, i64 24
   %i.je = load ptr, ptr %i.jd, align 8, !tbaa !109 ; 2 uses
   %i.jf = getelementptr i8, ptr %i.je, i64 24
   %i.jg = load i32, ptr %i.jf, align 8, !tbaa !156
   %i.jh = and i32 %i.jg, 4096
   %.not60 = icmp eq i32 %i.jh, 0
-  br i1 %.not60, label %bb.at, label %bb.as, !prof !149
+  br i1 %.not60, label %bb.at, label %bb.as, !prof !150
 
 bb.as:                                            ; preds = %rb_vm_check_ints.exit
   %i.ji = getelementptr i8, ptr %i.je, i64 16
@@ -1482,7 +1464,7 @@ bb.au:                                            ; preds = %bb.at
   %i.kd = getelementptr i8, ptr %i.kc, i64 48
   %i.ke = load ptr, ptr %i.kd, align 8, !tbaa !70 ; 2 uses
   %i.kf = getelementptr i8, ptr %i.ke, i64 128
-  store i64 5, ptr %i.kf, align 8, !tbaa !152
+  store i64 5, ptr %i.kf, align 8, !tbaa !153
   %i.kg = getelementptr i8, ptr %i.ke, i64 24
   %.val.i82 = load ptr, ptr %i.kg, align 8, !tbaa !89 ; 2 uses
   %i.kh = getelementptr i8, ptr %.val.i82, i64 64
@@ -1538,7 +1520,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -1645,7 +1627,7 @@ bb.d:                                             ; preds = %bb.c
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.d, %bb.c
   %i.aj = phi ptr [ %i.ai, %bb.d ], [ %i.ah, %bb.c ] ; 2 uses
   %i.ak = icmp eq i64 %i.ae, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.ak, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.ak, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.e
   %.016.i.i = phi ptr [ %i.am, %bb.e ], [ %i.af, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -1729,7 +1711,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -1808,7 +1790,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -1899,7 +1881,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2074,7 +2056,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2281,7 +2263,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2349,7 +2331,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2437,7 +2419,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -2600,7 +2582,7 @@ bb.a:
   %i.d = getelementptr i8, ptr %.0..0..0..0..0..0..0..0..i.i, i64 48
   %.val.i = load ptr, ptr %i.d, align 8, !tbaa !67 ; 2 uses
   %i.e = getelementptr i8, ptr %.val.i, i64 32
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !130  ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !131  ; 2 uses
   %i.g = getelementptr i8, ptr %i.f, i64 9536
   %i.h = load i64, ptr %i.g, align 8, !tbaa !224  ; 2 uses
   %i.i = getelementptr i8, ptr %i.f, i64 9544
@@ -3003,7 +2985,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3124,7 +3106,7 @@ bb.g:                                             ; preds = %bb.f
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.g, %bb.f
   %i.ac = phi ptr [ %i.ab, %bb.g ], [ %i.aa, %bb.f ] ; 2 uses
   %i.ad = icmp eq i64 %i.x, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.ad, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.ad, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.h
   %.016.i.i = phi ptr [ %i.af, %bb.h ], [ %i.y, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3190,7 +3172,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i.i:                   ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i.i, label %.preheader.i.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i.i, label %.preheader.i.i.i, !prof !150
 
 .preheader.i.i.i:                                 ; preds = %RTYPEDDATA_GET_DATA.exit.i.i.i, %bb.d
   %.016.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i.i ] ; 2 uses
@@ -3255,7 +3237,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i.i:                   ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i.i, label %.preheader.i.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i.i, label %.preheader.i.i.i, !prof !150
 
 .preheader.i.i.i:                                 ; preds = %RTYPEDDATA_GET_DATA.exit.i.i.i, %bb.d
   %.016.i.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i.i ] ; 2 uses
@@ -3320,7 +3302,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3420,7 +3402,7 @@ bb.k:                                             ; preds = %bb.j
   %i.bb = getelementptr i8, ptr %i.ba, i64 48
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !70 ; 2 uses
   %i.bd = getelementptr i8, ptr %i.bc, i64 128
-  store i64 5, ptr %i.bd, align 8, !tbaa !152
+  store i64 5, ptr %i.bd, align 8, !tbaa !153
   %i.be = getelementptr i8, ptr %i.bc, i64 24
   %.val.i14 = load ptr, ptr %i.be, align 8, !tbaa !89 ; 2 uses
   %i.bf = getelementptr i8, ptr %.val.i14, i64 64
@@ -3455,7 +3437,7 @@ bb.n:                                             ; preds = %bb.m
 RTYPEDDATA_GET_DATA.exit.i.i21:                   ; preds = %bb.n, %bb.m
   %i.br = phi ptr [ %i.bq, %bb.n ], [ %i.bp, %bb.m ] ; 2 uses
   %i.bs = icmp eq i64 %i.bm, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.bs, label %rbimpl_check_typeddata.exit.i18, label %.preheader.i.i22, !prof !149
+  br i1 %i.bs, label %rbimpl_check_typeddata.exit.i18, label %.preheader.i.i22, !prof !150
 
 .preheader.i.i22:                                 ; preds = %RTYPEDDATA_GET_DATA.exit.i.i21, %bb.o
   %.016.i.i23 = phi ptr [ %i.bu, %bb.o ], [ %i.bn, %RTYPEDDATA_GET_DATA.exit.i.i21 ] ; 2 uses
@@ -3523,7 +3505,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3588,7 +3570,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.o = phi ptr [ %i.n, %bb.c ], [ %i.m, %bb.b ] ; 2 uses
   %i.p = icmp eq i64 %i.j, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.p, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.r, %bb.d ], [ %i.k, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3654,7 +3636,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3900,7 +3882,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @cont_data_type to i64)
-  br i1 %i.q, label %cont_ptr.exit, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %cont_ptr.exit, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -3962,10 +3944,10 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g, %bb.f
   %i.ak = getelementptr i8, ptr %.1.i.i, i64 4
-  store i32 %0, ptr %i.ak, align 4, !tbaa !151
+  store i32 %0, ptr %i.ak, align 4, !tbaa !152
   %i.al = tail call fastcc i64 @make_passing_arg(i32 noundef %0, ptr noundef %1)
   %i.am = getelementptr i8, ptr %.1.i.i, i64 24
-  store i64 %i.al, ptr %i.am, align 8, !tbaa !150
+  store i64 %i.al, ptr %i.am, align 8, !tbaa !151
   tail call fastcc void @cont_restore_0(ptr noundef nonnull %.1.i.i) #34
   unreachable
 }
@@ -4131,9 +4113,9 @@ bb.e:                                             ; preds = %rb_fiber_update_sel
 
 cont_compact.exit:                                ; preds = %rb_fiber_update_self.exit, %bb.e
   %i.m = getelementptr i8, ptr %0, i64 24         ; 2 uses
-  %i.n = load i64, ptr %i.m, align 8, !tbaa !150
+  %i.n = load i64, ptr %i.m, align 8, !tbaa !151
   %i.o = tail call i64 @rb_gc_location(i64 noundef %i.n) #10
-  store i64 %i.o, ptr %i.m, align 8, !tbaa !150
+  store i64 %i.o, ptr %i.m, align 8, !tbaa !151
   %i.p = getelementptr i8, ptr %0, i64 80
   tail call void @rb_execution_context_update(ptr noundef %i.p) #10
   ret void
@@ -4153,7 +4135,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.c = getelementptr i8, ptr %0, i64 24
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !150
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !151
   tail call void @rb_gc_mark_movable(i64 noundef %i.d) #10
   %i.e = getelementptr i8, ptr %0, i64 80
   tail call void @rb_execution_context_mark(ptr noundef %i.e) #10
@@ -4259,9 +4241,9 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.d = getelementptr i8, ptr %0, i64 24         ; 2 uses
-  %i.e = load i64, ptr %i.d, align 8, !tbaa !150
+  %i.e = load i64, ptr %i.d, align 8, !tbaa !151
   %i.f = tail call i64 @rb_gc_location(i64 noundef %i.e) #10
-  store i64 %i.f, ptr %i.d, align 8, !tbaa !150
+  store i64 %i.f, ptr %i.d, align 8, !tbaa !151
   %i.g = getelementptr i8, ptr %0, i64 80
   tail call void @rb_execution_context_update(ptr noundef %i.g) #10
   ret void
@@ -4591,7 +4573,7 @@ bb.f:                                             ; preds = %bb.d
   %i.am = getelementptr i8, ptr %i.al, i64 312
   store ptr %i.aj, ptr %i.am, align 8, !tbaa !175
   %i.an = getelementptr i8, ptr %.val.i, i64 32
-  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !130
+  %i.ao = load ptr, ptr %i.an, align 8, !tbaa !131
   %i.ap = getelementptr i8, ptr %i.ao, i64 40
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !244
   %i.ar = icmp eq ptr %i.aq, %.val.i
@@ -4632,7 +4614,7 @@ bb.a:
   %i.e = getelementptr i8, ptr %i.c, i64 312
   store ptr %i.a, ptr %i.e, align 8, !tbaa !175
   %i.f = getelementptr i8, ptr %0, i64 32
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !130
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !131
   %i.h = getelementptr i8, ptr %i.g, i64 40
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !244
   %i.j = icmp eq ptr %i.i, %0
@@ -4893,7 +4875,7 @@ bb.c:                                             ; preds = %bb.b
 RTYPEDDATA_GET_DATA.exit.i.i:                     ; preds = %bb.c, %bb.b
   %i.p = phi ptr [ %i.o, %bb.c ], [ %i.n, %bb.b ] ; 2 uses
   %i.q = icmp eq i64 %i.k, ptrtoint (ptr @fiber_data_type to i64)
-  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !149
+  br i1 %i.q, label %rbimpl_check_typeddata.exit.i, label %.preheader.i.i, !prof !150
 
 .preheader.i.i:                                   ; preds = %RTYPEDDATA_GET_DATA.exit.i.i, %bb.d
   %.016.i.i = phi ptr [ %i.s, %bb.d ], [ %i.l, %RTYPEDDATA_GET_DATA.exit.i.i ] ; 2 uses
@@ -5086,7 +5068,7 @@ bb.d:                                             ; preds = %.thread.i
   %i.p = getelementptr i8, ptr %i.o, i64 312
   store ptr %i.m, ptr %i.p, align 8, !tbaa !175
   %i.q = getelementptr i8, ptr %.val.i.i, i64 32
-  %i.r = load ptr, ptr %i.q, align 8, !tbaa !130
+  %i.r = load ptr, ptr %i.q, align 8, !tbaa !131
   %i.s = getelementptr i8, ptr %i.r, i64 40
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !244
   %i.u = icmp eq ptr %i.t, %.val.i.i
@@ -5184,17 +5166,17 @@ ruby_nonempty_memcpy.exit45.i:                    ; preds = %bb.l, %rbimpl_size_
   %i.bh = load <2 x ptr>, ptr %i.bc, align 8, !tbaa !206
   store <2 x ptr> %i.bh, ptr %i.bd, align 8, !tbaa !206
   %i.bi = getelementptr i8, ptr %0, i64 184
-  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !153
+  %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !154
   %i.bk = getelementptr i8, ptr %i.bb, i64 104
-  store ptr %i.bj, ptr %i.bk, align 8, !tbaa !153
+  store ptr %i.bj, ptr %i.bk, align 8, !tbaa !154
   %i.bl = getelementptr i8, ptr %0, i64 192
-  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !154
+  %i.bm = load i64, ptr %i.bl, align 8, !tbaa !155
   %i.bn = getelementptr i8, ptr %i.bb, i64 112
-  store i64 %i.bm, ptr %i.bn, align 8, !tbaa !154
+  store i64 %i.bm, ptr %i.bn, align 8, !tbaa !155
   %i.bo = getelementptr i8, ptr %0, i64 208
-  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !152
+  %i.bp = load i64, ptr %i.bo, align 8, !tbaa !153
   %i.bq = getelementptr i8, ptr %i.bb, i64 128
-  store i64 %i.bp, ptr %i.bq, align 8, !tbaa !152
+  store i64 %i.bp, ptr %i.bq, align 8, !tbaa !153
   br label %cont_restore_thread.exit
 
 bb.m:                                             ; preds = %bb.a
@@ -5207,7 +5189,7 @@ bb.m:                                             ; preds = %bb.a
   %i.bv = getelementptr i8, ptr %i.bt, i64 312
   store ptr %i.br, ptr %i.bv, align 8, !tbaa !175
   %i.bw = getelementptr i8, ptr %.val.i.i, i64 32
-  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !130
+  %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !131
   %i.by = getelementptr i8, ptr %i.bx, i64 40
   %i.bz = load ptr, ptr %i.by, align 8, !tbaa !244
   %i.ca = icmp eq ptr %i.bz, %.val.i.i
@@ -5540,10 +5522,10 @@ bb.s:                                             ; preds = %cont_save_machine_s
   store volatile ptr %.0..0..0..0.27, ptr %i.e, align 8, !tbaa !261
   %.0..0..0..0.28 = load volatile ptr, ptr %i.e, align 8, !tbaa !261
   %i.dk = getelementptr i8, ptr %.0..0..0..0.28, i64 24
-  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !150 ; 2 uses
+  %i.dl = load i64, ptr %i.dk, align 8, !tbaa !151 ; 2 uses
   %.0..0..0..0.29 = load volatile ptr, ptr %i.e, align 8, !tbaa !261
   %i.dm = getelementptr i8, ptr %.0..0..0..0.29, i64 4
-  %i.dn = load i32, ptr %i.dm, align 4, !tbaa !151
+  %i.dn = load i32, ptr %i.dm, align 4, !tbaa !152
   %i.do = icmp eq i32 %i.dn, -1
   br i1 %i.do, label %bb.t, label %bb.u
 
@@ -5554,7 +5536,7 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.s
   %.0..0..0..0.30 = load volatile ptr, ptr %i.e, align 8, !tbaa !261
   %i.dp = getelementptr i8, ptr %.0..0..0..0.30, i64 24
-  store i64 4, ptr %i.dp, align 8, !tbaa !150
+  store i64 4, ptr %i.dp, align 8, !tbaa !151
   %.0..0..0..0.31 = load volatile ptr, ptr %i.d, align 8, !tbaa !259
   store volatile i32 1, ptr %.0..0..0..0.31, align 4, !tbaa !7
   br label %bb.w
@@ -5766,32 +5748,32 @@ attributes #37 = { nounwind allocsize(1,2) }
 !127 = !{!"rb_vm_tag", !16, i64 0, !16, i64 8, !9, i64 16, !30, i64 56, !8, i64 64, !8, i64 68}
 !128 = !{!127, !16, i64 0}
 !129 = !{!127, !30, i64 56}
-!130 = !{!71, !75, i64 32}
-!131 = !{!132, !74, i64 88}
-!132 = !{!"rb_vm_struct", !16, i64 0, !133, i64 8, !14, i64 488, !33, i64 496, !8, i64 504, !8, i64 508, !8, i64 508, !8, i64 508, !8, i64 508, !16, i64 512, !136, i64 520, !9, i64 528, !137, i64 568, !137, i64 576, !115, i64 584, !138, i64 592, !113, i64 1112, !139, i64 1136, !8, i64 1144, !86, i64 1152, !9, i64 1168, !16, i64 1208, !16, i64 1216, !16, i64 1224, !16, i64 1232, !8, i64 1240, !140, i64 1248, !143, i64 1264, !144, i64 1272, !115, i64 1280, !34, i64 1288, !115, i64 1296, !145, i64 1304, !145, i64 1312, !34, i64 1320, !16, i64 1328, !9, i64 1336, !146, i64 9520}
-!133 = !{!"", !86, i64 0, !8, i64 16, !8, i64 20, !74, i64 24, !32, i64 32, !134, i64 40, !135, i64 152}
-!134 = !{!"", !9, i64 0, !74, i64 40, !8, i64 48, !9, i64 56, !81, i64 104}
-!135 = !{!"", !9, i64 0, !74, i64 40, !81, i64 48, !9, i64 56, !8, i64 104, !8, i64 108, !8, i64 112, !8, i64 116, !86, i64 120, !8, i64 136, !86, i64 144, !86, i64 160, !86, i64 176, !81, i64 192, !9, i64 200, !9, i64 248, !81, i64 296, !8, i64 300, !8, i64 304, !74, i64 312, !8, i64 320}
-!136 = !{!"p1 _ZTS18global_object_list", !14, i64 0}
-!137 = !{!"p1 _ZTS13rb_box_struct", !14, i64 0}
-!138 = !{!"", !9, i64 0}
-!139 = !{!"p1 _ZTS22rb_postponed_job_queue", !14, i64 0}
-!140 = !{!"", !141, i64 0, !142, i64 8}
-!141 = !{!"p1 _ZTS11rb_objspace", !14, i64 0}
-!142 = !{!"p1 _ZTS24gc_mark_func_data_struct", !14, i64 0}
-!143 = !{!"p1 _ZTS15rb_at_exit_list", !14, i64 0}
-!144 = !{!"p1 _ZTS19rb_builtin_function", !14, i64 0}
-!145 = !{!"p1 _ZTS9set_table", !14, i64 0}
-!146 = !{!"", !16, i64 0, !16, i64 8, !16, i64 16, !16, i64 24}
-!147 = !{!132, !8, i64 96}
-!148 = !{!127, !8, i64 68}
-!149 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!150 = !{!24, !16, i64 24}
-!151 = !{!24, !8, i64 4}
-!152 = !{!28, !16, i64 128}
-!153 = !{!28, !26, i64 104}
-!154 = !{!28, !16, i64 112}
-!155 = !{}
+!130 = !{}
+!131 = !{!71, !75, i64 32}
+!132 = !{!133, !74, i64 88}
+!133 = !{!"rb_vm_struct", !16, i64 0, !134, i64 8, !14, i64 488, !33, i64 496, !8, i64 504, !8, i64 508, !8, i64 508, !8, i64 508, !8, i64 508, !16, i64 512, !137, i64 520, !9, i64 528, !138, i64 568, !138, i64 576, !115, i64 584, !139, i64 592, !113, i64 1112, !140, i64 1136, !8, i64 1144, !86, i64 1152, !9, i64 1168, !16, i64 1208, !16, i64 1216, !16, i64 1224, !16, i64 1232, !8, i64 1240, !141, i64 1248, !144, i64 1264, !145, i64 1272, !115, i64 1280, !34, i64 1288, !115, i64 1296, !146, i64 1304, !146, i64 1312, !34, i64 1320, !16, i64 1328, !9, i64 1336, !147, i64 9520}
+!134 = !{!"", !86, i64 0, !8, i64 16, !8, i64 20, !74, i64 24, !32, i64 32, !135, i64 40, !136, i64 152}
+!135 = !{!"", !9, i64 0, !74, i64 40, !8, i64 48, !9, i64 56, !81, i64 104}
+!136 = !{!"", !9, i64 0, !74, i64 40, !81, i64 48, !9, i64 56, !8, i64 104, !8, i64 108, !8, i64 112, !8, i64 116, !86, i64 120, !8, i64 136, !86, i64 144, !86, i64 160, !86, i64 176, !81, i64 192, !9, i64 200, !9, i64 248, !81, i64 296, !8, i64 300, !8, i64 304, !74, i64 312, !8, i64 320}
+!137 = !{!"p1 _ZTS18global_object_list", !14, i64 0}
+!138 = !{!"p1 _ZTS13rb_box_struct", !14, i64 0}
+!139 = !{!"", !9, i64 0}
+!140 = !{!"p1 _ZTS22rb_postponed_job_queue", !14, i64 0}
+!141 = !{!"", !142, i64 0, !143, i64 8}
+!142 = !{!"p1 _ZTS11rb_objspace", !14, i64 0}
+!143 = !{!"p1 _ZTS24gc_mark_func_data_struct", !14, i64 0}
+!144 = !{!"p1 _ZTS15rb_at_exit_list", !14, i64 0}
+!145 = !{!"p1 _ZTS19rb_builtin_function", !14, i64 0}
+!146 = !{!"p1 _ZTS9set_table", !14, i64 0}
+!147 = !{!"", !16, i64 0, !16, i64 8, !16, i64 16, !16, i64 24}
+!148 = !{!133, !8, i64 96}
+!149 = !{!127, !8, i64 68}
+!150 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!151 = !{!24, !16, i64 24}
+!152 = !{!24, !8, i64 4}
+!153 = !{!28, !16, i64 128}
+!154 = !{!28, !26, i64 104}
+!155 = !{!28, !16, i64 112}
 !156 = !{!113, !8, i64 8}
 !157 = !{!71, !16, i64 16}
 !158 = !{!159, !8, i64 0}
@@ -5860,8 +5842,8 @@ attributes #37 = { nounwind allocsize(1,2) }
 !221 = !{!12, !8, i64 40}
 !222 = !{!28, !8, i64 36}
 !223 = !{!23, !8, i64 4}
-!224 = !{!132, !16, i64 9536}
-!225 = !{!132, !16, i64 9544}
+!224 = !{!133, !16, i64 9536}
+!225 = !{!133, !16, i64 9544}
 !226 = !{i64 2152322006}
 !227 = !{!12, !16, i64 16}
 !228 = distinct !{null}
@@ -5880,7 +5862,7 @@ attributes #37 = { nounwind allocsize(1,2) }
 !241 = !{!23, !26, i64 256}
 !242 = !{i64 2152309497}
 !243 = !{!23, !26, i64 264}
-!244 = !{!132, !32, i64 40}
+!244 = !{!133, !32, i64 40}
 !245 = !{!39, !14, i64 8}
 !246 = !{!18, !14, i64 0}
 !247 = !{!18, !16, i64 8}

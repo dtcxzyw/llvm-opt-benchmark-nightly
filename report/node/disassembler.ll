@@ -201,25 +201,19 @@ _ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.
   %i.fa = icmp ult i64 %i.ez, %i.ex
   %i.fb = call i64 @llvm.umin.i64(i64 %i.ez, i64 9223372036854775807)
   %i.fc = select i1 %i.fa, i64 9223372036854775807, i64 %i.fb ; 3 uses
-  %.not.i.i.i.i139 = icmp eq i64 %i.fc, 0
-  br i1 %.not.i.i.i.i139, label %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i, label %16
+  %.not.i.i.i.i139 = icmp ne i64 %i.fc, 0
+  call void @llvm.assume(i1 %.not.i.i.i.i139)
+  %16 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #18 ; 4 uses
+  %17 = getelementptr inbounds nuw i8, ptr %16, i64 %i.ex ; 2 uses
+  store i8 %i.eu, ptr %17, align 1
+  %18 = icmp sgt i64 %i.ex, 0
+  br i1 %18, label %bb.ah, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-16:                                               ; preds = %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %17 = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fc) #18
-  br label %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
-
-_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i: ; preds = %16, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
-  %18 = phi ptr [ %17, %16 ], [ null, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i ] ; 4 uses
-  %19 = getelementptr inbounds nuw i8, ptr %18, i64 %i.ex ; 2 uses
-  store i8 %i.eu, ptr %19, align 1
-  %20 = icmp sgt i64 %i.ex, 0
-  br i1 %20, label %bb.ah, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-
-bb.ah:                                            ; preds = %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
-  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %18, ptr align 1 %.sroa.0177.0280, i64 %i.ex, i1 false)
+bb.ah:                                            ; preds = %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %16, ptr align 1 %.sroa.0177.0280, i64 %i.ex, i1 false)
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
 
-_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.ah, %_ZNSt12_Vector_baseIN2v88internal9RelocInfo4ModeESaIS3_EE11_M_allocateEm.exit.i.i.i
+_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i: ; preds = %bb.ah, %_ZNKSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
   %.not.i17.i.i.i140 = icmp eq ptr %.sroa.0177.0280, null
   br i1 %.not.i17.i.i.i140, label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.ai
 
@@ -228,13 +222,13 @@ bb.ai:                                            ; preds = %_ZNSt6vectorIN2v88i
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.ai, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  %i.fd = getelementptr inbounds nuw i8, ptr %18, i64 %i.fc
+  %i.fd = getelementptr inbounds nuw i8, ptr %16, i64 %i.fc
   br label %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE9push_backEOS3_.exit
 
 _ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE9push_backEOS3_.exit: ; preds = %bb.ae, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
-  %.pn248 = phi ptr [ %19, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.7180.0275, %bb.ae ]
+  %.pn248 = phi ptr [ %17, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.7180.0275, %bb.ae ]
   %.sroa.11182.1 = phi ptr [ %i.fd, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.11182.0276, %bb.ae ] ; 2 uses
-  %.sroa.0177.1 = phi ptr [ %18, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0177.0280, %bb.ae ] ; 2 uses
+  %.sroa.0177.1 = phi ptr [ %16, %_ZNSt6vectorIN2v88internal9RelocInfo4ModeESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i ], [ %.sroa.0177.0280, %bb.ae ] ; 2 uses
   %.sroa.7180.1 = getelementptr inbounds nuw i8, ptr %.pn248, i64 1
   %i.fe = load i64, ptr %i.cn, align 8            ; 2 uses
   %.not.i.i141 = icmp eq ptr %.sroa.7.0278, %.sroa.11.0279
