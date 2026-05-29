@@ -201,7 +201,7 @@ bb.b:                                             ; preds = %.lr.ph72, %._crit_e
   %i.z = load ptr, ptr %0, align 8, !tbaa !270    ; 10 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.05970, i64 %.idx64 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.05970, i64 %.idx65 ; 2 uses
-  %wide.trip.count = zext i32 %i.y to i64         ; 9 uses
+  %wide.trip.count = zext i32 %i.y to i64         ; 7 uses
   %min.iters.check177 = icmp ult i32 %i.y, 21
   br i1 %min.iters.check177, label %scalar.ph176.preheader, label %vector.memcheck127
 
@@ -337,7 +337,7 @@ vector.body181:                                   ; preds = %vector.body181, %ve
   %i.cm = getelementptr inbounds nuw i8, ptr %.05970, i64 %.idx61 ; 2 uses
   %i.cn = getelementptr inbounds nuw i8, ptr %.05970, i64 %.idx62 ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %.05970, i64 %.idx63 ; 2 uses
-  %wide.trip.count80 = zext i32 %i.y to i64
+  %wide.trip.count80 = zext i32 %i.y to i64       ; 3 uses
   %min.iters.check = icmp ult i32 %i.y, 21
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
 
@@ -396,10 +396,10 @@ vector.memcheck:                                  ; preds = %.lr.ph68
   br i1 %conflict.rdx126, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.memcheck
-  %n.mod.vf = and i64 %wide.trip.count, 3         ; 2 uses
+  %n.mod.vf = and i64 %wide.trip.count80, 3       ; 2 uses
   %i.cr = icmp eq i64 %n.mod.vf, 0
   %i.cs = select i1 %i.cr, i64 4, i64 %n.mod.vf
-  %n.vec = sub nsw i64 %wide.trip.count, %i.cs    ; 2 uses
+  %n.vec = sub nsw i64 %wide.trip.count80, %i.cs  ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph

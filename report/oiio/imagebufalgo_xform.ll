@@ -201,7 +201,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds nuw i8, ptr %11, i64 56
   %i.bq = icmp sgt i32 %i.be, 0                   ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 112
-  %wide.trip.count = zext i32 %i.be to i64        ; 5 uses
+  %wide.trip.count = zext i32 %i.be to i64        ; 3 uses
   %min.iters.check = icmp ult i32 %i.be, 8
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -335,12 +335,12 @@ bb.o:                                             ; preds = %_ZNK11OpenImageIO4v
   br i1 %i.bq, label %.lr.ph143.preheader, label %.loopexit133
 
 .lr.ph143.preheader:                              ; preds = %.preheader
-  %wide.trip.count157 = zext nneg i32 %i.be to i64
+  %wide.trip.count157 = zext nneg i32 %i.be to i64 ; 3 uses
   %min.iters.check180 = icmp ult i32 %i.be, 4
   br i1 %min.iters.check180, label %.lr.ph143.preheader193, label %vector.ph181
 
 vector.ph181:                                     ; preds = %.lr.ph143.preheader
-  %n.vec183 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec183 = and i64 %wide.trip.count157, 2147483644 ; 3 uses
   %broadcast.splatinsert184 = insertelement <4 x float> poison, float %.080, i64 0
   %broadcast.splat185 = shufflevector <4 x float> %broadcast.splatinsert184, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body186
@@ -357,7 +357,7 @@ vector.body186:                                   ; preds = %vector.body186, %ve
   br i1 %i.dl, label %middle.block190, label %vector.body186, !llvm.loop !881
 
 middle.block190:                                  ; preds = %vector.body186
-  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count
+  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count157
   br i1 %cmp.n191, label %.loopexit133, label %.lr.ph143.preheader193
 
 .lr.ph143.preheader193:                           ; preds = %.lr.ph143.preheader, %middle.block190
@@ -760,7 +760,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds nuw i8, ptr %11, i64 56
   %i.bq = icmp sgt i32 %i.be, 0                   ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 112
-  %wide.trip.count = zext i32 %i.be to i64        ; 5 uses
+  %wide.trip.count = zext i32 %i.be to i64        ; 3 uses
   %min.iters.check = icmp ult i32 %i.be, 8
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -900,12 +900,12 @@ bb.o:                                             ; preds = %_ZNK11OpenImageIO4v
   br i1 %i.bq, label %.lr.ph143.preheader, label %.loopexit133
 
 .lr.ph143.preheader:                              ; preds = %.preheader
-  %wide.trip.count157 = zext nneg i32 %i.be to i64
+  %wide.trip.count157 = zext nneg i32 %i.be to i64 ; 3 uses
   %min.iters.check180 = icmp ult i32 %i.be, 4
   br i1 %min.iters.check180, label %.lr.ph143.preheader193, label %vector.ph181
 
 vector.ph181:                                     ; preds = %.lr.ph143.preheader
-  %n.vec183 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec183 = and i64 %wide.trip.count157, 2147483644 ; 3 uses
   %broadcast.splatinsert184 = insertelement <4 x float> poison, float %.080, i64 0
   %broadcast.splat185 = shufflevector <4 x float> %broadcast.splatinsert184, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body186
@@ -922,7 +922,7 @@ vector.body186:                                   ; preds = %vector.body186, %ve
   br i1 %i.dr, label %middle.block190, label %vector.body186, !llvm.loop !905
 
 middle.block190:                                  ; preds = %vector.body186
-  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count
+  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count157
   br i1 %cmp.n191, label %.loopexit133, label %.lr.ph143.preheader193
 
 .lr.ph143.preheader193:                           ; preds = %.lr.ph143.preheader, %middle.block190
@@ -1325,7 +1325,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds nuw i8, ptr %11, i64 56
   %i.bq = icmp sgt i32 %i.be, 0                   ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 112
-  %wide.trip.count = zext i32 %i.be to i64        ; 5 uses
+  %wide.trip.count = zext i32 %i.be to i64        ; 3 uses
   %min.iters.check = icmp ult i32 %i.be, 4
   %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -1514,12 +1514,12 @@ bb.u:                                             ; preds = %_ZNK11OpenImageIO4v
   br i1 %i.bq, label %.lr.ph143.preheader, label %.loopexit133
 
 .lr.ph143.preheader:                              ; preds = %.preheader
-  %wide.trip.count157 = zext nneg i32 %i.be to i64
+  %wide.trip.count157 = zext nneg i32 %i.be to i64 ; 3 uses
   %min.iters.check182 = icmp ult i32 %i.be, 4
   br i1 %min.iters.check182, label %.lr.ph143.preheader195, label %vector.ph183
 
 vector.ph183:                                     ; preds = %.lr.ph143.preheader
-  %n.vec185 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec185 = and i64 %wide.trip.count157, 2147483644 ; 3 uses
   %broadcast.splatinsert186 = insertelement <4 x float> poison, float %.080, i64 0
   %broadcast.splat187 = shufflevector <4 x float> %broadcast.splatinsert186, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body188
@@ -1536,7 +1536,7 @@ vector.body188:                                   ; preds = %vector.body188, %ve
   br i1 %i.et, label %middle.block192, label %vector.body188, !llvm.loop !922
 
 middle.block192:                                  ; preds = %vector.body188
-  %cmp.n193 = icmp eq i64 %n.vec185, %wide.trip.count
+  %cmp.n193 = icmp eq i64 %n.vec185, %wide.trip.count157
   br i1 %cmp.n193, label %.loopexit133, label %.lr.ph143.preheader195
 
 .lr.ph143.preheader195:                           ; preds = %.lr.ph143.preheader, %middle.block192
@@ -1939,7 +1939,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bp = getelementptr inbounds nuw i8, ptr %11, i64 56
   %i.bq = icmp sgt i32 %i.be, 0                   ; 3 uses
   %i.br = getelementptr inbounds nuw i8, ptr %11, i64 112
-  %wide.trip.count = zext i32 %i.be to i64        ; 5 uses
+  %wide.trip.count = zext i32 %i.be to i64        ; 3 uses
   %min.iters.check = icmp ult i32 %i.be, 8
   %n.vec = and i64 %wide.trip.count, 2147483640   ; 3 uses
   %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
@@ -2079,12 +2079,12 @@ bb.o:                                             ; preds = %_ZNK11OpenImageIO4v
   br i1 %i.bq, label %.lr.ph143.preheader, label %.loopexit133
 
 .lr.ph143.preheader:                              ; preds = %.preheader
-  %wide.trip.count157 = zext nneg i32 %i.be to i64
+  %wide.trip.count157 = zext nneg i32 %i.be to i64 ; 3 uses
   %min.iters.check180 = icmp ult i32 %i.be, 4
   br i1 %min.iters.check180, label %.lr.ph143.preheader193, label %vector.ph181
 
 vector.ph181:                                     ; preds = %.lr.ph143.preheader
-  %n.vec183 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec183 = and i64 %wide.trip.count157, 2147483644 ; 3 uses
   %broadcast.splatinsert184 = insertelement <4 x float> poison, float %.080, i64 0
   %broadcast.splat185 = shufflevector <4 x float> %broadcast.splatinsert184, <4 x float> poison, <4 x i32> zeroinitializer
   br label %vector.body186
@@ -2101,7 +2101,7 @@ vector.body186:                                   ; preds = %vector.body186, %ve
   br i1 %i.dr, label %middle.block190, label %vector.body186, !llvm.loop !937
 
 middle.block190:                                  ; preds = %vector.body186
-  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count
+  %cmp.n191 = icmp eq i64 %n.vec183, %wide.trip.count157
   br i1 %cmp.n191, label %.loopexit133, label %.lr.ph143.preheader193
 
 .lr.ph143.preheader193:                           ; preds = %.lr.ph143.preheader, %middle.block190
@@ -2504,7 +2504,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .preheader.us.preheader:                          ; preds = %bb.c
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !874 ; 2 uses
-  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 14 uses
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2681,12 +2681,12 @@ scalar.ph28:                                      ; preds = %scalar.ph28.prehead
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %1)
   %i.bn = fsub float 1.000000e+00, %i.v           ; 3 uses
   %i.bo = fsub float 1.000000e+00, %i.y           ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64
+  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64 ; 3 uses
   %min.iters.check42 = icmp ult i32 %.sroa.speculated, 4
   br i1 %min.iters.check42, label %.lr.ph.i.preheader, label %vector.ph43
 
 vector.ph43:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec45 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec45 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.bn, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert46 = insertelement <4 x float> poison, float %i.bo, i64 0
@@ -2720,7 +2720,7 @@ vector.body52:                                    ; preds = %vector.body52, %vec
   br i1 %i.ca, label %middle.block59, label %vector.body52, !llvm.loop !1217
 
 middle.block59:                                   ; preds = %vector.body52
-  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count
+  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count.i
   br i1 %cmp.n60, label %_ZN11OpenImageIO4v3_16bilerpIffEEvPKT_S4_S4_S4_T0_S5_iPS2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block59
@@ -3123,7 +3123,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .preheader.us.preheader:                          ; preds = %bb.c
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !874 ; 2 uses
-  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 14 uses
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -3324,12 +3324,12 @@ scalar.ph28:                                      ; preds = %scalar.ph28.prehead
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %1)
   %i.cl = fsub float 1.000000e+00, %i.v           ; 3 uses
   %i.cm = fsub float 1.000000e+00, %i.y           ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64
+  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64 ; 3 uses
   %min.iters.check42 = icmp ult i32 %.sroa.speculated, 4
   br i1 %min.iters.check42, label %.lr.ph.i.preheader, label %vector.ph43
 
 vector.ph43:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec45 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec45 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.cl, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert46 = insertelement <4 x float> poison, float %i.cm, i64 0
@@ -3363,7 +3363,7 @@ vector.body52:                                    ; preds = %vector.body52, %vec
   br i1 %i.cy, label %middle.block59, label %vector.body52, !llvm.loop !1234
 
 middle.block59:                                   ; preds = %vector.body52
-  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count
+  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count.i
   br i1 %cmp.n60, label %_ZN11OpenImageIO4v3_16bilerpIffEEvPKT_S4_S4_S4_T0_S5_iPS2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block59
@@ -3766,7 +3766,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .preheader.us.preheader:                          ; preds = %bb.c
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !874
-  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 6 uses
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 4 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader.us.preheader, %_ZNK11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEfEixEi.exit.us
@@ -3976,12 +3976,12 @@ _ZNK11OpenImageIO4v3_18ImageBuf13ConstIteratorIN9Imath_3_14halfEfEixEi.exit.us.3
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %1)
   %i.df = fsub float 1.000000e+00, %i.v           ; 3 uses
   %i.dg = fsub float 1.000000e+00, %i.y           ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64
+  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated, 4
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.split36.us
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.v, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert1 = insertelement <4 x float> poison, float %i.df, i64 0
@@ -4015,7 +4015,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.ds, label %middle.block, label %vector.body, !llvm.loop !1244
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count.i
   br i1 %cmp.n, label %_ZN11OpenImageIO4v3_16bilerpIffEEvPKT_S4_S4_S4_T0_S5_iPS2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.split36.us, %middle.block
@@ -4418,7 +4418,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 
 .preheader.us.preheader:                          ; preds = %bb.c
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !874 ; 2 uses
-  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 14 uses
+  %wide.trip.count = zext nneg i32 %.sroa.speculated to i64 ; 12 uses
   %min.iters.check = icmp ult i32 %.sroa.speculated, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -4619,12 +4619,12 @@ scalar.ph28:                                      ; preds = %scalar.ph28.prehead
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %1)
   %i.cl = fsub float 1.000000e+00, %i.v           ; 3 uses
   %i.cm = fsub float 1.000000e+00, %i.y           ; 2 uses
-  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64
+  %wide.trip.count.i = zext nneg i32 %.sroa.speculated to i64 ; 3 uses
   %min.iters.check42 = icmp ult i32 %.sroa.speculated, 4
   br i1 %min.iters.check42, label %.lr.ph.i.preheader, label %vector.ph43
 
 vector.ph43:                                      ; preds = %.lr.ph.preheader.i
-  %n.vec45 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec45 = and i64 %wide.trip.count.i, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <4 x float> poison, float %i.cl, i64 0
   %broadcast.splat = shufflevector <4 x float> %broadcast.splatinsert, <4 x float> poison, <4 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert46 = insertelement <4 x float> poison, float %i.cm, i64 0
@@ -4658,7 +4658,7 @@ vector.body52:                                    ; preds = %vector.body52, %vec
   br i1 %i.cy, label %middle.block59, label %vector.body52, !llvm.loop !1261
 
 middle.block59:                                   ; preds = %vector.body52
-  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count
+  %cmp.n60 = icmp eq i64 %n.vec45, %wide.trip.count.i
   br i1 %cmp.n60, label %_ZN11OpenImageIO4v3_16bilerpIffEEvPKT_S4_S4_S4_T0_S5_iPS2_.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block59

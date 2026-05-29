@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -239,12 +239,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -266,7 +266,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1165
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -289,12 +289,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -316,7 +316,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1167
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -345,12 +345,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -372,7 +372,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1169
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -775,7 +775,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -813,12 +813,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -840,7 +840,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1196
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -863,12 +863,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -890,7 +890,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1198
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -919,12 +919,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -946,7 +946,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1200
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -1349,7 +1349,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1387,12 +1387,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -1414,7 +1414,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1455
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -1437,12 +1437,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -1464,7 +1464,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1457
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -1493,12 +1493,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -1520,7 +1520,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1459
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -1715,7 +1715,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -1753,12 +1753,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -1780,7 +1780,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1465
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -1803,12 +1803,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -1830,7 +1830,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1467
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -1859,12 +1859,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -1886,7 +1886,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1469
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -2081,7 +2081,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2119,12 +2119,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -2146,7 +2146,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1475
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -2169,12 +2169,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -2196,7 +2196,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1477
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -2225,12 +2225,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -2252,7 +2252,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1479
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -2447,7 +2447,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2485,12 +2485,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483640  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483640 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -2512,7 +2512,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bg, label %middle.block12, label %vector.body7, !llvm.loop !1485
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -2535,12 +2535,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bm = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483640 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -2562,7 +2562,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bw, label %middle.block25, label %vector.body20, !llvm.loop !1487
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -2591,12 +2591,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.cc = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 8
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483640 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -2618,7 +2618,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cm, label %middle.block38, label %vector.body33, !llvm.loop !1489
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38
@@ -2813,7 +2813,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 .lr.ph:                                           ; preds = %bb.c
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.q to i64    ; 9 uses
+  %wide.trip.count = zext nneg i32 %i.q to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.q, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -2849,12 +2849,12 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count108 = zext nneg i32 %i.q to i64
+  %wide.trip.count108 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check3 = icmp ult i32 %i.q, 4
   br i1 %min.iters.check3, label %scalar.ph2.preheader, label %vector.ph4
 
 vector.ph4:                                       ; preds = %.lr.ph94
-  %n.vec6 = and i64 %wide.trip.count, 2147483644  ; 3 uses
+  %n.vec6 = and i64 %wide.trip.count108, 2147483644 ; 3 uses
   br label %vector.body7
 
 vector.body7:                                     ; preds = %vector.body7, %vector.ph4
@@ -2874,7 +2874,7 @@ vector.body7:                                     ; preds = %vector.body7, %vect
   br i1 %i.bc, label %middle.block12, label %vector.body7, !llvm.loop !1495
 
 middle.block12:                                   ; preds = %vector.body7
-  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count
+  %cmp.n13 = icmp eq i64 %n.vec6, %wide.trip.count108
   br i1 %cmp.n13, label %.lr.ph98, label %scalar.ph2.preheader
 
 scalar.ph2.preheader:                             ; preds = %.lr.ph94, %middle.block12
@@ -2896,12 +2896,12 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bh = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count113 = zext nneg i32 %i.q to i64
+  %wide.trip.count113 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check16 = icmp ult i32 %i.q, 4
   br i1 %min.iters.check16, label %scalar.ph15.preheader, label %vector.ph17
 
 vector.ph17:                                      ; preds = %.lr.ph98
-  %n.vec19 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec19 = and i64 %wide.trip.count113, 2147483644 ; 3 uses
   br label %vector.body20
 
 vector.body20:                                    ; preds = %vector.body20, %vector.ph17
@@ -2921,7 +2921,7 @@ vector.body20:                                    ; preds = %vector.body20, %vec
   br i1 %i.bp, label %middle.block25, label %vector.body20, !llvm.loop !1497
 
 middle.block25:                                   ; preds = %vector.body20
-  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count
+  %cmp.n26 = icmp eq i64 %n.vec19, %wide.trip.count113
   br i1 %cmp.n26, label %.lr.ph102, label %scalar.ph15.preheader
 
 scalar.ph15.preheader:                            ; preds = %.lr.ph98, %middle.block25
@@ -2949,12 +2949,12 @@ scalar.ph2:                                       ; preds = %scalar.ph2.preheade
   tail call void @_ZN11OpenImageIO4v3_18ImageBuf12IteratorBaseppEv(ptr noundef nonnull align 8 dereferenceable(126) %5)
   %i.bu = getelementptr inbounds nuw i8, ptr %5, i64 112
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !1144 ; 2 uses
-  %wide.trip.count118 = zext nneg i32 %i.q to i64
+  %wide.trip.count118 = zext nneg i32 %i.q to i64 ; 3 uses
   %min.iters.check29 = icmp ult i32 %i.q, 4
   br i1 %min.iters.check29, label %scalar.ph28.preheader, label %vector.ph30
 
 vector.ph30:                                      ; preds = %.lr.ph102
-  %n.vec32 = and i64 %wide.trip.count, 2147483644 ; 3 uses
+  %n.vec32 = and i64 %wide.trip.count118, 2147483644 ; 3 uses
   br label %vector.body33
 
 vector.body33:                                    ; preds = %vector.body33, %vector.ph30
@@ -2974,7 +2974,7 @@ vector.body33:                                    ; preds = %vector.body33, %vec
   br i1 %i.cc, label %middle.block38, label %vector.body33, !llvm.loop !1499
 
 middle.block38:                                   ; preds = %vector.body33
-  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count
+  %cmp.n39 = icmp eq i64 %n.vec32, %wide.trip.count118
   br i1 %cmp.n39, label %._crit_edge103, label %scalar.ph28.preheader
 
 scalar.ph28.preheader:                            ; preds = %.lr.ph102, %middle.block38

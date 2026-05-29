@@ -201,7 +201,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit:               ; preds = %.noexc201
   br i1 %i.hy, label %.lr.ph519.preheader, label %.preheader471.thread
 
 .lr.ph519.preheader:                              ; preds = %.noexc201, %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit
-  %wide.trip.count583 = and i64 %i.hp, 2147483647 ; 14 uses
+  %wide.trip.count583 = and i64 %i.hp, 2147483647 ; 8 uses
   %min.iters.check1017 = icmp samesign ult i64 %wide.trip.count583, 6
   %i.hz = sub i64 %i.ht, %i.hm
   %diff.check1015 = icmp ult i64 %i.hz, 32
@@ -333,8 +333,8 @@ bb.ae:                                            ; preds = %bb.ae, %.epil.prehe
 .lr.ph524:                                        ; preds = %bb.ae, %.lr.ph524.unr-lcssa
   %i.ji = getelementptr inbounds nuw i8, ptr %0, i64 1440
   %i.jj = load ptr, ptr %i.ji, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count593 = and i64 %i.hp, 2147483647
-  %min.iters.check1032 = icmp samesign ult i64 %wide.trip.count583, 6
+  %wide.trip.count593 = and i64 %i.hp, 2147483647 ; 3 uses
+  %min.iters.check1032 = icmp samesign ult i64 %wide.trip.count593, 6
   %i.jk = ptrtoaddr ptr %i.jj to i64
   %i.jl = sub i64 %i.ht, %i.jk
   %diff.check1030 = icmp ult i64 %i.jl, 32
@@ -360,7 +360,7 @@ vector.body1036:                                  ; preds = %vector.body1036, %v
   br i1 %i.jq, label %middle.block1041, label %vector.body1036, !llvm.loop !106
 
 middle.block1041:                                 ; preds = %vector.body1036
-  %cmp.n1042 = icmp eq i64 %wide.trip.count583, %n.vec1035
+  %cmp.n1042 = icmp eq i64 %wide.trip.count593, %n.vec1035
   br i1 %cmp.n1042, label %.lr.ph526, label %scalar.ph1031.preheader
 
 scalar.ph1031.preheader:                          ; preds = %.lr.ph524, %middle.block1041
@@ -491,8 +491,8 @@ bb.ag:                                            ; preds = %bb.ag, %.epil.prehe
 .lr.ph528:                                        ; preds = %bb.ag, %.lr.ph528.unr-lcssa
   %i.lq = getelementptr inbounds nuw i8, ptr %0, i64 1464
   %i.lr = load ptr, ptr %i.lq, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count603 = and i64 %i.hp, 2147483647
-  %min.iters.check1047 = icmp samesign ult i64 %wide.trip.count583, 6
+  %wide.trip.count603 = and i64 %i.hp, 2147483647 ; 3 uses
+  %min.iters.check1047 = icmp samesign ult i64 %wide.trip.count603, 6
   %i.ls = ptrtoaddr ptr %i.lr to i64
   %i.lt = sub i64 %i.ht, %i.ls
   %diff.check1045 = icmp ult i64 %i.lt, 32
@@ -518,7 +518,7 @@ vector.body1051:                                  ; preds = %vector.body1051, %v
   br i1 %i.ly, label %middle.block1056, label %vector.body1051, !llvm.loop !111
 
 middle.block1056:                                 ; preds = %vector.body1051
-  %cmp.n1057 = icmp eq i64 %wide.trip.count583, %n.vec1050
+  %cmp.n1057 = icmp eq i64 %wide.trip.count603, %n.vec1050
   br i1 %cmp.n1057, label %.lr.ph530, label %scalar.ph1046.preheader
 
 scalar.ph1046.preheader:                          ; preds = %.lr.ph528, %middle.block1056
@@ -649,8 +649,8 @@ bb.ai:                                            ; preds = %bb.ai, %.epil.prehe
 .lr.ph532:                                        ; preds = %bb.ai, %.lr.ph532.unr-lcssa
   %i.ny = getelementptr inbounds nuw i8, ptr %0, i64 1488
   %i.nz = load ptr, ptr %i.ny, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count613 = and i64 %i.hp, 2147483647
-  %min.iters.check1062 = icmp samesign ult i64 %wide.trip.count583, 6
+  %wide.trip.count613 = and i64 %i.hp, 2147483647 ; 3 uses
+  %min.iters.check1062 = icmp samesign ult i64 %wide.trip.count613, 6
   %i.oa = ptrtoaddr ptr %i.nz to i64
   %i.ob = sub i64 %i.ht, %i.oa
   %diff.check1060 = icmp ult i64 %i.ob, 32
@@ -676,7 +676,7 @@ vector.body1066:                                  ; preds = %vector.body1066, %v
   br i1 %i.og, label %middle.block1071, label %vector.body1066, !llvm.loop !116
 
 middle.block1071:                                 ; preds = %vector.body1066
-  %cmp.n1072 = icmp eq i64 %wide.trip.count583, %n.vec1065
+  %cmp.n1072 = icmp eq i64 %wide.trip.count613, %n.vec1065
   br i1 %cmp.n1072, label %.lr.ph534, label %scalar.ph1061.preheader
 
 scalar.ph1061.preheader:                          ; preds = %.lr.ph532, %middle.block1071
@@ -1079,7 +1079,7 @@ _ZNSt6vectorIdSaIdEEC2EmRKS0_.exit230:            ; preds = %.noexc229
   br i1 %i.wm, label %.lr.ph494.preheader, label %.preheader479.thread
 
 .lr.ph494.preheader:                              ; preds = %.noexc229, %_ZNSt6vectorIdSaIdEEC2EmRKS0_.exit230
-  %wide.trip.count = and i64 %i.wd, 2147483647    ; 14 uses
+  %wide.trip.count = and i64 %i.wd, 2147483647    ; 8 uses
   %min.iters.check895 = icmp samesign ult i64 %wide.trip.count, 6
   %i.wn = sub i64 %i.wh, %i.wa
   %diff.check893 = icmp ult i64 %i.wn, 32
@@ -1211,8 +1211,8 @@ bb.bf:                                            ; preds = %bb.bf, %.epil.prehe
 .lr.ph499:                                        ; preds = %bb.bf, %.lr.ph499.unr-lcssa
   %i.xw = getelementptr inbounds nuw i8, ptr %0, i64 1440
   %i.xx = load ptr, ptr %i.xw, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count553 = and i64 %i.wd, 2147483647
-  %min.iters.check910 = icmp samesign ult i64 %wide.trip.count, 6
+  %wide.trip.count553 = and i64 %i.wd, 2147483647 ; 3 uses
+  %min.iters.check910 = icmp samesign ult i64 %wide.trip.count553, 6
   %i.xy = ptrtoaddr ptr %i.xx to i64
   %i.xz = sub i64 %i.wh, %i.xy
   %diff.check908 = icmp ult i64 %i.xz, 32
@@ -1238,7 +1238,7 @@ vector.body914:                                   ; preds = %vector.body914, %ve
   br i1 %i.ye, label %middle.block919, label %vector.body914, !llvm.loop !134
 
 middle.block919:                                  ; preds = %vector.body914
-  %cmp.n920 = icmp eq i64 %wide.trip.count, %n.vec913
+  %cmp.n920 = icmp eq i64 %wide.trip.count553, %n.vec913
   br i1 %cmp.n920, label %.lr.ph501, label %scalar.ph909.preheader
 
 scalar.ph909.preheader:                           ; preds = %.lr.ph499, %middle.block919
@@ -1369,8 +1369,8 @@ bb.bh:                                            ; preds = %bb.bh, %.epil.prehe
 .lr.ph503:                                        ; preds = %bb.bh, %.lr.ph503.unr-lcssa
   %i.aae = getelementptr inbounds nuw i8, ptr %0, i64 1464
   %i.aaf = load ptr, ptr %i.aae, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count563 = and i64 %i.wd, 2147483647
-  %min.iters.check925 = icmp samesign ult i64 %wide.trip.count, 6
+  %wide.trip.count563 = and i64 %i.wd, 2147483647 ; 3 uses
+  %min.iters.check925 = icmp samesign ult i64 %wide.trip.count563, 6
   %i.aag = ptrtoaddr ptr %i.aaf to i64
   %i.aah = sub i64 %i.wh, %i.aag
   %diff.check923 = icmp ult i64 %i.aah, 32
@@ -1396,7 +1396,7 @@ vector.body929:                                   ; preds = %vector.body929, %ve
   br i1 %i.aam, label %middle.block934, label %vector.body929, !llvm.loop !139
 
 middle.block934:                                  ; preds = %vector.body929
-  %cmp.n935 = icmp eq i64 %wide.trip.count, %n.vec928
+  %cmp.n935 = icmp eq i64 %wide.trip.count563, %n.vec928
   br i1 %cmp.n935, label %.lr.ph505, label %scalar.ph924.preheader
 
 scalar.ph924.preheader:                           ; preds = %.lr.ph503, %middle.block934
@@ -1527,8 +1527,8 @@ bb.bj:                                            ; preds = %bb.bj, %.epil.prehe
 .lr.ph507:                                        ; preds = %bb.bj, %.lr.ph507.unr-lcssa
   %i.acm = getelementptr inbounds nuw i8, ptr %0, i64 1488
   %i.acn = load ptr, ptr %i.acm, align 8, !tbaa !92 ; 7 uses
-  %wide.trip.count573 = and i64 %i.wd, 2147483647
-  %min.iters.check940 = icmp samesign ult i64 %wide.trip.count, 6
+  %wide.trip.count573 = and i64 %i.wd, 2147483647 ; 3 uses
+  %min.iters.check940 = icmp samesign ult i64 %wide.trip.count573, 6
   %i.aco = ptrtoaddr ptr %i.acn to i64
   %i.acp = sub i64 %i.wh, %i.aco
   %diff.check938 = icmp ult i64 %i.acp, 32
@@ -1554,7 +1554,7 @@ vector.body944:                                   ; preds = %vector.body944, %ve
   br i1 %i.acu, label %middle.block949, label %vector.body944, !llvm.loop !144
 
 middle.block949:                                  ; preds = %vector.body944
-  %cmp.n950 = icmp eq i64 %wide.trip.count, %n.vec943
+  %cmp.n950 = icmp eq i64 %wide.trip.count573, %n.vec943
   br i1 %cmp.n950, label %.lr.ph509, label %scalar.ph939.preheader
 
 scalar.ph939.preheader:                           ; preds = %.lr.ph507, %middle.block949

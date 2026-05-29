@@ -201,7 +201,7 @@ bb.p:                                             ; preds = %bb.n, %bb.o, %bb.e
 
 .lr.ph:                                           ; preds = %bb.p
   %i.gv = load <2 x double>, ptr %i.gd, align 8, !tbaa !77 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.gt to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.gt to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.gw = icmp eq i32 %i.gt, 1
   br i1 %i.gw, label %.epil.preheader, label %.lr.ph.new
@@ -295,12 +295,12 @@ bb.r:                                             ; preds = %bb.p
 
 .lr.ph137.preheader:                              ; preds = %._crit_edge, %.thread152
   %i.io = phi double [ %i.ik, %.thread152 ], [ 0.000000e+00, %._crit_edge ] ; 2 uses
-  %wide.trip.count145 = zext nneg i32 %i.gt to i64
+  %wide.trip.count145 = zext nneg i32 %i.gt to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %i.gt, 4
   br i1 %min.iters.check, label %.lr.ph137.preheader173, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph137.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %wide.trip.count145, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.io, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -359,7 +359,7 @@ pred.store.continue171:                           ; preds = %pred.store.if170, %
   br i1 %i.jg, label %middle.block, label %vector.body, !llvm.loop !173
 
 middle.block:                                     ; preds = %pred.store.continue171
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count145
   br i1 %cmp.n, label %._crit_edge138, label %.lr.ph137.preheader173
 
 .lr.ph137.preheader173:                           ; preds = %.lr.ph137.preheader, %middle.block
@@ -762,7 +762,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
 .lr.ph:                                           ; preds = %bb.m
   %i.ek = load double, ptr %i.dh, align 8, !tbaa !184 ; 3 uses
   %i.el = load double, ptr %i.di, align 8, !tbaa !185 ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.dz to i64   ; 4 uses
+  %wide.trip.count = zext nneg i32 %i.dz to i64   ; 2 uses
   %xtraiter = and i64 %wide.trip.count, 1
   %i.em = icmp eq i32 %i.dz, 1
   br i1 %i.em, label %.epil.preheader, label %.lr.ph.new
@@ -838,12 +838,12 @@ bb.o:                                             ; preds = %bb.m
 
 .lr.ph91.preheader:                               ; preds = %._crit_edge, %.thread105
   %i.fs = phi double [ %i.fo, %.thread105 ], [ 0.000000e+00, %._crit_edge ] ; 2 uses
-  %wide.trip.count99 = zext nneg i32 %i.dz to i64
+  %wide.trip.count99 = zext nneg i32 %i.dz to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %i.dz, 4
   br i1 %min.iters.check, label %.lr.ph91.preheader125, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph91.preheader
-  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
+  %n.vec = and i64 %wide.trip.count99, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <2 x double> poison, double %i.fs, i64 0
   %broadcast.splat = shufflevector <2 x double> %broadcast.splatinsert, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body
@@ -902,7 +902,7 @@ pred.store.continue124:                           ; preds = %pred.store.if123, %
   br i1 %i.gk, label %middle.block, label %vector.body, !llvm.loop !187
 
 middle.block:                                     ; preds = %pred.store.continue124
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count99
   br i1 %cmp.n, label %._crit_edge92, label %.lr.ph91.preheader125
 
 .lr.ph91.preheader125:                            ; preds = %.lr.ph91.preheader, %middle.block

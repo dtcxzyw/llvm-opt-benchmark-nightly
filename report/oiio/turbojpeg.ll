@@ -201,7 +201,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.0111 = phi i32 [ %i.ar, %bb.m ], [ %3, %bb.l ]
-  %i.as = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.as = zext nneg i32 %4 to i64                 ; 4 uses
   %i.at = shl nuw nsw i64 %i.as, 3
   %i.au = call noalias ptr @malloc(i64 noundef %i.at) #27 ; 11 uses
   %i.av = icmp eq ptr %i.au, null
@@ -285,12 +285,12 @@ bb.v:                                             ; preds = %bb.u
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.bv = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.bv = zext nneg i32 %4 to i64                 ; 4 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader157, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.as, 2147483644              ; 3 uses
+  %n.vec = and i64 %i.bv, 2147483644              ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.bv, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert155 = insertelement <2 x i64> poison, i64 %i.bs, i64 0
@@ -318,7 +318,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !94
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.as
+  %cmp.n = icmp eq i64 %n.vec, %i.bv
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader157
 
 .lr.ph.split.preheader157:                        ; preds = %.lr.ph.split.preheader, %middle.block
@@ -721,7 +721,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.0111 = phi i32 [ %i.ar, %bb.m ], [ %3, %bb.l ]
-  %i.as = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.as = zext nneg i32 %4 to i64                 ; 4 uses
   %i.at = shl nuw nsw i64 %i.as, 3
   %i.au = call noalias ptr @malloc(i64 noundef %i.at) #27 ; 11 uses
   %i.av = icmp eq ptr %i.au, null
@@ -805,12 +805,12 @@ bb.v:                                             ; preds = %bb.u
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.bv = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.bv = zext nneg i32 %4 to i64                 ; 4 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader157, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.as, 2147483644              ; 3 uses
+  %n.vec = and i64 %i.bv, 2147483644              ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.bv, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert155 = insertelement <2 x i64> poison, i64 %i.bs, i64 0
@@ -838,7 +838,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !200
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.as
+  %cmp.n = icmp eq i64 %n.vec, %i.bv
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader157
 
 .lr.ph.split.preheader157:                        ; preds = %.lr.ph.split.preheader, %middle.block
@@ -1241,7 +1241,7 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %.0111 = phi i32 [ %i.ar, %bb.m ], [ %3, %bb.l ]
-  %i.as = zext nneg i32 %4 to i64                 ; 6 uses
+  %i.as = zext nneg i32 %4 to i64                 ; 4 uses
   %i.at = shl nuw nsw i64 %i.as, 3
   %i.au = call noalias ptr @malloc(i64 noundef %i.at) #27 ; 11 uses
   %i.av = icmp eq ptr %i.au, null
@@ -1325,12 +1325,12 @@ bb.v:                                             ; preds = %bb.u
   br label %.lr.ph.split.us
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %i.bv = zext nneg i32 %4 to i64                 ; 2 uses
+  %i.bv = zext nneg i32 %4 to i64                 ; 4 uses
   %min.iters.check = icmp ult i32 %4, 4
   br i1 %min.iters.check, label %.lr.ph.split.preheader157, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.split.preheader
-  %n.vec = and i64 %i.as, 2147483644              ; 3 uses
+  %n.vec = and i64 %i.bv, 2147483644              ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.bv, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert155 = insertelement <2 x i64> poison, i64 %i.bs, i64 0
@@ -1358,7 +1358,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.cf, label %middle.block, label %vector.body, !llvm.loop !216
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %i.as
+  %cmp.n = icmp eq i64 %n.vec, %i.bv
   br i1 %cmp.n, label %.preheader, label %.lr.ph.split.preheader157
 
 .lr.ph.split.preheader157:                        ; preds = %.lr.ph.split.preheader, %middle.block
