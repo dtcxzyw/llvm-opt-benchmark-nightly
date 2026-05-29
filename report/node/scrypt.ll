@@ -201,7 +201,7 @@ set_digest.exit:                                  ; preds = %.set_digest.exit_cr
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.y = load i64, ptr %i.x, align 8, !tbaa !16   ; 12 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.aa = load i64, ptr %i.z, align 8, !tbaa !17  ; 17 uses
+  %i.aa = load i64, ptr %i.z, align 8, !tbaa !17  ; 19 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !18 ; 6 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72
@@ -269,7 +269,7 @@ bb.p:                                             ; preds = %bb.o
   br label %scrypt_alg.exit
 
 bb.q:                                             ; preds = %bb.o
-  %i.aw = shl i64 %i.aa, 5                        ; 12 uses
+  %i.aw = shl i64 %i.aa, 5                        ; 10 uses
   %i.ax = shl nuw nsw i64 %i.at, 2
   %i.ay = mul i64 %i.ax, %i.aw                    ; 2 uses
   %i.az = xor i64 %i.ay, -1
@@ -329,8 +329,12 @@ bb.w:                                             ; preds = %bb.v
   %i.bw = mul i64 %i.ac, %i.aa
   %i.bx = shl i64 %i.aa, 7
   %i.by = shl i64 %i.y, 7
-  %i.bz = shl i64 %i.bw, 7
+  %4 = shl i64 %i.bw, 7
+  %i.bz = shl i64 %i.aa, 5                        ; 2 uses
+  %min.iters.check52 = icmp eq i64 %i.bz, 0
   %diff.check49 = icmp eq i64 %i.bo, 0
+  %5 = shl i64 %i.aa, 5                           ; 2 uses
+  %min.iters.check = icmp eq i64 %5, 0
   br label %.lr.ph.i.preheader.i
 
 .preheader69.i.us.i:                              ; preds = %.preheader.i, %scryptROMix.exit.loopexit.us.i
@@ -410,29 +414,35 @@ scryptROMix.exit.loopexit.us.i:                   ; preds = %.split.i.us.i
 
 .lr.ph78.us.i.preheader.i:                        ; preds = %.preheader69.i.loopexit.i
   tail call fastcc void @scryptBlockMix(ptr noundef nonnull %i.bg, ptr noundef %i.bt, i64 noundef range(i64 1, 0) %i.aa)
-  br label %.lr.ph78.us.i.i.a
+  br label %.lr.ph78.us.i.i
 
-.lr.ph78.us.i.i.a:                                ; preds = %._crit_edge.us.i.i, %.lr.ph78.us.i.preheader.i
+.lr.ph78.us.i.i:                                  ; preds = %._crit_edge.us.i.i, %.lr.ph78.us.i.preheader.i
   %.26679.us.i.i = phi i64 [ %i.et, %._crit_edge.us.i.i ], [ 0, %.lr.ph78.us.i.preheader.i ]
-  %4 = load i32, ptr %i.bv, align 4, !tbaa !5
-  %5 = zext i32 %4 to i64                         ; 3 uses
-  %6 = urem i64 %5, %i.y
-  %7 = mul i64 %6, %i.aw
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %7 ; 2 uses
-  %9 = udiv i64 %5, %i.y
+  %6 = load i32, ptr %i.bv, align 4, !tbaa !5
+  %7 = zext i32 %6 to i64                         ; 3 uses
+  %8 = urem i64 %7, %i.y
+  %9 = udiv i64 %7, %i.y
+  %10 = mul i64 %8, %i.aw
+  %11 = getelementptr inbounds nuw [4 x i8], ptr %i.bi, i64 %10 ; 2 uses
+  br i1 %min.iters.check52, label %scalar.ph51.preheader, label %.lr.ph78.us.i.i.a
+
+scalar.ph51.preheader:                            ; preds = %.lr.ph78.us.i.i.a, %.lr.ph78.us.i.i
+  br label %scalar.ph51
+
+.lr.ph78.us.i.i.a:                                ; preds = %.lr.ph78.us.i.i
   %i.dd = mul i64 %i.by, %9
   %i.de = add i64 %i.dd, -128
-  %i.df = shl nuw nsw i64 %5, 7
+  %i.df = shl nuw nsw i64 %7, 7
   %i.dg = sub i64 %i.de, %i.df
   %i.dh = mul i64 %i.aa, %i.dg
   %diff.check50 = icmp eq i64 %i.dh, 0
   %conflict.rdx = or i1 %diff.check49, %diff.check50
-  br i1 %conflict.rdx, label %scalar.ph51, label %vector.body56
+  br i1 %conflict.rdx, label %scalar.ph51.preheader, label %vector.body56
 
 vector.body56:                                    ; preds = %.lr.ph78.us.i.i.a, %vector.body56
   %index57 = phi i64 [ %index.next63, %vector.body56 ], [ 0, %.lr.ph78.us.i.i.a ] ; 4 uses
   %i.di = shl i64 %index57, 2
-  %next.gep58 = getelementptr i8, ptr %8, i64 %i.di ; 2 uses
+  %next.gep58 = getelementptr i8, ptr %11, i64 %i.di ; 2 uses
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %index57 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
   %wide.load59 = load <4 x i32>, ptr %i.dj, align 4, !tbaa !5
@@ -447,12 +457,12 @@ vector.body56:                                    ; preds = %.lr.ph78.us.i.i.a, 
   store <4 x i32> %i.dm, ptr %i.do, align 4, !tbaa !5
   store <4 x i32> %i.dn, ptr %i.dp, align 4, !tbaa !5
   %index.next63 = add nuw i64 %index57, 8         ; 2 uses
-  %i.dq = icmp eq i64 %index.next63, %i.aw
+  %i.dq = icmp eq i64 %index.next63, %i.bz
   br i1 %i.dq, label %._crit_edge.us.i.i, label %vector.body56, !llvm.loop !33
 
-scalar.ph51:                                      ; preds = %.lr.ph78.us.i.i.a, %scalar.ph51
-  %.277.us.i.i = phi ptr [ %i.eo, %scalar.ph51 ], [ %8, %.lr.ph78.us.i.i.a ] ; 5 uses
-  %.06376.us.i.i = phi i64 [ %i.es, %scalar.ph51 ], [ 0, %.lr.ph78.us.i.i.a ] ; 6 uses
+scalar.ph51:                                      ; preds = %scalar.ph51, %scalar.ph51.preheader
+  %.277.us.i.i = phi ptr [ %11, %scalar.ph51.preheader ], [ %i.eo, %scalar.ph51 ] ; 5 uses
+  %.06376.us.i.i = phi i64 [ 0, %scalar.ph51.preheader ], [ %i.es, %scalar.ph51 ] ; 6 uses
   %i.dr = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %.06376.us.i.i
   %i.ds = load i32, ptr %i.dr, align 4, !tbaa !5
   %i.dt = getelementptr inbounds nuw i8, ptr %.277.us.i.i, i64 4
@@ -492,11 +502,12 @@ scalar.ph51:                                      ; preds = %.lr.ph78.us.i.i.a, 
   tail call fastcc void @scryptBlockMix(ptr noundef nonnull %i.bg, ptr noundef nonnull %i.bh, i64 noundef range(i64 1, 0) %i.aa)
   %i.et = add nuw i64 %.26679.us.i.i, 1           ; 2 uses
   %exitcond88.not.i.i = icmp eq i64 %i.et, %i.y
-  br i1 %exitcond88.not.i.i, label %vector.memcheck, label %.lr.ph78.us.i.i.a, !llvm.loop !29
+  br i1 %exitcond88.not.i.i, label %vector.memcheck, label %.lr.ph78.us.i.i, !llvm.loop !29
 
 vector.memcheck:                                  ; preds = %._crit_edge.us.i.i
-  %diff.check = icmp eq i64 %i.cd, %i.bz
-  br i1 %diff.check, label %.lr.ph82.i.i, label %vector.body
+  %diff.check = icmp eq i64 %i.cd, %4
+  %or.cond = or i1 %min.iters.check, %diff.check
+  br i1 %or.cond, label %.lr.ph82.i.i, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
   %index = phi i64 [ %index.next, %vector.body ], [ 0, %vector.memcheck ] ; 3 uses
@@ -510,7 +521,7 @@ vector.body:                                      ; preds = %vector.memcheck, %v
   store <4 x i32> %wide.load, ptr %next.gep, align 1
   store <4 x i32> %wide.load46, ptr %i.ex, align 1
   %index.next = add nuw i64 %index, 8             ; 2 uses
-  %i.ey = icmp eq i64 %index.next, %i.aw
+  %i.ey = icmp eq i64 %index.next, %5
   br i1 %i.ey, label %scryptROMix.exit.loopexit94.i, label %vector.body, !llvm.loop !37
 
 .lr.ph82.i.i:                                     ; preds = %vector.memcheck, %.lr.ph82.i.i
