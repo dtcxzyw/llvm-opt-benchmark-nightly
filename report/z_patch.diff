@@ -1,0 +1,99 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..c10c98c0e1164 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,84 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpSubNSWUmin(ICmpInst &I, IRBuilderBase &Builder,
++                                       const SimplifyQuery &SQ) {
++  // Match:
++  //
++  //   icmp slt/sle (sub nsw X, umin(X, Y)), Z
++  //
++  // or the commuted forms:
++  //
++  //   icmp sgt/sge Z, (sub nsw X, umin(X, Y))
++  //
++  // If Y >= 0 and Y + Z does not signed-overflow, then:
++  //
++  //   (sub nsw X, umin(X, Y)) s<  Z  -->  X s<  Y + Z
++  //   (sub nsw X, umin(X, Y)) s<= Z  -->  X s<= Y + Z
++  //
++  // For the strict form, require Z > 0. For the non-strict form, require
++  // Z >= 0. This is needed for the X <u Y arm where the subtraction is zero.
++  Value *SubV;
++  Value *Z;
++  ICmpInst::Predicate NewPred;
++
++  switch (I.getPredicate()) {
++  case ICmpInst::ICMP_SLT:
++    SubV = I.getOperand(0);
++    Z = I.getOperand(1);
++    NewPred = ICmpInst::ICMP_SLT;
++    break;
++  case ICmpInst::ICMP_SGT:
++    Z = I.getOperand(0);
++    SubV = I.getOperand(1);
++    NewPred = ICmpInst::ICMP_SLT;
++    break;
++  case ICmpInst::ICMP_SLE:
++    SubV = I.getOperand(0);
++    Z = I.getOperand(1);
++    NewPred = ICmpInst::ICMP_SLE;
++    break;
++  case ICmpInst::ICMP_SGE:
++    Z = I.getOperand(0);
++    SubV = I.getOperand(1);
++    NewPred = ICmpInst::ICMP_SLE;
++    break;
++  default:
++    return nullptr;
++  }
++
++  auto *Sub = dyn_cast<BinaryOperator>(SubV);
++  if (!Sub || Sub->getOpcode() != Instruction::Sub || !Sub->hasNoSignedWrap())
++    return nullptr;
++
++  Value *X = Sub->getOperand(0);
++  Value *Y;
++  if (!match(Sub->getOperand(1), m_c_UMin(m_Specific(X), m_Value(Y))))
++    return nullptr;
++
++  const SimplifyQuery Q = SQ.getWithInstruction(&I);
++
++  if (!isKnownNonNegative(Y, Q))
++    return nullptr;
++
++  if (NewPred == ICmpInst::ICMP_SLT) {
++    if (!isKnownPositive(Z, Q))
++      return nullptr;
++  } else {
++    if (!isKnownNonNegative(Z, Q))
++      return nullptr;
++  }
++
++  if (computeOverflowForSignedAdd(WithCache<const Value *>(Y),
++                                  WithCache<const Value *>(Z), Q) !=
++      OverflowResult::NeverOverflows)
++    return nullptr;
++
++  Value *Sum = Builder.CreateAdd(Y, Z, "sum", /*HasNUW=*/false,
++                                 /*HasNSW=*/true);
++  return new ICmpInst(NewPred, X, Sum);
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8214,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *R = foldICmpSubNSWUmin(I, Builder, Q))
++    return R;
++
+   return Changed ? &I : nullptr;
+ }
+ 
