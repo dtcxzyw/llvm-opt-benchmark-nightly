@@ -200,13 +200,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond132.not, label %.lr.ph123, label %.lr.ph121, !llvm.loop !110
 
 .lr.ph123:                                        ; preds = %.lr.ph121, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 3 uses
   %.0108125 = phi i64 [ %i.ak, %._crit_edge ], [ 0, %.lr.ph121 ] ; 3 uses
   %.2124 = phi i64 [ %i.al, %._crit_edge ], [ 0, %.lr.ph121 ] ; 5 uses
-  %umax137 = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umin = tail call i64 @llvm.umin.i64(i64 %umax137, i64 64) ; 2 uses
   %i.t = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64)
+  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64) ; 3 uses
   %i.u = sub nuw i64 %2, %.2124
   %i.v = tail call noundef i64 @llvm.umin.i64(i64 %i.u, i64 64) ; 2 uses
   %i.w = getelementptr [4 x i8], ptr %i.e, i64 %.0108125 ; 2 uses
@@ -214,7 +212,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check139, label %scalar.ph138.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %.lr.ph123
-  %n.vec142 = and i64 %umin, 120                  ; 3 uses
+  %n.vec142 = and i64 %umax, 120                  ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %.2124, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add nuw <4 x i64> splat (i64 4), %broadcast.splat
@@ -237,7 +235,7 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.ac, label %middle.block146, label %vector.body143, !llvm.loop !111
 
 middle.block146:                                  ; preds = %vector.body143
-  %cmp.n147 = icmp eq i64 %umin, %n.vec142
+  %cmp.n147 = icmp eq i64 %umax, %n.vec142
   br i1 %cmp.n147, label %._crit_edge, label %scalar.ph138.preheader
 
 scalar.ph138.preheader:                           ; preds = %.lr.ph123, %middle.block146
@@ -640,13 +638,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond132.not, label %.lr.ph123, label %.lr.ph121, !llvm.loop !202
 
 .lr.ph123:                                        ; preds = %.lr.ph121, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 3 uses
   %.0108125 = phi i64 [ %i.ak, %._crit_edge ], [ 0, %.lr.ph121 ] ; 3 uses
   %.2124 = phi i64 [ %i.al, %._crit_edge ], [ 0, %.lr.ph121 ] ; 5 uses
-  %umax137 = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umin = tail call i64 @llvm.umin.i64(i64 %umax137, i64 64) ; 2 uses
   %i.t = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64)
+  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64) ; 3 uses
   %i.u = sub nuw i64 %2, %.2124
   %i.v = tail call noundef i64 @llvm.umin.i64(i64 %i.u, i64 64) ; 2 uses
   %i.w = getelementptr [4 x i8], ptr %i.e, i64 %.0108125 ; 2 uses
@@ -654,7 +650,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check139, label %scalar.ph138.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %.lr.ph123
-  %n.vec142 = and i64 %umin, 120                  ; 3 uses
+  %n.vec142 = and i64 %umax, 120                  ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %.2124, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add nuw <4 x i64> splat (i64 4), %broadcast.splat
@@ -677,7 +673,7 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.ac, label %middle.block146, label %vector.body143, !llvm.loop !203
 
 middle.block146:                                  ; preds = %vector.body143
-  %cmp.n147 = icmp eq i64 %umin, %n.vec142
+  %cmp.n147 = icmp eq i64 %umax, %n.vec142
   br i1 %cmp.n147, label %._crit_edge, label %scalar.ph138.preheader
 
 scalar.ph138.preheader:                           ; preds = %.lr.ph123, %middle.block146
@@ -1080,13 +1076,11 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond132.not, label %.lr.ph123, label %.lr.ph121, !llvm.loop !294
 
 .lr.ph123:                                        ; preds = %.lr.ph121, %._crit_edge
-  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %._crit_edge ], [ %2, %.lr.ph121 ] ; 3 uses
   %.0108125 = phi i64 [ %i.ak, %._crit_edge ], [ 0, %.lr.ph121 ] ; 3 uses
   %.2124 = phi i64 [ %i.al, %._crit_edge ], [ 0, %.lr.ph121 ] ; 5 uses
-  %umax137 = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umin = tail call i64 @llvm.umin.i64(i64 %umax137, i64 64) ; 2 uses
   %i.t = tail call i64 @llvm.umax.i64(i64 %indvars.iv, i64 1)
-  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64)
+  %umax = tail call i64 @llvm.umin.i64(i64 %i.t, i64 64) ; 3 uses
   %i.u = sub nuw i64 %2, %.2124
   %i.v = tail call noundef i64 @llvm.umin.i64(i64 %i.u, i64 64) ; 2 uses
   %i.w = getelementptr [4 x i8], ptr %i.e, i64 %.0108125 ; 2 uses
@@ -1094,7 +1088,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %min.iters.check139, label %scalar.ph138.preheader, label %vector.ph140
 
 vector.ph140:                                     ; preds = %.lr.ph123
-  %n.vec142 = and i64 %umin, 120                  ; 3 uses
+  %n.vec142 = and i64 %umax, 120                  ; 3 uses
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %.2124, i64 0
   %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
   %invariant.op = add nuw <4 x i64> splat (i64 4), %broadcast.splat
@@ -1117,7 +1111,7 @@ vector.body143:                                   ; preds = %vector.body143, %ve
   br i1 %i.ac, label %middle.block146, label %vector.body143, !llvm.loop !295
 
 middle.block146:                                  ; preds = %vector.body143
-  %cmp.n147 = icmp eq i64 %umin, %n.vec142
+  %cmp.n147 = icmp eq i64 %umax, %n.vec142
   br i1 %cmp.n147, label %._crit_edge, label %scalar.ph138.preheader
 
 scalar.ph138.preheader:                           ; preds = %.lr.ph123, %middle.block146

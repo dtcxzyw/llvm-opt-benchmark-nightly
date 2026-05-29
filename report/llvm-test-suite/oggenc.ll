@@ -201,9 +201,9 @@ ogg_stream_packetout.exit:                        ; preds = %scalar.ph.prol.loop
 bb.ad:                                            ; preds = %.lr.ph191, %bb.ai
   %i.id = phi i64 [ %i.hz, %.lr.ph191 ], [ %i.it, %bb.ai ] ; 2 uses
   %i.ie = sub nsw i64 %1, %i.id                   ; 2 uses
-  %i.if = load i32, ptr %i.ib, align 8            ; 5 uses
+  %i.if = load i32, ptr %i.ib, align 8            ; 6 uses
   %i.ig = icmp sgt i32 %i.if, -1
-  br i1 %i.ig, label %bb.ae, label %vorbis_synthesis_pcmout.exit
+  br i1 %i.ig, label %bb.ae, label %._crit_edge.i148
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ih = load i32, ptr %i.ic, align 4            ; 2 uses
@@ -211,30 +211,28 @@ bb.ae:                                            ; preds = %bb.ad
   %i.ij = sub nsw i32 %i.ih, %i.if
   %spec.select168 = select i1 %i.ii, i32 %i.ij, i32 0
   %i.ik = sext i32 %spec.select168 to i64
-  br label %vorbis_synthesis_pcmout.exit
-
-vorbis_synthesis_pcmout.exit:                     ; preds = %bb.ae, %bb.ad
-  %.017.i = phi i64 [ 0, %bb.ad ], [ %i.ik, %bb.ae ] ; 2 uses
-  %spec.select107 = call i64 @llvm.smin.i64(i64 %i.ie, i64 %.017.i) ; 2 uses
-  %4 = trunc i64 %spec.select107 to i32           ; 2 uses
-  %.not.i146 = icmp eq i32 %4, 0
+  %4 = call i64 @llvm.smin.i64(i64 %i.ie, i64 %i.ik) ; 4 uses
+  %5 = trunc i64 %4 to i32                        ; 2 uses
+  %.not.i146 = icmp eq i32 %5, 0
   br i1 %.not.i146, label %._crit_edge.i148, label %bb.af
 
-bb.af:                                            ; preds = %vorbis_synthesis_pcmout.exit
-  %i.il = add nsw i32 %i.if, %4                   ; 2 uses
+bb.af:                                            ; preds = %bb.ae
+  %i.il = add nsw i32 %i.if, %5                   ; 2 uses
   %i.im = load i32, ptr %i.ic, align 4
   %i.in = icmp sgt i32 %i.il, %i.im
   br i1 %i.in, label %vorbis_synthesis_read.exit, label %._crit_edge.i148
 
-._crit_edge.i148:                                 ; preds = %bb.af, %vorbis_synthesis_pcmout.exit
-  %.pre-phi.i = phi i32 [ %i.il, %bb.af ], [ %i.if, %vorbis_synthesis_pcmout.exit ]
+._crit_edge.i148:                                 ; preds = %bb.ad, %bb.af, %bb.ae
+  %.017.i232 = phi i64 [ %4, %bb.af ], [ %4, %bb.ae ], [ 0, %bb.ad ]
+  %.pre-phi.i = phi i32 [ %i.il, %bb.af ], [ %i.if, %bb.ae ], [ %i.if, %bb.ad ]
   store i32 %.pre-phi.i, ptr %i.ib, align 8
   br label %vorbis_synthesis_read.exit
 
 vorbis_synthesis_read.exit:                       ; preds = %bb.af, %._crit_edge.i148
-  %i.io = add nsw i64 %spec.select107, %i.id      ; 2 uses
+  %.017.i231 = phi i64 [ %4, %bb.af ], [ %.017.i232, %._crit_edge.i148 ] ; 2 uses
+  %i.io = add nsw i64 %.017.i231, %i.id           ; 2 uses
   store i64 %i.io, ptr %i.ae, align 8
-  %i.ip = icmp slt i64 %.017.i, %i.ie
+  %i.ip = icmp slt i64 %.017.i231, %i.ie
   br i1 %i.ip, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %vorbis_synthesis_read.exit
@@ -637,16 +635,16 @@ bb.a:
   br i1 %i.ap, label %.lr.ph107.preheader, label %._crit_edge111
 
 .lr.ph107.preheader:                              ; preds = %._crit_edge92
-  %wide.trip.count133 = zext nneg i32 %3 to i64   ; 3 uses
+  %wide.trip.count133 = zext nneg i32 %3 to i64
   br label %.lr.ph107
 
 .lr.ph110.preheader:                              ; preds = %bb.d
-  %wide.trip.count = zext nneg i32 %3 to i64
+  %wide.trip.count = zext nneg i32 %3 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %3, 4
   br i1 %min.iters.check, label %.lr.ph110.preheader148, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph110.preheader
-  %n.vec = and i64 %wide.trip.count133, 2147483644 ; 3 uses
+  %n.vec = and i64 %wide.trip.count, 2147483644   ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -666,7 +664,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.aw, label %middle.block, label %vector.body, !llvm.loop !408
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count133
+  %cmp.n = icmp eq i64 %n.vec, %wide.trip.count
   br i1 %cmp.n, label %._crit_edge111, label %.lr.ph110.preheader148
 
 .lr.ph110.preheader148:                           ; preds = %.lr.ph110.preheader, %middle.block
@@ -1069,7 +1067,7 @@ bb.a:
   br i1 %i.g, label %.lr.ph.preheader, label %._crit_edge49.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %i.a to i64    ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 3 uses
   %min.iters.check = icmp ult i32 %i.a, 8
   br i1 %min.iters.check, label %.lr.ph.preheader79, label %vector.ph
 
@@ -1125,12 +1123,12 @@ middle.block:                                     ; preds = %vector.body
   %i.z = getelementptr inbounds nuw i8, ptr %i.y, i64 128
   %i.aa = load i32, ptr %i.z, align 8
   call fastcc void @bark_noise_hybridmp(i32 noundef %i.a, ptr noundef %i.w, ptr noundef nonnull %i.d, ptr noundef %2, float noundef 0.000000e+00, i32 noundef %i.aa)
-  %wide.trip.count54 = zext nneg i32 %i.a to i64
+  %wide.trip.count54 = zext nneg i32 %i.a to i64  ; 3 uses
   %min.iters.check65 = icmp ult i32 %i.a, 8
   br i1 %min.iters.check65, label %.lr.ph46.preheader, label %vector.ph66
 
 vector.ph66:                                      ; preds = %._crit_edge
-  %n.vec68 = and i64 %wide.trip.count, 2147483640 ; 3 uses
+  %n.vec68 = and i64 %wide.trip.count54, 2147483640 ; 3 uses
   br label %vector.body69
 
 vector.body69:                                    ; preds = %vector.body69, %vector.ph66
@@ -1152,7 +1150,7 @@ vector.body69:                                    ; preds = %vector.body69, %vec
   br i1 %i.ah, label %middle.block76, label %vector.body69, !llvm.loop !567
 
 middle.block76:                                   ; preds = %vector.body69
-  %cmp.n77 = icmp eq i64 %n.vec68, %wide.trip.count
+  %cmp.n77 = icmp eq i64 %n.vec68, %wide.trip.count54
   br i1 %cmp.n77, label %.lr.ph48.preheader, label %.lr.ph46.preheader
 
 .lr.ph46.preheader:                               ; preds = %._crit_edge, %middle.block76
@@ -1555,7 +1553,7 @@ bb.a:
   br i1 %i.d, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %1 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %1 to i64      ; 3 uses
   %min.iters.check = icmp ult i32 %1, 4
   br i1 %min.iters.check, label %.lr.ph.preheader22, label %vector.ph
 
@@ -1651,12 +1649,12 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph58.us.
   br i1 %exitcond.not, label %.preheader52.split.us, label %.lr.ph, !llvm.loop !688
 
 .lr.ph67.preheader:                               ; preds = %bb.b
-  %wide.trip.count84 = zext nneg i32 %1 to i64
+  %wide.trip.count84 = zext nneg i32 %1 to i64    ; 3 uses
   %min.iters.check6 = icmp ult i32 %1, 4
   br i1 %min.iters.check6, label %.lr.ph67.preheader18, label %vector.ph7
 
 vector.ph7:                                       ; preds = %.lr.ph67.preheader
-  %n.vec9 = and i64 %wide.trip.count, 2147483644  ; 3 uses
+  %n.vec9 = and i64 %wide.trip.count84, 2147483644 ; 3 uses
   br label %vector.body10
 
 vector.body10:                                    ; preds = %vector.body10, %vector.ph7
@@ -1676,7 +1674,7 @@ vector.body10:                                    ; preds = %vector.body10, %vec
   br i1 %i.ap, label %middle.block15, label %vector.body10, !llvm.loop !689
 
 middle.block15:                                   ; preds = %vector.body10
-  %cmp.n16 = icmp eq i64 %n.vec9, %wide.trip.count
+  %cmp.n16 = icmp eq i64 %n.vec9, %wide.trip.count84
   br i1 %cmp.n16, label %.loopexit, label %.lr.ph67.preheader18
 
 .lr.ph67.preheader18:                             ; preds = %.lr.ph67.preheader, %middle.block15
@@ -2079,7 +2077,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %i.ax = phi i32 [ 2, %._crit_edge.thread ], [ %i.au, %._crit_edge ] ; 7 uses
   %.087.lcssa158 = phi i32 [ 0, %._crit_edge.thread ], [ %.lcssa, %._crit_edge ] ; 2 uses
   %smax = tail call i32 @llvm.smax.i32(i32 %i.ax, i32 1)
-  %wide.trip.count120 = zext nneg i32 %smax to i64 ; 9 uses
+  %wide.trip.count120 = zext nneg i32 %smax to i64 ; 7 uses
   %min.iters.check = icmp slt i32 %i.ax, 4
   br i1 %min.iters.check, label %.lr.ph97.preheader181, label %vector.ph
 
@@ -2125,12 +2123,12 @@ middle.block:                                     ; preds = %vector.body
   %i.bg = ptrtoint ptr %i.d to i64                ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.b, i64 260 ; 2 uses
   %smax125 = call i32 @llvm.smax.i32(i32 %i.ax, i32 1)
-  %wide.trip.count126 = zext nneg i32 %smax125 to i64
+  %wide.trip.count126 = zext nneg i32 %smax125 to i64 ; 3 uses
   %min.iters.check170 = icmp slt i32 %i.ax, 4
   br i1 %min.iters.check170, label %scalar.ph169.preheader, label %vector.ph171
 
 vector.ph171:                                     ; preds = %.lr.ph101
-  %n.vec173 = and i64 %wide.trip.count120, 2147483644 ; 3 uses
+  %n.vec173 = and i64 %wide.trip.count126, 2147483644 ; 3 uses
   %broadcast.splatinsert = insertelement <2 x i64> poison, i64 %i.bg, i64 0
   %broadcast.splat = shufflevector <2 x i64> %broadcast.splatinsert, <2 x i64> poison, <2 x i32> zeroinitializer ; 2 uses
   br label %vector.body174
@@ -2158,7 +2156,7 @@ vector.body174:                                   ; preds = %vector.body174, %ve
   br i1 %i.bu, label %middle.block178, label %vector.body174, !llvm.loop !747
 
 middle.block178:                                  ; preds = %vector.body174
-  %cmp.n179 = icmp eq i64 %n.vec173, %wide.trip.count120
+  %cmp.n179 = icmp eq i64 %n.vec173, %wide.trip.count126
   br i1 %cmp.n179, label %.lr.ph103, label %scalar.ph169.preheader
 
 scalar.ph169.preheader:                           ; preds = %.lr.ph101, %middle.block178

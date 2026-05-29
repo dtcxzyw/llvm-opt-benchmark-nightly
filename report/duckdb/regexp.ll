@@ -201,7 +201,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %_ZN10duckdb_re26Regexp15AddRuneToStringEi.exit
   %i.y = phi ptr [ null, %.lr.ph ], [ %i.bl, %_ZN10duckdb_re26Regexp15AddRuneToStringEi.exit ] ; 9 uses
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN10duckdb_re26Regexp15AddRuneToStringEi.exit ] ; 7 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN10duckdb_re26Regexp15AddRuneToStringEi.exit ] ; 4 uses
   %i.z = phi i32 [ 0, %.lr.ph ], [ %i.bm, %_ZN10duckdb_re26Regexp15AddRuneToStringEi.exit ] ; 7 uses
   %i.aa = ptrtoaddr ptr %i.y to i64
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv
@@ -227,16 +227,14 @@ bb.g:                                             ; preds = %bb.e
   %i.ak = shl nuw nsw i64 %i.aj, 2
   %i.al = tail call noalias noundef nonnull ptr @_Znam(i64 noundef %i.ak) #30 ; 9 uses
   store ptr %i.al, ptr %i.x, align 8, !tbaa !33
-  %i.am = zext nneg i32 %i.z to i64
-  %min.iters.check = icmp samesign ult i64 %indvars.iv, 8
+  %i.am = zext nneg i32 %i.z to i64               ; 3 uses
   %i.an = ptrtoaddr ptr %i.al to i64
   %i.ao = sub i64 %i.an, %i.aa
   %diff.check = icmp ult i64 %i.ao, 32
-  %or.cond = or i1 %min.iters.check, %diff.check
-  br i1 %or.cond, label %.lr.ph.i.preheader, label %vector.ph
+  br i1 %diff.check, label %.lr.ph.i.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.preheader.i
-  %n.vec = and i64 %indvars.iv, 9223372036854775800 ; 3 uses
+  %n.vec = and i64 %i.am, 2147483640              ; 3 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -254,7 +252,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.at, label %middle.block, label %vector.body, !llvm.loop !62
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %indvars.iv, %n.vec
+  %cmp.n = icmp eq i64 %n.vec, %i.am
   br i1 %cmp.n, label %._crit_edge.i, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph.preheader.i, %middle.block
