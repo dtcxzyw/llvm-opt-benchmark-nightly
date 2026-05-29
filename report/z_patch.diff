@@ -1,0 +1,121 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..b2a5889c92682 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,59 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++/// Match:
++///   icmp slt/sle (sub nsw X, umin(X, Y)), Z
++/// or the commuted forms:
++///   icmp sgt/sge Z, (sub nsw X, umin(X, Y))
++///
++/// If Y >= 0 and Y + Z does not signed-overflow, then:
++///   (sub nsw X, umin(X, Y)) s<  Z  -->  X s<  Y + Z
++///   (sub nsw X, umin(X, Y)) s<= Z  -->  X s<= Y + Z
++///
++/// For the strict form, require Z > 0. For the non-strict form, require
++/// Z >= 0. This is needed for the X <u Y arm where the subtraction is zero.
++static Instruction *foldICmpSubNSWUmin(ICmpInst &I, IRBuilderBase &Builder,
++                                       const SimplifyQuery &SQ) {
++  Value *SubV, *Z;
++  ICmpInst::Predicate Pred = I.getPredicate(), NewPred;
++
++  if (Pred == ICmpInst::ICMP_SLT || Pred == ICmpInst::ICMP_SLE) {
++    SubV = I.getOperand(0);
++    Z = I.getOperand(1);
++    NewPred = Pred;
++  } else if (Pred == ICmpInst::ICMP_SGT || Pred == ICmpInst::ICMP_SGE) {
++    SubV = I.getOperand(1);
++    Z = I.getOperand(0);
++    NewPred = ICmpInst::getSwappedPredicate(Pred);
++  } else {
++    return nullptr;
++  }
++
++  Value *X, *Y;
++  if (!match(SubV, m_NSWSub(m_Value(X), m_c_UMin(m_Deferred(X), m_Value(Y)))))
++    return nullptr;
++
++  const SimplifyQuery Q = SQ.getWithInstruction(&I);
++  if (!isKnownNonNegative(Y, Q))
++    return nullptr;
++
++  if (NewPred == ICmpInst::ICMP_SLT) {
++    if (!isKnownPositive(Z, Q))
++      return nullptr;
++  } else {
++    if (!isKnownNonNegative(Z, Q))
++      return nullptr;
++  }
++
++  if (computeOverflowForSignedAdd(WithCache<const Value *>(Y),
++                                  WithCache<const Value *>(Z),
++                                  Q) != OverflowResult::NeverOverflows)
++    return nullptr;
++
++  Value *Sum = Builder.CreateNSWAdd(Y, Z);
++  return new ICmpInst(NewPred, X, Sum);
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8189,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *R = foldICmpSubNSWUmin(I, Builder, Q))
++    return R;
++
+   return Changed ? &I : nullptr;
+ }
+ 
+diff --git a/llvm/test/Transforms/InstCombine/icmp-sub.ll b/llvm/test/Transforms/InstCombine/icmp-sub.ll
+index 4bc4f1e4ba3fa..89ec62f6ab879 100644
+--- a/llvm/test/Transforms/InstCombine/icmp-sub.ll
++++ b/llvm/test/Transforms/InstCombine/icmp-sub.ll
+@@ -14,8 +14,7 @@ define i1 @fold_sub_nsw_umin_const(i8 %x) {
+ ; CHECK-LABEL: @fold_sub_nsw_umin_const(
+ ; CHECK-NEXT:    [[MIN:%.*]] = tail call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 10)
+ ; CHECK-NEXT:    tail call void @use_i8(i8 [[MIN]])
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i8 [[X]], [[MIN]]
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[SUB]], 20
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[X]], 30
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+   %min = tail call i8 @llvm.umin.i8(i8 %x, i8 10)
+@@ -29,8 +28,8 @@ define i1 @fold_sub_nsw_umin_range(i8 %x, i8 range(i8 0, 100) %y, i8 range(i8 1,
+ ; CHECK-LABEL: @fold_sub_nsw_umin_range(
+ ; CHECK-NEXT:    [[MIN:%.*]] = tail call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 [[Y:%.*]])
+ ; CHECK-NEXT:    tail call void @use_i8(i8 [[MIN]])
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i8 [[X]], [[MIN]]
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[SUB]], [[Z:%.*]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i8 [[Y]], [[Z:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[X]], [[TMP1]]
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+   %min = tail call i8 @llvm.umin.i8(i8 %x, i8 %y)
+@@ -46,8 +45,8 @@ define i1 @fold_sub_nsw_umin_zext(i8 %x, i6 %a, i4 %b) {
+ ; CHECK-NEXT:    [[BZ:%.*]] = zext i4 [[B:%.*]] to i8
+ ; CHECK-NEXT:    [[MIN:%.*]] = tail call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 [[Y]])
+ ; CHECK-NEXT:    tail call void @use_i8(i8 [[MIN]])
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i8 [[X]], [[MIN]]
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp sle i8 [[SUB]], [[BZ]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i8 [[Y]], [[BZ]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp sle i8 [[X]], [[TMP1]]
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+   %y = zext i6 %a to i8
+@@ -64,8 +63,8 @@ define i1 @fold_sub_nsw_umin_sgt_commuted(i8 %x, i8 range(i8 0, 100) %y, i8 rang
+ ; CHECK-LABEL: @fold_sub_nsw_umin_sgt_commuted(
+ ; CHECK-NEXT:    [[MIN:%.*]] = tail call i8 @llvm.umin.i8(i8 [[X:%.*]], i8 [[Y:%.*]])
+ ; CHECK-NEXT:    tail call void @use_i8(i8 [[MIN]])
+-; CHECK-NEXT:    [[SUB:%.*]] = sub nsw i8 [[X]], [[MIN]]
+-; CHECK-NEXT:    [[CMP:%.*]] = icmp sgt i8 [[Z:%.*]], [[SUB]]
++; CHECK-NEXT:    [[TMP1:%.*]] = add nuw nsw i8 [[Y]], [[Z:%.*]]
++; CHECK-NEXT:    [[CMP:%.*]] = icmp slt i8 [[X]], [[TMP1]]
+ ; CHECK-NEXT:    ret i1 [[CMP]]
+ ;
+   %min = tail call i8 @llvm.umin.i8(i8 %x, i8 %y)
