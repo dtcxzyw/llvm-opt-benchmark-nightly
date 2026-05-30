@@ -201,8 +201,8 @@ bb.m:                                             ; preds = %mbedtls_ssl_named_g
 
 mbedtls_ssl_tls13_named_group_is_ecdhe.exit:      ; preds = %bb.m
   %.not = icmp ne i16 %.0.copyload.i67, 7680
-  %i.ax = icmp samesign ult i16 %i.u, 256
-  %or.cond = select i1 %.not, i1 %i.ax, i1 false
+  %i.ax = icmp ult i16 %i.u, 256
+  %or.cond = and i1 %.not, %i.ax
   br i1 %or.cond, label %bb.n, label %mbedtls_ssl_tls13_named_group_is_ecdhe.exit.thread
 
 mbedtls_ssl_tls13_named_group_is_ecdhe.exit.thread: ; preds = %bb.m, %bb.m, %bb.m, %bb.m, %mbedtls_ssl_tls13_named_group_is_ecdhe.exit

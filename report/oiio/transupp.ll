@@ -201,7 +201,7 @@ scalar.ph:                                        ; preds = %vector.memcheck, %s
   %i.cd = getelementptr inbounds nuw i8, ptr %.06171.us.us.us, i64 8
   store i16 %i.cc, ptr %i.bx, align 2, !tbaa !21
   %i.ce = add nuw nsw i32 %.06369.us.us.us, 4
-  %i.cf = icmp samesign ult i32 %.06369.us.us.us, 60
+  %i.cf = icmp ult i32 %.06369.us.us.us, 60
   br i1 %i.cf, label %scalar.ph, label %middle.block, !llvm.loop !232
 
 ._crit_edge.us.us.us:                             ; preds = %middle.block
@@ -336,7 +336,7 @@ scalar.ph226:                                     ; preds = %vector.memcheck190,
   %i.dw = getelementptr inbounds nuw i8, ptr %.06171.us.us, i64 8
   store i16 %i.dv, ptr %i.dq, align 2, !tbaa !21
   %i.dx = add nuw nsw i32 %.06369.us.us, 4
-  %i.dy = icmp samesign ult i32 %.06369.us.us, 60
+  %i.dy = icmp ult i32 %.06369.us.us, 60
   br i1 %i.dy, label %scalar.ph226, label %middle.block241, !llvm.loop !236
 
 .loopexit.us.us.loopexit:                         ; preds = %.lr.ph74.us.us

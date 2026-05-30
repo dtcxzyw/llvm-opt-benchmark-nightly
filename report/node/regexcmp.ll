@@ -201,7 +201,7 @@ _ZNK6icu_789UVector3210elementAtiEi.exit96:       ; preds = %_ZNK6icu_789UVector
   br label %bb.z
 
 bb.e:                                             ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96, %_ZNK6icu_789UVector3210elementAtiEi.exit96
-  %i.af = icmp samesign ult i32 %.176, 2147483645
+  %i.af = icmp ult i32 %.176, 2147483645
   %i.ag = add nuw nsw i32 %.176, 2
   br i1 %i.af, label %_ZNK6icu_789UVector3210elementAtiEi.exit102.thread126, label %_ZNK6icu_789UVector3210elementAtiEi.exit102.thread
 
