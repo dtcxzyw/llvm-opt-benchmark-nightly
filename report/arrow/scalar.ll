@@ -201,7 +201,7 @@ bb.a:
   %3 = alloca %"class.std::__cxx11::basic_stringstream", align 8 ; 20 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %5 = alloca %"class.arrow::Result.62", align 8  ; 20 uses
-  %6 = alloca %"class.std::shared_ptr.56", align 8 ; 9 uses
+  %6 = alloca %"class.std::shared_ptr.56", align 16 ; 9 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 14 uses
   %8 = alloca %"class.std::shared_ptr.9", align 16 ; 9 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -253,8 +253,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZStl
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit39.peel: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 6 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.z = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 5 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %7, i64 16 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #28
@@ -275,7 +275,7 @@ bb.e:                                             ; preds = %bb.c
   call void @llvm.experimental.noalias.scope.decl(metadata !22071)
   call void @llvm.experimental.noalias.scope.decl(metadata !22074)
   %i.ae = load ptr, ptr %i.x, align 8, !tbaa !269, !noalias !22077 ; 2 uses
-  store ptr %i.ae, ptr %6, align 8, !tbaa !269, !alias.scope !22077
+  store ptr %i.ae, ptr %6, align 16, !tbaa !269, !alias.scope !22077
   %i.af = load ptr, ptr %i.z, align 8, !tbaa !201, !noalias !22077 ; 9 uses
   store ptr null, ptr %i.z, align 8, !tbaa !201, !noalias !22077
   store ptr %i.af, ptr %i.y, align 8, !tbaa !201, !alias.scope !22077
@@ -510,14 +510,14 @@ bb.ac:                                            ; preds = %bb.aa
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #28
   call void @llvm.experimental.noalias.scope.decl(metadata !22079)
   call void @llvm.experimental.noalias.scope.decl(metadata !22081)
-  %10 = load ptr, ptr %i.x, align 8, !tbaa !269, !noalias !22083 ; 2 uses
-  store ptr %10, ptr %6, align 8, !tbaa !269, !alias.scope !22083
-  %11 = load ptr, ptr %i.z, align 8, !tbaa !201, !noalias !22083 ; 9 uses
+  %10 = load <2 x ptr>, ptr %i.x, align 8, !tbaa !200, !noalias !22083 ; 3 uses
+  %11 = extractelement <2 x ptr> %10, i64 1       ; 8 uses
   store ptr null, ptr %i.z, align 8, !tbaa !201, !noalias !22083
-  store ptr %11, ptr %i.y, align 8, !tbaa !201, !alias.scope !22083
+  store <2 x ptr> %10, ptr %6, align 16, !tbaa !200, !alias.scope !22083
   store ptr null, ptr %i.x, align 8, !tbaa !269, !noalias !22083
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #28
-  invoke void @_ZNK5arrow6Scalar8ToStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr noundef nonnull align 8 dereferenceable(41) %10)
+  %12 = extractelement <2 x ptr> %10, i64 0
+  invoke void @_ZNK5arrow6Scalar8ToStringB5cxx11Ev(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %7, ptr noundef nonnull align 8 dereferenceable(41) %12)
           to label %bb.ad unwind label %.loopexit75
 
 bb.ad:                                            ; preds = %bb.ac

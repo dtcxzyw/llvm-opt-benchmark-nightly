@@ -201,26 +201,26 @@ _ZN4absl18debugging_internalL13ParseDecltypeEPNS0_5StateE.exit.thread: ; preds =
   br i1 %i.br, label %bb.r, label %bb.k
 
 bb.k:                                             ; preds = %_ZN4absl18debugging_internalL13ParseDecltypeEPNS0_5StateE.exit.thread
-  %3 = load i32, ptr %i.a, align 4                ; 7 uses
-  %i.bs = add nsw i32 %3, 1
-  %4 = load i32, ptr %i.d, align 8                ; 4 uses
-  %i.bt = add nsw i32 %4, 1
+  %3 = load <2 x i32>, ptr %i.a, align 4          ; 4 uses
+  %4 = extractelement <2 x i32> %3, i64 0         ; 5 uses
+  %i.bs = add nsw i32 %4, 1
+  %5 = extractelement <2 x i32> %3, i64 1         ; 2 uses
+  %i.bt = add nsw i32 %5, 1
   store i32 %i.bt, ptr %i.d, align 8
-  %i.bu = icmp sgt i32 %3, 255
-  %i.bv = icmp sgt i32 %4, 131071
+  %i.bu = icmp sgt i32 %4, 255
+  %i.bv = icmp sgt i32 %5, 131071
   %or.cond62 = select i1 %i.bu, i1 true, i1 %i.bv
   br i1 %or.cond62, label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %1)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %1, ptr noundef nonnull align 4 dereferenceable(16) %i.m, i64 16, i1 false)
-  %5 = add nsw i32 %3, 2
-  store i32 %5, ptr %i.a, align 4
-  %6 = add nsw i32 %4, 2
-  store i32 %6, ptr %i.d, align 8
-  %7 = icmp sgt i32 %3, 254
-  %8 = icmp sgt i32 %4, 131070
-  %or.cond.i38 = select i1 %7, i1 true, i1 %8
+  %6 = add nsw <2 x i32> %3, splat (i32 2)
+  store <2 x i32> %6, ptr %i.a, align 4
+  %7 = icmp sgt <2 x i32> %3, <i32 254, i32 131070> ; 2 uses
+  %8 = extractelement <2 x i1> %7, i64 0
+  %9 = extractelement <2 x i1> %7, i64 1
+  %or.cond.i38 = select i1 %8, i1 true, i1 %9
   br i1 %or.cond.i38, label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
@@ -251,25 +251,27 @@ _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread5
   br label %.sink.split
 
 _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit: ; preds = %bb.m, %bb.l, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge
-  %storemerge63.in.pre = phi i32 [ %i.cc, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge ], [ %3, %bb.l ], [ %3, %bb.m ]
+  %storemerge63.in.pre = phi i32 [ %i.cc, %._ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit_crit_edge ], [ %4, %bb.l ], [ %4, %bb.m ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.m, ptr noundef nonnull align 4 dereferenceable(16) %1, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
   br label %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread
 
 _ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread: ; preds = %bb.k, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit
-  %storemerge63.in = phi i32 [ %3, %bb.k ], [ %storemerge63.in.pre, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit ]
+  %storemerge63.in = phi i32 [ %4, %bb.k ], [ %storemerge63.in.pre, %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit ]
   store i32 %storemerge63.in, ptr %i.a, align 4
   %i.cf = tail call fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL17ParseUnscopedNameEPNS0_5StateE(ptr noundef nonnull %0)
   br i1 %i.cf, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %_ZN4absl18debugging_internalL23ParseVendorExtendedTypeEPNS0_5StateE.exit.thread
-  %9 = load <2 x i32>, ptr %i.a, align 4          ; 4 uses
-  %10 = add nsw <2 x i32> %9, splat (i32 1)
-  store <2 x i32> %10, ptr %i.a, align 4
-  %11 = icmp sgt <2 x i32> %9, <i32 255, i32 131071> ; 2 uses
-  %12 = extractelement <2 x i1> %11, i64 0
-  %13 = extractelement <2 x i1> %11, i64 1
-  %or.cond.i20 = select i1 %12, i1 true, i1 %13
+  %10 = load i32, ptr %i.a, align 4               ; 4 uses
+  %11 = add nsw i32 %10, 1
+  store i32 %11, ptr %i.a, align 4
+  %12 = load i32, ptr %i.d, align 8               ; 2 uses
+  %13 = add nsw i32 %12, 1
+  store i32 %13, ptr %i.d, align 8
+  %14 = icmp sgt i32 %10, 255
+  %15 = icmp sgt i32 %12, 131071
+  %or.cond.i20 = select i1 %14, i1 true, i1 %15
   br i1 %or.cond.i20, label %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
@@ -282,15 +284,13 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.cj, label %bb.q, label %_ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread
 
 _ZN4absl18debugging_internalL17ParseOneCharTokenEPNS0_5StateEc.exit.thread: ; preds = %bb.o, %bb.p
-  %14 = extractelement <2 x i32> %9, i64 0
-  store i32 %14, ptr %i.a, align 4
+  store i32 %10, ptr %i.a, align 4
   br label %.loopexit
 
 bb.q:                                             ; preds = %bb.p
   %i.ck = add nsw i32 %.val6.i, 1
   store i32 %i.ck, ptr %i.m, align 4
-  %15 = extractelement <2 x i32> %9, i64 0
-  store i32 %15, ptr %i.a, align 4
+  store i32 %10, ptr %i.a, align 4
   %i.cl = tail call fastcc noundef zeroext i1 @_ZN4absl18debugging_internalL20ParseUnnamedTypeNameEPNS0_5StateE(ptr noundef nonnull %0)
   br i1 %i.cl, label %bb.r, label %.loopexit
 

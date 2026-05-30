@@ -201,7 +201,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4, !tbaa !17   ; 2 uses
   %i.c = add nsw i32 %i.b, 1
   store i32 %i.c, ptr %i.a, align 4, !tbaa !17
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 11 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 13 uses
   %i.e = load i32, ptr %i.d, align 8, !tbaa !15   ; 2 uses
   %i.f = add nsw i32 %i.e, 1
   store i32 %i.f, ptr %i.d, align 8, !tbaa !15
@@ -473,13 +473,15 @@ bb.u:                                             ; preds = %.thread90
   br i1 %i.cq, label %bb.z, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %3 = load <2 x i32>, ptr %i.a, align 4, !tbaa !3 ; 4 uses
-  %4 = add nsw <2 x i32> %3, splat (i32 1)
-  store <2 x i32> %4, ptr %i.a, align 4, !tbaa !3
-  %5 = icmp sgt <2 x i32> %3, <i32 255, i32 131071> ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond.i23 = select i1 %6, i1 true, i1 %7
+  %3 = load i32, ptr %i.a, align 4, !tbaa !17     ; 4 uses
+  %4 = add nsw i32 %3, 1
+  store i32 %4, ptr %i.a, align 4, !tbaa !17
+  %5 = load i32, ptr %i.d, align 8, !tbaa !15     ; 2 uses
+  %6 = add nsw i32 %5, 1
+  store i32 %6, ptr %i.d, align 8, !tbaa !15
+  %7 = icmp sgt i32 %3, 255
+  %8 = icmp sgt i32 %5, 131071
+  %or.cond.i23 = select i1 %7, i1 true, i1 %8
   br i1 %or.cond.i23, label %_ZN4absl12lts_2025051218debugging_internalL17ParseOneCharTokenEPNS1_5StateEc.exit.thread, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
@@ -492,15 +494,13 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.cu, label %bb.x, label %_ZN4absl12lts_2025051218debugging_internalL17ParseOneCharTokenEPNS1_5StateEc.exit.thread
 
 _ZN4absl12lts_2025051218debugging_internalL17ParseOneCharTokenEPNS1_5StateEc.exit.thread: ; preds = %bb.v, %bb.w
-  %8 = extractelement <2 x i32> %3, i64 0
-  store i32 %8, ptr %i.a, align 4, !tbaa !17
+  store i32 %3, ptr %i.a, align 4, !tbaa !17
   br label %.loopexit52
 
 bb.x:                                             ; preds = %bb.w
   %i.cv = add nsw i32 %.val7.i, 1
   store i32 %i.cv, ptr %i.m, align 4, !tbaa !16
-  %9 = extractelement <2 x i32> %3, i64 0
-  store i32 %9, ptr %i.a, align 4, !tbaa !17
+  store i32 %3, ptr %i.a, align 4, !tbaa !17
   %i.cw = invoke fastcc noundef zeroext i1 @_ZN4absl12lts_2025051218debugging_internalL20ParseUnnamedTypeNameEPNS1_5StateE(ptr noundef nonnull %0)
           to label %bb.y unwind label %.loopexit
 
