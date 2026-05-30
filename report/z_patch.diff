@@ -1,0 +1,94 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..a0e1a22f59bac 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,79 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpZeroOfCheckLenSelect(ICmpInst &I,
++                                                 IRBuilderBase &Builder,
++                                                 const SimplifyQuery &SQ) {
++  if (!I.isEquality())
++    return nullptr;
++
++  Value *V;
++  if (match(I.getOperand(1), m_ZeroInt()))
++    V = I.getOperand(0);
++  else if (match(I.getOperand(0), m_ZeroInt()))
++    V = I.getOperand(1);
++  else
++    return nullptr;
++
++  if (!isa<IntegerType>(V->getType()))
++    return nullptr;
++
++  auto *Sel = dyn_cast<SelectInst>(V);
++  if (!Sel)
++    return nullptr;
++
++  Value *Cond = Sel->getCondition();
++  Value *TrueVal = Sel->getTrueValue();
++  Value *FalseVal = Sel->getFalseValue();
++
++  const APInt *CapC;
++  if (!match(TrueVal, m_APInt(CapC)) || CapC->isZero())
++    return nullptr;
++
++  Value *Add;
++  const APInt *MinC;
++  if (!match(FalseVal, m_c_UMin(m_Value(Add), m_APInt(MinC))) ||
++      *CapC != *MinC)
++    return nullptr;
++
++  CmpPredicate Pred;
++  Value *CmpLHS, *Size;
++  if (!match(Cond, m_ICmp(Pred, m_Value(CmpLHS), m_Value(Size))) ||
++      Pred != ICmpInst::ICMP_ULT || CmpLHS != Add)
++    return nullptr;
++
++  Value *Max;
++  if (!match(Add, m_c_Add(m_Value(Max), m_Specific(Size))))
++    return nullptr;
++
++  Value *N;
++  if (!match(Max, m_c_UMax(m_Specific(Size), m_Value(N))))
++    return nullptr;
++
++  const SimplifyQuery Q = SQ.getWithInstruction(&I);
++
++  // If the select is still used as the allocation size, replacing only the
++  // zero compare with `(Size | N) == 0` may increase instruction count.
++  // But if either operand is known non-zero, the comparison is known constant.
++  if (!Sel->hasOneUse()) {
++    Value *KnownNonZero = nullptr;
++    if (isKnownNonZero(N, Q))
++      KnownNonZero = N;
++    else if (isKnownNonZero(Size, Q))
++      KnownNonZero = Size;
++    else
++      return nullptr;
++
++    return new ICmpInst(I.getPredicate(), KnownNonZero,
++                        Constant::getNullValue(KnownNonZero->getType()));
++  }
++
++  Value *Or = Builder.CreateOr(Size, N);
++  return new ICmpInst(I.getPredicate(), Or,
++                      Constant::getNullValue(Or->getType()));
++}
++
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -7785,6 +7858,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     if (Instruction *Res = canonicalizeICmpBool(I, Builder))
+       return Res;
+ 
++  if (Instruction *R = foldICmpZeroOfCheckLenSelect(I, Builder, SQ))
++    return R;
++
+   if (Instruction *Res = canonicalizeCmpWithConstant(I))
+     return Res;
+ 
