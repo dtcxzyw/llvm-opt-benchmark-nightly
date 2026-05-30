@@ -201,11 +201,9 @@ _ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_t
   br i1 %exitcond.not.i.i, label %_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEEEEEvRKT_m.exit, label %.lr.ph.i.i, !llvm.loop !1138
 
 _ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEEEEEvRKT_m.exit: ; preds = %.lr.ph.i.i, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.i.i, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.thread.i.i, %bb.a, %.preheader.i.i
-  %.1.i.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i.i ], [ false, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.i.i ], [ false, %.lr.ph.i.i ], [ true, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.thread.i.i ]
+  %.1.i.i = phi i8 [ 0, %bb.a ], [ 1, %.preheader.i.i ], [ 0, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.i.i ], [ 0, %.lr.ph.i.i ], [ 1, %_ZN5arrow7compute8internalL13GenericEqualsINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEEbRKT_SB_.exit.thread.i.i ]
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.aa = load i8, ptr %i.z, align 8, !tbaa !1022, !range !36, !noundef !37
-  %2 = icmp ne i8 %i.aa, 0
-  %3 = and i1 %.1.i.i, %2                         ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ac = load i64, ptr %i.ab, align 8, !tbaa !1070 ; 2 uses
   %i.ad = getelementptr inbounds i8, ptr %i.a, i64 %i.ac ; 3 uses
@@ -264,9 +262,10 @@ bb.c:                                             ; preds = %.lr.ph.i.i9
   br i1 %i.bo, label %bb.c, label %_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorIbSaIbEEEEEEvRKT_m.exit
 
 _ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorIbSaIbEEEEEEvRKT_m.exit: ; preds = %bb.c, %.lr.ph.i.i9, %_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEEEEEvRKT_m.exit, %.preheader.i.i8
-  %.1.i.i7 = phi i1 [ false, %_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEEEEEvRKT_m.exit ], [ %3, %.preheader.i.i8 ], [ false, %.lr.ph.i.i9 ], [ %3, %bb.c ]
-  %4 = zext i1 %.1.i.i7 to i8
-  store i8 %4, ptr %i.z, align 8, !tbaa !1022
+  %.1.i.i7 = phi i8 [ 0, %_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISE_EEEEEEvRKT_m.exit ], [ 1, %.preheader.i.i8 ], [ 0, %.lr.ph.i.i9 ], [ 1, %bb.c ]
+  %2 = and i8 %i.aa, %.1.i.i
+  %3 = and i8 %.1.i.i7, %2
+  store i8 %3, ptr %i.z, align 8, !tbaa !1022
   tail call void @_ZN5arrow7compute8internal11CompareImplINS0_17MakeStructOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorISt10shared_ptrIKNS_16KeyValueMetadataEESaISC_EEEEEEvRKT_m(ptr noundef nonnull align 8 dereferenceable(17) %1, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 noundef 2)
   ret void
 }
@@ -363,13 +362,11 @@ _ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetada
   br i1 %.not20.i, label %.lr.ph.i, label %_ZN5arrow7compute8internalL13GenericEqualsISt10shared_ptrIKNS_16KeyValueMetadataEEEEbRKSt6vectorIT_SaIS8_EESC_.exit, !llvm.loop !1140
 
 _ZN5arrow7compute8internalL13GenericEqualsISt10shared_ptrIKNS_16KeyValueMetadataEEEEbRKSt6vectorIT_SaIS8_EESC_.exit: ; preds = %_ZN5arrow7compute8internalL7IsEmptyERKSt10shared_ptrIKNS_16KeyValueMetadataEE.exit13.i.i, %bb.c, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.i, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.thread.i, %bb.a, %.preheader.i
-  %.1.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i ], [ true, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.thread.i ], [ false, %_ZN5arrow7compute8internalL7IsEmptyERKSt10shared_ptrIKNS_16KeyValueMetadataEE.exit13.i.i ], [ false, %bb.c ], [ false, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.i ]
+  %.1.i = phi i8 [ 0, %bb.a ], [ 1, %.preheader.i ], [ 1, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.thread.i ], [ 0, %_ZN5arrow7compute8internalL7IsEmptyERKSt10shared_ptrIKNS_16KeyValueMetadataEE.exit13.i.i ], [ 0, %bb.c ], [ 0, %_ZN5arrow7compute8internalL13GenericEqualsERKSt10shared_ptrIKNS_16KeyValueMetadataEES7_.exit.i ]
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ar = load i8, ptr %i.aq, align 8, !tbaa !1022, !range !36, !noundef !37
-  %3 = icmp ne i8 %i.ar, 0
-  %4 = and i1 %.1.i, %3
-  %5 = zext i1 %4 to i8
-  store i8 %5, ptr %i.aq, align 8, !tbaa !1022
+  %3 = and i8 %i.ar, %.1.i
+  store i8 %3, ptr %i.aq, align 8, !tbaa !1022
   ret void
 }
 
@@ -772,8 +769,8 @@ bb.a:
   call void @_ZSt10__do_visitINSt8__detail9__variant20__variant_idx_cookieEZSteqIJN5arrow9FieldPathENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt6vectorINS4_8FieldRefESaISD_EEEEbRKSt7variantIJDpT_EESL_EUlOT_T0_E_JRKSG_IJS5_SB_SF_EEEEDcOSO_DpOT1_(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(40) %i.e), !inline_history !3042
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   %i.g = load i8, ptr %i.a, align 1, !tbaa !322, !range !36, !noundef !37
-  %4 = trunc nuw i8 %i.g to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
+  %4 = trunc nuw i8 %i.g to i1
   ret i1 %4
 }
 

@@ -201,31 +201,22 @@ _ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit: ; preds = 
 
 .lr.ph110:                                        ; preds = %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit, %bb.g
   %.sroa.080.0109 = phi ptr [ %i.ag, %bb.g ], [ %i.q, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
-  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ] ; 2 uses
+  %storemerge107108 = phi i8 [ %storemerge, %bb.g ], [ %.0.i, %_ZNK8facebook5velox4exec4Expr30isCurrentFunctionDeterministicEv.exit ]
   %i.ac = load ptr, ptr %.sroa.080.0109, align 8, !tbaa !113 ; 2 uses
   %i.ad = tail call noundef ptr @__dynamic_cast(ptr nonnull align 8 dereferenceable(482) %i.ac, ptr nonnull @_ZTIN8facebook5velox4exec4ExprE, ptr nonnull @_ZTIN8facebook5velox4exec10LambdaExprE, i64 0) #30 ; 2 uses
   %.not = icmp eq ptr %i.ad, null
-  br i1 %.not, label %9, label %bb.f
+  br i1 %.not, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph110
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 504
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !113
-  %3 = getelementptr inbounds nuw i8, ptr %i.af, i64 281
-  %4 = load i8, ptr %3, align 1, !tbaa !182, !range !53, !noundef !57
-  %5 = trunc nuw i8 %4 to i1
-  %6 = icmp ne i8 %storemerge107108, 0
-  %7 = and i1 %6, %5
-  %8 = zext i1 %7 to i8
   br label %bb.g
 
-9:                                                ; preds = %.lr.ph110
-  %10 = getelementptr inbounds nuw i8, ptr %i.ac, i64 281
-  %11 = load i8, ptr %10, align 1, !tbaa !182, !range !53, !noundef !57
-  %12 = and i8 %storemerge107108, %11
-  br label %bb.g
-
-bb.g:                                             ; preds = %9, %bb.f
-  %storemerge = phi i8 [ %12, %9 ], [ %8, %bb.f ] ; 2 uses
+bb.g:                                             ; preds = %.lr.ph110, %bb.f
+  %.pn124 = phi ptr [ %i.af, %bb.f ], [ %i.ac, %.lr.ph110 ]
+  %.pn123.in = getelementptr inbounds nuw i8, ptr %.pn124, i64 281
+  %.pn123 = load i8, ptr %.pn123.in, align 1, !tbaa !182, !range !53, !noundef !57
+  %storemerge = and i8 %storemerge107108, %.pn123 ; 2 uses
   store i8 %storemerge, ptr %i.p, align 1, !tbaa !182
   %i.ag = getelementptr inbounds nuw i8, ptr %.sroa.080.0109, i64 16 ; 2 uses
   %i.ah = icmp eq ptr %i.ag, %i.r
@@ -628,7 +619,6 @@ bb.ap:                                            ; preds = %.thread133._crit_ed
 
 .noexc53:                                         ; preds = %.noexc52
   %i.js = icmp ne i32 %i.jp, %i.jr
-  %11 = zext i1 %i.js to i8
   br label %_ZNK8facebook5velox4exec20MutableRemainingRows10hasChangedEv.exit
 
 bb.aq:                                            ; preds = %.loopexit, %.loopexit.split-lp, %bb.aj, %bb.ai, %bb.ah, %bb.ab
@@ -637,11 +627,13 @@ bb.aq:                                            ; preds = %.loopexit, %.loopex
   br label %bb.be
 
 _ZNK8facebook5velox4exec20MutableRemainingRows10hasChangedEv.exit: ; preds = %.noexc53, %.thread133._crit_edge
-  %12 = phi i8 [ 0, %.thread133._crit_edge ], [ %11, %.noexc53 ]
+  %11 = phi i1 [ false, %.thread133._crit_edge ], [ %i.js, %.noexc53 ]
   %i.jt = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.ju = load i8, ptr %i.jt, align 8, !tbaa !330, !range !53, !noundef !57
-  %13 = or i8 %i.ju, %12
-  store i8 %13, ptr %i.jt, align 8, !tbaa !330
+  %12 = trunc nuw i8 %i.ju to i1
+  %13 = or i1 %11, %12
+  %14 = zext i1 %13 to i8
+  store i8 %14, ptr %i.jt, align 8, !tbaa !330
   %i.jv = load ptr, ptr %i.i, align 8, !tbaa !335 ; 2 uses
   %i.jw = load ptr, ptr %6, align 8, !tbaa !344   ; 2 uses
   %.not.i48 = icmp eq ptr %i.jw, null
@@ -1044,7 +1036,6 @@ bb.at:                                            ; preds = %.thread144._crit_ed
 
 .noexc59:                                         ; preds = %.noexc58
   %i.jx = icmp ne i32 %i.ju, %i.jw
-  %11 = zext i1 %i.jx to i8
   br label %_ZNK8facebook5velox4exec20MutableRemainingRows10hasChangedEv.exit60
 
 bb.au:                                            ; preds = %bb.ap, %bb.am, %bb.al, %bb.af, %bb.ae
@@ -1053,11 +1044,13 @@ bb.au:                                            ; preds = %bb.ap, %bb.am, %bb.
   br label %bb.bi
 
 _ZNK8facebook5velox4exec20MutableRemainingRows10hasChangedEv.exit60: ; preds = %.noexc59, %.thread144._crit_edge
-  %12 = phi i8 [ 0, %.thread144._crit_edge ], [ %11, %.noexc59 ]
+  %11 = phi i1 [ false, %.thread144._crit_edge ], [ %i.jx, %.noexc59 ]
   %i.jy = getelementptr inbounds nuw i8, ptr %0, i64 472 ; 2 uses
   %i.jz = load i8, ptr %i.jy, align 8, !tbaa !330, !range !53, !noundef !57
-  %13 = or i8 %i.jz, %12
-  store i8 %13, ptr %i.jy, align 8, !tbaa !330
+  %12 = trunc nuw i8 %i.jz to i1
+  %13 = or i1 %11, %12
+  %14 = zext i1 %13 to i8
+  store i8 %14, ptr %i.jy, align 8, !tbaa !330
   %i.ka = load ptr, ptr %i.n, align 8, !tbaa !335 ; 2 uses
   %i.kb = load ptr, ptr %6, align 8, !tbaa !344   ; 2 uses
   %.not.i54 = icmp eq ptr %i.kb, null

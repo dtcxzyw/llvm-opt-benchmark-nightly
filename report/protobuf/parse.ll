@@ -201,8 +201,8 @@ _ZN4absl12lts_202505127GetFlagISt6vectorINSt7__cxx1112basic_stringIcSt11char_tra
           to label %bb.de unwind label %bb.dh
 
 bb.de:                                            ; preds = %_ZN4absl12lts_202505127GetFlagISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEET_RKNS0_14flags_internal4FlagISB_EE.exit33.i
-  %65 = icmp ne i8 %.0.i, 0
-  %i.sa = and i1 %65, %i.rz
+  %65 = trunc nuw i8 %.0.i to i1
+  %i.sa = and i1 %i.rz, %65
   %i.sb = zext i1 %i.sa to i8
   store i1 false, ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_124fromenv_needs_processingE, align 1
   %i.sc = load ptr, ptr %44, align 8, !tbaa !7    ; 3 uses
@@ -280,9 +280,7 @@ _ZN4absl12lts_202505127GetFlagISt6vectorINSt7__cxx1112basic_stringIcSt11char_tra
           to label %bb.dl unwind label %bb.do
 
 bb.dl:                                            ; preds = %_ZN4absl12lts_202505127GetFlagISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS8_EEEET_RKNS0_14flags_internal4FlagISB_EE.exit46.i
-  %66 = trunc nuw i8 %.1.i to i1
-  %67 = and i1 %i.sr, %66
-  %68 = zext i1 %67 to i8
+  %66 = select i1 %i.sr, i8 %.1.i, i8 0
   store i1 false, ptr @_ZN4absl12lts_2025051214flags_internal12_GLOBAL__N_127tryfromenv_needs_processingE, align 1
   %i.ss = load ptr, ptr %45, align 8, !tbaa !7    ; 3 uses
   %i.st = load ptr, ptr %i.ef, align 8, !tbaa !11 ; 2 uses
@@ -345,7 +343,7 @@ bb.dp:                                            ; preds = %bb.do, %bb.dn
   br label %bb.ds
 
 bb.dq:                                            ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit58.i, %bb.dj
-  %.2.i = phi i8 [ %68, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit58.i ], [ %.1.i, %bb.dj ]
+  %.2.i = phi i8 [ %66, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EED2Ev.exit58.i ], [ %.1.i, %bb.dj ]
   invoke void @_ZN4absl12lts_202505125Mutex6UnlockEv(ptr noundef nonnull align 8 dereferenceable(8) @_ZZN4absl12lts_2025051214flags_internal12_GLOBAL__N_121ProcessingChecksMutexEvE5mutex)
           to label %bb.du unwind label %bb.dr
 

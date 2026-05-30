@@ -201,7 +201,7 @@ bb.at:                                            ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !46, !noalias !720
   %i.i = tail call fastcc noundef zeroext i1 @_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareWithTypeERKNS_8DataTypeE(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef nonnull align 8 dereferenceable(72) %i.h), !noalias !720, !inline_history !723
   %i.j = load i8, ptr %i.a, align 8, !tbaa !94, !range !39, !noalias !720, !noundef !40
-  %6 = icmp ne i8 %i.j, 0
+  %6 = trunc nuw i8 %i.j to i1
   %i.k = and i1 %i.i, %6
   %i.l = zext i1 %i.k to i8
   store i8 %i.l, ptr %i.a, align 8, !tbaa !94, !noalias !720
@@ -604,7 +604,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #25, !noalias !794
   %i.ca = load i8, ptr %i.bd, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %26 = icmp ne i8 %i.ca, 0
+  %26 = trunc nuw i8 %i.ca to i1
   %i.cb = and i1 %.0.i.i.i.i.i.i.i.i.i.i.i.i, %26
   %i.cc = zext i1 %i.cb to i8
   store i8 %i.cc, ptr %i.bd, align 8, !tbaa !94, !noalias !794
@@ -681,7 +681,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #25, !noalias !794
   %i.dj = load i8, ptr %i.ch, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %27 = icmp ne i8 %i.dj, 0
+  %27 = trunc nuw i8 %i.dj to i1
   %i.dk = and i1 %.0.i.i.i17.i.i.i.i.i.i.i.i.i, %27
   %i.dl = zext i1 %i.dk to i8
   store i8 %i.dl, ptr %i.ch, align 8, !tbaa !94, !noalias !794
@@ -774,7 +774,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #25, !noalias !794
   %i.ew = load i8, ptr %i.dx, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %28 = icmp ne i8 %i.ew, 0
+  %28 = trunc nuw i8 %i.ew to i1
   %i.ex = and i1 %.0.i.i.i.i.i.i.i12.i.i.i.i.i, %28
   %i.ey = zext i1 %i.ex to i8
   store i8 %i.ey, ptr %i.dx, align 8, !tbaa !94, !noalias !794
@@ -856,7 +856,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #25, !noalias !794
   %i.gh = load i8, ptr %i.fd, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %29 = icmp ne i8 %i.gh, 0
+  %29 = trunc nuw i8 %i.gh to i1
   %i.gi = and i1 %.0.i.i.i17.i.i.i.i23.i.i.i.i.i, %29
   %i.gj = zext i1 %i.gi to i8
   store i8 %i.gj, ptr %i.fd, align 8, !tbaa !94, !noalias !794
@@ -943,7 +943,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #25, !noalias !794
   %i.hr = load i8, ptr %i.gv, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %30 = icmp ne i8 %i.hr, 0
+  %30 = trunc nuw i8 %i.hr to i1
   %i.hs = and i1 %.0.i.i.i.i.i.i.i.i35.i.i.i.i, %30
   %i.ht = zext i1 %i.hs to i8
   store i8 %i.ht, ptr %i.gv, align 8, !tbaa !94, !noalias !794
@@ -1016,7 +1016,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #25, !noalias !794
   %i.iz = load i8, ptr %i.hy, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %31 = icmp ne i8 %i.iz, 0
+  %31 = trunc nuw i8 %i.iz to i1
   %i.ja = and i1 %.0.i.i.i17.i.i.i.i.i45.i.i.i.i, %31
   %i.jb = zext i1 %i.ja to i8
   store i8 %i.jb, ptr %i.hy, align 8, !tbaa !94, !noalias !794
@@ -1105,7 +1105,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #25, !noalias !794
   %i.kl = load i8, ptr %i.jn, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %32 = icmp ne i8 %i.kl, 0
+  %32 = trunc nuw i8 %i.kl to i1
   %i.km = and i1 %.0.i.i.i.i.i.i.i12.i14.i.i.i.i, %32
   %i.kn = zext i1 %i.km to i8
   store i8 %i.kn, ptr %i.jn, align 8, !tbaa !94, !noalias !794
@@ -1183,7 +1183,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25, !noalias !794
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #25, !noalias !794
   %i.lv = load i8, ptr %i.ks, align 8, !tbaa !94, !range !39, !noalias !794, !noundef !40
-  %33 = icmp ne i8 %i.lv, 0
+  %33 = trunc nuw i8 %i.lv to i1
   %i.lw = and i1 %.0.i.i.i17.i.i.i.i23.i25.i.i.i.i, %33
   %i.lx = zext i1 %i.lw to i8
   store i8 %i.lx, ptr %i.ks, align 8, !tbaa !94, !noalias !794
@@ -1239,21 +1239,19 @@ bb.al:                                            ; preds = %bb.ak
   %i.mr = load i64, ptr %i.mq, align 8, !tbaa !92, !noalias !794
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.mr ; 2 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
-  %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ms, align 8, !tbaa !94, !noalias !794
-  %34 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0 ; 3 uses
+  %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ms, align 8, !tbaa !94, !noalias !794 ; 2 uses
   %min.iters.check101 = icmp ult i64 %i.mi, 8
   br i1 %min.iters.check101, label %scalar.ph100.preheader, label %vector.ph102
 
 vector.ph102:                                     ; preds = %.lr.ph.i.i.i.i.i.i.i12.i.i.i
   %n.vec104 = and i64 %i.mi, 9223372036854775800  ; 3 uses
-  %broadcast.splatinsert105 = insertelement <8 x i1> poison, i1 %34, i64 0
-  %broadcast.splat106 = shufflevector <8 x i1> %broadcast.splatinsert105, <8 x i1> poison, <8 x i32> zeroinitializer
+  %.scalar = and i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 1
+  %34 = insertelement <8 x i8> <i8 poison, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>, i8 %.scalar, i64 0
   br label %vector.body107
 
 vector.body107:                                   ; preds = %vector.body107, %vector.ph102
   %index108 = phi i64 [ 0, %vector.ph102 ], [ %index.next112, %vector.body107 ] ; 3 uses
-  %vec.phi109 = phi <8 x i1> [ %broadcast.splat106, %vector.ph102 ], [ %42, %vector.body107 ]
-  %35 = phi <8 x i1> [ zeroinitializer, %vector.ph102 ], [ %i.nf, %vector.body107 ]
+  %vec.phi113 = phi <8 x i8> [ %34, %vector.ph102 ], [ %39, %vector.body107 ]
   %i.mt = getelementptr [2 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i, i64 %index108
   %wide.load110 = load <8 x i16>, ptr %i.mt, align 2, !tbaa !799, !noalias !794 ; 3 uses
   %i.mu = getelementptr [2 x i8], ptr %invariant.gep2.i.i.i.i.i.i.i.i.i.i, i64 %index108
@@ -1262,43 +1260,41 @@ vector.body107:                                   ; preds = %vector.body107, %ve
   %i.mw = icmp samesign ugt <8 x i16> %i.mv, splat (i16 31744) ; 2 uses
   %i.mx = and <8 x i16> %wide.load111, splat (i16 32767)
   %i.my = icmp samesign ugt <8 x i16> %i.mx, splat (i16 31744) ; 2 uses
-  %i.mz = select <8 x i1> %i.mw, <8 x i1> splat (i1 true), <8 x i1> %i.my
+  %i.mz = select <8 x i1> %i.mw, <8 x i1> splat (i1 true), <8 x i1> %i.my ; 2 uses
   %i.na = xor <8 x i1> %i.mz, splat (i1 true)
-  %36 = icmp ne <8 x i16> %wide.load110, %wide.load111
-  %i.nb = select <8 x i1> %i.na, <8 x i1> %36, <8 x i1> zeroinitializer
+  %35 = icmp eq <8 x i16> %wide.load110, %wide.load111 ; 2 uses
+  %i.nb = select <8 x i1> %i.mz, <8 x i1> splat (i1 true), <8 x i1> %35
   %i.nc = or <8 x i16> %wide.load111, %wide.load110
   %i.nd = and <8 x i16> %i.nc, splat (i16 32767)
-  %37 = icmp ne <8 x i16> %i.nd, zeroinitializer
-  %38 = xor <8 x i1> %i.mw, %i.my
-  %i.ne = select <8 x i1> %i.nb, <8 x i1> %37, <8 x i1> zeroinitializer
-  %39 = or <8 x i1> %38, %i.ne
-  %40 = freeze <8 x i1> %39                       ; 2 uses
-  %41 = bitcast <8 x i1> %40 to i8
-  %.not117 = icmp eq i8 %41, 0                    ; 2 uses
-  %i.nf = select i1 %.not117, <8 x i1> %35, <8 x i1> %40 ; 2 uses
-  %42 = select i1 %.not117, <8 x i1> %vec.phi109, <8 x i1> zeroinitializer ; 2 uses
+  %36 = icmp eq <8 x i16> %i.nd, zeroinitializer
+  %i.ne = select <8 x i1> %i.mw, <8 x i1> %i.my, <8 x i1> zeroinitializer
+  %not.127 = xor <8 x i1> %i.nb, splat (i1 true)
+  %.not126 = select <8 x i1> %not.127, <8 x i1> %36, <8 x i1> zeroinitializer
+  %37 = select <8 x i1> %i.na, <8 x i1> %35, <8 x i1> zeroinitializer
+  %38 = select <8 x i1> %37, <8 x i1> splat (i1 true), <8 x i1> %.not126
+  %i.nf = select <8 x i1> %38, <8 x i1> splat (i1 true), <8 x i1> %i.ne
+  %39 = select <8 x i1> %i.nf, <8 x i8> %vec.phi113, <8 x i8> zeroinitializer ; 2 uses
   %index.next112 = add nuw i64 %index108, 8       ; 2 uses
   %i.ng = icmp eq i64 %index.next112, %n.vec104
   br i1 %i.ng, label %middle.block113, label %vector.body107, !llvm.loop !804
 
 middle.block113:                                  ; preds = %vector.body107
-  %43 = tail call i1 @llvm.experimental.vector.extract.last.active.v8i1(<8 x i1> %42, <8 x i1> %i.nf, i1 %34) ; 2 uses
+  %40 = tail call i8 @llvm.vector.reduce.and.v8i8(<8 x i8> %39) ; 2 uses
   %cmp.n114 = icmp eq i64 %i.mi, %n.vec104
   br i1 %cmp.n114, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, label %scalar.ph100.preheader
 
 scalar.ph100.preheader:                           ; preds = %.lr.ph.i.i.i.i.i.i.i12.i.i.i, %middle.block113
-  %.ph = phi i1 [ %34, %.lr.ph.i.i.i.i.i.i.i12.i.i.i ], [ %43, %middle.block113 ]
+  %.ph = phi i8 [ %.promoted.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i12.i.i.i ], [ %40, %middle.block113 ]
   %.01.i.i.i.i.i.i.i.i.i.i.ph = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i.i12.i.i.i ], [ %n.vec104, %middle.block113 ]
   br label %scalar.ph100
 
 ._crit_edge.i.i.i.i.i.i.i.i.i.i:                  ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %middle.block113
-  %.0.i.i.i.i.i.i.i.i.i17.i.i.i.lcssa = phi i1 [ %43, %middle.block113 ], [ %.0.i.i.i.i.i.i.i.i.i17.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ]
-  %44 = zext i1 %.0.i.i.i.i.i.i.i.i.i17.i.i.i.lcssa to i8
-  store i8 %44, ptr %i.ms, align 8, !tbaa !94, !noalias !794
+  %.lcssa = phi i8 [ %40, %middle.block113 ], [ %42, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ]
+  store i8 %.lcssa, ptr %i.ms, align 8, !tbaa !94, !noalias !794
   br label %_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 scalar.ph100:                                     ; preds = %scalar.ph100.preheader, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
-  %45 = phi i1 [ %.0.i.i.i.i.i.i.i.i.i17.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ], [ %.ph, %scalar.ph100.preheader ] ; 3 uses
+  %41 = phi i8 [ %42, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ], [ %.ph, %scalar.ph100.preheader ]
   %.01.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.nr, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ], [ %.01.i.i.i.i.i.i.i.i.i.i.ph, %scalar.ph100.preheader ] ; 3 uses
   %gep.i.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i.i.i.i.i.i.i.i.i.i, i64 %.01.i.i.i.i.i.i.i.i.i.i
   %i.nh = load i16, ptr %gep.i.i.i.i.i.i.i.i.i.i, align 2, !tbaa !799, !noalias !794 ; 3 uses
@@ -1329,7 +1325,8 @@ bb.an:                                            ; preds = %scalar.ph100
   br label %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
 
 _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %.thread.i.i.i.i.i.i.i.i.i16.i.i.i, %bb.an, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i.i.i.i.i.i.i14.i.i.i, %bb.am
-  %.0.i.i.i.i.i.i.i.i.i17.i.i.i = phi i1 [ false, %.thread.i.i.i.i.i.i.i.i.i16.i.i.i ], [ %45, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i.i.i.i.i.i.i14.i.i.i ], [ %45, %bb.an ], [ %45, %bb.am ] ; 2 uses
+  %.0.i.i.i.i.i.i.i.i.i17.i.i.i = phi i8 [ 0, %.thread.i.i.i.i.i.i.i.i.i16.i.i.i ], [ 1, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i.i.i.i.i.i.i14.i.i.i ], [ 1, %bb.an ], [ 1, %bb.am ]
+  %42 = and i8 %.0.i.i.i.i.i.i.i.i.i17.i.i.i, %41 ; 2 uses
   %i.nr = add nuw nsw i64 %.01.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i.i18.i.i.i = icmp eq i64 %i.nr, %i.mi
   br i1 %exitcond.not.i.i.i.i.i.i.i18.i.i.i, label %._crit_edge.i.i.i.i.i.i.i.i.i.i, label %scalar.ph100, !llvm.loop !807
@@ -1359,21 +1356,19 @@ bb.ao:                                            ; preds = %bb.al
   %invariant.gep.i14.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i.i, i64 %i.ob ; 2 uses
   %i.oc = load i64, ptr %i.nw, align 8, !tbaa !92, !noalias !794
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.oc ; 2 uses
-  %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.nv, align 8, !tbaa !94, !noalias !794
-  %46 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0 ; 3 uses
+  %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.nv, align 8, !tbaa !94, !noalias !794 ; 2 uses
   %min.iters.check = icmp ult i64 %i.nx, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph.i13.i.i.i.i.i.i.i.i.i
   %n.vec = and i64 %i.nx, 9223372036854775800     ; 3 uses
-  %broadcast.splatinsert = insertelement <8 x i1> poison, i1 %46, i64 0
-  %broadcast.splat = shufflevector <8 x i1> %broadcast.splatinsert, <8 x i1> poison, <8 x i32> zeroinitializer
+  %.scalar129 = and i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 1
+  %43 = insertelement <8 x i8> <i8 poison, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1, i8 1>, i8 %.scalar129, i64 0
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %vec.phi = phi <8 x i1> [ %broadcast.splat, %vector.ph ], [ %54, %vector.body ]
-  %47 = phi <8 x i1> [ zeroinitializer, %vector.ph ], [ %i.oq, %vector.body ]
+  %vec.phi = phi <8 x i8> [ %43, %vector.ph ], [ %48, %vector.body ]
   %i.od = add nsw i64 %index, %i.nz               ; 2 uses
   %i.oe = getelementptr [2 x i8], ptr %invariant.gep.i14.i.i.i.i.i.i.i.i.i, i64 %i.od
   %wide.load = load <8 x i16>, ptr %i.oe, align 2, !tbaa !799, !noalias !794 ; 3 uses
@@ -1383,43 +1378,41 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.oh = icmp samesign ugt <8 x i16> %i.og, splat (i16 31744) ; 2 uses
   %i.oi = and <8 x i16> %wide.load99, splat (i16 32767)
   %i.oj = icmp samesign ugt <8 x i16> %i.oi, splat (i16 31744) ; 2 uses
-  %i.ok = select <8 x i1> %i.oh, <8 x i1> splat (i1 true), <8 x i1> %i.oj
+  %i.ok = select <8 x i1> %i.oh, <8 x i1> splat (i1 true), <8 x i1> %i.oj ; 2 uses
   %i.ol = xor <8 x i1> %i.ok, splat (i1 true)
-  %48 = icmp ne <8 x i16> %wide.load, %wide.load99
-  %i.om = select <8 x i1> %i.ol, <8 x i1> %48, <8 x i1> zeroinitializer
+  %44 = icmp eq <8 x i16> %wide.load, %wide.load99 ; 2 uses
+  %i.om = select <8 x i1> %i.ok, <8 x i1> splat (i1 true), <8 x i1> %44
   %i.on = or <8 x i16> %wide.load99, %wide.load
   %i.oo = and <8 x i16> %i.on, splat (i16 32767)
-  %49 = icmp ne <8 x i16> %i.oo, zeroinitializer
-  %50 = xor <8 x i1> %i.oh, %i.oj
-  %i.op = select <8 x i1> %i.om, <8 x i1> %49, <8 x i1> zeroinitializer
-  %51 = or <8 x i1> %50, %i.op
-  %52 = freeze <8 x i1> %51                       ; 2 uses
-  %53 = bitcast <8 x i1> %52 to i8
-  %.not = icmp eq i8 %53, 0                       ; 2 uses
-  %i.oq = select i1 %.not, <8 x i1> %47, <8 x i1> %52 ; 2 uses
-  %54 = select i1 %.not, <8 x i1> %vec.phi, <8 x i1> zeroinitializer ; 2 uses
+  %45 = icmp eq <8 x i16> %i.oo, zeroinitializer
+  %i.op = select <8 x i1> %i.oh, <8 x i1> %i.oj, <8 x i1> zeroinitializer
+  %not. = xor <8 x i1> %i.om, splat (i1 true)
+  %.not124 = select <8 x i1> %not., <8 x i1> %45, <8 x i1> zeroinitializer
+  %46 = select <8 x i1> %i.ol, <8 x i1> %44, <8 x i1> zeroinitializer
+  %47 = select <8 x i1> %46, <8 x i1> splat (i1 true), <8 x i1> %.not124
+  %i.oq = select <8 x i1> %47, <8 x i1> splat (i1 true), <8 x i1> %i.op
+  %48 = select <8 x i1> %i.oq, <8 x i8> %vec.phi, <8 x i8> zeroinitializer ; 2 uses
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.or = icmp eq i64 %index.next, %n.vec
   br i1 %i.or, label %middle.block, label %vector.body, !llvm.loop !808
 
 middle.block:                                     ; preds = %vector.body
-  %55 = call i1 @llvm.experimental.vector.extract.last.active.v8i1(<8 x i1> %54, <8 x i1> %i.oq, i1 %46) ; 2 uses
+  %49 = call i8 @llvm.vector.reduce.and.v8i8(<8 x i8> %48) ; 2 uses
   %cmp.n = icmp eq i64 %i.nx, %n.vec
   br i1 %cmp.n, label %._crit_edge.i27.i.i.i.i.i.i.i.i.i, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.i13.i.i.i.i.i.i.i.i.i, %middle.block
-  %.ph123 = phi i1 [ %46, %.lr.ph.i13.i.i.i.i.i.i.i.i.i ], [ %55, %middle.block ]
+  %.ph135 = phi i8 [ %.promoted.i16.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i.i.i.i.i.i ], [ %49, %middle.block ]
   %.01.i17.i.i.i.i.i.i.i.i.i.ph = phi i64 [ 0, %.lr.ph.i13.i.i.i.i.i.i.i.i.i ], [ %n.vec, %middle.block ]
   br label %scalar.ph
 
 ._crit_edge.i27.i.i.i.i.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i, %middle.block
-  %.0.i.i.i25.i.i.i.i.i.i.i.i.i.lcssa = phi i1 [ %55, %middle.block ], [ %.0.i.i.i25.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ]
-  %56 = zext i1 %.0.i.i.i25.i.i.i.i.i.i.i.i.i.lcssa to i8
-  store i8 %56, ptr %i.nv, align 8, !tbaa !94, !noalias !794
+  %.lcssa102 = phi i8 [ %49, %middle.block ], [ %51, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ]
+  store i8 %.lcssa102, ptr %i.nv, align 8, !tbaa !94, !noalias !794
   br label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl11VisitValuesIZZNS1_15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS6_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS9_EUllE_EEvS9_ENKUlllE_clEll.exit28.i.i.i.i.i.i.i.i.i
 
 scalar.ph:                                        ; preds = %scalar.ph.preheader, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i
-  %57 = phi i1 [ %.0.i.i.i25.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ], [ %.ph123, %scalar.ph.preheader ] ; 3 uses
+  %50 = phi i8 [ %51, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ], [ %.ph135, %scalar.ph.preheader ]
   %.01.i17.i.i.i.i.i.i.i.i.i = phi i64 [ %i.pd, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ], [ %.01.i17.i.i.i.i.i.i.i.i.i.ph, %scalar.ph.preheader ] ; 2 uses
   %i.os = add nsw i64 %.01.i17.i.i.i.i.i.i.i.i.i, %i.nz ; 2 uses
   %gep.i18.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i14.i.i.i.i.i.i.i.i.i, i64 %i.os
@@ -1451,7 +1444,8 @@ bb.aq:                                            ; preds = %scalar.ph
   br label %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i
 
 _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i: ; preds = %.thread.i.i.i23.i.i.i.i.i.i.i.i.i, %bb.aq, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i21.i.i.i.i.i.i.i.i.i, %bb.ap
-  %.0.i.i.i25.i.i.i.i.i.i.i.i.i = phi i1 [ false, %.thread.i.i.i23.i.i.i.i.i.i.i.i.i ], [ %57, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i21.i.i.i.i.i.i.i.i.i ], [ %57, %bb.aq ], [ %57, %bb.ap ] ; 2 uses
+  %.0.i.i.i25.i.i.i.i.i.i.i.i.i = phi i8 [ 0, %.thread.i.i.i23.i.i.i.i.i.i.i.i.i ], [ 1, %_ZN5arrow4utileqENS0_7Float16ES1_.exit.i.i.i21.i.i.i.i.i.i.i.i.i ], [ 1, %bb.aq ], [ 1, %bb.ap ]
+  %51 = and i8 %.0.i.i.i25.i.i.i.i.i.i.i.i.i, %50 ; 2 uses
   %i.pd = add nuw nsw i64 %.01.i17.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
   %exitcond.not.i26.i.i.i.i.i.i.i.i.i = icmp eq i64 %i.pd, %i.nx
   br i1 %exitcond.not.i26.i.i.i.i.i.i.i.i.i, label %._crit_edge.i27.i.i.i.i.i.i.i.i.i, label %scalar.ph, !llvm.loop !809
@@ -1490,7 +1484,7 @@ bb.as:                                            ; preds = %bb.ar
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.pp
   %i.pq = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.pq, align 8, !tbaa !94, !noalias !794
-  %58 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0
+  %52 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1
   br label %bb.at
 
 ._crit_edge.i.i.i.i.i19.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
@@ -1499,7 +1493,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.at:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i6.i.i8.i.i.i
-  %i.ps = phi i1 [ %58, %.lr.ph.i.i.i.i.i6.i.i8.i.i.i ], [ %.0.i.i.i.i.i.i.i17.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %i.ps = phi i1 [ %52, %.lr.ph.i.i.i.i.i6.i.i8.i.i.i ], [ %.0.i.i.i.i.i.i.i17.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.01.i.i.i.i.i10.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i6.i.i8.i.i.i ], [ %i.qg, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %gep.i.i.i.i.i11.i.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i.i.i.i.i7.i.i.i.i.i, i64 %.01.i.i.i.i.i10.i.i.i.i.i
   %i.pt = load i16, ptr %gep.i.i.i.i.i11.i.i.i.i.i, align 2, !tbaa !799, !noalias !794 ; 4 uses
@@ -1567,7 +1561,7 @@ bb.aw:                                            ; preds = %bb.as
   %i.qr = load i64, ptr %i.ql, align 8, !tbaa !92, !noalias !794
   %invariant.gep2.i15.i.i.i.i25.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.qr
   %.promoted.i16.i.i.i.i26.i.i.i.i.i = load i8, ptr %i.qk, align 8, !tbaa !94, !noalias !794
-  %59 = icmp ne i8 %.promoted.i16.i.i.i.i26.i.i.i.i.i, 0
+  %53 = trunc nuw i8 %.promoted.i16.i.i.i.i26.i.i.i.i.i to i1
   br label %bb.ax
 
 ._crit_edge.i27.i.i.i.i36.i.i.i.i.i:              ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i
@@ -1576,7 +1570,7 @@ bb.aw:                                            ; preds = %bb.as
   br label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl11VisitValuesIZZNS1_15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS6_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS9_EUllE_EEvS9_ENKUlllE_clEll.exit29.i.i.i.i.i.i.i.i.i
 
 bb.ax:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i23.i.i.i.i.i
-  %i.qt = phi i1 [ %59, %.lr.ph.i13.i.i.i.i23.i.i.i.i.i ], [ %.0.i.i.i25.i.i.i.i34.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %i.qt = phi i1 [ %53, %.lr.ph.i13.i.i.i.i23.i.i.i.i.i ], [ %.0.i.i.i25.i.i.i.i34.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.01.i17.i.i.i.i27.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i13.i.i.i.i23.i.i.i.i.i ], [ %i.ri, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i24.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.qu = add nsw i64 %.01.i17.i.i.i.i27.i.i.i.i.i, %i.qo ; 2 uses
   %gep.i18.i.i.i.i28.i.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i14.i.i.i.i24.i.i.i.i.i, i64 %i.qu
@@ -1656,7 +1650,7 @@ bb.bc:                                            ; preds = %bb.bb
   %invariant.gep2.i.i.i.i.i.i25.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.ru
   %i.rv = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i26.i.i.i.i = load i8, ptr %i.rv, align 8, !tbaa !94, !noalias !794
-  %60 = icmp ne i8 %.promoted.i.i.i.i.i.i26.i.i.i.i, 0
+  %54 = trunc nuw i8 %.promoted.i.i.i.i.i.i26.i.i.i.i to i1
   br label %bb.bd
 
 ._crit_edge.i.i.i.i.i.i33.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
@@ -1665,7 +1659,7 @@ bb.bc:                                            ; preds = %bb.bb
   br label %_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.bd:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i23.i.i.i.i
-  %i.rx = phi i1 [ %60, %.lr.ph.i.i.i.i.i.i23.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %i.rx = phi i1 [ %54, %.lr.ph.i.i.i.i.i.i23.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.01.i.i.i.i.i.i27.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i.i23.i.i.i.i ], [ %i.si, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %gep.i.i.i.i.i.i28.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i.i.i.i.i.i24.i.i.i.i, i64 %.01.i.i.i.i.i.i27.i.i.i.i
   %i.ry = load i16, ptr %gep.i.i.i.i.i.i28.i.i.i.i, align 2, !tbaa !799, !noalias !794 ; 3 uses
@@ -1721,7 +1715,7 @@ bb.bg:                                            ; preds = %bb.bc
   %i.st = load i64, ptr %i.sn, align 8, !tbaa !92, !noalias !794
   %invariant.gep2.i15.i.i.i.i.i39.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.st
   %.promoted.i16.i.i.i.i.i40.i.i.i.i = load i8, ptr %i.sm, align 8, !tbaa !94, !noalias !794
-  %61 = icmp ne i8 %.promoted.i16.i.i.i.i.i40.i.i.i.i, 0
+  %55 = trunc nuw i8 %.promoted.i16.i.i.i.i.i40.i.i.i.i to i1
   br label %bb.bh
 
 ._crit_edge.i25.i.i.i.i.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i22.i.i.i.i.i.i.i.i.i
@@ -1730,7 +1724,7 @@ bb.bg:                                            ; preds = %bb.bc
   br label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl11VisitValuesIZZNS1_15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS6_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS9_EUllE_EEvS9_ENKUlllE_clEll.exit26.i.i.i.i.i.i.i.i.i
 
 bb.bh:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i22.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i.i37.i.i.i.i
-  %i.sv = phi i1 [ %61, %.lr.ph.i13.i.i.i.i.i37.i.i.i.i ], [ %.0.i.i.i.i23.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i22.i.i.i.i.i.i.i.i.i ] ; 2 uses
+  %i.sv = phi i1 [ %55, %.lr.ph.i13.i.i.i.i.i37.i.i.i.i ], [ %.0.i.i.i.i23.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i22.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %.01.i17.i.i.i.i.i41.i.i.i.i = phi i64 [ 0, %.lr.ph.i13.i.i.i.i.i37.i.i.i.i ], [ %i.th, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i22.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.sw = add nsw i64 %.01.i17.i.i.i.i.i41.i.i.i.i, %i.sq ; 2 uses
   %gep.i18.i.i.i.i.i42.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i14.i.i.i.i.i38.i.i.i.i, i64 %i.sw
@@ -1795,7 +1789,7 @@ bb.bl:                                            ; preds = %bb.bk
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.tt
   %i.tu = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.tu, align 8, !tbaa !94, !noalias !794
-  %62 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0
+  %56 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1
   br label %bb.bm
 
 ._crit_edge.i.i.i.i.i16.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
@@ -1804,7 +1798,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_.exit
 
 bb.bm:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i6.i8.i.i.i.i
-  %i.tw = phi i1 [ %62, %.lr.ph.i.i.i.i.i6.i8.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.i17.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ]
+  %i.tw = phi i1 [ %56, %.lr.ph.i.i.i.i.i6.i8.i.i.i.i ], [ %.0.i.i.i.i.i.i.i.i17.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ]
   %.01.i.i.i.i.i10.i12.i.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i.i.i6.i8.i.i.i.i ], [ %i.uj, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i ] ; 3 uses
   %gep.i.i.i.i.i11.i13.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i.i.i.i.i7.i9.i.i.i.i, i64 %.01.i.i.i.i.i10.i12.i.i.i.i
   %i.tx = load i16, ptr %gep.i.i.i.i.i11.i13.i.i.i.i, align 2, !tbaa !799, !noalias !794 ; 4 uses
@@ -1865,7 +1859,7 @@ bb.bo:                                            ; preds = %bb.bl
   %i.uu = load i64, ptr %i.uo, align 8, !tbaa !92, !noalias !794
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.uu
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.un, align 8, !tbaa !94, !noalias !794
-  %63 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0
+  %57 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1
   br label %bb.bp
 
 ._crit_edge.i26.i.i.i.i.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i23.i.i.i.i.i.i.i.i.i
@@ -1874,7 +1868,7 @@ bb.bo:                                            ; preds = %bb.bl
   br label %_ZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl11VisitValuesIZZNS1_15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS6_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS9_EUllE_EEvS9_ENKUlllE_clEll.exit28.i.i.i.i.i.i.i.i.i
 
 bb.bp:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i23.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i20.i.i.i.i.i
-  %i.uw = phi i1 [ %63, %.lr.ph.i13.i.i.i.i20.i.i.i.i.i ], [ %.0.i.i.i24.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i23.i.i.i.i.i.i.i.i.i ]
+  %i.uw = phi i1 [ %57, %.lr.ph.i13.i.i.i.i20.i.i.i.i.i ], [ %.0.i.i.i24.i.i.i.i.i.i.i.i.i, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i23.i.i.i.i.i.i.i.i.i ]
   %.01.i17.i.i.i.i24.i.i.i.i.i = phi i64 [ 0, %.lr.ph.i13.i.i.i.i20.i.i.i.i.i ], [ %i.vk, %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityItNS0_21FloatingEqualityFlagsILb0ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i23.i.i.i.i.i.i.i.i.i ] ; 2 uses
   %i.ux = add nsw i64 %.01.i17.i.i.i.i24.i.i.i.i.i, %i.ur ; 2 uses
   %gep.i18.i.i.i.i25.i.i.i.i.i = getelementptr [2 x i8], ptr %invariant.gep.i14.i.i.i.i21.i.i.i.i.i, i64 %i.ux
@@ -2036,7 +2030,7 @@ bb.g:                                             ; preds = %bb.f
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.be ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted7.i.i.i.i.i = load i8, ptr %i.bf, align 8, !tbaa !94, !noalias !816
-  %10 = icmp ne i8 %.promoted7.i.i.i.i.i, 0       ; 2 uses
+  %10 = trunc nuw i8 %.promoted7.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check429 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check429, label %scalar.ph428.preheader, label %vector.ph430
 
@@ -2152,7 +2146,7 @@ bb.j:                                             ; preds = %bb.g
   %i.cz = load i64, ptr %i.ct, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.cz ; 2 uses
   %.promoted5.i.i.i.i.i = load i8, ptr %i.cs, align 8, !tbaa !94, !noalias !816
-  %11 = icmp ne i8 %.promoted5.i.i.i.i.i, 0       ; 2 uses
+  %11 = trunc nuw i8 %.promoted5.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check404 = icmp ult i64 %i.cu, 8
   br i1 %min.iters.check404, label %scalar.ph403.preheader, label %vector.ph405
 
@@ -2280,7 +2274,7 @@ bb.n:                                             ; preds = %bb.m
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.ex ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted3.i.i.i.i.i = load i8, ptr %i.ey, align 8, !tbaa !94, !noalias !816
-  %12 = icmp ne i8 %.promoted3.i.i.i.i.i, 0       ; 2 uses
+  %12 = trunc nuw i8 %.promoted3.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check379 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check379, label %scalar.ph378.preheader, label %vector.ph380
 
@@ -2411,7 +2405,7 @@ bb.r:                                             ; preds = %bb.n
   %i.he = load i64, ptr %i.gy, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i21.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.he ; 2 uses
   %.promoted.i.i.i.i.i = load i8, ptr %i.gx, align 8, !tbaa !94, !noalias !816
-  %13 = icmp ne i8 %.promoted.i.i.i.i.i, 0        ; 2 uses
+  %13 = trunc nuw i8 %.promoted.i.i.i.i.i to i1   ; 2 uses
   %min.iters.check354 = icmp ult i64 %i.gz, 8
   br i1 %min.iters.check354, label %scalar.ph353.preheader, label %vector.ph355
 
@@ -2569,7 +2563,7 @@ bb.x:                                             ; preds = %bb.w
   %invariant.gep2.i.i.i.i.i.i21.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.jq ; 2 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.pre.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.jr, align 8, !tbaa !94, !range !39, !noalias !816
-  %14 = icmp ne i8 %.pre.i.i.i.i.i.i.i.i.i.i, 0   ; 2 uses
+  %14 = trunc nuw i8 %.pre.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check333 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check333, label %scalar.ph332.preheader, label %vector.ph334
 
@@ -2665,7 +2659,7 @@ bb.y:                                             ; preds = %bb.x
   %i.lf = load i64, ptr %i.kz, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i.i32.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.lf ; 2 uses
   %.pre.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ky, align 8, !tbaa !94, !range !39, !noalias !816
-  %15 = icmp ne i8 %.pre.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %15 = trunc nuw i8 %.pre.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check312 = icmp ult i64 %i.la, 8
   br i1 %min.iters.check312, label %scalar.ph311.preheader, label %vector.ph313
 
@@ -2773,7 +2767,7 @@ bb.aa:                                            ; preds = %bb.z
   %invariant.gep2.i.i.i.i.i8.i11.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.mx ; 2 uses
   %i.my = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.my, align 8, !tbaa !94, !noalias !816
-  %16 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %16 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check289 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.ph290
 
@@ -2890,7 +2884,7 @@ bb.ad:                                            ; preds = %bb.aa
   %i.ow = load i64, ptr %i.oq, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i20.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.ow ; 2 uses
   %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.op, align 8, !tbaa !94, !noalias !816
-  %17 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %17 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check268 = icmp ult i64 %i.or, 8
   br i1 %min.iters.check268, label %scalar.ph267.preheader, label %vector.ph269
 
@@ -3046,7 +3040,7 @@ bb.aj:                                            ; preds = %bb.ai
   %invariant.gep2.i.i.i.i.i.i.i35.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.rh ; 2 uses
   %i.ri = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i36.i.i.i = load i8, ptr %i.ri, align 8, !tbaa !94, !noalias !816
-  %18 = icmp ne i8 %.promoted.i.i.i.i.i.i.i36.i.i.i, 0 ; 2 uses
+  %18 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i36.i.i.i to i1 ; 2 uses
   %min.iters.check249 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check249, label %scalar.ph248.preheader, label %vector.ph250
 
@@ -3144,7 +3138,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.sw = load i64, ptr %i.sq, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i.i.i48.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.sw ; 2 uses
   %.promoted.i16.i.i.i.i.i.i49.i.i.i = load i8, ptr %i.sp, align 8, !tbaa !94, !noalias !816
-  %19 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i, 0 ; 2 uses
+  %19 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i to i1 ; 2 uses
   %min.iters.check230 = icmp ult i64 %i.sr, 8
   br i1 %min.iters.check230, label %scalar.ph229.preheader, label %vector.ph231
 
@@ -3252,7 +3246,7 @@ bb.am:                                            ; preds = %bb.al
   %invariant.gep2.i.i.i.i.i8.i.i25.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.un ; 2 uses
   %i.uo = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.uo, align 8, !tbaa !94, !noalias !816
-  %20 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0 ; 2 uses
+  %20 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check209 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check209, label %scalar.ph208.preheader, label %vector.ph210
 
@@ -3371,7 +3365,7 @@ bb.ap:                                            ; preds = %bb.am
   %i.wm = load i64, ptr %i.wg, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.wm ; 2 uses
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.wf, align 8, !tbaa !94, !noalias !816
-  %21 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0 ; 2 uses
+  %21 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check189 = icmp ult i64 %i.wh, 8
   br i1 %min.iters.check189, label %scalar.ph188.preheader, label %vector.ph190
 
@@ -3503,7 +3497,7 @@ bb.au:                                            ; preds = %bb.at
   %invariant.gep2.i.i.i.i.i.i20.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.yn ; 2 uses
   %i.yo = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i21.i.i.i.i = load i8, ptr %i.yo, align 8, !tbaa !94, !noalias !816
-  %22 = icmp ne i8 %.promoted.i.i.i.i.i.i21.i.i.i.i, 0 ; 2 uses
+  %22 = trunc nuw i8 %.promoted.i.i.i.i.i.i21.i.i.i.i to i1 ; 2 uses
   %min.iters.check170 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check170, label %scalar.ph169.preheader, label %vector.ph171
 
@@ -3589,7 +3583,7 @@ bb.av:                                            ; preds = %bb.au
   %i.zs = load i64, ptr %i.zm, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i.i32.i20.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.zs ; 2 uses
   %.promoted.i16.i.i.i.i.i33.i.i.i.i = load i8, ptr %i.zl, align 8, !tbaa !94, !noalias !816
-  %23 = icmp ne i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i, 0 ; 2 uses
+  %23 = trunc nuw i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i to i1 ; 2 uses
   %min.iters.check151 = icmp ult i64 %i.zn, 8
   br i1 %min.iters.check151, label %scalar.ph150.preheader, label %vector.ph152
 
@@ -3685,7 +3679,7 @@ bb.ax:                                            ; preds = %bb.aw
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.aaz ; 2 uses
   %i.aba = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.aba, align 8, !tbaa !94, !noalias !816
-  %24 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0 ; 2 uses
+  %24 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1 ; 2 uses
   %min.iters.check132 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check132, label %scalar.ph131.preheader, label %vector.ph133
 
@@ -3786,7 +3780,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.acs = load i64, ptr %i.acm, align 8, !tbaa !92, !noalias !816
   %invariant.gep2.i15.i.i.i.i20.i.i11.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.acs ; 2 uses
   %.promoted.i16.i.i.i.i21.i.i.i.i.i = load i8, ptr %i.acl, align 8, !tbaa !94, !noalias !816
-  %25 = icmp ne i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i, 0 ; 2 uses
+  %25 = trunc nuw i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check = icmp ult i64 %i.acn, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -3988,7 +3982,7 @@ bb.g:                                             ; preds = %bb.f
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.bd
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted7.i.i.i.i.i = load i8, ptr %i.be, align 8, !tbaa !94, !noalias !854
-  %10 = icmp ne i8 %.promoted7.i.i.i.i.i, 0
+  %10 = trunc nuw i8 %.promoted7.i.i.i.i.i to i1
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -4046,7 +4040,7 @@ bb.k:                                             ; preds = %bb.g
   %i.ca = load i64, ptr %i.bu, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.ca
   %.promoted5.i.i.i.i.i = load i8, ptr %i.bt, align 8, !tbaa !94, !noalias !854
-  %11 = icmp ne i8 %.promoted5.i.i.i.i.i, 0
+  %11 = trunc nuw i8 %.promoted5.i.i.i.i.i to i1
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i21.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i.i.i.i.i.i
@@ -4118,7 +4112,7 @@ bb.p:                                             ; preds = %bb.o
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.cz ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted3.i.i.i.i.i = load i8, ptr %i.da, align 8, !tbaa !94, !noalias !854
-  %12 = icmp ne i8 %.promoted3.i.i.i.i.i, 0       ; 2 uses
+  %12 = trunc nuw i8 %.promoted3.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check379 = icmp ult i64 %i.au, 4
   br i1 %min.iters.check379, label %scalar.ph378.preheader, label %vector.ph380
 
@@ -4249,7 +4243,7 @@ bb.t:                                             ; preds = %bb.p
   %i.fg = load i64, ptr %i.fa, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i21.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.fg ; 2 uses
   %.promoted.i.i.i.i.i = load i8, ptr %i.ez, align 8, !tbaa !94, !noalias !854
-  %13 = icmp ne i8 %.promoted.i.i.i.i.i, 0        ; 2 uses
+  %13 = trunc nuw i8 %.promoted.i.i.i.i.i to i1   ; 2 uses
   %min.iters.check354 = icmp ult i64 %i.fb, 4
   br i1 %min.iters.check354, label %scalar.ph353.preheader, label %vector.ph355
 
@@ -4406,7 +4400,7 @@ bb.z:                                             ; preds = %bb.y
   %invariant.gep2.i.i.i.i.i.i21.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.hs ; 2 uses
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.pre.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ht, align 8, !tbaa !94, !range !39, !noalias !854
-  %14 = icmp ne i8 %.pre.i.i.i.i.i.i.i.i.i.i, 0   ; 2 uses
+  %14 = trunc nuw i8 %.pre.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check333 = icmp ult i64 %i.au, 4
   br i1 %min.iters.check333, label %scalar.ph332.preheader, label %vector.ph334
 
@@ -4502,7 +4496,7 @@ bb.aa:                                            ; preds = %bb.z
   %i.jh = load i64, ptr %i.jb, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i.i32.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.jh ; 2 uses
   %.pre.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ja, align 8, !tbaa !94, !range !39, !noalias !854
-  %15 = icmp ne i8 %.pre.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %15 = trunc nuw i8 %.pre.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check312 = icmp ult i64 %i.jc, 4
   br i1 %min.iters.check312, label %scalar.ph311.preheader, label %vector.ph313
 
@@ -4610,7 +4604,7 @@ bb.ac:                                            ; preds = %bb.ab
   %invariant.gep2.i.i.i.i.i8.i11.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.kz ; 2 uses
   %i.la = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.la, align 8, !tbaa !94, !noalias !854
-  %16 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %16 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check289 = icmp ult i64 %i.au, 4
   br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.ph290
 
@@ -4727,7 +4721,7 @@ bb.af:                                            ; preds = %bb.ac
   %i.my = load i64, ptr %i.ms, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i20.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.my ; 2 uses
   %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.mr, align 8, !tbaa !94, !noalias !854
-  %17 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %17 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check268 = icmp ult i64 %i.mt, 4
   br i1 %min.iters.check268, label %scalar.ph267.preheader, label %vector.ph269
 
@@ -4883,7 +4877,7 @@ bb.al:                                            ; preds = %bb.ak
   %invariant.gep2.i.i.i.i.i.i.i35.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.pj ; 2 uses
   %i.pk = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i36.i.i.i = load i8, ptr %i.pk, align 8, !tbaa !94, !noalias !854
-  %18 = icmp ne i8 %.promoted.i.i.i.i.i.i.i36.i.i.i, 0 ; 2 uses
+  %18 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i36.i.i.i to i1 ; 2 uses
   %min.iters.check249 = icmp ult i64 %i.pa, 4
   br i1 %min.iters.check249, label %scalar.ph248.preheader, label %vector.ph250
 
@@ -4981,7 +4975,7 @@ bb.am:                                            ; preds = %bb.al
   %i.qy = load i64, ptr %i.qs, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i.i.i48.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.qy ; 2 uses
   %.promoted.i16.i.i.i.i.i.i49.i.i.i = load i8, ptr %i.qr, align 8, !tbaa !94, !noalias !854
-  %19 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i, 0 ; 2 uses
+  %19 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i to i1 ; 2 uses
   %min.iters.check230 = icmp ult i64 %i.qt, 4
   br i1 %min.iters.check230, label %scalar.ph229.preheader, label %vector.ph231
 
@@ -5089,7 +5083,7 @@ bb.ao:                                            ; preds = %bb.an
   %invariant.gep2.i.i.i.i.i8.i.i25.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.sp ; 2 uses
   %i.sq = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.sq, align 8, !tbaa !94, !noalias !854
-  %20 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0 ; 2 uses
+  %20 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check209 = icmp ult i64 %i.pa, 4
   br i1 %min.iters.check209, label %scalar.ph208.preheader, label %vector.ph210
 
@@ -5208,7 +5202,7 @@ bb.ar:                                            ; preds = %bb.ao
   %i.uo = load i64, ptr %i.ui, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.uo ; 2 uses
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.uh, align 8, !tbaa !94, !noalias !854
-  %21 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0 ; 2 uses
+  %21 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check189 = icmp ult i64 %i.uj, 4
   br i1 %min.iters.check189, label %scalar.ph188.preheader, label %vector.ph190
 
@@ -5340,7 +5334,7 @@ bb.aw:                                            ; preds = %bb.av
   %invariant.gep2.i.i.i.i.i.i20.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.wp ; 2 uses
   %i.wq = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i21.i.i.i.i = load i8, ptr %i.wq, align 8, !tbaa !94, !noalias !854
-  %22 = icmp ne i8 %.promoted.i.i.i.i.i.i21.i.i.i.i, 0 ; 2 uses
+  %22 = trunc nuw i8 %.promoted.i.i.i.i.i.i21.i.i.i.i to i1 ; 2 uses
   %min.iters.check170 = icmp ult i64 %i.pa, 4
   br i1 %min.iters.check170, label %scalar.ph169.preheader, label %vector.ph171
 
@@ -5426,7 +5420,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.xu = load i64, ptr %i.xo, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i.i32.i20.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.xu ; 2 uses
   %.promoted.i16.i.i.i.i.i33.i.i.i.i = load i8, ptr %i.xn, align 8, !tbaa !94, !noalias !854
-  %23 = icmp ne i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i, 0 ; 2 uses
+  %23 = trunc nuw i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i to i1 ; 2 uses
   %min.iters.check151 = icmp ult i64 %i.xp, 4
   br i1 %min.iters.check151, label %scalar.ph150.preheader, label %vector.ph152
 
@@ -5522,7 +5516,7 @@ bb.az:                                            ; preds = %bb.ay
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.zb ; 2 uses
   %i.zc = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.zc, align 8, !tbaa !94, !noalias !854
-  %24 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0 ; 2 uses
+  %24 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1 ; 2 uses
   %min.iters.check132 = icmp ult i64 %i.pa, 4
   br i1 %min.iters.check132, label %scalar.ph131.preheader, label %vector.ph133
 
@@ -5623,7 +5617,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.aau = load i64, ptr %i.aao, align 8, !tbaa !92, !noalias !854
   %invariant.gep2.i15.i.i.i.i20.i.i11.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.aau ; 2 uses
   %.promoted.i16.i.i.i.i21.i.i.i.i.i = load i8, ptr %i.aan, align 8, !tbaa !94, !noalias !854
-  %25 = icmp ne i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i, 0 ; 2 uses
+  %25 = trunc nuw i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check = icmp ult i64 %i.aap, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -6026,7 +6020,7 @@ _ZN5arrow12_GLOBAL__N_118CompareArrayRangesERKNS_9ArrayDataES3_lllRKNS_12EqualOp
   %.1.i = phi i1 [ true, %_ZN5arrow12_GLOBAL__N_123IdentityImpliesEqualityERKNS_8DataTypeERKNS_12EqualOptionsE.exit.i ], [ %i.am, %bb.g ], [ true, %bb.f ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 4 uses
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !94, !range !39, !noundef !40
-  %4 = icmp ne i8 %i.ap, 0
+  %4 = trunc nuw i8 %i.ap to i1
   %i.aq = and i1 %.1.i, %4                        ; 2 uses
   %i.ar = zext i1 %i.aq to i8
   store i8 %i.ar, ptr %i.ao, align 8, !tbaa !94
@@ -6037,7 +6031,7 @@ bb.h:                                             ; preds = %_ZN5arrow12_GLOBAL_
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !46
   %i.au = call fastcc noundef zeroext i1 @_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareWithTypeERKNS_8DataTypeE(ptr noundef nonnull align 8 dereferenceable(57) %1, ptr noundef nonnull align 8 dereferenceable(72) %i.at)
   %i.av = load i8, ptr %i.ao, align 8, !tbaa !94, !range !39, !noundef !40
-  %5 = icmp ne i8 %i.av, 0
+  %5 = trunc nuw i8 %i.av to i1
   %i.aw = and i1 %i.au, %5
   %i.ax = zext i1 %i.aw to i8
   store i8 %i.ax, ptr %i.ao, align 8, !tbaa !94
@@ -6440,8 +6434,8 @@ declare i64 @llvm.umin.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #9
 
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i1 @llvm.experimental.vector.extract.last.active.v8i1(<8 x i1>, <8 x i1>, i1) #8
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i8 @llvm.vector.reduce.and.v8i8(<8 x i8>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #9
