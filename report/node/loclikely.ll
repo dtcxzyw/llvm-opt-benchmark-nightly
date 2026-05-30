@@ -201,7 +201,7 @@ bb.a:
   %i.h = icmp slt i32 %i.g, 1
   %i.i = add i32 %i.f, -3
   %i.j = icmp ult i32 %i.i, 4
-  %or.cond3 = and i1 %i.h, %i.j
+  %or.cond3 = and i1 %i.j, %i.h
   br i1 %or.cond3, label %bb.b, label %_ZNK6icu_7817RegionValidateMap5isSetEPKc.exit.thread
 
 bb.b:                                             ; preds = %bb.a

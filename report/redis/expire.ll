@@ -201,7 +201,7 @@ bb.ab:                                            ; preds = %bb.z, %bb.aa
   %i.ei = phi i32 [ %i.eh, %bb.aa ], [ 1, %bb.z ] ; 2 uses
   %i.ej = and i32 %i.dd, 15                       ; 2 uses
   %i.ek = icmp ne i32 %i.ej, 0
-  %4 = icmp ne i32 %i.ei, 0
+  %4 = trunc nuw i32 %i.ei to i1
   %or.cond5 = select i1 %i.ek, i1 %4, i1 false
   br i1 %or.cond5, label %bb.aj, label %bb.ac
 
@@ -604,10 +604,10 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
   br i1 %i.r, label %bb.b, label %._crit_edge, !llvm.loop !118
 
 ._crit_edge:                                      ; preds = %bb.f
-  %2 = icmp ne i32 %.146, 0
-  %3 = icmp ne i32 %.143, 0
-  %4 = icmp ne i32 %.140, 0                       ; 2 uses
-  %5 = icmp ne i32 %.137, 0                       ; 2 uses
+  %2 = trunc nuw i32 %.146 to i1
+  %3 = trunc nuw i32 %.143 to i1
+  %4 = trunc nuw i32 %.140 to i1                  ; 2 uses
+  %5 = trunc nuw i32 %.137 to i1                  ; 2 uses
   %i.s = select i1 %3, i1 true, i1 %4
   %i.t = select i1 %i.s, i1 true, i1 %5
   %or.cond95 = select i1 %2, i1 %i.t, i1 false

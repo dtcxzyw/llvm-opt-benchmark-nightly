@@ -201,7 +201,6 @@ bb.a:
   %i.d = getelementptr inbounds i8, ptr %2, i64 %i.b
   %.val.i.i.i.i.i = load i64, ptr %i.c, align 8, !tbaa !357
   %.val3.i.i.i.i.i = load i64, ptr %i.d, align 8, !tbaa !357
-  %3 = icmp eq i64 %.val.i.i.i.i.i, %.val3.i.i.i.i.i ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.f = load i64, ptr %i.e, align 8, !tbaa !1369 ; 2 uses
   %i.g = getelementptr inbounds i8, ptr %1, i64 %i.f ; 3 uses
@@ -234,7 +233,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.aa = sub i64 %i.y, %i.z
   %i.ab = sdiv exact i64 %i.aa, 48
   %.not15.i.i.i.i.i.i = icmp ult i64 %i.v, %i.ab
-  br i1 %.not15.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i, !llvm.loop !837
+  br i1 %.not15.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit, !llvm.loop !837
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.b
   %i.ac = phi ptr [ %i.x, %bb.b ], [ %i.k, %.preheader.i.i.i.i.i.i ]
@@ -242,16 +241,14 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.i
   %i.ad = getelementptr inbounds nuw [48 x i8], ptr %i.ac, i64 %.01012.i.i.i.i.i.i
   %i.ae = load ptr, ptr %i.h, align 8, !tbaa !71
   %i.af = getelementptr inbounds nuw [48 x i8], ptr %i.ae, i64 %.01012.i.i.i.i.i.i
-  %i.ag = tail call noundef zeroext i1 @_ZNK5arrow7compute7SortKey6EqualsERKS1_(ptr noundef nonnull align 8 dereferenceable(44) %i.ad, ptr noundef nonnull align 8 dereferenceable(44) %i.af) ; 2 uses
-  br i1 %i.ag, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i
+  %i.ag = tail call noundef zeroext i1 @_ZNK5arrow7compute7SortKey6EqualsERKS1_(ptr noundef nonnull align 8 dereferenceable(44) %i.ad, ptr noundef nonnull align 8 dereferenceable(44) %i.af) ; 3 uses
+  br i1 %i.ag, label %bb.b, label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit
 
-_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i: ; preds = %.lr.ph.i.i.i.i.i.i, %bb.b
-  %4 = and i1 %3, %i.ag
-  br label %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit
-
-_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit: ; preds = %bb.a, %.preheader.i.i.i.i.i.i, %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i
-  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ %3, %.preheader.i.i.i.i.i.i ], [ %4, %_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEclINS_8internal18DataMemberPropertyIS3_St6vectorINS0_7SortKeyESaIS9_EEEEEEvRKT_m.exit.loopexit.i.i.i.i ]
-  ret i1 %.1.i.i.i.i.i.i
+_ZN5arrow7compute8internal11CompareImplINS0_14SelectKOptionsEEC2INS_8internal13PropertyTupleIJNS6_18DataMemberPropertyIS3_lEENS8_IS3_St6vectorINS0_7SortKeyESaISB_EEEEEEEEERKS3_SH_RKT_.exit: ; preds = %bb.b, %.lr.ph.i.i.i.i.i.i, %bb.a, %.preheader.i.i.i.i.i.i
+  %.1.i.i.i.i.i.i = phi i1 [ false, %bb.a ], [ true, %.preheader.i.i.i.i.i.i ], [ %i.ag, %.lr.ph.i.i.i.i.i.i ], [ %i.ag, %bb.b ]
+  %3 = icmp eq i64 %.val.i.i.i.i.i, %.val3.i.i.i.i.i
+  %4 = and i1 %3, %.1.i.i.i.i.i.i
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress uwtable

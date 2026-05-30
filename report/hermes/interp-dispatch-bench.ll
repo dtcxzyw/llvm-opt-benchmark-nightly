@@ -201,9 +201,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %3 = zext i1 %i.x to i8
-  %4 = or i8 %i.y, %3
-  store i8 %4, ptr %i.g, align 8, !tbaa !600
+  %3 = trunc nuw i8 %i.y to i1
+  %4 = or i1 %i.x, %3
+  %5 = zext i1 %4 to i8
+  store i8 %5, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -273,9 +274,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i3 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %5 = zext i1 %i.as to i8
-  %6 = or i8 %i.at, %5
-  store i8 %6, ptr %i.g, align 8, !tbaa !600
+  %6 = trunc nuw i8 %i.at to i1
+  %7 = or i1 %i.as, %6
+  %8 = zext i1 %7 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i4 = icmp eq ptr %.pre.i.i3, %i.ar
   br i1 %.not.i.i.i.i4, label %bb.o, label %bb.n
@@ -420,9 +422,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %3 = zext i1 %i.x to i8
-  %4 = or i8 %i.y, %3
-  store i8 %4, ptr %i.g, align 8, !tbaa !600
+  %3 = trunc nuw i8 %i.y to i1
+  %4 = or i1 %i.x, %3
+  %5 = zext i1 %4 to i8
+  store i8 %5, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -492,9 +495,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i3 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %5 = zext i1 %i.as to i8
-  %6 = or i8 %i.at, %5
-  store i8 %6, ptr %i.g, align 8, !tbaa !600
+  %6 = trunc nuw i8 %i.at to i1
+  %7 = or i1 %i.as, %6
+  %8 = zext i1 %7 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i4 = icmp eq ptr %.pre.i.i3, %i.ar
   br i1 %.not.i.i.i.i4, label %bb.o, label %bb.n
@@ -639,9 +643,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.x to i8
-  %5 = or i8 %i.y, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.y to i1
+  %5 = or i1 %i.x, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -711,9 +716,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i4 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.as to i8
-  %7 = or i8 %i.at, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.at to i1
+  %8 = or i1 %i.as, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.ar
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -783,9 +789,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit13: ; preds = %bb.n,
   %.pre.i.i14 = phi ptr [ %i.aw, %bb.n ], [ %i.bk, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bn = icmp ugt i64 %3, 255
   %i.bo = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bn to i8
-  %9 = or i8 %i.bo, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bo to i1
+  %11 = or i1 %i.bn, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bp = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i15 = icmp eq ptr %.pre.i.i14, %i.bm
   br i1 %.not.i.i.i.i15, label %bb.u, label %bb.t
@@ -931,9 +938,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %i.x = add i64 %1, -128
   %i.y = icmp ult i64 %i.x, -256
   %i.z = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.y to i8
-  %5 = or i8 %i.z, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.z to i1
+  %5 = or i1 %i.y, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.aa = trunc i64 %1 to i8                      ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -1003,9 +1011,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator9emitAddr8El.exit: ; preds = %bb.h, 
   %.pre.i.i4 = phi ptr [ %i.ac, %bb.h ], [ %i.aq, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.at = icmp ugt i64 %2, 255
   %i.au = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.at to i8
-  %7 = or i8 %i.au, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.au to i1
+  %8 = or i1 %i.at, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.av = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.as
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -1075,9 +1084,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.n, %
   %.pre.i.i13 = phi ptr [ %i.ax, %bb.n ], [ %i.bl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bo = icmp ugt i64 %3, 255
   %i.bp = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bo to i8
-  %9 = or i8 %i.bp, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bp to i1
+  %11 = or i1 %i.bo, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bq = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i14 = icmp eq ptr %.pre.i.i13, %i.bn
   br i1 %.not.i.i.i.i14, label %bb.u, label %bb.t
@@ -1378,9 +1388,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %3 = zext i1 %i.x to i8
-  %4 = or i8 %i.y, %3
-  store i8 %4, ptr %i.g, align 8, !tbaa !600
+  %3 = trunc nuw i8 %i.y to i1
+  %4 = or i1 %i.x, %3
+  %5 = zext i1 %4 to i8
+  store i8 %5, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -1450,9 +1461,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i3 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %5 = zext i1 %i.as to i8
-  %6 = or i8 %i.at, %5
-  store i8 %6, ptr %i.g, align 8, !tbaa !600
+  %6 = trunc nuw i8 %i.at to i1
+  %7 = or i1 %i.as, %6
+  %8 = zext i1 %7 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i4 = icmp eq ptr %.pre.i.i3, %i.ar
   br i1 %.not.i.i.i.i4, label %bb.o, label %bb.n
@@ -1598,9 +1610,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %i.x = add i64 %1, -128
   %i.y = icmp ult i64 %i.x, -256
   %i.z = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.y to i8
-  %5 = or i8 %i.z, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.z to i1
+  %5 = or i1 %i.y, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.aa = trunc i64 %1 to i8                      ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -1670,9 +1683,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator9emitAddr8El.exit: ; preds = %bb.h, 
   %.pre.i.i4 = phi ptr [ %i.ac, %bb.h ], [ %i.aq, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.at = icmp ugt i64 %2, 255
   %i.au = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.at to i8
-  %7 = or i8 %i.au, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.au to i1
+  %8 = or i1 %i.at, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.av = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.as
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -1742,9 +1756,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.n, %
   %.pre.i.i13 = phi ptr [ %i.ax, %bb.n ], [ %i.bl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bo = icmp ugt i64 %3, 255
   %i.bp = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bo to i8
-  %9 = or i8 %i.bp, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bp to i1
+  %11 = or i1 %i.bo, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bq = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i14 = icmp eq ptr %.pre.i.i13, %i.bn
   br i1 %.not.i.i.i.i14, label %bb.u, label %bb.t
@@ -1889,9 +1904,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.x to i8
-  %5 = or i8 %i.y, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.y to i1
+  %5 = or i1 %i.x, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -1961,9 +1977,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i4 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.as to i8
-  %7 = or i8 %i.at, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.at to i1
+  %8 = or i1 %i.as, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.ar
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -2033,9 +2050,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit13: ; preds = %bb.n,
   %.pre.i.i14 = phi ptr [ %i.aw, %bb.n ], [ %i.bk, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bn = icmp ugt i64 %3, 255
   %i.bo = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bn to i8
-  %9 = or i8 %i.bo, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bo to i1
+  %11 = or i1 %i.bn, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bp = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i15 = icmp eq ptr %.pre.i.i14, %i.bm
   br i1 %.not.i.i.i.i15, label %bb.u, label %bb.t
@@ -2181,9 +2199,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %i.x = add i64 %1, -128
   %i.y = icmp ult i64 %i.x, -256
   %i.z = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.y to i8
-  %5 = or i8 %i.z, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.z to i1
+  %5 = or i1 %i.y, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.aa = trunc i64 %1 to i8                      ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -2253,9 +2272,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator9emitAddr8El.exit: ; preds = %bb.h, 
   %.pre.i.i4 = phi ptr [ %i.ac, %bb.h ], [ %i.aq, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.at = icmp ugt i64 %2, 255
   %i.au = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.at to i8
-  %7 = or i8 %i.au, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.au to i1
+  %8 = or i1 %i.at, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.av = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.as
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -2325,9 +2345,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.n, %
   %.pre.i.i13 = phi ptr [ %i.ax, %bb.n ], [ %i.bl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bo = icmp ugt i64 %3, 255
   %i.bp = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bo to i8
-  %9 = or i8 %i.bp, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bp to i1
+  %11 = or i1 %i.bo, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bq = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i14 = icmp eq ptr %.pre.i.i13, %i.bn
   br i1 %.not.i.i.i.i14, label %bb.u, label %bb.t
@@ -2472,9 +2493,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.x to i8
-  %5 = or i8 %i.y, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.y to i1
+  %5 = or i1 %i.x, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -2544,9 +2566,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i4 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.as to i8
-  %7 = or i8 %i.at, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.at to i1
+  %8 = or i1 %i.as, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.ar
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -2616,9 +2639,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit13: ; preds = %bb.n,
   %.pre.i.i14 = phi ptr [ %i.aw, %bb.n ], [ %i.bk, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bn = icmp ugt i64 %3, 255
   %i.bo = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bn to i8
-  %9 = or i8 %i.bo, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bo to i1
+  %11 = or i1 %i.bn, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bp = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i15 = icmp eq ptr %.pre.i.i14, %i.bm
   br i1 %.not.i.i.i.i15, label %bb.u, label %bb.t
@@ -2764,9 +2788,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %i.x = add i64 %1, -128
   %i.y = icmp ult i64 %i.x, -256
   %i.z = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %4 = zext i1 %i.y to i8
-  %5 = or i8 %i.z, %4
-  store i8 %5, ptr %i.g, align 8, !tbaa !600
+  %4 = trunc nuw i8 %i.z to i1
+  %5 = or i1 %i.y, %4
+  %6 = zext i1 %5 to i8
+  store i8 %6, ptr %i.g, align 8, !tbaa !600
   %i.aa = trunc i64 %1 to i8                      ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -2836,9 +2861,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator9emitAddr8El.exit: ; preds = %bb.h, 
   %.pre.i.i4 = phi ptr [ %i.ac, %bb.h ], [ %i.aq, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.at = icmp ugt i64 %2, 255
   %i.au = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %6 = zext i1 %i.at to i8
-  %7 = or i8 %i.au, %6
-  store i8 %7, ptr %i.g, align 8, !tbaa !600
+  %7 = trunc nuw i8 %i.au to i1
+  %8 = or i1 %i.at, %7
+  %9 = zext i1 %8 to i8
+  store i8 %9, ptr %i.g, align 8, !tbaa !600
   %i.av = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i5 = icmp eq ptr %.pre.i.i4, %i.as
   br i1 %.not.i.i.i.i5, label %bb.o, label %bb.n
@@ -2908,9 +2934,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.n, %
   %.pre.i.i13 = phi ptr [ %i.ax, %bb.n ], [ %i.bl, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i12 ] ; 2 uses
   %i.bo = icmp ugt i64 %3, 255
   %i.bp = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %8 = zext i1 %i.bo to i8
-  %9 = or i8 %i.bp, %8
-  store i8 %9, ptr %i.g, align 8, !tbaa !600
+  %10 = trunc nuw i8 %i.bp to i1
+  %11 = or i1 %i.bo, %10
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.g, align 8, !tbaa !600
   %i.bq = trunc i64 %3 to i8                      ; 2 uses
   %.not.i.i.i.i14 = icmp eq ptr %.pre.i.i13, %i.bn
   br i1 %.not.i.i.i.i14, label %bb.u, label %bb.t
@@ -3055,9 +3082,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %3 = zext i1 %i.x to i8
-  %4 = or i8 %i.y, %3
-  store i8 %4, ptr %i.g, align 8, !tbaa !600
+  %3 = trunc nuw i8 %i.y to i1
+  %4 = or i1 %i.x, %3
+  %5 = zext i1 %4 to i8
+  store i8 %5, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -3127,9 +3155,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator8emitReg8El.exit: ; preds = %bb.h, %
   %.pre.i.i3 = phi ptr [ %i.ab, %bb.h ], [ %i.ap, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i ] ; 2 uses
   %i.as = icmp ugt i64 %2, 255
   %i.at = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %5 = zext i1 %i.as to i8
-  %6 = or i8 %i.at, %5
-  store i8 %6, ptr %i.g, align 8, !tbaa !600
+  %6 = trunc nuw i8 %i.at to i1
+  %7 = or i1 %i.as, %6
+  %8 = zext i1 %7 to i8
+  store i8 %8, ptr %i.g, align 8, !tbaa !600
   %i.au = trunc i64 %2 to i8                      ; 2 uses
   %.not.i.i.i.i4 = icmp eq ptr %.pre.i.i3, %i.ar
   br i1 %.not.i.i.i.i4, label %bb.o, label %bb.n
@@ -3274,9 +3303,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %2 = zext i1 %i.x to i8
-  %3 = or i8 %i.y, %2
-  store i8 %3, ptr %i.g, align 8, !tbaa !600
+  %2 = trunc nuw i8 %i.y to i1
+  %3 = or i1 %i.x, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h
@@ -3427,9 +3457,10 @@ _ZN6hermes3hbc28BytecodeInstructionGenerator10emitOpcodeENS0_8OperatorE.exit: ; 
   %.pre.i.i = phi ptr [ %i.k, %bb.b ], [ %i.u, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i.i.i.i ] ; 2 uses
   %i.x = icmp ugt i64 %1, 255
   %i.y = load i8, ptr %i.g, align 8, !tbaa !600, !range !547, !noundef !548
-  %3 = zext i1 %i.x to i8
-  %4 = or i8 %i.y, %3
-  store i8 %4, ptr %i.g, align 8, !tbaa !600
+  %3 = trunc nuw i8 %i.y to i1
+  %4 = or i1 %i.x, %3
+  %5 = zext i1 %4 to i8
+  store i8 %5, ptr %i.g, align 8, !tbaa !600
   %i.z = trunc i64 %1 to i8                       ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %.pre.i.i, %i.w
   br i1 %.not.i.i.i.i, label %bb.i, label %bb.h

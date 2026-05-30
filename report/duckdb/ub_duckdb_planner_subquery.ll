@@ -201,9 +201,10 @@ bb.cd:                                            ; preds = %bb.cc
 
 bb.ce:                                            ; preds = %bb.cd
   %i.mp = load i8, ptr %i.mk, align 1, !tbaa !40, !range !101, !noundef !50
-  %197 = zext i1 %i.mo to i8
-  %198 = or i8 %i.mp, %197
-  store i8 %198, ptr %i.mk, align 1, !tbaa !40
+  %197 = trunc nuw i8 %i.mp to i1
+  %198 = or i1 %i.mo, %197
+  %199 = zext i1 %198 to i8
+  store i8 %199, ptr %i.mk, align 1, !tbaa !40
   %i.mq = getelementptr inbounds nuw i8, ptr %.sroa.02887.03539, i64 8 ; 2 uses
   %.not3050 = icmp eq ptr %i.mq, %i.mj
   br i1 %.not3050, label %._crit_edge3542, label %bb.cc
@@ -391,8 +392,8 @@ bb.cx:                                            ; preds = %.lr.ph3533
 
 bb.cy:                                            ; preds = %bb.cx
   %i.oo = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %199 = icmp ne i8 %i.oo, 0
-  %i.op = and i1 %i.on, %199
+  %200 = trunc nuw i8 %i.oo to i1
+  %i.op = and i1 %i.on, %200
   %i.oq = zext i1 %i.op to i8
   store i8 %i.oq, ptr %3, align 1, !tbaa !340
   %i.or = getelementptr inbounds nuw i8, ptr %.sroa.02883.03531, i64 8 ; 2 uses
@@ -418,8 +419,8 @@ bb.dc:                                            ; preds = %bb.db
   %i.ox = load i8, ptr %i.ow, align 8, !tbaa !75
   %.not840 = icmp ne i8 %i.ox, 57
   %i.oy = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %200 = icmp ne i8 %i.oy, 0
-  %i.oz = and i1 %.not840, %200
+  %201 = trunc nuw i8 %i.oy to i1
+  %i.oz = and i1 %.not840, %201
   %i.pa = zext i1 %i.oz to i8
   store i8 %i.pa, ptr %3, align 1, !tbaa !340
   br i1 %i.at, label %bb.dp, label %bb.dd
@@ -822,8 +823,8 @@ bb.ex:                                            ; preds = %.lr.ph3503
 
 bb.ey:                                            ; preds = %bb.ex
   %i.wx = load i8, ptr %3, align 1, !tbaa !340, !range !101, !noundef !50
-  %201 = icmp ne i8 %i.wx, 0
-  %i.wy = and i1 %i.ww, %201
+  %202 = trunc nuw i8 %i.wx to i1
+  %i.wy = and i1 %i.ww, %202
   %i.wz = zext i1 %i.wy to i8
   store i8 %i.wz, ptr %3, align 1, !tbaa !340
   %i.xa = getelementptr inbounds nuw i8, ptr %.sroa.02873.03501, i64 8 ; 2 uses
@@ -1226,7 +1227,7 @@ _ZNK6duckdb17CorrelatedColumnsixERKm.exit._crit_edge: ; preds = %bb.l, %_ZNK6duc
   %.lcssa = phi i8 [ 0, %.preheader ], [ 1, %_ZNK6duckdb17CorrelatedColumnsixERKm.exit ], [ 0, %bb.l ]
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.aq = load i8, ptr %i.ap, align 8, !tbaa !367, !range !101, !noundef !50
-  %i.ar = or i8 %i.aq, %.lcssa
+  %i.ar = or i8 %.lcssa, %i.aq
   store i8 %i.ar, ptr %i.ap, align 8, !tbaa !367
   br label %bb.m
 

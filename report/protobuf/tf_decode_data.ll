@@ -201,7 +201,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.
   store i32 1, ptr %i.an, align 4, !tbaa !33
   %i.dh = add i8 %i.au, -65
   %i.di = icmp ult i8 %i.dh, 26
-  %14 = icmp ne i8 %i.cx, 0
+  %14 = trunc nuw i8 %i.cx to i1
   %i.dj = and i1 %i.di, %14
   br label %bb.ba
 
@@ -219,7 +219,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.am
   %i.dn = add nsw i32 %i.as, 1                    ; 2 uses
   store i32 %i.dn, ptr %i.an, align 4, !tbaa !33
-  %15 = icmp ne i8 %i.aq, 0
+  %15 = trunc nuw i8 %i.aq to i1
   %i.do = and i1 %i.dm, %15
   br label %bb.ba
 

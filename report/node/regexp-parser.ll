@@ -201,8 +201,8 @@ bb.fv:                                            ; preds = %bb.fq
   unreachable
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit216: ; preds = %bb.fq, %bb.fq, %bb.fr, %bb.fs, %bb.ft, %bb.fu
-  %.0.i214 = phi i1 [ %i.wn, %bb.fu ], [ false, %bb.ft ], [ false, %bb.fq ], [ false, %bb.fq ], [ false, %bb.fr ], [ %i.wc, %bb.fs ]
-  %i.wo = zext i1 %.0.i214 to i8                  ; 2 uses
+  %.0.i214 = phi i1 [ %i.wn, %bb.fu ], [ false, %bb.ft ], [ false, %bb.fq ], [ false, %bb.fq ], [ false, %bb.fr ], [ %i.wc, %bb.fs ] ; 2 uses
+  %i.wo = zext i1 %.0.i214 to i8
   store i8 %i.wo, ptr %i.k, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #19
   %.val16.i101 = load ptr, ptr %i.ck, align 8     ; 4 uses
@@ -336,7 +336,7 @@ _ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit210: ; pre
   br label %bb.gh
 
 bb.gh:                                            ; preds = %.lr.ph, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174
-  %1 = phi i8 [ %i.wo, %.lr.ph ], [ %i.aas, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174 ] ; 2 uses
+  %1 = phi i1 [ %.0.i214, %.lr.ph ], [ %i.aar, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit174 ] ; 2 uses
   %.val11.i110 = load i32, ptr %i.cj, align 4     ; 3 uses
   switch i32 %.val11.i110, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE4NextEv.exit203.thread [
     i32 93, label %bb.hk
@@ -523,9 +523,8 @@ bb.gz:                                            ; preds = %bb.gu
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit177: ; preds = %bb.gu, %bb.gu, %bb.gv, %bb.gw, %bb.gx, %bb.gy
   %.0.i175 = phi i1 [ %i.aaq, %bb.gy ], [ false, %bb.gx ], [ false, %bb.gu ], [ false, %bb.gu ], [ false, %bb.gv ], [ %i.aaf, %bb.gw ]
-  %2 = icmp ne i8 %1, 0
-  %i.aar = and i1 %2, %.0.i175
-  %i.aas = zext i1 %i.aar to i8                   ; 2 uses
+  %i.aar = and i1 %1, %.0.i175                    ; 2 uses
+  %i.aas = zext i1 %i.aar to i8
   store i8 %i.aas, ptr %i.k, align 1
   %.val13.i116 = load ptr, ptr %i.ck, align 8     ; 3 uses
   %i.aat = load i32, ptr %i.wz, align 4           ; 2 uses
@@ -638,8 +637,7 @@ bb.hj:                                            ; preds = %.critedge.i105
   br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE22ParseClassIntersectionEPKNS1_13RegExpBuilderEbPNS0_10RegExpTreeENS1_19ClassSetOperandTypeE.exit
 
 bb.hk:                                            ; preds = %bb.gh
-  %3 = trunc nuw i8 %1 to i1
-  %or.cond.i108 = select i1 %i.ci, i1 %3, i1 false
+  %or.cond.i108 = select i1 %i.ci, i1 %1, i1 false
   br i1 %or.cond.i108, label %bb.hl, label %bb.hn
 
 bb.hl:                                            ; preds = %bb.hk
@@ -1042,9 +1040,10 @@ bb.jh:                                            ; preds = %bb.jc
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256: ; preds = %bb.jc, %bb.jc, %bb.jd, %bb.je, %bb.jf, %bb.jg
   %.0.i254 = phi i1 [ %i.aif, %bb.jg ], [ false, %bb.jf ], [ false, %bb.jc ], [ false, %bb.jc ], [ false, %bb.jd ], [ %i.ahu, %bb.je ]
   %i.aig = load i8, ptr %i.f, align 1, !range !5, !noundef !6
-  %4 = zext i1 %.0.i254 to i8
-  %5 = or i8 %i.aig, %4                           ; 2 uses
-  store i8 %5, ptr %i.f, align 1
+  %2 = trunc nuw i8 %i.aig to i1
+  %3 = or i1 %.0.i254, %2                         ; 2 uses
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.f, align 1
   %i.aih = getelementptr inbounds nuw i8, ptr %i.afh, i64 12
   %i.aii = load i32, ptr %i.aih, align 4
   %i.aij = icmp eq i32 %i.aii, 0
@@ -1054,7 +1053,8 @@ _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOpe
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256._crit_edge: ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256
   %i.aim = icmp ne i64 %i.ail, 0
-  %i.ain = zext i1 %i.aim to i8
+  %5 = or i1 %3, %i.aim
+  %i.ain = zext i1 %5 to i8
   br label %bb.jj
 
 bb.ji:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256
@@ -1067,8 +1067,7 @@ bb.ji:                                            ; preds = %_ZN2v88internal12_G
 
 bb.jj:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256._crit_edge, %bb.ji
   %i.aip = phi i8 [ %i.ain, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit256._crit_edge ], [ 1, %bb.ji ]
-  %6 = or i8 %i.aip, %5
-  store i8 %6, ptr %i.f, align 1
+  store i8 %i.aip, ptr %i.f, align 1
   %i.aiq = load ptr, ptr %i.e, align 8            ; 6 uses
   %.val38.i = load ptr, ptr %i.ck, align 8        ; 3 uses
   %i.air = getelementptr inbounds nuw i8, ptr %.val38.i, i64 24
@@ -1392,19 +1391,24 @@ bb.kl:                                            ; preds = %bb.kk, %.critedge.i
 ._crit_edge434:                                   ; preds = %bb.kl
   %.pre439 = load i8, ptr %i.f, align 1, !range !5
   %i.anj = icmp ne i64 %i.ani, 0
-  %7 = zext i1 %i.anj to i8
   br label %bb.kn
 
 bb.km:                                            ; preds = %bb.kl
   %i.ank = icmp eq i64 %i.ani, 0
   %.pre440 = load i8, ptr %i.f, align 1, !range !5 ; 2 uses
-  br i1 %i.ank, label %._crit_edge437.a, label %bb.kn
+  br i1 %i.ank, label %._crit_edge437, label %bb.kn
+
+._crit_edge437:                                   ; preds = %bb.km
+  %6 = trunc nuw i8 %.pre440 to i1
+  br label %._crit_edge437.a
 
 bb.kn:                                            ; preds = %._crit_edge434, %bb.km
   %i.anl = phi i8 [ %.pre439, %._crit_edge434 ], [ %.pre440, %bb.km ]
-  %8 = phi i8 [ %7, %._crit_edge434 ], [ 1, %bb.km ]
-  %9 = or i8 %8, %i.anl                           ; 2 uses
-  store i8 %9, ptr %i.f, align 1
+  %7 = phi i1 [ %i.anj, %._crit_edge434 ], [ true, %bb.km ]
+  %8 = trunc nuw i8 %i.anl to i1
+  %9 = or i1 %7, %8                               ; 2 uses
+  %10 = zext i1 %9 to i8
+  store i8 %10, ptr %i.f, align 1
   %i.anm = load ptr, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #19
   %.val31.i = load ptr, ptr %i.ck, align 8
@@ -1415,13 +1419,12 @@ bb.kn:                                            ; preds = %._crit_edge434, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
   br label %._crit_edge437.a
 
-._crit_edge437.a:                                 ; preds = %bb.km, %bb.kn
-  %10 = phi i8 [ %9, %bb.kn ], [ %.pre440, %bb.km ]
+._crit_edge437.a:                                 ; preds = %._crit_edge437, %bb.kn
+  %11 = phi i1 [ %6, %._crit_edge437 ], [ %9, %bb.kn ]
   call fastcc void @_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE7AdvanceEv(ptr noundef nonnull align 8 dereferenceable(112) %0), !inline_history !59
   %i.ano = load i8, ptr %i.a, align 1, !range !5, !noundef !6
-  %11 = trunc nuw i8 %i.ano to i1                 ; 2 uses
-  %i.anp = trunc nuw i8 %10 to i1
-  %or.cond.i120 = select i1 %11, i1 %i.anp, i1 false
+  %i.anp = trunc nuw i8 %i.ano to i1              ; 2 uses
+  %or.cond.i120 = select i1 %i.anp, i1 %11, i1 false
   br i1 %or.cond.i120, label %bb.ko, label %bb.kq
 
 bb.ko:                                            ; preds = %._crit_edge437.a
@@ -1455,7 +1458,7 @@ bb.kq:                                            ; preds = %._crit_edge437.a
   br i1 %i.any, label %bb.kr, label %bb.ks
 
 bb.kr:                                            ; preds = %bb.kq
-  %i.anz = call noundef ptr @_ZN2v88internal24RegExpClassSetExpression5EmptyEPNS0_4ZoneEb(ptr noundef %.val29.i, i1 noundef zeroext %11) #19, !inline_history !59
+  %i.anz = call noundef ptr @_ZN2v88internal24RegExpClassSetExpression5EmptyEPNS0_4ZoneEb(ptr noundef %.val29.i, i1 noundef zeroext %i.anp) #19, !inline_history !59
   br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE15ParseClassUnionEPKNS1_13RegExpBuilderEbPNS0_10RegExpTreeENS1_19ClassSetOperandTypeEPNS0_8ZoneListINS0_14CharacterRangeEEEPNS0_7ZoneMapINS_4base6VectorIKjEES8_NS0_24CharacterClassStringLessEEEj.exit
 
 bb.ks:                                            ; preds = %bb.kq
@@ -1858,8 +1861,8 @@ bb.ej:                                            ; preds = %bb.ee
   unreachable
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit182: ; preds = %bb.ee, %bb.ee, %bb.ef, %bb.eg, %bb.eh, %bb.ei
-  %.0.i180 = phi i1 [ %i.sg, %bb.ei ], [ false, %bb.eh ], [ false, %bb.ee ], [ false, %bb.ee ], [ false, %bb.ef ], [ %i.rv, %bb.eg ]
-  %i.sh = zext i1 %.0.i180 to i8                  ; 2 uses
+  %.0.i180 = phi i1 [ %i.sg, %bb.ei ], [ false, %bb.eh ], [ false, %bb.ee ], [ false, %bb.ee ], [ false, %bb.ef ], [ %i.rv, %bb.eg ] ; 2 uses
+  %i.sh = zext i1 %.0.i180 to i8
   store i8 %i.sh, ptr %i.k, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #19
   %.val16.i72 = load ptr, ptr %i.ag, align 8      ; 4 uses
@@ -1987,7 +1990,7 @@ _ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176: ; pre
   br i1 %i.uc, label %.lr.ph, label %.critedge.i76
 
 .lr.ph:                                           ; preds = %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143
-  %1 = phi i8 [ %i.vz, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143 ], [ %i.sh, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176 ] ; 2 uses
+  %1 = phi i1 [ %i.vy, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit143 ], [ %.0.i180, %_ZN2v88internal8ZoneListIPNS0_10RegExpTreeEE3AddERKS3_PNS0_4ZoneE.exit176 ] ; 2 uses
   %.val11.i81 = load i32, ptr %i.ae, align 4      ; 3 uses
   switch i32 %.val11.i81, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE4NextEv.exit169.thread [
     i32 93, label %bb.fs
@@ -2126,9 +2129,8 @@ bb.fh:                                            ; preds = %bb.fc
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit146: ; preds = %bb.fc, %bb.fc, %bb.fd, %bb.fe, %bb.ff, %bb.fg
   %.0.i144 = phi i1 [ %i.vx, %bb.fg ], [ false, %bb.ff ], [ false, %bb.fc ], [ false, %bb.fc ], [ false, %bb.fd ], [ %i.vm, %bb.fe ]
-  %2 = icmp ne i8 %1, 0
-  %i.vy = and i1 %2, %.0.i144
-  %i.vz = zext i1 %i.vy to i8                     ; 2 uses
+  %i.vy = and i1 %1, %.0.i144                     ; 2 uses
+  %i.vz = zext i1 %i.vy to i8
   store i8 %i.vz, ptr %i.k, align 1
   %.val13.i87 = load ptr, ptr %i.ag, align 8      ; 3 uses
   %i.wa = load i32, ptr %i.ss, align 4            ; 2 uses
@@ -2241,8 +2243,7 @@ bb.fr:                                            ; preds = %.critedge.i76
   br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE22ParseClassIntersectionEPKNS1_13RegExpBuilderEbPNS0_10RegExpTreeENS1_19ClassSetOperandTypeE.exit
 
 bb.fs:                                            ; preds = %.lr.ph
-  %3 = trunc nuw i8 %1 to i1
-  %or.cond.i79 = select i1 %i.af, i1 %3, i1 false
+  %or.cond.i79 = select i1 %i.af, i1 %1, i1 false
   br i1 %or.cond.i79, label %bb.ft, label %bb.fv
 
 bb.ft:                                            ; preds = %bb.fs
@@ -2645,9 +2646,10 @@ bb.hj:                                            ; preds = %bb.he
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222: ; preds = %bb.he, %bb.he, %bb.hf, %bb.hg, %bb.hh, %bb.hi
   %.0.i220 = phi i1 [ %i.adl, %bb.hi ], [ false, %bb.hh ], [ false, %bb.he ], [ false, %bb.he ], [ false, %bb.hf ], [ %i.ada, %bb.hg ]
   %i.adm = load i8, ptr %i.f, align 1, !range !5, !noundef !6
-  %4 = zext i1 %.0.i220 to i8
-  %5 = or i8 %i.adm, %4                           ; 2 uses
-  store i8 %5, ptr %i.f, align 1
+  %2 = trunc nuw i8 %i.adm to i1
+  %3 = or i1 %.0.i220, %2                         ; 2 uses
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.f, align 1
   %i.adn = getelementptr inbounds nuw i8, ptr %i.aaq, i64 12
   %i.ado = load i32, ptr %i.adn, align 4
   %i.adp = icmp eq i32 %i.ado, 0
@@ -2657,7 +2659,8 @@ _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOpe
 
 _ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222._crit_edge: ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222
   %i.ads = icmp ne i64 %i.adr, 0
-  %i.adt = zext i1 %i.ads to i8
+  %5 = or i1 %3, %i.ads
+  %i.adt = zext i1 %5 to i8
   br label %bb.hl
 
 bb.hk:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222
@@ -2670,8 +2673,7 @@ bb.hk:                                            ; preds = %_ZN2v88internal12_G
 
 bb.hl:                                            ; preds = %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222._crit_edge, %bb.hk
   %i.adv = phi i8 [ %i.adt, %_ZN2v88internal12_GLOBAL__N_112_GLOBAL__N_117MayContainStringsENS1_19ClassSetOperandTypeEPNS0_10RegExpTreeE.exit222._crit_edge ], [ 1, %bb.hk ]
-  %6 = or i8 %i.adv, %5
-  store i8 %6, ptr %i.f, align 1
+  store i8 %i.adv, ptr %i.f, align 1
   %i.adw = load ptr, ptr %i.e, align 8            ; 6 uses
   %.val38.i = load ptr, ptr %i.ag, align 8        ; 3 uses
   %i.adx = getelementptr inbounds nuw i8, ptr %.val38.i, i64 24
@@ -2997,19 +2999,24 @@ bb.in:                                            ; preds = %bb.im, %.critedge.i
 ._crit_edge392:                                   ; preds = %bb.in
   %.pre397 = load i8, ptr %i.f, align 1, !range !5
   %i.air = icmp ne i64 %i.aiq, 0
-  %7 = zext i1 %i.air to i8
   br label %bb.ip
 
 bb.io:                                            ; preds = %bb.in
   %i.ais = icmp eq i64 %i.aiq, 0
   %.pre398 = load i8, ptr %i.f, align 1, !range !5 ; 2 uses
-  br i1 %i.ais, label %._crit_edge395.a, label %bb.ip
+  br i1 %i.ais, label %._crit_edge395, label %bb.ip
+
+._crit_edge395:                                   ; preds = %bb.io
+  %6 = trunc nuw i8 %.pre398 to i1
+  br label %._crit_edge395.a
 
 bb.ip:                                            ; preds = %._crit_edge392, %bb.io
   %i.ait = phi i8 [ %.pre397, %._crit_edge392 ], [ %.pre398, %bb.io ]
-  %8 = phi i8 [ %7, %._crit_edge392 ], [ 1, %bb.io ]
-  %9 = or i8 %8, %i.ait                           ; 2 uses
-  store i8 %9, ptr %i.f, align 1
+  %7 = phi i1 [ %i.air, %._crit_edge392 ], [ true, %bb.io ]
+  %8 = trunc nuw i8 %i.ait to i1
+  %9 = or i1 %7, %8                               ; 2 uses
+  %10 = zext i1 %9 to i8
+  store i8 %10, ptr %i.f, align 1
   %i.aiu = load ptr, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #19
   %.val31.i = load ptr, ptr %i.ag, align 8
@@ -3020,13 +3027,12 @@ bb.ip:                                            ; preds = %._crit_edge392, %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #19
   br label %._crit_edge395.a
 
-._crit_edge395.a:                                 ; preds = %bb.io, %bb.ip
-  %10 = phi i8 [ %9, %bb.ip ], [ %.pre398, %bb.io ]
+._crit_edge395.a:                                 ; preds = %._crit_edge395, %bb.ip
+  %11 = phi i1 [ %6, %._crit_edge395 ], [ %9, %bb.ip ]
   call fastcc void @_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE7AdvanceEv(ptr noundef nonnull align 8 dereferenceable(112) %0), !inline_history !111
   %i.aiw = load i8, ptr %i.a, align 1, !range !5, !noundef !6
-  %11 = trunc nuw i8 %i.aiw to i1                 ; 2 uses
-  %i.aix = trunc nuw i8 %10 to i1
-  %or.cond.i91 = select i1 %11, i1 %i.aix, i1 false
+  %i.aix = trunc nuw i8 %i.aiw to i1              ; 2 uses
+  %or.cond.i91 = select i1 %i.aix, i1 %11, i1 false
   br i1 %or.cond.i91, label %bb.iq, label %bb.is
 
 bb.iq:                                            ; preds = %._crit_edge395.a
@@ -3062,7 +3068,7 @@ bb.is:                                            ; preds = %._crit_edge395.a
   br i1 %i.aji, label %bb.it, label %bb.iu
 
 bb.it:                                            ; preds = %bb.is
-  %i.ajj = call noundef ptr @_ZN2v88internal24RegExpClassSetExpression5EmptyEPNS0_4ZoneEb(ptr noundef %.val29.i, i1 noundef zeroext %11) #19, !inline_history !111
+  %i.ajj = call noundef ptr @_ZN2v88internal24RegExpClassSetExpression5EmptyEPNS0_4ZoneEb(ptr noundef %.val29.i, i1 noundef zeroext %i.aix) #19, !inline_history !111
   br label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE15ParseClassUnionEPKNS1_13RegExpBuilderEbPNS0_10RegExpTreeENS1_19ClassSetOperandTypeEPNS0_8ZoneListINS0_14CharacterRangeEEEPNS0_7ZoneMapINS_4base6VectorIKjEES8_NS0_24CharacterClassStringLessEEEj.exit
 
 bb.iu:                                            ; preds = %bb.is
@@ -3465,7 +3471,7 @@ bb.a:
   %.val28 = load i32, ptr %i.b, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 76
   %.val29 = load i32, ptr %i.c, align 4           ; 3 uses
-  %2 = icmp ne i32 %1, 0
+  %2 = trunc nuw i32 %1 to i1
   %.not36 = icmp eq i32 %.val27, 2097152          ; 2 uses
   %or.cond = select i1 %2, i1 true, i1 %.not36
   br i1 %or.cond, label %.loopexit33, label %.lr.ph

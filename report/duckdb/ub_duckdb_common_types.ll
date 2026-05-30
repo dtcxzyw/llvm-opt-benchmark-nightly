@@ -201,15 +201,17 @@ bb.a:
   store ptr %i.w, ptr %30, align 8, !tbaa !2017
   %i.y = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 32 uses
   store ptr %i.w, ptr %i.y, align 8, !tbaa !2019
-  %i.z = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 17 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x
+  %i.z = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 16 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.w, i64 %i.x ; 2 uses
   store ptr %i.aa, ptr %i.z, align 8, !tbaa !2081
   %.not7888.i.not = icmp eq i32 %i.r, 0
   br i1 %.not7888.i.not, label %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread, label %.lr.ph94.i
 
 .lr.ph94.i:                                       ; preds = %bb.a, %.loopexit.i
-  %.sroa.21.093.i.a = phi i1 [ %.sroa.21.2.i, %.loopexit.i ], [ false, %bb.a ]
-  %.sroa.0.sroa.14.090.i = phi i8 [ %37, %.loopexit.i ], [ 0, %bb.a ]
+  %.sroa.21.093.i = phi i1 [ %.sroa.21.2.i, %.loopexit.i ], [ false, %bb.a ]
+  %.sroa.0.sroa.18.092.i = phi i1 [ %36, %.loopexit.i ], [ false, %bb.a ]
+  %.sroa.21.093.i.a = phi i1 [ %35, %.loopexit.i ], [ false, %bb.a ]
+  %.sroa.0.sroa.14.090.i = phi i1 [ %38, %.loopexit.i ], [ false, %bb.a ]
   %.sroa.0.sroa.0.089.i = phi i32 [ %.sroa.0.sroa.0.2.i, %.loopexit.i ], [ 0, %bb.a ] ; 4 uses
   %i.ab = call fastcc noundef zeroext i8 @_ZN6duckdb12_GLOBAL__N_110BlobReader4ReadIhLb1EEET_v(ptr noundef nonnull align 8 dereferenceable(24) %30)
   %i.ac = icmp eq i8 %i.ab, 1                     ; 5 uses
@@ -222,11 +224,11 @@ bb.a:
   %i.ai = and i32 %i.ad, 536870912
   %.not.i = icmp eq i32 %i.ai, 0
   %i.aj = trunc i16 %i.af to i1
-  %i.ak = or i1 %i.ag, %i.aj
+  %i.ak = or i1 %i.ag, %i.aj                      ; 2 uses
   %i.al = and i16 %i.af, 2
   %i.am = zext nneg i16 %i.al to i32
   %i.an = or disjoint i32 %i.ah, %i.am
-  %i.ao = icmp ne i32 %i.an, 0
+  %i.ao = icmp ne i32 %i.an, 0                    ; 2 uses
   br i1 %.not.i, label %bb.b, label %.thread.i
 
 .thread.i:                                        ; preds = %.lr.ph94.i
@@ -241,14 +243,15 @@ bb.c:                                             ; preds = %bb.b, %.thread.i
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.sroa.21.2.i = phi i1 [ %.sroa.21.093.i.a, %bb.b ], [ true, %bb.c ] ; 2 uses
+  %.sroa.21.2.i = phi i1 [ %.sroa.21.093.i, %bb.b ], [ true, %bb.c ] ; 2 uses
   %i.ap = select i1 %i.ak, i64 3, i64 2
   %i.aq = zext i1 %i.ao to i64
   %i.ar = add nuw nsw i64 %i.ap, %i.aq
   %i.as = shl nuw nsw i64 %i.ar, 3                ; 5 uses
-  %35 = xor i1 %i.ac, true
-  %36 = zext i1 %35 to i8
-  %37 = or i8 %.sroa.0.sroa.14.090.i, %36         ; 2 uses
+  %35 = or i1 %.sroa.21.093.i.a, %i.ak            ; 2 uses
+  %36 = or i1 %.sroa.0.sroa.18.092.i, %i.ao       ; 2 uses
+  %37 = xor i1 %i.ac, true
+  %38 = or i1 %.sroa.0.sroa.14.090.i, %37         ; 2 uses
   switch i16 %i.ae, label %bb.r [
     i16 1, label %bb.e
     i16 2, label %bb.f
@@ -467,15 +470,18 @@ bb.q:                                             ; preds = %bb.d, %bb.d, %bb.d,
 .loopexit.i:                                      ; preds = %_ZN6duckdb12_GLOBAL__N_110BlobReader4SkipEm.exit.us.i, %.loopexit.i.loopexit65, %bb.q, %bb.g, %bb.f, %bb.e
   %.sroa.0.sroa.0.2.i = phi i32 [ %i.dc, %bb.q ], [ %i.av, %bb.e ], [ %i.bb, %bb.f ], [ %i.bd, %bb.g ], [ %i.da, %.loopexit.i.loopexit65 ], [ %i.bn, %_ZN6duckdb12_GLOBAL__N_110BlobReader4SkipEm.exit.us.i ] ; 2 uses
   %.val.i = load ptr, ptr %i.y, align 8, !tbaa !2019
-  %.val51.i = load ptr, ptr %i.z, align 8, !tbaa !2081
+  %.val51.i = load ptr, ptr %i.z, align 8, !tbaa !2081 ; 2 uses
   %.not78.i = icmp ult ptr %.val.i, %.val51.i
   br i1 %.not78.i, label %.lr.ph94.i, label %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329
 
 _ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329: ; preds = %.loopexit.i
-  %38 = zext nneg i8 %37 to i64
-  %39 = shl nuw nsw i64 %38, 32
+  %39 = select i1 %36, i64 281474976710656, i64 0
+  %40 = select i1 %35, i64 1099511627776, i64 0
+  %41 = select i1 %38, i64 4294967296, i64 0
   %i.dd = zext i32 %.sroa.0.sroa.0.2.i to i64
-  %i.de = or disjoint i64 %39, %i.dd
+  %42 = or disjoint i64 %40, %41
+  %43 = or disjoint i64 %42, %39
+  %i.de = or disjoint i64 %43, %i.dd
   br label %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread
 
 bb.r:                                             ; preds = %bb.d
@@ -534,6 +540,7 @@ bb.x:                                             ; preds = %_ZNKSt7__cxx1112bas
   br label %common.resume
 
 _ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread: ; preds = %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329, %bb.a
+  %.val63210.i = phi ptr [ %.val51.i, %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329 ], [ %i.aa, %bb.a ]
   %.sroa.0.sroa.0.0.insert.insert.i49 = phi i64 [ %i.de, %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329 ], [ 0, %bb.a ] ; 2 uses
   %.sroa.21.3.i48 = phi i1 [ %.sroa.21.2.i, %_ZN6duckdb12_GLOBAL__N_110AnalyzeWKBERNS0_10BlobReaderE.exit.thread329 ], [ false, %bb.a ]
   %i.dl = and i64 %.sroa.0.sroa.0.0.insert.insert.i49, 4294967296
@@ -575,7 +582,6 @@ _ZN6duckdb12StringVector11EmptyStringERNS_6VectorEm.exit: ; preds = %bb.y, %bb.z
   %i.ec = getelementptr inbounds nuw i8, ptr %34, i64 16 ; 12 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dz, i64 %i.ea
   store ptr %i.ed, ptr %i.ec, align 8, !tbaa !2027
-  %.val63210.i = load ptr, ptr %i.z, align 8, !tbaa !2081
   %.not161211.i = icmp ult ptr %i.dn, %.val63210.i
   br i1 %.not161211.i, label %.lr.ph213.i, label %_ZN6duckdb12_GLOBAL__N_110ConvertWKBERNS0_10BlobReaderERNS0_19FixedSizeBlobWriterE.exit
 
@@ -978,8 +984,9 @@ bb.e:                                             ; preds = %bb.d, %bb.a
   %.sroa.2.1 = phi i32 [ %i.t, %bb.d ], [ %i.i, %bb.a ]
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.v = load i32, ptr %i.u, align 4, !tbaa !3511
-  %.not49 = icmp eq i32 %i.v, 0
-  %i.w = select i1 %.not49, i32 %i.h, i32 536870912
+  %5 = or i32 %i.h, %i.v
+  %.not49 = icmp eq i32 %5, 0
+  %i.w = select i1 %.not49, i32 0, i32 536870912
   %i.x = and i32 %.sroa.2.1, -536870914
   %i.y = or disjoint i32 %i.x, %i.w
   %i.z = or disjoint i32 %i.y, 1
@@ -993,8 +1000,9 @@ bb.g:                                             ; preds = %bb.f, %bb.a
   %.sroa.2.2 = phi i32 [ %i.aa, %bb.f ], [ %i.i, %bb.a ]
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !3511
-  %.not = icmp eq i32 %i.ac, 0
-  %i.ad = select i1 %.not, i32 %i.h, i32 536870912
+  %6 = or i32 %i.h, %i.ac
+  %.not = icmp eq i32 %6, 0
+  %i.ad = select i1 %.not, i32 0, i32 536870912
   %i.ae = and i32 %.sroa.2.2, -536870915
   %i.af = or disjoint i32 %i.ae, %i.ad
   %i.ag = or disjoint i32 %i.af, 2

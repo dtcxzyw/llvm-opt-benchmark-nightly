@@ -201,14 +201,14 @@ bb.c:                                             ; preds = %bb.b
   call fastcc void @ZSTD_findFrameSizeInfo(ptr dead_on_unwind noalias writable align 8 %2, ptr noundef %.015, i64 noundef %.019, i32 noundef 0)
   %i.c = load i64, ptr %i.a, align 8, !tbaa !65   ; 3 uses
   %i.d = load i64, ptr %i.b, align 8, !tbaa !67   ; 2 uses
-  %3 = icmp ult i64 %i.c, -119
-  %4 = icmp ne i64 %i.d, -2
-  %or.cond.not = select i1 %3, i1 %4, i1 false
+  %3 = icmp ugt i64 %i.c, -120
+  %4 = icmp eq i64 %i.d, -2
+  %or.cond.not = select i1 %3, i1 true, i1 %4
   %i.e = getelementptr inbounds nuw i8, ptr %.015, i64 %i.c
   %i.f = sub i64 %.019, %i.c
   %i.g = add i64 %i.d, %.017
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
-  br i1 %or.cond.not, label %bb.b, label %bb.d, !llvm.loop !68
+  br i1 %or.cond.not, label %bb.d, label %bb.b, !llvm.loop !68
 
 bb.d:                                             ; preds = %bb.b, %bb.c
   %.2 = phi i64 [ -2, %bb.c ], [ %.017, %bb.b ]

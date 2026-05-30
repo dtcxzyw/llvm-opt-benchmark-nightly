@@ -201,8 +201,8 @@ bb.ci:                                            ; preds = %bb.ch
   %i.qh = zext i8 %i.qg to i64
   %i.qi = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.qh
   %i.qj = load i8, ptr %i.qi, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not18 = icmp eq i8 %i.qj, 0
-  br i1 %.not18, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread, label %.thread921.i
+  %3 = trunc nuw i8 %i.qj to i1
+  br i1 %3, label %.thread921.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread
 
 bb.cj:                                            ; preds = %bb.ch
   %.not10.i.i = icmp eq i32 %.0.copyload.i13.i.i, 1936482662
@@ -219,8 +219,8 @@ bb.ck:                                            ; preds = %bb.cj
   %i.qn = zext i8 %i.qm to i64
   %i.qo = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.qn
   %i.qp = load i8, ptr %i.qo, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not17 = icmp eq i8 %i.qp, 0
-  br i1 %.not17, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread, label %.thread921.i
+  %4 = trunc nuw i8 %i.qp to i1
+  br i1 %4, label %.thread921.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread
 
 .thread921.i:                                     ; preds = %.thread1073.i, %.thread919.i, %bb.ck, %bb.ci
   %i.qq = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -285,8 +285,8 @@ bb.cq:                                            ; preds = %bb.cp
   %i.rq = zext i8 %i.rp to i64
   %i.rr = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.rq
   %i.rs = load i8, ptr %i.rr, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not.i = icmp eq i8 %i.rs, 0
-  br i1 %.not.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread, label %.critedge7.i.i
+  %5 = trunc nuw i8 %i.rs to i1
+  br i1 %5, label %.critedge7.i.i, label %_ZN8facebook5velox9functions12_GLOBAL__N_18validateIRN8simdjson8fallback8ondemand8documentEEENS4_10error_codeET_.exit.thread
 
 .critedge7.i.i:                                   ; preds = %bb.cq, %bb.cp
   %i.rt = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -689,9 +689,9 @@ bb.br:                                            ; preds = %bb.bq
   %i.os = zext i8 %i.or to i64
   %i.ot = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.os
   %i.ou = load i8, ptr %i.ot, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not783 = icmp ne i8 %i.ou, 0                  ; 2 uses
-  %brmerge = or i1 %.not783, %i.od
-  %.mux = select i1 %.not783, i32 17, i32 0
+  %3 = trunc nuw i8 %i.ou to i1                   ; 2 uses
+  %brmerge = or i1 %i.od, %3
+  %.mux = select i1 %3, i32 17, i32 0
   br i1 %brmerge, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
@@ -714,8 +714,8 @@ bb.bt:                                            ; preds = %bb.a
   %i.pc = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.pd = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.pe = load ptr, ptr %i.pd, align 8, !tbaa !21 ; 3 uses
-  %3 = icmp ne ptr %i.pe, %i.c                    ; 2 uses
-  br i1 %3, label %_ZN8simdjson8fallback8ondemand14value_iterator20peek_non_root_scalarEPKc.exit.i112, label %bb.bu
+  %4 = icmp eq ptr %i.pe, %i.c                    ; 2 uses
+  br i1 %4, label %bb.bu, label %_ZN8simdjson8fallback8ondemand14value_iterator20peek_non_root_scalarEPKc.exit.i112
 
 bb.bu:                                            ; preds = %bb.bt
   %i.pf = load i32, ptr %i.pe, align 4, !tbaa !3
@@ -735,10 +735,10 @@ bb.bv:                                            ; preds = %_ZN8simdjson8fallba
   %i.pk = zext i8 %i.pj to i64
   %i.pl = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.pk
   %i.pm = load i8, ptr %i.pl, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not = icmp eq i8 %i.pm, 0                     ; 2 uses
-  %brmerge1007 = or i1 %.not, %3
-  %.mux1008 = select i1 %.not, i32 17, i32 0
-  br i1 %brmerge1007, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %.thread955
+  %5 = trunc nuw i8 %i.pm to i1                   ; 2 uses
+  %brmerge1003.not = and i1 %4, %5
+  %.mux1008 = select i1 %5, i32 0, i32 17
+  br i1 %brmerge1003.not, label %.thread955, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit
 
 .thread955:                                       ; preds = %bb.bv
   %i.pn = getelementptr inbounds nuw i8, ptr %i.a, i64 36 ; 2 uses
@@ -1141,8 +1141,8 @@ bb.bk:                                            ; preds = %bb.bj
   %i.ns = zext i8 %i.nr to i64
   %i.nt = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.ns
   %i.nu = load i8, ptr %i.nt, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not193 = icmp eq i8 %i.nu, 0
-  br i1 %.not193, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.thread628.i
+  %10 = trunc nuw i8 %i.nu to i1
+  br i1 %10, label %.thread628.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 bb.bl:                                            ; preds = %bb.bj
   %.not10.i.i = icmp eq i32 %.0.copyload.i13.i.i, 1936482662
@@ -1159,8 +1159,8 @@ bb.bm:                                            ; preds = %bb.bl
   %i.ny = zext i8 %i.nx to i64
   %i.nz = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.ny
   %i.oa = load i8, ptr %i.nz, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not192 = icmp eq i8 %i.oa, 0
-  br i1 %.not192, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.thread628.i
+  %11 = trunc nuw i8 %i.oa to i1
+  br i1 %11, label %.thread628.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 .thread628.i:                                     ; preds = %.thread728.i, %.thread626.i, %bb.bm, %bb.bk
   %i.ob = load ptr, ptr %i.k, align 8, !tbaa !28
@@ -1225,8 +1225,8 @@ bb.bs:                                            ; preds = %bb.br
   %i.pa = zext i8 %i.oz to i64
   %i.pb = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.pa
   %i.pc = load i8, ptr %i.pb, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not.i = icmp eq i8 %i.pc, 0
-  br i1 %.not.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.critedge7.i.i
+  %12 = trunc nuw i8 %i.pc to i1
+  br i1 %12, label %.critedge7.i.i, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb1ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 .critedge7.i.i:                                   ; preds = %bb.bs, %bb.br
   %i.pd = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -1629,8 +1629,8 @@ bb.ef:                                            ; preds = %bb.ee
   %i.adn = zext i8 %i.adm to i64
   %i.ado = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.adn
   %i.adp = load i8, ptr %i.ado, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not191 = icmp eq i8 %i.adp, 0
-  br i1 %.not191, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.thread628.i104
+  %13 = trunc nuw i8 %i.adp to i1
+  br i1 %13, label %.thread628.i104, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 bb.eg:                                            ; preds = %bb.ee
   %.not10.i.i109 = icmp eq i32 %.0.copyload.i13.i.i107, 1936482662
@@ -1647,8 +1647,8 @@ bb.eh:                                            ; preds = %bb.eg
   %i.adt = zext i8 %i.ads to i64
   %i.adu = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.adt
   %i.adv = load i8, ptr %i.adu, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not190 = icmp eq i8 %i.adv, 0
-  br i1 %.not190, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.thread628.i104
+  %14 = trunc nuw i8 %i.adv to i1
+  br i1 %14, label %.thread628.i104, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 .thread628.i104:                                  ; preds = %.thread728.i111, %.thread626.i102, %bb.eh, %bb.ef
   %i.adw = load ptr, ptr %i.k, align 8, !tbaa !28
@@ -1713,8 +1713,8 @@ bb.en:                                            ; preds = %bb.em
   %i.aev = zext i8 %i.aeu to i64
   %i.aew = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.aev
   %i.aex = load i8, ptr %i.aew, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not.i133 = icmp eq i8 %i.aex, 0
-  br i1 %.not.i133, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread, label %.critedge7.i.i134
+  %15 = trunc nuw i8 %i.aex to i1
+  br i1 %15, label %.critedge7.i.i134, label %_ZNK8facebook5velox9functions12_GLOBAL__N_113JsonParseImpl13generateViewsILb0ERN8simdjson8fallback8ondemand8documentEEENS5_10error_codeET0_.exit.thread
 
 .critedge7.i.i134:                                ; preds = %bb.en, %bb.em
   %i.aey = getelementptr inbounds nuw i8, ptr %i.o, i64 8
@@ -2117,9 +2117,9 @@ bb.as:                                            ; preds = %_ZN8facebook5velox9
   %i.lr = zext i8 %i.lq to i64
   %i.ls = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.lr
   %i.lt = load i8, ptr %i.ls, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not432 = icmp ne i8 %i.lt, 0                  ; 2 uses
-  %brmerge = or i1 %.not432, %i.lb
-  %.mux = select i1 %.not432, i32 17, i32 0
+  %4 = trunc nuw i8 %i.lt to i1                   ; 2 uses
+  %brmerge = or i1 %i.lb, %4
+  %.mux = select i1 %4, i32 17, i32 0
   br i1 %brmerge, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
@@ -2163,8 +2163,8 @@ bb.aw:                                            ; preds = %_ZN8simdjson8fallba
   %i.mk = zext i8 %i.mj to i64
   %i.ml = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.mk
   %i.mm = load i8, ptr %i.ml, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not = icmp eq i8 %i.mm, 0
-  br i1 %.not, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit
+  %5 = trunc nuw i8 %i.mm to i1
+  br i1 %5, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit: ; preds = %bb.aw
   br i1 %i.me, label %bb.ax, label %_ZN8simdjson8fallback8ondemand14value_iterator7is_nullEv.exit.thread
@@ -2567,9 +2567,9 @@ bb.as:                                            ; preds = %_ZN8facebook5velox9
   %i.lr = zext i8 %i.lq to i64
   %i.ls = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal32structural_or_whitespace_negatedE, i64 %i.lr
   %i.lt = load i8, ptr %i.ls, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not432 = icmp ne i8 %i.lt, 0                  ; 2 uses
-  %brmerge = or i1 %.not432, %i.lb
-  %.mux = select i1 %.not432, i32 17, i32 0
+  %4 = trunc nuw i8 %i.lt to i1                   ; 2 uses
+  %brmerge = or i1 %i.lb, %4
+  %.mux = select i1 %4, i32 17, i32 0
   br i1 %brmerge, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %bb.at
 
 bb.at:                                            ; preds = %bb.as
@@ -2613,8 +2613,8 @@ bb.aw:                                            ; preds = %_ZN8simdjson8fallba
   %i.mk = zext i8 %i.mj to i64
   %i.ml = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internal24structural_or_whitespaceE, i64 %i.mk
   %i.mm = load i8, ptr %i.ml, align 1, !tbaa !74, !range !26, !noundef !27
-  %.not = icmp eq i8 %i.mm, 0
-  br i1 %.not, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit
+  %5 = trunc nuw i8 %i.mm to i1
+  br i1 %5, label %_ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit, label %_ZN8simdjson8fallback8ondemand5array5startERNS1_14value_iteratorE.exit
 
 _ZNK8simdjson8fallback8ondemand14value_iterator10parse_nullEPKh.exit: ; preds = %bb.aw
   br i1 %i.me, label %bb.ax, label %_ZN8simdjson8fallback8ondemand14value_iterator7is_nullEv.exit.thread
