@@ -1,0 +1,68 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..e0028a0e64413 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,53 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpZeroOfOrWithAddOrUMaxOperand(ICmpInst &I,
++                                                        IRBuilderBase &Builder) {
++  if (!I.isEquality())
++    return nullptr;
++
++  Value *V;
++  if (match(I.getOperand(1), m_ZeroInt()))
++    V = I.getOperand(0);
++  else if (match(I.getOperand(0), m_ZeroInt()))
++    V = I.getOperand(1);
++  else
++    return nullptr;
++
++  Value *A, *B;
++  if (!match(V, m_OneUse(m_c_Or(m_Value(A), m_Value(B)))))
++    return nullptr;
++
++  auto BuildCmp = [&](Value *X, Value *Y) -> Instruction * {
++    Value *Or = Builder.CreateOr(X, Y);
++    return new ICmpInst(I.getPredicate(), Or,
++                        Constant::getNullValue(Or->getType()));
++  };
++
++  auto MatchAddOrUMax = [&](Value *Op, Value *Other) -> Instruction * {
++    Value *X, *Y;
++
++    // ((X + Y) | X) == 0  ->  (X | Y) == 0
++    // ((X + Y) | Y) == 0  ->  (X | Y) == 0
++    if (match(Op, m_OneUse(m_c_Add(m_Value(X), m_Value(Y)))) &&
++        (Other == X || Other == Y))
++      return BuildCmp(X, Y);
++
++    // (umax(X, Y) | X) == 0  ->  (X | Y) == 0
++    // (umax(X, Y) | Y) == 0  ->  (X | Y) == 0
++    if (match(Op, m_OneUse(m_c_UMax(m_Value(X), m_Value(Y)))) &&
++        (Other == X || Other == Y))
++      return BuildCmp(X, Y);
++
++    return nullptr;
++  };
++
++  if (Instruction *R = MatchAddOrUMax(A, B))
++    return R;
++
++  return MatchAddOrUMax(B, A);
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8183,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *R = foldICmpZeroOfOrWithAddOrUMaxOperand(I, Builder))
++    return R;
++
+   return Changed ? &I : nullptr;
+ }
+ 
