@@ -201,9 +201,10 @@ _ZNSt13unordered_mapImN6duckdb19MaterializedCTEInfoESt4hashImESt8equal_toImESaIS
   %i.afx = call noundef nonnull align 8 dereferenceable(169) ptr @_ZNSt8__detail9_Map_baseImSt4pairIKmN6duckdb19MaterializedCTEInfoEESaIS5_ENS_10_Select1stESt8equal_toImESt4hashImENS_18_Mod_range_hashingENS_20_Default_ranged_hashENS_20_Prime_rehash_policyENS_17_Hashtable_traitsILb0ELb0ELb1EEELb1EEixERS2_(ptr noundef nonnull align 8 dereferenceable(56) %i.aeb, ptr noundef nonnull align 8 dereferenceable(8) %i.aec)
   %i.afy = getelementptr inbounds nuw i8, ptr %i.afx, i64 168 ; 2 uses
   %i.afz = load i8, ptr %i.afy, align 8, !tbaa !2503, !range !60, !noundef !61
-  %50 = zext i1 %i.afw to i8
-  %51 = or i8 %i.afz, %50
-  store i8 %51, ptr %i.afy, align 8, !tbaa !2503
+  %50 = trunc nuw i8 %i.afz to i1
+  %51 = or i1 %i.afw, %50
+  %52 = zext i1 %51 to i8
+  store i8 %52, ptr %i.afy, align 8, !tbaa !2503
   br label %bb.jm
 
 .lr.ph:                                           ; preds = %_ZNSt13unordered_mapImN6duckdb19MaterializedCTEInfoESt4hashImESt8equal_toImESaISt4pairIKmS1_EEE4findERS7_.exit, %bb.jl

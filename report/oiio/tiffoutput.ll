@@ -201,20 +201,21 @@ bb.g:                                             ; preds = %bb.e, %bb.c
   %i.w = icmp ne i32 %i.v, 0
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 289 ; 4 uses
   %i.y = load i8, ptr %i.x, align 1, !tbaa !75, !range !79, !noundef !80
-  %75 = zext i1 %i.w to i8
-  %76 = or i8 %i.y, %75
-  store i8 %76, ptr %i.x, align 1, !tbaa !75
+  %75 = trunc nuw i8 %i.y to i1
+  %76 = or i1 %i.w, %75
+  %77 = zext i1 %76 to i8
+  store i8 %77, ptr %i.x, align 1, !tbaa !75
   %i.z = call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec11image_bytesEb(ptr noundef nonnull align 8 dereferenceable(160) %i.l, i1 noundef zeroext false) #34
   %i.aa = icmp ugt i64 %i.z, 4194304000
   %i.ab = load i8, ptr %i.x, align 1, !tbaa !75, !range !79, !noundef !80
-  %77 = zext i1 %i.aa to i8
-  %78 = or i8 %i.ab, %77                          ; 2 uses
-  %.not105 = icmp eq i8 %78, 0
-  store i8 %78, ptr %i.x, align 1, !tbaa !75
+  %78 = trunc nuw i8 %i.ab to i1
+  %79 = or i1 %i.aa, %78                          ; 2 uses
+  %80 = zext i1 %79 to i8
+  store i8 %80, ptr %i.x, align 1, !tbaa !75
   %i.ac = icmp eq i32 %3, 1                       ; 2 uses
   %.str.19..str.20 = select i1 %i.ac, ptr @.str.19, ptr @.str.20
   %.str.21..str.22 = select i1 %i.ac, ptr @.str.21, ptr @.str.22
-  %i.ad = select i1 %.not105, ptr %.str.21..str.22, ptr %.str.19..str.20 ; 2 uses
+  %i.ad = select i1 %79, ptr %.str.19..str.20, ptr %.str.21..str.22 ; 2 uses
   %i.ae = call ptr @TIFFOpenOptionsAlloc()        ; 5 uses
   call void @TIFFOpenOptionsSetErrorHandlerExtR(ptr noundef %i.ae, ptr noundef nonnull @_ZN11OpenImageIO4v3_110TIFFOutput16my_error_handlerEP4tiffPvPKcS6_P13__va_list_tag, ptr noundef nonnull %0)
   call void @TIFFOpenOptionsSetWarningHandlerExtR(ptr noundef %i.ae, ptr noundef nonnull @_ZN11OpenImageIO4v3_110TIFFOutput18my_warning_handlerEP4tiffPvPKcS6_P13__va_list_tag, ptr noundef nonnull %0)
@@ -617,7 +618,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by
 
 bb.cb:                                            ; preds = %.lr.ph256
   %i.ju = load i8, ptr %i.e, align 1, !tbaa !155, !range !79, !noundef !80
-  %18 = icmp ne i8 %i.ju, 0
+  %18 = trunc nuw i8 %i.ju to i1
   %i.jv = and i1 %i.jt, %18                       ; 3 uses
   %i.jw = zext i1 %i.jv to i8
   store i8 %i.jw, ptr %i.e, align 1, !tbaa !155

@@ -201,8 +201,8 @@ bb.es:                                            ; preds = %.sink.split845, %bb
   br label %.thread442
 
 ._crit_edge.loopexit:                             ; preds = %.thread681
-  %4 = icmp ne i32 %.2283.2, 0
-  %5 = icmp ne i32 %.2277.3684, 0
+  %4 = trunc nuw i32 %.2283.2 to i1
+  %5 = trunc nuw i32 %.2277.3684 to i1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %sdslen.exit357.thread
@@ -605,7 +605,7 @@ bb.a:
   %i.a = alloca [46 x i8], align 16               ; 5 uses
   %i.b = alloca [46 x i8], align 16               ; 6 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !170  ; 44 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !170  ; 46 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !230
   %i.g = tail call noundef i32 @llvm.bswap.i32(i32 %i.f) ; 5 uses
@@ -1008,10 +1008,10 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
 
 bb.cu:                                            ; preds = %bb.cd, %bb.ct, %bb.cq, %bb.cp
   %i.lm = getelementptr inbounds nuw i8, ptr %.0.i497510, i64 88 ; 2 uses
-  %i.ln = load i32, ptr %i.lm, align 8, !tbaa !89 ; 2 uses
+  %i.ln = load i32, ptr %i.lm, align 8, !tbaa !89
   %i.lo = and i32 %i.ln, 1
   %.not469 = icmp eq i32 %i.lo, 0
-  br i1 %.not469, label %bb.cv, label %.critedge483.a
+  br i1 %.not469, label %bb.cv, label %bb.cw
 
 bb.cv:                                            ; preds = %bb.cu
   %i.lp = getelementptr inbounds nuw i8, ptr %.0.i497510, i64 2184
@@ -1019,24 +1019,26 @@ bb.cv:                                            ; preds = %bb.cu
   %.not470 = icmp eq ptr %i.lq, null
   br i1 %.not470, label %.critedge485, label %.critedge483.a
 
-.critedge483.a:                                   ; preds = %bb.cu, %bb.cv
-  %1 = phi ptr [ %i.lq, %bb.cv ], [ %.0.i497510, %bb.cu ]
-  %i.lr = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.ls = getelementptr inbounds nuw i8, ptr %i.d, i64 80 ; 3 uses
+.critedge483.a:                                   ; preds = %bb.cv
+  %i.lr = getelementptr inbounds nuw i8, ptr %i.lq, i64 104
+  %i.ls = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   %bcmp471.a = call i32 @bcmp(ptr noundef nonnull dereferenceable(2048) %i.lr, ptr noundef nonnull dereferenceable(2048) %i.ls, i64 2048)
-  %2 = icmp ne i32 %bcmp471.a, 0                  ; 2 uses
-  %3 = trunc i32 %i.ln to i1
-  %or.cond50 = select i1 %3, i1 %2, i1 false
-  br i1 %or.cond50, label %bb.cw, label %bb.cx
+  %.not543 = icmp eq i32 %bcmp471.a, 0
+  br i1 %.not543, label %.critedge485, label %.preheader
 
-bb.cw:                                            ; preds = %.critedge483.a
-  call void @clusterUpdateSlotsConfigWith(ptr noundef nonnull %.0.i497510, i64 noundef %.0392, ptr noundef nonnull %i.ls)
+bb.cw:                                            ; preds = %bb.cu
+  %1 = getelementptr inbounds nuw i8, ptr %.0.i497510, i64 104
+  %2 = getelementptr inbounds nuw i8, ptr %i.d, i64 80 ; 2 uses
+  %bcmp471 = call i32 @bcmp(ptr noundef nonnull dereferenceable(2048) %1, ptr noundef nonnull dereferenceable(2048) %2, i64 2048)
+  %.not542 = icmp eq i32 %bcmp471, 0
+  br i1 %.not542, label %.critedge485, label %bb.cx
+
+bb.cx:                                            ; preds = %bb.cw
+  call void @clusterUpdateSlotsConfigWith(ptr noundef nonnull %.0.i497510, i64 noundef %.0392, ptr noundef nonnull %2)
   br label %.preheader
 
-bb.cx:                                            ; preds = %.critedge483.a
-  br i1 %2, label %.preheader, label %.critedge485
-
-.preheader:                                       ; preds = %bb.cx, %bb.cw
+.preheader:                                       ; preds = %.critedge483.a, %bb.cx
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   %i.lt = load ptr, ptr getelementptr inbounds nuw (i8, ptr @server, i64 8224), align 8 ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %i.lt, i64 262192
   %i.lv = getelementptr inbounds nuw i8, ptr %i.lt, i64 393584
@@ -1048,7 +1050,7 @@ bb.cy:                                            ; preds = %.preheader, %bb.df
   %.zext = lshr i64 %indvars.iv, 3
   %i.lx = and i64 %.zext, 536870911               ; 2 uses
   %i.ly = and i32 %i.lw, 7
-  %i.lz = getelementptr inbounds nuw i8, ptr %i.ls, i64 %i.lx
+  %i.lz = getelementptr inbounds nuw i8, ptr %3, i64 %i.lx
   %i.ma = load i8, ptr %i.lz, align 1, !tbaa !58
   %i.mb = zext i8 %i.ma to i32
   %i.mc = shl nuw nsw i32 1, %i.ly                ; 2 uses
@@ -1105,7 +1107,7 @@ bb.df:                                            ; preds = %bb.cy, %bb.db, %bb.
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16384
   br i1 %exitcond.not, label %.critedge485, label %bb.cy, !llvm.loop !245
 
-.critedge485:                                     ; preds = %bb.df, %bb.cv, %bb.cx, %bb.de
+.critedge485:                                     ; preds = %bb.df, %bb.cw, %bb.cv, %bb.de, %.critedge483.a
   %i.mw = load ptr, ptr @myself, align 8, !tbaa !54 ; 2 uses
   %i.mx = getelementptr inbounds nuw i8, ptr %i.mw, i64 88
   %i.my = load i32, ptr %i.mx, align 8, !tbaa !89

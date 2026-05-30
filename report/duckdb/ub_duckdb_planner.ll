@@ -201,9 +201,10 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(88) %1), !inline_history !2564
   %i.e = load ptr, ptr %0, align 8, !tbaa !2565, !nonnull !72 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !364, !range !263, !noundef !72
-  %2 = zext i1 %i.d to i8
-  %3 = or i8 %i.f, %2
-  store i8 %3, ptr %i.e, align 1, !tbaa !364
+  %2 = trunc nuw i8 %i.f to i1
+  %3 = or i1 %i.d, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.e, align 1, !tbaa !364
   ret void
 }
 
@@ -242,9 +243,10 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(88) %1), !inline_history !2567
   %i.e = load ptr, ptr %0, align 8, !tbaa !2568, !nonnull !72 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !364, !range !263, !noundef !72
-  %2 = zext i1 %i.d to i8
-  %3 = or i8 %i.f, %2
-  store i8 %3, ptr %i.e, align 1, !tbaa !364
+  %2 = trunc nuw i8 %i.f to i1
+  %3 = or i1 %i.d, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.e, align 1, !tbaa !364
   ret void
 }
 
@@ -415,9 +417,10 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(88) %1), !inline_history !2579
   %i.e = load ptr, ptr %0, align 8, !tbaa !2580, !nonnull !72 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !364, !range !263, !noundef !72
-  %2 = zext i1 %i.d to i8
-  %3 = or i8 %i.f, %2
-  store i8 %3, ptr %i.e, align 1, !tbaa !364
+  %2 = trunc nuw i8 %i.f to i1
+  %3 = or i1 %i.d, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.e, align 1, !tbaa !364
   ret void
 }
 
@@ -544,9 +547,10 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(88) %1), !inline_history !2588
   %i.e = load ptr, ptr %0, align 8, !tbaa !2589, !nonnull !72 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !364, !range !263, !noundef !72
-  %2 = zext i1 %i.d to i8
-  %3 = or i8 %i.f, %2
-  store i8 %3, ptr %i.e, align 1, !tbaa !364
+  %2 = trunc nuw i8 %i.f to i1
+  %3 = or i1 %i.d, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.e, align 1, !tbaa !364
   ret void
 }
 
@@ -585,9 +589,10 @@ bb.a:
   %i.d = tail call noundef zeroext i1 %i.c(ptr noundef nonnull align 8 dereferenceable(88) %1), !inline_history !2591
   %i.e = load ptr, ptr %0, align 8, !tbaa !2592, !nonnull !72 ; 2 uses
   %i.f = load i8, ptr %i.e, align 1, !tbaa !364, !range !263, !noundef !72
-  %2 = zext i1 %i.d to i8
-  %3 = or i8 %i.f, %2
-  store i8 %3, ptr %i.e, align 1, !tbaa !364
+  %2 = trunc nuw i8 %i.f to i1
+  %3 = or i1 %i.d, %2
+  %4 = zext i1 %3 to i8
+  store i8 %4, ptr %i.e, align 1, !tbaa !364
   ret void
 }
 
