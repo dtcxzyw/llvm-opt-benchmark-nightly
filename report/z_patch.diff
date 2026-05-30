@@ -1,0 +1,77 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+index 97e1a6555eac4..3230070de3a85 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCompares.cpp
+@@ -7743,6 +7743,62 @@ Instruction *InstCombinerImpl::foldICmpCommutative(CmpPredicate Pred,
+   return nullptr;
+ }
+ 
++static Instruction *foldICmpZeroOfVectorCheckLen(ICmpInst &I,
++                                                 IRBuilderBase &Builder) {
++  if (!I.isEquality())
++    return nullptr;
++
++  Value *V;
++  if (match(I.getOperand(1), m_ZeroInt()))
++    V = I.getOperand(0);
++  else if (match(I.getOperand(0), m_ZeroInt()))
++    V = I.getOperand(1);
++  else
++    return nullptr;
++
++  if (!isa<IntegerType>(V->getType()))
++    return nullptr;
++
++  Value *A, *B;
++  if (!match(V, m_OneUse(m_c_Or(m_Value(A), m_Value(B)))))
++    return nullptr;
++
++  auto BuildCmp = [&](Value *N, Value *Size) -> Instruction * {
++    Value *Or = Builder.CreateOr(N, Size);
++    return new ICmpInst(I.getPredicate(), Or,
++                        Constant::getNullValue(Or->getType()));
++  };
++
++  auto MatchCheckLen = [&](Value *BoundedLen, Value *Size) -> Instruction * {
++    Value *N;
++    const APInt *C;
++
++    // Match:
++    //   umin(umax(N, Size), Size ^ C)
++    //
++    // If C != 0, then:
++    //   (umin(umax(N, Size), Size ^ C) | Size) == 0
++    // is true iff:
++    //   Size == 0 && N == 0
++    //
++    // Therefore it can be folded to:
++    //   (N | Size) == 0
++    if (match(BoundedLen,
++              m_OneUse(m_c_UMin(
++                  m_c_UMax(m_Value(N), m_Specific(Size)),
++                  m_Xor(m_Specific(Size), m_APInt(C))))) &&
++        !C->isZero())
++      return BuildCmp(N, Size);
++
++    return nullptr;
++  };
++
++  if (Instruction *R = MatchCheckLen(A, B))
++    return R;
++
++  return MatchCheckLen(B, A);
++}
++
+ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+   bool Changed = false;
+   const SimplifyQuery Q = SQ.getWithInstruction(&I);
+@@ -8136,6 +8192,9 @@ Instruction *InstCombinerImpl::visitICmpInst(ICmpInst &I) {
+     }
+   }
+ 
++  if (Instruction *R = foldICmpZeroOfVectorCheckLen(I, Builder))
++    return R;
++
+   return Changed ? &I : nullptr;
+ }
+ 
