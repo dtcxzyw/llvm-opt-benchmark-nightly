@@ -201,27 +201,22 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.bo
   %i.oq = add nsw i64 %.sroa.speculated.i.i.i, %i.oe ; 2 uses
   %i.or = icmp ult i64 %i.oq, %i.oe
   %i.os = call i64 @llvm.umin.i64(i64 %i.oq, i64 1152921504606846975)
-  %i.ot = select i1 %i.or, i64 1152921504606846975, i64 %i.os ; 3 uses
-  %.not.i.i141.i = icmp eq i64 %i.ot, 0
-  br i1 %.not.i.i141.i, label %.noexc143.i, label %36
+  %i.ot = select i1 %i.or, i64 1152921504606846975, i64 %i.os ; 2 uses
+  %36 = shl nuw nsw i64 %i.ot, 3
+  %37 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %36) #28
+          to label %.noexc143.i unwind label %.loopexit.i ; 5 uses
 
-36:                                               ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
-  %37 = shl nuw nsw i64 %i.ot, 3
-  %38 = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %37) #28
-          to label %.noexc143.i unwind label %.loopexit.i
-
-.noexc143.i:                                      ; preds = %36, %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
-  %39 = phi ptr [ null, %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i ], [ %38, %36 ] ; 5 uses
-  %i.ou = getelementptr inbounds i8, ptr %39, i64 %i.od ; 3 uses
+.noexc143.i:                                      ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
+  %i.ou = getelementptr inbounds i8, ptr %37, i64 %i.od ; 3 uses
   %i.ov = shl nsw i64 %i.nn, 3
   %reass.sub172 = sub i64 %i.ov, %i.od
   %i.ow = add i64 %reass.sub172, 8
-  call void @llvm.memset.p0.i64(ptr align 8 %i.ou, i8 0, i64 %i.ow, i1 false), !tbaa !41
+  call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ou, i8 0, i64 %i.ow, i1 false), !tbaa !41
   %i.ox = icmp sgt i64 %i.od, 8
   br i1 %i.ox, label %bb.bq, label %bb.br, !prof !117
 
 bb.bq:                                            ; preds = %.noexc143.i
-  call void @llvm.memmove.p0.p0.i64(ptr align 8 %39, ptr align 8 %.sroa.0170.2268.i, i64 %i.od, i1 false)
+  call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %37, ptr align 8 %.sroa.0170.2268.i, i64 %i.od, i1 false)
   br label %bb.bs
 
 bb.br:                                            ; preds = %.noexc143.i
@@ -230,7 +225,7 @@ bb.br:                                            ; preds = %.noexc143.i
 
 .thread.i86:                                      ; preds = %bb.br
   %i.oz = load i64, ptr %.sroa.0170.2268.i, align 8, !tbaa !41
-  store i64 %i.oz, ptr %39, align 8, !tbaa !41
+  store i64 %i.oz, ptr %37, align 8, !tbaa !41
   %i.pa = getelementptr inbounds nuw [8 x i8], ptr %i.ou, i64 %i.oh
   br label %bb.bt
 
@@ -247,7 +242,7 @@ bb.bt:                                            ; preds = %bb.bs, %.thread.i86
 
 _ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i: ; preds = %bb.bt, %bb.bs
   %i.pe = phi ptr [ %i.pc, %bb.bt ], [ %i.pb, %bb.bs ]
-  %i.pf = getelementptr inbounds nuw [8 x i8], ptr %39, i64 %i.ot
+  %i.pf = getelementptr inbounds nuw [8 x i8], ptr %37, i64 %i.ot
   br label %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.i
 
 bb.bu:                                            ; preds = %bb.bm
@@ -260,7 +255,7 @@ bb.bv:                                            ; preds = %bb.bu
   %spec.select187.i = select i1 %.not.i.i.i, ptr %.sroa.15.2267.i, ptr %i.ph
   br label %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.i
 
-.loopexit.i:                                      ; preds = %36
+.loopexit.i:                                      ; preds = %_ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i
   %lpad.loopexit.i = landingpad { ptr, i32 }
           cleanup
   br label %bb.dm
@@ -273,7 +268,7 @@ bb.bv:                                            ; preds = %bb.bu
 _ZNSt6vectorImSaImEE6resizeEmRKm.exit.i:          ; preds = %bb.bv, %bb.bu, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.loopexit.i, %bb.bl
   %.sroa.27.3.i = phi ptr [ %.sroa.27.2266.i, %bb.bl ], [ %.sroa.27.2266.i, %bb.bu ], [ %.sroa.27.2266.i, %bb.bv ], [ %i.pf, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i ], [ %.sroa.27.2266.i, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.loopexit.i ] ; 3 uses
   %.sroa.15.3.i = phi ptr [ %.sroa.15.2267.i, %bb.bl ], [ %.sroa.15.2267.i, %bb.bu ], [ %spec.select187.i, %bb.bv ], [ %i.pe, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i ], [ %i.on, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.loopexit.i ] ; 2 uses
-  %.sroa.0170.3.i = phi ptr [ %.sroa.0170.2268.i, %bb.bl ], [ %.sroa.0170.2268.i, %bb.bu ], [ %.sroa.0170.2268.i, %bb.bv ], [ %39, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i ], [ %.sroa.0170.2268.i, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.loopexit.i ] ; 4 uses
+  %.sroa.0170.3.i = phi ptr [ %.sroa.0170.2268.i, %bb.bl ], [ %.sroa.0170.2268.i, %bb.bu ], [ %.sroa.0170.2268.i, %bb.bv ], [ %37, %_ZNSt12_Vector_baseImSaImEE13_M_deallocateEPmm.exit.i.i ], [ %.sroa.0170.2268.i, %_ZNSt6vectorImSaImEE6resizeEmRKm.exit.loopexit.i ] ; 4 uses
   %i.pi = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0170.3.i, i64 %i.nn ; 2 uses
   %i.pj = load i64, ptr %i.pi, align 8, !tbaa !41
   %i.pk = add i64 %i.pj, 1

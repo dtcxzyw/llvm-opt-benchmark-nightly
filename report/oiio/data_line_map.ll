@@ -184,7 +184,7 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.an, label %bb.i, label %_ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_lenEmPKc.exit.i.i
 
 bb.i:                                             ; preds = %bb.h
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #10
   unreachable
 
 _ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.h
@@ -193,11 +193,9 @@ _ZNKSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE12_M_check_len
   %i.ap = add nsw i64 %.sroa.speculated.i.i.i, %i.ao ; 2 uses
   %i.aq = icmp ult i64 %i.ap, %i.ao
   %i.ar = tail call i64 @llvm.umin.i64(i64 %i.ap, i64 384307168202282325)
-  %i.as = select i1 %i.aq, i64 384307168202282325, i64 %i.ar ; 3 uses
-  %.not.i.i.i22 = icmp ne i64 %i.as, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i22)
+  %i.as = select i1 %i.aq, i64 384307168202282325, i64 %i.ar ; 2 uses
   %i.at = mul nuw nsw i64 %i.as, 24
-  %i.au = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #12 ; 5 uses
+  %i.au = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.at) #11 ; 5 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 %i.am ; 3 uses
   store i64 %.01939, ptr %i.av, align 8, !tbaa !35
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 8
@@ -223,7 +221,7 @@ _ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE11_S_relocateEP
   br i1 %.not.i34.i.i, label %_ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE17_M_realloc_insertIJmNS1_9DataRangeEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit33.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef %i.am) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.aj, i64 noundef %i.am) #12
   br label %_ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE17_M_realloc_insertIJmNS1_9DataRangeEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
 
 _ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE17_M_realloc_insertIJmNS1_9DataRangeEEEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i: ; preds = %bb.j, %_ZNSt6vectorIN22photos_editing_formats8image_io8DataLineESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit33.i.i
@@ -310,9 +308,6 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -323,10 +318,9 @@ attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protec
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { noreturn }
-attributes #12 = { builtin allocsize(0) }
-attributes #13 = { builtin nounwind }
+attributes #10 = { noreturn }
+attributes #11 = { builtin allocsize(0) }
+attributes #12 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -201,9 +201,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ad
   %i.kg = add nsw i64 %.sroa.speculated.i.i.i, %i.kf ; 2 uses
   %i.kh = icmp ult i64 %i.kg, %i.kf
   %i.ki = tail call i64 @llvm.umin.i64(i64 %i.kg, i64 2305843009213693951)
-  %i.kj = select i1 %i.kh, i64 2305843009213693951, i64 %i.ki ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.kj, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i)
+  %i.kj = select i1 %i.kh, i64 2305843009213693951, i64 %i.ki ; 2 uses
   %i.kk = shl nuw nsw i64 %i.kj, 2
   %i.kl = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kk) #33
           to label %.noexc97 unwind label %.loopexit ; 4 uses
@@ -260,9 +258,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i99: ; preds = %bb.ah
   %i.kz = add nsw i64 %.sroa.speculated.i.i.i100, %i.ky ; 2 uses
   %i.la = icmp ult i64 %i.kz, %i.ky
   %i.lb = tail call i64 @llvm.umin.i64(i64 %i.kz, i64 2305843009213693951)
-  %i.lc = select i1 %i.la, i64 2305843009213693951, i64 %i.lb ; 3 uses
-  %.not.i.i.i101 = icmp ne i64 %i.lc, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i101)
+  %i.lc = select i1 %i.la, i64 2305843009213693951, i64 %i.lb ; 2 uses
   %i.ld = shl nuw nsw i64 %i.lc, 2
   %i.le = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ld) #33
           to label %.noexc106 unwind label %.loopexit ; 4 uses
@@ -665,9 +661,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.bx
   %i.od = add nsw i64 %.sroa.speculated.i.i.i, %i.oc ; 2 uses
   %i.oe = icmp ult i64 %i.od, %i.oc
   %i.of = call i64 @llvm.umin.i64(i64 %i.od, i64 2305843009213693951)
-  %i.og = select i1 %i.oe, i64 2305843009213693951, i64 %i.of ; 3 uses
-  %.not.i.i.i164 = icmp ne i64 %i.og, 0
-  call void @llvm.assume(i1 %.not.i.i.i164)
+  %i.og = select i1 %i.oe, i64 2305843009213693951, i64 %i.of ; 2 uses
   %i.oh = shl nuw nsw i64 %i.og, 2
   %i.oi = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.oh) #33 ; 4 uses
   %i.oj = getelementptr inbounds i8, ptr %i.oi, i64 %i.oa ; 2 uses
@@ -725,9 +719,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i166: ; preds = %bb.cc
   %i.ow = add nsw i64 %.sroa.speculated.i.i.i167, %i.ov ; 2 uses
   %i.ox = icmp ult i64 %i.ow, %i.ov
   %i.oy = call i64 @llvm.umin.i64(i64 %i.ow, i64 2305843009213693951)
-  %i.oz = select i1 %i.ox, i64 2305843009213693951, i64 %i.oy ; 3 uses
-  %.not.i.i.i168 = icmp ne i64 %i.oz, 0
-  call void @llvm.assume(i1 %.not.i.i.i168)
+  %i.oz = select i1 %i.ox, i64 2305843009213693951, i64 %i.oy ; 2 uses
   %i.pa = shl nuw nsw i64 %i.oz, 2
   %i.pb = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pa) #33 ; 4 uses
   %i.pc = getelementptr inbounds i8, ptr %i.pb, i64 %i.ot ; 2 uses
@@ -1130,9 +1122,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ag
   %i.hr = add nsw i64 %.sroa.speculated.i.i.i, %i.hq ; 2 uses
   %i.hs = icmp ult i64 %i.hr, %i.hq
   %i.ht = call i64 @llvm.umin.i64(i64 %i.hr, i64 2305843009213693951)
-  %i.hu = select i1 %i.hs, i64 2305843009213693951, i64 %i.ht ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.hu, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.hu = select i1 %i.hs, i64 2305843009213693951, i64 %i.ht ; 2 uses
   %i.hv = shl nuw nsw i64 %i.hu, 2
   %i.hw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hv) #33 ; 4 uses
   %i.hx = getelementptr inbounds i8, ptr %i.hw, i64 %i.ho ; 2 uses
@@ -1198,9 +1188,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.al
   %i.iq = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ip ; 2 uses
   %i.ir = icmp ult i64 %i.iq, %i.ip
   %i.is = call i64 @llvm.umin.i64(i64 %i.iq, i64 2305843009213693951)
-  %i.it = select i1 %i.ir, i64 2305843009213693951, i64 %i.is ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.it, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.it = select i1 %i.ir, i64 2305843009213693951, i64 %i.is ; 2 uses
   %i.iu = shl nuw nsw i64 %i.it, 2
   %i.iv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.iu) #33 ; 4 uses
   %i.iw = getelementptr inbounds i8, ptr %i.iv, i64 %i.in ; 2 uses
@@ -1284,9 +1272,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i276: ; preds = %bb.as
   %i.ju = add nsw i64 %.sroa.speculated.i.i.i.i277, %i.jt ; 2 uses
   %i.jv = icmp ult i64 %i.ju, %i.jt
   %i.jw = call i64 @llvm.umin.i64(i64 %i.ju, i64 2305843009213693951)
-  %i.jx = select i1 %i.jv, i64 2305843009213693951, i64 %i.jw ; 3 uses
-  %.not.i.i.i.i278 = icmp ne i64 %i.jx, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i278)
+  %i.jx = select i1 %i.jv, i64 2305843009213693951, i64 %i.jw ; 2 uses
   %i.jy = shl nuw nsw i64 %i.jx, 2
   %i.jz = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jy) #33 ; 4 uses
   %i.ka = getelementptr inbounds i8, ptr %i.jz, i64 %i.jr ; 2 uses
@@ -1347,9 +1333,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i284: ; preds = %bb.ay
   %i.kq = add nsw i64 %.sroa.speculated.i.i.i.i285, %i.kp ; 2 uses
   %i.kr = icmp ult i64 %i.kq, %i.kp
   %i.ks = call i64 @llvm.umin.i64(i64 %i.kq, i64 2305843009213693951)
-  %i.kt = select i1 %i.kr, i64 2305843009213693951, i64 %i.ks ; 3 uses
-  %.not.i.i.i.i286 = icmp ne i64 %i.kt, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i286)
+  %i.kt = select i1 %i.kr, i64 2305843009213693951, i64 %i.ks ; 2 uses
   %i.ku = shl nuw nsw i64 %i.kt, 2
   %i.kv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ku) #33 ; 4 uses
   %i.kw = getelementptr inbounds i8, ptr %i.kv, i64 %i.kn ; 2 uses
@@ -1438,9 +1422,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i292: ; preds = %bb.bg
   %i.mc = add nsw i64 %.sroa.speculated.i.i.i293, %i.mb ; 2 uses
   %i.md = icmp ult i64 %i.mc, %i.mb
   %i.me = call i64 @llvm.umin.i64(i64 %i.mc, i64 2305843009213693951)
-  %i.mf = select i1 %i.md, i64 2305843009213693951, i64 %i.me ; 3 uses
-  %.not.i.i.i294 = icmp ne i64 %i.mf, 0
-  call void @llvm.assume(i1 %.not.i.i.i294)
+  %i.mf = select i1 %i.md, i64 2305843009213693951, i64 %i.me ; 2 uses
   %i.mg = shl nuw nsw i64 %i.mf, 2
   %i.mh = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.mg) #33 ; 4 uses
   %i.mi = getelementptr inbounds i8, ptr %i.mh, i64 %i.lz ; 2 uses
@@ -1503,9 +1485,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i300: ; preds = %bb.bl
   %i.na = add nsw i64 %.sroa.speculated.i.i.i.i301, %i.mz ; 2 uses
   %i.nb = icmp ult i64 %i.na, %i.mz
   %i.nc = call i64 @llvm.umin.i64(i64 %i.na, i64 2305843009213693951)
-  %i.nd = select i1 %i.nb, i64 2305843009213693951, i64 %i.nc ; 3 uses
-  %.not.i.i.i.i302 = icmp ne i64 %i.nd, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i302)
+  %i.nd = select i1 %i.nb, i64 2305843009213693951, i64 %i.nc ; 2 uses
   %i.ne = shl nuw nsw i64 %i.nd, 2
   %i.nf = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ne) #33 ; 4 uses
   %i.ng = getelementptr inbounds i8, ptr %i.nf, i64 %i.mx ; 2 uses
@@ -1567,9 +1547,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i308: ; preds = %bb.bq
   %i.nx = add nsw i64 %.sroa.speculated.i.i.i.i309, %i.nw ; 2 uses
   %i.ny = icmp ult i64 %i.nx, %i.nw
   %i.nz = call i64 @llvm.umin.i64(i64 %i.nx, i64 2305843009213693951)
-  %i.oa = select i1 %i.ny, i64 2305843009213693951, i64 %i.nz ; 3 uses
-  %.not.i.i.i.i310 = icmp ne i64 %i.oa, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i310)
+  %i.oa = select i1 %i.ny, i64 2305843009213693951, i64 %i.nz ; 2 uses
   %i.ob = shl nuw nsw i64 %i.oa, 2
   %i.oc = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ob) #33 ; 4 uses
   %i.od = getelementptr inbounds i8, ptr %i.oc, i64 %i.nu ; 2 uses
@@ -1676,9 +1654,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i316: ; preds = %bb.by
   %i.pr = add nsw i64 %.sroa.speculated.i.i.i317, %i.pq ; 2 uses
   %i.ps = icmp ult i64 %i.pr, %i.pq
   %i.pt = call i64 @llvm.umin.i64(i64 %i.pr, i64 2305843009213693951)
-  %i.pu = select i1 %i.ps, i64 2305843009213693951, i64 %i.pt ; 3 uses
-  %.not.i.i.i318 = icmp ne i64 %i.pu, 0
-  call void @llvm.assume(i1 %.not.i.i.i318)
+  %i.pu = select i1 %i.ps, i64 2305843009213693951, i64 %i.pt ; 2 uses
   %i.pv = shl nuw nsw i64 %i.pu, 2
   %i.pw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pv) #33 ; 4 uses
   %i.px = getelementptr inbounds i8, ptr %i.pw, i64 %i.po ; 2 uses
@@ -1744,9 +1720,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i324: ; preds = %bb.cd
   %i.qq = add nsw i64 %.sroa.speculated.i.i.i.i325, %i.qp ; 2 uses
   %i.qr = icmp ult i64 %i.qq, %i.qp
   %i.qs = call i64 @llvm.umin.i64(i64 %i.qq, i64 2305843009213693951)
-  %i.qt = select i1 %i.qr, i64 2305843009213693951, i64 %i.qs ; 3 uses
-  %.not.i.i.i.i326 = icmp ne i64 %i.qt, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i326)
+  %i.qt = select i1 %i.qr, i64 2305843009213693951, i64 %i.qs ; 2 uses
   %i.qu = shl nuw nsw i64 %i.qt, 2
   %i.qv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.qu) #33 ; 4 uses
   %i.qw = getelementptr inbounds i8, ptr %i.qv, i64 %i.qn ; 2 uses
@@ -1830,9 +1804,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i332.a: ; preds = %bb.ck
   %i.ru = add nsw i64 %.sroa.speculated.i.i.i.i333.a, %i.rt ; 2 uses
   %i.rv = icmp ult i64 %i.ru, %i.rt
   %i.rw = call i64 @llvm.umin.i64(i64 %i.ru, i64 2305843009213693951)
-  %i.rx = select i1 %i.rv, i64 2305843009213693951, i64 %i.rw ; 3 uses
-  %.not.i.i.i.i334 = icmp ne i64 %i.rx, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i334)
+  %i.rx = select i1 %i.rv, i64 2305843009213693951, i64 %i.rw ; 2 uses
   %i.ry = shl nuw nsw i64 %i.rx, 2
   %i.rz = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ry) #33 ; 4 uses
   %i.sa = getelementptr inbounds i8, ptr %i.rz, i64 %i.rr ; 2 uses
@@ -1893,9 +1865,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i340: ; preds = %bb.cq
   %i.sq = add nsw i64 %.sroa.speculated.i.i.i.i341, %i.sp ; 2 uses
   %i.sr = icmp ult i64 %i.sq, %i.sp
   %i.ss = call i64 @llvm.umin.i64(i64 %i.sq, i64 2305843009213693951)
-  %i.st = select i1 %i.sr, i64 2305843009213693951, i64 %i.ss ; 3 uses
-  %.not.i.i.i.i342 = icmp ne i64 %i.st, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i342)
+  %i.st = select i1 %i.sr, i64 2305843009213693951, i64 %i.ss ; 2 uses
   %i.su = shl nuw nsw i64 %i.st, 2
   %i.sv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.su) #33 ; 4 uses
   %i.sw = getelementptr inbounds i8, ptr %i.sv, i64 %i.sn ; 2 uses
@@ -1984,9 +1954,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i348: ; preds = %bb.cy
   %i.uc = add nsw i64 %.sroa.speculated.i.i.i349, %i.ub ; 2 uses
   %i.ud = icmp ult i64 %i.uc, %i.ub
   %i.ue = call i64 @llvm.umin.i64(i64 %i.uc, i64 2305843009213693951)
-  %i.uf = select i1 %i.ud, i64 2305843009213693951, i64 %i.ue ; 3 uses
-  %.not.i.i.i350 = icmp ne i64 %i.uf, 0
-  call void @llvm.assume(i1 %.not.i.i.i350)
+  %i.uf = select i1 %i.ud, i64 2305843009213693951, i64 %i.ue ; 2 uses
   %i.ug = shl nuw nsw i64 %i.uf, 2
   %i.uh = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ug) #33 ; 4 uses
   %i.ui = getelementptr inbounds i8, ptr %i.uh, i64 %i.tz ; 2 uses
@@ -2049,9 +2017,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i356: ; preds = %bb.dd
   %i.va = add nsw i64 %.sroa.speculated.i.i.i.i357, %i.uz ; 2 uses
   %i.vb = icmp ult i64 %i.va, %i.uz
   %i.vc = call i64 @llvm.umin.i64(i64 %i.va, i64 2305843009213693951)
-  %i.vd = select i1 %i.vb, i64 2305843009213693951, i64 %i.vc ; 3 uses
-  %.not.i.i.i.i358 = icmp ne i64 %i.vd, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i358)
+  %i.vd = select i1 %i.vb, i64 2305843009213693951, i64 %i.vc ; 2 uses
   %i.ve = shl nuw nsw i64 %i.vd, 2
   %i.vf = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ve) #33 ; 4 uses
   %i.vg = getelementptr inbounds i8, ptr %i.vf, i64 %i.ux ; 2 uses
@@ -2113,9 +2079,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i364: ; preds = %bb.di
   %i.vx = add nsw i64 %.sroa.speculated.i.i.i.i365, %i.vw ; 2 uses
   %i.vy = icmp ult i64 %i.vx, %i.vw
   %i.vz = call i64 @llvm.umin.i64(i64 %i.vx, i64 2305843009213693951)
-  %i.wa = select i1 %i.vy, i64 2305843009213693951, i64 %i.vz ; 3 uses
-  %.not.i.i.i.i366 = icmp ne i64 %i.wa, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i366)
+  %i.wa = select i1 %i.vy, i64 2305843009213693951, i64 %i.vz ; 2 uses
   %i.wb = shl nuw nsw i64 %i.wa, 2
   %i.wc = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.wb) #33 ; 4 uses
   %i.wd = getelementptr inbounds i8, ptr %i.wc, i64 %i.vu ; 2 uses
@@ -2518,9 +2482,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ag
   %i.il = add nsw i64 %.sroa.speculated.i.i.i, %i.ik ; 2 uses
   %i.im = icmp ult i64 %i.il, %i.ik
   %i.in = call i64 @llvm.umin.i64(i64 %i.il, i64 2305843009213693951)
-  %i.io = select i1 %i.im, i64 2305843009213693951, i64 %i.in ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.io, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.io = select i1 %i.im, i64 2305843009213693951, i64 %i.in ; 2 uses
   %i.ip = shl nuw nsw i64 %i.io, 2
   %i.iq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ip) #33 ; 4 uses
   %i.ir = getelementptr inbounds i8, ptr %i.iq, i64 %i.ii ; 2 uses
@@ -2579,9 +2541,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i228: ; preds = %bb.al
   %i.jf = add nsw i64 %.sroa.speculated.i.i.i229, %i.je ; 2 uses
   %i.jg = icmp ult i64 %i.jf, %i.je
   %i.jh = call i64 @llvm.umin.i64(i64 %i.jf, i64 2305843009213693951)
-  %i.ji = select i1 %i.jg, i64 2305843009213693951, i64 %i.jh ; 3 uses
-  %.not.i.i.i230 = icmp ne i64 %i.ji, 0
-  call void @llvm.assume(i1 %.not.i.i.i230)
+  %i.ji = select i1 %i.jg, i64 2305843009213693951, i64 %i.jh ; 2 uses
   %i.jj = shl nuw nsw i64 %i.ji, 2
   %i.jk = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jj) #33 ; 4 uses
   %i.jl = getelementptr inbounds i8, ptr %i.jk, i64 %i.jc ; 2 uses
@@ -2646,9 +2606,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i236: ; preds = %bb.aq
   %i.kf = add nsw i64 %.sroa.speculated.i.i.i237, %i.ke ; 2 uses
   %i.kg = icmp ult i64 %i.kf, %i.ke
   %i.kh = call i64 @llvm.umin.i64(i64 %i.kf, i64 2305843009213693951)
-  %i.ki = select i1 %i.kg, i64 2305843009213693951, i64 %i.kh ; 3 uses
-  %.not.i.i.i238 = icmp ne i64 %i.ki, 0
-  call void @llvm.assume(i1 %.not.i.i.i238)
+  %i.ki = select i1 %i.kg, i64 2305843009213693951, i64 %i.kh ; 2 uses
   %i.kj = shl nuw nsw i64 %i.ki, 2
   %i.kk = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kj) #33 ; 4 uses
   %i.kl = getelementptr inbounds i8, ptr %i.kk, i64 %i.kc ; 2 uses
@@ -2714,9 +2672,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.av
   %i.le = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ld ; 2 uses
   %i.lf = icmp ult i64 %i.le, %i.ld
   %i.lg = call i64 @llvm.umin.i64(i64 %i.le, i64 2305843009213693951)
-  %i.lh = select i1 %i.lf, i64 2305843009213693951, i64 %i.lg ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.lh, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.lh = select i1 %i.lf, i64 2305843009213693951, i64 %i.lg ; 2 uses
   %i.li = shl nuw nsw i64 %i.lh, 2
   %i.lj = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.li) #33 ; 4 uses
   %i.lk = getelementptr inbounds i8, ptr %i.lj, i64 %i.lb ; 2 uses
@@ -2800,9 +2756,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i245: ; preds = %bb.bc
   %i.mi = add nsw i64 %.sroa.speculated.i.i.i.i246, %i.mh ; 2 uses
   %i.mj = icmp ult i64 %i.mi, %i.mh
   %i.mk = call i64 @llvm.umin.i64(i64 %i.mi, i64 2305843009213693951)
-  %i.ml = select i1 %i.mj, i64 2305843009213693951, i64 %i.mk ; 3 uses
-  %.not.i.i.i.i247 = icmp ne i64 %i.ml, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i247)
+  %i.ml = select i1 %i.mj, i64 2305843009213693951, i64 %i.mk ; 2 uses
   %i.mm = shl nuw nsw i64 %i.ml, 2
   %i.mn = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.mm) #33 ; 4 uses
   %i.mo = getelementptr inbounds i8, ptr %i.mn, i64 %i.mf ; 2 uses
@@ -2863,9 +2817,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i253: ; preds = %bb.bi
   %i.ne = add nsw i64 %.sroa.speculated.i.i.i.i254, %i.nd ; 2 uses
   %i.nf = icmp ult i64 %i.ne, %i.nd
   %i.ng = call i64 @llvm.umin.i64(i64 %i.ne, i64 2305843009213693951)
-  %i.nh = select i1 %i.nf, i64 2305843009213693951, i64 %i.ng ; 3 uses
-  %.not.i.i.i.i255 = icmp ne i64 %i.nh, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i255)
+  %i.nh = select i1 %i.nf, i64 2305843009213693951, i64 %i.ng ; 2 uses
   %i.ni = shl nuw nsw i64 %i.nh, 2
   %i.nj = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ni) #33 ; 4 uses
   %i.nk = getelementptr inbounds i8, ptr %i.nj, i64 %i.nb ; 2 uses
@@ -2949,9 +2901,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i261: ; preds = %bb.bq
   %i.om = add nsw i64 %.sroa.speculated.i.i.i262, %i.ol ; 2 uses
   %i.on = icmp ult i64 %i.om, %i.ol
   %i.oo = call i64 @llvm.umin.i64(i64 %i.om, i64 2305843009213693951)
-  %i.op = select i1 %i.on, i64 2305843009213693951, i64 %i.oo ; 3 uses
-  %.not.i.i.i263 = icmp ne i64 %i.op, 0
-  call void @llvm.assume(i1 %.not.i.i.i263)
+  %i.op = select i1 %i.on, i64 2305843009213693951, i64 %i.oo ; 2 uses
   %i.oq = shl nuw nsw i64 %i.op, 2
   %i.or = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.oq) #33 ; 4 uses
   %i.os = getelementptr inbounds i8, ptr %i.or, i64 %i.oj ; 2 uses
@@ -3010,9 +2960,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i269: ; preds = %bb.bv
   %i.pg = add nsw i64 %.sroa.speculated.i.i.i270, %i.pf ; 2 uses
   %i.ph = icmp ult i64 %i.pg, %i.pf
   %i.pi = call i64 @llvm.umin.i64(i64 %i.pg, i64 2305843009213693951)
-  %i.pj = select i1 %i.ph, i64 2305843009213693951, i64 %i.pi ; 3 uses
-  %.not.i.i.i271 = icmp ne i64 %i.pj, 0
-  call void @llvm.assume(i1 %.not.i.i.i271)
+  %i.pj = select i1 %i.ph, i64 2305843009213693951, i64 %i.pi ; 2 uses
   %i.pk = shl nuw nsw i64 %i.pj, 2
   %i.pl = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pk) #33 ; 4 uses
   %i.pm = getelementptr inbounds i8, ptr %i.pl, i64 %i.pd ; 2 uses
@@ -3078,9 +3026,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i277: ; preds = %bb.ca
   %i.qh = add nsw i64 %.sroa.speculated.i.i.i278, %i.qg ; 2 uses
   %i.qi = icmp ult i64 %i.qh, %i.qg
   %i.qj = call i64 @llvm.umin.i64(i64 %i.qh, i64 2305843009213693951)
-  %i.qk = select i1 %i.qi, i64 2305843009213693951, i64 %i.qj ; 3 uses
-  %.not.i.i.i279 = icmp ne i64 %i.qk, 0
-  call void @llvm.assume(i1 %.not.i.i.i279)
+  %i.qk = select i1 %i.qi, i64 2305843009213693951, i64 %i.qj ; 2 uses
   %i.ql = shl nuw nsw i64 %i.qk, 2
   %i.qm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ql) #33 ; 4 uses
   %i.qn = getelementptr inbounds i8, ptr %i.qm, i64 %i.qe ; 2 uses
@@ -3145,9 +3091,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i285.a: ; preds = %bb.cf
   %i.rf = add nsw i64 %.sroa.speculated.i.i.i.i286.a, %i.re ; 2 uses
   %i.rg = icmp ult i64 %i.rf, %i.re
   %i.rh = call i64 @llvm.umin.i64(i64 %i.rf, i64 2305843009213693951)
-  %i.ri = select i1 %i.rg, i64 2305843009213693951, i64 %i.rh ; 3 uses
-  %.not.i.i.i.i287 = icmp ne i64 %i.ri, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i287)
+  %i.ri = select i1 %i.rg, i64 2305843009213693951, i64 %i.rh ; 2 uses
   %i.rj = shl nuw nsw i64 %i.ri, 2
   %i.rk = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.rj) #33 ; 4 uses
   %i.rl = getelementptr inbounds i8, ptr %i.rk, i64 %i.rc ; 2 uses
@@ -3209,9 +3153,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i293: ; preds = %bb.ck
   %i.sc = add nsw i64 %.sroa.speculated.i.i.i.i294, %i.sb ; 2 uses
   %i.sd = icmp ult i64 %i.sc, %i.sb
   %i.se = call i64 @llvm.umin.i64(i64 %i.sc, i64 2305843009213693951)
-  %i.sf = select i1 %i.sd, i64 2305843009213693951, i64 %i.se ; 3 uses
-  %.not.i.i.i.i295 = icmp ne i64 %i.sf, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i295)
+  %i.sf = select i1 %i.sd, i64 2305843009213693951, i64 %i.se ; 2 uses
   %i.sg = shl nuw nsw i64 %i.sf, 2
   %i.sh = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.sg) #33 ; 4 uses
   %i.si = getelementptr inbounds i8, ptr %i.sh, i64 %i.rz ; 2 uses
@@ -3318,9 +3260,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i301: ; preds = %bb.cs
   %i.tw = add nsw i64 %.sroa.speculated.i.i.i302, %i.tv ; 2 uses
   %i.tx = icmp ult i64 %i.tw, %i.tv
   %i.ty = call i64 @llvm.umin.i64(i64 %i.tw, i64 2305843009213693951)
-  %i.tz = select i1 %i.tx, i64 2305843009213693951, i64 %i.ty ; 3 uses
-  %.not.i.i.i303 = icmp ne i64 %i.tz, 0
-  call void @llvm.assume(i1 %.not.i.i.i303)
+  %i.tz = select i1 %i.tx, i64 2305843009213693951, i64 %i.ty ; 2 uses
   %i.ua = shl nuw nsw i64 %i.tz, 2
   %i.ub = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ua) #33 ; 4 uses
   %i.uc = getelementptr inbounds i8, ptr %i.ub, i64 %i.tt ; 2 uses
@@ -3379,9 +3319,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i309: ; preds = %bb.cx
   %i.uq = add nsw i64 %.sroa.speculated.i.i.i310, %i.up ; 2 uses
   %i.ur = icmp ult i64 %i.uq, %i.up
   %i.us = call i64 @llvm.umin.i64(i64 %i.uq, i64 2305843009213693951)
-  %i.ut = select i1 %i.ur, i64 2305843009213693951, i64 %i.us ; 3 uses
-  %.not.i.i.i311 = icmp ne i64 %i.ut, 0
-  call void @llvm.assume(i1 %.not.i.i.i311)
+  %i.ut = select i1 %i.ur, i64 2305843009213693951, i64 %i.us ; 2 uses
   %i.uu = shl nuw nsw i64 %i.ut, 2
   %i.uv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.uu) #33 ; 4 uses
   %i.uw = getelementptr inbounds i8, ptr %i.uv, i64 %i.un ; 2 uses
@@ -3446,9 +3384,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i317: ; preds = %bb.dc
   %i.vq = add nsw i64 %.sroa.speculated.i.i.i318, %i.vp ; 2 uses
   %i.vr = icmp ult i64 %i.vq, %i.vp
   %i.vs = call i64 @llvm.umin.i64(i64 %i.vq, i64 2305843009213693951)
-  %i.vt = select i1 %i.vr, i64 2305843009213693951, i64 %i.vs ; 3 uses
-  %.not.i.i.i319 = icmp ne i64 %i.vt, 0
-  call void @llvm.assume(i1 %.not.i.i.i319)
+  %i.vt = select i1 %i.vr, i64 2305843009213693951, i64 %i.vs ; 2 uses
   %i.vu = shl nuw nsw i64 %i.vt, 2
   %i.vv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.vu) #33 ; 4 uses
   %i.vw = getelementptr inbounds i8, ptr %i.vv, i64 %i.vn ; 2 uses
@@ -3514,9 +3450,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i325: ; preds = %bb.dh
   %i.wp = add nsw i64 %.sroa.speculated.i.i.i.i326, %i.wo ; 2 uses
   %i.wq = icmp ult i64 %i.wp, %i.wo
   %i.wr = call i64 @llvm.umin.i64(i64 %i.wp, i64 2305843009213693951)
-  %i.ws = select i1 %i.wq, i64 2305843009213693951, i64 %i.wr ; 3 uses
-  %.not.i.i.i.i327 = icmp ne i64 %i.ws, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i327)
+  %i.ws = select i1 %i.wq, i64 2305843009213693951, i64 %i.wr ; 2 uses
   %i.wt = shl nuw nsw i64 %i.ws, 2
   %i.wu = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.wt) #33 ; 4 uses
   %i.wv = getelementptr inbounds i8, ptr %i.wu, i64 %i.wm ; 2 uses
@@ -3600,9 +3534,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i333: ; preds = %bb.do
   %i.xt = add nsw i64 %.sroa.speculated.i.i.i.i334, %i.xs ; 2 uses
   %i.xu = icmp ult i64 %i.xt, %i.xs
   %i.xv = call i64 @llvm.umin.i64(i64 %i.xt, i64 2305843009213693951)
-  %i.xw = select i1 %i.xu, i64 2305843009213693951, i64 %i.xv ; 3 uses
-  %.not.i.i.i.i335 = icmp ne i64 %i.xw, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i335)
+  %i.xw = select i1 %i.xu, i64 2305843009213693951, i64 %i.xv ; 2 uses
   %i.xx = shl nuw nsw i64 %i.xw, 2
   %i.xy = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.xx) #33 ; 4 uses
   %i.xz = getelementptr inbounds i8, ptr %i.xy, i64 %i.xq ; 2 uses
@@ -3663,9 +3595,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i341: ; preds = %bb.du
   %i.yp = add nsw i64 %.sroa.speculated.i.i.i.i342, %i.yo ; 2 uses
   %i.yq = icmp ult i64 %i.yp, %i.yo
   %i.yr = call i64 @llvm.umin.i64(i64 %i.yp, i64 2305843009213693951)
-  %i.ys = select i1 %i.yq, i64 2305843009213693951, i64 %i.yr ; 3 uses
-  %.not.i.i.i.i343 = icmp ne i64 %i.ys, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i343)
+  %i.ys = select i1 %i.yq, i64 2305843009213693951, i64 %i.yr ; 2 uses
   %i.yt = shl nuw nsw i64 %i.ys, 2
   %i.yu = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.yt) #33 ; 4 uses
   %i.yv = getelementptr inbounds i8, ptr %i.yu, i64 %i.ym ; 2 uses
@@ -3749,9 +3679,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i349: ; preds = %bb.ec
   %i.zx = add nsw i64 %.sroa.speculated.i.i.i350, %i.zw ; 2 uses
   %i.zy = icmp ult i64 %i.zx, %i.zw
   %i.zz = call i64 @llvm.umin.i64(i64 %i.zx, i64 2305843009213693951)
-  %i.aaa = select i1 %i.zy, i64 2305843009213693951, i64 %i.zz ; 3 uses
-  %.not.i.i.i351 = icmp ne i64 %i.aaa, 0
-  call void @llvm.assume(i1 %.not.i.i.i351)
+  %i.aaa = select i1 %i.zy, i64 2305843009213693951, i64 %i.zz ; 2 uses
   %i.aab = shl nuw nsw i64 %i.aaa, 2
   %i.aac = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aab) #33 ; 4 uses
   %i.aad = getelementptr inbounds i8, ptr %i.aac, i64 %i.zu ; 2 uses
@@ -3810,9 +3738,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i357: ; preds = %bb.eh
   %i.aar = add nsw i64 %.sroa.speculated.i.i.i358, %i.aaq ; 2 uses
   %i.aas = icmp ult i64 %i.aar, %i.aaq
   %i.aat = call i64 @llvm.umin.i64(i64 %i.aar, i64 2305843009213693951)
-  %i.aau = select i1 %i.aas, i64 2305843009213693951, i64 %i.aat ; 3 uses
-  %.not.i.i.i359 = icmp ne i64 %i.aau, 0
-  call void @llvm.assume(i1 %.not.i.i.i359)
+  %i.aau = select i1 %i.aas, i64 2305843009213693951, i64 %i.aat ; 2 uses
   %i.aav = shl nuw nsw i64 %i.aau, 2
   %i.aaw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aav) #33 ; 4 uses
   %i.aax = getelementptr inbounds i8, ptr %i.aaw, i64 %i.aao ; 2 uses
@@ -3878,9 +3804,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i365: ; preds = %bb.em
   %i.abs = add nsw i64 %.sroa.speculated.i.i.i366, %i.abr ; 2 uses
   %i.abt = icmp ult i64 %i.abs, %i.abr
   %i.abu = call i64 @llvm.umin.i64(i64 %i.abs, i64 2305843009213693951)
-  %i.abv = select i1 %i.abt, i64 2305843009213693951, i64 %i.abu ; 3 uses
-  %.not.i.i.i367 = icmp ne i64 %i.abv, 0
-  call void @llvm.assume(i1 %.not.i.i.i367)
+  %i.abv = select i1 %i.abt, i64 2305843009213693951, i64 %i.abu ; 2 uses
   %i.abw = shl nuw nsw i64 %i.abv, 2
   %i.abx = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.abw) #33 ; 4 uses
   %i.aby = getelementptr inbounds i8, ptr %i.abx, i64 %i.abp ; 2 uses
@@ -3945,9 +3869,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i373: ; preds = %bb.er
   %i.acq = add nsw i64 %.sroa.speculated.i.i.i.i374, %i.acp ; 2 uses
   %i.acr = icmp ult i64 %i.acq, %i.acp
   %i.acs = call i64 @llvm.umin.i64(i64 %i.acq, i64 2305843009213693951)
-  %i.act = select i1 %i.acr, i64 2305843009213693951, i64 %i.acs ; 3 uses
-  %.not.i.i.i.i375 = icmp ne i64 %i.act, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i375)
+  %i.act = select i1 %i.acr, i64 2305843009213693951, i64 %i.acs ; 2 uses
   %i.acu = shl nuw nsw i64 %i.act, 2
   %i.acv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.acu) #33 ; 4 uses
   %i.acw = getelementptr inbounds i8, ptr %i.acv, i64 %i.acn ; 2 uses
@@ -4009,9 +3931,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i381: ; preds = %bb.ew
   %i.adn = add nsw i64 %.sroa.speculated.i.i.i.i382, %i.adm ; 2 uses
   %i.ado = icmp ult i64 %i.adn, %i.adm
   %i.adp = call i64 @llvm.umin.i64(i64 %i.adn, i64 2305843009213693951)
-  %i.adq = select i1 %i.ado, i64 2305843009213693951, i64 %i.adp ; 3 uses
-  %.not.i.i.i.i383 = icmp ne i64 %i.adq, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i383)
+  %i.adq = select i1 %i.ado, i64 2305843009213693951, i64 %i.adp ; 2 uses
   %i.adr = shl nuw nsw i64 %i.adq, 2
   %i.ads = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.adr) #33 ; 4 uses
   %i.adt = getelementptr inbounds i8, ptr %i.ads, i64 %i.adk ; 2 uses
@@ -4414,9 +4334,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i: ; preds = %bb.ae
   %i.ho = add nsw i64 %.sroa.speculated.i.i.i, %i.hn ; 2 uses
   %i.hp = icmp ult i64 %i.ho, %i.hn
   %i.hq = call i64 @llvm.umin.i64(i64 %i.ho, i64 2305843009213693951)
-  %i.hr = select i1 %i.hp, i64 2305843009213693951, i64 %i.hq ; 3 uses
-  %.not.i.i.i = icmp ne i64 %i.hr, 0
-  call void @llvm.assume(i1 %.not.i.i.i)
+  %i.hr = select i1 %i.hp, i64 2305843009213693951, i64 %i.hq ; 2 uses
   %i.hs = shl nuw nsw i64 %i.hr, 2
   %i.ht = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hs) #33 ; 4 uses
   %i.hu = getelementptr inbounds i8, ptr %i.ht, i64 %i.hl ; 2 uses
@@ -4475,9 +4393,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i243: ; preds = %bb.aj
   %i.ii = add nsw i64 %.sroa.speculated.i.i.i244, %i.ih ; 2 uses
   %i.ij = icmp ult i64 %i.ii, %i.ih
   %i.ik = call i64 @llvm.umin.i64(i64 %i.ii, i64 2305843009213693951)
-  %i.il = select i1 %i.ij, i64 2305843009213693951, i64 %i.ik ; 3 uses
-  %.not.i.i.i245 = icmp ne i64 %i.il, 0
-  call void @llvm.assume(i1 %.not.i.i.i245)
+  %i.il = select i1 %i.ij, i64 2305843009213693951, i64 %i.ik ; 2 uses
   %i.im = shl nuw nsw i64 %i.il, 2
   %i.in = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.im) #33 ; 4 uses
   %i.io = getelementptr inbounds i8, ptr %i.in, i64 %i.if ; 2 uses
@@ -4542,9 +4458,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i251: ; preds = %bb.ao
   %i.ji = add nsw i64 %.sroa.speculated.i.i.i252, %i.jh ; 2 uses
   %i.jj = icmp ult i64 %i.ji, %i.jh
   %i.jk = call i64 @llvm.umin.i64(i64 %i.ji, i64 2305843009213693951)
-  %i.jl = select i1 %i.jj, i64 2305843009213693951, i64 %i.jk ; 3 uses
-  %.not.i.i.i253 = icmp ne i64 %i.jl, 0
-  call void @llvm.assume(i1 %.not.i.i.i253)
+  %i.jl = select i1 %i.jj, i64 2305843009213693951, i64 %i.jk ; 2 uses
   %i.jm = shl nuw nsw i64 %i.jl, 2
   %i.jn = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.jm) #33 ; 4 uses
   %i.jo = getelementptr inbounds i8, ptr %i.jn, i64 %i.jf ; 2 uses
@@ -4610,9 +4524,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.at
   %i.kh = add nsw i64 %.sroa.speculated.i.i.i.i, %i.kg ; 2 uses
   %i.ki = icmp ult i64 %i.kh, %i.kg
   %i.kj = call i64 @llvm.umin.i64(i64 %i.kh, i64 2305843009213693951)
-  %i.kk = select i1 %i.ki, i64 2305843009213693951, i64 %i.kj ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.kk, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.kk = select i1 %i.ki, i64 2305843009213693951, i64 %i.kj ; 2 uses
   %i.kl = shl nuw nsw i64 %i.kk, 2
   %i.km = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.kl) #33 ; 4 uses
   %i.kn = getelementptr inbounds i8, ptr %i.km, i64 %i.ke ; 2 uses
@@ -4696,9 +4608,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i260: ; preds = %bb.ba
   %i.ll = add nsw i64 %.sroa.speculated.i.i.i.i261, %i.lk ; 2 uses
   %i.lm = icmp ult i64 %i.ll, %i.lk
   %i.ln = call i64 @llvm.umin.i64(i64 %i.ll, i64 2305843009213693951)
-  %i.lo = select i1 %i.lm, i64 2305843009213693951, i64 %i.ln ; 3 uses
-  %.not.i.i.i.i262 = icmp ne i64 %i.lo, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i262)
+  %i.lo = select i1 %i.lm, i64 2305843009213693951, i64 %i.ln ; 2 uses
   %i.lp = shl nuw nsw i64 %i.lo, 2
   %i.lq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.lp) #33 ; 4 uses
   %i.lr = getelementptr inbounds i8, ptr %i.lq, i64 %i.li ; 2 uses
@@ -4759,9 +4669,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i268: ; preds = %bb.bg
   %i.mh = add nsw i64 %.sroa.speculated.i.i.i.i269, %i.mg ; 2 uses
   %i.mi = icmp ult i64 %i.mh, %i.mg
   %i.mj = call i64 @llvm.umin.i64(i64 %i.mh, i64 2305843009213693951)
-  %i.mk = select i1 %i.mi, i64 2305843009213693951, i64 %i.mj ; 3 uses
-  %.not.i.i.i.i270 = icmp ne i64 %i.mk, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i270)
+  %i.mk = select i1 %i.mi, i64 2305843009213693951, i64 %i.mj ; 2 uses
   %i.ml = shl nuw nsw i64 %i.mk, 2
   %i.mm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ml) #33 ; 4 uses
   %i.mn = getelementptr inbounds i8, ptr %i.mm, i64 %i.me ; 2 uses
@@ -4848,9 +4756,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i276: ; preds = %bb.bo
   %i.nr = add nsw i64 %.sroa.speculated.i.i.i277, %i.nq ; 2 uses
   %i.ns = icmp ult i64 %i.nr, %i.nq
   %i.nt = call i64 @llvm.umin.i64(i64 %i.nr, i64 2305843009213693951)
-  %i.nu = select i1 %i.ns, i64 2305843009213693951, i64 %i.nt ; 3 uses
-  %.not.i.i.i278 = icmp ne i64 %i.nu, 0
-  call void @llvm.assume(i1 %.not.i.i.i278)
+  %i.nu = select i1 %i.ns, i64 2305843009213693951, i64 %i.nt ; 2 uses
   %i.nv = shl nuw nsw i64 %i.nu, 2
   %i.nw = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.nv) #33 ; 4 uses
   %i.nx = getelementptr inbounds i8, ptr %i.nw, i64 %i.no ; 2 uses
@@ -4909,9 +4815,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i284: ; preds = %bb.bt
   %i.ol = add nsw i64 %.sroa.speculated.i.i.i285, %i.ok ; 2 uses
   %i.om = icmp ult i64 %i.ol, %i.ok
   %i.on = call i64 @llvm.umin.i64(i64 %i.ol, i64 2305843009213693951)
-  %i.oo = select i1 %i.om, i64 2305843009213693951, i64 %i.on ; 3 uses
-  %.not.i.i.i286 = icmp ne i64 %i.oo, 0
-  call void @llvm.assume(i1 %.not.i.i.i286)
+  %i.oo = select i1 %i.om, i64 2305843009213693951, i64 %i.on ; 2 uses
   %i.op = shl nuw nsw i64 %i.oo, 2
   %i.oq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.op) #33 ; 4 uses
   %i.or = getelementptr inbounds i8, ptr %i.oq, i64 %i.oi ; 2 uses
@@ -4977,9 +4881,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i292: ; preds = %bb.by
   %i.pm = add nsw i64 %.sroa.speculated.i.i.i293, %i.pl ; 2 uses
   %i.pn = icmp ult i64 %i.pm, %i.pl
   %i.po = call i64 @llvm.umin.i64(i64 %i.pm, i64 2305843009213693951)
-  %i.pp = select i1 %i.pn, i64 2305843009213693951, i64 %i.po ; 3 uses
-  %.not.i.i.i294 = icmp ne i64 %i.pp, 0
-  call void @llvm.assume(i1 %.not.i.i.i294)
+  %i.pp = select i1 %i.pn, i64 2305843009213693951, i64 %i.po ; 2 uses
   %i.pq = shl nuw nsw i64 %i.pp, 2
   %i.pr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.pq) #33 ; 4 uses
   %i.ps = getelementptr inbounds i8, ptr %i.pr, i64 %i.pj ; 2 uses
@@ -5044,9 +4946,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i300.a: ; preds = %bb.cd
   %i.qk = add nsw i64 %.sroa.speculated.i.i.i.i301.a, %i.qj ; 2 uses
   %i.ql = icmp ult i64 %i.qk, %i.qj
   %i.qm = call i64 @llvm.umin.i64(i64 %i.qk, i64 2305843009213693951)
-  %i.qn = select i1 %i.ql, i64 2305843009213693951, i64 %i.qm ; 3 uses
-  %.not.i.i.i.i302 = icmp ne i64 %i.qn, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i302)
+  %i.qn = select i1 %i.ql, i64 2305843009213693951, i64 %i.qm ; 2 uses
   %i.qo = shl nuw nsw i64 %i.qn, 2
   %i.qp = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.qo) #33 ; 4 uses
   %i.qq = getelementptr inbounds i8, ptr %i.qp, i64 %i.qh ; 2 uses
@@ -5108,9 +5008,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i308: ; preds = %bb.ci
   %i.rh = add nsw i64 %.sroa.speculated.i.i.i.i309, %i.rg ; 2 uses
   %i.ri = icmp ult i64 %i.rh, %i.rg
   %i.rj = call i64 @llvm.umin.i64(i64 %i.rh, i64 2305843009213693951)
-  %i.rk = select i1 %i.ri, i64 2305843009213693951, i64 %i.rj ; 3 uses
-  %.not.i.i.i.i310 = icmp ne i64 %i.rk, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i310)
+  %i.rk = select i1 %i.ri, i64 2305843009213693951, i64 %i.rj ; 2 uses
   %i.rl = shl nuw nsw i64 %i.rk, 2
   %i.rm = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.rl) #33 ; 4 uses
   %i.rn = getelementptr inbounds i8, ptr %i.rm, i64 %i.re ; 2 uses
@@ -5513,9 +5411,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i391: ; preds = %bb.dx
   %i.aas = add nsw i64 %.sroa.speculated.i.i.i392, %i.aar ; 2 uses
   %i.aat = icmp ult i64 %i.aas, %i.aar
   %i.aau = call i64 @llvm.umin.i64(i64 %i.aas, i64 2305843009213693951)
-  %i.aav = select i1 %i.aat, i64 2305843009213693951, i64 %i.aau ; 3 uses
-  %.not.i.i.i393 = icmp ne i64 %i.aav, 0
-  call void @llvm.assume(i1 %.not.i.i.i393)
+  %i.aav = select i1 %i.aat, i64 2305843009213693951, i64 %i.aau ; 2 uses
   %i.aaw = shl nuw nsw i64 %i.aav, 2
   %i.aax = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aaw) #33 ; 4 uses
   %i.aay = getelementptr inbounds i8, ptr %i.aax, i64 %i.aap ; 2 uses
@@ -5574,9 +5470,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i399: ; preds = %bb.ec
   %i.abm = add nsw i64 %.sroa.speculated.i.i.i400, %i.abl ; 2 uses
   %i.abn = icmp ult i64 %i.abm, %i.abl
   %i.abo = call i64 @llvm.umin.i64(i64 %i.abm, i64 2305843009213693951)
-  %i.abp = select i1 %i.abn, i64 2305843009213693951, i64 %i.abo ; 3 uses
-  %.not.i.i.i401 = icmp ne i64 %i.abp, 0
-  call void @llvm.assume(i1 %.not.i.i.i401)
+  %i.abp = select i1 %i.abn, i64 2305843009213693951, i64 %i.abo ; 2 uses
   %i.abq = shl nuw nsw i64 %i.abp, 2
   %i.abr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.abq) #33 ; 4 uses
   %i.abs = getelementptr inbounds i8, ptr %i.abr, i64 %i.abj ; 2 uses
@@ -5641,9 +5535,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i407: ; preds = %bb.eh
   %i.acm = add nsw i64 %.sroa.speculated.i.i.i408, %i.acl ; 2 uses
   %i.acn = icmp ult i64 %i.acm, %i.acl
   %i.aco = call i64 @llvm.umin.i64(i64 %i.acm, i64 2305843009213693951)
-  %i.acp = select i1 %i.acn, i64 2305843009213693951, i64 %i.aco ; 3 uses
-  %.not.i.i.i409 = icmp ne i64 %i.acp, 0
-  call void @llvm.assume(i1 %.not.i.i.i409)
+  %i.acp = select i1 %i.acn, i64 2305843009213693951, i64 %i.aco ; 2 uses
   %i.acq = shl nuw nsw i64 %i.acp, 2
   %i.acr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.acq) #33 ; 4 uses
   %i.acs = getelementptr inbounds i8, ptr %i.acr, i64 %i.acj ; 2 uses
@@ -5709,9 +5601,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i415: ; preds = %bb.em
   %i.adl = add nsw i64 %.sroa.speculated.i.i.i.i416, %i.adk ; 2 uses
   %i.adm = icmp ult i64 %i.adl, %i.adk
   %i.adn = call i64 @llvm.umin.i64(i64 %i.adl, i64 2305843009213693951)
-  %i.ado = select i1 %i.adm, i64 2305843009213693951, i64 %i.adn ; 3 uses
-  %.not.i.i.i.i417 = icmp ne i64 %i.ado, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i417)
+  %i.ado = select i1 %i.adm, i64 2305843009213693951, i64 %i.adn ; 2 uses
   %i.adp = shl nuw nsw i64 %i.ado, 2
   %i.adq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.adp) #33 ; 4 uses
   %i.adr = getelementptr inbounds i8, ptr %i.adq, i64 %i.adi ; 2 uses
@@ -5795,9 +5685,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i423: ; preds = %bb.et
   %i.aep = add nsw i64 %.sroa.speculated.i.i.i.i424, %i.aeo ; 2 uses
   %i.aeq = icmp ult i64 %i.aep, %i.aeo
   %i.aer = call i64 @llvm.umin.i64(i64 %i.aep, i64 2305843009213693951)
-  %i.aes = select i1 %i.aeq, i64 2305843009213693951, i64 %i.aer ; 3 uses
-  %.not.i.i.i.i425 = icmp ne i64 %i.aes, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i425)
+  %i.aes = select i1 %i.aeq, i64 2305843009213693951, i64 %i.aer ; 2 uses
   %i.aet = shl nuw nsw i64 %i.aes, 2
   %i.aeu = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aet) #33 ; 4 uses
   %i.aev = getelementptr inbounds i8, ptr %i.aeu, i64 %i.aem ; 2 uses
@@ -5858,9 +5746,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i431: ; preds = %bb.ez
   %i.afl = add nsw i64 %.sroa.speculated.i.i.i.i432, %i.afk ; 2 uses
   %i.afm = icmp ult i64 %i.afl, %i.afk
   %i.afn = call i64 @llvm.umin.i64(i64 %i.afl, i64 2305843009213693951)
-  %i.afo = select i1 %i.afm, i64 2305843009213693951, i64 %i.afn ; 3 uses
-  %.not.i.i.i.i433 = icmp ne i64 %i.afo, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i433)
+  %i.afo = select i1 %i.afm, i64 2305843009213693951, i64 %i.afn ; 2 uses
   %i.afp = shl nuw nsw i64 %i.afo, 2
   %i.afq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.afp) #33 ; 4 uses
   %i.afr = getelementptr inbounds i8, ptr %i.afq, i64 %i.afi ; 2 uses
@@ -5947,9 +5833,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i439: ; preds = %bb.fh
   %i.agv = add nsw i64 %.sroa.speculated.i.i.i440, %i.agu ; 2 uses
   %i.agw = icmp ult i64 %i.agv, %i.agu
   %i.agx = call i64 @llvm.umin.i64(i64 %i.agv, i64 2305843009213693951)
-  %i.agy = select i1 %i.agw, i64 2305843009213693951, i64 %i.agx ; 3 uses
-  %.not.i.i.i441 = icmp ne i64 %i.agy, 0
-  call void @llvm.assume(i1 %.not.i.i.i441)
+  %i.agy = select i1 %i.agw, i64 2305843009213693951, i64 %i.agx ; 2 uses
   %i.agz = shl nuw nsw i64 %i.agy, 2
   %i.aha = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.agz) #33 ; 4 uses
   %i.ahb = getelementptr inbounds i8, ptr %i.aha, i64 %i.ags ; 2 uses
@@ -6008,9 +5892,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i447: ; preds = %bb.fm
   %i.ahp = add nsw i64 %.sroa.speculated.i.i.i448, %i.aho ; 2 uses
   %i.ahq = icmp ult i64 %i.ahp, %i.aho
   %i.ahr = call i64 @llvm.umin.i64(i64 %i.ahp, i64 2305843009213693951)
-  %i.ahs = select i1 %i.ahq, i64 2305843009213693951, i64 %i.ahr ; 3 uses
-  %.not.i.i.i449 = icmp ne i64 %i.ahs, 0
-  call void @llvm.assume(i1 %.not.i.i.i449)
+  %i.ahs = select i1 %i.ahq, i64 2305843009213693951, i64 %i.ahr ; 2 uses
   %i.aht = shl nuw nsw i64 %i.ahs, 2
   %i.ahu = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aht) #33 ; 4 uses
   %i.ahv = getelementptr inbounds i8, ptr %i.ahu, i64 %i.ahm ; 2 uses
@@ -6076,9 +5958,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i455: ; preds = %bb.fr
   %i.aiq = add nsw i64 %.sroa.speculated.i.i.i456, %i.aip ; 2 uses
   %i.air = icmp ult i64 %i.aiq, %i.aip
   %i.ais = call i64 @llvm.umin.i64(i64 %i.aiq, i64 2305843009213693951)
-  %i.ait = select i1 %i.air, i64 2305843009213693951, i64 %i.ais ; 3 uses
-  %.not.i.i.i457 = icmp ne i64 %i.ait, 0
-  call void @llvm.assume(i1 %.not.i.i.i457)
+  %i.ait = select i1 %i.air, i64 2305843009213693951, i64 %i.ais ; 2 uses
   %i.aiu = shl nuw nsw i64 %i.ait, 2
   %i.aiv = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aiu) #33 ; 4 uses
   %i.aiw = getelementptr inbounds i8, ptr %i.aiv, i64 %i.ain ; 2 uses
@@ -6143,9 +6023,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i463: ; preds = %bb.fw
   %i.ajo = add nsw i64 %.sroa.speculated.i.i.i.i464, %i.ajn ; 2 uses
   %i.ajp = icmp ult i64 %i.ajo, %i.ajn
   %i.ajq = call i64 @llvm.umin.i64(i64 %i.ajo, i64 2305843009213693951)
-  %i.ajr = select i1 %i.ajp, i64 2305843009213693951, i64 %i.ajq ; 3 uses
-  %.not.i.i.i.i465 = icmp ne i64 %i.ajr, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i465)
+  %i.ajr = select i1 %i.ajp, i64 2305843009213693951, i64 %i.ajq ; 2 uses
   %i.ajs = shl nuw nsw i64 %i.ajr, 2
   %i.ajt = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ajs) #33 ; 4 uses
   %i.aju = getelementptr inbounds i8, ptr %i.ajt, i64 %i.ajl ; 2 uses
@@ -6207,9 +6085,7 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i471: ; preds = %bb.gb
   %i.akl = add nsw i64 %.sroa.speculated.i.i.i.i472, %i.akk ; 2 uses
   %i.akm = icmp ult i64 %i.akl, %i.akk
   %i.akn = call i64 @llvm.umin.i64(i64 %i.akl, i64 2305843009213693951)
-  %i.ako = select i1 %i.akm, i64 2305843009213693951, i64 %i.akn ; 3 uses
-  %.not.i.i.i.i473 = icmp ne i64 %i.ako, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i473)
+  %i.ako = select i1 %i.akm, i64 2305843009213693951, i64 %i.akn ; 2 uses
   %i.akp = shl nuw nsw i64 %i.ako, 2
   %i.akq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.akp) #33 ; 4 uses
   %i.akr = getelementptr inbounds i8, ptr %i.akq, i64 %i.aki ; 2 uses
@@ -6612,31 +6488,23 @@ bb.q:                                             ; preds = %bb.b
   %i.bt = ashr exact i64 %i.bs, 2                 ; 4 uses
   %i.bu = sub nsw i64 2305843009213693951, %i.bt
   %i.bv = icmp ult i64 %i.bu, %2
-  br i1 %i.bv, label %bb.r, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
+  br i1 %i.bv, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.144) #34
   unreachable
 
-_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit:    ; preds = %bb.q
+bb.s:                                             ; preds = %bb.q
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.bt, i64 %2)
   %4 = add nsw i64 %.sroa.speculated.i, %i.bt     ; 2 uses
   %5 = icmp ult i64 %4, %i.bt
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 2305843009213693951)
-  %7 = select i1 %5, i64 2305843009213693951, i64 %6 ; 3 uses
+  %7 = select i1 %5, i64 2305843009213693951, i64 %6 ; 2 uses
   %8 = ptrtoint ptr %1 to i64                     ; 2 uses
   %9 = sub i64 %8, %i.br                          ; 4 uses
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %bb.s, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
-  %11 = shl nuw nsw i64 %7, 2
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #33
-  br label %bb.s
-
-bb.s:                                             ; preds = %10, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.bw = getelementptr inbounds i8, ptr %13, i64 %9 ; 5 uses
+  %10 = shl nuw nsw i64 %7, 2
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #33 ; 5 uses
+  %i.bw = getelementptr inbounds i8, ptr %11, i64 %9 ; 5 uses
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %.idx.i.i.i.i.i75
   %i.by = load i32, ptr %3, align 4, !tbaa !4     ; 2 uses
@@ -6685,7 +6553,7 @@ _ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80: ; preds = %.l
   br i1 %i.ci, label %bb.t, label %bb.u, !prof !281
 
 bb.t:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %13, ptr align 4 %i.bq, i64 %9, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %11, ptr align 4 %i.bq, i64 %9, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
 
 bb.u:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80
@@ -6694,7 +6562,7 @@ bb.u:                                             ; preds = %_ZSt24__uninitializ
 
 bb.v:                                             ; preds = %bb.u
   %i.ck = load i32, ptr %i.bq, align 4, !tbaa !4
-  store i32 %i.ck, ptr %13, align 4, !tbaa !4
+  store i32 %i.ck, ptr %11, align 4, !tbaa !4
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit: ; preds = %bb.v, %bb.u, %bb.t
@@ -6704,7 +6572,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.cn, label %bb.w, label %bb.x, !prof !281
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cl, ptr align 4 %1, i64 %i.cm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cl, ptr align 4 %1, i64 %i.cm, i1 false)
   br label %bb.z
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -6727,9 +6595,9 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit
 
 _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit: ; preds = %bb.z, %bb.aa
-  store ptr %13, ptr %0, align 8, !tbaa !63
+  store ptr %11, ptr %0, align 8, !tbaa !63
   store ptr %i.cq, ptr %i.c, align 8, !tbaa !62
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %7
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %7
   store ptr %i.cs, ptr %i.a, align 8, !tbaa !68
   br label %_ZSt4fillIPiiEvT_S1_RKT0_.exit
 

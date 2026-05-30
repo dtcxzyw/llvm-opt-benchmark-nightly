@@ -201,11 +201,9 @@ bb.af:                                            ; preds = %bb.ad
   %i.dk = add nsw i64 %.sroa.speculated.i.i, %i.dj ; 2 uses
   %i.dl = icmp ult i64 %i.dk, %i.dj
   %i.dm = call i64 @llvm.umin.i64(i64 %i.dk, i64 576460752303423487)
-  %i.dn = select i1 %i.dl, i64 576460752303423487, i64 %i.dm ; 3 uses
+  %i.dn = select i1 %i.dl, i64 576460752303423487, i64 %i.dm ; 2 uses
   %i.do = ptrtoint ptr %i.bl to i64
   %i.dp = sub i64 %i.do, %i.dg
-  %.not.i.i23 = icmp ne i64 %i.dn, 0
-  call void @llvm.assume(i1 %.not.i.i23), !noalias !70
   %i.dq = shl nuw nsw i64 %i.dn, 4
   %i.dr = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dq) #18, !noalias !70 ; 5 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 %i.dp ; 2 uses
@@ -608,11 +606,9 @@ _ZNKSt6vectorISt10shared_ptrIN6hermes2vm20ChromeStackFrameNodeEESaIS4_EE12_M_che
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487)
-  %i.l = select i1 %i.j, i64 576460752303423487, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 576460752303423487, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #18 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n
@@ -687,32 +683,24 @@ bb.a:
   %i.e = ptrtoint ptr %i.c to i64                 ; 3 uses
   %i.f = sub i64 %i.d, %i.e                       ; 2 uses
   %i.g = icmp eq i64 %i.f, 9223372036854775800
-  br i1 %i.g, label %bb.b, label %_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit
+  br i1 %i.g, label %bb.b, label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.50) #19
   unreachable
 
-_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit: ; preds = %bb.a
   %5 = sdiv exact i64 %i.f, 40                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %5, i64 1)
   %6 = add nsw i64 %.sroa.speculated.i, %5        ; 2 uses
   %7 = icmp ult i64 %6, %5
   %8 = tail call i64 @llvm.umin.i64(i64 %6, i64 230584300921369395)
-  %9 = select i1 %7, i64 230584300921369395, i64 %8 ; 3 uses
+  %9 = select i1 %7, i64 230584300921369395, i64 %8 ; 2 uses
   %10 = ptrtoint ptr %1 to i64
   %11 = sub i64 %10, %i.e
-  %.not.i = icmp eq i64 %9, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit, label %12
-
-12:                                               ; preds = %_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit
-  %13 = mul nuw nsw i64 %9, 40
-  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #18
-  br label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit, %12
-  %15 = phi ptr [ %14, %12 ], [ null, %_ZNKSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %15, i64 %11 ; 12 uses
+  %12 = mul nuw nsw i64 %9, 40
+  %13 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %12) #18 ; 5 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %13, i64 %11 ; 12 uses
   %i.i = load i64, ptr %2, align 8, !tbaa !100    ; 3 uses
   %.sroa.0.0.copyload.i = load i64, ptr %3, align 8, !tbaa !100 ; 3 uses
   %i.j = load ptr, ptr %4, align 8, !tbaa !10     ; 3 uses
@@ -827,7 +815,7 @@ _ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policy
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %.lr.ph.i.i.i
-  %.012.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i ], [ %15, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
+  %.012.i.i.i = phi ptr [ %i.ax, %.lr.ph.i.i.i ], [ %13, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 3 uses
   %.0911.i.i.i = phi ptr [ %i.aw, %.lr.ph.i.i.i ], [ %i.c, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !397)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !400)
@@ -845,7 +833,7 @@ _ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policy
   br i1 %.not.i.i.i20, label %_ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !403
 
 _ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %.lr.ph.i.i.i, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
-  %.0.lcssa.i.i.i = phi ptr [ %15, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.ax, %.lr.ph.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %13, %_ZNSt12__shared_ptrIN6hermes2vm20ChromeStackFrameNodeELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.ax, %.lr.ph.i.i.i ]
   %i.ay = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 40 ; 2 uses
   %.not10.i.i.i21 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i21, label %_ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit27, label %.lr.ph.i.i.i22
@@ -882,9 +870,9 @@ bb.m:                                             ; preds = %_ZNSt6vectorIN6herm
   br label %_ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN6hermes2vm17ChromeSampleEventESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN6hermes2vm17ChromeSampleEventESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit27, %bb.m
-  store ptr %15, ptr %0, align 8, !tbaa !109
+  store ptr %13, ptr %0, align 8, !tbaa !109
   store ptr %.0.lcssa.i.i.i26, ptr %i.a, align 8, !tbaa !98
-  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %15, i64 %9
+  %i.bj = getelementptr inbounds nuw [40 x i8], ptr %13, i64 %9
   store ptr %i.bj, ptr %i.bf, align 8, !tbaa !99
   ret void
 }

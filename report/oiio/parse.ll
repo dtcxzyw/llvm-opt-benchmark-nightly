@@ -201,32 +201,24 @@ bb.a:
   %i.f = ptrtoint ptr %i.d to i64                 ; 2 uses
   %i.g = sub i64 %i.e, %i.f                       ; 2 uses
   %i.h = icmp eq i64 %i.g, 9223372036854775744
-  br i1 %i.h, label %bb.b, label %_ZNKSt6vectorIN4YAML4NodeESaIS1_EE12_M_check_lenEmPKc.exit
+  br i1 %i.h, label %bb.b, label %_ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.8) #21
   unreachable
 
-_ZNKSt6vectorIN4YAML4NodeESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE11_M_allocateEm.exit: ; preds = %bb.a
   %3 = ashr exact i64 %i.g, 6                     ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %3, i64 1)
   %4 = add nsw i64 %.sroa.speculated.i, %3        ; 2 uses
   %5 = icmp ult i64 %4, %3
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 144115188075855871)
-  %7 = select i1 %5, i64 144115188075855871, i64 %6 ; 3 uses
+  %7 = select i1 %5, i64 144115188075855871, i64 %6 ; 2 uses
   %8 = ptrtoint ptr %1 to i64
   %9 = sub i64 %8, %i.f
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE11_M_allocateEm.exit, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIN4YAML4NodeESaIS1_EE12_M_check_lenEmPKc.exit
-  %11 = shl nuw nsw i64 %7, 6
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #23
-  br label %_ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN4YAML4NodeESaIS1_EE12_M_check_lenEmPKc.exit, %10
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIN4YAML4NodeESaIS1_EE12_M_check_lenEmPKc.exit ] ; 7 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %13, i64 %9 ; 7 uses
+  %10 = shl nuw nsw i64 %7, 6
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #23 ; 7 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %11, i64 %9 ; 7 uses
   %i.j = load i8, ptr %2, align 8, !tbaa !17, !range !77, !noundef !78
   store i8 %i.j, ptr %i.i, align 8, !tbaa !17
   %i.k = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 4 uses
@@ -305,7 +297,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %_ZNSt
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.al = load ptr, ptr %i.ak, align 8, !tbaa !80
   store ptr %i.al, ptr %i.aj, align 8, !tbaa !80
-  %i.am = invoke noundef ptr @_ZSt16__do_uninit_copyIPKN4YAML4NodeEPS1_ET0_T_S6_S5_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %13)
+  %i.am = invoke noundef ptr @_ZSt16__do_uninit_copyIPKN4YAML4NodeEPS1_ET0_T_S6_S5_(ptr noundef %i.d, ptr noundef %1, ptr noundef nonnull %11)
           to label %_ZSt34__uninitialized_move_if_noexcept_aIPN4YAML4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit unwind label %bb.p
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN4YAML4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit: ; preds = %bb.h
@@ -394,9 +386,9 @@ bb.o:                                             ; preds = %_ZSt8_DestroyIPN4YA
 
 _ZNSt12_Vector_baseIN4YAML4NodeESaIS1_EE13_M_deallocateEPS1_m.exit: ; preds = %_ZSt8_DestroyIPN4YAML4NodeEEvT_S3_.exit, %bb.o
   %i.bl = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store ptr %13, ptr %0, align 8, !tbaa !52
+  store ptr %11, ptr %0, align 8, !tbaa !52
   store ptr %i.ao, ptr %i.b, align 8, !tbaa !55
-  %i.bm = getelementptr inbounds nuw [64 x i8], ptr %13, i64 %7
+  %i.bm = getelementptr inbounds nuw [64 x i8], ptr %11, i64 %7
   store ptr %i.bm, ptr %i.bl, align 8, !tbaa !76
   ret void
 
@@ -409,12 +401,12 @@ bb.p:                                             ; preds = %bb.h
   br label %bb.s
 
 bb.q:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN4YAML4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit, %.noexc.i.i
-  %.0.ph = phi ptr [ %13, %.noexc.i.i ], [ %i.an, %_ZSt34__uninitialized_move_if_noexcept_aIPN4YAML4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit ]
+  %.0.ph = phi ptr [ %11, %.noexc.i.i ], [ %i.an, %_ZSt34__uninitialized_move_if_noexcept_aIPN4YAML4NodeES2_SaIS1_EET0_T_S5_S4_RT1_.exit ]
   %lpad.thr_comm = landingpad { ptr, i32 }
           catch ptr null
   %i.bp = extractvalue { ptr, i32 } %lpad.thr_comm, 0
   %i.bq = call ptr @__cxa_begin_catch(ptr %i.bp) #19 ; 0 uses
-  invoke void @_ZSt8_DestroyIPN4YAML4NodeEEvT_S3_(ptr noundef nonnull %13, ptr noundef nonnull %.0.ph)
+  invoke void @_ZSt8_DestroyIPN4YAML4NodeEEvT_S3_(ptr noundef nonnull %11, ptr noundef nonnull %.0.ph)
           to label %bb.s unwind label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %bb.s
@@ -424,7 +416,7 @@ bb.r:                                             ; preds = %bb.q, %bb.s
           to label %bb.t unwind label %bb.u
 
 bb.s:                                             ; preds = %bb.p, %bb.q
-  call void @_ZdlPv(ptr noundef nonnull %13) #20
+  call void @_ZdlPv(ptr noundef nonnull %11) #20
   invoke void @__cxa_rethrow() #21
           to label %bb.v unwind label %bb.r
 

@@ -201,9 +201,7 @@ _ZNKSt6vectorIPN2v88internal8compiler4NodeESaIS4_EE12_M_check_lenEmPKc.exit.i.i.
   %i.fz = add nsw i64 %.sroa.speculated.i.i.i.i, %i.fy ; 2 uses
   %i.ga = icmp ult i64 %i.fz, %i.fy
   %i.gb = call i64 @llvm.umin.i64(i64 %i.fz, i64 1152921504606846975)
-  %i.gc = select i1 %i.ga, i64 1152921504606846975, i64 %i.gb ; 3 uses
-  %.not.i.i.i.i61 = icmp ne i64 %i.gc, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i61)
+  %i.gc = select i1 %i.ga, i64 1152921504606846975, i64 %i.gb ; 2 uses
   %i.gd = shl nuw nsw i64 %i.gc, 3
   %i.ge = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.gd) #16 ; 4 uses
   %i.gf = getelementptr inbounds i8, ptr %i.ge, i64 %i.fw ; 2 uses

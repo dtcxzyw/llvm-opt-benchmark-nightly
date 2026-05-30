@@ -201,31 +201,23 @@ bb.q:                                             ; preds = %bb.b
   %i.bt = ashr exact i64 %i.bs, 3                 ; 4 uses
   %i.bu = sub nsw i64 1152921504606846975, %i.bt
   %i.bv = icmp ult i64 %i.bu, %2
-  br i1 %i.bv, label %bb.r, label %_ZNKSt6vectorIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE12_M_check_lenEmS4_.exit
+  br i1 %i.bv, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.3) #18
   unreachable
 
-_ZNKSt6vectorIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE12_M_check_lenEmS4_.exit: ; preds = %bb.q
+bb.s:                                             ; preds = %bb.q
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.bt, i64 %2)
   %4 = add nsw i64 %.sroa.speculated.i, %i.bt     ; 2 uses
   %5 = icmp ult i64 %4, %i.bt
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 1152921504606846975)
-  %7 = select i1 %5, i64 1152921504606846975, i64 %6 ; 3 uses
+  %7 = select i1 %5, i64 1152921504606846975, i64 %6 ; 2 uses
   %8 = ptrtoint ptr %1 to i64                     ; 2 uses
   %9 = sub i64 %8, %i.br                          ; 4 uses
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %bb.s, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE12_M_check_lenEmS4_.exit
-  %11 = shl nuw nsw i64 %7, 3
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #17
-  br label %bb.s
-
-bb.s:                                             ; preds = %10, %_ZNKSt6vectorIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE12_M_check_lenEmS4_.exit
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE12_M_check_lenEmS4_.exit ] ; 5 uses
-  %i.bw = getelementptr inbounds i8, ptr %13, i64 %9 ; 5 uses
+  %10 = shl nuw nsw i64 %7, 3
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #17 ; 5 uses
+  %i.bw = getelementptr inbounds i8, ptr %11, i64 %9 ; 5 uses
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 3       ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %.idx.i.i.i.i.i75
   %i.by = load ptr, ptr %3, align 8, !tbaa !31    ; 2 uses
@@ -274,7 +266,7 @@ _ZSt24__uninitialized_fill_n_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEEmS
   br i1 %i.ci, label %bb.t, label %bb.u, !prof !69
 
 bb.t:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEEmS8_S8_ET_SA_T0_RKT1_RSaIT2_E.exit80
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %13, ptr align 8 %i.bq, i64 %9, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %11, ptr align 8 %i.bq, i64 %9, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit
 
 bb.u:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEEmS8_S8_ET_SA_T0_RKT1_RSaIT2_E.exit80
@@ -283,7 +275,7 @@ bb.u:                                             ; preds = %_ZSt24__uninitializ
 
 bb.v:                                             ; preds = %bb.u
   %i.ck = load ptr, ptr %i.bq, align 8, !tbaa !31
-  store ptr %i.ck, ptr %13, align 8, !tbaa !31
+  store ptr %i.ck, ptr %11, align 8, !tbaa !31
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit: ; preds = %bb.v, %bb.u, %bb.t
@@ -293,7 +285,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairI
   br i1 %i.cn, label %bb.w, label %bb.x, !prof !69
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.cl, ptr align 8 %1, i64 %i.cm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cl, ptr align 8 %1, i64 %i.cm, i1 false)
   br label %bb.z
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit
@@ -316,15 +308,18 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZNSt12_Vector_baseIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE13_M_deallocateEPS8_m.exit
 
 _ZNSt12_Vector_baseIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE13_M_deallocateEPS8_m.exit: ; preds = %bb.z, %bb.aa
-  store ptr %13, ptr %0, align 8, !tbaa !12
+  store ptr %11, ptr %0, align 8, !tbaa !12
   store ptr %i.cq, ptr %i.c, align 8, !tbaa !27
-  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %13, i64 %7
+  %i.cs = getelementptr inbounds nuw [8 x i8], ptr %11, i64 %7
   store ptr %i.cs, ptr %i.a, align 8, !tbaa !16
   br label %_ZSt4fillIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES8_EvT_SA_RKT0_.exit
 
 _ZSt4fillIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES8_EvT_SA_RKT0_.exit: ; preds = %.lr.ph.i.i.i71, %.lr.ph.i.i.i, %middle.block123, %middle.block137, %_ZSt22__uninitialized_move_aIPPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEES9_SaIS8_EET0_T_SC_SB_RT1_.exit69, %_ZNSt12_Vector_baseIPN9__gnu_cxx15_Hashtable_nodeISt4pairIKPKciEEESaIS8_EE13_M_deallocateEPS8_m.exit, %bb.a
   ret void
 }
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN9__gnu_cxx9hashtableISt4pairIKPKciES3_NS_4hashIS3_EESt10_Select1stIS5_E5eqstrSaIiEE6resizeEm(ptr noundef nonnull align 8 dereferenceable(40) %0, i64 noundef %1) local_unnamed_addr #8 comdat align 2 personality ptr @__gxx_personality_v0 {

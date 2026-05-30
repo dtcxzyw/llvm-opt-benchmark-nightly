@@ -201,31 +201,23 @@ bb.o:                                             ; preds = %bb.b
   %i.cf = ashr exact i64 %i.ce, 1                 ; 4 uses
   %i.cg = sub nsw i64 4611686018427387903, %i.cf
   %i.ch = icmp ult i64 %i.cg, %2
-  br i1 %i.ch, label %bb.p, label %_ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit
+  br i1 %i.ch, label %bb.p, label %iter.check199
 
 bb.p:                                             ; preds = %bb.o
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.24) #18
   unreachable
 
-_ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit:    ; preds = %bb.o
+iter.check199:                                    ; preds = %bb.o
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.cf, i64 %2)
   %4 = add i64 %.sroa.speculated.i, %i.cf         ; 2 uses
   %5 = icmp ult i64 %4, %i.cf
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 4611686018427387903)
-  %7 = select i1 %5, i64 4611686018427387903, i64 %6 ; 3 uses
+  %7 = select i1 %5, i64 4611686018427387903, i64 %6 ; 2 uses
   %8 = ptrtoint ptr %1 to i64                     ; 2 uses
   %9 = sub i64 %8, %i.cd                          ; 4 uses
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %iter.check199, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit
-  %11 = shl nuw nsw i64 %7, 1
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #17
-  br label %iter.check199
-
-iter.check199:                                    ; preds = %10, %_ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIsSaIsEE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.ci = getelementptr inbounds i8, ptr %13, i64 %9 ; 7 uses
+  %10 = shl nuw nsw i64 %7, 1
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #17 ; 5 uses
+  %i.ci = getelementptr inbounds i8, ptr %11, i64 %9 ; 7 uses
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 1       ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 %.idx.i.i.i.i.i75
   %i.ck = load i16, ptr %3, align 2, !tbaa !28    ; 3 uses
@@ -305,7 +297,7 @@ _ZSt24__uninitialized_fill_n_aIPsmssET_S1_T0_RKT1_RSaIT2_E.exit80: ; preds = %.l
   br i1 %i.cy, label %bb.q, label %bb.r, !prof !137
 
 bb.q:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPsmssET_S1_T0_RKT1_RSaIT2_E.exit80
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 2 %13, ptr align 2 %i.cc, i64 %9, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %11, ptr align 2 %i.cc, i64 %9, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit
 
 bb.r:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPsmssET_S1_T0_RKT1_RSaIT2_E.exit80
@@ -314,7 +306,7 @@ bb.r:                                             ; preds = %_ZSt24__uninitializ
 
 bb.s:                                             ; preds = %bb.r
   %i.da = load i16, ptr %i.cc, align 2, !tbaa !28
-  store i16 %i.da, ptr %13, align 2, !tbaa !28
+  store i16 %i.da, ptr %11, align 2, !tbaa !28
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit: ; preds = %bb.s, %bb.r, %bb.q
@@ -324,7 +316,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.dd, label %bb.t, label %bb.u, !prof !137
 
 bb.t:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 2 %i.db, ptr align 2 %1, i64 %i.dc, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 2 %i.db, ptr align 2 %1, i64 %i.dc, i1 false)
   br label %bb.w
 
 bb.u:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPsS0_SaIsEET0_T_S3_S2_RT1_.exit
@@ -347,9 +339,9 @@ bb.x:                                             ; preds = %bb.w
   br label %_ZNSt12_Vector_baseIsSaIsEE13_M_deallocateEPsm.exit
 
 _ZNSt12_Vector_baseIsSaIsEE13_M_deallocateEPsm.exit: ; preds = %bb.w, %bb.x
-  store ptr %13, ptr %0, align 8, !tbaa !46
+  store ptr %11, ptr %0, align 8, !tbaa !46
   store ptr %i.dg, ptr %i.c, align 8, !tbaa !63
-  %i.di = getelementptr inbounds nuw [2 x i8], ptr %13, i64 %7
+  %i.di = getelementptr inbounds nuw [2 x i8], ptr %11, i64 %7
   store ptr %i.di, ptr %i.a, align 8, !tbaa !62
   br label %_ZSt4fillIPssEvT_S1_RKT0_.exit
 

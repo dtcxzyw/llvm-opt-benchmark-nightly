@@ -201,41 +201,33 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit:    ; preds = %bb.w
   %i.ba = add i64 %.sroa.speculated.i, %i.ax      ; 2 uses
   %i.bb = icmp ult i64 %i.ba, %i.ax
   %i.bc = tail call i64 @llvm.umin.i64(i64 %i.ba, i64 9223372036854775807)
-  %i.bd = select i1 %i.bb, i64 9223372036854775807, i64 %i.bc ; 3 uses
-  %.not.i = icmp eq i64 %i.bd, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit, label %4
+  %i.bd = select i1 %i.bb, i64 9223372036854775807, i64 %i.bc ; 2 uses
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bd) #12 ; 5 uses
+  %5 = ptrtoint ptr %1 to i64                     ; 2 uses
+  %6 = sub i64 %5, %i.aw                          ; 4 uses
+  %7 = icmp sgt i64 %6, 1
+  br i1 %7, label %bb.y, label %bb.z, !prof !55
 
-4:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bd) #12
-  br label %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit:  ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit, %4
-  %6 = phi ptr [ %5, %4 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %7 = ptrtoint ptr %1 to i64                     ; 2 uses
-  %8 = sub i64 %7, %i.aw                          ; 4 uses
-  %9 = icmp sgt i64 %8, 1
-  br i1 %9, label %bb.y, label %bb.z, !prof !55
-
-bb.y:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %6, ptr align 1 %i.av, i64 %8, i1 false)
+bb.y:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %i.av, i64 %6, i1 false)
   br label %bb.ab
 
-bb.z:                                             ; preds = %_ZNSt12_Vector_baseIhSaIhEE11_M_allocateEm.exit
-  %i.be = icmp eq i64 %8, 1
+bb.z:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
+  %i.be = icmp eq i64 %6, 1
   br i1 %i.be, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
   %i.bf = load i8, ptr %i.av, align 1, !tbaa !31
-  store i8 %i.bf, ptr %6, align 1, !tbaa !31
+  store i8 %i.bf, ptr %4, align 1, !tbaa !31
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.z, %bb.y
-  %i.bg = getelementptr inbounds i8, ptr %6, i64 %8 ; 3 uses
+  %i.bg = getelementptr inbounds i8, ptr %4, i64 %6 ; 3 uses
   %i.bh = icmp sgt i64 %i.c, 1
   br i1 %i.bh, label %bb.ac, label %bb.ad, !prof !55
 
 bb.ac:                                            ; preds = %bb.ab
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.bg, ptr align 1 %2, i64 %i.c, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bg, ptr align 1 %2, i64 %i.c, i1 false)
   br label %bb.af
 
 bb.ad:                                            ; preds = %bb.ab
@@ -249,12 +241,12 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
   %i.bk = getelementptr inbounds i8, ptr %i.bg, i64 %i.c ; 3 uses
-  %i.bl = sub i64 %i.i, %7                        ; 4 uses
+  %i.bl = sub i64 %i.i, %5                        ; 4 uses
   %i.bm = icmp sgt i64 %i.bl, 1
   br i1 %i.bm, label %bb.ag, label %bb.ah, !prof !55
 
 bb.ag:                                            ; preds = %bb.af
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.bk, ptr align 1 %1, i64 %i.bl, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bk, ptr align 1 %1, i64 %i.bl, i1 false)
   br label %bb.aj
 
 bb.ah:                                            ; preds = %bb.af
@@ -277,9 +269,9 @@ bb.ak:                                            ; preds = %bb.aj
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 
 _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit: ; preds = %bb.aj, %bb.ak
-  store ptr %6, ptr %0, align 8, !tbaa !52
+  store ptr %4, ptr %0, align 8, !tbaa !52
   store ptr %i.bp, ptr %i.f, align 8, !tbaa !29
-  %i.br = getelementptr inbounds nuw i8, ptr %6, i64 %i.bd
+  %i.br = getelementptr inbounds nuw i8, ptr %4, i64 %i.bd
   store ptr %i.br, ptr %i.d, align 8, !tbaa !30
   br label %_ZSt4copyIPKhN9__gnu_cxx17__normal_iteratorIPhSt6vectorIhSaIhEEEEET0_T_SA_S9_.exit
 

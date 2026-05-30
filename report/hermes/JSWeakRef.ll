@@ -59,7 +59,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN6hermes2vm8Metadata7Builder23addJSObjectOverlapSlotsEj.exit
 
 _ZN6hermes2vm8Metadata7Builder23addJSObjectOverlapSlotsEj.exit: ; preds = %bb.a, %bb.b
-  tail call void @_ZN6hermes2vm17JSObjectBuildMetaEPKNS0_6GCCellERNS0_8Metadata7BuilderE(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(224) %1) #10
+  tail call void @_ZN6hermes2vm17JSObjectBuildMetaEPKNS0_6GCCellERNS0_8Metadata7BuilderE(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(224) %1) #9
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 216
   store ptr @_ZN6hermes2vm9JSWeakRef2vtE, ptr %i.e, align 8, !tbaa !17
   ret void
@@ -79,12 +79,12 @@ bb.a:
   %2 = alloca %"class.hermes::vm::Handle", align 8 ; 2 uses
   %3 = alloca %"class.hermes::vm::Handle.158", align 8 ; 4 uses
   store ptr %1, ptr %2, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #9
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 9520
   store ptr %i.a, ptr %3, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 856
   %i.c = call noundef ptr @_ZN6hermes2vm7HadesGC5makeAINS0_9JSWeakRefELb1ELNS0_12HasFinalizerE1ELNS0_9LongLivedE0EJRNS0_7RuntimeERNS0_6HandleINS0_8JSObjectEEENS8_INS0_11HiddenClassEEEEEEPT_jDpOT3_(ptr noundef nonnull align 8 dereferenceable(8112) %i.b, i32 noundef 40, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull align 8 dereferenceable(8) %3) ; 3 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #9
   %.01320.i.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   store i32 14, ptr %.01320.i.ptr.i.i, align 4, !tbaa !3
   %.01320.i.ptr.1.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 36
@@ -103,7 +103,7 @@ bb.a:
   %i.d = sub i64 %.sroa.0.0.copyload.i.i.i.i, %i.c
   %i.e = trunc i64 %i.d to i32
   %.sroa.0.0.i.i.i.i.i = select i1 %.not.i.i.i.i.i, i32 0, i32 %i.e
-  %i.f = tail call noundef ptr @_ZN6hermes2vm6GCBase13allocWeakSlotENS0_17CompressedPointerE(ptr noundef nonnull align 8 dereferenceable(8112) %i.a, i32 %.sroa.0.0.i.i.i.i.i) #10
+  %i.f = tail call noundef ptr @_ZN6hermes2vm6GCBase13allocWeakSlotENS0_17CompressedPointerE(ptr noundef nonnull align 8 dereferenceable(8112) %i.a, i32 %.sroa.0.0.i.i.i.i.i) #9
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.h = ptrtoint ptr %i.f to i64
   store i64 %i.h, ptr %i.g, align 8
@@ -125,7 +125,7 @@ _ZNK6hermes2vm7WeakRefINS0_8JSObjectEE3getERNS0_7RuntimeE.exit: ; preds = %bb.a
   %i.f = zext i32 %i.c to i64
   %i.g = add i64 %i.f, %i.e                       ; 2 uses
   %i.h = inttoptr i64 %i.g to ptr
-  tail call void @_ZN6hermes2vm7HadesGC18weakRefReadBarrierEPNS0_6GCCellE(ptr noundef nonnull align 8 dereferenceable(8112) %i.d, ptr noundef %i.h) #10
+  tail call void @_ZN6hermes2vm7HadesGC18weakRefReadBarrierEPNS0_6GCCellE(ptr noundef nonnull align 8 dereferenceable(8112) %i.d, ptr noundef %i.h) #9
   %i.i = or i64 %i.g, -281474976710656
   br label %bb.b
 
@@ -147,7 +147,7 @@ bb.a:
   br i1 %.not.i.not.i, label %bb.b, label %bb.c, !prof !42
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %0, i32 noundef %1) #10
+  %i.g = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %0, i32 noundef %1) #9
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -179,7 +179,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.s, label %bb.g, label %_ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #10
   unreachable
 
 _ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.f
@@ -188,11 +188,9 @@ _ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; pred
   %i.u = add nsw i64 %.sroa.speculated.i.i.i.i, %i.t ; 2 uses
   %i.v = icmp ult i64 %i.u, %i.t
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.u, i64 1152921504606846975)
-  %i.x = select i1 %i.v, i64 1152921504606846975, i64 %i.w ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.x, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.x = select i1 %i.v, i64 1152921504606846975, i64 %i.w ; 2 uses
   %i.y = shl nuw nsw i64 %i.x, 3
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #12 ; 4 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #11 ; 4 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.r ; 2 uses
   store ptr %i.h, ptr %i.aa, align 8, !tbaa !48
   %i.ab = icmp sgt i64 %i.r, 0
@@ -208,7 +206,7 @@ _ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.r) #13
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.r) #12
   br label %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -274,9 +272,6 @@ declare i64 @llvm.umax.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
-
 attributes #0 = { mustprogress norecurse nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -286,11 +281,10 @@ attributes #5 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { noreturn nounwind }
-attributes #12 = { builtin nounwind allocsize(0) }
-attributes #13 = { builtin nounwind }
+attributes #9 = { nounwind }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { builtin nounwind allocsize(0) }
+attributes #12 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

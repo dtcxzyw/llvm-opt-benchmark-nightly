@@ -101,7 +101,7 @@ bb.a:
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.e = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #13 ; 4 uses
+  %i.e = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #12 ; 4 uses
   store i32 0, ptr %i.e, align 4, !tbaa !3
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 4 ; 3 uses
   store ptr %i.e, ptr %0, align 8, !tbaa !13
@@ -126,7 +126,7 @@ bb.b:                                             ; preds = %_ZNSt6vectorIiSaIiE
   br i1 %i.o, label %bb.c, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i10
 
 bb.c:                                             ; preds = %bb.b
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #14
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
           to label %.noexc16.a unwind label %bb.f
 
 .noexc16.a:                                       ; preds = %bb.c
@@ -138,11 +138,9 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i10: ; preds = %bb.b
   %i.q = add nsw i64 %.sroa.speculated.i.i.i.i11, %i.p ; 2 uses
   %i.r = icmp ult i64 %i.q, %i.p
   %i.s = tail call i64 @llvm.umin.i64(i64 %i.q, i64 2305843009213693951)
-  %i.t = select i1 %i.r, i64 2305843009213693951, i64 %i.s ; 3 uses
-  %.not.i.i.i.i12 = icmp ne i64 %i.t, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i12)
+  %i.t = select i1 %i.r, i64 2305843009213693951, i64 %i.s ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 2
-  %i.v = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #13
+  %i.v = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #12
           to label %.noexc17 unwind label %bb.f   ; 5 uses
 
 .noexc17:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i10
@@ -161,7 +159,7 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i13: ; preds = %bb.d, 
   br i1 %.not.i17.i.i.i14, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i15, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i13
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.n) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.g, i64 noundef %i.n) #14
   %.pre.pre = load i8, ptr %i.a, align 1, !tbaa !11
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i15
 
@@ -207,7 +205,7 @@ bb.i:                                             ; preds = %bb.g
   br i1 %i.am, label %bb.j, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i20
 
 bb.j:                                             ; preds = %bb.i
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #14
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
           to label %.noexc26 unwind label %bb.m
 
 .noexc26:                                         ; preds = %bb.j
@@ -219,11 +217,9 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i20: ; preds = %bb.i
   %i.ao = add nsw i64 %.sroa.speculated.i.i.i.i21, %i.an ; 2 uses
   %i.ap = icmp ult i64 %i.ao, %i.an
   %i.aq = tail call i64 @llvm.umin.i64(i64 %i.ao, i64 2305843009213693951)
-  %i.ar = select i1 %i.ap, i64 2305843009213693951, i64 %i.aq ; 3 uses
-  %.not.i.i.i.i22 = icmp ne i64 %i.ar, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i22)
+  %i.ar = select i1 %i.ap, i64 2305843009213693951, i64 %i.aq ; 2 uses
   %i.as = shl nuw nsw i64 %i.ar, 2
-  %i.at = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.as) #13
+  %i.at = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.as) #12
           to label %.noexc27 unwind label %bb.m   ; 5 uses
 
 .noexc27:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i20
@@ -242,7 +238,7 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i23: ; preds = %bb.k, 
   br i1 %.not.i17.i.i.i24, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i25, label %bb.l
 
 bb.l:                                             ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i23
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ab, i64 noundef %i.al) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ab, i64 noundef %i.al) #14
   %.pre46.pre = load i8, ptr %i.a, align 1, !tbaa !11
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i25
 
@@ -288,7 +284,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %i.bk, label %bb.q, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i30
 
 bb.q:                                             ; preds = %bb.p
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #14
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
           to label %.noexc36 unwind label %bb.t
 
 .noexc36:                                         ; preds = %bb.q
@@ -300,11 +296,9 @@ _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i30: ; preds = %bb.p
   %i.bm = add nsw i64 %.sroa.speculated.i.i.i.i31, %i.bl ; 2 uses
   %i.bn = icmp ult i64 %i.bm, %i.bl
   %i.bo = tail call i64 @llvm.umin.i64(i64 %i.bm, i64 2305843009213693951)
-  %i.bp = select i1 %i.bn, i64 2305843009213693951, i64 %i.bo ; 3 uses
-  %.not.i.i.i.i32 = icmp ne i64 %i.bp, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i32)
+  %i.bp = select i1 %i.bn, i64 2305843009213693951, i64 %i.bo ; 2 uses
   %i.bq = shl nuw nsw i64 %i.bp, 2
-  %i.br = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bq) #13
+  %i.br = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bq) #12
           to label %.noexc37 unwind label %bb.t   ; 4 uses
 
 .noexc37:                                         ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i30
@@ -323,7 +317,7 @@ _ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i33: ; preds = %bb.r, 
   br i1 %.not.i17.i.i.i34, label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i35, label %bb.s
 
 bb.s:                                             ; preds = %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i33
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.az, i64 noundef %i.bj) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.az, i64 noundef %i.bj) #14
   br label %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i35
 
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i35: ; preds = %bb.s, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i33
@@ -352,7 +346,7 @@ bb.v:                                             ; preds = %bb.u
   %i.bz = ptrtoint ptr %i.bx to i64
   %i.ca = ptrtoint ptr %i.by to i64
   %i.cb = sub i64 %i.bz, %i.ca
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %i.cb) #15
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.by, i64 noundef %i.cb) #14
   br label %_ZNSt6vectorIiSaIiEED2Ev.exit
 
 _ZNSt6vectorIiSaIiEED2Ev.exit:                    ; preds = %bb.u, %bb.v
@@ -403,9 +397,6 @@ declare i64 @llvm.umax.i64(i64, i64) #6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #12
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #10
 
@@ -421,10 +412,9 @@ attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-siz
 attributes #9 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #12 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #13 = { builtin allocsize(0) }
-attributes #14 = { noreturn }
-attributes #15 = { builtin nounwind }
+attributes #12 = { builtin allocsize(0) }
+attributes #13 = { noreturn }
+attributes #14 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

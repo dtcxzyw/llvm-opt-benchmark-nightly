@@ -201,31 +201,23 @@ _ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exi
   %i.bb = add nsw i64 %.sroa.speculated.i, %i.ay  ; 2 uses
   %i.bc = icmp ult i64 %i.bb, %i.ay
   %i.bd = tail call i64 @llvm.umin.i64(i64 %i.bb, i64 16470307208669242)
-  %i.be = select i1 %i.bc, i64 16470307208669242, i64 %i.bd ; 4 uses
-  %.not.i = icmp eq i64 %i.be, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit, label %4
+  %i.be = select i1 %i.bc, i64 16470307208669242, i64 %i.bd ; 2 uses
+  %4 = mul nuw nsw i64 %i.be, 560                 ; 2 uses
+  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #27 ; 6 uses
+  %.not.i = icmp eq ptr %i.av, %1
+  br i1 %.not.i, label %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i60
 
-4:                                                ; preds = %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit
-  %5 = mul nuw nsw i64 %i.be, 560
-  %6 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #27
-  br label %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit, %4
-  %7 = phi ptr [ %6, %4 ], [ null, %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit ] ; 7 uses
-  %.not11.i.i.i.i.i59 = icmp eq ptr %i.av, %1
-  br i1 %.not11.i.i.i.i.i59, label %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i60
-
-.lr.ph.i.i.i.i.i60:                               ; preds = %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit, %.lr.ph.i.i.i.i.i60
-  %.013.i.i.i.i.i61 = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i60 ], [ %7, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i62 = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i60 ], [ %i.av, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ] ; 2 uses
+.lr.ph.i.i.i.i.i60:                               ; preds = %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i.i.i60
+  %.013.i.i.i.i.i61 = phi ptr [ %i.bg, %.lr.ph.i.i.i.i.i60 ], [ %5, %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i62 = phi ptr [ %i.bf, %.lr.ph.i.i.i.i.i60 ], [ %i.av, %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   tail call void @_ZN9benchmark17BenchmarkReporter3RunC2EOS1_(ptr noundef nonnull align 8 dereferenceable(560) %.013.i.i.i.i.i61, ptr noundef nonnull align 8 dereferenceable(560) %.sroa.08.012.i.i.i.i.i62) #28
   %i.bf = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i62, i64 560 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i61, i64 560 ; 2 uses
   %.not.i.i.i.i.i63 = icmp eq ptr %i.bf, %1
   br i1 %.not.i.i.i.i.i63, label %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i60, !llvm.loop !81
 
-_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i60, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit
-  %.0.lcssa.i.i.i.i.i64 = phi ptr [ %7, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE11_M_allocateEm.exit ], [ %i.bg, %.lr.ph.i.i.i.i.i60 ] ; 3 uses
+_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i60, %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit
+  %.0.lcssa.i.i.i.i.i64 = phi ptr [ %5, %_ZNKSt6vectorIN9benchmark17BenchmarkReporter3RunESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.bg, %.lr.ph.i.i.i.i.i60 ] ; 3 uses
   br label %.lr.ph.i.i.i.i66
 
 .lr.ph.i.i.i.i66:                                 ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit, %_ZSt10_ConstructIN9benchmark17BenchmarkReporter3RunEJRKS2_EEvPT_DpOT0_.exit.i.i.i.i70
@@ -245,7 +237,7 @@ bb.k:                                             ; preds = %.lr.ph.i.i.i.i66
           catch ptr null
   %i.bk = extractvalue { ptr, i32 } %i.bj, 0
   %i.bl = tail call ptr @__cxa_begin_catch(ptr %i.bk) #28 ; 0 uses
-  invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN9benchmark17BenchmarkReporter3RunEEEvT_S6_(ptr noundef %.0.lcssa.i.i.i.i.i64, ptr noundef nonnull %.014.i.i.i.i67)
+  invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN9benchmark17BenchmarkReporter3RunEEEvT_S6_(ptr noundef nonnull %.0.lcssa.i.i.i.i.i64, ptr noundef nonnull %.014.i.i.i.i67)
           to label %_ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunEEvT_S4_.exit.i.i.i.i69 unwind label %bb.l
 
 _ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunEEvT_S4_.exit.i.i.i.i69: ; preds = %bb.k
@@ -295,32 +287,24 @@ bb.o:                                             ; preds = %_ZSt34__uninitializ
   br label %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN9benchmark17BenchmarkReporter3RunES3_SaIS2_EET0_T_S6_S5_RT1_.exit80, %bb.o
-  store ptr %7, ptr %0, align 8, !tbaa !68
+  store ptr %5, ptr %0, align 8, !tbaa !68
   store ptr %.0.lcssa.i.i.i.i.i79, ptr %i.g, align 8, !tbaa !70
-  %i.bu = getelementptr inbounds nuw [560 x i8], ptr %7, i64 %i.be
+  %i.bu = getelementptr inbounds nuw [560 x i8], ptr %5, i64 %i.be
   store ptr %i.bu, ptr %i.e, align 8, !tbaa !72
   br label %bb.r
 
 .body:                                            ; preds = %bb.l
   %i.bv = extractvalue { ptr, i32 } %i.bm, 0
   %i.bw = tail call ptr @__cxa_begin_catch(ptr %i.bv) #28 ; 0 uses
-  invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN9benchmark17BenchmarkReporter3RunEEEvT_S6_(ptr noundef %7, ptr noundef %.0.lcssa.i.i.i.i.i64)
-          to label %_ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunES2_EvT_S4_RSaIT0_E.exit unwind label %bb.q
+  invoke void @_ZNSt12_Destroy_auxILb0EE9__destroyIPN9benchmark17BenchmarkReporter3RunEEEvT_S6_(ptr noundef nonnull %5, ptr noundef nonnull %.0.lcssa.i.i.i.i.i64)
+          to label %bb.p unwind label %bb.q
 
-_ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunES2_EvT_S4_RSaIT0_E.exit: ; preds = %.body
-  %.not.i82 = icmp eq ptr %7, null
-  br i1 %.not.i82, label %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit83, label %bb.p
-
-bb.p:                                             ; preds = %_ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunES2_EvT_S4_RSaIT0_E.exit
-  %8 = mul nuw nsw i64 %i.be, 560
-  tail call void @_ZdlPvm(ptr noundef nonnull %7, i64 noundef %8) #24
-  br label %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit83
-
-_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit83: ; preds = %bb.p, %_ZSt8_DestroyIPN9benchmark17BenchmarkReporter3RunES2_EvT_S4_RSaIT0_E.exit
+bb.p:                                             ; preds = %.body
+  tail call void @_ZdlPvm(ptr noundef nonnull %5, i64 noundef %4) #24
   invoke void @__cxa_rethrow() #26
           to label %bb.t unwind label %bb.q
 
-bb.q:                                             ; preds = %.body, %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit83
+bb.q:                                             ; preds = %.body, %bb.p
   %i.bx = landingpad { ptr, i32 }
           cleanup
   invoke void @__cxa_end_catch()
@@ -336,7 +320,7 @@ bb.s:                                             ; preds = %bb.q
   tail call void @__clang_call_terminate(ptr %i.bz) #25
   unreachable
 
-bb.t:                                             ; preds = %_ZNSt12_Vector_baseIN9benchmark17BenchmarkReporter3RunESaIS2_EE13_M_deallocateEPS2_m.exit83
+bb.t:                                             ; preds = %bb.p
   unreachable
 }
 

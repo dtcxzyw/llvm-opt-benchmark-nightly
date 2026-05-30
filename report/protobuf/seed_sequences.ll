@@ -21,23 +21,23 @@ $_ZNSt8seed_seqC2IPjEET_S2_ = comdat any
 define void @_ZN4absl12lts_2025051211MakeSeedSeqEv(ptr dead_on_unwind noalias writable writeonly sret(%"class.absl::lts_20250512::random_internal::SaltedSeedSeq") align 8 captures(none) %0) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca [8 x i32], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @_ZN4absl12lts_2025051215random_internal24GetEntropyFromRandenPoolEPvm(ptr noundef nonnull %i.a, i64 noundef 32)
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.experimental.noalias.scope.decl(metadata !7)
-  %i.c = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #11, !noalias !7 ; 3 uses
+  %i.c = call noalias noundef nonnull dereferenceable(24) ptr @_Znwm(i64 noundef 24) #10, !noalias !7 ; 3 uses
   invoke void @_ZNSt8seed_seqC2IPjEET_S2_(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b)
           to label %_ZN4absl12lts_2025051215random_internal13SaltedSeedSeqISt8seed_seqEC2IPjEET_S7_.exit unwind label %bb.b, !noalias !7
 
 bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup
-  call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 24) #12, !noalias !7
+  call void @_ZdlPvm(ptr noundef nonnull %i.c, i64 noundef 24) #11, !noalias !7
   resume { ptr, i32 } %i.d
 
 _ZN4absl12lts_2025051215random_internal13SaltedSeedSeqISt8seed_seqEC2IPjEET_S7_.exit: ; preds = %bb.a
   store ptr %i.c, ptr %0, align 8, !tbaa !10, !alias.scope !7
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
 }
 
@@ -63,7 +63,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #13
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #12
           to label %.noexc unwind label %bb.d
 
 .noexc:                                           ; preds = %bb.b
@@ -75,7 +75,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not26, label %_ZNSt6vectorIjSaIjEE7reserveEm.exit, label %_ZNSt12_Vector_baseIjSaIjEE11_M_allocateEm.exit.i
 
 _ZNSt12_Vector_baseIjSaIjEE11_M_allocateEm.exit.i: ; preds = %bb.c
-  %i.f = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #11
+  %i.f = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.c) #10
           to label %.noexc12 unwind label %bb.d   ; 4 uses
 
 .noexc12:                                         ; preds = %_ZNSt12_Vector_baseIjSaIjEE11_M_allocateEm.exit.i
@@ -127,7 +127,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.u, label %bb.h, label %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.h:                                             ; preds = %bb.g
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #13
+  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #12
           to label %.noexc13 unwind label %.loopexit.split-lp
 
 .noexc13:                                         ; preds = %bb.h
@@ -139,11 +139,9 @@ _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %i.w = add nsw i64 %.sroa.speculated.i.i.i.i, %i.v ; 2 uses
   %i.x = icmp ult i64 %i.w, %i.v
   %i.y = tail call i64 @llvm.umin.i64(i64 %i.w, i64 2305843009213693951)
-  %i.z = select i1 %i.x, i64 2305843009213693951, i64 %i.y ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.z, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.z = select i1 %i.x, i64 2305843009213693951, i64 %i.y ; 2 uses
   %i.aa = shl nuw nsw i64 %i.z, 2
-  %i.ab = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #11
+  %i.ab = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aa) #10
           to label %.noexc14 unwind label %.loopexit ; 5 uses
 
 .noexc14:                                         ; preds = %_ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i.i
@@ -162,7 +160,7 @@ _ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i: ; preds = %bb.i, %.
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.t) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.m, i64 noundef %i.t) #11
   br label %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i.i: ; preds = %bb.j, %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i.i
@@ -202,7 +200,7 @@ bb.l:                                             ; preds = %bb.k
   %i.an = ptrtoint ptr %i.am to i64
   %i.ao = ptrtoint ptr %i.ak to i64
   %i.ap = sub i64 %i.an, %i.ao
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ap) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.ak, i64 noundef %i.ap) #11
   br label %_ZNSt6vectorIjSaIjEED2Ev.exit
 
 _ZNSt6vectorIjSaIjEED2Ev.exit:                    ; preds = %bb.k, %bb.l
@@ -229,11 +227,8 @@ declare i64 @llvm.umax.i64(i64, i64) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #7
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #8
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #9
+declare void @llvm.experimental.noalias.scope.decl(metadata) #8
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -243,12 +238,11 @@ attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #5 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #10 = { nounwind }
-attributes #11 = { builtin allocsize(0) }
-attributes #12 = { builtin nounwind }
-attributes #13 = { noreturn }
+attributes #8 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #9 = { nounwind }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { builtin nounwind }
+attributes #12 = { noreturn }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

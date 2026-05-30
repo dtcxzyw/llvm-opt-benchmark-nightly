@@ -201,9 +201,7 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.el = add nsw i64 %.sroa.speculated.i.i.i.i, %i.ek ; 2 uses
   %i.em = icmp ult i64 %i.el, %i.ek
   %i.en = call i64 @llvm.umin.i64(i64 %i.el, i64 2305843009213693951)
-  %i.eo = select i1 %i.em, i64 2305843009213693951, i64 %i.en ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.eo, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.eo = select i1 %i.em, i64 2305843009213693951, i64 %i.en ; 2 uses
   %i.ep = shl nuw nsw i64 %i.eo, 2
   %i.eq = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ep) #20 ; 8 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.eq, i64 %i.ei
@@ -606,9 +604,7 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.n = add nsw i64 %.sroa.speculated.i.i.i.i, %i.m ; 2 uses
   %i.o = icmp ult i64 %i.n, %i.m
   %i.p = tail call i64 @llvm.umin.i64(i64 %i.n, i64 2305843009213693951)
-  %i.q = select i1 %i.o, i64 2305843009213693951, i64 %i.p ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.q, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.q = select i1 %i.o, i64 2305843009213693951, i64 %i.p ; 2 uses
   %i.r = shl nuw nsw i64 %i.q, 2
   %i.s = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.r) #20 ; 8 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 %i.k
@@ -1011,29 +1007,21 @@ _ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit: ; pred
   %i.cp = add nsw i64 %.sroa.speculated.i, %i.cm  ; 2 uses
   %i.cq = icmp ult i64 %i.cp, %i.cm
   %i.cr = tail call i64 @llvm.umin.i64(i64 %i.cp, i64 2305843009213693951)
-  %i.cs = select i1 %i.cq, i64 2305843009213693951, i64 %i.cr ; 3 uses
+  %i.cs = select i1 %i.cq, i64 2305843009213693951, i64 %i.cr ; 2 uses
   %i.ct = ptrtoint ptr %1 to i64                  ; 4 uses
   %i.cu = sub i64 %i.ct, %i.ck
-  %.not.i = icmp eq i64 %i.cs, 0
-  br i1 %.not.i, label %.lr.ph.preheader.i.i.i.i65, label %4
-
-4:                                                ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit
-  %5 = shl nuw nsw i64 %i.cs, 2
-  %6 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #20
-  br label %.lr.ph.preheader.i.i.i.i65
-
-.lr.ph.preheader.i.i.i.i65:                       ; preds = %4, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit
-  %7 = phi ptr [ %6, %4 ], [ null, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit ] ; 8 uses
-  %8 = ptrtoaddr ptr %7 to i64
-  %9 = getelementptr inbounds nuw i8, ptr %7, i64 %i.cu ; 3 uses
+  %4 = shl nuw nsw i64 %i.cs, 2
+  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #20 ; 8 uses
+  %6 = ptrtoaddr ptr %5 to i64
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 %i.cu ; 3 uses
   %.pre.i.i.i.i66 = load i32, ptr %3, align 4     ; 2 uses
-  %min.iters.check179 = icmp ult i64 %2, 8
-  br i1 %min.iters.check179, label %.lr.ph.i.i.i.i67.preheader, label %vector.ph180
+  %min.iters.check178 = icmp ult i64 %2, 8
+  br i1 %min.iters.check178, label %.lr.ph.i.i.i.i67.preheader, label %vector.ph180
 
-vector.ph180:                                     ; preds = %.lr.ph.preheader.i.i.i.i65
+vector.ph180:                                     ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit
   %n.vec182 = and i64 %2, -8                      ; 3 uses
   %i.cv = shl i64 %n.vec182, 2
-  %i.cw = getelementptr i8, ptr %9, i64 %i.cv
+  %i.cw = getelementptr i8, ptr %7, i64 %i.cv
   %i.cx = and i64 %2, 7
   %broadcast.splatinsert183 = insertelement <4 x i32> poison, i32 %.pre.i.i.i.i66, i64 0
   %broadcast.splat184 = shufflevector <4 x i32> %broadcast.splatinsert183, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
@@ -1042,7 +1030,7 @@ vector.ph180:                                     ; preds = %.lr.ph.preheader.i.
 vector.body185:                                   ; preds = %vector.body185, %vector.ph180
   %index186 = phi i64 [ 0, %vector.ph180 ], [ %index.next188, %vector.body185 ] ; 2 uses
   %i.cy = shl i64 %index186, 2
-  %next.gep187 = getelementptr i8, ptr %9, i64 %i.cy ; 2 uses
+  %next.gep187 = getelementptr i8, ptr %7, i64 %i.cy ; 2 uses
   %i.cz = getelementptr i8, ptr %next.gep187, i64 16
   store <4 x i32> %broadcast.splat184, ptr %next.gep187, align 4
   store <4 x i32> %broadcast.splat184, ptr %i.cz, align 4
@@ -1054,9 +1042,9 @@ middle.block189:                                  ; preds = %vector.body185
   %cmp.n190 = icmp eq i64 %2, %n.vec182
   br i1 %cmp.n190, label %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72, label %.lr.ph.i.i.i.i67.preheader
 
-.lr.ph.i.i.i.i67.preheader:                       ; preds = %.lr.ph.preheader.i.i.i.i65, %middle.block189
-  %.09.i.i.i.i68.ph = phi ptr [ %9, %.lr.ph.preheader.i.i.i.i65 ], [ %i.cw, %middle.block189 ]
-  %.068.i.i.i.i69.ph = phi i64 [ %2, %.lr.ph.preheader.i.i.i.i65 ], [ %i.cx, %middle.block189 ]
+.lr.ph.i.i.i.i67.preheader:                       ; preds = %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit, %middle.block189
+  %.09.i.i.i.i68.ph = phi ptr [ %7, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.cw, %middle.block189 ]
+  %.068.i.i.i.i69.ph = phi i64 [ %2, %_ZNKSt6vectorIN6hermes2vm12RootSymbolIDESaIS2_EE12_M_check_lenEmPKc.exit ], [ %i.cx, %middle.block189 ]
   br label %.lr.ph.i.i.i.i67
 
 .lr.ph.i.i.i.i67:                                 ; preds = %.lr.ph.i.i.i.i67.preheader, %.lr.ph.i.i.i.i67
@@ -1078,7 +1066,7 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
   %i.df = lshr i64 %i.de, 2
   %i.dg = add nuw nsw i64 %i.df, 1                ; 2 uses
   %min.iters.check196 = icmp ult i64 %i.de, 28
-  %i.dh = sub i64 %8, %i.ck
+  %i.dh = sub i64 %6, %i.ck
   %diff.check194 = icmp ult i64 %i.dh, 32
   %or.cond230 = or i1 %min.iters.check196, %diff.check194
   br i1 %or.cond230, label %.lr.ph.i.i.i.i.i74.preheader232, label %vector.ph197
@@ -1086,14 +1074,14 @@ _ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_R
 vector.ph197:                                     ; preds = %.lr.ph.i.i.i.i.i74.preheader
   %n.vec199 = and i64 %i.dg, 9223372036854775800  ; 3 uses
   %i.di = shl i64 %n.vec199, 2                    ; 2 uses
-  %i.dj = getelementptr i8, ptr %7, i64 %i.di     ; 2 uses
+  %i.dj = getelementptr i8, ptr %5, i64 %i.di     ; 2 uses
   %i.dk = getelementptr i8, ptr %i.cj, i64 %i.di
   br label %vector.body200
 
 vector.body200:                                   ; preds = %vector.body200, %vector.ph197
   %index201 = phi i64 [ 0, %vector.ph197 ], [ %index.next206, %vector.body200 ] ; 2 uses
   %i.dl = shl i64 %index201, 2                    ; 2 uses
-  %next.gep202.a = getelementptr i8, ptr %7, i64 %i.dl ; 2 uses
+  %next.gep202.a = getelementptr i8, ptr %5, i64 %i.dl ; 2 uses
   %next.gep203 = getelementptr i8, ptr %i.cj, i64 %i.dl ; 2 uses
   %i.dm = getelementptr i8, ptr %next.gep203, i64 16
   %wide.load204.a = load <4 x i32>, ptr %next.gep203, align 4
@@ -1110,7 +1098,7 @@ middle.block207:                                  ; preds = %vector.body200
   br i1 %cmp.n208, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i74.preheader232
 
 .lr.ph.i.i.i.i.i74.preheader232:                  ; preds = %.lr.ph.i.i.i.i.i74.preheader, %middle.block207
-  %.09.i.i.i.i.i75.ph = phi ptr [ %7, %.lr.ph.i.i.i.i.i74.preheader ], [ %i.dj, %middle.block207 ]
+  %.09.i.i.i.i.i75.ph = phi ptr [ %5, %.lr.ph.i.i.i.i.i74.preheader ], [ %i.dj, %middle.block207 ]
   %.sroa.04.08.i.i.i.i.i76.ph = phi ptr [ %i.cj, %.lr.ph.i.i.i.i.i74.preheader ], [ %i.dk, %middle.block207 ]
   br label %.lr.ph.i.i.i.i.i74
 
@@ -1125,7 +1113,7 @@ middle.block207:                                  ; preds = %vector.body200
   br i1 %.not.i.i.i.i.i77, label %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit, label %.lr.ph.i.i.i.i.i74, !llvm.loop !474
 
 _ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit: ; preds = %.lr.ph.i.i.i.i.i74, %middle.block207, %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72
-  %.0.lcssa.i.i.i.i.i78 = phi ptr [ %7, %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72 ], [ %i.dj, %middle.block207 ], [ %i.dr, %.lr.ph.i.i.i.i.i74 ] ; 2 uses
+  %.0.lcssa.i.i.i.i.i78 = phi ptr [ %5, %_ZSt24__uninitialized_fill_n_aIPN6hermes2vm12RootSymbolIDEmS2_S2_ET_S4_T0_RKT1_RSaIT2_E.exit72 ], [ %i.dj, %middle.block207 ], [ %i.dr, %.lr.ph.i.i.i.i.i74 ] ; 2 uses
   %.0.lcssa.i.i.i.i.i78212 = ptrtoaddr ptr %.0.lcssa.i.i.i.i.i78 to i64
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %.0.lcssa.i.i.i.i.i78, i64 %2 ; 5 uses
   %.not7.i.i.i.i.i79 = icmp eq ptr %1, %i.d
@@ -1200,9 +1188,9 @@ bb.k:                                             ; preds = %_ZSt34__uninitializ
   br label %_ZNSt12_Vector_baseIN6hermes2vm12RootSymbolIDESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN6hermes2vm12RootSymbolIDESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPN6hermes2vm12RootSymbolIDES3_SaIS2_EET0_T_S6_S5_RT1_.exit85, %bb.k
-  store ptr %7, ptr %0, align 8, !tbaa !96
+  store ptr %5, ptr %0, align 8, !tbaa !96
   store ptr %.0.lcssa.i.i.i.i.i84, ptr %i.c, align 8, !tbaa !148
-  %i.en = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.cs
+  %i.en = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.cs
   store ptr %i.en, ptr %i.a, align 8, !tbaa !116
   br label %_ZSt4fillIPN6hermes2vm12RootSymbolIDES2_EvT_S4_RKT0_.exit
 

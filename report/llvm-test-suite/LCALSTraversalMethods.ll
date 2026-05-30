@@ -50,7 +50,7 @@ bb.a:
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
-  tail call void @_ZdlPv(ptr noundef nonnull %i.k) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %i.k) #10
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EED2Ev.exit
 
 _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EED2Ev.exit: ; preds = %._crit_edge, %bb.b
@@ -84,7 +84,7 @@ bb.e:                                             ; preds = %.lr.ph
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.sink.split: ; preds = %bb.d, %bb.c
   %.sink = phi ptr [ %i.p, %bb.c ], [ %i.r, %bb.d ]
-  tail call void @_ZdlPv(ptr noundef nonnull %.sink) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %.sink) #10
   br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
 
 _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.sink.split, %bb.e, %bb.d, %bb.c
@@ -96,7 +96,7 @@ bb.f:                                             ; preds = %bb.e
   %i.t = landingpad { ptr, i32 }
           catch ptr null
   %i.u = extractvalue { ptr, i32 } %i.t, 0
-  tail call void @__clang_call_terminate(ptr %i.u) #12
+  tail call void @__clang_call_terminate(ptr %i.u) #11
   unreachable
 }
 
@@ -108,8 +108,8 @@ declare i32 @__gxx_personality_v0(...)
 ; Function Attrs: noinline noreturn nounwind uwtable
 define linkonce_odr hidden void @__clang_call_terminate(ptr noundef %0) local_unnamed_addr #2 comdat {
 bb.a:
-  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #13 ; 0 uses
-  tail call void @_ZSt9terminatev() #12
+  %i.a = tail call ptr @__cxa_begin_catch(ptr %0) #12 ; 0 uses
+  tail call void @_ZSt9terminatev() #11
   unreachable
 }
 
@@ -175,7 +175,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN14HybridIndexSet11addIndexSetERK13RangeIndexSet(ptr noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #14 ; 5 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #13 ; 5 uses
   %i.b = load i32, ptr %1, align 4, !tbaa !20     ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !22   ; 3 uses
@@ -208,7 +208,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.q, label %bb.d, label %_ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #15
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #14
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
@@ -217,11 +217,9 @@ _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.s = add nsw i64 %.sroa.speculated.i.i.i.i, %i.r ; 2 uses
   %i.t = icmp ult i64 %i.s, %i.r
   %i.u = tail call i64 @llvm.umin.i64(i64 %i.s, i64 576460752303423487)
-  %i.v = select i1 %i.t, i64 576460752303423487, i64 %i.u ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.v, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.v = select i1 %i.t, i64 576460752303423487, i64 %i.u ; 2 uses
   %i.w = shl nuw nsw i64 %i.v, 4
-  %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #14 ; 5 uses
+  %i.x = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #13 ; 5 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 %i.p ; 2 uses
   store i32 0, ptr %i.y, align 8, !tbaa !24
   %.sroa.58.0..sroa_idx9 = getelementptr inbounds nuw i8, ptr %i.y, i64 8
@@ -245,7 +243,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.m) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %i.m) #10
   %.pre.pre = load i32, ptr %i.e, align 4, !tbaa !22
   %.pre11.pre = load i32, ptr %i.a, align 4, !tbaa !20
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
@@ -272,7 +270,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit: ; preds = %
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN14HybridIndexSet11addIndexSetERK19RangeStrideIndexSet(ptr noundef nonnull align 8 captures(none) dereferenceable(32) %0, ptr noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #14 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #13 ; 6 uses
   %i.b = load i32, ptr %1, align 4, !tbaa !37     ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.d = load i32, ptr %i.c, align 4, !tbaa !39   ; 3 uses
@@ -309,7 +307,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.t, label %bb.d, label %_ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #15
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #14
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
@@ -318,11 +316,9 @@ _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.v = add nsw i64 %.sroa.speculated.i.i.i.i, %i.u ; 2 uses
   %i.w = icmp ult i64 %i.v, %i.u
   %i.x = tail call i64 @llvm.umin.i64(i64 %i.v, i64 576460752303423487)
-  %i.y = select i1 %i.w, i64 576460752303423487, i64 %i.x ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.y, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.y = select i1 %i.w, i64 576460752303423487, i64 %i.x ; 2 uses
   %i.z = shl nuw nsw i64 %i.y, 4
-  %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #14 ; 5 uses
+  %i.aa = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #13 ; 5 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.s ; 2 uses
   store i32 1, ptr %i.ab, align 8, !tbaa !24
   %.sroa.510.0..sroa_idx11 = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
@@ -346,7 +342,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.p) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %i.p) #10
   %.pre.pre = load i32, ptr %i.g, align 4, !tbaa !39
   %.pre13.pre = load i32, ptr %i.a, align 4, !tbaa !37
   %.pre14.pre = load i32, ptr %i.h, align 4, !tbaa !40
@@ -380,7 +376,7 @@ declare noundef nonnull ptr @_Znwm(i64 noundef) local_unnamed_addr #5
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN14HybridIndexSet15addRangeIndicesEii(ptr noundef nonnull align 8 captures(none) dereferenceable(32) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #14 ; 5 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #13 ; 5 uses
   store i32 %1, ptr %i.a, align 4, !tbaa !20
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store i32 %2, ptr %i.b, align 4, !tbaa !22
@@ -410,7 +406,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.n, label %bb.d, label %_ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #15
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #14
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
@@ -419,11 +415,9 @@ _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.p = add nsw i64 %.sroa.speculated.i.i.i.i, %i.o ; 2 uses
   %i.q = icmp ult i64 %i.p, %i.o
   %i.r = tail call i64 @llvm.umin.i64(i64 %i.p, i64 576460752303423487)
-  %i.s = select i1 %i.q, i64 576460752303423487, i64 %i.r ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.s, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.s = select i1 %i.q, i64 576460752303423487, i64 %i.r ; 2 uses
   %i.t = shl nuw nsw i64 %i.s, 4
-  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #14 ; 5 uses
+  %i.u = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.t) #13 ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 %i.m ; 2 uses
   store i32 0, ptr %i.v, align 8, !tbaa !24
   %.sroa.57.0..sroa_idx8 = getelementptr inbounds nuw i8, ptr %i.v, i64 8
@@ -447,7 +441,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.j) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %i.j) #10
   %.pre.pre = load i32, ptr %i.b, align 4, !tbaa !22
   %.pre10.pre = load i32, ptr %i.a, align 4, !tbaa !20
   br label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i
@@ -474,7 +468,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE9push_backEOS1_.exit: ; preds = %
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN14HybridIndexSet21addRangeStrideIndicesEiii(ptr noundef nonnull align 8 captures(none) dereferenceable(32) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #14 ; 6 uses
+  %i.a = tail call noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #13 ; 6 uses
   store i32 %1, ptr %i.a, align 4, !tbaa !37
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4 ; 2 uses
   store i32 %2, ptr %i.b, align 4, !tbaa !39
@@ -506,7 +500,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.o, label %bb.d, label %_ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #15
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.2) #14
   unreachable
 
 _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.c
@@ -515,11 +509,9 @@ _ZNKSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: 
   %i.q = add nsw i64 %.sroa.speculated.i.i.i.i, %i.p ; 2 uses
   %i.r = icmp ult i64 %i.q, %i.p
   %i.s = tail call i64 @llvm.umin.i64(i64 %i.q, i64 576460752303423487)
-  %i.t = select i1 %i.r, i64 576460752303423487, i64 %i.s ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.t, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.t = select i1 %i.r, i64 576460752303423487, i64 %i.s ; 2 uses
   %i.u = shl nuw nsw i64 %i.t, 4
-  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #14 ; 5 uses
+  %i.v = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.u) #13 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.n ; 2 uses
   store i32 1, ptr %i.w, align 8, !tbaa !24
   %.sroa.59.0..sroa_idx10 = getelementptr inbounds nuw i8, ptr %i.w, i64 8
@@ -543,7 +535,7 @@ _ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit
   br i1 %.not.i23.i.i.i, label %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %_ZNSt6vectorIN14HybridIndexSet7SegmentESaIS1_EE11_S_relocateEPS1_S4_S4_RS2_.exit22.i.i.i
-  tail call void @_ZdlPv(ptr noundef nonnull %i.k) #11
+  tail call void @_ZdlPv(ptr noundef nonnull %i.k) #10
   %.pre.pre = load i32, ptr %i.b, align 4, !tbaa !39
   %.pre12.pre = load i32, ptr %i.a, align 4, !tbaa !37
   %.pre13.pre = load i32, ptr %i.c, align 4, !tbaa !40
@@ -585,9 +577,6 @@ declare i64 @llvm.umax.i64(i64, i64) #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #9
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
-
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { noinline noreturn nounwind uwtable "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -598,12 +587,11 @@ attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #8 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { builtin nounwind }
-attributes #12 = { noreturn nounwind }
-attributes #13 = { nounwind }
-attributes #14 = { builtin allocsize(0) }
-attributes #15 = { noreturn }
+attributes #10 = { builtin nounwind }
+attributes #11 = { noreturn nounwind }
+attributes #12 = { nounwind }
+attributes #13 = { builtin allocsize(0) }
+attributes #14 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -201,37 +201,29 @@ _ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 54901024028897475)
-  %i.l = select i1 %i.j, i64 54901024028897475, i64 %i.k ; 4 uses
+  %i.l = select i1 %i.j, i64 54901024028897475, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp eq i64 %i.l, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_M_allocateEm.exit, label %3
-
-3:                                                ; preds = %_ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check_lenEmPKc.exit
-  %4 = mul nuw nsw i64 %i.l, 168
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #26
-  br label %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check_lenEmPKc.exit, %3
-  %6 = phi ptr [ %5, %3 ], [ null, %_ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check_lenEmPKc.exit ] ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.n ; 5 uses
-  invoke void @_ZN22photos_editing_formats8image_io11DataScannerC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(168) %7, ptr noundef nonnull align 8 dereferenceable(100) %2)
+  %3 = mul nuw nsw i64 %i.l, 168                  ; 2 uses
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %3) #26 ; 6 uses
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 %i.n ; 5 uses
+  invoke void @_ZN22photos_editing_formats8image_io11DataScannerC2ERKS1_(ptr noundef nonnull align 8 dereferenceable(168) %5, ptr noundef nonnull align 8 dereferenceable(100) %2)
           to label %bb.c unwind label %bb.n
 
-bb.c:                                             ; preds = %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_M_allocateEm.exit
-  %i.o = getelementptr inbounds nuw i8, ptr %7, i64 104
+bb.c:                                             ; preds = %_ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check_lenEmPKc.exit
+  %i.o = getelementptr inbounds nuw i8, ptr %5, i64 104
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.o, i8 0, i64 32, i1 false)
-  %i.p = getelementptr inbounds nuw i8, ptr %7, i64 136
-  %i.q = getelementptr inbounds nuw i8, ptr %7, i64 152 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 136
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 152 ; 2 uses
   store ptr %i.q, ptr %i.p, align 8, !tbaa !9
-  %i.r = getelementptr inbounds nuw i8, ptr %7, i64 144
+  %i.r = getelementptr inbounds nuw i8, ptr %5, i64 144
   store i64 0, ptr %i.r, align 8, !tbaa !16
   store i8 0, ptr %i.q, align 8, !tbaa !18
   %.not10.i.i.i = icmp eq ptr %i.c, %1
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.br, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %6, %bb.c ] ; 15 uses
+  %.012.i.i.i = phi ptr [ %i.br, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %4, %bb.c ] ; 15 uses
   %.0911.i.i.i = phi ptr [ %i.bq, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.c, %bb.c ] ; 21 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !96)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !99)
@@ -364,7 +356,7 @@ _ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaI
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit, label %.lr.ph.i.i.i, !llvm.loop !103
 
 _ZNSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit: ; preds = %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i, %bb.c
-  %.0.lcssa.i.i.i = phi ptr [ %6, %bb.c ], [ %i.br, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %4, %bb.c ], [ %i.br, %_ZSt19__relocate_object_aIN22photos_editing_formats8image_io11XmlTerminalES2_SaIS2_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.bs = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 168 ; 2 uses
   %.not10.i.i.i26 = icmp eq ptr %1, %i.b
   br i1 %.not10.i.i.i26, label %_ZNSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit46, label %.lr.ph.i.i.i27
@@ -516,9 +508,9 @@ bb.l:                                             ; preds = %_ZNSt6vectorIN22pho
   br label %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE13_M_deallocateEPS2_m.exit
 
 _ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE13_M_deallocateEPS2_m.exit: ; preds = %_ZNSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_S_relocateEPS2_S5_S5_RS3_.exit46, %bb.l
-  store ptr %6, ptr %0, align 8, !tbaa !24
+  store ptr %4, ptr %0, align 8, !tbaa !24
   store ptr %.0.lcssa.i.i.i45, ptr %i.a, align 8, !tbaa !19
-  %i.dx = getelementptr inbounds nuw [168 x i8], ptr %6, i64 %i.l
+  %i.dx = getelementptr inbounds nuw [168 x i8], ptr %4, i64 %i.l
   store ptr %i.dx, ptr %i.dt, align 8, !tbaa !22
   ret void
 
@@ -528,13 +520,12 @@ bb.m:                                             ; preds = %bb.n
   invoke void @__cxa_end_catch()
           to label %bb.o unwind label %bb.p
 
-bb.n:                                             ; preds = %_ZNSt12_Vector_baseIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE11_M_allocateEm.exit
+bb.n:                                             ; preds = %_ZNKSt6vectorIN22photos_editing_formats8image_io11XmlTerminalESaIS2_EE12_M_check_lenEmPKc.exit
   %i.dz = landingpad { ptr, i32 }
           catch ptr null
   %i.ea = extractvalue { ptr, i32 } %i.dz, 0
   %i.eb = tail call ptr @__cxa_begin_catch(ptr %i.ea) #22 ; 0 uses
-  %8 = mul nuw nsw i64 %i.l, 168
-  tail call void @_ZdlPvm(ptr noundef nonnull %6, i64 noundef %8) #23
+  tail call void @_ZdlPvm(ptr noundef nonnull %4, i64 noundef %3) #23
   invoke void @__cxa_rethrow() #24
           to label %bb.q unwind label %bb.m
 

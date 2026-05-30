@@ -201,9 +201,7 @@ _ZNKSt6vectorImSaImEE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.ac
   %i.cz = add nsw i64 %.sroa.speculated.i.i.i.i, %i.cy ; 2 uses
   %i.da = icmp ult i64 %i.cz, %i.cy
   %i.db = tail call i64 @llvm.umin.i64(i64 %i.cz, i64 1152921504606846975)
-  %i.dc = select i1 %i.da, i64 1152921504606846975, i64 %i.db ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.dc, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.dc = select i1 %i.da, i64 1152921504606846975, i64 %i.db ; 2 uses
   %i.dd = shl nuw nsw i64 %i.dc, 3
   %i.de = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.dd) #16
           to label %.noexc133 unwind label %.loopexit ; 4 uses
@@ -606,9 +604,6 @@ declare i64 @llvm.umax.i64(i64, i64) #6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #6
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
-
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
@@ -617,6 +612,9 @@ declare i64 @llvm.vector.reduce.add.v24i64(<24 x i64>) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v32i64(<32 x i64>) #6
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #14
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
