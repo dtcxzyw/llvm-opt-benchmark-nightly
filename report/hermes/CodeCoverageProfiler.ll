@@ -201,32 +201,24 @@ bb.a:
   %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = icmp eq i64 %i.h, 9223372036854775800
-  br i1 %i.i, label %bb.b, label %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit
+  br i1 %i.i, label %bb.b, label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #16
   unreachable
 
-_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit: ; preds = %bb.a
   %6 = sdiv exact i64 %i.h, 40                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %6, i64 1)
   %7 = add nsw i64 %.sroa.speculated.i, %6        ; 2 uses
   %8 = icmp ult i64 %7, %6
   %9 = tail call i64 @llvm.umin.i64(i64 %7, i64 230584300921369395)
-  %10 = select i1 %8, i64 230584300921369395, i64 %9 ; 3 uses
+  %10 = select i1 %8, i64 230584300921369395, i64 %9 ; 2 uses
   %11 = ptrtoint ptr %1 to i64
   %12 = sub i64 %11, %i.g
-  %.not.i = icmp eq i64 %10, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit, label %13
-
-13:                                               ; preds = %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit
-  %14 = mul nuw nsw i64 %10, 40
-  %15 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %14) #15
-  br label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit, %13
-  %16 = phi ptr [ %15, %13 ], [ null, %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %16, i64 %12 ; 5 uses
+  %13 = mul nuw nsw i64 %10, 40
+  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #15 ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %14, i64 %12 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.k = load i32, ptr %2, align 4, !tbaa !3
   %i.l = load i32, ptr %3, align 4, !tbaa !3
@@ -331,7 +323,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6h
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.bh, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 5 uses
+  %.012.i.i.i = phi ptr [ %i.bh, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 5 uses
   %.0911.i.i.i = phi ptr [ %i.bg, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !201)
   call void @llvm.experimental.noalias.scope.decl(metadata !204)
@@ -377,7 +369,7 @@ _ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EE
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i, !llvm.loop !207
 
 _ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.0.lcssa.i.i.i = phi ptr [ %16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.bh, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.bh, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.bi = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 40 ; 2 uses
   %.not10.i.i.i18 = icmp eq ptr %1, %i.d
   br i1 %.not10.i.i.i18, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, label %.lr.ph.i.i.i19
@@ -442,9 +434,9 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN6herm
   br label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, %bb.k
-  store ptr %16, ptr %0, align 8, !tbaa !133
+  store ptr %14, ptr %0, align 8, !tbaa !133
   store ptr %.0.lcssa.i.i.i27, ptr %i.c, align 8, !tbaa !136
-  %i.ce = getelementptr inbounds nuw [40 x i8], ptr %16, i64 %10
+  %i.ce = getelementptr inbounds nuw [40 x i8], ptr %14, i64 %10
   store ptr %i.ce, ptr %i.ca, align 8, !tbaa !140
   ret void
 }
@@ -465,32 +457,24 @@ bb.a:
   %i.g = ptrtoint ptr %i.e to i64                 ; 3 uses
   %i.h = sub i64 %i.f, %i.g                       ; 2 uses
   %i.i = icmp eq i64 %i.h, 9223372036854775800
-  br i1 %i.i, label %bb.b, label %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit
+  br i1 %i.i, label %bb.b, label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.1) #16
   unreachable
 
-_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit: ; preds = %bb.a
+_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit: ; preds = %bb.a
   %6 = sdiv exact i64 %i.h, 40                    ; 3 uses
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %6, i64 1)
   %7 = add nsw i64 %.sroa.speculated.i, %6        ; 2 uses
   %8 = icmp ult i64 %7, %6
   %9 = tail call i64 @llvm.umin.i64(i64 %7, i64 230584300921369395)
-  %10 = select i1 %8, i64 230584300921369395, i64 %9 ; 3 uses
+  %10 = select i1 %8, i64 230584300921369395, i64 %9 ; 2 uses
   %11 = ptrtoint ptr %1 to i64
   %12 = sub i64 %11, %i.g
-  %.not.i = icmp eq i64 %10, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit, label %13
-
-13:                                               ; preds = %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit
-  %14 = mul nuw nsw i64 %10, 40
-  %15 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %14) #15
-  br label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit, %13
-  %16 = phi ptr [ %15, %13 ], [ null, %_ZNKSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.j = getelementptr inbounds nuw i8, ptr %16, i64 %12 ; 9 uses
+  %13 = mul nuw nsw i64 %10, 40
+  %14 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %13) #15 ; 5 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %14, i64 %12 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.k = load i32, ptr %2, align 4, !tbaa !3      ; 2 uses
   %i.l = load i32, ptr %3, align 4, !tbaa !3      ; 2 uses
@@ -619,7 +603,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZN6h
   br i1 %.not10.i.i.i, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i
-  %.012.i.i.i = phi ptr [ %i.bm, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 5 uses
+  %.012.i.i.i = phi ptr [ %i.bm, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 5 uses
   %.0911.i.i.i = phi ptr [ %i.bl, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ], [ %i.e, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 7 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !221)
   call void @llvm.experimental.noalias.scope.decl(metadata !224)
@@ -665,7 +649,7 @@ _ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EE
   br i1 %.not.i.i.i, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit, label %.lr.ph.i.i.i, !llvm.loop !207
 
 _ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit: ; preds = %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.0.lcssa.i.i.i = phi ptr [ %16, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.bm, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
+  %.0.lcssa.i.i.i = phi ptr [ %14, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.bm, %_ZSt19__relocate_object_aIN6hermes2vm20CodeCoverageProfiler8FuncInfoES3_SaIS3_EEvPT_PT0_RT1_.exit.i.i.i ]
   %i.bn = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i, i64 40 ; 2 uses
   %.not10.i.i.i18 = icmp eq ptr %1, %i.d
   br i1 %.not10.i.i.i18, label %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, label %.lr.ph.i.i.i19
@@ -730,9 +714,9 @@ bb.l:                                             ; preds = %_ZNSt6vectorIN6herm
   br label %_ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZNSt6vectorIN6hermes2vm20CodeCoverageProfiler8FuncInfoESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit28, %bb.l
-  store ptr %16, ptr %0, align 8, !tbaa !133
+  store ptr %14, ptr %0, align 8, !tbaa !133
   store ptr %.0.lcssa.i.i.i27, ptr %i.c, align 8, !tbaa !136
-  %i.cj = getelementptr inbounds nuw [40 x i8], ptr %16, i64 %10
+  %i.cj = getelementptr inbounds nuw [40 x i8], ptr %14, i64 %10
   store ptr %i.cj, ptr %i.cf, align 8, !tbaa !140
   ret void
 }

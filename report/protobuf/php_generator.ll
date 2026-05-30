@@ -201,9 +201,7 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.tx = add nsw i64 %.sroa.speculated.i.i.i, %i.tw ; 2 uses
   %i.ty = icmp ult i64 %i.tx, %i.tw
   %i.tz = call i64 @llvm.umin.i64(i64 %i.tx, i64 288230376151711743)
-  %i.ua = select i1 %i.ty, i64 288230376151711743, i64 %i.tz ; 3 uses
-  %.not.i.i.i79 = icmp ne i64 %i.ua, 0
-  call void @llvm.assume(i1 %.not.i.i.i79)
+  %i.ua = select i1 %i.ty, i64 288230376151711743, i64 %i.tz ; 2 uses
   %i.ub = shl nuw nsw i64 %i.ua, 5
   %i.uc = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ub) #32
           to label %.noexc353.i unwind label %.loopexit502.i ; 5 uses
@@ -499,9 +497,7 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.xj = add nsw i64 %.sroa.speculated.i.i355.i, %i.xi ; 2 uses
   %i.xk = icmp ult i64 %i.xj, %i.xi
   %i.xl = call i64 @llvm.umin.i64(i64 %i.xj, i64 288230376151711743)
-  %i.xm = select i1 %i.xk, i64 288230376151711743, i64 %i.xl ; 3 uses
-  %.not.i.i356.i = icmp ne i64 %i.xm, 0
-  call void @llvm.assume(i1 %.not.i.i356.i)
+  %i.xm = select i1 %i.xk, i64 288230376151711743, i64 %i.xl ; 2 uses
   %i.xn = shl nuw nsw i64 %i.xm, 5
   %i.xo = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.xn) #32
           to label %.noexc379.i unwind label %.loopexit.i ; 5 uses
@@ -904,9 +900,7 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.act = add nsw i64 %.sroa.speculated.i.i388.i, %i.acs ; 2 uses
   %i.acu = icmp ult i64 %i.act, %i.acs
   %i.acv = call i64 @llvm.umin.i64(i64 %i.act, i64 288230376151711743)
-  %i.acw = select i1 %i.acu, i64 288230376151711743, i64 %i.acv ; 3 uses
-  %.not.i.i389.i = icmp ne i64 %i.acw, 0
-  call void @llvm.assume(i1 %.not.i.i389.i)
+  %i.acw = select i1 %i.acu, i64 288230376151711743, i64 %i.acv ; 2 uses
   %i.acx = shl nuw nsw i64 %i.acw, 5
   %i.acy = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.acx) #32
           to label %.noexc412.i unwind label %.loopexit497.i ; 5 uses
@@ -1309,9 +1303,7 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.aou = add nsw i64 %.sroa.speculated.i.i253, %i.aot ; 2 uses
   %i.aov = icmp ult i64 %i.aou, %i.aot
   %i.aow = call i64 @llvm.umin.i64(i64 %i.aou, i64 288230376151711743)
-  %i.aox = select i1 %i.aov, i64 288230376151711743, i64 %i.aow ; 3 uses
-  %.not.i.i254 = icmp ne i64 %i.aox, 0
-  call void @llvm.assume(i1 %.not.i.i254)
+  %i.aox = select i1 %i.aov, i64 288230376151711743, i64 %i.aow ; 2 uses
   %i.aoy = shl nuw nsw i64 %i.aox, 5
   %i.aoz = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aoy) #32
           to label %.noexc257 unwind label %.loopexit ; 5 uses
@@ -1714,11 +1706,9 @@ _ZNKSt6vectorISt8functionIFSt8optionalIN6google8protobuf2io7Printer9ValueImplILb
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 288230376151711743)
-  %i.l = select i1 %i.j, i64 288230376151711743, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 288230376151711743, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 5
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #32 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n ; 4 uses
@@ -2121,31 +2111,23 @@ _ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEm
   %i.df = add nsw i64 %.sroa.speculated.i, %i.dc  ; 2 uses
   %i.dg = icmp ult i64 %i.df, %i.dc
   %i.dh = tail call i64 @llvm.umin.i64(i64 %i.df, i64 576460752303423487)
-  %i.di = select i1 %i.dg, i64 576460752303423487, i64 %i.dh ; 3 uses
-  %.not.i = icmp eq i64 %i.di, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit, label %4
+  %i.di = select i1 %i.dg, i64 576460752303423487, i64 %i.dh ; 2 uses
+  %4 = shl nuw nsw i64 %i.di, 4
+  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #32 ; 4 uses
+  %.not.i = icmp eq ptr %i.cz, %1
+  br i1 %.not.i, label %.lr.ph.i.i.i.i77.preheader, label %.lr.ph.i.i.i.i.i71
 
-4:                                                ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit
-  %5 = shl nuw nsw i64 %i.di, 4
-  %6 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #32
-  br label %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit, %4
-  %7 = phi ptr [ %6, %4 ], [ null, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 4 uses
-  %.not11.i.i.i.i.i70 = icmp eq ptr %i.cz, %1
-  br i1 %.not11.i.i.i.i.i70, label %.lr.ph.i.i.i.i77.preheader, label %.lr.ph.i.i.i.i.i71
-
-.lr.ph.i.i.i.i.i71:                               ; preds = %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit, %.lr.ph.i.i.i.i.i71
-  %.013.i.i.i.i.i72 = phi ptr [ %i.dk, %.lr.ph.i.i.i.i.i71 ], [ %7, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i73 = phi ptr [ %i.dj, %.lr.ph.i.i.i.i.i71 ], [ %i.cz, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit ] ; 2 uses
+.lr.ph.i.i.i.i.i71:                               ; preds = %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i.i.i71
+  %.013.i.i.i.i.i72 = phi ptr [ %i.dk, %.lr.ph.i.i.i.i.i71 ], [ %5, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i73 = phi ptr [ %i.dj, %.lr.ph.i.i.i.i.i71 ], [ %i.cz, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.013.i.i.i.i.i72, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.08.012.i.i.i.i.i73, i64 16, i1 false), !tbaa.struct !520
   %i.dj = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i73, i64 16 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %.013.i.i.i.i.i72, i64 16 ; 2 uses
   %.not.i.i.i.i.i74 = icmp eq ptr %i.dj, %1
   br i1 %.not.i.i.i.i.i74, label %.lr.ph.i.i.i.i77.preheader, label %.lr.ph.i.i.i.i.i71, !llvm.loop !1073
 
-.lr.ph.i.i.i.i77.preheader:                       ; preds = %.lr.ph.i.i.i.i.i71, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit
-  %.011.i.i.i.i78.ph = phi ptr [ %7, %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE11_M_allocateEm.exit ], [ %i.dk, %.lr.ph.i.i.i.i.i71 ]
+.lr.ph.i.i.i.i77.preheader:                       ; preds = %.lr.ph.i.i.i.i.i71, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit
+  %.011.i.i.i.i78.ph = phi ptr [ %5, %_ZNKSt6vectorISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE12_M_check_lenEmPKc.exit ], [ %i.dk, %.lr.ph.i.i.i.i.i71 ]
   br label %.lr.ph.i.i.i.i77
 
 .lr.ph.i.i.i.i77:                                 ; preds = %.lr.ph.i.i.i.i77.preheader, %.lr.ph.i.i.i.i77
@@ -2188,9 +2170,9 @@ bb.j:                                             ; preds = %_ZSt34__uninitializ
   br label %_ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseISt17basic_string_viewIcSt11char_traitsIcEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPSt17basic_string_viewIcSt11char_traitsIcEES4_SaIS3_EET0_T_S7_S6_RT1_.exit89, %bb.j
-  store ptr %7, ptr %0, align 8, !tbaa !1049
+  store ptr %5, ptr %0, align 8, !tbaa !1049
   store ptr %.0.lcssa.i.i.i.i.i88, ptr %i.g, align 8, !tbaa !1046
-  %i.dw = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.di
+  %i.dw = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.di
   store ptr %i.dw, ptr %i.e, align 8, !tbaa !1051
   br label %_ZSt4copyIPZNK4absl12lts_2025051216strings_internal8SplitterINS1_6ByCharENS1_9SkipEmptyESt17basic_string_viewIcSt11char_traitsIcEEE18ConvertToContainerISt6vectorIS9_SaIS9_EES9_Lb0EEclERKSA_E8raw_viewN9__gnu_cxx17__normal_iteratorIPS9_SE_EEET0_T_SP_SO_.exit
 

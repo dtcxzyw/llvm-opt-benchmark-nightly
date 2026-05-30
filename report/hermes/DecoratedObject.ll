@@ -44,7 +44,7 @@ _ZNKSt14default_deleteIN6hermes2vm15DecoratedObject10DecorationEEclEPS3_.exit.i.
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.e = load ptr, ptr %i.d, align 8
-  tail call void %i.e(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.b) #10, !inline_history !12
+  tail call void %i.e(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %i.b) #9, !inline_history !12
   br label %_ZN6hermes2vm15DecoratedObjectD2Ev.exit
 
 _ZN6hermes2vm15DecoratedObjectD2Ev.exit:          ; preds = %bb.a, %_ZNKSt14default_deleteIN6hermes2vm15DecoratedObject10DecorationEEclEPS3_.exit.i.i
@@ -63,7 +63,7 @@ bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !10
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b) #10
+  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b) #9
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -100,7 +100,7 @@ bb.b:                                             ; preds = %bb.a
   br label %_ZN6hermes2vm8Metadata7Builder23addJSObjectOverlapSlotsEj.exit
 
 _ZN6hermes2vm8Metadata7Builder23addJSObjectOverlapSlotsEj.exit: ; preds = %bb.a, %bb.b
-  tail call void @_ZN6hermes2vm17JSObjectBuildMetaEPKNS0_6GCCellERNS0_8Metadata7BuilderE(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(224) %1) #10
+  tail call void @_ZN6hermes2vm17JSObjectBuildMetaEPKNS0_6GCCellERNS0_8Metadata7BuilderE(ptr noundef %0, ptr noundef nonnull align 8 dereferenceable(224) %1) #9
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 216
   store ptr @_ZN6hermes2vm15DecoratedObject2vtE, ptr %i.e, align 8, !tbaa !19
   ret void
@@ -115,14 +115,14 @@ bb.a:
   %5 = alloca %"class.hermes::vm::Handle.163", align 8 ; 4 uses
   store ptr %1, ptr %4, align 8
   %i.a = add i32 %3, 3                            ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 9496
   %i.c = zext i32 %i.a to i64
   %i.d = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %i.c
   store ptr %i.d, ptr %5, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 856
   %i.f = call noundef ptr @_ZN6hermes2vm7HadesGC5makeAINS0_15DecoratedObjectELb1ELNS0_12HasFinalizerE1ELNS0_9LongLivedE0EJRNS0_7RuntimeERNS0_6HandleINS0_8JSObjectEEENS8_INS0_11HiddenClassEEESt10unique_ptrINS3_10DecorationESt14default_deleteISF_EEEEEPT_jDpOT3_(ptr noundef nonnull align 8 dereferenceable(8112) %i.e, i32 noundef 40, ptr noundef nonnull align 8 dereferenceable(9816) %0, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef nonnull align 8 dereferenceable(8) %5, ptr noundef nonnull align 8 dereferenceable(8) %2) ; 4 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   %.01320.i.ptr.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   store i32 14, ptr %.01320.i.ptr.i.i, align 4, !tbaa !3
   %.01320.i.ptr.1.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 36
@@ -149,7 +149,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i
 
 bb.d:                                             ; preds = %bb.b
-  %i.r = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.k, i64 %i.i) #10
+  %i.r = call noundef ptr @_ZN6hermes2vm7GCScope15_newChunkAndPHVENS0_11HermesValueE(ptr noundef nonnull align 8 dereferenceable(212) %i.k, i64 %i.i) #9
   br label %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i
 
 _ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i: ; preds = %bb.d, %bb.c
@@ -170,7 +170,7 @@ _ZN6hermes2vm8JSObject19allocatePropStorageENS0_12PseudoHandleIS1_EERNS0_7Runtim
   br i1 %.not.i, label %_ZN6hermes2vm8JSObject19allocatePropStorageENS0_12PseudoHandleIS1_EERNS0_7RuntimeEj.exit.thread, label %_ZN6hermes2vm7Runtime23ignoreAllocationFailureINS0_12PseudoHandleINS0_8JSObjectEEEEET_NS0_10CallResultIS6_Xsr6detail23GetCallResultSpecializeIS6_EE5valueEEE.exit, !prof !53
 
 _ZN6hermes2vm8JSObject19allocatePropStorageENS0_12PseudoHandleIS1_EERNS0_7RuntimeEj.exit.thread: ; preds = %_ZN6hermes2vm15HandleRootOwner10makeHandleINS0_8JSObjectEEENS0_6HandleIT_EEONS0_12PseudoHandleIS5_EE.exit.i, %_ZN6hermes2vm8JSObject19allocatePropStorageENS0_12PseudoHandleIS1_EERNS0_7RuntimeEj.exit
-  call void @_ZN6hermes12hermes_fatalEPKc(ptr noundef nonnull @.str.1) #11
+  call void @_ZN6hermes12hermes_fatalEPKc(ptr noundef nonnull @.str.1) #10
   unreachable
 
 _ZN6hermes2vm7Runtime23ignoreAllocationFailureINS0_12PseudoHandleINS0_8JSObjectEEEEET_NS0_10CallResultIS6_Xsr6detail23GetCallResultSpecializeIS6_EE5valueEEE.exit: ; preds = %_ZN6hermes2vm8JSObject19allocatePropStorageENS0_12PseudoHandleIS1_EERNS0_7RuntimeEj.exit
@@ -192,7 +192,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden void @_ZN6hermes2vm15DecoratedObject10DecorationD0Ev(ptr noundef nonnull align 8 dead_on_return(8) dereferenceable(8) %0) unnamed_addr #1 comdat align 2 {
 bb.a:
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 8) #11
   ret void
 }
 
@@ -227,7 +227,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = and i64 %i.f, 281474976710655
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 856
   %i.r = inttoptr i64 %i.p to ptr
-  tail call void @_ZN6hermes2vm7HadesGC16writeBarrierSlowEPKNS0_13GCPointerBaseEPKNS0_6GCCellE(ptr noundef nonnull align 8 dereferenceable(8112) %i.q, ptr noundef nonnull align 4 dereferenceable(4) %i.i, ptr noundef %i.r) #10
+  tail call void @_ZN6hermes2vm7HadesGC16writeBarrierSlowEPKNS0_13GCPointerBaseEPKNS0_6GCCellE(ptr noundef nonnull align 8 dereferenceable(8112) %i.q, ptr noundef nonnull align 4 dereferenceable(4) %i.i, ptr noundef %i.r) #9
   br label %_ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_13HermesValue32EEEE10setNonNullERNS0_11PointerBaseEPS4_RNS0_7HadesGCE.exit
 
 _ZN6hermes2vm9GCPointerINS0_16ArrayStorageBaseINS0_13HermesValue32EEEE10setNonNullERNS0_11PointerBaseEPS4_RNS0_7HadesGCE.exit: ; preds = %bb.c, %bb.d
@@ -265,7 +265,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 856
-  %i.l = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %i.k, i32 noundef %i.d) #10
+  %i.l = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %i.k, i32 noundef %i.d) #9
   br label %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.exit.thread
 
 bb.d:                                             ; preds = %bb.b
@@ -282,7 +282,7 @@ _ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.exi
   br label %bb.e
 
 _ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.exit: ; preds = %bb.a
-  %i.q = tail call noundef i32 @_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE27throwExcessiveCapacityErrorERNS0_7RuntimeEj(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 noundef %1) #10 ; 2 uses
+  %i.q = tail call noundef i32 @_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE27throwExcessiveCapacityErrorERNS0_7RuntimeEj(ptr noundef nonnull align 8 dereferenceable(9816) %0, i32 noundef %1) #9 ; 2 uses
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %bb.f, label %bb.e, !prof !61
 
@@ -292,7 +292,7 @@ bb.e:                                             ; preds = %_ZN6hermes2vm16Arra
   %i.s = and i64 %.sroa.3.0.i10, 281474976710655
   %i.t = inttoptr i64 %i.s to ptr
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 856
-  tail call void @_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE20resizeWithinCapacityEPS3_RNS0_7HadesGCEj(ptr noundef %i.t, ptr noundef nonnull align 8 dereferenceable(8112) %i.u, i32 noundef %2) #10
+  tail call void @_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE20resizeWithinCapacityEPS3_RNS0_7HadesGCEj(ptr noundef %i.t, ptr noundef nonnull align 8 dereferenceable(8112) %i.u, i32 noundef %2) #9
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6hermes2vm16ArrayStorageBaseINS0_13HermesValue32EE6createERNS0_7RuntimeEj.exit, %bb.e
@@ -327,7 +327,7 @@ bb.a:
   br i1 %.not.i.not.i, label %bb.b, label %bb.c, !prof !52
 
 bb.b:                                             ; preds = %bb.a
-  %i.g = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %0, i32 noundef %1) #10
+  %i.g = tail call noundef ptr @_ZN6hermes2vm7HadesGC9allocSlowEj(ptr noundef nonnull align 8 dereferenceable(8112) %0, i32 noundef %1) #9
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -359,7 +359,7 @@ bb.f:                                             ; preds = %bb.d
   br i1 %i.s, label %bb.g, label %_ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i
 
 bb.g:                                             ; preds = %bb.f
-  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #11
+  tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str) #10
   unreachable
 
 _ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.f
@@ -368,11 +368,9 @@ _ZNKSt6vectorIPN6hermes2vm6GCCellESaIS3_EE12_M_check_lenEmPKc.exit.i.i.i: ; pred
   %i.u = add nsw i64 %.sroa.speculated.i.i.i.i, %i.t ; 2 uses
   %i.v = icmp ult i64 %i.u, %i.t
   %i.w = tail call i64 @llvm.umin.i64(i64 %i.u, i64 1152921504606846975)
-  %i.x = select i1 %i.v, i64 1152921504606846975, i64 %i.w ; 3 uses
-  %.not.i.i.i.i = icmp ne i64 %i.x, 0
-  tail call void @llvm.assume(i1 %.not.i.i.i.i)
+  %i.x = select i1 %i.v, i64 1152921504606846975, i64 %i.w ; 2 uses
   %i.y = shl nuw nsw i64 %i.x, 3
-  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #13 ; 4 uses
+  %i.z = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.y) #12 ; 4 uses
   %i.aa = getelementptr inbounds i8, ptr %i.z, i64 %i.r ; 2 uses
   store ptr %i.h, ptr %i.aa, align 8, !tbaa !67
   %i.ab = icmp sgt i64 %i.r, 0
@@ -388,7 +386,7 @@ _ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i
   br i1 %.not.i17.i.i.i, label %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.r) #12
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.o, i64 noundef %i.r) #11
   br label %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i
 
 _ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE17_M_realloc_insertIJS3_EEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i.i: ; preds = %bb.i, %_ZNSt6vectorIPN6hermes2vm6GCCellESaIS3_EE11_S_relocateEPS3_S6_S6_RS4_.exit16.i.i.i
@@ -450,9 +448,6 @@ declare i64 @llvm.umax.i64(i64, i64) #8
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #8
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #9
-
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -462,11 +457,10 @@ attributes #5 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #6 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { noreturn nounwind }
-attributes #12 = { builtin nounwind }
-attributes #13 = { builtin nounwind allocsize(0) }
+attributes #9 = { nounwind }
+attributes #10 = { noreturn nounwind }
+attributes #11 = { builtin nounwind }
+attributes #12 = { builtin nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

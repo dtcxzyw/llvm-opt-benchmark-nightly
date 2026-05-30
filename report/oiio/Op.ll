@@ -201,23 +201,15 @@ _ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc
   %i.eh = add nsw i64 %.sroa.speculated.i, %i.ee  ; 2 uses
   %i.ei = icmp ult i64 %i.eh, %i.ee
   %i.ej = tail call i64 @llvm.umin.i64(i64 %i.eh, i64 576460752303423487)
-  %i.ek = select i1 %i.ei, i64 576460752303423487, i64 %i.ej ; 3 uses
-  %.not.i = icmp eq i64 %i.ek, 0
-  br i1 %.not.i, label %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit, label %4
+  %i.ek = select i1 %i.ei, i64 576460752303423487, i64 %i.ej ; 2 uses
+  %4 = shl nuw nsw i64 %i.ek, 4
+  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %4) #25 ; 4 uses
+  %.not.i = icmp eq ptr %i.eb, %1
+  br i1 %.not.i, label %.lr.ph.i.i.i.i87.preheader, label %.lr.ph.i.i.i.i.i81
 
-4:                                                ; preds = %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit
-  %5 = shl nuw nsw i64 %i.ek, 4
-  %6 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %5) #25
-  br label %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit
-
-_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit: ; preds = %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit, %4
-  %7 = phi ptr [ %6, %4 ], [ null, %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 4 uses
-  %.not11.i.i.i.i.i80 = icmp eq ptr %i.eb, %1
-  br i1 %.not11.i.i.i.i.i80, label %.lr.ph.i.i.i.i87.preheader, label %.lr.ph.i.i.i.i.i81
-
-.lr.ph.i.i.i.i.i81:                               ; preds = %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit, %.lr.ph.i.i.i.i.i81
-  %.013.i.i.i.i.i82 = phi ptr [ %i.eo, %.lr.ph.i.i.i.i.i81 ], [ %7, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit ] ; 2 uses
-  %.sroa.08.012.i.i.i.i.i83 = phi ptr [ %i.en, %.lr.ph.i.i.i.i.i81 ], [ %i.eb, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit ] ; 4 uses
+.lr.ph.i.i.i.i.i81:                               ; preds = %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit, %.lr.ph.i.i.i.i.i81
+  %.013.i.i.i.i.i82 = phi ptr [ %i.eo, %.lr.ph.i.i.i.i.i81 ], [ %5, %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 2 uses
+  %.sroa.08.012.i.i.i.i.i83 = phi ptr [ %i.en, %.lr.ph.i.i.i.i.i81 ], [ %i.eb, %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit ] ; 4 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.08.012.i.i.i.i.i83, i64 8
   %i.em = load <2 x ptr>, ptr %.sroa.08.012.i.i.i.i.i83, align 8, !tbaa !62
   store ptr null, ptr %i.el, align 8, !tbaa !21
@@ -228,8 +220,8 @@ _ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocate
   %.not.i.i.i.i.i84 = icmp eq ptr %i.en, %1
   br i1 %.not.i.i.i.i.i84, label %.lr.ph.i.i.i.i87.preheader, label %.lr.ph.i.i.i.i.i81, !llvm.loop !397
 
-.lr.ph.i.i.i.i87.preheader:                       ; preds = %.lr.ph.i.i.i.i.i81, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit
-  %.09.i.i.i.i88.ph = phi ptr [ %7, %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE11_M_allocateEm.exit ], [ %i.eo, %.lr.ph.i.i.i.i.i81 ]
+.lr.ph.i.i.i.i87.preheader:                       ; preds = %.lr.ph.i.i.i.i.i81, %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit
+  %.09.i.i.i.i88.ph = phi ptr [ %5, %_ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc.exit ], [ %i.eo, %.lr.ph.i.i.i.i.i81 ]
   br label %.lr.ph.i.i.i.i87
 
 .lr.ph.i.i.i.i87:                                 ; preds = %.lr.ph.i.i.i.i87.preheader, %_ZSt10_ConstructISt10shared_ptrIN16OpenColorIO_v2_52OpEEJRKS3_EEvPT_DpOT0_.exit.i.i.i.i92
@@ -356,9 +348,9 @@ bb.as:                                            ; preds = %_ZSt8_DestroyIPSt10
   br label %_ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE13_M_deallocateEPS3_m.exit
 
 _ZNSt12_Vector_baseISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE13_M_deallocateEPS3_m.exit: ; preds = %_ZSt8_DestroyIPSt10shared_ptrIN16OpenColorIO_v2_52OpEEEvT_S5_.exit, %bb.as
-  store ptr %7, ptr %0, align 8, !tbaa !59
+  store ptr %5, ptr %0, align 8, !tbaa !59
   store ptr %.0.lcssa.i.i.i.i.i101, ptr %i.g, align 8, !tbaa !65
-  %i.fz = getelementptr inbounds nuw [16 x i8], ptr %7, i64 %i.ek
+  %i.fz = getelementptr inbounds nuw [16 x i8], ptr %5, i64 %i.ek
   store ptr %i.fz, ptr %i.e, align 8, !tbaa !69
   br label %_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKSt10shared_ptrIN16OpenColorIO_v2_52OpEESt6vectorIS5_SaIS5_EEEENS1_IPS5_SA_EEET0_T_SF_SE_.exit
 
@@ -753,11 +745,9 @@ _ZNKSt6vectorISt10shared_ptrIN16OpenColorIO_v2_52OpEESaIS3_EE12_M_check_lenEmPKc
   %i.i = add nsw i64 %.sroa.speculated.i, %i.h    ; 2 uses
   %i.j = icmp ult i64 %i.i, %i.h
   %i.k = tail call i64 @llvm.umin.i64(i64 %i.i, i64 576460752303423487)
-  %i.l = select i1 %i.j, i64 576460752303423487, i64 %i.k ; 3 uses
+  %i.l = select i1 %i.j, i64 576460752303423487, i64 %i.k ; 2 uses
   %i.m = ptrtoint ptr %1 to i64
   %i.n = sub i64 %i.m, %i.e
-  %.not.i = icmp ne i64 %i.l, 0
-  tail call void @llvm.assume(i1 %.not.i)
   %i.o = shl nuw nsw i64 %i.l, 4
   %i.p = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #25 ; 5 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.n

@@ -201,6 +201,9 @@ middle.block:                                     ; preds = %vector.body
 
 declare double @cpu_timer_stop(i64, i64) local_unnamed_addr #3
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
 declare void @_ZN4Mesh24calc_spatial_coordinatesEi(ptr noundef nonnull align 8 dereferenceable(2288), i32 noundef) local_unnamed_addr #3
 
 declare void @_ZN4Mesh17calc_centerminmaxEv(ptr noundef nonnull align 8 dereferenceable(2288)) local_unnamed_addr #3
@@ -478,31 +481,23 @@ bb.q:                                             ; preds = %bb.b
   %i.bt = ashr exact i64 %i.bs, 2                 ; 4 uses
   %i.bu = sub nsw i64 2305843009213693951, %i.bt
   %i.bv = icmp ult i64 %i.bu, %2
-  br i1 %i.bv, label %bb.r, label %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
+  br i1 %i.bv, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
   tail call void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.18) #19
   unreachable
 
-_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit:    ; preds = %bb.q
+bb.s:                                             ; preds = %bb.q
   %.sroa.speculated.i = tail call i64 @llvm.umax.i64(i64 %i.bt, i64 %2)
   %4 = add nsw i64 %.sroa.speculated.i, %i.bt     ; 2 uses
   %5 = icmp ult i64 %4, %i.bt
   %6 = tail call i64 @llvm.umin.i64(i64 %4, i64 2305843009213693951)
-  %7 = select i1 %5, i64 2305843009213693951, i64 %6 ; 3 uses
+  %7 = select i1 %5, i64 2305843009213693951, i64 %6 ; 2 uses
   %8 = ptrtoint ptr %1 to i64                     ; 2 uses
   %9 = sub i64 %8, %i.br                          ; 4 uses
-  %.not.i = icmp eq i64 %7, 0
-  br i1 %.not.i, label %bb.s, label %10
-
-10:                                               ; preds = %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
-  %11 = shl nuw nsw i64 %7, 2
-  %12 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %11) #17
-  br label %bb.s
-
-bb.s:                                             ; preds = %10, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit
-  %13 = phi ptr [ %12, %10 ], [ null, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %i.bw = getelementptr inbounds i8, ptr %13, i64 %9 ; 5 uses
+  %10 = shl nuw nsw i64 %7, 2
+  %11 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %10) #17 ; 5 uses
+  %i.bw = getelementptr inbounds i8, ptr %11, i64 %9 ; 5 uses
   %.idx.i.i.i.i.i75 = shl nuw nsw i64 %2, 2       ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 %.idx.i.i.i.i.i75
   %i.by = load i32, ptr %3, align 4, !tbaa !4     ; 2 uses
@@ -551,7 +546,7 @@ _ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80: ; preds = %.l
   br i1 %i.ci, label %bb.t, label %bb.u, !prof !153
 
 bb.t:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 4 %13, ptr align 4 %i.bq, i64 %9, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %11, ptr align 4 %i.bq, i64 %9, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
 
 bb.u:                                             ; preds = %_ZSt24__uninitialized_fill_n_aIPimiiET_S1_T0_RKT1_RSaIT2_E.exit80
@@ -560,7 +555,7 @@ bb.u:                                             ; preds = %_ZSt24__uninitializ
 
 bb.v:                                             ; preds = %bb.u
   %i.ck = load i32, ptr %i.bq, align 4, !tbaa !4
-  store i32 %i.ck, ptr %13, align 4, !tbaa !4
+  store i32 %i.ck, ptr %11, align 4, !tbaa !4
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit: ; preds = %bb.v, %bb.u, %bb.t
@@ -570,7 +565,7 @@ _ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit: ; pred
   br i1 %i.cn, label %bb.w, label %bb.x, !prof !153
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.cl, ptr align 4 %1, i64 %i.cm, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.cl, ptr align 4 %1, i64 %i.cm, i1 false)
   br label %bb.z
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPiS0_SaIiEET0_T_S3_S2_RT1_.exit
@@ -593,9 +588,9 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit
 
 _ZNSt12_Vector_baseIiSaIiEE13_M_deallocateEPim.exit: ; preds = %bb.z, %bb.aa
-  store ptr %13, ptr %0, align 8, !tbaa !81
+  store ptr %11, ptr %0, align 8, !tbaa !81
   store ptr %i.cq, ptr %i.c, align 8, !tbaa !80
-  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %13, i64 %7
+  %i.cs = getelementptr inbounds nuw [4 x i8], ptr %11, i64 %7
   store ptr %i.cs, ptr %i.a, align 8, !tbaa !150
   br label %_ZSt4fillIPiiEvT_S1_RKT0_.exit
 

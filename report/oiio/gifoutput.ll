@@ -201,45 +201,37 @@ _ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit:    ; preds = %bb.r
   %i.an = add i64 %.sroa.speculated.i, %i.ak      ; 2 uses
   %i.ao = icmp ult i64 %i.an, %i.ak
   %i.ap = tail call i64 @llvm.umin.i64(i64 %i.an, i64 9223372036854775807)
-  %i.aq = select i1 %i.ao, i64 9223372036854775807, i64 %i.ap ; 3 uses
+  %i.aq = select i1 %i.ao, i64 9223372036854775807, i64 %i.ap ; 2 uses
   %i.ar = ptrtoint ptr %1 to i64                  ; 2 uses
   %i.as = sub i64 %i.ar, %i.aj                    ; 4 uses
-  %.not.i = icmp eq i64 %i.aq, 0
-  br i1 %.not.i, label %6, label %4
+  %4 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #40 ; 5 uses
+  %5 = getelementptr inbounds i8, ptr %4, i64 %i.as ; 2 uses
+  %6 = load i8, ptr %3, align 1, !tbaa !9
+  tail call void @llvm.memset.p0.i64(ptr nonnull align 1 %5, i8 %6, i64 %2, i1 false)
+  %7 = icmp sgt i64 %i.as, 1
+  br i1 %7, label %bb.t, label %bb.u, !prof !734
 
-4:                                                ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
-  %5 = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.aq) #40
-  br label %6
-
-6:                                                ; preds = %4, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
-  %7 = phi ptr [ %5, %4 ], [ null, %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit ] ; 5 uses
-  %8 = getelementptr inbounds i8, ptr %7, i64 %i.as ; 2 uses
-  %9 = load i8, ptr %3, align 1, !tbaa !9
-  tail call void @llvm.memset.p0.i64(ptr align 1 %8, i8 %9, i64 %2, i1 false)
-  %10 = icmp sgt i64 %i.as, 1
-  br i1 %10, label %bb.t, label %bb.u, !prof !734
-
-bb.t:                                             ; preds = %6
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %7, ptr align 1 %i.ai, i64 %i.as, i1 false)
+bb.t:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %4, ptr align 1 %i.ai, i64 %i.as, i1 false)
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
 
-bb.u:                                             ; preds = %6
+bb.u:                                             ; preds = %_ZNKSt6vectorIhSaIhEE12_M_check_lenEmPKc.exit
   %i.at = icmp eq i64 %i.as, 1
   br i1 %i.at, label %bb.v, label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
 
 bb.v:                                             ; preds = %bb.u
   %i.au = load i8, ptr %i.ai, align 1, !tbaa !9
-  store i8 %i.au, ptr %7, align 1, !tbaa !9
+  store i8 %i.au, ptr %4, align 1, !tbaa !9
   br label %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
 
 _ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit: ; preds = %bb.v, %bb.u, %bb.t
-  %i.av = getelementptr inbounds nuw i8, ptr %8, i64 %2 ; 3 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %5, i64 %2 ; 3 uses
   %i.aw = sub i64 %i.f, %i.ar                     ; 4 uses
   %i.ax = icmp sgt i64 %i.aw, 1
   br i1 %i.ax, label %bb.w, label %bb.x, !prof !734
 
 bb.w:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.av, ptr align 1 %1, i64 %i.aw, i1 false)
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.av, ptr align 1 %1, i64 %i.aw, i1 false)
   br label %bb.z
 
 bb.x:                                             ; preds = %_ZSt34__uninitialized_move_if_noexcept_aIPhS0_SaIhEET0_T_S3_S2_RT1_.exit
@@ -262,9 +254,9 @@ bb.aa:                                            ; preds = %bb.z
   br label %_ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit
 
 _ZNSt12_Vector_baseIhSaIhEE13_M_deallocateEPhm.exit: ; preds = %bb.z, %bb.aa
-  store ptr %7, ptr %0, align 8, !tbaa !81
+  store ptr %4, ptr %0, align 8, !tbaa !81
   store ptr %i.ba, ptr %i.c, align 8, !tbaa !106
-  %i.bc = getelementptr inbounds nuw i8, ptr %7, i64 %i.aq
+  %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 %i.aq
   store ptr %i.bc, ptr %i.a, align 8, !tbaa !82
   br label %_ZSt4fillIPhhEvT_S1_RKT0_.exit
 
