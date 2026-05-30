@@ -12,9 +12,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @AES_ige_encrypt(ptr noundef readonly captures(address) %0, ptr noundef %1, i64 noundef %2, ptr noundef %3, ptr noundef captures(address_is_null) %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = alloca %struct.aes_block_t, align 16       ; 8 uses
+  %6 = alloca %struct.aes_block_t, align 16       ; 9 uses
   %7 = alloca %struct.aes_block_t, align 16       ; 4 uses
-  %8 = alloca %struct.aes_block_t, align 16       ; 10 uses
+  %8 = alloca %struct.aes_block_t, align 16       ; 11 uses
   %i.a = lshr i64 %2, 4                           ; 4 uses
   %i.b = icmp eq i64 %2, 0
   br i1 %i.b, label %bb.k, label %bb.b
@@ -108,21 +108,25 @@ bb.i:                                             ; preds = %bb.h
   %.sroa.6199.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.ah = load <2 x i64>, ptr %i.ag, align 1
   %i.ai = load <2 x i64>, ptr %4, align 1
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 8
   br label %.lr.ph181
 
 .lr.ph181:                                        ; preds = %.lr.ph181.preheader, %.lr.ph181
   %.1179 = phi ptr [ %0, %.lr.ph181.preheader ], [ %i.aq, %.lr.ph181 ] ; 2 uses
   %.1120178 = phi ptr [ %1, %.lr.ph181.preheader ], [ %i.ar, %.lr.ph181 ] ; 2 uses
   %.1130177 = phi i64 [ %i.a, %.lr.ph181.preheader ], [ %i.ap, %.lr.ph181 ]
-  %i.aj = phi <2 x i64> [ %i.ah, %.lr.ph181.preheader ], [ %i.al, %.lr.ph181 ]
-  %i.ak = phi <2 x i64> [ %i.ai, %.lr.ph181.preheader ], [ %i.ao, %.lr.ph181 ]
+  %i.aj = phi <2 x i64> [ %i.ai, %.lr.ph181.preheader ], [ %i.ao, %.lr.ph181 ]
+  %i.ak = phi <2 x i64> [ %i.ah, %.lr.ph181.preheader ], [ %i.al, %.lr.ph181 ]
   %i.al = load <2 x i64>, ptr %.1179, align 1     ; 4 uses
-  %i.am = xor <2 x i64> %i.ak, %i.al
+  %i.am = xor <2 x i64> %i.aj, %i.al
   store <2 x i64> %i.am, ptr %6, align 16, !tbaa !9
   call void @AES_encrypt(ptr noundef nonnull %6, ptr noundef nonnull %6, ptr noundef nonnull %3) #5
   %i.an = load <2 x i64>, ptr %6, align 16, !tbaa !9
-  %i.ao = xor <2 x i64> %i.an, %i.aj              ; 4 uses
-  store <2 x i64> %i.ao, ptr %6, align 16, !tbaa !9
+  %i.ao = xor <2 x i64> %i.an, %i.ak              ; 3 uses
+  %10 = extractelement <2 x i64> %i.ao, i64 0     ; 2 uses
+  store i64 %10, ptr %6, align 16, !tbaa !9
+  %11 = extractelement <2 x i64> %i.ao, i64 1     ; 2 uses
+  store i64 %11, ptr %9, align 8, !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.1120178, ptr noundef nonnull align 16 dereferenceable(16) %6, i64 16, i1 false), !tbaa.struct !13
   %i.ap = add nsw i64 %.1130177, -1               ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %.1179, i64 16
@@ -131,10 +135,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not143, label %._crit_edge182, label %.lr.ph181, !llvm.loop !15
 
 ._crit_edge182:                                   ; preds = %.lr.ph181
-  %9 = extractelement <2 x i64> %i.ao, i64 0
-  store i64 %9, ptr %4, align 1
-  %10 = extractelement <2 x i64> %i.ao, i64 1
-  store i64 %10, ptr %.sroa.6207.0..sroa_idx, align 1
+  store i64 %10, ptr %4, align 1
+  store i64 %11, ptr %.sroa.6207.0..sroa_idx, align 1
   %i.as = extractelement <2 x i64> %i.al, i64 0
   store i64 %i.as, ptr %i.ag, align 1
   %i.at = extractelement <2 x i64> %i.al, i64 1
@@ -192,22 +194,26 @@ bb.j:                                             ; preds = %bb.h
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 24
   %i.bn = load <2 x i64>, ptr %i.bm, align 1
   %i.bo = load <2 x i64>, ptr %4, align 1
+  %.sroa.0.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %8, i64 8
   br label %.lr.ph161
 
 .lr.ph161:                                        ; preds = %.lr.ph161.preheader, %.lr.ph161
   %.3159 = phi ptr [ %0, %.lr.ph161.preheader ], [ %i.bw, %.lr.ph161 ] ; 2 uses
   %.3122158 = phi ptr [ %1, %.lr.ph161.preheader ], [ %i.bx, %.lr.ph161 ] ; 2 uses
   %.3132157 = phi i64 [ %i.a, %.lr.ph161.preheader ], [ %i.bv, %.lr.ph161 ]
-  %i.bp = phi <2 x i64> [ %i.bo, %.lr.ph161.preheader ], [ %i.br, %.lr.ph161 ]
-  %i.bq = phi <2 x i64> [ %i.bn, %.lr.ph161.preheader ], [ %i.bu, %.lr.ph161 ]
+  %i.bp = phi <2 x i64> [ %i.bn, %.lr.ph161.preheader ], [ %i.bu, %.lr.ph161 ]
+  %i.bq = phi <2 x i64> [ %i.bo, %.lr.ph161.preheader ], [ %i.br, %.lr.ph161 ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %8, ptr noundef nonnull align 1 dereferenceable(16) %.3159, i64 16, i1 false), !tbaa.struct !13
   %i.br = load <2 x i64>, ptr %8, align 16        ; 4 uses
-  %i.bs = xor <2 x i64> %i.br, %i.bq
+  %i.bs = xor <2 x i64> %i.br, %i.bp
   store <2 x i64> %i.bs, ptr %8, align 16, !tbaa !9
   call void @AES_decrypt(ptr noundef nonnull %8, ptr noundef nonnull %8, ptr noundef nonnull %3) #5
   %i.bt = load <2 x i64>, ptr %8, align 16, !tbaa !9
-  %i.bu = xor <2 x i64> %i.bt, %i.bp              ; 4 uses
-  store <2 x i64> %i.bu, ptr %8, align 16, !tbaa !9
+  %i.bu = xor <2 x i64> %i.bt, %i.bq              ; 3 uses
+  %12 = extractelement <2 x i64> %i.bu, i64 0     ; 2 uses
+  store i64 %12, ptr %8, align 16, !tbaa !9
+  %13 = extractelement <2 x i64> %i.bu, i64 1     ; 2 uses
+  store i64 %13, ptr %.sroa.0.sroa.4.0..sroa_idx, align 8, !tbaa !9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %.3122158, ptr noundef nonnull align 16 dereferenceable(16) %8, i64 16, i1 false), !tbaa.struct !13
   %i.bv = add nsw i64 %.3132157, -1               ; 2 uses
   %i.bw = getelementptr inbounds nuw i8, ptr %.3159, i64 16
@@ -220,10 +226,8 @@ bb.j:                                             ; preds = %bb.h
   store i64 %i.by, ptr %4, align 1
   %i.bz = extractelement <2 x i64> %i.br, i64 1
   store i64 %i.bz, ptr %.sroa.6193.0..sroa_idx, align 1
-  %11 = extractelement <2 x i64> %i.bu, i64 0
-  store i64 %11, ptr %i.bm, align 1
-  %12 = extractelement <2 x i64> %i.bu, i64 1
-  store i64 %12, ptr %.sroa.6.0..sroa_idx, align 1
+  store i64 %12, ptr %i.bm, align 1
+  store i64 %13, ptr %.sroa.6.0..sroa_idx, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   br label %bb.k
 

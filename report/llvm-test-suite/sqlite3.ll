@@ -201,7 +201,7 @@ bb.s:                                             ; preds = %bb.r
 
 bb.t:                                             ; preds = %bb.s
   %i.ed = icmp eq i32 %i.do, 0
-  %i.ee = load ptr, ptr %i.di, align 8, !tbaa !801 ; 2 uses
+  %i.ee = load ptr, ptr %i.di, align 8, !tbaa !801 ; 5 uses
   br i1 %i.ed, label %bb.u, label %bb.x
 
 bb.u:                                             ; preds = %bb.t
@@ -222,12 +222,26 @@ bb.w:                                             ; preds = %bb.u
 
 bb.x:                                             ; preds = %bb.t
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ee, i64 8
-  %5 = load <4 x i8>, ptr %i.ek, align 1, !tbaa !37 ; 6 uses
-  %6 = bitcast <4 x i8> %5 to i32                 ; 2 uses
-  %7 = tail call i32 @llvm.bswap.i32(i32 %6)      ; 2 uses
+  %5 = load i8, ptr %i.ek, align 1, !tbaa !37     ; 3 uses
+  %6 = zext i8 %5 to i32
+  %7 = shl nuw i32 %6, 24
+  %8 = getelementptr inbounds nuw i8, ptr %i.ee, i64 9
+  %9 = load i8, ptr %8, align 1, !tbaa !37        ; 3 uses
+  %10 = zext i8 %9 to i32
+  %11 = shl nuw nsw i32 %10, 16
+  %12 = or disjoint i32 %11, %7
+  %13 = getelementptr inbounds nuw i8, ptr %i.ee, i64 10
+  %14 = load i8, ptr %13, align 1, !tbaa !37      ; 3 uses
+  %15 = zext i8 %14 to i32
+  %16 = shl nuw nsw i32 %15, 8
+  %17 = getelementptr inbounds nuw i8, ptr %i.ee, i64 11
+  %18 = load i8, ptr %17, align 1, !tbaa !37      ; 3 uses
+  %19 = zext i8 %18 to i32
+  %20 = or disjoint i32 %12, %16
+  %21 = or disjoint i32 %20, %19                  ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #43
   %i.el = load ptr, ptr %0, align 8, !tbaa !461
-  %i.em = call fastcc i32 @sqlite3PagerAcquire(ptr noundef %i.el, i32 noundef %7, ptr noundef %i.c, i32 noundef 0) ; 2 uses
+  %i.em = call fastcc i32 @sqlite3PagerAcquire(ptr noundef %i.el, i32 noundef %21, ptr noundef %i.c, i32 noundef 0) ; 2 uses
   %.not.i226 = icmp eq i32 %i.em, 0
   br i1 %.not.i226, label %bb.y, label %sqlite3BtreeGetPage.exit229
 
@@ -250,8 +264,8 @@ bb.y:                                             ; preds = %bb.x
   %i.eu = getelementptr inbounds nuw i8, ptr %i.en, i64 192
   store ptr %0, ptr %i.eu, align 8, !tbaa !802
   %i.ev = getelementptr inbounds nuw i8, ptr %i.en, i64 216
-  store i32 %7, ptr %i.ev, align 8, !tbaa !329
-  %i.ew = icmp eq i32 %6, 16777216
+  store i32 %21, ptr %i.ev, align 8, !tbaa !329
+  %i.ew = icmp eq i32 %21, 1
   %i.ex = select i1 %i.ew, i8 100, i8 0
   %i.ey = getelementptr inbounds nuw i8, ptr %i.en, i64 96
   store i8 %i.ex, ptr %i.ey, align 8, !tbaa !803
@@ -304,17 +318,13 @@ releasePage.exit232:                              ; preds = %bb.y
 bb.z:                                             ; preds = %releasePage.exit232
   %i.gb = load ptr, ptr %i.h, align 8, !tbaa !801 ; 4 uses
   %i.gc = getelementptr inbounds nuw i8, ptr %i.gb, i64 32
-  %8 = extractelement <4 x i8> %5, i64 0
-  store i8 %8, ptr %i.gc, align 1, !tbaa !37
+  store i8 %5, ptr %i.gc, align 1, !tbaa !37
   %i.gd = getelementptr inbounds nuw i8, ptr %i.gb, i64 33
-  %9 = extractelement <4 x i8> %5, i64 1
   store i8 %9, ptr %i.gd, align 1, !tbaa !37
   %i.ge = getelementptr inbounds nuw i8, ptr %i.gb, i64 34
-  %10 = extractelement <4 x i8> %5, i64 2
-  store i8 %10, ptr %i.ge, align 1, !tbaa !37
+  store i8 %14, ptr %i.ge, align 1, !tbaa !37
   %i.gf = getelementptr inbounds nuw i8, ptr %i.gb, i64 35
-  %11 = extractelement <4 x i8> %5, i64 3
-  store i8 %11, ptr %i.gf, align 1, !tbaa !37
+  store i8 %18, ptr %i.gf, align 1, !tbaa !37
   br label %releasePage.exit238
 
 bb.aa:                                            ; preds = %releasePage.exit232
@@ -326,8 +336,14 @@ bb.aa:                                            ; preds = %releasePage.exit232
 
 bb.ab:                                            ; preds = %bb.aa
   %i.gj = getelementptr inbounds nuw i8, ptr %.0274, i64 112
-  %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !801
-  store <4 x i8> %5, ptr %i.gk, align 1, !tbaa !37
+  %i.gk = load ptr, ptr %i.gj, align 8, !tbaa !801 ; 4 uses
+  store i8 %5, ptr %i.gk, align 1, !tbaa !37
+  %22 = getelementptr inbounds nuw i8, ptr %i.gk, i64 1
+  store i8 %9, ptr %22, align 1, !tbaa !37
+  %23 = getelementptr inbounds nuw i8, ptr %i.gk, i64 2
+  store i8 %14, ptr %23, align 1, !tbaa !37
+  %24 = getelementptr inbounds nuw i8, ptr %i.gk, i64 3
+  store i8 %18, ptr %24, align 1, !tbaa !37
   br label %.thread309
 
 bb.ac:                                            ; preds = %bb.r

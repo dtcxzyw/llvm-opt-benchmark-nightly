@@ -201,7 +201,7 @@ bb.a:
   %.sroa.437 = alloca [144 x i8], align 16        ; 3 uses
   %i.a = alloca [128 x i8], align 16              ; 4 uses
   %i.b = alloca [128 x i8], align 16              ; 4 uses
-  %i.c = alloca [128 x i8], align 16              ; 7 uses
+  %i.c = alloca [128 x i8], align 16              ; 8 uses
   %.sroa.0 = alloca [112 x i8], align 16          ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 216
@@ -213,7 +213,9 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 144 ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %.sroa.526.0..sroa_idx27 = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.c, i64 112
+  %.sroa.6.0..sroa_idx30 = getelementptr inbounds nuw i8, ptr %1, i64 136
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 112
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.c, i64 120
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
@@ -242,10 +244,10 @@ bb.e:                                             ; preds = %bb.c
   unreachable
 
 _RNCNCNvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB6_21ReceiverStreamBuilderTNtCseo6ZV82fEK1_3url3UrlINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEEE5builds_00Bc_.exit: ; preds = %bb.c
-  %3 = load <2 x i64>, ptr %.sroa.526.0..sroa_idx27, align 16 ; 3 uses
+  %.sroa.526.0.copyload28 = load i64, ptr %.sroa.526.0..sroa_idx27, align 16 ; 4 uses
+  %.sroa.6.0.copyload31 = load i64, ptr %.sroa.6.0..sroa_idx30, align 8 ; 2 uses
   store i8 1, ptr %i.g, align 16, !noalias !31945
-  %4 = extractelement <2 x i64> %3, i64 0         ; 3 uses
-  %i.l = icmp eq i64 %4, 4
+  %i.l = icmp eq i64 %.sroa.526.0.copyload28, 4
   br i1 %i.l, label %bb.k, label %bb.l
 
 bb.f:                                             ; preds = %bb.b
@@ -293,8 +295,8 @@ _RNvMs5_NtCsbvkFyIu7lgC_4core3pinINtB5_3PinQINtNtB7_6option6OptionNCNCNvMNtNtNtC
   br label %.backedge
 
 .loopexit:                                        ; preds = %bb.f, %bb.m
-  %.sroa.6.0 = phi i64 [ %5, %bb.m ], [ undef, %bb.f ]
-  %.sroa.5.0 = phi i64 [ %4, %bb.m ], [ 3, %bb.f ]
+  %.sroa.6.0 = phi i64 [ %.sroa.6.0.copyload31, %bb.m ], [ undef, %bb.f ]
+  %.sroa.5.0 = phi i64 [ %.sroa.526.0.copyload28, %bb.m ], [ 3, %bb.f ]
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %0, ptr noundef nonnull align 16 dereferenceable(112) %.sroa.0, i64 112, i1 false)
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 112
   store i64 %.sroa.5.0, ptr %.sroa.5.0..sroa_idx, align 16
@@ -310,15 +312,15 @@ bb.k:                                             ; preds = %_RNCNCNvMNtNtNtCs14
 
 bb.l:                                             ; preds = %_RNCNCNvMNtNtNtCs14kWLkQVSKO_14deltalake_core6kernel8snapshot6streamINtB6_21ReceiverStreamBuilderTNtCseo6ZV82fEK1_3url3UrlINtNtCsbvkFyIu7lgC_4core6option6OptionINtNtCs6Po7BT7Nknu_5alloc3vec3VecbEEIB1W_yEEE5builds_00Bc_.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %i.c, ptr noundef nonnull align 16 dereferenceable(112) %i.h, i64 112, i1 false)
-  store <2 x i64> %3, ptr %.sroa.4.0..sroa_idx.a, align 16
+  store i64 %.sroa.526.0.copyload28, ptr %.sroa.4.0..sroa_idx, align 16
+  store i64 %.sroa.6.0.copyload31, ptr %.sroa.4.0..sroa_idx.a, align 8
   store i128 0, ptr %1, align 16, !noalias !31952
-  %.not13 = icmp eq i64 %4, 3
+  %.not13 = icmp eq i64 %.sroa.526.0.copyload28, 3
   br i1 %.not13, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(112) %.sroa.0, ptr noundef nonnull align 16 dereferenceable(112) %i.h, i64 112, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
-  %5 = extractelement <2 x i64> %3, i64 1
   br label %.loopexit
 
 bb.n:                                             ; preds = %bb.l
