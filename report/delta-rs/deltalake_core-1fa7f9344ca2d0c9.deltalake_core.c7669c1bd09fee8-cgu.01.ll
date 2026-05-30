@@ -201,7 +201,7 @@ _RNvXs4_NtNtCs6Po7BT7Nknu_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs4lawaffTVVK
   store ptr %i.cy, ptr %.sroa.56.0..sroa_idx, align 8, !alias.scope !29390, !noalias !29393
   %.sroa.0228.0.copyload = load i64, ptr %i.cx, align 8, !noalias !29390 ; 4 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cx, i64 1312
-  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !29390 ; 2 uses
+  %.sroa.10.0.copyload = load i8, ptr %.sroa.10.0..sroa_idx, align 8, !noalias !29390
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cx, i64 1313
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 1, !noalias !29390 ; 2 uses
   %.not127 = icmp eq i64 %.sroa.0228.0.copyload, 69
@@ -604,9 +604,7 @@ bb.ck:                                            ; preds = %bb.dg, %_RINvNtCsbv
   %.sroa.036.0 = phi i64 [ %i.ik, %bb.dg ], [ 5, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs6Po7BT7Nknu_5alloc6string6StringECs14kWLkQVSKO_14deltalake_core.exit195 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   call void @llvm.experimental.noalias.scope.decl(metadata !29420)
-  %.not.i196 = icmp eq i8 %.sroa.10.0.copyload, 2
-  %7 = trunc nuw i8 %.sroa.10.0.copyload to i1
-  %.sroa.04.0.i = select i1 %.not.i196, i1 true, i1 %7 ; 3 uses
+  %.sroa.04.0.i = icmp ne i8 %.sroa.10.0.copyload, 0 ; 3 uses
   %.not7.i = icmp eq i8 %.sroa.11.0.copyload, 2
   br i1 %.not7.i, label %bb.cm, label %bb.cl
 
