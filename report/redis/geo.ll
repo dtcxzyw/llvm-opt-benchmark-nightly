@@ -201,13 +201,13 @@ bb.ay:                                            ; preds = %bb.ao, %bb.aj, %bb.
   br i1 %i.en, label %bb.q, label %._crit_edge.loopexit, !llvm.loop !87
 
 ._crit_edge.loopexit:                             ; preds = %bb.ay
-  %5 = icmp ne i32 %.2315.ph, 0
-  %6 = icmp ne i32 %.2320.ph, 0
-  %7 = icmp ne i32 %.2328.ph, 0
-  %8 = icmp ne i32 %.2343.ph, 0
+  %5 = trunc nuw i32 %.2315.ph to i1
+  %6 = trunc nuw i32 %.2320.ph to i1
+  %7 = trunc nuw i32 %.2328.ph to i1
+  %8 = trunc nuw i32 %.2343.ph to i1
   %i.eo = icmp eq i32 %.2281.ph, 0
-  %9 = icmp ne i32 %.2295.ph, 0
-  %10 = icmp ne i32 %.2305.ph, 0
+  %9 = trunc nuw i32 %.2295.ph to i1
+  %10 = trunc nuw i32 %.2305.ph to i1
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.p, %._crit_edge.loopexit, %bb.o

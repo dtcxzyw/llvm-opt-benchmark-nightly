@@ -201,7 +201,7 @@ bb.at:                                            ; preds = %bb.b
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !13, !noalias !669
   %i.i = tail call fastcc noundef zeroext i1 @_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareWithTypeERKNS_8DataTypeE(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef nonnull align 8 dereferenceable(72) %i.h), !noalias !669, !inline_history !672
   %i.j = load i8, ptr %i.a, align 8, !tbaa !68, !range !58, !noalias !669, !noundef !59
-  %5 = icmp ne i8 %i.j, 0
+  %5 = trunc nuw i8 %i.j to i1
   %i.k = and i1 %i.i, %5
   %i.l = zext i1 %i.k to i8
   store i8 %i.l, ptr %i.a, align 8, !tbaa !68, !noalias !669
@@ -604,7 +604,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #23, !noalias !743
   %i.bx = load i8, ptr %i.bd, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %26 = icmp ne i8 %i.bx, 0
+  %26 = trunc nuw i8 %i.bx to i1
   %i.by = and i1 %.0.i.i.i.i.i.i.i.i.i.i.i.i, %26
   %i.bz = zext i1 %i.by to i8
   store i8 %i.bz, ptr %i.bd, align 8, !tbaa !68, !noalias !743
@@ -671,7 +671,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #23, !noalias !743
   %i.dd = load i8, ptr %i.ce, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %27 = icmp ne i8 %i.dd, 0
+  %27 = trunc nuw i8 %i.dd to i1
   %i.de = and i1 %.0.i.i.i14.i.i.i.i.i.i.i.i.i, %27
   %i.df = zext i1 %i.de to i8
   store i8 %i.df, ptr %i.ce, align 8, !tbaa !68, !noalias !743
@@ -749,7 +749,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %18) #23, !noalias !743
   %i.el = load i8, ptr %i.dr, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %28 = icmp ne i8 %i.el, 0
+  %28 = trunc nuw i8 %i.el to i1
   %i.em = and i1 %.0.i.i.i.i.i.i.i9.i.i.i.i.i, %28
   %i.en = zext i1 %i.em to i8
   store i8 %i.en, ptr %i.dr, align 8, !tbaa !68, !noalias !743
@@ -816,7 +816,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %16) #23, !noalias !743
   %i.fr = load i8, ptr %i.es, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %29 = icmp ne i8 %i.fr, 0
+  %29 = trunc nuw i8 %i.fr to i1
   %i.fs = and i1 %.0.i.i.i14.i.i.i.i17.i.i.i.i.i, %29
   %i.ft = zext i1 %i.fs to i8
   store i8 %i.ft, ptr %i.es, align 8, !tbaa !68, !noalias !743
@@ -889,7 +889,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #23, !noalias !743
   %i.gv = load i8, ptr %i.gf, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %30 = icmp ne i8 %i.gv, 0
+  %30 = trunc nuw i8 %i.gv to i1
   %i.gw = and i1 %.0.i.i.i.i.i.i.i.i15.i.i.i.i, %30
   %i.gx = zext i1 %i.gw to i8
   store i8 %i.gx, ptr %i.gf, align 8, !tbaa !68, !noalias !743
@@ -948,7 +948,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #23, !noalias !743
   %i.hx = load i8, ptr %i.hc, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %31 = icmp ne i8 %i.hx, 0
+  %31 = trunc nuw i8 %i.hx to i1
   %i.hy = and i1 %.0.i.i.i13.i.i.i.i.i.i.i.i.i, %31
   %i.hz = zext i1 %i.hy to i8
   store i8 %i.hz, ptr %i.hc, align 8, !tbaa !68, !noalias !743
@@ -1018,7 +1018,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #23, !noalias !743
   %i.jb = load i8, ptr %i.il, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %32 = icmp ne i8 %i.jb, 0
+  %32 = trunc nuw i8 %i.jb to i1
   %i.jc = and i1 %.0.i.i.i.i.i.i.i8.i.i.i.i.i, %32
   %i.jd = zext i1 %i.jc to i8
   store i8 %i.jd, ptr %i.il, align 8, !tbaa !68, !noalias !743
@@ -1077,7 +1077,7 @@ _ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_13HalfFloatTy
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #23, !noalias !743
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23, !noalias !743
   %i.kd = load i8, ptr %i.ji, align 8, !tbaa !68, !range !58, !noalias !743, !noundef !59
-  %33 = icmp ne i8 %i.kd, 0
+  %33 = trunc nuw i8 %i.kd to i1
   %i.ke = and i1 %.0.i.i.i13.i.i.i.i15.i.i.i.i.i, %33
   %i.kf = zext i1 %i.ke to i8
   store i8 %i.kf, ptr %i.ji, align 8, !tbaa !68, !noalias !743
@@ -1134,7 +1134,7 @@ iter.check357:                                    ; preds = %.thread.i.i.i.i.i10
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.kz ; 3 uses
   %i.la = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.la, align 8, !tbaa !68, !noalias !743
-  %34 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0 ; 3 uses
+  %34 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i.i.i.i to i1 ; 3 uses
   %min.iters.check335 = icmp ult i64 %i.kq, 4
   br i1 %min.iters.check335, label %vec.epilog.scalar.ph358.preheader, label %vector.main.loop.iter.check336
 
@@ -1285,7 +1285,7 @@ iter.check317:                                    ; preds = %.lr.ph.i.i.i.i.i.i1
   %i.nf = load i64, ptr %i.mz, align 8, !tbaa !66, !noalias !743
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.nf ; 3 uses
   %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.my, align 8, !tbaa !68, !noalias !743
-  %35 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0 ; 3 uses
+  %35 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i.i.i.i to i1 ; 3 uses
   %min.iters.check295 = icmp ult i64 %i.na, 4
   br i1 %min.iters.check295, label %vec.epilog.scalar.ph318.preheader, label %vector.main.loop.iter.check296
 
@@ -1447,7 +1447,7 @@ iter.check277:                                    ; preds = %.thread.i.i.i5.i.i7
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.po ; 3 uses
   %i.pp = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.pp, align 8, !tbaa !68, !noalias !743
-  %36 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0 ; 3 uses
+  %36 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1 ; 3 uses
   %min.iters.check255 = icmp ult i64 %i.kq, 4
   br i1 %min.iters.check255, label %vec.epilog.scalar.ph278.preheader, label %vector.main.loop.iter.check256
 
@@ -1598,7 +1598,7 @@ iter.check237:                                    ; preds = %.lr.ph.i.i.i.i18.i.
   %i.ru = load i64, ptr %i.ro, align 8, !tbaa !66, !noalias !743
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.ru ; 3 uses
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.rn, align 8, !tbaa !68, !noalias !743
-  %37 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0 ; 3 uses
+  %37 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1 ; 3 uses
   %min.iters.check216 = icmp ult i64 %i.rp, 4
   br i1 %min.iters.check216, label %vec.epilog.scalar.ph238.preheader, label %vector.main.loop.iter.check217
 
@@ -1763,7 +1763,7 @@ iter.check199:                                    ; preds = %.thread.i.i.i.i16.i
   %invariant.gep2.i.i.i.i.i.i19.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.ud ; 3 uses
   %i.ue = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i20.i.i.i.i = load i8, ptr %i.ue, align 8, !tbaa !68, !noalias !743
-  %38 = icmp ne i8 %.promoted.i.i.i.i.i.i20.i.i.i.i, 0 ; 3 uses
+  %38 = trunc nuw i8 %.promoted.i.i.i.i.i.i20.i.i.i.i to i1 ; 3 uses
   %min.iters.check179 = icmp ult i64 %i.kq, 4
   br i1 %min.iters.check179, label %vec.epilog.scalar.ph200.preheader, label %vector.main.loop.iter.check180
 
@@ -1884,7 +1884,7 @@ iter.check162:                                    ; preds = %.lr.ph.i.i.i.i.i27.
   %i.vq = load i64, ptr %i.vk, align 8, !tbaa !66, !noalias !743
   %invariant.gep2.i15.i.i.i.i.i31.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.vq ; 3 uses
   %.promoted.i16.i.i.i.i.i32.i.i.i.i = load i8, ptr %i.vj, align 8, !tbaa !68, !noalias !743
-  %39 = icmp ne i8 %.promoted.i16.i.i.i.i.i32.i.i.i.i, 0 ; 3 uses
+  %39 = trunc nuw i8 %.promoted.i16.i.i.i.i.i32.i.i.i.i to i1 ; 3 uses
   %min.iters.check142 = icmp ult i64 %i.vl, 4
   br i1 %min.iters.check142, label %vec.epilog.scalar.ph163.preheader, label %vector.main.loop.iter.check143
 
@@ -2016,7 +2016,7 @@ iter.check125:                                    ; preds = %.thread.i.i.i5.i7.i
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.xg ; 3 uses
   %i.xh = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.xh, align 8, !tbaa !68, !noalias !743
-  %40 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0 ; 3 uses
+  %40 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1 ; 3 uses
   %min.iters.check105 = icmp ult i64 %i.kq, 4
   br i1 %min.iters.check105, label %vec.epilog.scalar.ph126.preheader, label %vector.main.loop.iter.check106
 
@@ -2137,7 +2137,7 @@ iter.check:                                       ; preds = %.lr.ph.i.i.i.i16.i.
   %i.yt = load i64, ptr %i.yn, align 8, !tbaa !66, !noalias !743
   %invariant.gep2.i15.i.i.i.i20.i.i.i.i.i = getelementptr [2 x i8], ptr %.0.i.i2.i, i64 %i.yt ; 3 uses
   %.promoted.i16.i.i.i.i21.i.i.i.i.i = load i8, ptr %i.ym, align 8, !tbaa !68, !noalias !743
-  %41 = icmp ne i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i, 0 ; 3 uses
+  %41 = trunc nuw i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i to i1 ; 3 uses
   %min.iters.check = icmp ult i64 %i.yo, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.main.loop.iter.check
 
@@ -2361,7 +2361,7 @@ bb.g:                                             ; preds = %bb.f
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.be ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted7.i.i.i.i.i = load i8, ptr %i.bf, align 8, !tbaa !68, !noalias !783
-  %10 = icmp ne i8 %.promoted7.i.i.i.i.i, 0       ; 2 uses
+  %10 = trunc nuw i8 %.promoted7.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check429 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check429, label %scalar.ph428.preheader, label %vector.ph430
 
@@ -2477,7 +2477,7 @@ bb.j:                                             ; preds = %bb.g
   %i.cz = load i64, ptr %i.ct, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.cz ; 2 uses
   %.promoted5.i.i.i.i.i = load i8, ptr %i.cs, align 8, !tbaa !68, !noalias !783
-  %11 = icmp ne i8 %.promoted5.i.i.i.i.i, 0       ; 2 uses
+  %11 = trunc nuw i8 %.promoted5.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check404 = icmp ult i64 %i.cu, 8
   br i1 %min.iters.check404, label %scalar.ph403.preheader, label %vector.ph405
 
@@ -2605,7 +2605,7 @@ bb.n:                                             ; preds = %bb.m
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.ex ; 2 uses
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted3.i.i.i.i.i = load i8, ptr %i.ey, align 8, !tbaa !68, !noalias !783
-  %12 = icmp ne i8 %.promoted3.i.i.i.i.i, 0       ; 2 uses
+  %12 = trunc nuw i8 %.promoted3.i.i.i.i.i to i1  ; 2 uses
   %min.iters.check379 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check379, label %scalar.ph378.preheader, label %vector.ph380
 
@@ -2736,7 +2736,7 @@ bb.r:                                             ; preds = %bb.n
   %i.he = load i64, ptr %i.gy, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i21.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.he ; 2 uses
   %.promoted.i.i.i.i.i = load i8, ptr %i.gx, align 8, !tbaa !68, !noalias !783
-  %13 = icmp ne i8 %.promoted.i.i.i.i.i, 0        ; 2 uses
+  %13 = trunc nuw i8 %.promoted.i.i.i.i.i to i1   ; 2 uses
   %min.iters.check354 = icmp ult i64 %i.gz, 8
   br i1 %min.iters.check354, label %scalar.ph353.preheader, label %vector.ph355
 
@@ -2894,7 +2894,7 @@ bb.x:                                             ; preds = %bb.w
   %invariant.gep2.i.i.i.i.i.i21.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.jq ; 2 uses
   %i.jr = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.pre.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.jr, align 8, !tbaa !68, !range !58, !noalias !783
-  %14 = icmp ne i8 %.pre.i.i.i.i.i.i.i.i.i.i, 0   ; 2 uses
+  %14 = trunc nuw i8 %.pre.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check333 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check333, label %scalar.ph332.preheader, label %vector.ph334
 
@@ -2990,7 +2990,7 @@ bb.y:                                             ; preds = %bb.x
   %i.lf = load i64, ptr %i.kz, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i.i32.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.lf ; 2 uses
   %.pre.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.ky, align 8, !tbaa !68, !range !58, !noalias !783
-  %15 = icmp ne i8 %.pre.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %15 = trunc nuw i8 %.pre.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check312 = icmp ult i64 %i.la, 8
   br i1 %min.iters.check312, label %scalar.ph311.preheader, label %vector.ph313
 
@@ -3098,7 +3098,7 @@ bb.aa:                                            ; preds = %bb.z
   %invariant.gep2.i.i.i.i.i8.i11.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.mx ; 2 uses
   %i.my = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.my, align 8, !tbaa !68, !noalias !783
-  %16 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %16 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check289 = icmp ult i64 %i.av, 8
   br i1 %min.iters.check289, label %scalar.ph288.preheader, label %vector.ph290
 
@@ -3215,7 +3215,7 @@ bb.ad:                                            ; preds = %bb.aa
   %i.ow = load i64, ptr %i.oq, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i20.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.ow ; 2 uses
   %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.op, align 8, !tbaa !68, !noalias !783
-  %17 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %17 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check268 = icmp ult i64 %i.or, 8
   br i1 %min.iters.check268, label %scalar.ph267.preheader, label %vector.ph269
 
@@ -3371,7 +3371,7 @@ bb.aj:                                            ; preds = %bb.ai
   %invariant.gep2.i.i.i.i.i.i.i35.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.rh ; 2 uses
   %i.ri = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i36.i.i.i = load i8, ptr %i.ri, align 8, !tbaa !68, !noalias !783
-  %18 = icmp ne i8 %.promoted.i.i.i.i.i.i.i36.i.i.i, 0 ; 2 uses
+  %18 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i36.i.i.i to i1 ; 2 uses
   %min.iters.check249 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check249, label %scalar.ph248.preheader, label %vector.ph250
 
@@ -3469,7 +3469,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.sw = load i64, ptr %i.sq, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i.i.i48.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.sw ; 2 uses
   %.promoted.i16.i.i.i.i.i.i49.i.i.i = load i8, ptr %i.sp, align 8, !tbaa !68, !noalias !783
-  %19 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i, 0 ; 2 uses
+  %19 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i to i1 ; 2 uses
   %min.iters.check230 = icmp ult i64 %i.sr, 8
   br i1 %min.iters.check230, label %scalar.ph229.preheader, label %vector.ph231
 
@@ -3577,7 +3577,7 @@ bb.am:                                            ; preds = %bb.al
   %invariant.gep2.i.i.i.i.i8.i.i25.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.un ; 2 uses
   %i.uo = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.uo, align 8, !tbaa !68, !noalias !783
-  %20 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0 ; 2 uses
+  %20 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check209 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check209, label %scalar.ph208.preheader, label %vector.ph210
 
@@ -3696,7 +3696,7 @@ bb.ap:                                            ; preds = %bb.am
   %i.wm = load i64, ptr %i.wg, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.wm ; 2 uses
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.wf, align 8, !tbaa !68, !noalias !783
-  %21 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0 ; 2 uses
+  %21 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check189 = icmp ult i64 %i.wh, 8
   br i1 %min.iters.check189, label %scalar.ph188.preheader, label %vector.ph190
 
@@ -3828,7 +3828,7 @@ bb.au:                                            ; preds = %bb.at
   %invariant.gep2.i.i.i.i.i.i20.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.yn ; 2 uses
   %i.yo = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i21.i.i.i.i = load i8, ptr %i.yo, align 8, !tbaa !68, !noalias !783
-  %22 = icmp ne i8 %.promoted.i.i.i.i.i.i21.i.i.i.i, 0 ; 2 uses
+  %22 = trunc nuw i8 %.promoted.i.i.i.i.i.i21.i.i.i.i to i1 ; 2 uses
   %min.iters.check170 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check170, label %scalar.ph169.preheader, label %vector.ph171
 
@@ -3914,7 +3914,7 @@ bb.av:                                            ; preds = %bb.au
   %i.zs = load i64, ptr %i.zm, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i.i32.i20.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.zs ; 2 uses
   %.promoted.i16.i.i.i.i.i33.i.i.i.i = load i8, ptr %i.zl, align 8, !tbaa !68, !noalias !783
-  %23 = icmp ne i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i, 0 ; 2 uses
+  %23 = trunc nuw i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i to i1 ; 2 uses
   %min.iters.check151 = icmp ult i64 %i.zn, 8
   br i1 %min.iters.check151, label %scalar.ph150.preheader, label %vector.ph152
 
@@ -4010,7 +4010,7 @@ bb.ax:                                            ; preds = %bb.aw
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.aaz ; 2 uses
   %i.aba = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.aba, align 8, !tbaa !68, !noalias !783
-  %24 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0 ; 2 uses
+  %24 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1 ; 2 uses
   %min.iters.check132 = icmp ult i64 %i.qy, 8
   br i1 %min.iters.check132, label %scalar.ph131.preheader, label %vector.ph133
 
@@ -4111,7 +4111,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.acs = load i64, ptr %i.acm, align 8, !tbaa !66, !noalias !783
   %invariant.gep2.i15.i.i.i.i20.i.i11.i.i.i = getelementptr [4 x i8], ptr %.0.i.i2.i, i64 %i.acs ; 2 uses
   %.promoted.i16.i.i.i.i21.i.i.i.i.i = load i8, ptr %i.acl, align 8, !tbaa !68, !noalias !783
-  %25 = icmp ne i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i, 0 ; 2 uses
+  %25 = trunc nuw i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check = icmp ult i64 %i.acn, 8
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -4313,7 +4313,7 @@ bb.g:                                             ; preds = %bb.f
   %invariant.gep2.i.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.bd
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted7.i.i.i.i.i = load i8, ptr %i.be, align 8, !tbaa !68, !noalias !821
-  %10 = icmp ne i8 %.promoted7.i.i.i.i.i, 0
+  %10 = trunc nuw i8 %.promoted7.i.i.i.i.i to i1
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i.i.i
@@ -4371,7 +4371,7 @@ bb.k:                                             ; preds = %bb.g
   %i.ca = load i64, ptr %i.bu, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.ca
   %.promoted5.i.i.i.i.i = load i8, ptr %i.bt, align 8, !tbaa !68, !noalias !821
-  %11 = icmp ne i8 %.promoted5.i.i.i.i.i, 0
+  %11 = trunc nuw i8 %.promoted5.i.i.i.i.i to i1
   br label %bb.l
 
 bb.l:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb1EEEEEEEDaS8_ENKUllE_clEl.exit.i21.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i.i.i.i.i.i
@@ -4443,7 +4443,7 @@ bb.p:                                             ; preds = %bb.o
   %invariant.gep2.i.i.i.i.i8.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.cz
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted3.i.i.i.i.i = load i8, ptr %i.da, align 8, !tbaa !68, !noalias !821
-  %12 = icmp ne i8 %.promoted3.i.i.i.i.i, 0
+  %12 = trunc nuw i8 %.promoted3.i.i.i.i.i to i1
   br label %bb.q
 
 bb.q:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i6.i.i.i.i.i
@@ -4508,7 +4508,7 @@ bb.u:                                             ; preds = %bb.p
   %i.ea = load i64, ptr %i.du, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i21.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.ea
   %.promoted.i.i.i.i.i = load i8, ptr %i.dt, align 8, !tbaa !68, !noalias !821
-  %13 = icmp ne i8 %.promoted.i.i.i.i.i, 0
+  %13 = trunc nuw i8 %.promoted.i.i.i.i.i to i1
   br label %bb.v
 
 bb.v:                                             ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i21.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i19.i.i.i.i.i
@@ -4600,7 +4600,7 @@ bb.ab:                                            ; preds = %bb.aa
   %invariant.gep2.i.i.i.i.i.i21.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.ff ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.pre.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.fg, align 8, !tbaa !68, !range !58, !noalias !821
-  %14 = icmp ne i8 %.pre.i.i.i.i.i.i.i.i.i.i, 0   ; 2 uses
+  %14 = trunc nuw i8 %.pre.i.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check246 = icmp ult i64 %i.au, 4
   br i1 %min.iters.check246, label %scalar.ph245.preheader, label %vector.ph247
 
@@ -4696,7 +4696,7 @@ bb.ac:                                            ; preds = %bb.ab
   %i.gu = load i64, ptr %i.go, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i.i32.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.gu ; 2 uses
   %.pre.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.gn, align 8, !tbaa !68, !range !58, !noalias !821
-  %15 = icmp ne i8 %.pre.i16.i.i.i.i.i.i.i.i.i, 0 ; 2 uses
+  %15 = trunc nuw i8 %.pre.i16.i.i.i.i.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check227 = icmp ult i64 %i.gp, 4
   br i1 %min.iters.check227, label %scalar.ph226.preheader, label %vector.ph228
 
@@ -4804,7 +4804,7 @@ bb.ae:                                            ; preds = %bb.ad
   %invariant.gep2.i.i.i.i.i8.i11.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.im
   %i.in = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i.i.i.i = load i8, ptr %i.in, align 8, !tbaa !68, !noalias !821
-  %16 = icmp ne i8 %.promoted.i.i.i.i.i.i.i.i.i.i, 0
+  %16 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i.i.i.i to i1
   br label %bb.af
 
 bb.af:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i6.i9.i.i.i.i
@@ -4863,7 +4863,7 @@ bb.ai:                                            ; preds = %bb.ae
   %i.jl = load i64, ptr %i.jf, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i20.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.jl
   %.promoted.i16.i.i.i.i.i.i.i.i.i = load i8, ptr %i.je, align 8, !tbaa !68, !noalias !821
-  %17 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i.i.i.i, 0
+  %17 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i.i.i.i to i1
   br label %bb.aj
 
 bb.aj:                                            ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb1ELb0ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i21.i.i.i.i.i.i.i.i.i, %.lr.ph.i13.i.i.i.i18.i.i.i.i.i
@@ -4962,7 +4962,7 @@ bb.ap:                                            ; preds = %bb.ao
   %invariant.gep2.i.i.i.i.i.i.i35.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.kv ; 2 uses
   %i.kw = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i.i36.i.i.i = load i8, ptr %i.kw, align 8, !tbaa !68, !noalias !821
-  %18 = icmp ne i8 %.promoted.i.i.i.i.i.i.i36.i.i.i, 0 ; 2 uses
+  %18 = trunc nuw i8 %.promoted.i.i.i.i.i.i.i36.i.i.i to i1 ; 2 uses
   %min.iters.check208 = icmp ult i64 %i.km, 4
   br i1 %min.iters.check208, label %scalar.ph207.preheader, label %vector.ph209
 
@@ -5060,7 +5060,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.mk = load i64, ptr %i.me, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i.i.i48.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.mk ; 2 uses
   %.promoted.i16.i.i.i.i.i.i49.i.i.i = load i8, ptr %i.md, align 8, !tbaa !68, !noalias !821
-  %19 = icmp ne i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i, 0 ; 2 uses
+  %19 = trunc nuw i8 %.promoted.i16.i.i.i.i.i.i49.i.i.i to i1 ; 2 uses
   %min.iters.check189 = icmp ult i64 %i.mf, 4
   br i1 %min.iters.check189, label %scalar.ph188.preheader, label %vector.ph190
 
@@ -5168,7 +5168,7 @@ bb.as:                                            ; preds = %bb.ar
   %invariant.gep2.i.i.i.i.i8.i.i25.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.ob
   %i.oc = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i.i.i.i.i = load i8, ptr %i.oc, align 8, !tbaa !68, !noalias !821
-  %20 = icmp ne i8 %.promoted.i.i.i.i.i9.i.i.i.i.i, 0
+  %20 = trunc nuw i8 %.promoted.i.i.i.i.i9.i.i.i.i.i to i1
   br label %bb.at
 
 ._crit_edge.i.i.i.i.i16.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i.i.i.i.i.i.i.i.i.i
@@ -5232,7 +5232,7 @@ bb.aw:                                            ; preds = %bb.as
   %i.pa = load i64, ptr %i.ou, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i22.i.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.pa
   %.promoted.i16.i.i.i.i23.i.i.i.i.i = load i8, ptr %i.ot, align 8, !tbaa !68, !noalias !821
-  %21 = icmp ne i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i, 0
+  %21 = trunc nuw i8 %.promoted.i16.i.i.i.i23.i.i.i.i.i to i1
   br label %bb.ax
 
 ._crit_edge.i24.i.i.i.i.i.i.i.i.i:                ; preds = %_ZZZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareFloatingINS_10DoubleTypeEEENS_6StatusERKT_ENKUlOS5_E_clINS0_16FloatingEqualityIdNS0_21FloatingEqualityFlagsILb0ELb1ELb0EEEEEEEDaS8_ENKUllE_clEl.exit.i21.i.i.i.i.i.i.i.i.i
@@ -5308,7 +5308,7 @@ bb.bc:                                            ; preds = %bb.bb
   %invariant.gep2.i.i.i.i.i.i20.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.qa ; 2 uses
   %i.qb = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i.i21.i.i.i.i = load i8, ptr %i.qb, align 8, !tbaa !68, !noalias !821
-  %22 = icmp ne i8 %.promoted.i.i.i.i.i.i21.i.i.i.i, 0 ; 2 uses
+  %22 = trunc nuw i8 %.promoted.i.i.i.i.i.i21.i.i.i.i to i1 ; 2 uses
   %min.iters.check170 = icmp ult i64 %i.km, 4
   br i1 %min.iters.check170, label %scalar.ph169.preheader, label %vector.ph171
 
@@ -5394,7 +5394,7 @@ bb.bd:                                            ; preds = %bb.bc
   %i.rf = load i64, ptr %i.qz, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i.i32.i20.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.rf ; 2 uses
   %.promoted.i16.i.i.i.i.i33.i.i.i.i = load i8, ptr %i.qy, align 8, !tbaa !68, !noalias !821
-  %23 = icmp ne i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i, 0 ; 2 uses
+  %23 = trunc nuw i8 %.promoted.i16.i.i.i.i.i33.i.i.i.i to i1 ; 2 uses
   %min.iters.check151 = icmp ult i64 %i.ra, 4
   br i1 %min.iters.check151, label %scalar.ph150.preheader, label %vector.ph152
 
@@ -5490,7 +5490,7 @@ bb.bf:                                            ; preds = %bb.be
   %invariant.gep2.i.i.i.i.i8.i10.i.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.sm ; 2 uses
   %i.sn = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %.promoted.i.i.i.i.i9.i11.i.i.i.i = load i8, ptr %i.sn, align 8, !tbaa !68, !noalias !821
-  %24 = icmp ne i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i, 0 ; 2 uses
+  %24 = trunc nuw i8 %.promoted.i.i.i.i.i9.i11.i.i.i.i to i1 ; 2 uses
   %min.iters.check132 = icmp ult i64 %i.km, 4
   br i1 %min.iters.check132, label %scalar.ph131.preheader, label %vector.ph133
 
@@ -5591,7 +5591,7 @@ bb.bg:                                            ; preds = %bb.bf
   %i.uf = load i64, ptr %i.tz, align 8, !tbaa !66, !noalias !821
   %invariant.gep2.i15.i.i.i.i20.i.i11.i.i.i = getelementptr [8 x i8], ptr %.0.i.i2.i, i64 %i.uf ; 2 uses
   %.promoted.i16.i.i.i.i21.i.i.i.i.i = load i8, ptr %i.ty, align 8, !tbaa !68, !noalias !821
-  %25 = icmp ne i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i, 0 ; 2 uses
+  %25 = trunc nuw i8 %.promoted.i16.i.i.i.i21.i.i.i.i.i to i1 ; 2 uses
   %min.iters.check = icmp ult i64 %i.ua, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
@@ -5994,7 +5994,7 @@ _ZN5arrow12_GLOBAL__N_118CompareArrayRangesERKNS_9ArrayDataES3_lllRKNS_12EqualOp
   %.1.i = phi i1 [ true, %_ZN5arrow12_GLOBAL__N_123IdentityImpliesEqualityERKNS_8DataTypeERKNS_12EqualOptionsE.exit.i ], [ %i.am, %bb.g ], [ true, %bb.f ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 4 uses
   %i.ap = load i8, ptr %i.ao, align 8, !tbaa !68, !range !58, !noundef !59
-  %4 = icmp ne i8 %i.ap, 0
+  %4 = trunc nuw i8 %i.ap to i1
   %i.aq = and i1 %.1.i, %4                        ; 2 uses
   %i.ar = zext i1 %i.aq to i8
   store i8 %i.ar, ptr %i.ao, align 8, !tbaa !68
@@ -6005,7 +6005,7 @@ bb.h:                                             ; preds = %_ZN5arrow12_GLOBAL_
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !13
   %i.au = call fastcc noundef zeroext i1 @_ZN5arrow12_GLOBAL__N_119RangeDataEqualsImpl15CompareWithTypeERKNS_8DataTypeE(ptr noundef nonnull align 8 dereferenceable(57) %1, ptr noundef nonnull align 8 dereferenceable(72) %i.at)
   %i.av = load i8, ptr %i.ao, align 8, !tbaa !68, !range !58, !noundef !59
-  %5 = icmp ne i8 %i.av, 0
+  %5 = trunc nuw i8 %i.av to i1
   %i.aw = and i1 %i.au, %5
   %i.ax = zext i1 %i.aw to i8
   store i8 %i.ax, ptr %i.ao, align 8, !tbaa !68

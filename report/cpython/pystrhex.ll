@@ -201,8 +201,8 @@ _PyUnicode_DATA.exit.i:                           ; preds = %bb.i, %bb.j, %bb.l
   %.0123.in = phi ptr [ %i.p, %bb.l ], [ %.0.i.i.i, %bb.i ], [ %.val4.i.i, %bb.j ]
   %.0123 = load i8, ptr %.0123.in, align 1, !tbaa !11 ; 3 uses
   %i.r = icmp sgt i8 %.0123, -1
-  %5 = icmp ne i32 %4, 0
-  %or.cond = or i1 %5, %i.r
+  %5 = trunc nuw i32 %4 to i1
+  %or.cond = or i1 %i.r, %5
   br i1 %or.cond, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %_PyUnicode_DATA.exit.i

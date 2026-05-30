@@ -201,8 +201,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4308
@@ -605,8 +605,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !4759
@@ -1009,8 +1009,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5087
@@ -1413,8 +1413,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5194
@@ -1492,8 +1492,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5216
@@ -1571,8 +1571,8 @@ bb.b:                                             ; preds = %bb.a
   %i.d = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.e = load i64, ptr %i.c, align 8, !range !11, !noundef !12
-  %.not = icmp eq i64 %i.e, 0
-  br i1 %.not, label %.thread10, label %bb.j
+  %2 = trunc nuw i64 %i.e to i1
+  br i1 %2, label %bb.j, label %.thread10
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !5238

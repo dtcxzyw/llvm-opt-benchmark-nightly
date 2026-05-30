@@ -201,13 +201,13 @@ bb.n:                                             ; preds = %bb.m, %bb.j
 
 bb.o:                                             ; preds = %bb.a
   %i.ah = load i64, ptr %i.a, align 8, !tbaa !11  ; 2 uses
-  %2 = icmp eq i64 %i.ah, 0
+  %2 = icmp ne i64 %i.ah, 0
   %i.ai = and i64 %i.ah, 7
-  %3 = icmp ne i64 %i.ai, 0
-  %4 = or i1 %2, %3
-  %5 = icmp eq i32 %1, 0
-  %or.cond.not = and i1 %5, %4
-  br i1 %or.cond.not, label %rb_float_new_inline.exit15, label %bb.p
+  %3 = icmp eq i64 %i.ai, 0
+  %.not18 = and i1 %2, %3
+  %4 = trunc nuw i32 %1 to i1
+  %or.cond = or i1 %.not18, %4
+  br i1 %or.cond, label %bb.p, label %rb_float_new_inline.exit15
 
 bb.p:                                             ; preds = %bb.o, %bb.a
   %.not11 = icmp eq i32 %1, 0

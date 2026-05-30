@@ -201,7 +201,7 @@ bb.ah:                                            ; preds = %bb.af, %._crit_edge
 
 bb.ai:                                            ; preds = %bb.ah
   %i.by = getelementptr inbounds nuw i8, ptr %3, i64 1400
-  %9 = icmp ne i8 %6, 0                           ; 3 uses
+  %9 = trunc nuw i8 %6 to i1                      ; 3 uses
   %i.bz = select i1 %9, i32 12288, i32 4096
   %i.ca = call fastcc i32 @cff_subfont_load(ptr noundef nonnull %i.d, ptr noundef nonnull %i.by, i32 noundef %.0161, ptr noundef nonnull %1, i64 noundef %i.e, i32 noundef %i.bz, ptr noundef nonnull %3, ptr noundef %4) ; 2 uses
   store i32 %i.ca, ptr %i.a, align 4, !tbaa !3
@@ -228,7 +228,7 @@ bb.al:                                            ; preds = %bb.ak
   %i.ch = getelementptr inbounds nuw i8, ptr %3, i64 1868 ; 3 uses
   %i.ci = load i32, ptr %i.ch, align 4, !tbaa !126
   %i.cj = icmp ne i32 %i.ci, 65535
-  %or.cond5 = or i1 %9, %i.cj
+  %or.cond5 = or i1 %i.cj, %9
   br i1 %or.cond5, label %bb.am, label %bb.av
 
 bb.am:                                            ; preds = %bb.al
@@ -410,8 +410,8 @@ bb.ba:                                            ; preds = %bb.az
 bb.bb:                                            ; preds = %bb.ba
   %i.em = load i32, ptr %i.ch, align 4, !tbaa !126
   %i.en = icmp ne i32 %i.em, 65535
-  %10 = icmp ne i8 %5, 0
-  %i.eo = and i1 %10, %i.en
+  %10 = trunc nuw i8 %5 to i1
+  %i.eo = and i1 %i.en, %10
   %i.ep = zext i1 %i.eo to i8
   %i.eq = getelementptr inbounds nuw i8, ptr %3, i64 1296 ; 2 uses
   %i.er = getelementptr inbounds nuw i8, ptr %3, i64 1816

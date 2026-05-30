@@ -201,7 +201,7 @@ bb.be:                                            ; preds = %bb.bd
   %i.en = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   %i.eo = load i64, ptr %i.q, align 8, !range !44, !alias.scope !45, !noundef !3
-  %6 = icmp ne i64 %i.eo, 0
+  %6 = trunc nuw i64 %i.eo to i1
   %i.ep = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !45
   %i.eq = icmp eq ptr %i.ep, null
   %or.cond.i = select i1 %6, i1 %i.eq, i1 false
@@ -228,7 +228,7 @@ bb.bi:                                            ; preds = %bb.bg
   store i64 %i.em, ptr %i.ev, align 8
   store i64 3, ptr %0, align 8
   %i.ew = load i64, ptr %i.q, align 8, !range !44, !alias.scope !48, !noundef !3
-  %7 = icmp ne i64 %i.ew, 0
+  %7 = trunc nuw i64 %i.ew to i1
   %i.ex = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !48
   %i.ey = icmp eq ptr %i.ex, null
   %or.cond.i28 = select i1 %7, i1 %i.ey, i1 false
@@ -631,7 +631,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.dl = icmp eq i64 %i.bq, 0
   %i.dm = icmp eq i64 %i.bp, 0
   %or.cond41 = or i1 %i.dl, %i.dm
-  %.not37 = icmp ne i64 %.sroa.010.1, 0
+  %.not37 = trunc nuw i64 %.sroa.010.1 to i1
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %_RINvNtNtNtCs95DO3lnzZ3L_4moka3cht3map6bucket20defer_destroy_bucketINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtB17_6string6StringEINtNtNtNtB8_6common10concurrent3arc7MiniArcINtB22_10ValueEntryB1A_NtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEEEB35_.exit, label %bb.ay
 
@@ -754,13 +754,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !213)
   %i.en = load i64, ptr %i.n, align 8, !range !44, !alias.scope !213, !noundef !3
@@ -831,6 +824,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1233,7 +1233,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.dl = icmp eq i64 %i.bq, 0
   %i.dm = icmp eq i64 %i.bp, 0
   %or.cond41 = or i1 %i.dl, %i.dm
-  %.not37 = icmp ne i64 %.sroa.010.1, 0
+  %.not37 = trunc nuw i64 %.sroa.010.1 to i1
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %_RINvNtNtNtCs95DO3lnzZ3L_4moka3cht3map6bucket20defer_destroy_bucketINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtB17_6string6StringEINtNtNtNtB8_6common10concurrent3arc7MiniArcINtNtCs7kfTgH1B6X1_10async_lock5mutex5MutexuEEECsgO8S5jLFugx_23deltalake_catalog_unity.exit, label %bb.ay
 
@@ -1356,13 +1356,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !235)
   %i.en = load i64, ptr %i.n, align 8, !range !44, !alias.scope !235, !noundef !3
@@ -1433,6 +1426,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -1835,7 +1835,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.dk = icmp eq i64 %i.bq, 0
   %i.dl = icmp eq i64 %i.bp, 0
   %or.cond41 = or i1 %i.dk, %i.dl
-  %.not37 = icmp ne i64 %.sroa.010.1, 0
+  %.not37 = trunc nuw i64 %.sroa.010.1 to i1
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %_RINvNtNtNtCs95DO3lnzZ3L_4moka3cht3map6bucket20defer_destroy_bucketNtNtCs6Po7BT7Nknu_5alloc6string6StringINtNtNtB8_6future11invalidator9PredicateB12_NtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEEB2q_.exit, label %bb.ay
 
@@ -1958,13 +1958,6 @@ bb.bk:                                            ; preds = %bb.bj
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 
-4:                                                ; preds = %bb.bi, %bb.bo, %bb.bs, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
-
 bb.bl:                                            ; preds = %bb.bi
   call void @llvm.experimental.noalias.scope.decl(metadata !257)
   %i.em = load i64, ptr %i.n, align 8, !range !44, !alias.scope !257, !noundef !3
@@ -2035,6 +2028,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bs, %bb.bo, %bb.bi
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bh
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -2437,7 +2437,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.do = icmp eq i64 %i.bq, 0
   %i.dp = icmp eq i64 %i.bp, 0
   %or.cond41 = or i1 %i.do, %i.dp
-  %.not37 = icmp ne i64 %.sroa.010.1, 0
+  %.not37 = trunc nuw i64 %.sroa.010.1 to i1
   %or.cond42 = or i1 %or.cond41, %.not37
   br i1 %or.cond42, label %_RINvNtNtNtCs95DO3lnzZ3L_4moka3cht3map6bucket20defer_destroy_bucketTINtNtCs6Po7BT7Nknu_5alloc4sync3ArcNtNtB18_6string6StringENtNtCsbvkFyIu7lgC_4core3any6TypeIdEINtNtNtNtB8_6common10concurrent3arc7MiniArcINtNtCs7kfTgH1B6X1_10async_lock6rwlock6RwLockINtNtNtB8_6future17value_initializer11WaiterValueNtNtCsgO8S5jLFugx_23deltalake_catalog_unity6models25TemporaryTableCredentialsEEEEB4O_.exit, label %bb.az
 
@@ -2560,13 +2560,6 @@ bb.bl:                                            ; preds = %bb.bk
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val50, i8 %.val51) #24
           to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
 
-4:                                                ; preds = %bb.bj, %bb.bp, %bb.bt, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i
-  %5 = landingpad { ptr, i32 }
-          cleanup
-  %.val46 = load ptr, ptr %i.u, align 8
-  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
-          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
-
 bb.bm:                                            ; preds = %bb.bj
   call void @llvm.experimental.noalias.scope.decl(metadata !279)
   %i.eq = load i64, ptr %i.n, align 8, !range !44, !alias.scope !279, !noundef !3
@@ -2637,6 +2630,13 @@ _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6pois
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit
+
+4:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit.sink.split.i, %bb.bt, %bb.bp, %bb.bj
+  %5 = landingpad { ptr, i32 }
+          cleanup
+  %.val46 = load ptr, ptr %i.u, align 8
+  invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtCs2pqxYH9ZEk8_3std4sync6poison12TryLockErrorINtNtBJ_5mutex10MutexGuarduEEECsgO8S5jLFugx_23deltalake_catalog_unity(ptr %.val46, i8 2) #24
+          to label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtNtNtCs2pqxYH9ZEk8_3std4sync6poison5mutex10MutexGuarduEECsgO8S5jLFugx_23deltalake_catalog_unity.exit70 unwind label %bb.bi
 }
 
 ; Function Attrs: cold nonlazybind uwtable
